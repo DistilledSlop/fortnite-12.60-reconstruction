@@ -24,5 +24,9 @@ public:
 	UPROPERTY()
 	bool bCanGoBackToThisScreen;
 
+	UFUNCTION(BlueprintNativeEvent)
+	bool BP_ShouldDisplay();
+	virtual bool BP_ShouldDisplay_Implementation();
+
 };
 

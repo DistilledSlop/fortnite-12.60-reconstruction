@@ -245,6 +245,9 @@ public:
 	void FullScreenMapCursorStopDrag();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual AFortPlayerState* GetFollowedPlayer() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

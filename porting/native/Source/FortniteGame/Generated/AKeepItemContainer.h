@@ -69,6 +69,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	FName GetContainerNameAndLevelKey();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	int32 GetLootTierOverride() const;
+	virtual int32 GetLootTierOverride_Implementation() const;
+
 	UFUNCTION()
 	void OnRep_HostUpgradeLevel();
 

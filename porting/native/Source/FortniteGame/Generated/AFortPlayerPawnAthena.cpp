@@ -21,10 +21,22 @@ void AFortPlayerPawnAthena::ForceReviveFromDBNO()
 	// Empty body: the native function does nothing (see Inferred).
 }
 
+UAnimMontage* AFortPlayerPawnAthena::GetAdditiveHitReactsMontage_Implementation()
+{
+	// Native target 0x141a128e0; CONFIDENCE: high.
+	return AdditiveHitReactsMontage;
+}
+
 float AFortPlayerPawnAthena::GetDefaultReviveFromDBNOTime()
 {
 	// CONFIDENCE: high; native 0x141a132b0 initializes the class default object if needed.
 	return GetClass()->GetDefaultObject() ? ReviveFromDBNOTime : 10.0f;
+}
+
+bool AFortPlayerPawnAthena::LocalIsTryingToEnterVehicle()
+{
+	// Native target 0x141a19830; CONFIDENCE: high.
+	return NativeRecoveredPointer_0x2d98 != 0;
 }
 
 void AFortPlayerPawnAthena::NetMulticast_SuccessfulBuildingEdit_Implementation()

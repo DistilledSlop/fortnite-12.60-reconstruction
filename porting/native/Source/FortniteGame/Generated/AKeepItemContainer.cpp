@@ -11,6 +11,12 @@ FName AKeepItemContainer::GetContainerNameAndLevelKey()
 	return ABuildingContainer::ContainerLootTierKey;
 }
 
+int32 AKeepItemContainer::GetLootTierOverride_Implementation() const
+{
+	// Native target 0x1424acf50; CONFIDENCE: high.
+	return HostUpgradeLevel;
+}
+
 void AKeepItemContainer::OnRep_HostUpgradeLevel()
 {
 	// Body not recovered: reflection-derived stub.

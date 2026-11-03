@@ -118,15 +118,24 @@ public:
 	UPROPERTY()
 	TSubclassOf<UGameplayEffect> PlayerCollisionGameplayEffect;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x504): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x504;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x505): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x505;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x507): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x507;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x521): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x521;
+
 	// table index 20, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_CorrectTargetOrientation, Transient)
 	FVehicleTargetOrientation CorrectTargetOrientation;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x554): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x554;
 
 	// table index 19, flags 0x40000000010001
 	UPROPERTY()
@@ -214,7 +223,16 @@ public:
 	bool IsAsleep() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsCorrectingOrientation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsInAir() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInWater() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsScrapingSidesOrTop() const;
 
 private:
 	UFUNCTION()

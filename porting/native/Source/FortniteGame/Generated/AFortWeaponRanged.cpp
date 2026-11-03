@@ -89,6 +89,12 @@ bool AFortWeaponRanged::ShouldDisplayAmmoCounter() const
 	return bShouldDisplayAmmoCounter;
 }
 
+bool AFortWeaponRanged::ShouldPlayPersistentFireFX() const
+{
+	// Native target 0x1426e0b60; CONFIDENCE: high.
+	return bPersistentFireFX;
+}
+
 bool AFortWeaponRanged::UseFirstPersonTargeting() const
 {
 	// Original address: 0x142b502c0.

@@ -2,6 +2,12 @@
 #include "AFortPlayerControllerGameplay.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortPlayerControllerGameplay::CanFollowTeammate() const
+{
+	// Native target 0x1406801e0; CONFIDENCE: high.
+	return false;
+}
+
 void AFortPlayerControllerGameplay::ClientCreativePhoneCreated_Implementation()
 {
 	// Body not recovered: reflection-derived stub.

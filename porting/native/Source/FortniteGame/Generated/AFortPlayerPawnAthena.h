@@ -267,6 +267,9 @@ public:
 	UPROPERTY()
 	bool bIsPlayerPawnReady;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2d98): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x2d98;
+
 	// table index 42, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FVector LastFiredLocation;
@@ -442,8 +445,17 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void ForceReviveFromDBNO();
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	UAnimMontage* GetAdditiveHitReactsMontage();
+	virtual UAnimMontage* GetAdditiveHitReactsMontage_Implementation();
+public:
+
 	UFUNCTION(BlueprintCallable)
 	float GetDefaultReviveFromDBNOTime();
+
+	UFUNCTION(BlueprintCallable)
+	virtual bool LocalIsTryingToEnterVehicle();
 
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_SuccessfulBuildingEdit();

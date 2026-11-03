@@ -35,12 +35,30 @@ bool APhysicsObject::IsAsleep() const
 	return NativeRecoveredBool_0x505;
 }
 
+bool APhysicsObject::IsCorrectingOrientation() const
+{
+	// Native target 0x141b4cdc0; CONFIDENCE: high.
+	return NativeRecoveredFloat_0x554 > 0.0f;
+}
+
+bool APhysicsObject::IsInAir() const
+{
+	// Native target 0x141b4cec0; CONFIDENCE: high.
+	return NativeRecoveredByte_0x504 == 0;
+}
+
 bool APhysicsObject::IsInWater() const
 {
 	// Original address: 0x142b85450.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
 	return NativeRecoveredBool_0x507;
+}
+
+bool APhysicsObject::IsScrapingSidesOrTop() const
+{
+	// Native target 0x141b4d2c0; CONFIDENCE: high.
+	return NativeRecoveredByte_0x521 != 0;
 }
 
 void APhysicsObject::OnRep_AbilitySystemComponent()

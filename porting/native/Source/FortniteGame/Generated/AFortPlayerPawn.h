@@ -1224,6 +1224,9 @@ public:
 	UPROPERTY(Replicated)
 	uint32 RemoteViewData32;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2680): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x2680;
+
 	// table index 35, flags 0x10000000002000
 	UPROPERTY(Transient)
 	float LastQuickBarSwitchRequestTime;
@@ -1403,6 +1406,9 @@ public:
 	UFXSystemComponent* GetActivePlayerWaterBoostComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual AFortPlayerPawn* GetControllingPawn() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortSkyTube* GetCurrentSkyTube() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -1523,6 +1529,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool IsZiplining() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual bool LocalIsTryingToGetPickup();
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastUpdateVehicleInputStateReliable(const FFortAthenaVehicleInputStateReliable& ReliableInput);

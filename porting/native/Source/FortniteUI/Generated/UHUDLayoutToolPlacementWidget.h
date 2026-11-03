@@ -85,5 +85,11 @@ public:
 	UPROPERTY()
 	UBacchusHUDElement* BacchusHUDElement;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	bool GetIsOverlapping() const;
+	virtual bool GetIsOverlapping_Implementation() const;
+public:
+
 };
 

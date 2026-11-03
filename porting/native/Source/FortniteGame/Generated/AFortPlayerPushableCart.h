@@ -16,9 +16,11 @@
 #include "FPlayerPushableCartOnTeamsRolesChanged.h"
 #include "FTeamRoles.h"
 
+class AActor;
 class AFortAthenaMutator_Uranium;
 class AFortPlayerPawn;
 class UFortMovementComp_GroundSpline;
+class UShapeComponent;
 class USplineComponent;
 
 #include "AFortPlayerPushableCart.generated.h"
@@ -120,11 +122,19 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void AddPlayerToPushArea(AFortPlayerPawn* PlayerToAdd);
 
+	UFUNCTION(BlueprintNativeEvent)
+	AActor* GetCameraActor();
+	virtual AActor* GetCameraActor_Implementation();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsPlayerPushable() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetLastReachedCheckPointIndex() const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	UShapeComponent* GetPushAreaShapeComponent() const;
+	virtual UShapeComponent* GetPushAreaShapeComponent_Implementation() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetTotalActiveDefenders() const;

@@ -14,5 +14,8 @@ class FORTNITEUI_API UFortSettingValueDiscrete : public UFortSettingValue
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetDiscreteOptionDefaultIndex() const;
+
 };
 

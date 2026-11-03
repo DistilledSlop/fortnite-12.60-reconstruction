@@ -67,5 +67,8 @@ public:
 	UPROPERTY(Transient)
 	FTimerHandle UpdateCardTimer;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasRewards() const;
+
 };
 

@@ -18,5 +18,14 @@ public:
 	UPROPERTY()
 	int32 NumToStartShowingAt;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2a9): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x2a9;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	bool IsShowing() const;
+	virtual bool IsShowing_Implementation() const;
+public:
+
 };
 

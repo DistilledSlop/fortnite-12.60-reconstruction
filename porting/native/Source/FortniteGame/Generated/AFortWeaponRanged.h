@@ -383,6 +383,9 @@ public:
 	bool ShouldDisplayAmmoCounter() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool ShouldPlayPersistentFireFX() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool UseFirstPersonTargeting() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

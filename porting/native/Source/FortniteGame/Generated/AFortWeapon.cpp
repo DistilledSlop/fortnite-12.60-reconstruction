@@ -137,6 +137,12 @@ bool AFortWeapon::GetIsTargeting() const
 	return AFortWeapon::bIsTargeting;
 }
 
+int32 AFortWeapon::GetLocalMagazineAmmoCount() const
+{
+	// Native target 0x14269d650; CONFIDENCE: high.
+	return NativeRecoveredInt32_0x8d8;
+}
+
 int32 AFortWeapon::GetMagazineAmmoCount() const
 {
 	// Native target 0x14269d6b0; confidence: high.
@@ -305,6 +311,12 @@ UFortWeaponAnimSet* AFortWeapon::GetWeaponPawnAnimSet() const
 	// Original wrapper 0x142b47260; native callee 0x1426a1690.
 	// CONFIDENCE: HIGH
 	return WeaponPawnAnimsetOverride ? WeaponPawnAnimsetOverride : WeaponPawnAnimSet;
+}
+
+bool AFortWeapon::IsProjectileWeapon() const
+{
+	// Native target 0x1406801e0; CONFIDENCE: high.
+	return false;
 }
 
 void AFortWeapon::OnRep_AmmoCount(int32 OldAmmoCount)

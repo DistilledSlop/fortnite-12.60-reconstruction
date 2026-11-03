@@ -287,6 +287,9 @@ public:
 	UPROPERTY()
 	FCreativeOptionVariableBase WantedUIMetricsDisplay;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool CanFollowTeammate() const;
+
 	UFUNCTION(Client, Reliable)
 	void ClientCreativePhoneCreated();
 	void ClientCreativePhoneCreated_Implementation();

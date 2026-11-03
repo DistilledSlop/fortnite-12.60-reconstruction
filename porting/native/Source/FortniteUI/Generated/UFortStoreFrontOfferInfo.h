@@ -24,6 +24,9 @@ public:
 	UFortMtxOfferData* GetOfferDisplayAsset() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasDisplayAsset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsCardpack() const;
 
 };

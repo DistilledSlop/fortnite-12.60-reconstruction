@@ -511,6 +511,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_AmmoCount, Transient)
 	int32 AmmoCount;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x8d8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x8d8;
+
 	// table index 60, flags 0x20080000002000
 	UPROPERTY(Transient)
 	int32 BurstFireCounter;
@@ -776,6 +779,9 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetLocalMagazineAmmoCount() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetMagazineAmmoCount() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
@@ -846,6 +852,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortWeaponAnimSet* GetWeaponPawnAnimSet() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsProjectileWeapon() const;
 
 	UFUNCTION()
 	void OnRep_AmmoCount(int32 OldAmmoCount);

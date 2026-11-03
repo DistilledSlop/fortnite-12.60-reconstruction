@@ -9,6 +9,12 @@ UFortMtxOfferData* UFortStoreFrontOfferInfo::GetOfferDisplayAsset() const
 	return OfferDisplayAsset;
 }
 
+bool UFortStoreFrontOfferInfo::HasDisplayAsset() const
+{
+	// Native target 0x1444d3360; CONFIDENCE: high.
+	return OfferDisplayAsset != nullptr;
+}
+
 bool UFortStoreFrontOfferInfo::IsCardpack() const
 {
 	// Exact original shared stub 0x1406801e0.

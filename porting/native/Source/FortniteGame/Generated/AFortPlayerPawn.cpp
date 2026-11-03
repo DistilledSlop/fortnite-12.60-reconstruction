@@ -117,6 +117,12 @@ UFXSystemComponent* AFortPlayerPawn::GetActivePlayerWaterBoostComponent() const
 	return NiagaraPlayerWaterBoost;
 }
 
+AFortPlayerPawn* AFortPlayerPawn::GetControllingPawn() const
+{
+	// Native target 0x14069ac00; CONFIDENCE: high.
+	return const_cast<AFortPlayerPawn*>(this);
+}
+
 AFortSkyTube* AFortPlayerPawn::GetCurrentSkyTube() const
 {
 	// Behaviour snippet: AFortPlayerPawn::GetCurrentSkyTube (body only; spliced into the generated member function).
@@ -514,6 +520,12 @@ bool AFortPlayerPawn::IsZiplining() const
 	// CONFIDENCE: HIGH
 	// Reflected exec 0x142a7d5d0; native 0x142332270.
 	return ZiplineState.bIsZiplining;
+}
+
+bool AFortPlayerPawn::LocalIsTryingToGetPickup()
+{
+	// Native target 0x1423335a0; CONFIDENCE: high.
+	return NativeRecoveredPointer_0x2680 != 0;
 }
 
 void AFortPlayerPawn::MulticastUpdateVehicleInputStateReliable_Implementation(const FFortAthenaVehicleInputStateReliable& ReliableInput)

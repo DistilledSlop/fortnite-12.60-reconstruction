@@ -8,6 +8,12 @@ void AFortPlayerPushableCart::AddPlayerToPushArea(AFortPlayerPawn* PlayerToAdd)
 	// CONFIDENCE: HIGH
 }
 
+AActor* AFortPlayerPushableCart::GetCameraActor_Implementation()
+{
+	// Native target 0x14069ac00; CONFIDENCE: high.
+	return this;
+}
+
 bool AFortPlayerPushableCart::GetIsPlayerPushable() const
 {
 	// Original address: 0x142a88b20.
@@ -22,6 +28,12 @@ uint8 AFortPlayerPushableCart::GetLastReachedCheckPointIndex() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return CurrentCheckPoint;
+}
+
+UShapeComponent* AFortPlayerPushableCart::GetPushAreaShapeComponent_Implementation() const
+{
+	// Native target 0x140680300; CONFIDENCE: high.
+	return nullptr;
 }
 
 uint8 AFortPlayerPushableCart::GetTotalActiveDefenders() const

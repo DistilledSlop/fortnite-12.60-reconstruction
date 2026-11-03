@@ -16,6 +16,12 @@ void AFortPlayerControllerSpectating::FullScreenMapCursorStopDrag()
 	NativeRecoveredByte_0x2ad0 = 0;
 }
 
+AFortPlayerState* AFortPlayerControllerSpectating::GetFollowedPlayer() const
+{
+	// Native target 0x140680300; CONFIDENCE: high.
+	return nullptr;
+}
+
 UAthenaMarkerComponent* AFortPlayerControllerSpectating::GetMarkerComponent() const
 {
 	// Original address: 0x142a6ba30.
