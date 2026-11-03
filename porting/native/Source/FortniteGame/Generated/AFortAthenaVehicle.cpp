@@ -7,6 +7,22 @@ void AFortAthenaVehicle::BroadcastResetWaterIdleTimeEmpty_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortAthenaVehicle::CanAntigravityOnIncline() const
+{
+	// Original address: 0x14283a770.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_bit_runtime/README.md.
+	return (NativeRecoveredBits_0x40e & 0x40) != 0;
+}
+
+bool AFortAthenaVehicle::CanDriveOnIncline() const
+{
+	// Original address: 0x14283a880.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_bit_runtime/README.md.
+	return (NativeRecoveredBits_0x40e & 0x10) != 0;
+}
+
 void AFortAthenaVehicle::DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color)
 {
 	// Body not recovered: reflection-derived stub.

@@ -25,6 +25,13 @@ void UFortCreativeKeyLockComponent::OnRep_RemainingKeysToUnlock()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortCreativeKeyLockComponent::SetShouldConsumeKey(bool ShouldConsume)
+{
+	// Original exec 0x1428c58e0; pure writer 0x1406dab20.
+	// CONFIDENCE: HIGH
+	this->NativeRecoveredBool_0x150 = ShouldConsume;
+}
+
 void UFortCreativeKeyLockComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

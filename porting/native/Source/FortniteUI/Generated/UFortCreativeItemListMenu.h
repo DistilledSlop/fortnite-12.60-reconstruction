@@ -130,11 +130,17 @@ public:
 	UPROPERTY(Transient)
 	int32 LastUsedSlot;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3ac): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x3ac;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x3ad): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x3ad;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSubTabOpened() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetIsItemCommandsEnabled(bool bInIsItemCommandEnabled);
 
 };
 

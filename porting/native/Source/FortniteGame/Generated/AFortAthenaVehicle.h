@@ -136,6 +136,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 bHasDriver : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x40e): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredBits_0x40e;
+
 	// table index 134, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float CurrentFOV;
@@ -617,6 +620,12 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void BroadcastResetWaterIdleTimeEmpty();
 	void BroadcastResetWaterIdleTimeEmpty_Implementation();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanAntigravityOnIncline() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanDriveOnIncline() const;
 
 	UFUNCTION(Client, Reliable)
 	void DebugDrawImpactBucket(const FVector& Location, const FVector& ImpactVector, const FColor& Color);

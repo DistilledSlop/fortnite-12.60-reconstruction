@@ -43,5 +43,13 @@ public:
 	UPROPERTY()
 	float FocalLengthInterpSpeed;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x8c8): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x8c8;
+
+private:
+	UFUNCTION()
+	void OnFocalLengthSettingChanged(float NewFocalLength);
+public:
+
 };
 

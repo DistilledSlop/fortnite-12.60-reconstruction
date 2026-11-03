@@ -40,6 +40,20 @@ void AFortTimeOfDayManager::RemoveLightAndFogPhaseSettingOverrideMulticast_Imple
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortTimeOfDayManager::SetDirectionalLightColorMultiplier(float NewDirectionalLightColorMultiplier)
+{
+	// Original exec 0x142b0faf0; pure writer 0x141f6d740.
+	// CONFIDENCE: HIGH
+	this->NativeRecoveredFloat_0xde4 = NewDirectionalLightColorMultiplier;
+}
+
+void AFortTimeOfDayManager::SetFogDirectionalInscatteringMultiplier(float NewFogDirectionalInscatteringMultiplier)
+{
+	// Original exec 0x142b0fb70; pure writer 0x141f6d910.
+	// CONFIDENCE: HIGH
+	this->NativeRecoveredFloat_0xde8 = NewFogDirectionalInscatteringMultiplier;
+}
+
 void AFortTimeOfDayManager::SetStormStrength(float NewStormStrength)
 {
 	// Original exec 0x142b0fdc0; pure writer 0x141f6e6a0.

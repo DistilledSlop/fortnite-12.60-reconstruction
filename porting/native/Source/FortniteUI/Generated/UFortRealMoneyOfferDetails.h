@@ -83,5 +83,13 @@ public:
 	UPROPERTY()
 	UScrollBox* ScrollBox_Details;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x728): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x728;
+
+private:
+	UFUNCTION(BlueprintCallable)
+	void SetCanPurchase(bool bInCanPurchase);
+public:
+
 };
 

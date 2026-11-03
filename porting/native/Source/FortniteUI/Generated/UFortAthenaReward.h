@@ -26,5 +26,11 @@ public:
 	UPROPERTY(Transient)
 	UFortItem* SecondaryItemToRepresent;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xba0): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xba0;
+
+	UFUNCTION(BlueprintCallable)
+	void SetViewOnHovered(bool bShouldViewOnHovered);
+
 };
 

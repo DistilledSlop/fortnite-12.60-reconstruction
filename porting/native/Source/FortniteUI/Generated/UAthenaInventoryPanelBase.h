@@ -42,6 +42,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<UFortItemTileView*> InventorySections;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x490): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x490;
+
 	// table index 14, flags 0x44000000010001
 	UPROPERTY()
 	TSoftClassPtr<UFortCreativeSettingsFlow> MyIslandWidgetClass;
@@ -101,6 +104,11 @@ public:
 	// table index 0, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortCreativeItemListMenu* CreativeInventoryWidget;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetBypassNotifications(bool bBypass);
+public:
 
 };
 

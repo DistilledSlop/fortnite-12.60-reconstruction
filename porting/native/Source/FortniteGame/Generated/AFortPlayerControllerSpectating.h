@@ -186,6 +186,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x2ae5): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x2ae5;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2ae6): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x2ae6;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x2ae7): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x2ae7;
 
@@ -196,6 +199,9 @@ public:
 	// table index 9, flags 0x20080000000000
 	UPROPERTY()
 	AActor* LastKnownViewTarget;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2bf0): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredBits_0x2bf0;
 
 	// table index 8, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -230,6 +236,9 @@ public:
 	AFortBroadcastRemoteClientInfo* FollowedPlayerRemoteClientInfo;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AreNotificationsEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -247,6 +256,9 @@ protected:
 	UFUNCTION()
 	virtual void OnRep_FollowedPlayerRemoteClientInfo();
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetShowVehiclesOnMap(bool bInShowVehiclesOnMap);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

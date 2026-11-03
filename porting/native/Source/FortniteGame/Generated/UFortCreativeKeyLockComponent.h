@@ -62,6 +62,9 @@ public:
 	UPROPERTY(Replicated)
 	bool bRequireAllKeysAtOnce;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x150): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x150;
+
 	// table index 0, flags 0x24080101000020
 	UPROPERTY(ReplicatedUsing=OnRep_KeyItemDefinition, SaveGame)
 	TSoftObjectPtr<UFortItemDefinition> UnlockKeyDefinitionSoftPointer;
@@ -77,6 +80,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_RemainingKeysToUnlock();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetShouldConsumeKey(bool ShouldConsume);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

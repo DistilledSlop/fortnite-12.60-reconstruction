@@ -358,6 +358,12 @@ public:
 	UPROPERTY(Transient)
 	float StormStrength;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xde4): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xde4;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xde8): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xde8;
+
 	// table index 0, flags 0x2008000008201c
 	UPROPERTY(Transient)
 	UFortTimeOfDayWeatherComponent* WeatherComponent;
@@ -384,6 +390,12 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void RemoveLightAndFogPhaseSettingOverrideMulticast(EFortDayPhase::Type DayPhase, float BlendOutLength);
 	void RemoveLightAndFogPhaseSettingOverrideMulticast_Implementation(EFortDayPhase::Type DayPhase, float BlendOutLength);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	void SetDirectionalLightColorMultiplier(float NewDirectionalLightColorMultiplier);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	void SetFogDirectionalInscatteringMultiplier(float NewFogDirectionalInscatteringMultiplier);
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	void SetStormStrength(float NewStormStrength);
