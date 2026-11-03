@@ -1013,6 +1013,9 @@ public:
 	void PlaySound(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier);
 	void PlaySound_Implementation(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier);
 
+	UFUNCTION(BlueprintCallable)
+	void ResetFallingHeight();
+
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerInternalEquipWeapon(AFortWeapon* Weap);
 	void ServerInternalEquipWeapon_Implementation(AFortWeapon* Weap);
@@ -1030,6 +1033,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetControlRecoveryBehavior(EFortControlRecoveryBehavior NewBehavior);
+
+	UFUNCTION(BlueprintCallable)
+	void SetFallingHeight(float FromHeight);
 
 	UFUNCTION(BlueprintCallable)
 	void SetGravityMultiplier(float NewGravityVal);

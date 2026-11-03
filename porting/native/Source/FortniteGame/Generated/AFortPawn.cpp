@@ -18,6 +18,7 @@
 #include "UFortAnimNotifyState_AbilityDecisionWindow.h"
 #include "UFortControlResistanceSet.h"
 #include "UFortHealthSet.h"
+#include "UFortMovementComp_Character.h"
 #include "UFortMovementSet.h"
 #include "UObject/UnrealType.h"
 #include "Net/UnrealNetwork.h"
@@ -630,6 +631,17 @@ void AFortPawn::PlaySound_Implementation(USoundBase* Sound, float VolumeMultipli
 	    nullptr, nullptr, nullptr);
 }
 
+void AFortPawn::ResetFallingHeight()
+{
+	// CONFIDENCE: high; complete captured native branches and typed dependencies.
+	// Native 0x1420edbc0 uses the updated component's world Z or the largest finite float.
+	if (UFortMovementComp_Character* FortMovement = Cast<UFortMovementComp_Character>(GetCharacterMovement()))
+	{
+	    USceneComponent* Updated = FortMovement->UpdatedComponent;
+	    FortMovement->FallingStartedZ = Updated ? Updated->GetComponentLocation().Z : MAX_flt;
+	}
+}
+
 void AFortPawn::ServerInternalEquipWeapon_Implementation(AFortWeapon* Weap)
 {
 	// Body not recovered: reflection-derived stub.
@@ -681,6 +693,16 @@ void AFortPawn::SetControlRecoveryBehavior(EFortControlRecoveryBehavior NewBehav
 {
 	// Native 0x14234beb0. CONFIDENCE: high
 	ControlRecoveryBehavior = NewBehavior;
+}
+
+void AFortPawn::SetFallingHeight(float FromHeight)
+{
+	// CONFIDENCE: high; complete captured native branches and typed dependencies.
+	// Native 0x14234cbd0 updates the reflected FallingStartedZ only for Fort character movement.
+	if (UFortMovementComp_Character* FortMovement = Cast<UFortMovementComp_Character>(GetCharacterMovement()))
+	{
+	    FortMovement->FallingStartedZ = FromHeight;
+	}
 }
 
 void AFortPawn::SetGravityMultiplier(float NewGravityVal)

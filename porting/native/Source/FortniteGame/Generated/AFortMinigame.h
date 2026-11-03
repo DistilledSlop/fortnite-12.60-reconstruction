@@ -581,6 +581,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentRoundWinner() const;
 
+	UFUNCTION(BlueprintCallable)
+	bool GetEndConditionForStatIfAny(uint8 TeamNumber, TSubclassOf<UFortMinigameStatFilter>& InStat, FMinigameEndCondition& OutEndCondition);
+
+	UFUNCTION(BlueprintCallable)
+	bool GetEndConditionValueForStatIfAny(uint8 TeamNumber, TSubclassOf<UFortMinigameStatFilter>& InStat, int32& OutValue);
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetInitTeamSizeWeight(uint8 TeamIndex) const;
@@ -701,6 +707,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsWaitingForCameras() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsWinningPlayerId(FUniqueNetIdRepl& PlayerId) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsWinningPlayerState(APlayerState* PlayerState) const;
 
 protected:
 	UFUNCTION(BlueprintNativeEvent)

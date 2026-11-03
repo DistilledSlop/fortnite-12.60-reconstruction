@@ -1,0 +1,27 @@
+{
+  "functions": [
+    {
+      "function": "SetFallingHeight",
+      "captures": [
+        "porting/generated/native225-fresh-bulk/0x142a1fbb0.c",
+        "porting/generated/native294-callees/0x14234cbd0.c",
+        "porting/generated/native294-callees/0x1420edbb0.c",
+        "porting/generated/native294-callees/0x1429f5d30.c"
+      ],
+      "proof": "ACharacter::CharacterMovement at 0x280; class helper resolves FortMovementComp_Character; setter writes float +0x1d00, reflected FallingStartedZ per canonical UFortMovementComp_Character.GetFallingStartedZ."
+    },
+    {
+      "function": "ResetFallingHeight",
+      "captures": [
+        "porting/generated/native102-broad/0x142a1f540.c",
+        "porting/generated/native294-callees/0x1420edbc0.c",
+        "porting/generated/native294-callees/0x1429f5d30.c"
+      ],
+      "proof": "movement+0xb0 is reflected UpdatedComponent; null returns 0x7f7fffff (MAX_flt). Non-null uses component+0x1d8. Reflected USceneComponent.K2_GetComponentLocation exec 0x1447dba40 calls 0x14411aed0; image disassembly at latter loads world XYZ from component+0x1d0, making +0x1d8 its Z. Getter is GetComponentLocation in UE source."
+    }
+  ],
+  "flat_image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "layout_source": "porting/generated/reflection/fortnite_game_reflection.json",
+  "canonical_evidence": "porting/behavior/MANIFEST.json UFortMovementComp_Character.GetFallingStartedZ"
+}

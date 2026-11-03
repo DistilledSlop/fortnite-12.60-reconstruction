@@ -196,6 +196,45 @@ int32 AFortMinigame::GetCurrentRoundWinner() const
 	}
 }
 
+bool AFortMinigame::GetEndConditionForStatIfAny(uint8 TeamNumber, TSubclassOf<UFortMinigameStatFilter>& InStat, FMinigameEndCondition& OutEndCondition)
+{
+	// CONFIDENCE: high; complete captured native branches and typed dependencies.
+	// Native 0x14208f9f0; exec 0x1429c02b0.
+	for (const FMinigameEndCondition& Condition : EndConditionArray)
+	{
+	    if (Condition.StatQuery.Stat.Get() != InStat.Get()) continue;
+	    const bool bContains = Condition.TeamList.Contains(TeamNumber);
+	    if ((Condition.TeamListType == EMinigameTeamListType::Blacklist && !bContains) ||
+	        (Condition.TeamListType == EMinigameTeamListType::Whitelist && bContains))
+	    {
+	        static_assert(sizeof(FFortMinigameStatQuery) == 0x18, "Native stat query layout differs");
+	        FMemory::Memcpy(&OutEndCondition.StatQuery, &Condition.StatQuery, sizeof(FFortMinigameStatQuery));
+	        OutEndCondition.TeamListType = Condition.TeamListType;
+	        OutEndCondition.TeamList = Condition.TeamList;
+	        return true;
+	    }
+	}
+	return false;
+}
+
+bool AFortMinigame::GetEndConditionValueForStatIfAny(uint8 TeamNumber, TSubclassOf<UFortMinigameStatFilter>& InStat, int32& OutValue)
+{
+	// CONFIDENCE: high; complete captured native branches and typed dependencies.
+	// Native 0x14208fb60; exec 0x1429c0420.
+	for (const FMinigameEndCondition& Condition : EndConditionArray)
+	{
+	    if (Condition.StatQuery.Stat.Get() != InStat.Get()) continue;
+	    const bool bContains = Condition.TeamList.Contains(TeamNumber);
+	    if ((Condition.TeamListType == EMinigameTeamListType::Blacklist && !bContains) ||
+	        (Condition.TeamListType == EMinigameTeamListType::Whitelist && bContains))
+	    {
+	        OutValue = Condition.StatQuery.Value;
+	        return true;
+	    }
+	}
+	return false;
+}
+
 int32 AFortMinigame::GetInitTeamSizeWeight(uint8 TeamIndex) const
 {
 	// CONFIDENCE: high; native loops and reflected team records, see native-evidence.json.
@@ -644,6 +683,24 @@ bool AFortMinigame::IsWaitingForCameras() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
 	return static_cast<uint8>(CurrentState) == 3;
+}
+
+bool AFortMinigame::IsWinningPlayerId(FUniqueNetIdRepl& PlayerId) const
+{
+	// CONFIDENCE: high; complete captured native branches and typed dependencies.
+	// Native 0x1429c3b90; exec 0x1429c3b90.
+	const int32 RoundWinner = GetRoundWinner(CurrentRound);
+	const int32 PlayerBucket = GetBucketForPlayerId(PlayerId);
+	return RoundWinner == PlayerBucket;
+}
+
+bool AFortMinigame::IsWinningPlayerState(APlayerState* PlayerState) const
+{
+	// CONFIDENCE: high; complete captured native branches and typed dependencies.
+	// Native 0x1429c3cb0; exec 0x1429c3cb0.
+	const int32 RoundWinner = GetRoundWinner(CurrentRound);
+	const int32 PlayerBucket = GetBucketForPlayerState(PlayerState);
+	return RoundWinner == PlayerBucket;
 }
 
 void AFortMinigame::K2_EnteredVolumeEvent_Implementation(AFortPlayerState* PlayerState)
