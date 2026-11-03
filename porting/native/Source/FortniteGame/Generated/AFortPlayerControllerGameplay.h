@@ -323,6 +323,9 @@ public:
 	bool IsCreativePhoneAndHarvestHoldSwapped() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeQuickbarActive() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsCreativeQuickbarEnabled() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

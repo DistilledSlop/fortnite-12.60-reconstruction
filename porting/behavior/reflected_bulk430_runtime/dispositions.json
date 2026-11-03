@@ -1,0 +1,758 @@
+[
+  {
+    "index": 260,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "ClientCreativePhoneCreated",
+    "capture": "porting/generated/native96-broad/0x142a64950.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 261,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "ClientCreativeStopFly",
+    "capture": "porting/generated/native96-broad/0x142a64a00.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 262,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "FollowNextTeammate",
+    "capture": "porting/generated/native96-broad/0x142a64fe0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 263,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "FollowPreviousTeammate",
+    "capture": "porting/generated/native96-broad/0x142a65000.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 264,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "HideQuicktimeEventWidget",
+    "capture": "porting/generated/native96-broad/0x142a65320.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 265,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "RefreshHUDElementVisibilitiesToSettings",
+    "capture": "porting/generated/native96-broad/0x142a66640.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 266,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "ShowQuicktimeEventWidget",
+    "capture": "porting/generated/native96-broad/0x142a67430.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 267,
+    "class": "AFortPlayerControllerSpectating",
+    "function": "FollowNextPlayer",
+    "capture": "porting/generated/native102-broad/0x142a6b090.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 268,
+    "class": "AFortPlayerControllerSpectating",
+    "function": "FollowPrevPlayer",
+    "capture": "porting/generated/native102-broad/0x142a6b1d0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 269,
+    "class": "AFortPlayerControllerSpectating",
+    "function": "ResetCamera",
+    "capture": "porting/generated/native102-broad/0x142a6c250.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 270,
+    "class": "AFortPlayerControllerZone",
+    "function": "ClientClearDeathNotification",
+    "capture": "porting/generated/native102-broad/0x142a6ff50.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 271,
+    "class": "AFortPlayerControllerZone",
+    "function": "ClientOnPawnSpawned",
+    "capture": "porting/generated/native102-broad/0x142a70160.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 272,
+    "class": "AFortPlayerControllerZone",
+    "function": "PushDeathInputComponent",
+    "capture": "porting/generated/native102-broad/0x142a70750.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 273,
+    "class": "AFortPlayerControllerZone",
+    "function": "RespawnPlayer",
+    "capture": "porting/generated/native102-broad/0x142a70790.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 274,
+    "class": "AFortPlayerControllerZone",
+    "function": "ServerRequestLoadoutRefresh",
+    "capture": "porting/generated/native102-broad/0x142a70b00.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 275,
+    "class": "UFortAIRootAssignmentProviderInterface",
+    "function": "GetRootAssignmentIdentifier",
+    "capture": "porting/generated/native108-broad/0x1427abb20.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 276,
+    "class": "AFortAthenaVehicle",
+    "function": "DestroyVehicle",
+    "capture": "porting/generated/native89-broad/0x14283ab50.c",
+    "disposition": "Vehicle interface virtual dispatch; concrete target unresolved."
+  },
+  {
+    "index": 277,
+    "class": "AFortAthenaVehicle",
+    "function": "ResetTrick",
+    "capture": "porting/generated/native89-broad/0x14283ccf0.c",
+    "disposition": "Vehicle interface virtual dispatch; concrete target unresolved."
+  },
+  {
+    "index": 278,
+    "class": "AFortAthenaVehicle",
+    "function": "EjectAllPlayers",
+    "capture": "porting/generated/native89-broad/0x14283ac10.c",
+    "disposition": "Vehicle interface virtual dispatch; concrete target unresolved."
+  },
+  {
+    "index": 279,
+    "class": "AFortPlayerControllerZone",
+    "function": "PopDeathInputComponent",
+    "capture": "porting/generated/native102-broad/0x142a70730.c",
+    "disposition": "Conditional or object-dependent virtual call; concrete target or field behavior unresolved."
+  },
+  {
+    "index": 280,
+    "class": "UFortAttributeList",
+    "function": "Clear",
+    "capture": "porting/generated/native108-broad/0x1451ffd90.c",
+    "disposition": "Conditional or object-dependent virtual call; concrete target or field behavior unresolved."
+  },
+  {
+    "index": 281,
+    "class": "UFortGlobalActionDetailsDataSource",
+    "function": "GetValue",
+    "capture": "porting/generated/native108-broad/0x145249ae0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 282,
+    "class": "AFortPawn",
+    "function": "HideBodyOnDeath",
+    "capture": "porting/generated/native102-broad/0x142a1cb20.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 283,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "IsCreativeQuickbarActive",
+    "capture": "porting/generated/native96-broad/0x142a65650.c",
+    "disposition": "Ported; setter establishes reflected enabled bit, component getter reads reflected active byte."
+  },
+  {
+    "index": 284,
+    "class": "UFortProjectileMovementInterface",
+    "function": "GetCurrentLocation",
+    "capture": "porting/generated/native108-broad/0x142aabce0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 285,
+    "class": "UFortSafeZoneInterface",
+    "function": "GetSafeZoneNextCenter",
+    "capture": "porting/generated/native108-broad/0x142ad2480.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 286,
+    "class": "UFortSafeZoneInterface",
+    "function": "GetSafeZoneNextNextCenter",
+    "capture": "porting/generated/native210-fresh-bulk/0x142ad24c0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 287,
+    "class": "ABuildingActor",
+    "function": "GetCentroid",
+    "capture": "porting/generated/native100-broad/0x142736d40.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 288,
+    "class": "ABuildingTrap",
+    "function": "GetCenter",
+    "capture": "porting/generated/native103-broad/0x14275c1b0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 289,
+    "class": "UFortInteractInterface",
+    "function": "GetFocusedSocketLocation",
+    "capture": "porting/generated/native210-fresh-bulk/0x142958f00.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 290,
+    "class": "UFortSpawnableByPlacementSystemInterface",
+    "function": "GetMissionGuid",
+    "capture": "porting/generated/native210-fresh-bulk/0x142ae6b10.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 291,
+    "class": "UFortVehicleInterface",
+    "function": "GetIndicatorRelativeOffset",
+    "capture": "porting/generated/native210-fresh-bulk/0x142b2e2a0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 292,
+    "class": "UFortVehicleInterface",
+    "function": "GetOwnerLocation",
+    "capture": "porting/generated/native210-fresh-bulk/0x142b2e320.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 293,
+    "class": "UFortVehicleInterface",
+    "function": "GetVehicleForwardVector",
+    "capture": "porting/generated/native210-fresh-bulk/0x142b2e9e0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 294,
+    "class": "UFortVehicleInterface",
+    "function": "GetVehicleRightVector",
+    "capture": "porting/generated/native210-fresh-bulk/0x142b2eaf0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 295,
+    "class": "UFortVehicleInterface",
+    "function": "GetVehicleRotation",
+    "capture": "porting/generated/native210-fresh-bulk/0x142b2eb30.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 296,
+    "class": "UFortVehicleInterface",
+    "function": "GetVehicleVelocity",
+    "capture": "porting/generated/native210-fresh-bulk/0x142b2ece0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 297,
+    "class": "UFortInteractInterface",
+    "function": "GetCustomTint",
+    "capture": "porting/generated/native210-fresh-bulk/0x142958b90.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 298,
+    "class": "UFortItem",
+    "function": "GetRarityColor",
+    "capture": "porting/generated/native134-virtual-bulk/0x1429597a0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 299,
+    "class": "AFortPlayerPawn",
+    "function": "EndSkydiving",
+    "capture": "porting/generated/native102-broad/0x142a7b5f0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 300,
+    "class": "AFortPlayerControllerSpectating",
+    "function": "FollowLastDamagerOfViewTarget",
+    "capture": "porting/generated/native102-broad/0x142a6b070.c",
+    "disposition": "Conditional or object-dependent virtual call; concrete target or field behavior unresolved."
+  },
+  {
+    "index": 301,
+    "class": "AFortPlayerController",
+    "function": "ClientRefreshPlayerList",
+    "capture": "porting/generated/native102-broad/0x142a45510.c",
+    "disposition": "Shared exec address identified with AFortPlayerPawn::ServerDropCarriedPlayer; virtual target unresolved."
+  },
+  {
+    "index": 302,
+    "class": "AFortPlayerPawn",
+    "function": "ServerDropCarriedPlayer",
+    "capture": "porting/generated/native102-broad/0x142a45510.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 303,
+    "class": "AFortCreativeRoundSettings",
+    "function": "ClearResourcesGivenPerRound",
+    "capture": "porting/generated/native107-broad/0x1428c8aa0.c",
+    "disposition": "Inline resource array and count are not reflected; extent and field defaults unproven."
+  },
+  {
+    "index": 304,
+    "class": "AFortCreativeRoundSettings",
+    "function": "ClearResourcesGivenToWinnersPerRound",
+    "capture": "porting/generated/native107-broad/0x1428c8ac0.c",
+    "disposition": "Inline resource array and count are not reflected; extent and field defaults unproven."
+  },
+  {
+    "index": 305,
+    "class": "AFortPawn",
+    "function": "GetDefaultTargetingRotation",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a1c130.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 306,
+    "class": "AFortPlayerPawn",
+    "function": "ClientResetAbilitySystemComponent",
+    "capture": "porting/generated/native102-broad/0x142a7b310.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 307,
+    "class": "AFortPlayerPawnAthena",
+    "function": "MeleeCombatBlocked",
+    "capture": "porting/generated/native96-broad/0x142a837d0.c",
+    "disposition": "Conditional or object-dependent virtual call; concrete target or field behavior unresolved."
+  },
+  {
+    "index": 308,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ClientBotStopDogpile",
+    "capture": "porting/generated/native102-broad/0x142a56800.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 309,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ClientNotifyTeamLost",
+    "capture": "porting/generated/native102-broad/0x142a571c0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 310,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ClientEnterCameraMode",
+    "capture": "porting/generated/native102-broad/0x142a56ff0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 311,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ClientAlertLeaveIsland",
+    "capture": "porting/generated/native102-broad/0x142a56650.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 312,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ClientNotifyAbortRespawn",
+    "capture": "porting/generated/native102-broad/0x142a570d0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 313,
+    "class": "AFortPlayerControllerAthena",
+    "function": "FollowSpecialActor",
+    "capture": "porting/generated/native96-broad/0x142a58600.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 314,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ClientAlertPortalDoneTeleporting",
+    "capture": "porting/generated/native102-broad/0x142a56670.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 315,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ClientSendEndMatchReportHeartbeat",
+    "capture": "porting/generated/native102-broad/0x142a57af0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 316,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ClientRequestLevelStreamingHandshake",
+    "capture": "porting/generated/native102-broad/0x142a57830.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 317,
+    "class": "ABuildingTrap",
+    "function": "ResetTeamOnMinigameEnd",
+    "capture": "porting/generated/native103-broad/0x14275e900.c",
+    "disposition": "Conditional or object-dependent virtual call; concrete target or field behavior unresolved."
+  },
+  {
+    "index": 318,
+    "class": "AFortAthenaVehicle",
+    "function": "GetIndicatorRelativeOffset",
+    "capture": "porting/generated/native95-broad/0x14283b6e0.c",
+    "disposition": "Vehicle interface virtual dispatch; concrete target unresolved."
+  },
+  {
+    "index": 319,
+    "class": "AFortAthenaVehicle",
+    "function": "GetVehicleVelocity",
+    "capture": "porting/generated/native95-broad/0x14283bd20.c",
+    "disposition": "Vehicle interface virtual dispatch; concrete target unresolved."
+  },
+  {
+    "index": 320,
+    "class": "UFortPlayerSurveyWidgetBase",
+    "function": "ResetSurvey",
+    "capture": "porting/generated/native108-broad/0x1452b1aa0.c",
+    "disposition": "Conditional or object-dependent virtual call; concrete target or field behavior unresolved."
+  },
+  {
+    "index": 321,
+    "class": "UFortUICameraFrameTargetInterface",
+    "function": "GetZoomedInCameraFramingSettings",
+    "capture": "porting/generated/native108-broad/0x142858ac0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 322,
+    "class": "UFortUICameraFrameTargetInterface",
+    "function": "GetZoomedOutCameraFramingSettings",
+    "capture": "porting/generated/native210-fresh-bulk/0x142858b10.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 323,
+    "class": "AFortPlayerController",
+    "function": "ServerSuicide",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4dd00.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 324,
+    "class": "AFortPlayerControllerOutpost",
+    "function": "ServerUpgradePOST",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a6caa0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 325,
+    "class": "AFortVolume",
+    "function": "ServerClearVolume",
+    "capture": "porting/generated/native134-virtual-bulk/0x142b38120.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 326,
+    "class": "UFortPlayerSettingsComponentBase",
+    "function": "GetHUDVisibilityTags",
+    "capture": "porting/generated/native108-broad/0x142814f00.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 327,
+    "class": "AFortLiveBroadcastController",
+    "function": "ServerBeginBusPhase",
+    "capture": "porting/generated/native134-virtual-bulk/0x142983990.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 328,
+    "class": "AFortPlayerControllerOutpost",
+    "function": "ServerCleanUpOnExit",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a6c290.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 329,
+    "class": "AFortWeapon",
+    "function": "ServerResetShotReport",
+    "capture": "porting/generated/native134-virtual-bulk/0x142b48200.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 330,
+    "class": "AFortAthenaMutator_BlockBuilding",
+    "function": "GetHUDVisibilityTags",
+    "capture": "porting/generated/native107-broad/0x1427f5df0.c",
+    "disposition": "Virtual dispatch wrapper; concrete target unresolved."
+  },
+  {
+    "index": 331,
+    "class": "AFortPlayerController",
+    "function": "ServerRequestAIDebug",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4cb00.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 332,
+    "class": "AFortPlayerController",
+    "function": "ServerTouchActiveTime",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4dee0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 333,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "ServerCreativeStopFly",
+    "capture": "porting/generated/native96-broad/0x142a66b80.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 334,
+    "class": "AFortPlayerControllerZone",
+    "function": "ServerActivateMission",
+    "capture": "porting/generated/native102-broad/0x142a707d0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 335,
+    "class": "AFortPlayerController",
+    "function": "ServerReturnToMainMenu",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4cf60.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 336,
+    "class": "AFortPlayerController",
+    "function": "ServerDropCarriedObject",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4b060.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 337,
+    "class": "AFortPlayerController",
+    "function": "ServerReadyToStartMatch",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4c360.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 338,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "ServerCreativeStopFlyUp",
+    "capture": "porting/generated/native96-broad/0x142a66c20.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 339,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "ServerCreativeStopGhost",
+    "capture": "porting/generated/native96-broad/0x142a66c70.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 340,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "ServerCreativeStartFlyUp",
+    "capture": "porting/generated/native96-broad/0x142a66b30.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 341,
+    "class": "AFortPlayerControllerZone",
+    "function": "ServerAttemptExitVehicle",
+    "capture": "porting/generated/native102-broad/0x142a70820.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 342,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "ServerCreativeStopFlyDown",
+    "capture": "porting/generated/native96-broad/0x142a66bd0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 343,
+    "class": "AFortPlayerControllerOutpost",
+    "function": "ServerLeaveOutpostAsParty",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a6c400.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 344,
+    "class": "AFortPlayerController",
+    "function": "ServerLoadingScreenDropped",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4bd70.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 345,
+    "class": "AFortPlayerControllerGameplay",
+    "function": "ServerCreativeStartFlyDown",
+    "capture": "porting/generated/native96-broad/0x142a66ae0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 346,
+    "class": "AFortPlayerController",
+    "function": "Cheat_ClearForcedCosmeticItems",
+    "capture": "porting/generated/native102-broad/0x142a43980.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 347,
+    "class": "AFortPlayerController",
+    "function": "ServerStartPIDValueGraphing",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4dcb0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 348,
+    "class": "AFortPlayerController",
+    "function": "ServerStartIntensityGraphing",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4dc10.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 349,
+    "class": "AFortPlayerController",
+    "function": "ServerKillAllAIPawnsAroundPlayer",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4bd20.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 350,
+    "class": "AFortLobbyBeaconClientRM",
+    "function": "ServerUpdateNewlyJoinedPlayerInternal",
+    "capture": "porting/generated/native134-virtual-bulk/0x1429849e0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 351,
+    "class": "AFortPlayerController",
+    "function": "ServerStartPIDContributionsGraphing",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4dc60.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 352,
+    "class": "AFortPlayerControllerZone",
+    "function": "ServerDetachFromRemoteControlledPawn",
+    "capture": "porting/generated/native102-broad/0x142a70a00.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 353,
+    "class": "AFortPlayerControllerPvE",
+    "function": "ServerTriggerSetupTeleportCameraEvent",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a6c610.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 354,
+    "class": "AFortPlayerControllerZone",
+    "function": "ServerDestroyFromRemoteControlledPawn",
+    "capture": "porting/generated/native102-broad/0x142a709b0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 355,
+    "class": "AFortPlayerController",
+    "function": "Cheat_ClearForcedCosmeticVariantChannels",
+    "capture": "porting/generated/native102-broad/0x142a439d0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 356,
+    "class": "AFortPlayerController",
+    "function": "ServerHandleMissionEvent_StartLeavingZone",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a4b860.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 357,
+    "class": "AFortPlayerPawnAthena",
+    "function": "StopConsumableUseAudio",
+    "capture": "porting/generated/native96-broad/0x142a840c0.c",
+    "disposition": "Conditional or object-dependent virtual call; concrete target or field behavior unresolved."
+  },
+  {
+    "index": 358,
+    "class": "AFortPlayerControllerZone",
+    "function": "ServerSetShouldDisablePlayerTeleportingDuringMissionResults",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a70e50.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 359,
+    "class": "AFortPlayerPawn",
+    "function": "ServerRespawnFromDBNO",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a7f510.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 360,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ServerStartMinigame",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a5c920.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 361,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ServerThankBusDriver",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a5cbd0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 362,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ServerRestartMinigame",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a5bd70.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 363,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ServerClearSkydiveLeader",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a5ad00.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 364,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ServerThankBusDriverCheck",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a5cc20.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 365,
+    "class": "AFortPlayerPawn",
+    "function": "ServerPlayUnableToPerformActionMontage",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a7f4a0.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 366,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ServerClientIsReadyToRespawn",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a5ad50.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  },
+  {
+    "index": 367,
+    "class": "AFortPlayerControllerAthena",
+    "function": "ServerRequestNewSkydiveLeader",
+    "capture": "porting/generated/native134-virtual-bulk/0x142a5bb60.c",
+    "disposition": "RPC validate and implementation virtual dispatch; targets unresolved."
+  }
+]
