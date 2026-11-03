@@ -62,12 +62,22 @@ def validate_glb(path):
             raise ValueError('invalid GLB chunk boundary')
 
 
+def package_ok(value):
+    try:
+        package_path(value)
+        return True
+    except ValueError:
+        return False
+
+
 def package_path(value):
     p = PurePosixPath(value)
     if p.is_absolute() or not p.parts or any(x in ('.', '..') for x in p.parts):
         raise ValueError('unsafe package path')
-    if len(p.parts) < 4 or p.parts[:2] != ('FortniteGame', 'Content') or not p.name.startswith(PREFIX) or p.suffix:
-        raise ValueError('expected extensionless FortniteGame/Content/.../<prefix> package')
+    in_content = p.parts[:2] == ('FortniteGame', 'Content') or p.parts[:2] == ('Engine', 'Content') or (
+        p.parts[:2] == ('FortniteGame', 'Plugins') and 'Content' in p.parts[2:-1])
+    if len(p.parts) < 4 or not in_content or not p.name.startswith(PREFIX) or p.suffix:
+        raise ValueError('expected extensionless {FortniteGame,Engine}/Content or FortniteGame/Plugins/**/Content .../<prefix> package')
     return p.as_posix()
 
 
@@ -195,7 +205,8 @@ def main():
         parser.error('output must be outside the input tree')
     tool_id = tool_fingerprint(tool)
     names = sorted(set(package_path(p) for p in args.package)) if args.package else sorted(
-        p.relative_to(root).with_suffix('').as_posix() for p in (root / 'FortniteGame/Content').rglob(PREFIX + '*.uasset'))
+        p.relative_to(root).with_suffix('').as_posix() for base in ('FortniteGame/Content', 'FortniteGame/Plugins', 'Engine/Content')
+        for p in (root / base).rglob(PREFIX + '*.uasset') if package_ok(p.relative_to(root).with_suffix('').as_posix()))
     def run():
         state_path = output / 'state.json'
         state = json.loads(state_path.read_text()) if state_path.exists() else {'version':1, 'input_root':str(root), 'records':{}}
