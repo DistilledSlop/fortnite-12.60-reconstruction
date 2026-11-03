@@ -1117,6 +1117,23 @@ def helper_self_test(check):
     check("verify: body edit is detected", not verifies(header, cpp.replace("return 1;", "return 2;", 1)))
     check("verify: static outside the namespace is detected",
           not verifies(header, cpp.replace("namespace\n{", "{", 1)))
+    virtual_entries = [dict(entries[2], virtual=True)]
+    virtual_res = attach_snippets("ASelfTest", [], virtual_entries, ctx, "/Script/FortniteGame")
+    virtual_model = dict(model, helpers=virtual_res["helpers"], static_helpers=[])
+    virtual_header = render_promoted_header(virtual_model, "SELFTEST_API", "AActor.h", "self-test")
+    virtual_cpp = render_promoted_cpp(virtual_model, "self-test")
+    check("virtual member helper declared", "virtual UFortPlaylistAthena* Pick() const;" in virtual_header)
+    verify_spliced(virtual_model, virtual_header, virtual_cpp)
+    try:
+        verify_spliced(virtual_model, virtual_header.replace("virtual UFortPlaylistAthena*", "UFortPlaylistAthena*"), virtual_cpp)
+        lost_virtual_detected = False
+    except SystemExit:
+        lost_virtual_detected = True
+    check("lost virtual dispatch rejected by verification", lost_virtual_detected)
+    rejected = attach_snippets("ASelfTest", [], [dict(entries[0], virtual=True)], ctx, "/Script/FortniteGame")
+    check("static helper cannot be virtual", bool(rejected["rejected"]))
+    rejected = attach_snippets("ASelfTest", [], [dict(entries[2], virtual="true")], ctx, "/Script/FortniteGame")
+    check("virtual helper needs boolean", bool(rejected["rejected"]))
 def field_self_test(check):
     """member_field kind on synthetic input: signature, rules, placement by offset, rendering and verification."""
     def field_rejects(sig):
@@ -2236,6 +2253,10 @@ _client_event_spec = _common_activation_import.spec_from_file_location(
     "client_event_dispatch_policy", os.path.join(os.path.dirname(__file__), "frontend", "client_event_dispatch_runtime", "policy.py"))
 _client_event_policy = _common_activation_import.module_from_spec(_client_event_spec)
 _client_event_spec.loader.exec_module(_client_event_policy)
+_native_gameplay_tags_spec = _common_activation_import.spec_from_file_location(
+    "native_gameplay_tags_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_gameplay_tags_runtime", "source_policy.py"))
+_native_gameplay_tags_policy = _common_activation_import.module_from_spec(_native_gameplay_tags_spec)
+_native_gameplay_tags_spec.loader.exec_module(_native_gameplay_tags_policy)
 _route_spec = _common_activation_import.spec_from_file_location(
     "common_action_route_connected_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_route_connected_runtime", "policy.py"))
 _route_policy = _common_activation_import.module_from_spec(_route_spec)
@@ -2688,6 +2709,9 @@ def check_helper_entry(e, name, package, ctx, by_name, all_names, taken):
         return None, "signature names %s, the entry names %s" % (sname, fname)
     if fname in by_name or fname in taken:
         return None, "%s is already a function of this class" % fname
+    virtual = e.get("virtual", False)
+    if not isinstance(virtual, bool) or ("virtual" in e and kind != "helper"):
+        return None, "virtual must be a boolean on a member helper only"
     access = e.get("access")
     if kind == "helper" and access not in HELPER_ACCESS:
         return None, "a helper needs access public or protected, not %r" % (access,)
@@ -2706,7 +2730,7 @@ def check_helper_entry(e, name, package, ctx, by_name, all_names, taken):
         return None, "; ".join(problems)
     refs = (set(re.findall(r"[A-Za-z_]\w*", strip_comments(e["body"]))) & all_names) - {fname}
     return {"name": fname, "kind": kind, "tag": "%s::%s" % (name, fname), "ret": ret, "args": params,
-            "const": const, "access": access, "body": e["body"], "refs": refs,
+            "const": const, "virtual": virtual, "access": access, "body": e["body"], "refs": refs,
             "includes": inc_body | inc_sig | set(explicit), "header_includes": inc_sig | set(explicit),
             "forward": fwd}, None
 
@@ -3054,7 +3078,7 @@ def verify_spliced(model, header, cpp):
         ret, args = h["ret"], ", ".join(h["args"])
         const = " const" if h["const"] else ""
         tag = "%s::%s" % (name, h["name"])
-        decl = squash("%s %s(%s)%s;" % (ret, h["name"], args, const))
+        decl = squash("%s%s %s(%s)%s;" % ("virtual " if h.get("virtual") else "", ret, h["name"], args, const))
         if count(hsq, decl) != 1:
             problems.append("%s: declaration found %d times in header" % (tag, count(hsq, decl)))
         else:
@@ -3117,7 +3141,8 @@ def render_helper_declarations(model):
         if h["access"] != current:
             lines.append("%s:" % h["access"])
             current = h["access"]
-        lines.append("\t%s %s(%s)%s;" % (h["ret"], h["name"], ", ".join(h["args"]), " const" if h["const"] else ""))
+        lines.append("\t%s%s %s(%s)%s;" % ("virtual " if h.get("virtual") else "", h["ret"], h["name"],
+                                            ", ".join(h["args"]), " const" if h["const"] else ""))
     return lines
 
 
@@ -3656,6 +3681,8 @@ def promote(args):
     animated_switcher_sources = None
     ui_config_sources = (_ui_config_policy.sources(blocks_by_va, name_to_block)
                          if 'UFortUIDataConfiguration' in listed else None)
+    native_gameplay_tags_sources = (_native_gameplay_tags_policy.sources()
+                                    if 'AFortGameStateAthena' in listed else None)
     client_event_sources = None
     if {'UFortGameInstance', 'UFortUserWidget', 'UFortKismetLibrary'} & set(listed):
         required = {'UFortGameInstance', 'UFortUserWidget', 'UFortClientEventInterface'}
@@ -3760,8 +3787,8 @@ def promote(args):
         "class_pkg": package_of, "struct_index": struct_index, "gate": gate,
         # Only headers actually scheduled for emission qualify; arbitrary source-tree
         # files (including stale Native output) must not authorize snippet includes.
-        "generated_support_headers": {filename for filename in (client_event_sources or {})
-                                      if filename.endswith(".h")},
+        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources)
+                                      for filename in (bundle or {}) if filename.endswith(".h")},
         "button_feedback_sound_identity_proven": 'UCommonButton' in listed,
         "other_promoted": {n for b, n in names.items()
                            if n not in listed and (parents.get(b) or {}).get("package") in PROMOTE_PACKAGES},
@@ -3778,6 +3805,9 @@ def promote(args):
 
     def add_deps(module, mods):
         module_deps.setdefault(module, set()).update(m for m in mods if m and m != module)
+
+    if native_gameplay_tags_sources:
+        add_deps(_native_gameplay_tags_policy.MODULE, _native_gameplay_tags_policy.DEPENDENCIES)
 
     for name in class_list:
         block = name_to_block[name]
@@ -4095,6 +4125,10 @@ def promote(args):
     if ui_config_sources:
         for filename, text in ui_config_sources.items():
             with open(os.path.join(args.source_root, 'FortniteUI', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
+    if native_gameplay_tags_sources:
+        for filename, text in native_gameplay_tags_sources.items():
+            with open(os.path.join(args.source_root, 'FortniteGame', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(text)
     if client_event_sources:
         for filename, text in client_event_sources.items():
