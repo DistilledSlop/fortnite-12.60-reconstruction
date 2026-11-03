@@ -17,6 +17,13 @@ EVariantUnlockType UAthenaCosmeticItemDefinition::GetVariantUnlockType() const
 	return VariantUnlockType;
 }
 
+bool UAthenaCosmeticItemDefinition::HasVariants() const
+{
+	// CONFIDENCE: HIGH
+	// ItemVariants count at +0x420.
+	return ItemVariants.Num() > 0;
+}
+
 bool UAthenaCosmeticItemDefinition::IsOwnedByCampaignHero() const
 {
 	// Original address: 0x14271ed30.

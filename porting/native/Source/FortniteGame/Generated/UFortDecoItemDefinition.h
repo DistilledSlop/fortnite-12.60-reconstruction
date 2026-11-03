@@ -186,6 +186,9 @@ public:
 	int32 GetMaxPlacementDistance() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EPlacementType::Type> GetPlacementTypeOverride() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetRotationAngleIncrement() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

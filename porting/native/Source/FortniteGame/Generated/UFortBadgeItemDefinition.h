@@ -48,5 +48,8 @@ public:
 	UPROPERTY()
 	TArray<FFortItemQuantityPair> ItemRewards;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetUIMissionPointsOffset() const;
+
 };
 

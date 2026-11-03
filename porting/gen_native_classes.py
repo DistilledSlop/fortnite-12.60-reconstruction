@@ -2326,6 +2326,10 @@ _pawn_ability_interface_spec = _common_activation_import.spec_from_file_location
     "pawn_ability_interface_policy", os.path.join(os.path.dirname(__file__), "behavior", "pawn_ability_native50_runtime", "source_policy.py"))
 _pawn_ability_interface_policy = _common_activation_import.module_from_spec(_pawn_ability_interface_spec)
 _pawn_ability_interface_spec.loader.exec_module(_pawn_ability_interface_policy)
+_definition_queries_spec = _common_activation_import.spec_from_file_location(
+    "definition_queries_signature_policy", os.path.join(os.path.dirname(__file__), "behavior", "definition_broad53_runtime", "source_policy.py"))
+_definition_queries_policy = _common_activation_import.module_from_spec(_definition_queries_spec)
+_definition_queries_spec.loader.exec_module(_definition_queries_policy)
 _inventory_entry_spec = _common_activation_import.spec_from_file_location(
     "inventory_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "inventory_entry_copy_runtime", "source_policy.py"))
 _inventory_entry_policy = _common_activation_import.module_from_spec(_inventory_entry_spec)
@@ -2477,6 +2481,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns,
                                          splice_names, UI_BLUEPRINT_EVENTS.get(name, frozenset()),
                                          UI_PARAMETERIZED_BLUEPRINT_EVENTS.get(name, {}), native_event_names)
+    _definition_queries_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped,
                               {m["name"] for m in members})
               if snippets else None)

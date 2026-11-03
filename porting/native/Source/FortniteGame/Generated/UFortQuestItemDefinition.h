@@ -221,10 +221,22 @@ public:
 	bool GetAthenaUpdateObjectiveOncePerMatch() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FDataTableRowHandle GetCategory() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetObjectiveNeededToComplete() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetPartialObjectiveCompletionCount() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FDataTableRowHandle GetPrerequisiteObjective() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortQuestType GetQuestType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetUpdateObjectiveOncePerMatch() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetWeight() const;

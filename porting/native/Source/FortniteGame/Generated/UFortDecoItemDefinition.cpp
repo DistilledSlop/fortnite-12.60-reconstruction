@@ -25,6 +25,13 @@ int32 UFortDecoItemDefinition::GetMaxPlacementDistance() const
 	return MaxPlacementDistance;
 }
 
+TEnumAsByte<EPlacementType::Type> UFortDecoItemDefinition::GetPlacementTypeOverride() const
+{
+	// CONFIDENCE: HIGH
+	// PlacementTypeOverride byte at +0xb30.
+	return PlacementTypeOverride;
+}
+
 float UFortDecoItemDefinition::GetRotationAngleIncrement() const
 {
 	// Original address: 0x1428d1470.

@@ -46,5 +46,8 @@ public:
 	UPROPERTY()
 	TArray<FFortItemQuantityPair> AdditionalRespecCosts;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EFortAlteration::Type> GetAlterationType() const;
+
 };
 

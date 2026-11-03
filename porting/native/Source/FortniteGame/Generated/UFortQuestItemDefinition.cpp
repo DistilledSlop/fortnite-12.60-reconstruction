@@ -33,6 +33,20 @@ bool UFortQuestItemDefinition::GetAthenaUpdateObjectiveOncePerMatch() const
 	return bAthenaUpdateObjectiveOncePerMatch;
 }
 
+FDataTableRowHandle UFortQuestItemDefinition::GetCategory() const
+{
+	// CONFIDENCE: HIGH
+	// Category at +0x4a0.
+	return Category;
+}
+
+int32 UFortQuestItemDefinition::GetObjectiveNeededToComplete() const
+{
+	// CONFIDENCE: HIGH
+	// Positive completion count +0x390; otherwise objectives array count +0x438.
+	return ObjectiveCompletionCount > 0 ? ObjectiveCompletionCount : Objectives.Num();
+}
+
 int32 UFortQuestItemDefinition::GetPartialObjectiveCompletionCount() const
 {
 	// Original address: 0x14285c700.
@@ -41,12 +55,26 @@ int32 UFortQuestItemDefinition::GetPartialObjectiveCompletionCount() const
 	return ObjectiveCompletionCount;
 }
 
+FDataTableRowHandle UFortQuestItemDefinition::GetPrerequisiteObjective() const
+{
+	// CONFIDENCE: HIGH
+	// PrerequisiteObjective at +0x488.
+	return PrerequisiteObjective;
+}
+
 EFortQuestType UFortQuestItemDefinition::GetQuestType() const
 {
 	// Original address: 0x14285ce40.
 	// CONFIDENCE: HIGH
 	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
 	return QuestType;
+}
+
+bool UFortQuestItemDefinition::GetUpdateObjectiveOncePerMatch() const
+{
+	// CONFIDENCE: HIGH
+	// Bit 7 of +0x389.
+	return bUpdateObjectiveOncePerMatch;
 }
 
 float UFortQuestItemDefinition::GetWeight() const

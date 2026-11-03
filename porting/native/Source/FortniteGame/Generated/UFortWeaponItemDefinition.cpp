@@ -54,12 +54,47 @@ float UFortWeaponItemDefinition::GetLowAmmoPercentage() const
 	return LowAmmoPercentage;
 }
 
+FVector2D UFortWeaponItemDefinition::GetReticleCenterImageOffset() const
+{
+	// CONFIDENCE: HIGH
+	// ReticleCenterImageOffset at +0xa38.
+	return ReticleCenterImageOffset;
+}
+
+const TArray<float>& UFortWeaponItemDefinition::GetReticleCornerAngles() const
+{
+	// CONFIDENCE: HIGH
+	// Reference to ReticleCornerAngles at +0x9d8; wrapper copies into result.
+	return ReticleCornerAngles;
+}
+
+TEnumAsByte<EFortWeaponTriggerType::Type> UFortWeaponItemDefinition::GetSecondaryTriggerType() const
+{
+	// CONFIDENCE: HIGH
+	// SecondaryTriggerType byte at +0x9a5.
+	return SecondaryTriggerType;
+}
+
+TEnumAsByte<EFortWeaponTriggerType::Type> UFortWeaponItemDefinition::GetTriggerType() const
+{
+	// CONFIDENCE: HIGH
+	// TriggerType byte at +0x9a4; existing NativeGetTriggerType helper uses same callee.
+	return TriggerType;
+}
+
 bool UFortWeaponItemDefinition::GetUsesCustomAmmoType() const
 {
 	// Original address: 0x142b4bb20.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return bUsesCustomAmmoType;
+}
+
+FDataTableRowHandle UFortWeaponItemDefinition::GetWeaponStatHandle() const
+{
+	// CONFIDENCE: HIGH
+	// WeaponStatHandle at +0x7b8.
+	return WeaponStatHandle;
 }
 
 bool UFortWeaponItemDefinition::ShouldAllowTargetingDuringReload() const

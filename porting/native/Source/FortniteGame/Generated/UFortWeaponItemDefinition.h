@@ -225,7 +225,22 @@ public:
 	float GetLowAmmoPercentage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector2D GetReticleCenterImageOffset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	const TArray<float>& GetReticleCornerAngles() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EFortWeaponTriggerType::Type> GetSecondaryTriggerType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EFortWeaponTriggerType::Type> GetTriggerType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUsesCustomAmmoType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FDataTableRowHandle GetWeaponStatHandle() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldAllowTargetingDuringReload() const;

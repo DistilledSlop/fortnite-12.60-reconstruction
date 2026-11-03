@@ -135,6 +135,9 @@ public:
 	EVariantUnlockType GetVariantUnlockType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasVariants() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsOwnedByCampaignHero() const;
 
 };
