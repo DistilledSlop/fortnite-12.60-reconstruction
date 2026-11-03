@@ -175,13 +175,13 @@ def main():
     parser.add_argument('--output', type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument('--package', action='append', help='extensionless package path; repeat for a bounded selection')
     parser.add_argument('--batch', type=int, default=10, help='maximum attempts (1–100)')
-    parser.add_argument('--workers', type=int, default=1, help='parallel converters (1–2)')
+    parser.add_argument('--workers', type=int, default=1, help='parallel converters (1–32)')
     parser.add_argument('--timeout', type=int, default=120)
     parser.add_argument('--retry-failed', action='store_true')
     parser.add_argument('--dry-run', action='store_true', help='do not write or run converter')
     args = parser.parse_args()
-    if not 1 <= args.batch <= 100 or not 1 <= args.workers <= 2 or not 1 <= args.timeout <= 3600:
-        parser.error('batch must be 1–100, workers 1–2, timeout 1–3600 seconds')
+    if not 1 <= args.batch <= 100 or not 1 <= args.workers <= 32 or not 1 <= args.timeout <= 3600:
+        parser.error('batch must be 1–100, workers 1–32, timeout 1–3600 seconds')
     root, tool, output = args.input_root.resolve(), args.tool_dir.resolve(), args.output.resolve()
     if not (root / 'FortniteGame/Content').is_dir():
         parser.error('input root lacks FortniteGame/Content')
