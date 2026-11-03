@@ -9,7 +9,6 @@ from out/progress.json. Stdlib only, offline, deterministic for a given out/.
     python3 porting/progress/publish.py                # then publish
     python3 porting/progress/publish.py --check        # exit 1 if docs/README are stale
 """
-import colorsys
 import json
 import re
 import shutil
@@ -73,29 +72,13 @@ def human(n):
     return f"{n / 1000:.1f}k" if n >= 10000 else f"{n:,}"
 
 
-class Badge(str):
-    """Badge markup that remembers its color so the grid can be sorted by hue."""
-    color = "000000"
-
-
-def hue_key(b):
-    r, g, bl = (int(b.color[i:i + 2], 16) / 255 for i in (0, 2, 4))
-    h, sat, val = colorsys.rgb_to_hsv(r, g, bl)
-    if sat < 0.15 or val < 0.25:  # greys and near-blacks go last, light to dark
-        return (1, 0.0, -val)
-    # Shift 20 degrees so crimson/wine reds sort with the reds, then 12-degree bands, lighter first.
-    return (0, round(((h * 360 + 20) % 360) / 12), -val)
-
-
 def badge(label, message, color, logo=None):
     """Default shields.io flat badge as an <img>, so it can sit in an HTML table cell."""
     q = {"label": label, "message": str(message), "color": color}
     if logo:
         q["logo"] = logo
     url = "https://img.shields.io/static/v1?" + urllib.parse.urlencode(q, quote_via=urllib.parse.quote)
-    out = Badge(f'<img alt="{label}: {message}" src="{url.replace("&", "&amp;")}">')
-    out.color = color
-    return out
+    return f'<img alt="{label}: {message}" src="{url.replace("&", "&amp;")}">'
 
 
 def badges(d):
@@ -146,8 +129,8 @@ def badges(d):
         ],
         [  # files by kind
             badge("C++", f"{human(st['cpp_c'])} .cpp", "00599c", "cplusplus"),
-            badge("headers", f"{human(st['cpp_h'])} .h", "00599c"),
-            badge("recovered", f"{human(st['cpp_i'])} .inc", "004482"),
+            badge("headers", f"{human(st['cpp_h'])} .h", "0e7490"),
+            badge("recovered", f"{human(st['cpp_i'])} .inc", "d97757"),
             badge("Python", f"{N['py']} scripts", "3776ab", "python"),
             badge("C#", f"{N['cs']} files", "512bd4"),
             badge("shell", f"{N['sh']} scripts", "4eaa25", "gnubash"),
@@ -159,13 +142,13 @@ def badges(d):
             badge("C# lines", human(L["cs"]), "512bd4"),
             badge("shell lines", human(L["sh"]), "4eaa25"),
             badge("docs", f"{human(L['md'])} lines", "0e7490"),
-            badge("markdown", f"{N['md']} files", "0e7490"),
+            badge("markdown", f"{N['md']} files", "6e5494"),
             badge("data", f"{st['json']} JSON", "b08800"),
         ],
         [  # repo
-            badge("tracked files", human(st["files"]), "1f6feb"),
+            badge("tracked files", human(st["files"]), "0e7490"),
             badge("commits", human(st["commits"]), "1f6feb", "git"),
-            badge("branches", st["branches"], "1f6feb"),
+            badge("branches", st["branches"], "7d4cdb"),
             badge("since", st["first"], "9f9f9f"),
             badge("authored by", "Codex", "10a37f"),
             badge("authored by", "Claude", "d97757", "anthropic"),
@@ -173,29 +156,29 @@ def badges(d):
         ],
         [  # game data (counts from porting/README.md "Current evidence")
             badge("paks", "31 · v10", "5b4a8a"),
-            badge("pak entries", "963,427", "5b4a8a"),
-            badge(".uasset", "450,951", "5b4a8a"),
-            badge("maps", "3,694", "5b4a8a"),
-            badge("plugins", "123", "5b4a8a"),
-            badge("modules", "6", "5b4a8a"),
-            badge("API routes", "59", "5b4a8a"),
+            badge("pak entries", "963,427", "0e7490"),
+            badge(".uasset", "450,951", "2e8540"),
+            badge("maps", "3,694", "b08800"),
+            badge("plugins", "123", "a41e22"),
+            badge("modules", "6", "512bd4"),
+            badge("API routes", "59", "e8a317"),
         ],
         areas[:7],
         [  # remaining areas and model shape
             *areas[7:],
-            badge("components", len(leaves), "0e7490"),
-            badge("areas", len(d["groups"]), "0e7490"),
+            badge("components", len(leaves), "2a78d6"),
+            badge("areas", len(d["groups"]), "7d4cdb"),
             *([badge("class parity", f"{parity.group(1)}/{parity.group(2)}", "2e8540")] if parity else []),
-            badge("git-measured", f"{basis('git')} leaves", "0e7490"),
+            badge("git-measured", f"{basis('git')} leaves", "4eaa25"),
             badge("manual", f"{basis('manual')} leaves", "9f9f9f"),
         ],
         [  # tracked files per tree
             badge("native", f"{human(D['native'])} files", "00599c"),
-            badge("behavior", f"{human(D['behavior'])} files", "004482"),
+            badge("behavior", f"{human(D['behavior'])} files", "b5301f"),
             badge("frontend", f"{human(D['frontend'])} files", "7d4cdb"),
             badge("server", f"{D['server']} files", "e8a317"),
-            badge("assets", f"{D['asset_pipeline']} files", "5b4a8a"),
-            badge("materials", f"{D['material_pipeline']} files", "5b4a8a"),
+            badge("assets", f"{D['asset_pipeline']} files", "2e8540"),
+            badge("materials", f"{D['material_pipeline']} files", "d97757"),
             badge("dashboard", f"{D['progress']} files", "2a78d6"),
         ],
         [  # toolchain
@@ -213,14 +196,13 @@ def badges(d):
             badge("history", "per commit", "2a78d6"),
             badge("evidence", "ledgered", "2e8540"),
             badge("keys", "git-ignored", "e05d44"),
-            badge("assets", "git-ignored", "e05d44"),
+            badge("assets", "git-ignored", "fe7d37"),
             badge("checks", "batched", "dfb317"),
         ],
     ]
-    flat = sorted((b for r in rows for b in r), key=hue_key)  # stable, so ties keep their topic order
-    per = max(len(r) for r in rows)
-    grid = [flat[i:i + per] for i in range(0, len(flat), per)]
-    return "\n".join([BSTART, *(f'<p align="center">{" ".join(r)}</p>' for r in grid), BEND])
+    # Reading order: status, areas, target, game data, toolchain, code, repo, process.
+    order = [0, 1, 7, 8, 2, 6, 10, 3, 4, 9, 5, 11]
+    return "\n".join([BSTART, *(f'<p align="center">{" ".join(rows[i])}</p>' for i in order), BEND])
 
 
 def block(d):
