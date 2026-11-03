@@ -1,0 +1,17 @@
+[
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "GetFeedbackTitle",
+    "kind": "exec",
+    "signature": "FText GetFeedbackTitle() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/terra263_03_runtime/UFortGlobalUIContext_GetFeedbackTitle.inc",
+    "address": "0x1452473f0",
+    "native_body_address": "0x1452473f0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Wrapper directly copies the FText at offset 0x378; reflected FeedbackTitle has that offset."
+  }
+]

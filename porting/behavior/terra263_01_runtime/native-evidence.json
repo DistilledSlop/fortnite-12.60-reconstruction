@@ -1,0 +1,30 @@
+[
+  {
+    "function": "GetCollectionBookManager",
+    "wrapper": "porting/generated/native194-fresh-bulk/0x142a472e0.c",
+    "implementation": "porting/generated/native197-fresh-callees/0x14237e620.c",
+    "proof": "MyPlayerInfo at 0x19e8; UFortRegisteredPlayerInfo::CollectionBookManager at 0x1c8 in reflection.",
+    "additional_evidence": [
+      "porting/generated/reflection/fortnite_game_reflection.json"
+    ]
+  },
+  {
+    "function": "GetLockOnState",
+    "wrapper": "porting/generated/native95-broad/0x140a02a40.c",
+    "implementation": "porting/generated/native95-broad/0x140a02a40.c",
+    "proof": "Wrapper calls Stub_ReturnFalse and writes the single enum underlying byte; NoTarget is enumerator zero.",
+    "additional_evidence": [
+      "porting/generated/reflection/fortnite_game_reflection.json",
+      "porting/native/Source/FortniteGame/Generated/ELockOnState.h"
+    ]
+  },
+  {
+    "function": "IsActionInputIgnored",
+    "wrapper": "porting/generated/native194-fresh-bulk/0x142a47f70.c",
+    "implementation": "porting/generated/native197-fresh-callees/0x14238e1f0.c",
+    "proof": "Native reads byte at 0xad9; bool_bits identifies bIsClientTimingOut at 0xad9, mask 1, full-byte mov8.",
+    "additional_evidence": [
+      "porting/generated/reflection/bool_bits.json"
+    ]
+  }
+]

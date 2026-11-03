@@ -7,6 +7,7 @@
 #include "UFortPlayerSurveyMultipleSelectionAnswerWidgetBase.h"
 
 #include "FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBaseInternalButtonData.h"
+#include "UCommonButton.h"
 
 #include "UFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBase.generated.h"
 
@@ -19,6 +20,11 @@ public:
 	// table index 0, flags 0x20088000002000
 	UPROPERTY(Transient)
 	TArray<FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBaseInternalButtonData> ButtonWidgets;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonButton* GetButtonAtIndex(int32 Index) const;
+public:
 
 };
 

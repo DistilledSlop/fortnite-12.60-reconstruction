@@ -1,0 +1,32 @@
+[
+  {
+    "function": "GetButtonAtIndex",
+    "kind": "exec",
+    "signature": "UCommonButton* GetButtonAtIndex(int32 Index) const",
+    "signature_status": "proposed",
+    "static": false,
+    "access": "public",
+    "inc_path": "porting/behavior/native_ui259_runtime/UFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBase_GetButtonAtIndex.inc",
+    "address": "0x1452a83e0",
+    "native_body_address": "0x144f9fa50",
+    "reflection_flags": "0x54080401",
+    "confidence": "high",
+    "status": "ported",
+    "class": "UFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBase"
+  },
+  {
+    "function": "GetSettingValueInRange",
+    "kind": "exec",
+    "signature": "float GetSettingValueInRange(float Value, ESettingType InSettingType, ESettingTab InSettingTab)",
+    "signature_status": "proposed",
+    "static": false,
+    "access": "public",
+    "inc_path": "porting/behavior/native_ui259_runtime/UFortSettingsContext_GetSettingValueInRange.inc",
+    "address": "0x1452cec80",
+    "native_body_address": "0x1418c7350",
+    "reflection_flags": "0x14020401",
+    "confidence": "high",
+    "status": "ported",
+    "class": "UFortSettingsContext"
+  }
+]

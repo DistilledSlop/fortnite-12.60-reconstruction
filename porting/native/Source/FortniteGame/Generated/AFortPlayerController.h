@@ -22,6 +22,7 @@
 #include "EFortRequestedGameplayAction.h"
 #include "EFortResourceLevel.h"
 #include "EFortResourceType.h"
+#include "ELockOnState.h"
 #include "ERichPresenceStateChange.h"
 #include "EStatCategory.h"
 #include "EStatMod.h"
@@ -105,6 +106,7 @@ class UFortAccountItemDefinition;
 class UFortCinematicCamera;
 class UFortClientBotManager;
 class UFortClientPilot_Base;
+class UFortCollectionBookManager;
 class UFortControllerComponent_Interaction;
 class UFortControllerComponent_InventoryNetworkManagement;
 class UFortControllerComponent_Telemetry;
@@ -1454,7 +1456,13 @@ public:
 	ABuildingSMActor* GetBuildPreviewMarker() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortCollectionBookManager* GetCollectionBookManager() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetForceAllowCameraMode() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ELockOnState GetLockOnState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortMcpProfileCampaign* GetMcpCampaignProfile() const;
@@ -1496,6 +1504,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool HasPermissionToEditWorld(ABuildingActor* Building, FVector& Location, FRotator& Rotation) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsActionInputIgnored() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsBuildToolOverridden() const;
@@ -1879,6 +1890,18 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerUpgradeBuildingActor(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 	void ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
+
+	UFUNCTION(BlueprintCallable)
+	void SetAtNameHomeBaseScreen(bool AtScreen);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCinematicOverrideClass(TSubclassOf<UFortCinematicCamera> OverrideCameraClass);
+
+	UFUNCTION(BlueprintCallable)
+	void SetInputPitchScale(float InInputPitchScale);
+
+	UFUNCTION(BlueprintCallable)
+	void SetInputYawScale(float InInputYawScale);
 
 	UFUNCTION(BlueprintCallable)
 	void SetPickerEnabled(bool bEnabled);

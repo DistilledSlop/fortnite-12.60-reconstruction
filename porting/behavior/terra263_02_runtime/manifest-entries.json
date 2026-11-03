@@ -1,0 +1,62 @@
+[
+  {
+    "class": "AFortPlayerController",
+    "function": "SetAtNameHomeBaseScreen",
+    "kind": "exec",
+    "signature": "void SetAtNameHomeBaseScreen(bool AtScreen)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/terra263_02_runtime/142a4eb80_AFortPlayerController_SetAtNameHomeBaseScreen.inc",
+    "confidence": "high",
+    "address": "0x142a4eb80",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Wrapper stores normalized bool at 0xaf5; bool_bits maps to bAtNameBaseScreen."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "SetCinematicOverrideClass",
+    "kind": "exec",
+    "signature": "void SetCinematicOverrideClass(TSubclassOf<UFortCinematicCamera> OverrideCameraClass)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/terra263_02_runtime/142a4ef20_AFortPlayerController_SetCinematicOverrideClass.inc",
+    "confidence": "high",
+    "address": "0x142a4ef20",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Body 0x1423aec70 stores class at 0xb78, reflected CinematicCameraClassOverride."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "SetInputPitchScale",
+    "kind": "exec",
+    "signature": "void SetInputPitchScale(float InInputPitchScale)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/terra263_02_runtime/142a4f370_AFortPlayerController_SetInputPitchScale.inc",
+    "confidence": "high",
+    "address": "0x142a4f370",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Body 0x1423afad0 preserves old sign with ordered comparisons and multiplies absolute input."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "SetInputYawScale",
+    "kind": "exec",
+    "signature": "void SetInputYawScale(float InInputYawScale)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/terra263_02_runtime/142a4f3f0_AFortPlayerController_SetInputYawScale.inc",
+    "confidence": "high",
+    "address": "0x142a4f3f0",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Body 0x1423afb20 preserves old sign with ordered comparisons and multiplies absolute input."
+  }
+]

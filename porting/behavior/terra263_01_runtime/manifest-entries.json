@@ -1,0 +1,47 @@
+[
+  {
+    "function": "GetCollectionBookManager",
+    "kind": "exec",
+    "signature": "UFortCollectionBookManager* GetCollectionBookManager() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/terra263_01_runtime/GetCollectionBookManager.inc",
+    "confidence": "high",
+    "address": "0x142a472e0",
+    "status": "ported",
+    "reflection_flags": "0x54020403",
+    "static": false,
+    "access": "public",
+    "notes": "MyPlayerInfo at 0x19e8; UFortRegisteredPlayerInfo::CollectionBookManager at 0x1c8 in reflection.",
+    "class": "AFortPlayerController"
+  },
+  {
+    "function": "GetLockOnState",
+    "kind": "exec",
+    "signature": "ELockOnState GetLockOnState() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/terra263_01_runtime/GetLockOnState.inc",
+    "confidence": "high",
+    "address": "0x140a02a40",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Wrapper calls Stub_ReturnFalse and writes the single enum underlying byte; NoTarget is enumerator zero.",
+    "class": "AFortPlayerController"
+  },
+  {
+    "function": "IsActionInputIgnored",
+    "kind": "exec",
+    "signature": "bool IsActionInputIgnored() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/terra263_01_runtime/IsActionInputIgnored.inc",
+    "confidence": "high",
+    "address": "0x142a47f70",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Native reads byte at 0xad9; bool_bits identifies bIsClientTimingOut at 0xad9, mask 1, full-byte mov8.",
+    "class": "AFortPlayerController"
+  }
+]

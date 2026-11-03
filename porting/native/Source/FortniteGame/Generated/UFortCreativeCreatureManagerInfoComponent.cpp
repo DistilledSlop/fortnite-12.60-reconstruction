@@ -99,6 +99,12 @@ void UFortCreativeCreatureManagerInfoComponent::ResetScorePoints()
 	ScorePoints = -1;
 }
 
+void UFortCreativeCreatureManagerInfoComponent::SetCreatureManagerComponent(UFortCreativeCreatureManagerComponent* InCreatureManagerComponent)
+{
+	// Native0x1428ba560 CONFIDENCE: high
+	CreatureManagerComponent = InCreatureManagerComponent;
+}
+
 void UFortCreativeCreatureManagerInfoComponent::SetDamageOverrideEffect(TSubclassOf<UGameplayEffect> Effect)
 {
 	// CONFIDENCE: high; complete body from reflected exec and field offsets.
@@ -110,6 +116,12 @@ void UFortCreativeCreatureManagerInfoComponent::SetEnvironmentalDamageOverride(f
 	// Original exec 0x1428ba6e0; inline store.
 	// CONFIDENCE: HIGH
 	this->EnvironmentalDamageOverride = InOverrideDamage;
+}
+
+void UFortCreativeCreatureManagerInfoComponent::SetEnvironmentalDamageOverrideEffect(TSubclassOf<UGameplayEffect> Effect)
+{
+	// Native0x1428ba760 CONFIDENCE: high
+	EnvironmentalDamageOverrideEffect = Effect;
 }
 
 void UFortCreativeCreatureManagerInfoComponent::SetHearingAggroRange(float InHearingAggroRange)
@@ -132,11 +144,23 @@ void UFortCreativeCreatureManagerInfoComponent::SetMovementSpeedMultiplier(float
 	this->MovementSpeedMultiplier = InOverrideMovementSpeedMultiplier;
 }
 
+void UFortCreativeCreatureManagerInfoComponent::SetMovementSpeedOverrideEffect(TSubclassOf<UGameplayEffect> Effect)
+{
+	// Native0x1428baaa0 CONFIDENCE: high
+	MovementSpeedOverrideEffect = Effect;
+}
+
 void UFortCreativeCreatureManagerInfoComponent::SetOverrideDamage(float InOverrideDamage)
 {
 	// Original exec 0x1428bab20; inline store.
 	// CONFIDENCE: HIGH
 	this->DamageCaused = InOverrideDamage;
+}
+
+void UFortCreativeCreatureManagerInfoComponent::SetScoreDistribution(EScoreDistributionType InScoreDistribution)
+{
+	// Native0x1428baba0 CONFIDENCE: high
+	ScoreDistribution = InScoreDistribution;
 }
 
 void UFortCreativeCreatureManagerInfoComponent::SetScorePoints(int32 InScorePoints)

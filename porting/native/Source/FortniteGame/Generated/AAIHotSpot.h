@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "EAIHotSpotSlot.h"
 #include "Math/Vector.h"
 
 class AAIController;
@@ -89,6 +90,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAIHotSpotSlot* GetSlotByIndex(int32 Index) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AAIController* GetSlotOwnerByIndex(int32 Index) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EAIHotSpotSlot GetSlotStateByIndex(int32 Index) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSlotUserIdByIndex(int32 Index) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEnabled() const;

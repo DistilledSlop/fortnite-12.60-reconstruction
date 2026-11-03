@@ -645,6 +645,9 @@ public:
 	virtual int32 GetCurrentBuildingLevel() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetEditorTestTags(FGameplayTagContainer& TagContainer) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetMaxShield() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)

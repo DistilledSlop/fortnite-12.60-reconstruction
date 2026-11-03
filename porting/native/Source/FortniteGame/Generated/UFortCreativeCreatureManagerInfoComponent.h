@@ -108,10 +108,16 @@ public:
 	void ResetScorePoints();
 
 	UFUNCTION(BlueprintCallable)
+	void SetCreatureManagerComponent(UFortCreativeCreatureManagerComponent* InCreatureManagerComponent);
+
+	UFUNCTION(BlueprintCallable)
 	void SetDamageOverrideEffect(TSubclassOf<UGameplayEffect> Effect);
 
 	UFUNCTION(BlueprintCallable)
 	void SetEnvironmentalDamageOverride(float InOverrideDamage);
+
+	UFUNCTION(BlueprintCallable)
+	void SetEnvironmentalDamageOverrideEffect(TSubclassOf<UGameplayEffect> Effect);
 
 	UFUNCTION(BlueprintCallable)
 	void SetHearingAggroRange(float InHearingAggroRange);
@@ -123,7 +129,13 @@ public:
 	void SetMovementSpeedMultiplier(float InOverrideMovementSpeedMultiplier);
 
 	UFUNCTION(BlueprintCallable)
+	void SetMovementSpeedOverrideEffect(TSubclassOf<UGameplayEffect> Effect);
+
+	UFUNCTION(BlueprintCallable)
 	void SetOverrideDamage(float InOverrideDamage);
+
+	UFUNCTION(BlueprintCallable)
+	void SetScoreDistribution(EScoreDistributionType InScoreDistribution);
 
 	UFUNCTION(BlueprintCallable)
 	void SetScorePoints(int32 InScorePoints);

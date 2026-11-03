@@ -1,0 +1,77 @@
+{
+  "selection": "porting/behavior/haiku262_07_minigame_runtime/inputs.json",
+  "selection_count": 100,
+  "ported_count": 4,
+  "unresolved_count": 96,
+  "build_pending": true,
+  "rows": [
+    {
+      "index": 45,
+      "class": "UFortCreativeCreatureManagerInfoComponent",
+      "function": "SetCreatureManagerComponent",
+      "wrapper": "0x1428ba560",
+      "native_body": "0x1428ba560",
+      "wrapper_capture": "porting/generated/native228-fresh-callees/0x1428ba560.c",
+      "body_capture": "porting/generated/native228-fresh-callees/0x1428ba560.c",
+      "member": {
+        "name": "CreatureManagerComponent",
+        "offset": "0x1a8",
+        "type": "UFortCreativeCreatureManagerComponent*",
+        "evidence": "query member CreatureManagerComponent: UFortCreativeCreatureManagerInfoComponent offset 424 (0x1a8), kind Object"
+      },
+      "status": "ported",
+      "build_pending": true
+    },
+    {
+      "index": 47,
+      "class": "UFortCreativeCreatureManagerInfoComponent",
+      "function": "SetEnvironmentalDamageOverrideEffect",
+      "wrapper": "0x1428ba760",
+      "native_body": "0x1428ba760",
+      "wrapper_capture": "porting/generated/native228-fresh-callees/0x1428ba760.c",
+      "body_capture": "porting/generated/native228-fresh-callees/0x1428ba760.c",
+      "member": {
+        "name": "EnvironmentalDamageOverrideEffect",
+        "offset": "0x1b8",
+        "type": "TSubclassOf<UGameplayEffect>",
+        "evidence": "query member OverrideEffect: UFortCreativeCreatureManagerInfoComponent EnvironmentalDamageOverrideEffect offset 0x1b8, kind Class"
+      },
+      "status": "ported",
+      "build_pending": true
+    },
+    {
+      "index": 49,
+      "class": "UFortCreativeCreatureManagerInfoComponent",
+      "function": "SetMovementSpeedOverrideEffect",
+      "wrapper": "0x1428baaa0",
+      "native_body": "0x1428baaa0",
+      "wrapper_capture": "porting/generated/native228-fresh-callees/0x1428baaa0.c",
+      "body_capture": "porting/generated/native228-fresh-callees/0x1428baaa0.c",
+      "member": {
+        "name": "MovementSpeedOverrideEffect",
+        "offset": "0x1c0",
+        "type": "TSubclassOf<UGameplayEffect>",
+        "evidence": "query member OverrideEffect: UFortCreativeCreatureManagerInfoComponent MovementSpeedOverrideEffect offset 0x1c0, kind Class"
+      },
+      "status": "ported",
+      "build_pending": true
+    },
+    {
+      "index": 50,
+      "class": "UFortCreativeCreatureManagerInfoComponent",
+      "function": "SetScoreDistribution",
+      "wrapper": "0x1428baba0",
+      "native_body": "0x1428baba0",
+      "wrapper_capture": "porting/generated/native210-fresh-bulk/0x1428baba0.c",
+      "body_capture": "porting/generated/native210-fresh-bulk/0x1428baba0.c",
+      "member": {
+        "name": "ScoreDistribution",
+        "offset": "0x1c8",
+        "type": "EScoreDistributionType (1-byte enum)",
+        "evidence": "query member ScoreDistribution: UFortCreativeCreatureManagerInfoComponent ScoreDistribution offset 0x1c8, kind Enum"
+      },
+      "status": "ported",
+      "build_pending": true
+    }
+  ]
+}

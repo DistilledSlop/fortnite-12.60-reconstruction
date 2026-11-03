@@ -6,12 +6,14 @@
 #include "AFortPlayerPawn.h"
 #include "AnalyticsEventAttribute.h"
 #include "EFortQuickBars.h"
+#include "ELockOnState.h"
 #include "Engine/World.h"
 #include "FortNativeAnalyticsProvider.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "UFortControllerComponent_Aircraft.h"
 #include "UFortItemDefinition.h"
 #include "UFortLocalPlayer.h"
+#include "UFortRegisteredPlayerInfo.h"
 #include "UFortWorldItem.h"
 #include "Net/UnrealNetwork.h"
 
@@ -350,12 +352,27 @@ ABuildingSMActor* AFortPlayerController::GetBuildPreviewMarker() const
 	return BuildPreviewMarker;
 }
 
+UFortCollectionBookManager* AFortPlayerController::GetCollectionBookManager() const
+{
+	// CONFIDENCE: high
+	// Native 0x14237e620, reflected wrapper 0x142a472e0.
+	UFortRegisteredPlayerInfo* PlayerInfo = MyPlayerInfo;
+	return PlayerInfo ? PlayerInfo->CollectionBookManager : nullptr;
+}
+
 bool AFortPlayerController::GetForceAllowCameraMode() const
 {
 	// Original address: 0x142a47340.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
 	return AFortPlayerController::bForceAllowCameraMode;
+}
+
+ELockOnState AFortPlayerController::GetLockOnState() const
+{
+	// CONFIDENCE: high
+	// Native 0x140a02a40, reflected wrapper 0x140a02a40.
+	return ELockOnState::NoTarget;
 }
 
 UFortMcpProfileCampaign* AFortPlayerController::GetMcpCampaignProfile() const
@@ -447,6 +464,13 @@ bool AFortPlayerController::HasPermissionToEditWorld(ABuildingActor* Building, F
 	// CONFIDENCE: high
 	// Native target 0x1406801d0.
 	return true;
+}
+
+bool AFortPlayerController::IsActionInputIgnored() const
+{
+	// CONFIDENCE: high
+	// Native 0x14238e1f0, reflected wrapper 0x142a47f70.
+	return bIsClientTimingOut;
 }
 
 bool AFortPlayerController::IsBuildToolOverridden() const
@@ -1033,6 +1057,32 @@ void AFortPlayerController::ServerUpdatePlayerData_Implementation(const TArray<u
 void AFortPlayerController::ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::SetAtNameHomeBaseScreen(bool AtScreen)
+{
+	// Native 0x142a4eb80; CONFIDENCE: high.
+	bAtNameBaseScreen = AtScreen;
+}
+
+void AFortPlayerController::SetCinematicOverrideClass(TSubclassOf<UFortCinematicCamera> OverrideCameraClass)
+{
+	// Native 0x142a4ef20; CONFIDENCE: high.
+	CinematicCameraClassOverride = OverrideCameraClass;
+}
+
+void AFortPlayerController::SetInputPitchScale(float InInputPitchScale)
+{
+	// Native 0x142a4f370; CONFIDENCE: high.
+	const float Sign = InputPitchScale > 0.0f ? 1.0f : (InputPitchScale < 0.0f ? -1.0f : 0.0f);
+	InputPitchScale = FMath::Abs(InInputPitchScale) * Sign;
+}
+
+void AFortPlayerController::SetInputYawScale(float InInputYawScale)
+{
+	// Native 0x142a4f3f0; CONFIDENCE: high.
+	const float Sign = InputYawScale > 0.0f ? 1.0f : (InputYawScale < 0.0f ? -1.0f : 0.0f);
+	InputYawScale = FMath::Abs(InInputYawScale) * Sign;
 }
 
 void AFortPlayerController::SetPickerEnabled(bool bEnabled)

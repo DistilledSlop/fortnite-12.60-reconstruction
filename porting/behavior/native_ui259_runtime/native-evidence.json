@@ -1,0 +1,18 @@
+{
+  "entries": [
+    {
+      "class": "UFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBase",
+      "function": "GetButtonAtIndex",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x1452a83e0.c",
+      "native": "porting/generated/native240-fresh-callees/0x144f9fa50.c",
+      "note": "Native validates index against array count at 0x320 and returns the first pointer of the element at array offset 0x318; reflected ButtonWidgets and its element ButtonWidget identify both."
+    },
+    {
+      "class": "UFortSettingsContext",
+      "function": "GetSettingValueInRange",
+      "wrapper": "porting/generated/native245-fresh-bulk/0x1452cec80.c",
+      "native": "porting/generated/native247-fresh-callees/0x1418c7350.c",
+      "note": "Wrapper reads Value, InSettingType, InSettingTab in that order; native returns the first 32-bit argument unchanged."
+    }
+  ]
+}

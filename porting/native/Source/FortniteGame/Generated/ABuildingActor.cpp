@@ -30,6 +30,12 @@ int32 ABuildingActor::GetCurrentBuildingLevel() const
 	return CurrentBuildingLevel;
 }
 
+void ABuildingActor::GetEditorTestTags(FGameplayTagContainer& TagContainer) const
+{
+	// Native0x1427360d0 CONFIDENCE: high
+	// Original exec body is Stub_Empty (0x1406801c0, empty no-op per porting/decompilation_notes.md). TagContainer is not written.
+}
+
 float ABuildingActor::GetMaxShield() const
 {
 	// Original address: 0x141ba75a0.

@@ -44,5 +44,8 @@ public:
 	UPROPERTY()
 	AFortPlayerPawn* CapturePawn;
 
+	UFUNCTION(BlueprintCallable)
+	bool EndCapture();
+
 };
 

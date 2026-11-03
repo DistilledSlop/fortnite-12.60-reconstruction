@@ -16,6 +16,12 @@ bool UFortGlobalUIContext::GetCreativeMode() const
 	return NativeRecoveredBool_0x3d4;
 }
 
+FText UFortGlobalUIContext::GetFeedbackTitle() const
+{
+	// Native 0x1452473f0. CONFIDENCE: high
+	return FeedbackTitle;
+}
+
 bool UFortGlobalUIContext::IsBluGloEnabled()
 {
 	// Original address: 0x1412d9d60.

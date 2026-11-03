@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "ESettingTab.h"
+#include "ESettingType.h"
+
 #include "UFortSettingsContext.generated.h"
 
 UCLASS(transient)
@@ -21,6 +24,9 @@ public:
 	// table index 0, flags 0x10000000000005
 	UPROPERTY()
 	float MaxGammaValue;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSettingValueInRange(float Value, ESettingType InSettingType, ESettingTab InSettingTab);
 
 };
 

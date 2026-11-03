@@ -161,6 +161,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetCreativeMode() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetFeedbackTitle() const;
+
 	UFUNCTION(BlueprintCallable)
 	bool IsBluGloEnabled();
 
