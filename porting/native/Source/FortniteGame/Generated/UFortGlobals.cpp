@@ -4,6 +4,12 @@
 #include "SharedFortGameLog.h"
 #include "UObject/UObjectGlobals.h"
 
+bool UFortGlobals::AllowContainersInCreativeItemLists()
+{
+	// CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bAllowContainersInCreativeItemLists;
+}
+
 EFortAccountLinkingUIConfig UFortGlobals::GetAccountLinkingUIConfig()
 {
 	// Native body 0x141ed2420. CONFIDENCE: high
@@ -80,6 +86,42 @@ bool UFortGlobals::IsTwitchEnabled()
 {
 	// Native body 0x141ed90f0. CONFIDENCE: high
 	return UFortGlobals::NativeGetGlobals()->bTwitchEnabled;
+}
+
+bool UFortGlobals::ShouldDisableParticleEffectsDuringMissionResults()
+{
+	// CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bDisableParticleEffectsDuringMissionResults;
+}
+
+bool UFortGlobals::ShouldDisablePlayerTeleportDuringMissionResults()
+{
+	// CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bDisablePlayerTeleportDuringMissionResults;
+}
+
+bool UFortGlobals::ShouldFlushGPUWhenPlayerIsTeleportedAtEndOfZone()
+{
+	// CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bFlushGPUWhenPlayerIsTeleportedAtEndOfZone;
+}
+
+bool UFortGlobals::ShouldShowMissionResultsMovies()
+{
+	// CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bShowMissionResultsMovies;
+}
+
+bool UFortGlobals::ShouldStreamOutTextureDataWhenPlayerIsTeleportedAtEndOfZone()
+{
+	// CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bStreamOutTextureDataWhenPlayerIsTeleportedAtEndOfZone;
+}
+
+bool UFortGlobals::ShowExtendedBattlePassMovie()
+{
+	// CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bShowExtendedBattlePassMovie;
 }
 
 UFortGlobals* UFortGlobals::NativeGetGlobals()

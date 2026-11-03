@@ -604,6 +604,9 @@ public:
 	UFortGameFeaturePluginManager* GameFeaturePluginManager;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool AllowContainersInCreativeItemLists();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static EFortAccountLinkingUIConfig GetAccountLinkingUIConfig();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -641,6 +644,24 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsTwitchEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool ShouldDisableParticleEffectsDuringMissionResults();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool ShouldDisablePlayerTeleportDuringMissionResults();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool ShouldFlushGPUWhenPlayerIsTeleportedAtEndOfZone();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool ShouldShowMissionResultsMovies();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool ShouldStreamOutTextureDataWhenPlayerIsTeleportedAtEndOfZone();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool ShowExtendedBattlePassMovie();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsErebus();

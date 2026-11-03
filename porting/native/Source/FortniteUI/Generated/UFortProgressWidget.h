@@ -30,5 +30,8 @@ public:
 	UPROPERTY()
 	UImage* Image_MainIcon;
 
+	UFUNCTION(BlueprintCallable)
+	void SetTitle(FText Title);
+
 };
 

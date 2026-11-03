@@ -120,5 +120,8 @@ public:
 	UPROPERTY(Transient)
 	USocialUser* QueriedSocialUser;
 
+	UFUNCTION(BlueprintCallable)
+	void SetDisplayName(FText InDisplayName);
+
 };
 
