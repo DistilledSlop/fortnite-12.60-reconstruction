@@ -72,6 +72,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void AddOrRemoveTime(float TimeToAdd);
 
+protected:
+	UFUNCTION()
+	void DummyTimer();
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FMissionTimeDisplayData GetCorrectTimeDisplayData() const;
 

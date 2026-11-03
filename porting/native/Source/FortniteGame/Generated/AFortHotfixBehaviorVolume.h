@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	UBoxComponent* TriggerBoxComponent;
 
+	UFUNCTION()
+	void CopyToClipboard();
+
 };
 

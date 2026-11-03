@@ -70,10 +70,22 @@ bool UFortGlobals::IsDisplayingTwitchViewerNamesAllowed()
 	return UFortGlobals::NativeGetGlobals()->bTwitchAllowDisplayViewernames;
 }
 
+bool UFortGlobals::IsEnduranceDebugEnabled()
+{
+	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
+	return false;
+}
+
 bool UFortGlobals::IsFirstShotAccuracyDisabled()
 {
 	// Native body 0x141ed8c30. CONFIDENCE: high
 	return UFortGlobals::NativeGetGlobals()->bFirstShotAccuracyDisabled;
+}
+
+bool UFortGlobals::IsHeroLoadoutSystemEnabled()
+{
+	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
+	return true;
 }
 
 bool UFortGlobals::IsHestiaEnabled()
@@ -82,10 +94,28 @@ bool UFortGlobals::IsHestiaEnabled()
 	return UFortGlobals::NativeGetGlobals()->bEnableHestia;
 }
 
+bool UFortGlobals::IsIronCityAutoAmplifierPlacementEnabled()
+{
+	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
+	return false;
+}
+
+bool UFortGlobals::IsTouchInputPlatform()
+{
+	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
+	return false;
+}
+
 bool UFortGlobals::IsTwitchEnabled()
 {
 	// Native body 0x141ed90f0. CONFIDENCE: high
 	return UFortGlobals::NativeGetGlobals()->bTwitchEnabled;
+}
+
+bool UFortGlobals::IsWargameDebugEnabled()
+{
+	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
+	return false;
 }
 
 bool UFortGlobals::ShouldDisableParticleEffectsDuringMissionResults()

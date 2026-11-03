@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	UBoxComponent* KillBoxComponent;
 
+	UFUNCTION()
+	void CopyToClipboard();
+
 };
 

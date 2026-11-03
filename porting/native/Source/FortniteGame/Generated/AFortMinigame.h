@@ -780,6 +780,11 @@ protected:
 	void RefreshVoiceForPlayers();
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ResetStats();
+public:
+
 	UFUNCTION(BlueprintCallable)
 	void SetClassSlotInventory(uint8 ClassSlotIndex, TArray<FItemAndCount>& InventoryItems);
 

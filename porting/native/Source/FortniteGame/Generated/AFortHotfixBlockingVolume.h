@@ -31,6 +31,9 @@ public:
 	bool bNeededOnClient;
 
 	UFUNCTION()
+	void CopyToClipboard();
+
+	UFUNCTION()
 	void OnRep_ReplicatedExtent();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

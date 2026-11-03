@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "EFortNotificationPriority.h"
 #include "EFortNotificationType.h"
 #include "FFortUINotificationClearedDelegate.h"
 #include "GameFramework/OnlineReplStructs.h"
@@ -45,6 +46,12 @@ public:
 	// table index 0, flags 0x24080000010001
 	UPROPERTY()
 	TSoftObjectPtr<UObject> DisplayAsset;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xc8): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0xc8 = 0;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortNotificationPriority GetPriority() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintCosmetic)
 	void NotificationShown();

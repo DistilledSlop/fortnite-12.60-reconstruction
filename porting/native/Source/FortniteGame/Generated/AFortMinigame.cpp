@@ -833,6 +833,11 @@ void AFortMinigame::RefreshVoiceForPlayers()
 	return;
 }
 
+void AFortMinigame::ResetStats()
+{
+	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
+}
+
 void AFortMinigame::SetClassSlotInventory(uint8 ClassSlotIndex, TArray<FItemAndCount>& InventoryItems)
 {
 	// Native 0x1420a3c70. CONFIDENCE: high

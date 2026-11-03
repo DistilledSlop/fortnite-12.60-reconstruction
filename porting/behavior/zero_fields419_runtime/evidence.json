@@ -1,0 +1,49 @@
+[
+  {
+    "class": "UFortUINotification",
+    "function": "GetPriority",
+    "reflection": "porting/generated/reflection/native_funcs.json: EFortNotificationPriority enum return, byte underlying, flags 0x54020401; enum_blocks.json constructor 0x142b28f30",
+    "wrapper_capture": "porting/generated/native368-callees/0x142b29310.c",
+    "field_offset": "0xc8",
+    "field_type": "uint8",
+    "default": "0",
+    "allocation_evidence": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/CoreUObject/Private/UObject/UObjectGlobals.cpp:2344,2452: non-subobject allocation zeroes TotalSize before UObjectBase construction.",
+    "class_extent_evidence": "porting/generated/native379-callees/0x142b28690.c registers class size 0xd0; reflection/class_parent_map.json identifies direct UObject parent. UObject extent ends well before 0xc8.",
+    "constructor_evidence": "porting/generated/native126-dispatch-bulk/0x142b27b20.c calls porting/generated/native129-constructors/0x1425dfcd0.c. Constructor writes 0xc4 through 0xc7 and 0xc9, leaving 0xc8 untouched.",
+    "limitations": "Native writes after construction are not recovered; source-level getter recovery."
+  },
+  {
+    "class": "UFortMatchXPTotalEntry",
+    "function": "GetXPTarget",
+    "wrapper_capture": "porting/generated/native108-broad/0x14528a2a0.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "field_offset": "0x2b8",
+    "field_type": "int32",
+    "default": "0",
+    "constructor_evidence": "porting/generated/native126-dispatch-bulk/0x145287fa0.c: writes 32-bit zero at 0x2b8 after parent constructor",
+    "limitations": "Other native writers remain unrecovered."
+  },
+  {
+    "class": "UFortMissionActivationWidget",
+    "function": "GetCurrentState",
+    "wrapper_capture": "porting/generated/native108-broad/0x14287d8b0.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "field_offset": "0x478",
+    "field_type": "uint8",
+    "default": "0",
+    "constructor_evidence": "porting/generated/native129-constructors/0x144f4e1b0.c: writes byte zero at 0x478 after parent constructor",
+    "limitations": "Other native writers remain unrecovered."
+  },
+  {
+    "class": "UFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBase",
+    "function": "GetFocusInfo",
+    "wrapper_capture": "porting/generated/native368-callees/0x1452a8540.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "field_offset": "0x328",
+    "field_type": "uint64",
+    "default": "0",
+    "constructor_evidence": "porting/generated/native129-constructors/0x144f901a0.c: writes 64-bit zero at 0x328 after parent constructor",
+    "limitations": "Other native writers remain unrecovered.",
+    "struct_evidence": "porting/generated/reflection/struct_blocks.json: 0x1452a7fa0 constructs FortPlayerSurveyButtonListMultipleSelectionAnswerWidgetFocusInfo, size 8 and plain old data. Wrapper copies all 8 bytes."
+  }
+]

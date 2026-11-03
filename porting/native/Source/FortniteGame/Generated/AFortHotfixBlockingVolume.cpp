@@ -2,6 +2,11 @@
 #include "AFortHotfixBlockingVolume.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortHotfixBlockingVolume::CopyToClipboard()
+{
+	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
+}
+
 void AFortHotfixBlockingVolume::OnRep_ReplicatedExtent()
 {
 	// Body not recovered: reflection-derived stub.

@@ -14,6 +14,11 @@ void UFortMissionTimerComponent::AddOrRemoveTime(float TimeToAdd)
 	// CONFIDENCE: HIGH
 }
 
+void UFortMissionTimerComponent::DummyTimer()
+{
+	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
+}
+
 FMissionTimeDisplayData UFortMissionTimerComponent::GetCorrectTimeDisplayData() const
 {
 	// CONFIDENCE: high; captured native flow and typed dependency behavior.

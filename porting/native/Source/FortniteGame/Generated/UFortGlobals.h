@@ -637,13 +637,28 @@ public:
 	static bool IsDisplayingTwitchViewerNamesAllowed();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsEnduranceDebugEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsFirstShotAccuracyDisabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsHeroLoadoutSystemEnabled();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsHestiaEnabled();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsIronCityAutoAmplifierPlacementEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsTouchInputPlatform();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsTwitchEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsWargameDebugEnabled();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool ShouldDisableParticleEffectsDuringMissionResults();
