@@ -1,0 +1,23 @@
+[
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "OnRep_VehicleAttributes",
+    "kind": "exec",
+    "signature": "void OnRep_VehicleAttributes()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/vehicle_bulk310_runtime/AFortAthenaVehicle_OnRep_VehicleAttributes.inc",
+    "address": "0x14283cab0",
+    "native_body_address": "0x14283cab0",
+    "reflection_flags": "0x80401",
+    "confidence": "high",
+    "status": "ported",
+    "static": false,
+    "includes": [
+      "UObject/UnrealType.h",
+      "AbilitySystemComponent.h",
+      "AbilitySystemInterface.h",
+      "AttributeSet.h"
+    ]
+  }
+]

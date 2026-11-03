@@ -598,7 +598,13 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetMinigameComponentsByTagQuery(TArray<UFortMinigameLogicComponent*>& OutComponents, FGameplayTagQuery& TagQuery) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetPlayerCount(bool bIncludeSpectators) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetPlayerStartComponentsByTagQuery(TArray<UFortMinigamePlayerStartComponent*>& OutPlayerStartComponents, FGameplayTagQuery& TagQuery);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetPostGameResetDelay(EFortMinigameEnd EndMethod) const;

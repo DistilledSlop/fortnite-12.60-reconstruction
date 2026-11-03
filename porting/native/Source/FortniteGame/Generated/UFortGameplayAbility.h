@@ -20,11 +20,13 @@
 
 class AFortPawn;
 class AFortProjectileBase;
+class AFortWeapon;
 class UFortAbilitySystemComponent;
 class UFortCameraMode;
 class UFortTooltip;
 class UFortTooltipDisplayStatsList;
 class UFortWeaponItemDefinition;
+class UFortWorldItemDefinition;
 class UTexture2D;
 
 #include "UFortGameplayAbility.generated.h"
@@ -271,6 +273,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPawn* GetActivatingPawn() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortWorldItemDefinition* GetCurrentSourceItemDefinition() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortWeapon* GetCurrentSourceWeapon() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	int32 GetMaxNumTrackedActors() const;
 
 	UFUNCTION(BlueprintNativeEvent)
 	void OnGenericNotifyFromAnimation(FGameplayTag NotifyTag);

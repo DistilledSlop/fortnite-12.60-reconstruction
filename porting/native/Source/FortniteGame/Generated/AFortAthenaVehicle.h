@@ -743,8 +743,10 @@ public:
 	UFUNCTION()
 	void OnRep_SurfaceTypeVehicleOn(EPhysicalSurface PreviousSurfaceOn);
 
+protected:
 	UFUNCTION()
 	void OnRep_VehicleAttributes();
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool RearLateralFrictionHasReachedMax() const;

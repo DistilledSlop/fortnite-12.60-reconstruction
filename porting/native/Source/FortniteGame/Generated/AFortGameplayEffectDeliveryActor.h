@@ -155,6 +155,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x558): not a UPROPERTY, not replicated.
 	FTimerHandle NativeKillTimer;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x560): not a UPROPERTY, not replicated.
+	TWeakObjectPtr<AActor> NativeNoiseMakingInstigatorOverride;
+
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	FGameplayTagContainer AnalyticsTags;
@@ -195,6 +198,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnTouched(AActor* OtherActor, UPrimitiveComponent* OtherComp, const FHitResult& HitResult, bool bIsOverlap);
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetNoiseMakingInstigatorOverride(AActor* NewActor);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

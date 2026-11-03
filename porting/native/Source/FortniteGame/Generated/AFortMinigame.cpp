@@ -20,6 +20,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/UnrealMathSSE.h"
 #include "UFortMinigameLogicComponent.h"
+#include "UFortMinigamePlayerStartComponent.h"
 #include "UFortMinigameStatFilter.h"
 #include "UFortMutatorListComponent.h"
 #include "UObject/Object.h"
@@ -271,12 +272,46 @@ int32 AFortMinigame::GetMaxInitTeamSize(uint8 TeamIndex) const
 	return -1;
 }
 
+void AFortMinigame::GetMinigameComponentsByTagQuery(TArray<UFortMinigameLogicComponent*>& OutComponents, FGameplayTagQuery& TagQuery) const
+{
+	// CONFIDENCE: high; captured tag-query evaluation, array order and null behavior.
+	{
+	    const int32 SourceCount = MinigameComponents.Num();
+	    OutComponents.Reset();
+	    OutComponents.Reserve(SourceCount);
+	    for (UFortMinigameLogicComponent* Component : MinigameComponents)
+	    {
+	        if (Component && TagQuery.Matches(Component->MinigameTags))
+	        {
+	            OutComponents.Add(Component);
+	        }
+	    }
+	}
+}
+
 int32 AFortMinigame::GetPlayerCount(bool bIncludeSpectators) const
 {
 	// CONFIDENCE: high
 	// Native 0x1420930f0; wrapper 0x1429c0a40.
 	{
 	    return PlayerArray.Players.Num() + (bIncludeSpectators ? SpectatingPlayerArray.Players.Num() : 0);
+	}
+}
+
+void AFortMinigame::GetPlayerStartComponentsByTagQuery(TArray<UFortMinigamePlayerStartComponent*>& OutPlayerStartComponents, FGameplayTagQuery& TagQuery)
+{
+	// CONFIDENCE: high; captured tag-query evaluation, array order and null behavior.
+	{
+	    const int32 SourceCount = PlayerStartComponents.Num();
+	    OutPlayerStartComponents.Reset();
+	    OutPlayerStartComponents.Reserve(SourceCount);
+	    for (UFortMinigamePlayerStartComponent* Component : PlayerStartComponents)
+	    {
+	        if (TagQuery.Matches(Component->MinigameTags))
+	        {
+	            OutPlayerStartComponents.Add(Component);
+	        }
+	    }
 	}
 }
 

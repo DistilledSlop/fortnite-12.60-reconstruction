@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+class UGameplayEffect;
+
 #include "UFortAbilitySystemUI.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEGAME_API UFortAbilitySystemUI : public UObject
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static UGameplayEffect* GetDefaultObjectOfGameplayEffectType(TSubclassOf<UGameplayEffect> EffectType);
+
 };
 

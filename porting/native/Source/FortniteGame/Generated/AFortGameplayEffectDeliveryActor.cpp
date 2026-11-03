@@ -174,6 +174,12 @@ void AFortGameplayEffectDeliveryActor::OnRep_IsBeingKilled()
 	}
 }
 
+void AFortGameplayEffectDeliveryActor::SetNoiseMakingInstigatorOverride(AActor* NewActor)
+{
+	// CONFIDENCE: high; captured native branches, fields and engine contracts.
+	NativeNoiseMakingInstigatorOverride = NewActor;
+}
+
 void AFortGameplayEffectDeliveryActor::NativeCollectTouchingActors(TArray<AActor*>& Actors) const
 {
 	// Native 0x14269fc60. CONFIDENCE: high
