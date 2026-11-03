@@ -81,6 +81,16 @@ def badge(label, message, color, logo=None):
     return f'<img alt="{label}: {message}" src="{url.replace("&", "&amp;")}">'
 
 
+def water_badge():
+    """Estimated water use; figure is stored by porting/water_badge.py so this stays offline."""
+    try:
+        gal = json.loads((ROOT / "porting" / "progress" / "water.json").read_text())["gallons"]
+    except (OSError, KeyError, ValueError):
+        return []
+    color = "4c1" if gal < 10 else "dfb317" if gal < 100 else "fe7d37" if gal < 1000 else "e05d44"
+    return [badge("water used", f"{gal:,.1f} gal", color)]
+
+
 def badges(d):
     st = repo_stats()
     leaves = d["leaves"]
@@ -198,6 +208,7 @@ def badges(d):
             badge("keys", "git-ignored", "e05d44"),
             badge("assets", "git-ignored", "fe7d37"),
             badge("checks", "batched", "dfb317"),
+            *water_badge(),
         ],
     ]
     # Reading order: status, areas, target, game data, toolchain, code, repo, process.
