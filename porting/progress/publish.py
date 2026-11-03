@@ -23,7 +23,6 @@ DOCS = ROOT / "docs"
 README = ROOT / "README.md"
 START, END = "<!-- progress:start -->", "<!-- progress:end -->"
 BSTART, BEND = "<!-- badges:start -->", "<!-- badges:end -->"
-CODE_EXTS = (".h", ".cpp", ".inc", ".py", ".cs", ".sh")
 PAGES = ["index.html", "history.html", "progress.svg", "progress.json"]
 
 
@@ -37,25 +36,33 @@ def git(*args):
 
 
 def repo_stats():
-    files = git("ls-files", "-z").split("\0")
-    files = [f for f in files if f]
-    lines = 0
+    files = [f for f in git("ls-files", "-z").split("\0") if f]
+    groups = {"cpp": (".cpp", ".h", ".inc"), "py": (".py",), "cs": (".cs",), "sh": (".sh",), "md": (".md",)}
+    lines = dict.fromkeys(groups, 0)
+    count = {k: sum(1 for f in files if f.endswith(e)) for k, e in groups.items()}
     for f in files:
-        if f.endswith(CODE_EXTS):
-            try:
-                lines += (ROOT / f).read_bytes().count(b"\n")
-            except OSError:
-                pass
-    by_ext = lambda *e: sum(1 for f in files if f.endswith(e))
+        for k, e in groups.items():
+            if f.endswith(e):
+                try:
+                    lines[k] += (ROOT / f).read_bytes().count(b"\n")
+                except OSError:
+                    pass
+    under = lambda pre: sum(1 for f in files if f.startswith(pre))
     return {
         "commits": int(git("rev-list", "--count", "HEAD")),
         "files": len(files),
-        "loc": lines,
-        "cpp": by_ext(".cpp", ".h", ".inc"),
-        "py": by_ext(".py"),
-        "cs": by_ext(".cs"),
-        "sh": by_ext(".sh"),
+        "lines": lines,
+        "count": count,
+        "cpp_h": sum(1 for f in files if f.endswith(".h")),
+        "cpp_c": sum(1 for f in files if f.endswith(".cpp")),
+        "cpp_i": sum(1 for f in files if f.endswith(".inc")),
+        "json": sum(1 for f in files if f.endswith(".json")),
+        "patch": sum(1 for f in files if f.endswith(".patch")),
+        "dirs": {k: under(f"porting/{k}/") for k in
+                 ("native", "behavior", "frontend", "server", "asset_pipeline", "material_pipeline", "progress")},
+        "branches": len([b for b in git("branch", "-a", "--format=%(refname:short)").split("\n") if b.strip()]),
         "first": git("log", "--reverse", "--format=%ad", "--date=short").split("\n")[0],
+        "last": git("log", "-1", "--format=%ad", "--date=short").strip(),
     }
 
 
@@ -80,6 +87,8 @@ def badges(d):
     checks = sum(l.get("total") or 0 for l in leaves)
     passed = sum(l.get("done") or 0 for l in leaves)
     parity = re.search(r"([\d,]+) of ([\d,]+) generated classes", " ".join(m.get("evidence", "") for m in d["milestones"]))
+    basis = lambda k: sum(1 for l in leaves if k in (l.get("basis") or ""))
+
     def tone(pct):
         return "2e8540" if pct >= 50 else "97ca00" if pct >= 25 else "dfb317" if pct >= 10 else "fe7d37" if pct >= 5 else "e05d44"
 
@@ -87,32 +96,66 @@ def badges(d):
              "net": "network", "backend": "backend", "audio": "audio", "visuals": "visuals", "ui": "frontend UI"}
     area = {g["id"]: badge(short.get(g["id"], g["id"]), f"{g['pct']:.1f}%", tone(g["pct"])) for g in d["groups"]}
     areas = [area[k] for k in short if k in area]
+    ms = {m["id"]: "done" if m["done"] else "open" for m in d["milestones"]}
+    mc = lambda k: "2e8540" if ms.get(k) == "done" else "9f9f9f"
+    L, N, D = st["lines"], st["count"], st["dirs"]
     rows = [
         [  # progress
             badge("overall", f"{d['overall_pct']:.1f}%", "2a78d6"),
-            badge("evidence-based", f"{d['measured_pct']:.1f}%", "3987e5"),
+            badge("evidence", f"{d['measured_pct']:.1f}%", "3987e5"),
             badge("objective", f"{d['objective_pct']:.1f}%", "5a9cec"),
             badge("milestones", f"{d['milestones_done']}/{d['milestones_total']}", "d6a02a"),
-            badge("units done", f"{human(passed)}/{human(checks)}", "0e7490"),
+            badge("units", f"{human(passed)}/{human(checks)}", "0e7490"),
             badge("snapshot", d["head"][:8], "9f9f9f", "git"),
+            badge("updated", st["last"], "9f9f9f"),
+        ],
+        [  # milestones and scope
+            badge("M1 menu", ms.get("m1", "open"), mc("m1")),
+            badge("M2 lobby", ms.get("m2", "open"), mc("m2")),
+            badge("M3 matchmaking", ms.get("m3", "open"), mc("m3")),
+            badge("M4 match", ms.get("m4", "open"), mc("m4")),
+            badge("client", "unstripped", "7d4cdb"),
+            badge("server", "reconstructed", "e8a317"),
+            badge("goal", "full A/V", "a41e22"),
         ],
         [  # target
             badge("Fortnite", "12.60", "7d4cdb", "epicgames"),
             badge("build", "CL 13477524", "6a3fc4"),
-            badge("Unreal Engine", "4.25.0", "0e1128", "unrealengine"),
+            badge("UE", "4.25.0", "0e1128", "unrealengine"),
             badge("platform", "Linux x64", "e8a317", "linux"),
             badge("renderer", "Vulkan", "a41e22", "vulkan"),
             badge("oracle", "Wine", "722f37", "wine"),
+            badge("original", "Win64", "0078d4"),
         ],
-        [  # stack
-            badge("C++", f"{human(st['cpp'])} files", "00599c", "cplusplus"),
-            badge("Python", f"{st['py']} scripts", "3776ab", "python"),
-            badge("C#", f"{st['cs']} files", "512bd4"),
-            badge("shell", f"{st['sh']} scripts", "4eaa25", "gnubash"),
-            badge("code", f"{human(st['loc'])} lines", "2f6f4f"),
+        [  # files by kind
+            badge("C++", f"{human(st['cpp_c'])} .cpp", "00599c", "cplusplus"),
+            badge("headers", f"{human(st['cpp_h'])} .h", "00599c"),
+            badge("recovered", f"{human(st['cpp_i'])} .inc", "004482"),
+            badge("Python", f"{N['py']} scripts", "3776ab", "python"),
+            badge("C#", f"{N['cs']} files", "512bd4"),
+            badge("shell", f"{N['sh']} scripts", "4eaa25", "gnubash"),
+            badge("patches", st["patch"], "6e5494"),
+        ],
+        [  # lines by kind
+            badge("C++ lines", human(L["cpp"]), "00599c"),
+            badge("Python lines", human(L["py"]), "3776ab"),
+            badge("C# lines", human(L["cs"]), "512bd4"),
+            badge("shell lines", human(L["sh"]), "4eaa25"),
+            badge("docs", f"{human(L['md'])} lines", "0e7490"),
+            badge("markdown", f"{N['md']} files", "0e7490"),
+            badge("data", f"{st['json']} JSON", "b08800"),
+        ],
+        [  # repo
             badge("tracked files", human(st["files"]), "1f6feb"),
+            badge("commits", human(st["commits"]), "1f6feb", "git"),
+            badge("branches", st["branches"], "1f6feb"),
+            badge("since", st["first"], "9f9f9f"),
+            badge("authored by", "Codex", "10a37f"),
+            badge("authored by", "Claude", "d97757", "anthropic"),
+            badge("status", "WIP", "dfb317"),
         ],
         [  # game data (counts from porting/README.md "Current evidence")
+            badge("paks", "31 · v10", "5b4a8a"),
             badge("pak entries", "963,427", "5b4a8a"),
             badge(".uasset", "450,951", "5b4a8a"),
             badge("maps", "3,694", "5b4a8a"),
@@ -120,20 +163,41 @@ def badges(d):
             badge("modules", "6", "5b4a8a"),
             badge("API routes", "59", "5b4a8a"),
         ],
-        areas[:6],
-        [
-            *areas[6:],
+        areas[:7],
+        [  # remaining areas and model shape
+            *areas[7:],
             badge("components", len(leaves), "0e7490"),
             badge("areas", len(d["groups"]), "0e7490"),
             *([badge("class parity", f"{parity.group(1)}/{parity.group(2)}", "2e8540")] if parity else []),
+            badge("git-measured", f"{basis('git')} leaves", "0e7490"),
+            badge("manual", f"{basis('manual')} leaves", "9f9f9f"),
+        ],
+        [  # tracked files per tree
+            badge("native", f"{human(D['native'])} files", "00599c"),
+            badge("behavior", f"{human(D['behavior'])} files", "004482"),
+            badge("frontend", f"{human(D['frontend'])} files", "7d4cdb"),
+            badge("server", f"{D['server']} files", "e8a317"),
+            badge("assets", f"{D['asset_pipeline']} files", "5b4a8a"),
+            badge("materials", f"{D['material_pipeline']} files", "5b4a8a"),
+            badge("dashboard", f"{D['progress']} files", "2a78d6"),
+        ],
+        [  # toolchain
+            badge("extraction", "CUE4Parse", "512bd4"),
+            badge("decompiler", "Ghidra 12.2", "b5301f"),
+            badge("pak index", "v10", "5b4a8a"),
+            badge("net", "IpNetDriver", "a41e22"),
+            badge("UI", "CommonUI", "7d4cdb"),
+            badge("parity", "checksum", "2e8540"),
+            badge("tooling", "Python", "3776ab", "python"),
         ],
         [  # process
-            badge("commits", human(st["commits"]), "1f6feb", "git"),
-            badge("since", st["first"], "9f9f9f"),
-            badge("status", "work in progress", "dfb317"),
-            badge("authored by", "Codex", "10a37f"),
-            badge("co-authored by", "Claude", "d97757", "anthropic"),
-            badge("decompiler", "Ghidra", "9f9f9f"),
+            badge("agents", "≤3 at once", "d97757", "anthropic"),
+            badge("commits", "each batch", "1f6feb"),
+            badge("history", "per commit", "2a78d6"),
+            badge("evidence", "ledgered", "2e8540"),
+            badge("keys", "git-ignored", "e05d44"),
+            badge("assets", "git-ignored", "e05d44"),
+            badge("checks", "batched", "dfb317"),
         ],
     ]
     return "\n".join([BSTART, *(f'<p align="center">{" ".join(r)}</p>' for r in rows), BEND])

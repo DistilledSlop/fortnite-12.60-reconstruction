@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "446010172448821d554f8abe8218ad4b6c15510c",
- "subject": "Lay README badges out as a shields.io-style grid",
- "date": "2026-11-03T01:08:12-05:00",
+ "head": "1e93ff5c793ddedc1b934d95b382463c5c91201f",
+ "subject": "Replace the badge table with a free-standing 7x6 badge grid",
+ "date": "2026-11-03T01:09:26-05:00",
  "overall_pct": 20.66,
  "measured_pct": 19.79,
  "objective_pct": 19.786,
