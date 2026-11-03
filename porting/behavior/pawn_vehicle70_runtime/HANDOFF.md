@@ -15,3 +15,5 @@ No compiler, tests, build, generator, Ghidra, canonical edits or commits were ru
 
 All bounded workers finished. Root reviewed control flow and unresolved contracts;
 no source-complete or runtime-parity claim is made.
+
+Batch87 follow-up: hoverboard_wrap87_runtime/ expands the previously opaque record append and destruction adapters, preserves byte-sized initialization with unwritten gaps, and records the complete0xf0 context extent. Its call/layout contracts remain open; use that more explicit draft for the next hoverboard pass.

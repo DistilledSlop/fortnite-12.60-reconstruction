@@ -1,5 +1,47 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Broad native source recovery batch87 (2026-11-03)
+
+Added two newly probed connected native drafts: quest-assist update142443e60
+and scoreboard append/flush141e4f8a0. Quest source now binds reflected quest,
+objective, definition and feat fields/classes while retaining lookup order,
+completion scan, writes and event. Scoreboard source exposes synchronous and
+asynchronous flush, task/closure transfer, reference counts and cleanup; original
+assembly recovers its omitted string argument. External helper/ownership ABIs
+remain open; neither draft is canonical or runtime validated.
+
+Improved two existing large drafts: team-change text formatting now has both
+season-level operands from original call registers, reflected state fields and
+explicit ordered text/map temporaries; hoverboard wrapping expands record copies
+and cleanup. Root corrected its stack extent to0xf0 and preserved unwritten gaps.
+Applied two original-byte argument corrections directly to the existing vehicle
+replication draft (driver logging and old-driver montage). Removed a redundant
+raw decompiler transcription rather than treating it as a new recovered body.
+Earlier large drafts existed for all three reflected candidates; address-only
+screening missed them. Next discovery must check function names and source
+coverage, then probe unrepresented native callees rather than duplicate wrappers.
+
+Canonical counts unchanged:2,147 bodies+221fields=2,368 accepted, rejected0
+at generation86. No generator/build/runtime/tests this batch. Last tested2,040;
+107 canonical+4 manual bodies pending; next test3,040. All four gates OPEN;
+objective ACTIVE. Previous status-only goal turn was NO PROGRESS; this turn
+changes source drafts and resolves concrete ABI operands. Root reviewed source
+control flow, assembly evidence and fields; these are source-level improvements,
+not additional accepted native bodies or parity claims.
+
+Root serial probe: porting/.venv/bin/python -I porting/ghidra/probe_callees.py
+--input /tmp/large-native87-probe.json --out porting/generated/large-native87
+--timeout60 --mem12G;5/5 ok,10.8s, rolled back, usual project metadata changes,
+log/tmp/large-native87-probe.log. No live probe/generation/build remains.
+Additional probed helpers141a78050,14244f820,142f440c0 remain local evidence,
+not recovered bodies. New tracked folders quest_assist87_runtime,
+scoreboard_native87_runtime,team_rep87_runtime,hoverboard_wrap87_runtime and
+vehicle_rep87_runtime pin inputs and list open contracts. No full-image rehash.
+Preserve unrelated graphics/Engine edits, deferred visuals, economical reads,
+bounded rotating fork-none Terra6.1 medium workers (Luna medium small reads;
+Sol6.1 medium complex), root canonical/native/promotion/commit ownership.
+Previous pushed source23383de9/dashboard2f806824.
+
 ## Registered getter remainder batch86 (2026-11-03)
 
 Integrated14 getter bodies plus14 evidenced fields: vehicle steering angle,

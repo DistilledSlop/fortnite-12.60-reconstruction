@@ -21,3 +21,5 @@ The RPCs preserve cast checks, report call order and rereads, optional runtime
 flag, downstream notification, kill-feed 0x30 iteration and reference release.
 The 36-byte output is opaque; array Data indirection and refcount control-block
 layout require ABI confirmation. No draft is proposed as a completed candidate.
+
+Batch87 follow-up: team_rep87_runtime/ provides a more concrete standard-container/text draft and original-byte evidence for both previously missing level-format operands. It also binds ChangeTeamInfo, SeasonLevelUIDisplay and the player-state class identity. The new draft is still uncounted with unresolved map/text/call contracts.

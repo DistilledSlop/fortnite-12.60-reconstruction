@@ -10,6 +10,12 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch87 broad source recovery adds quest-assist and scoreboard native drafts,
+resolves team-format and vehicle-call arguments, and expands hoverboard record
+copy/cleanup. All remain uncounted with explicit ABI dependencies. No duplicate
+raw transcription retained. Canonical2,147 bodies+221fields unchanged; no builds/
+tests; next3,040, all four product gates OPEN. See top HANDOFF for exact scope.
+
 Batch86 integrates14 remaining getters+14 fields across steering, content
 controls, leaderboard, quest and upgrade state. Exact registration and occupancy
 checks remain intact; zone teleport getter stays blocked. Generation accepts

@@ -4,12 +4,14 @@
 struct Pawn; struct Object; struct Vehicle; struct Name; struct OwnedString;
 struct VehicleState { unsigned char bytes[32]; };
 extern int vehicle_log_verbosity();
-extern Vehicle* pawn_v1088(Pawn*); extern bool vehicle_v568(Vehicle*, uint8_t);
+extern Vehicle* pawn_v1088(Pawn*); extern uint8_t vehicle_v568(Vehicle*, uint8_t);
 extern uint8_t role(Pawn*); extern void* fun_142d68a40();
 extern Object* find_enum_142ed84a0(void*, int, const wchar_t*, int);
 extern void log_enum_missing(); extern void fun_142c7b670();
 extern OwnedString* enum_name_142d67ac0(Object*, uint8_t);
-extern void log_role_driving_unresolved_args(OwnedString*); // decompiler omits variadic arguments
+extern int32_t name_count(OwnedString*); extern const wchar_t* name_data(OwnedString*);
+extern const wchar_t* literal_1459a4b30();
+extern void log_role_driving(const wchar_t*, uint32_t); // recovered varargs; log ABI remains open
 extern void free_string(OwnedString*);
 extern Object* movement(Pawn*); extern void log_no_movement(); extern void pawn_v5e8(Pawn*);
 extern VehicleState& local_state(Pawn*); extern VehicleState& rep_state(Pawn*);
@@ -41,12 +43,13 @@ struct InVehicleFrame {
 bool OnRep_InVehicle_prefix(Pawn* p, InVehicleFrame& f) {
  if (vehicle_log_verbosity() > 4) {
   Vehicle* current = pawn_v1088(p);
-  if (current) vehicle_v568(current, state_seat(local_state(p)));
+  uint8_t driving = current ? vehicle_v568(current, state_seat(local_state(p))) : 0;
   uint8_t r = role(p);
   Object* e = find_enum_142ed84a0(fun_142d68a40(), 0, L"Engine.ENetRole", 0);
   if (!e) { log_enum_missing(); fun_142c7b670(); }
   OwnedString* name = enum_name_142d67ac0(e, r);
-  log_role_driving_unresolved_args(name);
+  // Original-byte register/stack evidence: vehicle_rep87_runtime/PROPOSAL.md.
+  log_role_driving(name_count(name) ? name_data(name) : literal_1459a4b30(), driving);
   if (name) free_string(name);
  }
  f.movement = movement(p);
@@ -383,7 +386,6 @@ InVehicleNext OnRep_InVehicle_552_856(Pawn* p, InVehicleFrame& f, InVehicle552Fr
 extern void controller_vbe0(Object*);
 extern void vehicle_vf8(Vehicle*,uint8_t); extern Object* vehicle_vb0(Vehicle*,uint8_t,uint8_t);
 extern float pawn_v7b8(Pawn*,Object*,float,int);
-extern float pawn_v7b8_old_driver_unresolved(Pawn*); // decompiler omits call arguments at line 958
 extern uint8_t& reliable_input_byte2(Pawn*); extern uint8_t& emote_random_byte18(Pawn*);
 struct Delegate; struct TimerArg; struct TimerCleanup; struct DelegateFactoryResult;
 extern DelegateFactoryResult* delegate_factory_1406a86f0(Pawn*,uintptr_t,float);
@@ -469,7 +471,8 @@ static void OnRep_InVehicle_857_1105(Pawn* p,InVehicleFrame& f,InVehicleNext nex
    bool newDriving=vehicle_v568(old,state_seat(rep_state(p)));
    if (!newDriving) {
     bool oldDriving=vehicle_v568(old,state_seat(local_state(p)));
-    float duration=oldDriving ? pawn_v7b8_old_driver_unresolved(p) : pawn_v7b8(p,montage,1.0f,0);
+    // Both native branches share RCX=p, RDX=montage, XMM2=1.0f, R9=0.
+    float duration=pawn_v7b8(p,montage,1.0f,0);
     if (duration>0) {
      if (!oldDriving) {
       reliable_input_byte2(p)|=4;
