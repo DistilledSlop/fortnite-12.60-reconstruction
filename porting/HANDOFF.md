@@ -1,5 +1,46 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Fresh spawn policy and pickup source batch91 (2026-11-03)
+
+Added UNCOUNTED source drafts for game-state actor-spawn policy and pawn pickup
+overlap/automatic pickup. Spawn policy covers class-default creation, Invalid_Class
+result, ordered rule scan, early failure transfer and result cleanup. Root
+reflection lookup identifies EvaluationResult (48bytes): bSucceeded, ErrorCode
+FString+8, ErrorMessage FText+24, plus all4 source argument names. Actual rule
+implementations/storage and typed lifetime integration remain unresolved.
+
+Pickup recovery follows exec142a7d810 ->1423366f0 ->142357350 ->142357450, plus
+repickup eligibility1420289a0. The final native body is626 Ghidra lines, recovered
+as a behavioral draft covering capacity/stack/swap/interaction/queue/timer paths.
+Root review restored logging, native query order, byte widths, wrapped32-bit
+capacity sum and the full snapshot/identity/rank scan after rejection. Extern
+ABI/lifetime, allocator behavior and callback ownership remain explicit gaps;
+these drafts are not complete source recoveries or canonical implementations.
+
+Canonical unchanged2,170 bodies+238fields. No tests/build/runtime: last tested
+2,040;130 canonical+4 manual build-pending; next3,040. All product gates OPEN;
+full objective ACTIVE. This turn PROGRESS:14 canonical bodies+9fields integrated
+and pushed, broad source recovery across vehicle/building/spawn/pickup families.
+Last pushed sourceca4149d8/dashboard955740d6 before this source commit.
+
+Root serial Ghidra probes: native91-fresh(2),native91-body(3),native91-pickup(2),
+all successful and project metadata rolled back; all process handles terminal.
+Commands porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input
+/tmp/<name>.json --out porting/generated/<name> --timeout60 --mem12G; logs
+/tmp/<name>.log. Bounded Terra medium workers finished source; root retains
+canonical/native/generation/staging/build ownership. Luna inventory confirmed
+21 untouched improved-decomp files in60-350line window were mostly exec wrappers,
+then extracted underlying direct callees for fresh probes rather than treating
+wrapper exhaustion as native-family exhaustion.
+
+Next: continue grouped probes of new native families; use broad rough source
+passes, keep dependency closure bounded, and promote complete implementations
+when ready. Current ignored probe evidence supports these draft refinements.
+Avoid rediscovering existing drafts: check function names in tracked source
+contents as well as names/addresses. Preserve unrelated graphics/Engine edits,
+visual pause, economical reads and fork-none Terra6.1 medium work delegation
+(Luna medium small read-only; Sol6.1 medium complex); rotate bounded tasks.
+
 ## Broad vehicle/building implementation batch90 (2026-11-03)
 
 Committed source89 d040793d and dashboardb2d552a5, pushed origin/main.

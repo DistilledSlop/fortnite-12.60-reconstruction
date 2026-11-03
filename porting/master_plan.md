@@ -10,6 +10,11 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch91 adds uncounted actor-spawn-policy and automatic-pickup source drafts,
+including the fresh626-line native pickup body. Review restores logs, snapshot
+scan and query order. Lifetime/ABI dependencies remain; canonical2,170 bodies+
+238fields unchanged; no tests/build, next3,040. All gates remain OPEN.
+
 Batch90 adds uncounted substantive vehicle destruction/trick/ejection and
 building initialization/foliage source lifts. Dependency-bearing drafts remain
 outside the canonical manifest;2,170 bodies+238fields unchanged. No tests/build;
