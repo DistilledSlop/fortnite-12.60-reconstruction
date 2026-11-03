@@ -2342,6 +2342,10 @@ _volume_client_spec = _common_activation_import.spec_from_file_location(
     "volume_client64_policy", os.path.join(os.path.dirname(__file__), "behavior", "volume_client_tracking64_runtime", "source_policy.py"))
 _volume_client_policy = _common_activation_import.module_from_spec(_volume_client_spec)
 _volume_client_spec.loader.exec_module(_volume_client_policy)
+_kismet_geometry_spec = _common_activation_import.spec_from_file_location(
+    "kismet_geometry64_policy", os.path.join(os.path.dirname(__file__), "behavior", "kismet_geometry64_runtime", "source_policy.py"))
+_kismet_geometry_policy = _common_activation_import.module_from_spec(_kismet_geometry_spec)
+_kismet_geometry_spec.loader.exec_module(_kismet_geometry_policy)
 _definition_queries_spec = _common_activation_import.spec_from_file_location(
     "definition_queries_signature_policy", os.path.join(os.path.dirname(__file__), "behavior", "definition_broad53_runtime", "source_policy.py"))
 _definition_queries_policy = _common_activation_import.module_from_spec(_definition_queries_spec)
@@ -3894,6 +3898,7 @@ def promote(args):
                                     if 'AFortGameStateAthena' in listed else None)
     profile_entry_sources = _profile_entry_policy.sources() if 'UMcpProfile' in listed else None
     pending_save_sources = _pending_save_policy.sources() if 'UFortMcpProfileWorld' in listed else None
+    _kismet_geometry_policy.validate()
     asset_diagnostic_sources = _asset_diagnostic_policy.sources() if 'UFortAssetManager' in listed else None
     if 'AFortVolume' in listed:
         asset_diagnostic_sources = asset_diagnostic_sources or {}

@@ -13,7 +13,7 @@ credentials in Git, and the orchestrator reviews and commits.
 Native source recovery has reached 2,051 complete bodies plus 176 supporting
 fields (batch64, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
 Linux client/server builds and Apollo headless join passed; tracked receipts in
-progress/native-checkpoint-2040.json. Eleven subsequent bodies are build pending.
+progress/native-checkpoint-2040.json. Eleven subsequent canonical bodies and four manual Kismet math bodies are build pending.
 Next build/runtime/test batch at3,040 bodies. Fail-closed generation accepts
 2,227 ported entries with no rejected splices. All four product gates remain
 open. Latest source restores day-phase callback/virtual boundaries, the live

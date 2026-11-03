@@ -63,6 +63,18 @@ public:
     UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
     static bool IsMobilePlatform();
 
+    UFUNCTION(BlueprintCallable, Category="Fortnite|Math")
+    static float GetAngleDegrees(const FVector& Source, const FVector& Target);
+
+    UFUNCTION(BlueprintPure, Category="Fortnite|Math")
+    static FVector K2_GetClosestAxisXY(FVector InVector);
+
+    UFUNCTION(BlueprintPure, Category="Fortnite|Math")
+    static FVector NormalizedAngleInDegreesToVector(float A);
+
+    UFUNCTION(BlueprintPure, Category="Fortnite|Math")
+    static float VectorToNormalizedAngleInDegrees(FVector V);
+
     // Original Win64 shipping contract: context is marshaled but not inspected.
     UFUNCTION(BlueprintPure, Category="Fortnite|Platform", meta=(WorldContext="WorldContextObject"))
     static bool IsMobileGame(const UObject* WorldContextObject);

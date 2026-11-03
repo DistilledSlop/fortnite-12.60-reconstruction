@@ -1,5 +1,25 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native rough/source batch65 (2026-11-03)
+
+Four reviewed math bodies now integrated in manually owned FortniteMapClasses:
+GetAngleDegrees, K2_GetClosestAxisXY, NormalizedAngleInDegreesToVector and
+VectorToNormalizedAngleInDegrees. Original x86 UE math operations, comparison
+semantics, constants and reflection are preserved. Their policy pins original
+bytes and exact manual declarations/bodies/reflection during generation.
+These four manual implementations are outside canonical splice accounting:
+canonical remains2,051 bodies+176fields=2,227 accepted/rejected0. Fifteen bodies
+have been added across generated/manual source since2,040; all build pending.
+Promotion65 changed no generated files. Next tests remain at about3,040.
+
+New uncounted rough passes: volume_membership65_runtime covers removal, callback
+bind/unbind, EndPlay and clear; building_asc65_runtime covers component creation,
+guarded initialization and static tags. Explicit unresolved effects remain, with
+no fabricated implementations. The native+550 delegate broadcast evidence is
+corrected in the older delegate handoff. Four product gates remain OPEN. Source
+batch64 commit73658649 pushed. Root retains canonical/generation/build ownership,
+bounded fork-none Terra6.1 medium/low workers and economical output preferences.
+
 ## Native source batch64 (2026-11-03)
 
 Canonical 2,051 bodies + 176 fields = 2,227 accepted, rejected 0. Added the
