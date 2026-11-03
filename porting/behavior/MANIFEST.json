@@ -34143,5 +34143,186 @@
       "FortTrackedTimeOfDayClass.h"
     ],
     "notes": "Assigned nonconst native virtual name; AFortGameMode primary table +0x930 override. Preserve raw TSubclassOf return storage."
+  },
+  {
+    "kind": "helper",
+    "class": "UFortGameInstance",
+    "function": "NativeIsGameMode141ed8de0",
+    "signature": "bool NativeIsGameMode141ed8de0(const UObject* ContextObject, uint8 GameMode)",
+    "signature_status": "proposed",
+    "address": "0x141ed8de0",
+    "static": true,
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/timeofday_context_predicate_runtime/NativeIsGameMode141ed8de0.inc",
+    "notes": "Address alias; compares against the byte selected by canonical NativeGetGameMode141ed4e30. Native input is an unrestricted byte. The native fallback value is 2 when the engine or asset manager is absent.",
+    "includes": [
+      "UObject/Object.h"
+    ]
+  },
+  {
+    "function": "NativeAppendTimeOfDayClasses",
+    "kind": "helper",
+    "signature": "void NativeAppendTimeOfDayClasses(TArray<TSoftClassPtr<AFortTimeOfDayManager>>& Destination, const TArray<TSoftClassPtr<AFortTimeOfDayManager>>& Source)",
+    "access": "public",
+    "static": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f4fed0",
+    "inc_path": "porting/behavior/timeofday_theme_selection_runtime/NativeAppendTimeOfDayClasses.inc",
+    "includes": [],
+    "notes": "Copies owning soft class pointers and preserves append order and duplicates.",
+    "class": "UFortTimeOfDayData"
+  },
+  {
+    "function": "NativeRebuildValidTimeOfDayManagers",
+    "kind": "helper",
+    "signature": "void NativeRebuildValidTimeOfDayManagers(FFortTimeOfDayTheme& Theme)",
+    "access": "public",
+    "static": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f5ba50",
+    "inc_path": "porting/behavior/timeofday_theme_selection_runtime/NativeRebuildValidTimeOfDayManagers.inc",
+    "includes": [],
+    "notes": "Rebuilds the cache with collection and additional classes, then removes prohibited paths using swap removal.",
+    "class": "UFortTimeOfDayData"
+  },
+  {
+    "function": "NativeSelectTimeOfDayManager",
+    "kind": "helper",
+    "signature": "TSoftClassPtr<AFortTimeOfDayManager> NativeSelectTimeOfDayManager(FFortTimeOfDayTheme& Theme)",
+    "access": "public",
+    "static": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f60280",
+    "inc_path": "porting/behavior/timeofday_theme_selection_runtime/NativeSelectTimeOfDayManager.inc",
+    "includes": [],
+    "notes": "Lazily rebuilds an empty cache and returns a copied class selected with FMath::RandHelper.",
+    "class": "UFortTimeOfDayData"
+  },
+  {
+    "class": "AFortGameMode",
+    "function": "GetGameContextTagsNative",
+    "kind": "helper",
+    "signature": "FGameplayTagContainer* GetGameContextTagsNative()",
+    "access": "public",
+    "virtual": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1419458e0",
+    "inc_path": "porting/behavior/timeofday_data_provider_runtime/GetGameContextTagsNative.inc",
+    "includes": [],
+    "notes": "Assigned native virtual name and nonconst signature. Base and Athena vtable +0x980 share this exact target, returning address of GameContextTags at +0x4b0."
+  },
+  {
+    "class": "UGameDataSTW",
+    "function": "ResolveTimeOfDayDataNative",
+    "kind": "helper",
+    "signature": "UFortTimeOfDayData* ResolveTimeOfDayDataNative()",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1424e4940",
+    "inc_path": "porting/behavior/timeofday_data_provider_runtime/ResolveTimeOfDayDataNative.inc",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ],
+    "notes": "Assigned native name; 0x1424e4940 reads the reflected UGameDataSTW::FortTimeOfDayData at +0x10d8 and tail-calls typed resolver 0x1424ce5d0 with logging enabled. Nonempty references track the typed result including null."
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "NativeGetGameDataSTW",
+    "kind": "helper",
+    "signature": "UGameDataSTW* NativeGetGameDataSTW()",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141df78c0",
+    "inc_path": "porting/behavior/timeofday_data_provider_runtime/NativeGetGameDataSTW.inc",
+    "includes": [
+      "Engine/DataAsset.h",
+      "Engine/StreamableManager.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Assigned name; 0x141df78c0 calls 0x141df76b0 on cache miss, loading primary assets with the reflected STW class name as type, default bundles and priority zero. Handle is released before fatal and before caching."
+  },
+  {
+    "class": "UGameDataSTW",
+    "function": "NativeGetGameDataSTW",
+    "kind": "helper",
+    "signature": "UGameDataSTW* NativeGetGameDataSTW()",
+    "access": "public",
+    "static": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1424e1120",
+    "inc_path": "porting/behavior/timeofday_data_provider_runtime/NativeGetGameDataSTWProvider.inc",
+    "includes": [],
+    "notes": "Assigned static provider binding. Native 0x1424e1120 obtains the real engine UFortAssetManager and forwards to its STW data accessor."
+  },
+  {
+    "function": "NativeSetTimeOfDayManagerGameplayOverride",
+    "kind": "helper",
+    "signature": "void NativeSetTimeOfDayManagerGameplayOverride(UClass* TimeOfDayManagerClass)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/timeofday_override_runtime/NativeSetTimeOfDayManagerGameplayOverride.inc",
+    "address": "0x1419642e0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/World.h",
+      "UObject/Class.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Assigned helper for original reflected operation. Requires NativeRefreshTimeOfDayManager source closure before promotion. Compares checked classes then stores the raw new class; preserves guard and callback order.",
+    "class": "AFortGameModeAthena"
+  },
+  {
+    "kind": "helper",
+    "class": "AFortWorldSettings",
+    "function": "NativeSpawnTimeOfDayManager",
+    "signature": "AFortTimeOfDayManager* NativeSpawnTimeOfDayManager()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x141fbd1f0",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/timeofday_spawn_selection_runtime/NativeSpawnTimeOfDayManager.inc",
+    "includes": [
+      "Engine/World.h",
+      "EngineUtils.h",
+      "FortTrackedTimeOfDayClass.h"
+    ],
+    "notes": "Assigned native name. Preserves native spawn/refresh ordering and shared tracked soft-class resolution; complete source dependencies integrated together."
+  },
+  {
+    "kind": "helper",
+    "class": "AFortWorldSettings",
+    "function": "NativeRefreshTimeOfDayManager",
+    "signature": "AFortTimeOfDayManager* NativeRefreshTimeOfDayManager()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x141fd72d0",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/timeofday_spawn_selection_runtime/NativeRefreshTimeOfDayManager.inc",
+    "includes": [
+      "Engine/World.h",
+      "EngineUtils.h",
+      "FortTrackedTimeOfDayClass.h"
+    ],
+    "notes": "Assigned native name. Preserves native spawn/refresh ordering and shared tracked soft-class resolution; complete source dependencies integrated together."
   }
 ]

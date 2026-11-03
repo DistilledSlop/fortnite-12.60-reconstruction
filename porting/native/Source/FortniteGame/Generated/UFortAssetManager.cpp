@@ -2,8 +2,10 @@
 #include "UFortAssetManager.h"
 #include "AFortGameModeFrontEnd.h"
 #include "AFortPlayerController.h"
+#include "Engine/DataAsset.h"
 #include "Engine/DemoNetDriver.h"
 #include "Engine/Engine.h"
+#include "Engine/StreamableManager.h"
 #include "Engine/World.h"
 #include "FortAssetDiagnosticMap.h"
 #include "FortAssetLoadDiagnosticState.h"
@@ -15,6 +17,7 @@
 #include "SharedFortCsv.h"
 #include "SharedFortGameLog.h"
 #include "UFortGameInstance.h"
+#include "UGameDataSTW.h"
 #include "UObject/NoExportTypes.h"
 #include "UObject/Object.h"
 #include "UObject/UObjectGlobals.h"
@@ -217,5 +220,33 @@ void UFortAssetManager::NativeHandleLoadDiagnostic(FFortAssetLoadDiagnosticState
 	}
 	State.LastLoadTime = FPlatformTime::Seconds();
 	State.LastLoadPath = Path;
+}
+
+UGameDataSTW* UFortAssetManager::NativeGetGameDataSTW()
+{
+	// CONFIDENCE: HIGH
+	// 0x141df78c0 and its common loader 0x141df76b0.
+	if (GameDataSTW)
+	    return GameDataSTW;
+
+	UPrimaryDataAsset* LoadedData = nullptr;
+	const FPrimaryAssetType DataType(UGameDataSTW::StaticClass()->GetFName());
+	if (!GameDataNameSTW.IsEmpty())
+	{
+	    TSharedPtr<FStreamableHandle> Handle = LoadPrimaryAssetsWithType(
+	        DataType, DefaultBundleState, FStreamableDelegate(), 0);
+	    if (Handle.IsValid())
+	    {
+	        Handle->WaitUntilComplete(0.0f, false);
+	        LoadedData = Cast<UPrimaryDataAsset>(Handle->GetLoadedAsset());
+	    }
+	} // The native shared handle is released before error handling and caching.
+	if (!LoadedData)
+	{
+	    UE_LOG(LogFort, Fatal, TEXT("Failed to load GameData asset at %s. Type %s. This is not recoverable and likely means you do not have the correct data to run Fortnite."),
+	        *GameDataNameSTW, *DataType.ToString());
+	}
+	GameDataSTW = Cast<UGameDataSTW>(LoadedData);
+	return GameDataSTW;
 }
 

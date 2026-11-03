@@ -22,6 +22,7 @@
 #include "Misc/Guid.h"
 #include "UGameFrameworkComponentManager.h"
 #include "UMcpProfileManager.h"
+#include "UObject/Object.h"
 #include "WebJSFunction.h"
 
 class AContentBeaconClient;
@@ -368,6 +369,7 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	uint8 NativeGetSubGame141e5f160() const;
 	static uint8 NativeGetGameMode141ed4e30(const UObject* ContextObject);
+	static bool NativeIsGameMode141ed8de0(const UObject* ContextObject, uint8 GameMode);
 public:
     void NativeCollectClientEventFunctions141e60900(UObject* Object, TSet<FName>& Functions) const;
     void NativeRegisterClientEventObject141e78cb0(UObject* Object);

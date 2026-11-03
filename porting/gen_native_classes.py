@@ -2775,13 +2775,13 @@ def helper_type_refs(names, texts, package, ctx, explicit):
             if ctx["class_pkg"][tok] != package:
                 problems.append("signature uses %s, a class of another module" % tok)
             else:
-                # TSubclassOf stores a UClass pointer, not an instance of T.
+                # Class pointer wrappers do not store an instance of T.
                 # Check each occurrence so another pointer/wrapper occurrence
                 # cannot mask a separate invalid class-by-value parameter.
                 occurrences = list(re.finditer(r"\b%s\b" % re.escape(tok), joined))
                 indirect = all(
                     re.match(r"\s*[*&]", joined[m.end():]) or
-                    re.search(r"\bTSubclassOf\s*<\s*(?:class\s+)?$", joined[:m.start()])
+                    re.search(r"\b(?:TSubclassOf|TSoftClassPtr)\s*<\s*(?:class\s+)?$", joined[:m.start()])
                     for m in occurrences)
                 if indirect:
                     fwd.add(tok)

@@ -6,8 +6,10 @@
 #include "CoreMinimal.h"
 #include "Engine/AssetManager.h"
 
+#include "Engine/DataAsset.h"
 #include "Engine/DemoNetDriver.h"
 #include "Engine/Engine.h"
+#include "Engine/StreamableManager.h"
 #include "Engine/World.h"
 #include "FortAssetDiagnosticMap.h"
 #include "FortAssetLoadDiagnosticState.h"
@@ -121,5 +123,6 @@ public:
 	static void AppendFirstDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out);
 	static uint8 NativeGetGameSubMode();
 	static void NativeHandleLoadDiagnostic(FFortAssetLoadDiagnosticState& State, const FString& Path, bool bSynchronous);
+	UGameDataSTW* NativeGetGameDataSTW();
 };
 

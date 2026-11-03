@@ -8,6 +8,7 @@
 
 #include "AttributeSet.h"
 #include "EForceKickAfterDeathMode.h"
+#include "Engine/World.h"
 #include "FAthenaStreamIdOverride.h"
 #include "FAthenaVehicleOverride.h"
 #include "FBuildingGameplayActorSpawnData.h"
@@ -22,8 +23,10 @@
 #include "FTimeOfDayOverride.h"
 #include "FortTrackedTimeOfDayClass.h"
 #include "Math/Vector.h"
+#include "SharedFortGameLog.h"
 #include "UFortMutatorOwner.h"
 #include "UGameplayMutatorObserverInterface.h"
+#include "UObject/Class.h"
 #include "UObject/Object.h"
 
 class AActor;
@@ -687,6 +690,7 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 	virtual TSubclassOf<AFortTimeOfDayManager> GetTimeOfDayManagerClassNative();
+	void NativeSetTimeOfDayManagerGameplayOverride(UClass* TimeOfDayManagerClass);
 public:
     // Existing Linux fixture/runtime support; original native bodies remain open.
     // Definitions stay in Private/FortniteAthenaGameplay.cpp.

@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/WorldSettings.h"
 
+#include "Engine/World.h"
+#include "EngineUtils.h"
+#include "FortTrackedTimeOfDayClass.h"
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
@@ -222,5 +225,10 @@ public:
 	UPROPERTY(Transient)
 	UFortLevelOverlayManager* LevelOverlayManager;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	AFortTimeOfDayManager* NativeSpawnTimeOfDayManager();
+	AFortTimeOfDayManager* NativeRefreshTimeOfDayManager();
 };
 

@@ -12,7 +12,7 @@ def sources():
     policy = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(policy)
     result.update(policy.sources())
-    for dirname in ('asset_diagnostic_reads_source_runtime', 'asset_diagnostic_support_runtime', 'asset_load_analytics_source_runtime', 'asset_load_callback_runtime', 'independent_native_recovery_runtime', 'asset_owner_materialization_runtime', 'weapon_ammo_source_batch_runtime', 'building_init_mode_helpers_runtime', 'gadget_ammo_override_batch_runtime', 'tracked_soft_class_resolver_runtime'):
+    for dirname in ('asset_diagnostic_reads_source_runtime', 'asset_diagnostic_support_runtime', 'asset_load_analytics_source_runtime', 'asset_load_callback_runtime', 'independent_native_recovery_runtime', 'asset_owner_materialization_runtime', 'weapon_ammo_source_batch_runtime', 'building_init_mode_helpers_runtime', 'gadget_ammo_override_batch_runtime', 'tracked_soft_class_resolver_runtime', 'timeofday_context_predicate_runtime', 'timeofday_theme_selection_runtime', 'timeofday_data_provider_runtime', 'timeofday_spawn_selection_runtime', 'timeofday_override_runtime'):
         folder = HERE.parent / dirname
         evidence = json.loads((folder / 'native-evidence.json').read_text())
         with Path(evidence['image']).open('rb') as stream:

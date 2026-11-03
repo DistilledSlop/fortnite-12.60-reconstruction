@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortTimeOfDayTheme.h"
 #include "FWorldAmbientPropertiesMatchingGameContext.h"
+
+class AFortTimeOfDayManager;
 
 #include "UFortTimeOfDayData.generated.h"
 
@@ -20,5 +23,11 @@ public:
 	UPROPERTY()
 	TArray<FWorldAmbientPropertiesMatchingGameContext> WorldAmbientPropertiesList;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeAppendTimeOfDayClasses(TArray<TSoftClassPtr<AFortTimeOfDayManager>>& Destination, const TArray<TSoftClassPtr<AFortTimeOfDayManager>>& Source);
+	static void NativeRebuildValidTimeOfDayManagers(FFortTimeOfDayTheme& Theme);
+	static TSoftClassPtr<AFortTimeOfDayManager> NativeSelectTimeOfDayManager(FFortTimeOfDayTheme& Theme);
 };
 

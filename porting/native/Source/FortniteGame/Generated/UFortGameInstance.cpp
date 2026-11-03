@@ -6,6 +6,7 @@
 #include "UFortAssetManager.h"
 #include "UFortClientEventInterface.h"
 #include "UFortGameInstance.h"
+#include "UObject/Object.h"
 #include "UObject/UnrealType.h"
 
 void UFortGameInstance::CancelContentInstall()
@@ -169,6 +170,13 @@ uint8 UFortGameInstance::NativeGetGameMode141ed4e30(const UObject* ContextObject
 	    }
 	}
 	return UFortAssetManager::NativeGetGameSubMode();
+}
+
+bool UFortGameInstance::NativeIsGameMode141ed8de0(const UObject* ContextObject, uint8 GameMode)
+{
+	// CONFIDENCE: HIGH
+	// 0x141ed8de0 compares the same context lookup and fallback as 0x141ed4e30.
+	return NativeGetGameMode141ed4e30(ContextObject) == GameMode;
 }
 
 // 141e60900: ordinary field iteration includes superclasses and deprecated fields.

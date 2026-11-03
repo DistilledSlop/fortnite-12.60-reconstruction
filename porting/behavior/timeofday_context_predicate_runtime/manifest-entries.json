@@ -1,0 +1,19 @@
+[
+  {
+    "kind": "helper",
+    "class": "UFortGameInstance",
+    "function": "NativeIsGameMode141ed8de0",
+    "signature": "bool NativeIsGameMode141ed8de0(const UObject* ContextObject, uint8 GameMode)",
+    "signature_status": "proposed",
+    "address": "0x141ed8de0",
+    "static": true,
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/timeofday_context_predicate_runtime/NativeIsGameMode141ed8de0.inc",
+    "notes": "Address alias; compares against the byte selected by canonical NativeGetGameMode141ed4e30. Native input is an unrestricted byte. The native fallback value is 2 when the engine or asset manager is absent.",
+    "includes": [
+      "UObject/Object.h"
+    ]
+  }
+]

@@ -18,6 +18,8 @@
 #include "FItemDefinitionAndCount.h"
 #include "FQuickBarData.h"
 #include "FSettingsHUDVisibilityAndText.h"
+#include "FortAssets.h"
+#include "FortDelayedObjectLoader.h"
 #include "GameplayTagContainer.h"
 #include "UGameStateComponent.h"
 
@@ -636,5 +638,10 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UFortItemWrapMappingData> ItemWrapConfigAsset;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	UFortTimeOfDayData* ResolveTimeOfDayDataNative();
+	static UGameDataSTW* NativeGetGameDataSTW();
 };
 
