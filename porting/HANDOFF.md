@@ -1,9 +1,10 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Immediate priority: nine unresolved imports and strict Root gate
+## Handoff / stopped: nine unresolved imports and strict Root gate
 
-User explicitly redirected work to these blockers, then requested handoff/stop
-and resumed. Defer unrelated startup work. Latest observed strict gate is FAIL:
+User explicitly redirected work to these blockers and requested finishing the
+handoff and stopping. No new build has been started. Defer unrelated startup
+work when resumed. Latest observed strict gate is FAIL:
 phase10 root exits0, creation/attachment complete, zero Blueprint errors,9
 unresolved imports. Do not count new source as resolved until the new binary
 runs the strict gate. All4 project milestones and normal interactive startup
@@ -18,7 +19,7 @@ fails9. Commands /tmp/build_frontend_routing_10.py,
 receipts generated/frontend-routing-batch-10/. Client stage is phase10; server
 remains phase8 (prior shared build/join PASS). No unchanged button/server suites.
 
-Current UNCOMMITTED batch targets2 imports: CommonActivatablePanel.
+Source commit393635bc targets2 imports: CommonActivatablePanel.
 HasInputActionHandler with all12 real producers/query/removals/destructor paths,
 and FortKismetLibrary.ExecuteClientEvent with owned weak listener registry,
 registration/removal, source/fallback handler dispatch and FortUserWidget
@@ -33,9 +34,11 @@ files plus2 new support files, and2 hand-written library files. Build and strict
 runtime have NOT run for these edits. Previous promotion12 refused the library
 blocklist;13 caught a missing Python import before writes;14 passes.
 
-Before building, review/stage only owned source and Native paths; other work
+Before building, inspect current source status; the import batch is committed,
+but unrelated/source-only candidates remain uncommitted. Review/stage only owned
+source and Native paths; other work
 updated dashboard dates/time formatting and verified style/click evidence.
-Latest observed HEAD1452e715 includes those external commits; preserve them and
+Source393635bc includes external1452e715 and earlier dashboard commits; preserve them and
 any unrelated progress edits. Do not broadly stage porting/progress. Primary
 owns Native/generator/Engine/build/stage. Never hand-edit Generated code; fix
 canonical fragments/policies, promote fresh report folder, preserve mtimes.
@@ -68,7 +71,13 @@ OnlinePurchaseInterface.h before typing it). Frozen client-event evidence is
 porting/frontend/client-event-evidence.md and the referenced generated .c/.asm
 files; reuse it, don't rediscover the same registry repeatedly.
 
-All workers currently finished; no build/runtime sessions live. Preserve bounded
+All workers currently finished; no build/runtime sessions live. Next action on
+an explicit project resume is one client build from393635bc (adapt
+/tmp/build_frontend_routing_10.py to a fresh strict report directory), then the
+real Root strict run using the newly built ELF. The expected reduction2 imports
+is unverified; inspect actual receipt errors, never change the gate to accept
+missing imports. No build wrapper/report exists yet for this strict batch.
+Preserve bounded
 reads for assembly too, expanding through additional targeted chunks as needed.
 Use fresh bounded workers at coherent component boundaries: Luna medium small
 read-only, Terra medium/high regular implementation, Sol medium complex work,
