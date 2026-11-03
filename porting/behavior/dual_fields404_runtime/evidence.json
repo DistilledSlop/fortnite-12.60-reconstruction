@@ -1,0 +1,45 @@
+[
+  {
+    "class": "AFortWeaponRangedDual",
+    "function": "GetLastFireHand",
+    "reflection": {
+      "exec_addr": "0x142b51b40",
+      "flags": "0x54020409",
+      "create_func": "0x142b50a90",
+      "return_kind": "Enum",
+      "enum_construct_fn": "0x142b51960",
+      "underlying_kind": "Byte",
+      "source": "porting/generated/reflection/fortnite_game_reflection.json"
+    },
+    "enum": {
+      "name": "EDualWeaponHand",
+      "values": {
+        "LEFT": 0,
+        "RIGHT": 1,
+        "MAX": 2
+      },
+      "source": "porting/generated/reflection/enum_blocks.json"
+    },
+    "wrapper_capture": "porting/generated/native108-broad/0x142b51b40.c",
+    "field_offset": "0xf40",
+    "field_type": "uint8",
+    "default": "0",
+    "allocation_evidence": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/CoreUObject/Private/UObject/UObjectGlobals.cpp:2344,2452: TotalSize is InClass->GetPropertiesSize(); non-subobject allocation is zeroed before UObjectBase construction.",
+    "class_extent_evidence": {
+      "parent": "porting/generated/native102-impl/0x142b4dac0.c: AFortWeaponRanged class size 0xef0",
+      "derived": "porting/generated/native399-callees/0x142b509a0.c: AFortWeaponRangedDual class size 0xf48"
+    },
+    "constructor_evidence": {
+      "parent": "porting/generated/native111-constructors/0x1426bd2a0.c",
+      "derived": "porting/generated/native129-constructors/0x1426bd8e0.c",
+      "notes": "Derived constructor calls parent then writes vtables, offsets 0xf30, 0xf38 and 0xef0, and initializes the newly created mesh; no write to 0xf40. Parent extent ends at 0xef0."
+    },
+    "limitations": "Native writes after construction are not recovered; this is source-level getter recovery."
+  },
+  {
+    "function": "GetNextFireHand",
+    "capture": "porting/generated/native411-callees/0x142b51be0.c",
+    "reflection": "native_funcs.json AFortWeaponRangedDual::GetNextFireHand flags0x54020409 returnEDualWeaponHand",
+    "semantics": "Wrapper compares byte+0xf40 to zero and stores bool byte. Enum valuesLEFT0 RIGHT1, so lastLEFT\u2192RIGHT, allotherbytevalues\u2192LEFT. Reuses same constructor-proven zero field."
+  }
+]

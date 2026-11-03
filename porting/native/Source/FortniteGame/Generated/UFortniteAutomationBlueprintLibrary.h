@@ -14,5 +14,8 @@ class FORTNITEGAME_API UFortniteAutomationBlueprintLibrary : public UBlueprintFu
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static bool ResetForcedAthenaCosmetics();
+
 };
 

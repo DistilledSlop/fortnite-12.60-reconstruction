@@ -1,0 +1,49 @@
+[
+  {
+    "class": "AFortWeaponRangedDual",
+    "function": "NativeRecoveredByte_0xf40",
+    "kind": "member_field",
+    "signature": "uint8 NativeRecoveredByte_0xf40",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0xf40",
+    "default": "0",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "notes": "Unreflected last-fire-hand byte; zero-filled object allocation and derived constructor leave it zero. Other writers remain unrecovered."
+  },
+  {
+    "class": "AFortWeaponRangedDual",
+    "function": "GetLastFireHand",
+    "kind": "exec",
+    "signature": "EDualWeaponHand GetLastFireHand() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/dual_fields404_runtime/AFortWeaponRangedDual_GetLastFireHand.inc",
+    "address": "0x142b51b40",
+    "reflection_flags": "0x54020409",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns the byte at 0xf40. Enum type and underlying byte follow reflected return property."
+  },
+  {
+    "class": "AFortWeaponRangedDual",
+    "function": "GetNextFireHand",
+    "kind": "exec",
+    "signature": "EDualWeaponHand GetNextFireHand() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/dual_fields404_runtime/AFortWeaponRangedDual_GetNextFireHand.inc",
+    "address": "0x142b51be0",
+    "reflection_flags": "0x54020409",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Native wrapper returns 1 for last-hand byte zero, otherwise 0."
+  }
+]

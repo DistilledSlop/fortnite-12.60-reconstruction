@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortWeaponRanged.h"
 
+#include "EDualWeaponHand.h"
 #include "FOnHandFired.h"
 
 class UAnimMontage;
@@ -55,8 +56,17 @@ public:
 	UPROPERTY()
 	FOnHandFired OnHandFired;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xf40): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0xf40 = 0;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	EDualWeaponHand GetLastFireHand() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponentBudgeted* GetLeftHandWeaponMesh() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	EDualWeaponHand GetNextFireHand() const;
 
 };
 
