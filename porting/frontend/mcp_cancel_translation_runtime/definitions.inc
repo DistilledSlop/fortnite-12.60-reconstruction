@@ -35,13 +35,16 @@ void NativeCancelBody1411ce2d0(NativeCancelHelper1421cb230* Helper)
     }
 }
 
-// 0x1411d0c30 (CancelInner). Purchase-flow completion. Helper+0x50 = Impl*, Impl+0x50 = success marker.
+// 0x1411d0c30 (CancelInner). Purchase-flow completion. Helper+0x50 = Impl*.
+// Impl+0x50/+0x58 = TSharedPtr<FPurchaseReceipt>-shaped {Object, ReferenceController} (VERIFIED from the
+// 0x140d0e7f0 out pair and the stores in the failure path); non-null Object is the "success" test.
 void NativeCancelInner1411d0c30(NativeCancelHelper1421cb230* Helper, const FString* Error)
 {
     void** HelperImplSlot = (void**)((uint8*)Helper + 0x50);   // plVar1
     uint8* Impl = (uint8*)*HelperImplSlot;                       // lVar9
     bool bSucceeded = false;                                     // uVar11
-    uint8 ResultBuf[0x40];          // auStack_58. Size UNKNOWN; only +0x8 and +0x18 are read below.
+    uint8 ResultBuf[0x48];          // auStack_58 = FOnlineError (VERIFIED size 0x48; was 0x40, which is too small).
+                                    // +0x0 bSucceeded, +0x8 ErrorRaw (FString), +0x18 ErrorCode (FString), +0x28 ErrorMessage (FText), +0x40 Result.
     void* PairCopy[2] = {};         // uStack_88 (Object), plStack_80 (Controller)
     void* Slot78[2] = {};           // auStack_78 out slot for NativeCreateSharedResult140d0e7f0
 
@@ -124,7 +127,8 @@ void NativeCancelInner1411d0c30(NativeCancelHelper1421cb230* Helper, const FStri
         ++*(int32*)((uint8*)PairCopy[1] + 0x8);
         Impl = (uint8*)*HelperImplSlot;
     }
-    // Virtual slot 0x48 on the listener at Impl+0x40 (null when Impl+0x48 == 0).
+    // Impl+0x40 / Impl+0x48 = FDelegateBase storage (VERIFIED: GetDelegateInstanceProtected returns the
+    // allocation only when DelegateSize != 0). Dispatch slot 0x48 is NOT verified (see NOTES.md UNKNOWN 8).
     void* Listener = (*(int32*)(Impl + 0x48) == 0) ? nullptr : *(void**)(Impl + 0x40);
     ((void (*)(void*, void*, void*))((*(void***)Listener)[9]))(Listener, ResultBuf, PairCopy);
     NativeCtrlRelease1411d0c30(PairCopy[1]);
@@ -143,12 +147,13 @@ void NativeCancelInner1411d0c30(NativeCancelHelper1421cb230* Helper, const FStri
     NativeCtrlRelease1411d0c30(UNKNOWN_plStack_28);
 
     // Free the two result-owned buffers (lStack_40 first, then lStack_50).
-    if (UNKNOWN_lStack_40 != nullptr)
+    // VERIFIED: lStack_40 = auStack_58+0x18 (ErrorCode data), lStack_50 = auStack_58+0x8 (ErrorRaw data).
+    if (*(void**)(ResultBuf + 0x18) != nullptr)
     {
-        NativeFreeData142bee710(UNKNOWN_lStack_40);
+        NativeFreeData142bee710(*(void**)(ResultBuf + 0x18));
     }
-    if (UNKNOWN_lStack_50 != nullptr)
+    if (*(void**)(ResultBuf + 0x8) != nullptr)
     {
-        NativeFreeData142bee710(UNKNOWN_lStack_50);
+        NativeFreeData142bee710(*(void**)(ResultBuf + 0x8));
     }
 }

@@ -5,7 +5,8 @@
 
 // ===== Class body: UFortMcpContext =====
 // Reflected name (blueprint import /Script/FortniteGame.FortMcpContext:CancelEpicPurchasingDisplay).
-// UFUNCTION flags UNKNOWN (not in reflection JSON).
+// UFUNCTION flags VERIFIED from fortnite_game_reflection.json (owner block_va 0x146433050 = UFortMcpContext):
+// flags 0x4020403 = FUNC_Final|FUNC_RequiredAPI|FUNC_Native|FUNC_Public|FUNC_BlueprintCallable; params []. Category UNKNOWN.
 void CancelEpicPurchasingDisplay();
 // Helper pointer at this+0x378. Placement at offset 0x378 is UNKNOWN in the generated class layout.
 NativeCancelHelper1421cb230* NativeCancelHelper378 = nullptr;
@@ -37,7 +38,9 @@ extern const void* NativeLogCategory1480ededc;   // DAT_1480ededc
 extern const wchar_t NativeEmptyStr1459a4b30[];  // DAT_1459a4b30 (used when Error.Num == 0)
 
 // Shared-pointer and result helpers used by CancelInner (addresses are the call targets).
-// 0x140d0e7f0 returns a pointer to {Object, Controller}; the out slot is auStack_78.
+// 0x140d0e7f0 returns its out pointer (rax = r14) holding {Object, Controller}; the out slot is auStack_78.
+// VERIFIED: Object = FPurchaseReceipt-sized 0x30 heap object (vptr, TransactionId@0x8, TransactionState@0x18,
+// ReceiptOffers TArray@0x20); Controller = 0x18-byte TReferenceControllerWithDeleter-shaped block.
 void** NativeCreateSharedResult140d0e7f0(void* Arg, void* OutSlot);
 void NativeResultInit140d5ddf0(void* Result, bool bSucceeded);     // 0x140d5ddf0 (bool arg = uVar11)
 void NativeResultSetError140d6ff70(void* Result, const FString* Error); // 0x140d6ff70
@@ -50,5 +53,4 @@ void NativeCtrlRelease1411d0c30(void* Ctrl);
 // Pseudo-C locals with no visible assignment (sources UNKNOWN). Left as undefined symbols on purpose.
 extern void* UNKNOWN_plStack_70;   // released on the failure path
 extern void* UNKNOWN_plStack_28;   // atomic release at the end of CancelInner
-extern void* UNKNOWN_lStack_40;    // presumed ResultBuf+0x18, not confirmed
-extern void* UNKNOWN_lStack_50;    // presumed ResultBuf+0x8, not confirmed
+// lStack_40 / lStack_50 are VERIFIED as ResultBuf+0x18 / +0x8 and are now written in definitions.inc.
