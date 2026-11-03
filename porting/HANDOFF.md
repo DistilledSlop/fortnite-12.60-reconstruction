@@ -26,8 +26,8 @@ null, but wrapper initialization/copy/destruction and Blueprint event dispatch
 must be respected. Neither is promoted merely from a null return.
 
 Root serial Ghidra native93-loot5 andnative93-final3 successful, metadata rolled
-back, all handles terminal. Commands probe_callees.py --input/tmp/<name>.json
---out porting/generated/<name> --timeout60 --mem12G; logs/tmp/<name>.log.
+back, all handles terminal. Commands probe_callees.py --input /tmp/<name>.json
+--out porting/generated/<name> --timeout 60 --mem 12G; logs/tmp/<name>.log.
 Three bounded Terra medium tasks finished this continuation; no active workers
 or generators. Root owns canonical/native/generation/staging/build. Preserve
 unrelated graphics/Engine edits and visual pause. Continue fresh grouped native
@@ -62,8 +62,8 @@ lookup, registry mutation order and cleanup.
 
 Root grouped Ghidra native92-broad36 exec targets across3 fresh classes,
 native92-impl13 actual bodies, native92-query5 queries. Successful, project
-metadata rolled back. Commands probe_callees.py --input/tmp/<name>.json
---out porting/generated/<name> --timeout60 --mem12G; logs/tmp/<name>.log.
+metadata rolled back. Commands probe_callees.py --input /tmp/<name>.json
+--out porting/generated/<name> --timeout 60 --mem 12G; logs/tmp/<name>.log.
 Native93-loot5 further supply/engine targets are finalized; final closure probe
 native93-final examines null loot stub and replay engine helper. See next
 snapshot for its terminal outcome and any integration. All earlier handles terminal.
