@@ -47858,5 +47858,300 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Iterates ItemVariants and returns the first matching valid channel tag; used throughout GatherVariantAssets and its helpers."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeCollectTouchingActors",
+    "kind": "helper",
+    "signature": "void NativeCollectTouchingActors(TArray<AActor*>& Actors) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150c_runtime/AFortGameplayEffectDeliveryActor_NativeCollectTouchingActors.inc",
+    "address": "0x14269fc60",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/PrimitiveComponent.h"
+    ],
+    "notes": "Preserves duplicate owners for multiple overlapping components. Collects only overlap-enabled primitive components on both sides; appends candidates ordered by squared actor distance. Comparator in14268ca50 original sort proves ascending +8 float comparison."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeTouchTimer",
+    "kind": "member_field",
+    "signature": "FTimerHandle NativeTouchTimer",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "offset": "0x550",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "notes": "Native layout and initialization proven by14268d2d0 and use in1426a4af0/14268f060. Neutral name; semantic type retained."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeKillTimer",
+    "kind": "member_field",
+    "signature": "FTimerHandle NativeKillTimer",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "offset": "0x558",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "notes": "Native layout and initialization proven by14268d2d0 and use in1426a4af0/14268f060. Neutral name; semantic type retained."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeMaxTouchTargets",
+    "kind": "member_field",
+    "signature": "int32 NativeMaxTouchTargets",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "offset": "0x450",
+    "default": "-1",
+    "notes": "Native layout and initialization proven by14268d2d0 and use in1426a4af0/14268f060. Neutral name; semantic type retained."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeTouchTargetCount",
+    "kind": "member_field",
+    "signature": "int32 NativeTouchTargetCount",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "offset": "0x454",
+    "default": "0",
+    "notes": "Native layout and initialization proven by14268d2d0 and use in1426a4af0/14268f060. Neutral name; semantic type retained."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeActorOverlapCounts",
+    "kind": "member_field",
+    "signature": "TMap<TWeakObjectPtr<AActor>, int32> NativeActorOverlapCounts",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "offset": "0x458",
+    "notes": "Native layout and initialization proven by14268d2d0 and use in1426a4af0/14268f060. Neutral name; semantic type retained.",
+    "includes": [
+      "GameFramework/Actor.h"
+    ]
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeTouchHit",
+    "kind": "member_field",
+    "signature": "FHitResult NativeTouchHit",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "offset": "0x4a8",
+    "includes": [
+      "Engine/EngineTypes.h"
+    ],
+    "notes": "Native layout and initialization proven by14268d2d0 and use in1426a4af0/14268f060. Neutral name; semantic type retained."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "bNativeTouchBlocked",
+    "kind": "member_field",
+    "signature": "bool bNativeTouchBlocked",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "offset": "0x548",
+    "default": "false",
+    "notes": "Native layout and initialization proven by14268d2d0 and use in1426a4af0/14268f060. Neutral name; semantic type retained."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "bNativeTouchHitPending",
+    "kind": "member_field",
+    "signature": "bool bNativeTouchHitPending",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "default": "false",
+    "notes": "Native layout and initialization proven by14268d2d0 and use in1426a4af0/14268f060. Neutral name; semantic type retained."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeTouched",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, AFortGameplayEffectDeliveryActor*, AActor*, UPrimitiveComponent*, const FHitResult&, bool> NativeTouched",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "offset": "0x420",
+    "includes": [
+      "Delegates/Delegate.h",
+      "Engine/EngineTypes.h"
+    ],
+    "notes": "Native layout and initialization proven by14268d2d0 and use in1426a4af0/14268f060. Neutral name; semantic type retained."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeCanApplyTouch",
+    "kind": "helper",
+    "signature": "bool NativeCanApplyTouch() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150c_runtime/AFortGameplayEffectDeliveryActor_NativeCanApplyTouch.inc",
+    "address": "0x1426a5ee0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": []
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativePrepareTouchSpec",
+    "kind": "helper",
+    "signature": "void NativePrepareTouchSpec(FGameplayEffectSpec& Spec)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150c_runtime/AFortGameplayEffectDeliveryActor_NativePrepareTouchSpec.inc",
+    "address": "0x1406801c0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameplayEffect.h"
+    ],
+    "virtual": true,
+    "notes": "Original native empty virtual hook at primary table slot660, proof native158-delivery-slots."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "OnRep_IsBeingKilled",
+    "kind": "onrep",
+    "signature": "void OnRep_IsBeingKilled()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150c_runtime/AFortGameplayEffectDeliveryActor_OnRep_IsBeingKilled.inc",
+    "address": "0x1407545b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/PrimitiveComponent.h",
+      "TimerManager.h"
+    ],
+    "native_body_address": "0x142697870",
+    "virtual": true
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeSphereRayPoint",
+    "kind": "static_helper",
+    "signature": "void NativeSphereRayPoint(const FVector& Center, float Radius, const FVector& Start, const FVector& Direction, FVector& Point)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/large_bulk150c_runtime/AFortGameplayEffectDeliveryActor_NativeSphereRayPoint.inc",
+    "address": "0x142c5ee10",
+    "confidence": "high",
+    "status": "ported",
+    "includes": []
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeFindDamageZoneBone",
+    "kind": "static_helper",
+    "signature": "bool NativeFindDamageZoneBone(AFortPawn* Pawn, const FVector& Start, const FVector& Direction, const FVector& Offset, float SphereRadius, int32 RestrictedZone, bool& bRestrictZone, FName& OutBone, FVector& OutPoint)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/large_bulk150c_runtime/AFortGameplayEffectDeliveryActor_NativeFindDamageZoneBone.inc",
+    "address": "0x1415f5e00",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/SkeletalMeshComponent.h"
+    ]
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "KillTimerExpired",
+    "kind": "exec",
+    "signature": "void KillTimerExpired()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150c_runtime/AFortGameplayEffectDeliveryActor_KillTimerExpired.inc",
+    "address": "0x142906ca0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "virtual": true,
+    "native_body_address": "0x14164f2e0",
+    "reflection_flags": "0x80400"
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "Kill",
+    "kind": "exec",
+    "signature": "void Kill()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150c_runtime/AFortGameplayEffectDeliveryActor_Kill.inc",
+    "address": "0x1412ec630",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "virtual": true,
+    "native_body_address": "0x1426a5f50",
+    "reflection_flags": "0x4020404"
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "bNativeExplosionBroadcastBlocked",
+    "kind": "member_field",
+    "signature": "bool bNativeExplosionBroadcastBlocked",
+    "signature_status": "proposed",
+    "access": "public",
+    "default": "false",
+    "offset": "0x3e0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native3e0bit4, set by1426a4970 when !bCanExplodeMultipleTimes; neutral semantic name."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeExploded",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, AFortGameplayEffectDeliveryActor*, const TArray<AActor*>&, const TArray<FHitResult>&> NativeExploded",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x438",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Delegates/Delegate.h",
+      "Engine/EngineTypes.h"
+    ],
+    "notes": "Invocation list438 count440 lock44c, observed1426a4970 dispatch(this, HitActors, HitResults)."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "BroadcastExplosion_Implementation",
+    "kind": "impl",
+    "signature": "void BroadcastExplosion_Implementation(const TArray<AActor*>& HitActors, const TArray<FHitResult>& HitResults)",
+    "signature_status": "declared",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/large_bulk150c_runtime/AFortGameplayEffectDeliveryActor_BroadcastExplosion_Implementation.inc",
+    "address": "0x1429064e0",
+    "native_body_address": "0x1426a4970",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Full broadcast guard/hasexploded state, Blueprint OnExploded event, native delegate and overlap-count map clear. Primary table+698 target proof; +6a0 is RPC ProcessEvent wrapper142904550."
   }
 ]

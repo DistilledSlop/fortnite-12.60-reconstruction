@@ -1,0 +1,352 @@
+{
+  "selection": "/tmp/native150-batch-3.json",
+  "selection_count": 18,
+  "ported_count": 1,
+  "unresolved_count": 17,
+  "rows": [
+    {
+      "index": 0,
+      "class": "AFortPlayerPawn",
+      "function": "EnterSkyTube",
+      "wrapper": "0x142a7b6c0",
+      "target": "0x142314810",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a7b6c0.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x142314810.c",
+      "status": "unresolved",
+      "reason": "Requires recovery of movement state, camera/controller dispatch and sky tube side effects in target."
+    },
+    {
+      "index": 1,
+      "class": "AFortPlayerPawn",
+      "function": "IsActivelySkydiving",
+      "wrapper": "0x142a7d020",
+      "target": "0x142330ff0",
+      "wrapper_capture": "porting/generated/native96-broad/0x142a7d020.c",
+      "target_capture": "porting/generated/native111-virtual-expanded/0x142330ff0.c",
+      "status": "unresolved",
+      "reason": "Depends on movement custom modes and acceleration, FUN_1420e2860 view-direction handling and sky tube threshold."
+    },
+    {
+      "index": 2,
+      "class": "AFortPlayerPawn",
+      "function": "ResetGameplayAttributes",
+      "wrapper": "0x142a7e6e0",
+      "target": "0x142349420",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a7e6e0.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x142349420.c",
+      "status": "unresolved",
+      "reason": "Requires attribute and ability-system effects, including target helper dispatch and replication semantics."
+    },
+    {
+      "index": 3,
+      "class": "AFortPlayerPawn",
+      "function": "SetInVortex",
+      "wrapper": "0x142a80200",
+      "target": "0x14234d650",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a80200.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x14234d650.c",
+      "status": "unresolved",
+      "reason": "Requires vortex state transition, movement-mode behavior, launch, effects and world-time update."
+    },
+    {
+      "index": 4,
+      "class": "AFortGameplayEffectDeliveryActor",
+      "function": "DoSingleActorHit",
+      "wrapper": "0x1429066e0",
+      "target": "0x142697d40",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1429066e0.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x142697d40.c",
+      "status": "ported",
+      "reason": "Complete native body, Engine spec/context operations and reflected ChargeMagnitude helper.",
+      "proofs": [
+        "porting/generated/native134-virtual-bulk/0x142697d40.asm",
+        "porting/generated/native150-large-helpers/0x1406ec840.c",
+        "porting/generated/native103-impl/0x1415f4460.c"
+      ],
+      "original_assembly": "142698080 mov rdx,[r15];14269808c lea rcx,[rbp+0xc0];142698093 call1406ec840"
+    },
+    {
+      "index": 5,
+      "class": "AFortGameplayEffectDeliveryActor",
+      "function": "OnComponentOverlap",
+      "wrapper": "0x142906e00",
+      "target": "0x1426a78e0",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142906e00.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x1426a78e0.c",
+      "status": "unresolved",
+      "reason": "Complete main overlap/collision/effect/timer/delegate lifts are written; promotion waits for proof of FName148121cc8 weak-spot bone marker text and full target-filter helper graph integration. OnTouched/OnExploded UFunction declarations now supported by generator. Do not use raw original FName index or omit weak-spot resolution."
+    },
+    {
+      "index": 6,
+      "class": "AFortPawn",
+      "function": "GameplayCue_Damage",
+      "wrapper": "0x142a1ba90",
+      "target": "0x142318010",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1ba90.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x142318010.c",
+      "status": "unresolved",
+      "reason": "Requires full damage-cue side effects, parameters and native virtual dispatch."
+    },
+    {
+      "index": 7,
+      "class": "AFortPawn",
+      "function": "PawnStartFire",
+      "wrapper": "0x142a1ed20",
+      "target": "0x14233ed20",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1ed20.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x14233ed20.c",
+      "status": "unresolved",
+      "reason": "Requires weapon, timing, tag and input dispatch including native virtual calls."
+    },
+    {
+      "index": 8,
+      "class": "AFortPawn",
+      "function": "SetHolsterWeapon",
+      "wrapper": "0x142a1fed0",
+      "target": "0x14234cf20",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1fed0.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x14234cf20.c",
+      "status": "unresolved",
+      "reason": "Requires weapon state changes, event dispatch and side effects in the captured target."
+    },
+    {
+      "index": 9,
+      "class": "AFortPlayerControllerSpectating",
+      "function": "SetFollowedPlayer",
+      "wrapper": "0x142a6caf0",
+      "target": "0x1423ea700",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a6caf0.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x1423ea700.c",
+      "status": "unresolved",
+      "reason": "Requires spectator player state transition and camera-related virtual calls and side effects."
+    },
+    {
+      "index": 10,
+      "class": "AFortPlayerControllerSpectating",
+      "function": "SetNewCameraType",
+      "wrapper": "0x142a6cc10",
+      "target": "0x1423eb050",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a6cc10.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x1423eb050.c",
+      "status": "unresolved",
+      "reason": "Requires spectator camera selection, followed-player validity, logging and native virtual dispatch."
+    },
+    {
+      "index": 11,
+      "class": "UFortTouchControlRegion",
+      "function": "OnMovePlayerRegionTouchStarted",
+      "wrapper": "0x145305230",
+      "target": "0x144dd3f30",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x145305230.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x144dd3f30.c",
+      "status": "unresolved",
+      "reason": "Requires touch input, controller and timer/delegate side effects."
+    },
+    {
+      "index": 12,
+      "class": "UFortTouchControlRegion",
+      "function": "OnRotatePlayerRegionTouchEnded",
+      "wrapper": "0x1453053d0",
+      "target": "0x144dd4890",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1453053d0.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x144dd4890.c",
+      "status": "unresolved",
+      "reason": "Requires touch history averaging, touch routing and controller side effects."
+    },
+    {
+      "index": 13,
+      "class": "AFortPhysicsPawn",
+      "function": "ClientAckGoodMove",
+      "wrapper": "0x142a26e50",
+      "target": "0x1421059d0",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a26e50.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x1421059d0.c",
+      "status": "unresolved",
+      "reason": "Requires physics move acknowledgement timing, recent sample calculations, logging and callback effects."
+    },
+    {
+      "index": 14,
+      "class": "AInfiltrationCarryObjectCapturePoint",
+      "function": "IntelTagCallback",
+      "wrapper": "0x142b67500",
+      "target": "0x141a82950",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b67500.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x141a82950.c",
+      "status": "unresolved",
+      "reason": "Requires gameplay tag match, actor iteration and captured target effects."
+    },
+    {
+      "index": 15,
+      "class": "UCreativeQuickbarComponent",
+      "function": "HandleCreativeQuickbarPressed",
+      "wrapper": "0x14276faa0",
+      "target": "0x141d85f70",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14276faa0.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x141d85f70.c",
+      "status": "unresolved",
+      "reason": "Requires world timer and controller/quickbar dispatch, including delegate behavior."
+    },
+    {
+      "index": 16,
+      "class": "AFortPlayerStateZone",
+      "function": "MulticastTriggerOnGadgetTrackedAttributeDestroyedFX",
+      "wrapper": "0x142a951d0",
+      "target": "0x14241d950",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a951d0.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x14241d950.c",
+      "status": "unresolved",
+      "reason": "Requires gadget matching, world/actor checks and visual/audio effect spawning and state cleanup."
+    },
+    {
+      "index": 17,
+      "class": "AFortPlayerControllerPvE",
+      "function": "ClientShowIdleWarning",
+      "wrapper": "0x142a6ab50",
+      "target": "0x14253a300",
+      "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a6ab50.c",
+      "target_capture": "porting/generated/native134-virtual-bulk/0x14253a300.c",
+      "status": "unresolved",
+      "reason": "Requires warning logging, world-time state update and asynchronous asset-load delegate."
+    }
+  ],
+  "delivery_native_dependencies": [
+    {
+      "function": "NativeSetContextCharge",
+      "address": "0x1415f4460",
+      "status": "ported",
+      "source": "porting/generated/native103-impl/0x1415f4460.c",
+      "proof": "FFortGameplayEffectContext reflection charge at80. Live struct ancestry exact package/name cast, checked reflected property setter; missing property fails closed."
+    },
+    {
+      "function": "NativeCollectTouchingActors",
+      "address": "0x14269fc60",
+      "status": "ported",
+      "source": "porting/generated/native158-delivery-effects/0x14269fc60.c",
+      "proof": "Primitive components plus overlap enabled flag209 bit0 on both sides; owner entries preserve duplicates;14268ca50 comparator sorts ascending distance+8."
+    },
+    {
+      "function": "NativeCanApplyTouch",
+      "address": "0x1426a5ee0",
+      "status": "ported",
+      "source": "porting/generated/native158-delivery-effects/0x1426a5ee0.c"
+    },
+    {
+      "function": "NativePrepareTouchSpec",
+      "address": "0x1406801c0",
+      "status": "ported",
+      "proof": "/tmp/native158-delivery-slots.json: primary table146209600 slot660 resolves to known empty native1406801c0; retains virtual hook."
+    },
+    {
+      "function": "OnRep_IsBeingKilled",
+      "address": "0x142697870",
+      "status": "ported",
+      "source": "porting/generated/native162-delivery-next/0x142697870.c",
+      "proof": "Disables collision/tick, conditionally hides, clears touch timer, removes actor from three sparse collision delegates."
+    },
+    {
+      "function": "Kill",
+      "address": "0x1426a5f50",
+      "status": "ported",
+      "source": "porting/generated/native158-delivery-effects/0x1426a5f50.c",
+      "proof": "Authority and killed gates; paused timer behavior matches Engine IsTimerActive; native replication notify called before one-shot lifespan timer."
+    },
+    {
+      "function": "KillTimerExpired",
+      "address": "0x14164f2e0",
+      "status": "ported",
+      "source": "porting/generated/native167-effect-filter/0x14164f2e0.c",
+      "proof": "Delivery table146209600+6a8 maps14164f2e0, forwards143f6c200(this,0,1) = Destroy(false,true)."
+    },
+    {
+      "function": "NativeSphereRayPoint",
+      "address": "0x142c5ee10",
+      "status": "ported",
+      "source": "porting/generated/native167-effect-filter/0x142c5ee10.c",
+      "proof": "Exact quadratic root branch including equal absolute roots; tangent fallback projects/normalizes to sphere radius."
+    },
+    {
+      "function": "NativeFindDamageZoneBone",
+      "address": "0x1415f5e00",
+      "status": "ported",
+      "source": "porting/generated/native162-delivery-next/0x1415f5e00.c",
+      "proof": "Four FPawnDamageZones active+Bones arrays at738, bone index/matrix APIs14413ac90/14413af50; offset transform, max per-axis scale cutoff, ray range test and nearest hit retained."
+    },
+    {
+      "function": "BroadcastExplosion_Implementation",
+      "address": "0x1426a4970",
+      "status": "ported",
+      "source": "porting/generated/native171-explosion-dispatch/0x1426a4970.c",
+      "proof": "Primary146209600+698; OnExploded wrapper142905330 copies both arrays into reflected ProcessEvent params;142698cf0(map,0) empties sparse storage/bitarray/hash into empty TMap. Full native delegate438 dispatch retained."
+    }
+  ],
+  "delivery_virtual_proofs": [
+    {
+      "class": "AFortGameplayEffectDeliveryActor",
+      "constructor": "0x14268d2d0",
+      "constructor_capture": "porting/generated/native129-constructors/0x14268d2d0.c",
+      "primary_store": "*param_1 = &DAT_146209600",
+      "vtable": "0x146209600",
+      "slots": {
+        "0x648": {
+          "function": "DoSingleActorHit",
+          "target": "0x142697d40",
+          "wrapper": "0x1429066e0"
+        },
+        "0x650": {
+          "function": "Kill",
+          "target": "0x1426a5f50"
+        },
+        "0x658": {
+          "function": "IsBeingKilled",
+          "target": "0x1426a5ae0"
+        },
+        "0x660": {
+          "function": "NativePrepareTouchSpec",
+          "target": "0x1406801c0"
+        },
+        "0x668": {
+          "function": "NativeHandleTouch",
+          "target": "0x1426a4af0"
+        },
+        "0x688": {
+          "function": "OnComponentOverlap",
+          "target": "0x1426a78e0",
+          "wrapper": "0x142906e00"
+        },
+        "0x698": {
+          "function": "BroadcastExplosion_Implementation",
+          "target": "0x1426a4970"
+        },
+        "0x6a0": {
+          "function": "BroadcastExplosion",
+          "target": "0x142904550"
+        },
+        "0x6a8": {
+          "function": "KillTimerExpired",
+          "target": "0x14164f2e0"
+        },
+        "0x6c0": {
+          "function": "OnRep_IsBeingKilled",
+          "target": "0x142697870"
+        }
+      },
+      "proof_inputs": [
+        "/tmp/native150-batch-3.json",
+        "/tmp/native151-overlap-slot.json",
+        "/tmp/native155-slot658.json",
+        "/tmp/native158-delivery-slots.json",
+        "/tmp/native167-slots.json",
+        "/tmp/native171-delivery-slots.json",
+        "/tmp/native162-slot6c0.json"
+      ]
+    },
+    {
+      "class": "AFortPawn",
+      "vtable": "0x146115880",
+      "slot": "0xa98",
+      "target": "0x142351050",
+      "proof_input": "/tmp/native167-slots.json",
+      "field_proof": "reflection/bool_bits.json bUseLineTestForDamageZoneBoneDetection offset0x521mask4; Character capsule at288"
+    }
+  ]
+}

@@ -6,12 +6,18 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "Components/PrimitiveComponent.h"
+#include "Delegates/Delegate.h"
 #include "Engine/EngineTypes.h"
 #include "FFortGameplayEffectContainerSpec.h"
 #include "FFortSpawnContext.h"
 #include "FOverlapRestrictions.h"
+#include "GameFramework/Actor.h"
+#include "GameplayEffect.h"
 #include "GameplayTagContainer.h"
+#include "TimerManager.h"
 
+class AFortPawn;
 class UNavArea;
 class UPrimitiveComponent;
 
@@ -99,6 +105,9 @@ public:
 	UPROPERTY()
 	uint8 bSpawnNavAreaModifierOverTargetSelectionShape : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3e0): not a UPROPERTY, not replicated.
+	bool bNativeExplosionBroadcastBlocked = false;
+
 	// table index 6, flags 0x24080000010001
 	UPROPERTY()
 	TSubclassOf<UNavArea> NavAreaClass;
@@ -115,17 +124,47 @@ public:
 	UPROPERTY(Transient)
 	uint8 bDoExplosionReentrancyGuard : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x420): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, AFortGameplayEffectDeliveryActor*, AActor*, UPrimitiveComponent*, const FHitResult&, bool> NativeTouched;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x438): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, AFortGameplayEffectDeliveryActor*, const TArray<AActor*>&, const TArray<FHitResult>&> NativeExploded;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x450): not a UPROPERTY, not replicated.
+	int32 NativeMaxTouchTargets = -1;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x454): not a UPROPERTY, not replicated.
+	int32 NativeTouchTargetCount = 0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x458): not a UPROPERTY, not replicated.
+	TMap<TWeakObjectPtr<AActor>, int32> NativeActorOverlapCounts;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x4a8): not a UPROPERTY, not replicated.
+	FHitResult NativeTouchHit;
+
 	// table index 1, flags 0x40000000000000
 	UPROPERTY()
 	TArray<AActor*> InstigatorActorsAdded;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x548): not a UPROPERTY, not replicated.
+	bool bNativeTouchBlocked = false;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x550): not a UPROPERTY, not replicated.
+	FTimerHandle NativeTouchTimer;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x558): not a UPROPERTY, not replicated.
+	FTimerHandle NativeKillTimer;
 
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	FGameplayTagContainer AnalyticsTags;
 
+	// Non-reflected field (behaviour kind "member_field"): not a UPROPERTY, not replicated.
+	bool bNativeTouchHitPending = false;
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void BroadcastExplosion(const TArray<AActor*>& HitActors, const TArray<FHitResult>& HitResults);
-	void BroadcastExplosion_Implementation(const TArray<AActor*>& HitActors, const TArray<FHitResult>& HitResults);
+	virtual void BroadcastExplosion_Implementation(const TArray<AActor*>& HitActors, const TArray<FHitResult>& HitResults);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UPrimitiveComponent* GetCollisionComponent() const;
@@ -133,12 +172,36 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsBeingKilled() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	virtual void Kill();
+
+protected:
+	UFUNCTION()
+	virtual void KillTimerExpired();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExploded(const TArray<AActor*>& HitActors, const TArray<FHitResult>& HitResults);
+public:
+
 	UFUNCTION()
 	void OnRep_HasExplodedReplay();
 
 	UFUNCTION()
-	void OnRep_IsBeingKilled();
+	virtual void OnRep_IsBeingKilled();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTouched(AActor* OtherActor, UPrimitiveComponent* OtherComp, const FHitResult& HitResult, bool bIsOverlap);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	void NativeCollectTouchingActors(TArray<AActor*>& Actors) const;
+	bool NativeCanApplyTouch() const;
+	virtual void NativePrepareTouchSpec(FGameplayEffectSpec& Spec);
 };
 
