@@ -1,0 +1,19 @@
+[
+  {
+    "class": "UFortGadgetItemDefinition",
+    "function": "GetAmmoWorldItemDefinitionNative",
+    "kind": "helper",
+    "signature": "UFortWorldItemDefinition* GetAmmoWorldItemDefinitionNative() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/gadget_ammo_override_batch_runtime/Gadget_GetAmmoDefinition.inc",
+    "address": "0x142008520",
+    "includes": [
+      "FortGadgetAmmo.h"
+    ],
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Gadget native ammo virtual, see HANDOFF.md for helper and tracker semantics. Actual body is shared explicit-pointer source entry, preserving original null guard without member-call UB. FMath::TruncToInt matches native CVTTSS2SI on target Linux x86, including unordered/out-of-range indefinite result."
+  }
+]

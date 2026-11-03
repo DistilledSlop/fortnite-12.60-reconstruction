@@ -12,7 +12,7 @@ def sources():
     policy = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(policy)
     result.update(policy.sources())
-    for dirname in ('asset_diagnostic_reads_source_runtime', 'asset_diagnostic_support_runtime', 'asset_load_analytics_source_runtime', 'asset_load_callback_runtime', 'independent_native_recovery_runtime', 'asset_owner_materialization_runtime', 'weapon_ammo_source_batch_runtime', 'building_init_mode_helpers_runtime'):
+    for dirname in ('asset_diagnostic_reads_source_runtime', 'asset_diagnostic_support_runtime', 'asset_load_analytics_source_runtime', 'asset_load_callback_runtime', 'independent_native_recovery_runtime', 'asset_owner_materialization_runtime', 'weapon_ammo_source_batch_runtime', 'building_init_mode_helpers_runtime', 'gadget_ammo_override_batch_runtime', 'tracked_soft_class_resolver_runtime'):
         folder = HERE.parent / dirname
         evidence = json.loads((folder / 'native-evidence.json').read_text())
         with Path(evidence['image']).open('rb') as stream:
@@ -36,4 +36,9 @@ def sources():
         result[name] = (owner / name).read_text()
     ammo = HERE.parent / 'weapon_ammo_source_batch_runtime'
     result['FortDelayedObjectLoader.h'] = (ammo / 'FortDelayedObjectLoader.h').read_text()
+    gadget = HERE.parent / 'gadget_ammo_override_batch_runtime'
+    for name in ('FortGadgetAmmo.h', 'FortGadgetAmmo.cpp'):
+        result[name] = (gadget / name).read_text()
+    classes = HERE.parent / 'tracked_soft_class_resolver_runtime'
+    result['FortTrackedTimeOfDayClass.h'] = (classes / 'FortTrackedTimeOfDayClass.h').read_text()
     return result

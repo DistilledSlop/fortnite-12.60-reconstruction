@@ -2,7 +2,9 @@
 #include "AFortGameModeAthena.h"
 #include "AFortAthenaAircraft.h"
 #include "AFortGameStateAthena.h"
+#include "FortTrackedTimeOfDayClass.h"
 #include "UFortMutatorListComponent.h"
+#include "UFortPlaylistAthena.h"
 #include "UObject/Object.h"
 
 void AFortGameModeAthena::AddContentKeysToGameState()
@@ -94,5 +96,19 @@ void AFortGameModeAthena::NativeAppendOwnerMutators(TArray<AFortGameplayMutator*
 	{
 	    OutMutators.Append(Component->Mutators);
 	}
+}
+
+TSubclassOf<AFortTimeOfDayManager> AFortGameModeAthena::GetTimeOfDayManagerClassNative()
+{
+	// CONFIDENCE: HIGH
+	// 0x141949030, virtual +0x930. Name proposed pending base virtual recovery.
+	if (TimeOfDayManagerGameplayOverride.Get())
+	    return TimeOfDayManagerGameplayOverride;
+	if (AFortGameStateAthena* AthenaState = Cast<AFortGameStateAthena>(GameState))
+	{
+	    if (UFortPlaylistAthena* Playlist = AthenaState->GetCurrentPlaylistAthena())
+	        return FortResolveTrackedTimeOfDayClass(Playlist->TimeOfDayManager, true);
+	}
+	return nullptr;
 }
 

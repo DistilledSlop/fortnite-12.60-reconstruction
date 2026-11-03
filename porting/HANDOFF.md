@@ -1,5 +1,39 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 42 (2026-11-03)
+
+Canonical source:1,928 bodies +171 fields =2,099 entries. Three credited bodies:
+Gadget native ammo override, base game-mode930nullclass virtual and Athena930
+class selection override. Two additional shared support bodies close tracked
+TimeOfDay soft-class resolution14192c570 and explicit-pointer Gadget entry.
+Gadget empty soft path tracks null. Preserve ability validity/CDO/log checks,
+ordered costs, virtual item type, first matched failed cast returningnull, and
+CVTTSS2SI conversion via target Unix FMath::TruncToInt. Explicit-pointer source
+entry preserves original null guard without C++ member-call UB; virtual delegates.
+
+TimeOfDay resolver also tracks null for EMPTY paths, correcting old summary's
+nonempty-only claim. It returns raw loaded UClass storage even when subclass check
+fails; only tracked pointer is null. Never convert returned wrapper through Get.
+Base and Athena930dispatch established by actual constructor/vtable stores; assigned
+nonconst source virtual preserves return-buffer ABI, original const spelling unknown.
+Generator helper type gate now admits TSubclassOf<T> as indirect class storage and
+checks each occurrence to avoid masking a separate invalid class-by-value argument.
+
+Promotion42 accepts2,099/rejects0; original windows/pins checked. No tests/build/
+runtime. Last tested1,040;888 pending; next2,040 requires112 bodies. Source41
+aac4ccb2 pushed. Previous goal turn was progress; full game/server and all four
+product gates still open. All bounded workers finished, Ghidra lease free.
+Root owns canonical manifest/generator/native and commits; Terra medium/low fork
+none, bounded reads/output, rotate finished tasks. Preserve porting/graphics/.
+
+Next useful work: connect GetRemainingAmmo with canonical base/Weapon/Gadget
+virtuals without assuming all derived tables, or advance timeofday Spawn141fbd1f0
+now that same shared tracker and base/Athena930selector are closed. Theme rebuild/
+selection still separately open; don't repeat class-resolver, world-map-name,
+provider, mission/time, playlist guard, release-parent or FFortAssets identification.
+Owner submode clear caller and diagnostic map hash/writers remain open. No tests
+before2,040. Source count is coverage, not feature or parity completion.
+
 ## Native source batch 41 (2026-11-03)
 
 Canonical source:1,925 bodies +171 fields =2,096 entries. Two bodies close the

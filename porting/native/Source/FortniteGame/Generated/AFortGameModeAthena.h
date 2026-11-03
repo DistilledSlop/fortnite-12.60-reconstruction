@@ -20,6 +20,7 @@
 #include "FScorePlacementTable.h"
 #include "FSupplyDropSpawnData.h"
 #include "FTimeOfDayOverride.h"
+#include "FortTrackedTimeOfDayClass.h"
 #include "Math/Vector.h"
 #include "UFortMutatorOwner.h"
 #include "UGameplayMutatorObserverInterface.h"
@@ -685,6 +686,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
+	virtual TSubclassOf<AFortTimeOfDayManager> GetTimeOfDayManagerClassNative();
 public:
     // Existing Linux fixture/runtime support; original native bodies remain open.
     // Definitions stay in Private/FortniteAthenaGameplay.cpp.

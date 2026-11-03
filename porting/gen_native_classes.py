@@ -2774,10 +2774,19 @@ def helper_type_refs(names, texts, package, ctx, explicit):
         if tok in ctx["class_pkg"]:
             if ctx["class_pkg"][tok] != package:
                 problems.append("signature uses %s, a class of another module" % tok)
-            elif not re.search(r"\b%s\b\s*[*&]" % re.escape(tok), joined):
-                problems.append("signature uses class %s by value (pointer or reference needed)" % tok)
             else:
-                fwd.add(tok)
+                # TSubclassOf stores a UClass pointer, not an instance of T.
+                # Check each occurrence so another pointer/wrapper occurrence
+                # cannot mask a separate invalid class-by-value parameter.
+                occurrences = list(re.finditer(r"\b%s\b" % re.escape(tok), joined))
+                indirect = all(
+                    re.match(r"\s*[*&]", joined[m.end():]) or
+                    re.search(r"\bTSubclassOf\s*<\s*(?:class\s+)?$", joined[:m.start()])
+                    for m in occurrences)
+                if indirect:
+                    fwd.add(tok)
+                else:
+                    problems.append("signature uses class %s by value (pointer or reference needed)" % tok)
         elif tok in ctx["struct_index"]:
             inc, problem = type_include(tok, package, ctx)
             if problem:

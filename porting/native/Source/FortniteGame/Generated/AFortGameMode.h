@@ -16,6 +16,7 @@ class AFortMissionGenerationManager;
 class AFortMissionManager;
 class AFortPlayerControllerGameplay;
 class AFortTeamInfo;
+class AFortTimeOfDayManager;
 class APawn;
 class UFortAwardItemDefinition;
 class UFortGameDeathPenalty;
@@ -246,5 +247,9 @@ public:
 	UPROPERTY()
 	TArray<AFortPlayerControllerGameplay*> ConnectedPlayerControllers;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual TSubclassOf<AFortTimeOfDayManager> GetTimeOfDayManagerClassNative();
 };
 
