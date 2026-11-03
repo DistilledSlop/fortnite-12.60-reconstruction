@@ -1424,6 +1424,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortPawnStasisMode GetStasisMode() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetVehicleActor() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetVehicleOverrideExit();
+
 	UFUNCTION()
 	void HandleInStasis();
 

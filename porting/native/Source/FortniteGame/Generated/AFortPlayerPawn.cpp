@@ -217,6 +217,20 @@ EFortPawnStasisMode AFortPlayerPawn::GetStasisMode() const
 	return StasisMode;
 }
 
+AActor* AFortPlayerPawn::GetVehicleActor() const
+{
+	// Exact original embedded struct object pointer leaf; see README.md.
+	// CONFIDENCE: HIGH
+	return VehicleStateLocal.Vehicle;
+}
+
+bool AFortPlayerPawn::GetVehicleOverrideExit()
+{
+	// Exact original embedded struct Boolean leaf; see README.md.
+	// CONFIDENCE: HIGH
+	return VehicleStateLocal.bOverrideVehicleExit;
+}
+
 void AFortPlayerPawn::HandleInStasis()
 {
 	// Body not recovered: reflection-derived stub.

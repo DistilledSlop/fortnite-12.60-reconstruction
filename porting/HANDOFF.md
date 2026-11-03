@@ -1,5 +1,40 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 22 (2026-11-03)
+
+Canonical source: 1,819 function bodies + 163 supporting fields = 1,982 ported
+entries. Added six complete getters: AFortPlayerPawn GetVehicleOverrideExit and
+GetVehicleActor, AFortAttachableProjectileBase GetAttachedToActor,
+UFortPerkWidget_NUI IsTierPerk, UFortTrackMovementComponent IsReverseDirection,
+and UFortSpline GetDuration. Complete wrapper/leaf bytes, original struct Bool
+property records and SetBitFuncs, exact pointer classes, reflected struct-super
+layout, named generated storage, and module dependencies were reviewed.
+GetDBNOHoister was excluded because its reflected offsets are not unique.
+
+Root promoted via `/tmp/promote-native-batch22.py`: 1,982 accepted, zero rejected,
+10 Native files changed, 12,793 unchanged mtimes restored. Receipts in
+`porting/generated/gameplay-bulk-integration-22/`. No tests/builds/runtime runs.
+Last tested 1,040; 779 new bodies pending; next checkpoint 2,040 (221 more).
+Batches20 and21 pushed as ade94f4a and11c758fe; commit/push this batch, then
+refresh/publish dashboard and commit it. All four product gates remain open.
+
+All finite Terra workers completed. No pending source proposals. Scalar, Bool,
+object, and nested/inherited struct leaf scans are now exhausted for their
+explicit shapes; do not rerun unchanged scans. Options constructor and normalized
+durability blockers are preserved in their source HANDOFFs. A useful next finite
+family is exact same-class native-leaf aliases of already recovered functions:
+prove complete wrapper/target identity, parameterless signature/return identity,
+original direct versus virtual dispatch, constructor slot where necessary,
+then reuse an already evidenced body only with identical storage/dependencies.
+No alias credit until the complete original function is proved. Alternatively
+close one unresolved item-definition virtual and its dynamic behavior.
+
+User preferences persist: root plans/reviews/integrates; fresh bounded Terra
+low/medium workers with fork_turns none and explicit source-dir ownership,
+at most three workers, no canonical/Native ownership delegated. Read bounded
+excerpts, avoid excess output and redundant audits, preserve unrelated untracked
+porting/graphics, no visuals, no tests before2,040. Source coverage is not parity.
+
 ## Native source batch 21 (2026-11-03)
 
 Canonical source: 1,813 function bodies + 163 supporting fields = 1,976 ported

@@ -29,6 +29,9 @@ public:
 	UPROPERTY()
 	bool bShouldUseSummaryTooltip;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTierPerk() const;
+
 	UFUNCTION(BlueprintCallable)
 	void SetTooltipContext(UFortTooltipContext* InTooltipContext);
 

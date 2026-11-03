@@ -73,6 +73,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetDistanceAlongSpline() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsReverseDirection() const;
+
 	UFUNCTION()
 	void OnRep_ReplicatedTrackMovement();
 

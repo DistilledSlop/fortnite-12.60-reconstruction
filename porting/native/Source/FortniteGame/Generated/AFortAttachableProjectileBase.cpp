@@ -2,6 +2,13 @@
 #include "AFortAttachableProjectileBase.h"
 #include "Net/UnrealNetwork.h"
 
+AActor* AFortAttachableProjectileBase::GetAttachedToActor()
+{
+	// Exact original embedded struct object pointer leaf; see README.md.
+	// CONFIDENCE: HIGH
+	return AttachedInfo.AttachedToActor;
+}
+
 void AFortAttachableProjectileBase::OnRep_ReplicatedAttachedInfo()
 {
 	// Body not recovered: reflection-derived stub.

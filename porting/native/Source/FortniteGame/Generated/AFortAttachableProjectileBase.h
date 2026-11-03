@@ -8,6 +8,8 @@
 
 #include "FAttachedInfo.h"
 
+class AActor;
+
 #include "AFortAttachableProjectileBase.generated.h"
 
 UCLASS(config=Engine)
@@ -19,6 +21,9 @@ public:
 	// table index 0, flags 0x10008100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedAttachedInfo, Transient)
 	FAttachedInfo AttachedInfo;
+
+	UFUNCTION(BlueprintCallable)
+	AActor* GetAttachedToActor();
 
 	UFUNCTION()
 	void OnRep_ReplicatedAttachedInfo();

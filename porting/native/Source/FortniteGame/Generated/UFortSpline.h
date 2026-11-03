@@ -29,5 +29,8 @@ public:
 	UPROPERTY()
 	FInterpCurveFloat SplineLookupTable;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetDuration() const;
+
 };
 
