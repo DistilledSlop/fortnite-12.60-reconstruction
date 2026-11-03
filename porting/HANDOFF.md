@@ -1,5 +1,34 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source/broad rough batch71 (2026-11-03)
+
+Canonical2,075 bodies+180fields=2,255 accepted/rejected0. Restored original
+AFortPawn PlaySound_Implementation forwarding to UGameplayStatics with actor
+location, original volume/pitch and zero/null defaults. Corrected prior skipped
+manifest signature using reflected offsets and exec registers. Original pawn
+vtable target, full body, engine exec identifying shared nativecall and zero
+constants are pinned; both reflected contracts are frozen. Promotion71 changed
+one generated file, no removals. Initial missing-CONFIDENCE snippet rejection
+corrected; initial/final logs retained. No compiler/build/runtime/tests. Last
+tested2,040; 35 canonical+4 manual bodies pending; next tests3,040.
+
+Seventeen new uncounted rough bodies cover six controller win/publish/revive/LTM
+paths, five player-state team-change/kill/DBNO/feed/match-entry paths and six
+pawn anti-cheat/emote/montage/part paths. Two emote names alias one native body
+and were counted once. These C++ lifts retain explicit unresolved ABI, arrays,
+text/delegate ownership, timer and callback effects. They are not canonical or
+runtime-parity claims. Direct/source inventories identify ignored decompiler
+inputs, not original-byte proof. All workers finished; no Ghidra ran, lease free.
+
+Previous turn PROGRESS (22 rough lifts, source/dashboard pushed284c6d90).
+Current full client/server/visual/audio goal remains active; all4 product gates
+OPEN. Root sole canonical/generation/build/commit owner, primarily planner/
+orchestrator/reviewer with direct work where useful. Keep bounded Terra6.1
+medium/low fork-none tasks, rotation and economical reads; preserve unrelated
+graphics/Engine edits. Source promotion command python3 /tmp/promote-native-batch71.py;
+reports porting/generated/gameplay-bulk-integration-71/. Continue broad substantial
+native recovery and integrate genuinely closed behavior without getter rabbit holes.
+
 ## Broad native rough batch70 (2026-11-03)
 
 Added22 new uncounted full control-flow drafts: six creative plot/profile

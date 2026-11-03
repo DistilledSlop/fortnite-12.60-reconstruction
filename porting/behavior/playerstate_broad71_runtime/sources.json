@@ -1,0 +1,27 @@
+[
+  {
+    "function": "OnRep_ChangeTeamInfo",
+    "source": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_ChangeTeamInfo.c",
+    "sha256": "2586945e9fb196dc44851afaf64b7527d90403e125ae4aaa0db0b01c306870b2"
+  },
+  {
+    "function": "ClientAddKillFeedErrorMessage_Implementation",
+    "source": "porting/generated/decomp_improved/AFortPlayerStateAthena/ClientAddKillFeedErrorMessage_Implementation.c",
+    "sha256": "bb6d8b73e0d52b512bc62a4708d2546abc910ddb122438b1a9d7b116f24d443f"
+  },
+  {
+    "function": "ClientReportKill_Implementation",
+    "source": "porting/generated/decomp_improved/AFortPlayerStateAthena/ClientReportKill_Implementation.c",
+    "sha256": "2b8691fcdf3669520b9aaba0a682c0dc1669cadd04d6e60563a3064aa28d2f27"
+  },
+  {
+    "function": "ClientReportDBNO_Implementation",
+    "source": "porting/generated/decomp_improved/AFortPlayerStateAthena/ClientReportDBNO_Implementation.c",
+    "sha256": "edbceacf46f25b98f44ea353fed7d7768aeb59d2a8019184dfff809ddd759a1a"
+  },
+  {
+    "function": "ClientNotifyMatchEntered_Implementation",
+    "source": "porting/generated/decomp_improved/AFortPlayerStateAthena/ClientNotifyMatchEntered_Implementation.c",
+    "sha256": "d90853d00f46d4dcb6d197550a8f1ec53f8fccef6512b557a8a48a116f5c4e72"
+  }
+]

@@ -3391,15 +3391,18 @@
     "class": "AFortPawn",
     "function": "PlaySound_Implementation",
     "kind": "impl",
-    "signature": "void PlaySound_Implementation(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound)",
+    "signature": "void PlaySound_Implementation(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier)",
     "signature_status": "declared",
-    "inc_path": null,
-    "confidence": null,
+    "inc_path": "porting/behavior/pawn_sound71_runtime/PlaySound_Implementation.inc",
+    "confidence": "high",
     "address": "0x142341850",
-    "status": "skipped",
+    "status": "ported",
     "proxy_score": 60.5,
     "decompile_source": "porting/generated/decomp_improved/AFortPawn/PlaySound_Implementation.c",
-    "notes": "unnamed_call: calls an unidentified FUN_* helper"
+    "notes": "Original virtual8f8 implementation forwards Sound (RDX), Volume (XMM2), Pitch (XMM3), actor location, zero rotation/start and null optional objects to native UGameplayStatics::PlaySoundAtLocation. Corrected prior skipped manifest parameter order using reflected offsets.",
+    "includes": [
+      "Kismet/GameplayStatics.h"
+    ]
   },
   {
     "class": "AFortPlayerPawn",

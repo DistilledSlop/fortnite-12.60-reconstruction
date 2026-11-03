@@ -1,4 +1,4 @@
-"""Original reflected RPC contracts for the pawn-to-ASC forwarding path."""
+"""Original reflected pawn RPC and forwarded engine-call contracts."""
 import json
 from pathlib import Path
 HERE = Path(__file__).resolve().parent
@@ -10,4 +10,4 @@ def validate():
     for owner, funcs in contracts['functions'].items():
         for name, expected in funcs.items():
             if current[owner][name] != expected:
-                raise ValueError('pawn cue RPC reflection changed: ' + owner + '::' + name)
+                raise ValueError('pawn RPC reflection changed: ' + owner + '::' + name)

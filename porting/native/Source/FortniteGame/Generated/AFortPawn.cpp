@@ -4,6 +4,8 @@
 #include "AbilitySystemComponent.h"
 #include "EFortControlRecoveryBehavior.h"
 #include "GameplayTagContainer.h"
+#include "Kismet/GameplayStatics.h"
+#include "Math/Rotator.h"
 #include "UFortAbilitySystemComponent.h"
 #include "Net/UnrealNetwork.h"
 
@@ -327,7 +329,10 @@ void AFortPawn::OnRep_WeaponActivated()
 
 void AFortPawn::PlaySound_Implementation(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; original full body142341850 and engine exec144711920.
+	UGameplayStatics::PlaySoundAtLocation(this, Sound, GetActorLocation(),
+	    FRotator::ZeroRotator, VolumeMultiplier, PitchMultiplier, 0.0f,
+	    nullptr, nullptr, nullptr);
 }
 
 void AFortPawn::ServerInternalEquipWeapon_Implementation(AFortWeapon* Weap)

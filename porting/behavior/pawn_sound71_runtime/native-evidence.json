@@ -1,0 +1,35 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "windows": [
+    {
+      "begin": "0x142341850",
+      "length": 194,
+      "sha256": "2d48f017ac107e4e3689b889f2d47b72554bec1b35554d35787554af7003135d",
+      "label": "Full pawn sound virtual implementation"
+    },
+    {
+      "begin": "0x142a1f0d0",
+      "length": 243,
+      "sha256": "57bece7df1e28e626399a3e780b12001ab1677527aa6b3463a33142637a9434f",
+      "label": "Sound RPC exec, scalar registers and virtual8f8 dispatch"
+    },
+    {
+      "begin": "0x144711920",
+      "length": 719,
+      "sha256": "69b62c88e432f9d3f66b06ad9ff9fe4a0b093af5fd60cd443d65562513b5cba4",
+      "label": "Engine PlaySoundAtLocation exec identifying shared native144224f50"
+    },
+    {
+      "begin": "0x148218630",
+      "length": 24,
+      "sha256": "9d908ecfb6b256def8b49a7c504e6c889c4b0e41fe6ce3e01863dd7b61a20aa0",
+      "label": "Original zero location and zero rotator"
+    },
+    {
+      "begin": "0x146116178",
+      "length": 8,
+      "sha256": "76886e40fdd3214718047440e11e91b3bead5176056c69fcd96cda106afa904d",
+      "label": "FortPawn virtual8f8 target"
+    }
+  ]
+}
