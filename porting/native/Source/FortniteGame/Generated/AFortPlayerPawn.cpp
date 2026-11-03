@@ -1264,6 +1264,12 @@ void AFortPlayerPawn::UpdateGameStateModifiedGravity(float GravityMultiplier)
 	// CONFIDENCE: HIGH
 }
 
+bool AFortPlayerPawn::NativeIsLocalPlayer() const
+{
+	// CONFIDENCE: HIGH
+	return bIsLocalPlayer;
+}
+
 void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

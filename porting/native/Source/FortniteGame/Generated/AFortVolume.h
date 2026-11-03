@@ -7,6 +7,7 @@
 #include "AGameplayVolume.h"
 
 #include "AttributeSet.h"
+#include "Components/PostProcessComponent.h"
 #include "EVolumeShape.h"
 #include "EVolumeState.h"
 #include "Engine/Engine.h"
@@ -19,6 +20,8 @@
 #include "FOnShowPublishWatermarkChanged.h"
 #include "FOnVolumePerformanceMetricsUpdated.h"
 #include "FVolumeActorStats.h"
+#include "FortVolumeClientPostProcess.h"
+#include "GameFramework/PlayerController.h"
 #include "Math/Box.h"
 #include "Math/BoxSphereBounds.h"
 #include "Math/Vector.h"
@@ -229,5 +232,6 @@ public:
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 	virtual AFortVolume* NativeGetVolume();
 	FBox NativeGetBoundsBox() const;
+	void NativeUpdateClientPostProcess(AActor* Actor, bool bEntering);
 };
 

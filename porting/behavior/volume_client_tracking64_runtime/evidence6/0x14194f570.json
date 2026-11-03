@@ -1,0 +1,15 @@
+{
+ "address": "0x14194f570",
+ "label": "",
+ "name": "FUN_14194f570",
+ "status": "ok",
+ "body_bytes": 11,
+ "instructions": 4,
+ "called": [],
+ "indirect_calls": 0,
+ "strings": [],
+ "callers": [],
+ "reference_counts": {},
+ "thunk": false,
+ "error": null
+}

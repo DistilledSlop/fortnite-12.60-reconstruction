@@ -942,5 +942,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual bool HasNativeAction(const FGameplayTag& ActionTag);
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
+	virtual bool NativeIsLocalPlayer() const;
 };
 

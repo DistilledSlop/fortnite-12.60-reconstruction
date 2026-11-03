@@ -370,6 +370,12 @@ UAbilitySystemComponent* AFortPawn::GetAbilitySystemComponent() const
 	return Component;
 }
 
+bool AFortPawn::NativeIsLocalPlayer() const
+{
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

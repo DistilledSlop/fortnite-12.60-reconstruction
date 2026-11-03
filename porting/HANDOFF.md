@@ -1,5 +1,21 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch64 (2026-11-03)
+
+Canonical 2,051 bodies + 176 fields = 2,227 accepted, rejected 0. Added the
+full client volume post-process update and native FortPawn/FortPlayerPawn
+predicate implementations. Original startup initializer proves the shared
+Component.PostProcess.Mobile FName; original helper/iterator/vtable windows
+are pinned by source policy. Uses local controller view target selection and
+live component BlendWeight writes. Promotion64 changed six files and added two
+support files. No build/runtime/tests; eleven bodies pending since 2,040,
+next checkpoint 3,040. All four product gates remain OPEN.
+Root owns canonical source/generator/promotion/builds. Bounded Terra6.1 medium
+fork-none rough passes continue on larger membership and ability-system paths;
+explicit unresolved drafts are uncounted. Preserve economical reads, worker
+rotation, and unrelated porting/graphics. Previous answer-only turn was NO
+PROGRESS; this turn changes canonical source and recovers larger path lifts.
+
 ## Native source batch63 (2026-11-03)
 
 Canonical2,048 bodies+176fields=2,224 accepted/rejected0. Four recovered bodies:

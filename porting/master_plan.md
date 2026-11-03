@@ -10,15 +10,15 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Native source recovery has reached 2,048 complete bodies plus 176 supporting
-fields (batch63, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
+Native source recovery has reached 2,051 complete bodies plus 176 supporting
+fields (batch64, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
 Linux client/server builds and Apollo headless join passed; tracked receipts in
-progress/native-checkpoint-2040.json. Eight subsequent bodies are build pending.
+progress/native-checkpoint-2040.json. Eleven subsequent bodies are build pending.
 Next build/runtime/test batch at3,040 bodies. Fail-closed generation accepts
-2,224 ported entries with no rejected splices. All four product gates remain
+2,227 ported entries with no rejected splices. All four product gates remain
 open. Latest source restores day-phase callback/virtual boundaries, the live
 UFortGlobals accessor, native volume accessor interface and three implementing
-classes, plus live volume bounds-to-box conversion. Larger actor volume lookup,
+classes, plus live volume bounds-to-box conversion and client post-process component updates. Larger actor volume lookup,
 membership lifecycle and building attribute delegate bindings have explicit
 uncounted lifts and unresolved effects; they are not ported behavior. See the
 latest HANDOFF for ownership, evidence and next dependency tasks.

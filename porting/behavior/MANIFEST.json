@@ -36060,5 +36060,52 @@
     "status": "ported",
     "notes": "Exact live bounds-to-box helper. No forced initialization when original bounds helper leaves its output untouched.",
     "class": "AFortVolume"
+  },
+  {
+    "class": "AFortVolume",
+    "function": "NativeUpdateClientPostProcess",
+    "kind": "helper",
+    "signature": "void NativeUpdateClientPostProcess(AActor* Actor, bool bEntering)",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x141c93b20",
+    "inc_path": "porting/behavior/volume_client_tracking64_runtime/NativeUpdateClientPostProcess.inc",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/PostProcessComponent.h",
+      "Engine/World.h",
+      "GameFramework/PlayerController.h",
+      "FortVolumeClientPostProcess.h"
+    ],
+    "notes": "Non-authority AddActor/RemoveActor share this helper. Uses the process-startup Component.PostProcess.Mobile FName and native virtual pawn predicate. See HANDOFF."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeIsLocalPlayer",
+    "kind": "helper",
+    "signature": "bool NativeIsLocalPlayer() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "address": "0x1406801e0",
+    "inc_path": "porting/behavior/volume_client_tracking64_runtime/FortPawnNativeIsLocalPlayer.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Base virtual +0xdb0 returns false; proposed helper name and const qualifier."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeIsLocalPlayer",
+    "kind": "helper",
+    "signature": "bool NativeIsLocalPlayer() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "address": "0x14194f570",
+    "inc_path": "porting/behavior/volume_client_tracking64_runtime/FortPlayerPawnNativeIsLocalPlayer.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Override virtual +0xdb0 tests reflected bIsLocalPlayer, +0x2004 mask 0x02."
   }
 ]

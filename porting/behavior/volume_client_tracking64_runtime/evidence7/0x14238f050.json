@@ -1,0 +1,15 @@
+{
+ "address": "0x14238f050",
+ "label": "",
+ "name": "thunk_FUN_1444816f0",
+ "status": "ok",
+ "body_bytes": 5,
+ "instructions": 1,
+ "called": [],
+ "indirect_calls": 0,
+ "strings": [],
+ "callers": [],
+ "reference_counts": {},
+ "thunk": true,
+ "error": null
+}
