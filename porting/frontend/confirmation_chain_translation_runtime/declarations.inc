@@ -10,12 +10,14 @@
 UFUNCTION(BlueprintCallable)
 void BotClickButton();
 
-// Window +0x596, byte. Compared against 0 in NativeConfirmClicked144f5fbc0 (cmp %dl,0x596(%rdi)).
-// No writer in the translated set. Owner is UNKNOWN (see NOTES.md).
+// Window +0x596 = ConfirmationDescription (+0x4b0) +0xe6, a bool (reflected struct size 280; ctor 0x142b1bea0 stores 0 at e6).
+// Compared against 0 in NativeConfirmClicked144f5fbc0 (cmp %dl,0x596(%rdi), 0x144f5fc22). No writer in the translated set.
+// Name: bShouldWaitForLatentActionOnConfirmAction is INFERRED from layout order only (NOTES.md item 15).
 uint8 NativeFlag596 = 0;
 
-// Window +0x490, 8-byte slot. Passed by address (&W+0x490) as the handle argument of
-// NativeDispatch144ce33d0 from NativeConfirmClicked144f5fbc0 only. Type UNKNOWN.
+// Window +0x490, 8-byte slot. Unreflected gap between LatentSpinner (0x488) and ConfirmationButtons (0x498).
+// Passed by address (&W+0x490) as Dispatch's handle argument from NativeConfirmClicked144f5fbc0 only; Dispatch reads its first dword.
+// Type UNKNOWN.
 alignas(8) uint8 NativeMember490[8];
 
 // Window +0x480, object pointer whose vtable slots 0x2c0 and 0x270 are called in NativeHelper144f75f90. Type UNKNOWN.
@@ -96,14 +98,14 @@ void*  NativeFunc144ade1e0(void* Global, void* Obj);                   // UNKNOW
 uint64 NativeInit142cbd480();                                          // UNKNOWN
 void*  NativeInit142cc0600(uint64 A, uint64 FName);                    // UNKNOWN
 void   NativeFunc143d852b0(void* EntryBox, bool bFlag);                // EntryBox setter (UNKNOWN meaning)
-void   NativeFunc1407f7e20(void* LatentSpinner, bool bFlag);           // UNKNOWN meaning
-void   NativeHelper142b1bea0(uint8* Buf);                              // UNKNOWN
+void   NativeFunc1407f7e20(void* LatentSpinner, bool bFlag);           // tail-jumped from ConfirmClicked 0x144f5fc8b; stores bFlag at [[obj+0x1f0]+0x408], tail-calls 0x1408033f0 (UNKNOWN). Meaning UNKNOWN
+void   NativeHelper142b1bea0(uint8* Buf);                              // FFortDialogDescription_NUI constructor body (verified, NOTES.md VERIFIED)
 void   NativeHelper144f4f6a0(uint8* Dst, uint8* Src);                  // UNKNOWN (arg direction as in pseudo-C)
 void   NativeHelper144f555e0(UFortConfirmationWindow* W);              // UNKNOWN
 void   NativeHelper144f7b690(UFortConfirmationWindow* W);              // UNKNOWN
 void   NativeHelper144f7b730(UFortConfirmationWindow* W);              // UNKNOWN
 void   NativeDispatchSlot2C0(void* Obj, const uint8* Desc);            // vtable 0x2c0 on W+0x480 (UNKNOWN)
-void   NativeDispatchSlot270(void* Obj, bool bFlag);                   // vtable 0x270 on W+0x480 (tail jump in pseudo-C)
+void   NativeDispatchSlot270(void* Obj, bool bFlag);                   // u2 tail jmp 0x144f7601e; Obj = [W+0x480], bFlag = (W+0x4f8 == 0); slot target UNKNOWN
 void   NativeHelper1407b7ed0(UFortConfirmationWindow* W);              // UNKNOWN
 void   NativeHelper140685370(void* ArrayAddr, bool bFlag);             // UNKNOWN
 bool   NativeDispatchSlot50_Entry(void* Ptr, UFortConfirmationWindow* W); // vtable 0x50 on u3 element (UNKNOWN)

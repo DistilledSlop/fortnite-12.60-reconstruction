@@ -4,18 +4,48 @@ Scope: translation of porting/generated/decomp-imports/Imports/{BotClick__144f54
 
 Naming: BotClickButton is reflected (exec 145218540) and used as-is. All other functions and members are address-suffixed (NativeXxx<VA>). Reflected members (ConfirmationButtons, DeclineButton, ConfirmationDescription, EntryBox_SimpleButtons, CommonLoadGuard_LatentSpinner) are used as-is. ConfirmClicked, DeclineClicked, Present, WeakPin, OuterWalk, Dispatch, u2, u3 are not in the reflection JSON (exact-name search returned 0 hits).
 
-## Byte identities
+Evidence method: image is /mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin, a flat memory image with VA = 0x140000000 + file offset. Disassembly was done by extracting bytes at the VA with dd and running `objdump -D -b binary -mi386:x86-64 --adjust-vma=<VA>`. Do not run objdump directly on the PE file: it reads on-disk section layout, not the memory image.
 
-### +0x596 (window byte, NativeFlag596)
-- Verified by the C: ConfirmClicked reads `*(char*)(W+0x596)` and branches on == 0 (Present path) vs != 0 (dispatch path). Disassembly confirms `cmp %dl,0x596(%rdi)` at 0x144f5fc22 (rdi = W, dl = the bool argument).
-- Verified by the C: no writer in the nine translated files.
-- NOT verified: that the byte is inside ConfirmationDescription (would be description +0xe6). The C accesses it via the window base only. The description starts at W+0x4b0 (verified as the Dispatch description argument), but its sizeof is not shown. The 288-byte copy buffer is an allocation size, and the TArray at W+0x5c8 suggests sizeof is at most 0x118, which would put 0x596 inside. This is INFERRED only.
-- Field name and type: UNKNOWN.
+## VERIFIED (this pass)
 
-### +0x490 (8-byte slot, NativeMember490)
-- Verified by the C: `lea 0x490(%rdi),%rcx` at 0x144f5fc48 (ConfirmClicked). It is passed as Dispatch's 6th argument only on that path. Present and DeclineClicked pass a local handle instead. Dispatch passes it to 141f8f0a0 and 141f87900, then reads its first dword (`*param_6`).
-- NOT verified: type, owner class, and meaning. "Weak or shared ref" is inference only. Layout placement (between reflected 0x488 and ConfirmationButtons 0x498) comes from CALLEES.md and was not re-checked against the reflection JSON.
-- The grep hit for 0x490 in OutroDefault__1407bb630.c is a vtable call `*0x490(param_1)`, not this member.
+### Window +0x4b0 is ConfirmationDescription (FFortDialogDescription_NUI, inline)
+- Reflection (fortnite_game_reflection.json, window class owning ConfirmationDescription): ConfirmationDescription offset 1200 = 0x4b0, kind Struct. DeclineButton 1192 = 0x4a8, ConfirmationButtons 1176 = 0x498, CommonLoadGuard_LatentSpinner 1160 = 0x488, Image_MainIcon 1152 = 0x480, EntryBox_SimpleButtons 1096 = 0x448.
+- struct_blocks.json FortDialogDescription_NUI: size 280 = 0x118. 0x4b0 + 0x118 = 0x5c8, the TArray that ConfirmClicked/u3 use at W+0x5c8.
+- Therefore W+0x596 = description +0xe6 (0x596 - 0x4b0 = 0xe6), inside the struct.
+
+### Description +0xe6 is a bool, stored false by the struct constructor
+- Vtable 0x146556f68 (struct_ops_fn of FortDialogDescription_NUI, reflection): slot 3 (Construct, per engine Class.h ICppStructOps order: dtor, HasNoopConstructor, HasZeroConstructor, Construct, HasDestructor, Destruct) = 0x142b1d5f0.
+- 0x142b1d5f0 is `mov rcx,rdx; jmp 0x142b1bea0`.
+- 0x142b1bea0 (constructor body, flat disassembly) stores: `movl $0,0xe0` (DisplayTime 0.0), `movw $1,0xe4` (byte e4=1, byte e5=0), `mov %dil,0xe6` (byte e6=0), `mov %rdi,0xe8` (NotificationHandler null), `mov %rdi,0xf0` (ShowSound null), `mov %rdi,0xd0`/`0xd8` (AdditionalContent, LeftAdditionalContent null). Also FSlateBrush-style ctor at +0 and FText ctors at +0x88 and +0xa0, TArray at +0xb8, Name at +0xc8.
+- The header FFortDialogDescription_NUI.h (generated) gives defaults Dismissable(true), Cancelable(false), bShouldWaitForLatentActionOnConfirmAction(false), which match the stores: the only true default is at e4.
+- Name of e6 as bShouldWaitForLatentActionOnConfirmAction: NOT closed by a direct store or read. Layout evidence only: reflection table indices fall monotonically with offset for all 10 reflected offset members (13@0, 12@136, 11@160, 9@184, 8@200, 7@208, 6@216, 5@224, 1@232, 0@240). Bools are indices 4, 3, 2, i.e. between DisplayTime (224) and NotificationHandler (232), so the header order Dismissable(e4), Cancelable(e5), bShouldWait(e6) follows. This is INFERRED from ordering, so the name stays UNKNOWN (see item 15).
+- Dispatch does not read desc bytes 0xe4..0xe6 (Dispatch__144ce33d0.c). ConfirmClicked passes literal 1 as Dispatch's param_5.
+
+### W+0x490 (8-byte slot): owner and access verified, type UNKNOWN
+- Reflection: no property at 1168 = 0x490 in the window class. The gap lies between reflected CommonLoadGuard_LatentSpinner (0x488) and ConfirmationButtons (0x498). It is an unreflected native member.
+- ConfirmClicked 0x144f5fc48 `lea 0x490(%rdi),%rcx`, then stored as Dispatch's 6th stack argument (`mov %rcx,0x28(%rsp)`).
+- Dispatch reads only the first dword (`uVar1 = *param_6`) and passes it on. Its handle operations are 141f8f0a0 and 141f87900.
+- u4 (141f7ce20) initializes a handle as `*p = 0xffffffff` (one dword). FFortDialogExternalLatentActionHandle.h has one int32 member, Handle, at offset 0. This matches the access pattern but is not proof that W+0x490 holds that type, so the type stays UNKNOWN.
+
+### W+0x596 read path
+- ConfirmClicked 0x144f5fc22 `cmp %dl,0x596(%rdi)`, then je 0x144f5fc90 (Present path) if zero. Otherwise dispatch path. Confirmed by disassembly.
+
+### 0x1407f7e20 (LatentSpinner setter, u1): behavior verified, meaning UNKNOWN
+- ConfirmClicked 0x144f5fc78 loads rcx = [W+0x488] (reflected CommonLoadGuard_LatentSpinner), 0x144f5fc81 `mov 0x40(%rsp),%rbx`, and 0x144f5fc8b is `jmp 0x1407f7e20` (a TAIL CALL, not a call). dl = 1.
+- 0x1407f7e20 (flat disassembly): `mov 0x1f0(%rcx),%rcx; test; je ret; mov %dl,0x408(%rcx); jmp 0x1408033f0`. So it stores the flag byte at [[obj+0x1f0]+0x408] and tail-jumps to 0x1408033f0 (callee UNKNOWN).
+
+### jmp *0x270 sites: two different functions
+- 0x144f7601e (in u2, NativeHelper144f75f90): `lea 0x4b0(%rdi),%rdx; mov 0x480(%rdi),%rcx; call *0x2c0(%rax)` at 0x144f75fee (Obj=[W+0x480], Desc=W+0x4b0). Then `cmpq $0,0x4f8(%rdi)`; dl = ([W+0x4f8]==0) ? 1 : 0; `mov 0x480(%rdi),%rcx; mov (%rcx),%rax; rex.W jmp *0x270(%rax)` at 0x144f7601e. So u2 tail-calls vtable slot 0x270 of [W+0x480] with bFlag = (W+0x4f8 == 0). This matches definitions.inc.
+- 0x144f5fcc0 (a separate function, NOT part of ConfirmClicked; its bytes start after a ret at 0x144f5fca7): `mov 0x2c0(%rcx),%rcx; test; je ret; mov (%rcx),%rax; test %dl,%dl; mov $4,%dl; jne +2; mov $1,%dl; jmp *0x270(%rax)`. Receiver is [arg+0x2c0], dl = (arg!=0) ? 4 : 1. Its caller is not identified.
+- Vtable slot 0x270 targets: UNKNOWN for both sites (receiver classes not resolved to a vtable in the image).
+
+### W+0x480 receiver class
+- Reflection: window member at 0x480 is Image_MainIcon (Object), type_refs class = 0x143daaa70. The class name is not resolved in class_name_map.json / class_ref_map.json (no hit for that VA).
+
+## Corrections to the earlier notes
+- The earlier claim that the call to 0x1407f7e20 does not appear in 0x144f5fbc0..0x144f5fce0 was wrong: it is the tail `jmp` at 0x144f5fc8b.
+- The earlier claim that `jmp *0x270` at 0x144f5fcd7 explains u2's tail was wrong: u2's tail is at 0x144f7601e, and 0x144f5fcd7 is in the separate 0x144f5fcc0 helper.
+- The earlier "+0x596 inside the description is INFERRED" is now VERIFIED (see above). Only the bool's name remains open.
 
 ## UNKNOWN items (bodies or meanings not in the translated set)
 
@@ -29,15 +59,17 @@ Naming: BotClickButton is reflected (exec 145218540) and used as-is. All other f
 8. Dispatch: 141f8f0a0, 141f87900 (handle operations), vtable 0x28 and 0x50 on the desc+0xf8 and desc+0x108 objects, and the field names and types at desc+0xf8, +0x100, +0x108, +0x110. The first parameter (Controller) is never read in the pseudo-C.
    - Disassembly check: the 0x28 call receiver is the object in rcx (`mov 0xf8(%rsi),%rcx; mov (%rcx),%rax; call *0x28(%rax)`). The pseudo-C shows `()` with no arguments, so the receiver is inferred from this.
    - Disassembly check: Dispatch has no backward loop. CALLEES.md's "iterates an array" claim is not supported.
-9. Present and DeclineClicked: 144f4cfd0 (copy into temp, argument order as pseudo-C), 144ae20d0 (destroy), 141f7ce20 (handle init).
-10. u2 (NativeHelper144f75f90): 142b1bea0, 144f4f6a0 (argument direction as pseudo-C), 144f555e0, 144f7b690, 144f7b730. W+0x480 object type. Vtable 0x2c0 and 0x270 meanings. W+0x4f8 meaning (tested == 0).
+9. Present and DeclineClicked: 144f4cfd0 (copy into temp, argument order as pseudo-C), 144ae20d0 (destroy), 141f7ce20 (handle init; body read from pseudo-C as `*p = 0xffffffff`, not disassembled).
+10. u2 (NativeHelper144f75f90): 142b1bea0 (the struct constructor, now identified; see VERIFIED), 144f4f6a0 (argument direction as pseudo-C), 144f555e0, 144f7b690, 144f7b730. Vtable 0x2c0 and 0x270 target identity. W+0x4f8 meaning (tested == 0). W+0x480 class identity (see VERIFIED).
 11. u3 (NativeHelper144f55ae0): 144f555e0, 1407b7ed0, 140685370. Element struct at +0x5c8: pointer at +0x0 and int32 Count at +0x8 are read by the pseudo-C; bytes +0xc..+0xf UNKNOWN. Vtable 0x50 on the element pointer. W+0x5dc counter semantics beyond the increment/decrement shape.
-12. 143d852b0 (EntryBox setter) and 1407f7e20 (LatentSpinner setter): meanings UNKNOWN (CALLEES.md says "probably SetVisibility" and "loading state", both inferred).
+12. 143d852b0 (EntryBox setter) and 1407f7e20 (LatentSpinner setter): meanings UNKNOWN (CALLEES.md says "probably SetVisibility" and "loading state", both inferred). 1407f7e20 body verified (see VERIFIED); its callee 0x1408033f0 is UNKNOWN.
 13. W+0x570 mapping: ConfirmationDescription.ConfirmButtonInputActions.ArrayNum per LAYOUT.md. ArrayNum at +8 is inferred.
-14. sizeof(FFortDialogDescription_NUI): not shown in the set (see +0x596 above).
+14. W+0x490 type and owner class (see VERIFIED): the slot is an unreflected native member; its declared type is UNKNOWN.
+15. Name of description +0xe6 (bShouldWaitForLatentActionOnConfirmAction vs Cancelable at e5): the byte location and the false default are verified; the name is INFERRED from reflection table-index ordering. No direct store or read in the set distinguishes e5 from e6.
+16. The 0x270 receiver vtable targets (both sites, see VERIFIED): UNKNOWN. The 0x144f5fcc0 helper's caller is UNKNOWN.
 
 ## Cross-check results (disassembly, image-125.runtime.bin)
 
-- Pseudo-C calls `thunk_FUN_143d853b0` at the EntryBox setter. The disassembly `call 0x3d852b0` at 0x144f5fc73 gives VA 0x143d852b0. The translation uses 0x143d852b0 (CALLEES.md matches). The pseudo-C thunk name is unexplained.
-- Call sites in 0x144f5fbc0..0x144f5fce0: 0x3d66ef0 (WeakPin), `call *0x268` on the button, 0x4ade110 (OuterWalk), 0x4ce33d0 (Dispatch), 0x3d852b0, 0x4f55c60 (Present), and `jmp *0x270(%rax)` at 0x144f5fcd7. The pseudo-C's call to 0x1407f7e20 (LatentSpinner setter) does NOT appear as a direct call in that range, and the `jmp *0x270` is not explained by the pseudo-C. Unresolved; the translation keeps the pseudo-C call.
+- Pseudo-C calls `thunk_FUN_143d853b0` at the EntryBox setter. The disassembly `call 0x143d852b0` at 0x144f5fc73 (rcx = [W+0x448], dl = 1) gives VA 0x143d852b0. The translation uses 0x143d852b0 (CALLEES.md matches). The pseudo-C thunk name is unexplained.
+- Call sites in 0x144f5fbc0..0x144f5fca7 (ConfirmClicked): 0x143d66ef0 (WeakPin), `cmp`/`call *0x268` on the button, 0x144ade110 (OuterWalk), 0x144ce33d0 (Dispatch), 0x143d852b0 (EntryBox setter), tail `jmp 0x1407f7e20` at 0x144f5fc8b, and 0x144f55c60 (Present) on the zero path.
 - BotClick's virtual call at 0x288 is on `this` (the window) per the pseudo-C pattern. Not separately disassembled.
