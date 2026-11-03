@@ -1,5 +1,41 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Broad substantial native rough batch72 (2026-11-03)
+
+Added eight full recovered-body rough lifts and one connected partial death-info
+lift, all uncounted and outside build inputs. Three game-state paths cover cosmetic
+usage report/item variants/reverse callbacks, map-info loot arrays and winning
+player announcement. Three controller paths cover device-replication timeout,
+respawn fade/timers and creative-linked-volume callbacks. Two pawn paths cover
+looping weapon cue shutdown/cleanup and batched damage RPC dispatch/input mutation;
+this RPC is distinct from the batch70 helper. The large OnRep_DeathInfo lift covers
+connected top-level notification, formatting selection, callbacks and marker
+branches; marker record/payload construction was expanded into a connected second
+file. Formatting, text/reference ownership and compact notification remain large
+unresolved contracts: this is not a completed native body. All drafts retain
+explicit ABI, offset, helper and lifetime uncertainties, with source fingerprints.
+
+Review removed an invented empty null-winner string and inferred third timer
+lookup arguments, replacing them with explicit unresolved contracts. Root also
+restored the marker registry-result dereference. Source review only: no compiler,
+build, runtime, tests, generator or Ghidra. Canonical remains2,075 bodies+180fields,
+2,255 accepted/rejected0 from promotion71. Last tested2,040;35 canonical+4 manual
+bodies build pending; next tests3,040 per AGENTS.md. No runtime/parity claim follows
+from these roughs; all4 product gates remain OPEN, full goal active.
+
+Previous turn was a status answer (NO PROGRESS); current work revalidated clean
+source state at3fc9add5 and made these concrete drafts. Root reviewed all four
+proposal directories. Bounded Terra6.1 medium fork-none workers finished; no live
+process or Ghidra lease remains. Preserve primary planner/orchestrator/reviewer
+ownership, economical reads and bounded worker rotation; root sole canonical,
+generator/build/staging/commit owner. Preserve unrelated porting/graphics/ and
+Engine edits; skip visual work. Continue broad substantial functions, without
+getter dependency detours or counting compressed/partial drafts as implementation.
+Commands: ordinary bounded source reads and apply_patch/source-inventory writes;
+no generation/build command this batch. New source dirs are controller_broad72,
+gamestate_broad72, pawn_cues72 and playerstate_death72 under porting/behavior,
+all suffixed _runtime. Worker handoffs capture remaining exact contracts.
+
 ## Native source/broad rough batch71 (2026-11-03)
 
 Canonical2,075 bodies+180fields=2,255 accepted/rejected0. Restored original

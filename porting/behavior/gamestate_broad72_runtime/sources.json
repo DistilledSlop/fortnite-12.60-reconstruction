@@ -1,0 +1,16 @@
+{
+  "sources": [
+    {
+      "path": "porting/generated/decomp_improved/AFortGameStateAthena/OnRep_CosmeticUsage.c",
+      "sha256": "fc3311dae8e2ae1e8308ae17b53c54e347afd12167531da1efb7d15fa1e6a39c"
+    },
+    {
+      "path": "porting/generated/decomp_improved/AFortGameStateAthena/OnRep_MapInfo.c",
+      "sha256": "3fa50eb869e607c669d9102fa2516eedd60b3e56ab63bd6eafb278a1fa6c4332"
+    },
+    {
+      "path": "porting/generated/decomp_improved/AFortGameStateAthena/OnRep_WinningPlayerState.c",
+      "sha256": "ac36d8395d8ab22b89a36df6c6239d964b3bd73ee351c385d325410b3721db25"
+    }
+  ]
+}

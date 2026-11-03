@@ -20,6 +20,10 @@ Batch70 adds22 more uncounted drafts, including full vehicle/cosmetic callback
 control flow and creative operations, pawn effects, weapon equip and carry paths.
 Batch71 restores pawn sound RPC forwarding and adds17 uncounted controller,
 player-state and pawn callback drafts.
+Batch72 adds eight full recovered-body rough lifts and a connected partial
+OnRep_DeathInfo lift with expanded marker construction. Cosmetic report, map/winner,
+controller respawn/timeout/volume and pawn cue paths remain uncounted with explicit
+unresolved effects, ownership and ABI; no builds/tests ran.
 Next build/runtime/test batch at3,040 bodies. Fail-closed generation accepts
 2,255 ported entries with no rejected splices. All four product gates remain
 open. Latest source restores day-phase callback/virtual boundaries, the live

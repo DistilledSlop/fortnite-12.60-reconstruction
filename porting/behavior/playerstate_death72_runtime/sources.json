@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {
+      "path": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_DeathInfo.c",
+      "sha256": "2c6f3323f20f9b2964d8be60309a1c40d1b05a94e1629a1e415f80aa56ed77d0",
+      "address": "0x142a8d9b0"
+    }
+  ]
+}

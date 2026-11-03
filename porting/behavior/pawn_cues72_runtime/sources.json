@@ -1,0 +1,12 @@
+[
+  {
+    "function": "StopBatchedLoopingWeaponActivation",
+    "source": "porting/generated/decomp_improved/AFortPawn/StopBatchedLoopingWeaponActivation.c",
+    "sha256": "290a5cf03316d66c500d9c1552d0cad013014a983e557e8f7b2911ae9ee919b8"
+  },
+  {
+    "function": "NetMulticast_Athena_BatchedDamageCues_Implementation",
+    "source": "porting/generated/decomp_improved/AFortPawn/NetMulticast_Athena_BatchedDamageCues_Implementation.c",
+    "sha256": "af0fd123cf0c526eae067c8b4e52f5db96f80dc3f9debe9681dc5a17d4732c2c"
+  }
+]
