@@ -176,6 +176,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsUIVisible() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetRatingWidgetFeedbackTitle(FText& Title);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldCloseMenuOnEscape() const;
 

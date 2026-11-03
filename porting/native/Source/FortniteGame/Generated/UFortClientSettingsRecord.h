@@ -1273,6 +1273,9 @@ public:
 	void SetAnonymousModeEnabled(bool bEnable);
 
 	UFUNCTION()
+	void SetAutoEquipBetterItems(bool bAutoEquip);
+
+	UFUNCTION()
 	void SetAutoJoinGameVoiceChannel(bool bNewValue);
 
 	UFUNCTION()
@@ -1285,6 +1288,9 @@ public:
 	void SetAutoSortConsumablesToRight(bool bNewValue);
 
 	UFUNCTION()
+	void SetBuildingPossessionShown(bool bShown);
+
+	UFUNCTION()
 	void SetChatVolume(float InVolume);
 
 	UFUNCTION()
@@ -1294,10 +1300,19 @@ public:
 	void SetColorBlindMode(EColorBlindMode InMode);
 
 	UFUNCTION()
+	void SetConsoleFPSUnlocked(bool bNewValue);
+
+	UFUNCTION()
+	void SetContextTutorialEnabled(bool bEnabled);
+
+	UFUNCTION()
 	void SetCreativeModeReplayRecordingEnabled(bool bEnabled);
 
 	UFUNCTION()
 	void SetCreativeTurboDelete(bool bNewValue);
+
+	UFUNCTION()
+	void SetDeviceFeedbackBlockedWithAttachedController(bool bForceFeedbackBlocked);
 
 	UFUNCTION()
 	void SetDialogueVolume(float InVolume);
@@ -1306,16 +1321,34 @@ public:
 	void SetEditButtonHoldTime(float NewValue);
 
 	UFUNCTION()
+	void SetEditConfirmOnReleaseEnabled(bool bNewEditConfirmOnRelease);
+
+	UFUNCTION()
 	void SetEnableRudderControl(bool bEnable);
 
 	UFUNCTION()
 	void SetEnableTryBuildOnFocus(bool bNewValue);
 
 	UFUNCTION()
+	void SetFocusOnFirstBuildingPieceWhenQuickbarSwapped(bool InFocusOnFirstBuildingPieceWhenQuickbarSwapped);
+
+	UFUNCTION()
+	void SetFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena(bool InFocusOnFirstBuildingPieceWhenQuickbarSwapped);
+
+	UFUNCTION()
+	void SetForceFeedbackEnabled(bool bForceFeedback);
+
+	UFUNCTION()
 	void SetGamepadBuildingMultiplier(float InMultiplier);
 
 	UFUNCTION()
 	void SetGamepadEditModeMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetGamepadLookSensitivityX(float InSensitivity);
+
+	UFUNCTION()
+	void SetGamepadLookSensitivityY(float InSensitivity);
 
 	UFUNCTION()
 	void SetGamepadLookStickDeadZone(float NewValue);
@@ -1417,6 +1450,9 @@ public:
 	void SetLookVerticalSpeedAds(uint32 NewValue);
 
 	UFUNCTION()
+	void SetMotionControlsEnabledSetting(bool InSetting);
+
+	UFUNCTION()
 	void SetMotionHarvestingToolMultiplier(float InMultiplier);
 
 	UFUNCTION()
@@ -1424,6 +1460,15 @@ public:
 
 	UFUNCTION()
 	void SetMotionTargetingMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetMouseSensitivityMultiplierForAircraft(float InSensitivityMultiplier);
+
+	UFUNCTION()
+	void SetMouseSensitivityX(float InSensitivityX);
+
+	UFUNCTION()
+	void SetMouseSensitivityY(float InSensitivityY);
 
 	UFUNCTION()
 	void SetMusicVolume(float InVolume);
@@ -1436,6 +1481,9 @@ public:
 
 	UFUNCTION()
 	void SetPlayerSurveysAllowed(bool Value);
+
+	UFUNCTION()
+	void SetQuickEditEnabled(bool bNewQuickEditEnabled);
 
 	UFUNCTION()
 	void SetReplayRecordingEnabled(bool bEnable);
@@ -1471,10 +1519,25 @@ public:
 	void SetSoundFXVolume(float InVolume);
 
 	UFUNCTION()
+	void SetSprintCancelsReload(bool bInSprintCancelsReload);
+
+	UFUNCTION()
+	void SetSubtitlesEnabled(bool Value);
+
+	UFUNCTION()
+	void SetTapInteract(bool bTapInteract);
+
+	UFUNCTION()
 	void SetTargetingMultiplier(float InMultiplier);
 
 	UFUNCTION()
+	void SetToggleSprint(bool bToggle);
+
+	UFUNCTION()
 	void SetTouchBuildingMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetTouchEditEnabled(bool bTouchEdit);
 
 	UFUNCTION()
 	void SetTouchEditModeMultiplier(float InMultiplier);
@@ -1493,6 +1556,21 @@ public:
 
 	UFUNCTION()
 	void SetTouchVerticalMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetUseFirstPersonCamera(bool bUseFirstPerson);
+
+	UFUNCTION()
+	void SetUseGamepadAutoRun(bool InUseGamepadAutoRun);
+
+	UFUNCTION()
+	void SetUseGamepadEditModeAimAssist(bool InUseGamepadEditModeAimAssist);
+
+	UFUNCTION()
+	void SetUseHoldToSwapPickup(bool InUseHoldToSwapPickup);
+
+	UFUNCTION()
+	void SetUsePowerSavingMode(bool bNewUsePowerSavingMode);
 
 	UFUNCTION()
 	void SetVisualizeAudioSources(bool bEnable);

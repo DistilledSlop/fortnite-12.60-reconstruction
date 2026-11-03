@@ -43,5 +43,8 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UFortHomebaseNodeItemDefinition> TeamPerkUnlockNode;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSlotIndexByName(FName& SlotName) const;
+
 };
 

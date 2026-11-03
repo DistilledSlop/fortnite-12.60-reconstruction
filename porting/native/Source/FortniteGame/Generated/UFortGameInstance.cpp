@@ -136,6 +136,14 @@ void UFortGameInstance::SetMultipleUserSettings(const TMap<FString, FString>& Se
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortGameInstance::SetOverrideCurrentMusicFFT(float FFT100hz, float FFT2000hz)
+{
+	// Native 0x141e80130. CONFIDENCE: high
+	CurrentEmoteMusicFFT100hz = FFT100hz;
+	CurrentEmoteMusicFFT2000hz = FFT2000hz;
+	bOverridingCurrentEmoteMusicFFT = true;
+}
+
 void UFortGameInstance::SetUserSetting(const FString& Key, const FString& Value, const FWebJSResponse& Response)
 {
 	// Body not recovered: reflection-derived stub.

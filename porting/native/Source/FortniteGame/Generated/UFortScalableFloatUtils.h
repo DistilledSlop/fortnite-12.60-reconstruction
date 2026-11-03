@@ -19,5 +19,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static float GetValue(FScalableFloat& Input);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsStatic(FScalableFloat& Input);
+
 };
 

@@ -832,6 +832,16 @@ void UFortClientSettingsRecord::SetAnonymousModeEnabled(bool bEnable)
 	}
 }
 
+void UFortClientSettingsRecord::SetAutoEquipBetterItems(bool bAutoEquip)
+{
+	// Native 0x14287ef60. CONFIDENCE: high
+	if (bAutoEquipBetterItems != bAutoEquip)
+	{
+	    bAutoEquipBetterItems = bAutoEquip;
+	    bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetAutoJoinGameVoiceChannel(bool bNewValue)
 {
 	// Native 0x141e3a600. CONFIDENCE: high
@@ -872,6 +882,16 @@ void UFortClientSettingsRecord::SetAutoSortConsumablesToRight(bool bNewValue)
 	}
 }
 
+void UFortClientSettingsRecord::SetBuildingPossessionShown(bool bShown)
+{
+	// Native 0x14287f770. CONFIDENCE: high
+	if (bBuildingPossessionShown != bShown)
+	{
+	    bBuildingPossessionShown = bShown;
+	    bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetChatVolume(float InVolume)
 {
 	// CONFIDENCE: HIGH. Native 0x141e3aa60; wrapper 0x14287f800.
@@ -905,6 +925,26 @@ void UFortClientSettingsRecord::SetColorBlindMode(EColorBlindMode InMode)
 	}
 }
 
+void UFortClientSettingsRecord::SetConsoleFPSUnlocked(bool bNewValue)
+{
+	// Native 0x14287fa00. CONFIDENCE: high
+	if (bUnlockConsoleFPS != bNewValue)
+	{
+	    bUnlockConsoleFPS = bNewValue;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetContextTutorialEnabled(bool bEnabled)
+{
+	// Native 0x14287fa90. CONFIDENCE: high
+	if (bContextTutorialEnabled != bEnabled)
+	{
+	    bContextTutorialEnabled = bEnabled;
+	    bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetCreativeModeReplayRecordingEnabled(bool bEnabled)
 {
 	// Native 0x141e3af20. CONFIDENCE: high
@@ -921,6 +961,16 @@ void UFortClientSettingsRecord::SetCreativeTurboDelete(bool bNewValue)
 	if (bCreativeTurboDelete != bNewValue)
 	{
 	    bCreativeTurboDelete = bNewValue;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetDeviceFeedbackBlockedWithAttachedController(bool bForceFeedbackBlocked)
+{
+	// Native 0x14287fd50. CONFIDENCE: high
+	if (bDeviceFeedbackBlockedWithAttachedController != bForceFeedbackBlocked)
+	{
+	    bDeviceFeedbackBlockedWithAttachedController = bForceFeedbackBlocked;
 	    bDirty = true;
 	}
 }
@@ -945,6 +995,16 @@ void UFortClientSettingsRecord::SetEditButtonHoldTime(float NewValue)
 	}
 }
 
+void UFortClientSettingsRecord::SetEditConfirmOnReleaseEnabled(bool bNewEditConfirmOnRelease)
+{
+	// Native 0x14287ff70. CONFIDENCE: high
+	if (bEditConfirmOnReleaseEnabled != bNewEditConfirmOnRelease)
+	{
+	    bEditConfirmOnReleaseEnabled = bNewEditConfirmOnRelease;
+	    bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetEnableRudderControl(bool bEnable)
 {
 	// Native 0x141e3b2b0. CONFIDENCE: high
@@ -961,6 +1021,36 @@ void UFortClientSettingsRecord::SetEnableTryBuildOnFocus(bool bNewValue)
 	if (bEnableTryBuildOnFocus != bNewValue)
 	{
 	    bEnableTryBuildOnFocus = bNewValue;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetFocusOnFirstBuildingPieceWhenQuickbarSwapped(bool InFocusOnFirstBuildingPieceWhenQuickbarSwapped)
+{
+	// Native 0x1428801a0. CONFIDENCE: high
+	if (bNewFocusOnFirstBuildingPieceWhenQuickbarSwapped != InFocusOnFirstBuildingPieceWhenQuickbarSwapped)
+	{
+	    bDirty = true;
+	    bNewFocusOnFirstBuildingPieceWhenQuickbarSwapped = InFocusOnFirstBuildingPieceWhenQuickbarSwapped;
+	}
+}
+
+void UFortClientSettingsRecord::SetFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena(bool InFocusOnFirstBuildingPieceWhenQuickbarSwapped)
+{
+	// Native 0x142880230. CONFIDENCE: high
+	if (bNewFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena != InFocusOnFirstBuildingPieceWhenQuickbarSwapped)
+	{
+	    bDirty = true;
+	    bNewFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena = InFocusOnFirstBuildingPieceWhenQuickbarSwapped;
+	}
+}
+
+void UFortClientSettingsRecord::SetForceFeedbackEnabled(bool bForceFeedback)
+{
+	// Native 0x1428802c0. CONFIDENCE: high
+	if (bForceFeedbackEnabled != bForceFeedback)
+	{
+	    bForceFeedbackEnabled = bForceFeedback;
 	    bDirty = true;
 	}
 }
@@ -986,6 +1076,26 @@ void UFortClientSettingsRecord::SetGamepadEditModeMultiplier(float InMultiplier)
 	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
 	{
 	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetGamepadLookSensitivityX(float InSensitivity)
+{
+	// Native 0x1428804f0. CONFIDENCE: high
+	if (FMath::Abs(InSensitivity - GamepadLookSensitivity.X) > 1.e-8f)
+	{
+	    GamepadLookSensitivity.X = InSensitivity;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetGamepadLookSensitivityY(float InSensitivity)
+{
+	// Native 0x142880590. CONFIDENCE: high
+	if (FMath::Abs(InSensitivity - GamepadLookSensitivity.Y) > 1.e-8f)
+	{
+	    GamepadLookSensitivity.Y = InSensitivity;
+	    bDirty = true;
 	}
 }
 
@@ -1282,6 +1392,17 @@ void UFortClientSettingsRecord::SetLookVerticalSpeedAds(uint32 NewValue)
 	bNativeGamepadOptionsDirty = true;
 }
 
+void UFortClientSettingsRecord::SetMotionControlsEnabledSetting(bool InSetting)
+{
+	// Native 0x142881db0. CONFIDENCE: high
+	const bool bPreviousValue = bMotionControlsEnabled;
+	bMotionControlsEnabled = InSetting;
+	if (bPreviousValue != InSetting)
+	{
+	    bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetMotionHarvestingToolMultiplier(float InMultiplier)
 {
 	// Original exec 0x142881e40; ordered unequal float compare and conditional dirty-byte store.
@@ -1315,6 +1436,36 @@ void UFortClientSettingsRecord::SetMotionTargetingMultiplier(float InMultiplier)
 	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
 	{
 	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetMouseSensitivityMultiplierForAircraft(float InSensitivityMultiplier)
+{
+	// Native 0x142882080. CONFIDENCE: high
+	if (FMath::Abs(InSensitivityMultiplier - MouseSensitivityMultiplierForAircraftValue) > 1.e-8f)
+	{
+	    MouseSensitivityMultiplierForAircraftValue = InSensitivityMultiplier;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetMouseSensitivityX(float InSensitivityX)
+{
+	// Native 0x142882120. CONFIDENCE: high
+	if (FMath::Abs(InSensitivityX - MouseSensitivityX) > 1.e-8f)
+	{
+	    MouseSensitivityX = InSensitivityX;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetMouseSensitivityY(float InSensitivityY)
+{
+	// Native 0x1428821c0. CONFIDENCE: high
+	if (FMath::Abs(InSensitivityY - MouseSensitivityY) > 1.e-8f)
+	{
+	    MouseSensitivityY = InSensitivityY;
+	    bDirty = true;
 	}
 }
 
@@ -1354,6 +1505,16 @@ void UFortClientSettingsRecord::SetPlayerSurveysAllowed(bool Value)
 	if (bPlayerSurveysAllowed != Value)
 	{
 	    bPlayerSurveysAllowed = Value;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetQuickEditEnabled(bool bNewQuickEditEnabled)
+{
+	// Native 0x142882640. CONFIDENCE: high
+	if (bQuickEditEnabled != bNewQuickEditEnabled)
+	{
+	    bQuickEditEnabled = bNewQuickEditEnabled;
 	    bDirty = true;
 	}
 }
@@ -1470,6 +1631,36 @@ void UFortClientSettingsRecord::SetSoundFXVolume(float InVolume)
 	}
 }
 
+void UFortClientSettingsRecord::SetSprintCancelsReload(bool bInSprintCancelsReload)
+{
+	// Native 0x1428831c0. CONFIDENCE: high
+	if (bSprintCancelsReload != bInSprintCancelsReload)
+	{
+	    bSprintCancelsReload = bInSprintCancelsReload;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetSubtitlesEnabled(bool Value)
+{
+	// Native 0x1428833f0. CONFIDENCE: high
+	if (bEnableSubtitles != Value)
+	{
+	    bEnableSubtitles = Value;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetTapInteract(bool bTapInteract)
+{
+	// Native 0x142883630. CONFIDENCE: high
+	if (bTapInteractEnabled != bTapInteract)
+	{
+	    bTapInteractEnabled = bTapInteract;
+	    bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetTargetingMultiplier(float InMultiplier)
 {
 	// Original exec 0x1428836c0; ordered unequal float compare and conditional dirty-byte store.
@@ -1482,6 +1673,16 @@ void UFortClientSettingsRecord::SetTargetingMultiplier(float InMultiplier)
 	}
 }
 
+void UFortClientSettingsRecord::SetToggleSprint(bool bToggle)
+{
+	// Native 0x142883970. CONFIDENCE: high
+	if (bToggleSprint != bToggle)
+	{
+	    bDirty = true;
+	    bToggleSprint = bToggle;
+	}
+}
+
 void UFortClientSettingsRecord::SetTouchBuildingMultiplier(float InMultiplier)
 {
 	// Original exec 0x142883a00; ordered unequal float compare and conditional dirty-byte store.
@@ -1491,6 +1692,16 @@ void UFortClientSettingsRecord::SetTouchBuildingMultiplier(float InMultiplier)
 	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
 	{
 	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetTouchEditEnabled(bool bTouchEdit)
+{
+	// Native 0x142883a90. CONFIDENCE: high
+	if (bTouchEditEnabled != bTouchEdit)
+	{
+	    bTouchEditEnabled = bTouchEdit;
+	    bDirty = true;
 	}
 }
 
@@ -1563,6 +1774,56 @@ void UFortClientSettingsRecord::SetTouchVerticalMultiplier(float InMultiplier)
 	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
 	{
 	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetUseFirstPersonCamera(bool bUseFirstPerson)
+{
+	// Native 0x142884030. CONFIDENCE: high
+	if (bUseFirstPersonCamera != bUseFirstPerson)
+	{
+	    bUseFirstPersonCamera = bUseFirstPerson;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetUseGamepadAutoRun(bool InUseGamepadAutoRun)
+{
+	// Native 0x1428840c0. CONFIDENCE: high
+	if (bUseGamepadAutoRun != InUseGamepadAutoRun)
+	{
+	    bUseGamepadAutoRun = InUseGamepadAutoRun;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetUseGamepadEditModeAimAssist(bool InUseGamepadEditModeAimAssist)
+{
+	// Native 0x142884150. CONFIDENCE: high
+	if (bUseGamepadEditModeAimAssist != InUseGamepadEditModeAimAssist)
+	{
+	    bUseGamepadEditModeAimAssist = InUseGamepadEditModeAimAssist;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetUseHoldToSwapPickup(bool InUseHoldToSwapPickup)
+{
+	// Native 0x1428841e0. CONFIDENCE: high
+	if (bUseHoldToSwapPickup != InUseHoldToSwapPickup)
+	{
+	    bUseHoldToSwapPickup = InUseHoldToSwapPickup;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetUsePowerSavingMode(bool bNewUsePowerSavingMode)
+{
+	// Native 0x142884300. CONFIDENCE: high
+	if (bUsePowerSavingMode != bNewUsePowerSavingMode)
+	{
+	    bUsePowerSavingMode = bNewUsePowerSavingMode;
+	    bDirty = true;
 	}
 }
 

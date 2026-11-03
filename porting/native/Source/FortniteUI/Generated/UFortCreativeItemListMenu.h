@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "FFortItemEntry.h"
 #include "FSelectItemToSpawnDelegate.h"
 #include "UCommonButton.h"
 #include "UCommonWidgetSwitcher.h"
@@ -135,6 +136,9 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x3ad): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x3ad;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanEquip(FFortItemEntry& SelectedItem) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSubTabOpened() const;

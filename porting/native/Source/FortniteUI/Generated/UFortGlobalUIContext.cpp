@@ -56,6 +56,13 @@ bool UFortGlobalUIContext::IsUIVisible() const
 	return UFortGlobalUIContext::bIsUIVisible;
 }
 
+void UFortGlobalUIContext::SetRatingWidgetFeedbackTitle(FText& Title)
+{
+	// Native 0x144ce8060. CONFIDENCE: high
+	bShowRateWidget = true;
+	FeedbackTitle = Title;
+}
+
 bool UFortGlobalUIContext::ShouldCloseMenuOnEscape() const
 {
 	// Original address: 0x1412d9d60.

@@ -358,6 +358,9 @@ public:
 	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
 	void SetMultipleUserSettings(const TMap<FString, FString>& Settings, const FWebJSResponse& Response);
 
+	UFUNCTION(BlueprintCallable)
+	void SetOverrideCurrentMusicFFT(float FFT100hz, float FFT2000hz);
+
 	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
 	void SetUserSetting(const FString& Key, const FString& Value, const FWebJSResponse& Response);
 

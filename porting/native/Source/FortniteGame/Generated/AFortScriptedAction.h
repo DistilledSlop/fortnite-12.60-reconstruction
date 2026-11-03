@@ -46,5 +46,8 @@ public:
 	void Execute(FFortScriptedActionParams& Params);
 	virtual void Execute_Implementation(FFortScriptedActionParams& Params);
 
+	UFUNCTION(BlueprintCallable)
+	void GetParams(FFortScriptedActionParams& Params);
+
 };
 

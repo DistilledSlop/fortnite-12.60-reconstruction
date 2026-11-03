@@ -1,0 +1,436 @@
+[
+  {
+    "function": "SetAutoEquipBetterItems",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x14287ef60.c",
+    "native": "porting/generated/native235-fresh-bulk/0x14287ef60.c",
+    "native_sha256": "3ebcfe1da07c44111b5d94ede67c11caf9b73bf19bfe7eb497751e863246a811",
+    "field": {
+      "name": "bAutoEquipBetterItems",
+      "offset": 1136,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetBuildingPossessionShown",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x14287f770.c",
+    "native": "porting/generated/native235-fresh-bulk/0x14287f770.c",
+    "native_sha256": "da2b3387696e7ca1bcd9cfa9173d48dee5fee1ba9aec804f3a05094073f4a34a",
+    "field": {
+      "name": "bBuildingPossessionShown",
+      "offset": 1145,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetConsoleFPSUnlocked",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x14287fa00.c",
+    "native": "porting/generated/native235-fresh-bulk/0x14287fa00.c",
+    "native_sha256": "21e17b2e137e4c1d470e748447ea6674cc0d2c985140466d107d2e60967deb81",
+    "field": {
+      "name": "bUnlockConsoleFPS",
+      "offset": 1172,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetContextTutorialEnabled",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x14287fa90.c",
+    "native": "porting/generated/native235-fresh-bulk/0x14287fa90.c",
+    "native_sha256": "3331ca2668c0bd0b080a61a2b24feb7484f9b8f636c4df33259be1ddf13f4247",
+    "field": {
+      "name": "bContextTutorialEnabled",
+      "offset": 1144,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetDeviceFeedbackBlockedWithAttachedController",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x14287fd50.c",
+    "native": "porting/generated/native235-fresh-bulk/0x14287fd50.c",
+    "native_sha256": "f5145e5a7d881ecc01bacf79364c8992d3eeddac9a4b663bee2634e8dcc86d1b",
+    "field": {
+      "name": "bDeviceFeedbackBlockedWithAttachedController",
+      "offset": 1143,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetEditConfirmOnReleaseEnabled",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x14287ff70.c",
+    "native": "porting/generated/native235-fresh-bulk/0x14287ff70.c",
+    "native_sha256": "754f7429ddf29f46cc630493c75d7397fbde9377386f21f7380e7c1bd8ca4e0e",
+    "field": {
+      "name": "bEditConfirmOnReleaseEnabled",
+      "offset": 1140,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetFocusOnFirstBuildingPieceWhenQuickbarSwapped",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1428801a0.c",
+    "native": "porting/generated/native235-fresh-bulk/0x1428801a0.c",
+    "native_sha256": "5503c28e0e6fc524119155b8f8a1073d8b487df177520a10b29bf53f43090a31",
+    "field": {
+      "name": "bNewFocusOnFirstBuildingPieceWhenQuickbarSwapped",
+      "offset": 1152,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x142880230.c",
+    "native": "porting/generated/native235-fresh-bulk/0x142880230.c",
+    "native_sha256": "ab6745345ee4aad07a5023faf90a5dc7754c7ce35392bc6bb74fd1a06fc2ebc0",
+    "field": {
+      "name": "bNewFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena",
+      "offset": 1154,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetForceFeedbackEnabled",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1428802c0.c",
+    "native": "porting/generated/native235-fresh-bulk/0x1428802c0.c",
+    "native_sha256": "677342eb2484c353f8bf19d074f39539f96fe0aab4d95fa0e52b12fc9aca2e32",
+    "field": {
+      "name": "bForceFeedbackEnabled",
+      "offset": 1142,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetQuickEditEnabled",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x142882640.c",
+    "native": "porting/generated/native235-fresh-bulk/0x142882640.c",
+    "native_sha256": "810495cd45a76c999715d79ceabb570bcada050d75d1e88b03a643ca5708d0ce",
+    "field": {
+      "name": "bQuickEditEnabled",
+      "offset": 1141,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetSprintCancelsReload",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1428831c0.c",
+    "native": "porting/generated/native235-fresh-bulk/0x1428831c0.c",
+    "native_sha256": "f051a03788642b858f3ed7e0a75467f0c9dc302f3ee54736cfeb5cef8324203f",
+    "field": {
+      "name": "bSprintCancelsReload",
+      "offset": 1131,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetTapInteract",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x142883630.c",
+    "native": "porting/generated/native235-fresh-bulk/0x142883630.c",
+    "native_sha256": "35d6aaff9602c93fbfa297c202dff20084dd4e147aab5d27df5bf8ef113edfb8",
+    "field": {
+      "name": "bTapInteractEnabled",
+      "offset": 1132,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetToggleSprint",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x142883970.c",
+    "native": "porting/generated/native235-fresh-bulk/0x142883970.c",
+    "native_sha256": "074dc95640b3dbc7a245d7f2ada3d8c91b797c588df857a2457551ee0248d2e3",
+    "field": {
+      "name": "bToggleSprint",
+      "offset": 1128,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetTouchEditEnabled",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x142883a90.c",
+    "native": "porting/generated/native235-fresh-bulk/0x142883a90.c",
+    "native_sha256": "4bf5ce1c427e0a5e973cff7463538c49007aff845c3db0dc1d90d82f5199ea9c",
+    "field": {
+      "name": "bTouchEditEnabled",
+      "offset": 1139,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetUseFirstPersonCamera",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x142884030.c",
+    "native": "porting/generated/native235-fresh-bulk/0x142884030.c",
+    "native_sha256": "5c95888a1cf741d0dbdba38f42d9cd04eda0262bc47c00f502dd323979e903c7",
+    "field": {
+      "name": "bUseFirstPersonCamera",
+      "offset": 1147,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetUseGamepadAutoRun",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1428840c0.c",
+    "native": "porting/generated/native235-fresh-bulk/0x1428840c0.c",
+    "native_sha256": "faf090c446fd6d8ed4bb88283730e46ea3f734a5026fe69cfe11320b2ab8c828",
+    "field": {
+      "name": "bUseGamepadAutoRun",
+      "offset": 1150,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetUseGamepadEditModeAimAssist",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x142884150.c",
+    "native": "porting/generated/native235-fresh-bulk/0x142884150.c",
+    "native_sha256": "c92a2cb5df764d5ba6fe4e20d361b1d8f2f3579ef0f0cf71be7d04bb2cc65866",
+    "field": {
+      "name": "bUseGamepadEditModeAimAssist",
+      "offset": 1148,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetUseHoldToSwapPickup",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1428841e0.c",
+    "native": "porting/generated/native235-fresh-bulk/0x1428841e0.c",
+    "native_sha256": "4f050d5eade0a7c5bd019eb862a0efafd974ed5032d3e12f38697fc8f3eb5830",
+    "field": {
+      "name": "bUseHoldToSwapPickup",
+      "offset": 1149,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetUsePowerSavingMode",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x142884300.c",
+    "native": "porting/generated/native235-fresh-bulk/0x142884300.c",
+    "native_sha256": "5456ff1c0b20602951d6f77464e6fc3f96cac853ea138ed3159ce6681130968e",
+    "field": {
+      "name": "bUsePowerSavingMode",
+      "offset": 1594,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetSubtitlesEnabled",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1428833f0.c",
+    "native": "porting/generated/native235-fresh-bulk/0x1428833f0.c",
+    "native_sha256": "94010d68fa7c636af88a7e1fa74bb5838b02edcec0248faa7694ba8b9a812444",
+    "field": {
+      "name": "bEnableSubtitles",
+      "offset": 1360,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "dirty": {
+      "name": "bDirty",
+      "offset": 2174,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body matches conditional byte comparison and stores, preserving store order; no other effects."
+  },
+  {
+    "function": "SetMotionControlsEnabledSetting",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x142881db0.c",
+    "native": "porting/generated/native235-fresh-bulk/0x142881db0.c",
+    "native_sha256": "71d4d0cfb4cfba2955394971a1767ac0bb6c22d41897a71ca4ab30fad8142aa7",
+    "field": {
+      "name": "bMotionControlsEnabled",
+      "offset": 824,
+      "mask": 1,
+      "form": "mov8",
+      "bitfield": true
+    },
+    "proof": "Entire inline wrapper body unconditionally assigns the reflected byte, then marks dirty on changed value."
+  }
+]

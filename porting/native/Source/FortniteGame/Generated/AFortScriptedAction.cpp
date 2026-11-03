@@ -7,3 +7,9 @@ void AFortScriptedAction::Execute_Implementation(FFortScriptedActionParams& Para
 	// The original implementation returns without side effects.
 }
 
+void AFortScriptedAction::GetParams(FFortScriptedActionParams& Params)
+{
+	// Native 0x142ad21e0. CONFIDENCE: high
+	Params = CachedParams;
+}
+

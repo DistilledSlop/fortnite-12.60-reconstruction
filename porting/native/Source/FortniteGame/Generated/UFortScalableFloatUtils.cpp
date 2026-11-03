@@ -8,3 +8,9 @@ float UFortScalableFloatUtils::GetValue(FScalableFloat& Input)
 	return Input.Value;
 }
 
+bool UFortScalableFloatUtils::IsStatic(FScalableFloat& Input)
+{
+	// Native 0x141f62ed0. CONFIDENCE: high
+	return Input.Curve.RowName == NAME_None;
+}
+

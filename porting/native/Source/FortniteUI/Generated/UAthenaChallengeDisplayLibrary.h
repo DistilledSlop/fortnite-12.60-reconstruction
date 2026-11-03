@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "FFortChallengeSetStyle.h"
+#include "Math/Color.h"
+
 #include "UAthenaChallengeDisplayLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +17,8 @@ class FORTNITEUI_API UAthenaChallengeDisplayLibrary : public UBlueprintFunctionL
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static FLinearColor GetChallengeStyleLightAccentColor(FFortChallengeSetStyle& DisplayStyle);
+
 };
 
