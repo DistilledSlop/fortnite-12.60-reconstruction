@@ -1,5 +1,37 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 27 (2026-11-03)
+
+Canonical source:1,847 bodies +165 supporting fields =2,012 ported entries.
+Added GG context setter, GG infinite-ammo callback and LoadoutSwap callback.
+GG casts CachedContext to Pawn then player state, uses KillScore and evaluates
+GameIsReverse only after successful casts; reverse subtraction preserves uint32
+wrap. Always evaluates UseInfiniteAmmo at the resulting level. LoadoutSwap
+writes pointer-membership result (null may match null) and returns1; GG returns2.
+Unreflected GG +3d4 is NativeReverseLevelOrigin with constructor-proven default0;
+it is not ScoreToWin. Its other writers remain unported, so full GG behavior
+is still incomplete. Root inspected original instructions and source/field gates.
+
+Promotion27 accepts2,012/rejects0. Four Native files changed overall. Initial
+field initializer syntax was rejected; fixed input to separate default expression.
+Final pass changedonefile/restored12,802 mtimes. No builds/runtime/tests.
+Last tested1,040;807 bodies pending; next2,040 needs193 bodies.
+
+Profile entry lifecycle now has typed source proposal FMcpProfileItem: three
+strings, quantity, FString/shared FJsonValue map, raw GC-traced item UObject,
+integer update value and weak profile handle. Copy shares JSON values rather
+than cloning them. Root saved nine bounded original code windows in recover.py/
+evidence.json; no canonical credit for the unintegrated support type. Bridge
+still needs actual profile class registry and native item-aware interface ABI.
+All workers finished. Next work: connect actual profile backing population/dirty
+updates/GC and item UObject bridge; recover remaining mutator provider bindings
+and asset callback/lifecycle before claiming full GetRemainingAmmo.
+
+Root sole canonical/Native/generator owner; finite fresh Terra medium workers
+own proposal dirs. Keep bounded reads, frequent commits/pushes/dashboard,
+no tiny getter scans, no tests before2,040, preserve unrelated graphics.
+All four milestones and full parity remain open.
+
 ## Native source batch 26 (2026-11-03)
 
 Canonical source: 1,844 bodies +164 supporting fields =2,008 ported entries.

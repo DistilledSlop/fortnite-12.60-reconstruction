@@ -13,9 +13,13 @@
 #include "FGunGamePlayerData.h"
 #include "FLocalPlayerWeaponProgressed.h"
 #include "FOtherPlayerWeaponProgressed.h"
+#include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
+#include "UObject/Object.h"
 
 class AActor;
 class AFortPlayerStateAthena;
+class UFortWeaponItemDefinition;
 
 #include "AFortAthenaMutator_GG.generated.h"
 
@@ -69,5 +73,13 @@ public:
 	UPROPERTY()
 	FOtherPlayerWeaponProgressed OnOtherPlayerAwardedWeapon;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3d4): not a UPROPERTY, not replicated.
+	int32 NativeReverseLevelOrigin = 0;
+
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual void NativeSetMutatorContext(UObject* Context);
+	virtual uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition);
 };
 

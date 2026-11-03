@@ -32674,5 +32674,67 @@
     "status": "ported",
     "notes": "Assigned native name; virtual dispatch is required. See infinite_ammo_iterator_runtime/README.md.",
     "class": "AFortAthenaMutator_InfiniteAmmo"
+  },
+  {
+    "class": "AFortAthenaMutator_GG",
+    "function": "NativeSetMutatorContext",
+    "kind": "helper",
+    "signature": "void NativeSetMutatorContext(UObject* Context)",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/mutator_ammo_overrides_runtime/GGSetContext.inc",
+    "address": "0x141ac7260",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "GameFramework/Actor.h"
+    ]
+  },
+  {
+    "class": "AFortAthenaMutator_GG",
+    "function": "NativeQueryInfiniteAmmo",
+    "kind": "helper",
+    "signature": "uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition)",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/mutator_ammo_overrides_runtime/GGQuery.inc",
+    "address": "0x141ad6740",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Body requires shared NativeReverseLevelOrigin state; other writers remain unported.",
+    "includes": [
+      "GameFramework/Pawn.h"
+    ]
+  },
+  {
+    "class": "AFortAthenaMutator_LoadoutSwap",
+    "function": "NativeQueryInfiniteAmmo",
+    "kind": "helper",
+    "signature": "uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition)",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/mutator_ammo_overrides_runtime/LoadoutSwapQuery.inc",
+    "address": "0x141afee60",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "AFortAthenaMutator_GG",
+    "function": "NativeReverseLevelOrigin",
+    "kind": "member_field",
+    "signature": "int32 NativeReverseLevelOrigin",
+    "signature_status": "verified",
+    "access": "public",
+    "offset": "0x3d4",
+    "inc_path": null,
+    "confidence": "high",
+    "address": "0x141ac236c",
+    "status": "ported",
+    "notes": "Assigned name for unreflected state; constructor initializes zero; preserve identity with all other writers when recovered.",
+    "default": "0"
   }
 ]

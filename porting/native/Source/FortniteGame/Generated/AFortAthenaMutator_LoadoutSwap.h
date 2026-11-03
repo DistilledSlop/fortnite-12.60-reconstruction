@@ -11,6 +11,7 @@
 #include "FPlayerLoadout.h"
 #include "FPlayerLoudoutEntry.h"
 
+class UFortWeaponItemDefinition;
 class UFortWorldItemDefinition;
 
 #include "AFortAthenaMutator_LoadoutSwap.generated.h"
@@ -65,5 +66,9 @@ public:
 	void OnRep_ServerWorldTimeOfNextSwap();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition);
 };
 
