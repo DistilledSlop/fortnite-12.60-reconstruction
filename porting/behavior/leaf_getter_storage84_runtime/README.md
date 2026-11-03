@@ -1,0 +1,10 @@
+# Getter storage assessment
+
+Run `python3 porting/behavior/leaf_getter_storage84_runtime/prepare.py` after the known-field getter scan. This reads that scanner's complete-body evidence and current reflection, generated headers and canonical manifest; it does not reread or hash the runtime image. The source report records the previously pinned image identity without reverifying it. At most 20 field/body pairs are proposed here; no canonical files are edited.
+
+A candidate must fit wholly between the original immediate parent's proven size and the class's proven size, match the generated parent, and avoid all reflected and canonical field intervals. Unknown property widths conservatively extend to the next property or class end. Reflected struct sizes are used only when their unique construct-function mapping has positive size and matching struct-ops size in `struct_blocks.json`; this accounts for the entire struct, not its reflected subfields. The scan does not infer defaults, writers, constructors, or lifetime. Native bool storage is proposed only for the exact plain byte load and reflected Bool return, as in the prior native scalar policy. Int needs a dword load and reflected Int return; Float additionally requires MOVSS. Existing occupied properties are rejected rather than duplicated. Object returns and other instruction families are out of scope.
+
+Current scan assessed 58 matched getters and proposes three field/body pairs. The `AFortSaveFileBuildingInstructionsHandler` byte at 0x321 follows `OperationUserId` at 0x2f8: its `UniqueNetIdRepl` struct block 0x147d99840 and struct ops agree on 40 bytes, ending at 0x320. Other candidates are two unoccupied intervals in `UFortAthenaMOTDWidget`. The report contains original complete exec and leaf bytes and hashes, bounds, adjacent intervals, and rejected reasons. Source scan only; no generation, build or runtime tests were performed.
+
+Root reviewed and integrated the proposals in generation84:2,300 accepted
+entries,0 rejected. No native build/runtime validation before checkpoint3,040.

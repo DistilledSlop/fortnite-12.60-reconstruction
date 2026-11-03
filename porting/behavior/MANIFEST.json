@@ -4066,15 +4066,18 @@
     "class": "AFortPlayerControllerAthena",
     "function": "ClientReportTournamentPlacementPointsScored_Implementation",
     "kind": "impl",
-    "signature": "void ClientReportTournamentPlacementPointsScored_Implementation(int32 PointsEarned, int32 Placement)",
+    "signature": "void ClientReportTournamentPlacementPointsScored_Implementation(int32 Placement, int32 PointsEarned)",
     "signature_status": "declared",
-    "inc_path": null,
-    "confidence": null,
+    "inc_path": "porting/behavior/controller_native_delegates84_runtime/ClientReportTournamentPlacementPointsScored_Implementation.inc",
+    "confidence": "high",
     "address": "0x1419c73e0",
-    "status": "skipped",
+    "status": "ported",
     "proxy_score": 34.2,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientReportTournamentPlacementPointsScored_Implementation.c",
-    "notes": "unnamed_call: calls an unidentified FUN_* helper"
+    "notes": "Native multicast broadcasts original EDX Placement then R8D PointsEarned. See controller_native_delegates84_runtime/README.md.",
+    "includes": [
+      "Delegates/Delegate.h"
+    ]
   },
   {
     "class": "AFortPlayerControllerAthena",
@@ -4094,15 +4097,18 @@
     "class": "AFortPlayerControllerAthena",
     "function": "ClientNotifyLost_Implementation",
     "kind": "impl",
-    "signature": "void ClientNotifyLost_Implementation(const EEndOfMatchReason& LostReason, APawn* WinningPawn)",
+    "signature": "void ClientNotifyLost_Implementation(APawn* WinningPawn, const EEndOfMatchReason& LostReason)",
     "signature_status": "declared",
-    "inc_path": null,
-    "confidence": null,
+    "inc_path": "porting/behavior/controller_native_delegates84_runtime/ClientNotifyLost_Implementation.inc",
+    "confidence": "high",
     "address": "0x1419c57a0",
-    "status": "skipped",
+    "status": "ported",
     "proxy_score": 33.8,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientNotifyLost_Implementation.c",
-    "notes": "unnamed_call: calls an unidentified FUN_* helper"
+    "notes": "Native multicast broadcast with original argument order; loss flag written before broadcast and WinningPawn unused. See controller_native_delegates84_runtime/README.md.",
+    "includes": [
+      "Delegates/Delegate.h"
+    ]
   },
   {
     "class": "AFortPlayerControllerAthena",
@@ -36574,5 +36580,125 @@
     "static": false,
     "access": "protected",
     "notes": "Complete tail-call raw storage operation; see leaf_storage83_runtime/report.json."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeLossNotification",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, uint8> NativeLossNotification",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x31b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "notes": "Assigned source name for evidenced non-reflected native multicast,24byte storage; see controller_native_delegates84_runtime/README.md."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeTournamentPlacementPointsNotification",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, int32, int32> NativeTournamentPlacementPointsNotification",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x3240",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "notes": "Assigned source name for evidenced non-reflected native multicast,24byte storage; see controller_native_delegates84_runtime/README.md."
+  },
+  {
+    "class": "AFortSaveFileBuildingInstructionsHandler",
+    "function": "NativeRecoveredBool_0x321",
+    "kind": "member_field",
+    "signature": "bool NativeRecoveredBool_0x321",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x321",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "recovery_source": "leaf_getter_storage84_runtime",
+    "notes": "Complete getter establishes read width and return type; writers, initialization and lifetime unproven."
+  },
+  {
+    "class": "AFortSaveFileBuildingInstructionsHandler",
+    "function": "AreBuildingsLoaded",
+    "kind": "exec",
+    "signature": "bool AreBuildingsLoaded()",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/leaf_getter_storage84_runtime/142ad1bc0_AFortSaveFileBuildingInstructionsHandler_AreBuildingsLoaded.inc",
+    "confidence": "high",
+    "address": "0x142ad1bc0",
+    "status": "ported",
+    "reflection_flags": "0x4020405",
+    "static": false,
+    "access": "public",
+    "notes": "Complete getter of evidenced storage; see leaf_getter_storage84_runtime/report.json."
+  },
+  {
+    "class": "UFortAthenaMOTDWidget",
+    "function": "NativeRecoveredBool_0x388",
+    "kind": "member_field",
+    "signature": "bool NativeRecoveredBool_0x388",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x388",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "recovery_source": "leaf_getter_storage84_runtime",
+    "notes": "Complete getter establishes read width and return type; writers, initialization and lifetime unproven."
+  },
+  {
+    "class": "UFortAthenaMOTDWidget",
+    "function": "AutoPlayedVideo",
+    "kind": "exec",
+    "signature": "bool AutoPlayedVideo() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/leaf_getter_storage84_runtime/1451fb610_UFortAthenaMOTDWidget_AutoPlayedVideo.inc",
+    "confidence": "high",
+    "address": "0x1451fb610",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Complete getter of evidenced storage; see leaf_getter_storage84_runtime/report.json."
+  },
+  {
+    "class": "UFortAthenaMOTDWidget",
+    "function": "NativeRecoveredInt_0x378",
+    "kind": "member_field",
+    "signature": "int32 NativeRecoveredInt_0x378",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x378",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "recovery_source": "leaf_getter_storage84_runtime",
+    "notes": "Complete getter establishes read width and return type; writers, initialization and lifetime unproven."
+  },
+  {
+    "class": "UFortAthenaMOTDWidget",
+    "function": "GetNewsCount",
+    "kind": "exec",
+    "signature": "int32 GetNewsCount() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/leaf_getter_storage84_runtime/1451fba80_UFortAthenaMOTDWidget_GetNewsCount.inc",
+    "confidence": "high",
+    "address": "0x1451fba80",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Complete getter of evidenced storage; see leaf_getter_storage84_runtime/report.json."
   }
 ]

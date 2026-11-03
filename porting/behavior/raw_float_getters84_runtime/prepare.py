@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+"""Assess raw float-return bits for unoccupied, evidenced storage."""
+import collections, json, re, sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[3]; REF=ROOT/'porting/generated/reflection'; HERE=Path(__file__).resolve().parent
+sys.path.insert(0,str(ROOT/'porting'))
+from gen_native_classes import split_properties
+load=lambda p:json.loads(p.read_text())
+names=load(REF/'class_name_map.json'); parents=load(REF/'class_parent_map.json'); bits=load(REF/'bool_bits.json')['by_class']; native=load(REF/'native_funcs.json')
+blocks={b['block_va'].lower():b for b in load(REF/'fortnite_game_reflection.json')['classes_in_groups_with_fort_names']}
+manifest=load(ROOT/'porting/behavior/MANIFEST.json'); byname=collections.defaultdict(list)
+for va,name in names.items(): byname[name].append(va)
+headers=collections.defaultdict(list)
+for h in (ROOT/'porting/native/Source').glob('*/Generated/*.h'): headers[h.stem].append(h)
+def size(va):
+ b=blocks.get(va.lower(),{}); pairs,notes=split_properties(b.get('properties',[]))
+ ss={p.get('size_of_outer') for p,_ in pairs if p.get('kind')=='Bool' and isinstance(p.get('size_of_outer'),int) and p['size_of_outer']>0}
+ return next(iter(ss)) if len(ss)==1 and not notes else None
+structs=collections.defaultdict(list)
+for s in load(REF/'struct_blocks.json')['structs']:
+ for fn in s.get('construct_fns',[]): structs[fn.lower()].append(s)
+def occupancy(cls,block,own):
+ pairs,notes=split_properties(block.get('properties',[]))
+ if notes:return None
+ locs=[]
+ for p,_ in pairs:
+  if p.get('kind')=='Bool':
+   bs=[b for b in bits.get(cls,[]) if b['name']==p['name']]
+   if len(bs)!=1:return None
+   loc=bs[0].get('offset')
+  else:loc=p.get('offset')
+  if not isinstance(loc,int) or not 0<=loc<own:return None
+  locs.append((loc,p))
+ for e in manifest:
+  if e.get('class')!=cls or e.get('kind')!='member_field' or e.get('status')!='ported':continue
+  try:loc=int(str(e['offset']),0)
+  except (KeyError,ValueError,TypeError):return None
+  if not 0<=loc<own:return None
+  locs.append((loc,e))
+ offsets=sorted({loc for loc,_ in locs}|{own}); spans=[]
+ widths={'Bool':1,'Byte':1,'Int8':1,'Int16':2,'UInt16':2,'Int':4,'UInt32':4,'Float':4,'Int64':8,'UInt64':8,'Double':8,'Name':8,'Object':8,'Class':8,'Array':16,'Str':16}
+ for loc,p in locs:
+  kind=p.get('kind'); width=widths.get(kind)
+  if kind=='Struct':
+   ref=p.get('type_refs',{}).get('struct','').lower(); matches=structs.get(ref,[])
+   if len(matches)==1 and (matches[0].get('struct_ops') or {}).get('size_matches') and isinstance(matches[0].get('size'),int) and matches[0]['size']>0: width=matches[0]['size']
+  if kind=='member_field':width={'bool':1,'uint8':1,'int8':1,'int16':2,'uint16':2,'int32':4,'uint32':4,'float':4,'int64':8,'uint64':8,'double':8}.get((p.get('signature') or '').split(' ',1)[0])
+  dim=p.get('array_dim',1)
+  if not isinstance(dim,int) or dim<1:return None
+  end=loc+width*dim if width else next(x for x in offsets if x>loc)
+  if end>own:return None
+  spans.append((loc,end,p.get('name') or p.get('function'),kind))
+ return spans
+source=load(ROOT/'porting/behavior/leaf_getter_storage84_runtime/report.json'); rows=[]; candidates=[]
+for source_row in source['rows']:
+ if 'float_storage_not_proved' not in source_row['reasons']:continue
+ r=dict(source_row); r['reasons']=[]; rows.append(r)
+ cls=r['class']; fn=r['function']; record=native[cls][fn]; pspec=record.get('params',[])
+ if len(pspec)!=1 or pspec[0].get('name')!='ReturnValue' or pspec[0].get('kind')!='Float' or pspec[0].get('array_dim')!=1: r['reasons'].append('invalid_float_return');continue
+ asm=r['assembly']; pat=r'mov rax, qword ptr \[rdx \+ 0x20\]; xor r9d, r9d; test rax, rax; setne r9b; add r9, rax; mov qword ptr \[rdx \+ 0x20\], r9; mov eax, dword ptr \[rcx \+ (0x[0-9a-f]+)\]; mov dword ptr \[r8\], eax; ret'
+ m=re.fullmatch(pat,asm)
+ if not m:r['reasons'].append('unsupported_code');continue
+ off=int(m.group(1),0); width=4; r.update(offset=off,width=width)
+ vs=byname.get(cls,[])
+ if len(vs)!=1:r['reasons'].append('ambiguous_class');continue
+ va=vs[0]; parent=parents.get(va,{}); pva=parent.get('parent_va'); block=blocks.get(va.lower()); own=size(va); ps=size(pva) if isinstance(pva,str) else None
+ r.update(own_size=own,parent_size=ps)
+ if not block or not own or not ps or len(headers.get(cls,[]))!=1:r['reasons'].append('missing_class_parent_size_or_header');continue
+ h=headers[cls][0].read_text(); decl=re.findall(r'\bclass\s+\w+_API\s+'+re.escape(cls)+r'\s*:\s*public\s+(\w+)',h)
+ if names.get(pva)!=parent.get('parent_name') or decl!=[parent.get('parent_name')]:r['reasons'].append('parent_mismatch');continue
+ if not(ps<=off and off+width<=own):r['reasons'].append('outside_class')
+ parentblock=blocks.get(pva.lower()); parentspans=occupancy(parent['parent_name'],parentblock,ps) if parentblock else None
+ if parentspans is None:r['reasons'].append('unknown_parent_occupancy');continue
+ spans=occupancy(cls,block,own)
+ if spans is None:r['reasons'].append('unknown_occupancy');continue
+ overlap=[s for s in spans if off<s[1] and s[0]<off+width]; r['overlaps']=overlap; r['nearby_spans']=sorted([s for s in spans if s[0]<off+width+16 and s[1]>off-16])
+ if overlap:r['reasons'].append('occupied')
+ field=f'NativeRecoveredBits_0x{off:x}'
+ if re.search(r'\b'+field+r'\b',h) or any(e.get('class')==cls and e.get('function')==field for e in manifest):r['reasons'].append('name_collision')
+ if not r['reasons']:candidates.append((r,field))
+entries=[]; chosen=[]
+for r,field in candidates:
+ cls=r['class']; fn=r['function']; off=r['offset']; addr=int(r['address'],0); flags=native[cls][fn]['flags']; access={0x20000:'public',0x40000:'private',0x80000:'protected'}[int(flags,0)&0xe0000]
+ if any(c==cls and off<e and b<off+4 for c,b,e in chosen):r['reasons'].append('proposal_overlap');continue
+ chosen.append((cls,off,off+4))
+ entries.append({'class':cls,'function':field,'kind':'member_field','signature':f'uint32 {field}','signature_status':'proposed','access':'public','offset':hex(off),'inc_path':None,'confidence':'high','address':None,'status':'ported','recovery_source':'raw_float_getters84_runtime','notes':'Raw 32-bit source for Float return; source field type, writers, initialization and lifetime unproven.'})
+ inc=HERE/f'{addr:x}_{cls}_{fn}.inc'; inc.write_text(f'// CONFIDENCE: high; exact 32-bit transfer, see report.json.\nfloat Result;\nFMemory::Memcpy(&Result, &{field}, sizeof(Result));\nreturn Result;\n')
+ entries.append({'class':cls,'function':fn,'kind':'exec','signature':f'float {fn}()'+(' const' if int(flags,0)&0x40000000 else ''),'signature_status':'proposed','inc_path':str(inc.relative_to(ROOT)),'confidence':'high','address':hex(addr),'status':'ported','reflection_flags':flags,'static':False,'access':access,'notes':'Complete bit-copy Float getter; see raw_float_getters84_runtime/report.json.'})
+(HERE/'manifest-entries.json').write_text(json.dumps(entries,indent=2)+'\n')
+(HERE/'report.json').write_text(json.dumps({'expected_image_sha256':source['expected_image_sha256'],'digest_verified_this_run':False,'source_report':'leaf_getter_storage84_runtime/report.json','proposals':len(chosen),'rows':rows},indent=2)+'\n')
+print('assessed',len(rows),'proposals',len(chosen))

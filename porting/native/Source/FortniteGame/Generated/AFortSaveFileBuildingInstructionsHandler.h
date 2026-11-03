@@ -59,5 +59,11 @@ public:
 	UPROPERTY(Transient)
 	FUniqueNetIdRepl OperationUserId;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x321): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x321;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	bool AreBuildingsLoaded();
+
 };
 

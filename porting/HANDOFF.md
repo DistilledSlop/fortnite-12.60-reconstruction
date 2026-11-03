@@ -1,5 +1,57 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Controller broadcasts and getter storage batch84 (2026-11-03)
+
+Integrated5 bodies and5 evidenced fields. Controller ClientNotifyLost1419c57a0
+sets mapped bClientNotifiedOfLoss then broadcasts LostReason (WinningPawn unused);
+placement notification1419c73e0 broadcasts Placement then PointsEarned. Two typed
+native multicast fields at31b0/3240 preserve reverse ExecuteIfSafe iteration,
+locking, reentry and deferred compaction, matching UE delegate source. Original
+assembly resolves misleading decompiler parameter labels/object array expressions.
+Three safe-gap getters recover AreBuildingsLoaded, AutoPlayedVideo and GetNewsCount.
+The first uses exact UniqueNetIdRepl struct size40 to end preceding occupancy320;
+byte321 is separate storage. No defaults, constructors or other writer claims.
+
+Generation84 accepted2,300 entries =2,113 bodies+187fields, rejected0;6 expected
+native implementation/header files changed. No builds/runtime/tests. Last tested
+2,040;73 canonical+4 manual bodies build pending; next checkpoint3,040. All four
+product gates OPEN; objective ACTIVE. Previous goal turn PROGRESS:31 bodies+
+2fields across82/83, source3587e47a/dashboard1ab50bb3 committed/pushed.
+
+Broader bounded source scanners recovered evidence without inventing bodies:
+guarded mutation scan found1 multi-write leaf but no safe mapped fields;
+known getter scan found58 exact shapes,3 safe storage proposals (integrated);
+forwarding scan found no meaningful ready accepted-helper match. DisableFilters
+storage remains blocked on class bounds. Four raw-Float bitcopy getters remain
+blocked on parent bounds or occupied storage. Reports/tools saved so unchanged
+coverage need not be rescanned. These patterns do not exhaust all native work.
+
+Root and a fresh Terra6.1 medium worker established class registration size
+arguments: UFortGenericRecord=f0, AFortPhysicsPawn=380, AFortGameState_InGame=6b8.
+The class-size evidence follows FClassParams identity/no-register thunks and
+UTF16 names to direct GetPrivateStaticClassBody142d698b0 calls: fifth/sixth Win64
+arguments are actual InSize/InAlignment, not nearest-property guesses. This
+resolves missing parent bounds; occupancy checks still apply. A fresh bounded
+registered_getters85 worker is reassessing the58 candidates using registration
+sizes, owning only registered_getters85_runtime; its pending work is uncounted.
+
+Root reviewed and integrated5 bodies, sole canonical/native/generation/staging/
+build owner. Three bounded Terra6.1 medium fork-none workers handled independent
+scanner scopes and bounded follow-ups; a fresh worker recovered3 exact class
+sizes. Preserve economical reads and bounded rotation, configured Luna/Terra/Sol,
+untouched graphics/Engine edits and deferred visual work. Source-level UI getters
+were recovered; no visual reconstruction. Incomplete profile/PSO drafts unchanged.
+
+Paths: controller_native_delegates84_runtime, leaf_getter_storage84_runtime,
+bulk_guarded_mutation84_runtime, bulk_known_leaf_getters84_runtime,
+native_forward84_runtime, disable_filters84_runtime, raw_float_getters84_runtime,
+class_size84_runtime. Worker commands/outcomes are in their READMEs/HANDOFFs.
+Root command: `porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input porting/generated/controller-delegates84/targets.json --out porting/generated/controller-delegates84 --timeout 60 --mem 12G > /tmp/controller-delegates84.log 2>&1`
+Exit0,2ok,10.8s, transaction rolled back; usual project index/prp metadata changes.
+`python3 -I /tmp/promote-native-batch84.py > /tmp/promote-native-batch84.log 2>&1`
+Exit0,2,300accepted/0rejected; command/reports at
+porting/generated/gameplay-bulk-integration-84/. No compiler/build/tests ran.
+
 ## Native leaf integrations batch83 (2026-11-03)
 
 Integrated12 more function bodies and2 evidenced storage fields. Ten complete

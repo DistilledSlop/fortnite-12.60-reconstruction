@@ -1,0 +1,60 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "expected_image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "digest_verified_this_run": false,
+  "matches": [
+    {
+      "class": "UFortCreativeMessageKnobsDialog",
+      "function": "DisableFilters",
+      "address": "0x145224b90",
+      "assembly": "mov rax, qword ptr [rdx + 0x20]; xor r8d, r8d; test rax, rax; setne r8b; add r8, rax; mov qword ptr [rdx + 0x20], r8; jmp 0x144d75db0",
+      "bytes": "488b42204533c04885c0410f95c04c03c04c894220e90612b5ff",
+      "sha256": "16adab3d90e2acfdb35752f3cec53364c73fee75d04ef5d7818c2e9139fbfba6",
+      "leaf_address": "0x144d75db0",
+      "leaf_assembly": "mov byte ptr [rcx + 0x590], 0; mov byte ptr [rcx + 0x578], 0; mov byte ptr [rcx + 0x592], 0; ret",
+      "leaf_bytes": "c6819005000000c6817805000000c6819205000000c3",
+      "leaf_sha256": "2c865515b9495407b94e0fff1f55c956f4dc920ee37d367d6ac145b6dbd2040f",
+      "guarded": false,
+      "writes": [
+        [
+          "mov",
+          "byte",
+          1424,
+          0
+        ],
+        [
+          "mov",
+          "byte",
+          1400,
+          0
+        ],
+        [
+          "mov",
+          "byte",
+          1426,
+          0
+        ]
+      ],
+      "targets": [],
+      "diagnostics": [
+        {
+          "offset": "0x590",
+          "candidates": [],
+          "eligible": []
+        },
+        {
+          "offset": "0x578",
+          "candidates": [],
+          "eligible": []
+        },
+        {
+          "offset": "0x592",
+          "candidates": [],
+          "eligible": []
+        }
+      ],
+      "accepted": false
+    }
+  ],
+  "proposals": 0
+}

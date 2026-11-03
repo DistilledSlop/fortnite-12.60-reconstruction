@@ -1,0 +1,66 @@
+[
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeLossNotification",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, uint8> NativeLossNotification",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x31b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "notes": "Assigned source name for evidenced non-reflected native multicast,24byte storage; see controller_native_delegates84_runtime/README.md."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeTournamentPlacementPointsNotification",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, int32, int32> NativeTournamentPlacementPointsNotification",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x3240",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "notes": "Assigned source name for evidenced non-reflected native multicast,24byte storage; see controller_native_delegates84_runtime/README.md."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "ClientNotifyLost_Implementation",
+    "kind": "impl",
+    "signature": "void ClientNotifyLost_Implementation(APawn* WinningPawn, const EEndOfMatchReason& LostReason)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/controller_native_delegates84_runtime/ClientNotifyLost_Implementation.inc",
+    "confidence": "high",
+    "address": "0x1419c57a0",
+    "status": "ported",
+    "proxy_score": 33.8,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientNotifyLost_Implementation.c",
+    "notes": "Native multicast broadcast with original argument order; loss flag written before broadcast and WinningPawn unused. See controller_native_delegates84_runtime/README.md.",
+    "includes": [
+      "Delegates/Delegate.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "ClientReportTournamentPlacementPointsScored_Implementation",
+    "kind": "impl",
+    "signature": "void ClientReportTournamentPlacementPointsScored_Implementation(int32 Placement, int32 PointsEarned)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/controller_native_delegates84_runtime/ClientReportTournamentPlacementPointsScored_Implementation.inc",
+    "confidence": "high",
+    "address": "0x1419c73e0",
+    "status": "ported",
+    "proxy_score": 34.2,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientReportTournamentPlacementPointsScored_Implementation.c",
+    "notes": "Native multicast broadcasts original EDX Placement then R8D PointsEarned. See controller_native_delegates84_runtime/README.md.",
+    "includes": [
+      "Delegates/Delegate.h"
+    ]
+  }
+]

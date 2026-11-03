@@ -1,0 +1,7 @@
+# Known-field no-argument getters
+
+Run `python3 porting/behavior/bulk_known_leaf_getters84_runtime/scan.py` from the repository root. The scanner reads the previously pinned original runtime image with mmap; the SHA-256 in the report is an expected identity, **not checked in this run**. It requires the existing Capstone installation at `/tmp/common-input-capstone` and generated reflection and headers. It writes only this directory, and caps proposals at 20.
+
+The matcher recognizes complete inline exec reads, complete exec tail jumps to a decoded result-writing leaf, and calls to fully decoded pure leaves with matching return stores. Supported return types are reflected Bool, Int and Float, with exact byte/dword width; packed Bool tests/extracts must match a single reflected bit mask. It resolves only previously declared reflected or canonical scalar fields, checks unique mappings, ancestry, generated declaration, access, and shadowing, and never proposes storage. Ambiguous or unsupported cases are rejected. Object returns, other instruction forms, forwarding calls with undecoded operations, and other field types are not covered.
+
+Current scan: 58 instruction-family matches and zero proposals. This is not an exhaustion claim. Complete matched bytes, disassembly and per-body hashes are in `report.json`; the image identity is not reverified. No canonical generation, compilation, build, or runtime tests were run.

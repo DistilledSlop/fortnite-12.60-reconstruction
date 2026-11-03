@@ -3,6 +3,7 @@
 #include "AFortGameStateAthena.h"
 #include "AFortPlayerStateAthena.h"
 #include "AFortVolume.h"
+#include "Delegates/Delegate.h"
 #include "Engine/World.h"
 #include "SharedFortGameLog.h"
 #include "UFortPlaysetItemDefinition.h"
@@ -184,7 +185,9 @@ void AFortPlayerControllerAthena::ClientNotifyAbortRespawn_Implementation()
 
 void AFortPlayerControllerAthena::ClientNotifyLost_Implementation(APawn* WinningPawn, const EEndOfMatchReason& LostReason)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; native reverse ExecuteIfSafe broadcast and deferred compaction.
+	bClientNotifiedOfLoss = true;
+	NativeLossNotification.Broadcast(static_cast<uint8>(LostReason));
 }
 
 void AFortPlayerControllerAthena::ClientNotifyTeamLost_Implementation()
@@ -230,7 +233,8 @@ void AFortPlayerControllerAthena::ClientReceiveSquadQuickChatMessage_Implementat
 
 void AFortPlayerControllerAthena::ClientReportTournamentPlacementPointsScored_Implementation(int32 Placement, int32 PointsEarned)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; native reverse ExecuteIfSafe broadcast and deferred compaction.
+	NativeTournamentPlacementPointsNotification.Broadcast(Placement, PointsEarned);
 }
 
 void AFortPlayerControllerAthena::ClientRequestLevelStreamingHandshake_Implementation()

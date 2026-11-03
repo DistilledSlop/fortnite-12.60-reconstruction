@@ -74,6 +74,12 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle NavigateRightInputAction;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x378): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x378;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x388): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x388;
+
 	// table index 9, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<UFortStoreFrontOfferInfo*> OfferInfoOwnershipArray;
@@ -105,6 +111,12 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UFortDynamicEntryBox* EntryBox_MOTDEntries;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AutoPlayedVideo() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNewsCount() const;
 
 };
 
