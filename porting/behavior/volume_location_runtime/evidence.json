@@ -1,0 +1,25 @@
+{
+  "windows": [
+    {
+      "address": "0x141c7cde0",
+      "length": 321,
+      "sha256": "06906393e6e01e48228cbf4bf57ac8906342c1ed7e4d7d4cee2a3d9ef6b220ae"
+    },
+    {
+      "address": "0x141c82210",
+      "length": 373,
+      "sha256": "fef9f4a1ddd544e4a543827b635363d3dee98ea2747d50c15418eb494e25424b"
+    },
+    {
+      "address": "0x141c75610",
+      "length": 176,
+      "sha256": "49785df0d1480b1f756a319f6521ef914fc7dff950fce9b732d4e0bedf338c03"
+    }
+  ],
+  "field_bindings": {
+    "AFortVolumeManager.VolumeObjects": "0x278",
+    "AFortVolume.BoundsComponent": "0x2a0",
+    "AFortVolume.BoundsShape": "0x560",
+    "USceneComponent.Bounds": "0x100"
+  }
+}

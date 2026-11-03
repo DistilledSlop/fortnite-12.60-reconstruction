@@ -6,12 +6,18 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "Engine/Engine.h"
+#include "Engine/World.h"
 #include "FFortVolumeActiveUsers.h"
 #include "FOnClientEnterVolume.h"
 #include "FOnClientExitVolume.h"
 #include "FOnClientVolumeRestrictionStateChanged.h"
 #include "FOnVolumeStateChanged.h"
 #include "FVolumePlayerStateInfo.h"
+#include "Math/BoxSphereBounds.h"
+#include "Math/Vector.h"
+#include "Stats/Stats.h"
+#include "UObject/Object.h"
 
 class AFortVolume;
 class UAsyncOverlapQueue;
@@ -102,5 +108,10 @@ public:
 	FOnClientVolumeRestrictionStateChanged OnServerVolumeUGCViewableStateChanged;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	AFortVolume* NativeFindVolumeAtLocation(const FVector& Location) const;
+	static AFortVolumeManager* NativeResolveVolumeManager(UObject* Context);
 };
 

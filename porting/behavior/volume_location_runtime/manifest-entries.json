@@ -1,0 +1,53 @@
+[
+  {
+    "class": "AFortVolume",
+    "function": "NativeGetLocationBounds",
+    "kind": "helper",
+    "signature": "void NativeGetLocationBounds(FBoxSphereBounds& OutBounds) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/volume_location_runtime/GetLocationBounds.inc",
+    "address": "0x141c75610",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/BoxSphereBounds.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Assigned output-reference binding of original return-buffer helper; leaves output untouched when component missing. See README."
+  },
+  {
+    "class": "AFortVolume",
+    "function": "NativeContainsLocation",
+    "kind": "helper",
+    "signature": "bool NativeContainsLocation(const FVector& Location) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/volume_location_runtime/ContainsLocation.inc",
+    "address": "0x141c82210",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Requires NativeGetLocationBounds; see README.",
+    "includes": [
+      "Math/BoxSphereBounds.h",
+      "Stats/Stats.h"
+    ]
+  },
+  {
+    "class": "AFortVolumeManager",
+    "function": "NativeFindVolumeAtLocation",
+    "kind": "helper",
+    "signature": "AFortVolume* NativeFindVolumeAtLocation(const FVector& Location) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/volume_location_runtime/FindVolumeAtLocation.inc",
+    "address": "0x141c7cde0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/BoxSphereBounds.h",
+      "Stats/Stats.h"
+    ],
+    "notes": "Requires NativeContainsLocation and NativeGetLocationBounds; see README."
+  }
+]

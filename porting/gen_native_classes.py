@@ -2322,6 +2322,10 @@ _item_tag_interface_spec = _common_activation_import.spec_from_file_location(
     "item_tag_interface_policy", os.path.join(os.path.dirname(__file__), "behavior", "item_tag_interface_runtime", "source_policy.py"))
 _item_tag_interface_policy = _common_activation_import.module_from_spec(_item_tag_interface_spec)
 _item_tag_interface_spec.loader.exec_module(_item_tag_interface_policy)
+_profile_entry_spec = _common_activation_import.spec_from_file_location(
+    "profile_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "profile_entry_lifecycle_runtime", "source_policy.py"))
+_profile_entry_policy = _common_activation_import.module_from_spec(_profile_entry_spec)
+_profile_entry_spec.loader.exec_module(_profile_entry_policy)
 _mutator_owner_spec = _common_activation_import.spec_from_file_location(
     "mutator_owner_policy", os.path.join(os.path.dirname(__file__), "behavior", "mutator_provider_bindings_runtime", "source_policy.py"))
 _mutator_owner_policy = _common_activation_import.module_from_spec(_mutator_owner_spec)
@@ -3823,6 +3827,7 @@ def promote(args):
                                if 'AFortAthenaAircraft' in listed else None)
     native_gameplay_tags_sources = (_native_gameplay_tags_policy.sources()
                                     if 'AFortGameStateAthena' in listed else None)
+    profile_entry_sources = _profile_entry_policy.sources() if 'UMcpProfile' in listed else None
     client_event_sources = None
     if {'UFortGameInstance', 'UFortUserWidget', 'UFortKismetLibrary'} & set(listed):
         required = {'UFortGameInstance', 'UFortUserWidget', 'UFortClientEventInterface'}
@@ -3929,7 +3934,7 @@ def promote(args):
         "class_pkg": package_of, "struct_index": struct_index, "gate": gate,
         # Only headers actually scheduled for emission qualify; arbitrary source-tree
         # files (including stale Native output) must not authorize snippet includes.
-        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources)
+        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources, profile_entry_sources)
                                       for filename in (bundle or {}) if filename.endswith(".h")},
         "button_feedback_sound_identity_proven": 'UCommonButton' in listed,
         "other_promoted": {n for b, n in names.items()
@@ -3948,6 +3953,8 @@ def promote(args):
     def add_deps(module, mods):
         module_deps.setdefault(module, set()).update(m for m in mods if m and m != module)
 
+    if profile_entry_sources:
+        add_deps(_profile_entry_policy.MODULE, _profile_entry_policy.DEPENDENCIES)
     if native_gameplay_tags_sources:
         add_deps(_native_gameplay_tags_policy.MODULE, _native_gameplay_tags_policy.DEPENDENCIES)
 
@@ -4269,6 +4276,10 @@ def promote(args):
     if ui_config_sources:
         for filename, text in ui_config_sources.items():
             with open(os.path.join(args.source_root, 'FortniteUI', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
+    if profile_entry_sources:
+        for filename, text in profile_entry_sources.items():
+            with open(os.path.join(args.source_root, 'McpProfileSys', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(text)
     if aircraft_timing_sources:
         for filename, text in aircraft_timing_sources.items():

@@ -19,6 +19,10 @@
 #include "FOnShowPublishWatermarkChanged.h"
 #include "FOnVolumePerformanceMetricsUpdated.h"
 #include "FVolumeActorStats.h"
+#include "Math/BoxSphereBounds.h"
+#include "Math/Vector.h"
+#include "SharedFortGameLog.h"
+#include "Stats/Stats.h"
 #include "UObject/Object.h"
 
 class AActor;
@@ -216,5 +220,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static void NativeAppendMinigameOwner(AFortVolume* Volume, TArray<UObject*>& OutOwners);
+	void NativeGetLocationBounds(FBoxSphereBounds& OutBounds) const;
+	bool NativeContainsLocation(const FVector& Location) const;
 };
 

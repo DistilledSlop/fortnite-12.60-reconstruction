@@ -30,5 +30,24 @@
       "UObject/Object.h"
     ],
     "notes": "Assigned static binding of original free helper; includes 0x141c74820 semantics and requires NativeGetVolumeManager; see README."
+  },
+  {
+    "class": "AFortVolumeManager",
+    "function": "NativeResolveVolumeManager",
+    "kind": "helper",
+    "signature": "AFortVolumeManager* NativeResolveVolumeManager(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/mutator_context_runtime/ResolveVolumeManager.inc",
+    "address": "0x141c74820",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h",
+      "UObject/Object.h"
+    ],
+    "notes": "Assigned static source binding of shared native resolver. Rejects null context, resolves world using LogAndReturnNull, casts Athena state, reads manager, rejects pending kill. Capture pinned in mutator_context_runtime/evidence.json."
   }
 ]

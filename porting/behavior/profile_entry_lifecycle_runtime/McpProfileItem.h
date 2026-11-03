@@ -10,7 +10,7 @@ class FReferenceCollector;
 
 // Native backing item, distinct from the reflected profile-group FProfileEntry.
 // These are semantic fields, not an assertion about the shipping binary layout.
-struct FMcpProfileItem
+struct MCPPROFILESYS_API FMcpProfileItem
 {
     explicit FMcpProfileItem(const FString& InItemId);
     FMcpProfileItem(const FMcpProfileItem& Other);

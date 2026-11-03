@@ -1,0 +1,26 @@
+"""Emit the original native profile entry as typed module support source."""
+import hashlib
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+MODULE = 'McpProfileSys'
+DEPENDENCIES = ('Core', 'CoreUObject', 'Json')
+
+
+def sources():
+    evidence = json.loads((HERE / 'evidence.json').read_text())
+    image = Path('/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin')
+    # Constructor, copy constructor, JSON update, and actual owner collection.
+    required = {'0x1410ebe70', '0x1410ebf10', '0x1411042a0', '0x1410f1290'}
+    receipts = [item for item in evidence['functions'] if item['target'] in required]
+    if {item['target'] for item in receipts} != required:
+        raise ValueError('missing original profile entry receipts')
+    with image.open('rb') as stream:
+        for item in receipts:
+            start, end = int(item['begin'], 16), int(item['end'], 16)
+            stream.seek(start - 0x140000000)
+            if hashlib.sha256(stream.read(end - start)).hexdigest() != item['sha256']:
+                raise ValueError('profile entry original capture changed: ' + item['target'])
+    banner = '// Generated from profile_entry_lifecycle_runtime; do not edit by hand.\n'
+    return {name: banner + (HERE / name).read_text() for name in ('McpProfileItem.h', 'McpProfileItem.cpp')}

@@ -14,5 +14,8 @@ FMcpProfileItem::~FMcpProfileItem() = default;
 
 void FMcpProfileItem::AddReferencedObjects(FReferenceCollector& Collector)
 {
-    Collector.AddReferencedObject(ItemObject);
+    if (ItemObject)
+    {
+        Collector.AddReferencedObject(ItemObject);
+    }
 }

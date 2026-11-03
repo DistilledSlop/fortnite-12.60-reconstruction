@@ -32821,5 +32821,75 @@
       "UObject/Object.h"
     ],
     "notes": "Assigned static binding of original free helper; includes 0x141c74820 semantics and requires NativeGetVolumeManager; see README."
+  },
+  {
+    "class": "AFortVolume",
+    "function": "NativeGetLocationBounds",
+    "kind": "helper",
+    "signature": "void NativeGetLocationBounds(FBoxSphereBounds& OutBounds) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/volume_location_runtime/GetLocationBounds.inc",
+    "address": "0x141c75610",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/BoxSphereBounds.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Assigned output-reference binding of original return-buffer helper; leaves output untouched when component missing. See README."
+  },
+  {
+    "class": "AFortVolume",
+    "function": "NativeContainsLocation",
+    "kind": "helper",
+    "signature": "bool NativeContainsLocation(const FVector& Location) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/volume_location_runtime/ContainsLocation.inc",
+    "address": "0x141c82210",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Requires NativeGetLocationBounds; see README.",
+    "includes": [
+      "Math/BoxSphereBounds.h",
+      "Stats/Stats.h"
+    ]
+  },
+  {
+    "class": "AFortVolumeManager",
+    "function": "NativeFindVolumeAtLocation",
+    "kind": "helper",
+    "signature": "AFortVolume* NativeFindVolumeAtLocation(const FVector& Location) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/volume_location_runtime/FindVolumeAtLocation.inc",
+    "address": "0x141c7cde0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/BoxSphereBounds.h",
+      "Stats/Stats.h"
+    ],
+    "notes": "Requires NativeContainsLocation and NativeGetLocationBounds; see README."
+  },
+  {
+    "class": "AFortVolumeManager",
+    "function": "NativeResolveVolumeManager",
+    "kind": "helper",
+    "signature": "AFortVolumeManager* NativeResolveVolumeManager(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/mutator_context_runtime/ResolveVolumeManager.inc",
+    "address": "0x141c74820",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h",
+      "UObject/Object.h"
+    ],
+    "notes": "Assigned static source binding of shared native resolver. Rejects null context, resolves world using LogAndReturnNull, casts Athena state, reads manager, rejects pending kill. Capture pinned in mutator_context_runtime/evidence.json."
   }
 ]

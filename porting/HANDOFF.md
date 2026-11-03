@@ -1,5 +1,50 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 30 (2026-11-03)
+
+Canonical source:1,856 bodies +165 supporting fields =2,021 ported entries.
+Four connected volume methods added: output-reference bounds getter, box/sphere
+containment, location selector, and shared world-to-volume-manager resolver.
+Selection uses strict X and Y box extents, not priorities, preserves captured
+unordered-comparison behavior, buffer reuse and repeated bounds reads. Null
+bounds component logs LogFort/Error and leaves output untouched; local default
+FBoxSphereBounds remains uninitialized as in original source contract. This path
+has indeterminate C++ reads; no fabricated zero/rejection was introduced. Original
+hitch scopes map exactly to FLightweightStatScope, GHitchDetected and
+QUICK_SCOPE_CYCLE_COUNTER with original labels; profiling is retained.
+Minigame owner helper now delegates to shared resolver instead of inlining it.
+
+Native McpProfileSys now emits exported FMcpProfileItem support header/source via
+a guarded generator policy. It preserves constructor defaults, shared JSON map
+values, weak profile, raw GC-traced object, and null-skipping per-item collector.
+Owner traversal and live backing/bridge integration remain open; support source
+receives no function-body credit. Root corrected false evidence:141100f10 is a
+profile operation, NOT native entry assignment. Default C++ value assignment is
+not claimed as a recovered original function. Json dependency is emitted.
+
+Promotion30 accepts2,021/rejects0. Four existing Native files changed and2support
+files added overall. Initial duplicated profiling macro from overlapping worker
+edits was removed before final generation; one scope remains per method. No
+build/runtime/tests. Last tested1,040;816 bodies pending; next2,040 needs184.
+Read-only original capture gates and bounded source review only.
+
+New durable evidence/proposals: profile_registry_writer_runtime proves registry
+constructor/destructor but no writer; profile_itemaware_runtime proves UFortItem
+native interface dispatch false and WorldItem real override142060e40; the latter
+is still unintegrated and depends on generic struct deserialization, asset lookup,
+inventory and notification. profile_entry_json_runtime updater proposal proves
+keys templateId/quantity/attributes and prefix before period (preferred) or colon.
+Its attribute copier interns empty/0/1/boolean/array/object JSON values rather than
+blindly preserving every pointer; profile virtual+2a8 notification remains a
+placeholder and MUST NOT be promoted as-is. No canonical credit for proposals.
+
+All bounded Terra workers finished. Next: wire profile native item-aware contract
+and actual WorldItem populate dependencies, registry writer, or close player
+identity-to-volume mapping using integrated location selector. Root canonical/
+Native/generator owner; use fresh finite Terra medium fork_turns none workers,
+economical reads, frequent commits/pushes/dashboard. No tests until2,040. Preserve
+unrelated graphics. All four product gates and full parity remain open.
+
 ## Native source batch 29 (2026-11-03)
 
 Canonical source:1,852 bodies +165 supporting fields =2,017 ported entries.
