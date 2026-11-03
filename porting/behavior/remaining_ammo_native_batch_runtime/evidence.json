@@ -1,0 +1,7 @@
+{
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "base": "0x140000000",
+  "body_address": "0x14205b6b0",
+  "body_size": 598,
+  "body_sha256": "5e96333a3dcfb2fe0dba97c2ff394274cdb4ce7e2c84d7fbdc68e704018cbdfd"
+}

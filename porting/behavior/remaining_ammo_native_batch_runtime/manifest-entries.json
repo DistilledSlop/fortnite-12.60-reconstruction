@@ -1,0 +1,27 @@
+[
+  {
+    "class": "UFortWorldItem",
+    "function": "GetRemainingAmmo",
+    "kind": "helper",
+    "signature": "int32 GetRemainingAmmo() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/remaining_ammo_native_batch_runtime/GetRemainingAmmo.inc",
+    "address": "0x14205b6b0",
+    "confidence": "high",
+    "status": "blocked",
+    "notes": "WorldItem slot 0x380; requires the assigned inventory-owner +0xa0 interface contract. See HANDOFF.md.",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h",
+      "AFortInventory.h",
+      "AFortPlayerController.h",
+      "AFortPlayerControllerFrontEnd.h",
+      "UFortAmmoItemDefinition.h",
+      "UFortInventoryOwnerInterface.h",
+      "UFortWeaponItemDefinition.h",
+      "UFortWorldItemDefinition.h"
+    ]
+  }
+]

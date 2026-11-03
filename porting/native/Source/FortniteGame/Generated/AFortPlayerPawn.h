@@ -1407,6 +1407,9 @@ public:
 	void GetLastWaterSurfaceInfo(FVector& OutWaterSurfacePosition, FVector& OutWaterSurfaceNormal);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumActiveBalloons() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetPawnLOD() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

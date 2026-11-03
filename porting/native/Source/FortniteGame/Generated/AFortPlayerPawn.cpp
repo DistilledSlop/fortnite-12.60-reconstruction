@@ -155,6 +155,13 @@ void AFortPlayerPawn::GetLastWaterSurfaceInfo(FVector& OutWaterSurfacePosition, 
 	OutWaterSurfaceNormal = Movement->NativeRecoveredFVector_0x1d48;
 }
 
+int32 AFortPlayerPawn::GetNumActiveBalloons() const
+{
+	// AFortPlayerPawn::GetNumActiveBalloons; exec 0x142a7c4c0, native 0x142323330.
+	// CONFIDENCE: HIGH
+	return static_cast<int32>(BalloonActiveCount);
+}
+
 int32 AFortPlayerPawn::GetPawnLOD() const
 {
 	// Original address: 0x142a7c5b0.
