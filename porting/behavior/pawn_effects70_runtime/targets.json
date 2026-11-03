@@ -1,0 +1,34 @@
+[
+  {
+    "label": "SpawnPooledCameraLensEffectDirectional",
+    "address": "0x142351a10"
+  },
+  {
+    "label": "SpawnCameraLensEffectDirectional",
+    "address": "0x1423517d0"
+  },
+  {
+    "label": "SpawnSoundLensEffectDirectional",
+    "address": "0x142351d50"
+  },
+  {
+    "label": "SetFNameBasedOnHitDirection",
+    "address": "0x14234c7b0"
+  },
+  {
+    "label": "PlayLocalAnimMontage",
+    "address": "0x142341760"
+  },
+  {
+    "label": "EquipWeaponDefinition",
+    "address": "0x1423150b0"
+  },
+  {
+    "label": "NetMulticast_Athena_BatchedDamageCues_Helper",
+    "address": "0x142345360"
+  },
+  {
+    "label": "GetCurrentSentenceSpeechText",
+    "address": "0x14231a990"
+  }
+]

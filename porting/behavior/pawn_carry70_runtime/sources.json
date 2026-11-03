@@ -1,0 +1,26 @@
+[
+  {
+    "function": "RestoreDBNOCollisionAfterDrop",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/RestoreDBNOCollisionAfterDrop.c",
+    "sha256": "cad24a16aaaa5b1ac7180a06100eee56499d076d3688a20e6e5d7eab4d2ad8e1",
+    "status": "rough_uncounted"
+  },
+  {
+    "function": "LocalThrowCarriedPlayer",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/LocalThrowCarriedPlayer.c",
+    "sha256": "4556ead71eb208e6169ea061a0239513014434cee6379bdac4c7bc3dc3e1076e",
+    "status": "rough_uncounted"
+  },
+  {
+    "function": "ServerHoistDBNOPlayer_Implementation",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/ServerHoistDBNOPlayer_Implementation.c",
+    "sha256": "da54d4ac8a803702e62ca86d6de455f5e9f987269fe2a185517035e7560f640e",
+    "status": "rough_uncounted"
+  },
+  {
+    "function": "RemoveAttachment",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/RemoveAttachment.c",
+    "sha256": "e3fbb0536deee9e0ff61c072d033dd5a3e3c0c2540d1dc6ec0e7f1f1843a96e1",
+    "status": "rough_uncounted"
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "function": "DuplicateCreativePlot_Implementation",
+    "address": "0x1419cdd40",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/DuplicateCreativePlot_Implementation.c",
+    "sha256": "c7a584086770e9fbcc7386770e267b3f118f861d6911268c57a9a9c44b1875f5"
+  },
+  {
+    "function": "RestoreCreativePlot_Implementation",
+    "address": "0x1419ef2a0",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/RestoreCreativePlot_Implementation.c",
+    "sha256": "d024cfd9aec2425675c000f3aa62cdd33013e46ebd5d2fa8000dbfbd2c65c604"
+  },
+  {
+    "function": "DestroyCreativePlot_Implementation",
+    "address": "0x1419ca250",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/DestroyCreativePlot_Implementation.c",
+    "sha256": "be7e694e90d77c75ca9329b101c2f2a1d9e245e4389df3e357342942f72c3008"
+  },
+  {
+    "function": "MakeNewCreativePlotFromLinkCode_Implementation",
+    "address": "0x1419dec70",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/MakeNewCreativePlotFromLinkCode_Implementation.c",
+    "sha256": "d94360aba5370a6ac350dd3246c36bdeb9f8f874c06afd9485c96c6df6ac52e7"
+  },
+  {
+    "function": "MakeNewCreativePlot_Implementation",
+    "address": "0x1419df280",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/MakeNewCreativePlot_Implementation.c",
+    "sha256": "0b329d24ca4362e1f5bef61f78ca342f41a5458237fa95363218af84491560c2"
+  },
+  {
+    "function": "UpdateCreativeIslandDescriptionTags_Implementation",
+    "address": "0x141a006d0",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/UpdateCreativeIslandDescriptionTags_Implementation.c",
+    "sha256": "c85d2ef0d6e0f2dbc0e54d03ccf068f8761e9085c59d8de12bb739d7be30d41d"
+  }
+]
