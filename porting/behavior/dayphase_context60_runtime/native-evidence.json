@@ -1,0 +1,91 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "base": "0x140000000",
+  "windows": [
+    {
+      "address": "0x141999ba0",
+      "length": 8,
+      "sha256": "a1b55e47f377c58892e12a2a2c11a0fc91524f12a270a61636915547775daf12",
+      "label": "GameStateVolumeGetter"
+    },
+    {
+      "address": "0x141c74820",
+      "length": 190,
+      "sha256": "9e4163ab2fc795a21cfe61150a8315aef50beffad0d30eaced467b854dc4b61c",
+      "label": "ContextService"
+    },
+    {
+      "address": "0x141c7c5c0",
+      "length": 1220,
+      "sha256": "319950ec8af88c84c15a777424381ccbbace6eee4c028b1ca55fd74eaa24fafc",
+      "label": "ContextResolveA"
+    },
+    {
+      "address": "0x141c7d270",
+      "length": 426,
+      "sha256": "da8cb9dfe1a82cbfc29ae415eb3096c22f1d0619408479a7366523e539b63701",
+      "label": "PlayerVolumeInActiveUsers"
+    },
+    {
+      "address": "0x141c7d420",
+      "length": 172,
+      "sha256": "e423cc0200f5c4a21aad9281cd2eceb3e08689edabd0900f513870415c06cd71",
+      "label": "ContextResolveB"
+    },
+    {
+      "address": "0x141ef3ab0",
+      "length": 54,
+      "sha256": "333cca7bf759e3e94cb90c6d1e1a10846afc96b20984e72595785902d3a50bc5",
+      "label": "GetGameState"
+    },
+    {
+      "address": "0x141f611f0",
+      "length": 254,
+      "sha256": "62a17e3d79616dabc544502231d8752ab667acc668c2cc1c8d43e9eb6412728d",
+      "label": "ResolveTimeOfDayManager"
+    },
+    {
+      "address": "0x141f9f270",
+      "length": 79,
+      "sha256": "c46361954a06536454dbe0c52b8bccb5359c0fdfada496dd123ebc4c19610f37",
+      "label": "PlayspaceManager"
+    },
+    {
+      "address": "0x142752f80",
+      "length": 178,
+      "sha256": "113626793ef838f07c129866852fe6fc9062bac6b577ab1132449dd438949cb2",
+      "label": "ActorSpecialClass"
+    },
+    {
+      "address": "0x1429234b0",
+      "length": 178,
+      "sha256": "df5a192de1b2c461f72aeda1e2a530322377bb752dd96ed1aefdeddca3ccf068",
+      "label": "GameStateClass"
+    },
+    {
+      "address": "0x142a85850",
+      "length": 178,
+      "sha256": "886afcedf68e1eb66f7075b1f1174f40f673b704116174014c4a8e43dddbdcbb",
+      "label": "ContextClassB"
+    },
+    {
+      "address": "0x142b39750",
+      "length": 178,
+      "sha256": "47850978d9190557815c645abf8e5a17e5b033243fb3eb105bc601454ebbbee5",
+      "label": "ComponentClass"
+    },
+    {
+      "address": "0x1446acb00",
+      "length": 179,
+      "sha256": "651341d8da65559157b7c2e07f12530ba79d03738626741b0d42331b44955398",
+      "label": "ContextClassA"
+    },
+    {
+      "address": "0x144720ae0",
+      "length": 178,
+      "sha256": "f2469ff3df9dcb43a42358ed104d5d53c682e8e9cef372d012f89312d87d20a1",
+      "label": "ActorFallbackClass"
+    }
+  ]
+}

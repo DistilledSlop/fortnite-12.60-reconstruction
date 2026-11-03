@@ -35938,5 +35938,68 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Reads original native storage; see HANDOFF for layout and lifecycle evidence."
+  },
+  {
+    "class": "ABuildingActor",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "access": "public",
+    "function": "OnDayPhaseChanged_Implementation",
+    "kind": "native_event_impl",
+    "signature": "void OnDayPhaseChanged_Implementation(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation)",
+    "inc_path": "porting/behavior/dayphase_callback60_runtime/OnDayPhaseChanged_Implementation.inc",
+    "address": "0x142737bf0",
+    "native_body_address": "0x141bb0d80",
+    "reflection_flags": "0x8020c00",
+    "static": false,
+    "notes": "Native Blueprint event virtual +0x650 forwards to virtual +0x808."
+  },
+  {
+    "class": "ABuildingActor",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "access": "public",
+    "function": "NativeOnDayPhaseChanged",
+    "kind": "helper",
+    "signature": "void NativeOnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation)",
+    "inc_path": "porting/behavior/dayphase_callback60_runtime/NativeOnDayPhaseChanged.inc",
+    "address": "0x1406801c0",
+    "virtual": true,
+    "notes": "Proposed helper name; base virtual +0x808 is ret 0."
+  },
+  {
+    "class": "ABuildingActor",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "access": "public",
+    "function": "NativeUsesDayPhaseChange",
+    "kind": "helper",
+    "signature": "bool NativeUsesDayPhaseChange() const",
+    "inc_path": "porting/behavior/dayphase_callback60_runtime/NativeUsesDayPhaseChange.inc",
+    "address": "0x141bc5c50",
+    "virtual": true,
+    "notes": "Proposed helper name and const qualifier; base virtual +0x938 returns bUsesDayPhaseChange."
+  },
+  {
+    "function": "NativeGetGlobals",
+    "kind": "helper",
+    "signature": "UFortGlobals* NativeGetGlobals()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/building_lazy_setting61_runtime/UFortGlobals_NativeGetGlobals.inc",
+    "includes": [
+      "Engine/Engine.h",
+      "SharedFortGameLog.h",
+      "UObject/UObjectGlobals.h"
+    ],
+    "address": "0x141ed2350",
+    "confidence": "high",
+    "status": "ported",
+    "static": true,
+    "notes": "Native checked singleton accessor. Diagnostic retained verbatim despite stale type wording; reads live UFortGlobals config.",
+    "class": "UFortGlobals"
   }
 ]

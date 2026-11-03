@@ -1,0 +1,42 @@
+{
+ "address": "0x141c7d270",
+ "label": "PlayerVolumeInActiveUsers",
+ "name": "FUN_141c7d270",
+ "status": "ok",
+ "body_bytes": 426,
+ "instructions": 121,
+ "called": [
+  {
+   "address": "0x142a174f0",
+   "name": "FUN_142a174f0"
+  },
+  {
+   "address": "0x141c74820",
+   "name": "FUN_141c74820"
+  },
+  {
+   "address": "0x141c7cde0",
+   "name": "FUN_141c7cde0"
+  }
+ ],
+ "indirect_calls": 4,
+ "strings": [],
+ "callers": [
+  {
+   "address": "0x1485a8210",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x141c7d420",
+   "name": "FUN_141c7d420",
+   "ref": "call"
+  }
+ ],
+ "reference_counts": {
+  "data": 1,
+  "call": 1
+ },
+ "thunk": false,
+ "error": null
+}

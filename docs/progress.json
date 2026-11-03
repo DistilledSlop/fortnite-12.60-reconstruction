@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "785be98dc9d6097c65c64ed0f50da6b5f8e43b1b",
- "subject": "Fix native query dependencies exposed by the 2040-body compile",
- "date": "2026-11-03T06:25:27-05:00",
+ "head": "e74f271c85ca8be523b03a0d30b0b790a263e4b8",
+ "subject": "Record passing 2040-body client server and Apollo checkpoint",
+ "date": "2026-11-03T06:33:11-05:00",
  "overall_pct": 20.891,
  "measured_pct": 20.021,
  "objective_pct": 20.017,

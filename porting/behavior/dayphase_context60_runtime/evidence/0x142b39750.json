@@ -1,0 +1,62 @@
+{
+ "address": "0x142b39750",
+ "label": "ComponentClass",
+ "name": "FUN_142b39750",
+ "status": "ok",
+ "body_bytes": 178,
+ "instructions": 32,
+ "called": [
+  {
+   "address": "0x142d698b0",
+   "name": "GetPrivateStaticClassBody"
+  }
+ ],
+ "indirect_calls": 0,
+ "strings": [
+  {
+   "text": "FortVolumeTimeOfDayComponent",
+   "address": "0x146568962"
+  },
+  {
+   "text": "Game",
+   "address": "0x1459a4c58"
+  },
+  {
+   "text": "/Script/FortniteGame",
+   "address": "0x146232ea8"
+  }
+ ],
+ "callers": [
+  {
+   "address": "0x1486c38b4",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x141f9f270",
+   "name": "FUN_141f9f270",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f892c0",
+   "name": "FUN_141f892c0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142b3a100",
+   "name": "FUN_142b3a100",
+   "ref": "call"
+  },
+  {
+   "address": "0x140452f30",
+   "name": "FUN_140452f30",
+   "ref": "data"
+  }
+ ],
+ "reference_counts": {
+  "data": 2,
+  "call": 6
+ },
+ "thunk": false,
+ "error": null
+}

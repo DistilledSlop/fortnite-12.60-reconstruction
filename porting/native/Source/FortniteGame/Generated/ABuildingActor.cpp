@@ -3,6 +3,7 @@
 #include "AFortGameMode.h"
 #include "AFortPlayerController.h"
 #include "AFortPlayerState.h"
+#include "EFortDayPhase.h"
 #include "Engine/World.h"
 #include "GameFramework/GameStateBase.h"
 #include "NavigationSystem.h"
@@ -134,6 +135,13 @@ bool ABuildingActor::IsPlayerBuilt() const
 	return OwnerPersistentID != -1 || bPlayerPlaced;
 }
 
+void ABuildingActor::OnDayPhaseChanged_Implementation(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation)
+{
+	// CONFIDENCE: HIGH
+	// Original native event implementation 0x141bb0d80 forwards through virtual slot +0x808.
+	NativeOnDayPhaseChanged(CurrentDayPhase, PreviousDayPhase, bAtCreation);
+}
+
 void ABuildingActor::OnRep_AbilitySystemComponent()
 {
 	// Body not recovered: reflection-derived stub.
@@ -248,6 +256,19 @@ bool ABuildingActor::UseDefaultHealthBar_Implementation() const
 	// CONFIDENCE: MEDIUM
 	// Virtual slot 0x660 is the shared stub 0x1406801d0 (returns true); see building_vitals_runtime/README.md.
 	return true;
+}
+
+void ABuildingActor::NativeOnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation)
+{
+	// CONFIDENCE: HIGH
+	// Original base virtual slot +0x808 is 0x1406801c0 (ret 0).
+}
+
+bool ABuildingActor::NativeUsesDayPhaseChange() const
+{
+	// CONFIDENCE: HIGH
+	// Original base virtual slot +0x938, 0x141bc5c50.
+	return bUsesDayPhaseChange;
 }
 
 void ABuildingActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

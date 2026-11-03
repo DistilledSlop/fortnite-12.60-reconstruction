@@ -1,0 +1,142 @@
+{
+ "address": "0x1429234b0",
+ "label": "GameStateClass",
+ "name": "FUN_1429234b0",
+ "status": "ok",
+ "body_bytes": 178,
+ "instructions": 32,
+ "called": [
+  {
+   "address": "0x142d698b0",
+   "name": "GetPrivateStaticClassBody"
+  }
+ ],
+ "indirect_calls": 0,
+ "strings": [
+  {
+   "text": "FortGameStateBase",
+   "address": "0x1463eeb7a"
+  },
+  {
+   "text": "Game",
+   "address": "0x1459a4c58"
+  },
+  {
+   "text": "/Script/FortniteGame",
+   "address": "0x146232ea8"
+  }
+ ],
+ "callers": [
+  {
+   "address": "0x1486886d0",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x141066490",
+   "name": "FUN_141066490",
+   "ref": "call"
+  },
+  {
+   "address": "0x1411d7750",
+   "name": "FUN_1411d7750",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f611f0",
+   "name": "FUN_141f611f0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141862280",
+   "name": "FUN_141862280",
+   "ref": "call"
+  },
+  {
+   "address": "0x141871920",
+   "name": "FUN_141871920",
+   "ref": "call"
+  },
+  {
+   "address": "0x141871e80",
+   "name": "FUN_141871e80",
+   "ref": "call"
+  },
+  {
+   "address": "0x1420d8d50",
+   "name": "FUN_1420d8d50",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e89da0",
+   "name": "FUN_141e89da0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e9bc30",
+   "name": "FUN_141e9bc30",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e89d50",
+   "name": "FUN_141e89d50",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e9c7f0",
+   "name": "FUN_141e9c7f0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f642f0",
+   "name": "FUN_141f642f0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f9d460",
+   "name": "FUN_141f9d460",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f88e70",
+   "name": "FUN_141f88e70",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f863e0",
+   "name": "FUN_141f863e0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1424e8b80",
+   "name": "FUN_1424e8b80",
+   "ref": "call"
+  },
+  {
+   "address": "0x1424db170",
+   "name": "FUN_1424db170",
+   "ref": "call"
+  },
+  {
+   "address": "0x1425a03a0",
+   "name": "FUN_1425a03a0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142923720",
+   "name": "FUN_142923720",
+   "ref": "call"
+  },
+  {
+   "address": "0x14290afc0",
+   "name": null,
+   "ref": "call"
+  }
+ ],
+ "reference_counts": {
+  "data": 1,
+  "call": 26
+ },
+ "thunk": false,
+ "error": null
+}

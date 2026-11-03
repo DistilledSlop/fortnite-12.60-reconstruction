@@ -1,0 +1,33 @@
+{
+  "status": "proposal_requires_generator_integration_and_uht_validation",
+  "reflected": [
+    {
+      "class": "ABuildingActor",
+      "function": "OnDayPhaseChanged",
+      "signature": "void OnDayPhaseChanged(TEnumAsByte<EFortDayPhase::Type> CurrentDayPhase, TEnumAsByte<EFortDayPhase::Type> PreviousDayPhase, bool bAtCreation)",
+      "reflection_flags": "0x08020c00",
+      "exec_address": "0x142737bf0",
+      "event_kind": "BlueprintNativeEvent",
+      "native_implementation_address": "0x141bb0d80",
+      "native_implementation_vtable_slot": "0x650",
+      "implementation": "forward to virtual NativeOnDayPhaseChanged"
+    }
+  ],
+  "non_reflected_virtual_helpers": [
+    {
+      "proposed_name": "NativeOnDayPhaseChanged",
+      "vtable_slot": "0x808",
+      "base_address": "0x1406801c0",
+      "base_behavior": "empty; ret 0",
+      "arguments": "same as OnDayPhaseChanged"
+    },
+    {
+      "proposed_name": "NativeUsesDayPhaseChange",
+      "vtable_slot": "0x938",
+      "base_address": "0x141bc5c50",
+      "base_behavior": "return bUsesDayPhaseChange",
+      "const_qualification": "proposed, not recovered"
+    }
+  ],
+  "source_policy": "Generator must declare BlueprintNativeEvent and both virtual helper methods, implement native event forwarding through helper, and retain reflected event binding and predicate virtual dispatch; consult PROPOSAL.md."
+}

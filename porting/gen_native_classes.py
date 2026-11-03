@@ -2330,6 +2330,10 @@ _native_checkpoint2040_spec = _common_activation_import.spec_from_file_location(
     "native_checkpoint2040_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_checkpoint2040_runtime", "source_policy.py"))
 _native_checkpoint2040_policy = _common_activation_import.module_from_spec(_native_checkpoint2040_spec)
 _native_checkpoint2040_spec.loader.exec_module(_native_checkpoint2040_policy)
+_dayphase_callback_spec = _common_activation_import.spec_from_file_location(
+    "dayphase_callback60_policy", os.path.join(os.path.dirname(__file__), "behavior", "dayphase_callback60_runtime", "source_policy.py"))
+_dayphase_callback_policy = _common_activation_import.module_from_spec(_dayphase_callback_spec)
+_dayphase_callback_spec.loader.exec_module(_dayphase_callback_policy)
 _definition_queries_spec = _common_activation_import.spec_from_file_location(
     "definition_queries_signature_policy", os.path.join(os.path.dirname(__file__), "behavior", "definition_broad53_runtime", "source_policy.py"))
 _definition_queries_policy = _common_activation_import.module_from_spec(_definition_queries_spec)
@@ -2486,6 +2490,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
                                          splice_names, UI_BLUEPRINT_EVENTS.get(name, frozenset()),
                                          UI_PARAMETERIZED_BLUEPRINT_EVENTS.get(name, {}), native_event_names)
     _definition_queries_policy.apply_signatures(name, block, functions, owner_fns, function_view)
+    _dayphase_callback_policy.apply_signatures(name, block, functions, owner_fns, function_view, snippets)
     splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped,
                               {m["name"] for m in members})
               if snippets else None)

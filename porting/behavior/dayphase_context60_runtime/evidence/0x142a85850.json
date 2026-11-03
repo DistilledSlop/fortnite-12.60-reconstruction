@@ -1,0 +1,437 @@
+{
+ "address": "0x142a85850",
+ "label": "ContextClassB",
+ "name": "FUN_142a85850",
+ "status": "ok",
+ "body_bytes": 178,
+ "instructions": 32,
+ "called": [
+  {
+   "address": "0x142d698b0",
+   "name": "GetPrivateStaticClassBody"
+  }
+ ],
+ "indirect_calls": 0,
+ "strings": [
+  {
+   "text": "FortPlayerState",
+   "address": "0x1464d2442"
+  },
+  {
+   "text": "Engine",
+   "address": "0x1459a4c08"
+  },
+  {
+   "text": "/Script/FortniteGame",
+   "address": "0x146232ea8"
+  }
+ ],
+ "callers": [
+  {
+   "address": "0x1486ae728",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x141ee5f70",
+   "name": "FUN_141ee5f70",
+   "ref": "call"
+  },
+  {
+   "address": "0x141a07cb0",
+   "name": "FUN_141a07cb0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1415fb610",
+   "name": "FUN_1415fb610",
+   "ref": "call"
+  },
+  {
+   "address": "0x141ba8b20",
+   "name": "FUN_141ba8b20",
+   "ref": "call"
+  },
+  {
+   "address": "0x141605cf0",
+   "name": "FUN_141605cf0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142324c10",
+   "name": "FUN_142324c10",
+   "ref": "call"
+  },
+  {
+   "address": "0x1423b95d0",
+   "name": "FUN_1423b95d0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1416806f0",
+   "name": "FUN_1416806f0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1423881c0",
+   "name": "FUN_1423881c0",
+   "ref": "call"
+  },
+  {
+   "address": "0x14165dba0",
+   "name": "FUN_14165dba0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f611f0",
+   "name": "FUN_141f611f0",
+   "ref": "call"
+  },
+  {
+   "address": "0x14168bed0",
+   "name": "FUN_14168bed0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141699800",
+   "name": "FUN_141699800",
+   "ref": "call"
+  },
+  {
+   "address": "0x14168bf30",
+   "name": "FUN_14168bf30",
+   "ref": "call"
+  },
+  {
+   "address": "0x141b38d00",
+   "name": "FUN_141b38d00",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e5ca70",
+   "name": "FUN_141e5ca70",
+   "ref": "call"
+  },
+  {
+   "address": "0x141cd1550",
+   "name": "FUN_141cd1550",
+   "ref": "call"
+  },
+  {
+   "address": "0x1416986f0",
+   "name": "FUN_1416986f0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141a78b30",
+   "name": "FUN_141a78b30",
+   "ref": "call"
+  },
+  {
+   "address": "0x14169f040",
+   "name": "FUN_14169f040",
+   "ref": "call"
+  },
+  {
+   "address": "0x14196d120",
+   "name": "FUN_14196d120",
+   "ref": "call"
+  },
+  {
+   "address": "0x141ef63b0",
+   "name": "FUN_141ef63b0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1416afe70",
+   "name": "FUN_1416afe70",
+   "ref": "call"
+  },
+  {
+   "address": "0x1423803f0",
+   "name": "FUN_1423803f0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142529970",
+   "name": "FUN_142529970",
+   "ref": "call"
+  },
+  {
+   "address": "0x1416a5c40",
+   "name": "FUN_1416a5c40",
+   "ref": "call"
+  },
+  {
+   "address": "0x1416a6190",
+   "name": "FUN_1416a6190",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f1cff0",
+   "name": "FUN_141f1cff0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f5b8c0",
+   "name": "FUN_141f5b8c0",
+   "ref": "call"
+  },
+  {
+   "address": "0x14177e7a0",
+   "name": "FUN_14177e7a0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1417a7fd0",
+   "name": "FUN_1417a7fd0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142382cf0",
+   "name": "FUN_142382cf0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142385ad0",
+   "name": "FUN_142385ad0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141843cf0",
+   "name": "FUN_141843cf0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141844b90",
+   "name": "FUN_141844b90",
+   "ref": "call"
+  },
+  {
+   "address": "0x142322580",
+   "name": "FUN_142322580",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e44850",
+   "name": "FUN_141e44850",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419344e0",
+   "name": "FUN_1419344e0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e4fb60",
+   "name": "FUN_141e4fb60",
+   "ref": "call"
+  },
+  {
+   "address": "0x142087c20",
+   "name": "FUN_142087c20",
+   "ref": "call"
+  },
+  {
+   "address": "0x1423d0e60",
+   "name": "FUN_1423d0e60",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e9e680",
+   "name": "FUN_141e9e680",
+   "ref": "call"
+  },
+  {
+   "address": "0x1423d0d80",
+   "name": "FUN_1423d0d80",
+   "ref": "call"
+  },
+  {
+   "address": "0x14264f2d0",
+   "name": "FUN_14264f2d0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142641fb0",
+   "name": "FUN_142641fb0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141dba280",
+   "name": "FUN_141dba280",
+   "ref": "call"
+  },
+  {
+   "address": "0x142323630",
+   "name": "FUN_142323630",
+   "ref": "call"
+  },
+  {
+   "address": "0x142649d20",
+   "name": "FUN_142649d20",
+   "ref": "call"
+  },
+  {
+   "address": "0x141944b40",
+   "name": "FUN_141944b40",
+   "ref": "call"
+  },
+  {
+   "address": "0x141a16140",
+   "name": "FUN_141a16140",
+   "ref": "call"
+  },
+  {
+   "address": "0x14209bda0",
+   "name": "FUN_14209bda0",
+   "ref": "call"
+  },
+  {
+   "address": "0x14208da70",
+   "name": "FUN_14208da70",
+   "ref": "call"
+  },
+  {
+   "address": "0x142093480",
+   "name": "FUN_142093480",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f593c0",
+   "name": "FUN_141f593c0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f59690",
+   "name": "FUN_141f59690",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e6dcb0",
+   "name": "FUN_141e6dcb0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141ea2e00",
+   "name": "FUN_141ea2e00",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e6e6a0",
+   "name": "FUN_141e6e6a0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142147c00",
+   "name": "FUN_142147c00",
+   "ref": "call"
+  },
+  {
+   "address": "0x141950f10",
+   "name": "FUN_141950f10",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e6ee30",
+   "name": "FUN_141e6ee30",
+   "ref": "call"
+  },
+  {
+   "address": "0x1423a9940",
+   "name": "FUN_1423a9940",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419585e0",
+   "name": "FUN_1419585e0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142342d20",
+   "name": "FUN_142342d20",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e7a1d0",
+   "name": "FUN_141e7a1d0",
+   "ref": "call"
+  },
+  {
+   "address": "0x14231b600",
+   "name": "FUN_14231b600",
+   "ref": "call"
+  },
+  {
+   "address": "0x141987ea0",
+   "name": "FUN_141987ea0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419aceb0",
+   "name": "FUN_1419aceb0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1423cb420",
+   "name": "FUN_1423cb420",
+   "ref": "call"
+  },
+  {
+   "address": "0x142027ec0",
+   "name": "FUN_142027ec0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142034c10",
+   "name": "FUN_142034c10",
+   "ref": "call"
+  },
+  {
+   "address": "0x142034cd0",
+   "name": "FUN_142034cd0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419c7db0",
+   "name": "AFortPlayerControllerAthena_ClientSetDeathReport_Implementation",
+   "ref": "call"
+  },
+  {
+   "address": "0x142651940",
+   "name": "FUN_142651940",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419c83d0",
+   "name": "AFortPlayerControllerAthena_Client_DisplayQuestUpdate_Assist_Implementation",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419c8540",
+   "name": "AFortPlayerControllerAthena_Client_DisplayQuestUpdate_Self_Implementation",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f34e50",
+   "name": "FUN_141f34e50",
+   "ref": "call"
+  },
+  {
+   "address": "0x141a8ae70",
+   "name": "FUN_141a8ae70",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419d7d80",
+   "name": "FUN_1419d7d80",
+   "ref": "call"
+  }
+ ],
+ "reference_counts": {
+  "data": 4,
+  "call": 509
+ },
+ "thunk": false,
+ "error": null
+}

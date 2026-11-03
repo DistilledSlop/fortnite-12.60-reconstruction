@@ -1,5 +1,32 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch62 (2026-11-03)
+
+Canonical2,044 bodies+176fields=2,220 accepted/rejected0. Four bodies added:
+BuildingActor Blueprint-native OnDayPhaseChanged forwarding, original empty
+virtual callback base, original virtual bUsesDayPhaseChange predicate; and full
+UFortGlobals checked live GameSingleton accessor including fatal diagnostic and
+NewObject fallback. This closes callback/settings dependencies, not the whole
+building lifecycle. Source naming/const choices are documented; reflected event
+flags/order/types and all virtual relationships are guarded and preserved.
+Last tested2,040 at785be98d; these four bodies are build pending. No tests until
+3,040. Source batch62 is generation/splice and original-byte pinning only.
+
+Further concrete evidence (uncounted proposals): dayphase_context60_runtime has
+full contextual manager resolver ordering; actor_volume61_runtime identifies
+native weak actor-membership set and full add/remove/endplay/clear writers plus
+IFortVolumeAccessor dependency; building_asc_flags60_runtime maps tick/component
+flags and bare SpawnedAttributes.AddUnique (4.26 mutable accessor adds an
+unobserved dirty mark); building_asc_init61_runtime proposes full static tag
+initializer via virtual component getter and AddLooseGameplayTag, while seven
+native attribute delegate bindings/virtual callbacks remain unresolved.
+building_lazy_setting61_runtime proves UFortGlobals.bEnableLazyASC at+c7; do
+not hardcode defaults. GEngine GameSingleton configuration still needs original
+runtime/config parity before building creation can be wired. All workers done,
+Ghidra lease free. Root sole canonical owner. Delegate bounded Terra6.1 medium/
+low fork-none tasks; economical reads and rotate at task boundary. Preserve
+unrelated porting/graphics. User focus larger rough paths, not small-body count.
+
 ## Passed 2,040-body checkpoint (2026-11-03)
 
 Source785be98d passed client attempt3, server attempt1, matching staged binaries

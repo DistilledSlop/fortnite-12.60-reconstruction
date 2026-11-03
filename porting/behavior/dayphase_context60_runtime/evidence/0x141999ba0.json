@@ -1,0 +1,68 @@
+{
+ "address": "0x141999ba0",
+ "label": "GameStateVolumeGetter",
+ "name": "FUN_141999ba0",
+ "status": "ok",
+ "body_bytes": 8,
+ "instructions": 2,
+ "called": [],
+ "indirect_calls": 0,
+ "strings": [],
+ "callers": [
+  {
+   "address": "0x141c74820",
+   "name": "FUN_141c74820",
+   "ref": "call"
+  },
+  {
+   "address": "0x141c794e0",
+   "name": "FUN_141c794e0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1416702f0",
+   "name": "FUN_1416702f0",
+   "ref": "call"
+  },
+  {
+   "address": "0x14194b280",
+   "name": "FUN_14194b280",
+   "ref": "call"
+  },
+  {
+   "address": "0x141f062e0",
+   "name": "FUN_141f062e0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419c0620",
+   "name": "FUN_1419c0620",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419cef10",
+   "name": "FUN_1419cef10",
+   "ref": "call"
+  },
+  {
+   "address": "0x14215b3d0",
+   "name": "FUN_14215b3d0",
+   "ref": "call"
+  },
+  {
+   "address": "0x14215bda0",
+   "name": "FUN_14215bda0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1426510b0",
+   "name": "FUN_1426510b0",
+   "ref": "call"
+  }
+ ],
+ "reference_counts": {
+  "call": 10
+ },
+ "thunk": false,
+ "error": null
+}

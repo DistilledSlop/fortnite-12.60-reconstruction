@@ -11,6 +11,7 @@
 #include "EDynamicBuildingPlacementType.h"
 #include "EFortBaseWeaponDamage.h"
 #include "EFortBuildingType.h"
+#include "EFortDayPhase.h"
 #include "EFortTeam.h"
 #include "ENavigationObstacleOverride.h"
 #include "Engine/CurveTable.h"
@@ -658,6 +659,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayerBuilt() const;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation);
+	virtual void OnDayPhaseChanged_Implementation(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation);
+
 	UFUNCTION()
 	void OnRep_AbilitySystemComponent();
 
@@ -720,5 +725,10 @@ public:
 	virtual bool UseDefaultHealthBar_Implementation() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual void NativeOnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation);
+	virtual bool NativeUsesDayPhaseChange() const;
 };
 

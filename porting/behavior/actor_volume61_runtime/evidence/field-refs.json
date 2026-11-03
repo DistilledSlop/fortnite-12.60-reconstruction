@@ -1,0 +1,129 @@
+{
+ "0x318@0x141c70000": [
+  {
+   "addr": "0x141c5832b",
+   "function": "0x141c58290",
+   "text": "MOV qword ptr [R14 + 0x318],RBP"
+  },
+  {
+   "addr": "0x141c5a0dc",
+   "function": "0x141c59ff0",
+   "text": "MOV dword ptr [RBX + 0x318],R12D"
+  },
+  {
+   "addr": "0x141c5a405",
+   "function": "0x141c59ff0",
+   "text": "MOV dword ptr [RBX + 0x318],EAX"
+  },
+  {
+   "addr": "0x141c5a95f",
+   "function": "0x141c5a700",
+   "text": "MOV qword ptr [RBX + 0x318],RAX"
+  },
+  {
+   "addr": "0x141c5aae4",
+   "function": "0x141c5aa40",
+   "text": "MOVSS dword ptr [RBX + 0x318],XMM2"
+  },
+  {
+   "addr": "0x141c5b42e",
+   "function": "0x141c5b260",
+   "text": "LEA RCX,[RBX + 0x318]"
+  },
+  {
+   "addr": "0x141c5b906",
+   "function": "0x141c5b890",
+   "text": "LEA RCX,[RBX + 0x318]"
+  },
+  {
+   "addr": "0x141c5c785",
+   "function": "0x141c5c710",
+   "text": "LEA RCX,[RDI + 0x318]"
+  },
+  {
+   "addr": "0x141c5c816",
+   "function": "0x141c5c710",
+   "text": "LEA RCX,[RDI + 0x318]"
+  },
+  {
+   "addr": "0x141c5c83f",
+   "function": "0x141c5c710",
+   "text": "LEA RCX,[RDI + 0x318]"
+  },
+  {
+   "addr": "0x141c5df2e",
+   "function": "0x141c5dea0",
+   "text": "LEA RCX,[RDI + 0x318]"
+  },
+  {
+   "addr": "0x141c6a5c1",
+   "function": "0x141c6a510",
+   "text": "LEA RCX,[RSI + 0x318]"
+  },
+  {
+   "addr": "0x141c6b6ef",
+   "function": "0x141c6b5d0",
+   "text": "LEA RCX,[RSI + 0x318]"
+  },
+  {
+   "addr": "0x141c6f717",
+   "function": "0x141c6f610",
+   "text": "LEA R15,[RSI + 0x318]"
+  },
+  {
+   "addr": "0x141c7497d",
+   "function": "0x141c74950",
+   "text": "LEA R12,[RCX + 0x318]"
+  },
+  {
+   "addr": "0x141c74e2c",
+   "function": "0x141c74e00",
+   "text": "LEA R12,[RCX + 0x318]"
+  },
+  {
+   "addr": "0x141c7c80b",
+   "function": "0x141c7c5c0",
+   "text": "LEA RCX,[RDI + 0x318]"
+  },
+  {
+   "addr": "0x141c80aeb",
+   "function": "0x141c80700",
+   "text": "CALL qword ptr [RAX + 0x318]"
+  },
+  {
+   "addr": "0x141c83927",
+   "function": "0x141c838d0",
+   "text": "CALL qword ptr [R8 + 0x318]"
+  },
+  {
+   "addr": "0x141c86de6",
+   "function": "0x141c86db0",
+   "text": "LEA RBX,[RSI + 0x318]"
+  },
+  {
+   "addr": "0x141c8ac48",
+   "function": "0x141c8abe0",
+   "text": "LEA RCX,[RBX + 0x318]"
+  },
+  {
+   "addr": "0x141c8bbfd",
+   "function": "0x141c8baa0",
+   "text": "LEA RCX,[R14 + 0x318]"
+  },
+  {
+   "addr": "0x141c8bc30",
+   "function": "0x141c8baa0",
+   "text": "LEA RCX,[R14 + 0x318]"
+  },
+  {
+   "addr": "0x141c8d05c",
+   "function": "0x141c8cfd0",
+   "text": "LEA RCX,[RDI + 0x318]"
+  },
+  {
+   "addr": "0x141c8d5b3",
+   "function": "0x141c8d520",
+   "text": "CALL qword ptr [RAX + 0x318]"
+  }
+ ]
+}
