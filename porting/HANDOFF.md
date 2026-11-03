@@ -28,10 +28,14 @@ and field/order/value conversions recovered; no fake provider.
 Promotion38 accepts2,085/rejects0. Full analytics instruction spans include chained
 unwind fragments rather than only first .pdata range; original bytes checked. No
 build/tests/runtime. Last tested1,040;876 pending;next2,040 needs124 bodies. Source
-ready to commit/push, then dashboard publish. Full game/server/four product gates
+f18331c8 committed/pushed; dashboard published with this handoff. Full game/server/four product gates
 remain open. Previous goal turn was progress (source37 + committed release evidence).
 
-Next: connect full141e09a30 callback using these closed helpers and real Fort CSV,
+User asked whether large quick functions are exhausted: no; recent effort was concentrated
+on dependency-heavy inventory/profile and asset/analytics chains. Broaden the next
+parallel pass toward substantial recoveries with fewer unresolved dependencies.
+
+Also ready: connect full141e09a30 callback using these closed helpers and real Fort CSV,
 cap20 CVars and actual submode byte (141ed2b30), then materialize reviewed single
 FFortAssets owner from recovered lifecycle/GC/diagnostic maps. Do not repeat provider,
 world map-name, mission/time or playlist predicate identification. Whole submode
