@@ -1404,6 +1404,9 @@ public:
 	bool GetIsSlopeSliding() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetLastWaterSurfaceInfo(FVector& OutWaterSurfacePosition, FVector& OutWaterSurfaceNormal);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetPawnLOD() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -1429,6 +1432,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool GetVehicleOverrideExit();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetWaterImmersionDepth() const;
 
 	UFUNCTION()
 	void HandleInStasis();
@@ -1467,6 +1473,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSkydivingFromBus() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsSkydivingFromLaunchPad() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsUsingUmbrella() const;
@@ -1733,7 +1742,13 @@ public:
 	void SetClientObservedStatsFromAnotherPawn(AFortPlayerPawn* OtherPawn);
 
 	UFUNCTION(BlueprintCallable)
+	void SetInSlipperyMovement(bool bIsSlippery);
+
+	UFUNCTION(BlueprintCallable)
 	void SetIsInFrontEndHologram(bool bInFrontEndHologram);
+
+	UFUNCTION(BlueprintCallable)
+	void SetNumActiveBalloons(int32 NewBalloonCount);
 
 	UFUNCTION(BlueprintCallable)
 	void SetPreviousPosition(FVector OldPosition);

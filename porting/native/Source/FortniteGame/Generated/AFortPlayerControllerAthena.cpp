@@ -382,6 +382,20 @@ UFortPlaysetItemDefinition* AFortPlayerControllerAthena::GetPlayset() const
 	return CurrentPlayset;
 }
 
+void AFortPlayerControllerAthena::GetPlaysetSize(int32& SizeX, int32& SizeY, int32& SizeZ) const
+{
+	// CONFIDENCE: HIGH
+	// Original exec 0x142a58830; native body 0x1419d5f80.
+	if (!CurrentPlayset)
+	{
+	    SizeX = SizeY = SizeZ = 1;
+	    return;
+	}
+	SizeX = CurrentPlayset->SizeX;
+	SizeY = CurrentPlayset->SizeY;
+	SizeZ = FMath::Max(CurrentPlayset->SizeZ, 1);
+}
+
 bool AFortPlayerControllerAthena::IsClientNotifiedOfLoss() const
 {
 	// Behaviour snippet: AFortPlayerControllerAthena::IsClientNotifiedOfLoss (body only; spliced into the generated member function).

@@ -977,6 +977,9 @@ public:
 	UFortPlaysetItemDefinition* GetPlayset() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetPlaysetSize(int32& SizeX, int32& SizeY, int32& SizeZ) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsClientNotifiedOfLoss() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
