@@ -229,6 +229,9 @@ public:
 	UPROPERTY(Transient)
 	float HoldingStartTime;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSafeZoneRadius() const;
+
 	UFUNCTION()
 	void OnRep_NumActiveMegaStormCircles(int32 PrevNumActiveMegaStormCircles);
 

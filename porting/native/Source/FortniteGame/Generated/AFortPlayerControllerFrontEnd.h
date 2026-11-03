@@ -18,5 +18,17 @@ public:
 	UPROPERTY(Transient)
 	bool bUnlockAllZones;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsXboxPlatform();
+
+	UFUNCTION(BlueprintCallable, Exec)
+	void StartWriteToAudioFile();
+
+	UFUNCTION(BlueprintCallable, Exec)
+	void StopFacialAnimationTest();
+
+	UFUNCTION(BlueprintCallable, Exec)
+	void StopWriteToAudioFile();
+
 };
 

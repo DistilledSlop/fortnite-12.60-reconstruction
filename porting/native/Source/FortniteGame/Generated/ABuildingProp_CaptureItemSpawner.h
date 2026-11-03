@@ -33,9 +33,24 @@ public:
 	UPROPERTY()
 	bool bShowCaptureEvents;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	int32 AddItemRef();
+public:
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_NotifyFeedbackEvent(const FGameplayFeedbackEventParams& EventParams, const FFortItemQuantityPair& ItemEntry);
 	void NetMulticast_NotifyFeedbackEvent_Implementation(const FGameplayFeedbackEventParams& EventParams, const FFortItemQuantityPair& ItemEntry);
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	int32 RemoveItemRef();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void ResetItemRefCount();
+public:
 
 };
 

@@ -128,5 +128,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<FName> ConfiguredDynamicInstallBundles;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsOwnedByCampaignHero() const;
+
 };
 

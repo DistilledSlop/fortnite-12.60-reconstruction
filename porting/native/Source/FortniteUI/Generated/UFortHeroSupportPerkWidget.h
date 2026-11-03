@@ -45,5 +45,11 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* DescriptionText;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsHeroInSupportSlot() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPerkInCorrectSlot() const;
+
 };
 

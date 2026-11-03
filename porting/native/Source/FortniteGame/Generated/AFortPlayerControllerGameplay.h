@@ -296,6 +296,23 @@ public:
 	void ClientCreativeStopFly();
 	void ClientCreativeStopFly_Implementation();
 
+protected:
+	UFUNCTION()
+	void GrantCreativePhoneItemDefLoadedCallback();
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeModeEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeQuickbarEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeQuickmenuEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeThermometerNewUIEnabled() const;
+
 	UFUNCTION()
 	void OnRep_CreativeQuickbarComponent();
 
@@ -319,6 +336,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_UIMetricsDisplayIndex();
+
+	UFUNCTION()
+	void OnVerifyAllowedToFly();
 
 	UFUNCTION(Server, Reliable)
 	void ServerAwardVehicleTrickPoints(int32 InPoints, int32 InAirTimeX1000);

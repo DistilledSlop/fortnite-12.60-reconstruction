@@ -108,6 +108,9 @@ public:
 	UPROPERTY()
 	FTimerHandle SnapCaptureProgressTimerHandle;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetCaptureStateOwner() const;
+
 	UFUNCTION()
 	void OnRep_CaptureProgress();
 

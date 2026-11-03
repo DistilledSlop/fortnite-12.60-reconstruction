@@ -203,5 +203,26 @@ public:
 	UPROPERTY()
 	FFortCreativeTagsHelper CreativeTagsHelper;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AllowSecondaryFireToInterruptPrimary() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AlwaysChargeUpToMin() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetHitNotifyDuration() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetLowAmmoPercentage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetUsesCustomAmmoType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldAllowTargetingDuringReload() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool TargetingPreventsReload() const;
+
 };
 

@@ -12,6 +12,38 @@ void AFortWeapon::ClientReportShotFlags_Implementation(uint32 ShotFlags, int32 S
 	// Body not recovered: reflection-derived stub.
 }
 
+float AFortWeapon::GetChargeTime() const
+{
+	// Original address: 0x142b45c30.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return ChargeTime;
+}
+
+float AFortWeapon::GetProjectilePitchOffset() const
+{
+	// Original address: 0x142b46770.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return ProjectilePitchOffset;
+}
+
+int32 AFortWeapon::GetTraceThroughBuildingsLimit() const
+{
+	// Original address: 0x142b469e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return TraceThroughBuildingsLimit;
+}
+
+int32 AFortWeapon::GetTraceThroughPawnsLimit() const
+{
+	// Original address: 0x142b46a20.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return TraceThroughPawnsLimit;
+}
+
 void AFortWeapon::OnRep_AmmoCount(int32 OldAmmoCount)
 {
 	// Body not recovered: reflection-derived stub.
@@ -65,6 +97,14 @@ void AFortWeapon::ServerResetShotReport_Implementation()
 void AFortWeapon::ServerSetChargeState_Implementation(uint8 NewState)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortWeapon::TryReloadAmmoFromAbility()
+{
+	// Original address: 0x140a02a40.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return false;
 }
 
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

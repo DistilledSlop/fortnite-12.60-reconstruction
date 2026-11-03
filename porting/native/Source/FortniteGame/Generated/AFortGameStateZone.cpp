@@ -2,6 +2,38 @@
 #include "AFortGameStateZone.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortGameStateZone::GetGameDifficulty() const
+{
+	// Original address: 0x14292acc0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return GameDifficulty;
+}
+
+int32 AFortGameStateZone::GetNumSurvivorsDead() const
+{
+	// Original address: 0x14292af20.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return NumSurvivorsDead;
+}
+
+int32 AFortGameStateZone::GetNumSurvivorsRescued() const
+{
+	// Original address: 0x14292af40.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return NumSurvivorsRescued;
+}
+
+int32 AFortGameStateZone::GetNumSurvivorsSpawned() const
+{
+	// Original address: 0x14292af60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return NumSurvivorsSpawned;
+}
+
 void AFortGameStateZone::NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType)
 {
 	// Body not recovered: reflection-derived stub.

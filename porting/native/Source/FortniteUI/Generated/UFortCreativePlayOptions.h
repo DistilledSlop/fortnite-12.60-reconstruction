@@ -30,5 +30,15 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Cancel;
 
+private:
+	UFUNCTION(BlueprintCallable)
+	void ImportPlatformFriends();
+public:
+
+private:
+	UFUNCTION(BlueprintCallable)
+	bool ShouldShowImportPlatformFriendsOption();
+public:
+
 };
 

@@ -88,6 +88,14 @@ bool AFortPawn::IsStaggered() const
 	return bIsStaggered || bIsStunned || bIsKnockedback;
 }
 
+bool AFortPawn::IsWeaponHolstered() const
+{
+	// Original address: 0x142a1cdf0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return bWeaponHolstered;
+}
+
 void AFortPawn::LogChugSplashEvent()
 {
 	// Behaviour snippet: AFortPawn::LogChugSplashEvent (body only; spliced into the generated member function).

@@ -7,6 +7,22 @@ void AFortWeaponRanged::ClientFixupOverheatValue_Implementation(float InOverheat
 	// Body not recovered: reflection-derived stub.
 }
 
+float AFortWeaponRanged::GetCurrentOverheatValue() const
+{
+	// Original address: 0x142b4f6c0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return OverheatValue;
+}
+
+int32 AFortWeaponRanged::GetShellReloadCounter() const
+{
+	// Original address: 0x142b4f890.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return ShellReloadCounter;
+}
+
 void AFortWeaponRanged::OnRep_OverheatState(EFortWeaponOverheatState PreviousOverheatState)
 {
 	// Body not recovered: reflection-derived stub.
@@ -15,6 +31,14 @@ void AFortWeaponRanged::OnRep_OverheatState(EFortWeaponOverheatState PreviousOve
 void AFortWeaponRanged::ServerSetMuzzleTraceNearWall_Implementation(bool bIsNearWall)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortWeaponRanged::ShouldDisplayAmmoCounter() const
+{
+	// Original address: 0x142b501b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return bShouldDisplayAmmoCounter;
 }
 
 void AFortWeaponRanged::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

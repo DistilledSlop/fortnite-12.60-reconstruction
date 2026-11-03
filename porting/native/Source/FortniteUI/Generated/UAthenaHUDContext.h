@@ -193,5 +193,11 @@ public:
 	UPROPERTY()
 	UAthenaPlayerViewModel* PlayerViewModel;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetBatteryLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasWifi() const;
+
 };
 

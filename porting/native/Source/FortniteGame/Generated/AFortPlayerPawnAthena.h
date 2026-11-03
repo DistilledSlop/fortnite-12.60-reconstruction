@@ -439,7 +439,7 @@ public:
 	void FastSharedReplication(const FSharedRepMovement& SharedRepMovement);
 	void FastSharedReplication_Implementation(const FSharedRepMovement& SharedRepMovement);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void ForceReviveFromDBNO();
 
 	UFUNCTION(NetMulticast, Unreliable)
@@ -482,8 +482,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetBushEnabled(bool bEnableBush);
 
+protected:
 	UFUNCTION(BlueprintCallable)
 	void SetDamageCameraShakeClass(TSubclassOf<UCameraShake> NewValue);
+public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetShouldDropItemsOnDeath(bool bInShouldDropItemsOnDeath);

@@ -22,6 +22,22 @@ void AFortCreativeMoveTool::ClientStopInteracting_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+uint8 AFortCreativeMoveTool::GetGridSnapIndex() const
+{
+	// Original address: 0x1428c2710.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return GridSnapIndex;
+}
+
+uint8 AFortCreativeMoveTool::GetRotationAxisIndex() const
+{
+	// Original address: 0x142831580.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return RotationAxisIndex;
+}
+
 void AFortCreativeMoveTool::MulticastForceMoveActor_Implementation(AActor* ActorToMove, const FTransform& NewTransform)
 {
 	// Body not recovered: reflection-derived stub.

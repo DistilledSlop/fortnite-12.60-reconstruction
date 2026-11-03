@@ -56,5 +56,10 @@ public:
 	UPROPERTY()
 	float SpamThrottle;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumOfRounds() const;
+public:
+
 };
 

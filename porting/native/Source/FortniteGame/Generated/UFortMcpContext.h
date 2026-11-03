@@ -223,5 +223,11 @@ public:
 	UPROPERTY()
 	FOnLoginFlowWidgetDismissed DismissAccountCreationWidget;
 
+	UFUNCTION(BlueprintCallable)
+	bool DoesPlatformSupportFriendCodes();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentPhoenixXp() const;
+
 };
 

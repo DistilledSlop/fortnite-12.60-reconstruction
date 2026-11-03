@@ -2082,8 +2082,11 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
                "notify": name in notify_names, "splice": is_splice,
                "specifiers": specifiers, "args": args, "used": used, "original_flags": flags}
         if is_splice:
-            # A snippet makes a non-RPC function a BlueprintCallable member; BlueprintPure follows the reflection flag.
-            rec["specifiers"] = ["BlueprintCallable"] + (["BlueprintPure"] if flags & FUNC_BLUEPRINT_PURE else [])
+            # Keep the shipped reflected surface when lifting a native body.
+            rec["specifiers"] = (["BlueprintCallable"] if flags & 0x04000000 else [])
+            rec["specifiers"] += [label for bit, label in ((FUNC_BLUEPRINT_PURE, "BlueprintPure"),
+                (0x200, "Exec"), (0x4, "BlueprintAuthorityOnly"), (0x8, "BlueprintCosmetic")) if flags & bit]
+            rec["access"] = "protected" if flags & 0x80000 else ("private" if flags & 0x40000 else "public")
         emitted.append(rec)
     return emitted
 
@@ -3229,13 +3232,13 @@ def render_promoted_header(model, api, parent_include, source_label):
     for fd in pending:
         lines.extend(field_lines(fd))
     for f in model["functions"]:
-        if f.get("blueprint_event") or f.get("access") == "protected":
+        if f.get("blueprint_event") or f.get("access") in ("protected", "private"):
             lines.append(f.get("access", "protected") + ":")
         lines.append("\tUFUNCTION(%s)" % ", ".join(f["specifiers"]))
         lines.append("\t%s%s %s(%s)%s;" % ("static " if f.get("static") else "", f.get("ret", "void"), f["name"],
                                        ", ".join(header_arg(f, a) for a in f["args"]),
                                        " const" if f.get("const") else ""))
-        if f.get("blueprint_event") or f.get("access") == "protected":
+        if f.get("blueprint_event") or f.get("access") in ("protected", "private"):
             lines.append("public:")
         if f["rpc"] and not f.get("service"):
             lines.append("\tvoid %s_Implementation(%s)%s;" % (f["name"], ", ".join(f["args"]),

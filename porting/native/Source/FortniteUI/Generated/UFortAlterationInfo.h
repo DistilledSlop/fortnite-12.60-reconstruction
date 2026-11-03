@@ -49,5 +49,11 @@ public:
 	UPROPERTY(Transient)
 	bool bUnlockedByEvolution;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRequiredLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSlotIndex() const;
+
 };
 

@@ -76,5 +76,8 @@ public:
 	UPROPERTY()
 	bool bHideCountdownFromMapChallenges;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSortPriority() const;
+
 };
 

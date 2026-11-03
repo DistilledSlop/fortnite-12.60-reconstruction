@@ -616,8 +616,10 @@ public:
 	void DebugDrawImpactBucket(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 
+private:
 	UFUNCTION()
 	void OnRep_AbilitySystemComponent();
+public:
 
 	UFUNCTION()
 	void OnRep_CorrectTargetOrientation();
@@ -625,8 +627,10 @@ public:
 	UFUNCTION()
 	void OnRep_DisabledCollisionShapes();
 
+private:
 	UFUNCTION()
 	void OnRep_HealthSet();
+public:
 
 	UFUNCTION()
 	void OnRep_IgnoredBuildingActors();

@@ -7,6 +7,14 @@ void AFortTimeOfDayManager::AddLightAndFogPhaseSettingOverrideMulticast_Implemen
 	// Body not recovered: reflection-derived stub.
 }
 
+float AFortTimeOfDayManager::GetStormStrength() const
+{
+	// Original address: 0x142b0efc0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return StormStrength;
+}
+
 void AFortTimeOfDayManager::OnRep_DirectOverrides()
 {
 	// Body not recovered: reflection-derived stub.

@@ -124,5 +124,11 @@ public:
 	UPROPERTY()
 	FOnOutpostDiscoveryFailure OnOutpostDiscoveryFailure;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsOutpostPermitted() const;
+
+	UFUNCTION(BlueprintCallable)
+	void ReadyUp();
+
 };
 

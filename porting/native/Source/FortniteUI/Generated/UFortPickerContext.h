@@ -84,5 +84,8 @@ public:
 	UPROPERTY(Transient)
 	TMap<UObject*, int32> ConsumableStackCount;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentWheelIndex() const;
+
 };
 

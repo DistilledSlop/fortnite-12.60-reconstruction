@@ -208,5 +208,41 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UFortAbilitySet> QuestAbilitySet;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AllowsPlayNowNavigation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ExpandsStormShield() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetAthenaObjectiveMustBeCompletedInASingleMatch() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetAthenaUpdateObjectiveOncePerMatch() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPartialObjectiveCompletionCount() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetWeight() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsDeprecated() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsHidden() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsIncludedInCategories() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTutorialQuest() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldAutoLaunch() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldDisplayOverallQuestInformation() const;
+
 };
 

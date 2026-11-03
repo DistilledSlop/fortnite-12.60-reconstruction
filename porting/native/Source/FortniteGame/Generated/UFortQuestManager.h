@@ -193,5 +193,10 @@ public:
 	UPROPERTY(Transient)
 	TSet<UFortFeatItemDefinition*> FeatsCompletedThisSession;
 
+private:
+	UFUNCTION(Exec)
+	void CheckObjectiveStatUsage();
+public:
+
 };
 

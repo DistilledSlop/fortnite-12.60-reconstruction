@@ -107,5 +107,1156 @@ public:
 	UPROPERTY(Transient)
 	TArray<UChildCheatManager*> ChildCheatManagers;
 
+protected:
+	UFUNCTION(Exec)
+	void AcceptEULA();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void AddKillFeedMessage();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void AllowRespawn();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void AthenaEndlessGame();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void Badass();
+public:
+
+	UFUNCTION(Exec)
+	void BattleLabForceSave();
+
+	UFUNCTION(Exec)
+	void BattleLabResetSave();
+
+protected:
+	UFUNCTION(Exec)
+	void BeautyMode();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void BotStartDogpile();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void BotStopDogpile();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void BounceContainer();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void BringDownWall();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void BuildFree();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void CaptureTeamToggleInput();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void CheatMountExitVan();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ClaimPortal();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ClearDebugEncounterTags();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ClearDebugSpawnAIGroupTags();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ClearEncounterSimulatedNumberOfPlayers();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ClearEncounterSpawnPointsCap();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ClearEncounterSpawnPointsCurve();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ClearFortVolume();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ClearMapFog();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ClearRespawnTimer();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void CommunityVotingRefreshVotingState();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void CountPlayerBuiltBuildingActors();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void CraftFree();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void CycleDebugAbilitySystem();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void CycleEncounterEQSQueryToDebug();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void CycleTheaterDisplayed();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DebugBuildingDetection();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DebugBuildingGroups();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DebugForceEnsure();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DebugHideLoadingScreen();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DebugHotSpots();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DebugKickPlayerDueToInactivity();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void DestroyAllPickups();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void DestroyAllScriptedPawns();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DisableAI();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DisableAllParticleComponents();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DiscardAILogging();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void DoAnalyticsAthenaPlayerEndPhaseReportOnServer();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DumpActiveGameplayEffects();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DumpInventory();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void DumpMatchAnalytics();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void EncounterCurrentUtilities();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void EncounterInitialUtilities();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void EncounterSpawnProbabilities();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void EncounterTopUtilityPercentages();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void EndLiveStreamingWindow();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void EventsRefreshPlayer();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void FakeDownHighlight();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void FakeKillHighlight();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void FakeXPEvents();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ForceExternalRichPresenceUpdate();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void FortVolumeAsyncTest();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void FortVolumeResetTest();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GenerateMockMatchReport();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GetAllReplStats();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GetPoiInfoForPlayer();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GetPoiVolumeData();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GetWTFRotations();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAllMelee();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAllPistols();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAllRifles();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAllShotguns();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAllWeapons();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveApolloLoadout();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAthenaAmmo();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAthenaConsumables();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAthenaCosmeticPassWeapons();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAthenaFullKit();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAthenaLoadout();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAthenaTraps();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveAthenaWeapons();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveGoodWeapons();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GPadV2_ToggleDebugDraw();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void HideGameplayCaptureUI();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void KillPlaneSquad();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void KillSkyCap();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListActiveEncounters();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListAIUtilities();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListAllFavoriteIslands();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListAmmo();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListAthenaEmotes();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListAthenaGadgets() const;
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListCheats();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListConsumables() const;
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListEmotes();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListGadgets() const;
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListPlayerIDs();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListSpawnGroups();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListSupplyDrops();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListTraps() const;
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ListWeapons() const;
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void LockDebugCamera();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void LogAllMinigameComponents();
+public:
+
+private:
+	UFUNCTION(Exec)
+	void LogSelectedActorCost();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void MakeAIsGod();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void MakeBuildingActorsGod();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void MassSuicide();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpCheat() const;
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpCheatAthena() const;
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpCheatCampaign() const;
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpGetCurrencyAmount();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpGetPrivacySettings();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpGetUnredeemedCodes();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpGetVersion();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpHostGetPlayers();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpLogout();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpRedeemPurchases();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpRefreshCatalog();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpRefreshProfile();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpTestGetClientFeatureKeys();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpTestVerifyProfileToken();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void OpenAllContainersAndWriteLootEconomy();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void PauseWarmup();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void PrintScriptedActionManagerState();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void PrintShotReport();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void PrintTileWorld();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void QueryHighlightCount();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ReadLevelSaveComponentsFromDisk();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void RefreshAllCalendars();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void RefreshCMS();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void RefreshTheaters();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void RefreshTournamentManager();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ReInitHUD();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ReleasePortal();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ReloadLevelStream();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ReloadUI();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ReloadUMG();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void RequestNextCarouselOffer();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ReRandomizeTiles();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ResetEncounterWave();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ResetForcedAthenaCosmeticItems();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ResetItemShopLanding();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ResetMaxAITracking();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ResetWall();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void RespawnPlayer();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void RespawnPlayerServer();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void RespawnPlayspacePlayer();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void RetestFailedBanhammerActions();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ServerStartProfiling();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ServerStopProfiling();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetRandomAircraftFlightPath();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetSafeZoneLocationToPlayer();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ShowActiveGameplayModifiers();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ShowAllMinimapIcons();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ShowGameplayCaptureUI();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ShowHighlightSummary();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ShowSolarisEditor();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SimulateLootDrops();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SkipAircraft();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SkipSafeZones();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SpawnFoodFightObjective();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void StartFillFloorMovement();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void StartGooseDrops();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void StartLavaMovement();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void StartMinigame();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void StealPlane();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void StopDummyDebugEncounter();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void StopGooseDrops();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void StopHighlights();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SwitchTeam();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void TeleportToMapMarker();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void TeleportToMe();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestAllDevPartyMembers();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestCancelLobby();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestCheckBansAtMatchStart();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestCloseClientConfirmationMessage();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestDisconnect();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestJoin();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestLeaveGame();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestRegenId();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestTournamentOver();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleAIAnim();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleAIDespawning();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleAIDirectorLogging();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleAISpawnCap();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleAISpawning();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleBuildingActorsTransparency();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleBuildingHighlights();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleContextMenus();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleDebugHUDObjectiveHeight();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleDrawRunVariationDebug();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleDrawTargetSelectionDebug();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleDrawTurnTransitionDebug();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleEncounterEQSDebug();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleEncounterModifierTags();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleExplorationBadgeView();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleExplorationLogging();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleFreezeAILOD();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleGameDifficultyHUD();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleHeroVisibility();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleIgnoreAll();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleInfiniteAmmo();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleInfiniteDurability();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleInfiniteStamina();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleIntensityHUD();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleInteractTrace();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleInWorldScoreNumbers();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleIsLobbyTimerPaused();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleItemIdsOnCards();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleLogCharacterCustomization();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleMaxAIHUD();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleMustUseJetpackToggle();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleNoCoolDown();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TogglePickupSpline();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleRBAN();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleShotLogging();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleSpawningEnabled();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleSpawnPointsHUD();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleTreeVisibility();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleUnlimitedAIHealth();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleUnlimitedHealth();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleUseNewItemCards();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleVoiceDebug();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleWalkOnWalls();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleWindDebugDeltaBoundsDisplay();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleWindDebugVolumeDisplay();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void TriggerEndOfMatch();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TriggerOutOfStaminaFeedback();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TutorialListAll();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TutorialListHidden();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TutorialListHighlights();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void UnforceAILODs();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void UnlockDebugCamera();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ViewStuck();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void WannaGun();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void WriteLevelSaveComponentsToDisk();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void WriteLootReport();
+public:
+
 };
 

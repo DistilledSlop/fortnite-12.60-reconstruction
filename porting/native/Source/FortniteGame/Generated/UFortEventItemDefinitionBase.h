@@ -30,5 +30,8 @@ public:
 	UPROPERTY()
 	FName DisallowedEventTag;
 
+	UFUNCTION(Exec)
+	void CreateCalendarPayload();
+
 };
 

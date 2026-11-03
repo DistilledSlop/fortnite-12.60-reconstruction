@@ -53,5 +53,8 @@ public:
 	UPROPERTY()
 	FGameplayTag AlwaysShowPropertyTag;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLocked() const;
+
 };
 

@@ -158,6 +158,9 @@ public:
 	UPROPERTY()
 	FVector MovementCancellableActionStartingLeashLocation;
 
+	UFUNCTION(BlueprintCallable)
+	void AllowLoadoutRefresh();
+
 	UFUNCTION(Client, Reliable)
 	void ClientAckLoadoutConfig(int32 LoadoutSeed);
 	void ClientAckLoadoutConfig_Implementation(int32 LoadoutSeed);
@@ -197,6 +200,9 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientVoiceChatSendJoinToken(bool bSuccess, const FString& Error, const FString& Token);
 	void ClientVoiceChatSendJoinToken_Implementation(bool bSuccess, const FString& Error, const FString& Token);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetVehicleSeatTransitionTargetIndex() const;
 
 	UFUNCTION()
 	void OnRep_VoiceChatChannel();

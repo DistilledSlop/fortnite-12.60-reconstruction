@@ -135,5 +135,8 @@ public:
 	UPROPERTY()
 	FString NodeId;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasChargeUp() const;
+
 };
 

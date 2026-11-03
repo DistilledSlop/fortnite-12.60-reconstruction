@@ -336,12 +336,23 @@ public:
 	void ClientFixupOverheatValue(float InOverheatValue);
 	void ClientFixupOverheatValue_Implementation(float InOverheatValue);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCurrentOverheatValue() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetShellReloadCounter() const;
+public:
+
 	UFUNCTION()
 	void OnRep_OverheatState(EFortWeaponOverheatState PreviousOverheatState);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetMuzzleTraceNearWall(bool bIsNearWall);
 	void ServerSetMuzzleTraceNearWall_Implementation(bool bIsNearWall);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldDisplayAmmoCounter() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

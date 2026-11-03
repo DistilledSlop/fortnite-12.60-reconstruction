@@ -97,6 +97,12 @@ public:
 	UPROPERTY(Transient)
 	UPostProcessComponent* PostProcessComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentWeatherEventIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCurrentWeatherIntensity() const;
+
 	UFUNCTION()
 	void OnRep_CurrentWeatherEventIntensity();
 

@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer GameplayTags;
 
+	UFUNCTION()
+	void HandleAllGameplayModifiersRegistered();
+
 };
 

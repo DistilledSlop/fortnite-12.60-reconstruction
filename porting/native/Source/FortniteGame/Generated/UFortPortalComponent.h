@@ -77,6 +77,11 @@ public:
 	UPROPERTY(Replicated, Transient)
 	FDateTime LinkCodeLockExpirationTime;
 
+private:
+	UFUNCTION()
+	void OnMinigameStarted();
+public:
+
 	UFUNCTION()
 	void OnRep_LinkCodeLockStatus();
 

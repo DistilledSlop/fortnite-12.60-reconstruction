@@ -153,11 +153,24 @@ public:
 	UPROPERTY()
 	FScalableFloat bRespawnAllowed;
 
+private:
+	UFUNCTION()
+	void OnAllTeleportComplete();
+public:
+
+	UFUNCTION(BlueprintCallable)
+	void OnEndOfRoundUIComplete();
+
 	UFUNCTION()
 	void OnRep_CurrentRound();
 
 	UFUNCTION()
 	void OnRep_ZincPhase();
+
+private:
+	UFUNCTION()
+	void PreRoundEndDelayComplete();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -2,6 +2,38 @@
 #include "AFortPlayerStartupController.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerStartupController::DropContainmentTimeToAllInCountdownTime()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+float AFortPlayerStartupController::GetContainmentTimeRemaining()
+{
+	// Original address: 0x142a88a20.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return ContainmentTimer;
+}
+
+int32 AFortPlayerStartupController::GetNumPlayersExpected()
+{
+	// Original address: 0x142a88bc0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return 1;
+}
+
+int32 AFortPlayerStartupController::GetNumPlayersStillWaitingFor()
+{
+	// Original address: 0x1411a8460.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return 0;
+}
+
 void AFortPlayerStartupController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

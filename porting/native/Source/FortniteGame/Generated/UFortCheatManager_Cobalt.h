@@ -14,5 +14,8 @@ class FORTNITEGAME_API UFortCheatManager_Cobalt : public UFortCheatManager_Coupl
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void EndCobaltRound();
+
 };
 

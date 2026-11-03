@@ -179,6 +179,9 @@ public:
 	UPROPERTY(Transient)
 	FTransform DynamicFoundationTransform;
 
+	UFUNCTION(BlueprintCallable)
+	void EditorOnlyClearAdditionalWorlds();
+
 	UFUNCTION()
 	void OnRep_DynamicFoundationRepData();
 

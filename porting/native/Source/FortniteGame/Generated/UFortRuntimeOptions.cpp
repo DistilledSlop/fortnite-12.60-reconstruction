@@ -4,6 +4,14 @@
 #include "Misc/CString.h"
 #include "Misc/EngineVersion.h"
 
+float UFortRuntimeOptions::GetDelayGiftButtonWhenMFANotEnabledSeconds() const
+{
+	// Original address: 0x142acdb90.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return DelayGiftButtonWhenMFANotEnabledSeconds;
+}
+
 FString UFortRuntimeOptions::GetGameVersion() const
 {
 	// Behaviour snippet: UFortRuntimeOptions::GetGameVersion (body only).
@@ -42,6 +50,30 @@ FString UFortRuntimeOptions::GetGameVersion() const
 	return Result;
 }
 
+int32 UFortRuntimeOptions::GetNumGameplayMessageChannels() const
+{
+	// Original address: 0x142ace150.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return NumGameplayMessageChannels;
+}
+
+float UFortRuntimeOptions::GetRebootChipExpirationTime() const
+{
+	// Original address: 0x142ace360.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return RebootChipExpirationTime;
+}
+
+float UFortRuntimeOptions::GetRebootDirectiveDisplayTime() const
+{
+	// Original address: 0x142ace380.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return RebootDirectiveDisplayTime;
+}
+
 UFortRuntimeOptions* UFortRuntimeOptions::GetRuntimeOptions()
 {
 	// Original address: 0x142ace3c0
@@ -49,5 +81,13 @@ UFortRuntimeOptions* UFortRuntimeOptions::GetRuntimeOptions()
 	// Decompile and disassembly: /tmp/fortnite-frontend-thunks and /tmp/fortnite-frontend-bodies.
 	// CONFIDENCE: HIGH
 	return ::GetMutableDefault<UFortRuntimeOptions>();
+}
+
+bool UFortRuntimeOptions::IsShippingBuild() const
+{
+	// Original address: 0x1412d9d60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return true;
 }
 

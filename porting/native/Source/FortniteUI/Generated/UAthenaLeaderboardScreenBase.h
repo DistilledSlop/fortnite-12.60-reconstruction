@@ -116,5 +116,10 @@ public:
 	UPROPERTY(Transient)
 	FLeaderboardFilter CurrentLeaderboardFilter;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanShowFriendsOnlyLeaderboard() const;
+public:
+
 };
 

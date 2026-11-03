@@ -54,6 +54,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_LatestServerTime)
 	float LatestServerTime;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetLatestServerTime() const;
+
 	UFUNCTION()
 	void OnRep_CurrentControlType();
 

@@ -612,6 +612,9 @@ public:
 	void ForceIntoStructuralGridDuringRuntime();
 	void ForceIntoStructuralGridDuringRuntime_Implementation();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsUnderConstruction() const;
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void MulticastPlayFullHealthEffects();
 	void MulticastPlayFullHealthEffects_Implementation();

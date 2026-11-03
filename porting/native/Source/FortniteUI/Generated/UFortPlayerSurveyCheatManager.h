@@ -14,5 +14,8 @@ class FORTNITEUI_API UFortPlayerSurveyCheatManager : public UChildCheatManager
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec)
+	void ListCMSPlayerSurveys();
+
 };
 

@@ -14,5 +14,15 @@ class FORTNITEGAME_API UFortCheatManager_Infiltration : public UFortCheatManager
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ForceCaptureIntel();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ForceDefendIntel();
+public:
+
 };
 

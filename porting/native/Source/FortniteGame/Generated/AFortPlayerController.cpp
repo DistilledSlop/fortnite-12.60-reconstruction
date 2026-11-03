@@ -257,6 +257,14 @@ void AFortPlayerController::ClientUpdateServerOnPlayerChangedBuildMode_Implement
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerController::DumpHomebaseRatingInfo() const
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortPlayerController::FortClientPlaySound_Implementation(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier)
 {
 	// Body not recovered: reflection-derived stub.
@@ -285,6 +293,14 @@ void AFortPlayerController::HandleViewTargetInventoryLocalUpdate()
 void AFortPlayerController::HandleWorldInventoryLocalUpdate()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerController::HasLockOnTarget() const
+{
+	// Original address: 0x140a02a40.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return false;
 }
 
 void AFortPlayerController::MulticastClearWeakSpotData_Implementation(ABuildingSMActor* ParentBuilding)
@@ -345,6 +361,14 @@ void AFortPlayerController::OnRep_UpdatedObjectiveStats()
 void AFortPlayerController::OnRep_UpdatedUnsavedPrimaryMissionProgress()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::PrintEventInfo()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerController::ProcessMcpProfileUpdate_Implementation(const FProfileUpdateSingle& Update)
@@ -740,6 +764,14 @@ void AFortPlayerController::ServerUpdatePlayerData_Implementation(const TArray<u
 void AFortPlayerController::ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::ToggleClientBot()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerController::TogglePersonalVehicle_Implementation(bool bOn)

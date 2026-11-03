@@ -14,5 +14,11 @@ class FORTNITEGAME_API UFortCheatManager_Wax : public UFortCheatManager_Coupled
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void DisableWaxRespawningLogic();
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void EnableWaxRespawningLogic();
+
 };
 

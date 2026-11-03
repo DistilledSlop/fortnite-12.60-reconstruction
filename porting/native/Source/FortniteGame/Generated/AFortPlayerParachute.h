@@ -117,6 +117,9 @@ public:
 	UPROPERTY()
 	uint8 bUsesDayPhaseChange : 1;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsGliderFullyDeployedAccordingToAnim() const;
+
 	UFUNCTION()
 	void OnRep_ParachuteItemDef();
 

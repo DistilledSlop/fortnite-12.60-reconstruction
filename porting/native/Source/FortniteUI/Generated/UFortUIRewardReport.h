@@ -24,5 +24,8 @@ public:
 	UPROPERTY(Transient)
 	int32 RewardDisplayLevel;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRewardedChestIndex() const;
+
 };
 

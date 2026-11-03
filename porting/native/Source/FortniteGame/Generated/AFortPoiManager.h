@@ -88,11 +88,15 @@ public:
 	UPROPERTY()
 	TArray<FFortPoiVolumeGridCell> FortPoiGridCellsLargeVolume;
 
+private:
 	UFUNCTION()
 	void OnRep_FortPoiGridInfo();
+public:
 
+private:
 	UFUNCTION()
 	void OnRep_PoiGridForDebugDisplay();
+public:
 
 	UFUNCTION()
 	void OnRep_PoiTagContainerTable();

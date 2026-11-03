@@ -73,5 +73,8 @@ public:
 	UPROPERTY()
 	FGuid LayoutGUID;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldUseTierAsRandomSeed() const;
+
 };
 

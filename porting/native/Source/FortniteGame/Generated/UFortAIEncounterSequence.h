@@ -69,5 +69,8 @@ public:
 	UPROPERTY()
 	FFortEncounterSettings EncounterSettings;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	int32 GetEncounterIndexInSequence() const;
+
 };
 

@@ -1405,6 +1405,9 @@ public:
 	void ClientUpdateServerOnPlayerChangedBuildMode();
 	void ClientUpdateServerOnPlayerChangedBuildMode_Implementation();
 
+	UFUNCTION(Exec)
+	void DumpHomebaseRatingInfo() const;
+
 	UFUNCTION(Client, Unreliable)
 	void FortClientPlaySound(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier);
 	void FortClientPlaySound_Implementation(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier);
@@ -1425,6 +1428,9 @@ public:
 
 	UFUNCTION()
 	void HandleWorldInventoryLocalUpdate();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasLockOnTarget() const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastClearWeakSpotData(ABuildingSMActor* ParentBuilding);
@@ -1462,6 +1468,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_UpdatedUnsavedPrimaryMissionProgress();
+
+	UFUNCTION(Exec)
+	void PrintEventInfo();
 
 	UFUNCTION(Client, Reliable)
 	void ProcessMcpProfileUpdate(const FProfileUpdateSingle& Update);
@@ -1778,6 +1787,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerUpgradeBuildingActor(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 	void ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
+
+	UFUNCTION(Exec)
+	void ToggleClientBot();
 
 	UFUNCTION(Server, Reliable)
 	void TogglePersonalVehicle(bool bOn);

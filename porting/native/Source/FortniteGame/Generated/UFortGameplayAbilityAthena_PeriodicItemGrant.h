@@ -26,5 +26,11 @@ public:
 	UPROPERTY()
 	AFortPlayerController* OwnerControllerCachedValue;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void StartItemAwardTimers();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void StopItemAwardTimers();
+
 };
 

@@ -2,6 +2,14 @@
 #include "AFortClientAnnouncement.h"
 #include "Net/UnrealNetwork.h"
 
+int32 AFortClientAnnouncement::GetPriority()
+{
+	// Original address: 0x142872250.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return Priority;
+}
+
 void AFortClientAnnouncement::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

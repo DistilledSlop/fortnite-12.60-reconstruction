@@ -28,5 +28,8 @@ public:
 	UPROPERTY()
 	float ScreenEdgePaddingSizePercent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMaxOffscreenTreshold() const;
+
 };
 

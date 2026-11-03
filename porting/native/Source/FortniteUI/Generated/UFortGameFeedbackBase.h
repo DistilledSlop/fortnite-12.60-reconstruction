@@ -73,5 +73,15 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Cancel;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void CancelSignIn();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void GetBugComponents();
+public:
+
 };
 

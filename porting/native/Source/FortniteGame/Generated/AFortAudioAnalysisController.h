@@ -14,5 +14,8 @@ class FORTNITEGAME_API AFortAudioAnalysisController : public AActor
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	void Update();
+
 };
 

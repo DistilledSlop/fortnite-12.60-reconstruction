@@ -910,8 +910,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CanRespawnOnStarterIsland() const;
 
-	UFUNCTION(BlueprintCallable)
+protected:
+	UFUNCTION()
 	void ConditionalStopAutoPerfCapture();
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortAthenaAircraft* GetAircraft(int32 AircraftIndex) const;
@@ -1079,11 +1081,13 @@ public:
 	void RunPerfMemCheatScript_Client_Replicated(bool bStartStatFiles);
 	void RunPerfMemCheatScript_Client_Replicated_Implementation(bool bStartStatFiles);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetFocalPointActor(AActor* InFocalPointActor, FVector InFocalPointOffset, float InFocalPointFOV, float InDuration);
 
-	UFUNCTION(BlueprintCallable)
+protected:
+	UFUNCTION()
 	void StopAutoPerfCaptureTimer();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

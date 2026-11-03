@@ -679,5 +679,11 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<AFortTimeOfDayManager> DefaultCreativeTOD;
 
+	UFUNCTION(Exec)
+	void CreateCalendarPayload_Enabling();
+
+	UFUNCTION(Exec)
+	void CreateCalendarPayload_RegionalOverride();
+
 };
 

@@ -77,5 +77,10 @@ public:
 	UPROPERTY(Config)
 	TArray<int32> DisableSharedMissionListIndices;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void UpdatePIEPlayers();
+public:
+
 };
 

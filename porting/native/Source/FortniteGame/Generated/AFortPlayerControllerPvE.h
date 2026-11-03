@@ -64,6 +64,9 @@ public:
 	void ClientUpdateQuickBarRecordsCache(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
 	void ClientUpdateQuickBarRecordsCache_Implementation(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void RefreshHarvestingWeapon();
+
 	UFUNCTION(Server, Reliable)
 	void ServerTriggerSetupTeleportCameraEvent();
 	void ServerTriggerSetupTeleportCameraEvent_Implementation();

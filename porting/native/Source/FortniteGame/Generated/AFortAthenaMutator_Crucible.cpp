@@ -2,6 +2,14 @@
 #include "AFortAthenaMutator_Crucible.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortAthenaMutator_Crucible::GetLatestServerTime() const
+{
+	// Original address: 0x1427fa580.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return LatestServerTime;
+}
+
 void AFortAthenaMutator_Crucible::OnRep_CurrentControlType()
 {
 	// Body not recovered: reflection-derived stub.

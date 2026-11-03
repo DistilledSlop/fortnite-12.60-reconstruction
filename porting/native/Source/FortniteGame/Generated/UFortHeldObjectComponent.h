@@ -150,6 +150,9 @@ public:
 	UPROPERTY(Transient)
 	AFortDecoPreview* PlacementPreviewActor;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void DropHeldObject();
+
 	UFUNCTION()
 	void OnRep_bCollisionBlockedByPawns();
 
@@ -158,6 +161,17 @@ public:
 
 	UFUNCTION()
 	void OnRep_UsePreviewMaterial();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void OnThrowComplete();
+
+protected:
+	UFUNCTION()
+	void OnWeaponUnequipped();
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void PlaceHeldObject();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -49,5 +49,15 @@ public:
 	UPROPERTY()
 	int32 PlayDuringGameEnd;
 
+protected:
+	UFUNCTION()
+	void Play();
+public:
+
+protected:
+	UFUNCTION()
+	void Stop();
+public:
+
 };
 

@@ -74,6 +74,9 @@ public:
 	UPROPERTY(Replicated)
 	TArray<AFortPlayerController*> RecipientControllers;
 
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	int32 GetPriority();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

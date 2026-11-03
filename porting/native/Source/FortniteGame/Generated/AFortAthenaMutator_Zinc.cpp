@@ -2,6 +2,22 @@
 #include "AFortAthenaMutator_Zinc.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortAthenaMutator_Zinc::OnAllTeleportComplete()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AFortAthenaMutator_Zinc::OnEndOfRoundUIComplete()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortAthenaMutator_Zinc::OnRep_CurrentRound()
 {
 	// Body not recovered: reflection-derived stub.
@@ -10,6 +26,14 @@ void AFortAthenaMutator_Zinc::OnRep_CurrentRound()
 void AFortAthenaMutator_Zinc::OnRep_ZincPhase()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortAthenaMutator_Zinc::PreRoundEndDelayComplete()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortAthenaMutator_Zinc::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

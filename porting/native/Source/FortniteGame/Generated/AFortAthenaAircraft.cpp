@@ -2,6 +2,22 @@
 #include "AFortAthenaAircraft.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortAthenaAircraft::GetDropEndTime() const
+{
+	// Original address: 0x1427cfc50.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return DropEndTime;
+}
+
+float AFortAthenaAircraft::GetDropStartTime() const
+{
+	// Original address: 0x1427cfc80.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return DropStartTime;
+}
+
 void AFortAthenaAircraft::OnRep_ReplicatedFlightTimestamp()
 {
 	// Original address: 0x1427cfe60; native body 0x1418ce280.

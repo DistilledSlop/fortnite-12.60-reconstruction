@@ -32,5 +32,13 @@ public:
 	UPROPERTY()
 	TMap<AFortPlayerController*, FCaptureHandle> InventoryChangedHandlesMap;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void UnbindAllControllersToInventoryChangedEvent();
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void UnregisterAllRegisteredPlayerInsideArea();
+public:
+
 };
 

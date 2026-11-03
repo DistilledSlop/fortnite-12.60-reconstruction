@@ -2,6 +2,14 @@
 #include "UCaptureComponent.h"
 #include "Net/UnrealNetwork.h"
 
+uint8 UCaptureComponent::GetCaptureStateOwner() const
+{
+	// Original address: 0x142765f40.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return StateOwner;
+}
+
 void UCaptureComponent::OnRep_CaptureProgress()
 {
 	// Body not recovered: reflection-derived stub.

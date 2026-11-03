@@ -145,6 +145,14 @@ bool AFortPlayerPawn::GetIsSlopeSliding() const
 	return bIsSlopeSliding;
 }
 
+bool AFortPlayerPawn::GetPendingSkydiveLaunch() const
+{
+	// Original address: 0x142a7c5f0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return bPendingSkydiveLaunch;
+}
+
 ABuildingGameplayActorPlayerPropAttachment* AFortPlayerPawn::GetPossessedProp() const
 {
 	// Behaviour snippet: AFortPlayerPawn::GetPossessedProp (body only; spliced into the generated member function).

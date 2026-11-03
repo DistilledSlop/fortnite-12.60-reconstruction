@@ -84,5 +84,8 @@ public:
 	UPROPERTY()
 	UMediaSource* LocalFilePlaybackAsset;
 
+	UFUNCTION(BlueprintCallable)
+	bool IsScreenRecordingInProgress();
+
 };
 

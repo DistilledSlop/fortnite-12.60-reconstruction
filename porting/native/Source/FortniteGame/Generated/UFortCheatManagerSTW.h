@@ -14,5 +14,65 @@ class FORTNITEGAME_API UFortCheatManagerSTW : public UChildCheatManager
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec)
+	void ClearKeepSave();
+
+	UFUNCTION(Exec)
+	void DevSkipTutorial();
+
+	UFUNCTION(Exec)
+	void EvolveHero();
+
+	UFUNCTION(Exec)
+	void GetWorldDifficulty();
+
+	UFUNCTION(Exec)
+	void GetWorldLevel();
+
+	UFUNCTION(Exec)
+	void GiveCheatInventory();
+
+	UFUNCTION(Exec)
+	void McpAddTestStatsMock();
+
+	UFUNCTION(Exec)
+	void McpClaimAllAvailableCollectionBookRewards();
+
+	UFUNCTION(Exec)
+	void McpCompleteHexMission();
+
+	UFUNCTION(Exec)
+	void McpGetCachedPersistence();
+
+	UFUNCTION(Exec)
+	void McpGetHexMission();
+
+	UFUNCTION(Exec)
+	void McpGetPersonnelXP();
+
+	UFUNCTION(Exec)
+	void McpGetSchematicXP();
+
+	UFUNCTION(Exec)
+	void McpHostGetAllPlayerCachedPersistence();
+
+	UFUNCTION(Exec)
+	void McpRemoveAllTestProfileMocks();
+
+	UFUNCTION(Exec)
+	void McpResetPersistence();
+
+	UFUNCTION(Exec)
+	void TestOutpostUI();
+
+	UFUNCTION(Exec)
+	void ToggleCharacterBackpack();
+
+	UFUNCTION(Exec)
+	void ToggleCharacterHeadAccessories();
+
+	UFUNCTION(Exec)
+	void UnlockAllZones();
+
 };
 

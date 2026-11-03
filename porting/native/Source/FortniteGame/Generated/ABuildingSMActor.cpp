@@ -7,6 +7,14 @@ void ABuildingSMActor::ForceIntoStructuralGridDuringRuntime_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool ABuildingSMActor::IsUnderConstruction() const
+{
+	// Original address: 0x142756750.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return bUnderConstruction;
+}
+
 void ABuildingSMActor::MulticastPlayFullHealthEffects_Implementation()
 {
 	// Body not recovered: reflection-derived stub.

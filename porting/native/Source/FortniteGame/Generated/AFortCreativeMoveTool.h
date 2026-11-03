@@ -390,6 +390,12 @@ public:
 	void ClientStopInteracting();
 	void ClientStopInteracting_Implementation();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetGridSnapIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetRotationAxisIndex() const;
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastForceMoveActor(AActor* ActorToMove, const FTransform& NewTransform);
 	void MulticastForceMoveActor_Implementation(AActor* ActorToMove, const FTransform& NewTransform);

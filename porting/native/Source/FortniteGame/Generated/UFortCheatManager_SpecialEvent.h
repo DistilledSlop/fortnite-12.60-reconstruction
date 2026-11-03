@@ -14,5 +14,45 @@ class FORTNITEGAME_API UFortCheatManager_SpecialEvent : public UFortCheatManager
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void AutobalanceTargetScore();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void CloseParachutes();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void PlacePlayersInAircraft();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ResetMatchTimeToPrevious();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ResetSpecialEventAircraft();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ResetWinCondition();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ResetWinConditionProgressToZero();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ResumeWinCondition();
+public:
+
 };
 

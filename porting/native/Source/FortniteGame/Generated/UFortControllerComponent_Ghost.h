@@ -55,5 +55,16 @@ public:
 	UPROPERTY()
 	TSubclassOf<UGameplayEffect> DBNOToGhostReviveGameplayEffect;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void EndGhostMode();
+
+protected:
+	UFUNCTION()
+	void ReviveAndBecomeGhosted();
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void StartGhostMode();
+
 };
 

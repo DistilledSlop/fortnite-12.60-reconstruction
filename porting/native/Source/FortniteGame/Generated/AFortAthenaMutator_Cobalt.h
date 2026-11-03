@@ -372,6 +372,16 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bIsFinishedDisplayingRoundEndUI)
 	bool bIsFinishedDisplayingRoundEndUI;
 
+private:
+	UFUNCTION()
+	void ClientCobaltRoundTimerComplete();
+public:
+
+private:
+	UFUNCTION()
+	void HandleTeleportComplete();
+public:
+
 	UFUNCTION()
 	void OnRep_ActiveRound();
 

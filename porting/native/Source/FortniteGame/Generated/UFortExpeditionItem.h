@@ -56,5 +56,8 @@ public:
 	UPROPERTY()
 	float expedition_success_chance;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetExpeditionSuccessChance() const;
+
 };
 

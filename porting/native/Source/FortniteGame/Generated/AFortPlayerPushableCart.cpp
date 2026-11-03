@@ -2,6 +2,30 @@
 #include "AFortPlayerPushableCart.h"
 #include "Net/UnrealNetwork.h"
 
+uint8 AFortPlayerPushableCart::GetLastReachedCheckPointIndex() const
+{
+	// Original address: 0x142a88b40.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return CurrentCheckPoint;
+}
+
+uint8 AFortPlayerPushableCart::GetTotalActiveDefenders() const
+{
+	// Original address: 0x142a88ff0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return TotalActiveDefenders;
+}
+
+uint8 AFortPlayerPushableCart::GetTotalActivePushers() const
+{
+	// Original address: 0x142a89010.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return TotalActivePushers;
+}
+
 void AFortPlayerPushableCart::OnRep_bIsNearCheckpoint()
 {
 	// Body not recovered: reflection-derived stub.

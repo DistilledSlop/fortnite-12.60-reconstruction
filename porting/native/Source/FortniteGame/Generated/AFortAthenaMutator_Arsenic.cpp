@@ -2,6 +2,30 @@
 #include "AFortAthenaMutator_Arsenic.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortAthenaMutator_Arsenic::IsGrowlEnabled() const
+{
+	// Original address: 0x1412d9d60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return true;
+}
+
+bool AFortAthenaMutator_Arsenic::IsHealOverTimeEnabled() const
+{
+	// Original address: 0x1412d9d60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return true;
+}
+
+bool AFortAthenaMutator_Arsenic::IsHeartbeatEnabled() const
+{
+	// Original address: 0x1412d9d60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return true;
+}
+
 void AFortAthenaMutator_Arsenic::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

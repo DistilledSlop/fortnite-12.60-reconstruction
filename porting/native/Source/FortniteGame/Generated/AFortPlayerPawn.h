@@ -1369,10 +1369,10 @@ public:
 	void ClientResetAbilitySystemComponent();
 	void ClientResetAbilitySystemComponent_Implementation();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(Exec)
 	void DebugDestroyVehicle();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	void EndGhostModeExit();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -1395,6 +1395,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsSlopeSliding() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetPendingSkydiveLaunch() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	ABuildingGameplayActorPlayerPropAttachment* GetPossessedProp() const;
@@ -1432,8 +1435,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsParachuteForcedOpen() const;
 
+protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsParachuteLockedOpen() const;
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsParachuteOpen() const;
@@ -1703,10 +1708,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetPreviousVelocity(FVector OldVelocity);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(Exec)
 	void ToggleBodyType();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(Exec)
 	void ToggleGender();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

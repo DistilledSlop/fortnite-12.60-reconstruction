@@ -20,6 +20,9 @@ public:
 	UPROPERTY()
 	bool bConsumePointerInput;
 
+	UFUNCTION(BlueprintCallable)
+	void AddStoreCheatMenu();
+
 public:
     virtual void NativeConstruct() override;
     virtual void NativeDestruct() override;

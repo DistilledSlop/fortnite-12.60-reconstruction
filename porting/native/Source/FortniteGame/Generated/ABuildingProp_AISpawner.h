@@ -51,5 +51,8 @@ public:
 	UPROPERTY()
 	float DespawnRangeOverride;
 
+	UFUNCTION(BlueprintCallable)
+	void SpawnRift();
+
 };
 

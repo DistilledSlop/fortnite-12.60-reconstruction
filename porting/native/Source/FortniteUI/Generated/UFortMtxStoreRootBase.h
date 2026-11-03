@@ -42,5 +42,8 @@ public:
 	UPROPERTY()
 	UWidget* Container_AvailableAmount;
 
+	UFUNCTION()
+	void PushStoreSelection();
+
 };
 

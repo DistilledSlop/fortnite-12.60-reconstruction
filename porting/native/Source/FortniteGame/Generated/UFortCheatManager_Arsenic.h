@@ -14,5 +14,23 @@ class FORTNITEGAME_API UFortCheatManager_Arsenic : public UFortCheatManager_Coup
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleDBNOEnabled();
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleGrowlEnabled();
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleHealOverTimeEnabled();
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleHeartbeatEnabled();
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleInfectedModifiedDamageEnabled();
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleWinConditionEnabled();
+
 };
 

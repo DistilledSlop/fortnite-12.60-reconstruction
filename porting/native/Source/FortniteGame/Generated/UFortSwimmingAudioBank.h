@@ -36,5 +36,11 @@ public:
 	UPROPERTY()
 	float RequiredImmersionDepth;
 
+	UFUNCTION()
+	float GetRequiredImmersionDepth();
+
+	UFUNCTION()
+	float GetTeammateVolumeMultiplier();
+
 };
 

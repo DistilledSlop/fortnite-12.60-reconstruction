@@ -179,6 +179,9 @@ public:
 	UFUNCTION()
 	void OnRep_MapData();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ServerClearAllFog();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -36,5 +36,10 @@ public:
 	UPROPERTY(Transient)
 	UFortPlayerSurveyDispatcher* PlayerSurveyDispatcher;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	bool AttemptToOpenBattlePassTabForNewSeason();
+public:
+
 };
 

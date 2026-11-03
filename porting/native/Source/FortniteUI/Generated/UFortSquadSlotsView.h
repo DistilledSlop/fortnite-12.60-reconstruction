@@ -71,5 +71,8 @@ public:
 	UPROPERTY()
 	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetIndexOfSelectedSquadSlot() const;
+
 };
 

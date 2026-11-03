@@ -52,5 +52,20 @@ public:
 	UPROPERTY()
 	UCommonWidgetSwitcher* SettingTabSwitcher;
 
+private:
+	UFUNCTION(BlueprintCallable)
+	bool ShowControllerOptions();
+public:
+
+private:
+	UFUNCTION(BlueprintCallable)
+	bool ShowInputOptions();
+public:
+
+private:
+	UFUNCTION(BlueprintCallable)
+	bool ShowTouchAndMotionOptions();
+public:
+
 };
 

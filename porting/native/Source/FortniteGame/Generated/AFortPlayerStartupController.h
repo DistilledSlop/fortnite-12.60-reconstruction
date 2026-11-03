@@ -67,6 +67,18 @@ public:
 	UPROPERTY()
 	FPlayerStartupControllerDestroyed OnResetContainmentTimer;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void DropContainmentTimeToAllInCountdownTime();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	float GetContainmentTimeRemaining();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	int32 GetNumPlayersExpected();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	int32 GetNumPlayersStillWaitingFor();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

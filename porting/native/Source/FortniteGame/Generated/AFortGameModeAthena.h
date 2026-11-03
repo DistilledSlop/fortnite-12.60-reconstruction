@@ -652,6 +652,14 @@ public:
 	UPROPERTY(Transient)
 	TArray<TSoftObjectPtr<UDataTable>> GameFeatureLootPackageData;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void AddContentKeysToGameState();
+
+protected:
+	UFUNCTION()
+	void FireServerPerformanceEvent();
+public:
+
 protected:
 	UFUNCTION()
 	void OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAthenaAircraft);

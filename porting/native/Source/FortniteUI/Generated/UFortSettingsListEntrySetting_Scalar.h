@@ -36,5 +36,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_SettingValue;
 
+protected:
+	UFUNCTION()
+	void HandleSliderCaptureEnded();
+public:
+
 };
 

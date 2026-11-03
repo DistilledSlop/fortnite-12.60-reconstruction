@@ -233,5 +233,8 @@ public:
 	UPROPERTY()
 	uint8 bUpdatesFloorWhenNotInFullSimulationOnlyOnNetUpdate : 1;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetFallingStartedZ() const;
+
 };
 

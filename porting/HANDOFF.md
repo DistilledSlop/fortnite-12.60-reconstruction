@@ -1,5 +1,52 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Current gameplay bulk checkpoint (2026-11-02)
+
+User reverted the temporary server-only pivot: continue the full client/server
+reconstruction. Claude works on UI; this primary now owns gameplay integration,
+Native promotion, staging and coherent UE builds, explicitly authorized by user.
+Do not hold finished gameplay back for an owner. Preserve shared UI edits.
+Primary orchestrates/reviews and implements when useful; bounded rotating workers,
+Luna medium read-only / Terra medium-high regular / Sol medium complex,
+`fork_turns: none`, maximum three workers. Prefer bulk typed Ghidra-C rough passes,
+neutral names and reusable blocker notes; refine through actual integration needs.
+Do not count unresolved drafts. Carry forward unaffected passing checks; batch
+builds/checks rather than repeating them per method.
+
+Original Athena mode ancestry/interfaces/properties and ten recovered constructor
+class-default writes are now integrated. Original protected drop-zone callback
+and aircraft flight timestamp RepNotify are integrated. Previous baseline receipts
+`generated/gameplay-native-integration-1/`: client.final PASS147.204s, server
+PASS259.544s; default/Athena joins PASS. Apollo joined but failed an incorrect log
+line count (39 client notifications for27 actors); the current diagnostic logs
+actor identities and smoke_join still requires exactly27 unique loaded actors.
+Full original mode constructor, aircraft tick/cosmetic/event ownership and asset
+GC tracker lifecycle remain incomplete; no feature credit for these drafts.
+
+Current bulk:367 exact shared-empty original bodies plus215 scalar getters or
+constant returns,582 new bodies total. These are body coverage, not582 gameplay
+features; most empty bodies are shipped-disabled cheat commands. Canonical
+manifest now875 ported entries =851 functions +24 member fields. Generator
+preserves original callable/access/Exec/authority/cosmetic flags. Checker resolves
+headers across Native modules without missing-header waivers. Generation875/0
+rejects and full generated splice check875/0 failures PASS; generator self-test
+151 PASS. Promotion restored12,521 unchanged file mtimes;274 files changed.
+Current client build PASS302.0s; server build RUNNING: session16996, receipts under
+`generated/gameplay-bulk-integration-1/{promotion.command.json,promotion.result.json,
+splice-check.log,client.build.log,server.build.log}`. Do not claim server/runtime validation until its build receipt and affected joins pass.
+
+Bulk automation sources:behavior/bulk_empty_exec_runtime and bulk_scalar_runtime;
+original image hash and complete accepted machine patterns are checked. Scratch
+combined source/reports `/tmp/gameplay-bulk-integration/`; scalar reports
+`/tmp/gameplay-bulk-scalar/`, `/tmp/gameplay-bulk-scalar-2/` (historic proposal counts
+131+84); self-contained replay `/tmp/gameplay-bulk-scalar-replay/` exactly
+reproduced all215 canonical entries without a body mismatch. Unintegrated broad lifts in aircraft_rough_runtime and
+asset_manager_rough_runtime; asset_gc_tracker_runtime documents exact unresolved
+five-container/delegate lifecycle. Batch enriched Ghidra C for15 callees took
+11.9s under generated/callee_probe/gameplay_rough_pass_1; do not rebuild a perfect
+bottom-up graph one method at a time. All four product milestones remain open.
+
+
 ## Gameplay checkpoint (2026-11-02): action queries and original-mode migration
 
 Progress: three closed bodies added (ASC HasNativeAction, pawn forwarding virtual,

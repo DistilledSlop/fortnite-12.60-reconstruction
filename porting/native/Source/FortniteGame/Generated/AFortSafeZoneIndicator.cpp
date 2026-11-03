@@ -2,6 +2,14 @@
 #include "AFortSafeZoneIndicator.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortSafeZoneIndicator::GetSafeZoneRadius() const
+{
+	// Original address: 0x142ad2500.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return Radius;
+}
+
 void AFortSafeZoneIndicator::OnRep_NumActiveMegaStormCircles(int32 PrevNumActiveMegaStormCircles)
 {
 	// Body not recovered: reflection-derived stub.

@@ -42,5 +42,8 @@ public:
 	UPROPERTY()
 	TArray<AFortPlayerStart*> UsedSpawnSlots;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumOfRounds() const;
+
 };
 

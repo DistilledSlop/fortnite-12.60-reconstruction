@@ -60,5 +60,8 @@ public:
 	UPROPERTY()
 	int32 DefaultRestockAmmoAmount;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRoundIndex() const;
+
 };
 

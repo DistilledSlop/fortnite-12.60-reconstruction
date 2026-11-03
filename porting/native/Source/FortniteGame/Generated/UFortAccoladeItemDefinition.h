@@ -70,5 +70,8 @@ public:
 	UPROPERTY()
 	TArray<FAccoladeSecondaryXpType> SecondaryXpValues;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAccoladeLevel() const;
+
 };
 

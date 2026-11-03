@@ -346,6 +346,18 @@ public:
 	UPROPERTY()
 	bool bUseMaxBackpackSize;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGameDifficulty() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumSurvivorsDead() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumSurvivorsRescued() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumSurvivorsSpawned() const;
+
 	UFUNCTION(NetMulticast, Reliable)
 	void NotifyEndFailedGameplayVoteLockout(const EFortVoteType& VoteType);
 	void NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType);

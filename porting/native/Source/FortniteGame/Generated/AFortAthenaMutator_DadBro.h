@@ -143,8 +143,10 @@ public:
 	void DoDebugSphereForImpulse();
 	void DoDebugSphereForImpulse_Implementation();
 
+private:
 	UFUNCTION()
 	void OnRep_DadBroCodeState();
+public:
 
 	UFUNCTION()
 	void OnRep_DadBroPawn();

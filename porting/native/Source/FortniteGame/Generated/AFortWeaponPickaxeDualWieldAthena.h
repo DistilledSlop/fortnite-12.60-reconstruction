@@ -89,5 +89,8 @@ public:
 	UPROPERTY()
 	TArray<TSoftObjectPtr<UNiagaraSystem>> OffhandImpactNiagaraPhysicalSurfaceEffectAssets;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAnimTrailsOffhandWidth() const;
+
 };
 

@@ -71,8 +71,10 @@ if [[ "$map" == *'?game=/Script/FortniteGame.FortGameModeAthena'* ]]; then
                 printf 'Apollo background placements did not spawn. See %s\n' "$server_log" >&2
                 exit 1
             fi
-            server_background=$( { rg -a 'Apollo background mesh .* ready: authority=1 mesh=yes' "$server_log" || true; } | wc -l)
-            client_background=$( { rg -a 'Apollo background mesh .* ready: authority=0 mesh=yes' "$client_log" || true; } | wc -l)
+            # MeshId and MaterialPackage share a rep-notify, so one actor may report twice.
+            # Require exactly 27 loaded actor identities, not 27 notification messages.
+            server_background=$( { rg -a 'Apollo background mesh .* ready: authority=1 mesh=yes' "$server_log" || true; } | sed -n 's/.* actor=\([^ ]*\).*/\1/p' | sort -u | wc -l)
+            client_background=$( { rg -a 'Apollo background mesh .* ready: authority=0 mesh=yes' "$client_log" || true; } | sed -n 's/.* actor=\([^ ]*\).*/\1/p' | sort -u | wc -l)
             if [[ $server_background -ne 27 || $client_background -ne 27 ]]; then
                 printf 'Apollo background mesh count differs: server=%s client=%s (expected 27). See %s and %s\n' \
                     "$server_background" "$client_background" "$server_log" "$client_log" >&2

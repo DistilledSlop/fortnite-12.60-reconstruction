@@ -209,6 +209,9 @@ public:
 	UPROPERTY()
 	UBulletWhipTrackerComponentBase* BulletWhipTrackerComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGravityScale() const;
+
 	UFUNCTION()
 	void OnRep_CurrentSkyTube();
 

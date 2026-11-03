@@ -233,6 +233,9 @@ public:
 	UFUNCTION()
 	void BounceContainer();
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetLootTier();
+
 	UFUNCTION()
 	void OnRep_bAlreadySearched();
 

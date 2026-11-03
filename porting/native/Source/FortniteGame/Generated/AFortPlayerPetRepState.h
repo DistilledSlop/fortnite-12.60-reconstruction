@@ -33,8 +33,10 @@ public:
 	UFUNCTION()
 	void OnRep_LookAtTarget();
 
+protected:
 	UFUNCTION()
 	void OnRep_PetItemDef();
+public:
 
 	UFUNCTION()
 	void OnRep_StimuliTag();

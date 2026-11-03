@@ -3,6 +3,22 @@
 #include "AFortAthenaAircraft.h"
 #include "AFortGameStateAthena.h"
 
+void AFortGameModeAthena::AddContentKeysToGameState()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AFortGameModeAthena::FireServerPerformanceEvent()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortGameModeAthena::OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAthenaAircraft)
 {
 	// Original address: 0x1428f0440; native body 0x1419520f0.

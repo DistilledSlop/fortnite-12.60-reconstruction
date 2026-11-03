@@ -14,5 +14,32 @@ class FORTNITEGAME_API UFortCheatManagerMissions : public UChildCheatManager
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec)
+	void DumpAllActiveMissions();
+
+	UFUNCTION(Exec)
+	void DumpAllActorsWithAssetTags();
+
+	UFUNCTION(Exec)
+	void EndDeimosSpawning();
+
+	UFUNCTION(Exec)
+	void ListMissionGenerators();
+
+	UFUNCTION(Exec)
+	void ListMissions();
+
+	UFUNCTION(Exec)
+	void MissionForcePrimaryFailure();
+
+	UFUNCTION(Exec)
+	void RegenerateZoneMissions();
+
+	UFUNCTION(Exec)
+	void TeleportToMissionActor();
+
+	UFUNCTION(Exec)
+	void ToggleSecondaryMissionHeaders();
+
 };
 

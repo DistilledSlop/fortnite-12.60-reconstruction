@@ -470,9 +470,24 @@ public:
 	UPROPERTY(Transient)
 	bool bCheatDrawRespawnLocations;
 
+private:
+	UFUNCTION()
+	void HandleTeleportComplete();
+public:
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastSetWinningTeams(const TArray<uint8>& InWinningTeams);
 	void MulticastSetWinningTeams_Implementation(const TArray<uint8>& InWinningTeams);
+
+protected:
+	UFUNCTION()
+	void OnAllAdditionalPlaylistLevelsVisible();
+public:
+
+protected:
+	UFUNCTION()
+	void OnPushCartPushersOrDefendersChanged();
+public:
 
 	UFUNCTION()
 	void OnRep_bInOvertime();
@@ -491,6 +506,11 @@ public:
 
 	UFUNCTION()
 	void OnRep_TeleportComplete();
+
+protected:
+	UFUNCTION()
+	void TickUraniumEvents();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

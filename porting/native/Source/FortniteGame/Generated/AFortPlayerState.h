@@ -271,8 +271,10 @@ public:
 	UFUNCTION()
 	void OnRep_BannerInfo();
 
+protected:
 	UFUNCTION()
 	void OnRep_bHasStartedPlaying();
+public:
 
 	UFUNCTION()
 	void OnRep_CharacterBodyType();

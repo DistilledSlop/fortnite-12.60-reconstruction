@@ -2,6 +2,14 @@
 #include "AFortAthenaCreativePortal.h"
 #include "Net/UnrealNetwork.h"
 
+uint8 AFortAthenaCreativePortal::GetPopulation() const
+{
+	// Original address: 0x1427d3c50.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return CurrentPopulation;
+}
+
 void AFortAthenaCreativePortal::OnRep_ErrorState()
 {
 	// Body not recovered: reflection-derived stub.

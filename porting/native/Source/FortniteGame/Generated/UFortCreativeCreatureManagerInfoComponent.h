@@ -68,5 +68,23 @@ public:
 	UPROPERTY()
 	EScoreDistributionType ScoreDistribution;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetEnvironmentalDamageOverride() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetHearingAggroRange() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetMaxHealth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMovementSpeedMultiplier() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetOverrideDamage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetScorePoints() const;
+
 };
 

@@ -725,6 +725,22 @@ public:
 	void ClientReportShotFlags(uint32 ShotFlags, int32 ShotIndex);
 	void ClientReportShotFlags_Implementation(uint32 ShotFlags, int32 ShotIndex);
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetChargeTime() const;
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetProjectilePitchOffset() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTraceThroughBuildingsLimit() const;
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTraceThroughPawnsLimit() const;
+
 	UFUNCTION()
 	void OnRep_AmmoCount(int32 OldAmmoCount);
 
@@ -760,6 +776,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSetChargeState(uint8 NewState);
 	void ServerSetChargeState_Implementation(uint8 NewState);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	bool TryReloadAmmoFromAbility();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

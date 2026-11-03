@@ -3358,10 +3358,25 @@ public:
 	bool bBuildingPossessionShown;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetDelayGiftButtonWhenMFANotEnabledSeconds() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FString GetGameVersion() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumGameplayMessageChannels() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetRebootChipExpirationTime() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetRebootDirectiveDisplayTime() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static UFortRuntimeOptions* GetRuntimeOptions();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsShippingBuild() const;
 
 };
 

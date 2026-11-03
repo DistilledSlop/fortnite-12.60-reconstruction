@@ -107,6 +107,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_RotationLerpData)
 	FRotationLerpData RotationLerpData;
 
+	UFUNCTION(BlueprintCallable)
+	void CheatDepart();
+
 	UFUNCTION()
 	void OnRep_BalloonActor();
 
@@ -116,8 +119,10 @@ public:
 	UFUNCTION()
 	void OnRep_LocationLerpData();
 
+protected:
 	UFUNCTION()
 	void OnRep_QualifyingPlayers();
+public:
 
 	UFUNCTION()
 	void OnRep_RotationLerpData();

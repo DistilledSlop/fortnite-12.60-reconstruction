@@ -195,5 +195,10 @@ public:
 	UPROPERTY()
 	float LongRangeAutoPickupRadius;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void ClearPlayerStartLocationOverrides();
+public:
+
 };
 

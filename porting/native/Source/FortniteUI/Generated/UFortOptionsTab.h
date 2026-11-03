@@ -35,5 +35,14 @@ public:
 	UPROPERTY()
 	ESettingTab TabType;
 
+	UFUNCTION(BlueprintCallable)
+	bool IsPS4Platform();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsSwitchPlatform();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsXboxPlatform();
+
 };
 

@@ -2,6 +2,14 @@
 #include "UFortHeldObjectComponent.h"
 #include "Net/UnrealNetwork.h"
 
+void UFortHeldObjectComponent::DropHeldObject()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortHeldObjectComponent::OnRep_bCollisionBlockedByPawns()
 {
 	// Body not recovered: reflection-derived stub.
@@ -15,6 +23,30 @@ void UFortHeldObjectComponent::OnRep_OwningPawn()
 void UFortHeldObjectComponent::OnRep_UsePreviewMaterial()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void UFortHeldObjectComponent::OnThrowComplete()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortHeldObjectComponent::OnWeaponUnequipped()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortHeldObjectComponent::PlaceHeldObject()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void UFortHeldObjectComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

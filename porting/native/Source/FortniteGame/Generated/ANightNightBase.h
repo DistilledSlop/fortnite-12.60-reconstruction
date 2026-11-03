@@ -18,8 +18,20 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PrepareClient, Transient)
 	bool bPrepareClient;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void MakePreparationsForNightNight();
+public:
+
+private:
 	UFUNCTION()
 	void OnRep_PrepareClient();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void ReturnToNight();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

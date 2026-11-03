@@ -2,9 +2,33 @@
 #include "AFortAthenaMutator_Uranium.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortAthenaMutator_Uranium::HandleTeleportComplete()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortAthenaMutator_Uranium::MulticastSetWinningTeams_Implementation(const TArray<uint8>& InWinningTeams)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortAthenaMutator_Uranium::OnAllAdditionalPlaylistLevelsVisible()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AFortAthenaMutator_Uranium::OnPushCartPushersOrDefendersChanged()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortAthenaMutator_Uranium::OnRep_bInOvertime()
@@ -35,6 +59,14 @@ void AFortAthenaMutator_Uranium::OnRep_RoundData()
 void AFortAthenaMutator_Uranium::OnRep_TeleportComplete()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortAthenaMutator_Uranium::TickUraniumEvents()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortAthenaMutator_Uranium::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

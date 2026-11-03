@@ -44,5 +44,10 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle CloseMapPanelInputAction;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanShowChallengePins() const;
+public:
+
 };
 

@@ -65,5 +65,32 @@ public:
 	UPROPERTY()
 	uint8 bForceProjectileTooltip : 1;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoNotAllowDoublePump() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ForceProjectileTooltip() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldShowReticleHitNotifyAtImpactLocation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldSpawnBulletShellFX() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldTraceThroughPawns() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldTraceThroughWorld() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldUseNativeWeaponTrace() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldUsePerfectAimWhenTargetingMinSpread() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool UseOnTouch() const;
+
 };
 

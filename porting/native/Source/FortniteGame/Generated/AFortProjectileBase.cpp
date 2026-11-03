@@ -2,6 +2,14 @@
 #include "AFortProjectileBase.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortProjectileBase::GetGravityScale() const
+{
+	// Original address: 0x142aa5dd0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return GravityScale;
+}
+
 void AFortProjectileBase::OnRep_CurrentSkyTube()
 {
 	// Body not recovered: reflection-derived stub.

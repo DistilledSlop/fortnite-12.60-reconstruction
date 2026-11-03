@@ -29,6 +29,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_InstigatorRegistry, Transient)
 	FPickupInstigatorArray InstigatorRegistry;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ClearPickupInstigators();
+
 	UFUNCTION()
 	void OnRep_InstigatorRegistry();
 

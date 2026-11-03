@@ -87,6 +87,15 @@ public:
 	UPROPERTY(Replicated, Transient)
 	bool bCheatHeartbeatEnabled;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool IsGrowlEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool IsHealOverTimeEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsHeartbeatEnabled() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

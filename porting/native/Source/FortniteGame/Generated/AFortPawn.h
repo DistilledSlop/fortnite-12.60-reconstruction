@@ -805,6 +805,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsStaggered() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsWeaponHolstered() const;
+
 	UFUNCTION(BlueprintCallable)
 	void LogChugSplashEvent();
 

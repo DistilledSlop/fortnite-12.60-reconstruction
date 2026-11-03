@@ -528,6 +528,9 @@ public:
 	FGameplayTagContainer OldUIExtensionTags;
 
 	UFUNCTION()
+	bool AreEnoughPlayersLeftToContinueMatch();
+
+	UFUNCTION()
 	void DoRep_UIExtensionTags();
 
 	UFUNCTION()
@@ -556,6 +559,19 @@ public:
 
 	UFUNCTION()
 	void OnRep_Volume();
+
+protected:
+	UFUNCTION()
+	void PostGameResetPlayers();
+public:
+
+	UFUNCTION(BlueprintCallable)
+	void RefreshGameRulesPreview();
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void RefreshVoiceForPlayers();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

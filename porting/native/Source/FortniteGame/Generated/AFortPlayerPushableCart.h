@@ -116,6 +116,15 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bIsNearCheckpoint)
 	bool bIsNearCheckpoint;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetLastReachedCheckPointIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetTotalActiveDefenders() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetTotalActivePushers() const;
+
 	UFUNCTION()
 	void OnRep_bIsNearCheckpoint();
 

@@ -62,3 +62,15 @@ baseline/milestone checkpoints or when evidence is suspect, not every helper.
 If verification repeatedly dominates without advancing the product path, consolidate
 the implementation batch and reassess the check selection. Preserve this preference
 in compaction summaries and handoffs alongside the delegation and input-use rules.
+
+# Rough implementation passes
+
+Prefer broad feature passes from batch-decompiled, typed/named Ghidra C to an
+initial C++ lift, then use compilation and affected runtime flows to prioritize
+refinement. Use assembly for specific ambiguities, not as the default starting
+point for every missing helper. Neutral address-based names are acceptable; do
+not spend time polishing names that do not affect correctness. Preserve explicit
+unresolved calls/effects and concise reusable blocker notes; do not count drafts
+or placeholders as verified bodies or claim their behavior is implemented.
+Integrate completed gameplay code for the UI collaborator to use rather than
+holding it back; the user authorized this shared Native integration.

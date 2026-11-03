@@ -2,6 +2,22 @@
 #include "UFortVehicleSeatWeaponComponent.h"
 #include "Net/UnrealNetwork.h"
 
+float UFortVehicleSeatWeaponComponent::GetCurrentOverheatValue()
+{
+	// Original address: 0x142b31cc0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return CachedOverheatValue;
+}
+
+float UFortVehicleSeatWeaponComponent::GetOverheatingMaxValue() const
+{
+	// Original address: 0x142b31d20.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return CachedOverheatMax;
+}
+
 void UFortVehicleSeatWeaponComponent::OnRep_OverheatValueRepped()
 {
 	// Body not recovered: reflection-derived stub.

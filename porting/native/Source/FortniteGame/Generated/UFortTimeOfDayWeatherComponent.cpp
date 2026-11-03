@@ -2,6 +2,22 @@
 #include "UFortTimeOfDayWeatherComponent.h"
 #include "Net/UnrealNetwork.h"
 
+int32 UFortTimeOfDayWeatherComponent::GetCurrentWeatherEventIndex() const
+{
+	// Original address: 0x14292f0c0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return LocalWeatherEventIndex;
+}
+
+float UFortTimeOfDayWeatherComponent::GetCurrentWeatherIntensity() const
+{
+	// Original address: 0x142b146b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return CurrentWeatherEventIntensity;
+}
+
 void UFortTimeOfDayWeatherComponent::OnRep_CurrentWeatherEventIntensity()
 {
 	// Body not recovered: reflection-derived stub.

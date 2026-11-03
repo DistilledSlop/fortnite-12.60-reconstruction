@@ -265,17 +265,27 @@ public:
 	void DbgSphereSendToAllInternal_DoNotCall(const FVector& Center, float Radius, int32 Segments, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
 	void DbgSphereSendToAllInternal_DoNotCall_Implementation(const FVector& Center, float Radius, int32 Segments, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DBNOEnabledForGameMode() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetWorldDaysElapsed() const;
+
 	UFUNCTION()
 	void OnRep_AdditionalPlaylistLevelsStreamed();
 
+protected:
 	UFUNCTION()
 	void OnRep_AnnouncementManager();
+public:
 
 	UFUNCTION()
 	void OnRep_CurrentWUID();
 
+protected:
 	UFUNCTION()
 	void OnRep_FeedbackManager();
+public:
 
 	UFUNCTION()
 	void OnRep_GameplayState();

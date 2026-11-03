@@ -952,14 +952,22 @@ public:
 	void DuplicateCreativePlot(const FString& IslandId, const FString& Locale, const FString& Title);
 	void DuplicateCreativePlot_Implementation(const FString& IslandId, const FString& Locale, const FString& Title);
 
-	UFUNCTION(BlueprintCallable)
+private:
+	UFUNCTION()
 	void EnableCreativeContentManagerBasedOnPlaylist();
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCachedHighlightCount();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortVolume* GetCreativePlotLinkedVolume() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UCreativeUserContentManager* GetCreativeUserContentManager() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetInventorySpace() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;
@@ -1001,7 +1009,7 @@ public:
 	UFUNCTION()
 	void OnRep_SkydiveLeader();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	void PreLobbyIslandTeleport();
 
 	UFUNCTION(Server, Reliable)

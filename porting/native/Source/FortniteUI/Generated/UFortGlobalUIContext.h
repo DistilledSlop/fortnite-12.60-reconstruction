@@ -156,6 +156,21 @@ public:
 	UPROPERTY(Transient)
 	FUniqueNetIdRepl CurrentLocalPlayerUniqueNetId;
 
+	UFUNCTION(BlueprintCallable)
+	bool IsBluGloEnabled();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsDesktopPlatform();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsGamepadAttached() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMobileApp() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldCloseMenuOnEscape() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetInputPriority(EInputPriority Priority) const;
 

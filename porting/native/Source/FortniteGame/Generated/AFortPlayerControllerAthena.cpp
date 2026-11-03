@@ -319,6 +319,14 @@ void AFortPlayerControllerAthena::EnableCreativeContentManagerBasedOnPlaylist()
 	// Empty body: the native function does nothing (see Inferred).
 }
 
+int32 AFortPlayerControllerAthena::GetCachedHighlightCount()
+{
+	// Original address: 0x142a58640.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return CachedHighlightCount;
+}
+
 AFortVolume* AFortPlayerControllerAthena::GetCreativePlotLinkedVolume() const
 {
 	// Behaviour snippet: AFortPlayerControllerAthena::GetCreativePlotLinkedVolume (body only; spliced into the generated member function).
@@ -341,6 +349,14 @@ UCreativeUserContentManager* AFortPlayerControllerAthena::GetCreativeUserContent
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return CreativeUserContentManager;
+}
+
+int32 AFortPlayerControllerAthena::GetInventorySpace() const
+{
+	// Original address: 0x1411a8460.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return 0;
 }
 
 UAthenaMarkerComponent* AFortPlayerControllerAthena::GetMarkerComponent() const

@@ -17,6 +17,46 @@ void AFortPlayerControllerGameplay::ClientCreativeStopFly_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerGameplay::GrantCreativePhoneItemDefLoadedCallback()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+bool AFortPlayerControllerGameplay::IsCreativeModeEnabled() const
+{
+	// Original address: 0x142a655c0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return bIsCreativeModeEnabled;
+}
+
+bool AFortPlayerControllerGameplay::IsCreativeQuickbarEnabled() const
+{
+	// Original address: 0x142a65690.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return bIsCreativeQuickbarEnabled;
+}
+
+bool AFortPlayerControllerGameplay::IsCreativeQuickmenuEnabled() const
+{
+	// Original address: 0x142a656c0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return bIsCreativeQuickmenuEnabled;
+}
+
+bool AFortPlayerControllerGameplay::IsCreativeThermometerNewUIEnabled() const
+{
+	// Original address: 0x142a656f0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return bIsCreativeThermometerNewUIEnabled;
+}
+
 void AFortPlayerControllerGameplay::OnRep_CreativeQuickbarComponent()
 {
 	// Body not recovered: reflection-derived stub.
@@ -55,6 +95,14 @@ void AFortPlayerControllerGameplay::OnRep_PoiTagContainerTableID(int16 PreviousP
 void AFortPlayerControllerGameplay::OnRep_UIMetricsDisplayIndex()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerGameplay::OnVerifyAllowedToFly()
+{
+	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
+	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerControllerGameplay::ServerAwardVehicleTrickPoints_Implementation(int32 InPoints, int32 InAirTimeX1000)

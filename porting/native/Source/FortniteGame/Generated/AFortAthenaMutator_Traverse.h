@@ -68,8 +68,10 @@ public:
 	UPROPERTY()
 	TSubclassOf<AActor> BoundsXYSplineClass;
 
+protected:
 	UFUNCTION()
 	void OnRep_CurrentPointIndex();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

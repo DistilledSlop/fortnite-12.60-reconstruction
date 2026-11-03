@@ -30,5 +30,8 @@ public:
 	UPROPERTY(Transient)
 	UFortReplayContext* ReplayContext;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentShotIndex() const;
+
 };
 

@@ -176,5 +176,77 @@ public:
 	UPROPERTY()
 	bool bReplacesDecoOnAttachment;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGridPlacementOffset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGridSnapSizeOverride() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetMaxPlacementDistance() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetRotationAngleIncrement() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool RequiresPermissionToEditWorld() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool RequiresPlayerPlaceableAttachmentActors() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldAllowPlacementOnBuildings() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldAllowPlacementOnWorldGeometry() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldAllowStairsWhenAttachingToFloors() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldAttachWhenPlacing() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldCancelAbilityOnUnequip() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldCancelToolWhenPlaced() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldConsumeWhenPlaced() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldDisableRotationLerpWhilePlacing() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldDisableScaleLerpWhilePlacing() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldForceIgnoreBuildingOverlaps() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldForceIgnoreOverlapTest() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldIgnoreCollisionWithCriticalActors() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldIgnoreCollisionWithFortStaticMeshActors() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldIgnoreCollisionWithPlayers() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldIgnoreCollisionWithStructuralGridActors() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldIgnoreCollisionWithVehicles() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldSnapYawToHorizontalAxes() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldUseRelativeCameraRotation() const;
+
 };
 

@@ -365,7 +365,7 @@ void AApolloBackgroundMesh::LoadMesh()
             }
         }
     }
-    UE_LOG(LogTemp, Display, TEXT("Apollo background mesh %s ready: authority=%d mesh=%s rebuilt_materials=%d"),
+    UE_LOG(LogTemp, Display, TEXT("Apollo background mesh %s ready: authority=%d mesh=%s rebuilt_materials=%d actor=%s"),
         *MeshId, HasAuthority() ? 1 : 0,
-        GetStaticMeshComponent()->GetStaticMesh() ? TEXT("yes") : TEXT("no"), Rebuilt);
+        GetStaticMeshComponent()->GetStaticMesh() ? TEXT("yes") : TEXT("no"), Rebuilt, *GetName());
 }

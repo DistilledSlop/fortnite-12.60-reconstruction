@@ -4,6 +4,46 @@
 #include "AFortPlayerControllerZone.h"
 #include "Engine/LocalPlayer.h"
 
+bool UFortGlobalUIContext::IsBluGloEnabled()
+{
+	// Original address: 0x1412d9d60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return true;
+}
+
+bool UFortGlobalUIContext::IsDesktopPlatform()
+{
+	// Original address: 0x1412d9d60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return true;
+}
+
+bool UFortGlobalUIContext::IsGamepadAttached() const
+{
+	// Original address: 0x1412d9d60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return true;
+}
+
+bool UFortGlobalUIContext::IsMobileApp() const
+{
+	// Original address: 0x140a02a40.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return false;
+}
+
+bool UFortGlobalUIContext::ShouldCloseMenuOnEscape() const
+{
+	// Original address: 0x1412d9d60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return true;
+}
+
 int32 UFortGlobalUIContext::GetInputPriority(EInputPriority Priority) const
 {
     return static_cast<uint8>(Priority);

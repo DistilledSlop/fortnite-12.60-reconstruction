@@ -100,5 +100,8 @@ public:
 	UPROPERTY()
 	TArray<FMarshalledVFXRuntimeData> RuntimeMarshalledData;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAnimTrailsWidth() const;
+
 };
 

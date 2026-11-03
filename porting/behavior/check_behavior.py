@@ -2,7 +2,7 @@
 """Static checker for porting/behavior/MANIFEST.json and the .inc snippets (stdlib only).
 
 For every manifest entry with status "ported" it checks:
-  1. the class header exists under porting/native/Source/FortniteGame/Generated/;
+  1. the class header exists under its module in porting/native/Source/*/Generated/;
   2. the signature: "declared" entries must appear verbatim in the generated header (followed by ';');
      "proposed" entries are declared (counted in declared_in_header) once the generator emits them, and are
      reported as PENDING_DECL until then;
@@ -26,6 +26,7 @@ validate), the definition with the same signature, and that the body equals the 
 spliced is a FAIL unless --splice-report lists it as rejected.
 Exit status is 1 if any FAIL is reported. PENDING_DECL is not a failure.
 """
+import glob
 import json
 import os
 import re
@@ -33,7 +34,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-GEN = os.path.join(ROOT, "porting", "native", "Source", "FortniteGame", "Generated")
+SOURCE = os.path.join(ROOT, "porting", "native", "Source")
+GEN = None  # Explicit --gen-root; default lookup searches each native module.
 MANIFEST = os.path.join(HERE, "MANIFEST.json")
 
 CPP_KEYWORDS = {
@@ -71,10 +73,21 @@ KNOWN_KINDS = {"getter", "exec", "impl", "validate", "onrep", "callee", FIELD_KI
 HELPER_NAMES = {}  # class -> names of its ported helper and static_helper entries (callable from any body)
 
 
+def generated_path(cls, extension):
+    """Resolve native classes across modules; an explicit generated root stays flat."""
+    filename = cls + extension
+    if GEN is not None:
+        return os.path.join(GEN, filename)
+    paths = glob.glob(os.path.join(SOURCE, "*", "Generated", glob.escape(filename)))
+    if len(paths) > 1:
+        raise RuntimeError("ambiguous generated file %s: %s" % (filename, ", ".join(sorted(paths))))
+    return paths[0] if paths else None
+
+
 def read_header(cls):
     if cls not in _header_cache:
-        path = os.path.join(GEN, cls + ".h")
-        _header_cache[cls] = open(path, encoding="utf-8", errors="replace").read() if os.path.exists(path) else None
+        path = generated_path(cls, ".h")
+        _header_cache[cls] = open(path, encoding="utf-8", errors="replace").read() if path and os.path.exists(path) else None
     return _header_cache[cls]
 
 
@@ -243,7 +256,7 @@ def check_entry(e, problems, infos, waived=frozenset()):
             continue
         if name in allowed or name in ENGINE_NAMES or name.startswith("__"):
             continue
-        if name in types or os.path.exists(os.path.join(GEN, name + ".h")):
+        if name in types or read_header(name) is not None:
             continue
         if name[0].isupper() and name in types:
             continue
@@ -507,8 +520,8 @@ def check_static_helper(e, tag, ret, sfn, args, hdr, cpp, problems, counts):
 
 
 def read_cpp(cls):
-    path = os.path.join(GEN, cls + ".cpp")
-    return open(path, encoding="utf-8", errors="replace").read() if os.path.exists(path) else None
+    path = generated_path(cls, ".cpp")
+    return open(path, encoding="utf-8", errors="replace").read() if path and os.path.exists(path) else None
 
 
 def main():

@@ -71,5 +71,10 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UAthenaCosmeticItemDefinition> RequiredEmoteParent;
 
+protected:
+	UFUNCTION()
+	void PreviewInPIE();
+public:
+
 };
 

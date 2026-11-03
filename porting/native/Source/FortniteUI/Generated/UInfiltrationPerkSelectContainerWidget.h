@@ -26,5 +26,8 @@ public:
 	UPROPERTY()
 	FPerkMutatorData MutatorData;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool PerkSelectionEnabled() const;
+
 };
 

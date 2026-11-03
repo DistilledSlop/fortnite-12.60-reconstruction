@@ -30,5 +30,8 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<AFortToyPreviewActor> FrontEndPreviewActor;
 
+	UFUNCTION()
+	void BakeLaunchPositions();
+
 };
 

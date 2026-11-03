@@ -14,5 +14,11 @@ class FORTNITEGAME_API AFortGameStateBoss : public AFortGameStatePvE
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	void AllPlayersDied();
+
+	UFUNCTION(BlueprintCallable)
+	void BossSpawned();
+
 };
 

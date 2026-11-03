@@ -527,5 +527,20 @@ public:
 	UPROPERTY(Config)
 	int32 LastYearForcedDisplayWinterfestInfoButton;
 
+	UFUNCTION()
+	int32 GetCachedPlayerLevel() const;
+
+	UFUNCTION()
+	float GetDisplayGamma() const;
+
+	UFUNCTION()
+	int32 GetRenderingAPI() const;
+
+	UFUNCTION()
+	float GetSafeZone() const;
+
+	UFUNCTION()
+	float GetUserInterfaceContrast() const;
+
 };
 

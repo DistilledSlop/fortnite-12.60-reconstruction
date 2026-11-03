@@ -99,6 +99,14 @@ public:
 	UPROPERTY()
 	bool bSaveAndRestoreWeaponData;
 
+	UFUNCTION(BlueprintCallable)
+	float GetCurrentOverheatValue();
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetOverheatingMaxValue() const;
+public:
+
 	UFUNCTION()
 	void OnRep_OverheatValueRepped();
 

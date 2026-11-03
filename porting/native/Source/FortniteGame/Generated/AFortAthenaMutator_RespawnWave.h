@@ -41,6 +41,11 @@ public:
 	UFUNCTION()
 	void OnRep_WaveDataArray();
 
+private:
+	UFUNCTION()
+	void OnWaveLaunched();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

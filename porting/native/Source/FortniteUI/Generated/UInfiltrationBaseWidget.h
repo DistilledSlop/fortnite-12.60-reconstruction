@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<AFortAthenaMutator_Infiltration> CachedMutator;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumOfRounds() const;
+
 };
 

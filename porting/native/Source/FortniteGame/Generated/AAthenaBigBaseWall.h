@@ -40,8 +40,10 @@ public:
 	UFUNCTION()
 	void OnRep_BarrierState();
 
+protected:
 	UFUNCTION()
 	void OnRep_ResetBool();
+public:
 
 	UFUNCTION()
 	void OnRep_TimeUntilWallComesDown();

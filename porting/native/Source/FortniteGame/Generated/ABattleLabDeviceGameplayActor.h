@@ -20,8 +20,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_BattleLabDeviceItemData)
 	UFortBattleLabDeviceItemDefinition* BattleLabDeviceItemData;
 
+protected:
 	UFUNCTION()
 	void OnRep_BattleLabDeviceItemData();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

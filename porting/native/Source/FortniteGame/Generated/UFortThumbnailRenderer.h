@@ -68,5 +68,8 @@ public:
 	UPROPERTY()
 	TArray<TWeakObjectPtr<AActor>> AlphaMaskActorPtrs;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRendererIndex() const;
+
 };
 

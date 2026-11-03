@@ -28,5 +28,8 @@ public:
 	UPROPERTY()
 	TArray<FPotentialSpectatorTarget> AvailableTargets;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldBeVisible() const;
+
 };
 

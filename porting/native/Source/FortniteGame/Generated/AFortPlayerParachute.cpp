@@ -2,6 +2,14 @@
 #include "AFortPlayerParachute.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortPlayerParachute::IsGliderFullyDeployedAccordingToAnim() const
+{
+	// Original address: 0x142a7d170.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
+	return bGliderFullyDeployed;
+}
+
 void AFortPlayerParachute::OnRep_ParachuteItemDef()
 {
 	// Body not recovered: reflection-derived stub.

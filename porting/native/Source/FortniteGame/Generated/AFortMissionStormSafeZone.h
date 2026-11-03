@@ -48,6 +48,9 @@ public:
 	UPROPERTY()
 	UAbilitySystemComponent* AbilityComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSafeZoneRadius() const;
+
 	UFUNCTION()
 	void OnRep_SafeZoneInStormStateChanged();
 

@@ -107,6 +107,9 @@ public:
 	UFUNCTION()
 	void OnRep_BudgetTracker();
 
+	UFUNCTION()
+	void UpdateVolumeInformation();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

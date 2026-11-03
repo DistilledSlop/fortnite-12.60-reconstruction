@@ -75,5 +75,17 @@ public:
 	UPROPERTY(Transient)
 	EAIHotSpotSlot SlotState;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSlotHeight() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSlotIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSlotRadius() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSlotUserId() const;
+
 };
 

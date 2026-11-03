@@ -217,8 +217,10 @@ protected:
 	void OnTriggeredInputActionChanged(const FDataTableRowHandle& NewTriggeredAction);
 public:
 
+protected:
 	UFUNCTION(BlueprintCallable)
 	void StopDoubleClickPropagation();
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInteractionEnabled() const;

@@ -659,5 +659,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<AFortGameplayMutator_AIEncounterModifierTags*> EncounterModifierTagsMutators;
 
+	UFUNCTION(BlueprintCallable)
+	float GetEncounterTimeSeconds();
+
 };
 

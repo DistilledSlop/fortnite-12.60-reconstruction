@@ -60,5 +60,8 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UFortPackPersonality> PackPersonality;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetDisplayRarityLevel() const;
+
 };
 

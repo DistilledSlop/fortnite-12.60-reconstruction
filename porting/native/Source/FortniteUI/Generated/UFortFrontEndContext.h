@@ -157,5 +157,8 @@ public:
 	UPROPERTY()
 	UFortServerBrowserHelper* ServerBrowserHelper;
 
+	UFUNCTION(BlueprintCallable)
+	void SendFrontendEnteredEvent();
+
 };
 

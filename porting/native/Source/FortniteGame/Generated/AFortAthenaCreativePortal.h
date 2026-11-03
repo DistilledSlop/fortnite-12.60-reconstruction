@@ -155,6 +155,9 @@ public:
 	uint8 bForceUpdateInteraction : 1;
 
 	UFUNCTION()
+	uint8 GetPopulation() const;
+
+	UFUNCTION()
 	void OnRep_ErrorState();
 
 	UFUNCTION()

@@ -190,5 +190,8 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<USkeletalMesh> FrontendPreviewSkeletalMeshOverride;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInventorySizeLimited() const;
+
 };
 

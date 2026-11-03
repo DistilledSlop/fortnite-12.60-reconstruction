@@ -198,8 +198,13 @@ public:
 	void DrawServerAndClientBallPosition(const FVector& ServerPosition);
 	void DrawServerAndClientBallPosition_Implementation(const FVector& ServerPosition);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasPermissionToAlterBuildings() const;
+
+private:
 	UFUNCTION()
 	void OnRep_AbilitySystemComponent();
+public:
 
 	UFUNCTION()
 	void OnRep_CorrectTargetOrientation();
@@ -207,8 +212,10 @@ public:
 	UFUNCTION()
 	void OnRep_CurrentServerPhysicsState();
 
+private:
 	UFUNCTION()
 	void OnRep_HealthSet();
+public:
 
 	UFUNCTION()
 	void OnRep_InitialParameters();

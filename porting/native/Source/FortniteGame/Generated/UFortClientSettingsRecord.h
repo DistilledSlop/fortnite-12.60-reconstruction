@@ -966,5 +966,101 @@ public:
 	UPROPERTY(Transient)
 	double NextCloudSaveTime;
 
+	UFUNCTION()
+	float GetChatVolume() const;
+
+	UFUNCTION()
+	float GetCinematicsVolume() const;
+
+	UFUNCTION()
+	float GetDialogueVolume() const;
+
+	UFUNCTION()
+	float GetEditButtonHoldTime() const;
+
+	UFUNCTION()
+	float GetGamepadBuildingMultiplier() const;
+
+	UFUNCTION()
+	float GetGamepadEditModeMultiplier() const;
+
+	UFUNCTION()
+	float GetGamepadLookStickDeadZone() const;
+
+	UFUNCTION()
+	float GetGamepadMoveStickDeadZone() const;
+
+	UFUNCTION()
+	float GetGamepadScopedMultiplier() const;
+
+	UFUNCTION()
+	float GetGamepadTargetingMultiplier() const;
+
+	UFUNCTION()
+	float GetGyroLookSensitivitySetting() const;
+
+	UFUNCTION()
+	int32 GetHiddenMatchmakingDelayMax() const;
+
+	UFUNCTION()
+	float GetHUDScaleRaw() const;
+
+	UFUNCTION()
+	float GetMotionHarvestingToolMultiplier() const;
+
+	UFUNCTION()
+	float GetMotionScopedMultiplier() const;
+
+	UFUNCTION()
+	float GetMotionTargetingMultiplier() const;
+
+	UFUNCTION()
+	float GetMouseSensitivityMultiplierForAircraft() const;
+
+	UFUNCTION()
+	float GetMouseSensitivityX() const;
+
+	UFUNCTION()
+	float GetMouseSensitivityY() const;
+
+	UFUNCTION()
+	float GetMusicVolume() const;
+
+	UFUNCTION()
+	float GetRudderDeadZone() const;
+
+	UFUNCTION()
+	float GetRudderMaxThrottle() const;
+
+	UFUNCTION()
+	float GetScopedMultiplier() const;
+
+	UFUNCTION()
+	float GetSoundFXVolume() const;
+
+	UFUNCTION()
+	float GetTargetingMultiplier() const;
+
+	UFUNCTION()
+	float GetTouchBuildingMultiplier() const;
+
+	UFUNCTION()
+	float GetTouchEditModeMultiplier() const;
+
+	UFUNCTION()
+	float GetTouchLookAccelerationMultiplier() const;
+
+	UFUNCTION()
+	float GetTouchLookSensitivitySetting() const;
+
+	UFUNCTION()
+	float GetTouchScopedMultiplier() const;
+
+	UFUNCTION()
+	float GetTouchTargetingMultiplier() const;
+
+	UFUNCTION()
+	float GetTouchVerticalMultiplier() const;
+
 };
 

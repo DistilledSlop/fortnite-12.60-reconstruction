@@ -64,6 +64,11 @@ public:
 	UFUNCTION()
 	void OnRep_PlayingSongData();
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void StartSongForOptionsChange();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

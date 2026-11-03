@@ -30,5 +30,8 @@ public:
 	UPROPERTY()
 	int32 LastGoodFrame;
 
+	UFUNCTION(BlueprintCallable)
+	void StopRecordingFTestPerf();
+
 };
 
