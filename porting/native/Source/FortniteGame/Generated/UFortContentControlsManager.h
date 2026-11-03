@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "ESelectableVoiceChatSetting.h"
+
 class UFortLocalPlayer;
 
 #include "UFortContentControlsManager.generated.h"
@@ -91,6 +93,9 @@ public:
 
 	UFUNCTION()
 	bool GetPurchaseReportingEnabled() const;
+
+	UFUNCTION()
+	ESelectableVoiceChatSetting GetVoiceChatSettings() const;
 
 };
 

@@ -1,0 +1,17 @@
+[
+  {
+    "class": "UFortContentControlsManager",
+    "function": "GetVoiceChatSettings",
+    "kind": "exec",
+    "signature": "ESelectableVoiceChatSetting GetVoiceChatSettings() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/object_leaf356_runtime/GetVoiceChatSettings.inc",
+    "address": "0x142890460",
+    "native_body_address": "0x14215af10",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Returns Off if the recovered voice-chat permission is false; otherwise Everyone or FriendsOnly according to the second permission.",
+    "includes": []
+  }
+]

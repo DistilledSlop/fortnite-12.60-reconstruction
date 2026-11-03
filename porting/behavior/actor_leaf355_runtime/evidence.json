@@ -1,0 +1,33 @@
+[
+  {
+    "class": "AFortAbilityDecoTool",
+    "function": "GetSpawnParameters",
+    "reflection": {
+      "exec_addr": "0x1427814c0",
+      "flags": "0x54420405",
+      "params": [
+        {
+          "index": 0,
+          "name": "OutSpawnParamters",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000180",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142780110"
+          }
+        }
+      ],
+      "create_func": "0x14277e6b0",
+      "source": "lea"
+    },
+    "reflection_capture": "porting/generated/reflection/fortnite_game_reflection.json",
+    "wrapper_capture": "porting/generated/native105-broad/0x1427814c0.c",
+    "native_body_capture": "porting/generated/native105-impl/0x142670d10.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortAbilityDecoTool.h"
+  }
+]

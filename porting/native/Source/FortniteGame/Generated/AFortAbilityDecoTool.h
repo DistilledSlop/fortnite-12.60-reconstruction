@@ -20,5 +20,8 @@ public:
 	UPROPERTY(Transient)
 	FAbilityToolSpawnParameters CachedSpawnParameters;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	void GetSpawnParameters(FAbilityToolSpawnParameters& OutSpawnParamters) const;
+
 };
 

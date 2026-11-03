@@ -1,0 +1,19 @@
+[
+  {
+    "class": "AFortAbilityDecoTool",
+    "function": "GetSpawnParameters",
+    "kind": "exec",
+    "signature": "void GetSpawnParameters(FAbilityToolSpawnParameters& OutSpawnParamters) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/actor_leaf355_runtime/AFortAbilityDecoTool_GetSpawnParameters.inc",
+    "address": "0x1427814c0",
+    "native_body_address": "0x142670d10",
+    "reflection_flags": "0x54420405",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Native body copies the entire 40-byte reflected CachedSpawnParameters at offset 3040 to the output reference."
+  }
+]

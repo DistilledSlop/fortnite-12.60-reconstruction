@@ -1,0 +1,42 @@
+[
+  {
+    "class": "AFortAbilityDecoTool",
+    "function": "GetSpawnParameters",
+    "disposition": "Ported; wrapper, native body, and reflection prove the struct copy."
+  },
+  {
+    "class": "ABuildingItemWeaponUpgradeActor",
+    "function": "OnRep_AllowSecondInteraction",
+    "disposition": "Written bit at offset 1000 is not mapped to a reflected field."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "OnRep_MinimapViewableDistance",
+    "disposition": "Target component storage at offset 0x22c is not mapped to an accessible reflected field."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "SetMinimapViewableDistance",
+    "disposition": "Target component storage at offset 0x22c is not mapped to an accessible reflected field."
+  },
+  {
+    "class": "AFortAthenaDoghouseVehicle",
+    "function": "OnRep_ControlState",
+    "disposition": "Written and read storage are not mapped to accessible reflected fields."
+  },
+  {
+    "class": "AFortAthenaGoatVehicle",
+    "function": "ClearBoostAccumulated",
+    "disposition": "Written storage at 0x10a0 is not mapped to a reflected field."
+  },
+  {
+    "class": "AFortAthenaMutator_Arsenic",
+    "function": "IsPawnAnInfected",
+    "disposition": "Native body reads offset 0x441 of parameter, requiring mapped class field and argument proof."
+  },
+  {
+    "class": "AFortAthenaMutator_Crucible",
+    "function": "HasRegisteredPlayerController",
+    "disposition": "Weak pointer storage at offset 0x328 is not mapped to an accessible reflected field."
+  }
+]
