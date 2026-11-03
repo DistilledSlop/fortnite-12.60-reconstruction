@@ -1871,6 +1871,9 @@ public:
 	void ServerUpgradeBuildingActor(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 	void ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 
+	UFUNCTION(BlueprintCallable)
+	virtual void SetRotatePawnToCamera(bool bNewRotatePawnToCamera);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool ShouldShowInfoIndicator(AActor* TestActor) const;
 

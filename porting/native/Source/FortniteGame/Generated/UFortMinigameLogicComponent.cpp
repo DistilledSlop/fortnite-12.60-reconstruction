@@ -7,6 +7,13 @@ void UFortMinigameLogicComponent::HandleMinigameSet()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortMinigameLogicComponent::HandleMinigameStateChanged_Implementation(AFortMinigame* Minigame, EFortMinigameState NewMinigameState)
+{
+	// Native 0x142098810. CONFIDENCE: high
+	NativeCachedMinigameState = NewMinigameState;
+	MinigameStateChangedDelegate.Broadcast(Minigame, NewMinigameState);
+}
+
 void UFortMinigameLogicComponent::HandlePlayspaceEditModeChange_Implementation(bool bInEditMode)
 {
 	// CONFIDENCE: high

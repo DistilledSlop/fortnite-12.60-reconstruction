@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
+#include "EFortMinigameState.h"
 #include "FOnMinigameAssignmentChanged.h"
 #include "FOnMinigameStateChanged.h"
 #include "FOnPlayspaceEditModeChanged.h"
@@ -71,8 +72,15 @@ public:
 	UPROPERTY(Transient)
 	AFortMinigame* CachedMinigame;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x160): not a UPROPERTY, not replicated.
+	EFortMinigameState NativeCachedMinigameState;
+
 	UFUNCTION()
 	void HandleMinigameSet();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleMinigameStateChanged(AFortMinigame* Minigame, EFortMinigameState NewMinigameState);
+	virtual void HandleMinigameStateChanged_Implementation(AFortMinigame* Minigame, EFortMinigameState NewMinigameState);
 
 	UFUNCTION(BlueprintNativeEvent)
 	void HandlePlayspaceEditModeChange(bool bInEditMode);

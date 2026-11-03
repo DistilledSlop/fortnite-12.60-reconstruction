@@ -48217,5 +48217,77 @@
     "status": "ported",
     "notes": "Shipping native body has no effect besides destruction of by-value FString arguments; C++ parameter lifetime supplies that destruction.",
     "virtual": true
+  },
+  {
+    "class": "AFortMission",
+    "function": "NativeRespawnTextOverride",
+    "kind": "member_field",
+    "signature": "FText NativeRespawnTextOverride",
+    "offset": "0x2d8",
+    "notes": "Native GetRespawnTextOverride reads the FText at +0x2d8.",
+    "confidence": "high",
+    "status": "ported",
+    "access": "public",
+    "includes": []
+  },
+  {
+    "class": "UFortMinigameLogicComponent",
+    "function": "NativeCachedMinigameState",
+    "kind": "member_field",
+    "signature": "EFortMinigameState NativeCachedMinigameState",
+    "offset": "0x160",
+    "includes": [],
+    "notes": "Native state-change callback writes this byte before broadcasting.",
+    "confidence": "high",
+    "status": "ported",
+    "access": "public"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "SetRotatePawnToCamera",
+    "kind": "exec",
+    "signature": "void SetRotatePawnToCamera(bool bNewRotatePawnToCamera)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/native_bulk185_runtime/AFortPlayerController_SetRotatePawnToCamera.inc",
+    "address": "0x142a4f500",
+    "native_body_address": "0x1423b0960",
+    "reflection_flags": "0x4020400",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "UFortMinigameLogicComponent",
+    "function": "HandleMinigameStateChanged_Implementation",
+    "kind": "native_event_impl",
+    "signature": "void HandleMinigameStateChanged_Implementation(AFortMinigame* Minigame, EFortMinigameState NewMinigameState)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/native_bulk185_runtime/UFortMinigameLogicComponent_HandleMinigameStateChanged.inc",
+    "address": "0x1429d2670",
+    "native_body_address": "0x142098810",
+    "reflection_flags": "0x8020c00",
+    "confidence": "high",
+    "status": "ported",
+    "includes": []
+  },
+  {
+    "class": "AFortMission",
+    "function": "GetRespawnTextOverride_Implementation",
+    "kind": "native_event_impl",
+    "signature": "FText GetRespawnTextOverride_Implementation() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/native_bulk185_runtime/AFortMission_GetRespawnTextOverride.inc",
+    "address": "0x1429de1a0",
+    "native_body_address": "0x1420bc960",
+    "reflection_flags": "0x4c020c00",
+    "confidence": "high",
+    "status": "ported",
+    "includes": []
   }
 ]

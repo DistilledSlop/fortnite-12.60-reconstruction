@@ -8,6 +8,7 @@
 #include "EFortQuickBars.h"
 #include "Engine/World.h"
 #include "FortNativeAnalyticsProvider.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "UFortControllerComponent_Aircraft.h"
 #include "UFortItemDefinition.h"
 #include "UFortLocalPlayer.h"
@@ -1009,6 +1010,16 @@ void AFortPlayerController::ServerUpdatePlayerData_Implementation(const TArray<u
 void AFortPlayerController::ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::SetRotatePawnToCamera(bool bNewRotatePawnToCamera)
+{
+	// Native 0x1423b0960. CONFIDENCE: high
+	AFortPlayerPawn* Pawn = MyFortPawn;
+	if (Pawn && Pawn->GetCharacterMovement())
+	{
+	    Pawn->GetCharacterMovement()->bUseControllerDesiredRotation = bNewRotatePawnToCamera;
+	}
 }
 
 bool AFortPlayerController::ShouldShowInfoIndicator(AActor* TestActor) const

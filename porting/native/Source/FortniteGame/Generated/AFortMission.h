@@ -80,6 +80,9 @@ public:
 	UPROPERTY()
 	TArray<FFortMissionEventName> MissionEventNames;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2d8): not a UPROPERTY, not replicated.
+	FText NativeRespawnTextOverride;
+
 	// table index 43, flags 0x10000010080000
 	UPROPERTY()
 	FOnObjectivesUpdated OnObjectivesUpdated;
@@ -255,6 +258,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual FText GetMissionName() const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	FText GetRespawnTextOverride() const;
+	virtual FText GetRespawnTextOverride_Implementation() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void GetSpawningDistanceMinMaxOverrideForAIEncounter(UFortAIEncounterInfo* Encounter, float& OutSpawningDistanceMin, float& OutSpawningDistanceMax) const;

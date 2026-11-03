@@ -60,6 +60,12 @@ FText AFortMission::GetMissionName() const
 	return MissionInfo ? MissionInfo->MissionName : FText::GetEmpty();
 }
 
+FText AFortMission::GetRespawnTextOverride_Implementation() const
+{
+	// Native 0x1420bc960. CONFIDENCE: high
+	return NativeRespawnTextOverride;
+}
+
 void AFortMission::GetSpawningDistanceMinMaxOverrideForAIEncounter_Implementation(UFortAIEncounterInfo* Encounter, float& OutSpawningDistanceMin, float& OutSpawningDistanceMax) const
 {
 	// CONFIDENCE: high
