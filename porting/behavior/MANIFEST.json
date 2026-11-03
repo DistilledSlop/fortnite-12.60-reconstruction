@@ -36001,5 +36001,64 @@
     "static": true,
     "notes": "Native checked singleton accessor. Diagnostic retained verbatim despite stale type wording; reads live UFortGlobals config.",
     "class": "UFortGlobals"
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "NativeGetVolume",
+    "kind": "helper",
+    "signature": "AFortVolume* NativeGetVolume()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/volume_accessor63_runtime/Minigame.inc",
+    "address": "0x1420974d0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source name and non-const interface contract; native slot +0x10. See HANDOFF."
+  },
+  {
+    "class": "AFortMinigameSettingsBuilding",
+    "function": "NativeGetVolume",
+    "kind": "helper",
+    "signature": "AFortVolume* NativeGetVolume()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/volume_accessor63_runtime/SettingsBuilding.inc",
+    "address": "0x142702350",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source name and non-const interface contract; native slot +0x10. See HANDOFF."
+  },
+  {
+    "class": "AFortVolume",
+    "function": "NativeGetVolume",
+    "kind": "helper",
+    "signature": "AFortVolume* NativeGetVolume()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/volume_accessor63_runtime/Volume.inc",
+    "address": "0x14165b340",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source name and non-const interface contract; native slot +0x10. See HANDOFF."
+  },
+  {
+    "function": "NativeGetBoundsBox",
+    "kind": "helper",
+    "signature": "FBox NativeGetBoundsBox() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/volume_geometry63_runtime/NativeGetBoundsBox.inc",
+    "includes": [
+      "Math/Box.h",
+      "Math/BoxSphereBounds.h"
+    ],
+    "address": "0x141c756c0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Exact live bounds-to-box helper. No forced initialization when original bounds helper leaves its output untouched.",
+    "class": "AFortVolume"
   }
 ]

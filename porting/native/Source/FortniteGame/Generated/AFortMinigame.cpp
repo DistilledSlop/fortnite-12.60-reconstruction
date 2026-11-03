@@ -204,6 +204,12 @@ void AFortMinigame::NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& Out
 	}
 }
 
+AFortVolume* AFortMinigame::NativeGetVolume()
+{
+	// CONFIDENCE: HIGH
+	return Volume;
+}
+
 void AFortMinigame::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

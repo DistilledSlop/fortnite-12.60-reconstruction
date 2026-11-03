@@ -1,5 +1,29 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch63 (2026-11-03)
+
+Canonical2,048 bodies+176fields=2,224 accepted/rejected0. Four recovered bodies:
+AFortMinigame/AFortMinigameSettingsBuilding/AFortVolume native volume accessor
+virtuals and AFortVolume bounds-to-box helper. Restored IFortVolumeAccessor native
+contract and three direct native implementing bases; class fields/interface
+metadata, original constructor stores, getter bodies and vtables are pinned.
+Header inclusion follows existing interface type inference. Method name and
+nonconst qualification are source reconstruction choices. Actual dispatch uses
+native interface address, preserving inherited C++ implementations; Blueprint
+execute dispatch must not replace it. No tests/build/runtime after2040baseline;
+eight bodies now pending, next testing3040. Promotion63 output retained.
+
+Uncounted concrete lifts now cover the complete AddActor control flow in
+volume_add_actor63_runtime; actor geometry/selection in volume_geometry63_runtime;
+seven attribute delegate bindings in building_attribute_delegates63_runtime.
+Membership add/remove/endplay/clear, client tracking, navigation/AI effects,
+HealthSet delegate source signatures and virtual callback bodies remain open.
+No new empty set or callback stubs were integrated to pretend those paths work.
+All four product milestones remain OPEN. Root sole canonical source/generator/
+promotion/build/commit owner. Bounded Terra6.1 medium/low fork-none delegation,
+rotation and economical reads/output persist. Previous turn was PROGRESS (passed
+2040checkpoint and four additional bodies). Preserve unrelated porting/graphics.
+
 ## Native source batch62 (2026-11-03)
 
 Canonical2,044 bodies+176fields=2,220 accepted/rejected0. Four bodies added:

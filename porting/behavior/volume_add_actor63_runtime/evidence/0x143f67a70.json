@@ -1,0 +1,109 @@
+{
+ "address": "0x143f67a70",
+ "label": "",
+ "name": "FUN_143f67a70",
+ "status": "ok",
+ "body_bytes": 131,
+ "instructions": 41,
+ "called": [
+  {
+   "address": "0x142cd8ed0",
+   "name": "FName_EqualsEName"
+  }
+ ],
+ "indirect_calls": 0,
+ "strings": [],
+ "callers": [
+  {
+   "address": "0x1487b530c",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x14178e740",
+   "name": "FUN_14178e740",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419c2ba0",
+   "name": "FUN_1419c2ba0",
+   "ref": "call"
+  },
+  {
+   "address": "0x1419ccb20",
+   "name": "FUN_1419ccb20",
+   "ref": "call"
+  },
+  {
+   "address": "0x141b80e00",
+   "name": "FUN_141b80e00",
+   "ref": "call"
+  },
+  {
+   "address": "0x142356320",
+   "name": "FUN_142356320",
+   "ref": "call"
+  },
+  {
+   "address": "0x141a74eb0",
+   "name": "FUN_141a74eb0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141a7d2e0",
+   "name": "FUN_141a7d2e0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141a7d9b0",
+   "name": "FUN_141a7d9b0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141ad6c10",
+   "name": "FUN_141ad6c10",
+   "ref": "call"
+  },
+  {
+   "address": "0x141c5c710",
+   "name": "FUN_141c5c710",
+   "ref": "call"
+  },
+  {
+   "address": "0x141c8abe0",
+   "name": "FUN_141c8abe0",
+   "ref": "call"
+  },
+  {
+   "address": "0x144213340",
+   "name": "FUN_144213340",
+   "ref": "call"
+  },
+  {
+   "address": "0x144213e50",
+   "name": "FUN_144213e50",
+   "ref": "call"
+  },
+  {
+   "address": "0x1446adf40",
+   "name": "FUN_1446adf40",
+   "ref": "call"
+  },
+  {
+   "address": "0x144e80410",
+   "name": "FUN_144e80410",
+   "ref": "call"
+  },
+  {
+   "address": "0x144e85350",
+   "name": "FUN_144e85350",
+   "ref": "call"
+  }
+ ],
+ "reference_counts": {
+  "data": 1,
+  "call": 20
+ },
+ "thunk": false,
+ "error": null
+}

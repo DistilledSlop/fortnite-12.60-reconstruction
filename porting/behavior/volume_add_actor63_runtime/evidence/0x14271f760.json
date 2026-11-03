@@ -1,0 +1,67 @@
+{
+ "address": "0x14271f760",
+ "label": "",
+ "name": "FUN_14271f760",
+ "status": "ok",
+ "body_bytes": 178,
+ "instructions": 32,
+ "called": [
+  {
+   "address": "0x142d698b0",
+   "name": "GetPrivateStaticClassBody"
+  }
+ ],
+ "indirect_calls": 0,
+ "strings": [
+  {
+   "text": "AthenaNavInvokerBox",
+   "address": "0x14624070a"
+  },
+  {
+   "text": "Engine",
+   "address": "0x1459a4c08"
+  },
+  {
+   "text": "/Script/FortniteGame",
+   "address": "0x146232ea8"
+  }
+ ],
+ "callers": [
+  {
+   "address": "0x14864c9b8",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x141745890",
+   "name": "FUN_141745890",
+   "ref": "call"
+  },
+  {
+   "address": "0x14174c5c0",
+   "name": "FUN_14174c5c0",
+   "ref": "call"
+  },
+  {
+   "address": "0x141c5c710",
+   "name": "FUN_141c5c710",
+   "ref": "call"
+  },
+  {
+   "address": "0x142724ab0",
+   "name": "FUN_142724ab0",
+   "ref": "call"
+  },
+  {
+   "address": "0x14036a5f0",
+   "name": "FUN_14036a5f0",
+   "ref": "data"
+  }
+ ],
+ "reference_counts": {
+  "data": 2,
+  "call": 5
+ },
+ "thunk": false,
+ "error": null
+}

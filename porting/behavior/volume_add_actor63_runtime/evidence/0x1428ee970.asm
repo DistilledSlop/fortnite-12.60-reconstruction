@@ -1,0 +1,32 @@
+1428ee970  MOV R11,RSP
+1428ee973  SUB RSP,0x88
+1428ee97a  MOV RAX,qword ptr [0x1481964a0]
+1428ee981  TEST RAX,RAX
+1428ee984  JNZ 0x1428eea1a
+1428ee98a  XOR ECX,ECX
+1428ee98c  LEA RAX,[0x1406966e0]
+1428ee993  MOV qword ptr [R11 + -0x10],RCX
+1428ee997  LEA R9,[0x1428ef870]
+1428ee99e  MOV byte ptr [RSP + 0x70],CL
+1428ee9a2  LEA R8,[0x1481964a0]
+1428ee9a9  MOV qword ptr [R11 + -0x20],RAX
+1428ee9ad  LEA RDX,[0x1463d068a]
+1428ee9b4  LEA RAX,[0x1428ef860]
+1428ee9bb  MOV qword ptr [R11 + -0x28],RAX
+1428ee9bf  LEA RAX,[0x143f68ab0]
+1428ee9c6  MOV qword ptr [R11 + -0x30],RAX
+1428ee9ca  LEA RAX,[0x140680300]
+1428ee9d1  MOV qword ptr [R11 + -0x38],RAX
+1428ee9d5  LEA RAX,[0x1428eebb0]
+1428ee9dc  MOV qword ptr [R11 + -0x40],RAX
+1428ee9e0  LEA RAX,[0x1459a4c58]
+1428ee9e7  MOV qword ptr [R11 + -0x48],RAX
+1428ee9eb  MOV qword ptr [R11 + -0x50],RCX
+1428ee9ef  LEA RCX,[0x146232ea8]
+1428ee9f6  MOV dword ptr [RSP + 0x30],0x1000000c
+1428ee9fe  MOV dword ptr [RSP + 0x28],0x8
+1428eea06  MOV dword ptr [RSP + 0x20],0x1618
+1428eea0e  CALL 0x142d698b0
+1428eea13  MOV RAX,qword ptr [0x1481964a0]
+1428eea1a  ADD RSP,0x88
+1428eea21  RET

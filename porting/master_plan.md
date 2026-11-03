@@ -10,13 +10,18 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Native source recovery has reached 1,928 complete bodies plus 171 supporting
-fields (batch 42, 2026-11-03). The tested baseline remains 1,040 bodies;
-888 subsequent bodies are build pending. Per user instruction, run the next
-build/runtime/test batch at approximately 2,040 bodies. Fail-closed generation
-accepts 2,099 ported entries with no rejected splices. This source coverage does
-not establish gameplay, normal frontend startup, or milestone parity; all four
-product gates remain open. See the latest HANDOFF for exact evidence paths.
+Native source recovery has reached 2,048 complete bodies plus 176 supporting
+fields (batch63, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
+Linux client/server builds and Apollo headless join passed; tracked receipts in
+progress/native-checkpoint-2040.json. Eight subsequent bodies are build pending.
+Next build/runtime/test batch at3,040 bodies. Fail-closed generation accepts
+2,224 ported entries with no rejected splices. All four product gates remain
+open. Latest source restores day-phase callback/virtual boundaries, the live
+UFortGlobals accessor, native volume accessor interface and three implementing
+classes, plus live volume bounds-to-box conversion. Larger actor volume lookup,
+membership lifecycle and building attribute delegate bindings have explicit
+uncounted lifts and unresolved effects; they are not ported behavior. See the
+latest HANDOFF for ownership, evidence and next dependency tasks.
 
 
 Native77e0bbb3 / Engineb96f01a60: animated queue/container client PASS131.301s,

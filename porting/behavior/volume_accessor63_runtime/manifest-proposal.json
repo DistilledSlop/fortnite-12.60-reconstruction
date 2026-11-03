@@ -1,0 +1,13 @@
+{
+  "status": "proposal_unintegrated_unbuilt",
+  "method_name": "NativeGetVolume",
+  "method_name_is_provisional": true,
+  "interface": "IFortVolumeAccessor",
+  "return_type": "AFortVolume*",
+  "native_vtable_byte_offset": 16,
+  "entries": [
+    {"class": "AFortMinigame", "interface_offset": 552, "vtable": "0x146085b68", "body": "0x1420974d0", "result": "Volume"},
+    {"class": "AFortMinigameSettingsBuilding", "interface_offset": 544, "vtable": "0x14622d920", "body": "0x142702350", "result": "SettingsVolume"},
+    {"class": "AFortVolume", "interface_offset": 664, "vtable": "0x145f62390", "body": "0x14165b340", "result": "this"}
+  ]
+}

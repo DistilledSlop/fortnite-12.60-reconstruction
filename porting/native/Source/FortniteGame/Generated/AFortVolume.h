@@ -19,11 +19,13 @@
 #include "FOnShowPublishWatermarkChanged.h"
 #include "FOnVolumePerformanceMetricsUpdated.h"
 #include "FVolumeActorStats.h"
+#include "Math/Box.h"
 #include "Math/BoxSphereBounds.h"
 #include "Math/Vector.h"
 #include "SharedFortGameLog.h"
 #include "Stats/Stats.h"
 #include "UFortMutatorOwner.h"
+#include "UFortVolumeAccessor.h"
 #include "UObject/Object.h"
 
 class AActor;
@@ -42,7 +44,7 @@ class UStaticMeshComponent;
 #include "AFortVolume.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortVolume : public AGameplayVolume, public IFortMutatorOwner
+class FORTNITEGAME_API AFortVolume : public AGameplayVolume, public IFortVolumeAccessor, public IFortMutatorOwner
 {
 	GENERATED_BODY()
 
@@ -225,5 +227,7 @@ public:
 	void NativeGetLocationBounds(FBoxSphereBounds& OutBounds) const;
 	bool NativeContainsLocation(const FVector& Location) const;
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
+	virtual AFortVolume* NativeGetVolume();
+	FBox NativeGetBoundsBox() const;
 };
 

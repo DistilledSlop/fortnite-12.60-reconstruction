@@ -2334,6 +2334,10 @@ _dayphase_callback_spec = _common_activation_import.spec_from_file_location(
     "dayphase_callback60_policy", os.path.join(os.path.dirname(__file__), "behavior", "dayphase_callback60_runtime", "source_policy.py"))
 _dayphase_callback_policy = _common_activation_import.module_from_spec(_dayphase_callback_spec)
 _dayphase_callback_spec.loader.exec_module(_dayphase_callback_policy)
+_volume_accessor_spec = _common_activation_import.spec_from_file_location(
+    "volume_accessor63_policy", os.path.join(os.path.dirname(__file__), "behavior", "volume_accessor63_runtime", "source_policy.py"))
+_volume_accessor_policy = _common_activation_import.module_from_spec(_volume_accessor_spec)
+_volume_accessor_spec.loader.exec_module(_volume_accessor_policy)
 _definition_queries_spec = _common_activation_import.spec_from_file_location(
     "definition_queries_signature_policy", os.path.join(os.path.dirname(__file__), "behavior", "definition_broad53_runtime", "source_policy.py"))
 _definition_queries_policy = _common_activation_import.module_from_spec(_definition_queries_spec)
@@ -2566,6 +2570,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _item_tag_interface_policy.apply(model, block, owner_fns)
     model = _pawn_ability_interface_policy.apply(model, block, owner_fns)
     model = _native_checkpoint2040_policy.apply(model)
+    model = _volume_accessor_policy.apply(model, block, owner_fns)
     model = _athena_mode_policy.apply(model, block, owner_fns)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)
@@ -3454,6 +3459,7 @@ def render_interface_header(name, source_label, api):
         "#include \"CoreMinimal.h\"",
         "#include \"UObject/Interface.h\"",
         *(['#include "McpProfileItem.h"'] if name == "UMcpItemAware" else []),
+        *_volume_accessor_policy.interface_preamble(name),
         "",
         "#include \"%s.generated.h\"" % name,
         "",
@@ -3468,6 +3474,7 @@ def render_interface_header(name, source_label, api):
         "\tGENERATED_IINTERFACE_BODY()",
         *_mutator_owner_policy.interface_declarations(name),
         *_controller_analytics_policy.interface_declarations(name),
+        *_volume_accessor_policy.interface_declarations(name),
         "};",
         "",
     ]

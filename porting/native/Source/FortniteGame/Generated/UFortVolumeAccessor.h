@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+class AFortVolume;
 
 #include "UFortVolumeAccessor.generated.h"
 
@@ -16,5 +17,7 @@ class FORTNITEGAME_API UFortVolumeAccessor : public UInterface
 class FORTNITEGAME_API IFortVolumeAccessor
 {
 	GENERATED_IINTERFACE_BODY()
+public:
+    virtual AFortVolume* NativeGetVolume() = 0;
 };
 

@@ -45,6 +45,7 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 #include "UFortMutatorOwner.h"
+#include "UFortVolumeAccessor.h"
 #include "UObject/Object.h"
 
 class AFortGameplayMutator;
@@ -63,7 +64,7 @@ class UFortWorldItemDefinition;
 #include "AFortMinigame.generated.h"
 
 UCLASS(config=Engine, abstract)
-class FORTNITEGAME_API AFortMinigame : public AInfo, public IFortMutatorOwner
+class FORTNITEGAME_API AFortMinigame : public AInfo, public IFortVolumeAccessor, public IFortMutatorOwner
 {
 	GENERATED_BODY()
 
@@ -629,5 +630,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
+	virtual AFortVolume* NativeGetVolume();
 };
 

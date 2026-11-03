@@ -1,0 +1,159 @@
+{
+ "_meta": {
+  "generated": "2026-11-03T06:37:07",
+  "elapsed_s": 11.3,
+  "count": 9,
+  "rolled_back": true,
+  "project_files_changed": [
+   "/opt/fortnite/ghidra-projects/fortnite-slim.rep/idata/~index.bak",
+   "/opt/fortnite/ghidra-projects/fortnite-slim.rep/idata/~index.dat",
+   "/opt/fortnite/ghidra-projects/fortnite-slim.rep/project.prp",
+   "/opt/fortnite/ghidra-projects/fortnite-slim.rep/versioned/~index.bak",
+   "/opt/fortnite/ghidra-projects/fortnite-slim.rep/versioned/~index.dat"
+  ]
+ },
+ "functions": [
+  {
+   "address": "0x141c93b20",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_141c93b20",
+   "body_bytes": 813,
+   "instructions": 235,
+   "direct_callees": 7,
+   "indirect_calls": 2,
+   "callers": 7,
+   "ref_counts": {
+    "data": 3,
+    "call": 4
+   }
+  },
+  {
+   "address": "0x141c55d00",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_141c55d00",
+   "body_bytes": 150,
+   "instructions": 45,
+   "direct_callees": 1,
+   "indirect_calls": 0,
+   "callers": 3,
+   "ref_counts": {
+    "data": 1,
+    "call": 2
+   }
+  },
+  {
+   "address": "0x14271f760",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_14271f760",
+   "body_bytes": 178,
+   "instructions": 32,
+   "direct_callees": 1,
+   "indirect_calls": 0,
+   "callers": 6,
+   "ref_counts": {
+    "data": 2,
+    "call": 5
+   }
+  },
+  {
+   "address": "0x1428ee970",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_1428ee970",
+   "body_bytes": 178,
+   "instructions": 32,
+   "direct_callees": 1,
+   "indirect_calls": 0,
+   "callers": 80,
+   "ref_counts": {
+    "data": 4,
+    "call": 110
+   }
+  },
+  {
+   "address": "0x141e9a660",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_141e9a660",
+   "body_bytes": 43,
+   "instructions": 12,
+   "direct_callees": 0,
+   "indirect_calls": 1,
+   "callers": 3,
+   "ref_counts": {
+    "data": 1,
+    "call": 2
+   }
+  },
+  {
+   "address": "0x1442e74f0",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_1442e74f0",
+   "body_bytes": 172,
+   "instructions": 46,
+   "direct_callees": 3,
+   "indirect_calls": 0,
+   "callers": 80,
+   "ref_counts": {
+    "data": 1,
+    "call": 209
+   }
+  },
+  {
+   "address": "0x141748280",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_141748280",
+   "body_bytes": 57,
+   "instructions": 15,
+   "direct_callees": 0,
+   "indirect_calls": 0,
+   "callers": 3,
+   "ref_counts": {
+    "call": 3
+   }
+  },
+  {
+   "address": "0x143f67a70",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_143f67a70",
+   "body_bytes": 131,
+   "instructions": 41,
+   "direct_callees": 1,
+   "indirect_calls": 0,
+   "callers": 17,
+   "ref_counts": {
+    "data": 1,
+    "call": 20
+   }
+  },
+  {
+   "address": "0x144680860",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_144680860",
+   "body_bytes": 39,
+   "instructions": 11,
+   "direct_callees": 0,
+   "indirect_calls": 0,
+   "callers": 80,
+   "ref_counts": {
+    "call": 298
+   }
+  }
+ ]
+}

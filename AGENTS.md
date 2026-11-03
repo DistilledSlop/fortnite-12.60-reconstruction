@@ -81,6 +81,6 @@ give it bounded independent source batches with clear file ownership. Keep one
 Native promotion/build stream and skip visual work until the user resumes it.
 
 User checkpoint cadence: run builds/runtime/tests only after roughly 1,000 new
-native function bodies. Last tested baseline: 1,040 bodies; next about 2,040.
+native function bodies. Last tested baseline: 2,040 bodies; next about 3,040.
 Keep source generation fail-closed, commit and push completed source immediately,
 and explicitly label bodies added since the tested baseline as build pending.

@@ -17,6 +17,12 @@ void AFortMinigameSettingsBuilding::OnRep_SettingsVolume()
 	// Body not recovered: reflection-derived stub.
 }
 
+AFortVolume* AFortMinigameSettingsBuilding::NativeGetVolume()
+{
+	// CONFIDENCE: HIGH
+	return SettingsVolume;
+}
+
 void AFortMinigameSettingsBuilding::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

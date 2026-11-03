@@ -1,0 +1,19 @@
+[
+  {
+    "function": "NativeGetBoundsBox",
+    "kind": "helper",
+    "signature": "FBox NativeGetBoundsBox() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/volume_geometry63_runtime/NativeGetBoundsBox.inc",
+    "includes": [
+      "Math/Box.h",
+      "Math/BoxSphereBounds.h"
+    ],
+    "address": "0x141c756c0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Exact live bounds-to-box helper. No forced initialization when original bounds helper leaves its output untouched.",
+    "class": "AFortVolume"
+  }
+]

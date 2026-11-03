@@ -5,6 +5,7 @@
 #include "EVolumeShape.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "Math/Box.h"
 #include "Math/BoxSphereBounds.h"
 #include "Math/Vector.h"
 #include "SharedFortGameLog.h"
@@ -156,6 +157,21 @@ void AFortVolume::NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMu
 	{
 	    OutMutators.Append(Component->Mutators);
 	}
+}
+
+AFortVolume* AFortVolume::NativeGetVolume()
+{
+	// CONFIDENCE: HIGH
+	return this;
+}
+
+FBox AFortVolume::NativeGetBoundsBox() const
+{
+	// CONFIDENCE: HIGH
+	// Native 0x141c756c0: get the live bounds once, then form both box corners.
+	FBoxSphereBounds Bounds;
+	NativeGetLocationBounds(Bounds);
+	return FBox(Bounds.Origin - Bounds.BoxExtent, Bounds.Origin + Bounds.BoxExtent);
 }
 
 void AFortVolume::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
