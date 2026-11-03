@@ -1,10 +1,38 @@
 #!/bin/sh
 # Regenerate the port progress dashboard after each commit and append the
 # commit's history point. Finish the refresh before the hook returns so process
-# cleanup cannot discard a detached job. Never stage files or fail the commit.
+# cleanup cannot discard a detached job. Never fail the commit.
+#
+# On main it also publishes README.md and docs/ (publish.py) and, at most once
+# per PROGRESS_REFRESH_MIN minutes (default 10), commits only those paths as a
+# "Refresh published dashboard" commit so the GitHub README stays current.
 root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
 gen="$root/porting/generated"
 mkdir -p "$gen" 2>/dev/null || exit 0
-(cd "$root" && python3 -I porting/progress/progress.py) \
-  >>"$gen/progress-hook.log" 2>&1 </dev/null || :
+log="$gen/progress-hook.log"
+(cd "$root" && python3 -I porting/progress/progress.py) >>"$log" 2>&1 </dev/null || :
+
+# The refresh commit re-enters this hook; do not publish again from it.
+[ -n "$PROGRESS_REFRESH" ] && exit 0
+[ "$(git -C "$root" symbolic-ref --short -q HEAD)" = "main" ] || exit 0
+gitdir=$(git -C "$root" rev-parse --git-dir)
+for s in rebase-merge rebase-apply MERGE_HEAD CHERRY_PICK_HEAD REVERT_HEAD; do
+  [ -e "$gitdir/$s" ] && exit 0
+done
+
+(
+  cd "$root" || exit 0
+  python3 -I porting/progress/publish.py >>"$log" 2>&1 </dev/null || exit 0
+  paths="README.md docs"
+  git diff --quiet -- $paths && exit 0
+  last=$(git log -1 --format=%ct --grep='^Refresh published dashboard' 2>/dev/null)
+  now=$(date +%s)
+  min=${PROGRESS_REFRESH_MIN:-10}
+  [ -n "$last" ] && [ $((now - last)) -lt $((min * 60)) ] && exit 0
+  snap=$(git rev-parse --short=8 HEAD)
+  PROGRESS_REFRESH=1 git commit -q --only -m "Refresh published dashboard at $snap
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>" -- $paths \
+    >>"$log" 2>&1 </dev/null || :
+) || :
 exit 0
