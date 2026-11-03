@@ -10,6 +10,13 @@ bool UFortGadgetItemDefinition::HasChargeUp() const
 	return bHasChargeUp;
 }
 
+bool UFortGadgetItemDefinition::HasTrackedAttributes() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return TrackedAttributes.Num() > 0;
+}
+
 UFortWorldItemDefinition* UFortGadgetItemDefinition::GetAmmoWorldItemDefinitionNative() const
 {
 	// CONFIDENCE: HIGH

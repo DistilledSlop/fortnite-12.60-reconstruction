@@ -928,6 +928,9 @@ public:
 	void ServerTeleportNearLocation_Implementation(const FVector& ActorLocation);
 	bool ServerTeleportNearLocation_Validate(const FVector& ActorLocation);
 
+	UFUNCTION(BlueprintCallable)
+	void StartSpinning(float Value, bool bFallingOnly, bool bAdjustForInputYawScale);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool WasDBNOOnDeath() const;
 

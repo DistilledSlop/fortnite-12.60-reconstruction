@@ -2,6 +2,62 @@
 #include "AFortWeaponRanged_Ostrich.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortWeaponRanged_Ostrich::GetAimPointCacheRange() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return AimPointCacheRange.GetValueAtLevel(0.0f, nullptr);
+}
+
+int32 AFortWeaponRanged_Ostrich::GetAmmoPerCharge() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return FMath::TruncToInt(AmmoPerCharge.GetValueAtLevel(0.0f, nullptr));
+}
+
+float AFortWeaponRanged_Ostrich::GetAutofireDelay() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return AutofireDelay.GetValueAtLevel(0.0f, nullptr);
+}
+
+float AFortWeaponRanged_Ostrich::GetFireRate() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return FireRate.GetValueAtLevel(0.0f, nullptr);
+}
+
+int32 AFortWeaponRanged_Ostrich::GetMaxRockets() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return FMath::TruncToInt(MaxRockets.GetValueAtLevel(0.0f, nullptr));
+}
+
+int32 AFortWeaponRanged_Ostrich::GetMinRocketsForFiring() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return FMath::TruncToInt(MinRocketsForFiring.GetValueAtLevel(0.0f, nullptr));
+}
+
+float AFortWeaponRanged_Ostrich::GetRocketsCooldown() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return RocketsCooldown.GetValueAtLevel(0.0f, nullptr);
+}
+
+float AFortWeaponRanged_Ostrich::GetTimeToLoadOneAmmoCharge() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return TimeToLoadOneAmmoCharge.GetValueAtLevel(0.0f, nullptr);
+}
+
 void AFortWeaponRanged_Ostrich::OnRep_RocketsCooldown()
 {
 	// Body not recovered: reflection-derived stub.

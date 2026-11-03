@@ -195,6 +195,9 @@ public:
 	bool RequiresPlayerPlaceableAttachmentActors() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldAllowAnyFloorPlacement() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldAllowPlacementOnBuildings() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -214,6 +217,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldConsumeWhenPlaced() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldDestroySmallObjectsWhenPlaced() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldDisableLocationLerpWhilePlacing() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldDisableRotationLerpWhilePlacing() const;

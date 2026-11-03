@@ -45,4 +45,11 @@ def sources():
             if hashlib.sha256(stream.read(item['length'])).hexdigest() != item['sha256']:
                 raise ValueError('profile bridge original capture changed: ' + item['begin'])
     result['SharedProfileSysLog.h'] = banner + (bridge_dir / 'SharedProfileSysLog.h').read_text()
+    overlay_dir = HERE.parent / 'profile_overlay_lookup_batch_runtime'
+    with image.open('rb') as stream:
+        for item in json.loads((overlay_dir / 'native-evidence.json').read_text())['windows']:
+            stream.seek(int(item['begin'], 16) - 0x140000000)
+            if hashlib.sha256(stream.read(item['length'])).hexdigest() != item['sha256']:
+                raise ValueError('profile overlay original capture changed: ' + item['begin'])
+    result['ProfileOverlayState.h'] = banner + (overlay_dir / 'ProfileOverlayState.h').read_text()
     return result

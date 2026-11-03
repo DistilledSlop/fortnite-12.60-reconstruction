@@ -1,0 +1,36 @@
+[
+  {
+    "function": "NativeRecomputeOverlayProfileGroup",
+    "kind": "helper",
+    "signature": "int32 NativeRecomputeOverlayProfileGroup(const FMcpProfileGroupMap& BaseGroups, const FMcpProfileOverlayMap& Overrides, const FString& Key, FMcpProfileItemArray& OutItems)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_overlay_lookup_batch_runtime/NativeRecomputeOverlayProfileGroup.inc",
+    "address": "0x1410fbda0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "ProfileOverlayState.h"
+    ],
+    "notes": "Assigned static source binding over borrowed state of the actual derived backend; owner, population, overlay writers, dirty marking and GC traversal remain unclosed. Results are borrowed; see HANDOFF.",
+    "class": "UMcpProfile"
+  },
+  {
+    "function": "NativeFindOverlayProfileGroup",
+    "kind": "helper",
+    "signature": "const FMcpProfileItemArray* NativeFindOverlayProfileGroup(const FMcpProfileGroupMap& BaseGroups, FMcpProfileOverlayState& Overlay, const FString& Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_overlay_lookup_batch_runtime/NativeFindOverlayProfileGroup.inc",
+    "address": "0x1410fe220",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "ProfileOverlayState.h"
+    ],
+    "notes": "Assigned static source binding over borrowed state of the actual derived backend; owner, population, overlay writers, dirty marking and GC traversal remain unclosed. Results are borrowed; see HANDOFF.",
+    "class": "UMcpProfile"
+  }
+]

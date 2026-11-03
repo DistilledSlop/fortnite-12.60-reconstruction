@@ -158,6 +158,30 @@ public:
 	UPROPERTY(Transient)
 	FTimerHandle ServerSideRocketCooldownTimer;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAimPointCacheRange() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetAmmoPerCharge() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAutofireDelay() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetFireRate() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetMaxRockets() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetMinRocketsForFiring() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetRocketsCooldown() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTimeToLoadOneAmmoCharge() const;
+
 	UFUNCTION()
 	void OnRep_RocketsCooldown();
 

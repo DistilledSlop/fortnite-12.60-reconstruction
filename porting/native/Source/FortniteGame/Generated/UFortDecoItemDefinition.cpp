@@ -49,6 +49,13 @@ bool UFortDecoItemDefinition::RequiresPlayerPlaceableAttachmentActors() const
 	return bRequiresPlayerPlaceableAttachmentActors;
 }
 
+bool UFortDecoItemDefinition::ShouldAllowAnyFloorPlacement() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return bAllowAnyFloorPlacement;
+}
+
 bool UFortDecoItemDefinition::ShouldAllowPlacementOnBuildings() const
 {
 	// Original address: 0x1428d1ba0.
@@ -103,6 +110,20 @@ bool UFortDecoItemDefinition::ShouldConsumeWhenPlaced() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return bConsumeWhenPlaced;
+}
+
+bool UFortDecoItemDefinition::ShouldDestroySmallObjectsWhenPlaced() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return bDestroySmallObjectsWhenPlaced && !bForceIgnoreOverlapTest;
+}
+
+bool UFortDecoItemDefinition::ShouldDisableLocationLerpWhilePlacing() const
+{
+	// CONFIDENCE: HIGH
+	// Native wrapper and complete body windows are pinned in native-evidence.json.
+	return bDisableLocationLerpWhilePlacing;
 }
 
 bool UFortDecoItemDefinition::ShouldDisableRotationLerpWhilePlacing() const

@@ -1,0 +1,5 @@
+# StartSpinning recovery
+
+Reflected exec `porting/generated/decomp/AFortPawn/StartSpinning.c` at `0x142a20d90` parses Value, bFallingOnly, bAdjustForInputYawScale then calls native `0x1423532a0`. Full original native decompile, assembly and metadata: `porting/generated/callee_probe/blocking/0x1423532a0.{c,asm,json}`. The `0x142a3d9f0` class getter is AFortPlayerController, identified in `porting/behavior/controller_analytics_provider_binding_runtime/README.md`; +0x424 is the inherited PlayerController InputYawScale, supported by the reflected parameter name. Authority role is compared to 3. The store at pawn +0x63c uses already-canonical `NativeRecoveredBool_0x63c`.
+
+Only this candidate was closed. Other surveyed probes included gameplay_rough_pass_1 and reflected AFortGameModeAthena/AFortGameStateAthena/AFortPawn executors: the larger aircraft and time-of-day bodies involve unresolved native dependencies, and do not support faithful complete bodies under the task constraints. No tests, builds, runtime or Ghidra were run. Raw native body SHA-256 is recorded in native-evidence.json.
