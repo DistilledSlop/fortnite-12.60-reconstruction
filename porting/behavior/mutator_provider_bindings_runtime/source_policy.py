@@ -1,5 +1,7 @@
 """Restore original owner/context interfaces with recovered concrete callbacks."""
 BLOCKS = {
+    'AFortVolume': ('0x1465647c0', 'IFortMutatorOwner'),
+    'AFortMinigame': ('0x146446ef0', 'IFortMutatorOwner'),
     'AFortGameModeAthena': ('0x1463cf250', 'IFortMutatorOwner'),
     'AFortGameStateAthena': ('0x1463ea150', 'IFortMutatorOwner'),
     'AFortPlayerStateAthena': ('0x1464d3e50', 'IFortMutatorContext'),

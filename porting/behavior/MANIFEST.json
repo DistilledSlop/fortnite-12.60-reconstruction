@@ -33119,5 +33119,88 @@
       "SharedFortGameLog.h"
     ],
     "notes": "Assigned override name and source signature. Slot +0x2a8; redirects TemplateId, then derives key using colon only. See HANDOFF."
+  },
+  {
+    "function": "NativeSetItemGuidFromString",
+    "kind": "helper",
+    "signature": "bool NativeSetItemGuidFromString(FFortItemEntry& Entry, FString ItemId)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/worlditem_entry_helpers_runtime/NativeSetItemGuidFromString.inc",
+    "address": "0x142038870",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned static binding and name. Native takes the string by value; Parse writes directly into ItemGuid and its result is returned.",
+    "class": "UFortWorldItem",
+    "includes": [
+      "Misc/Guid.h"
+    ]
+  },
+  {
+    "function": "NativeSetEntryParentInventory",
+    "kind": "helper",
+    "signature": "void NativeSetEntryParentInventory(FFortItemEntry& Entry, AFortInventory* Inventory, bool bReplicatedCopy)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/worlditem_entry_helpers_runtime/NativeSetEntryParentInventory.inc",
+    "address": "0x142038ae0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned static binding and name. Native assigns the weak parent pointer before the replicated-copy flag.",
+    "class": "UFortWorldItem"
+  },
+  {
+    "class": "AFortVolume",
+    "function": "NativeAppendOwnerMutators",
+    "kind": "helper",
+    "signature": "void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/volume_mutator_owner_runtime/OwnerAppend.inc",
+    "address": "0x141c79ac0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned interface override; context unused. See README.",
+    "includes": [
+      "UObject/Object.h"
+    ]
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "NativeAppendOwnerMutators",
+    "kind": "helper",
+    "signature": "void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/volume_mutator_owner_runtime/OwnerAppend.inc",
+    "address": "0x142092410",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned interface override; context unused. See README.",
+    "includes": [
+      "UObject/Object.h"
+    ]
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "NativeQueryInfiniteAmmoRule",
+    "kind": "helper",
+    "signature": "bool NativeQueryInfiniteAmmoRule(AFortGameStateAthena* GameState, AFortPlayerStateAthena* PlayerState, UFortWeaponItemDefinition* WeaponDefinition)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/infinite_ammo_typed_rule_runtime/QueryRule.inc",
+    "address": "0x1419b0920",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Stats/Stats.h",
+      "GameFramework/Actor.h"
+    ],
+    "notes": "Assigned static binding; original rule plus local iterator specialized to concrete PlayerState context. Generic UObject context fallback remains unported. See README and native-evidence."
   }
 ]

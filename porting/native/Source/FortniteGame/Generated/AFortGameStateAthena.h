@@ -70,10 +70,12 @@
 #include "FStormCapDamageThresholdInfo.h"
 #include "FTotalPlayers.h"
 #include "FUpdateNamedPoiColorDelegate.h"
+#include "GameFramework/Actor.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 #include "Misc/DateTime.h"
+#include "Stats/Stats.h"
 #include "Styling/SlateBrush.h"
 #include "UFortMutatorOwner.h"
 #include "UObject/Object.h"
@@ -87,6 +89,7 @@ class AFortBroadcastSpectatorInfo;
 class AFortGameplayMutator;
 class AFortLocalizationService;
 class AFortPlayerState;
+class AFortPlayerStateAthena;
 class AFortProjectileBase;
 class AFortPropertyOverrideReplShared;
 class AFortSafeZoneIndicator;
@@ -101,6 +104,7 @@ class UFortGameStateComponent_ActiveEventManager;
 class UFortGameStateComponent_Telemetry;
 class UFortMutatorListComponent;
 class UFortPlaylistAthena;
+class UFortWeaponItemDefinition;
 class UMaterialInstanceDynamic;
 class UMaterialInterface;
 class UMaterialParameterCollection;
@@ -1100,5 +1104,6 @@ public:
 	void SetAircraftLocked(bool bLocked);
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 	AFortVolumeManager* NativeGetVolumeManager() const;
+	static bool NativeQueryInfiniteAmmoRule(AFortGameStateAthena* GameState, AFortPlayerStateAthena* PlayerState, UFortWeaponItemDefinition* WeaponDefinition);
 };
 

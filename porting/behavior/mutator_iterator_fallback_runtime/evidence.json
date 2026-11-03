@@ -1,0 +1,10 @@
+{
+  "windows": [
+    {"address":"0x141c7c5c0","length":1220,"sha256":"319950ec8af88c84c15a777424381ccbbace6eee4c028b1ca55fd74eaa24fafc"},
+    {"address":"0x141c6a510","length":1026,"sha256":"bdd20cf28b71fe7d1c4c03792c9b7920b86690245263506898fd7f4929af1a6c"},
+    {"address":"0x140782160","length":298,"sha256":"f7daae50df0673770dba7389817fa5af0efaaef49953e926f475e3a047be4da1"},
+    {"address":"0x141c07130","length":8,"sha256":"13702494c8bf20bc98a1e83a17136139f15caaa4c6e7f39b239780155496fba8"}
+  ],
+  "field_bindings": {"AFortVolumeManager.VolumeObjects":"0x278","ABuildingSMActor.StaticMeshComponent":"0x768","AFortVolume.native_weak_actor_set":"0x318","AFortVolume.BoundsShape":"0x560"},
+  "global_recursion_guard":"0x14812316c"
+}

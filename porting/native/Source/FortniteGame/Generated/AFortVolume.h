@@ -23,12 +23,14 @@
 #include "Math/Vector.h"
 #include "SharedFortGameLog.h"
 #include "Stats/Stats.h"
+#include "UFortMutatorOwner.h"
 #include "UObject/Object.h"
 
 class AActor;
 class AAthenaNavInvokerBox;
 class AFortAthenaCreativePortal;
 class AFortCreativeTimerObjective;
+class AFortGameplayMutator;
 class AFortMissionStormShield;
 class AFortPlayerController;
 class UAsyncTaskQueue;
@@ -40,7 +42,7 @@ class UStaticMeshComponent;
 #include "AFortVolume.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortVolume : public AGameplayVolume
+class FORTNITEGAME_API AFortVolume : public AGameplayVolume, public IFortMutatorOwner
 {
 	GENERATED_BODY()
 
@@ -222,5 +224,6 @@ public:
 	static void NativeAppendMinigameOwner(AFortVolume* Volume, TArray<UObject*>& OutOwners);
 	void NativeGetLocationBounds(FBoxSphereBounds& OutBounds) const;
 	bool NativeContainsLocation(const FVector& Location) const;
+	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 };
 

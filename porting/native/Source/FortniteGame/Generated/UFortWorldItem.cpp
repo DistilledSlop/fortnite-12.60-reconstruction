@@ -5,6 +5,7 @@
 #include "Dom/JsonValue.h"
 #include "Engine/World.h"
 #include "FFortItemEntry.h"
+#include "Misc/Guid.h"
 #include "SharedFortGameLog.h"
 #include "UFortAlterationItemDefinition.h"
 #include "UFortAssetManager.h"
@@ -150,5 +151,20 @@ bool UFortWorldItem::NativePopulateItemAttributes(FFortItemEntry& Entry, const T
 	    }
 	}
 	return true;
+}
+
+bool UFortWorldItem::NativeSetItemGuidFromString(FFortItemEntry& Entry, FString ItemId)
+{
+	// CONFIDENCE: HIGH
+	// 0x142038870. Parse writes directly into the existing GUID, even on failure.
+	return FGuid::Parse(ItemId, Entry.ItemGuid);
+}
+
+void UFortWorldItem::NativeSetEntryParentInventory(FFortItemEntry& Entry, AFortInventory* Inventory, bool bReplicatedCopy)
+{
+	// CONFIDENCE: HIGH
+	// 0x142038ae0. Preserve assignment order.
+	Entry.ParentInventory = Inventory;
+	Entry.bIsReplicatedCopy = bReplicatedCopy;
 }
 

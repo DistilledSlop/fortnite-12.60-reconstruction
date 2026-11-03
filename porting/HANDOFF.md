@@ -1,5 +1,43 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 33 (2026-11-03)
+
+Canonical source:1,874 bodies +165 supporting fields =2,039 ported entries.
+Five bodies added: Volume/Minigame native mutator-owner callbacks and interface
+inheritance, typed PlayerState infinite-ammo game rule, world-item entry GUID
+parser and parent/replicated-copy assignments. Original owner interface entries,
+constructor vtables and callbacks are identified in volume_mutator_owner_runtime.
+Callbacks reset output and copy first matching component mutators in order.
+
+Rule1419b0920 includes local specialized iterator preserving owner ordering,
+duplicates, weak context resolution, active filtering, repeated context clears,
+virtual callback byte control2, bitwise accumulation and early-stop destruction.
+Its concrete PlayerState context implements IFortMutatorContext: generic context
+fallback cannot execute here. Generic UObject iterator fallback remains unported;
+local embedded iterator methods receive no additional canonical body credit.
+Peer review found no material discrepancies against original decompilation.
+Entry GUID parse preserves by-value FString and direct destination writes;
+parent assignment writes weak pointer before replicated-copy flag.
+
+Promotion33 final accepts2,039/rejects0. Initial missing UObject includes fixed;
+final generation changes4files/restores12,803 mtimes (10 Native files changed
+across batch). Original-byte receipt windows re-read and match for all new
+sources. No builds/runtime/tests. Last tested1,040;834 bodies pending; next2,040
+needs166 bodies. Commit/push source and refresh dashboard.
+
+Full WorldItem population remains unclosed: exact dependencies now documented
+in worlditem_population_runtime. It requires profile lookups, authority inventory
+fast-array/map synchronization and native plus dynamic notification, not a generic
+change signal. Registry population and base initializer control flow recovered
+in profile_registry_population_runtime and profile_initializer_runtime, but group
+state types/ownership still need closure. Mutator generic fallback needs weak actor
+membership and IFortVolumeAccessor; evidence in mutator_iterator_fallback_runtime.
+Workers profile_group_types and profile_registry_support_source investigating
+bounded next dependencies; first owns Ghidra lease. Root sole canonical/generator/
+Native owner. Fresh Terra medium fork_turns none; bounded tasks, economical reads,
+frequent commits/pushes/dashboard. Preserve unrelated graphics. All4 milestones
+and full faithful client/server/visual/audio parity remain open.
+
 ## Native source batch 32 (2026-11-03)
 
 Canonical source:1,869 bodies +165 supporting fields =2,034 ported entries.

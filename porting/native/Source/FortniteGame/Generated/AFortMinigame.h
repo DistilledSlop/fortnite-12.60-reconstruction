@@ -44,7 +44,10 @@
 #include "FSolarisPrototype.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
+#include "UFortMutatorOwner.h"
+#include "UObject/Object.h"
 
+class AFortGameplayMutator;
 class AFortPlayerControllerAthena;
 class AFortPlayerState;
 class AFortVolume;
@@ -60,7 +63,7 @@ class UFortWorldItemDefinition;
 #include "AFortMinigame.generated.h"
 
 UCLASS(config=Engine, abstract)
-class FORTNITEGAME_API AFortMinigame : public AInfo
+class FORTNITEGAME_API AFortMinigame : public AInfo, public IFortMutatorOwner
 {
 	GENERATED_BODY()
 
@@ -622,5 +625,9 @@ protected:
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 };
 

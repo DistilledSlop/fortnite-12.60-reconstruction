@@ -9,6 +9,7 @@
 #include "Dom/JsonValue.h"
 #include "Engine/World.h"
 #include "FFortItemEntry.h"
+#include "Misc/Guid.h"
 #include "SharedFortGameLog.h"
 
 class AFortInventory;
@@ -69,5 +70,7 @@ public:
 	virtual bool NativeWasGifted() const;
 	virtual int32 GetLoadedAmmo() const;
 	static bool NativePopulateItemAttributes(FFortItemEntry& Entry, const TMap<FString, TSharedPtr<FJsonValue>>& Attributes);
+	static bool NativeSetItemGuidFromString(FFortItemEntry& Entry, FString ItemId);
+	static void NativeSetEntryParentInventory(FFortItemEntry& Entry, AFortInventory* Inventory, bool bReplicatedCopy);
 };
 

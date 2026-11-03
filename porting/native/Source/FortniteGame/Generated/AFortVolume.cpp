@@ -10,6 +10,7 @@
 #include "SharedFortGameLog.h"
 #include "Stats/Stats.h"
 #include "UFortMinigameVolumeComponent.h"
+#include "UFortMutatorListComponent.h"
 #include "UObject/Object.h"
 #include "UPawnOverlapComponent.h"
 #include "Net/UnrealNetwork.h"
@@ -143,6 +144,18 @@ bool AFortVolume::NativeContainsLocation(const FVector& Location) const
 	    return Radius * Radius >= (DY * DY + DX * DX) + DZ * DZ;
 	}
 	return false;
+}
+
+void AFortVolume::NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context)
+{
+	// CONFIDENCE: HIGH
+	OutMutators.Reset();
+	UFortMutatorListComponent* Component = static_cast<UFortMutatorListComponent*>(
+	    FindComponentByClass(UFortMutatorListComponent::StaticClass()));
+	if (Component)
+	{
+	    OutMutators.Append(Component->Mutators);
+	}
 }
 
 void AFortVolume::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

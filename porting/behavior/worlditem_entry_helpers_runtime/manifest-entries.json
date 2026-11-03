@@ -1,0 +1,33 @@
+[
+  {
+    "function": "NativeSetItemGuidFromString",
+    "kind": "helper",
+    "signature": "bool NativeSetItemGuidFromString(FFortItemEntry& Entry, FString ItemId)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/worlditem_entry_helpers_runtime/NativeSetItemGuidFromString.inc",
+    "address": "0x142038870",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned static binding and name. Native takes the string by value; Parse writes directly into ItemGuid and its result is returned.",
+    "class": "UFortWorldItem",
+    "includes": [
+      "Misc/Guid.h"
+    ]
+  },
+  {
+    "function": "NativeSetEntryParentInventory",
+    "kind": "helper",
+    "signature": "void NativeSetEntryParentInventory(FFortItemEntry& Entry, AFortInventory* Inventory, bool bReplicatedCopy)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/worlditem_entry_helpers_runtime/NativeSetEntryParentInventory.inc",
+    "address": "0x142038ae0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned static binding and name. Native assigns the weak parent pointer before the replicated-copy flag.",
+    "class": "UFortWorldItem"
+  }
+]
