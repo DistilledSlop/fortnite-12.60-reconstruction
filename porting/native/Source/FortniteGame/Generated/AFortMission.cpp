@@ -13,6 +13,14 @@ void AFortMission::AddCompletionTag(FGameplayTag NewCompletionTag)
 	MissionCompletionTags.AddTag(NewCompletionTag);
 }
 
+void AFortMission::AddCompletionTags(FGameplayTagContainer NewCompletionTagContainer)
+{
+	// CONFIDENCE: high; wrapper, native body, tag-container helper, and reflected field reviewed.
+	{
+		MissionCompletionTags.AppendTags(NewCompletionTagContainer);
+	}
+}
+
 void AFortMission::AddOrRemoveTimerTime_Implementation(float TimeToAdd)
 {
 	// CONFIDENCE: high

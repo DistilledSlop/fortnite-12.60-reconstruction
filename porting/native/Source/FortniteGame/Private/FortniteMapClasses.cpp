@@ -95,3 +95,37 @@ float UFortKismetLibrary::VectorToNormalizedAngleInDegrees(FVector V)
     // Native 0x141f0ac50 uses Unreal's Atan2 and NormalizeAxis implementations.
     return FRotator::NormalizeAxis(FMath::Atan2(V.Y, V.X) * 57.295776f);
 }
+
+// Native 0x140df1140; capture evidence in utility_leaf357_runtime.
+bool UFortKismetLibrary::IsValid_UniqueNetIdRepl(const FUniqueNetIdRepl& InUniqueNetIdRepl)
+{
+    return InUniqueNetIdRepl.IsValid();
+}
+
+
+// Native 0x141f8f0a0; capture evidence in utility_leaf357_runtime.
+void UFortKismetLibrary::InvalidateLatentActionHandle(FFortDialogExternalLatentActionHandle& Handle)
+{
+    Handle.Handle = -1;
+}
+
+
+// Native 0x141f8f570; capture evidence in utility_leaf357_runtime.
+bool UFortKismetLibrary::IsLatentActionHandleValid(const FFortDialogExternalLatentActionHandle& Handle)
+{
+    return Handle.Handle >= 0;
+}
+
+
+// Native 0x141ef9370; capture evidence in utility_leaf357_runtime.
+bool UFortKismetLibrary::IsAssetNull(TSoftObjectPtr<UObject> Asset)
+{
+    return Asset.IsNull();
+}
+
+
+// Native 0x141ef9370: the engine path null check tests the complete None name.
+bool UFortKismetLibrary::IsAssetNull(TSoftObjectPtr<UObject> Asset)
+{
+    return Asset.IsNull();
+}

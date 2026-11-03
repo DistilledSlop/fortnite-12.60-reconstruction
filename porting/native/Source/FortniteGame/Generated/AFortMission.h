@@ -239,6 +239,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void AddCompletionTag(FGameplayTag NewCompletionTag);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void AddCompletionTags(FGameplayTagContainer NewCompletionTagContainer);
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintAuthorityOnly)
 	void AddOrRemoveTimerTime(float TimeToAdd);
 	virtual void AddOrRemoveTimerTime_Implementation(float TimeToAdd);

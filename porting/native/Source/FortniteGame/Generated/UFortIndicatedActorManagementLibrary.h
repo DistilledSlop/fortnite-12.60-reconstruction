@@ -6,6 +6,12 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "FIndicatedActorParticleSystemData.h"
+#include "FIndicatedActorScaleAndOpacityData.h"
+#include "Math/Vector.h"
+
+class UParticleSystem;
+
 #include "UFortIndicatedActorManagementLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +20,11 @@ class FORTNITEGAME_API UFortIndicatedActorManagementLibrary : public UBlueprintF
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FIndicatedActorParticleSystemData MakeIndicatedActorParticleSystemData(UParticleSystem* ParticleSystem, FName ActorParamName, FVector Offset, FVector DBNOOffset, FName VectorParamName);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FIndicatedActorScaleAndOpacityData MakeIndicatedActorScaleAndOpacityData(float SmallSizeDistance, float LargestSizeDistance, float SmallScale, float LargestScale, float FarAwayScale, float FarAwayOpacity, float MaxScaleAndFadePercent);
+
 };
 

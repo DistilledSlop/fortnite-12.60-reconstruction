@@ -8,6 +8,8 @@
 #include "NavigationSystem.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FFortClientEventName.h"
+#include "FFortDialogExternalLatentActionHandle.h"
+#include "GameFramework/OnlineReplStructs.h"
 #include "FortniteMapClasses.generated.h"
 
 // Classes that are not in the promoted native set (porting/native_class_set.txt) stay hand-written here.
@@ -60,6 +62,18 @@ class FORTNITEGAME_API UFortKismetLibrary : public UBlueprintFunctionLibrary
     GENERATED_BODY()
 
 public:
+    UFUNCTION(BlueprintPure)
+    static bool IsAssetNull(TSoftObjectPtr<UObject> Asset);
+
+    UFUNCTION(BlueprintPure)
+    static bool IsValid_UniqueNetIdRepl(const FUniqueNetIdRepl& InUniqueNetIdRepl);
+
+    UFUNCTION(BlueprintCallable)
+    static void InvalidateLatentActionHandle(UPARAM(ref) FFortDialogExternalLatentActionHandle& Handle);
+
+    UFUNCTION(BlueprintPure)
+    static bool IsLatentActionHandleValid(const FFortDialogExternalLatentActionHandle& Handle);
+
     UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
     static bool IsMobilePlatform();
 

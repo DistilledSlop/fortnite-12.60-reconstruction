@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "EFortBrushSize.h"
+
 #include "UFortBrushSizeFunctionLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,11 @@ class FORTNITEGAME_API UFortBrushSizeFunctionLibrary : public UBlueprintFunction
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static TEnumAsByte<EFortBrushSize::Type> GrowBrushSize(EFortBrushSize::Type OriginalBrushSize, int32 Steps);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static TEnumAsByte<EFortBrushSize::Type> ShrinkBrushSize(EFortBrushSize::Type OriginalBrushSize, int32 Steps);
+
 };
 
