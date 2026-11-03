@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 
+#include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
 #include "EFortControlRecoveryBehavior.h"
 #include "EFortFootstepSurfaceType.h"
 #include "EFortMovementStyle.h"
@@ -84,7 +86,7 @@ class UWeaponHitNotifyAudioBank;
 #include "AFortPawn.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortPawn : public ACharacter
+class FORTNITEGAME_API AFortPawn : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -939,5 +941,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual bool HasNativeAction(const FGameplayTag& ActionTag);
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 

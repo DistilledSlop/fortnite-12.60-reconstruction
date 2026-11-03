@@ -693,8 +693,14 @@ public:
 	void PlacedByPlacementTool();
 	virtual void PlacedByPlacementTool_Implementation();
 
+	UFUNCTION(BlueprintCallable)
+	void SetCanExportNavigationObstacle(bool InCanExportNavigationObstacle);
+
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetHealthBarIndicatorDifficultyRating(int32 InDisplayLevel);
+
+	UFUNCTION(BlueprintCallable)
+	void SetNavigationModifier(bool bEnableModifier);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
 	bool ShouldDie(float Damage, AController* EventInstigator, AActor* DamageCauser);

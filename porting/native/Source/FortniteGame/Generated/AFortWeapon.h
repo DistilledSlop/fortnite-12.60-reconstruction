@@ -13,6 +13,7 @@
 #include "EFortWeaponTriggerType.h"
 #include "FCosmeticVariantCache.h"
 #include "FFortAbilitySetHandle.h"
+#include "FFortBaseWeaponStats.h"
 #include "FFortEffectDistanceQuality.h"
 #include "FFortGameplayAbilityBehaviorDistanceData.h"
 #include "FMaterialInterfaceArray.h"
@@ -841,5 +842,9 @@ public:
 	bool TryReloadAmmoFromAbility();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual FFortBaseWeaponStats* NativeGetWeaponStats() const;
 };
 

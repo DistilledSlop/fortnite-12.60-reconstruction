@@ -10,6 +10,7 @@
 #include "EFortDisplayTier.h"
 #include "EFortWeaponTriggerType.h"
 #include "Engine/DataTable.h"
+#include "FFortBaseWeaponStats.h"
 #include "FFortCreativeTagsHelper.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
@@ -237,5 +238,7 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual UFortWorldItemDefinition* GetAmmoWorldItemDefinitionNative() const;
 	TEnumAsByte<EFortWeaponTriggerType::Type> NativeGetTriggerType() const;
+	static bool NativeSupportsCharge(const FFortBaseWeaponStats& Stats);
+	static int32 NativeAmmoCostForCharge(const FFortBaseWeaponStats& Stats, float ChargeFraction);
 };
 

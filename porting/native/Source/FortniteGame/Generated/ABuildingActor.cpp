@@ -5,6 +5,7 @@
 #include "AFortPlayerState.h"
 #include "Engine/World.h"
 #include "GameFramework/GameStateBase.h"
+#include "NavigationSystem.h"
 #include "UFortBuildingActorSet.h"
 #include "Net/UnrealNetwork.h"
 
@@ -189,11 +190,33 @@ void ABuildingActor::PlacedByPlacementTool_Implementation()
 	return;
 }
 
+void ABuildingActor::SetCanExportNavigationObstacle(bool InCanExportNavigationObstacle)
+{
+	// CONFIDENCE: HIGH
+	// Native 0x141bc4900; reflected exec 0x142738050.
+	if (bCanExportNavigationObstacle != InCanExportNavigationObstacle)
+	{
+	    bCanExportNavigationObstacle = InCanExportNavigationObstacle;
+	    UNavigationSystemV1::UpdateActorInNavOctree(*this);
+	}
+}
+
 void ABuildingActor::SetHealthBarIndicatorDifficultyRating(int32 InDisplayLevel)
 {
 	// Original exec 0x142738310; pure writer 0x141bc4b10.
 	// CONFIDENCE: HIGH
 	this->HealthBarIndicatorDifficultyRating = InDisplayLevel;
+}
+
+void ABuildingActor::SetNavigationModifier(bool bEnableModifier)
+{
+	// CONFIDENCE: HIGH
+	// Native 0x141bc4d30; reflected exec 0x142738450.
+	if (bIsNavigationModifier != bEnableModifier)
+	{
+	    bIsNavigationModifier = bEnableModifier;
+	    UNavigationSystemV1::UpdateActorInNavOctree(*this);
+	}
 }
 
 bool ABuildingActor::ShouldDie_Implementation(float Damage, AController* EventInstigator, AActor* DamageCauser)

@@ -2322,6 +2322,10 @@ _item_tag_interface_spec = _common_activation_import.spec_from_file_location(
     "item_tag_interface_policy", os.path.join(os.path.dirname(__file__), "behavior", "item_tag_interface_runtime", "source_policy.py"))
 _item_tag_interface_policy = _common_activation_import.module_from_spec(_item_tag_interface_spec)
 _item_tag_interface_spec.loader.exec_module(_item_tag_interface_policy)
+_pawn_ability_interface_spec = _common_activation_import.spec_from_file_location(
+    "pawn_ability_interface_policy", os.path.join(os.path.dirname(__file__), "behavior", "pawn_ability_native50_runtime", "source_policy.py"))
+_pawn_ability_interface_policy = _common_activation_import.module_from_spec(_pawn_ability_interface_spec)
+_pawn_ability_interface_spec.loader.exec_module(_pawn_ability_interface_policy)
 _inventory_entry_spec = _common_activation_import.spec_from_file_location(
     "inventory_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "inventory_entry_copy_runtime", "source_policy.py"))
 _inventory_entry_policy = _common_activation_import.module_from_spec(_inventory_entry_spec)
@@ -2546,6 +2550,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _restart_modal_policy.apply(model, block, owner_fns, native_execs)
     model = _client_event_policy.apply(model, block, native_execs)
     model = _item_tag_interface_policy.apply(model, block, owner_fns)
+    model = _pawn_ability_interface_policy.apply(model, block, owner_fns)
     model = _athena_mode_policy.apply(model, block, owner_fns)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)

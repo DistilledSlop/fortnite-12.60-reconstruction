@@ -3,7 +3,9 @@
 #include "EFortItemType.h"
 #include "EFortRarity.h"
 #include "EFortWeaponTriggerType.h"
+#include "FFortBaseWeaponStats.h"
 #include "SharedFortGameLog.h"
+#include "UFortWeaponItemDefinition.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortWeapon::ClientGivenTo_Implementation(APawn* P)
@@ -248,6 +250,15 @@ bool AFortWeapon::TryReloadAmmoFromAbility()
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
 	return false;
+}
+
+FFortBaseWeaponStats* AFortWeapon::NativeGetWeaponStats() const
+{
+	// CONFIDENCE: HIGH
+	// Primary AFortWeapon virtual slot +0x6a8, 0x140696570.
+	const UFortWeaponItemDefinition* Definition = WeaponData;
+	return Definition ? Definition->WeaponStatHandle.GetRow<FFortBaseWeaponStats>(
+	    TEXT("UFortWeaponItemDefinition::GetWeaponStats")) : nullptr;
 }
 
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
