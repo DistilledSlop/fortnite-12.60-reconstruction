@@ -2,6 +2,13 @@
 #include "APhysicsObject.h"
 #include "Net/UnrealNetwork.h"
 
+bool APhysicsObject::CanTeleport() const
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void APhysicsObject::DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color)
 {
 	// Body not recovered: reflection-derived stub.

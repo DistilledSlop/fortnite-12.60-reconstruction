@@ -1204,6 +1204,9 @@ public:
 	UPROPERTY()
 	FOnToggleFullscreenMap OnToggleFullscreenMap;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool CanAlterHostileWalls() const;
+
 	UFUNCTION(Server, Reliable)
 	void Cheat_ClearForcedCosmeticItems();
 	void Cheat_ClearForcedCosmeticItems_Implementation();
@@ -1426,11 +1429,23 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	AFortAIDirectorDataManager* GetAIDirectorDataManager();
 
+	UFUNCTION(BlueprintCallable)
+	bool GetAtNameHomeBaseScreen();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetForceAllowCameraMode() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortMcpProfileCampaign* GetMcpCampaignProfile() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortRegisteredPlayerInfo* GetRegisteredPlayerInfo() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetRevertPlayerListenerChangeFlag() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetUseHoldToSwapPickupSetting() const;
 
 	UFUNCTION()
 	void HandleOutpostInventoryLocalUpdate();
@@ -1446,6 +1461,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsBuildToolOverridden() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsClientTimingOut() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsNearActiveEncounters() const;

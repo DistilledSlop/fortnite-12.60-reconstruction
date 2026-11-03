@@ -63,5 +63,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetRoundIndex() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsActive() const;
+
 };
 

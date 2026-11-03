@@ -342,6 +342,13 @@ bool AFortPlayerPawn::IsSkydivingFromBus() const
 	return bIsSkydivingFromBus && bLocalIsSkydiving;
 }
 
+bool AFortPlayerPawn::IsUsingUmbrella() const
+{
+	// Exact original shared stub 0x1406801e0.
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 bool AFortPlayerPawn::IsWaterSprintBoosting() const
 {
 	// Behaviour snippet: AFortPlayerPawn::IsWaterSprintBoosting (body only; spliced into the generated member function).
@@ -580,7 +587,9 @@ void AFortPlayerPawn::OnRep_StartedInteractSearch()
 
 void AFortPlayerPawn::OnRep_StoredControlRotation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerPawn::OnRep_VehicleInputStateReliableForReplay()
@@ -596,6 +605,13 @@ void AFortPlayerPawn::OnRep_VehicleInputStateUnreliable()
 void AFortPlayerPawn::OnRep_WaitingForEmoteInteraction()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::PerformSupplementalKillVolumeSweep()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerPawn::ServerChooseGender_Implementation(EFortCustomGender::Type Gender)

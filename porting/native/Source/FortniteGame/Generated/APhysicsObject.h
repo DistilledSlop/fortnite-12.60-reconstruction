@@ -190,6 +190,9 @@ public:
 	UPROPERTY()
 	TArray<TSubclassOf<AActor>> ActorsObjectDiesWhenHitting;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool CanTeleport() const;
+
 	UFUNCTION(Client, Reliable)
 	void DebugDrawImpactBucket(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);

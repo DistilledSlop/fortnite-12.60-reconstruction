@@ -130,5 +130,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UParticleSystemComponent* GetSwingPSC() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetUseAnimTrailsPSC() const;
+
 };
 

@@ -503,6 +503,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetAimPoint() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsDashing() const;
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastDriverInput(bool bIsPrimaryFire);
 	void MulticastDriverInput_Implementation(bool bIsPrimaryFire);

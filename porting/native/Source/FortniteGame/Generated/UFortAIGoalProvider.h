@@ -30,5 +30,8 @@ public:
 	UPROPERTY(Transient)
 	UFortAIEncounterInfo* EncounterInfo;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void UpdateGoals();
+
 };
 

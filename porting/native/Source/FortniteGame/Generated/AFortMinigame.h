@@ -530,6 +530,9 @@ public:
 	UFUNCTION()
 	bool AreEnoughPlayersLeftToContinueMatch();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoesTimerCountDown() const;
+
 	UFUNCTION()
 	void DoRep_UIExtensionTags();
 

@@ -9,3 +9,10 @@ UFortMtxOfferData* UFortStoreFrontOfferInfo::GetOfferDisplayAsset() const
 	return OfferDisplayAsset;
 }
 
+bool UFortStoreFrontOfferInfo::IsCardpack() const
+{
+	// Exact original shared stub 0x1406801e0.
+	// CONFIDENCE: HIGH
+	return false;
+}
+

@@ -10,6 +10,14 @@ float AFortGameStateZone::GetGameDifficulty() const
 	return GameDifficulty;
 }
 
+bool AFortGameStateZone::GetIsDBNODeathEnabled() const
+{
+	// Original address: 0x14292aed0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortGameStateZone::bDBNODeathEnabled;
+}
+
 int32 AFortGameStateZone::GetNumSurvivorsDead() const
 {
 	// Original address: 0x14292af20.
@@ -40,6 +48,22 @@ AFortThreatParticleActor* AFortGameStateZone::GetThreatParticleActor() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
 	return ThreatParticleActor;
+}
+
+bool AFortGameStateZone::IsBuildingAtLayoutRequirementsAllowed() const
+{
+	// Original address: 0x14292bab0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortGameStateZone::bAllowBuildingAtLayoutRequirements;
+}
+
+bool AFortGameStateZone::IsBuildingWithoutLayoutRequirementsAllowed() const
+{
+	// Original address: 0x14292bad0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortGameStateZone::bAllowBuildingWithoutLayoutRequirements;
 }
 
 void AFortGameStateZone::NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType)
@@ -129,7 +153,9 @@ void AFortGameStateZone::OnRep_PlayerSharedTrapAttributes()
 
 void AFortGameStateZone::OnRep_PlayerStructuresChanged()
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortGameStateZone::OnRep_ServerGameplayTagIndexHash()

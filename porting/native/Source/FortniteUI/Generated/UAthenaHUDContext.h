@@ -197,7 +197,13 @@ public:
 	float GetBatteryLevel() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetLocalPlayerWonMatch() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasWifi() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInSelectWidgetToMoveMode() const;
 
 };
 

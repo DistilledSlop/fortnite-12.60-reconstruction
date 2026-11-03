@@ -57,6 +57,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInSkyTube() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMagnetized() const;
+
 	UFUNCTION()
 	void OnRep_Magnetized(bool bPreviousMagnetized);
 

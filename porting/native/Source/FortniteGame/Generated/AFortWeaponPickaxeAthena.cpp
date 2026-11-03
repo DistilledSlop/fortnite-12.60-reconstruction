@@ -81,3 +81,11 @@ UParticleSystemComponent* AFortWeaponPickaxeAthena::GetSwingPSC() const
 	return SwingPSC;
 }
 
+bool AFortWeaponPickaxeAthena::GetUseAnimTrailsPSC() const
+{
+	// Original address: 0x142b4fa60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortWeaponPickaxeAthena::bUseAnimTrailsPSC;
+}
+

@@ -106,5 +106,8 @@ public:
 	UPROPERTY()
 	FRotator FreeFloorPlacementRelativeRotationOffset;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetInFallbackPosition() const;
+
 };
 

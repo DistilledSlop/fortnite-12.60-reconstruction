@@ -23,5 +23,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortMtxOfferData* GetOfferDisplayAsset() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsCardpack() const;
+
 };
 

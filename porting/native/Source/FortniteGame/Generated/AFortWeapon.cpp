@@ -28,6 +28,22 @@ FGuid AFortWeapon::GetInventoryGUID() const
 	return ItemEntryGuid;
 }
 
+bool AFortWeapon::GetIsChargingWeapon() const
+{
+	// Original address: 0x142b45fb0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortWeapon::bIsChargingWeapon;
+}
+
+bool AFortWeapon::GetIsTargeting() const
+{
+	// Original address: 0x142b45fd0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortWeapon::bIsTargeting;
+}
+
 float AFortWeapon::GetProjectilePitchOffset() const
 {
 	// Original address: 0x142b46770.
@@ -44,12 +60,28 @@ UAnimMontage* AFortWeapon::GetReloadAnimation() const
 	return ReloadAnimation;
 }
 
+bool AFortWeapon::GetSupportsAutoFireAtReticleTargetMode() const
+{
+	// Original address: 0x142b46970.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortWeapon::bSupportsAutofireAtReticleTarget;
+}
+
 int32 AFortWeapon::GetTraceThroughBuildingsLimit() const
 {
 	// Original address: 0x142b469e0.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return TraceThroughBuildingsLimit;
+}
+
+bool AFortWeapon::GetTraceThroughPawns() const
+{
+	// Original address: 0x142b46a00.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortWeapon::bTraceThroughPawns;
 }
 
 int32 AFortWeapon::GetTraceThroughPawnsLimit() const

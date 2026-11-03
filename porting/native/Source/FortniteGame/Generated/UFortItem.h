@@ -33,5 +33,53 @@ public:
 	UPROPERTY(Transient)
 	uint8 bTemporaryItemOwningController : 1;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool AllowedToBeLockedInInventory() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool CanBeDropped() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool CanBeUnslotted() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetLoadedAmmo() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetRecycleValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetUpgradeCost() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasDurability() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasEvolutions() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasRarityUpgrade() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsDroppedItem() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsEquipped() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsInStorageVault() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsInventoryOverflowItem() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsSchematic() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsSlotted() const;
+
 };
 

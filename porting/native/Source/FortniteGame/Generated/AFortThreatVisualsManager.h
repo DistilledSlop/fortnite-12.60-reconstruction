@@ -112,14 +112,19 @@ public:
 	void BeginThreatVisualsPrecursor(AActor* SourceActor, const FVector& ThreatLocation);
 	void BeginThreatVisualsPrecursor_Implementation(AActor* SourceActor, const FVector& ThreatLocation);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetCloudsAreHidden() const;
+
 	UFUNCTION()
 	void OnRep_GoalActorLocations();
 
 	UFUNCTION()
 	void OnRep_HideClouds();
 
+private:
 	UFUNCTION()
-	void OnRep_StormWinds();
+	virtual void OnRep_StormWinds();
+public:
 
 	UFUNCTION()
 	void OnRep_ThreatLocations();

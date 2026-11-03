@@ -48,6 +48,14 @@ TEnumAsByte<EFortGameplayState::Type> AFortGameState::GetGameplayState() const
 	return GameplayState;
 }
 
+bool AFortGameState::GetPlayerRespawningBlocked_Temporarily() const
+{
+	// Original address: 0x14290d690.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortGameState::bPlayerRespawningBlocked_Temporarily;
+}
+
 int32 AFortGameState::GetWorldDaysElapsed() const
 {
 	// Original address: 0x14290d6b0.
@@ -71,7 +79,9 @@ void AFortGameState::OnRep_AnnouncementManager()
 
 void AFortGameState::OnRep_CurrentWUID()
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortGameState::OnRep_FeedbackManager()
@@ -84,7 +94,9 @@ void AFortGameState::OnRep_FeedbackManager()
 
 void AFortGameState::OnRep_GameplayState()
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortGameState::OnRep_GameSessionID()
@@ -134,7 +146,9 @@ void AFortGameState::OnRep_WorldDaysElapsed()
 
 void AFortGameState::OnRep_WorldManager()
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortGameState::RunPerfMemCheatScript_Implementation(bool bStartStatFiles)

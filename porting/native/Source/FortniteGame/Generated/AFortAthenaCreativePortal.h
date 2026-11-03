@@ -157,6 +157,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FVector GetHUDPointerOrigin();
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsPublishedPortal() const;
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortVolume* GetLinkedVolume() const;
 

@@ -10,6 +10,22 @@ AFortAircraft* AFortGameStatePvE::GetAircraft() const
 	return Aircraft;
 }
 
+bool AFortGameStatePvE::IsMulchingAllowed() const
+{
+	// Original address: 0x14292bd60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortGameStatePvE::bAllowMulching;
+}
+
+bool AFortGameStatePvE::IsWeaponSwappingEnabled() const
+{
+	// Original address: 0x14292beb0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortGameStatePvE::bWeaponSwappingEnabled;
+}
+
 void AFortGameStatePvE::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

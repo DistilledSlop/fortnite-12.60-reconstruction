@@ -3361,7 +3361,40 @@ public:
 	float GetDelayGiftButtonWhenMFANotEnabledSeconds() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetDisablePurchaseHistoryScreen() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetEnableLFG() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetEnableLobbyGenericLinkButton();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetEnableLocalNotifications() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetEnableMainMenuSocialButton() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetEnableNotifyWhenPlaying() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetEnableSplitWalletTextNotice() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FString GetGameVersion() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsDonutIdleGameEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsFriendLinkEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsPlayerReportingFlowEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetNewSettingsScreenEnabled() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumGameplayMessageChannels() const;
@@ -3373,10 +3406,25 @@ public:
 	float GetRebootDirectiveDisplayTime() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetRebootShowInInventory() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static UFortRuntimeOptions* GetRuntimeOptions();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetShowReplayTrailerButton_Athena() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsGiftingDisabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInviteUIDisabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsShippingBuild() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldShowLeaderboardPrivacySettings() const;
 
 };
 

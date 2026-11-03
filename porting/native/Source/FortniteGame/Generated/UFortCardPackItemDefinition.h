@@ -66,5 +66,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FLinearColor GetPackColor() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsChoicePack() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLlama() const;
+
 };
 

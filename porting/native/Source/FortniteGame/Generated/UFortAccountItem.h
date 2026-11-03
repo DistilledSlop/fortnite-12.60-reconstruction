@@ -46,5 +46,8 @@ public:
 	UPROPERTY()
 	bool bNeedsResolveMarkedAsSeen;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsRefundable() const;
+
 };
 

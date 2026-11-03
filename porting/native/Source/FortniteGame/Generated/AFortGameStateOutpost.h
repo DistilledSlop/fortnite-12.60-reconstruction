@@ -59,6 +59,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerWeaponSkillLevel, Transient)
 	float PlayerWeaponSkillLevel;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoesOutpostStatusAllowMissionStart() const;
+
 	UFUNCTION()
 	void OnRep_PlayerWeaponSkillLevel();
 

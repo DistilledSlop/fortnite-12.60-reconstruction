@@ -57,6 +57,13 @@ bool UFortQuestItemDefinition::IsDeprecated() const
 	return bDeprecated;
 }
 
+bool UFortQuestItemDefinition::IsFeatQuest() const
+{
+	// Exact original shared stub 0x1406801e0.
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 bool UFortQuestItemDefinition::IsHidden() const
 {
 	// Original address: 0x142ab99e0.

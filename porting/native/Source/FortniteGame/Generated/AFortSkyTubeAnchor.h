@@ -22,5 +22,8 @@ public:
 	UPROPERTY()
 	bool bExemptFromShutdown;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsExemptFromShutdown() const;
+
 };
 

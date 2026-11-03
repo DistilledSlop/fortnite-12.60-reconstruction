@@ -176,6 +176,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortPlaysetItemDefinition* GetCurrentPlayset() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetUserGeneratedContentRestricted() const;
+
 	UFUNCTION()
 	void OnRep_BoundsCollisionSetting();
 

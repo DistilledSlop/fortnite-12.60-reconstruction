@@ -85,5 +85,11 @@ public:
 	UPROPERTY()
 	bool bActive;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsActive() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsVisibleToUser() const;
+
 };
 

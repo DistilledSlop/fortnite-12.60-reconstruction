@@ -45,6 +45,12 @@ public:
 	UFortPartyMember* CachedPartyMember;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsInGameSlot() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsLocalPlayerSlot() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEmptySlot() const;
 
 };

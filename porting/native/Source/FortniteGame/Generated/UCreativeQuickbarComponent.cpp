@@ -6,6 +6,14 @@ void UCreativeQuickbarComponent::ClientAddToQuickBarComplete_Implementation(int3
 	// Body not recovered: reflection-derived stub.
 }
 
+bool UCreativeQuickbarComponent::IsQuickbarActive() const
+{
+	// Original address: 0x14276fe50.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UCreativeQuickbarComponent::bIsCreativeQuickbarActive;
+}
+
 void UCreativeQuickbarComponent::ServerAddItemToQuickBar_Implementation(UFortItemDefinition* ItemDefinition, int32 DesiredSlotIndexconst, const FGuid& PreviousItemGuid, bool bUseVolumeToSpawn)
 {
 	// Body not recovered: reflection-derived stub.

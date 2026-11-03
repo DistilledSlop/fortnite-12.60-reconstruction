@@ -129,6 +129,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TEnumAsByte<EFortBrushSize::Type> GetBrushSize() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsHoldKeybind() const;
+
 	UFUNCTION(BlueprintCallable)
 	void SetAxisScale(float NewValue);
 

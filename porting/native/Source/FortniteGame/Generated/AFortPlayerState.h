@@ -312,8 +312,10 @@ public:
 	UFUNCTION()
 	void OnRep_PartyOwner();
 
+protected:
 	UFUNCTION()
-	void OnRep_Platform();
+	virtual void OnRep_Platform();
+public:
 
 	UFUNCTION()
 	void OnRep_PlatformUniqueNetId();

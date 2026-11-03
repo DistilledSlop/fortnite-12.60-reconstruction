@@ -44,5 +44,8 @@ public:
 	UPROPERTY()
 	FText ButtonText;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsFilterActive() const;
+
 };
 

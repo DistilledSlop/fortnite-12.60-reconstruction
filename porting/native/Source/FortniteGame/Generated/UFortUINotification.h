@@ -51,6 +51,9 @@ public:
 	virtual void NotificationShown_Implementation();
 
 	UFUNCTION(BlueprintCallable)
+	virtual void TakeAction();
+
+	UFUNCTION(BlueprintCallable)
 	TSoftObjectPtr<UObject> GetImageOverride();
 
 };

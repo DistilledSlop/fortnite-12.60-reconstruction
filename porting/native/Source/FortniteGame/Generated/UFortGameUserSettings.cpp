@@ -17,12 +17,44 @@ float UFortGameUserSettings::GetDisplayGamma() const
 	return DisplayGamma;
 }
 
+bool UFortGameUserSettings::GetHasSeenCreativeHeatmapTutorial() const
+{
+	// Original address: 0x14292f180.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortGameUserSettings::bHasSeenCreativeHeatmapTutorial;
+}
+
+bool UFortGameUserSettings::GetHasSeenCreativePhoneTutorial() const
+{
+	// Original address: 0x14292f1b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortGameUserSettings::bHasSeenCreativePhoneTutorial;
+}
+
 bool UFortGameUserSettings::GetHasSeenPanningTip() const
 {
 	// Original address: 0x14292f1e0.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete integer immediate comparison; see bulk_integer_predicate_runtime/README.md.
 	return NumTimesSeeingPanningTip >= 3;
+}
+
+bool UFortGameUserSettings::GetHasSeenTapToShoot() const
+{
+	// Original address: 0x14292f210.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortGameUserSettings::bHasSeenTapToShoot;
+}
+
+bool UFortGameUserSettings::GetLastSelectedFillOption() const
+{
+	// Original address: 0x14292f240.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortGameUserSettings::LastSelectedFillOption;
 }
 
 int32 UFortGameUserSettings::GetRenderingAPI() const
@@ -41,12 +73,44 @@ float UFortGameUserSettings::GetSafeZone() const
 	return SafeZone;
 }
 
+bool UFortGameUserSettings::GetShowCareerTabBang() const
+{
+	// Original address: 0x14292f2c0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortGameUserSettings::bShowCareerTabBang;
+}
+
+bool UFortGameUserSettings::GetShowTemperature() const
+{
+	// Original address: 0x14292f2e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortGameUserSettings::bShowTemperature;
+}
+
+bool UFortGameUserSettings::GetUseGPUCrashDebugging() const
+{
+	// Original address: 0x14292f310.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortGameUserSettings::bUseGPUCrashDebugging;
+}
+
 float UFortGameUserSettings::GetUserInterfaceContrast() const
 {
 	// Original address: 0x14292f340.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return UserInterfaceContrast;
+}
+
+bool UFortGameUserSettings::IsHeadphoneModeEnabled() const
+{
+	// Original address: 0x14292f4f0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortGameUserSettings::bUseHeadphoneMode;
 }
 
 void UFortGameUserSettings::SetSafeZone(float Value)

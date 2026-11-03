@@ -8,6 +8,13 @@ void UObjectInteractionBehavior::HandleDuplicateActor_Implementation()
 	return;
 }
 
+bool UObjectInteractionBehavior::IsSelectionSetInValidPosition()
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void UObjectInteractionBehavior::TickMovementMode_Implementation()
 {
 	// Exact original shared stub 0x1406801c0.

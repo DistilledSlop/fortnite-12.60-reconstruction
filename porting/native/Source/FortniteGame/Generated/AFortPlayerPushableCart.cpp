@@ -2,6 +2,14 @@
 #include "AFortPlayerPushableCart.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortPlayerPushableCart::GetIsPlayerPushable() const
+{
+	// Original address: 0x142a88b20.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortPlayerPushableCart::bIsPushable;
+}
+
 uint8 AFortPlayerPushableCart::GetLastReachedCheckPointIndex() const
 {
 	// Original address: 0x142a88b40.
@@ -32,6 +40,14 @@ int32 AFortPlayerPushableCart::GetTotalCheckPoints() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete TArray count query; see bulk_array_query_runtime/README.md.
 	return SplineCheckPointIndices.Num();
+}
+
+bool AFortPlayerPushableCart::IsNearCheckpoint()
+{
+	// Original address: 0x142a89470.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortPlayerPushableCart::bIsNearCheckpoint;
 }
 
 void AFortPlayerPushableCart::OnRep_bIsNearCheckpoint()

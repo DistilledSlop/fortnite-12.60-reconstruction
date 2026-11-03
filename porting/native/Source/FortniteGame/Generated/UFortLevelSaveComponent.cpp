@@ -2,6 +2,22 @@
 #include "UFortLevelSaveComponent.h"
 #include "Net/UnrealNetwork.h"
 
+bool UFortLevelSaveComponent::IsCurated() const
+{
+	// Original address: 0x14297ef00.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortLevelSaveComponent::bCurated;
+}
+
+bool UFortLevelSaveComponent::IsLoaded() const
+{
+	// Original address: 0x14297ef20.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortLevelSaveComponent::bIsLoaded;
+}
+
 void UFortLevelSaveComponent::OnRep_BackupSaveState(EBackupSaveState OldValue)
 {
 	// Body not recovered: reflection-derived stub.

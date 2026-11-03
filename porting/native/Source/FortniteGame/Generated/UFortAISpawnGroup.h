@@ -79,5 +79,14 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumberOfEnemies() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLargeSpawnGroup() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPrototype() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsValidForEnemySpawners() const;
+
 };
 

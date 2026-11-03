@@ -204,6 +204,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetVehicleSeatTransitionTargetIndex() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsClientNotifiedOfPawnDied() const;
+
 	UFUNCTION()
 	void OnRep_VoiceChatChannel();
 

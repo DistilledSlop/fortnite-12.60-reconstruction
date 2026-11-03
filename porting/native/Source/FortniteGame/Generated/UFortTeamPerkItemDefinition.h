@@ -39,5 +39,8 @@ public:
 	UPROPERTY()
 	TArray<FFortTeamPerkLoadoutCondition> TeamPerkLoadoutConditions;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasProgressiveBonus() const;
+
 };
 

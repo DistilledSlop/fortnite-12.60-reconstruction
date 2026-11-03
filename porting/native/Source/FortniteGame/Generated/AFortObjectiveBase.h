@@ -103,6 +103,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortMissionTimerComponent* GetTimerComponent() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsRelevantToASpecificTeam() const;
+
 	UFUNCTION()
 	void OnRep_bIsObjectiveVisible();
 
@@ -111,6 +114,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_ObjectiveVisibilityOverride();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	virtual bool StartPlayingObjective();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

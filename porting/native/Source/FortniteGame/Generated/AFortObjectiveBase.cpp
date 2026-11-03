@@ -10,6 +10,14 @@ UFortMissionTimerComponent* AFortObjectiveBase::GetTimerComponent() const
 	return TimerComponent;
 }
 
+bool AFortObjectiveBase::IsRelevantToASpecificTeam() const
+{
+	// Original address: 0x142a050b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortObjectiveBase::bRelevantToSpecificTeam;
+}
+
 void AFortObjectiveBase::OnRep_bIsObjectiveVisible()
 {
 	// Body not recovered: reflection-derived stub.
@@ -23,6 +31,13 @@ void AFortObjectiveBase::OnRep_ObjectiveStatus()
 void AFortObjectiveBase::OnRep_ObjectiveVisibilityOverride()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortObjectiveBase::StartPlayingObjective()
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortObjectiveBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

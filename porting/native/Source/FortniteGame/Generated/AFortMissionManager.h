@@ -97,6 +97,9 @@ public:
 	UFUNCTION()
 	void OnRep_MissionUIActors();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldShowSecondaryMissionHeaders() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

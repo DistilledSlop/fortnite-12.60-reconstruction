@@ -10,6 +10,14 @@ bool AFortMinigame::AreEnoughPlayersLeftToContinueMatch()
 	return true;
 }
 
+bool AFortMinigame::DoesTimerCountDown() const
+{
+	// Original address: 0x1429bf5e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortMinigame::bTimerCountsDown;
+}
+
 void AFortMinigame::DoRep_UIExtensionTags()
 {
 	// Body not recovered: reflection-derived stub.

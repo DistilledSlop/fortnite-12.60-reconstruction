@@ -78,5 +78,8 @@ public:
 	UPROPERTY(Transient)
 	float AudioWindParam;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasTraction() const;
+
 };
 

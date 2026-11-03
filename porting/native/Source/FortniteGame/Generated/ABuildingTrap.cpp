@@ -20,6 +20,14 @@ void ABuildingTrap::OnRep_ReplicatedAppliedAlterations()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool ABuildingTrap::UseAttachedToWhenTargeted()
+{
+	// Original address: 0x14275eb10.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return ABuildingTrap::bTargetWithAttachedTo;
+}
+
 void ABuildingTrap::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -734,6 +734,14 @@ public:
 	FGuid GetInventoryGUID() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsChargingWeapon() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsTargeting() const;
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetProjectilePitchOffset() const;
 
 protected:
@@ -741,9 +749,17 @@ protected:
 	UAnimMontage* GetReloadAnimation() const;
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetSupportsAutoFireAtReticleTargetMode() const;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetTraceThroughBuildingsLimit() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetTraceThroughPawns() const;
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

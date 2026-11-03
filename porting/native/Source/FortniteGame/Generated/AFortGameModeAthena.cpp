@@ -35,6 +35,14 @@ UFortServerBotManagerAthena* AFortGameModeAthena::GetServerBotManager() const
 	return ServerBotManager;
 }
 
+bool AFortGameModeAthena::IsMapInfoInitialized() const
+{
+	// Original address: 0x1428f0400.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortGameModeAthena::bMapInfoInitialized;
+}
+
 void AFortGameModeAthena::OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAthenaAircraft)
 {
 	// Original address: 0x1428f0440; native body 0x1419520f0.

@@ -172,6 +172,12 @@ public:
 	UPROPERTY(Config)
 	int32 RestoreRateLimitSeconds;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCurated() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLoaded() const;
+
 	UFUNCTION()
 	void OnRep_BackupSaveState(EBackupSaveState OldValue);
 

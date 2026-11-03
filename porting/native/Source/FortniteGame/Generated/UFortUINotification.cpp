@@ -8,6 +8,13 @@ void UFortUINotification::NotificationShown_Implementation()
 	return;
 }
 
+void UFortUINotification::TakeAction()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 TSoftObjectPtr<UObject> UFortUINotification::GetImageOverride()
 {
     return DisplayAsset;

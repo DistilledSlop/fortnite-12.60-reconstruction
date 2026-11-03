@@ -31,6 +31,9 @@ public:
 	int32 LastGoodFrame;
 
 	UFUNCTION(BlueprintCallable)
+	bool IsRecordingFTestPerf();
+
+	UFUNCTION(BlueprintCallable)
 	void StopRecordingFTestPerf();
 
 };

@@ -2,6 +2,13 @@
 #include "AFortPlayerController.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortPlayerController::CanAlterHostileWalls() const
+{
+	// Exact original shared stub 0x1406801e0.
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 void AFortPlayerController::Cheat_ClearForcedCosmeticItems_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
@@ -288,6 +295,22 @@ AFortAIDirectorDataManager* AFortPlayerController::GetAIDirectorDataManager()
 	return AIDirectorDataManager;
 }
 
+bool AFortPlayerController::GetAtNameHomeBaseScreen()
+{
+	// Original address: 0x142a47000.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortPlayerController::bAtNameBaseScreen;
+}
+
+bool AFortPlayerController::GetForceAllowCameraMode() const
+{
+	// Original address: 0x142a47340.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortPlayerController::bForceAllowCameraMode;
+}
+
 UFortMcpProfileCampaign* AFortPlayerController::GetMcpCampaignProfile() const
 {
 	// Original address: 0x142a476c0.
@@ -302,6 +325,22 @@ UFortRegisteredPlayerInfo* AFortPlayerController::GetRegisteredPlayerInfo() cons
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
 	return MyPlayerInfo;
+}
+
+bool AFortPlayerController::GetRevertPlayerListenerChangeFlag() const
+{
+	// Original address: 0x142a479a0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortPlayerController::bRevertPlayerListenerChange;
+}
+
+bool AFortPlayerController::GetUseHoldToSwapPickupSetting() const
+{
+	// Original address: 0x142a47b30.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortPlayerController::bUseHoldToSwapPickup;
 }
 
 void AFortPlayerController::HandleOutpostInventoryLocalUpdate()
@@ -333,6 +372,14 @@ bool AFortPlayerController::IsBuildToolOverridden() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
 	return NativeRecoveredBool_0x14b3;
+}
+
+bool AFortPlayerController::IsClientTimingOut() const
+{
+	// Original address: 0x142a48030.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortPlayerController::bIsClientTimingOut;
 }
 
 bool AFortPlayerController::IsNearActiveEncounters() const

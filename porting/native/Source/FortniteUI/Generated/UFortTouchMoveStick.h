@@ -56,5 +56,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocked() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTouched() const;
+
 };
 

@@ -2,6 +2,14 @@
 #include "AFortGameStateOutpost.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortGameStateOutpost::DoesOutpostStatusAllowMissionStart() const
+{
+	// Original address: 0x14292a9e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortGameStateOutpost::bOutpostStatusAllowsMissionStart;
+}
+
 void AFortGameStateOutpost::OnRep_PlayerWeaponSkillLevel()
 {
 	// Body not recovered: reflection-derived stub.

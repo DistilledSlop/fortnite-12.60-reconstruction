@@ -109,5 +109,8 @@ public:
 	UPROPERTY(Transient)
 	bool bPropLockedInPlace;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPropLockedInPlace() const;
+
 };
 

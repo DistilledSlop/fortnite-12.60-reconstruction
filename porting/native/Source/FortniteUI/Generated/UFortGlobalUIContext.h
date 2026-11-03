@@ -165,7 +165,13 @@ public:
 	bool IsMobileApp() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsUIVisible() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldCloseMenuOnEscape() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldShowRateWidget() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetInputPriority(EInputPriority Priority) const;

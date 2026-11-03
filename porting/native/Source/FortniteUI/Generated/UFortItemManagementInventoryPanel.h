@@ -116,6 +116,9 @@ public:
 	UPROPERTY()
 	UWidget* WidgetToCenter;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanDragItems() const;
+
 	UFUNCTION(BlueprintCallable)
 	bool GetShouldPrioritizeFavorites();
 

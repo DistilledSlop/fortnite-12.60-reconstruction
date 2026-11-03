@@ -12,6 +12,62 @@ float UFortRuntimeOptions::GetDelayGiftButtonWhenMFANotEnabledSeconds() const
 	return DelayGiftButtonWhenMFANotEnabledSeconds;
 }
 
+bool UFortRuntimeOptions::GetDisablePurchaseHistoryScreen() const
+{
+	// Original address: 0x142acdbc0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bDisablePurchaseHistoryScreen;
+}
+
+bool UFortRuntimeOptions::GetEnableLFG() const
+{
+	// Original address: 0x142acdc90.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bAllowLFG;
+}
+
+bool UFortRuntimeOptions::GetEnableLobbyGenericLinkButton()
+{
+	// Original address: 0x142acdcb0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bEnableLobbyGenericLinkButton;
+}
+
+bool UFortRuntimeOptions::GetEnableLocalNotifications() const
+{
+	// Original address: 0x142acdcd0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bEnableLocalNotifications;
+}
+
+bool UFortRuntimeOptions::GetEnableMainMenuSocialButton() const
+{
+	// Original address: 0x142acdcf0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bEnableFriendsListButton;
+}
+
+bool UFortRuntimeOptions::GetEnableNotifyWhenPlaying() const
+{
+	// Original address: 0x142acdd10.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bEnableNotifyWhenPlaying;
+}
+
+bool UFortRuntimeOptions::GetEnableSplitWalletTextNotice() const
+{
+	// Original address: 0x142acdd30.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bEnableSplitWalletTextNotice;
+}
+
 FString UFortRuntimeOptions::GetGameVersion() const
 {
 	// Behaviour snippet: UFortRuntimeOptions::GetGameVersion (body only).
@@ -50,6 +106,38 @@ FString UFortRuntimeOptions::GetGameVersion() const
 	return Result;
 }
 
+bool UFortRuntimeOptions::GetIsDonutIdleGameEnabled()
+{
+	// Original address: 0x142acdf70.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bDonutIdleGameEnabled;
+}
+
+bool UFortRuntimeOptions::GetIsFriendLinkEnabled() const
+{
+	// Original address: 0x142acdf90.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bEnableFriendLink;
+}
+
+bool UFortRuntimeOptions::GetIsPlayerReportingFlowEnabled() const
+{
+	// Original address: 0x142acdfb0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bEnablePlayerReportingFlow;
+}
+
+bool UFortRuntimeOptions::GetNewSettingsScreenEnabled() const
+{
+	// Original address: 0x142ace130.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bEnableNewSettingsScreen;
+}
+
 int32 UFortRuntimeOptions::GetNumGameplayMessageChannels() const
 {
 	// Original address: 0x142ace150.
@@ -74,6 +162,14 @@ float UFortRuntimeOptions::GetRebootDirectiveDisplayTime() const
 	return RebootDirectiveDisplayTime;
 }
 
+bool UFortRuntimeOptions::GetRebootShowInInventory() const
+{
+	// Original address: 0x142ace3a0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bRebootEnableInventoryDisplay;
+}
+
 UFortRuntimeOptions* UFortRuntimeOptions::GetRuntimeOptions()
 {
 	// Original address: 0x142ace3c0
@@ -83,11 +179,43 @@ UFortRuntimeOptions* UFortRuntimeOptions::GetRuntimeOptions()
 	return ::GetMutableDefault<UFortRuntimeOptions>();
 }
 
+bool UFortRuntimeOptions::GetShowReplayTrailerButton_Athena() const
+{
+	// Original address: 0x142ace3f0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bShowReplayTrailerButton_Athena;
+}
+
+bool UFortRuntimeOptions::IsGiftingDisabled() const
+{
+	// Original address: 0x142ace5b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bDisableGifting;
+}
+
+bool UFortRuntimeOptions::IsInviteUIDisabled() const
+{
+	// Original address: 0x142ace5e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bInviteUIDisabled;
+}
+
 bool UFortRuntimeOptions::IsShippingBuild() const
 {
 	// Original address: 0x1412d9d60.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
 	return true;
+}
+
+bool UFortRuntimeOptions::ShouldShowLeaderboardPrivacySettings() const
+{
+	// Original address: 0x142acead0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortRuntimeOptions::bShowLeaderboardPrivacySettings;
 }
 

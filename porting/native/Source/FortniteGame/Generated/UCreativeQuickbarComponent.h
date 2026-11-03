@@ -80,6 +80,9 @@ public:
 	void ClientAddToQuickBarComplete(int32 SlotPutIn, const FGuid& ItemGuid, UFortItemDefinition* Playset, bool UseDelayedAddToQuickbar, bool bUseVolumeToSpawn);
 	void ClientAddToQuickBarComplete_Implementation(int32 SlotPutIn, const FGuid& ItemGuid, UFortItemDefinition* Playset, bool UseDelayedAddToQuickbar, bool bUseVolumeToSpawn);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsQuickbarActive() const;
+
 	UFUNCTION(Server, Reliable)
 	void ServerAddItemToQuickBar(UFortItemDefinition* ItemDefinition, int32 DesiredSlotIndexconst, const FGuid& PreviousItemGuid, bool bUseVolumeToSpawn);
 	void ServerAddItemToQuickBar_Implementation(UFortItemDefinition* ItemDefinition, int32 DesiredSlotIndexconst, const FGuid& PreviousItemGuid, bool bUseVolumeToSpawn);

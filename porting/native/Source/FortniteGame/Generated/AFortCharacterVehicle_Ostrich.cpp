@@ -10,6 +10,14 @@ FVector AFortCharacterVehicle_Ostrich::GetAimPoint() const
 	return GunnerAimPoint;
 }
 
+bool AFortCharacterVehicle_Ostrich::GetIsDashing() const
+{
+	// Original address: 0x1428617f0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortCharacterVehicle_Ostrich::bDashing;
+}
+
 void AFortCharacterVehicle_Ostrich::MulticastDriverInput_Implementation(bool bIsPrimaryFire)
 {
 	// Body not recovered: reflection-derived stub.

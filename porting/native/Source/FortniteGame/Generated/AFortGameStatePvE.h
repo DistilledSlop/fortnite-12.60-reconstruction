@@ -66,6 +66,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortAircraft* GetAircraft() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMulchingAllowed() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsWeaponSwappingEnabled() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

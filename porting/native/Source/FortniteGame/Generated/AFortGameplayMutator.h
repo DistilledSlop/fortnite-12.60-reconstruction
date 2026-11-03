@@ -32,8 +32,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bMutatorActive)
 	uint8 bMutatorActiveInternal : 1;
 
+protected:
 	UFUNCTION()
-	void OnRep_bMutatorActive();
+	virtual void OnRep_bMutatorActive();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

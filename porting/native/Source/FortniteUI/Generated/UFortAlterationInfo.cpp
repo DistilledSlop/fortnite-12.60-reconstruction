@@ -33,3 +33,11 @@ int32 UFortAlterationInfo::GetSlotIndex() const
 	return SlotIndex;
 }
 
+bool UFortAlterationInfo::IsFreeAlterationChoice() const
+{
+	// Original address: 0x1451f6620.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortAlterationInfo::bFreeAlterationSlot;
+}
+

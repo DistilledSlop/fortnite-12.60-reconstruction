@@ -146,5 +146,11 @@ public:
 	UPROPERTY()
 	bool bShuttingDown;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsExemptFromShutdown() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsShuttingDown() const;
+
 };
 

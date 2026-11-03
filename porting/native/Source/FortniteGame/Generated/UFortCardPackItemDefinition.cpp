@@ -17,3 +17,19 @@ FLinearColor UFortCardPackItemDefinition::GetPackColor() const
 	return PackColor;
 }
 
+bool UFortCardPackItemDefinition::IsChoicePack() const
+{
+	// Original address: 0x14285ccf0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortCardPackItemDefinition::bIsChoicePack;
+}
+
+bool UFortCardPackItemDefinition::IsLlama() const
+{
+	// Original address: 0x14285ce40.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortCardPackItemDefinition::bIsLlama;
+}
+

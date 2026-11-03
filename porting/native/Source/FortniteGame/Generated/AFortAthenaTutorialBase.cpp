@@ -7,6 +7,14 @@ void AFortAthenaTutorialBase::ExecuteTutorialStep_Client_Implementation(int32 St
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortAthenaTutorialBase::IsExecuting() const
+{
+	// Original address: 0x14283bf20.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortAthenaTutorialBase::bExecuting;
+}
+
 void AFortAthenaTutorialBase::OnClientStepCompleted_Server_Implementation(int32 StepIndex)
 {
 	// Body not recovered: reflection-derived stub.

@@ -71,6 +71,9 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UAthenaCosmeticItemDefinition> RequiredEmoteParent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasCosmeticDrivenMotageSection() const;
+
 protected:
 	UFUNCTION()
 	void PreviewInPIE();

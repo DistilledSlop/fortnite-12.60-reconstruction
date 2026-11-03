@@ -376,6 +376,12 @@ public:
 	void ClientReportTeamKill(int32 TeamKills);
 	void ClientReportTeamKill_Implementation(int32 TeamKills);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsDisconnected() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsResurrectingNow() const;
+
 	UFUNCTION()
 	void OnRep_ChangeTeamInfo();
 

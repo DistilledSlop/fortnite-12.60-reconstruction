@@ -17,7 +17,9 @@ void AFortMission::OnRep_ActiveObjectives()
 
 void AFortMission::OnRep_bIsMissionVisible()
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortMission::OnRep_CurrentFocusDisplayData()
@@ -42,12 +44,16 @@ void AFortMission::OnRep_PotentialBadgesArray()
 
 void AFortMission::OnRep_QuestOwnerAccount()
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortMission::OnRep_UIIndex()
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortMission::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

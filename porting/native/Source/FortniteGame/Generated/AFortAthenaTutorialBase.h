@@ -40,6 +40,9 @@ public:
 	void ExecuteTutorialStep_Client(int32 StepIndex);
 	void ExecuteTutorialStep_Client_Implementation(int32 StepIndex);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsExecuting() const;
+
 	UFUNCTION(Server, Reliable)
 	void OnClientStepCompleted_Server(int32 StepIndex);
 	void OnClientStepCompleted_Server_Implementation(int32 StepIndex);

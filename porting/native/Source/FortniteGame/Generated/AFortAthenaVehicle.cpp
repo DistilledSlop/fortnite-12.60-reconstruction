@@ -12,6 +12,13 @@ void AFortAthenaVehicle::DebugDrawImpactBucket_Implementation(const FVector& Loc
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortAthenaVehicle::IsBraking() const
+{
+	// Exact original shared stub 0x1406801e0.
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 void AFortAthenaVehicle::OnRep_AbilitySystemComponent()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

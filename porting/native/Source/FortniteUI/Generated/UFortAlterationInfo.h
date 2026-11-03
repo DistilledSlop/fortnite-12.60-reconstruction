@@ -61,5 +61,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSlotIndex() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsFreeAlterationChoice() const;
+
 };
 

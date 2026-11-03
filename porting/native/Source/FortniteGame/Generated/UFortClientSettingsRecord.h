@@ -959,6 +959,36 @@ public:
 	double NextCloudSaveTime;
 
 	UFUNCTION()
+	bool GetAllowFriendSubscriptionNudges() const;
+
+	UFUNCTION()
+	bool GetAnonymousCharacterModeEnabled() const;
+
+	UFUNCTION()
+	bool GetAnonymousModeEnabled() const;
+
+	UFUNCTION()
+	bool GetAutoEquipBetterItems() const;
+
+	UFUNCTION()
+	bool GetAutoHideBuildingMaterials() const;
+
+	UFUNCTION()
+	bool GetAutoJoinGameVoiceChannel() const;
+
+	UFUNCTION()
+	bool GetAutoPickupWeapons() const;
+
+	UFUNCTION()
+	bool GetAutoPickupWeaponsConsolePC() const;
+
+	UFUNCTION()
+	bool GetAutoSortConsumablesToRight() const;
+
+	UFUNCTION()
+	bool GetBuildingPossessionShown() const;
+
+	UFUNCTION()
 	float GetChatVolume() const;
 
 	UFUNCTION()
@@ -968,10 +998,40 @@ public:
 	int32 GetColorBlindStrength() const;
 
 	UFUNCTION()
+	bool GetConsoleFPSUnlocked() const;
+
+	UFUNCTION()
+	bool GetContextTutorialEnabled() const;
+
+	UFUNCTION()
+	bool GetCreativeModeReplayRecordingEnabled() const;
+
+	UFUNCTION()
+	bool GetCreativeTurboDelete() const;
+
+	UFUNCTION()
+	bool GetDeviceFeedbackBlockedWithAttachedController() const;
+
+	UFUNCTION()
 	float GetDialogueVolume() const;
 
 	UFUNCTION()
 	float GetEditButtonHoldTime() const;
+
+	UFUNCTION()
+	bool GetEditConfirmOnReleaseEnabled() const;
+
+	UFUNCTION()
+	bool GetEnableRudderControl() const;
+
+	UFUNCTION()
+	bool GetEnableTryBuildOnFocus() const;
+
+	UFUNCTION()
+	bool GetFocusOnFirstBuildingPieceWhenQuickbarSwapped() const;
+
+	UFUNCTION()
+	bool GetFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena() const;
 
 	UFUNCTION()
 	float GetGamepadBuildingMultiplier() const;
@@ -998,7 +1058,37 @@ public:
 	int32 GetHiddenMatchmakingDelayMax() const;
 
 	UFUNCTION()
+	bool GetHideOtherPlayerNames() const;
+
+	UFUNCTION()
 	float GetHUDScaleRaw() const;
+
+	UFUNCTION()
+	bool GetIgnoreGamepadInput() const;
+
+	UFUNCTION()
+	bool GetInvertedPitchForAircraftPrimary() const;
+
+	UFUNCTION()
+	bool GetInvertedPitchForAircraftSecondary() const;
+
+	UFUNCTION()
+	bool GetInvertedPitchForMotion() const;
+
+	UFUNCTION()
+	bool GetInvertedYawForMotion() const;
+
+	UFUNCTION()
+	bool GetLargeTeamReplayRecordingEnabled() const;
+
+	UFUNCTION()
+	bool GetLocalNotificationsEnabled() const;
+
+	UFUNCTION()
+	bool GetLockPrimaryInputMethodToMouse() const;
+
+	UFUNCTION()
+	bool GetMotionControlsEnabledSetting() const;
 
 	UFUNCTION()
 	float GetMotionHarvestingToolMultiplier() const;
@@ -1022,6 +1112,24 @@ public:
 	float GetMusicVolume() const;
 
 	UFUNCTION()
+	bool GetNotifyUsersWhenPlaying() const;
+
+	UFUNCTION()
+	bool GetPeripheralLightingEnabled() const;
+
+	UFUNCTION()
+	bool GetPlaceDangerMarkerWhenTargeting() const;
+
+	UFUNCTION()
+	bool GetPlayerSurveysAllowed() const;
+
+	UFUNCTION()
+	bool GetQuickEditEnabled() const;
+
+	UFUNCTION()
+	bool GetReplayRecordingEnabled() const;
+
+	UFUNCTION()
 	float GetRudderDeadZone() const;
 
 	UFUNCTION()
@@ -1031,13 +1139,49 @@ public:
 	float GetScopedMultiplier() const;
 
 	UFUNCTION()
+	bool GetShouldShowBothQuickbars() const;
+
+	UFUNCTION()
+	bool GetShowGlobalChatEnabled() const;
+
+	UFUNCTION()
+	bool GetShowHeroBackpack() const;
+
+	UFUNCTION()
+	bool GetShowHeroHeadAccessories() const;
+
+	UFUNCTION()
+	bool GetShowTemperature() const;
+
+	UFUNCTION()
+	bool GetShowViewerCountEnabled() const;
+
+	UFUNCTION()
+	bool GetShowVoiceIndicators() const;
+
+	UFUNCTION()
 	float GetSoundFXVolume() const;
+
+	UFUNCTION()
+	bool GetSprintCancelsReload() const;
+
+	UFUNCTION()
+	bool GetSubtitlesEnabled() const;
+
+	UFUNCTION()
+	bool GetTapInteract() const;
 
 	UFUNCTION()
 	float GetTargetingMultiplier() const;
 
 	UFUNCTION()
+	bool GetToggleSprint() const;
+
+	UFUNCTION()
 	float GetTouchBuildingMultiplier() const;
+
+	UFUNCTION()
+	bool GetTouchEditEnabled() const;
 
 	UFUNCTION()
 	float GetTouchEditModeMultiplier() const;
@@ -1056,6 +1200,33 @@ public:
 
 	UFUNCTION()
 	float GetTouchVerticalMultiplier() const;
+
+	UFUNCTION()
+	bool GetUseFirstPersonCamera() const;
+
+	UFUNCTION()
+	bool GetUsePowerSavingMode() const;
+
+	UFUNCTION()
+	bool GetVisualizeAudioSources() const;
+
+	UFUNCTION()
+	bool GetVoiceChat3DEnabled() const;
+
+	UFUNCTION()
+	bool GetVoiceChatPTTEnabled() const;
+
+	UFUNCTION()
+	bool GetVoiceChatWithUnknownsEnabled() const;
+
+	UFUNCTION()
+	bool IsUsingGamepadAutoRun() const;
+
+	UFUNCTION()
+	bool IsUsingGamepadEditModeAimAssist() const;
+
+	UFUNCTION()
+	bool IsUsingHoldToSwapPickup() const;
 
 	UFUNCTION()
 	void SetGamepadBuildingMultiplier(float InMultiplier);

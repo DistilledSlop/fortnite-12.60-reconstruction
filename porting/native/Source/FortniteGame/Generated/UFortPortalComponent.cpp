@@ -2,6 +2,14 @@
 #include "UFortPortalComponent.h"
 #include "Net/UnrealNetwork.h"
 
+bool UFortPortalComponent::HasValidLinkData() const
+{
+	// Original address: 0x142aa2180.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortPortalComponent::bHasValidLinkData;
+}
+
 void UFortPortalComponent::OnMinigameStarted()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

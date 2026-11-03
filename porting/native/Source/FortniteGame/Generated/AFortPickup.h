@@ -254,6 +254,9 @@ public:
 	UFUNCTION()
 	void OnRep_TossedFromContainer();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool PickedUp() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

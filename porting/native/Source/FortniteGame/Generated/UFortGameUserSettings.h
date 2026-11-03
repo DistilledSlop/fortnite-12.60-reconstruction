@@ -534,7 +534,19 @@ public:
 	float GetDisplayGamma() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetHasSeenCreativeHeatmapTutorial() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetHasSeenCreativePhoneTutorial() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetHasSeenPanningTip() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetHasSeenTapToShoot() const;
+
+	UFUNCTION()
+	bool GetLastSelectedFillOption() const;
 
 	UFUNCTION()
 	int32 GetRenderingAPI() const;
@@ -543,7 +555,19 @@ public:
 	float GetSafeZone() const;
 
 	UFUNCTION()
+	bool GetShowCareerTabBang() const;
+
+	UFUNCTION()
+	bool GetShowTemperature() const;
+
+	UFUNCTION()
+	bool GetUseGPUCrashDebugging() const;
+
+	UFUNCTION()
 	float GetUserInterfaceContrast() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsHeadphoneModeEnabled() const;
 
 	UFUNCTION()
 	void SetSafeZone(float Value);

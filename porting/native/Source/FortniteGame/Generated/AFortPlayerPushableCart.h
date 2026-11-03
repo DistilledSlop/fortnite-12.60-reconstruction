@@ -117,6 +117,9 @@ public:
 	bool bIsNearCheckpoint;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsPlayerPushable() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetLastReachedCheckPointIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -127,6 +130,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetTotalCheckPoints() const;
+
+	UFUNCTION()
+	bool IsNearCheckpoint();
 
 	UFUNCTION()
 	void OnRep_bIsNearCheckpoint();

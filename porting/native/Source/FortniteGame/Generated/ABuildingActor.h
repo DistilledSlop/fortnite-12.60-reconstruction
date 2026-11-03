@@ -663,8 +663,10 @@ public:
 	UFUNCTION()
 	void OnRep_BuildingAttributeSet();
 
+protected:
 	UFUNCTION()
-	void OnRep_CurrentBuildingLevel();
+	virtual void OnRep_CurrentBuildingLevel();
+public:
 
 	UFUNCTION()
 	void OnRep_CustomState();
@@ -675,8 +677,10 @@ public:
 	UFUNCTION()
 	void OnRep_InstantDeath();
 
+protected:
 	UFUNCTION()
-	void OnRep_Team();
+	virtual void OnRep_Team();
+public:
 
 	UFUNCTION(BlueprintNativeEvent)
 	void PlacedByPlacementTool();
@@ -692,6 +696,11 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	bool ShouldDisplayDamageNumbers() const;
 	virtual bool ShouldDisplayDamageNumbers_Implementation() const;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void SnapDmgVisualsToCurrentHealth();
+public:
 
 	UFUNCTION(BlueprintNativeEvent)
 	bool UseDefaultHealthBar() const;

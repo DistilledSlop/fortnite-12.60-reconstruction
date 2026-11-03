@@ -200,5 +200,8 @@ protected:
 	void ClearPlayerStartLocationOverrides();
 public:
 
+	UFUNCTION()
+	virtual bool IsGameReadyToSelectLoot() const;
+
 };
 

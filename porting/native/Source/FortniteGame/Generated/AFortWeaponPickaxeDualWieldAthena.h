@@ -120,6 +120,9 @@ public:
 	UParticleSystemComponent* GetSwingOffhandPSC() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetUseAnimTrailsOffhandPSC() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponentBudgeted* GetWeaponMeshOffhand() const;
 
 };

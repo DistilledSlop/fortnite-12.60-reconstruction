@@ -616,6 +616,9 @@ public:
 	void DebugDrawImpactBucket(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsBraking() const;
+
 private:
 	UFUNCTION()
 	void OnRep_AbilitySystemComponent();

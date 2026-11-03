@@ -9,3 +9,27 @@ int32 UFortAISpawnGroup::GetNumberOfEnemies() const
 	return EnemiesToSpawn.Num();
 }
 
+bool UFortAISpawnGroup::IsLargeSpawnGroup() const
+{
+	// Original address: 0x1427abce0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortAISpawnGroup::bIsLargeSpawnGroup;
+}
+
+bool UFortAISpawnGroup::IsPrototype() const
+{
+	// Original address: 0x1427abd10.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortAISpawnGroup::bIsPrototype;
+}
+
+bool UFortAISpawnGroup::IsValidForEnemySpawners() const
+{
+	// Original address: 0x1427abd40.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortAISpawnGroup::bIsValidForEnemySpawners;
+}
+

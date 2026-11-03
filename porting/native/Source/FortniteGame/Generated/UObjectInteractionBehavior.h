@@ -88,6 +88,9 @@ public:
 	void HandleDuplicateActor();
 	virtual void HandleDuplicateActor_Implementation();
 
+	UFUNCTION()
+	virtual bool IsSelectionSetInValidPosition();
+
 	UFUNCTION(BlueprintNativeEvent)
 	void TickMovementMode();
 	virtual void TickMovementMode_Implementation();

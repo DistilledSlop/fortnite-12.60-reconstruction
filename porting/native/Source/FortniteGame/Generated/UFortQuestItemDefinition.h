@@ -230,6 +230,9 @@ public:
 	bool IsDeprecated() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsFeatQuest() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsHidden() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

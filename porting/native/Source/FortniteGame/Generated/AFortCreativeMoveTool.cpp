@@ -30,6 +30,22 @@ UObjectInteractionBehavior* AFortCreativeMoveTool::GetActiveMovementMode() const
 	return ActiveMovementMode;
 }
 
+bool AFortCreativeMoveTool::GetAllowGravityOnPlace() const
+{
+	// Original address: 0x1428c24a0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortCreativeMoveTool::bAllowGravityOnPlace;
+}
+
+bool AFortCreativeMoveTool::GetClientNeedsToProcessNewlyPlacedActors() const
+{
+	// Original address: 0x1428c24f0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortCreativeMoveTool::bClientNeedsToProcessNewlyPlacedActors;
+}
+
 UFortObjectMoverInputComponent* AFortCreativeMoveTool::GetCreativeMoveToolInputComponent() const
 {
 	// Original address: 0x1428c2510.
@@ -52,6 +68,14 @@ uint8 AFortCreativeMoveTool::GetRotationAxisIndex() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return RotationAxisIndex;
+}
+
+bool AFortCreativeMoveTool::GetShouldUsePrecisionGridSnapping() const
+{
+	// Original address: 0x1428c29b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortCreativeMoveTool::bShouldUsePrecisionGridSnapping;
 }
 
 void AFortCreativeMoveTool::MulticastForceMoveActor_Implementation(AActor* ActorToMove, const FTransform& NewTransform)

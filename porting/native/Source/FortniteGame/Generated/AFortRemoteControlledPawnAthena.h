@@ -91,6 +91,9 @@ public:
 	UPROPERTY(Transient)
 	bool bIsKeyboardLookPressed;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool IsCurrentlyDelayingLaunch() const;
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCosmetic)
 	void OnClientSetupRemoteControlPawn();
 	virtual void OnClientSetupRemoteControlPawn_Implementation();

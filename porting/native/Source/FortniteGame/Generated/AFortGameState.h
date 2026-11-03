@@ -272,6 +272,9 @@ public:
 	TEnumAsByte<EFortGameplayState::Type> GetGameplayState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetPlayerRespawningBlocked_Temporarily() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetWorldDaysElapsed() const;
 
 	UFUNCTION()
@@ -282,16 +285,20 @@ protected:
 	void OnRep_AnnouncementManager();
 public:
 
+protected:
 	UFUNCTION()
-	void OnRep_CurrentWUID();
+	virtual void OnRep_CurrentWUID();
+public:
 
 protected:
 	UFUNCTION()
 	void OnRep_FeedbackManager();
 public:
 
+protected:
 	UFUNCTION()
-	void OnRep_GameplayState();
+	virtual void OnRep_GameplayState();
+public:
 
 	UFUNCTION()
 	void OnRep_GameSessionID();
@@ -320,8 +327,10 @@ public:
 	UFUNCTION()
 	void OnRep_WorldDaysElapsed();
 
+protected:
 	UFUNCTION()
-	void OnRep_WorldManager();
+	virtual void OnRep_WorldManager();
+public:
 
 	UFUNCTION(NetMulticast, Reliable)
 	void RunPerfMemCheatScript(bool bStartStatFiles);

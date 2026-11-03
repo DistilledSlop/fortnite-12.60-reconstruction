@@ -68,6 +68,14 @@ int32 AFortPlayerControllerZone::GetVehicleSeatTransitionTargetIndex() const
 	return VehicleSeatTransitionTargetIndex;
 }
 
+bool AFortPlayerControllerZone::IsClientNotifiedOfPawnDied() const
+{
+	// Original address: 0x142a705f0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortPlayerControllerZone::bClientNotifiedOfPawnDied;
+}
+
 void AFortPlayerControllerZone::OnRep_VoiceChatChannel()
 {
 	// Body not recovered: reflection-derived stub.

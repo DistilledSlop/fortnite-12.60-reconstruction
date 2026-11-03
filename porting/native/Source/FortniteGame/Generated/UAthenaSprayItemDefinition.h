@@ -33,5 +33,8 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UTexture2D> DecalTexture;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldUseBannerAsTexture() const;
+
 };
 

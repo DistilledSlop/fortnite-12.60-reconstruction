@@ -9,11 +9,27 @@ float UAthenaHUDContext::GetBatteryLevel() const
 	return 0.0f;
 }
 
+bool UAthenaHUDContext::GetLocalPlayerWonMatch() const
+{
+	// Original address: 0x14519dbd0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UAthenaHUDContext::bLocalPlayerWonMatch;
+}
+
 bool UAthenaHUDContext::HasWifi() const
 {
 	// Original address: 0x1412d9d60.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
 	return true;
+}
+
+bool UAthenaHUDContext::IsInSelectWidgetToMoveMode() const
+{
+	// Original address: 0x14519f450.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UAthenaHUDContext::bMoveButtonMode;
 }
 

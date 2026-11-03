@@ -350,6 +350,9 @@ public:
 	float GetGameDifficulty() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsDBNODeathEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumSurvivorsDead() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -360,6 +363,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortThreatParticleActor* GetThreatParticleActor() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool IsBuildingAtLayoutRequirementsAllowed() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool IsBuildingWithoutLayoutRequirementsAllowed() const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void NotifyEndFailedGameplayVoteLockout(const EFortVoteType& VoteType);
@@ -414,7 +423,7 @@ public:
 	void OnRep_PlayerSharedTrapAttributes();
 
 	UFUNCTION()
-	void OnRep_PlayerStructuresChanged();
+	virtual void OnRep_PlayerStructuresChanged();
 
 	UFUNCTION()
 	void OnRep_ServerGameplayTagIndexHash();

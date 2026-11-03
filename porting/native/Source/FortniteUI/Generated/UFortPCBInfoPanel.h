@@ -26,5 +26,8 @@ public:
 	UPROPERTY()
 	FText PCB_Description;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldDisplayPCBData() const;
+
 };
 

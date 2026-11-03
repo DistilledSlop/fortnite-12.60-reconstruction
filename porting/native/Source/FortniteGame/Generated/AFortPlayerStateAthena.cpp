@@ -80,6 +80,22 @@ void AFortPlayerStateAthena::ClientReportTeamKill_Implementation(int32 TeamKills
 	}
 }
 
+bool AFortPlayerStateAthena::IsDisconnected() const
+{
+	// Original address: 0x142a8d850.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortPlayerStateAthena::bIsDisconnected;
+}
+
+bool AFortPlayerStateAthena::IsResurrectingNow() const
+{
+	// Original address: 0x142a8d8e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortPlayerStateAthena::bResurrectingNow;
+}
+
 void AFortPlayerStateAthena::OnRep_ChangeTeamInfo()
 {
 	// Body not recovered: reflection-derived stub.

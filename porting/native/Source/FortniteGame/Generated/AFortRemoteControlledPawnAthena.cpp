@@ -2,6 +2,14 @@
 #include "AFortRemoteControlledPawnAthena.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortRemoteControlledPawnAthena::IsCurrentlyDelayingLaunch() const
+{
+	// Original address: 0x142ac2540.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return AFortRemoteControlledPawnAthena::bCurrentlyDelayingLaunch;
+}
+
 void AFortRemoteControlledPawnAthena::OnClientSetupRemoteControlPawn_Implementation()
 {
 	// Exact original shared stub 0x1406801c0.

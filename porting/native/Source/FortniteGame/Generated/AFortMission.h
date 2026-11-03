@@ -236,8 +236,10 @@ public:
 	UFUNCTION()
 	void OnRep_ActiveObjectives();
 
+protected:
 	UFUNCTION()
-	void OnRep_bIsMissionVisible();
+	virtual void OnRep_bIsMissionVisible();
+public:
 
 	UFUNCTION()
 	void OnRep_CurrentFocusDisplayData();
@@ -251,11 +253,15 @@ public:
 	UFUNCTION()
 	void OnRep_PotentialBadgesArray();
 
+protected:
 	UFUNCTION()
-	void OnRep_QuestOwnerAccount();
+	virtual void OnRep_QuestOwnerAccount();
+public:
 
+protected:
 	UFUNCTION()
-	void OnRep_UIIndex();
+	virtual void OnRep_UIIndex();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

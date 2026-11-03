@@ -7,6 +7,14 @@ void ABuildingLayoutRequirement::OnRep_RequirementStatus()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool ABuildingLayoutRequirement::SupportsEditingOfOccupant() const
+{
+	// Original address: 0x142747f10.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return ABuildingLayoutRequirement::bAllowOccupantPatternEditing;
+}
+
 void ABuildingLayoutRequirement::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

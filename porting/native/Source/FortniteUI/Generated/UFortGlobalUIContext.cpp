@@ -36,12 +36,28 @@ bool UFortGlobalUIContext::IsMobileApp() const
 	return false;
 }
 
+bool UFortGlobalUIContext::IsUIVisible() const
+{
+	// Original address: 0x14294b5e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortGlobalUIContext::bIsUIVisible;
+}
+
 bool UFortGlobalUIContext::ShouldCloseMenuOnEscape() const
 {
 	// Original address: 0x1412d9d60.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
 	return true;
+}
+
+bool UFortGlobalUIContext::ShouldShowRateWidget() const
+{
+	// Original address: 0x14524b9c0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
+	return UFortGlobalUIContext::bShowRateWidget;
 }
 
 int32 UFortGlobalUIContext::GetInputPriority(EInputPriority Priority) const

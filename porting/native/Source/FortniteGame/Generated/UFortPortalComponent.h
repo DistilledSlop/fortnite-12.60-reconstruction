@@ -77,6 +77,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	FDateTime LinkCodeLockExpirationTime;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasValidLinkData() const;
+
 private:
 	UFUNCTION()
 	void OnMinigameStarted();

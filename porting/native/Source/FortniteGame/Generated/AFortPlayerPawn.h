@@ -1462,6 +1462,9 @@ public:
 	bool IsSkydivingFromBus() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsUsingUmbrella() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsWaterSprintBoosting() const;
 
 	UFUNCTION(NetMulticast, Reliable)
@@ -1573,8 +1576,10 @@ public:
 	UFUNCTION()
 	void OnRep_StartedInteractSearch();
 
+protected:
 	UFUNCTION()
-	void OnRep_StoredControlRotation();
+	virtual void OnRep_StoredControlRotation();
+public:
 
 	UFUNCTION()
 	void OnRep_VehicleInputStateReliableForReplay();
@@ -1584,6 +1589,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_WaitingForEmoteInteraction();
+
+	UFUNCTION()
+	virtual void PerformSupplementalKillVolumeSweep();
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerChooseGender(EFortCustomGender::Type Gender);

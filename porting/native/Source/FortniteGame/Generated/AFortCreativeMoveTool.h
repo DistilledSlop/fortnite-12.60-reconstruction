@@ -396,6 +396,12 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetAllowGravityOnPlace() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetClientNeedsToProcessNewlyPlacedActors() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortObjectMoverInputComponent* GetCreativeMoveToolInputComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -403,6 +409,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetRotationAxisIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetShouldUsePrecisionGridSnapping() const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastForceMoveActor(AActor* ActorToMove, const FTransform& NewTransform);

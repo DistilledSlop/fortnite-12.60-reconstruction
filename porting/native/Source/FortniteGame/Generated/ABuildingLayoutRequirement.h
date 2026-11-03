@@ -77,6 +77,9 @@ public:
 	UFUNCTION()
 	void OnRep_RequirementStatus();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool SupportsEditingOfOccupant() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -666,6 +666,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortServerBotManagerAthena* GetServerBotManager() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMapInfoInitialized() const;
+
 protected:
 	UFUNCTION()
 	void OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAthenaAircraft);

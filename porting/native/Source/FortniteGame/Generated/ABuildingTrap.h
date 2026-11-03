@@ -177,6 +177,9 @@ public:
 	UFUNCTION()
 	void OnRep_ReplicatedAppliedAlterations();
 
+	UFUNCTION(BlueprintCallable)
+	bool UseAttachedToWhenTargeted();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

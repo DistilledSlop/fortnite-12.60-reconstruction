@@ -40,5 +40,8 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer DisallowedPlaylistNameTags;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsHiddenInUI() const;
+
 };
 

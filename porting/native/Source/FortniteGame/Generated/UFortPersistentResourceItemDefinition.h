@@ -18,5 +18,8 @@ public:
 	UPROPERTY()
 	bool bIsEventItem;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsEventItem() const;
+
 };
 

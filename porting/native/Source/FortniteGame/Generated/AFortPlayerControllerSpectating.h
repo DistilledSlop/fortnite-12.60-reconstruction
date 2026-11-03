@@ -226,8 +226,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual bool IsAllowedChangeCamera();
+public:
+
+protected:
 	UFUNCTION()
-	void OnRep_FollowedPlayerRemoteClientInfo();
+	virtual void OnRep_FollowedPlayerRemoteClientInfo();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -1,5 +1,27 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 8 (2026-11-03)
+
+Canonical Native1444 entries =1382 function bodies +62 fields. Added203
+complete bodies:156 reflected full-byte bool getters (86 inline,70 direct leaf)
+and47 ordinary virtual stubs (25bool,18void,4int32). Independent bounded source
+reviews found no concrete blockers; existing generated implementations are not
+overwritten. Full-byte bool fields use bool_bits mov8/mask1 with exact generated
+bool declarations, including reflection records whose offsets are null. Virtual
+wrappers use hardened constructor/vtable proof and preserve virtual:true.
+Promotion accepts1444, rejects0: porting/generated/gameplay-bulk-integration-8/.
+Unchanged generated file mtimes restored. No builds/runtime/tests run;342 bodies
+since tested1040 are build pending, next checkpoint about2040. Source coverage
+is not feature/class parity; all4 milestones remain open. Commit/push promptly.
+
+Batch7 pushed3bac3429. Unrelated README badge commitf5ce0955 appeared from another
+collaborator and was preserved. Dashboard source measurement is automatic after
+source commits; published docs snapshot will follow this batch. Root owns Native
+promotion/builds, not visuals. Bounded Terra medium/fork_turns none workers are
+recovering enum predicates; Claude Sonnet medium bounded vitals pass5 result is
+/tmp/claude-native-building-vitals/pass5-result.json. Keep reads/output bounded,
+rotate agents at task completion, preserve other graphics edits.
+
 ## Native source batch 7 (2026-11-03)
 
 Canonical Native1241 entries =1179 bodies +62 fields. Added26 complete bodies:
