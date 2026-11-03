@@ -1,0 +1,38 @@
+[
+  {
+    "class": "ABuildingTrap",
+    "function": "GetCenter",
+    "wrapper_capture": "porting/generated/native103-broad/0x14275c1b0.c",
+    "constructor_capture": "porting/generated/native103-ctors2/0x141c26cb0.c",
+    "vtable_proof": "Constructor installs primary vtable 0x145f46db0; wrapper dispatches byte offset 0xec0. Original runtime image qword at 0x145f47c70 is 0x141c39100.",
+    "target_capture": "porting/generated/native104-virtual/0x141c39100.c",
+    "semantics": "Target calls the object's virtual at byte offset 0x8b8 with the same result pointer and returns it; ABuildingActor GetCentroid exec dispatches slot 0x8b8. The original trap vtable entry at 0x145f47668 is 0x141b9c710."
+  },
+  {
+    "class": "AFortPlayerControllerGameplay",
+    "function": "FollowNextTeammate",
+    "wrapper_capture": "porting/generated/native96-broad/0x142a64fe0.c",
+    "constructor_capture": "porting/generated/native111-constructors/0x1423c3af0.c",
+    "vtable_proof": "Constructor installs primary vtable 0x14613b108; wrapper dispatches byte offset 0x1fe0; original runtime image qword at 0x14613d0e8 is 0x1406801c0.",
+    "target_capture": "porting/generated/native437-callees/0x1406801c0.asm",
+    "semantics": "The complete original target is RET 0x0; it has no side effects."
+  },
+  {
+    "class": "AFortPlayerControllerGameplay",
+    "function": "FollowPreviousTeammate",
+    "wrapper_capture": "porting/generated/native96-broad/0x142a65000.c",
+    "constructor_capture": "porting/generated/native111-constructors/0x1423c3af0.c",
+    "vtable_proof": "Constructor installs primary vtable 0x14613b108; wrapper dispatches byte offset 0x1fe8; original runtime image qword at 0x14613d0f0 is 0x1406801c0.",
+    "target_capture": "porting/generated/native437-callees/0x1406801c0.asm",
+    "semantics": "The complete original target is RET 0x0; it has no side effects."
+  },
+  {
+    "class": "AFortPlayerControllerZone",
+    "function": "ServerRequestLoadoutRefresh_Implementation",
+    "wrapper_capture": "porting/generated/native102-broad/0x142a70b00.c",
+    "constructor_capture": "porting/generated/native129-constructors/0x1423c4bd0.c",
+    "vtable_proof": "Constructor installs primary vtable 0x14613f330; wrapper dispatches byte offset 0x2140; original runtime image qword at 0x146141470 is 0x1406801c0.",
+    "target_capture": "porting/generated/native437-callees/0x1406801c0.asm",
+    "semantics": "The complete original target is RET 0x0; it has no side effects."
+  }
+]

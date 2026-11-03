@@ -673,6 +673,12 @@ public:
 	float GetCurrentSignificance() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetHealth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetMaxHealth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetPreviousLinearAcceleration() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

@@ -30,6 +30,20 @@ void AFortPlayerControllerGameplay::DisplayNPCNumbers(bool bDisplay)
 	// CONFIDENCE: HIGH
 }
 
+void AFortPlayerControllerGameplay::FollowNextTeammate()
+{
+	// CONFIDENCE: high; the original virtual target consists solely of RET.
+	{
+	}
+}
+
+void AFortPlayerControllerGameplay::FollowPreviousTeammate()
+{
+	// CONFIDENCE: high; the original virtual target consists solely of RET.
+	{
+	}
+}
+
 UFortAmbientAudioController* AFortPlayerControllerGameplay::GetAmbientAudioController()
 {
 	// Original address: 0x142a65020.

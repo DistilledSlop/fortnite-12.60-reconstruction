@@ -151,7 +151,9 @@ void AFortPlayerControllerZone::ServerEndGameplayVote_Implementation(const EFort
 
 void AFortPlayerControllerZone::ServerRequestLoadoutRefresh_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; the original virtual target consists solely of RET.
+	{
+	}
 }
 
 void AFortPlayerControllerZone::ServerRequestSeatChange_Implementation(int32 TargetSeatIndex)

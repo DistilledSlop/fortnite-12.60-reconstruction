@@ -305,6 +305,12 @@ public:
 	UFUNCTION(Exec)
 	void DisplayNPCNumbers(bool bDisplay);
 
+	UFUNCTION(BlueprintCallable)
+	virtual void FollowNextTeammate();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void FollowPreviousTeammate();
+
 	UFUNCTION()
 	UFortAmbientAudioController* GetAmbientAudioController();
 

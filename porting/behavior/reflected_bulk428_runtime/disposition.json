@@ -1,0 +1,802 @@
+[
+  {
+    "row": 60,
+    "class": "UFortAccountItem",
+    "function": "IsFavorite",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14278ea30.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 61,
+    "class": "AFortActorSpawner",
+    "function": "TrySpawnActor",
+    "wrapper_capture": "porting/generated/native362-callees/0x14278f0f0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 62,
+    "class": "AFortAIDirector",
+    "function": "GetNumPlayers",
+    "wrapper_capture": "porting/generated/native107-broad/0x142794120.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 63,
+    "class": "AFortAIPawn",
+    "function": "ShouldUpdateSkeletalMesh",
+    "wrapper_capture": "porting/generated/native107-broad/0x1427a6840.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 64,
+    "class": "AFortAIPawn",
+    "function": "ShouldUseFiringCapsuleCollision",
+    "wrapper_capture": "porting/generated/native107-broad/0x1427a6870.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 65,
+    "class": "UFortAthenaAISpawnerDataComponent_BehaviorBase",
+    "function": "GetBehaviorTree",
+    "wrapper_capture": "porting/generated/native108-broad/0x1409ee2e0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 66,
+    "class": "UFortAthenaAISpawnerDataComponent_SpawnParamsBase",
+    "function": "GetSpawnTracePadding",
+    "wrapper_capture": "porting/generated/native108-broad/0x1427cfcb0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 67,
+    "class": "UFortAthenaAISpawnerDataComponent_SpawnParamsBase",
+    "function": "ShouldCheckForOverlaps",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1427cff10.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 68,
+    "class": "AFortAthenaSKVehicle",
+    "function": "HasPermissionToAlterBuildings",
+    "wrapper_capture": "porting/generated/native107-broad/0x1428342d0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 69,
+    "class": "AFortAthenaVehicle",
+    "function": "GetCurrentForwardVelocity",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283b430.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 70,
+    "class": "AFortAthenaVehicle",
+    "function": "GetDesiredForwardSpeedKmh",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283b4d0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 71,
+    "class": "AFortAthenaVehicle",
+    "function": "GetDesiredForwardVelocity",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283b510.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 72,
+    "class": "AFortAthenaVehicle",
+    "function": "GetDesiredForwardVelocityDelta",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283b550.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 73,
+    "class": "AFortAthenaVehicle",
+    "function": "GetForwardSpeedKmh",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283b660.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 74,
+    "class": "AFortAthenaVehicle",
+    "function": "GetPreviousForwardSpeedKmh",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283b810.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 75,
+    "class": "AFortAthenaVehicle",
+    "function": "GetTotalSpeedKmh",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283bce0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 76,
+    "class": "AFortAthenaVehicle",
+    "function": "IsAirControlling",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283be20.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 77,
+    "class": "AFortAthenaVehicle",
+    "function": "IsHonking",
+    "wrapper_capture": "porting/generated/native95-broad/0x142738850.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 78,
+    "class": "AFortAthenaVehicle",
+    "function": "IsInSkyTube",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283c000.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 79,
+    "class": "AFortAthenaVehicle",
+    "function": "IsMagnetizedForSkyTubes",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283c0a0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 80,
+    "class": "AFortAthenaVehicle",
+    "function": "IsSlowEnoughToInteract",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283c180.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 81,
+    "class": "AFortAthenaVehicle",
+    "function": "IsSprinting",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283c1b0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 82,
+    "class": "AFortAthenaVehicle",
+    "function": "PlayerIsTryingToMoveForward",
+    "wrapper_capture": "porting/generated/native103-broad/0x14283cc60.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 83,
+    "class": "AFortAthenaVehicle",
+    "function": "PlayerIsTryingToReverse",
+    "wrapper_capture": "porting/generated/native103-broad/0x14283cc90.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 84,
+    "class": "AFortAthenaVehicle",
+    "function": "ShouldShowSoundIndicator",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283d9e0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 85,
+    "class": "AFortCreativeMoveTool",
+    "function": "CanUtilizeMoveToolSpawningFunctionality",
+    "wrapper_capture": "porting/generated/native103-broad/0x1428c2170.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 86,
+    "class": "AFortEventLevelNavigationActor",
+    "function": "CanCommitNavigationRequest",
+    "wrapper_capture": "porting/generated/native362-callees/0x14278f0f0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 87,
+    "class": "AFortGameModeZone",
+    "function": "IsSpectatingAllowedAfterDeath",
+    "wrapper_capture": "porting/generated/native96-broad/0x1428f3510.c",
+    "disposition": "already_generated_body",
+    "detail": "Generated C++ contains the recovered _Implementation body"
+  },
+  {
+    "row": 88,
+    "class": "UFortGameplayAbility",
+    "function": "GetAbilityTargetingLevel",
+    "wrapper_capture": "porting/generated/native100-broad/0x1428f8240.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 89,
+    "class": "UFortItem",
+    "function": "GetFilterCategory",
+    "wrapper_capture": "porting/generated/native94-broad/0x142958ed0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 90,
+    "class": "UFortItem",
+    "function": "GetMaxLevel",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1429593c0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 91,
+    "class": "UFortItem",
+    "function": "GetRating",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142959820.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 92,
+    "class": "AFortMission",
+    "function": "GetCurrentBluGloRewards",
+    "wrapper_capture": "porting/generated/native107-broad/0x142794120.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 93,
+    "class": "AFortMission",
+    "function": "GetExpectedCompletionTime",
+    "wrapper_capture": "porting/generated/native362-callees/0x1429ddb60.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 94,
+    "class": "AFortPlayerPushableCart",
+    "function": "GetCameraActor",
+    "wrapper_capture": "porting/generated/native362-callees/0x142743d10.c",
+    "disposition": "already_generated_body",
+    "detail": "Generated C++ contains the recovered _Implementation body"
+  },
+  {
+    "row": 95,
+    "class": "AFortPlayerPushableCart",
+    "function": "GetPushAreaShapeComponent",
+    "wrapper_capture": "porting/generated/native107-broad/0x142716410.c",
+    "disposition": "already_generated_body",
+    "detail": "Generated C++ contains the recovered _Implementation body"
+  },
+  {
+    "row": 96,
+    "class": "UFortPlayerSurveyQuestion",
+    "function": "GetPresentationStyle",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1427cff10.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 97,
+    "class": "UFortPlayerSurveyQuestion",
+    "function": "GetQuestionType",
+    "wrapper_capture": "porting/generated/native108-broad/0x1415a4f60.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 98,
+    "class": "AFortPlayerStateZone",
+    "function": "IsPlayerDead",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a94ff0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 99,
+    "class": "UFortVehicleInterface",
+    "function": "CanContainPlayers",
+    "wrapper_capture": "porting/generated/native107-broad/0x142779370.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 100,
+    "class": "UFortVehicleInterface",
+    "function": "CanTeleport",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142b2d9d0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 101,
+    "class": "UFortVehicleInterface",
+    "function": "ClientIsDriver",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b2da90.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 102,
+    "class": "UFortVehicleInterface",
+    "function": "ContainsPlayers",
+    "wrapper_capture": "porting/generated/native173-delivery-vehicle/0x142b2dac0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 103,
+    "class": "UFortVehicleInterface",
+    "function": "GetDriver",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142b2e0d0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 104,
+    "class": "UFortVehicleInterface",
+    "function": "GetHealth",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142b2e260.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 105,
+    "class": "UFortVehicleInterface",
+    "function": "GetMaxHealth",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142b2e2e0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 106,
+    "class": "UFortVehicleInterface",
+    "function": "GetSkeletalMeshComponent",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142b2e6c0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 107,
+    "class": "UFortVehicleInterface",
+    "function": "GetVehicleAbilitySystemComponent",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142b2e7a0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 108,
+    "class": "UFortVehicleInterface",
+    "function": "GetVehicleActorPtr",
+    "wrapper_capture": "porting/generated/native173-delivery-vehicle/0x142b2e7d0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 109,
+    "class": "UFortVehicleInterface",
+    "function": "GetVehicleActorPtrConst",
+    "wrapper_capture": "porting/generated/native173-delivery-vehicle/0x142b2e800.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 110,
+    "class": "UFortVehicleInterface",
+    "function": "GetVehicleSeatComponentPtr",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142b2ec70.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 111,
+    "class": "UFortVehicleInterface",
+    "function": "HasDriver",
+    "wrapper_capture": "porting/generated/native108-broad/0x142958460.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 112,
+    "class": "UFortVehicleInterface",
+    "function": "HasEverContainedPlayers",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142a067c0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 113,
+    "class": "UFortVehicleInterface",
+    "function": "IsBoosting",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142b2ed20.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 114,
+    "class": "UFortVehicleInterface",
+    "function": "IsInWater",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142b2ed50.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 115,
+    "class": "UFortVehicleInterface",
+    "function": "IsTouchingGround",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142b2ed80.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 116,
+    "class": "AFortWeapon",
+    "function": "GetLocalRemainingAmmo",
+    "wrapper_capture": "porting/generated/native100-broad/0x142b46270.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 117,
+    "class": "AFortWeapon",
+    "function": "GetReloadProgress",
+    "wrapper_capture": "porting/generated/native100-broad/0x142b46880.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 118,
+    "class": "AFortWeapon",
+    "function": "GetRemainingAmmo",
+    "wrapper_capture": "porting/generated/native100-broad/0x142b46900.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 119,
+    "class": "AFortWeapon",
+    "function": "GetTimeToNextFire",
+    "wrapper_capture": "porting/generated/native100-broad/0x142b469a0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 120,
+    "class": "AFortWeapon",
+    "function": "IsReloading",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b47490.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 121,
+    "class": "AFortWeaponPickaxeAthena",
+    "function": "GetIdleVFXComponent",
+    "wrapper_capture": "porting/generated/native108-broad/0x142b4f770.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 122,
+    "class": "AFortWeaponPickaxeAthena",
+    "function": "GetSwingVFXComponent",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b4f960.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 123,
+    "class": "AFortWeaponRanged",
+    "function": "IsCachedIsProjectileWeapon",
+    "wrapper_capture": "porting/generated/native100-broad/0x142b4fb80.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 124,
+    "class": "UFortCollectionBookGenericRewardWidget",
+    "function": "HasRewards",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14520cdd0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 125,
+    "class": "UFortCreativeMessageKnobsDialog",
+    "function": "ContainsItem",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b2da90.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 126,
+    "class": "UFortCreativeMessageKnobsDialog",
+    "function": "GetItemCount",
+    "wrapper_capture": "porting/generated/native108-broad/0x145225370.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 127,
+    "class": "UFortSettingValueDiscrete",
+    "function": "GetDiscreteOptionIndex",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x1452d86f0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 128,
+    "class": "AFortCharacterVehicle",
+    "function": "ShouldShowSoundIndicator",
+    "wrapper_capture": "porting/generated/native107-broad/0x142862320.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 129,
+    "class": "AFortPlayerController",
+    "function": "GetTimeRemainingForRespawnBP",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a47af0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 130,
+    "class": "AFortPlayerController",
+    "function": "IsFullscreenMapVisible",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a48080.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 131,
+    "class": "AFortPlayerController",
+    "function": "IsPartyLeader",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a48200.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 132,
+    "class": "AFortPlayerController",
+    "function": "IsPersonalVehicleActive",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a48230.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 133,
+    "class": "AFortPlayerController",
+    "function": "IsPersonalVehicleAvailable",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a48260.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 134,
+    "class": "AFortPlayerController",
+    "function": "IsPlayingEmote",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a48290.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 135,
+    "class": "AFortPawn",
+    "function": "EquipBestWeapon",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1b6a0.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 136,
+    "class": "AFortPlayerControllerPvE",
+    "function": "ResetPlayerDeathReportForForcePlayerRestart",
+    "wrapper_capture": "porting/generated/native108-broad/0x142a6c270.c",
+    "disposition": "blocked_native_field",
+    "detail": "two unreflected fields; exact layout and constructor initialization required"
+  },
+  {
+    "row": 137,
+    "class": "AFortAthenaMutator_Uranium",
+    "function": "GetPushCart",
+    "wrapper_capture": "porting/generated/native107-broad/0x1428278a0.c",
+    "disposition": "already_ported",
+    "detail": "small_bulk423_runtime; reflected weak PushCart"
+  },
+  {
+    "row": 138,
+    "class": "AFortGameModeZone",
+    "function": "GetPlayerStartupController",
+    "wrapper_capture": "porting/generated/native96-broad/0x1428f33e0.c",
+    "disposition": "blocked_native_field",
+    "detail": "weak object field is not reflected; exact constructor initialization and storage evidence required"
+  },
+  {
+    "row": 139,
+    "class": "AFortPlayerPawn",
+    "function": "DontCrossArms",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a7b510.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 140,
+    "class": "UAthenaSpectatorPlayerWidgetBase",
+    "function": "GetPlayerData",
+    "wrapper_capture": "porting/generated/native108-broad/0x1451c1230.c",
+    "disposition": "ported",
+    "detail": "constructor initializes weak pointer; wrapper resolves it"
+  },
+  {
+    "row": 141,
+    "class": "AFortOctopusVehicle",
+    "function": "GetTowhookAttachedComponent",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142a08e20.c",
+    "disposition": "blocked_native_field",
+    "detail": "weak object field is not reflected; exact constructor initialization and storage evidence required"
+  },
+  {
+    "row": 142,
+    "class": "AFortSpaghettiVehicle",
+    "function": "GetTowhookAttachedComponent",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142a08e20.c",
+    "disposition": "blocked_native_field",
+    "detail": "weak object field is not reflected; exact constructor initialization and storage evidence required"
+  },
+  {
+    "row": 143,
+    "class": "UFortAIGoalProvider",
+    "function": "GetEncounterInfo",
+    "wrapper_capture": "porting/generated/native108-broad/0x14279c3e0.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 144,
+    "class": "UFortItemDefinition",
+    "function": "GetDisplayStats",
+    "wrapper_capture": "porting/generated/native100-broad/0x14295d0b0.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 145,
+    "class": "AFortPlayerPawn",
+    "function": "DontHandsOnHips",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a7b540.c",
+    "disposition": "blocked_virtual_dispatch",
+    "detail": "exec wrapper only delegates to virtual slot; concrete target unresolved"
+  },
+  {
+    "row": 146,
+    "class": "AFortAIController",
+    "function": "GetEncounterInfo",
+    "wrapper_capture": "porting/generated/native107-broad/0x142794090.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 147,
+    "class": "AFortAthenaVehicle",
+    "function": "AllowInteractionBetweenFortVolume",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283a4f0.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 148,
+    "class": "AFortCarriedObject",
+    "function": "GetHoldingActor",
+    "wrapper_capture": "porting/generated/native107-broad/0x14285c6c0.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 149,
+    "class": "AFortCharacterVehicle",
+    "function": "GetAbilitySystemComponent",
+    "wrapper_capture": "porting/generated/native107-broad/0x142861520.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 150,
+    "class": "UFortGameplayAbility",
+    "function": "GetDisplayStats",
+    "wrapper_capture": "porting/generated/native105-broad/0x1428f8480.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 151,
+    "class": "AFortAthenaAntelopeVehicle",
+    "function": "IsBoosting",
+    "wrapper_capture": "porting/generated/native107-broad/0x1427cfd10.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 152,
+    "class": "AFortAthenaFerretVehicle",
+    "function": "IsBoosting",
+    "wrapper_capture": "porting/generated/native107-broad/0x1427cfd10.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 153,
+    "class": "AFortAthenaGoatVehicle",
+    "function": "IsBoosting",
+    "wrapper_capture": "porting/generated/native107-broad/0x1427cfd10.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 154,
+    "class": "AFortAthenaJackalVehicle",
+    "function": "IsBoosting",
+    "wrapper_capture": "porting/generated/native107-broad/0x1427cfd10.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 155,
+    "class": "AFortAthenaSKVehicle",
+    "function": "GetSkeletalMeshComponent",
+    "wrapper_capture": "porting/generated/native107-broad/0x142833e70.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 156,
+    "class": "AFortAthenaVehicle",
+    "function": "BlocksBuilding",
+    "wrapper_capture": "porting/generated/native103-broad/0x14283a710.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 157,
+    "class": "AFortAthenaVehicle",
+    "function": "CanContainPlayers",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283a7a0.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 158,
+    "class": "AFortAthenaVehicle",
+    "function": "CanTeleport",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283a950.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  },
+  {
+    "row": 159,
+    "class": "AFortAthenaVehicle",
+    "function": "ClientIsDriver",
+    "wrapper_capture": "porting/generated/native103-broad/0x14283a990.c",
+    "disposition": "blocked_interface_dispatch",
+    "detail": "secondary interface virtual call; target and compatible interface declaration unresolved"
+  }
+]

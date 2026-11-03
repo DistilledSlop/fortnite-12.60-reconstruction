@@ -4,6 +4,7 @@
 #include "AbilitySystemInterface.h"
 #include "AttributeSet.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortHealthSet.h"
 #include "UFortVehicleMovementSet.h"
 #include "UObject/UnrealType.h"
 #include "Net/UnrealNetwork.h"
@@ -68,6 +69,24 @@ float AFortAthenaVehicle::GetCurrentSignificance() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
 	return NativeRecoveredFloat_0x44c;
+}
+
+float AFortAthenaVehicle::GetHealth() const
+{
+	// CONFIDENCE: high; original interface target reads the reflected current health attribute or zero.
+	{
+	    const UFortHealthSet* CurrentHealthSet = HealthSet;
+	    return CurrentHealthSet ? CurrentHealthSet->Health.GetCurrentValue() : 0.0f;
+	}
+}
+
+float AFortAthenaVehicle::GetMaxHealth() const
+{
+	// CONFIDENCE: high; original interface target reads the reflected current health attribute or zero.
+	{
+	    const UFortHealthSet* CurrentHealthSet = HealthSet;
+	    return CurrentHealthSet ? CurrentHealthSet->MaxHealth.GetCurrentValue() : 0.0f;
+	}
 }
 
 FVector AFortAthenaVehicle::GetPreviousLinearAcceleration() const

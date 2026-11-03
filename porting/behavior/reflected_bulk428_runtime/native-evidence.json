@@ -1,0 +1,11 @@
+[
+  {
+    "class": "UAthenaSpectatorPlayerWidgetBase",
+    "function": "GetPlayerData",
+    "wrapper_capture": "porting/generated/native108-broad/0x1451c1230.c",
+    "constructor_capture": "porting/generated/native126-dispatch-bulk/0x1451bfe40.c",
+    "class_capture": "porting/generated/native433-callees/0x1451bf260.c",
+    "reflection": "porting/generated/reflection/native_funcs.json: return class 0x1451b73e0 resolves through class_ref_map.json and class_name_map.json to UAthenaRemotePlayerViewData",
+    "semantics": "FWeakObjectPtr_Get on this+0x260; constructor initializes index at +0x260 to -1 and serial at +0x264 to zero."
+  }
+]

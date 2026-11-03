@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+class UAthenaRemotePlayerViewData;
+
 #include "UAthenaSpectatorPlayerWidgetBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,11 @@ class FORTNITEUI_API UAthenaSpectatorPlayerWidgetBase : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x260): not a UPROPERTY, not replicated.
+	TWeakObjectPtr<UAthenaRemotePlayerViewData> NativeRecoveredPlayerData_0x260;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UAthenaRemotePlayerViewData* GetPlayerData() const;
+
 };
 

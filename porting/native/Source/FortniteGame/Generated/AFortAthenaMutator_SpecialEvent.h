@@ -126,6 +126,9 @@ public:
 	UPROPERTY(Transient)
 	TMap<FUniqueNetIdRepl, int32> OverridePartsArrayIndexMap;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ClearAdditionalViewpoint();
+
 	UFUNCTION()
 	void OnRep_AdditionalViewpoint();
 
