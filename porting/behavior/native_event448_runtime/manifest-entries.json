@@ -1,0 +1,15 @@
+[
+  {
+    "class": "AFortGameModeZone",
+    "function": "GetTeammateReviveGameplayEffectOverride_Implementation",
+    "kind": "native_event_impl",
+    "signature": "TSubclassOf<UGameplayEffect> GetTeammateReviveGameplayEffectOverride_Implementation()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x14084c1f0",
+    "reflection_flags": "0x8020c00",
+    "inc_path": "porting/behavior/native_event448_runtime/AFortGameModeZone_GetTeammateReviveGameplayEffectOverride_Implementation.inc",
+    "confidence": "high",
+    "status": "ported"
+  }
+]

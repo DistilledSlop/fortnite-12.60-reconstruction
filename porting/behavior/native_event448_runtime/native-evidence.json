@@ -1,0 +1,9 @@
+{
+  "wrapper": "0x1428f3420",
+  "constructor": "porting/generated/native129-constructors/0x141e89e00.c",
+  "vtable": "0x145fff0f0",
+  "slot": "0xbd0",
+  "target": "porting/generated/native438-callees/0x14084c1f0.c",
+  "semantics": "Original target writes zero qword to returned TSubclassOf storage. Native Blueprint event remains dispatched by UHT; only default implementation recovered.",
+  "reflection": "native_funcs.json flags0x8020c00 Class return meta_class140773c50 -> class_ref_map.resolved1459e1880 -> class_name_map UGameplayEffect"
+}

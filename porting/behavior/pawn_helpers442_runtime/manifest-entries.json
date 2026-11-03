@@ -1,0 +1,34 @@
+[
+  {
+    "class": "AFortPlayerControllerZone",
+    "function": "PushDeathInputComponent",
+    "kind": "exec",
+    "signature": "void PushDeathInputComponent()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/pawn_helpers442_runtime/AFortPlayerControllerZone_PushDeathInputComponent.inc",
+    "address": "0x142a70750",
+    "reflection_flags": "0x4020400",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original class virtual target pushes the reflected DeathInputComponent through the inherited PushInputComponent virtual.",
+    "virtual": true
+  },
+  {
+    "class": "AFortPlayerControllerZone",
+    "function": "ClientClearDeathNotification_Implementation",
+    "kind": "impl",
+    "signature": "void ClientClearDeathNotification_Implementation()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/pawn_helpers442_runtime/AFortPlayerControllerZone_ClientClearDeathNotification_Implementation.inc",
+    "address": "0x1423cd0e0",
+    "reflection_flags": "0x1020cc0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original class vtable target resets PlayerDeathReport to its native defaults and clears bClientNotifiedOfPawnDied.",
+    "virtual": true
+  }
+]

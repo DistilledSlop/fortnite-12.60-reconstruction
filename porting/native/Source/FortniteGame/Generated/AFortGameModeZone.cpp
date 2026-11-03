@@ -9,6 +9,14 @@ void AFortGameModeZone::ClearPlayerStartLocationOverrides()
 	return;
 }
 
+TSubclassOf<UGameplayEffect> AFortGameModeZone::GetTeammateReviveGameplayEffectOverride_Implementation()
+{
+	// CONFIDENCE: high; native default event implementation writes a null class result.
+	{
+	    return TSubclassOf<UGameplayEffect>();
+	}
+}
+
 bool AFortGameModeZone::IsGameReadyToSelectLoot() const
 {
 	// Exact original shared stub 0x1406801d0.

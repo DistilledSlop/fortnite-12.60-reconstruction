@@ -167,7 +167,7 @@ public:
 
 	UFUNCTION(Client, Reliable)
 	void ClientClearDeathNotification();
-	void ClientClearDeathNotification_Implementation();
+	virtual void ClientClearDeathNotification_Implementation();
 
 	UFUNCTION(Client, Reliable)
 	void ClientOnPawnDied(const FFortPlayerDeathReport& DeathReport);
@@ -209,6 +209,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_VoiceChatChannel();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void PushDeathInputComponent();
 
 	UFUNCTION(BlueprintCallable)
 	void ResetExecuteJetpackToggle();

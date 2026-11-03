@@ -5,7 +5,9 @@
 #include "AttributeSet.h"
 #include "UFortAbilitySystemComponent.h"
 #include "UFortHealthSet.h"
+#include "UFortSkyTubePhysicsComponent.h"
 #include "UFortVehicleMovementSet.h"
+#include "UFortVehicleSeatComponent.h"
 #include "UObject/UnrealType.h"
 #include "Net/UnrealNetwork.h"
 
@@ -118,6 +120,25 @@ bool AFortAthenaVehicle::HasConstraints() const
 	return false;
 }
 
+bool AFortAthenaVehicle::HasDriver() const
+{
+	// Native target 0x14191abb0; CONFIDENCE: high.
+	UFortVehicleSeatComponent* Seats = const_cast<AFortAthenaVehicle*>(this)->NativeGetSeatComponent163();
+	return Seats->NativeGetDriverPawn163() != nullptr;
+}
+
+bool AFortAthenaVehicle::HasEverContainedPlayers() const
+{
+	// Native target 0x14191abd0; CONFIDENCE: high.
+	return NativeEverContainedPlayers;
+}
+
+bool AFortAthenaVehicle::IsAsleep() const
+{
+	// Native target 0x14084cc70; CONFIDENCE: high.
+	return NativeVehicleAsleep;
+}
+
 bool AFortAthenaVehicle::IsBraking() const
 {
 	// Exact original shared stub 0x1406801e0.
@@ -139,10 +160,22 @@ bool AFortAthenaVehicle::IsFuelBelowThreshold() const
 	return !(FuelCharge.Charge >= FuelCharge.ChargeThreshold);
 }
 
+bool AFortAthenaVehicle::IsInAir() const
+{
+	// Native target 0x14191bcc0; CONFIDENCE: high.
+	return !NativeVehicleNotInAir && !IsInWaterBody();
+}
+
 bool AFortAthenaVehicle::IsInReverseGear() const
 {
 	// Native target 0x14191bcf0; CONFIDENCE: high.
 	return (uint32(NativeRecoveredInt_0x578) - uint32(ReverseGears.Num())) >> 31;
+}
+
+bool AFortAthenaVehicle::IsInWater() const
+{
+	// Native target 0x14191bd20; CONFIDENCE: high.
+	return (NativeRecoveredBits_0x40e & 0x01) != 0 || IsInWaterBody();
 }
 
 bool AFortAthenaVehicle::IsInWaterBody() const
@@ -289,6 +322,12 @@ void AFortAthenaVehicle::UpdateClientWithVehicleTestInput_Implementation(const F
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortAthenaVehicle::VehicleIsInSkyTube() const
+{
+	// Native target 0x140857200; CONFIDENCE: high.
+	return NativeIsInSkyTube();
+}
+
 bool AFortAthenaVehicle::WheelsOnGround() const
 {
 	// Native target 0x140850620; CONFIDENCE: high.
@@ -300,6 +339,20 @@ UAbilitySystemComponent* AFortAthenaVehicle::GetAbilitySystemComponent() const
 	// CONFIDENCE: high; captured native behavior and reflected types.
 	UFortAbilitySystemComponent* Component = AbilitySystemComponent;
 	return Component;
+}
+
+bool AFortAthenaVehicle::NativeIsInSkyTube() const
+{
+	// Native primary target 0x14191bd00; CONFIDENCE: high.
+	const UFortSkyTubePhysicsComponent* Component = SkyTubePhysicsComponent;
+	return Component && Component->SkyTube != nullptr;
+}
+
+UFortVehicleSeatComponent* AFortAthenaVehicle::NativeGetSeatComponent163()
+{
+	// CONFIDENCE: high
+	// 0x14084c920, IFortVehicleInterface byte slot 0x408.
+	return VehicleSeatComponent;
 }
 
 void AFortAthenaVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

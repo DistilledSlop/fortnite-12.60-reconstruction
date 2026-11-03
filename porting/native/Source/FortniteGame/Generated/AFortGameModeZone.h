@@ -23,6 +23,7 @@ class AFortVisibilityManager;
 class UFortBuildingOctreeManager;
 class UFortPetManager;
 class UFortTaggedActorsManager;
+class UGameplayEffect;
 
 #include "AFortGameModeZone.generated.h"
 
@@ -200,6 +201,10 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void ClearPlayerStartLocationOverrides();
 public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	TSubclassOf<UGameplayEffect> GetTeammateReviveGameplayEffectOverride();
+	virtual TSubclassOf<UGameplayEffect> GetTeammateReviveGameplayEffectOverride_Implementation();
 
 	UFUNCTION()
 	virtual bool IsGameReadyToSelectLoot() const;

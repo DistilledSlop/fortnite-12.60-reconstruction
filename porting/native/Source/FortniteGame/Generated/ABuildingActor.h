@@ -642,6 +642,9 @@ public:
 	void ClearPlayedDying();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FVector GetCentroid() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetCurrentBuildingLevel() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

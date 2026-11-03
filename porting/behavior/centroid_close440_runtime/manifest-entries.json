@@ -1,0 +1,41 @@
+[
+  {
+    "class": "ABuildingActor",
+    "function": "GetCentroid",
+    "signature": "FVector GetCentroid() const",
+    "address": "0x142736d40",
+    "native_body_address": "0x141b9c710",
+    "reflection_flags": "0x54820400",
+    "vtable_slot": "0x8b8",
+    "kind": "exec",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/centroid_close440_runtime/ABuildingActor_GetCentroid.inc",
+    "confidence": "high",
+    "status": "ported",
+    "static": false,
+    "access": "public",
+    "virtual": true,
+    "recovery_source": "centroid_close440_runtime",
+    "includes": [
+      "Components/SceneComponent.h"
+    ]
+  },
+  {
+    "class": "ABuildingTrap",
+    "function": "GetCenter",
+    "signature": "FVector GetCenter()",
+    "address": "0x14275c1b0",
+    "native_body_address": "0x141c39100",
+    "reflection_flags": "0x14820400",
+    "vtable_slot": "0xec0",
+    "kind": "exec",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/centroid_close440_runtime/ABuildingTrap_GetCenter.inc",
+    "confidence": "high",
+    "status": "ported",
+    "static": false,
+    "access": "public",
+    "virtual": true,
+    "recovery_source": "centroid_close440_runtime"
+  }
+]

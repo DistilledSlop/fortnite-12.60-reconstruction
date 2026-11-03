@@ -178,7 +178,13 @@ public:
 	ABuildingSMActor* GetBuildingAttachedTo() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FVector GetCenter();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetTrapLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasDurability() const;
 
 	UFUNCTION()
 	void OnRep_AttachedTo();

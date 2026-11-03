@@ -643,6 +643,15 @@ public:
 	UPROPERTY()
 	FVehicleCosmeticInfo VehicleCosmeticInfo;
 
+	// Non-reflected field (behaviour kind "member_field"): not a UPROPERTY, not replicated.
+	bool NativeEverContainedPlayers = false;
+
+	// Non-reflected field (behaviour kind "member_field"): not a UPROPERTY, not replicated.
+	bool NativeVehicleAsleep = false;
+
+	// Non-reflected field (behaviour kind "member_field"): not a UPROPERTY, not replicated.
+	bool NativeVehicleNotInAir = false;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool AnyWheelsOnGround() const;
 
@@ -691,6 +700,15 @@ public:
 	bool HasConstraints() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasDriver() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasEverContainedPlayers() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsAsleep() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsBraking() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -702,7 +720,13 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsInAir() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsInReverseGear() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsInWater() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsInWaterBody() const;
@@ -778,6 +802,9 @@ public:
 	void UpdateClientWithVehicleTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool VehicleIsInSkyTube() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool WheelsOnGround() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -785,5 +812,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
+	virtual bool NativeIsInSkyTube() const;
+	virtual UFortVehicleSeatComponent* NativeGetSeatComponent163();
 };
 
