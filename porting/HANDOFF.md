@@ -1,5 +1,57 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 24 (2026-11-03)
+
+Canonical source: 1,836 function bodies + 164 supporting fields = 2,000 ported
+entries. Added nine connected inventory bodies: base/WorldItem owning-controller
+resolution, temporary-item controller assignment, WorldItem owner inventory and
+world resolution, loaded ammo, base/WorldItem gifted predicates, and complete
+AFortInventory lookup by definition with gifted filtering. Restored original
+weak-storage INDEX_NONE/0 default and its writer using FWeakObjectPtr; typed static
+casts add no runtime class check. Repeated inventory calls and array reads after
+virtual calls remain explicit. NativeGetOwnerInventory, NativeWasGifted and
+NativeFindWorldItemByDefinition are assigned helper names, not original names.
+
+Promotion `/tmp/promote-native-batch24.py` accepts 2,000, rejects 0. Six Native
+files differ from batch23. Initial pass rejected missing confidence tags,
+unknown UWorld signature header and a class template field interpreted by-value;
+inputs now carry tags/indexed headers and use existing raw FWeakObjectPtr with
+statically typed access. Final pass changed two files after earlier partial
+outputs; 12,801 unchanged mtimes restored. Receipts in
+`porting/generated/gameplay-bulk-integration-24/`. No builds/tests/runtime runs.
+Last tested 1,040 bodies; 796 new bodies pending. Next checkpoint 2,040 bodies
+(204 more), NOT 2,000 total manifest entries.
+
+Full GetRemainingAmmo remains unported. Root proved engine fallback corresponds
+to GEngine->GetFirstLocalPlayerController(World), preserving world-context lookup
+and local controller selection. Generated IFortInventoryOwnerInterface is empty
+and AFortPlayerController does not yet inherit it; future integration needs
+actual native interface support with exact concrete methods. Original slot60:
+Athena controller1419db850 uses mutator infinite-ammo rule1419b0920 before flag;
+base controller/replay spectator141a49670 reads bInfiniteAmmo. Interface+a0
+14237aa80 has world/outpost/view-target and profile inventory branches, still
+unrecovered. AFortInventory helper1420065a0 is now closed and promoted.
+
+Weapon ammo-definition load proposal preserves soft resolution, synchronous
+loading and FFortAssets retention, but cannot integrate until shared tracker is
+closed. Tracker has five collections, PreLoadMap release, OnSyncLoadPackage
+diagnostics and startup-window toggles; detailed lifecycle evidence in
+fort_assets_callbacks_runtime and fort_assets_retention_runtime. Third GC
+collection150 is UObject-key/opaque-eight-byte-payload map; current Terra medium
+worker fort_assets_gc_collection is tracing payload sources/consumers in owned
+fort_assets_gc_collection_runtime. Other workers completed; root owns integration.
+No permanent-root substitute or base/null ammo shortcut. Infinite-ammo rule
+iterator uses mutator context/owner interfaces and callbacks; see its HANDOFF.
+
+User strategy: broad easy leaf scans exhausted, stop tiny getter expansion and
+advance connected gameplay/inventory closure. Keep fresh bounded Terra low/medium
+workers with fork_turns none and explicit source-dir ownership, at most three
+workers; root plans/reviews/integrates and owns Native/gen/Manifest. Commit/push
+this batch and publish dashboard manually; another user thread changed hook
+bf99a108 to stop auto-committing generated publication. Source23 f2507672,
+dashboard c59cf5b2. Preserve unrelated graphics, no visuals, bounded output,
+no testing before2,040. All four product gates and full parity remain open.
+
 ## Native source batch 23 (2026-11-03)
 
 Canonical source: 1,827 function bodies + 163 supporting fields = 1,990 ported

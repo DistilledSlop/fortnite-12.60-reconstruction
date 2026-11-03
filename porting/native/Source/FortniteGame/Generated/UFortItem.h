@@ -8,7 +8,9 @@
 
 #include "FFortOnItemChangedDelegate.h"
 #include "FFortOnItemDestroyedDelegate.h"
+#include "UObject/WeakObjectPtr.h"
 
+class AFortPlayerController;
 class UFortItemDefinition;
 
 #include "UFortItem.generated.h"
@@ -34,6 +36,11 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bTemporaryItemOwningController : 1;
+
+protected:
+	// Non-reflected field (behaviour kind "member_field", offset 0x78): not a UPROPERTY, not replicated.
+	FWeakObjectPtr NativeOwningController;
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool AllowedToBeLockedInInventory() const;
@@ -67,6 +74,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetNumInStack() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual AFortPlayerController* GetOwningController() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetRecycleValue() const;
@@ -104,5 +114,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsSlotted() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetOwningControllerForTemporaryItem(AFortPlayerController* InController);
+
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool NativeWasGifted() const;
 };
 

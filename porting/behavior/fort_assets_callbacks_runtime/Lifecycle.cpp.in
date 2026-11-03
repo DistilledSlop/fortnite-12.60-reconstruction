@@ -1,0 +1,39 @@
+// Source proposal only. Merge into the recovered complete FFortAssets owner;
+// do not compile or register as a separate singleton. Other members and the
+// synchronous-load diagnostic callback remain required.
+FFortAssets::FFortAssets()
+    : bStartupWindowClosedForAlwaysLoadedAssets(false)
+{
+    FCoreUObjectDelegates::PreLoadMap.AddRaw(this, &FFortAssets::HandlePreLoadMap);
+    FCoreDelegates::OnSyncLoadPackage.AddRaw(this, &FFortAssets::HandleLoadPackage, true);
+}
+
+FFortAssets::~FFortAssets()
+{
+    FCoreUObjectDelegates::PreLoadMap.RemoveAll(this);
+    FCoreDelegates::OnAsyncLoadingFlush.RemoveAll(this);
+    FCoreDelegates::OnAsyncLoadPackage.RemoveAll(this);
+    FCoreDelegates::OnSyncLoadPackage.RemoveAll(this);
+}
+
+void FFortAssets::HandlePreLoadMap(const FString& /*MapName*/)
+{
+    FScopeLock Lock(&CriticalSection);
+    PostStartupAssets.Empty();  // original +0x100
+    TemporaryReferences.Empty(); // original +0x150; type recovered separately
+}
+
+void FFortAssets::SetStartupWindowClosedForAlwaysLoadedAssets(bool bClosed)
+{
+    FFortAssets& Assets = Get();
+    FScopeLock Lock(&Assets.CriticalSection);
+    if (Assets.bStartupWindowClosedForAlwaysLoadedAssets == bClosed)
+    {
+        // Original logs at verbosity 2: "SetStartupWindowClosedForAlwaysLoadedAssets called with already set value!"
+        // Use the recovered original log category when integrating.
+    }
+    else
+    {
+        Assets.bStartupWindowClosedForAlwaysLoadedAssets = bClosed;
+    }
+}

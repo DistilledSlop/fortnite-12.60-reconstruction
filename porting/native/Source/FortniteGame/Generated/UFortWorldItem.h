@@ -6,9 +6,11 @@
 #include "CoreMinimal.h"
 #include "UFortItem.h"
 
+#include "Engine/World.h"
 #include "FFortItemEntry.h"
 
 class AFortInventory;
+class AFortPlayerController;
 class UFortItemDefinition;
 
 #include "UFortWorldItem.generated.h"
@@ -59,5 +61,10 @@ public:
 	virtual UFortItemDefinition* GetItemDefinitionBP() const;
 	virtual int32 GetLevel() const;
 	virtual float GetNormalizedDurability() const;
+	virtual AFortInventory* NativeGetOwnerInventory() const;
+	virtual AFortPlayerController* GetOwningController() const;
+	virtual UWorld* GetWorld() const;
+	virtual bool NativeWasGifted() const;
+	virtual int32 GetLoadedAmmo() const;
 };
 
