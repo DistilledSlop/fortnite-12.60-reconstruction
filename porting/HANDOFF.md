@@ -1,5 +1,50 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Broad independent native dependencies batch79 (2026-11-03)
+
+Added16 uncounted native-body drafts across broad_mode79_runtime (2),
+broad_state79_runtime (4), broad_pawn79_runtime (6), creative_helpers79_runtime
+(4). These cover actual callees behind safe-zone eligibility, player-state
+messages, creative publish/tag/text operations, wrap variant/material selection,
+pawn events and landscape queries. Includes one forwarding wrapper, two simple
+related-object accessors/predicates, ancestry tests and a guarded global accessor;
+do not describe all16 as large gameplay implementations. No canonical promotion.
+The broader named-callback scan found prior rough drafts, so workers selected
+uncovered dependencies rather than duplicate those callbacks. Large-function
+recovery is not exhausted; the queue extends beyond the recent weapon chain.
+
+Root reviewed all16 complete C sources and worker lifts. Pawn review corrected
+24-byte identifier temporary storage and reused freed-array stack storage without
+invented reinitialization; event vtables remain captured before lookup. Creative
+review preserves signed tag-length return provenance, ordered shared/weak atomic
+cleanup, observed20-byte text copying and unresolved memcpy/logging arguments.
+Per-call ABI, ownership, class/interface layout, allocators and native engine
+effects remain explicit open contracts. These are source-recovery drafts, not
+accepted engine implementations or parity proof. No compiler/build/runtime/tests
+or canonical generation ran. Canonical2,075 bodies+180fields=2,255 accepted,
+rejected0;35 canonical+4 manual build pending since tested2,040. Next tests3,040.
+All four product gates OPEN; full objective ACTIVE.
+
+The preceding conversational status reply made no source progress; current state
+was revalidated and work resumed. Previous implementation batch78 was PROGRESS,
+source35269d01/dashboardde5c8f9d pushed. This batch is PROGRESS through committed
+new source recovery. Three bounded Terra6.1 medium fork-none workers finished;
+root retained planning, direct implementation, integration, review and sole
+canonical/native/promotion/build/staging/commit ownership. Preserve economical
+reads, bounded worker rotation, Luna6 medium for small read-only work, Terra6.1
+low/medium bulk work, Sol6.1 medium for complex delegated tasks. Preserve unrelated
+porting/graphics/ and Engine edits; visual work remains deferred.
+
+Root probe commands (repository cwd):
+`porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input porting/generated/native-broad79/targets.json --out porting/generated/native-broad79 --timeout 60 --mem 12G > /tmp/native-broad79.log 2>&1`
+Exit0,8ok,11.0s; native-broad79 contains creative/state/helper C/asm/metadata.
+`porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input porting/generated/pawn-broad79/targets.json --out porting/generated/pawn-broad79 --timeout 60 --mem 12G > /tmp/pawn-broad79.log 2>&1`
+Exit0,6ok,10.8s. Both transactions rolled back, usual Ghidra project index/prp
+metadata changes; no deliberate save. Safe-zone helper inputs reused existing
+porting/generated/callee_probe/blocking/. Each new source inventory pins hashes.
+No probe sessions or leases remain live. Continue broad substantive native
+recovery and engine contract closure; avoid getter/wrapper coverage inflation.
+
 ## Weapon/sky/streaming dependency rough batch78 (2026-11-03)
 
 Added eight uncounted native-body drafts in weapon_state78_runtime (3),

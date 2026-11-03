@@ -1,0 +1,6 @@
+[
+  {"address":"0x14241bc10","source":"porting/generated/native-broad79/0x14241bc10.c","sha256":"9ed8bc7f45e4c5720151c3ab782bf48f853f8b15200990f73b30e4b00a35bf84","status":"rough_uncounted"},
+  {"address":"0x1423d5330","source":"porting/generated/native-broad79/0x1423d5330.c","sha256":"bb2a35b02c350aabb469e1ed7881a946431a2e4c614ac54ac58e39946f1fcff8","status":"rough_uncounted_forwarder"},
+  {"address":"0x141e5f780","source":"porting/generated/native-broad79/0x141e5f780.c","sha256":"11de9005b725094ff7a1a37a186dc8d1d8684ccfacb13864aa6c7ac55fad1b1f","status":"rough_uncounted"},
+  {"address":"0x141a2d0f0","source":"porting/generated/native-broad79/0x141a2d0f0.c","sha256":"60e00896482008a193e6e7dab9cc03efb589e379c121efa116941996a06d6c95","status":"rough_uncounted_type_check"}
+]

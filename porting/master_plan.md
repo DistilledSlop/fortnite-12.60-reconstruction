@@ -10,6 +10,14 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch79 adds16 uncounted independent native helper drafts for safe-zone checks,
+player-state messages, creative publish/tag/text operations and pawn wrap/material
+selection/events. This includes small predicates/accessors and one forwarding
+wrapper, not16 large gameplay functions. Source review corrected temporary layout
+and reuse; native ABI/lifetime/engine adapters remain open. No canonical promotion
+or builds/tests. Broader named callbacks already had drafts; uncovered actual
+callees were selected to avoid duplicate work and broaden beyond weapon chains.
+
 Native source recovery has reached 2,075 complete bodies plus 180 supporting
 fields (batch71, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
 Linux client/server builds and Apollo headless join passed; tracked receipts in

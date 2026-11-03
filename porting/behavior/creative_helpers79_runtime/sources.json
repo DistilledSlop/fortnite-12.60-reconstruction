@@ -1,0 +1,22 @@
+[
+  {
+    "address": "0x1419d9d90",
+    "path": "porting/generated/native-broad79/0x1419d9d90.c",
+    "sha256": "cc65a307d160b4d9a4d3f72cd3c89ccde2e595e99c3b55db7d86b5b8979b0b04"
+  },
+  {
+    "address": "0x1419ddfd0",
+    "path": "porting/generated/native-broad79/0x1419ddfd0.c",
+    "sha256": "6ab75b08482d536f40e85a0ddbae5b4c1c15f9885c34a8fbf6b29687829f09a5"
+  },
+  {
+    "address": "0x142705ec0",
+    "path": "porting/generated/native-broad79/0x142705ec0.c",
+    "sha256": "47b7ebbf91ca8d7f7289ed5d74a5d2f773ebd47c96a156d7aa6c01ef3defd47e"
+  },
+  {
+    "address": "0x141ed1800",
+    "path": "porting/generated/native-broad79/0x141ed1800.c",
+    "sha256": "604c41e16e5186db0990da457307b580b3e4e405b7344c6d3401314b1e25942f"
+  }
+]
