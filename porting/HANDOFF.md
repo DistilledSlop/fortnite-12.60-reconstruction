@@ -1,5 +1,19 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Passed 2,040-body checkpoint (2026-11-03)
+
+Source785be98d passed client attempt3, server attempt1, matching staged binaries
+and Apollo headless join attempt1. Prior attempts1/2 preserved. Tracked receipts:
+porting/progress/native-checkpoint-2040.json. Evidence ledger updated from existing
+logs, no extra tests. LAST TESTED2,040; NEXT TEST3,040 bodies. This proves builds
+and the smoke script terrain/pawn/network conditions only, not full parity.
+All four product gates and the overall faithful reconstruction remain open.
+
+Larger recovery proposals preserve original lifecycle/virtual boundaries; root
+reviews/integrates source separately from checkpoint. Never treat handoff-only
+evidence as accepted implementations.
+
+
 ## Checkpoint compile repair (2026-11-03)
 
 Client attempt2 passed UHT and compiled 235 actions before stopping on seven
