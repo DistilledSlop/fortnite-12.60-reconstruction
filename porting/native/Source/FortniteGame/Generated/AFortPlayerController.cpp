@@ -335,6 +335,14 @@ bool AFortPlayerController::IsBuildToolOverridden() const
 	return NativeRecoveredBool_0x14b3;
 }
 
+bool AFortPlayerController::IsNearActiveEncounters() const
+{
+	// Original address: 0x142a481d0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected packed-bool word-shift getter; see bulk_bool_expansion_runtime/README.md.
+	return bIsNearActiveEncounters;
+}
+
 void AFortPlayerController::MulticastClearWeakSpotData_Implementation(ABuildingSMActor* ParentBuilding)
 {
 	// Body not recovered: reflection-derived stub.

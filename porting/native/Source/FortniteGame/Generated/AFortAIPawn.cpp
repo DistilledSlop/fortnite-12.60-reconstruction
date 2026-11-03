@@ -39,6 +39,14 @@ FRotator AFortAIPawn::GetSpawnRotation() const
 	return SpawnRotation;
 }
 
+bool AFortAIPawn::GetUsesDBNO() const
+{
+	// Original address: 0x1427a4de0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected packed-bool word-shift getter; see bulk_bool_expansion_runtime/README.md.
+	return bUsesDBNO;
+}
+
 void AFortAIPawn::NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data)
 {
 	// Body not recovered: reflection-derived stub.

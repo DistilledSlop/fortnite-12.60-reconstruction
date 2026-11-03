@@ -1447,6 +1447,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsBuildToolOverridden() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsNearActiveEncounters() const;
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastClearWeakSpotData(ABuildingSMActor* ParentBuilding);
 	void MulticastClearWeakSpotData_Implementation(ABuildingSMActor* ParentBuilding);

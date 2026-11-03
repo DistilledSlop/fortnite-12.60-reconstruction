@@ -7,6 +7,22 @@ void AFortPlayerState::ClientNotifyAwardGranted_Implementation(UFortAwardItemDef
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerState::HasStartedPlaying() const
+{
+	// Original address: 0x142a891f0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected packed-bool word-shift getter; see bulk_bool_expansion_runtime/README.md.
+	return bHasStartedPlaying;
+}
+
+bool AFortPlayerState::IsMeshNetPlayer() const
+{
+	// Original address: 0x142a89440.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected packed-bool word-shift getter; see bulk_bool_expansion_runtime/README.md.
+	return bMeshNetPlayer;
+}
+
 void AFortPlayerState::OnRep_AccessoryColorSwatches()
 {
 	// Body not recovered: reflection-derived stub.

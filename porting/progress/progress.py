@@ -451,6 +451,18 @@ def m_tracked_regex(spec, ctx):
     return {"pct": pct, "done": done, "total": total, "evidence": f"{done} of {total} ({what}; {tnote})"}
 
 
+def m_native_manifest(spec, ctx):
+    """Count committed function bodies independently of the last test checkpoint."""
+    entries = parse_json_or_none(ctx.files.get(spec["file"])) or []
+    done = len({(e["class"], e["function"]) for e in entries
+                if e.get("status") == "ported" and e.get("kind") != "member_field"
+                and e.get("inc_path") in ctx.files and e.get("class") and e.get("function")})
+    total, tnote = ctx.total_value(spec)
+    return {"pct": 100.0 * min(done, total) / total if total else 0.0,
+            "done": done, "total": total,
+            "evidence": f"{done} committed function bodies of {total} ({tnote}); source recovery only; build/runtime validation follows separate batch checkpoints"}
+
+
 def read_ledger(ctx):
     """Latest entry per check id from the tracked evidence ledger (dict or list form)."""
     data = parse_json_or_none(ctx.files.get(EVIDENCE_REL)) or {}
@@ -510,13 +522,14 @@ MEASURERS = {
     "local_glob": m_local_glob,
     "tracked_count": m_tracked_count,
     "tracked_regex": m_tracked_regex,
+    "native_manifest": m_native_manifest,
     "ledger": m_ledger,
     "manual": m_manual,
 }
 
 # Kinds whose numerator is tracked data (replayable per commit). A git-kind leaf has
 # no local input unless it names one, so its basis is 'git' alone.
-GIT_KINDS = ("checks", "tracked_count", "tracked_regex", "ledger")
+GIT_KINDS = ("checks", "tracked_count", "tracked_regex", "native_manifest", "ledger")
 
 BASIS_BY_KIND = {
     "checks": "git",
@@ -527,6 +540,7 @@ BASIS_BY_KIND = {
     "local_glob": "local",
     "tracked_count": "git",
     "tracked_regex": "git",
+    "native_manifest": "git",
     "ledger": "git",
     "manual": "manual",
 }

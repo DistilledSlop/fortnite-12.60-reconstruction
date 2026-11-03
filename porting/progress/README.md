@@ -670,3 +670,8 @@ interactive presentation has been established. The importer rechecks archived
 artifacts and source pairs; stage binary fields are cross-checked without
 rehashing binary contents. The original build/stage/freeze receipts carry those
 binary hashes. Frozen external evidence must remain available for re-verification.
+
+Native body coverage reads committed `MANIFEST.json` entries with tracked `.inc`
+files directly, excluding member fields. It updates after each source commit
+without rerunning native tests. `behavior/COUNTS.txt` retains the last checker
+checkpoint; source coverage does not establish build or runtime parity.

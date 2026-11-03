@@ -93,5 +93,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasUserId() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsEnabled() const;
+
 };
 

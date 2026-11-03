@@ -117,7 +117,7 @@ loading or display.
   confidence, address, status, proxy_score, decompile_source, notes}`. One entry per function, even when
   several functions share one body.
   - `status`: `ported` (has an `inc_path`) or `skipped` (`inc_path` is null, `notes` holds the reason).
-  - `kind`: `getter`, `onrep` (RepNotify body), `impl` (RPC `_Implementation`), `validate` (RPC `_Validate`),
+  - `kind`: `getter`, `onrep` (RepNotify body), `impl` (RPC `_Implementation`), `native_event_impl` (BlueprintNativeEvent `_Implementation`), `validate` (RPC `_Validate`),
     `exec` (other BlueprintCallable body), `callee` (an unidentified helper queued in CALLEE_PORT_QUEUE.md),
     `helper` (a non-reflected member function), `static_helper` (a static free function in the class .cpp),
     `member_field` (a non-reflected data member) and `struct_net` (the NetSerialize of a struct); see "Helpers",
@@ -380,3 +380,15 @@ only for the ported and skipped entries.
 Dashboard function coverage uses `COUNTS.txt`'s `ported_functions` value: ported manifest entries excluding `member_field` storage declarations. The legacy `ported` total remains an entry count for checker reporting; `member_fields` records supporting storage separately. Neither declaration nor source-body coverage establishes runtime parity.
 
 For a recovered internal reflected function, `reflection_flags` may pin the original numeric mask. Generation rejects a mismatch; the class policy must preserve original callable/access metadata, and the checker verifies it. This permits protected non-Blueprint-callable native callbacks without adding a new Blueprint API. `GameState` is the inherited AGameModeBase property used by the original Athena callback.
+
+Reflected `getter`/`exec` snippets may carry a boolean `virtual` when original
+vtable/exec evidence establishes native virtual dispatch. It is independent of
+reflection flags. The generator preserves the qualifier in declarations and its
+declaration guard; static functions, RPCs and Blueprint events cannot opt into
+this path. Keep signatures free of linkage words and record original slot/table
+evidence in the source batch. Existing entries without this key retain their
+previous declarations.
+
+### Blueprint native event implementations
+
+Use `native_event_impl` only for an opted-in reflected native event with a recovered virtual implementation. The `function` and reflection-derived `signature` name the `_Implementation` method; `reflection_flags` is required and pins the original mask. The generator rejects mismatched flags, signatures, RPCs, static functions, delegates, and RepNotify targets. It emits the reflected `BlueprintNativeEvent` declaration with the original callable, pure, cosmetic, authority, exec, const and access metadata, followed by a virtual `_Implementation` declaration. Only the implementation receives the snippet; UHT generates the event dispatcher. An ordinary `getter` or `exec` cannot opt an event in.

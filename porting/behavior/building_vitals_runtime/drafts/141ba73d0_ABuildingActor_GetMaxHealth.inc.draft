@@ -1,0 +1,21 @@
+// DRAFT, NOT COMPILABLE. Original address: 0x141ba73d0 (exec thunk 0x142737110, vtable slot 0x7b0).
+// Complete flow from the typed C/asm:
+//   if (BuildingAttributeSet) return BuildingAttributeSet->MaxHealth.GetCurrentValue();   // set+0x58, data+0xc
+//   if (MaxHealthInitializationValue == -1.0f) {                                        // this+0x328
+//       const bool bFlag = FUN_141ef70e0(this);          // UNRESOLVED: FUN_141ed2350(); FUN_141ed4e30(this) (byte result)
+//       const int32* InitKey = GetAttributeInitializationKey(bFlag);   // 0x141b9b2a0, resolved below
+//       if (InitKey[0]==0 && InitKey[1]==0) return 0.0f;                // 8-byte key zero => 0
+//       auto* Globals = IGameplayAbilitiesModule::Get().GetAbilitySystemGlobals();  // 0x1406c6ef0: module "GameplayAbilities", vcall slot 8 (+0x40)
+//       auto* Initter = *(void**)((uint8*)Globals + 0x220);   // 0x14070c720; FAttributeSetInitter*
+//       if (!Initter) return 0.0f;
+//       FGameplayAttribute Attr = MakeMaxHealthAttribute();   // 0x141ba74f0: lazy static FindField(UFortHealthSet class, "MaxHealth")
+//       const int32 Level = (int32)GetLevelFloat();           // virtual slot 0x778 of this, cvttss2si
+//       Initter->vslot6(InitKey, Attr, Level, &MaxHealthInitializationValue);  // custom Fortnite slot 0x30, NOT Engine ApplyAttributeDefault
+//       return MaxHealthInitializationValue;
+//   }
+//   return MaxHealthInitializationValue;
+// GetAttributeInitializationKey(this, byte b) 0x141b9b2a0: b==2 -> 0; if !(flag 0x3e0&4) && !(uint@+8 >>4 &1) && Outer(+0x10) {
+//   CDO = Outer->vslot 0x390 lazy (+0x130 field 0x26*8); compare 16-byte keys at this+0x32c+b*0x10 vs CDO; on mismatch log
+//   (verbosity >2) "ABuildingActor::GetAttributeInitializationKey : [%s] - Instanced InitKey[%s] and CDO InitKey[%s]" and return CDO key }
+//   else return &this->key[b]. (Key = 16 bytes at +0x32c; reflected name needed.)
+// Still unresolved: 0x141ed2350, 0x141ed4e30, Initter vslot6 class/type, slot 0x778 name, key field names.

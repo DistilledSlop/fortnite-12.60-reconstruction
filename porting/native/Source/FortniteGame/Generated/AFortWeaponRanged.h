@@ -359,6 +359,11 @@ protected:
 	int32 GetShellReloadCounter() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetUseBeamParticles() const;
+public:
+
 	UFUNCTION()
 	void OnRep_OverheatState(EFortWeaponOverheatState PreviousOverheatState);
 
@@ -368,6 +373,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldDisplayAmmoCounter() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool UseFirstPersonTargeting() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

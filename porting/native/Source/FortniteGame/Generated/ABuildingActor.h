@@ -26,6 +26,7 @@
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 
+class AController;
 class AFortAthenaVehicle;
 class AFortMission;
 class AFortPlacementActor;
@@ -632,8 +633,23 @@ public:
 	UPROPERTY()
 	FMarkedActorDisplayInfo MarkerDisplay;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetCurrentBuildingLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetMaxShield() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetShield() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetShieldPercent() const;
+
 	UFUNCTION()
 	void HandleDestroyed();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayerBuilt() const;
 
 	UFUNCTION()
 	void OnRep_AbilitySystemComponent();
@@ -664,6 +680,18 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetHealthBarIndicatorDifficultyRating(int32 InDisplayLevel);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	bool ShouldDie(float Damage, AController* EventInstigator, AActor* DamageCauser);
+	virtual bool ShouldDie_Implementation(float Damage, AController* EventInstigator, AActor* DamageCauser);
+
+	UFUNCTION(BlueprintNativeEvent)
+	bool ShouldDisplayDamageNumbers() const;
+	virtual bool ShouldDisplayDamageNumbers_Implementation() const;
+
+	UFUNCTION(BlueprintNativeEvent)
+	bool UseDefaultHealthBar() const;
+	virtual bool UseDefaultHealthBar_Implementation() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

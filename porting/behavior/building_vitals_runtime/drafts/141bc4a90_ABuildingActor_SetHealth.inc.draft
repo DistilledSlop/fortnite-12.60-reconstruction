@@ -1,0 +1,6 @@
+// DRAFT (dependency-blocked). Original address: 0x141bc4a90 (exec thunk 0x142738290, non-virtual: exec calls it directly).
+// UFortBuildingActorSet* Set = <0x141b9b750(this)>;      // returns BuildingAttributeSet (+0x318); if null and !IsTemplate() and
+//                                                        // AbilitySystemComponentCreationPolicy(+0x34d)==1 and UFortEngine(0x141ed2350)+199 and Role==3: 0x141b94070(this,true) creates ASC+set
+// const FGameplayAttribute Health = <0x141916570>();     // lazy static: FGameplayAttribute(FindField<FProperty>(UFortHealthSet class, "Health")), via 0x1406a8e40 + 0x1406ebb90
+// UAbilitySystemComponent* ASC = Set->GetOwningAbilitySystemComponent();   // 0x14070f1a0: Outer(+0x20) -> IAbilitySystemInterface -> GetAbilitySystemComponent (no null check on Set)
+// if (ASC) { ASC->SetNumericAttributeBase(Health, NewHealth); }            // 0x1406da850 == UAbilitySystemComponent::SetNumericAttributeBase

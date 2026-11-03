@@ -265,6 +265,12 @@ public:
 	void ClientNotifyAwardGranted(UFortAwardItemDefinition* AwardDefinition);
 	void ClientNotifyAwardGranted_Implementation(UFortAwardItemDefinition* AwardDefinition);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasStartedPlaying() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMeshNetPlayer() const;
+
 	UFUNCTION()
 	void OnRep_AccessoryColorSwatches();
 

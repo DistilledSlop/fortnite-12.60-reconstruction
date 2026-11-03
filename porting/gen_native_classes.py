@@ -1969,7 +1969,7 @@ for _owner, _name, _outer, _create, _flags, _access, _params, _types, _args, _al
 
 
 def build_functions_promoted(functions, resolver, notify_names, owner_fns, splice_names=frozenset(),
-                             blueprint_events=frozenset(), parameterized_blueprint_events=None):
+                             blueprint_events=frozenset(), parameterized_blueprint_events=None, native_event_names=frozenset()):
     """Emit RPCs, RepNotify targets, snippet functions and narrowly selected observed Blueprint events.
     A function whose flags cannot be classified is recorded, since it might be an RPC."""
     emitted = []
@@ -1980,7 +1980,14 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
             resolver.skipped.append(skip_function(fn, "flags_ambiguous", "RPC status unknown: " + problem))
             continue
         is_rpc = bool(flags & FUNC_NET_ANY)
-        is_splice = name in splice_names and not is_rpc
+        is_native_event = name in native_event_names
+        is_splice = (name in splice_names or is_native_event) and not is_rpc
+        if is_native_event and ((flags & 0xc00) != 0xc00 or flags & (FUNC_NET_ANY | FUNC_NET_REQUEST | FUNC_NET_RESPONSE | FUNC_STATIC | 0x100000 | 0x10000) or name in notify_names):
+            resolver.skipped.append(skip_function(fn, "native_event_mismatch", "expected native event without RPC, static, delegate or RepNotify flags"))
+            continue
+        if name in splice_names and flags & 0x800:
+            resolver.skipped.append(skip_function(fn, "snippet_event", "events require native_event_impl"))
+            continue
         policy = (parameterized_blueprint_events or {}).get(name)
         is_blueprint_event = name in blueprint_events or policy is not None
         if policy is not None:
@@ -2117,6 +2124,9 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
             rec["specifiers"] += [label for bit, label in ((FUNC_BLUEPRINT_PURE, "BlueprintPure"),
                 (0x200, "Exec"), (0x4, "BlueprintAuthorityOnly"), (0x8, "BlueprintCosmetic")) if flags & bit]
             rec["access"] = "protected" if flags & 0x80000 else ("private" if flags & 0x40000 else "public")
+            if is_native_event:
+                rec["native_event"] = True
+                rec["specifiers"].insert(0, "BlueprintNativeEvent")
         emitted.append(rec)
     return emitted
 
@@ -2429,9 +2439,12 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     members, _notes = build_members(block.get("properties") or [], resolver, promote=True)
     notify_names = {m["rep_notify"] for m in members if m["rep_notify"]}
     splice_names = {e["function"] for e in snippets if e["kind"] in ("getter", "exec") and e.get("body") is not None}
+    native_event_names = {e["function"][:-len("_Implementation")] for e in snippets
+                          if e.get("kind") == "native_event_impl" and e.get("body") is not None
+                          and e.get("function", "").endswith("_Implementation")}
     functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns,
                                          splice_names, UI_BLUEPRINT_EVENTS.get(name, frozenset()),
-                                         UI_PARAMETERIZED_BLUEPRINT_EVENTS.get(name, {}))
+                                         UI_PARAMETERIZED_BLUEPRINT_EVENTS.get(name, {}), native_event_names)
     splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped,
                               {m["name"] for m in members})
               if snippets else None)
@@ -2992,6 +3005,20 @@ def attach_snippets(name, functions, entries, ctx, package, skipped=(), member_n
                 reject("function not emitted: " + not_emitted_reason(skipped, fname))
                 continue
             want = "%s %s(%s)%s" % (target["ret"], fname, ", ".join(target["args"]), " const" if target["const"] else "")
+        elif kind == "native_event_impl" and fname.endswith("_Implementation"):
+            base = fname[:-len("_Implementation")]
+            target = by_name.get(base)
+            if target is None or not target.get("native_event"):
+                reject("native event %s not emitted: %s" % (base, not_emitted_reason(skipped, base)))
+                continue
+            if "reflection_flags" not in e:
+                reject("native event requires pinned reflection_flags")
+                continue
+            if e.get("static", False):
+                reject("native event implementation cannot be static")
+                continue
+            want = "%s %s(%s)%s" % (target["ret"], fname, ", ".join(target["args"]),
+                                      " const" if target.get("const") else "")
         elif kind == "impl" and fname.endswith("_Implementation"):
             base = fname[:-len("_Implementation")]
             target = by_name.get(base)
@@ -3019,6 +3046,13 @@ def attach_snippets(name, functions, entries, ctx, package, skipped=(), member_n
         else:
             reject("unknown kind %r or name %r" % (kind, fname))
             continue
+        if "virtual" in e:
+            if kind not in ("getter", "exec") or not isinstance(e["virtual"], bool):
+                reject("virtual must be a boolean on a reflected member function")
+                continue
+            if target.get("static") or target.get("rpc") or target.get("blueprint_event"):
+                reject("explicit virtual requires an ordinary reflected member function")
+                continue
         if "reflection_flags" in e:
             try:
                 original_flags = int(e["reflection_flags"], 0)
@@ -3072,8 +3106,10 @@ def attach_snippets(name, functions, entries, ctx, package, skipped=(), member_n
             target["specifiers"] = target["specifiers"] + ["WithValidation"]
         else:
             target["body"] = e["body"]
-        if kind in ("getter", "exec"):
+        if kind in ("getter", "exec", "native_event_impl"):
             target["accepted"] = True
+            if "virtual" in e:
+                target["virtual"] = e["virtual"]
         out["includes"] |= includes
         out["accepted"].append(tag)
     return out
@@ -3116,14 +3152,22 @@ def verify_spliced(model, header, cpp):
         const = " const" if f.get("const") else ""
         tag = "%s::%s" % (name, f["name"])
         ufunc = squash("UFUNCTION(%s)" % ", ".join(f["specifiers"]))
-        decl = squash("%s%s %s(%s)%s;" % ("static " if f.get("static") else "", ret, f["name"], args, const))
+        decl = squash("%s%s %s(%s)%s;" % ("static " if f.get("static") else "virtual " if f.get("virtual") else "", ret, f["name"], args, const))
         if count(hsq, decl) != 1:
             problems.append("%s: declaration found %d times in header" % (tag, count(hsq, decl)))
         else:
             idx = hsq.index(decl)
             if idx == 0 or hsq[idx - 1] != ufunc:
                 problems.append("%s: UFUNCTION specifiers differ from %s" % (tag, ufunc))
-        if f["rpc"] and not f.get("service"):
+        if f.get("native_event"):
+            impl = "%s_Implementation" % f["name"]
+            idecl = squash("virtual %s %s(%s)%s;" % (ret, impl, args, const))
+            if count(hsq, idecl) != 1:
+                problems.append("%s: native event implementation declaration missing or repeated" % tag)
+            check_def("%s %s::%s(%s)%s" % (ret, name, impl, args, const), body_lines(f.get("body")), tag)
+            if re.search(r"\b%s::%s\s*\(" % (re.escape(name), re.escape(f["name"])), cpp):
+                problems.append("%s: event dispatcher must be generated by UHT" % tag)
+        elif f["rpc"] and not f.get("service"):
             impl = "%s_Implementation" % f["name"]
             if count(hsq, squash("void %s(%s);" % (impl, args))) != 1:
                 problems.append("%s: _Implementation declaration missing or repeated" % tag)
@@ -3269,9 +3313,12 @@ def render_promoted_header(model, api, parent_include, source_label):
         if f.get("blueprint_event") or f.get("access") in ("protected", "private"):
             lines.append(f.get("access", "protected") + ":")
         lines.append("\tUFUNCTION(%s)" % ", ".join(f["specifiers"]))
-        lines.append("\t%s%s %s(%s)%s;" % ("static " if f.get("static") else "", f.get("ret", "void"), f["name"],
+        lines.append("\t%s%s %s(%s)%s;" % ("static " if f.get("static") else "virtual " if f.get("virtual") else "", f.get("ret", "void"), f["name"],
                                        ", ".join(header_arg(f, a) for a in f["args"]),
                                        " const" if f.get("const") else ""))
+        if f.get("native_event"):
+            lines.append("\tvirtual %s %s_Implementation(%s)%s;" % (f["ret"], f["name"], ", ".join(f["args"]),
+                                                                  " const" if f.get("const") else ""))
         if f.get("blueprint_event") or f.get("access") in ("protected", "private"):
             lines.append("public:")
         if f["rpc"] and not f.get("service"):
@@ -3428,7 +3475,7 @@ def render_promoted_cpp(model, source_label):
                 raise ValueError("%s: a behaviour body cannot be spliced into a service request (UHT generates it)" % f["name"])
             continue
         # A net service response is the programmer's own body (UHT: CppImplName = the name), so it has no _Implementation.
-        impl = "%s_Implementation" % f["name"] if f["rpc"] and not f.get("service") else f["name"]
+        impl = "%s_Implementation" % f["name"] if (f["rpc"] and not f.get("service")) or f.get("native_event") else f["name"]
         args = ", ".join(f["args"])
         lines.append("%s %s::%s(%s)%s" % (f.get("ret", "void"), name, impl, args, " const" if f.get("const") else ""))
         lines.append("{")

@@ -801,6 +801,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	FRotator GetSpawnRotation() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetUsesDBNO() const;
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_BatchedDamageCues(const FFortAIBatchedDamageCues& Data);
 	void NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data);

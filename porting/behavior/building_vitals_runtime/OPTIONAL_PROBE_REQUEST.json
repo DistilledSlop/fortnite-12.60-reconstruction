@@ -1,0 +1,6 @@
+[
+{"address":"0x141b94070","label":"ABuildingActor ASC+BuildingAttributeSet creator (SetHealth/ForceBuildingHealth/GetMaxHealth dependency); callees 0x143f72040,0x142ed7360,0x14277e480,0x1440c2bb0"},
+{"address":"0x141e5f160","label":"GetMaxHealth: byte from 0x141ed4e30 world lookup"},
+{"address":"0x141df62a0","label":"0x141ed4e30 fallback; +0x6cc byte"},
+{"address":"0x144640410","label":"0x141ed4e30: lookup (GEngine, this, 0)"}
+]

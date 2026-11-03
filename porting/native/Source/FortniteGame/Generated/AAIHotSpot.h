@@ -87,5 +87,11 @@ public:
 	UPROPERTY()
 	UBillboardComponent* SpriteComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsSlotlessAssignmentAllowed() const;
+
 };
 

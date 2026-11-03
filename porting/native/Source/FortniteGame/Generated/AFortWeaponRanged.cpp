@@ -47,6 +47,14 @@ int32 AFortWeaponRanged::GetShellReloadCounter() const
 	return ShellReloadCounter;
 }
 
+bool AFortWeaponRanged::GetUseBeamParticles() const
+{
+	// Original address: 0x142b4fa80.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected packed-bool word-shift getter; see bulk_bool_expansion_runtime/README.md.
+	return bUseBeamParticles;
+}
+
 void AFortWeaponRanged::OnRep_OverheatState(EFortWeaponOverheatState PreviousOverheatState)
 {
 	// Body not recovered: reflection-derived stub.
@@ -63,6 +71,14 @@ bool AFortWeaponRanged::ShouldDisplayAmmoCounter() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return bShouldDisplayAmmoCounter;
+}
+
+bool AFortWeaponRanged::UseFirstPersonTargeting() const
+{
+	// Original address: 0x142b502c0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete reflected packed-bool word-shift getter; see bulk_bool_expansion_runtime/README.md.
+	return bUseFirstPersonTargeting;
 }
 
 void AFortWeaponRanged::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

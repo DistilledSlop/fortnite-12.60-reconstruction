@@ -1,0 +1,12 @@
+// DRAFT (dependency-blocked). Original address: 0x141b990d0 (exec thunk 0x142736690).
+// if (Role /*+0xf0*/ == ROLE_Authority /*3*/) {
+//   if (BuildingAttributeSet == nullptr) {
+//     if (!IsTemplate() /*0x142ecc600: Outer-chain flag test 0x30*/ && AbilitySystemComponentCreationPolicy /*+0x34d*/ == 1) {
+//       if (GetFortEngine() /*0x141ed2350*/ ->Flag_at_199 && policy==1 && Role==3) <0x141b94070>(this, true);   // creates ASC + attribute set
+//     }
+//   }
+//   UFortBuildingActorSet* Set = BuildingAttributeSet;                          // re-read
+//   ASC = Set->GetOwningAbilitySystemComponent(); if (ASC) ASC->SetNumericAttributeBase(MaxHealthAttribute, NewHealth);   // 0x141ba74f0
+//   ASC = Set->GetOwningAbilitySystemComponent(); if (ASC) ASC->SetNumericAttributeBase(HealthAttribute,   NewHealth);   // 0x141916570
+// }
+// Note: the original reuses one Set pointer, calling 0x14070f1a0 each time; ASC lookup is repeated per attribute.

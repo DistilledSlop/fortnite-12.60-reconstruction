@@ -69,7 +69,7 @@ HELPER_KINDS = ("helper", "static_helper")
 FIELD_KIND = "member_field"
 FIELD_ACCESS = ("public", "protected", "private")
 FIELD_SIG_RE = re.compile(r"^(?P<type>.*?[\s*&>])\s*(?P<name>[A-Za-z_]\w*)$")
-KNOWN_KINDS = {"getter", "exec", "impl", "validate", "onrep", "callee", FIELD_KIND, STRUCT_NET_KIND} | set(HELPER_KINDS)
+KNOWN_KINDS = {"getter", "exec", "impl", "native_event_impl", "validate", "onrep", "callee", FIELD_KIND, STRUCT_NET_KIND} | set(HELPER_KINDS)
 HELPER_NAMES = {}  # class -> names of its ported helper and static_helper entries (callable from any body)
 
 
@@ -275,12 +275,22 @@ def check_kind(e, problems):
     if kind not in KNOWN_KINDS:
         problems.append(("FAIL", tag, "unknown kind %r" % (kind,)))
         return
-    if "virtual" in e and (kind != "helper" or not isinstance(e["virtual"], bool)):
-        problems.append(("FAIL", tag, "virtual must be a boolean on a member helper only"))
-    if "reflection_flags" in e and (kind not in ("getter", "exec") or
+    if "virtual" in e and (kind not in ("helper", "getter", "exec") or not isinstance(e["virtual"], bool)):
+        problems.append(("FAIL", tag, "virtual must be a boolean on a member helper or reflected function"))
+    if e.get("virtual") and e.get("static"):
+        problems.append(("FAIL", tag, "static function cannot be virtual"))
+    if "reflection_flags" in e and (kind not in ("getter", "exec", "native_event_impl") or
             not re.fullmatch(r"0x[0-9a-fA-F]+", str(e["reflection_flags"]))):
-        problems.append(("FAIL", tag, "reflection_flags must be a hex string on getter/exec"))
+        problems.append(("FAIL", tag, "reflection_flags must be a hex string on getter/exec/native_event_impl"))
     sig = e.get("signature") or ""
+    if kind == "native_event_impl":
+        flags = e.get("reflection_flags")
+        if not flags or not re.fullmatch(r"0x[0-9a-fA-F]+", str(flags)):
+            problems.append(("FAIL", tag, "native_event_impl requires hex reflection_flags"))
+        elif (int(flags, 0) & 0xc00) != 0xc00 or int(flags, 0) & (0x40 | 0x100 | 0x1000 | 0x2000 | 0x4000 | 0x10000 | 0x100000 | 0x200000 | 0x1000000):
+            problems.append(("FAIL", tag, "native event flags must be Event and Native without RPC, static or delegate"))
+        if not str(e.get("function") or "").endswith("_Implementation"):
+            problems.append(("FAIL", tag, "native event function must end in _Implementation"))
     if kind == STRUCT_NET_KIND:
         # The struct is the class; the function, signature and linkage are fixed (gen_native_classes.py, struct_net).
         if e.get("function") != "NetSerialize":
@@ -437,7 +447,7 @@ def check_generated(e, rejected, problems, counts):
         check_static_helper(e, tag, ret, sfn, args, hdr, cpp, problems, counts)
         return
     hl = [squash(line) for line in hdr.splitlines()]
-    linkage = "virtual " if e.get("virtual") else ("static " if e.get("static") else "")
+    linkage = "virtual " if e.get("virtual") or e["kind"] == "native_event_impl" else ("static " if e.get("static") else "")
     decl_key = squash("%s%s %s(%s)%s;" % (linkage, ret, sfn, args, const))
     if hl.count(decl_key) != 1:
         problems.append(("FAIL", tag, "declaration %r found %d times in header" % (decl_key, hl.count(decl_key))))
@@ -462,6 +472,28 @@ def check_generated(e, rejected, problems, counts):
                            if hl[j] in ("public:", "protected:", "private:")), None)
             if access != expected_access:
                 problems.append(("FAIL", tag, "function access differs from original reflection flags"))
+    if e["kind"] == "native_event_impl":
+        if not sfn.endswith("_Implementation") or not re.fullmatch(r"0x[0-9a-fA-F]+", str(e.get("reflection_flags") or "")):
+            return  # check_kind reported the malformed entry
+        base = sfn[:-len("_Implementation")]
+        event_key = squash("%s %s(%s)%s;" % (ret, base, args, const))
+        if hl.count(event_key) != 1:
+            problems.append(("FAIL", tag, "native event declaration missing or repeated"))
+        else:
+            event_index = hl.index(event_key)
+            spec = hl[event_index - 1] if event_index else ""
+            flags = int(e["reflection_flags"], 0)
+            expected = {"BlueprintNativeEvent"}
+            expected.update(label for bit, label in ((0x04000000, "BlueprintCallable"), (0x10000000, "BlueprintPure"), (0x200, "Exec"), (0x4, "BlueprintAuthorityOnly"), (0x8, "BlueprintCosmetic")) if flags & bit)
+            actual = set(spec[len("UFUNCTION("):-1].split(",")) if spec.startswith("UFUNCTION(") and spec.endswith(")") else set()
+            if actual != expected:
+                problems.append(("FAIL", tag, "native event specifiers differ from reflection: %r" % spec))
+            access = next((hl[j] for j in range(event_index - 1, -1, -1) if hl[j] in ("public:", "protected:", "private:")), None)
+            expected_access = "protected:" if flags & 0x80000 else ("private:" if flags & 0x40000 else "public:")
+            if access != expected_access:
+                problems.append(("FAIL", tag, "native event access differs from reflection"))
+        if re.search(r"\b%s::%s\s*\(" % (re.escape(cls), re.escape(base)), cpp):
+            problems.append(("FAIL", tag, "native event dispatcher must be generated by UHT"))
     if e["kind"] == "validate":
         rpc = sfn[:-len("_Validate")]
         rpc_key = squash("void %s(%s);" % (rpc, args))

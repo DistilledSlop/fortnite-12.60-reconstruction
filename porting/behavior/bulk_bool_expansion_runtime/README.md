@@ -1,0 +1,5 @@
+# Reflected packed-bool word-shift getters
+
+`prepare.py` recovers zero-argument Bool getters only when the complete exec handler or its exact single-call wrapper and leaf loads a 32-bit word, logically shifts it, masks the low bit and returns the normalized result. The shifted bit must match exactly one own-class reflected Bool property and its recorded byte offset and mask; the generated header must declare that property as a one-bit `uint8` and have the expected reflected parent. Function flags, return shape, class selection, unique header, and original image SHA-256 are checked fail-closed. The C++ getter reads the existing reflected field; no new storage, defaults, constructors or writers are invented. Source recovery does not establish class feature parity.
+
+Run `python3 porting/behavior/bulk_bool_expansion_runtime/prepare.py` to generate isolated proposals and evidence at `/tmp/gameplay-bulk-bool-expansion/{manifest-entries,report}.json`. `--output-dir` changes the report destination; `--revalidate-own` includes this pass's canonical entries. Existing body files must match exactly. Bodies await integration and the next scheduled build checkpoint.
