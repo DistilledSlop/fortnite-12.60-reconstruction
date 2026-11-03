@@ -32,3 +32,9 @@ bool UAthenaCosmeticItemDefinition::IsOwnedByCampaignHero() const
 	return bIsOwnedByCampaignHero;
 }
 
+FText UAthenaCosmeticItemDefinition::GetDisplayName(bool bBaseName) const
+{
+	// CONFIDENCE: high
+	return Super::GetDisplayName(bBaseName);
+}
+

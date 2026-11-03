@@ -39,6 +39,12 @@ TArray<FFortAlterationSlotStatus> UFortItem::GetAlterationSlots() const
 	return {};
 }
 
+FText UFortItem::GetDisplayName() const
+{
+	// CONFIDENCE: high
+	return NativeGetDisplayName(false);
+}
+
 float UFortItem::GetDurability() const
 {
 	// Exact UFortItem base implementation at 0x14084bee0.
@@ -302,5 +308,12 @@ FGuid UFortItem::NativeGetItemGuid()
 {
 	// CONFIDENCE: HIGH
 	return FGuid();
+}
+
+FText UFortItem::NativeGetDisplayName(bool bBaseName) const
+{
+	// CONFIDENCE: high
+	const UFortItemDefinition* Definition = GetItemDefinitionBP();
+	return Definition ? Definition->GetDisplayName(bBaseName) : FText::GetEmpty();
 }
 

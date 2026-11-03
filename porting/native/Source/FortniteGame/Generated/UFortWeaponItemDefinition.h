@@ -297,5 +297,6 @@ public:
 	TEnumAsByte<EFortWeaponTriggerType::Type> NativeGetTriggerType() const;
 	static bool NativeSupportsCharge(const FFortBaseWeaponStats& Stats);
 	static int32 NativeAmmoCostForCharge(const FFortBaseWeaponStats& Stats, float ChargeFraction);
+	virtual FText GetDisplayName(bool bBaseName) const;
 };
 

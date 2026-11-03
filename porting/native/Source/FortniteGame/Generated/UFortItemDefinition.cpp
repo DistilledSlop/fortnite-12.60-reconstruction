@@ -24,6 +24,18 @@ FSoftObjectPath UFortItemDefinition::GetDisplayAssetPath() const
 	return DisplayAssetPath;
 }
 
+FText UFortItemDefinition::GetDisplayName(bool bBaseName) const
+{
+	// CONFIDENCE: high
+	if (!bBaseName && !DisplayNamePrefix.IsEmpty())
+	{
+	    const FText Name = DisplayName;
+	    const FText Prefix = DisplayNamePrefix;
+	    return FText::Format(NSLOCTEXT("DisplayNameFormat", "DisplayNameFormatWithoutRarityPrefix", "{0} {1}"), Prefix, Name);
+	}
+	return DisplayName;
+}
+
 FSoftObjectPath UFortItemDefinition::GetHiResDisplayAssetPath() const
 {
 	// Native target 0x14202dd60; confidence: high.

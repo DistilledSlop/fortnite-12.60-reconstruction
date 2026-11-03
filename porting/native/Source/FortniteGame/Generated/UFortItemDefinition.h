@@ -202,6 +202,9 @@ public:
 	virtual FSoftObjectPath GetDisplayAssetPath() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetDisplayName(bool bBaseName) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual FSoftObjectPath GetHiResDisplayAssetPath() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

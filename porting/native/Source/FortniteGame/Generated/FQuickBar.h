@@ -44,5 +44,7 @@ struct FQuickBar
 	UPROPERTY()
 	TArray<int32> SharedVisibleSlotIndicesWhenUsingGamepad;
 
+	void RefreshEquippedItemDefinitions(class AFortPlayerController* Owner);
+
 };
 

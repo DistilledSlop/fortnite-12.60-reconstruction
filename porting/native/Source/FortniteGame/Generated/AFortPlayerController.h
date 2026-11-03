@@ -1866,6 +1866,7 @@ public:
 	virtual UFortItem* NativeFindItemByGuid(const FGuid& ItemGuid);
 	virtual AFortInventory* NativeQuickBarInventory();
 	virtual AFortWeapon* NativeQuickBarHeldWeapon();
+	static void NativeRecordQuickBarSlotItem(AFortPlayerController* Controller, UFortItem* Item, EFortQuickBars Bar, int32 PreviousSlot, int32 NewSlot, UFortItem* ReplacedItem);
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 };

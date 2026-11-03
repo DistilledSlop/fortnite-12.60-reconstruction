@@ -1,0 +1,18 @@
+{
+  "status": "Recovered source proposals; known concrete definition and item primary tables audited. No build performed.",
+  "primary_this": "UFortItem constructor 0x142024010 installs primary table 0x14606c3f0; UFortWorldItem constructor 0x142041fc0 installs primary table 0x14607a630, as documented in item_stack_runtime/prepare.py. These are original-this primary tables.",
+  "override_proof": "Original image-125 runtime bytes, base 0x140000000: tables 0x14606c3f0 and 0x14607a630 both have 0x14202cab0 at +0x3a8 and 0x14202cad0 at +0x3a0; no UFortWorldItem override at either slot.",
+  "get_display_name": "exec 0x142958c70 dispatches item +0x3a8; 0x14202cab0 forwards output storage and false to item +0x3a0. Reflection outer 0x1429528f0 confirms FText GetDisplayName() const, flags 0x54020400.",
+  "native_get_display_name": "0x14202cad0 calls virtual +0x3e8 once. A non-null definition receives virtual +0x2e0 with the original bool; null returns FText::GetEmpty (0x1407c2c80). FText is copied into return storage with normal lifetime semantics.",
+  "definition_dependency": "Definition slot +0x2e0: UFortItemDefinition 0x14606bf00 and UFortWorldItemDefinition 0x14606f8f8 -> 0x14202cc10; UFortWeaponItemDefinition 0x1461fea98 -> 0x14266b100. Reflection outer 0x14295abf0 provides FText GetDisplayName(bool bBaseName) const. Base returns DisplayName unless !bBaseName and prefix is nonempty, then formats prefix and name using localized pattern. Weapon additionally includes tier even for bBaseName; copies name/prefix before tier helper, then formats tier. Strings and localization keys recovered from original image. Known additional subclass tables are described in override_audit.",
+  "captures": [
+    "porting/generated/native120-item-displayname/0x14202cab0.c",
+    "porting/generated/native121-displayname-deps/0x14202cad0.c",
+    "porting/generated/native121-displayname-deps/0x14202cc10.c",
+    "porting/generated/native121-displayname-deps/0x14266b100.c",
+    "porting/generated/native122-displaytier/0x14266bb90.c",
+    "porting/generated/native123-cosmetic-display/0x141d49560.c"
+  ],
+  "tier_helper": "0x14266bb90 switches 0..10 to localized tier names in Fort.Weapon.Defaults namespace with EFortDisplayTier.<name> keys; unknown value returns empty text.",
+  "override_audit": "Known definition tables: UFortItemDefinition 0x14606bf00, UFortWorldItemDefinition 0x14606f8f8, UFortConsumableItemDefinition 0x14605df38 select 0x14202cc10; UFortWeaponItemDefinition 0x1461fea98 selects 0x14266b100; UAthenaCosmeticItemDefinition 0x145f957c0 selects 0x141d49560, a direct forwarding call to 0x14202cc10 with bool unchanged. Original-this table evidence for latter two known concrete classes: /tmp/native110-vtable-proof.json. Five known item tables (UFortItem, UFortWorldItem, UFortAccountItem, UFortCreativeWorldItem, UFortPlaysetWorldItem) select common targets 0x14202cad0 and 0x14202cab0 at +0x3a0 and +0x3a8. This audit covers known evidence, not every subclass in game."
+}

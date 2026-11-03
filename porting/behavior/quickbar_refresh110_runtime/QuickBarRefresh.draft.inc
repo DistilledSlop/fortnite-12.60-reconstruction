@@ -1,7 +1,43 @@
 // Uncounted draft of FQuickBar::RefreshEquippedItemDefinitions, 0x142063590.
-// The Unresolved_ calls/globals are explicit integration gaps, not implemented APIs.
-// In particular retain interface dispatch for +0x48 and +0x38, item virtuals
-// +0x490/+0x3f0, and the native notification helper. See native-evidence.json.
+// The Unresolved_ calls are explicit integration gaps, not implemented APIs.
+// The original +0x48/+0x38 interface dispatch and item virtuals +0x490/+0x3f0
+// require declarations before integration. See native-evidence.json.
+static int32 GUnloadQuickbarItemsWhenUnequippedStW = 0;
+static int32 GUnloadQuickbarItemsWhenUnequippedBR = 0;
+static FAutoConsoleVariableRef CVarUnloadQuickbarItemsWhenUnequippedStW(
+    TEXT("Fort.UnloadQuickbarItemsWhenUnequippedStW"), GUnloadQuickbarItemsWhenUnequippedStW,
+    TEXT("When set to 1, quickbar items will be unloaded when equipped in StW. Not a graceful way to handle unloading these assets, and is only intended for legacy behavior"), ECVF_Default);
+static FAutoConsoleVariableRef CVarUnloadQuickbarItemsWhenUnequippedBR(
+    TEXT("Fort.UnloadQuickbarItemsWhenUnequippedBR"), GUnloadQuickbarItemsWhenUnequippedBR,
+    TEXT("When set to 1, quickbar items will be unloaded when equipped in BR. Not a graceful way to handle unloading these assets, and is only intended for legacy behavior"), ECVF_Default);
+
+// Proposed integration contracts (not yet declared on generated classes):
+// IFortInventoryOwnerInterface virtual AFortInventory* NativeQuickBarInventory();
+// IFortInventoryOwnerInterface virtual AFortWeapon* NativeQuickBarHeldWeapon();
+// AFortPlayerController overrides each, retaining interface dispatch:
+//   NativeQuickBarInventory()  { return WorldInventory; }             // 0x142388170
+//   NativeQuickBarHeldWeapon() { return MyFortPawn ? MyFortPawn->CurrentWeapon : nullptr; }
+// The latter is the 0x1419d37c0 this-adjusting thunk -> 0x142384300.
+// The adapters below denote these virtual slots until the interface is extended.
+
+// Uses the reflected 16-byte FFortAlterationSlotStatus, which is not emitted
+// in the canonical headers yet. The two dispatch adapters must bind the item
+// virtual slots rather than bypassing overrides.
+static TArray<UFortAlterationItemDefinition*> Draft_GetActiveAlterations(UFortItem* Item, int32 PretendLevel)
+{
+    if (PretendLevel < 0)
+        PretendLevel = Item->GetLevel();
+    TArray<FFortAlterationSlotStatus> Slots = Unresolved_ItemGetAlterationSlots_490(Item);
+    TArray<UFortAlterationItemDefinition*> Result;
+    if (Slots.Num() > 0)
+        Result.Reserve(Slots.Num());
+    for (const FFortAlterationSlotStatus& Slot : Slots)
+        if (Slot.MinRequiredLevel <= PretendLevel &&
+            uint8(Slot.MinHostItemRarity) <= uint8(Unresolved_ItemGetRarity_3f0(Item)) && Slot.Alteration)
+            Result.Add(Slot.Alteration);
+    return Result;
+}
+
 // 0x1420140e0 / 0x141ff80b0: soft resolve, load if necessary, track
 // even a failed non-null-path lookup. Same contract as weapon alteration getters.
 static UFortWeaponItemDefinition* Draft_GetGadgetWeapon(UFortGadgetItemDefinition* Gadget)
@@ -36,7 +72,7 @@ static TArray<UFortItemDefinition*> Draft_GetAdditionalGadgetItems(UFortGadgetIt
     return Result;
 }
 
-// 0x142050360. The native bundle FName has not yet been identified.
+// 0x142050360. The native bundle FName is Equipped.
 static void Draft_ProcessDefinitions_142050360(
     const TArray<UFortItemDefinition*>& Definitions, bool bAdd)
 {
@@ -79,7 +115,7 @@ static void Draft_ProcessDefinitions_142050360(
                 AssetIds.AddUnique(Alteration->GetPrimaryAssetId());
         }
     }
-    TArray<FName> Bundle{Unresolved_BundleName_14812b6e0};
+    TArray<FName> Bundle{FName(TEXT("Equipped"))};
     TArray<FName> Empty;
     Manager.ChangeBundleStateForPrimaryAssets(AssetIds, bAdd ? Bundle : Empty,
         bAdd ? Empty : Bundle, false, FStreamableDelegate(), 0);
@@ -114,7 +150,7 @@ void FQuickBar::RefreshEquippedItemDefinitions(AFortPlayerController* Owner)
         // 0x14202b8d0: negative pretend level calls GetLevel; fetch a snapshot
         // of alteration slots, then for every level-qualified slot call GetRarity
         // even when Alteration is null; accept when rarity qualifies and non-null.
-        for (UFortAlterationItemDefinition* Alteration : Unresolved_GetActiveAlterations_14202b8d0(Item, -1))
+        for (UFortAlterationItemDefinition* Alteration : Draft_GetActiveAlterations(Item, -1))
             if (Alteration)
                 NewDefinitions.Add(Alteration);
     }
@@ -123,7 +159,7 @@ void FQuickBar::RefreshEquippedItemDefinitions(AFortPlayerController* Owner)
     if (AFortWeapon* Weapon = Unresolved_OwnerInterfaceWeapon_48(Owner))
         if (UFortWeaponItemDefinition* WeaponDefinition = Weapon->GetWeaponData())
             if (AFortInventory* Inventory = Unresolved_OwnerInterfaceInventory_38(Owner))
-                if (Unresolved_FindInventoryItemByDefinition_1420065a0(Inventory, WeaponDefinition, false))
+                if (Inventory->NativeFindWorldItemByDefinition(WeaponDefinition, false))
                     NewDefinitions.Add(WeaponDefinition);
 
     // Native builds a temporary difference set, then materializes it as an array.
@@ -132,8 +168,8 @@ void FQuickBar::RefreshEquippedItemDefinitions(AFortPlayerController* Owner)
 
     // Every mode query is preceded by the UFortGlobals singleton access and is
     // independently re-evaluated on the second branch.
-    if ((Unresolved_Gate_14813c4e8 && (UFortGlobals::NativeGetGlobals(), UFortGameInstance::NativeGetGameMode141ed4e30(Owner)) == 0) ||
-        (Unresolved_Gate_14813c4ec && (UFortGlobals::NativeGetGlobals(), UFortGameInstance::NativeGetGameMode141ed4e30(Owner)) == 1))
+    if ((GUnloadQuickbarItemsWhenUnequippedStW && (UFortGlobals::NativeGetGlobals(), UFortGameInstance::NativeGetGameMode141ed4e30(Owner)) == 0) ||
+        (GUnloadQuickbarItemsWhenUnequippedBR && (UFortGlobals::NativeGetGlobals(), UFortGameInstance::NativeGetGameMode141ed4e30(Owner)) == 1))
     {
         TArray<UFortItemDefinition*> SecondDifference = EquippedItemDefinitions.Difference(NewDefinitions).Array();
         Draft_ProcessDefinitions_142050360(SecondDifference, false);

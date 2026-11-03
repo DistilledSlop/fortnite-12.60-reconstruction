@@ -2362,6 +2362,10 @@ _inventory_entry_spec = _common_activation_import.spec_from_file_location(
     "inventory_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "inventory_entry_copy_runtime", "source_policy.py"))
 _inventory_entry_policy = _common_activation_import.module_from_spec(_inventory_entry_spec)
 _inventory_entry_spec.loader.exec_module(_inventory_entry_policy)
+_quickbar_refresh_spec = _common_activation_import.spec_from_file_location(
+    "quickbar_refresh_policy", os.path.join(os.path.dirname(__file__), "behavior", "quickbar_refresh110_runtime", "source_policy.py"))
+_quickbar_refresh_policy = _common_activation_import.module_from_spec(_quickbar_refresh_spec)
+_quickbar_refresh_spec.loader.exec_module(_quickbar_refresh_policy)
 _profile_entry_spec = _common_activation_import.spec_from_file_location(
     "profile_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "profile_entry_lifecycle_runtime", "source_policy.py"))
 _profile_entry_policy = _common_activation_import.module_from_spec(_profile_entry_spec)
@@ -3918,6 +3922,9 @@ def promote(args):
     _kismet_geometry_policy.validate()
     _pawn_cues_policy.validate()
     asset_diagnostic_sources = _asset_diagnostic_policy.sources() if 'UFortAssetManager' in listed else None
+    if 'UFortAssetManager' in listed:
+        asset_diagnostic_sources = asset_diagnostic_sources or {}
+        asset_diagnostic_sources.update(_quickbar_refresh_policy.sources())
     if 'AFortVolume' in listed:
         asset_diagnostic_sources = asset_diagnostic_sources or {}
         asset_diagnostic_sources.update(_volume_client_policy.sources())
@@ -5276,6 +5283,7 @@ def render_struct_header(model, source_label):
         lines.append("")
         lines.extend(_inventory_entry_policy.fields_after(model, m))
     lines.extend(_common_activation_policy.struct_declarations(model))
+    lines.extend(_quickbar_refresh_policy.declarations(model))
     lines.extend(_cursor_settings_policy.struct_declarations(model))
     lines.extend(_panel_queue_policy.struct_declarations(model))
     lines.extend(_confirmation_policy.declarations(model))

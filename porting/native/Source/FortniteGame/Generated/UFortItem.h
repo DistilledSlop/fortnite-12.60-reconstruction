@@ -68,6 +68,9 @@ public:
 	virtual TArray<FFortAlterationSlotStatus> GetAlterationSlots() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetDisplayName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetDurability() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -159,5 +162,6 @@ public:
 	void BroadcastOnItemChanged(bool bItemChanged, bool bAmmoChanged, bool bIngredientsChanged, bool bLog);
 	virtual EFortItemType NativeGetItemType() const;
 	virtual FGuid NativeGetItemGuid();
+	virtual FText NativeGetDisplayName(bool bBaseName) const;
 };
 
