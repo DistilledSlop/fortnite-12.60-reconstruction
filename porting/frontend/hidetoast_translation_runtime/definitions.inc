@@ -23,8 +23,9 @@ UFortRegisteredPlayerInfo* NativeToastFindRegisteredPlayer142292260(UFortTeamMem
     UFortRegisteredPlayerInfo* Player = NativeFindToastRegisteredPlayer141e62c80(GameInstance, (const void*)IdRef);
     *(void**)&IdOut = NativeVtable145a95888;              // VERIFIED store mov %rax,0x20(%rsp) at 0x1422922b3, after both calls
 
-    // VERIFIED: lStack_20 is read from wrapper rsp+0x38 (0x1422922a4) and plStack_28 from rsp+0x30 (0x1422922c2);
-    // the wrapper has no store to either slot. Their source is UNKNOWN (see NOTES.md item 8).
+    // VERIFIED (NOTES.md round 2): lStack_20 = IdOut+0x18 (rsp+0x38, read 0x1422922a4) is written 0 by the 0x268 callee
+    // (0x142292235) on all paths except path C (0x1422921bd); plStack_28 = IdOut+0x10 (rsp+0x30, read 0x1422922c2) is the
+    // callee's refcounted pointer (obj+0x240 or obj+0x258, incl at 0x1422921b6) or 0. Path C UNKNOWN.
     if (UNKNOWN_lStack_20 != nullptr)
     {
         NativeFreeData142bee710(UNKNOWN_lStack_20);
