@@ -1,3 +1,39 @@
+diff --git a/Engine/Plugins/FX/Niagara/Source/Niagara/Private/NiagaraScript.cpp b/Engine/Plugins/FX/Niagara/Source/Niagara/Private/NiagaraScript.cpp
+index b7c23824b..2781e0344 100644
+--- a/Engine/Plugins/FX/Niagara/Source/Niagara/Private/NiagaraScript.cpp
++++ b/Engine/Plugins/FX/Niagara/Source/Niagara/Private/NiagaraScript.cpp
+@@ -1,6 +1,9 @@
+ // Copyright Epic Games, Inc. All Rights Reserved.
+ 
+ #include "NiagaraScript.h"
++#include "UObject/LinkerLoad.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ #include "Modules/ModuleManager.h"
+ #include "NiagaraScriptSourceBase.h"
+ #include "NiagaraComponent.h"
+@@ -804,6 +807,21 @@ void UNiagaraScript::Serialize(FArchive& Ar)
+ 		|| (Ar.IsLoading() && NiagaraVer >= FNiagaraCustomVersion::NiagaraShaderMaps && (NiagaraVer < FNiagaraCustomVersion::NiagaraShaderMapCooking || IsValidShaderScript))  // load only if we know shader map is presen
+ 		)
+ 	{
++		// Probe-only escape hatch: Windows-cooked 12.60 Niagara shader maps are unreadable by the stock
++		// reader (FShaderMapBase::Serialize is fatal). They are the last data in this export, so skip to
++		// its end and leave the GPU script without a shader map.
++		if (Ar.IsLoading() && FParse::Param(FCommandLine::Get(), TEXT("FortniteSkipUnconvertedLegacyShaderMaps")))
++		{
++			FLinkerLoad* ScriptLinker = GetLinker();
++			const int32 ScriptIndex = GetLinkerIndex();
++			if (ScriptLinker && ScriptLinker->ExportMap.IsValidIndex(ScriptIndex))
++			{
++				const FObjectExport& ScriptExport = ScriptLinker->ExportMap[ScriptIndex];
++				UE_LOG(LogNiagara, Display, TEXT("Skipping unconverted legacy Niagara shader map for %s"), *GetPathName());
++				Ar.Seek(ScriptExport.SerialOffset + ScriptExport.SerialSize);
++				return;
++			}
++		}
+ #if WITH_EDITOR
+ 		SerializeNiagaraShaderMaps(&CachedScriptResourcesForCooking, Ar, LoadedScriptResources);
+ #else
 diff --git a/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp b/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
 index b37568755..44ffd614c 100644
 --- a/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp

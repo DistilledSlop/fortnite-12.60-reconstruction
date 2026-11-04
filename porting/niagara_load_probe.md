@@ -108,3 +108,25 @@ Result: **128 of 173** systems load as `NiagaraSystem` (was 1, then 51). Remaini
 21 handled ensures, 17 "Corrupt data found" dialogs and 7 `SerializeNum >= 0` assertions, not yet
 classified (likely further Windows-cooked layout differences in referenced assets). Loaded here
 means deserialized with no error lines; materials have no shader map and nothing was rendered.
+
+### Final: 173 of 173 load
+
+The 45 remaining failures turned out to be four separate causes, fixed probe-only:
+
+1. **`/Engine/`, `/Niagara/` etc. content mis-treated by the legacy static mesh layout** (the
+   layout switch was global). `-FortniteStockLayoutList=<file>` now names the 407 packages cooked by
+   the stock-layout engine; those use the stock reader, everything else the 12.60 layout
+   (`FortniteUseLegacyStaticMeshLayout` in `StaticMesh.cpp`, gate in `RawIndexBuffer.cpp`).
+2. **Water plugin content**: the stage mounts recovered `Engine/Plugins/Water` content.
+3. **26 failures were a mis-excluded recovered mesh**, not Niagara data.
+4. **Windows-cooked Niagara GPU-script shader maps** (last 17): `UNiagaraScript::Serialize` ->
+   `FNiagaraShaderScript::SerializeShaderMap` -> `FShaderMapBase::Serialize` is fatal. With
+   `-FortniteSkipUnconvertedLegacyShaderMaps` the export is skipped to its end, leaving the GPU script
+   without a shader map (`NiagaraScript.cpp`, same switch as the material skip).
+
+Run: `niagara_probe.py <work> --skip-closure --probe-arg=-FortniteSkipUnconvertedLegacyShaderMaps
+--probe-arg=-FortniteLegacyStaticMeshLayout --probe-arg=-FortniteStockLayoutList=<work>/stock_layout_packages.txt`
+-> **173 loaded / 0 failed**, all 173 promoted to `generated/converted`. Loaded still means
+deserialized without error lines in `-nullrhi`; materials and GPU scripts have no shader map and
+nothing was render-verified. Patches: `patches/ue425-legacy-static-mesh-layout.patch`,
+`patches/ue425-skip-unconverted-legacy-shader-maps.patch`.

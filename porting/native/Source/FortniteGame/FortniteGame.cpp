@@ -429,6 +429,28 @@ private:
     static void ProbeAsset()
     {
         FString AssetPath;
+        FString AssetListPath;
+        if (FParse::Value(FCommandLine::Get(), TEXT("FortniteProbeAssetList="), AssetListPath))
+        {
+            // Batch mode: one object path per line. "begin" is logged before each load so a crash can be
+            // attributed to the asset that was loading; "result" follows each successful load attempt.
+            TArray<FString> Lines;
+            FFileHelper::LoadFileToStringArray(Lines, *AssetListPath);
+            for (const FString& Line : Lines)
+            {
+                const FString Path = Line.TrimStartAndEnd();
+                if (Path.IsEmpty())
+                {
+                    continue;
+                }
+                UE_LOG(LogTemp, Display, TEXT("Fortnite asset probe begin: %s"), *Path);
+                UObject* BatchAsset = StaticLoadObject(UObject::StaticClass(), nullptr, *Path);
+                UE_LOG(LogTemp, Display, TEXT("Fortnite asset probe: %s -> %s"),
+                    *Path, BatchAsset ? *BatchAsset->GetClass()->GetName() : TEXT("LOAD_FAILED"));
+                GLog->Flush();
+            }
+            return;
+        }
         if (!FParse::Value(FCommandLine::Get(), TEXT("FortniteProbeAsset="), AssetPath))
         {
             if (FParse::Param(FCommandLine::Get(),TEXT("FortniteProbeLegacyFloatChannel")))

@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "0a78857bce54db548336e7301f3406f3aa104e8d",
- "subject": "Niagara: 128/173 systems load with legacy static mesh layout and plugin mounts",
- "date": "2026-11-03T19:43:18-05:00",
+ "head": "e2ba8200ab502cbbeca207d60f650476e5de2121",
+ "subject": "Refresh dashboard: meshes, sound classes, animation and Niagara load coverage",
+ "date": "2026-11-03T19:43:34-05:00",
  "overall_pct": 28.216,
  "measured_pct": 27.346,
  "objective_pct": 27.345,
