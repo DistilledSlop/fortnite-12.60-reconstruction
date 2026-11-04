@@ -1,4 +1,10 @@
 {
+ "animation_sequence_packages": {
+  "generated_utc": "2026-11-03T23:14:13Z",
+  "method": "packages whose export table includes an AnimSequence export (Cue4Inspect --scan-export-classes over the full raw extraction, summarized by porting/asset_pipeline/animation_inventory.py; export class names only, exports not deserialized). Not a name heuristic.",
+  "source": "porting/asset_pipeline/animation_inventory.json",
+  "value": 9514
+ },
  "apollo_streaming_levels": {
   "generated_utc": "2026-10-31T04:48:38Z",
   "method": "regex '(\\d+) absent streaming levels' in the tracked map_compatibility.md report",

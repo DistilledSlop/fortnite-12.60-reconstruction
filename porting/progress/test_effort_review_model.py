@@ -24,12 +24,12 @@ class EffortReviewModel(unittest.TestCase):
 
     def test_total_and_explicit_missing_scope(self):
         self.assertEqual(len(self.rows), len(self.by_id))
-        self.assertEqual(len(self.rows), 135)
+        self.assertEqual(len(self.rows), 136)
         self.assertEqual(sum(row['weight'] for row in self.rows), 2019)
         self.assertEqual(sum(row['weight'] for row in self.rows if row['id'].startswith('ui.')), 199)
         scopes = ['visuals.world_materials_particles', 'assets.animation_cosmetics',
                   'gameplay.engine_system_integration', 'net.full_match_scale', 'gameplay.replay_spectating']
-        self.assertEqual(sum(self.by_id[name]['weight'] for name in scopes), 120)
+        self.assertEqual(sum(self.by_id[name]['weight'] for name in scopes), 110)
         for name in scopes:
             self.assertEqual(self.by_id[name]['measure'], {'kind': 'manual', 'pct': 0})
         self.assertTrue(all(not gate['done'] for gate in self.model['milestones']))

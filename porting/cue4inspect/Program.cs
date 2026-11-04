@@ -46,6 +46,8 @@ bool seedList = args.Contains("--seed-list");
 bool followSoft = args.Contains("--follow-soft");
 bool scanMaps = args.Contains("--scan-maps");
 bool scanNative = args.Contains("--scan-native");
+bool scanExportClasses = args.Contains("--scan-export-classes");
+string? classesOutArgument = args.SingleOrDefault(arg => arg.StartsWith("--classes-out=", StringComparison.Ordinal));
 bool allKeys = args.Contains("--all-keys");
 bool savePackage = args.Contains("--save-package");
 bool saveList = args.Contains("--save-list");
@@ -93,9 +95,9 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-anim" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
-bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
-if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
+string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg != classesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--scan-export-classes" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-anim" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
+bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || scanExportClasses || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
+if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, scanExportClasses, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <package-path> [source-directory] --imports-json [--loose]");
@@ -120,6 +122,13 @@ if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, expor
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --scan-maps [pak-directory] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --scan-native [pak-directory] [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect --scan-export-classes <extracted-root> --classes-out=<tsv> [--workers=N]");
+    return 2;
+}
+if (scanExportClasses && (classesOutArgument is null || classesOutArgument.Length == "--classes-out=".Length || positional.Length != 1 ||
+    (extractWorkersArgument is not null && (!int.TryParse(extractWorkersArgument["--workers=".Length..], out int scanWorkers) || scanWorkers is < 1 or > 32))))
+{
+    Console.Error.WriteLine("Usage: Cue4Inspect --scan-export-classes <extracted-root> --classes-out=<tsv> [--workers=N] (workers 1-32)");
     return 2;
 }
 
@@ -195,6 +204,10 @@ try
             // DDC handle), although its custom versions otherwise match 4.25.
             ["AnimSequence.UE424CompressedDataLayout"] = true
         });
+    if (scanExportClasses)
+        return ScanExportClasses(sourceDirectory, Path.GetFullPath(classesOutArgument!["--classes-out=".Length..]),
+            extractWorkersArgument is null ? 16 : int.Parse(extractWorkersArgument["--workers=".Length..]), versions);
+
     var provider = loose
         ? new DefaultFileProvider(new DirectoryInfo(Path.Combine(sourceDirectory, "FortniteGame")),
             SearchOption.AllDirectories, versions, StringComparer.OrdinalIgnoreCase)
@@ -1400,6 +1413,59 @@ static object[] ImportChain(Package package, int index)
     }
     chain.Reverse();
     return chain.ToArray();
+}
+
+// Reads only each loose package header (summary, name, import and export maps);
+// exports stay lazy and are never deserialized, and .uexp/.ubulk are not opened.
+static int ScanExportClasses(string root, string output, int workers, VersionContainer versions)
+{
+    root = Path.GetFullPath(root);
+    if (output.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+    {
+        Console.Error.WriteLine("--classes-out must be outside the extracted root");
+        return 2;
+    }
+    var files = Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)
+        .Where(file => file.EndsWith(".uasset", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".umap", StringComparison.OrdinalIgnoreCase))
+        .ToArray();
+    Console.Error.WriteLine($"Scanning export classes of {files.Length} package(s) with {workers} worker(s)");
+    var rows = new System.Collections.Concurrent.ConcurrentBag<string>();
+    var errors = new System.Collections.Concurrent.ConcurrentBag<string>();
+    int scanned = 0;
+    Parallel.ForEach(files, new ParallelOptions { MaxDegreeOfParallelism = workers }, file =>
+    {
+        string name = Path.GetRelativePath(root, file).Replace('\\', '/');
+        name = name[..name.LastIndexOf('.')];
+        try
+        {
+            var archive = new FByteArchive(file, File.ReadAllBytes(file), versions);
+            var package = new Package(archive, null, (FArchive?) null);
+            var classes = package.ExportMap.Select(export => export.ClassIndex switch
+                {
+                    { IsImport: true } index when -index.Index - 1 < package.ImportMap.Length => package.ImportMap[-index.Index - 1].ObjectName.Text,
+                    { IsExport: true } index when index.Index - 1 < package.ExportMap.Length => package.ExportMap[index.Index - 1].ObjectName.Text,
+                    { IsNull: true } => "Class",
+                    _ => "?"
+                })
+                .Distinct(StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal);
+            rows.Add(name + "\t" + string.Join(',', classes));
+        }
+        catch (Exception error)
+        {
+            errors.Add(name + "\t" + error.GetType().Name + ": " + error.Message.ReplaceLineEndings(" "));
+        }
+        int done = Interlocked.Increment(ref scanned);
+        if (done % 20000 == 0) Console.Error.WriteLine($"Scanned {done}/{files.Length}");
+    });
+    Directory.CreateDirectory(Path.GetDirectoryName(output)!);
+    string temp = output + ".partial";
+    File.WriteAllLines(temp, rows.Order(StringComparer.Ordinal));
+    File.Move(temp, output, overwrite: true);
+    foreach (var error in errors.Order(StringComparer.Ordinal).Take(50))
+        Console.Error.WriteLine("error\t" + error);
+    Console.Error.WriteLine($"Wrote {rows.Count} package row(s) to {output}; {errors.Count} unreadable package(s)");
+    return errors.IsEmpty ? 0 : 1;
 }
 
 static string RootImportName(Package package, FObjectImport import)

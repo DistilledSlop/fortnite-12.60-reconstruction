@@ -39,3 +39,26 @@ The saved full import-chain reports in `generated/asset_pipeline/frontend-eviden
 `--prefix SK_` (with a skeletal-capable `--tool-dir` and a separate `--output`, e.g. `generated/asset_pipeline_skeletal`) exports skeletal meshes as skinned GLBs. `Program.cs` pins `FAnimObjectVersion` and disables skeletal ray-tracing data for 12.60, and retries without morph targets when a mesh carries non-finite morph deltas.
 
 Many `SM_`/`SK_`-named packages are not meshes (Blueprints, physics assets, skeletons, animations, control rigs). `classify_nonmesh.py` reads both checkpoints and their logs and writes `nonmesh_packages.json`; `progress/refresh_totals.py` subtracts those from the mesh denominators (`cooked_mesh_exportable`). Rerun it after any bulk export, then `refresh_totals.py`.
+
+## Export-class census and AnimSequence conversion
+
+The asset registry has no AnimSequence rows, so animation packages are found by export class. `Cue4Inspect --scan-export-classes <extracted-root> --classes-out=<tsv> [--workers=N]` walks every loose `.uasset`/`.umap` under the root in parallel (default 16 workers, max 32), reads only each package header (summary, name, import and export maps; exports stay lazy and `.uexp`/`.ubulk` are never opened) and writes sorted `package<TAB>class1,class2,...` rows (distinct export class names; `Class` for a null class index). Unreadable packages are listed on stderr and make the exit code 1. Build it into a scratch tool directory, not `cue4inspect/bin`:
+
+```sh
+dotnet build porting/cue4inspect/Cue4Inspect.csproj -c Release -o /mnt/vibrato/fortnite-asset-pipeline/tool-scan
+dotnet /mnt/vibrato/fortnite-asset-pipeline/tool-scan/Cue4Inspect.dll --scan-export-classes /mnt/vibrato/fortnite-extracted-full \
+    --classes-out=/mnt/vibrato/fortnite-asset-pipeline/export-classes.tsv --workers=24   # ~9 minutes for 454,645 packages
+python3 -I porting/asset_pipeline/animation_inventory.py          # writes animation_inventory.json
+python3 -I porting/progress/refresh_totals.py                     # animation_sequence_packages
+```
+
+`animation_inventory.py` writes the tracked `animation_inventory.json`: per-class package counts for animation-related classes and the sorted list of packages with an AnimSequence export (the `animation_sequence_packages` denominator of the `assets.animation_sequences` dashboard leaf).
+
+`export_anims.py` reuses the `export_meshes.py` checkpoint machinery to run `--loose --export-anim` over that list (from the TSV, or the tracked inventory when the TSV is absent). Defaults: tool `/mnt/vibrato/fortnite-asset-pipeline/tool-scan`, output `generated/asset_pipeline_anim/` whose `anim/` is a symlink to `/mnt/vibrato/fortnite-asset-pipeline/anim`, batch 100, 24 workers (max), 300-second timeout. Each package yields `anim/<package>/<name>.ueanim`, checked for a `UEFORMAT` magic and `UEANIM` identifier (a container check, not a semantic one). The checkpoint is written once per batch; skipping an ok record checks only that its files exist unless `--verify` rehashes inputs and outputs. Failures record the classified `Inspection failed:` reason; retry with `--retry-failed`. It refuses to start a batch with less than `--min-free-gb` (15) free on `/`; exit code 3 means nothing is left to attempt.
+
+```sh
+mkdir -p /mnt/vibrato/fortnite-asset-pipeline/anim porting/generated/asset_pipeline_anim
+ln -sfn /mnt/vibrato/fortnite-asset-pipeline/anim porting/generated/asset_pipeline_anim/anim
+python3 -I porting/asset_pipeline/export_anims.py --dry-run
+until python3 -I porting/asset_pipeline/export_anims.py; [ $? -gt 1 ]; do :; done
+```

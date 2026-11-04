@@ -368,14 +368,31 @@
           "rationale": "Class names recovered for 6,957 of the 6,967 UHT class blocks (class_name_map.json over the block total in totals.json). Measures recovery of the names, not rebuilt behaviour. Structs (4,512), enums (2,056) and delegates (1,515) are recovered too but not counted here. Parents are verified at 99.76% against UE 4.25 headers (binary_analysis.md). Ten blocks remain unnamed. EFF-014 boundary: recovered reflection tables/identities, generated declarations and offline checksums are distinct from runtime replication layout/conditions/RPC behavior and struct wire encoding; shared recovery is allocated once."
         },
         {
+          "id": "assets.animation_sequences",
+          "name": "AnimSequence package conversion",
+          "weight": 10,
+          "measure": {
+            "kind": "local_glob",
+            "sources": [
+              {
+                "root": "porting/generated/asset_pipeline_anim/anim",
+                "suffix": ".ueanim"
+              }
+            ],
+            "total_key": "animation_sequence_packages",
+            "what": "AnimSequence packages converted to UEFormat .ueanim"
+          },
+          "rationale": "EFF-018 split: carved 10 of the former 40-weight animation leaf (group weight unchanged). Counted: .ueanim files under generated/asset_pipeline_anim/anim written by export_anims.py (bulk Cue4Inspect --export-anim, UEFORMAT/UEANIM header checked; one file per package). Denominator: packages whose export table includes an AnimSequence export (Cue4Inspect --scan-export-classes; totals.json animation_sequence_packages via porting/asset_pipeline/animation_inventory.json). Offline decode/conversion coverage only: no UE import, retargeting, compression parity or runtime playback is established. Coarse estimate 10 (review range 5–15, low confidence)."
+        },
+        {
           "id": "assets.animation_cosmetics",
           "name": "Animation graphs, emotes and character assembly",
-          "weight": 40,
+          "weight": 30,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "EFF-018: required by the full original-feature parity goal. Animation sequences, skeleton/retarget integration, montages/notifies, animation Blueprints, emotes and modular character/cosmetic assembly. Skeletal mesh package conversion remains in skeletal_anim; menu navigation remains in frontend_lobby; shared native body recovery is separate. Coarse total-effort estimate 40 (review range 25–60, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts."
+          "rationale": "EFF-018: required by the full original-feature parity goal. Skeleton/retarget integration of animation sequences, montages/notifies, animation Blueprints, emotes and modular character/cosmetic assembly. Skeletal mesh package conversion remains in skeletal_anim; menu navigation remains in frontend_lobby; shared native body recovery is separate. Coarse total-effort estimate 30 after carving 10 for offline AnimSequence conversion into assets.animation_sequences (combined review range 25–60, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts."
         }
       ]
     },
