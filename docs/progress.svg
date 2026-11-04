@@ -14,7 +14,7 @@
 .leaf-label,.leaf-pct,.tm-head{fill:var(--tm-ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .leaf-pct{font-weight:700}
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 26.2% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit dfea574 | Recover dual weapon hand getters and forced cosmetic reset event | 2026-11-03T17:54:30-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
+.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 28.2% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit 0a78857 | Niagara: 128/173 systems load with legacy static mesh layout and plugin mounts | 2026-11-03T19:43:18-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Gameplay classes (/Script/FortniteGame)
 15.1% complete
 effort weight 673 | source: derived
@@ -23,11 +23,11 @@ effort weight 673 | source: derived
 <text class="grp-head" x="7.0" y="17.0" font-size="12">Gameplay classes<tspan class="grp-pct"> · 15%</tspan></text>
 </g>
 <g><title>Asset pipeline
-62.2% complete
+65.8% complete
 effort weight 273 | source: derived
 </title>
 <rect class="tile-frame tm-grp0" x="334.3" y="1.0" width="239.7" height="351.6" rx="4"/>
-<text class="grp-head" x="340.3" y="17.0" font-size="12">Asset pipeline<tspan class="grp-pct"> · 62%</tspan></text>
+<text class="grp-head" x="340.3" y="17.0" font-size="12">Asset pipeline<tspan class="grp-pct"> · 66%</tspan></text>
 </g>
 <g><title>Backend services (reconstructed server)
 46.3% complete
@@ -72,28 +72,28 @@ effort weight 100 | source: derived
 <text class="grp-head" x="755.7" y="306.5" font-size="12"><tspan class="grp-pct">· 26%</tspan></text>
 </g>
 <g><title>Visuals parity
-2.5% complete
+17.2% complete
 effort weight 100 | source: derived
 </title>
 <rect class="tile-frame tm-grp0" x="875.3" y="290.5" width="123.7" height="247.1" rx="4"/>
 <text class="grp-head" x="881.3" y="306.5" font-size="12">Visuals parity</text>
-<text class="grp-head" x="881.3" y="320.5" font-size="12"><tspan class="grp-pct">· 2.5%</tspan></text>
+<text class="grp-head" x="881.3" y="320.5" font-size="12"><tspan class="grp-pct">· 17%</tspan></text>
 </g>
 <g><title>Audio
-7.4% complete
+27.3% complete
 effort weight 75 | source: derived
 </title>
 <rect class="tile-frame tm-grp0" x="749.7" y="539.6" width="249.3" height="91.4" rx="4"/>
-<text class="grp-head" x="755.7" y="555.6" font-size="12">Audio<tspan class="grp-pct"> · 7.4%</tspan></text>
+<text class="grp-head" x="755.7" y="555.6" font-size="12">Audio<tspan class="grp-pct"> · 27%</tspan></text>
 </g>
 <g><title>Native function bodies ported (behaviour)
-16.0% complete (3294/20574)
+16.2% complete (3337/20574)
 effort weight 150 | source: git
-3294 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints</title>
+3337 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints</title>
 <rect class="tile-body" x="5.0" y="25.0" width="244.5" height="175.7" rx="4"/>
 <clipPath id="stm-c0"><rect x="5.00" y="25.00" width="244.46" height="175.70" rx="4"/></clipPath>
-<g clip-path="url(#stm-c0)"><rect class="tile-fill" x="5.00" y="172.57" width="244.46" height="28.13"/>
-<rect class="tile-edge" x="5.00" y="171.57" width="244.46" height="2"/>
+<g clip-path="url(#stm-c0)"><rect class="tile-fill" x="5.00" y="172.20" width="244.46" height="28.50"/>
+<rect class="tile-edge" x="5.00" y="171.20" width="244.46" height="2"/>
 </g>
 <text class="leaf-label" x="10.0" y="40.0" font-size="11">Native function bodies ported</text>
 <text class="leaf-label" x="10.0" y="53.0" font-size="11">(behaviour)</text>
@@ -416,178 +416,179 @@ effort weight 3 | source: git
 100.0% complete (334200/334005)
 effort weight 50 | source: local
 334200 local non-SM_/SK_ .uasset distinct names of 334005 (total 334005 from totals.json cooked_non_mesh_distinct_names); ignored outputs under porting/generated or native/Content</title>
-<rect class="tile-body" x="338.3" y="25.0" width="127.8" height="105.3" rx="4"/>
-<clipPath id="stm-c30"><rect x="338.33" y="25.00" width="127.84" height="105.33" rx="4"/></clipPath>
-<g clip-path="url(#stm-c30)"><rect class="tile-fill" x="338.33" y="25.00" width="127.84" height="105.33"/>
+<rect class="tile-body" x="338.3" y="25.0" width="135.5" height="99.4" rx="4"/>
+<clipPath id="stm-c30"><rect x="338.33" y="25.00" width="135.47" height="99.36" rx="4"/></clipPath>
+<g clip-path="url(#stm-c30)"><rect class="tile-fill" x="338.33" y="25.00" width="135.47" height="99.36"/>
 </g>
 <text class="leaf-label" x="343.3" y="39.0" font-size="10">Recovered or</text>
-<text class="leaf-label" x="343.3" y="51.0" font-size="10">converted</text>
-<text class="leaf-label" x="343.3" y="63.0" font-size="10">non-mesh package</text>
-<text class="leaf-label" x="343.3" y="75.0" font-size="10">names (local count)</text>
+<text class="leaf-label" x="343.3" y="51.0" font-size="10">converted non-mesh</text>
+<text class="leaf-label" x="343.3" y="63.0" font-size="10">package names</text>
+<text class="leaf-label" x="343.3" y="75.0" font-size="10">(local count)</text>
 <text class="leaf-pct" x="343.3" y="87.0" font-size="12">100%</text>
-<rect class="tile-frame" x="338.3" y="25.0" width="127.8" height="105.3" rx="4"/>
-</g>
-<g><title>Animation graphs, emotes and character assembly
-0.0% complete
-effort weight 40 | source: manual
-manual estimate (see rationale)</title>
-<rect class="tile-body" x="468.2" y="25.0" width="101.9" height="105.3" rx="4"/>
-<text class="leaf-label" x="473.2" y="39.0" font-size="10">Animation</text>
-<text class="leaf-label" x="473.2" y="51.0" font-size="10">graphs,</text>
-<text class="leaf-label" x="473.2" y="63.0" font-size="10">emotes and</text>
-<text class="leaf-label" x="473.2" y="75.0" font-size="10">character</text>
-<text class="leaf-label" x="473.2" y="87.0" font-size="10">assembly</text>
-<text class="leaf-pct" x="473.2" y="99.0" font-size="12">0.0%</text>
-<rect class="tile-frame" x="468.2" y="25.0" width="101.9" height="105.3" rx="4"/>
+<rect class="tile-frame" x="338.3" y="25.0" width="135.5" height="99.4" rx="4"/>
 </g>
 <g><title>Skeletal mesh package conversion (name coverage)
 100.0% complete (750/750)
 effort weight 35 | source: local
 750 local skeletal mesh packages (SK_, distinct names) of 750 (total 750 from totals.json cooked_mesh_exportable[skeletal_mesh]); ignored outputs under porting/generated or native/Content</title>
-<rect class="tile-body" x="338.3" y="132.3" width="81.0" height="115.5" rx="4"/>
-<clipPath id="stm-c32"><rect x="338.33" y="132.33" width="81.01" height="115.51" rx="4"/></clipPath>
-<g clip-path="url(#stm-c32)"><rect class="tile-fill" x="338.33" y="132.33" width="81.01" height="115.51"/>
+<rect class="tile-body" x="475.8" y="25.0" width="94.2" height="99.4" rx="4"/>
+<clipPath id="stm-c31"><rect x="475.81" y="25.00" width="94.23" height="99.36" rx="4"/></clipPath>
+<g clip-path="url(#stm-c31)"><rect class="tile-fill" x="475.81" y="25.00" width="94.23" height="99.36"/>
 </g>
-<text class="leaf-label" x="343.3" y="146.3" font-size="10">Skeletal</text>
-<text class="leaf-label" x="343.3" y="158.3" font-size="10">mesh</text>
-<text class="leaf-label" x="343.3" y="170.3" font-size="10">package</text>
-<text class="leaf-label" x="343.3" y="182.3" font-size="10">conversion</text>
-<text class="leaf-label" x="343.3" y="194.3" font-size="10">(name</text>
-<text class="leaf-label" x="343.3" y="206.3" font-size="10">coverage)</text>
-<text class="leaf-pct" x="343.3" y="218.3" font-size="12">100%</text>
-<rect class="tile-frame" x="338.3" y="132.3" width="81.0" height="115.5" rx="4"/>
+<text class="leaf-label" x="480.8" y="39.0" font-size="10">Skeletal mesh</text>
+<text class="leaf-label" x="480.8" y="51.0" font-size="10">package</text>
+<text class="leaf-label" x="480.8" y="63.0" font-size="10">conversion</text>
+<text class="leaf-label" x="480.8" y="75.0" font-size="10">(name</text>
+<text class="leaf-label" x="480.8" y="87.0" font-size="10">coverage)</text>
+<text class="leaf-pct" x="480.8" y="99.0" font-size="12">100%</text>
+<rect class="tile-frame" x="475.8" y="25.0" width="94.2" height="99.4" rx="4"/>
 </g>
 <g><title>Static mesh exports or converted packages (local count)
 100.0% complete (4261/4261)
 effort weight 30 | source: local
 4261 local static mesh conversions (distinct names) of 4261 (total 4261 from totals.json cooked_mesh_exportable[static_mesh]); ignored outputs under porting/generated or native/Content</title>
-<rect class="tile-body" x="338.3" y="249.8" width="81.0" height="98.7" rx="4"/>
-<clipPath id="stm-c33"><rect x="338.33" y="249.84" width="81.01" height="98.72" rx="4"/></clipPath>
-<g clip-path="url(#stm-c33)"><rect class="tile-fill" x="338.33" y="249.84" width="81.01" height="98.72"/>
+<rect class="tile-body" x="338.3" y="126.4" width="109.9" height="72.7" rx="4"/>
+<clipPath id="stm-c32"><rect x="338.33" y="126.36" width="109.88" height="72.73" rx="4"/></clipPath>
+<g clip-path="url(#stm-c32)"><rect class="tile-fill" x="338.33" y="126.36" width="109.88" height="72.73"/>
 </g>
-<text class="leaf-label" x="343.3" y="263.8" font-size="10">Static mesh</text>
-<text class="leaf-label" x="343.3" y="275.8" font-size="10">exports or</text>
-<text class="leaf-label" x="343.3" y="287.8" font-size="10">converted</text>
-<text class="leaf-label" x="343.3" y="299.8" font-size="10">packages</text>
-<text class="leaf-label" x="343.3" y="311.8" font-size="10">(local</text>
-<text class="leaf-label" x="343.3" y="323.8" font-size="10">count)</text>
-<text class="leaf-pct" x="343.3" y="335.8" font-size="12">100%</text>
-<rect class="tile-frame" x="338.3" y="249.8" width="81.0" height="98.7" rx="4"/>
+<text class="leaf-pct" x="343.3" y="142.4" font-size="12">100%</text>
+<rect class="tile-frame" x="338.3" y="126.4" width="109.9" height="72.7" rx="4"/>
 </g>
 <g><title>Cooked Blueprint packages load
 0.0% complete (4/22211)
 effort weight 30 | source: documented
 4 of 22211 (documented; total 22211 from totals.json asset_registry_counts[Blueprint])</title>
-<rect class="tile-body" x="421.3" y="132.3" width="80.2" height="99.7" rx="4"/>
-<clipPath id="stm-c34"><rect x="421.34" y="132.33" width="80.20" height="99.72" rx="4"/></clipPath>
-<g clip-path="url(#stm-c34)"><rect class="tile-fill" x="421.34" y="232.03" width="80.20" height="0.02"/>
-<rect class="tile-edge" x="421.34" y="231.03" width="80.20" height="2"/>
+<rect class="tile-body" x="338.3" y="201.1" width="109.9" height="72.7" rx="4"/>
+<clipPath id="stm-c33"><rect x="338.33" y="201.10" width="109.88" height="72.73" rx="4"/></clipPath>
+<g clip-path="url(#stm-c33)"><rect class="tile-fill" x="338.33" y="273.81" width="109.88" height="0.01"/>
+<rect class="tile-edge" x="338.33" y="272.81" width="109.88" height="2"/>
 </g>
-<text class="leaf-label" x="426.3" y="147.3" font-size="11">Cooked</text>
-<text class="leaf-label" x="426.3" y="160.3" font-size="11">Blueprint</text>
-<text class="leaf-label" x="426.3" y="173.3" font-size="11">packages</text>
-<text class="leaf-label" x="426.3" y="186.3" font-size="11">load</text>
-<text class="leaf-pct" x="426.3" y="199.3" font-size="12">0.0%</text>
-<rect class="tile-frame" x="421.3" y="132.3" width="80.2" height="99.7" rx="4"/>
+<text class="leaf-label" x="343.3" y="216.1" font-size="11">Cooked</text>
+<text class="leaf-label" x="343.3" y="229.1" font-size="11">Blueprint</text>
+<text class="leaf-label" x="343.3" y="242.1" font-size="11">packages load</text>
+<text class="leaf-pct" x="343.3" y="255.1" font-size="12">0.0%</text>
+<rect class="tile-frame" x="338.3" y="201.1" width="109.9" height="72.7" rx="4"/>
+</g>
+<g><title>Animation graphs, emotes and character assembly
+0.0% complete
+effort weight 30 | source: manual
+manual estimate (see rationale)</title>
+<rect class="tile-body" x="338.3" y="275.8" width="109.9" height="72.7" rx="4"/>
+<text class="leaf-label" x="343.3" y="289.8" font-size="10">Animation</text>
+<text class="leaf-label" x="343.3" y="301.8" font-size="10">graphs, emotes</text>
+<text class="leaf-label" x="343.3" y="313.8" font-size="10">and character</text>
+<text class="leaf-label" x="343.3" y="325.8" font-size="10">assembly</text>
+<text class="leaf-pct" x="343.3" y="337.8" font-size="12">0.0%</text>
+<rect class="tile-frame" x="338.3" y="275.8" width="109.9" height="72.7" rx="4"/>
 </g>
 <g><title>Landscape weightmaps and streamed components
 15.0% complete
 effort weight 25 | source: manual
 manual estimate (see rationale)</title>
-<rect class="tile-body" x="503.5" y="132.3" width="66.5" height="99.7" rx="4"/>
-<clipPath id="stm-c35"><rect x="503.54" y="132.33" width="66.50" height="99.72" rx="4"/></clipPath>
-<g clip-path="url(#stm-c35)"><rect class="tile-fill" x="503.54" y="217.09" width="66.50" height="14.96"/>
-<rect class="tile-edge" x="503.54" y="216.09" width="66.50" height="2"/>
+<rect class="tile-body" x="450.2" y="126.4" width="74.1" height="89.5" rx="4"/>
+<clipPath id="stm-c35"><rect x="450.21" y="126.36" width="74.14" height="89.51" rx="4"/></clipPath>
+<g clip-path="url(#stm-c35)"><rect class="tile-fill" x="450.21" y="202.45" width="74.14" height="13.43"/>
+<rect class="tile-edge" x="450.21" y="201.45" width="74.14" height="2"/>
 </g>
-<text class="leaf-pct" x="508.5" y="148.3" font-size="12">15%</text>
-<rect class="tile-frame" x="503.5" y="132.3" width="66.5" height="99.7" rx="4"/>
+<text class="leaf-pct" x="455.2" y="142.4" font-size="12">15%</text>
+<rect class="tile-frame" x="450.2" y="126.4" width="74.1" height="89.5" rx="4"/>
 </g>
 <g><title>Raw pak extraction (all 31 paks)
 100.0% complete (963427/963427)
 effort weight 15 | source: local
 963427 of 963427 (local output extract-full-summary.json; total 963427 from totals.json pak_full_distinct_paths)</title>
-<rect class="tile-body" x="421.3" y="234.0" width="69.8" height="56.3" rx="4"/>
-<clipPath id="stm-c36"><rect x="421.34" y="234.04" width="69.76" height="56.26" rx="4"/></clipPath>
-<g clip-path="url(#stm-c36)"><rect class="tile-fill" x="421.34" y="234.04" width="69.76" height="56.26"/>
+<rect class="tile-body" x="526.4" y="126.4" width="43.7" height="89.5" rx="4"/>
+<clipPath id="stm-c36"><rect x="526.35" y="126.36" width="43.68" height="89.51" rx="4"/></clipPath>
+<g clip-path="url(#stm-c36)"><rect class="tile-fill" x="526.35" y="126.36" width="43.68" height="89.51"/>
 </g>
-<text class="leaf-pct" x="426.3" y="250.0" font-size="12">100%</text>
-<rect class="tile-frame" x="421.3" y="234.0" width="69.8" height="56.3" rx="4"/>
+<rect class="tile-frame" x="526.4" y="126.4" width="43.7" height="89.5" rx="4"/>
 </g>
 <g><title>Native reflection recovery from the decrypted exe (names, parents, structs, enums)
 99.9% complete (6957/6967)
 effort weight 15 | source: local
 6957 of 6967 (local output class_name_map.json; total 6967 from totals.json uht_class_blocks)</title>
-<rect class="tile-body" x="421.3" y="292.3" width="69.8" height="56.3" rx="4"/>
-<clipPath id="stm-c37"><rect x="421.34" y="292.30" width="69.76" height="56.26" rx="4"/></clipPath>
-<g clip-path="url(#stm-c37)"><rect class="tile-fill" x="421.34" y="292.38" width="69.76" height="56.18"/>
-<rect class="tile-edge" x="421.34" y="291.38" width="69.76" height="2"/>
+<rect class="tile-body" x="450.2" y="217.9" width="71.1" height="55.2" rx="4"/>
+<clipPath id="stm-c37"><rect x="450.21" y="217.87" width="71.09" height="55.19" rx="4"/></clipPath>
+<g clip-path="url(#stm-c37)"><rect class="tile-fill" x="450.21" y="217.95" width="71.09" height="55.11"/>
+<rect class="tile-edge" x="450.21" y="216.95" width="71.09" height="2"/>
 </g>
-<text class="leaf-pct" x="426.3" y="308.3" font-size="12">100%</text>
-<rect class="tile-frame" x="421.3" y="292.3" width="69.8" height="56.3" rx="4"/>
+<text class="leaf-pct" x="455.2" y="233.9" font-size="12">100%</text>
+<rect class="tile-frame" x="450.2" y="217.9" width="71.1" height="55.2" rx="4"/>
 </g>
 <g><title>Pak index decryption and parse (31 paks)
 100.0% complete (31/31)
 effort weight 10 | source: local
 31 of 31 (local output inventory.json; )</title>
-<rect class="tile-body" x="493.1" y="234.0" width="41.9" height="61.6" rx="4"/>
-<clipPath id="stm-c38"><rect x="493.10" y="234.04" width="41.85" height="61.55" rx="4"/></clipPath>
-<g clip-path="url(#stm-c38)"><rect class="tile-fill" x="493.10" y="234.04" width="41.85" height="61.55"/>
+<rect class="tile-body" x="523.3" y="217.9" width="46.7" height="55.2" rx="4"/>
+<clipPath id="stm-c38"><rect x="523.31" y="217.87" width="46.73" height="55.19" rx="4"/></clipPath>
+<g clip-path="url(#stm-c38)"><rect class="tile-fill" x="523.31" y="217.87" width="46.73" height="55.19"/>
 </g>
-<path class="unit-done" transform="translate(496.10 234.04)" d="M0.5 0.5h6v6h-6zM7.5 0.5h6v6h-6zM14.5 0.5h6v6h-6zM21.5 0.5h6v6h-6zM28.5 0.5h6v6h-6zM0.5 7.5h6v6h-6zM7.5 7.5h6v6h-6zM14.5 7.5h6v6h-6zM21.5 7.5h6v6h-6zM28.5 7.5h6v6h-6zM0.5 14.5h6v6h-6zM7.5 14.5h6v6h-6zM14.5 14.5h6v6h-6zM21.5 14.5h6v6h-6zM28.5 14.5h6v6h-6zM0.5 21.5h6v6h-6zM7.5 21.5h6v6h-6zM14.5 21.5h6v6h-6zM21.5 21.5h6v6h-6zM28.5 21.5h6v6h-6zM0.5 28.5h6v6h-6zM7.5 28.5h6v6h-6zM14.5 28.5h6v6h-6zM21.5 28.5h6v6h-6zM28.5 28.5h6v6h-6zM0.5 35.5h6v6h-6zM7.5 35.5h6v6h-6zM14.5 35.5h6v6h-6zM21.5 35.5h6v6h-6zM28.5 35.5h6v6h-6zM0.5 42.5h6v6h-6z"/>
-<rect class="tile-frame" x="493.1" y="234.0" width="41.9" height="61.6" rx="4"/>
+<path class="unit-done" transform="translate(526.31 238.47)" d="M0.5 0.5h4v4h-4zM5.5 0.5h4v4h-4zM10.5 0.5h4v4h-4zM15.5 0.5h4v4h-4zM20.5 0.5h4v4h-4zM25.5 0.5h4v4h-4zM30.5 0.5h4v4h-4zM35.5 0.5h4v4h-4zM0.5 5.5h4v4h-4zM5.5 5.5h4v4h-4zM10.5 5.5h4v4h-4zM15.5 5.5h4v4h-4zM20.5 5.5h4v4h-4zM25.5 5.5h4v4h-4zM30.5 5.5h4v4h-4zM35.5 5.5h4v4h-4zM0.5 10.5h4v4h-4zM5.5 10.5h4v4h-4zM10.5 10.5h4v4h-4zM15.5 10.5h4v4h-4zM20.5 10.5h4v4h-4zM25.5 10.5h4v4h-4zM30.5 10.5h4v4h-4zM35.5 10.5h4v4h-4zM0.5 15.5h4v4h-4zM5.5 15.5h4v4h-4zM10.5 15.5h4v4h-4zM15.5 15.5h4v4h-4zM20.5 15.5h4v4h-4zM25.5 15.5h4v4h-4zM30.5 15.5h4v4h-4z"/>
+<text class="leaf-pct" x="528.3" y="232.9" font-size="11">100%</text>
+<rect class="tile-frame" x="523.3" y="217.9" width="46.7" height="55.2" rx="4"/>
+</g>
+<g><title>AnimSequence package conversion
+100.0% complete (9514/9514)
+effort weight 10 | source: local
+9514 local AnimSequence packages converted to UEFormat .ueanim of 9514 (total 9514 from totals.json animation_sequence_packages); ignored outputs under porting/generated or native/Content</title>
+<rect class="tile-body" x="450.2" y="275.1" width="64.4" height="39.9" rx="4"/>
+<clipPath id="stm-c39"><rect x="450.21" y="275.06" width="64.45" height="39.94" rx="4"/></clipPath>
+<g clip-path="url(#stm-c39)"><rect class="tile-fill" x="450.21" y="275.06" width="64.45" height="39.94"/>
+</g>
+<text class="leaf-pct" x="455.2" y="291.1" font-size="12">100%</text>
+<rect class="tile-frame" x="450.2" y="275.1" width="64.4" height="39.9" rx="4"/>
 </g>
 <g><title>Map header parse (3,694 maps)
 100.0% complete (3694/3694)
 effort weight 8 | source: local
 3694 map header rows parsed of 3694 (local census output; total 3694 from totals.json asset_registry_counts[World])</title>
-<rect class="tile-body" x="537.0" y="234.0" width="33.1" height="61.6" rx="4"/>
-<clipPath id="stm-c39"><rect x="536.95" y="234.04" width="33.08" height="61.55" rx="4"/></clipPath>
-<g clip-path="url(#stm-c39)"><rect class="tile-fill" x="536.95" y="234.04" width="33.08" height="61.55"/>
+<rect class="tile-body" x="450.2" y="317.0" width="64.4" height="31.6" rx="4"/>
+<clipPath id="stm-c40"><rect x="450.21" y="317.00" width="64.45" height="31.55" rx="4"/></clipPath>
+<g clip-path="url(#stm-c40)"><rect class="tile-fill" x="450.21" y="317.00" width="64.45" height="31.55"/>
 </g>
-<rect class="tile-frame" x="537.0" y="234.0" width="33.1" height="61.6" rx="4"/>
+<text class="leaf-pct" x="455.2" y="333.0" font-size="12">100%</text>
+<rect class="tile-frame" x="450.2" y="317.0" width="64.4" height="31.6" rx="4"/>
 </g>
 <g><title>Cinematics and sequences
 0.0% complete
 effort weight 5 | source: manual
 manual estimate (see rationale)</title>
-<rect class="tile-body" x="493.1" y="297.6" width="45.4" height="27.4" rx="4"/>
-<text class="leaf-pct" x="498.1" y="313.6" font-size="12">0.0%</text>
-<rect class="tile-frame" x="493.1" y="297.6" width="45.4" height="27.4" rx="4"/>
+<rect class="tile-body" x="516.7" y="275.1" width="28.8" height="43.3" rx="4"/>
+<rect class="tile-frame" x="516.7" y="275.1" width="28.8" height="43.3" rx="4"/>
 </g>
 <g><title>Shipped plugins and module integration
 0.0% complete
 effort weight 4 | source: manual
 manual estimate (see rationale)</title>
-<rect class="tile-body" x="493.1" y="327.0" width="45.4" height="21.5" rx="4"/>
-<text class="leaf-pct" x="498.1" y="343.0" font-size="12">0.0%</text>
-<rect class="tile-frame" x="493.1" y="327.0" width="45.4" height="21.5" rx="4"/>
+<rect class="tile-body" x="547.4" y="275.1" width="22.6" height="43.3" rx="4"/>
+<rect class="tile-frame" x="547.4" y="275.1" width="22.6" height="43.3" rx="4"/>
 </g>
 <g><title>Other shipped asset types and cooking
 0.0% complete
 effort weight 3 | source: manual
 manual estimate (see rationale)</title>
-<rect class="tile-body" x="540.5" y="297.6" width="29.6" height="24.5" rx="4"/>
-<rect class="tile-frame" x="540.5" y="297.6" width="29.6" height="24.5" rx="4"/>
+<rect class="tile-body" x="516.7" y="320.4" width="25.7" height="28.2" rx="4"/>
+<rect class="tile-frame" x="516.7" y="320.4" width="25.7" height="28.2" rx="4"/>
 </g>
 <g><title>Frontend source mesh bundle export
 100.0% complete (1/1)
 effort weight 2 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_source_bundle pass (exit 0, age unknown)</title>
-<rect class="tile-body" x="540.5" y="324.1" width="19.0" height="24.5" rx="4"/>
-<clipPath id="stm-c43"><rect x="540.46" y="324.08" width="19.05" height="24.48" rx="4"/></clipPath>
-<g clip-path="url(#stm-c43)"><rect class="tile-fill" x="540.46" y="324.08" width="19.05" height="24.48"/>
+<rect class="tile-body" x="544.3" y="320.4" width="25.7" height="18.1" rx="4"/>
+<clipPath id="stm-c44"><rect x="544.35" y="320.36" width="25.69" height="18.13" rx="4"/></clipPath>
+<g clip-path="url(#stm-c44)"><rect class="tile-fill" x="544.35" y="320.36" width="25.69" height="18.13"/>
 </g>
-<rect class="tile-frame" x="540.5" y="324.1" width="19.0" height="24.5" rx="4"/>
+<rect class="tile-frame" x="544.3" y="320.4" width="25.7" height="18.1" rx="4"/>
 </g>
 <g><title>Original project plugin-count metadata
 100.0% complete (123/123)
 effort weight 1 | source: git
 123 of 123 (captured from porting/README.md; )</title>
-<rect class="tile-body" x="561.5" y="324.1" width="8.5" height="24.5" rx="4"/>
-<clipPath id="stm-c44"><rect x="561.51" y="324.08" width="8.52" height="24.48" rx="4"/></clipPath>
-<g clip-path="url(#stm-c44)"><rect class="tile-fill" x="561.51" y="324.08" width="8.52" height="24.48"/>
+<rect class="tile-body" x="544.3" y="340.5" width="25.7" height="8.1" rx="4"/>
+<clipPath id="stm-c45"><rect x="544.35" y="340.49" width="25.69" height="8.07" rx="4"/></clipPath>
+<g clip-path="url(#stm-c45)"><rect class="tile-fill" x="544.35" y="340.49" width="25.69" height="8.07"/>
 </g>
-<rect class="tile-frame" x="561.5" y="324.1" width="8.5" height="24.5" rx="4"/>
+<rect class="tile-frame" x="544.3" y="340.5" width="25.7" height="8.1" rx="4"/>
 </g>
 <g><title>Session and beacon behavior and integration
 0.0% complete
@@ -602,8 +603,8 @@ manual estimate (see rationale)</title>
 effort weight 20 | source: git
 3 of 3 client route templates have their literal path in committed server code (stub credit 1); templates from the static client scan</title>
 <rect class="tile-body" x="426.0" y="378.6" width="71.0" height="72.6" rx="4"/>
-<clipPath id="stm-c46"><rect x="425.97" y="378.56" width="71.03" height="72.55" rx="4"/></clipPath>
-<g clip-path="url(#stm-c46)"><rect class="tile-fill" x="425.97" y="378.56" width="71.03" height="72.55"/>
+<clipPath id="stm-c47"><rect x="425.97" y="378.56" width="71.03" height="72.55" rx="4"/></clipPath>
+<g clip-path="url(#stm-c47)"><rect class="tile-fill" x="425.97" y="378.56" width="71.03" height="72.55"/>
 </g>
 <text class="leaf-pct" x="431.0" y="394.6" font-size="12">100%</text>
 <rect class="tile-frame" x="426.0" y="378.6" width="71.0" height="72.6" rx="4"/>
@@ -621,8 +622,8 @@ manual estimate (see rationale)</title>
 effort weight 15 | source: git
 14 of 14 client route templates have their literal path in committed server code (stub credit 1); templates from the static client scan</title>
 <rect class="tile-body" x="338.3" y="453.1" width="67.6" height="56.6" rx="4"/>
-<clipPath id="stm-c48"><rect x="338.33" y="453.11" width="67.65" height="56.63" rx="4"/></clipPath>
-<g clip-path="url(#stm-c48)"><rect class="tile-fill" x="338.33" y="453.11" width="67.65" height="56.63"/>
+<clipPath id="stm-c49"><rect x="338.33" y="453.11" width="67.65" height="56.63" rx="4"/></clipPath>
+<g clip-path="url(#stm-c49)"><rect class="tile-fill" x="338.33" y="453.11" width="67.65" height="56.63"/>
 </g>
 <text class="leaf-pct" x="343.3" y="469.1" font-size="12">100%</text>
 <rect class="tile-frame" x="338.3" y="453.1" width="67.6" height="56.6" rx="4"/>
@@ -632,8 +633,8 @@ effort weight 15 | source: git
 effort weight 15 | source: git
 ok Party or XMPP referenced in committed server code</title>
 <rect class="tile-body" x="338.3" y="511.7" width="67.6" height="56.6" rx="4"/>
-<clipPath id="stm-c49"><rect x="338.33" y="511.74" width="67.65" height="56.63" rx="4"/></clipPath>
-<g clip-path="url(#stm-c49)"><rect class="tile-fill" x="338.33" y="511.74" width="67.65" height="56.63"/>
+<clipPath id="stm-c50"><rect x="338.33" y="511.74" width="67.65" height="56.63" rx="4"/></clipPath>
+<g clip-path="url(#stm-c50)"><rect class="tile-fill" x="338.33" y="511.74" width="67.65" height="56.63"/>
 </g>
 <text class="leaf-pct" x="343.3" y="527.7" font-size="12">100%</text>
 <rect class="tile-frame" x="338.3" y="511.7" width="67.6" height="56.6" rx="4"/>
@@ -651,8 +652,8 @@ manual estimate (see rationale)</title>
 effort weight 12.5 | source: git+local
 22 of 22 client route templates have their literal path in committed server code (stub credit 1); templates from the static client scan</title>
 <rect class="tile-body" x="408.0" y="453.1" width="52.7" height="60.2" rx="4"/>
-<clipPath id="stm-c51"><rect x="407.98" y="453.11" width="52.69" height="60.23" rx="4"/></clipPath>
-<g clip-path="url(#stm-c51)"><rect class="tile-fill" x="407.98" y="453.11" width="52.69" height="60.23"/>
+<clipPath id="stm-c52"><rect x="407.98" y="453.11" width="52.69" height="60.23" rx="4"/></clipPath>
+<g clip-path="url(#stm-c52)"><rect class="tile-fill" x="407.98" y="453.11" width="52.69" height="60.23"/>
 </g>
 <text class="leaf-pct" x="413.0" y="469.1" font-size="12">100%</text>
 <rect class="tile-frame" x="408.0" y="453.1" width="52.7" height="60.2" rx="4"/>
@@ -670,8 +671,8 @@ manual estimate (see rationale)</title>
 effort weight 12.5 | source: git
 18 of 18 client route templates have their literal path in committed server code (stub credit 1); templates from the static client scan</title>
 <rect class="tile-body" x="517.4" y="453.1" width="52.7" height="60.2" rx="4"/>
-<clipPath id="stm-c53"><rect x="517.35" y="453.11" width="52.69" height="60.23" rx="4"/></clipPath>
-<g clip-path="url(#stm-c53)"><rect class="tile-fill" x="517.35" y="453.11" width="52.69" height="60.23"/>
+<clipPath id="stm-c54"><rect x="517.35" y="453.11" width="52.69" height="60.23" rx="4"/></clipPath>
+<g clip-path="url(#stm-c54)"><rect class="tile-fill" x="517.35" y="453.11" width="52.69" height="60.23"/>
 </g>
 <text class="leaf-pct" x="522.4" y="469.1" font-size="12">100%</text>
 <rect class="tile-frame" x="517.4" y="453.1" width="52.7" height="60.2" rx="4"/>
@@ -689,8 +690,8 @@ manual estimate (see rationale)</title>
 effort weight 10 | source: git
 ok Cloud storage route referenced; ok Datarouter route referenced</title>
 <rect class="tile-body" x="408.0" y="578.5" width="51.9" height="48.5" rx="4"/>
-<clipPath id="stm-c55"><rect x="407.98" y="578.48" width="51.89" height="48.52" rx="4"/></clipPath>
-<g clip-path="url(#stm-c55)"><rect class="tile-fill" x="407.98" y="578.48" width="51.89" height="48.52"/>
+<clipPath id="stm-c56"><rect x="407.98" y="578.48" width="51.89" height="48.52" rx="4"/></clipPath>
+<g clip-path="url(#stm-c56)"><rect class="tile-fill" x="407.98" y="578.48" width="51.89" height="48.52"/>
 </g>
 <text class="leaf-pct" x="413.0" y="594.5" font-size="12">100%</text>
 <rect class="tile-frame" x="408.0" y="578.5" width="51.9" height="48.5" rx="4"/>
@@ -708,8 +709,8 @@ manual estimate (see rationale)</title>
 effort weight 7.5 | source: git
 ok versioncheck route; ok lightswitch route</title>
 <rect class="tile-body" x="524.8" y="515.3" width="45.2" height="41.2" rx="4"/>
-<clipPath id="stm-c57"><rect x="524.82" y="515.33" width="45.22" height="41.24" rx="4"/></clipPath>
-<g clip-path="url(#stm-c57)"><rect class="tile-fill" x="524.82" y="515.33" width="45.22" height="41.24"/>
+<clipPath id="stm-c58"><rect x="524.82" y="515.33" width="45.22" height="41.24" rx="4"/></clipPath>
+<g clip-path="url(#stm-c58)"><rect class="tile-fill" x="524.82" y="515.33" width="45.22" height="41.24"/>
 </g>
 <rect class="tile-frame" x="524.8" y="515.3" width="45.2" height="41.2" rx="4"/>
 </g>
@@ -734,8 +735,8 @@ manual estimate (see rationale)</title>
 effort weight 6 | source: git
 ok Session discovery route (matchmaking session record) referenced; ok Session key route referenced; ok BeaconPort session attribute served (credit 0.5: present in source, not exercised against the client)</title>
 <rect class="tile-body" x="517.9" y="558.6" width="52.1" height="28.2" rx="4"/>
-<clipPath id="stm-c60"><rect x="517.92" y="558.58" width="52.12" height="28.18" rx="4"/></clipPath>
-<g clip-path="url(#stm-c60)"><rect class="tile-fill" x="517.92" y="572.67" width="52.12" height="14.09"/>
+<clipPath id="stm-c61"><rect x="517.92" y="558.58" width="52.12" height="28.18" rx="4"/></clipPath>
+<g clip-path="url(#stm-c61)"><rect class="tile-fill" x="517.92" y="572.67" width="52.12" height="14.09"/>
 <rect class="tile-edge" x="517.92" y="571.67" width="52.12" height="2"/>
 </g>
 <text class="leaf-pct" x="522.9" y="574.6" font-size="12">50%</text>
@@ -753,8 +754,8 @@ manual estimate (see rationale)</title>
 effort weight 4 | source: git
 1 of 1 checks pass in the evidence ledger: backend_local_tests pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="545.0" y="588.8" width="25.1" height="38.2" rx="4"/>
-<clipPath id="stm-c62"><rect x="544.98" y="588.76" width="25.06" height="38.24" rx="4"/></clipPath>
-<g clip-path="url(#stm-c62)"><rect class="tile-fill" x="544.98" y="588.76" width="25.06" height="38.24"/>
+<clipPath id="stm-c63"><rect x="544.98" y="588.76" width="25.06" height="38.24" rx="4"/></clipPath>
+<g clip-path="url(#stm-c63)"><rect class="tile-fill" x="544.98" y="588.76" width="25.06" height="38.24"/>
 </g>
 <rect class="tile-frame" x="545.0" y="588.8" width="25.1" height="38.2" rx="4"/>
 </g>
@@ -816,8 +817,8 @@ manual estimate (see rationale)</title>
 effort weight 6 | source: git
 4 of 4 checks pass in the evidence ledger: material_powertoast_asset_ingress pass (exit 0, age unknown); material_menubutton_asset_ingress pass (exit 0, age unknown); material_donut_asset_ingress pass (exit 0, age unknown); material_keybind_asset_ingress pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="738.2" y="154.1" width="25.0" height="21.3" rx="4"/>
-<clipPath id="stm-c68"><rect x="738.16" y="154.12" width="25.04" height="21.31" rx="4"/></clipPath>
-<g clip-path="url(#stm-c68)"><rect class="tile-fill" x="738.16" y="154.12" width="25.04" height="21.31"/>
+<clipPath id="stm-c69"><rect x="738.16" y="154.12" width="25.04" height="21.31" rx="4"/></clipPath>
+<g clip-path="url(#stm-c69)"><rect class="tile-fill" x="738.16" y="154.12" width="25.04" height="21.31"/>
 </g>
 <rect class="tile-frame" x="738.2" y="154.1" width="25.0" height="21.3" rx="4"/>
 </g>
@@ -826,8 +827,8 @@ effort weight 6 | source: git
 effort weight 2 | source: git
 129 of 142 checks pass in the evidence ledger: material_frontend_owner_b5fcb772a31ecd36 pending (exit ?, age unknown); material_frontend_owner_bc329a3f5f9a9ef3 pass (exit 0, age unknown); material_frontend_owner_3d3453906eeb002d pass (exit 0, age unknown); material_frontend_owner_89ef13495431e896 pass (exit 0, age unknown); material_frontend_owner_0d309c58ac5bb800 pass (exit 0, age unknown); material_frontend_owner_2b046459bb5f6410 pass (exit 0, age unknown); material_frontend_owner_6664a1649c7c749d pass (exit 0, age unknown); material_frontend_owner_ae24ce856a758b68 pass (exit 0, age unknown); material_frontend_owner_117e56c2db40977a pass (exit 0, age unknown); material_frontend_owner_1617aeaa75413901 pass (exit 0, age unknown); material_frontend_owner_a48ed3d16a59ff02 pass (exit 0, age unknown); material_frontend_owner_c304e323fb4aa651 pass (exit 0, age unknown); material_frontend_owner_9b8adcef0120976a pass (exit 0, age unknown); material_frontend_owner_2653ef5701a87e0d pass (exit 0, age unknown); material_frontend_owner_5eb5902d97b5aa44 pass (exit 0, age unknown); material_frontend_owner_cf4d079608bc2f33 pass (exit 0, age unknown); material_frontend_owner_ffc6370f2c221fd9 pass (exit 0, age unknown); material_frontend_owner_24db817708f03e94 pass (exit 0, age unknown); material_frontend_owner_03dc9bacf030cc07 pass (exit 0, age unknown); material_frontend_owner_717e40e8fa8e2c32 pass (exit 0, age unknown); material_frontend_owner_8d0e73389b345ed5 pass (exit 0, age unknown); material_frontend_owner_7bfee806c2a07e24 pass (exit 0, age unknown); material_frontend_owner_d1d318ba4f03ccbb pass (exit 0, age unknown); material_frontend_owner_ec6952c187bd91c9 pass (exit 0, age unknown); material_frontend_owner_01005a35c43064b9 pass (exit 0, age unknown); material_frontend_owner_fe10ec5e8832653d pass (exit 0, age unknown); material_frontend_owner_b8b839b3819ae1c2 pass (exit 0, age unknown); material_frontend_owner_1796b4e99a45332a pass (exit 0, age unknown); material_frontend_owner_32eda186ebb5ce56 pass (exit 0, age unknown); material_frontend_owner_8f511158d4db10b1 pass (exit 0, age unknown); material_frontend_owner_c9d88259c847c84d pass (exit 0, age unknown); material_frontend_owner_f0139bb67f9deede pass (exit 0, age unknown); material_frontend_owner_bae7af1c2339c8e9 pass (exit 0, age unknown); material_frontend_owner_a330ba5dc5ca850c pass (exit 0, age unknown); material_frontend_owner_6ef29112792555b3 pass (exit 0, age unknown); material_frontend_owner_c33708b9c35ea6a8 pass (exit 0, age unknown); material_frontend_owner_4c2aac70b3f3dbd1 pass (exit 0, age unknown); material_frontend_owner_1f088da64e08242a pass (exit 0, age unknown); material_frontend_owner_938763ddeabcd36f pass (exit 0, age unknown); material_frontend_owner_6cf1c33082ec2c66 pass (exit 0, age unknown); material_frontend_owner_2417aa268eef1a39 pass (exit 0, age unknown); material_frontend_owner_9d410fe06d5264a2 pass (exit 0, age unknown); material_frontend_owner_8a40608645c131f5 pass (exit 0, age unknown); material_frontend_owner_5f050df5e87273f4 pass (exit 0, age unknown); material_frontend_owner_a14da5c803dc7ee1 pass (exit 0, age unknown); material_frontend_owner_f182c51cd1dfcc3b pass (exit 0, age unknown); material_frontend_owner_608199fda7d1e82e pass (exit 0, age unknown); material_frontend_owner_7c362ccf47797f25 pass (exit 0, age unknown); material_frontend_owner_063d3f629e391688 pass (exit 0, age unknown); material_frontend_owner_1ef3291cb638eec6 pass (exit 0, age unknown); material_frontend_owner_549fb1eeb6758cd1 pass (exit 0, age unknown); material_frontend_owner_b252a23b73c6fb81 pass (exit 0, age unknown); material_frontend_owner_e4dee38b6dfad9d0 pass (exit 0, age unknown); material_frontend_owner_28869e2c3b7228c9 pass (exit 0, age unknown); material_frontend_owner_3cb1dbe7865244da pass (exit 0, age unknown); material_frontend_owner_0913e00f5e97b9ef pass (exit 0, age unknown); material_frontend_owner_6324393b933fcd96 pass (exit 0, age unknown); material_frontend_owner_de03144ff3e7efc4 pass (exit 0, age unknown); material_frontend_owner_8d8f9c33c99f3c19 pass (exit 0, age unknown); material_frontend_owner_0d6eef0eedb3a105 pass (exit 0, age unknown); material_frontend_owner_3404cdb51f0042b7 pass (exit 0, age unknown); material_frontend_owner_e301c2b9ca5016a9 pass (exit 0, age unknown); material_frontend_owner_d3c3351b9a43e296 pass (exit 0, age unknown); material_frontend_owner_1dc4a097333f93f2 pass (exit 0, age unknown); material_frontend_owner_24f51f6b50f7f669 pass (exit 0, age unknown); material_frontend_owner_d15c22ba8ecb47eb pass (exit 0, age unknown); material_frontend_owner_9fa2c9fa5a0adce3 pass (exit 0, age unknown); material_frontend_owner_c84d1b524ca65932 pass (exit 0, age unknown); material_frontend_owner_d4d005a96f5fcbac pass (exit 0, age unknown); material_frontend_owner_3e61495beb42f46a pass (exit 0, age unknown); material_frontend_owner_97661b3fd8a7cdae pass (exit 0, age unknown); material_frontend_owner_345056c2af5ba66c pass (exit 0, age unknown); material_frontend_owner_4cfe3467e5741e39 pass (exit 0, age unknown); material_frontend_owner_18764c8406b4145c pass (exit 0, age unknown); material_frontend_owner_d69046cddd3aa006 pass (exit 0, age unknown); material_frontend_owner_ee4465dd06707423 pass (exit 0, age unknown); material_frontend_owner_96b3ea6c980a0471 pass (exit 0, age unknown); material_frontend_owner_82e095670ddb3361 pass (exit 0, age unknown); material_frontend_owner_aa1d5d94cd13e2d1 pass (exit 0, age unknown); material_frontend_owner_0b06ba64698a35cc pass (exit 0, age unknown); material_frontend_owner_f031e14c46854c80 pass (exit 0, age unknown); material_frontend_owner_00deb035d0f12b57 pass (exit 0, age unknown); material_frontend_owner_35485889509ef94c pass (exit 0, age unknown); material_frontend_owner_a1592d429e518930 pass (exit 0, age unknown); material_frontend_owner_e2e417961e86ee57 pass (exit 0, age unknown); material_frontend_owner_468ac6254646f83f pass (exit 0, age unknown); material_frontend_owner_a27ecd263b4e0be1 pass (exit 0, age unknown); material_frontend_owner_eab2e0733bb2c0b0 pass (exit 0, age unknown); material_frontend_owner_7e7e96890e8e2cb9 pass (exit 0, age unknown); material_frontend_owner_e40404ad8584d6f7 pass (exit 0, age unknown); material_frontend_owner_41ec3f75c33fb3e1 pass (exit 0, age unknown); material_frontend_owner_12b4b9d27db4bd2a pass (exit 0, age unknown); material_frontend_owner_4885a4e3746af65a pass (exit 0, age unknown); material_frontend_owner_cec9824e0de68cc2 pass (exit 0, age unknown); material_frontend_owner_68c6b793868fb135 pass (exit 0, age unknown); material_frontend_owner_451308c403d819d9 pass (exit 0, age unknown); material_frontend_owner_38326995e5da4628 pass (exit 0, age unknown); material_frontend_owner_5093bf7499fb0868 pass (exit 0, age unknown); material_frontend_owner_102ccff623f49560 pass (exit 0, age unknown); material_frontend_owner_fb47eed205e1343f pass (exit 0, age unknown); material_frontend_owner_da03e8ca979e7f9a pass (exit 0, age unknown); material_frontend_owner_b90cda314897166b pass (exit 0, age unknown); material_frontend_owner_eb8157410a8eab95 pass (exit 0, age unknown); material_frontend_owner_2d07a9a8cc7b4259 pass (exit 0, age unknown); material_frontend_owner_894d848218709a26 pass (exit 0, age unknown); material_frontend_owner_96bfe15951a896cf pass (exit 0, age unknown); material_frontend_owner_90ddca0528cff0a6 pass (exit 0, age unknown); material_frontend_owner_998a56b515851671 pass (exit 0, age unknown); material_frontend_owner_228a3818abe7e12b pass (exit 0, age unknown); material_frontend_owner_4b42fa72c08462c5 pass (exit 0, age unknown); material_frontend_owner_ffbd51b27d50cb73 pass (exit 0, age unknown); material_frontend_owner_35e8669e63fbe450 pending (exit ?, age unknown); material_frontend_owner_64b7b96001bfef4d pending (exit ?, age unknown); material_frontend_owner_7250d437e180d476 pass (exit 0, age unknown); material_frontend_owner_61384ac1a8df8d33 pass (exit 0, age unknown); material_frontend_owner_80ccd638caec3952 pass (exit 0, age unknown); material_frontend_owner_29755c4cfd6666f4 pass (exit 0, age unknown); material_frontend_owner_ad9caa93275c1135 pass (exit 0, age unknown); material_frontend_owner_54983de3a5747f9a pass (exit 0, age unknown); material_frontend_owner_cf3c32b152f73b30 pass (exit 0, age unknown); material_frontend_owner_61a7f3b113aa2f08 pending (exit ?, age unknown); material_frontend_owner_63269f654c717009 pending (exit ?, age unknown); material_frontend_owner_d30b3e8fe8337e75 pending (exit ?, age unknown); material_frontend_owner_2f5d8a82c5e52049 pending (exit ?, age unknown); material_frontend_owner_9b5b3166703bd591 pending (exit ?, age unknown); material_frontend_owner_68d6d9631d5952e9 pending (exit ?, age unknown); material_frontend_owner_ca7e3de8f5664d6e pending (exit ?, age unknown); material_frontend_owner_96d352985327c1b0 pass (exit 0, age unknown); material_frontend_owner_ea40fc1498463f86 pending (exit ?, age unknown); material_frontend_owner_840e96f4a8e8d0e8 pending (exit ?, age unknown); material_frontend_owner_3ac27ee2271ff052 pass (exit 0, age unknown); material_frontend_owner_554fedcce7794993 pass (exit 0, age unknown); material_frontend_owner_7073d28348adc145 pass (exit 0, age unknown); material_frontend_owner_caf8370896015506 pass (exit 0, age unknown); material_frontend_owner_fef06d412a5f85d9 pass (exit 0, age unknown); material_frontend_owner_a06d6ac78ef215dd pass (exit 0, age unknown); material_frontend_owner_ad65bb4edb5c0278 pass (exit 0, age unknown); material_frontend_owner_699241b5b952ce61 pass (exit 0, age unknown); material_frontend_owner_d0d4dd84423d89df pending (exit ?, age unknown); material_frontend_owner_88faed927c75cd8d pass (exit 0, age unknown); material_frontend_owner_6e588337f96d7197 pass (exit 0, age unknown); material_frontend_owner_8310f3e2e82adf74 pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="765.2" y="154.1" width="16.0" height="9.7" rx="4"/>
-<clipPath id="stm-c69"><rect x="765.20" y="154.12" width="16.02" height="9.65" rx="4"/></clipPath>
-<g clip-path="url(#stm-c69)"><rect class="tile-fill" x="765.20" y="155.00" width="16.02" height="8.77"/>
+<clipPath id="stm-c70"><rect x="765.20" y="154.12" width="16.02" height="9.65" rx="4"/></clipPath>
+<g clip-path="url(#stm-c70)"><rect class="tile-fill" x="765.20" y="155.00" width="16.02" height="8.77"/>
 <rect class="tile-edge" x="765.20" y="154.00" width="16.02" height="2"/>
 </g>
 <rect class="tile-frame" x="765.2" y="154.1" width="16.0" height="9.7" rx="4"/>
@@ -851,8 +852,8 @@ effort weight 1 | source: git
 effort weight 10 | source: git
 1660 of 1681 tracked files (porting/native/Source/FortniteUI/Generated/[AU]*.h); total 1681 from totals.json uht_classes_named_by_package[/Script/FortniteUI]</title>
 <rect class="tile-body" x="675.8" y="181.4" width="39.5" height="63.7" rx="4"/>
-<clipPath id="stm-c72"><rect x="675.79" y="181.43" width="39.46" height="63.66" rx="4"/></clipPath>
-<g clip-path="url(#stm-c72)"><rect class="tile-fill" x="675.79" y="182.22" width="39.46" height="62.87"/>
+<clipPath id="stm-c73"><rect x="675.79" y="181.43" width="39.46" height="63.66" rx="4"/></clipPath>
+<g clip-path="url(#stm-c73)"><rect class="tile-fill" x="675.79" y="182.22" width="39.46" height="62.87"/>
 <rect class="tile-edge" x="675.79" y="181.22" width="39.46" height="2"/>
 </g>
 <text class="leaf-pct" x="680.8" y="196.4" font-size="11">99%</text>
@@ -863,8 +864,8 @@ effort weight 10 | source: git
 effort weight 6 | source: git
 58 of 168 tracked files (porting/native/Source/CommonUI/Generated/[AU]*.h, porting/native/Source/UMG/Generated/[AU]*.h); total 168 from totals.json uht_classes_named_commonui_umg</title>
 <rect class="tile-body" x="675.8" y="247.1" width="39.5" height="37.4" rx="4"/>
-<clipPath id="stm-c73"><rect x="675.79" y="247.09" width="39.46" height="37.40" rx="4"/></clipPath>
-<g clip-path="url(#stm-c73)"><rect class="tile-fill" x="675.79" y="271.57" width="39.46" height="12.91"/>
+<clipPath id="stm-c74"><rect x="675.79" y="247.09" width="39.46" height="37.40" rx="4"/></clipPath>
+<g clip-path="url(#stm-c74)"><rect class="tile-fill" x="675.79" y="271.57" width="39.46" height="12.91"/>
 <rect class="tile-edge" x="675.79" y="270.57" width="39.46" height="2"/>
 </g>
 <text class="leaf-pct" x="680.8" y="262.1" font-size="11">35%</text>
@@ -875,8 +876,8 @@ effort weight 6 | source: git
 effort weight 2 | source: git
 1 of 1 checks pass in the evidence ledger: material_original_maps pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="717.3" y="181.4" width="21.3" height="21.3" rx="4"/>
-<clipPath id="stm-c74"><rect x="717.26" y="181.43" width="21.32" height="21.35" rx="4"/></clipPath>
-<g clip-path="url(#stm-c74)"><rect class="tile-fill" x="717.26" y="181.43" width="21.32" height="21.35"/>
+<clipPath id="stm-c75"><rect x="717.26" y="181.43" width="21.32" height="21.35" rx="4"/></clipPath>
+<g clip-path="url(#stm-c75)"><rect class="tile-fill" x="717.26" y="181.43" width="21.32" height="21.35"/>
 </g>
 <rect class="tile-frame" x="717.3" y="181.4" width="21.3" height="21.3" rx="4"/>
 </g>
@@ -885,8 +886,8 @@ effort weight 2 | source: git
 effort weight 2 | source: git
 1 of 1 checks pass in the evidence ledger: material_shader_translation pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="740.6" y="181.4" width="21.3" height="21.3" rx="4"/>
-<clipPath id="stm-c75"><rect x="740.58" y="181.43" width="21.32" height="21.35" rx="4"/></clipPath>
-<g clip-path="url(#stm-c75)"><rect class="tile-fill" x="740.58" y="181.43" width="21.32" height="21.35"/>
+<clipPath id="stm-c76"><rect x="740.58" y="181.43" width="21.32" height="21.35" rx="4"/></clipPath>
+<g clip-path="url(#stm-c76)"><rect class="tile-fill" x="740.58" y="181.43" width="21.32" height="21.35"/>
 </g>
 <rect class="tile-frame" x="740.6" y="181.4" width="21.3" height="21.3" rx="4"/>
 </g>
@@ -895,8 +896,8 @@ effort weight 2 | source: git
 effort weight 2 | source: git
 1 of 1 checks pass in the evidence ledger: material_uniform_evaluation pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="763.9" y="181.4" width="21.3" height="21.3" rx="4"/>
-<clipPath id="stm-c76"><rect x="763.90" y="181.43" width="21.32" height="21.35" rx="4"/></clipPath>
-<g clip-path="url(#stm-c76)"><rect class="tile-fill" x="763.90" y="181.43" width="21.32" height="21.35"/>
+<clipPath id="stm-c77"><rect x="763.90" y="181.43" width="21.32" height="21.35" rx="4"/></clipPath>
+<g clip-path="url(#stm-c77)"><rect class="tile-fill" x="763.90" y="181.43" width="21.32" height="21.35"/>
 </g>
 <rect class="tile-frame" x="763.9" y="181.4" width="21.3" height="21.3" rx="4"/>
 </g>
@@ -905,8 +906,8 @@ effort weight 2 | source: git
 effort weight 2 | source: git
 1 of 1 checks pass in the evidence ledger: material_locker_draw pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="717.3" y="204.8" width="21.3" height="21.3" rx="4"/>
-<clipPath id="stm-c77"><rect x="717.26" y="204.77" width="21.32" height="21.35" rx="4"/></clipPath>
-<g clip-path="url(#stm-c77)"><rect class="tile-fill" x="717.26" y="204.77" width="21.32" height="21.35"/>
+<clipPath id="stm-c78"><rect x="717.26" y="204.77" width="21.32" height="21.35" rx="4"/></clipPath>
+<g clip-path="url(#stm-c78)"><rect class="tile-fill" x="717.26" y="204.77" width="21.32" height="21.35"/>
 </g>
 <rect class="tile-frame" x="717.3" y="204.8" width="21.3" height="21.3" rx="4"/>
 </g>
@@ -915,8 +916,8 @@ effort weight 2 | source: git
 effort weight 2 | source: git
 1 of 1 checks pass in the evidence ledger: material_locker_asset_ingress pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="740.6" y="204.8" width="21.3" height="21.3" rx="4"/>
-<clipPath id="stm-c78"><rect x="740.58" y="204.77" width="21.32" height="21.35" rx="4"/></clipPath>
-<g clip-path="url(#stm-c78)"><rect class="tile-fill" x="740.58" y="204.77" width="21.32" height="21.35"/>
+<clipPath id="stm-c79"><rect x="740.58" y="204.77" width="21.32" height="21.35" rx="4"/></clipPath>
+<g clip-path="url(#stm-c79)"><rect class="tile-fill" x="740.58" y="204.77" width="21.32" height="21.35"/>
 </g>
 <rect class="tile-frame" x="740.6" y="204.8" width="21.3" height="21.3" rx="4"/>
 </g>
@@ -925,8 +926,8 @@ effort weight 2 | source: git
 effort weight 2 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_commonui_button_style_runtime pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="763.9" y="204.8" width="21.3" height="21.3" rx="4"/>
-<clipPath id="stm-c79"><rect x="763.90" y="204.77" width="21.32" height="21.35" rx="4"/></clipPath>
-<g clip-path="url(#stm-c79)"><rect class="tile-fill" x="763.90" y="204.77" width="21.32" height="21.35"/>
+<clipPath id="stm-c80"><rect x="763.90" y="204.77" width="21.32" height="21.35" rx="4"/></clipPath>
+<g clip-path="url(#stm-c80)"><rect class="tile-fill" x="763.90" y="204.77" width="21.32" height="21.35"/>
 </g>
 <rect class="tile-frame" x="763.9" y="204.8" width="21.3" height="21.3" rx="4"/>
 </g>
@@ -935,8 +936,8 @@ effort weight 2 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_commonui_panel_outro_runtime pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="717.3" y="228.1" width="16.7" height="12.6" rx="4"/>
-<clipPath id="stm-c80"><rect x="717.26" y="228.12" width="16.66" height="12.59" rx="4"/></clipPath>
-<g clip-path="url(#stm-c80)"><rect class="tile-fill" x="717.26" y="228.12" width="16.66" height="12.59"/>
+<clipPath id="stm-c81"><rect x="717.26" y="228.12" width="16.66" height="12.59" rx="4"/></clipPath>
+<g clip-path="url(#stm-c81)"><rect class="tile-fill" x="717.26" y="228.12" width="16.66" height="12.59"/>
 </g>
 <rect class="tile-frame" x="717.3" y="228.1" width="16.7" height="12.6" rx="4"/>
 </g>
@@ -945,8 +946,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_commonui_panel_intro_runtime pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="717.3" y="242.7" width="16.7" height="12.6" rx="4"/>
-<clipPath id="stm-c81"><rect x="717.26" y="242.71" width="16.66" height="12.59" rx="4"/></clipPath>
-<g clip-path="url(#stm-c81)"><rect class="tile-fill" x="717.26" y="242.71" width="16.66" height="12.59"/>
+<clipPath id="stm-c82"><rect x="717.26" y="242.71" width="16.66" height="12.59" rx="4"/></clipPath>
+<g clip-path="url(#stm-c82)"><rect class="tile-fill" x="717.26" y="242.71" width="16.66" height="12.59"/>
 </g>
 <rect class="tile-frame" x="717.3" y="242.7" width="16.7" height="12.6" rx="4"/>
 </g>
@@ -955,8 +956,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_commonui_internal_button_runtime pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="717.3" y="257.3" width="16.7" height="12.6" rx="4"/>
-<clipPath id="stm-c82"><rect x="717.26" y="257.30" width="16.66" height="12.59" rx="4"/></clipPath>
-<g clip-path="url(#stm-c82)"><rect class="tile-fill" x="717.26" y="257.30" width="16.66" height="12.59"/>
+<clipPath id="stm-c83"><rect x="717.26" y="257.30" width="16.66" height="12.59" rx="4"/></clipPath>
+<g clip-path="url(#stm-c83)"><rect class="tile-fill" x="717.26" y="257.30" width="16.66" height="12.59"/>
 </g>
 <rect class="tile-frame" x="717.3" y="257.3" width="16.7" height="12.6" rx="4"/>
 </g>
@@ -965,8 +966,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_commonui_base_activation_runtime pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="717.3" y="271.9" width="16.7" height="12.6" rx="4"/>
-<clipPath id="stm-c83"><rect x="717.26" y="271.89" width="16.66" height="12.59" rx="4"/></clipPath>
-<g clip-path="url(#stm-c83)"><rect class="tile-fill" x="717.26" y="271.89" width="16.66" height="12.59"/>
+<clipPath id="stm-c84"><rect x="717.26" y="271.89" width="16.66" height="12.59" rx="4"/></clipPath>
+<g clip-path="url(#stm-c84)"><rect class="tile-fill" x="717.26" y="271.89" width="16.66" height="12.59"/>
 </g>
 <rect class="tile-frame" x="717.3" y="271.9" width="16.7" height="12.6" rx="4"/>
 </g>
@@ -975,8 +976,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 41 of 41 checks pass in the evidence ledger: frontend_event_signature_97a7a9a26cffc1ef pass (exit ?, age unknown); frontend_event_signature_6c3745abe695e828 pass (exit ?, age unknown); frontend_event_signature_cef8ed789ea4cca6 pass (exit ?, age unknown); frontend_event_signature_acdd5f250c07b3f5 pass (exit ?, age unknown); frontend_event_signature_86be4fd63c1f3750 pass (exit ?, age unknown); frontend_event_signature_be009a77ba833c9e pass (exit ?, age unknown); frontend_event_signature_f0e8d7f839d603a6 pass (exit ?, age unknown); frontend_event_signature_7f410db84053bf97 pass (exit ?, age unknown); frontend_event_signature_cad49b19554f2294 pass (exit ?, age unknown); frontend_event_signature_082e932ed60cc28a pass (exit ?, age unknown); frontend_event_signature_5974ea6157df96a1 pass (exit ?, age unknown); frontend_event_signature_6472bb99ee9b5eae pass (exit ?, age unknown); frontend_event_signature_d4680cda66578a74 pass (exit ?, age unknown); frontend_event_signature_b1669f5a7a25b463 pass (exit ?, age unknown); frontend_event_signature_d948f4dfac455d84 pass (exit ?, age unknown); frontend_event_signature_805e8ce2cd0b59d4 pass (exit ?, age unknown); frontend_event_signature_6f584de16f39d26f pass (exit ?, age unknown); frontend_event_signature_551e74e5bd2eca40 pass (exit ?, age unknown); frontend_event_signature_a7f746f057ea7969 pass (exit ?, age unknown); frontend_event_signature_3b15a4585c645518 pass (exit ?, age unknown); frontend_event_signature_f9d18a0bde72a1e9 pass (exit ?, age unknown); frontend_event_signature_6519358e05e107dc pass (exit ?, age unknown); frontend_event_signature_aed5bb04f983aaea pass (exit ?, age unknown); frontend_event_signature_8273b2a360af95f0 pass (exit ?, age unknown); frontend_event_signature_37a6db2b59f63e51 pass (exit ?, age unknown); frontend_event_signature_f6471223d54183eb pass (exit ?, age unknown); frontend_event_signature_6b477b21f58cfe66 pass (exit ?, age unknown); frontend_event_signature_08ac3c611a145c94 pass (exit ?, age unknown); frontend_event_signature_925ce33dae931e0b pass (exit ?, age unknown); frontend_event_signature_c927837cfa8d256e pass (exit ?, age unknown); frontend_event_signature_e1cc754f9f891a6d pass (exit ?, age unknown); frontend_event_signature_3720cf4e31f354ee pass (exit ?, age unknown); frontend_event_signature_46979d00c23e6599 pass (exit ?, age unknown); frontend_event_signature_abcf6a4a1c87315b pass (exit ?, age unknown); frontend_event_signature_acc366dcab5dd9aa pass (exit ?, age unknown); frontend_event_signature_725ac5635b4bd5ff pass (exit ?, age unknown); frontend_event_signature_a18b8fa106e94b89 pass (exit ?, age unknown); frontend_event_signature_ea85d14aa60b13ef pass (exit ?, age unknown); frontend_event_signature_a7a890054c988e28 pass (exit ?, age unknown); frontend_event_signature_a61d1d649bb8c042 pass (exit ?, age unknown); frontend_event_signature_da1eeac922dcfbda pass (exit ?, age unknown)</title>
 <rect class="tile-body" x="735.9" y="228.1" width="15.1" height="13.9" rx="4"/>
-<clipPath id="stm-c84"><rect x="735.91" y="228.12" width="15.10" height="13.92" rx="4"/></clipPath>
-<g clip-path="url(#stm-c84)"><rect class="tile-fill" x="735.91" y="228.12" width="15.10" height="13.92"/>
+<clipPath id="stm-c85"><rect x="735.91" y="228.12" width="15.10" height="13.92" rx="4"/></clipPath>
+<g clip-path="url(#stm-c85)"><rect class="tile-fill" x="735.91" y="228.12" width="15.10" height="13.92"/>
 </g>
 <rect class="tile-frame" x="735.9" y="228.1" width="15.1" height="13.9" rx="4"/>
 </g>
@@ -985,8 +986,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 4 checks pass in the evidence ledger: frontend_confirmation_description_runtime pass (exit 0, age unknown); frontend_confirmation_async_action_runtime missing; frontend_confirmation_presentation_runtime missing; frontend_confirmation_interaction_runtime missing</title>
 <rect class="tile-body" x="753.0" y="228.1" width="15.1" height="13.9" rx="4"/>
-<clipPath id="stm-c85"><rect x="753.02" y="228.12" width="15.10" height="13.92" rx="4"/></clipPath>
-<g clip-path="url(#stm-c85)"><rect class="tile-fill" x="753.02" y="238.56" width="15.10" height="3.48"/>
+<clipPath id="stm-c86"><rect x="753.02" y="228.12" width="15.10" height="13.92" rx="4"/></clipPath>
+<g clip-path="url(#stm-c86)"><rect class="tile-fill" x="753.02" y="238.56" width="15.10" height="3.48"/>
 <rect class="tile-edge" x="753.02" y="237.56" width="15.10" height="2"/>
 </g>
 <rect class="tile-frame" x="753.0" y="228.1" width="15.1" height="13.9" rx="4"/>
@@ -996,8 +997,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_context_source_stage pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="770.1" y="228.1" width="15.1" height="13.9" rx="4"/>
-<clipPath id="stm-c86"><rect x="770.12" y="228.12" width="15.10" height="13.92" rx="4"/></clipPath>
-<g clip-path="url(#stm-c86)"><rect class="tile-fill" x="770.12" y="228.12" width="15.10" height="13.92"/>
+<clipPath id="stm-c87"><rect x="770.12" y="228.12" width="15.10" height="13.92" rx="4"/></clipPath>
+<g clip-path="url(#stm-c87)"><rect class="tile-fill" x="770.12" y="228.12" width="15.10" height="13.92"/>
 </g>
 <rect class="tile-frame" x="770.1" y="228.1" width="15.1" height="13.9" rx="4"/>
 </g>
@@ -1006,8 +1007,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 5 of 5 checks pass in the evidence ledger: frontend_context_runtime_metadata pass (exit 0, age unknown); frontend_context_runtime_reflection pass (exit 0, age unknown); frontend_context_runtime_lookup pass (exit 0, age unknown); frontend_context_runtime_registry pass (exit 0, age unknown); frontend_context_runtime_lifecycle pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="735.9" y="244.0" width="17.2" height="12.1" rx="4"/>
-<clipPath id="stm-c87"><rect x="735.91" y="244.04" width="17.24" height="12.15" rx="4"/></clipPath>
-<g clip-path="url(#stm-c87)"><rect class="tile-fill" x="735.91" y="244.04" width="17.24" height="12.15"/>
+<clipPath id="stm-c88"><rect x="735.91" y="244.04" width="17.24" height="12.15" rx="4"/></clipPath>
+<g clip-path="url(#stm-c88)"><rect class="tile-fill" x="735.91" y="244.04" width="17.24" height="12.15"/>
 </g>
 <rect class="tile-frame" x="735.9" y="244.0" width="17.2" height="12.1" rx="4"/>
 </g>
@@ -1016,8 +1017,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_panel_base_source_stage pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="735.9" y="258.2" width="17.2" height="12.1" rx="4"/>
-<clipPath id="stm-c88"><rect x="735.91" y="258.18" width="17.24" height="12.15" rx="4"/></clipPath>
-<g clip-path="url(#stm-c88)"><rect class="tile-fill" x="735.91" y="258.18" width="17.24" height="12.15"/>
+<clipPath id="stm-c89"><rect x="735.91" y="258.18" width="17.24" height="12.15" rx="4"/></clipPath>
+<g clip-path="url(#stm-c89)"><rect class="tile-fill" x="735.91" y="258.18" width="17.24" height="12.15"/>
 </g>
 <rect class="tile-frame" x="735.9" y="258.2" width="17.2" height="12.1" rx="4"/>
 </g>
@@ -1026,8 +1027,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_input_source_stage pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="735.9" y="272.3" width="17.2" height="12.1" rx="4"/>
-<clipPath id="stm-c89"><rect x="735.91" y="272.33" width="17.24" height="12.15" rx="4"/></clipPath>
-<g clip-path="url(#stm-c89)"><rect class="tile-fill" x="735.91" y="272.33" width="17.24" height="12.15"/>
+<clipPath id="stm-c90"><rect x="735.91" y="272.33" width="17.24" height="12.15" rx="4"/></clipPath>
+<g clip-path="url(#stm-c90)"><rect class="tile-fill" x="735.91" y="272.33" width="17.24" height="12.15"/>
 </g>
 <rect class="tile-frame" x="735.9" y="272.3" width="17.2" height="12.1" rx="4"/>
 </g>
@@ -1036,8 +1037,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_foundation_button_defaults_query pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="755.2" y="244.0" width="14.0" height="15.0" rx="4"/>
-<clipPath id="stm-c90"><rect x="755.15" y="244.04" width="14.03" height="14.98" rx="4"/></clipPath>
-<g clip-path="url(#stm-c90)"><rect class="tile-fill" x="755.15" y="244.04" width="14.03" height="14.98"/>
+<clipPath id="stm-c91"><rect x="755.15" y="244.04" width="14.03" height="14.98" rx="4"/></clipPath>
+<g clip-path="url(#stm-c91)"><rect class="tile-fill" x="755.15" y="244.04" width="14.03" height="14.98"/>
 </g>
 <rect class="tile-frame" x="755.2" y="244.0" width="14.0" height="15.0" rx="4"/>
 </g>
@@ -1046,8 +1047,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 2 of 2 checks pass in the evidence ledger: frontend_foundation_input_action_row pass (exit 0, age unknown); frontend_foundation_current_input_type pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="771.2" y="244.0" width="14.0" height="15.0" rx="4"/>
-<clipPath id="stm-c91"><rect x="771.19" y="244.04" width="14.03" height="14.98" rx="4"/></clipPath>
-<g clip-path="url(#stm-c91)"><rect class="tile-fill" x="771.19" y="244.04" width="14.03" height="14.98"/>
+<clipPath id="stm-c92"><rect x="771.19" y="244.04" width="14.03" height="14.98" rx="4"/></clipPath>
+<g clip-path="url(#stm-c92)"><rect class="tile-fill" x="771.19" y="244.04" width="14.03" height="14.98"/>
 </g>
 <rect class="tile-frame" x="771.2" y="244.0" width="14.0" height="15.0" rx="4"/>
 </g>
@@ -1056,8 +1057,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_foundation_startup_selection pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="755.2" y="261.0" width="19.4" height="10.7" rx="4"/>
-<clipPath id="stm-c92"><rect x="755.15" y="261.01" width="19.38" height="10.73" rx="4"/></clipPath>
-<g clip-path="url(#stm-c92)"><rect class="tile-fill" x="755.15" y="261.01" width="19.38" height="10.73"/>
+<clipPath id="stm-c93"><rect x="755.15" y="261.01" width="19.38" height="10.73" rx="4"/></clipPath>
+<g clip-path="url(#stm-c93)"><rect class="tile-fill" x="755.15" y="261.01" width="19.38" height="10.73"/>
 </g>
 <rect class="tile-frame" x="755.2" y="261.0" width="19.4" height="10.7" rx="4"/>
 </g>
@@ -1066,8 +1067,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_commonui_binding_data_runtime pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="755.2" y="273.7" width="19.4" height="10.7" rx="4"/>
-<clipPath id="stm-c93"><rect x="755.15" y="273.75" width="19.38" height="10.73" rx="4"/></clipPath>
-<g clip-path="url(#stm-c93)"><rect class="tile-fill" x="755.15" y="273.75" width="19.38" height="10.73"/>
+<clipPath id="stm-c94"><rect x="755.15" y="273.75" width="19.38" height="10.73" rx="4"/></clipPath>
+<g clip-path="url(#stm-c94)"><rect class="tile-fill" x="755.15" y="273.75" width="19.38" height="10.73"/>
 </g>
 <rect class="tile-frame" x="755.2" y="273.7" width="19.4" height="10.7" rx="4"/>
 </g>
@@ -1076,8 +1077,8 @@ effort weight 1 | source: git
 effort weight 1 | source: git
 1 of 1 checks pass in the evidence ledger: frontend_commonui_button_click_runtime pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="776.5" y="261.0" width="8.7" height="23.5" rx="4"/>
-<clipPath id="stm-c94"><rect x="776.53" y="261.01" width="8.69" height="23.47" rx="4"/></clipPath>
-<g clip-path="url(#stm-c94)"><rect class="tile-fill" x="776.53" y="261.01" width="8.69" height="23.47"/>
+<clipPath id="stm-c95"><rect x="776.53" y="261.01" width="8.69" height="23.47" rx="4"/></clipPath>
+<g clip-path="url(#stm-c95)"><rect class="tile-fill" x="776.53" y="261.01" width="8.69" height="23.47"/>
 </g>
 <rect class="tile-frame" x="776.5" y="261.0" width="8.7" height="23.5" rx="4"/>
 </g>
@@ -1098,8 +1099,8 @@ effort weight 40 | source: git
 effort weight 30 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="910.5" y="39.0" width="84.5" height="87.3" rx="4"/>
-<clipPath id="stm-c96"><rect x="910.52" y="39.00" width="84.48" height="87.30" rx="4"/></clipPath>
-<g clip-path="url(#stm-c96)"><rect class="tile-fill" x="910.52" y="125.42" width="84.48" height="0.87"/>
+<clipPath id="stm-c97"><rect x="910.52" y="39.00" width="84.48" height="87.30" rx="4"/></clipPath>
+<g clip-path="url(#stm-c97)"><rect class="tile-fill" x="910.52" y="125.42" width="84.48" height="0.87"/>
 <rect class="tile-edge" x="910.52" y="124.42" width="84.48" height="2"/>
 </g>
 <text class="leaf-label" x="915.5" y="54.0" font-size="11">Replicated</text>
@@ -1114,8 +1115,8 @@ manual estimate (see rationale)</title>
 effort weight 20 | source: git
 3 of 3 checks pass in the evidence ledger: smoke_default pass (exit 0, age unknown); smoke_athena pass (exit 0, age unknown); net_version_checksum pass (exit 0, age unknown)</title>
 <rect class="tile-body" x="795.2" y="128.3" width="63.1" height="77.1" rx="4"/>
-<clipPath id="stm-c97"><rect x="795.22" y="128.30" width="63.09" height="77.09" rx="4"/></clipPath>
-<g clip-path="url(#stm-c97)"><rect class="tile-fill" x="795.22" y="128.30" width="63.09" height="77.09"/>
+<clipPath id="stm-c98"><rect x="795.22" y="128.30" width="63.09" height="77.09" rx="4"/></clipPath>
+<g clip-path="url(#stm-c98)"><rect class="tile-fill" x="795.22" y="128.30" width="63.09" height="77.09"/>
 </g>
 <text class="leaf-pct" x="800.2" y="144.3" font-size="12">100%</text>
 <rect class="tile-frame" x="795.2" y="128.3" width="63.1" height="77.1" rx="4"/>
@@ -1125,8 +1126,8 @@ effort weight 20 | source: git
 effort weight 20 | source: git
 4617 of 6957 (captured from porting/class_checksum_report.md; total 6957 from totals.json uht_classes_named)</title>
 <rect class="tile-body" x="795.2" y="207.4" width="63.1" height="77.1" rx="4"/>
-<clipPath id="stm-c98"><rect x="795.22" y="207.39" width="63.09" height="77.09" rx="4"/></clipPath>
-<g clip-path="url(#stm-c98)"><rect class="tile-fill" x="795.22" y="233.32" width="63.09" height="51.16"/>
+<clipPath id="stm-c99"><rect x="795.22" y="207.39" width="63.09" height="77.09" rx="4"/></clipPath>
+<g clip-path="url(#stm-c99)"><rect class="tile-fill" x="795.22" y="233.32" width="63.09" height="51.16"/>
 <rect class="tile-edge" x="795.22" y="232.32" width="63.09" height="2"/>
 </g>
 <text class="leaf-pct" x="800.2" y="223.4" font-size="12">66%</text>
@@ -1137,8 +1138,8 @@ effort weight 20 | source: git
 effort weight 12 | source: git
 ok AESHandlerComponent configured; ok Oodle disabled (credit 0.5: present in source, not exercised against the client)</title>
 <rect class="tile-body" x="860.3" y="128.3" width="43.6" height="65.8" rx="4"/>
-<clipPath id="stm-c99"><rect x="860.31" y="128.30" width="43.56" height="65.79" rx="4"/></clipPath>
-<g clip-path="url(#stm-c99)"><rect class="tile-fill" x="860.31" y="161.19" width="43.56" height="32.90"/>
+<clipPath id="stm-c100"><rect x="860.31" y="128.30" width="43.56" height="65.79" rx="4"/></clipPath>
+<g clip-path="url(#stm-c100)"><rect class="tile-fill" x="860.31" y="161.19" width="43.56" height="32.90"/>
 <rect class="tile-edge" x="860.31" y="160.19" width="43.56" height="2"/>
 </g>
 <text class="leaf-pct" x="865.3" y="144.3" font-size="12">50%</text>
@@ -1149,8 +1150,8 @@ ok AESHandlerComponent configured; ok Oodle disabled (credit 0.5: present in sou
 effort weight 12 | source: git
 ok OnReceivedNetworkEncryptionToken bound; ok Session key route answered by server (credit 0.5: present in source, not exercised against the client)</title>
 <rect class="tile-body" x="905.9" y="128.3" width="43.6" height="65.8" rx="4"/>
-<clipPath id="stm-c100"><rect x="905.87" y="128.30" width="43.56" height="65.79" rx="4"/></clipPath>
-<g clip-path="url(#stm-c100)"><rect class="tile-fill" x="905.87" y="161.19" width="43.56" height="32.90"/>
+<clipPath id="stm-c101"><rect x="905.87" y="128.30" width="43.56" height="65.79" rx="4"/></clipPath>
+<g clip-path="url(#stm-c101)"><rect class="tile-fill" x="905.87" y="161.19" width="43.56" height="32.90"/>
 <rect class="tile-edge" x="905.87" y="160.19" width="43.56" height="2"/>
 </g>
 <text class="leaf-pct" x="910.9" y="144.3" font-size="12">50%</text>
@@ -1177,8 +1178,8 @@ manual estimate (see rationale)</title>
 effort weight 10 | source: git
 ok Version override bound in native source; ok Version constant used by server (credit 0.5: present in source, not exercised against the client)</title>
 <rect class="tile-body" x="860.3" y="245.4" width="60.6" height="39.1" rx="4"/>
-<clipPath id="stm-c103"><rect x="860.31" y="245.40" width="60.65" height="39.09" rx="4"/></clipPath>
-<g clip-path="url(#stm-c103)"><rect class="tile-fill" x="860.31" y="264.94" width="60.65" height="19.54"/>
+<clipPath id="stm-c104"><rect x="860.31" y="245.40" width="60.65" height="39.09" rx="4"/></clipPath>
+<g clip-path="url(#stm-c104)"><rect class="tile-fill" x="860.31" y="264.94" width="60.65" height="19.54"/>
 <rect class="tile-edge" x="860.31" y="263.94" width="60.65" height="2"/>
 </g>
 <text class="leaf-pct" x="865.3" y="261.4" font-size="12">50%</text>
@@ -1196,8 +1197,8 @@ manual estimate (see rationale)</title>
 effort weight 8 | source: git
 ok Set in native config; missing Set in server code (credit 0.5: present in source, not exercised against the client)</title>
 <rect class="tile-body" x="964.1" y="196.1" width="30.9" height="60.6" rx="4"/>
-<clipPath id="stm-c105"><rect x="964.09" y="196.09" width="30.91" height="60.58" rx="4"/></clipPath>
-<g clip-path="url(#stm-c105)"><rect class="tile-fill" x="964.09" y="241.53" width="30.91" height="15.14"/>
+<clipPath id="stm-c106"><rect x="964.09" y="196.09" width="30.91" height="60.58" rx="4"/></clipPath>
+<g clip-path="url(#stm-c106)"><rect class="tile-fill" x="964.09" y="241.53" width="30.91" height="15.14"/>
 <rect class="tile-edge" x="964.09" y="240.53" width="30.91" height="2"/>
 </g>
 <rect class="tile-frame" x="964.1" y="196.1" width="30.9" height="60.6" rx="4"/>
@@ -1215,8 +1216,8 @@ manual estimate (see rationale)</title>
 effort weight 30 | source: documented
 2 of 3694 (documented; total 3694 from totals.json asset_registry_counts[World])</title>
 <rect class="tile-body" x="580.0" y="314.5" width="80.8" height="97.3" rx="4"/>
-<clipPath id="stm-c107"><rect x="580.04" y="314.48" width="80.82" height="97.32" rx="4"/></clipPath>
-<g clip-path="url(#stm-c107)"><rect class="tile-fill" x="580.04" y="411.75" width="80.82" height="0.05"/>
+<clipPath id="stm-c108"><rect x="580.04" y="314.48" width="80.82" height="97.32" rx="4"/></clipPath>
+<g clip-path="url(#stm-c108)"><rect class="tile-fill" x="580.04" y="411.75" width="80.82" height="0.05"/>
 <rect class="tile-edge" x="580.04" y="410.75" width="80.82" height="2"/>
 </g>
 <text class="leaf-label" x="585.0" y="328.5" font-size="10">Maps that</text>
@@ -1231,8 +1232,8 @@ effort weight 30 | source: documented
 effort weight 30 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="662.9" y="314.5" width="80.8" height="97.3" rx="4"/>
-<clipPath id="stm-c108"><rect x="662.86" y="314.48" width="80.82" height="97.32" rx="4"/></clipPath>
-<g clip-path="url(#stm-c108)"><rect class="tile-fill" x="662.86" y="410.83" width="80.82" height="0.97"/>
+<clipPath id="stm-c109"><rect x="662.86" y="314.48" width="80.82" height="97.32" rx="4"/></clipPath>
+<g clip-path="url(#stm-c109)"><rect class="tile-fill" x="662.86" y="410.83" width="80.82" height="0.97"/>
 <rect class="tile-edge" x="662.86" y="409.83" width="80.82" height="2"/>
 </g>
 <text class="leaf-label" x="667.9" y="329.5" font-size="11">POIs and</text>
@@ -1264,8 +1265,8 @@ effort weight 28 | source: documented
 effort weight 20 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="580.0" y="508.6" width="83.4" height="62.2" rx="4"/>
-<clipPath id="stm-c111"><rect x="580.04" y="508.57" width="83.38" height="62.23" rx="4"/></clipPath>
-<g clip-path="url(#stm-c111)"><rect class="tile-fill" x="580.04" y="558.36" width="83.38" height="12.45"/>
+<clipPath id="stm-c112"><rect x="580.04" y="508.57" width="83.38" height="62.23" rx="4"/></clipPath>
+<g clip-path="url(#stm-c112)"><rect class="tile-fill" x="580.04" y="558.36" width="83.38" height="12.45"/>
 <rect class="tile-edge" x="580.04" y="557.36" width="83.38" height="2"/>
 </g>
 <text class="leaf-label" x="585.0" y="523.6" font-size="11">Sky,</text>
@@ -1287,8 +1288,8 @@ manual estimate (see rationale)</title>
 effort weight 15.75 | source: local
 61 of 61 (local output apollo-landscape-grid.json; )</title>
 <rect class="tile-body" x="665.4" y="508.6" width="78.3" height="51.8" rx="4"/>
-<clipPath id="stm-c113"><rect x="665.42" y="508.57" width="78.26" height="51.81" rx="4"/></clipPath>
-<g clip-path="url(#stm-c113)"><rect class="tile-fill" x="665.42" y="508.57" width="78.26" height="51.81"/>
+<clipPath id="stm-c114"><rect x="665.42" y="508.57" width="78.26" height="51.81" rx="4"/></clipPath>
+<g clip-path="url(#stm-c114)"><rect class="tile-fill" x="665.42" y="508.57" width="78.26" height="51.81"/>
 </g>
 <path class="unit-done" transform="translate(668.42 530.40)" d="M0.5 0.5h4v4h-4zM5.5 0.5h4v4h-4zM10.5 0.5h4v4h-4zM15.5 0.5h4v4h-4zM20.5 0.5h4v4h-4zM25.5 0.5h4v4h-4zM30.5 0.5h4v4h-4zM35.5 0.5h4v4h-4zM40.5 0.5h4v4h-4zM45.5 0.5h4v4h-4zM50.5 0.5h4v4h-4zM55.5 0.5h4v4h-4zM60.5 0.5h4v4h-4zM65.5 0.5h4v4h-4zM0.5 5.5h4v4h-4zM5.5 5.5h4v4h-4zM10.5 5.5h4v4h-4zM15.5 5.5h4v4h-4zM20.5 5.5h4v4h-4zM25.5 5.5h4v4h-4zM30.5 5.5h4v4h-4zM35.5 5.5h4v4h-4zM40.5 5.5h4v4h-4zM45.5 5.5h4v4h-4zM50.5 5.5h4v4h-4zM55.5 5.5h4v4h-4zM60.5 5.5h4v4h-4zM65.5 5.5h4v4h-4zM0.5 10.5h4v4h-4zM5.5 10.5h4v4h-4zM10.5 10.5h4v4h-4zM15.5 10.5h4v4h-4zM20.5 10.5h4v4h-4zM25.5 10.5h4v4h-4zM30.5 10.5h4v4h-4zM35.5 10.5h4v4h-4zM40.5 10.5h4v4h-4zM45.5 10.5h4v4h-4zM50.5 10.5h4v4h-4zM55.5 10.5h4v4h-4zM60.5 10.5h4v4h-4zM65.5 10.5h4v4h-4zM0.5 15.5h4v4h-4zM5.5 15.5h4v4h-4zM10.5 15.5h4v4h-4zM15.5 15.5h4v4h-4zM20.5 15.5h4v4h-4zM25.5 15.5h4v4h-4zM30.5 15.5h4v4h-4zM35.5 15.5h4v4h-4zM40.5 15.5h4v4h-4zM45.5 15.5h4v4h-4zM50.5 15.5h4v4h-4zM55.5 15.5h4v4h-4zM60.5 15.5h4v4h-4zM65.5 15.5h4v4h-4zM0.5 20.5h4v4h-4zM5.5 20.5h4v4h-4zM10.5 20.5h4v4h-4zM15.5 20.5h4v4h-4zM20.5 20.5h4v4h-4z"/>
 <text class="leaf-pct" x="670.4" y="524.6" font-size="12">100%</text>
@@ -1307,8 +1308,8 @@ manual estimate (see rationale)</title>
 effort weight 7.5 | source: local
 27 of 32 (local output apollo-background-placements.json; )</title>
 <rect class="tile-body" x="714.8" y="562.4" width="28.9" height="64.6" rx="4"/>
-<clipPath id="stm-c115"><rect x="714.81" y="562.38" width="28.87" height="64.62" rx="4"/></clipPath>
-<g clip-path="url(#stm-c115)"><rect class="tile-fill" x="714.81" y="572.48" width="28.87" height="54.52"/>
+<clipPath id="stm-c116"><rect x="714.81" y="562.38" width="28.87" height="64.62" rx="4"/></clipPath>
+<g clip-path="url(#stm-c116)"><rect class="tile-fill" x="714.81" y="572.48" width="28.87" height="54.52"/>
 <rect class="tile-edge" x="714.81" y="571.48" width="28.87" height="2"/>
 </g>
 <path class="unit-done" transform="translate(717.81 562.38)" d="M0.5 0.5h4v4h-4zM5.5 0.5h4v4h-4zM10.5 0.5h4v4h-4zM15.5 0.5h4v4h-4zM0.5 5.5h4v4h-4zM5.5 5.5h4v4h-4zM10.5 5.5h4v4h-4zM15.5 5.5h4v4h-4zM0.5 10.5h4v4h-4zM5.5 10.5h4v4h-4zM10.5 10.5h4v4h-4zM15.5 10.5h4v4h-4zM0.5 15.5h4v4h-4zM5.5 15.5h4v4h-4zM10.5 15.5h4v4h-4zM15.5 15.5h4v4h-4zM0.5 20.5h4v4h-4zM5.5 20.5h4v4h-4zM10.5 20.5h4v4h-4zM15.5 20.5h4v4h-4zM0.5 25.5h4v4h-4zM5.5 25.5h4v4h-4zM10.5 25.5h4v4h-4zM15.5 25.5h4v4h-4zM0.5 30.5h4v4h-4zM5.5 30.5h4v4h-4zM10.5 30.5h4v4h-4z"/>
@@ -1328,8 +1329,8 @@ effort weight 25 | source: git
 effort weight 20 | source: git+local
 ok Linux game target tracked; ok Linux server target tracked; ok Linux binaries built (local); ok Linux stage present (local)</title>
 <rect class="tile-body" x="819.0" y="314.5" width="50.3" height="97.5" rx="4"/>
-<clipPath id="stm-c117"><rect x="819.05" y="314.48" width="50.29" height="97.50" rx="4"/></clipPath>
-<g clip-path="url(#stm-c117)"><rect class="tile-fill" x="819.05" y="314.48" width="50.29" height="97.50"/>
+<clipPath id="stm-c118"><rect x="819.05" y="314.48" width="50.29" height="97.50" rx="4"/></clipPath>
+<g clip-path="url(#stm-c118)"><rect class="tile-fill" x="819.05" y="314.48" width="50.29" height="97.50"/>
 </g>
 <text class="leaf-pct" x="824.0" y="330.5" font-size="12">100%</text>
 <rect class="tile-frame" x="819.0" y="314.5" width="50.3" height="97.5" rx="4"/>
@@ -1339,8 +1340,8 @@ ok Linux game target tracked; ok Linux server target tracked; ok Linux binaries 
 effort weight 20 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="753.7" y="414.0" width="76.4" height="64.3" rx="4"/>
-<clipPath id="stm-c118"><rect x="753.68" y="413.98" width="76.44" height="64.33" rx="4"/></clipPath>
-<g clip-path="url(#stm-c118)"><rect class="tile-fill" x="753.68" y="459.01" width="76.44" height="19.30"/>
+<clipPath id="stm-c119"><rect x="753.68" y="413.98" width="76.44" height="64.33" rx="4"/></clipPath>
+<g clip-path="url(#stm-c119)"><rect class="tile-fill" x="753.68" y="459.01" width="76.44" height="19.30"/>
 <rect class="tile-edge" x="753.68" y="458.01" width="76.44" height="2"/>
 </g>
 <text class="leaf-pct" x="758.7" y="430.0" font-size="12">30%</text>
@@ -1407,23 +1408,23 @@ manual estimate (see rationale)</title>
 effort weight 20 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="879.3" y="411.3" width="56.8" height="80.8" rx="4"/>
-<clipPath id="stm-c126"><rect x="879.34" y="411.32" width="56.83" height="80.84" rx="4"/></clipPath>
-<g clip-path="url(#stm-c126)"><rect class="tile-fill" x="879.34" y="484.08" width="56.83" height="8.08"/>
+<clipPath id="stm-c127"><rect x="879.34" y="411.32" width="56.83" height="80.84" rx="4"/></clipPath>
+<g clip-path="url(#stm-c127)"><rect class="tile-fill" x="879.34" y="484.08" width="56.83" height="8.08"/>
 <rect class="tile-edge" x="879.34" y="483.08" width="56.83" height="2"/>
 </g>
 <text class="leaf-pct" x="884.3" y="427.3" font-size="12">10%</text>
 <rect class="tile-frame" x="879.3" y="411.3" width="56.8" height="80.8" rx="4"/>
 </g>
 <g><title>Niagara package conversion (name coverage)
-0.6% complete (1/173)
+74.0% complete (128/173)
 effort weight 20 | source: local
-1 local Niagara packages (NS_, distinct names) of 173 (total 173 from totals.json cooked_name_prefix_counts[niagara]); ignored outputs under porting/generated or native/Content</title>
+128 local Niagara packages (NS_, distinct names) of 173 (total 173 from totals.json cooked_name_prefix_counts[niagara]); ignored outputs under porting/generated or native/Content</title>
 <rect class="tile-body" x="938.2" y="411.3" width="56.8" height="80.8" rx="4"/>
-<clipPath id="stm-c127"><rect x="938.17" y="411.32" width="56.83" height="80.84" rx="4"/></clipPath>
-<g clip-path="url(#stm-c127)"><rect class="tile-fill" x="938.17" y="491.70" width="56.83" height="0.47"/>
-<rect class="tile-edge" x="938.17" y="490.70" width="56.83" height="2"/>
+<clipPath id="stm-c128"><rect x="938.17" y="411.32" width="56.83" height="80.84" rx="4"/></clipPath>
+<g clip-path="url(#stm-c128)"><rect class="tile-fill" x="938.17" y="432.35" width="56.83" height="59.81"/>
+<rect class="tile-edge" x="938.17" y="431.35" width="56.83" height="2"/>
 </g>
-<text class="leaf-pct" x="943.2" y="427.3" font-size="12">0.6%</text>
+<text class="leaf-pct" x="943.2" y="427.3" font-size="12">74%</text>
 <rect class="tile-frame" x="938.2" y="411.3" width="56.8" height="80.8" rx="4"/>
 </g>
 <g><title>Post-process and renderer settings parity
@@ -1431,8 +1432,8 @@ effort weight 20 | source: local
 effort weight 12 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="879.3" y="494.2" width="68.6" height="39.4" rx="4"/>
-<clipPath id="stm-c128"><rect x="879.34" y="494.17" width="68.60" height="39.42" rx="4"/></clipPath>
-<g clip-path="url(#stm-c128)"><rect class="tile-fill" x="879.34" y="532.40" width="68.60" height="1.18"/>
+<clipPath id="stm-c129"><rect x="879.34" y="494.17" width="68.60" height="39.42" rx="4"/></clipPath>
+<g clip-path="url(#stm-c129)"><rect class="tile-fill" x="879.34" y="532.40" width="68.60" height="1.18"/>
 <rect class="tile-edge" x="879.34" y="531.40" width="68.60" height="2"/>
 </g>
 <text class="leaf-pct" x="884.3" y="510.2" font-size="12">3.0%</text>
@@ -1451,8 +1452,8 @@ manual estimate (see rationale)</title>
 effort weight 25 | source: manual
 manual estimate (see rationale)</title>
 <rect class="tile-body" x="753.7" y="563.6" width="79.1" height="63.4" rx="4"/>
-<clipPath id="stm-c130"><rect x="753.68" y="563.59" width="79.11" height="63.41" rx="4"/></clipPath>
-<g clip-path="url(#stm-c130)"><rect class="tile-fill" x="753.68" y="625.73" width="79.11" height="1.27"/>
+<clipPath id="stm-c131"><rect x="753.68" y="563.59" width="79.11" height="63.41" rx="4"/></clipPath>
+<g clip-path="url(#stm-c131)"><rect class="tile-fill" x="753.68" y="625.73" width="79.11" height="1.27"/>
 <rect class="tile-edge" x="753.68" y="624.73" width="79.11" height="2"/>
 </g>
 <text class="leaf-pct" x="758.7" y="579.6" font-size="12">2.0%</text>
@@ -1467,15 +1468,15 @@ manual estimate (see rationale)</title>
 <rect class="tile-frame" x="834.8" y="563.6" width="62.9" height="63.4" rx="4"/>
 </g>
 <g><title>Sound classes and mixes load
-0.3% complete (1/317)
-effort weight 15 | source: documented
-1 of 317 (documented; total 317 from totals.json sound_class_mix_packages)</title>
+99.7% complete (316/317)
+effort weight 15 | source: local
+316 local verified-loadable sound class and mix packages of 317 (total 317 from totals.json sound_class_mix_packages); ignored outputs under porting/generated or native/Content</title>
 <rect class="tile-body" x="899.7" y="563.6" width="46.7" height="63.4" rx="4"/>
-<clipPath id="stm-c132"><rect x="899.67" y="563.59" width="46.66" height="63.41" rx="4"/></clipPath>
-<g clip-path="url(#stm-c132)"><rect class="tile-fill" x="899.67" y="626.80" width="46.66" height="0.20"/>
-<rect class="tile-edge" x="899.67" y="625.80" width="46.66" height="2"/>
+<clipPath id="stm-c133"><rect x="899.67" y="563.59" width="46.66" height="63.41" rx="4"/></clipPath>
+<g clip-path="url(#stm-c133)"><rect class="tile-fill" x="899.67" y="563.79" width="46.66" height="63.21"/>
+<rect class="tile-edge" x="899.67" y="562.79" width="46.66" height="2"/>
 </g>
-<text class="leaf-pct" x="904.7" y="579.6" font-size="12">0.3%</text>
+<text class="leaf-pct" x="904.7" y="578.6" font-size="11">100%</text>
 <rect class="tile-frame" x="899.7" y="563.6" width="46.7" height="63.4" rx="4"/>
 </g>
 <g><title>Voice chat
@@ -1483,8 +1484,8 @@ effort weight 15 | source: documented
 effort weight 10 | source: git
 2 of 2 client route templates have their literal path in committed server code (stub credit 0.5); templates from the static client scan</title>
 <rect class="tile-body" x="948.3" y="563.6" width="46.7" height="41.6" rx="4"/>
-<clipPath id="stm-c133"><rect x="948.34" y="563.59" width="46.66" height="41.61" rx="4"/></clipPath>
-<g clip-path="url(#stm-c133)"><rect class="tile-fill" x="948.34" y="584.39" width="46.66" height="20.80"/>
+<clipPath id="stm-c134"><rect x="948.34" y="563.59" width="46.66" height="41.61" rx="4"/></clipPath>
+<g clip-path="url(#stm-c134)"><rect class="tile-fill" x="948.34" y="584.39" width="46.66" height="20.80"/>
 <rect class="tile-edge" x="948.34" y="583.39" width="46.66" height="2"/>
 </g>
 <text class="leaf-pct" x="953.3" y="579.6" font-size="12">50%</text>

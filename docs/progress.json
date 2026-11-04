@@ -1,21 +1,21 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "dfea57488bfde967358c6757e501e50f4f6d9001",
- "subject": "Recover dual weapon hand getters and forced cosmetic reset event",
- "date": "2026-11-03T17:54:30-05:00",
- "overall_pct": 26.24,
- "measured_pct": 25.37,
- "objective_pct": 25.366,
+ "head": "0a78857bce54db548336e7301f3406f3aa104e8d",
+ "subject": "Niagara: 128/173 systems load with legacy static mesh layout and plugin mounts",
+ "date": "2026-11-03T19:43:18-05:00",
+ "overall_pct": 28.216,
+ "measured_pct": 27.346,
+ "objective_pct": 27.345,
  "weight_by_basis": {
-  "documented": 5.102,
+  "documented": 4.359,
   "git": 26.449,
   "git+local": 2.204,
-  "local": 10.215,
-  "manual": 56.03
+  "local": 11.454,
+  "manual": 55.535
  },
  "estimated_pct": 0.87,
- "manual_weight_pct": 56.03,
- "manual_full_pct": 81.4,
+ "manual_weight_pct": 55.535,
+ "manual_full_pct": 82.881,
  "milestones": [
   {
    "id": "m1",
@@ -185,7 +185,7 @@
    "name": "Asset pipeline",
    "kind": "group",
    "weight": 273.0,
-   "pct": 62.174,
+   "pct": 65.837,
    "children": [
     {
      "id": "assets.pak_index",
@@ -384,17 +384,31 @@
      "evidence_links": []
     },
     {
+     "id": "assets.animation_sequences",
+     "name": "AnimSequence package conversion",
+     "kind": "leaf",
+     "weight": 10.0,
+     "pct": 100.0,
+     "done": 9514,
+     "total": 9514,
+     "evidence": "9514 local AnimSequence packages converted to UEFormat .ueanim of 9514 (total 9514 from totals.json animation_sequence_packages); ignored outputs under porting/generated or native/Content",
+     "basis": "local",
+     "carried": false,
+     "rationale": "EFF-018 split: carved 10 of the former 40-weight animation leaf (group weight unchanged). Counted: .ueanim files under generated/asset_pipeline_anim/anim written by export_anims.py (bulk Cue4Inspect --export-anim, UEFORMAT/UEANIM header checked; one file per package). Denominator: packages whose export table includes an AnimSequence export (Cue4Inspect --scan-export-classes; totals.json animation_sequence_packages via porting/asset_pipeline/animation_inventory.json). Offline decode/conversion coverage only: no UE import, retargeting, compression parity or runtime playback is established. Coarse estimate 10 (review range 5\u201315, low confidence).",
+     "evidence_links": []
+    },
+    {
      "id": "assets.animation_cosmetics",
      "name": "Animation graphs, emotes and character assembly",
      "kind": "leaf",
-     "weight": 40.0,
+     "weight": 30.0,
      "pct": 0.0,
      "done": null,
      "total": null,
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "EFF-018: required by the full original-feature parity goal. Animation sequences, skeleton/retarget integration, montages/notifies, animation Blueprints, emotes and modular character/cosmetic assembly. Skeletal mesh package conversion remains in skeletal_anim; menu navigation remains in frontend_lobby; shared native body recovery is separate. Coarse total-effort estimate 40 (review range 25\u201360, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts.",
+     "rationale": "EFF-018: required by the full original-feature parity goal. Skeleton/retarget integration of animation sequences, montages/notifies, animation Blueprints, emotes and modular character/cosmetic assembly. Skeletal mesh package conversion remains in skeletal_anim; menu navigation remains in frontend_lobby; shared native body recovery is separate. Coarse total-effort estimate 30 after carving 10 for offline AnimSequence conversion into assets.animation_sequences (combined review range 25\u201360, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts.",
      "evidence_links": []
     }
    ]
@@ -539,7 +553,7 @@
    "name": "Gameplay classes (/Script/FortniteGame)",
    "kind": "group",
    "weight": 673.0,
-   "pct": 15.088,
+   "pct": 15.134,
    "children": [
     {
      "id": "gameplay.framework",
@@ -924,10 +938,10 @@
      "name": "Native function bodies ported (behaviour)",
      "kind": "leaf",
      "weight": 150.0,
-     "pct": 16.01,
-     "done": 3294,
+     "pct": 16.22,
+     "done": 3337,
      "total": 20574,
-     "evidence": "3294 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
+     "evidence": "3337 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
      "basis": "git",
      "carried": false,
      "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported' excluding supporting member_field declarations, with a committed inc_path; counted directly from MANIFEST.json independently of the last build/test checkpoint), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort. EFF-008: manifest-indexed body recovery/transcription across modules only. The manifest is not an inventory of all maintained generator-policy bodies; absence there does not mean source is absent. Feature leaves own additional assembly/integration/runtime verification. A 12-case purposive sample supports this boundary, not a numeric effort extrapolation.",
@@ -1406,20 +1420,20 @@
    "name": "Audio",
    "kind": "group",
    "weight": 75.0,
-   "pct": 7.396,
+   "pct": 27.27,
    "children": [
     {
      "id": "audio.sound_classes",
      "name": "Sound classes and mixes load",
      "kind": "leaf",
      "weight": 15.0,
-     "pct": 0.315,
-     "done": 1,
+     "pct": 99.685,
+     "done": 316,
      "total": 317,
-     "evidence": "1 of 317 (documented; total 317 from totals.json sound_class_mix_packages)",
-     "basis": "documented",
+     "evidence": "316 local verified-loadable sound class and mix packages of 317 (total 317 from totals.json sound_class_mix_packages); ignored outputs under porting/generated or native/Content",
+     "basis": "local",
      "carried": false,
-     "rationale": "Only Master.Master is logged as loaded (typed count, documented, asset_compatibility.md). The denominator is the 317 cooked sound class and mix package paths (totals.json, path heuristic). The documented 306 packages in FortSoundClassesAndModes and SoundClasses are a subset of that set; mixes beyond that have not been checked.",
+     "rationale": "Counts packages verified to load in the UE 4.25 Linux runtime: each of the 317 cooked SoundClass/SoundMix packages was probed headless (-nullrhi, -FortniteProbeAsset) in a copy of the staged build with its hard /Game import closure; only packages logged as SoundClass or SoundMix with no error lines are copied to porting/generated/converted (ignored). 316 of 317 load; DefaultAppActivationSoundMixManager is a Blueprint whose native parent /Script/FortniteGame.FortAppActivationSoundMixManager is absent. Load means package and object deserialization only (no audio playback, -nosound). The name filter lists the verified package names; rerun porting/asset_pipeline/sound_probe.py and see porting/sound_class_load_probe.md. Local-only value: needs the ignored generated dir.",
      "evidence_links": []
     },
     {
@@ -1485,7 +1499,7 @@
    "name": "Visuals parity",
    "kind": "group",
    "weight": 100.0,
-   "pct": 2.476,
+   "pct": 17.158,
    "children": [
     {
      "id": "visuals.lighting",
@@ -1534,13 +1548,13 @@
      "name": "Niagara package conversion (name coverage)",
      "kind": "leaf",
      "weight": 20.0,
-     "pct": 0.578,
-     "done": 1,
+     "pct": 73.988,
+     "done": 128,
      "total": 173,
-     "evidence": "1 local Niagara packages (NS_, distinct names) of 173 (total 173 from totals.json cooked_name_prefix_counts[niagara]); ignored outputs under porting/generated or native/Content",
+     "evidence": "128 local Niagara packages (NS_, distinct names) of 173 (total 173 from totals.json cooked_name_prefix_counts[niagara]); ignored outputs under porting/generated or native/Content",
      "basis": "local",
      "carried": false,
-     "rationale": "Counted: NS_ Niagara packages converted in native/Content or generated/converted (none). Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. No Niagara or particle asset has loaded. Conversion/name coverage only: animation/cosmetic behavior and world particle runtime are separately allocated; package presence does not establish those features.",
+     "rationale": "Counted: NS_ Niagara packages in native/Content or generated/converted. generated/converted holds only systems verified to load as NiagaraSystem by niagara_probe.py in a rebuilt client with the probe-only switches -FortniteSkipUnconvertedLegacyShaderMaps and -FortniteLegacyStaticMeshLayout (porting/niagara_load_probe.md); their materials have no shader map and would render with the default material, so this is load coverage, not render parity. Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. Conversion/name coverage only: animation/cosmetic behavior and world particle runtime are separately allocated; package presence does not establish those features.",
      "evidence_links": []
     },
     {
@@ -2400,17 +2414,31 @@
    "evidence_links": []
   },
   {
+   "id": "assets.animation_sequences",
+   "name": "AnimSequence package conversion",
+   "kind": "leaf",
+   "weight": 10.0,
+   "pct": 100.0,
+   "done": 9514,
+   "total": 9514,
+   "evidence": "9514 local AnimSequence packages converted to UEFormat .ueanim of 9514 (total 9514 from totals.json animation_sequence_packages); ignored outputs under porting/generated or native/Content",
+   "basis": "local",
+   "carried": false,
+   "rationale": "EFF-018 split: carved 10 of the former 40-weight animation leaf (group weight unchanged). Counted: .ueanim files under generated/asset_pipeline_anim/anim written by export_anims.py (bulk Cue4Inspect --export-anim, UEFORMAT/UEANIM header checked; one file per package). Denominator: packages whose export table includes an AnimSequence export (Cue4Inspect --scan-export-classes; totals.json animation_sequence_packages via porting/asset_pipeline/animation_inventory.json). Offline decode/conversion coverage only: no UE import, retargeting, compression parity or runtime playback is established. Coarse estimate 10 (review range 5\u201315, low confidence).",
+   "evidence_links": []
+  },
+  {
    "id": "assets.animation_cosmetics",
    "name": "Animation graphs, emotes and character assembly",
    "kind": "leaf",
-   "weight": 40.0,
+   "weight": 30.0,
    "pct": 0.0,
    "done": null,
    "total": null,
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "EFF-018: required by the full original-feature parity goal. Animation sequences, skeleton/retarget integration, montages/notifies, animation Blueprints, emotes and modular character/cosmetic assembly. Skeletal mesh package conversion remains in skeletal_anim; menu navigation remains in frontend_lobby; shared native body recovery is separate. Coarse total-effort estimate 40 (review range 25\u201360, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts.",
+   "rationale": "EFF-018: required by the full original-feature parity goal. Skeleton/retarget integration of animation sequences, montages/notifies, animation Blueprints, emotes and modular character/cosmetic assembly. Skeletal mesh package conversion remains in skeletal_anim; menu navigation remains in frontend_lobby; shared native body recovery is separate. Coarse total-effort estimate 30 after carving 10 for offline AnimSequence conversion into assets.animation_sequences (combined review range 25\u201360, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts.",
    "evidence_links": []
   },
   {
@@ -2922,10 +2950,10 @@
    "name": "Native function bodies ported (behaviour)",
    "kind": "leaf",
    "weight": 150.0,
-   "pct": 16.01,
-   "done": 3294,
+   "pct": 16.22,
+   "done": 3337,
    "total": 20574,
-   "evidence": "3294 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
+   "evidence": "3337 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
    "basis": "git",
    "carried": false,
    "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported' excluding supporting member_field declarations, with a committed inc_path; counted directly from MANIFEST.json independently of the last build/test checkpoint), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort. EFF-008: manifest-indexed body recovery/transcription across modules only. The manifest is not an inventory of all maintained generator-policy bodies; absence there does not mean source is absent. Feature leaves own additional assembly/integration/runtime verification. A 12-case purposive sample supports this boundary, not a numeric effort extrapolation.",
@@ -3384,13 +3412,13 @@
    "name": "Sound classes and mixes load",
    "kind": "leaf",
    "weight": 15.0,
-   "pct": 0.315,
-   "done": 1,
+   "pct": 99.685,
+   "done": 316,
    "total": 317,
-   "evidence": "1 of 317 (documented; total 317 from totals.json sound_class_mix_packages)",
-   "basis": "documented",
+   "evidence": "316 local verified-loadable sound class and mix packages of 317 (total 317 from totals.json sound_class_mix_packages); ignored outputs under porting/generated or native/Content",
+   "basis": "local",
    "carried": false,
-   "rationale": "Only Master.Master is logged as loaded (typed count, documented, asset_compatibility.md). The denominator is the 317 cooked sound class and mix package paths (totals.json, path heuristic). The documented 306 packages in FortSoundClassesAndModes and SoundClasses are a subset of that set; mixes beyond that have not been checked.",
+   "rationale": "Counts packages verified to load in the UE 4.25 Linux runtime: each of the 317 cooked SoundClass/SoundMix packages was probed headless (-nullrhi, -FortniteProbeAsset) in a copy of the staged build with its hard /Game import closure; only packages logged as SoundClass or SoundMix with no error lines are copied to porting/generated/converted (ignored). 316 of 317 load; DefaultAppActivationSoundMixManager is a Blueprint whose native parent /Script/FortniteGame.FortAppActivationSoundMixManager is absent. Load means package and object deserialization only (no audio playback, -nosound). The name filter lists the verified package names; rerun porting/asset_pipeline/sound_probe.py and see porting/sound_class_load_probe.md. Local-only value: needs the ignored generated dir.",
    "evidence_links": []
   },
   {
@@ -3496,13 +3524,13 @@
    "name": "Niagara package conversion (name coverage)",
    "kind": "leaf",
    "weight": 20.0,
-   "pct": 0.578,
-   "done": 1,
+   "pct": 73.988,
+   "done": 128,
    "total": 173,
-   "evidence": "1 local Niagara packages (NS_, distinct names) of 173 (total 173 from totals.json cooked_name_prefix_counts[niagara]); ignored outputs under porting/generated or native/Content",
+   "evidence": "128 local Niagara packages (NS_, distinct names) of 173 (total 173 from totals.json cooked_name_prefix_counts[niagara]); ignored outputs under porting/generated or native/Content",
    "basis": "local",
    "carried": false,
-   "rationale": "Counted: NS_ Niagara packages converted in native/Content or generated/converted (none). Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. No Niagara or particle asset has loaded. Conversion/name coverage only: animation/cosmetic behavior and world particle runtime are separately allocated; package presence does not establish those features.",
+   "rationale": "Counted: NS_ Niagara packages in native/Content or generated/converted. generated/converted holds only systems verified to load as NiagaraSystem by niagara_probe.py in a rebuilt client with the probe-only switches -FortniteSkipUnconvertedLegacyShaderMaps and -FortniteLegacyStaticMeshLayout (porting/niagara_load_probe.md); their materials have no shader map and would render with the default material, so this is load coverage, not render parity. Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. Conversion/name coverage only: animation/cosmetic behavior and world particle runtime are separately allocated; package presence does not establish those features.",
    "evidence_links": []
   },
   {
