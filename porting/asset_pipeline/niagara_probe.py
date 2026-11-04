@@ -129,7 +129,9 @@ def run_probe(work, pkg, timeout):
 
 
 # Per-launch messages unrelated to the probed asset: the stage lacks the Water plugin content.
-BENIGN = ("CDO Constructor (WaterSubsystem)", "GameUserSettings.ini", "/Water/", "/Water.")
+BENIGN = ("CDO Constructor (WaterSubsystem)", "GameUserSettings.ini", "/Water/", "/Water.",
+          # Windows-named cooked nav collision format is not found; the engine returns no nav data and continues.
+          "Attempt to build nav collision data")
 
 
 def classify(pkg, log, rc):

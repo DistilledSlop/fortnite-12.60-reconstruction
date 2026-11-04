@@ -1417,7 +1417,7 @@
             "total_sub": "niagara",
             "what": "Niagara packages (NS_, distinct names)"
           },
-          "rationale": "Counted: NS_ Niagara packages converted in native/Content or generated/converted (none). Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. No Niagara or particle asset has loaded. Conversion/name coverage only: animation/cosmetic behavior and world particle runtime are separately allocated; package presence does not establish those features."
+          "rationale": "Counted: NS_ Niagara packages in native/Content or generated/converted. generated/converted holds only systems verified to load as NiagaraSystem by niagara_probe.py in a rebuilt client with the probe-only switches -FortniteSkipUnconvertedLegacyShaderMaps and -FortniteLegacyStaticMeshLayout (porting/niagara_load_probe.md); their materials have no shader map and would render with the default material, so this is load coverage, not render parity. Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. Conversion/name coverage only: animation/cosmetic behavior and world particle runtime are separately allocated; package presence does not establish those features."
         },
         {
           "id": "visuals.world_materials_particles",

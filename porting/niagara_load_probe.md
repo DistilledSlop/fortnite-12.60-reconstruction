@@ -91,3 +91,20 @@ rebuilt `FortniteLinux` binary and `Engine/Binaries/ThirdParty/CEF3/Linux`):
 
 Water-plugin CDO messages (`/Water/...` missing in the stage) appear in every launch and are
 ignored by the classifier. Only systems that load are copied to `generated/converted`.
+
+## Update: legacy static mesh layout and plugin mounts (2026-11-03)
+
+Second probe-only engine switch, `-FortniteLegacyStaticMeshLayout`
+(`patches/ue425-legacy-static-mesh-layout.patch`): on load it skips `bForceOpaque` in mesh
+sections, `bShouldExpandTo32Bit` in index buffers and the ray tracing geometry array, the three
+fields the 12.60 cook does not write (same finding as `patches/cue4parse-fortnite-12.60-static-mesh.patch`).
+It is not applied to `/Engine/`, `/Niagara/`, `/Paper2D/` or `/Water/` packages, which are cooked
+by this engine. The stage also mounts `Hoagie`, `PapayaGameplay` and `NiagaraFN` as content-only
+plugins (a `.uplugin` with `CanContainContent` and `EnabledByDefault`, no code modules).
+The classifier ignores `Attempt to build nav collision data`: the Windows-named cooked nav format is
+not found, the engine returns no nav data and continues.
+
+Result: **128 of 173** systems load as `NiagaraSystem` (was 1, then 51). Remaining 45 failures:
+21 handled ensures, 17 "Corrupt data found" dialogs and 7 `SerializeNum >= 0` assertions, not yet
+classified (likely further Windows-cooked layout differences in referenced assets). Loaded here
+means deserialized with no error lines; materials have no shader map and nothing was rendered.
