@@ -10,6 +10,7 @@
 #include "FFortWindImpulseCylinderDelta.h"
 #include "FFortWindImpulseRadius.h"
 #include "FFortWindResponder.h"
+#include "Math/Vector.h"
 
 class ABuildingSMActor;
 class UAudioComponent;
@@ -123,5 +124,18 @@ public:
 	UPROPERTY(Transient)
 	TArray<UAudioComponent*> WindAudioComponentPool;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x420): not a UPROPERTY, not replicated.
+	float NativeWindIntensity_0x420 = 0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x424): not a UPROPERTY, not replicated.
+	FVector NativeWindDirection_0x424 = FVector(0.7071067094802856f, 0.7071067690849304f, 0.0f);
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x430): not a UPROPERTY, not replicated.
+	FVector NativeWindVector_0x430 = FVector::ZeroVector;
+
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	void NativeSetGlobalWind(float Intensity, const FVector& Direction);
 };
 

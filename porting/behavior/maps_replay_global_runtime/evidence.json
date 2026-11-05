@@ -1,0 +1,60 @@
+{
+  "scope": "Original capture evidence; no implementation emitted because producer and lifetime graph remains incomplete.",
+  "sources": [
+    {
+      "path": "porting/generated/maps-replay-global-registration/_adhoc/0x14212fd00__14212fd00.c",
+      "sha256": "2f09acef4b946b82dc85a231f0bcb1d3a78a3c24b320d5e248b70d2023f8d31d"
+    },
+    {
+      "path": "porting/generated/maps-replay-global-registration/_adhoc/0x1423ea0e0__1423ea0e0.c",
+      "sha256": "fb27750e99747f433eec0e494f944cb1392f0ff16ca5ea24d4bad62e83b892d4"
+    },
+    {
+      "path": "porting/generated/maps-replay-global-registration/_adhoc/0x14587d2f0__14587d2f0.c",
+      "sha256": "3a52bed4d1c7bb17de5449e0983dafc02dd33b486f1c106d9c055a904368026c"
+    },
+    {
+      "path": "porting/generated/maps-live-source-candidates/_adhoc/0x14212cfd0__14212cfd0.c",
+      "sha256": "d5bd711aa3faaac149dbe75dfc18da72755025feed4006f447277f4ed0e356f6"
+    },
+    {
+      "path": "porting/generated/native209-filter-followthroughs/0x14246bc30.c",
+      "sha256": "e91f9a40c03a27b191b259a9b1ed6bca3543ad024134654d487e3b554a2d4153"
+    },
+    {
+      "path": "porting/generated/maps-native-global-refs/results.json",
+      "sha256": "04c7f88d47fc498ff8b889385c8c9a340f0ca518525ed995a8a410983fb89a2e"
+    },
+    {
+      "path": "porting/generated/maps-native-global-refs/functions.json",
+      "sha256": "14dfbb17d86417e6a132a94f2388a0bec70f74f49c001d24646706b7e729d7b6"
+    }
+  ],
+  "multicast": {
+    "storage": "0x1478dec78",
+    "argument": "One nullable AFortPlayerState* (inferred from replay getter cached FollowedPlayerPrivate and setter parameter; both pass the same value to delegate virtual +0x50).",
+    "broadcasts": [
+      "0x14246bc30 passes cached FollowedPlayerPrivate after validation and reflected event",
+      "0x1423ea0e0 passes param_2 after updating controller spectating state and reflected event"
+    ],
+    "mechanics": "Reverse iteration, invocation lock at 0x1478dec8c, deferred invalid-entry compaction; count/capacity/threshold at 0x1478dec80/84/88. 0x14587d2f0 destroys entries and storage at process exit."
+  },
+  "registration": {
+    "function": "0x14212fd00",
+    "condition": "Only if weak cached object 0x1478ddbc8 resolves null and owner byte +0x48 bit 0x04 was clear; bit is set before allocations.",
+    "delegate": "0x20-byte static delegate instance, final vtable 0x1460b0890; appended to shared 0x1478dec78 with entry kind 2; vtable +0x50 is 0x14212cfd0.",
+    "payload": "Registration passes address of local copy of param_1 to instance virtual +0x30; callback invokes 0x142126d80 on instance +8 and returns success 1. Incoming state is ignored by this thunk. Payload interpretation and target function behavior need confirmation before giving a source-level static function signature.",
+    "second_binding": "Same guarded block also appends a different static delegate, vtable 0x1460b0940, to shared multicast 0x1478ddb60."
+  },
+  "cached_state": {
+    "storage": "0x1478ddbc8",
+    "observed": "Resolved via 0x142ee5dd0, assigned via 0x142ee3b30; behavior is consistent with a weak UObject reference. When null, candidate is registration param_2 virtual +0x150 result; if nonnull, differs from resolved cache, has nonnull +0xf0, and globals 0x1478ddb90 == 0x41, 0x1478ddb80 > 1 and byte 0x1478ddb98 is nonzero, assign candidate and broadcast 0x1478ddb60 with it. Candidate resembles world with DemoNetDriver at +0xf0, but type and gates require independent proof.",
+    "other_dependency": "Matching rows in global array 0x1478ddbb8/count 0x1478ddbc0, stride 0x48, influence output and owner state before registration; this array and its producer are shared dependencies."
+  },
+  "unresolved": [
+    "Exact source type/lifetime of registration owner and static payload; implementation of 0x142126d80; whether and where callback or owner unregisters. Static binding may outlive its owner; do not invent weak or private binding.",
+    "All producers and listeners of shared 0x1478ddb60, cache 0x1478ddbc8, row array 0x1478ddbb8 and condition globals; concrete provider and startup/teardown ownership.",
+    "Exact source declaration and calling convention of callback, and type of candidate from virtual +0x150; named proof remains necessary. Raw displacement scan is candidate evidence, not proof of completeness for indirect references."
+  ],
+  "integration_allowed": false
+}

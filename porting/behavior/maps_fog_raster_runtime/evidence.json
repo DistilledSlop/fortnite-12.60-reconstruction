@@ -79,5 +79,24 @@
     "path": "porting/generated/maps-team-map-copy/_adhoc/0x14294a220__14294a220.c",
     "sha256": "0de9105dcf92adb601258f81ed7263892790a644d3739375c7164364b57f21e2",
     "observation": "Copies first three byte arrays through identical helper, fourth array using memcpy(count << 3), then counter at0x40, bytes44/45 and logical bits0/1 at0x46."
+  },
+  "dispatch_raw_scan": {
+    "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+    "executable_sections": [
+      {
+        "begin": "0x140001000",
+        "size": 93301760
+      },
+      {
+        "begin": "0x148d2c000",
+        "size": 17962496
+      }
+    ],
+    "method": "Scan all four displacement alignments for possible RIP-relative references, permitting 0, 1 or 4 trailing immediate bytes; validate candidates separately.",
+    "direct_flag_reference": "0x141ec880f compare byte at 0x14812fa79",
+    "result": "Only the known raster read was found for this exact flag. Nearby references target other global data and do not name this mode. No proof about indirect stores, configuration identity or external writes.",
+    "raw_result": "porting/generated/maps-native-global-refs/results.json",
+    "raw_result_sha256": "04c7f88d47fc498ff8b889385c8c9a340f0ca518525ed995a8a410983fb89a2e",
+    "fastcall_abi": "Assembly at 0x141ec8829 loads XMM3 from current RSP+0xf8 (entry RSP+0x40) before tail jump to 0x141ec8ae0, establishing that the fifth radius float is used by the fast disk path."
   }
 }
