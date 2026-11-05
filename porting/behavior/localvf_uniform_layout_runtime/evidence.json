@@ -1,0 +1,244 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "original_metadata": {
+    "type_name_va": "0x146aab080",
+    "uniform_name_va": "0x146aab070",
+    "initializer": "0x140546830",
+    "metadata_object": "0x148333480",
+    "first_helper": "0x1442fe7a0",
+    "initializer_size_instruction": "0x14054690a",
+    "helper_count_including_terminal": 9,
+    "struct_size": 64,
+    "members": [
+      {
+        "name": "VertexFetch_Parameters",
+        "offset": 0,
+        "base_type": 2,
+        "precision": 0,
+        "rows": 1,
+        "columns": 4,
+        "elements": 0,
+        "size": 16,
+        "shader_type": "",
+        "helper": "1442fe8e0"
+      },
+      {
+        "name": "PreSkinBaseVertexIndex",
+        "offset": 16,
+        "base_type": 2,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 4,
+        "shader_type": "",
+        "helper": "1442fe700"
+      },
+      {
+        "name": "LODLightmapDataIndex",
+        "offset": 20,
+        "base_type": 3,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 4,
+        "shader_type": "",
+        "helper": "1442fe660"
+      },
+      {
+        "name": "VertexFetch_TexCoordBuffer",
+        "offset": 24,
+        "base_type": 6,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Buffer<float2>",
+        "helper": "1442feac0",
+        "resource_index": 0
+      },
+      {
+        "name": "VertexFetch_PositionBuffer",
+        "offset": 32,
+        "base_type": 6,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Buffer<float>",
+        "helper": "1442fe980",
+        "resource_index": 1
+      },
+      {
+        "name": "VertexFetch_PreSkinPositionBuffer",
+        "offset": 40,
+        "base_type": 6,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Buffer<float>",
+        "helper": "1442fea20",
+        "resource_index": 2
+      },
+      {
+        "name": "VertexFetch_PackedTangentsBuffer",
+        "offset": 48,
+        "base_type": 6,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Buffer<float4>",
+        "helper": "1442fe840",
+        "resource_index": 3
+      },
+      {
+        "name": "VertexFetch_ColorComponentsBuffer",
+        "offset": 56,
+        "base_type": 6,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Buffer<float4>",
+        "helper": "1442fe7a0",
+        "resource_index": 4
+      }
+    ]
+  },
+  "legacy_resource_layout_hash": 105252376,
+  "shader_associations": [
+    {
+      "shader_index": 713,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 853,
+      "uniform_buffer": 2,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 854,
+      "uniform_buffer": 2,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 857,
+      "uniform_buffer": 2,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 859,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 1510,
+      "uniform_buffer": 2,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 1511,
+      "uniform_buffer": 2,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 1512,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 1513,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 1520,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 1521,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 1522,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 1528,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 2477,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    },
+    {
+      "shader_index": 2479,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 105252376
+    }
+  ],
+  "current_source_comparison": {
+    "exact_source_layout_match": true,
+    "differences": []
+  },
+  "current_source_evidence": [
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Public/LocalVertexFactory.h",
+      "sha256": "00c8460c6fb570369b870997ec6dc673a78921433eabacc060d805965ead6d5d"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/RenderCore/Public/ShaderParameterMacros.h",
+      "sha256": "6d85c6bd15b08234c93cacc78d4cc4a029e1b0017939425a381216eff457956b"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/RHI/Public/RHI.h",
+      "sha256": "fdfc50563d8d71197229036a34e619ccc4d2717fac2e74632433669afeeda110"
+    }
+  ],
+  "capture_evidence": [
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/localvf-identity/member-chain.json",
+      "sha256": "8401be21fa8c83bc5ae94008e4f5bda5d888b605c74b9d6200e96f072a79abf3"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/localvf-identity/140546830.asm",
+      "sha256": "55a795e8710311e5107b576153d88817464bd3bf0a834ab394ad010c28ab1ff0"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/paper2d-shader-semantics/conversion/d3d.json",
+      "sha256": "72297e49189bb5c0f355eab8926dfb13c4d5947e9a54a2280ed6a72dee9da1f1"
+    }
+  ],
+  "reproduction": "porting/.venv/bin/python -I porting/material_pipeline/view_original_probe.py --strings 146aab080 146aab070 --functions 140546830 --chain 1442fe7a0 --out porting/generated/material_pipeline/localvf-identity; python3 porting/material_pipeline/localvf_layout_contract.py",
+  "limits": "Read-only original metadata recovery and source-derived current layout. The hash validates resource layout against original wrappers, not numeric semantics. No current compiled metadata, binding or runtime rendering validation was performed."
+}

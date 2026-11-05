@@ -148,6 +148,7 @@ bool SameUniform(const FLegacyLocalUniformContract& Contract)
 {
     const auto* Metadata = Contract.CurrentMetadata;
     if (!Metadata || Contract.ParameterName.IsEmpty() || Contract.OriginalMembers.Num() == 0 ||
+        !Contract.OriginalStaticSlotName.IsEmpty() ||
         !Metadata->GetShaderVariableName() || Contract.ParameterName != Metadata->GetShaderVariableName() ||
         Contract.OriginalStructTypeName != Metadata->GetStructTypeName() ||
         Contract.OriginalStaticSlotName != (Metadata->GetStaticSlotName() ? Metadata->GetStaticSlotName() : TEXT("")) ||
@@ -164,6 +165,48 @@ bool SameUniform(const FLegacyLocalUniformContract& Contract)
     for (int32 I = 0; I < Layout.Resources.Num(); ++I)
         if (Contract.OriginalResources[I].Offset != Layout.Resources[I].MemberOffset ||
             Contract.OriginalResources[I].BaseType != Layout.Resources[I].MemberType) return false;
+    return true;
+}
+
+// Fortnite's original layout predates StaticSlot in the UE4.25 RHI layout
+// hash. Hash original fields independently; current headers still use the
+// current metadata hash. Only independently identified legacy resource enums
+// are accepted here, without assuming later RDG enum values are compatible.
+bool OriginalResourceHash(const FLegacyLocalUniformContract& Contract, uint32& Out)
+{
+    if (!Contract.OriginalStaticSlotName.IsEmpty() || !Contract.OriginalSize || Contract.OriginalSize > 65536) return false;
+    TArray<uint32> Types;
+    uint32 Hash = Contract.OriginalSize << 16;
+    for (const auto& R : Contract.OriginalResources)
+    {
+        if (R.Offset % 8 || uint32(R.Offset) + 8 > Contract.OriginalSize) return false;
+        uint32 LegacyType;
+        switch (R.BaseType)
+        {
+        case UBMT_TEXTURE: LegacyType = 5; break;
+        case UBMT_SRV: LegacyType = 6; break;
+        case UBMT_UAV: LegacyType = 7; break;
+        case UBMT_SAMPLER: LegacyType = 8; break;
+        default: return false;
+        }
+        Types.Add(LegacyType);
+        Hash ^= R.Offset;
+    }
+    int32 N = Types.Num();
+    while (N >= 4)
+    {
+        Hash ^= Types[--N] << 0;
+        Hash ^= Types[--N] << 8;
+        Hash ^= Types[--N] << 16;
+        Hash ^= Types[--N] << 24;
+    }
+    while (N >= 2)
+    {
+        Hash ^= Types[--N] << 0;
+        Hash ^= Types[--N] << 16;
+    }
+    while (N > 0) Hash ^= Types[--N];
+    Out = Hash;
     return true;
 }
 
@@ -203,6 +246,48 @@ bool SameTableEntry(const TSharedPtr<FJsonObject>& A, const TSharedPtr<FJsonObje
 }
 }
 
+bool BuildLegacyLocalVFUniformContract(uint16 SourceRegister, uint32 SourceResourceLayoutHash,
+    FLegacyLocalUniformContract& Out, FString& Error)
+{
+    constexpr uint32 OriginalLocalVFHash = 105252376;
+    if (SourceRegister >= 32 || (SourceResourceLayoutHash && SourceResourceLayoutHash != OriginalLocalVFHash))
+        return Fail(Error, TEXT("unsupported original LocalVF register or resource hash"));
+    FLegacyLocalUniformContract Result;
+    Result.SourceRegister = SourceRegister;
+    Result.ParameterName = TEXT("LocalVF");
+    Result.OriginalStructTypeName = TEXT("FLocalVertexFactoryUniformShaderParameters");
+    Result.OriginalSize = 64;
+    Result.OriginalResourceLayoutHash = SourceResourceLayoutHash;
+    // Original helper chain 1442fe8e0..1442fe7a0, initializer 140546830;
+    // material_pipeline/localvf_layout_contract.py independently decodes it.
+    const auto Add = [&Result](const TCHAR* Name, uint32 Offset, EUniformBufferBaseType BaseType,
+        uint32 Columns, const TCHAR* ShaderType)
+    {
+        auto& M = Result.OriginalMembers.AddDefaulted_GetRef();
+        M.Name = Name; M.Offset = Offset; M.BaseType = BaseType;
+        M.Rows = 1; M.Columns = Columns; M.ShaderType = ShaderType;
+        if (BaseType == UBMT_SRV)
+        {
+            auto& R = Result.OriginalResources.AddDefaulted_GetRef();
+            R.Offset = Offset; R.BaseType = UBMT_SRV;
+        }
+    };
+    Add(TEXT("VertexFetch_Parameters"), 0, UBMT_INT32, 4, TEXT(""));
+    Add(TEXT("PreSkinBaseVertexIndex"), 16, UBMT_INT32, 1, TEXT(""));
+    Add(TEXT("LODLightmapDataIndex"), 20, UBMT_UINT32, 1, TEXT(""));
+    Add(TEXT("VertexFetch_TexCoordBuffer"), 24, UBMT_SRV, 1, TEXT("Buffer<float2>"));
+    Add(TEXT("VertexFetch_PositionBuffer"), 32, UBMT_SRV, 1, TEXT("Buffer<float>"));
+    Add(TEXT("VertexFetch_PreSkinPositionBuffer"), 40, UBMT_SRV, 1, TEXT("Buffer<float>"));
+    Add(TEXT("VertexFetch_PackedTangentsBuffer"), 48, UBMT_SRV, 1, TEXT("Buffer<float4>"));
+    Add(TEXT("VertexFetch_ColorComponentsBuffer"), 56, UBMT_SRV, 1, TEXT("Buffer<float4>"));
+    uint32 DerivedHash;
+    Result.CurrentMetadata = FShaderParametersMetadata::GetNameStructMap().FindRef(FHashedName(TEXT("LocalVF")));
+    if (!OriginalResourceHash(Result, DerivedHash) || DerivedHash != OriginalLocalVFHash || !SameUniform(Result))
+        return Fail(Error, TEXT("registered current LocalVF metadata differs from recovered original contract"));
+    Out = MoveTemp(Result);
+    return true;
+}
+
 bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
     const TSharedPtr<FJsonObject>& ConvertedShader,
     const TArray<FLegacyLocalUniformContract>& UniformContracts,
@@ -230,7 +315,7 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
     const auto* LayoutHashes = Array(Maps, TEXT("layout_hash"));
     const auto* OptionalData = Array(D3D, TEXT("optional_data"));
     const auto* Interfaces = Array(Reflection, TEXT("interfaces"));
-    uint32 Frequency, ArchiveIndex, SourceIndex, MappedIndex, D3DIndex, ReflectedIndex, Model;
+    uint32 Frequency, ArchiveIndex, SourceIndex, MappedIndex, D3DIndex, ReflectedIndex, Model, SourceTableBits;
     FString ArchiveHash, LibraryHash, Path, MappedPath, Digest, MappedDigest, WrapperDigest, SourceDigest, D3DDigest;
     bool bValidated = false;
     if (!Number(ConvertedShader, TEXT("frequency"), Frequency) || Frequency != Original.Frequency ||
@@ -251,7 +336,8 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
         !Number(EntryPoint, TEXT("execution_model"), Model) || Model != (Frequency == SF_Vertex ? 0u : Frequency == SF_Pixel ? 4u : 3u) ||
         !Descriptors || !MappedBindings || Descriptors->Num() > UINT16_MAX || UniformContracts.Num() > UINT16_MAX ||
         Descriptors->Num() != MappedBindings->Num() || !Unmatched || Unmatched->Num() ||
-        !LayoutHashes || !OptionalData || !Interfaces || !SourceResourceBindings)
+        !LayoutHashes || LayoutHashes->Num() > 32 || !Number(D3D, TEXT("resource_table_bits"), SourceTableBits) ||
+        !OptionalData || !Interfaces || !SourceResourceBindings)
         return Fail(Error, TEXT("inconsistent original conversion receipts"));
     for (const auto& Receipt : {Source, Mapped, D3D, Reflection})
     {
@@ -284,8 +370,22 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
     TSet<uint32> SourceUniformSlots;
     for (const auto& U : Original.UniformBuffers)
     {
-        if (U.Second || SourceUniformSlots.Contains(U.First)) return Fail(Error, TEXT("unsupported original UB allocation"));
+        if (U.First >= 32 || U.Second || SourceUniformSlots.Contains(U.First)) return Fail(Error, TEXT("unsupported original UB allocation"));
         SourceUniformSlots.Add(U.First);
+    }
+    for (uint32 I = 0; I < 32; ++I)
+    {
+        uint32 Hash = 0;
+        if (LayoutHashes->IsValidIndex(I))
+        {
+            double Value;
+            if (!(*LayoutHashes)[I]->TryGetNumber(Value) || !(Value >= 0 && Value <= UINT32_MAX) || Value != uint32(Value))
+                return Fail(Error, TEXT("invalid original resource layout hash"));
+            Hash = uint32(Value);
+        }
+        const bool bActive = !!(SourceTableBits & (1u << I));
+        if ((bActive && (!Hash || !SourceUniformSlots.Contains(I))) || (!bActive && Hash))
+            return Fail(Error, TEXT("original table bits disagree with resource layout hashes/allocations"));
     }
     for (int32 I = 0; I < UniformContracts.Num(); ++I)
     {
@@ -302,8 +402,11 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
                 return Fail(Error, TEXT("invalid original resource layout hash"));
             SourceLayoutHash = uint32(Hash);
         }
-        if (C.OriginalResourceLayoutHash != SourceLayoutHash ||
-            (SourceLayoutHash && SourceLayoutHash != C.CurrentMetadata->GetLayout().GetHash()))
+        uint32 DerivedOriginalHash;
+        const bool bActiveTable = !!(SourceTableBits & (1u << C.SourceRegister));
+        if (!OriginalResourceHash(C, DerivedOriginalHash) || C.OriginalResourceLayoutHash != SourceLayoutHash ||
+            (bActiveTable && (!C.OriginalResources.Num() || !SourceLayoutHash || SourceLayoutHash != DerivedOriginalHash)) ||
+            (!bActiveTable && SourceLayoutHash))
             return Fail(Error, TEXT("original resource layout receipt mismatch"));
         if (C.ParameterName == TEXT("Material"))
         {
@@ -328,6 +431,7 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
     // Cross-check the mapping/reflection entries against the original D3D table,
     // rather than treating an empty unmatched[] report as sufficient evidence.
     TSet<FString> RemainingTableEntries;
+    uint32 SeenSourceTableBits = 0;
     for (const TCHAR* Table : {TEXT("texture"), TEXT("sampler"), TEXT("shader_resource_view"), TEXT("unordered_access_view")})
     {
         const auto* Entries = Array(SourceResourceBindings, Table);
@@ -337,13 +441,17 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
             const auto E = Value->AsObject();
             uint32 SourceUB, Resource, Bind;
             if (!Number(E, TEXT("uniform_buffer"), SourceUB) || !Number(E, TEXT("resource"), Resource) ||
-                !Number(E, TEXT("bind"), Bind) || SourceUB > UINT16_MAX || Resource > UINT16_MAX || Bind > UINT16_MAX)
+                !Number(E, TEXT("bind"), Bind) || SourceUB >= 32 || !(SourceTableBits & (1u << SourceUB)) ||
+                Resource > UINT16_MAX || Bind > UINT16_MAX)
                 return Fail(Error, TEXT("invalid original D3D resource table"));
+            SeenSourceTableBits |= 1u << SourceUB;
             const FString Key = FString::Printf(TEXT("%s:%u:%u:%u"), Table, SourceUB, Resource, Bind);
             if (RemainingTableEntries.Contains(Key)) return Fail(Error, TEXT("duplicate original D3D table entry"));
             RemainingTableEntries.Add(Key);
         }
     }
+    if (SeenSourceTableBits != SourceTableBits)
+        return Fail(Error, TEXT("original table bits do not match actual D3D resource entries"));
 
     FLegacyMaterialShaderInput Result;
     Result.TypeName = Original.Type;

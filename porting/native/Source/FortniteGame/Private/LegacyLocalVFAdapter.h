@@ -34,6 +34,7 @@ struct FLegacyLocalMemberContract
 struct FLegacyLocalUniformContract
 {
     uint16 SourceRegister = 0;
+    // The original pre-static-slot ABI requires OriginalStaticSlotName empty.
     FString ParameterName, OriginalStructTypeName, OriginalStaticSlotName;
     uint32 OriginalSize = 0;
     // Original D3D resource-table hash, when present. Not a semantic-layout proof.
@@ -47,6 +48,16 @@ struct FLegacyLocalLooseContract
     FString ParameterName;
     uint16 SourceBuffer = 0, ByteOffset = 0, ByteSize = 0;
 };
+
+/** Produce the independently recovered 64-byte/eight-member original LocalVF
+ * contract, after global uniform metadata has been initialized. Current metadata
+ * is compared against fixed original values; it is never copied as source proof.
+ * Source hash is 0 for a constant-only use or 105252376 for an active table.
+ * BuildLegacyLocalVFOutput additionally verifies that use against D3D tablebits.
+ * Out is unchanged on failure. No runtime provider is installed.
+ */
+bool BuildLegacyLocalVFUniformContract(uint16 SourceRegister, uint32 SourceResourceLayoutHash,
+    FLegacyLocalUniformContract& Out, FString& Error);
 
 /** Complete output-construction kernel for an original inventory occurrence.
  * ConvertedShader is one shader-manifest.json shaders[] entry, not an owner

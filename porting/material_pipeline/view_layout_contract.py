@@ -68,12 +68,19 @@ def original(chain, initializer):
             raise ValueError('unsupported original member shape')
         if base in (5, 6, 8) and (rows != 1 or columns != 1 or elements):
             raise ValueError('unsupported original resource shape')
+        # The captured numeric helpers use this verified UTF-16 empty string.
+        # A missing resource type or another unrecorded pointer is unknown.
+        shader_type = strings.get(pointers.get(8))
+        if shader_type is None:
+            if base not in (2, 3, 4) or pointers.get(8) != 0x1459a4b30:
+                raise ValueError('unknown original shader type string')
+            shader_type = ''
         member_size = (align(4*rows*columns, 16)*elements if elements else 4*rows*columns) if base in (2, 3, 4) else 8
         if offset + member_size > size:
             raise ValueError('member exceeds original View size')
         members.append(dict(name=strings[pointers[0]], offset=offset, base_type=base,
                             precision=precision, rows=rows, columns=columns, elements=elements,
-                            size=member_size, shader_type=strings.get(pointers.get(8), ''),
+                            size=member_size, shader_type=shader_type,
                             helper=helper['function']))
     members.reverse()
     if len({m['name'] for m in members}) != len(members) or any(a['offset']+a['size'] > b['offset'] for a, b in zip(members, members[1:])):

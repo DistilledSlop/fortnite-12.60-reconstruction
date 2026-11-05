@@ -211,4 +211,17 @@ connected to the provider: the [full View comparison](view_original_identity.md)
 now proves a whole-buffer mismatch, so supplying the current View by name would
 correctly fail its contract. Runtime work must establish compatible accessed
 members/resources or implement a faithful remapping, along with independently
-recovered LocalVF and pass contracts.
+recovered pass contracts.
+
+The LocalVF contract is now independently recovered from the original registry
+initializer and eight member helpers: 64 bytes, three numeric members and five
+SRVs. Its legacy resource hash (105252376) matches all 15 active LocalVF wrapper
+associations. `localvf_layout_contract.py` reproduces the recovery and compares
+it with current Engine source; all members match. The native contract producer
+uses fixed recovered values and requires exact registered current metadata
+before publishing. It does not install a provider or establish runtime binding.
+
+The output kernel now independently derives original pre-static-slot resource
+hashes, checks table bits against hashes and actual resource entries, and emits
+the current metadata hash required by Vulkan. This preserves validation across
+the original/current hash format change without equating the two formats.
