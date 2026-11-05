@@ -67,6 +67,9 @@ The original `UFortSignInWidget` now has a source adaptation that labels its fir
 input USERNAME, hides password and forgotten-password controls, and submits through
 this subsystem on click or Enter. It uses `http://127.0.0.1:8080` by default;
 `-LocalBackend=http://127.0.0.1:PORT` selects another service origin.
+The original login-interactions panel selects its existing credentials child on
+construction and activation, hides Back, and deactivates the child with its parent.
+This bypasses the account-provider selection screens for the local username flow.
 These native changes are build pending under the checkpoint cadence. The selected
 snapshot is not yet connected to the game's online login or MCP profile manager,
 and no lobby transition is implemented. The rebuilt launcher still joins directly;

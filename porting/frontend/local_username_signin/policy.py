@@ -3,9 +3,31 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 FLAG = 'local_username_signin'
+INTERACTIONS_FLAG = 'local_username_interactions'
 
 
 def apply(model, block):
+    if model.get('name') == 'UFortLoginInteractions':
+        if (model.get('package') != '/Script/FortniteUI'
+                or model.get('parent') != 'UCommonActivatablePanel'
+                or block.get('block_va') != '0x146f6d700'
+                or block.get('base_fn') != '0x145299720'
+                or block.get('class_noregister_fn') != '0x145282190'):
+            raise ValueError('local login interactions owner changed')
+        for name, kind in {'Switcher_Input': 'UCommonWidgetSwitcher*',
+                           'SignIn_Credentials': 'UFortSignInWidget*',
+                           'Button_Back': 'UCommonButton*'}.items():
+            found = [m for m in model.get('members_decl_order', []) if m.get('name') == name]
+            if len(found) != 1 or kind not in found[0].get('decl', ''):
+                raise ValueError('local login interactions control changed: ' + name)
+        forbidden = {'NativeConstruct', 'NativeHandleActivated', 'NativeHandleDeactivated',
+                     'SelectLocalCredentials'}
+        if model.get(INTERACTIONS_FLAG) or any(
+                m.get('name') in forbidden for group in ('functions', 'fields', 'helpers', 'members_decl_order')
+                for m in model.get(group, [])):
+            raise ValueError('local login interactions adapter collision')
+        model[INTERACTIONS_FLAG] = True
+        return model
     if model.get('name') != 'UFortSignInWidget':
         return model
     if model.get('package') != '/Script/FortniteUI' or model.get('parent') != 'UCommonActivatablePanel':
@@ -59,19 +81,27 @@ def apply(model, block):
 
 
 def configure_model(model):
+    if model.get(INTERACTIONS_FLAG):
+        model['cpp_includes'] = sorted(set(model.get('cpp_includes', [])) | {
+            'UFortSignInWidget.h', 'UCommonActivatableWidget.h'})
     if model.get(FLAG):
         model['includes'] = sorted(set(model.get('includes', [])) | {'Components/EditableText.h'})
         model['cpp_includes'] = sorted(set(model.get('cpp_includes', [])) | {'LocalAccountSubsystem.h', 'Engine/GameInstance.h', 'Misc/CommandLine.h', 'Misc/Parse.h'})
 
 
 def declarations(model):
+    if model.get(INTERACTIONS_FLAG):
+        return (HERE / 'interactions.declarations.inc').read_text()
     return (HERE / 'declarations.inc').read_text() if model.get(FLAG) else ''
 
 
 def definitions(model):
+    if model.get(INTERACTIONS_FLAG):
+        return (HERE / 'interactions.definitions.inc').read_text()
     return (HERE / 'definitions.inc').read_text() if model.get(FLAG) else ''
 
 
 def validate_output(model, header, cpp):
-    if model.get(FLAG) and (header.count(declarations(model).strip()) != 1 or cpp.count(definitions(model).strip()) != 1):
+    if (model.get(FLAG) or model.get(INTERACTIONS_FLAG)) and (
+            header.count(declarations(model).strip()) != 1 or cpp.count(definitions(model).strip()) != 1):
         raise ValueError('sign-in local adapter missing or duplicated')

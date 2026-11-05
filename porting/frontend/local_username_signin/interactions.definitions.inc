@@ -1,0 +1,41 @@
+void UFortLoginInteractions::NativeConstruct()
+{
+    Super::NativeConstruct();
+    // Local accounts use the original credentials panel directly.
+    if (Button_Back) Button_Back->SetVisibility(ESlateVisibility::Collapsed);
+    SelectLocalCredentials();
+}
+
+bool UFortLoginInteractions::SelectLocalCredentials()
+{
+    if (!Switcher_Input || !SignIn_Credentials ||
+        Switcher_Input->GetChildIndex(SignIn_Credentials) == INDEX_NONE)
+    {
+        return false;
+    }
+    UWidget* Previous = Switcher_Input->GetActiveWidget();
+    if (Previous != SignIn_Credentials)
+    {
+        if (UCommonActivatableWidget* Panel = Cast<UCommonActivatableWidget>(Previous))
+            Panel->DeactivateWidget();
+        // A Blueprint deactivation callback can remove or replace a child.
+        if (!Switcher_Input || !SignIn_Credentials ||
+            Switcher_Input->GetChildIndex(SignIn_Credentials) == INDEX_NONE)
+            return false;
+        Switcher_Input->SetActiveWidget(SignIn_Credentials);
+    }
+    return true;
+}
+
+void UFortLoginInteractions::NativeHandleActivated()
+{
+    Super::NativeHandleActivated();
+    if (IsActivated() && SelectLocalCredentials() && IsActivated())
+        SignIn_Credentials->ActivateWidget();
+}
+
+void UFortLoginInteractions::NativeHandleDeactivated()
+{
+    if (SignIn_Credentials) SignIn_Credentials->DeactivateWidget();
+    Super::NativeHandleDeactivated();
+}
