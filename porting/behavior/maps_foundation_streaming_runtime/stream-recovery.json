@@ -6,10 +6,12 @@
     "porting/generated/apollo-material-evidence/foundation-deps",
     "porting/generated/apollo-material-evidence/foundation-role",
     "porting/generated/apollo-material-evidence/foundation-mode-refs.json",
-    "porting/generated/apollo-material-evidence/foundation-mode"
+    "porting/generated/apollo-material-evidence/foundation-mode",
+    "porting/generated/apollo-material-evidence/foundation-unload"
   ],
   "complete_callees_prepared": [
-    "0x141be2550"
+    "0x141be2550",
+    "0x141be2520"
   ],
   "blocking_effects": {
     "0x141bec0f0": "Tests the process-global foundation streaming enabled byte, StreamingData.ProxyInfo.Num or ChildStreamingDataIndices.Num, and role != 3. The global defaults to 1 in the captured image but can be changed by console command Athena.BuildingFoundationStreamingEnabled; its handler also updates existing foundations. The reflected StreamingData model is now emitted. The shared command/state implementation and its foundation updates remain missing, so the predicate is not yet callable recovered code.",
@@ -17,7 +19,8 @@
     "0x141be3f50": "OnLevelStreamedIn has full actor/HLOD processing, per-instance visibility data, material/texture construction and render-thread work. Captured 478-line body remains unimplemented.",
     "0x141be38f0": "OnLevelShown has visibility updates, original timing/global statistics, manager notifications and dependent callbacks. Captured 200-line body remains unimplemented.",
     "0x141be5e90": "Preserves first streaming timestamp only, records BuildingStartedStreaming stat, increments process-global count and always stores global 0x147c31c54 at record+0x24. Shared telemetry ownership remains unresolved.",
-    "0x141bea280": "Visibility path includes foundation hierarchy, HLOD visibility, original actor iteration, game-mode checks and material effects. Captured 167-line body remains unimplemented."
+    "0x141bea280": "Visibility path includes foundation hierarchy, HLOD visibility, original actor iteration, game-mode checks and material effects. Captured 167-line body remains unimplemented.",
+    "0x141bedfa0": "Original unload body now captured. Clears streaming timing state at df8-e1a and updates process counters, changes existing ULevelStreaming loading/visibility/unload state, then reads shared foundation streaming switch and StreamingData counts. The enabled path calls unresolved visibility helper 141bea280, clears d68 array, and clears weak object at +28. Global statistics, weak object identity and callback effects still need full reconstruction."
   },
   "caller_observations": [
     "The body consumes LevelToStream at 0xba0; it does not select an AdditionalWorlds candidate. Candidate selection occurs in upstream callers and must remain separate.",
@@ -31,5 +34,13 @@
     "streaming_data": "Foundation StreamingData at 0xcb8; reflected struct BuildingFoundationStreamingData is 0x80 bytes. ProxyInfo at struct+0x58 and ChildStreamingDataIndices at struct+0x68: their TArray counts match foundation+0xd18 and +0xd28. See porting/generated/reflection/struct_blocks.json and fortnite_game_reflection.json.",
     "global": "0x1478c36ed defaults to 1 in image .data; 0x141d54630 returns it. Console registration at 0x1402aa42c-0x1402aa480 binds handler 0x141d409d0 to Athena.BuildingFoundationStreamingEnabled. Handler toggles on no argument or parses an argument, and visits foundation state after a change. See foundation-mode captures and foundation-mode-refs.json.",
     "limit": "The captured reference at 0x141d398d0 is outside a Ghidra function and reads the byte. The reference listing does not by itself prove all indirect writes or runtime initialization."
+  },
+  "enabled_ancestry_predicate": {
+    "address": "0x141be2520",
+    "enum": "EDynamicFoundationEnabledState::Enabled = 1",
+    "state_offset": "0xb6a",
+    "parent_offset": "0xd78",
+    "assembly": "MOV RCX,[RCX+0xd78] immediately before recursive CALL confirms parent receiver",
+    "scope": "Complete recursive predicate only; visibility and unload caller effects remain incomplete."
   }
 }
