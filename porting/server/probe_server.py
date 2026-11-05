@@ -2,6 +2,7 @@
 """Local HTTP request recorder and fixture responder for protocol discovery."""
 
 import argparse
+import fcntl
 import hashlib
 import json
 import os
@@ -194,7 +195,16 @@ def main():
     args.record.parent.mkdir(parents=True, exist_ok=True)
     routes = load_fixtures(args.fixtures)
     stub = None
+    state_lock = None
     if args.stub:
+        if not args.ephemeral:
+            args.state_dir.mkdir(parents=True, exist_ok=True)
+            state_lock = (args.state_dir / ".backend.lock").open("a")
+            try:
+                fcntl.flock(state_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                state_lock.close()
+                parser.error(f"state directory is already in use: {args.state_dir}")
         import fortnite_stub as stub
         stub.configure(cloudstorage_dir=args.cloudstorage_dir,
                        state_dir=None if args.ephemeral else args.state_dir)
@@ -211,6 +221,8 @@ def main():
         pass
     finally:
         server.server_close()
+        if state_lock is not None:
+            state_lock.close()
 
 
 if __name__ == "__main__":

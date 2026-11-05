@@ -10,7 +10,8 @@ Evidence:
 Policy (local, deliberate):
   * Access and refresh tokens are random per process. They live only in memory.
   * An exchange_code that GET .../oauth/exchange issued is single use and maps to
-    its own account. Any other non-empty exchange_code signs in the local account.
+    its own account. Unknown, expired and used issued-format codes are rejected.
+    Other non-empty exchange codes sign in the local account.
     The earlier login capture used an arbitrary auth password, so this keeps it working.
   * The local_username grant and the local-username: exchange-code prefix select
     a persistent local account by username without a password.
@@ -27,6 +28,7 @@ ACCESS_TTL_SEC = 28800  # the field value from the earlier stub
 REFRESH_TTL_SEC = 115200  # the field value from the earlier stub
 EXCHANGE_CODE_TTL_SEC = 300  # guess
 LOCAL_USERNAME_PREFIX = "local-username:"
+EXCHANGE_CODE_PREFIX = "local-exchange:"
 
 
 @dataclass
@@ -157,6 +159,8 @@ class OAuthService:
                 account_id, expires = issued
                 if expires <= self.ctx.now():
                     raise ApiError(400, Err.OAUTH_INVALID_GRANT, "The exchange code has expired.")
+            elif code.startswith(EXCHANGE_CODE_PREFIX):
+                raise ApiError(400, Err.OAUTH_INVALID_GRANT, "The exchange code is invalid or has expired.")
             elif code.startswith(LOCAL_USERNAME_PREFIX):
                 account_id = self._username_account_id(code[len(LOCAL_USERNAME_PREFIX):])
             else:
@@ -175,7 +179,7 @@ class OAuthService:
     def exchange(self, req, match):
         """GET /account/api/oauth/exchange: issue a single-use code for the caller's account."""
         session = self.account_session(req)
-        code = secrets.token_hex(16)
+        code = EXCHANGE_CODE_PREFIX + secrets.token_hex(16)
         self._codes[code] = (session.account_id, self.ctx.now() + EXCHANGE_CODE_TTL_SEC)
         return 200, {
             "expiresInSeconds": EXCHANGE_CODE_TTL_SEC,

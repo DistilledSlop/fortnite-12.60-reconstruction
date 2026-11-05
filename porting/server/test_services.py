@@ -289,11 +289,9 @@ class OAuthTests(ServiceTestCase):
                                 form={"grant_type": "exchange_code", "exchange_code": issued["code"]})
         self.assertEqual(body["account_id"], other)
         self.remember(body)
-        # Policy: a used code no longer maps to its account, so it falls back to the local account.
-        status, again, _ = jcall(self.base, "POST", "/account/api/oauth/token",
-                                 form={"grant_type": "exchange_code", "exchange_code": issued["code"]})
-        self.assertEqual(again["account_id"], LOCAL)
-        self.remember(again)
+        self.assertError(jcall(self.base, "POST", "/account/api/oauth/token",
+                               form={"grant_type": "exchange_code", "exchange_code": issued["code"]}),
+                         400, Err.OAUTH_INVALID_GRANT)
 
     def test_kill_all_ends_the_callers_sessions(self):
         token = self.sign_in()["access_token"]
@@ -345,6 +343,18 @@ class AccountTests(ServiceTestCase):
         status, body, _ = jcall(self.base, "GET", "/account/api/public/account/displayName/bee", token=token)
         self.assertEqual((status, body["id"]), (200, friend))
         self.assertError(jcall(self.base, "GET", "/account/api/public/account/displayName/Nobody", token=token),
+                         404, Err.ACCOUNT_NOT_FOUND)
+
+    def test_display_name_lookup_decodes_one_path_segment(self):
+        token = self.sign_in()["access_token"]
+        for name in ("Space Name", "Élodie 雪", "Slash/Name", "Literal%20Name", "Plus+Name"):
+            with self.subTest(name=name):
+                account_id = self.new_account(name)
+                segment = urllib.parse.quote(name, safe="")
+                status, body, _ = jcall(self.base, "GET", "/account/api/public/account/displayName/" + segment,
+                                        token=token)
+                self.assertEqual((status, body["id"], body["displayName"]), (200, account_id, name))
+        self.assertError(jcall(self.base, "GET", "/account/api/public/account/displayName/%FF", token=token),
                          404, Err.ACCOUNT_NOT_FOUND)
 
     def test_external_auths_user_setting_and_play_on_platform(self):

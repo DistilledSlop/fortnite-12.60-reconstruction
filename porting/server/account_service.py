@@ -17,6 +17,7 @@ import json
 import sqlite3
 from contextlib import closing
 from pathlib import Path
+from urllib.parse import unquote
 
 from api_common import (LOCAL_ACCOUNT_ID, LOCAL_DISPLAY_NAME, ApiError, Err, RawText)
 
@@ -121,7 +122,11 @@ class AccountService:
         return 200, [account for account in found if account is not None]
 
     def account_by_name(self, req, match):
-        account_id = self._by_name.get(match.group(1).casefold())
+        try:
+            name = unquote(match.group(1), encoding="utf-8", errors="strict")
+        except UnicodeDecodeError:
+            name = None
+        account_id = self._by_name.get(name.casefold()) if name is not None else None
         account = self.get(account_id) if account_id else None
         if account is None:
             raise ApiError(404, Err.ACCOUNT_NOT_FOUND, "Sorry, we couldn't find an account for that display name.")

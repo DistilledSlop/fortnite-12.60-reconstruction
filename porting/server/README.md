@@ -64,7 +64,9 @@ With `--stub`, `probe_server.py` persists account mappings, profile revisions an
 cloud files under ignored `porting/generated/local-backend-state` by default. Set
 `--state-dir DIR` to choose a different local directory, or `--ephemeral` for fresh
 in-memory state. Tokens, parties and matchmaking sessions remain process-local; obtain
-a new token after restarting the service.
+a new token after restarting the service. Only one probe server can use a state
+directory at a time; a second server exits instead of risking conflicting writes.
+Code embedding `Backend` directly must likewise use a single owner per state directory.
 
 `probe_server.py` binds `127.0.0.1` by default and records method, path, route
 name, query keys, body length and status to ignored `porting/generated/server-requests.jsonl`.
@@ -180,9 +182,10 @@ method answers 405. Party and presence routes that are not in the table, such as
 ### Exchange code policy
 
 The `local-username:` exchange-code prefix selects a named local account. Other
-unissued non-empty `exchange_code` values retain the legacy LocalPlayer fallback. A code issued
-by `GET /account/api/oauth/exchange` is single use and maps to its own account. Once
-used, it falls back to the local account. This is a local policy, not Epic behaviour.
+non-empty `exchange_code` values retain the legacy LocalPlayer fallback unless they use the
+reserved `local-exchange:` prefix. A code issued by `GET /account/api/oauth/exchange`
+uses that prefix, is single use, and maps to its own account. Unknown, expired, and
+used codes with the reserved prefix are rejected. This is a local policy, not Epic behaviour.
 
 ### MCP profile commands
 
