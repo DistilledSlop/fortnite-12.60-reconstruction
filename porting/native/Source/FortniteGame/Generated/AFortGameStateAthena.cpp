@@ -311,6 +311,13 @@ FTotalPlayers AFortGameStateAthena::GetTotalPlayers() const
 	return Result;
 }
 
+void AFortGameStateAthena::HandleGameModeHideMarker(int32 PlayerID, int32 InstanceID)
+{
+	// CONFIDENCE: high
+	// Original address: 0x14199a6f0
+	HideMarkerGameMode.Broadcast(PlayerID, InstanceID);
+}
+
 void AFortGameStateAthena::HandleGameModeMessageDefaultPosition()
 {
 	// Behaviour snippet: AFortGameStateAthena::HandleGameModeMessageDefaultPosition (body only; spliced into the generated member function).
@@ -321,6 +328,20 @@ void AFortGameStateAthena::HandleGameModeMessageDefaultPosition()
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	SetDefaultPositionGameModeMessage.Broadcast();
+}
+
+void AFortGameStateAthena::HandleGameModeMessageReposition(FVector2D Position, EHorizontalAlignment HorizontalAlignment, EVerticalAlignment VerticalAlignment)
+{
+	// CONFIDENCE: high
+	// Original address: 0x14199a730
+	RepositionGameModeMessage.Broadcast(Position, HorizontalAlignment, VerticalAlignment);
+}
+
+void AFortGameStateAthena::HandleGameModeShowMarker(int32 PlayerID, int32 InstanceID)
+{
+	// CONFIDENCE: high
+	// Original address: 0x14199abd0
+	ShowMarkerGameMode.Broadcast(PlayerID, InstanceID);
 }
 
 bool AFortGameStateAthena::HasValidFocalPointActor() const

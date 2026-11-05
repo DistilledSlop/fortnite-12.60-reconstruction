@@ -79,6 +79,7 @@
 #include "Misc/DateTime.h"
 #include "Stats/Stats.h"
 #include "Styling/SlateBrush.h"
+#include "Types/SlateEnums.h"
 #include "UFortMutatorOwner.h"
 #include "UObject/Object.h"
 
@@ -952,7 +953,16 @@ public:
 	FTotalPlayers GetTotalPlayers() const;
 
 	UFUNCTION(BlueprintCallable)
+	void HandleGameModeHideMarker(int32 PlayerID, int32 InstanceID);
+
+	UFUNCTION(BlueprintCallable)
 	void HandleGameModeMessageDefaultPosition();
+
+	UFUNCTION(BlueprintCallable)
+	void HandleGameModeMessageReposition(FVector2D Position, EHorizontalAlignment HorizontalAlignment, EVerticalAlignment VerticalAlignment);
+
+	UFUNCTION(BlueprintCallable)
+	void HandleGameModeShowMarker(int32 PlayerID, int32 InstanceID);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasValidFocalPointActor() const;

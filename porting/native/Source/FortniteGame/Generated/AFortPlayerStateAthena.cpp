@@ -183,7 +183,9 @@ void AFortPlayerStateAthena::OnRep_Kills()
 
 void AFortPlayerStateAthena::OnRep_MatchAbandonState(EMatchAbandonState PrevMatchAbandonState)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// Original address: 0x141a519d0
+	MatchAbandonStateChanged.Broadcast(PrevMatchAbandonState, MatchAbandonState);
 }
 
 void AFortPlayerStateAthena::OnRep_MetricInformation()

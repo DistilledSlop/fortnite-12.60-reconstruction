@@ -1,0 +1,7 @@
+{
+  "batch": "batch_006_new",
+  "captures": "porting/generated/native-triage006",
+  "bodies": "porting/generated/callee_probe/blocking",
+  "recovered_count": 4,
+  "notes": "Wrappers marshal parameters into the named bodies. Bodies invoke the multicast delegate helper at the stated field offsets. Reflected delegate signatures and field order are in generated headers; functions are absent from canonical manifest."
+}

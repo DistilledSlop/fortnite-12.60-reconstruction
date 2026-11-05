@@ -419,8 +419,10 @@ public:
 	UFUNCTION()
 	void OnRep_Kills();
 
+private:
 	UFUNCTION()
 	void OnRep_MatchAbandonState(EMatchAbandonState PrevMatchAbandonState);
+public:
 
 	UFUNCTION()
 	void OnRep_MetricInformation();
