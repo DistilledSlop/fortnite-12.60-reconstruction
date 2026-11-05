@@ -63275,5 +63275,21 @@
     "includes": [
       "GameFramework/Actor.h"
     ]
+  },
+  {
+    "class": "AFortWorldSettings",
+    "function": "NativeDispatchWorldReady",
+    "kind": "helper",
+    "signature": "void NativeDispatchWorldReady()",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/maps_world_ready_runtime/AFortWorldSettings_NativeDispatchWorldReady.inc",
+    "address": "0x141fbc600",
+    "includes": [
+      "GameFramework/Actor.h"
+    ],
+    "notes": "Drain actor queue in detached batches, interface pending predicate before pending-kill check, callback, then process reentrant registrations. Original driver and interface providers not yet connected."
   }
 ]

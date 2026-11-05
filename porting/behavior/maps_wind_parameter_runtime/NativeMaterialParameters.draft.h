@@ -1,5 +1,6 @@
 // Typed behavior of material parameter helpers; review draft, not integrated.
 #pragma once
+#include "Materials/Material.h"
 #include "Materials/MaterialInstance.h"
 #include "Materials/MaterialInstanceDynamic.h"
 
@@ -45,4 +46,21 @@ inline bool SetVector(UMaterialInstanceDynamic& Instance, int32 Index,
 {
     return Instance.SetVectorParameterByIndex(Index, Value);
 }
+// Setup's base-material vtable slots 0x3e0/0x3f8. The caller ignores the
+// boolean and consumes the output initialized to zero, including on failure.
+// The local UE checkout takes FHashedMaterialParameterInfo; the captured client
+// takes its older un-hashed FMaterialParameterInfo ABI. Both calls are global.
+inline float BaseScalarValue(const UMaterial& Base, const FName& Name)
+{
+    float Value = 0.0f;
+    Base.GetScalarParameterValue(FHashedMaterialParameterInfo(Name), Value, false);
+    return Value;
+}
+inline FLinearColor BaseVectorValue(const UMaterial& Base, const FName& Name)
+{
+    FLinearColor Value(0.0f, 0.0f, 0.0f, 0.0f);
+    Base.GetVectorParameterValue(FHashedMaterialParameterInfo(Name), Value, false);
+    return Value;
+}
+
 }

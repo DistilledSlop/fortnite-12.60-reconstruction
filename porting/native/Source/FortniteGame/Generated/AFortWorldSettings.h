@@ -232,5 +232,6 @@ public:
 	AFortTimeOfDayManager* NativeSpawnTimeOfDayManager();
 	AFortTimeOfDayManager* NativeRefreshTimeOfDayManager();
 	void NativeRegisterActorForWorldReady(AActor* Actor);
+	void NativeDispatchWorldReady();
 };
 
