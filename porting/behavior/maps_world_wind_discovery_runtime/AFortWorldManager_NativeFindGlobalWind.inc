@@ -24,8 +24,8 @@ if (AFortGameMode* GameMode = Cast<AFortGameMode>(World->GetAuthGameMode()))
 // 0x141f886f0: current record, then the first valid queued world-record action,
 // then the process-wide empty zone instance. Only the first action is examined.
 const FFortZoneInstanceDetails* Details = nullptr;
-if (CurrentWorldRecord)
-    Details = &CurrentWorldRecord->ZoneInstanceInfo;
+if (UFortWorldRecord* Record = CurrentWorldRecord)
+    Details = &Record->ZoneInstanceInfo;
 else if (NativeWorldRecordActions_0x6c0.Num() > 0)
 {
     const FFortZoneInstanceDetails& First = NativeWorldRecordActions_0x6c0[0].ZoneInstanceInfo;
