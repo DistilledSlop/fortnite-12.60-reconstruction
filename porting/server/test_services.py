@@ -1062,6 +1062,11 @@ class MatchmakingTests(ServiceTestCase):
                 opcode, payload = ws.ws_recv(stream)
                 self.assertEqual(opcode, 0x1)
                 message = json.loads(payload)
+                if message["name"] == "StatusUpdate":
+                    update = message["payload"]
+                    self.assertEqual(update["totalPlayers"], 2)
+                    if update["state"] == "ReadyCheck":
+                        self.assertEqual((update["readyPlayers"], update["unreadyPlayers"]), (2, 0))
                 if message["name"] == "Play":
                     session_id = message["payload"]["sessionId"]
                     break

@@ -119,7 +119,8 @@ class MatchmakingService:
         ).decode("ascii")
         owner_name = self.accounts.display_name(account_id)
         with self._lock:
-            self._tickets[ticket_id] = {"matchId": match_id, "sessionId": session_id}
+            self._tickets[ticket_id] = {"matchId": match_id, "sessionId": session_id,
+                                        "playerCount": len(players)}
             self._sessions[session_id] = self._session_record(account_id, owner_name, players)
         body = {  # [observed] field names per section 3; values [guess]
             "serviceUrl": f"wss://{MATCHMAKING_HOST}{MATCHMAKING_WS_PATH}/{ticket_id}",
@@ -144,17 +145,18 @@ class MatchmakingService:
             conn.close(1008, "unknown ticket")
             return
         for state in STATES:
-            queued = 1 if state in ("Queued", "ReadyCheck", "SessionAssignment") else 0
+            count = entry["playerCount"]
+            queued = count if state in ("Queued", "ReadyCheck", "SessionAssignment") else 0
             fields = {
                 "state": state,  # [observed] state names
-                "totalPlayers": 1, "connectedPlayers": 1,  # [guess] values
+                "totalPlayers": count, "connectedPlayers": 1,  # local ticket roster and socket
                 "queuedPlayers": queued, "estimatedWaitSec": 0,  # [guess] values
                 "ticketId": ticket_id, "matchId": entry["matchId"],
             }
             if state == "ReadyCheck":
-                # [observed] reader fields and accepted status; local values are guesses.
+                # [observed] reader fields; locally the entire ticket roster is accepted.
                 fields.update(status="ACTIVE", durationSec=0, ready=True, responded=True,
-                              readyPlayers=1, unreadyPlayers=0)
+                              readyPlayers=count, unreadyPlayers=0)
             conn.send_json(_message(STATUS_UPDATE_MESSAGE, **fields))
             if self.state_step_sec:
                 time.sleep(self.state_step_sec)
