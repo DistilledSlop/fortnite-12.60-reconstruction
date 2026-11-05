@@ -1,0 +1,19 @@
+[
+  {
+    "class": "UFortQuestItemDefinition",
+    "function": "CanPartyAssist",
+    "kind": "exec",
+    "signature": "bool CanPartyAssist() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x142ab7e70",
+    "native_body_address": "0x142437000",
+    "inc_path": "porting/behavior/quest_definition_party_assist_runtime/CanPartyAssist.inc",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Calls checked globals accessor 0x141ed2350, then searches only explicit GameplayTags for valid Quest.Metadata.PartyAssist native tag at 0x1f30; no parent-tag match."
+  }
+]

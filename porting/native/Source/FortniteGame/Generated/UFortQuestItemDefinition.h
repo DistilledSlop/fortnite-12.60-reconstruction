@@ -215,6 +215,9 @@ public:
 	bool AllowsTileMatching() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanPartyAssist() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ExpandsStormShield() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
