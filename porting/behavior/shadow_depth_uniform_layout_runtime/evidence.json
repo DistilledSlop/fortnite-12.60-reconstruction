@@ -1,0 +1,1458 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "original_metadata": {
+    "uniform_name_va": "0x146702728",
+    "type_name_va": "0x146702750",
+    "initializer": "0x1404d4ac0",
+    "metadata_object": "0x1482e0820",
+    "first_helper": "0x14354bd10",
+    "initializer_size_instruction": "0x1404d4b9a",
+    "nested_initializers": {
+      "SceneTextures": "0x1404c9240",
+      "LPV": "0x1404ac130"
+    },
+    "struct_size": 1392,
+    "members": [
+      {
+        "name": "SceneTextures",
+        "offset": 0,
+        "base_type": 17,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 272,
+        "shader_type": "FSceneTexturesUniformParameters",
+        "helper": "143265d90",
+        "metadata_object": "0x1482d2390",
+        "members": [
+          {
+            "name": "SceneColorTexture",
+            "offset": 0,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "1434666e0",
+            "resource_index": 0
+          },
+          {
+            "name": "SceneColorTextureSampler",
+            "offset": 8,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "143466780",
+            "resource_index": 1
+          },
+          {
+            "name": "SceneDepthTexture",
+            "offset": 16,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "143466820",
+            "resource_index": 2
+          },
+          {
+            "name": "SceneDepthTextureSampler",
+            "offset": 24,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "1434668c0",
+            "resource_index": 3
+          },
+          {
+            "name": "SceneDepthTextureNonMS",
+            "offset": 32,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float>",
+            "helper": "14346d8a0",
+            "resource_index": 4
+          },
+          {
+            "name": "GBufferATexture",
+            "offset": 40,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "14346cc20",
+            "resource_index": 5
+          },
+          {
+            "name": "GBufferBTexture",
+            "offset": 48,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "14346ce00",
+            "resource_index": 6
+          },
+          {
+            "name": "GBufferCTexture",
+            "offset": 56,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "14346cfe0",
+            "resource_index": 7
+          },
+          {
+            "name": "GBufferDTexture",
+            "offset": 64,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "14346d1c0",
+            "resource_index": 8
+          },
+          {
+            "name": "GBufferETexture",
+            "offset": 72,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "14346d3a0",
+            "resource_index": 9
+          },
+          {
+            "name": "GBufferVelocityTexture",
+            "offset": 80,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "14346d580",
+            "resource_index": 10
+          },
+          {
+            "name": "GBufferATextureNonMS",
+            "offset": 88,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "helper": "14346ccc0",
+            "resource_index": 11
+          },
+          {
+            "name": "GBufferBTextureNonMS",
+            "offset": 96,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "helper": "14346cea0",
+            "resource_index": 12
+          },
+          {
+            "name": "GBufferCTextureNonMS",
+            "offset": 104,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "helper": "14346d080",
+            "resource_index": 13
+          },
+          {
+            "name": "GBufferDTextureNonMS",
+            "offset": 112,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "helper": "14346d260",
+            "resource_index": 14
+          },
+          {
+            "name": "GBufferETextureNonMS",
+            "offset": 120,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "helper": "14346d440",
+            "resource_index": 15
+          },
+          {
+            "name": "GBufferVelocityTextureNonMS",
+            "offset": 128,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "helper": "14346d620",
+            "resource_index": 16
+          },
+          {
+            "name": "GBufferATextureSampler",
+            "offset": 136,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "14346cd60",
+            "resource_index": 17
+          },
+          {
+            "name": "GBufferBTextureSampler",
+            "offset": 144,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "14346cf40",
+            "resource_index": 18
+          },
+          {
+            "name": "GBufferCTextureSampler",
+            "offset": 152,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "14346d120",
+            "resource_index": 19
+          },
+          {
+            "name": "GBufferDTextureSampler",
+            "offset": 160,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "14346d300",
+            "resource_index": 20
+          },
+          {
+            "name": "GBufferETextureSampler",
+            "offset": 168,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "14346d4e0",
+            "resource_index": 21
+          },
+          {
+            "name": "GBufferVelocityTextureSampler",
+            "offset": 176,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "14346d6c0",
+            "resource_index": 22
+          },
+          {
+            "name": "ScreenSpaceAOTexture",
+            "offset": 184,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "14346d9e0",
+            "resource_index": 23
+          },
+          {
+            "name": "ScreenSpaceAOTextureSampler",
+            "offset": 192,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "14346da80",
+            "resource_index": 24
+          },
+          {
+            "name": "CustomDepthTextureNonMS",
+            "offset": 200,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float>",
+            "helper": "14346c9a0",
+            "resource_index": 25
+          },
+          {
+            "name": "CustomDepthTexture",
+            "offset": 208,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "14346c900",
+            "resource_index": 26
+          },
+          {
+            "name": "CustomDepthTextureSampler",
+            "offset": 216,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "14346ca40",
+            "resource_index": 27
+          },
+          {
+            "name": "CustomStencilTexture",
+            "offset": 224,
+            "base_type": 6,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<uint2>",
+            "helper": "14346cae0",
+            "resource_index": 28
+          },
+          {
+            "name": "SceneStencilTexture",
+            "offset": 232,
+            "base_type": 6,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<uint2>",
+            "helper": "14346d940",
+            "resource_index": 29
+          },
+          {
+            "name": "EyeAdaptation",
+            "offset": 240,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "14346cb80",
+            "resource_index": 30
+          },
+          {
+            "name": "SceneColorCopyTexture",
+            "offset": 248,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "14346d760",
+            "resource_index": 31
+          },
+          {
+            "name": "SceneColorCopyTextureSampler",
+            "offset": 256,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "14346d800",
+            "resource_index": 32
+          }
+        ]
+      },
+      {
+        "name": "LPV",
+        "offset": 272,
+        "base_type": 17,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 192,
+        "shader_type": "FLpvWriteUniformBufferParameters",
+        "helper": "14354bb20",
+        "metadata_object": "0x14829f4a0",
+        "members": [
+          {
+            "name": "mRsmToWorld",
+            "offset": 0,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 4,
+            "columns": 4,
+            "elements": 0,
+            "size": 64,
+            "shader_type": "",
+            "helper": "14332a870"
+          },
+          {
+            "name": "mLightColour",
+            "offset": 64,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "14332a690"
+          },
+          {
+            "name": "GeometryVolumeCaptureLightDirection",
+            "offset": 80,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "143329fb0"
+          },
+          {
+            "name": "mEyePos",
+            "offset": 96,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "14332a5f0"
+          },
+          {
+            "name": "mOldGridOffset",
+            "offset": 112,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 3,
+            "elements": 0,
+            "size": 12,
+            "shader_type": "",
+            "helper": "14332a7d0"
+          },
+          {
+            "name": "mLpvGridOffset",
+            "offset": 128,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 3,
+            "elements": 0,
+            "size": 12,
+            "shader_type": "",
+            "helper": "14332a730"
+          },
+          {
+            "name": "ClearMultiplier",
+            "offset": 140,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "143329d30"
+          },
+          {
+            "name": "LpvScale",
+            "offset": 144,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "14332a0f0"
+          },
+          {
+            "name": "OneOverLpvScale",
+            "offset": 148,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "14332a190"
+          },
+          {
+            "name": "DirectionalOcclusionIntensity",
+            "offset": 152,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "143329dd0"
+          },
+          {
+            "name": "DirectionalOcclusionRadius",
+            "offset": 156,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "143329e70"
+          },
+          {
+            "name": "RsmAreaIntensityMultiplier",
+            "offset": 160,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "14332a2d0"
+          },
+          {
+            "name": "RsmPixelToTexcoordMultiplier",
+            "offset": 164,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "14332a370"
+          },
+          {
+            "name": "SecondaryOcclusionStrength",
+            "offset": 168,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "14332a4b0"
+          },
+          {
+            "name": "SecondaryBounceStrength",
+            "offset": 172,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "14332a410"
+          },
+          {
+            "name": "VplInjectionBias",
+            "offset": 176,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "14332a550"
+          },
+          {
+            "name": "GeometryVolumeInjectionBias",
+            "offset": 180,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "14332a050"
+          },
+          {
+            "name": "EmissiveInjectionMultiplier",
+            "offset": 184,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "143329f10"
+          },
+          {
+            "name": "PropagationIndex",
+            "offset": 188,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "14332a230"
+          }
+        ]
+      },
+      {
+        "name": "ProjectionMatrix",
+        "offset": 464,
+        "base_type": 4,
+        "precision": 0,
+        "rows": 4,
+        "columns": 4,
+        "elements": 0,
+        "size": 64,
+        "shader_type": "",
+        "helper": "14354bbd0"
+      },
+      {
+        "name": "ViewMatrix",
+        "offset": 528,
+        "base_type": 4,
+        "precision": 0,
+        "rows": 4,
+        "columns": 4,
+        "elements": 0,
+        "size": 64,
+        "shader_type": "",
+        "helper": "14354be70"
+      },
+      {
+        "name": "ShadowParams",
+        "offset": 592,
+        "base_type": 4,
+        "precision": 0,
+        "rows": 1,
+        "columns": 4,
+        "elements": 0,
+        "size": 16,
+        "shader_type": "",
+        "helper": "14354bc70"
+      },
+      {
+        "name": "bClampToNearPlane",
+        "offset": 608,
+        "base_type": 4,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 4,
+        "shader_type": "",
+        "helper": "14354bf10"
+      },
+      {
+        "name": "ShadowViewProjectionMatrices",
+        "offset": 624,
+        "base_type": 4,
+        "precision": 0,
+        "rows": 4,
+        "columns": 4,
+        "elements": 6,
+        "size": 384,
+        "shader_type": "",
+        "helper": "14354bdc0"
+      },
+      {
+        "name": "ShadowViewMatrices",
+        "offset": 1008,
+        "base_type": 4,
+        "precision": 0,
+        "rows": 4,
+        "columns": 4,
+        "elements": 6,
+        "size": 384,
+        "shader_type": "",
+        "helper": "14354bd10"
+      }
+    ]
+  },
+  "computed_legacy_resource_layout_hash": 191892491,
+  "hash_corroborated_by_shader_wrappers": false,
+  "shader_associations": [
+    {
+      "shader_index": 812,
+      "uniform_buffer": 0,
+      "resource_table_active": false,
+      "original_layout_hash": 0
+    },
+    {
+      "shader_index": 1510,
+      "uniform_buffer": 1,
+      "resource_table_active": false,
+      "original_layout_hash": 0
+    },
+    {
+      "shader_index": 1511,
+      "uniform_buffer": 1,
+      "resource_table_active": false,
+      "original_layout_hash": 0
+    },
+    {
+      "shader_index": 2467,
+      "uniform_buffer": 1,
+      "resource_table_active": false,
+      "original_layout_hash": 0
+    }
+  ],
+  "current_source_struct_size": 1440,
+  "current_source_comparison": {
+    "exact_source_layout_match": false,
+    "differences": [
+      {
+        "name": "LPV.ClearMultiplier",
+        "changes": {
+          "offset": [
+            412,
+            428
+          ]
+        }
+      },
+      {
+        "name": "LPV.DirectionalOcclusionIntensity",
+        "changes": {
+          "offset": [
+            424,
+            440
+          ]
+        }
+      },
+      {
+        "name": "LPV.DirectionalOcclusionRadius",
+        "changes": {
+          "offset": [
+            428,
+            444
+          ]
+        }
+      },
+      {
+        "name": "LPV.EmissiveInjectionMultiplier",
+        "changes": {
+          "offset": [
+            456,
+            472
+          ]
+        }
+      },
+      {
+        "name": "LPV.GeometryVolumeCaptureLightDirection",
+        "changes": {
+          "offset": [
+            352,
+            368
+          ]
+        }
+      },
+      {
+        "name": "LPV.GeometryVolumeInjectionBias",
+        "changes": {
+          "offset": [
+            452,
+            468
+          ]
+        }
+      },
+      {
+        "name": "LPV.LpvScale",
+        "changes": {
+          "offset": [
+            416,
+            432
+          ]
+        }
+      },
+      {
+        "name": "LPV.OneOverLpvScale",
+        "changes": {
+          "offset": [
+            420,
+            436
+          ]
+        }
+      },
+      {
+        "name": "LPV.PropagationIndex",
+        "changes": {
+          "offset": [
+            460,
+            476
+          ]
+        }
+      },
+      {
+        "name": "LPV.RsmAreaIntensityMultiplier",
+        "changes": {
+          "offset": [
+            432,
+            448
+          ]
+        }
+      },
+      {
+        "name": "LPV.RsmPixelToTexcoordMultiplier",
+        "changes": {
+          "offset": [
+            436,
+            452
+          ]
+        }
+      },
+      {
+        "name": "LPV.SecondaryBounceStrength",
+        "changes": {
+          "offset": [
+            444,
+            460
+          ]
+        }
+      },
+      {
+        "name": "LPV.SecondaryOcclusionStrength",
+        "changes": {
+          "offset": [
+            440,
+            456
+          ]
+        }
+      },
+      {
+        "name": "LPV.VplInjectionBias",
+        "changes": {
+          "offset": [
+            448,
+            464
+          ]
+        }
+      },
+      {
+        "name": "LPV.mEyePos",
+        "changes": {
+          "offset": [
+            368,
+            384
+          ]
+        }
+      },
+      {
+        "name": "LPV.mLightColour",
+        "changes": {
+          "offset": [
+            336,
+            352
+          ]
+        }
+      },
+      {
+        "name": "LPV.mLpvGridOffset",
+        "changes": {
+          "offset": [
+            400,
+            416
+          ]
+        }
+      },
+      {
+        "name": "LPV.mOldGridOffset",
+        "changes": {
+          "offset": [
+            384,
+            400
+          ]
+        }
+      },
+      {
+        "name": "LPV.mRsmToWorld",
+        "changes": {
+          "offset": [
+            272,
+            288
+          ]
+        }
+      },
+      {
+        "name": "ProjectionMatrix",
+        "changes": {
+          "offset": [
+            464,
+            480
+          ]
+        }
+      },
+      {
+        "name": "RWGvListBuffer",
+        "changes": {
+          "presence": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "name": "RWGvListHeadBuffer",
+        "changes": {
+          "presence": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "name": "RWVplListBuffer",
+        "changes": {
+          "presence": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "name": "RWVplListHeadBuffer",
+        "changes": {
+          "presence": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.CustomDepthTexture",
+        "changes": {
+          "offset": [
+            208,
+            232
+          ],
+          "resource_index": [
+            26,
+            29
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.CustomDepthTextureNonMS",
+        "changes": {
+          "offset": [
+            200,
+            224
+          ],
+          "resource_index": [
+            25,
+            28
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.CustomDepthTextureSampler",
+        "changes": {
+          "offset": [
+            216,
+            240
+          ],
+          "resource_index": [
+            27,
+            30
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.CustomStencilTexture",
+        "changes": {
+          "offset": [
+            224,
+            248
+          ],
+          "resource_index": [
+            28,
+            31
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.EyeAdaptation",
+        "changes": {
+          "offset": [
+            240,
+            264
+          ],
+          "resource_index": [
+            30,
+            33
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferATextureNonMS",
+        "changes": {
+          "offset": [
+            88,
+            96
+          ],
+          "resource_index": [
+            11,
+            12
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferATextureSampler",
+        "changes": {
+          "offset": [
+            136,
+            152
+          ],
+          "resource_index": [
+            17,
+            19
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferBTextureNonMS",
+        "changes": {
+          "offset": [
+            96,
+            104
+          ],
+          "resource_index": [
+            12,
+            13
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferBTextureSampler",
+        "changes": {
+          "offset": [
+            144,
+            160
+          ],
+          "resource_index": [
+            18,
+            20
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferCTextureNonMS",
+        "changes": {
+          "offset": [
+            104,
+            112
+          ],
+          "resource_index": [
+            13,
+            14
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferCTextureSampler",
+        "changes": {
+          "offset": [
+            152,
+            168
+          ],
+          "resource_index": [
+            19,
+            21
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferDTextureNonMS",
+        "changes": {
+          "offset": [
+            112,
+            120
+          ],
+          "resource_index": [
+            14,
+            15
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferDTextureSampler",
+        "changes": {
+          "offset": [
+            160,
+            176
+          ],
+          "resource_index": [
+            20,
+            22
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferETextureNonMS",
+        "changes": {
+          "offset": [
+            120,
+            128
+          ],
+          "resource_index": [
+            15,
+            16
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferETextureSampler",
+        "changes": {
+          "offset": [
+            168,
+            184
+          ],
+          "resource_index": [
+            21,
+            23
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferFTexture",
+        "changes": {
+          "presence": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferFTextureNonMS",
+        "changes": {
+          "presence": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferFTextureSampler",
+        "changes": {
+          "presence": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferVelocityTexture",
+        "changes": {
+          "offset": [
+            80,
+            88
+          ],
+          "resource_index": [
+            10,
+            11
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferVelocityTextureNonMS",
+        "changes": {
+          "offset": [
+            128,
+            144
+          ],
+          "resource_index": [
+            16,
+            18
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferVelocityTextureSampler",
+        "changes": {
+          "offset": [
+            176,
+            200
+          ],
+          "resource_index": [
+            22,
+            25
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.SceneColorCopyTexture",
+        "changes": {
+          "offset": [
+            248,
+            272
+          ],
+          "resource_index": [
+            31,
+            34
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.SceneColorCopyTextureSampler",
+        "changes": {
+          "offset": [
+            256,
+            280
+          ],
+          "resource_index": [
+            32,
+            35
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.SceneStencilTexture",
+        "changes": {
+          "offset": [
+            232,
+            256
+          ],
+          "resource_index": [
+            29,
+            32
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.ScreenSpaceAOTexture",
+        "changes": {
+          "offset": [
+            184,
+            208
+          ],
+          "resource_index": [
+            23,
+            26
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.ScreenSpaceAOTextureSampler",
+        "changes": {
+          "offset": [
+            192,
+            216
+          ],
+          "resource_index": [
+            24,
+            27
+          ]
+        }
+      },
+      {
+        "name": "ShadowParams",
+        "changes": {
+          "offset": [
+            592,
+            608
+          ]
+        }
+      },
+      {
+        "name": "ShadowViewMatrices",
+        "changes": {
+          "offset": [
+            1008,
+            1024
+          ]
+        }
+      },
+      {
+        "name": "ShadowViewProjectionMatrices",
+        "changes": {
+          "offset": [
+            624,
+            640
+          ]
+        }
+      },
+      {
+        "name": "ViewMatrix",
+        "changes": {
+          "offset": [
+            528,
+            544
+          ]
+        }
+      },
+      {
+        "name": "bClampToNearPlane",
+        "changes": {
+          "offset": [
+            608,
+            624
+          ]
+        }
+      }
+    ],
+    "member_order_match": false
+  },
+  "current_source_evidence": [
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Private/ShadowRendering.h",
+      "sha256": "7774371ba528f57e7fbdcc88995300f862f7e96f330f4b15d160c0c165400a78"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Public/SceneRenderTargetParameters.h",
+      "sha256": "ca4896e8f654e1bff763d7bb25b61e6aaaa03ea6965b651d0f78b6d82301beff"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Private/LightPropagationVolume.h",
+      "sha256": "d44a7926fea39eb22d42de8a78922ab4b1618e83d2a108f4e92e2eceda8a5d52"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/RenderCore/Public/ShaderParameterMacros.h",
+      "sha256": "6d85c6bd15b08234c93cacc78d4cc4a029e1b0017939425a381216eff457956b"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/RHI/Public/RHI.h",
+      "sha256": "fdfc50563d8d71197229036a34e619ccc4d2717fac2e74632433669afeeda110"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/RHI/Public/RHIDefinitions.h",
+      "sha256": "a81b5e11cc2b0dac79eaf908560baa5c1bba38b638a8e705f90323b1671123a6"
+    }
+  ],
+  "capture_evidence": [
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-depth-scene/member-chain.json",
+      "sha256": "0903441cfb7496590b32dbca350f48fc2ef99c9471f5b0575552c04a45daee4b"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-depth-nested/1404c9240.asm",
+      "sha256": "77444f309d6fc5eb19c608189133e98f698ac498ee02d1098b737d41a5e03132"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/shadow-depth-lpv/member-chain.json",
+      "sha256": "8056abc87306d9fb7bc9d9fa8d815250025a57e351e2f12614b453f2dbf0fd40"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/shadow-depth-lpv/1404ac130.asm",
+      "sha256": "8e063fee82108e386bef518d4b988481b52aa63a478118b6339e87ba4337703d"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/shadow-depth-identity/member-chain.json",
+      "sha256": "76ad2726b63a81c1292a6825426d0532d42dc1fb1d918e11b9e5ccf562eca8cd"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/shadow-depth-identity/1404d4ac0.asm",
+      "sha256": "7a5778cc1b41c11cfc2087f44c014765b20a10fdcf1f88ac7b8292fbd52a2c00"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/paper2d-shader-semantics/conversion/d3d.json",
+      "sha256": "72297e49189bb5c0f355eab8926dfb13c4d5947e9a54a2280ed6a72dee9da1f1"
+    }
+  ],
+  "reproduction": "From repository root: porting/.venv/bin/python -I porting/material_pipeline/view_original_probe.py --strings 146702728 146702750 --chain 14354bd10 --out porting/generated/material_pipeline/shadow-depth-identity; porting/.venv/bin/python -I porting/material_pipeline/view_original_probe.py --strings 14829f4a0 --chain 14332a230 --out porting/generated/material_pipeline/shadow-depth-lpv; reuse SceneTextures captures as recorded in translucent_depth_uniform_layout_runtime/evidence.json; python3 porting/material_pipeline/shadow_depth_layout_contract.py",
+  "limits": "Original top-level and both nested metadata independently decoded. All four wrapper resource-table slots are inactive and their recorded hashes are zero, so the computed hash is uncorroborated. Current source layout is derived, not compiled; no runtime binding or rendering validation."
+}

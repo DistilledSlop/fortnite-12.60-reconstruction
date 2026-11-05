@@ -251,3 +251,10 @@ source, with the same nested SceneTextures expansion shifting all five trailing
 members by 16 bytes. Its computed original resource hash, 206963205, matches the
 active table in shader 2470. This corroborates the original nested-resource
 order while confirming that the current pass layout requires explicit mapping.
+
+ShadowDepthPass now has a complete independently decoded 1392-byte original
+layout, including SceneTextures, LPV and both matrix arrays. Current source is
+1440 bytes, with a larger scene-texture table and four added UAVs. All four
+observed wrappers have inactive ShadowDepthPass resource tables and zero hashes;
+the computed original hash 191892491 is therefore not corroborated by them.
+This pass also needs explicit original/current binding adaptation.
