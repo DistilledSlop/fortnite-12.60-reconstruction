@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "7072320acd89eaf88a5588726933a5a3467fc23c",
- "subject": "Align matchmaking key and reject unsupported locker styles",
- "date": "2026-11-04T22:32:07-05:00",
+ "head": "31d1cbc25fe4b50e84a971c0342a5388455d513c",
+ "subject": "Update locker and matchmaking status",
+ "date": "2026-11-04T22:32:36-05:00",
  "overall_pct": 28.571,
  "measured_pct": 27.701,
  "objective_pct": 27.7,
@@ -77,7 +77,7 @@
      "evidence": "0 of 5 checks pass in the evidence ledger: wine_pak_mount missing; wine_frontend_map missing; wine_login_ui missing; wine_entitlement_passed missing; wine_lobby_reached missing",
      "basis": "git",
      "carried": false,
-     "rationale": "Five post-start Wine oracle stages: pak mount, Frontend map, login screen, AppES entitlement and lobby map. Engine startup effort and its wine_starts check belong exclusively to platform.eac_removal. Wine analysis supports reconstruction; it is not rebuilt-client acceptance. The observed run stopped at the AppES access gate. EFF-017 ownership: original Wine downstream oracle stages only. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+     "rationale": "Five post-start Wine oracle stages: pak mount, Frontend map, login screen, AppES entitlement and lobby map. Engine startup effort and its wine_starts check belong exclusively to platform.eac_removal. Wine analysis supports reconstruction; it is not rebuilt-client acceptance. The observed run stopped at the AppES access gate. EFF-017 ownership: original Wine downstream oracle stages only. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement and anti-cheat checks are not required for the rebuilt local project.",
      "evidence_links": []
     },
     {
@@ -91,7 +91,7 @@
      "evidence": "0 of 1 checks pass in the evidence ledger: wine_starts missing",
      "basis": "git",
      "carried": false,
-     "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality. The shared engine-start check and its startup effort are allocated here only; downstream Wine analysis is allocated to wine_launch. EFF-017 ownership: original Wine engine-start analysis only. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+     "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality. The shared engine-start check and its startup effort are allocated here only; downstream Wine analysis is allocated to wine_launch. EFF-017 ownership: original Wine engine-start analysis only. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement and anti-cheat checks are not required for the rebuilt local project.",
      "evidence_links": []
     },
     {
@@ -1037,7 +1037,7 @@
      "evidence": "ok OnReceivedNetworkEncryptionToken bound; ok Session key route answered by server (credit 0.5: present in source, not exercised against the client)",
      "basis": "git",
      "carried": false,
-     "rationale": "Hooks are declared. Key validity is not tested against the client. EFF-017 ownership: session crypto/token wire behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+     "rationale": "Hooks are declared. Key validity is not tested against the client. EFF-017 ownership: session crypto/token wire behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement and anti-cheat checks are not required for the rebuilt local project.",
      "evidence_links": []
     },
     {
@@ -1065,7 +1065,7 @@
      "evidence": "0 of 4 checks pass in the evidence ledger: original_client_hello missing; original_client_login missing; original_client_welcome missing; original_client_join missing",
      "basis": "git",
      "carried": false,
-     "rationale": "Acceptance stages against the reconstructed server require original-client Hello, Login, Welcome and Join evidence. The observed Wine run stopped at the AppES access gate; none of these stages has been verified. Wine oracle entitlement and lobby stages belong to platform.wine_launch. EFF-017 ownership: original-client protocol acceptance, not Wine entitlement/lobby staging. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+     "rationale": "Acceptance stages against the reconstructed server require original-client Hello, Login, Welcome and Join evidence. The observed Wine run stopped at the AppES access gate; none of these stages has been verified. Wine oracle entitlement and lobby stages belong to platform.wine_launch. EFF-017 ownership: original-client protocol acceptance, not Wine entitlement/lobby staging. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement and anti-cheat checks are not required for the rebuilt local project.",
      "evidence_links": []
     },
     {
@@ -1186,7 +1186,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md. EFF-017 ownership: local version/availability service behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+     "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md. EFF-017 ownership: local version/availability service behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement and anti-cheat checks are not required for the rebuilt local project.",
      "evidence_links": []
     },
     {
@@ -2116,7 +2116,7 @@
    "evidence": "0 of 5 checks pass in the evidence ledger: wine_pak_mount missing; wine_frontend_map missing; wine_login_ui missing; wine_entitlement_passed missing; wine_lobby_reached missing",
    "basis": "git",
    "carried": false,
-   "rationale": "Five post-start Wine oracle stages: pak mount, Frontend map, login screen, AppES entitlement and lobby map. Engine startup effort and its wine_starts check belong exclusively to platform.eac_removal. Wine analysis supports reconstruction; it is not rebuilt-client acceptance. The observed run stopped at the AppES access gate. EFF-017 ownership: original Wine downstream oracle stages only. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+   "rationale": "Five post-start Wine oracle stages: pak mount, Frontend map, login screen, AppES entitlement and lobby map. Engine startup effort and its wine_starts check belong exclusively to platform.eac_removal. Wine analysis supports reconstruction; it is not rebuilt-client acceptance. The observed run stopped at the AppES access gate. EFF-017 ownership: original Wine downstream oracle stages only. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement and anti-cheat checks are not required for the rebuilt local project.",
    "evidence_links": []
   },
   {
@@ -2130,7 +2130,7 @@
    "evidence": "0 of 1 checks pass in the evidence ledger: wine_starts missing",
    "basis": "git",
    "carried": false,
-   "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality. The shared engine-start check and its startup effort are allocated here only; downstream Wine analysis is allocated to wine_launch. EFF-017 ownership: original Wine engine-start analysis only. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+   "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality. The shared engine-start check and its startup effort are allocated here only; downstream Wine analysis is allocated to wine_launch. EFF-017 ownership: original Wine engine-start analysis only. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement and anti-cheat checks are not required for the rebuilt local project.",
    "evidence_links": []
   },
   {
@@ -3040,7 +3040,7 @@
    "evidence": "ok OnReceivedNetworkEncryptionToken bound; ok Session key route answered by server (credit 0.5: present in source, not exercised against the client)",
    "basis": "git",
    "carried": false,
-   "rationale": "Hooks are declared. Key validity is not tested against the client. EFF-017 ownership: session crypto/token wire behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+   "rationale": "Hooks are declared. Key validity is not tested against the client. EFF-017 ownership: session crypto/token wire behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement and anti-cheat checks are not required for the rebuilt local project.",
    "evidence_links": []
   },
   {
@@ -3068,7 +3068,7 @@
    "evidence": "0 of 4 checks pass in the evidence ledger: original_client_hello missing; original_client_login missing; original_client_welcome missing; original_client_join missing",
    "basis": "git",
    "carried": false,
-   "rationale": "Acceptance stages against the reconstructed server require original-client Hello, Login, Welcome and Join evidence. The observed Wine run stopped at the AppES access gate; none of these stages has been verified. Wine oracle entitlement and lobby stages belong to platform.wine_launch. EFF-017 ownership: original-client protocol acceptance, not Wine entitlement/lobby staging. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+   "rationale": "Acceptance stages against the reconstructed server require original-client Hello, Login, Welcome and Join evidence. The observed Wine run stopped at the AppES access gate; none of these stages has been verified. Wine oracle entitlement and lobby stages belong to platform.wine_launch. EFF-017 ownership: original-client protocol acceptance, not Wine entitlement/lobby staging. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement and anti-cheat checks are not required for the rebuilt local project.",
    "evidence_links": []
   },
   {
@@ -3180,7 +3180,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md. EFF-017 ownership: local version/availability service behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+   "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md. EFF-017 ownership: local version/availability service behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement and anti-cheat checks are not required for the rebuilt local project.",
    "evidence_links": []
   },
   {
