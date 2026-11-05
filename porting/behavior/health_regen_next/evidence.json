@@ -1,0 +1,62 @@
+{
+  "source_image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "search": "Scan image for E9 rel32 branches to 0x142abf2d0 and absolute qword occurrences of each resulting branch address.",
+  "branch_targets": [
+    {
+      "address": "0x142abf830",
+      "pointer_occurrences": [
+        "0x1464847d0",
+        "0x146503990"
+      ]
+    }
+  ],
+  "interpretation": "0x1464847d0 is the known AFortPawn interface row, with 0x4f8 offset; 0x146503990 is a function/name registration pair. This search does not exclude alternate thunk instruction sequences or inherited/Blueprint implementors.",
+  "reflected_pawn_descendants": [
+    {
+      "class": "AFortAIBuddy",
+      "block": "0x1462a3070"
+    },
+    {
+      "class": "AFortAIPawn",
+      "block": "0x1462afb30"
+    },
+    {
+      "class": "AFortBotPawn",
+      "block": "0x146342100"
+    },
+    {
+      "class": "AFortCharacterVehicle_Ostrich",
+      "block": "0x146350360"
+    },
+    {
+      "class": "AFortCharacterVehicle",
+      "block": "0x146350a00"
+    },
+    {
+      "class": "AFortPawn_InteractablePawn",
+      "block": "0x146489550"
+    },
+    {
+      "class": "AFortPawn_Taker",
+      "block": "0x1464896c0"
+    },
+    {
+      "class": "AFortPawn_FeedbackAnnouncer",
+      "block": "0x146489a10"
+    },
+    {
+      "class": "AFortPlayerPawn",
+      "block": "0x1464c3f90"
+    },
+    {
+      "class": "AFortPlayerPawnAthena",
+      "block": "0x1464cd530"
+    },
+    {
+      "class": "AFortRemoteControlledPawnAthena",
+      "block": "0x146503240"
+    }
+  ],
+  "remaining": "Recover derived interface vtable slots and other possible registration thunk forms; reconstruct complete UHT interface declarations, native bases, overrides, and wrappers before promotion. No wrapper bodies are proposed while closure is incomplete."
+}

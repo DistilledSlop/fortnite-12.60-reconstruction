@@ -59811,5 +59811,18 @@
     "status": "ported",
     "includes": [],
     "notes": "Two field copies to out parameters; signature order taken from parameter offsets (flagged in evidence); build pending; source proposal, not runtime parity."
+  },
+  {
+    "class": "AFortPlayerControllerSpectating",
+    "function": "GetBlendType",
+    "kind": "exec",
+    "signature": "EFortSpectatorBlendType GetBlendType() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/next_recovery_batch/AFortPlayerControllerSpectating_GetBlendType.inc",
+    "address": "0x1409aca00",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported"
   }
 ]

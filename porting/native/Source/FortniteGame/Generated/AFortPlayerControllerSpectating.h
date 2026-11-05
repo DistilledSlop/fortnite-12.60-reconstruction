@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerControllerGameplay.h"
 
+#include "EFortSpectatorBlendType.h"
 #include "EPlayEventType.h"
 #include "ESpectatorCameraType.h"
 #include "FNoParamDelegate.h"
@@ -244,6 +245,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void FullScreenMapCursorStopDrag();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortSpectatorBlendType GetBlendType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual AFortPlayerState* GetFollowedPlayer() const;
