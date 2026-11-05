@@ -55,6 +55,19 @@ attachment, binding and value producers remain unfinished. See the
 [batch evidence receipt](../behavior/paper2d_output_batch_runtime/evidence.json)
 and [original loose identity evidence](../behavior/paper2d_loose_contracts_runtime/evidence.json).
 
+`LoadLegacyOriginalUniformBindings` parses the caller-pinned contract bundle once,
+validates its full inventory and returns fixed contracts and Material binding
+receipts indexed by archive shader. `PrepareLegacyPaper2DOutputBatch` combines
+those bindings with the pinned manifest, decoded material, recovered loose
+contracts and the factory's actual Material metadata for each occurrence. Fixed
+contracts receive independent original layout targets; Material uses factory
+metadata and has no original target. The returned record contracts retain both
+the original contracts and target owners for later buffer construction; callers
+must keep the owners alive while their layouts are in use. All output arrays
+remain unchanged on failure. This bridge is source-reviewed only and installs no
+provider or renderer binding; missing producer values still require explicit
+repacker inputs.
+
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 
 | Explicit layout | Index | Compression |

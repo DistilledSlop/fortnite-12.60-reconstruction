@@ -1,0 +1,24 @@
+{
+  "schema": "paper2d-uniform-draw-binding-source-review-v1",
+  "sources": [
+    "porting/native/Source/FortniteGame/Private/LegacyLocalVFUniformBindings.h",
+    "porting/native/Source/FortniteGame/Private/LegacyLocalVFUniformBindings.cpp"
+  ],
+  "implemented": [
+    "Validates installed shader platform/frequency, actual draw-binding layout and RHI shader compiled output hash, including configurations without editor-only FShader output hashes.",
+    "Matches explicit input data by original D3D source register, then binds using the converted ParameterMap remapped uniform index. Every prepared contract and shader uniform slot must be covered exactly once.",
+    "Creates original-layout RHI buffers from current CPU parameter bytes and explicit member overrides, validates prepared target layouts, and uses an explicit actual Material expression buffer.",
+    "Completes fallible checks and buffer creation before writing draw bindings. Returns strong RHI references which callers must retain through draw-command release."
+  ],
+  "engine_contracts": {
+    "binding": "Renderer/Public/MeshDrawShaderBindings.h: FMeshDrawSingleShaderBindings::Add stores raw RHI uniform pointers using FShaderUniformBufferParameter::GetBaseIndex.",
+    "output_identity": "RenderCore/Private/ShaderResource.cpp: FShaderMapResource_InlineCode::CreateRHIShader sets FRHIShader hash from the compiled code entry. FShader::GetHash is a source hash and GetOutputHash is editor-only."
+  },
+  "verification": "Bounded source/API review and diff checks only; no build or runtime verification.",
+  "remaining": [
+    "No pass/provider calls this bridge yet.",
+    "Caller must supply correct current producer bytes, complete missing original member values and resource ownership; no aliases or semantic defaults are inferred.",
+    "Loose parameters and other mesh resources remain the pass caller's responsibility.",
+    "RHI references returned by this bridge must outlive all raw mesh draw bindings using them."
+  ]
+}

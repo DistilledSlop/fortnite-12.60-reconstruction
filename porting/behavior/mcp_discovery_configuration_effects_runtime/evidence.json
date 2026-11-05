@@ -12,13 +12,13 @@
   ],
   "override_branch": [
     "0x1422c05b1-0x1422c05cd calls 0x142caa880 on the object from 0x142c70dc0 with UTF-16 AuthClient= at 0x14610b448, output local rbp+0xf, and r9b=1. If true, 0x1422c05d5-0x1422c05f3 repeats with AuthSecret= at 0x14610b460 and output rbp-0x1. Only if both calls return nonzero does execution take the path at 0x1422c05f9.",
-    "0x1422c05f9-0x1422c06a2 copies three FString-shaped values into adjacent locals rbp-0x39, rbp-0x29 and rbp-0x19: respectively global string at 0x1480df850, AuthClient output, and AuthSecret output. 0x1422c06a7-0x1422c06b6 passes the resulting 0x30-byte record to the collection at argument4+0xa8. Then 0x1422c06bb-0x1422c06e4 cleans up remaining temporary buffers and branches to shared cleanup. The called getter's precise parser behavior and the semantic identity of the global string are not established."
+    "0x1422c05f9-0x1422c06a2 copies three FString-shaped values into adjacent locals rbp-0x39, rbp-0x29 and rbp-0x19: respectively global string at 0x1480df850, AuthClient output, and AuthSecret output. 0x1422c06a7-0x1422c06b6 passes the resulting 0x30-byte record to the collection at argument4+0xa8. Then 0x1422c06bb-0x1422c06e4 cleans up remaining temporary buffers and branches to shared cleanup. The parser is characterized below; the semantic identity of the global string remains unresolved."
   ],
   "collection_effect": [
     "0x1422b28b0 first calls 0x140d4b820 for a match. That routine iterates 0x30-byte records (0x140d4b834-0x140d4b849 and 0x140d4b8ac) and compares string fields at offsets +0x10 and +0 via 0x142bcf780 (0x140d4b851-0x140d4b8aa). If the call returns -1, 0x1422b28d3-0x1422b28f4 increments collection count at +0x8, grows capacity as needed, and indexes a new 0x30-byte element. 0x1422b28fa-0x1422b2959 transfers all three FString-shaped fields at record offsets +0, +0x10, +0x20 and clears the source fields. A matching pair causes no append. The third string does not participate in the comparisons visible here; an existing matching record is not overwritten by this helper.",
     "Another path reaches the same collection call at 0x1422c141a-0x1422c1429 with a record copied from the global string and selected embedded constants. Those constants may be credential material and are intentionally not reproduced. The bounded trace does not establish which value is a client identifier or secret for each constant."
   ],
-  "limits": "Branches beyond the explicit paired overrides and selected embedded-constant path were not exhaustively traced. 0x1422c1472 checks collection count after a separate call path and may perform additional actions, not characterized here. No concrete host or endpoint assignment, complete fallback configuration tree, canonical deployment effects, or live behavior is established. No native edits, build, runtime, or tests.",
+  "limits": "Branches beyond the explicit paired overrides and selected embedded-constant path were not exhaustively traced. 0x1422c1472 checks collection count after a separate call path and may perform additional actions, not characterized here. No concrete host or endpoint assignment, complete fallback configuration tree, canonical deployment effects, or live behavior is established. Native source only; build, runtime and tests pending.",
   "native_implementation": {
     "sources": [
       "porting/native/Source/FortniteGame/Private/LegacyMcpConfiguration.h",
@@ -27,9 +27,10 @@
     "implemented": [
       "Collection searches existing records in order, compares Client then Key with ASCII-only case folding and NUL termination, and preserves the first match including its third field.",
       "On no match, appends all three fields and clears the incoming record.",
-      "Paired override path queries AuthClient= before AuthSecret= with separator stopping enabled; only two successful getters copy the externally supplied first field and submit the record."
+      "Paired override path queries AuthClient= before AuthSecret= with separator stopping enabled; only two successful getters copy the externally supplied first field and submit the record.",
+      "Explicit NUL-terminated caller-supplied command-line overload uses Engine FParse::Value for the paired ASCII argument names; no process command line is read."
     ],
-    "integration_boundary": "Argument parsing is an explicit context callback; global first-field identity, embedded fallback branches and live discovery registration remain unresolved.",
+    "integration_boundary": "The caller supplies the command-line stream or an argument callback; global first-field identity, embedded fallback branches and live discovery registration remain unresolved.",
     "verification": "Original bounded instruction review and native source review only; build and runtime pending.",
     "instruction_windows": [
       {
@@ -51,8 +52,34 @@
         "address": "0x1465b3720",
         "size": 128,
         "sha256": "fc5b9b2c32b0ecc0354c66f03e60790599a8fbae3511b2b60b2c0f7f27b6ceae"
+      },
+      {
+        "address": "0x142caa880",
+        "size": 504,
+        "sha256": "07e13288364a7c75141969e49e332c8a1ec95e0b9315b9743dde530776bd0500"
+      },
+      {
+        "address": "0x142caabb0",
+        "size": 598,
+        "sha256": "7f8ba075d05668d37e38c395a1c302beb2197aff8627e615b8c75d169913ad59"
+      },
+      {
+        "address": "0x142bcf940",
+        "size": 115,
+        "sha256": "731aa81f57c1c7261dde2f65ecb60063c17b0194f7f5cb6ec84276f4aa63894c"
+      },
+      {
+        "address": "0x1465de450",
+        "size": 10,
+        "sha256": "8d10d1f0c37f511192e8f14eab5dde9d4594d01ff3142551688e54a77dcaeab1"
       }
     ],
-    "comparison_proof": "0x142bcf790 loads UTF-16 words until NUL. On unequal ASCII words, 0x142bcf7ab-0x142bcf7c8 uses the table at 0x1465b3720; all 128 entries independently match A-Z to lowercase, all others unchanged. Unequal non-ASCII words are not case-folded. 0x140d4b877 compares both record/input +0x10; 0x140d4b8a3 compares both +0 only after that succeeds."
+    "comparison_proof": "0x142bcf790 loads UTF-16 words until NUL. On unequal ASCII words, 0x142bcf7ab-0x142bcf7c8 uses the table at 0x1465b3720; all 128 entries independently match A-Z to lowercase, all others unchanged. Unequal non-ASCII words are not case-folded. 0x140d4b877 compares both record/input +0x10; 0x140d4b8a3 compares both +0 only after that succeeds.",
+    "parser_proof": [
+      "Getter 0x142caa880 returns false for null stream; stream length below 4096 uses a zeroed 4096-TCHAR buffer, otherwise allocates stream length plus one TCHAR. Both call 0x142caabb0 with the separator flag as fifth argument. Failure leaves the output untouched; success assigns the temporary string.",
+      "0x142caabb0 scans outside double-quoted regions, toggling on each quote, and requires the preceding character not be an ASCII letter or digit. Matching is ASCII case insensitive for these ASCII keys; 0x142bcf940 uses ASCII-only folding for the remainder. The first match wins. Quotes have no escape handling in this scan.",
+      "Immediately after a match, an opening double quote selects quoted extraction through the next double quote or NUL; separators and whitespace are retained. Otherwise it skips leading space, CR, LF and tab, then stops at the first of those characters and, when the fifth argument is true, comma or closing parenthesis. Empty values succeed.",
+      "Engine Core/Private/Misc/Parse.cpp FParse::Value and Core/Public/Misc/CString.h Strifind implement the same wrapper, scan and extraction for the two fixed ASCII keys. This comparison does not assert equivalent non-ASCII matching for arbitrary keys."
+    ]
   }
 }

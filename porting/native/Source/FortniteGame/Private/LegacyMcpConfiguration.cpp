@@ -1,4 +1,5 @@
 #include "LegacyMcpConfiguration.h"
+#include "Misc/Parse.h"
 
 // Original collection helpers 0x140d4b820 and 0x1422b28b0; comparator
 // 0x142bcf780. See mcp_discovery_configuration_effects_runtime/evidence.json.
@@ -21,6 +22,18 @@ bool EqualOriginalString(const FString& Left, const FString& Right)
     }
     return false;
 }
+
+class FExplicitMcpConfigurationArguments final : public ILegacyMcpConfigurationArguments
+{
+public:
+    explicit FExplicitMcpConfigurationArguments(const TCHAR* InStream) : Stream(InStream) {}
+    virtual bool ReadArgument(const TCHAR* Match, FString& Out, bool bStopOnSeparator) override
+    {
+        return FParse::Value(Stream, Match, Out, bStopOnSeparator);
+    }
+private:
+    const TCHAR* Stream;
+};
 }
 
 int32 AppendLegacyMcpConfiguration(TArray<FLegacyMcpConfigurationRecord>& Records,
@@ -48,4 +61,11 @@ bool ApplyLegacyMcpConfigurationOverrides(const FString& Key,
     Incoming.Key = Key;
     AppendLegacyMcpConfiguration(Records, Incoming);
     return true;
+}
+
+bool ApplyLegacyMcpConfigurationOverrides(const FString& Key,
+    const TCHAR* CommandLine, TArray<FLegacyMcpConfigurationRecord>& Records)
+{
+    FExplicitMcpConfigurationArguments Arguments(CommandLine);
+    return ApplyLegacyMcpConfigurationOverrides(Key, Arguments, Records);
 }

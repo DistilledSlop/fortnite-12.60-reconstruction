@@ -21,8 +21,7 @@ int32 AppendLegacyMcpConfiguration(TArray<FLegacyMcpConfigurationRecord>& Record
 struct ILegacyMcpConfigurationArguments
 {
     virtual ~ILegacyMcpConfigurationArguments() = default;
-    // Original argument getter 0x142caa880. Its complete parsing contract and
-    // live command-line source remain the integration caller's responsibility.
+    // Original argument getter 0x142caa880. The caller supplies the source.
     virtual bool ReadArgument(const TCHAR* Match, FString& Out, bool bStopOnSeparator) = 0;
 };
 
@@ -32,3 +31,8 @@ struct ILegacyMcpConfigurationArguments
 bool ApplyLegacyMcpConfigurationOverrides(const FString& Key,
     ILegacyMcpConfigurationArguments& Arguments,
     TArray<FLegacyMcpConfigurationRecord>& Records);
+
+// Uses the supplied NUL-terminated command-line stream, without obtaining a
+// process command line. A null stream causes the first query to fail.
+bool ApplyLegacyMcpConfigurationOverrides(const FString& Key,
+    const TCHAR* CommandLine, TArray<FLegacyMcpConfigurationRecord>& Records);
