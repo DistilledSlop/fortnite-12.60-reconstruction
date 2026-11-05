@@ -1,0 +1,105 @@
+{
+  "capture": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "method": "Whole mapped image byte scan for x86-64 REX.W RIP-relative LEA targeting 0x1466f23a8; two hits: 0x143473a41 and 0x14347840a. Targeted instruction windows decoded with objdump; apparent second hit is destructor, not allocation constructor.",
+  "windows": [
+    {
+      "name": "constructor_install_lea",
+      "va": "0x143473a2c",
+      "length": "0x42",
+      "sha256": "9319a7f1313245a53f1e99c2fa4d8ac36123071f24768135a524297c86964de1",
+      "bytes": "48895110488d592033ff4863ac24f8000000896908488d0560e927034889791841bfffffffff48893b450fb6e148897b084c8bea48897b104c8bf148897b1848897b"
+    },
+    {
+      "name": "constructor_install_store",
+      "va": "0x143473ae9",
+      "length": "0x3",
+      "sha256": "9889d05b5e5b5a26684ba615a0d82427fab5889689446a219d9d9614464efba4",
+      "bytes": "488901"
+    },
+    {
+      "name": "constructor_world_install",
+      "va": "0x143474b81",
+      "length": "0xb",
+      "sha256": "134eaa1a7cfb877d7895db917dc0a9935c4f7d055cb25a41dc9ee82e4defcca0",
+      "bytes": "498b46104c89b0b0010000"
+    },
+    {
+      "name": "constructor_scene_field_init",
+      "va": "0x1434744bd",
+      "length": "0xe",
+      "sha256": "afdc15d7b2df65fa9c0b44608bc4da3d33890f68816fd9066537c1650ffafef5",
+      "bytes": "4989ae181400004989ae20140000"
+    },
+    {
+      "name": "factory_constructor_call",
+      "va": "0x143482d8d",
+      "length": "0x35",
+      "sha256": "9f9cb3c76f006a86f9849498c624763d88c4e9b1dec15af6e2acdd9eb34a69ed",
+      "bytes": "b9d05d0000e8091ff0fd4885c074248b4c24704533c9894c2428440fb6c7488bc840886c2420488bd6e8550cffff488bf8eb0233ff"
+    },
+    {
+      "name": "factory_alternative_scene",
+      "va": "0x143482de2",
+      "length": "0x35",
+      "sha256": "38e15efd847a5ce8de158aec664375df7a22aa862c5e5e08b7fabacc26cf05f0",
+      "bytes": "b920000000e8b41ef0fd33ff488bd84885c074428b0d287b7e04894808488d052a1727034889034889731048897b1848899eb00100"
+    },
+    {
+      "name": "component_world_scene_load",
+      "va": "0x144136b39",
+      "length": "0x2a",
+      "sha256": "a5e602f0818b354b9bc4e84643e5a9ab6bdb8a78bb977323e16bdba84d824176",
+      "bytes": "488b87a80000004889b7880200004885c07508488bcfe80cc7f7ff488b8fa0000000488bb0b001000048"
+    },
+    {
+      "name": "component_submit",
+      "va": "0x144136c1c",
+      "length": "0x16",
+      "sha256": "90e4b1bde6a86729e269afd7a53c88ce9c8b4e82d0d20250acdf18eee53e6d58",
+      "bytes": "41b001488b06488bce488b9788020000ff90b8010000"
+    },
+    {
+      "name": "scene_vtable_slot_submit",
+      "va": "0x1466f2560",
+      "length": "0x8",
+      "sha256": "ca164aa46aac741be866cff970595b0a7999e6818cfa4a53074d833160c61cf2",
+      "bytes": "e0b9554301000000"
+    },
+    {
+      "name": "scene_vtable_slot_get_scene",
+      "va": "0x1466f25f0",
+      "length": "0x8",
+      "sha256": "6ed0816c792e1999e4a4353650b641f2cbeb8843443da7e40dafa8bc910b4d53",
+      "bytes": "00ac694001000000"
+    },
+    {
+      "name": "get_scene_returns_this",
+      "va": "0x14069ac00",
+      "length": "0x4",
+      "sha256": "cbc18d5e3d66ae414162c4a417b073a375f2804b50567d073ef1c62e50d8d523",
+      "bytes": "488bc1c3"
+    },
+    {
+      "name": "producer_scene_virtual",
+      "va": "0x1434ef96f",
+      "length": "0x18",
+      "sha256": "454628f103434ad101f2869b815e34d783ac6721e18d69eccacec0b6c10f2691",
+      "bytes": "498b06488b48204885c9740c488b01ff90480200004c8bf8"
+    },
+    {
+      "name": "producer_scene_field",
+      "va": "0x1434efe54",
+      "length": "0x11",
+      "sha256": "5cca55a85a85332e92bd23fcac41179ffc65d1c1ade6200cf00703547c807e06",
+      "bytes": "498b8f20140000488b81c8000000488b19"
+    }
+  ],
+  "findings": [
+    "Constructor 0x143473a10 stores incoming RDX at scene+0x10, installs vtable 0x1466f23a8 at scene+0, initializes scene+0x1420, and stores scene at [scene+0x10]+0x1b0 at 0x143474b81..b8b.",
+    "Factory 0x143482d50 conditionally allocates 0x5dd0 bytes and calls constructor 0x143473a10 with its incoming RDX, returning the constructed object. An alternate branch creates an object with vtable 0x1466f4530 and also assigns it to input+0x1b0; the factory condition matters.",
+    "Component 0x144136a00 obtains a world-like pointer via component+0xa8 or 0x1440b3260, reads that pointer+0x1b0 into RSI at 0x144136b5b, then calls its slot+0x1b8 at 0x144136c2c. The candidate vtable slot+0x1b8 points to 0x14355b9e0.",
+    "Candidate vtable slot+0x248 points to 0x14069ac00 (mov rax,rcx; ret). Producer 0x1434ef810 obtains a pointer from [[input RCX]+0x20], calls its virtual slot+0x248, and uses the return as the object whose +0x1420 is dereferenced. Therefore, when that input is the candidate scene, the producer uses the identical scene object."
+  ],
+  "qualification": "Static instruction chain proves candidate constructor installs the table and publishes that object to the same +0x1b0 field used by the component, and proves producer slot+0x248 returns the candidate scene itself. It does not independently establish that producer input [[RCX]+0x20] and component world are the same actual runtime instance, nor that the factory took the candidate branch in the observed session. A runtime pointer/vtable capture or additional call-chain proof is needed for unconditional identity; no physical units inferred."
+}

@@ -228,8 +228,8 @@
     "SkyAtmosphereCommonData.cpp:42-43 constructs current bottom radius from component BottomRadius and top radius from BottomRadius + AtmosphereHeight. The original component-to-proxy instructions independently establish matching arithmetic, but the scene vtable identity and units remain open."
   ],
   "bounded_radii_followup": {
-    "result": "Original component-to-proxy radius arithmetic is proven with no scaling; matching scene-to-View bridge recovered, but scene virtual table identity and original physical units remain unproved.",
-    "next_trace": "Verify the scene object used at 0x144136c2c installs vtable 0x1466f23a8, and find original property metadata or conversion establishing units.",
+    "result": "Original component-to-proxy radius arithmetic has no scaling. Scene constructor installation, world publication and producer identity slot now establish the conditional static bridge. Actual instance identity, factory branch and physical units remain unproved.",
+    "next_trace": "Establish the producer input scene and component world resolve to the same instance and candidate factory branch; establish physical units independently.",
     "component_constructor_candidate": "SkyAtmosphereComponent class singleton 0x1447eaff0 registers constructor thunk 0x1447ebd10, which jumps to 0x14412d9d0. The latter installs vtable 0x146a50e18 and writes float defaults 6360 at component +0x1f0 and 60 at +0x1f8; these offsets and values do not prove connection to the View producer object or the units.",
     "component_constructor_assembly": [
       "14412d9de MOVAPS XMM0,xmmword ptr [0x14603bb20]",
@@ -356,7 +356,8 @@
       "formula": "0x1446a5852..587c copies component +0x1f0 as 32-bit bits to allocation +0x10, and stores float32(component +0x1f8 + component +0x1f0) to allocation +0x14; there is no scaling in these writes.",
       "renderer_bridge": "0x14355b9e0 saves incoming scene RCX and proxy RDX into the command at stack +0x20/+0x28; 0x143559950 receives that command, allocates a wrapper, calls 0x143558730 with RDX=proxy, then stores wrapper to scene+0x1420. 0x143558738 sets wrapper+0 to proxy. View reads [[scene+0x1420]] then proxy+0x10/+0x14. Removal path 0x14355969e..a2 selects the last remaining proxy wrapper at scene+0x1420.",
       "qualification": "0x14355b9e0 is found in original image at 0x1466f2560, consistent with a scene vtable base of 0x1466f23a8 and virtual slot +0x1b8, but this bounded capture does not independently prove that vtable is installed on the scene object reached by the component call. Thus the matching renderer bridge remains a well-supported candidate, not a complete runtime identity proof. Default values and comparison with current source support kilometre interpretation but do not independently prove original units; do not promote a units alias solely on this evidence."
-    }
+    },
+    "scene_constructor_followup": "../scene_radius_vtable_runtime/evidence.json"
   },
   "native_depth_kernel": {
     "sources": [
@@ -373,5 +374,22 @@
       "Inputs are explicit original values; this API does not read current CVars, identify the original view fields, obtain scene objects or attach a renderer provider.",
       "Source/instruction review only; build, generated instruction selection, special floating-point behavior and runtime output are pending verification."
     ]
+  },
+  "current_image_verification": {
+    "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+    "note": "The top-level digest is retained from the earlier capture record and differs from the current file. Current verification covers the listed radius windows and native depth helper window only; it does not reauthenticate every older Ghidra instruction excerpt.",
+    "matched_radius_windows": [
+      "component_vtable_slot",
+      "component_create_proxy",
+      "component_submit_proxy",
+      "setup_radius_writes",
+      "renderer_command_pack",
+      "renderer_add_command",
+      "renderer_wrapper_constructor",
+      "view_pointer_and_copy",
+      "view_radius_copy",
+      "renderer_vtable_slot_candidate"
+    ],
+    "matched_depth_helper": "0x143579e10"
   }
 }
