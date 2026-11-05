@@ -9,6 +9,7 @@
 #include "EFortAILODLevel.h"
 #include "EFortReplicatedStat.h"
 #include "ERiftCosmeticState.h"
+#include "GameplayTagContainer.h"
 
 class AActor;
 class AFortPawn;
@@ -718,6 +719,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec)
+	void HideHUDElement(FGameplayTag HUDElementTag);
+public:
+
+protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void KillBots(bool bKillPlayers, bool bKillNoneParticipants, uint8 TeamIndex);
 public:
@@ -1368,6 +1374,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void ShowHighlightSummary();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ShowHUDElement(FGameplayTag HUDElementTag);
 public:
 
 protected:

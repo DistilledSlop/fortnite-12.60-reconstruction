@@ -62037,5 +62037,37 @@
     "static": false,
     "notes": "Shared wrapper steps one class argument and calls Stub_Empty; build and runtime pending.",
     "class": "AFortPlayerPawn"
+  },
+  {
+    "class": "UFortCheatManager",
+    "function": "HideHUDElement",
+    "kind": "exec",
+    "signature": "void HideHUDElement(FGameplayTag HUDElementTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage064_new/empty.inc",
+    "address": "0x1406969b0",
+    "native_body_address": "0x1406801c0",
+    "reflection_flags": "0x80601",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Shared wrapper steps one GameplayTag argument and invokes bare-return native target."
+  },
+  {
+    "class": "UFortCheatManager",
+    "function": "ShowHUDElement",
+    "kind": "exec",
+    "signature": "void ShowHUDElement(FGameplayTag HUDElementTag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage064_new/empty.inc",
+    "address": "0x1406969b0",
+    "native_body_address": "0x1406801c0",
+    "reflection_flags": "0x80601",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Shared wrapper steps one GameplayTag argument and invokes bare-return native target."
   }
 ]
