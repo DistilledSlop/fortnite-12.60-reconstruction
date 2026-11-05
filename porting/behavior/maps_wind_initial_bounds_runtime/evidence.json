@@ -1,5 +1,5 @@
 {
-  "status": "INTEGRATED_SOURCE_BUILD_PENDING",
+  "status": "INTEGRATED_CLIENT_BUILD_PASSED_CALLER_PENDING",
   "function": "0x141dc7100",
   "signature": "FBox AFortWindManager::GetInitialWindBounds() (name provisional; Win64 hidden return pointer in RDX)",
   "evidence": [
@@ -35,5 +35,5 @@
     "AFortStaticMeshActor": "Handwritten reflection-compatible class in FortniteMapClasses.h derives AStaticMeshActor; omitted from generated native set intentionally."
   },
   "implementation": "AFortWindManager_NativeGetInitialWindBounds.inc uses default TActorIterator flags, FBox union, and NativeClipWindImpulseBounds for ordered overlap regardless of validity.",
-  "integration": "Global manifest and generated Native source include initial bounds and the logical structural support bounds field. Generator accepted 4007 entries with zero rejects after narrow handwritten AFortStaticMeshActor support validation. New source is after screenshot build6d0f22d8; caller/setter lifecycle remains incomplete."
+  "integration": "Global manifest and generated Native source include initial bounds and logical structural support bounds field; client builde0ad5c03 passed after resolving the complete support type dependency. Caller/setter lifecycle and runtime bounds behavior remain incomplete."
 }

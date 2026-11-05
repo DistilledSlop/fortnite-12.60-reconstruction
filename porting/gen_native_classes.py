@@ -2472,6 +2472,10 @@ _pending_save_spec = _common_activation_import.spec_from_file_location(
     "pending_save_policy", os.path.join(os.path.dirname(__file__), "behavior", "pending_save_membership_runtime", "source_policy.py"))
 _pending_save_policy = _common_activation_import.module_from_spec(_pending_save_spec)
 _pending_save_spec.loader.exec_module(_pending_save_policy)
+_world_record_action_spec = _common_activation_import.spec_from_file_location(
+    "world_record_action_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_world_record_action_types_runtime", "support.py"))
+_world_record_action_policy = _common_activation_import.module_from_spec(_world_record_action_spec)
+_world_record_action_spec.loader.exec_module(_world_record_action_policy)
 _replay_spectator216_spec = _common_activation_import.spec_from_file_location(
     "replay_spectator216_policy", os.path.join(os.path.dirname(__file__), "behavior", "replay_spectator216_runtime", "source_policy.py"))
 _replay_spectator216_policy = _common_activation_import.module_from_spec(_replay_spectator216_spec)
@@ -4087,6 +4091,7 @@ def promote(args):
                                     if 'AFortGameStateAthena' in listed else None)
     profile_entry_sources = _profile_entry_policy.sources() if 'UMcpProfile' in listed else None
     pending_save_sources = _pending_save_policy.sources() if 'UFortMcpProfileWorld' in listed else None
+    world_record_action_sources = _world_record_action_policy.sources() if 'AFortWorldManager' in listed else None
     _kismet_geometry_policy.validate()
     _pawn_cues_policy.validate()
     asset_diagnostic_sources = _asset_diagnostic_policy.sources() if 'UFortAssetManager' in listed else None
@@ -4215,12 +4220,13 @@ def promote(args):
         "interface_packages": iface_packages,
         # Only headers actually scheduled for emission qualify; arbitrary source-tree
         # files (including stale Native output) must not authorize snippet includes.
-        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources, profile_entry_sources, pending_save_sources, asset_diagnostic_sources)
+        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources, profile_entry_sources, pending_save_sources, world_record_action_sources, asset_diagnostic_sources)
                                       for filename in (bundle or {}) if filename.endswith(".h")},
         "button_feedback_sound_identity_proven": 'UCommonButton' in listed,
         "other_promoted": {n for b, n in names.items()
                            if n not in listed and (parents.get(b) or {}).get("package") in PROMOTE_PACKAGES},
     }
+    _world_record_action_policy.validate(splice_ctx, snippets_by_class)
     splice_done, splice_rejects = [], []
     if animated_switcher_sources:
         if 'UCommonActivatableWidget' not in listed:
@@ -4583,6 +4589,10 @@ def promote(args):
                 fh.write(text)
     if asset_diagnostic_sources:
         for filename, text in asset_diagnostic_sources.items():
+            with open(os.path.join(args.source_root, 'FortniteGame', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
+    if world_record_action_sources:
+        for filename, text in world_record_action_sources.items():
             with open(os.path.join(args.source_root, 'FortniteGame', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(text)
     if pending_save_sources:

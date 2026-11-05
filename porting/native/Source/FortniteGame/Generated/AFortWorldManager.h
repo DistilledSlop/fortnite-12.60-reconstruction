@@ -20,6 +20,9 @@
 #include "FFortTileLootData.h"
 #include "FFortWindIntensityAndDirection.h"
 #include "FWorldTileSubArray.h"
+#include "FortAssets.h"
+#include "FortDelayedObjectLoader.h"
+#include "FortWorldRecordAction.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 #include "SharedFortGameLog.h"
@@ -176,6 +179,9 @@ public:
 	UPROPERTY()
 	UFortZoneRecord* CurrentZoneRecord;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x6c0): not a UPROPERTY, not replicated.
+	TArray<FFortWorldRecordAction> NativeWorldRecordActions_0x6c0;
+
 	// table index 19, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortUserCloudHelperComponent* CloudHelper;
@@ -249,5 +255,7 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static AFortWorldManager* NativeResolveWorldManager(const UObject* WorldContextObject);
 	bool NativeGetDifficultyRowForPIE(FDataTableRowHandle& OutDifficulty);
+	bool NativeFindGlobalWind(FFortWindIntensityAndDirection& OutWind);
+	bool NativeFindGlobalWindValues(float& OutIntensity, FVector& OutDirection);
 };
 

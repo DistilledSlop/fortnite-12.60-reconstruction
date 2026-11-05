@@ -6,24 +6,13 @@
     "0x1420bc010": "UFortMissionInfo::NativeFindGlobalWindForDifficulty",
     "0x1425f34d0": "UFortZoneTheme::NativeFindWindDifficultyIndex",
     "0x1425f3c40": "UFortZoneTheme::NativeFindGlobalWindForDifficulty",
-    "0x141f88c60": "AFortWorldManager::NativeGetDifficultyRowForPIE"
+    "0x141f88c60": "AFortWorldManager::NativeGetDifficultyRowForPIE",
+    "0x141f87000": "AFortWorldManager::NativeFindGlobalWind",
+    "0x141f87230": "AFortWorldManager::NativeFindGlobalWindValues"
   },
   "capture_directory": "porting/generated/maps-world-wind-discovery-callees/_adhoc",
-  "validation": "Seven asset/difficulty helpers integrated into the global manifest and generated Native source; generator accepts4008 entries with zero rejects. Initial wind bounds collection and its structural bounds field are also integrated. Source is after screenshot build6d0f22d8; build/runtime verification pending. Complete world fallback and wrapper remain unmanifested pending action-record type/lifecycle proof.",
-  "remaining": {
-    "0x141f87000": {
-      "status": "Full source exists but intentionally unmanifested. World-record action support remains unimplemented; no ready native body claimed.",
-      "contracts": [
-        "Source requires native field NativeWorldRecordActions_0x6c0 with typed .ZoneInstanceInfo, preserving all action-owned state. See resolved_contracts.world_record_action_schema for proven fields and explicit remaining type/lifecycle gaps.",
-        "PIE row helper is source-complete and locally manifested as seventh entry; root owns category/native integration.",
-        "Do not manifest fallback or dependent wrapper before the complete typed action ownership contract is implemented."
-      ]
-    },
-    "0x141f87230": {
-      "status": "Full source exists but intentionally unmanifested; dependency on complete fallback remains.",
-      "semantics": "Ordered negative InitialGlobalWind intensity triggers fallback; NaN bypasses fallback. Success returns fallback values. Failure logs and then overwrites output from InitialGlobalWind and returns ordered intensity>=0. Initial local0.1/45 is overwritten by fallback packed sentinel0x42340000b8d1b717, not a0.1 default."
-    }
-  },
+  "validation": "Global manifest and generated Native source now accept4011 entries with zero rejects after staged promotion. First seven discovery/PIE helpers and initial wind bounds passed client builde0ad5c03. Newly integrated fallback, values wrapper and owned world action support have not been built or run. Native record writers, wind initialization caller and full world lifecycle remain incomplete.",
+  "remaining": {},
   "mandatory_next_captures": [],
   "known_mappings": {
     "0x142927a60": "AFortGameStateZone",
@@ -68,19 +57,21 @@
         "0x178": "owned no-argument delegate (FSimpleDelegate semantics); dtor140692d60, caller93820 copies then executes without arguments",
         "0x188": "double start-time state; zero default",
         "0x190": "double creation-time QueryPerformanceCounter*seconds-per-cycle+16777216",
-        "0x198": "40-byte polymorphic shared-reference wrapper, vtable145a95888; likely FUniqueNetIdRepl but identity remains unproven",
+        "0x198": "FUniqueNetIdRepl; identity established by reflected quick-chat parameter offset and exec constructor",
         "0x1c0": "owned TArray of56-byte entries; destructor141f7e7e0; starts with same40-byte wrapper, bool+28, weakUObject+2c",
-        "0x1d0": "owned trivially-destructed TArray; element type and stride UNKNOWN; array allocation freed directly by141f7e890",
-        "0x1e0": "owned TArray of40-byte polymorphic shared-reference wrappers; destructor1411aa280",
+        "0x1d0": "TArray<uint64>; original cloud request counter identifier bit patterns, 8-byte stride",
+        "0x1e0": "TArray<FUniqueNetIdRepl>",
         "0x1f0": "boolean state; written by93820",
         "0x1f1": "boolean initialized true"
       },
       "unknowns": [
-        "Exact identity/shared-pointer mode for wrapper145a95888; no RTTI/type-name proof yet. Existing hidetoast evidence also marks FUniqueNetIdRepl association unverified.",
-        "Exact0x1d0 array element type/stride and any behavioral ownership effects.",
-        "Full typed56-byte1c0 entry semantics and complete action state/copy/move lifecycle."
+        "Exact original cloud request typedef/signedness and semantic names remain unknown; uint64 preserves all bits.",
+        "Full semantic name of +0x1c0 entry remains unknown; all observed owned fields and weak pointer are represented.",
+        "Subsequent action-state writers are outside this wind discovery batch; +0x1f0 intentionally has no constructor initializer."
       ],
-      "integration_rule": "Do not replace the native action array with a details-only projection or opaque POD record; preserve typed ownership/destruction of every owned member."
+      "integration_rule": "Do not replace the native action array with a details-only projection or opaque POD record; preserve typed ownership/destruction of every owned member.",
+      "support": "maps_world_record_action_types_runtime/support.py emits FortWorldRecordAction.h with mandatory action/details/int constructor, implicit UE value ownership, and complete typed owned fields; no opaque storage or details projection.",
+      "clock": "Linux target FUnixTime::Seconds returns raw clock seconds, so OriginalSeconds adds 16777216.0; Windows Seconds already adds it."
     }
   }
 }

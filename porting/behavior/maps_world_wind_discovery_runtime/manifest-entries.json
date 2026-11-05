@@ -94,5 +94,54 @@
       "SharedFortGameLog.h"
     ],
     "notes": "Original override and global STW PIE row selection with typed FGameDifficultyInfo validation and original LogFortGameDifficulty log messages. Build pending."
+  },
+  {
+    "function": "NativeWorldRecordActions_0x6c0",
+    "kind": "member_field",
+    "signature": "TArray<FFortWorldRecordAction> NativeWorldRecordActions_0x6c0",
+    "offset": "0x6c0",
+    "includes": [
+      "FortWorldRecordAction.h"
+    ],
+    "notes": "Owned logical pending action array; every original owned field is preserved with UE lifetime semantics. Original element stride 0x1f8 is evidence only; host layout is not a Windows ABI overlay.",
+    "class": "AFortWorldManager",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high"
+  },
+  {
+    "function": "NativeFindGlobalWind",
+    "kind": "helper",
+    "signature": "bool NativeFindGlobalWind(FFortWindIntensityAndDirection& OutWind)",
+    "address": "0x141f87000",
+    "inc_path": "porting/behavior/maps_world_wind_discovery_runtime/AFortWorldManager_NativeFindGlobalWind.inc",
+    "includes": [
+      "Engine/World.h",
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ],
+    "notes": "Complete ordered context/mission/theme fallback; game-state row only gates discovery, selection handle stays empty outside PIE. Tracks class null attempts, rereads zone soft class, uses first owned pending action only.",
+    "class": "AFortWorldManager",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high"
+  },
+  {
+    "function": "NativeFindGlobalWindValues",
+    "kind": "helper",
+    "signature": "bool NativeFindGlobalWindValues(float& OutIntensity, FVector& OutDirection)",
+    "address": "0x141f87230",
+    "inc_path": "porting/behavior/maps_world_wind_discovery_runtime/AFortWorldManager_NativeFindGlobalWindValues.inc",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Original negative-intensity discovery attempt, failure log, fallback to initial wind, and ordered float comparisons (NaN returns false).",
+    "class": "AFortWorldManager",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high"
   }
 ]
