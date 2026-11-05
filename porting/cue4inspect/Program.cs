@@ -20,6 +20,7 @@ using CUE4Parse.UE4.Assets.Exports.Component.StaticMesh;
 using CUE4Parse.UE4.Assets.Exports.Material;
 using CUE4Parse.UE4.Assets.Exports.Texture;
 using CUE4Parse.UE4.Objects.Core.Misc;
+using CUE4Parse.UE4.Objects.Core.Math;
 using CUE4Parse.UE4.Objects.Engine;
 using CUE4Parse.UE4.Objects.UObject;
 using CUE4Parse.UE4.Readers;
@@ -60,6 +61,7 @@ bool exportLandscapeGrid = args.Contains("--export-landscape-grid");
 bool exportLandscapeWeightmapGrid = args.Contains("--export-landscape-weightmap-grid");
 bool landscapeReport = args.Contains("--landscape-report");
 bool actorReport = args.Contains("--actor-report");
+bool streamingReport = args.Contains("--streaming-report");
 bool exportPng = args.Contains("--export-png");
 bool exportLandscapeWeightmaps = args.Contains("--export-landscape-weightmaps");
 bool materialReport = args.Contains("--material-report");
@@ -84,7 +86,7 @@ string? extractSeedArgument = args.SingleOrDefault(arg => arg.StartsWith("--seed
 bool auditDuplicates = args.Contains("--audit-duplicates");
 bool repairDuplicates = args.Contains("--repair");
 string? duplicatesOutArgument = args.SingleOrDefault(arg => arg.StartsWith("--duplicates-out=", StringComparison.Ordinal));
-Globals.FatalObjectSerializationErrors = exportGlb || exportAnim || exportLandscape || exportLandscapeGrid || exportLandscapeWeightmapGrid || exportPng || exportLandscapeWeightmaps || materialReport || functionReport || landscapeReport || actorReport;
+Globals.FatalObjectSerializationErrors = exportGlb || exportAnim || exportLandscape || exportLandscapeGrid || exportLandscapeWeightmapGrid || exportPng || exportLandscapeWeightmaps || materialReport || functionReport || landscapeReport || actorReport || streamingReport;
 string? keyFileArgument = args.SingleOrDefault(arg => arg.StartsWith("--key-file=", StringComparison.Ordinal));
 string? keyFilePath = keyFileArgument is not null ? keyFileArgument["--key-file=".Length..] : Environment.GetEnvironmentVariable("FORTNITE_AES_KEY_FILE");
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
@@ -95,7 +97,7 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg != classesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--scan-export-classes" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-anim" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg != classesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--scan-export-classes" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-anim" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--streaming-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
 bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || scanExportClasses || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
 if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, scanExportClasses, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
@@ -117,6 +119,7 @@ if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, scanE
     Console.Error.WriteLine("   or: Cue4Inspect <material-path> [pak-directory] --material-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <landscape-map-path> [pak-directory] --landscape-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <map-path> [pak-directory] --actor-report [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <map-path> [source-directory] --streaming-report [--loose]");
     Console.Error.WriteLine("   or: Cue4Inspect <blueprint-path> [pak-directory] --function-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <package-path> [pak-directory] --versions [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
@@ -737,6 +740,46 @@ try
                     }).ToArray()
             }).ToArray()
         }, new JsonSerializerOptions { WriteIndented = true }));
+        return 0;
+    }
+    if (streamingReport)
+    {
+        if (packageData is not Package mapPackage)
+            throw new InvalidDataException("Streaming report requires a legacy package");
+        // Deserialize only streaming exports, avoiding unrelated map actor and bulk data.
+        var entries = mapPackage.ExportMap.Select((export, index) => (export, index))
+            .Where(entry => entry.export.ClassName.StartsWith("LevelStreaming", StringComparison.Ordinal))
+            .Select(entry =>
+            {
+                var level = mapPackage.ExportsLazy[entry.index].Value as ULevelStreaming
+                    ?? throw new InvalidDataException($"Unsupported streaming export {entry.export.ObjectName.Text} ({entry.export.ClassName})");
+                var transformTag = level.Properties.SingleOrDefault(p => p.Name.Text == "LevelTransform");
+                var transform = FTransform.Identity;
+                if (transformTag is not null)
+                {
+                    if (transformTag.Tag?.GenericValue is not FScriptStruct { StructType: FStructFallback fields })
+                        throw new InvalidDataException($"Unsupported LevelTransform on {level.Name}");
+                    // Tagged struct fields omitted by Unreal retain FTransform's identity defaults.
+                    transform.Translation = fields.GetOrDefault("Translation", transform.Translation);
+                    transform.Rotation = fields.GetOrDefault("Rotation", transform.Rotation);
+                    transform.Scale3D = fields.GetOrDefault("Scale3D", transform.Scale3D);
+                }
+                return new
+                {
+                    index = entry.index + 1,
+                    name = level.Name,
+                    type = entry.export.ClassName,
+                    worldAsset = level.WorldAsset?.AssetPathName.Text,
+                    worldSubPath = level.WorldAsset?.SubPathString,
+                    packageName = level.PackageName?.Text,
+                    transformSerialized = transformTag is not null,
+                    translation = new[] { transform.Translation.X, transform.Translation.Y, transform.Translation.Z },
+                    rotation = new[] { transform.Rotation.X, transform.Rotation.Y, transform.Rotation.Z, transform.Rotation.W },
+                    scale = new[] { transform.Scale3D.X, transform.Scale3D.Y, transform.Scale3D.Z }
+                };
+            }).ToArray();
+        Console.WriteLine(JsonSerializer.Serialize(new { path = assetPath, streamingLevels = entries },
+            new JsonSerializerOptions { WriteIndented = true }));
         return 0;
     }
     if (actorReport)
