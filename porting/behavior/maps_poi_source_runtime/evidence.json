@@ -20,5 +20,10 @@
     "source": "porting/generated/native-triage005/0x14294cf40.c",
     "observation": "Returns byte at 0x231.",
     "source_sha256": "65d45f5c17eeb63d2d32380cea6bfda63950ad8ff7b1329655c8aa8700389581"
+  },
+  "visibility_defaults": {
+    "source": "porting/generated/maps-state-runtime-original/_adhoc/0x141ebaf90__141ebaf90.c",
+    "source_sha256": "85b1090ae212c3e360c08be90d988694b24569db0b4d5d59de0bcfb20c8c332a",
+    "observation": "Constructor writes uint16 0x0101 at this+0x230, so both mini-map and main-map visibility bytes initialize to 1."
   }
 }

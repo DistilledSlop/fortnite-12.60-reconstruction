@@ -16,6 +16,7 @@
 #include "Fonts/SlateFontInfo.h"
 #include "Layout/Margin.h"
 #include "Math/Color.h"
+#include "Math/Vector.h"
 
 class ASceneCapture2D;
 class UMaterialInterface;
@@ -34,10 +35,10 @@ public:
 	FOnAllowShowMainMapChanged OnAllowShowMainMapChanged;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x230): not a UPROPERTY, not replicated.
-	uint8 NativeMiniMapVisible_0x230;
+	uint8 NativeMiniMapVisible_0x230 = 1;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x231): not a UPROPERTY, not replicated.
-	uint8 NativeMainMapVisible_0x231;
+	uint8 NativeMainMapVisible_0x231 = 1;
 
 	// table index 34, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_MapData)
@@ -151,6 +152,9 @@ public:
 	UPROPERTY(Transient)
 	ASceneCapture2D* SceneCaptureBlurry;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x338): not a UPROPERTY, not replicated.
+	FVector NativeCaptureLocation_0x338;
+
 	// table index 5, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UTexture2D* FogMask;
@@ -198,6 +202,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_MapData();
+
+	UFUNCTION(BlueprintCallable)
+	void ResetCaptureLocation();
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void ServerClearAllFog();

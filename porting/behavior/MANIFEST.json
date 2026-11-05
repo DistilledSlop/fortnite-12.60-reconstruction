@@ -62713,7 +62713,8 @@
     "offset": "0x230",
     "confidence": "high",
     "status": "ported",
-    "notes": "Original AllowShowMiniMap stores a complete byte at this offset; the rebuilt class keeps a separate native byte alongside the main-map visibility byte."
+    "notes": "Original AllowShowMiniMap stores a complete byte at this offset; the rebuilt class keeps a separate native byte alongside the main-map visibility byte. Original constructor 0x141ebaf90 initializes the adjacent visibility bytes together to 0x0101.",
+    "default": "1"
   },
   {
     "class": "AFortInGameMapManager",
@@ -62739,8 +62740,9 @@
     "offset": "0x231",
     "confidence": "high",
     "status": "ported",
-    "notes": "Native byte observed by AllowShowMainMap and ShouldShowMainMap.",
-    "class": "AFortInGameMapManager"
+    "notes": "Native byte observed by AllowShowMainMap and ShouldShowMainMap. Original constructor 0x141ebaf90 initializes the adjacent visibility bytes together to 0x0101.",
+    "class": "AFortInGameMapManager",
+    "default": "1"
   },
   {
     "function": "AllowShowMainMap",
@@ -62790,5 +62792,32 @@
       "Engine/LevelStreamingDynamic.h"
     ],
     "notes": "Original helper 0x14241bac0 checks the StreamedLevel pointer at 0x128 and compares its current state to 3 (Loading)."
+  },
+  {
+    "class": "AFortInGameMapManager",
+    "function": "NativeCaptureLocation_0x338",
+    "kind": "member_field",
+    "signature": "FVector NativeCaptureLocation_0x338",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x338",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original ResetCaptureLocation stores three contiguous floats at 0x338, 0x33c and 0x340."
+  },
+  {
+    "class": "AFortInGameMapManager",
+    "function": "ResetCaptureLocation",
+    "kind": "exec",
+    "signature": "void ResetCaptureLocation()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/maps_capture_runtime/ResetCaptureLocation.inc",
+    "address": "0x14294cc60",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Uses FortWorldSettings' override map center and Z offset when enabled; otherwise uses zero XY and the manager OffsetZ."
   }
 ]

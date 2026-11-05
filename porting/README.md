@@ -32,8 +32,9 @@ Read the current snapshot in `HANDOFF.md` before the historical probes below.
 The four dashboard milestones remain the product acceptance gates.
 
 - Map source recovery now includes the original main-map visibility setter and
-  query, minimap visibility setter, and playset level loading query. Generated
-  source accepts all four bodies with no rejected snippets; build/runtime
+  query, minimap visibility setter, capture-location reset, and playset level
+  loading query. Both visibility flags use their recovered enabled defaults.
+  Generated source accepts all five bodies with no rejected snippets; build/runtime
   verification is pending under the native-body checkpoint cadence. The
   landscape LOD proxy has an uncounted source draft based on its original
   4.25-era streaming interface; mobile platform data and streaming update

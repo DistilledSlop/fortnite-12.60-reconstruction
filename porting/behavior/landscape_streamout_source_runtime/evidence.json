@@ -1,0 +1,58 @@
+{
+  "status": "Uncounted, unintegrated source draft; not built or runtime validated",
+  "captures": [
+    {
+      "address": "0x1445d5620",
+      "path": "porting/generated/maps-lod-updates-original/_adhoc/0x1445d5620__1445d5620.c",
+      "sha256": "5027bf7c0b57e30c7b729e127851a6185640f04c85174478861cafac406f4415",
+      "observation": "Calls base constructor 0x1445d5880; binds this to callback 0x1445df960; invokes context helper 0x143acaa20; assigns task thread 1, callback, cancellation thread 0 and empty cancellation callback."
+    },
+    {
+      "address": "0x143acdcb0",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143acdcb0__143acdcb0.c",
+      "sha256": "81d4bae32eea4de31f2792d106d8f07e962327c4370d47e93a23d3600ef8a27d",
+      "observation": "Passes proxy and requested mip count to constructor; allocates 0x110 bytes."
+    },
+    {
+      "address": "0x1445d5880",
+      "path": "porting/generated/maps-lod-update-callbacks/_adhoc/0x1445d5880__1445d5880.c",
+      "sha256": "5d991169e00d9d919da7c5a88e37a9cd726bab1a1c955f7e1b16f1fc292b322a",
+      "observation": "Calls 0x1445d6490; initializes task callbacks; copies render data; on missing data resets PendingFirstMip and RequestedMips to -1, cancels and sets current first LOD to -1; otherwise reads byte at render data +0x20 into current first LOD."
+    },
+    {
+      "address": "0x143acaa20",
+      "path": "porting/generated/maps-lod-update-callbacks/_adhoc/0x143acaa20__143acaa20.c",
+      "sha256": "d95775ecd96bb1446c3db0d5d9587a2eaffecff699ff81dc8be67ca00bfb003f",
+      "observation": "Copies thread-safe shared render-data pointer from component +0x5c0 and increments shared reference count."
+    },
+    {
+      "address": "0x1445df960",
+      "path": "porting/generated/maps-lod-update-callbacks/_adhoc/0x1445df960__1445df960.c",
+      "sha256": "69fabf0a66c70d097b2f291fa8cad5bd5e7c871a44f02e0425b6a0ad75f80a9a",
+      "observation": "Closure wrapper forwards captured this to 0x1445f4db0; the decompiler omits the context argument, which the callback body reads as its second argument."
+    },
+    {
+      "address": "0x1445f4db0",
+      "path": "porting/generated/maps-state-runtime-original/_adhoc/0x1445f4db0__1445f4db0.c",
+      "sha256": "9067ca22f2c33ca7b28b46cad475646537209b5cf336025d55ffa23b8e1e1de7",
+      "observation": "If not cancelled and context proxy/render data are present, sets render data first LOD and cached resident byte, computes cumulative size delta, updates memory stat, creates a new vertex buffer, copies its retained prefix, and queues an RHI resource replacement."
+    },
+    {
+      "address": "0x1445d6490",
+      "path": "porting/generated/maps-next-state-helpers/_adhoc/0x1445d6490__1445d6490.c",
+      "sha256": "e56172106fc4e6310276065fc6624a98b227a50202d4c10af639f3f2b5ffc1ad",
+      "observation": "Initializes old render-asset update fields, clamps requested mip count, and cancels invalid/no-change requests, consistent with 4.25 FRenderAssetUpdate constructor."
+    }
+  ],
+  "source_comparisons": [
+    "../UnrealEngine/Engine/Source/Runtime/Engine/Public/RenderAssetUpdate.h",
+    "../UnrealEngine/Engine/Source/Runtime/Engine/Private/Streaming/RenderAssetUpdate.inl",
+    "../UnrealEngine4260/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.h",
+    "../UnrealEngine4260/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.cpp"
+  ],
+  "limitations": [
+    "Context constructors and fields are inferred from the counterpart and need original confirmation; wrapper argument forwarding follows the callback body despite the wrapper decompiler omitting that argument.",
+    "The proxy must grant stream-out direct access to its cached resident byte (or provide unconditional equivalent access); 4.25 public cached accessors differ in editor builds.",
+    "Requires original mobile platform and render data, proxy integration, compilation and runtime validation. No native body or parity credit."
+  ]
+}

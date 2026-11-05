@@ -9,7 +9,8 @@
     "offset": "0x230",
     "confidence": "high",
     "status": "ported",
-    "notes": "Original AllowShowMiniMap stores a complete byte at this offset; the rebuilt class keeps a separate native byte alongside the main-map visibility byte."
+    "notes": "Original AllowShowMiniMap stores a complete byte at this offset; the rebuilt class keeps a separate native byte alongside the main-map visibility byte. Original constructor 0x141ebaf90 initializes the adjacent visibility bytes together to 0x0101.",
+    "default": "1"
   },
   {
     "class": "AFortInGameMapManager",
@@ -35,8 +36,9 @@
     "offset": "0x231",
     "confidence": "high",
     "status": "ported",
-    "notes": "Native byte observed by AllowShowMainMap and ShouldShowMainMap.",
-    "class": "AFortInGameMapManager"
+    "notes": "Native byte observed by AllowShowMainMap and ShouldShowMainMap. Original constructor 0x141ebaf90 initializes the adjacent visibility bytes together to 0x0101.",
+    "class": "AFortInGameMapManager",
+    "default": "1"
   },
   {
     "function": "AllowShowMainMap",
