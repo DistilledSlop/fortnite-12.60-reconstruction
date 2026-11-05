@@ -88,5 +88,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UMediaPlayer* GetMediaPlayer() const;
 
+	UFUNCTION(BlueprintCallable)
+	void ShowThrobber();
+
 };
 

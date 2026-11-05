@@ -61360,5 +61360,23 @@
     "reflection_flags": "0x4420401",
     "confidence": "high",
     "status": "ported"
+  },
+  {
+    "class": "UFortActivatableVideoPanel",
+    "function": "ShowThrobber",
+    "kind": "exec",
+    "signature": "void ShowThrobber()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage039_new/UFortActivatableVideoPanel_ShowThrobber.inc",
+    "address": "0x1451ee8f0",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/Image.h"
+    ],
+    "notes": "Sets each non-null throbber background and throbber image visible, in that order."
   }
 ]

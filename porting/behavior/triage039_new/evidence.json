@@ -1,0 +1,12 @@
+[
+  {
+    "class": "UFortActivatableVideoPanel",
+    "function": "ShowThrobber",
+    "wrapper_capture": "porting/generated/native-triage001/0x1451ee8f0.c",
+    "reflection": "porting/generated/reflection/native_funcs.json; porting/generated/reflection/fortnite_game_reflection.json: Image_ThrobberBackground at 0x500 and Image_Throbber at 0x508",
+    "represented_fields": "porting/native/Source/FortniteUI/Generated/UFortActivatableVideoPanel.h",
+    "slot_evidence": "porting/frontend/confirmation_chain_translation_runtime/SLOT270.md: UImage slot 0x270 is UWidget::SetVisibility; enum value zero is Visible",
+    "behavior": "Checks each UImage pointer independently and invokes its virtual SetVisibility with zero, background first.",
+    "manual_policy_check": "No ShowThrobber entry in behavior manifests or porting Python policies; class absent from native_class_blocklist.txt."
+  }
+]
