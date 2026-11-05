@@ -31,6 +31,7 @@ NAMES += ['FLocalVertexFactory',
           'TTranslucencyShadowDepthPS<TranslucencyShadowDepth_Standard>',
           'TBasePassVSFNoLightMapPolicy', 'TBasePassPSFNoLightMapPolicy',
           'FConvertToUniformMeshVS', 'FConvertToUniformMeshGS']
+NAMES += ['FLandscapeXYOffsetVertexFactory']
 
 
 def name(index):
@@ -53,15 +54,17 @@ HEADER = pack('4I', 1, 1, 1, 3) + bytes(range(20)) + pack('I', 0)
 HEADER += string('M_Test') + string('/Game/UI/M_Test.M_Test')
 
 
-def resource(arrays=None, tail=b'', collections=(), vt_count=0):
+def resource(arrays=None, tail=b'', collections=(), vt_stacks=()):
     arrays = arrays or [[VECTOR, SWIZZLE], [SCALAR], [TEXTURE]] + [[] for _ in range(5)]
     encoded = [pack('i', len(a)) + b''.join(a) for a in arrays]
-    encoded.insert(7, pack('i', vt_count))
+    encoded.insert(7, pack('i', len(vt_stacks)) + b''.join(
+        pack('I', len(indices)) + b''.join(pack('i', index) for index in indices)
+        + pack('i', preallocated) for indices, preallocated in vt_stacks))
     prefix = (HEADER + b''.join(encoded) + pack('i', len(collections))
             + b''.join(pack('4I', *guid) for guid in collections)
             + pack('IHHHBB', 5, 2, 3, 4, 6, 7) + pack('BB', 0, 0)
             + string('Compiling M_Test'))
-    counts = [len(a) for a in arrays[:6]] + [len(arrays[7])]
+    counts = [len(arrays[i]) for i in (0, 1, 2, 3, 7, 4, 5)]
     output_hash = bytes(reversed(range(20)))
     body = (pack('HIHIi', 0, 0, 1, 1, 0) + pack('7i', *counts)
             + name(14) + pack('Iii', 128, 0, 0) + string('M_Test')
@@ -77,17 +80,20 @@ def resource(arrays=None, tail=b'', collections=(), vt_count=0):
             + pack('iiI', 0, 0, 1) + tail)
 
 
-def mesh_resource(type_index=16, frequency=0):
+def mesh_resource(type_index=16, frequency=0, landscape=False):
     original = resource()
     parsed = parse_prefix(original, NAMES)
     slate = parsed['material_shaders']['records'][0]
     # Reuse the independently checked common material-parameter fixture.
     material = original[slate['body_offset']:slate['output_hash']['offset'] - 12]
     prefix = original[:parsed['material_shaders']['mesh_shader_maps_count_offset']]
-    prefix += pack('i', 1) + name(15) + pack('i', 1)
+    vf_name = 22 if landscape else 15
+    prefix += pack('i', 1) + name(vf_name) + pack('i', 1)
     body_offset = len(prefix) + 16
-    vf_head = pack('HI', 1, 1) + name(15) + pack('BB', frequency, 0) + bytes(20)
-    vf_body = pack('I3H', 0, 0, 0, 0) if frequency == 0 else b''
+    vf_head = pack('HI', 1, 1) + name(vf_name) + pack('BB', frequency, 0) + bytes(20)
+    vf_body = (pack('12H', 32, 16, 0, 64, 4, 0, *([0] * 6)) + pack('6H', *([0] * 6))
+               if frequency == 0 and landscape else
+               pack('I3H', 0, 0, 0, 0) if frequency == 0 else b'')
     vf_end = body_offset + len(material) + len(vf_head) + 8 + len(vf_body)
     body = material + vf_head + pack('q', vf_end) + vf_body
     if NAMES[type_index].startswith('TBasePass'):
@@ -95,7 +101,7 @@ def mesh_resource(type_index=16, frequency=0):
     elif NAMES[type_index].startswith('TTranslucencyShadowDepthPS'):
         body += pack('3H', 0, 0, 0)
     output_hash = bytes(reversed(range(20)))
-    body += (output_hash + bytes(range(20)) + name(13) + name(15) + bytes(20)
+    body += (output_hash + bytes(range(20)) + name(13) + name(vf_name) + bytes(20)
              + name(type_index) + pack('i', 0) + bytes(20) + pack('IIi', frequency, 0, 0)
              + name(13) + pack('iII', 0, frequency, 0) + output_hash
              + pack('I4iII', 17, 0, 0, 0, 0, 1095, 1)
@@ -237,11 +243,51 @@ class LegacyPrefixTests(unittest.TestCase):
             with self.subTest(declared=declared), self.assertRaises(ValueError):
                 parse_prefix(data, NAMES)
 
-    def test_collection_guids_and_nonempty_vt_rejection(self):
+    def test_landscape_xy_factory_parameters_and_exact_boundaries(self):
+        for type_index, frequency in ((16, 0), (17, 3)):
+            original = mesh_resource(type_index, frequency, landscape=True)
+            record = parse_prefix(original, NAMES)['mesh_shader_maps'][0]['records'][0]
+            vf = record['vertex_factory_parameters']
+            self.assertEqual(vf['end'], vf['serialized_end_offset'])
+            if frequency == 0:
+                self.assertEqual(vf['landscape_parameters']['lod_values']['base_index'], 32)
+                self.assertEqual(vf['landscape_parameters']['forced_lod']['byte_count'], 4)
+            field = vf['offset'] + 8 + 2 + 20
+            for declared in (vf['end'] - 1, vf['end'] + 1):
+                data = bytearray(original)
+                data[field:field + 8] = pack('q', declared)
+                with self.subTest(frequency=frequency, declared=declared), self.assertRaises(ValueError):
+                    parse_prefix(data, NAMES)
+
+    def test_debug_counts_use_material_texture_type_order(self):
+        arrays = [[VECTOR], [SCALAR], [TEXTURE], [], [], [TEXTURE, TEXTURE], [], [TEXTURE]]
+        parsed = parse_prefix(resource(arrays=arrays), NAMES)
+        self.assertEqual(parsed['material_shaders']['records'][0]['serialized_expression_counts'],
+                         [1, 1, 1, 0, 1, 0, 2])
+
+    def test_collection_guids_and_nonempty_vt_stacks(self):
         result = parse_prefix(resource(collections=[(1, 2, 3, 0xffffffff)]), NAMES)
         self.assertEqual(result['parameter_collections']['guids'], [[1, 2, 3, 0xffffffff]])
-        with self.assertRaisesRegex(ValueError, 'unsupported nonempty VT stacks'):
-            parse_prefix(resource(vt_count=1), NAMES)
+        result = parse_prefix(resource(vt_stacks=[([0, 1, 2], 164), (list(range(10)), -1)]), NAMES)
+        vt = result['virtual_texture_stacks']
+        self.assertEqual(vt['count'], 2)
+        self.assertEqual(vt['stacks'][0]['layer_uniform_expression_indices'], [0, 1, 2])
+        self.assertEqual(vt['stacks'][0]['preallocated_stack_texture_index'], 164)
+        self.assertEqual(vt['stacks'][1]['effective_num_layers'], 8)
+        self.assertEqual(vt['stacks'][1]['layer_uniform_expression_indices'], list(range(10)))
+        self.assertEqual(vt['end'], result['uniform_expression_arrays']['texture_2d_array']['offset'])
+
+    def test_vt_stack_count_bounds_and_truncation(self):
+        data = bytearray(resource(vt_stacks=[([0, 1, 2], 164)]))
+        stack = parse_prefix(data, NAMES)['virtual_texture_stacks']['stacks'][0]
+        for count in (4097, 0xffffffff):
+            bad = bytearray(data)
+            bad[stack['offset']:stack['offset'] + 4] = pack('I', count)
+            with self.assertRaisesRegex(ValueError, 'VT stack layer count'):
+                parse_prefix(bad, NAMES)
+        for cut in range(stack['offset'], stack['end']):
+            with self.subTest(cut=cut), self.assertRaises(ValueError):
+                parse_prefix(data[:cut], NAMES)
 
     def test_invalid_collection_count_is_rejected(self):
         data = bytearray(resource())

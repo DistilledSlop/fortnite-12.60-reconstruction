@@ -82,7 +82,7 @@
       0,
       1
     ],
-    "original_resource_parse_first_failure": "unsupported nonempty VT stacks at resource offset 3440 (count 1)",
+    "original_resource_parse_first_failure": "First map: unsupported shader type TLightMapDensityVSFDummyLightMapPolicy at map-relative offset 8628",
     "first_runtime_virtual_texture_uniforms": {
       "offsets": [
         226,
@@ -132,6 +132,57 @@
         "expression_pointer_serializer": "0x144344b40",
         "serialization": "one nested expression pointer"
       }
+    },
+    "virtual_texture_stacks": {
+      "offset": 3440,
+      "end": 3464,
+      "count": 1,
+      "stacks": [
+        {
+          "offset": 3444,
+          "serialized_num_layers": 3,
+          "layer_uniform_expression_indices": [
+            0,
+            1,
+            2
+          ],
+          "preallocated_stack_texture_index": 164,
+          "end": 3464
+        }
+      ],
+      "applies_to_shader_map_offsets": [
+        0,
+        50634
+      ],
+      "serialization_source": "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp",
+      "evidence": "Original uexp SHA-256 matches d4-resource.json; both independently framed 50634-byte maps reach the same unsupported vertex factory after decoding the stack. The subsequent shader-map payload is not validated.",
+      "limitations": [
+        "Original runtime VT stack serializer has not been captured; source layout and asset bytes do not independently prove its implementation."
+      ]
+    },
+    "landscape_vertex_factory": {
+      "type": "FLandscapeXYOffsetVertexFactory",
+      "first_map_offset": 4346,
+      "validated_first_map_shader_record_offsets": [
+        4358,
+        5093,
+        5828,
+        6545,
+        7262,
+        7899
+      ],
+      "first_unsupported_shader_record_offset": 8628,
+      "first_unsupported_shader_type": "TLightMapDensityVSFDummyLightMapPolicy",
+      "vertex_parameter_encoding": "six FShaderParameter values, each three uint16 values, in UE 4.24 source serializer order",
+      "first_vertex_parameter_payload_offset": 4739,
+      "first_vertex_parameter_payload_end": 4775,
+      "first_pixel_parameter_payload_bytes": 0,
+      "source": "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp#L3953",
+      "limitations": [
+        "Original landscape vertex-factory serializer has not been captured.",
+        "Second map record end offsets use resource-relative coordinates; independently slicing it does not validate its records.",
+        "Shader archive association and runtime loading have not been validated."
+      ]
     }
   },
   "reports": [

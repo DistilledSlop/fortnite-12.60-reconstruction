@@ -156,7 +156,7 @@ class Reader:
 def parse_prefix(data, names):
     """Return the verified serialized shader map with exact resource EOF.
 
-    Nonempty VT stacks and parameter-binding arrays remain unsupported.
+    Nonempty parameter-binding arrays remain unsupported.
     """
     if len(data) > MAX_BYTES:
         raise ValueError('legacy resource exceeds size bound')
@@ -175,13 +175,25 @@ def parse_prefix(data, names):
     for name in ARRAYS:
         if name == 'texture_2d_array':
             # 4.24 inserts VTStacks before Uniform2DArrayTextureExpressions.
-            # These are not expression records: never interpret a nonzero stack
-            # count as an expression-array count or search for a later boundary.
+            # MaterialShared.cpp FMaterialVirtualTextureStack::Serialize consumes
+            # every serialized layer, retaining at most eight in the engine.
             start = reader.cursor
             count = reader.count()
-            if count:
-                raise ValueError(f'unsupported nonempty VT stacks at {start}')
-            vt_stacks = {'offset': start, 'end': reader.cursor, 'count': count}
+            stacks = []
+            for _ in range(count):
+                stack_start = reader.cursor
+                layers = reader.read('I')
+                if layers > 4096:
+                    raise ValueError(f'invalid VT stack layer count at {stack_start}')
+                indices = [reader.read('i') for _ in range(layers)]
+                preallocated = reader.read('i')
+                stacks.append({'offset': stack_start, 'serialized_num_layers': layers,
+                               'effective_num_layers': min(layers, 8),
+                               'layer_uniform_expression_indices': indices,
+                               'preallocated_stack_texture_index': preallocated,
+                               'end': reader.cursor})
+            vt_stacks = {'offset': start, 'end': reader.cursor, 'count': count,
+                         'stacks': stacks}
         start = reader.cursor
         count = reader.count()
         expressions = [reader.expression() for _ in range(count)]
@@ -213,10 +225,13 @@ def parse_prefix(data, names):
                   'has_runtime_virtual_texture_output_node')
     compilation_flags.update({name: bool(flags & (1 << bit)) for bit, name in enumerate(flag_names)})
     debug_description = reader.string()
-    shader_records = material_shader_records(reader, shader_map_hash,
-        [arrays[name]['count'] for name in ARRAYS[:6]] + [arrays['texture_2d_array']['count']])
-    mesh_maps = mesh_shader_maps(reader, shader_records['mesh_shader_maps_count'], shader_map_hash,
-        [arrays[name]['count'] for name in ARRAYS[:6]] + [arrays['texture_2d_array']['count']])
+    # FDebugUniformExpressionSet uses material texture parameter type order,
+    # which differs from the serialized uniform expression array order.
+    debug_order = ('vector', 'scalar', 'texture_2d', 'texture_cube',
+                   'texture_2d_array', 'texture_volume', 'texture_virtual')
+    debug_counts = [arrays[name]['count'] for name in debug_order]
+    shader_records = material_shader_records(reader, shader_map_hash, debug_counts)
+    mesh_maps = mesh_shader_maps(reader, shader_records['mesh_shader_maps_count'], shader_map_hash, debug_counts)
     cooking_offset = reader.cursor
     if reader.read('I') != 1:
         raise ValueError('only cooked original material shader maps are supported')
@@ -226,9 +241,10 @@ def parse_prefix(data, names):
     return {'complete_shader_map': True, 'complete_serialized_shader_map': True,
             'runtime_loading_verified': False,
             'limitations': ['Complete serialized metadata does not establish runtime loading, shader semantics or draw parity',
-                'Nonempty VT stacks are unsupported',
+                'VT stack serialization follows local UE source and original asset bytes; original runtime serializer is not captured',
                 'Nonempty parameter-binding arrays and shader pipelines are unsupported',
-                'Only the observed Slate and LocalVF mesh shader types are supported'],
+                'Only observed Slate, LocalVF and landscape XY-offset mesh shader types are supported',
+                'Landscape vertex-factory parameters follow UE 4.24 source; original runtime serializer is not captured'],
             'cooked': cooked, 'valid': valid,
             'quality_level': quality, 'feature_level': feature,
             'cooked_shader_map_id_hash': shader_map_hash, 'shader_platform': platform,

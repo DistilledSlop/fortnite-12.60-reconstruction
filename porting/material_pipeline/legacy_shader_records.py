@@ -112,12 +112,18 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
                 # Original LocalVF constructor 0x1442f01e0 supplies parameters
                 # for VS, compute and ray hit group; the latter two are outside
                 # this verified material grammar. PS/GS return nullptr.
-                if expected_frequency == 0:
+                if expected_frequency == 0 and vertex_factory['name'] == 'FLocalVertexFactory':
                     speedtree = reader.read('I')
                     if speedtree not in (0, 1):
                         raise ValueError('invalid LocalVF speedtree bool')
                     vf['any_speedtree_parameter_bound'] = bool(speedtree)
                     vf['lod_parameter'] = parameters(reader)
+                elif expected_frequency == 0 and vertex_factory['name'] == 'FLandscapeXYOffsetVertexFactory':
+                    # UE 4.24 FLandscapeVertexFactoryVertexShaderParameters::Serialize.
+                    # Original binary serializer has not yet been captured.
+                    names = ('lod_values', 'forced_lod', 'lod_tessellation',
+                             'neighbor_section_lod', 'lod_bias', 'section_lods')
+                    vf['landscape_parameters'] = {name: parameters(reader) for name in names}
                 if reader.cursor != vf_end:
                     raise ValueError('vertex-factory parameters do not end at declared offset')
             finally:
@@ -265,7 +271,7 @@ def mesh_shader_maps(reader, count, map_hash, expression_counts):
     for _ in range(count):
         start = reader.cursor
         vf = reader.name()
-        if vf != {'name': 'FLocalVertexFactory', 'number': 0}:
+        if vf['number'] or vf['name'] not in {'FLocalVertexFactory', 'FLandscapeXYOffsetVertexFactory'}:
             raise ValueError('unsupported mesh shader-map vertex factory')
         shader_count = reader.count()
         records = [shader_record(reader, map_hash, expression_counts, vf) for _ in range(shader_count)]
