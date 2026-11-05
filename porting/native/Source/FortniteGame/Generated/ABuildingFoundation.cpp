@@ -2,7 +2,15 @@
 #include "ABuildingFoundation.h"
 #include "EDynamicFoundationEnabledState.h"
 #include "EDynamicFoundationType.h"
+#include "Engine/LevelStreaming.h"
 #include "Net/UnrealNetwork.h"
+
+bool ABuildingFoundation::DoesBuildingFoundationContainActor(AActor* Actor) const
+{
+	// Original 0x141bd99a0, exec 0x14273fc40; static disassembly. CONFIDENCE: HIGH
+	ULevel* ActorLevel = Actor ? Actor->GetLevel() : nullptr;
+	return ActorLevel && LevelStreamInfo && LevelStreamInfo->GetLoadedLevel() == ActorLevel;
+}
 
 void ABuildingFoundation::EditorOnlyClearAdditionalWorlds()
 {

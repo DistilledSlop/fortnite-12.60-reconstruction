@@ -1,0 +1,69 @@
+--- a/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp
++++ b/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp
+@@ -4084,6 +4084,9 @@
+ 	*/
+ 	void Bind(const FShaderParameterMap& ParameterMap)
+ 	{
++		// Original cooked landscape VS uses a loose LodValues instead of the fixed-grid UB.
++		// Leave other legacy slots unbound until their runtime sources are recovered.
++		LegacyLodValues.Bind(ParameterMap, TEXT("LodValues"));
+ 	}
+ 
+ 	void GetElementShaderBindings(
+@@ -4104,6 +4107,7 @@
+ 		check(BatchElementParams);
+ 
+ 		const FLandscapeComponentSceneProxy* SceneProxy = BatchElementParams->SceneProxy;
++		BindLegacyLodValues(BatchElementParams, ShaderBindings);
+ 
+ 		ShaderBindings.Add(Shader->GetUniformBufferParameter<FLandscapeUniformShaderParameters>(), *BatchElementParams->LandscapeUniformShaderParametersResource);
+ 
+@@ -4123,6 +4127,16 @@
+ 		}
+ #endif
+ 	}
++protected:
++	void BindLegacyLodValues(const FLandscapeBatchElementParams* Params, FMeshDrawSingleShaderBindings& Bindings) const
++	{
++		if (LegacyLodValues.IsBound())
++		{
++			const float Size = float((Params->SceneProxy->SubsectionSizeVerts >> Params->CurrentLOD) - 1);
++			Bindings.Add(LegacyLodValues, FVector4(float(Params->CurrentLOD), 0.f, Size, 1.f / Size));
++		}
++	}
++	LAYOUT_FIELD(FShaderParameter, LegacyLodValues);
+ };
+ 
+ /** 
+@@ -4133,6 +4147,13 @@
+ {
+ 	DECLARE_INLINE_TYPE_LAYOUT(FLandscapeFixedGridVertexFactoryVertexShaderParameters, NonVirtual);
+ public:
++	void Bind(const FShaderParameterMap& ParameterMap)
++	{
++		FLandscapeVertexFactoryVertexShaderParameters::Bind(ParameterMap);
++		// The original fixed-grid path explicitly writes a zero float4.
++		LegacyLodBias.Bind(ParameterMap, TEXT("LodBias"));
++	}
++
+ 	void GetElementShaderBindings(
+ 		const class FSceneInterface* Scene,
+ 		const FSceneView* InView,
+@@ -4151,10 +4172,17 @@
+ 		check(BatchElementParams);
+ 		const FLandscapeComponentSceneProxy* SceneProxy = BatchElementParams->SceneProxy;
+ 		check(SceneProxy);
++		BindLegacyLodValues(BatchElementParams, ShaderBindings);
++		if (LegacyLodBias.IsBound())
++		{
++			ShaderBindings.Add(LegacyLodBias, FVector4(ForceInitToZero));
++		}
+ 
+ 		ShaderBindings.Add(Shader->GetUniformBufferParameter<FLandscapeUniformShaderParameters>(), *BatchElementParams->LandscapeUniformShaderParametersResource);
+ 		ShaderBindings.Add(Shader->GetUniformBufferParameter<FLandscapeFixedGridUniformShaderParameters>(), SceneProxy->LandscapeFixedGridUniformShaderParameters[BatchElementParams->CurrentLOD]);
+ 		}
++private:
++	LAYOUT_FIELD(FShaderParameter, LegacyLodBias);
+ };
+ 
+ //

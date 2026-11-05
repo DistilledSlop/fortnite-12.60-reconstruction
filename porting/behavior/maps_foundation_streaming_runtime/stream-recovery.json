@@ -78,5 +78,11 @@
       "objdump -d -Mintel --start-address=0x142bb8270 --stop-address=0x142bb828a porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
       "objdump -d -Mintel --start-address=0x142c95320 --stop-address=0x142c95496 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe"
     ]
+  },
+  "actor_containment_query": {
+    "address": "0x141bd99a0",
+    "exec": "0x14273fc40",
+    "evidence": "The exec passes the Actor parameter to the native body. The body rejects null Actor, calls 0x143f76730 for an owning object of class Level (class registration 0x14477bcd0; 0x142eca940 walks outer objects), rejects null returned level and LevelStreamInfo at 0xda0, then compares that level with [LevelStreamInfo+0x128]. The original ULevelStreaming GetLoadedLevel exec 0x144783660 reads the same offset. UE Actor::GetLevel uses GetTypedOuter<ULevel>().",
+    "scope": "Complete containment query only; does not implement streaming behavior. Source promoted and Linux Development client build passed; runtime execution pending."
   }
 }

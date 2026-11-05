@@ -1,0 +1,38 @@
+[
+  {
+    "target": "0x1483117f0",
+    "from": "143acfb83",
+    "instruction": "LEA R9,[0x1483117f0]",
+    "function": "143acfa60"
+  },
+  {
+    "target": "0x1483117f0",
+    "from": "143aeee3b",
+    "instruction": "LEA R9,[0x1483117f0]",
+    "function": "143aee780"
+  },
+  {
+    "target": "0x148311850",
+    "from": "1405061ec",
+    "instruction": "LEA RCX,[0x148311850]",
+    "function": "140506120"
+  },
+  {
+    "target": "0x148311850",
+    "from": "143ae90de",
+    "instruction": "LEA R9,[0x148311850]",
+    "function": "143ae8e90"
+  },
+  {
+    "target": "0x148311850",
+    "from": "1458be7d0",
+    "instruction": "LEA RCX,[0x148311850]",
+    "function": null
+  },
+  {
+    "target": "0x148311870",
+    "from": "143ae8568",
+    "instruction": "LEA R9,[0x148311870]",
+    "function": "143ae8090"
+  }
+]

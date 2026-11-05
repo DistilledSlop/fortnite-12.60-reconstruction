@@ -10,7 +10,7 @@
     "status": "ported",
     "address": "0x141be2550",
     "inc_path": "porting/behavior/maps_foundation_streaming_runtime/ABuildingFoundation_NativeIsDynamicFoundationOrParent.inc",
-    "notes": "Complete original nonvirtual predicate: nonzero DynamicFoundationType at 0xb6b, otherwise recursively query ParentFoundation at 0xd78. Both fields match reflection; assembly explicitly passes ParentFoundation as recursive this. Does not integrate the unresolved streaming caller 0x141bed450. Build/runtime pending."
+    "notes": "Complete original nonvirtual predicate: nonzero DynamicFoundationType at 0xb6b, otherwise recursively query ParentFoundation at 0xd78. Both fields match reflection; assembly explicitly passes ParentFoundation as recursive this. Does not integrate the unresolved streaming caller 0x141bed450. Linux Development client build passed; runtime execution pending."
   },
   {
     "class": "ABuildingFoundation",
@@ -24,5 +24,20 @@
     "address": "0x141be2520",
     "inc_path": "porting/behavior/maps_foundation_streaming_runtime/ABuildingFoundation_NativeIsFoundationAndParentsEnabled.inc",
     "notes": "Complete original nonvirtual recursive predicate. FoundationEnabledState at 0xb6a must equal Enabled=1, then ParentFoundation at 0xd78 must be null or recursively enabled. Assembly explicitly passes ParentFoundation as recursive this. Source integration only; streaming visibility caller remains incomplete."
+  },
+  {
+    "class": "ABuildingFoundation",
+    "function": "DoesBuildingFoundationContainActor",
+    "kind": "getter",
+    "signature": "bool DoesBuildingFoundationContainActor(AActor* Actor) const",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141bd99a0",
+    "inc_path": "porting/behavior/maps_foundation_streaming_runtime/ABuildingFoundation_DoesBuildingFoundationContainActor.inc",
+    "includes": [
+      "Engine/LevelStreaming.h"
+    ],
+    "notes": "Original exec 0x14273fc40 calls 0x141bd99a0. The body gets the actor typed outer ULevel, rejects null actor or level, then compares LevelStreamInfo loaded level to that level. Reflected LevelStreamInfo is at 0xda0; original ULevelStreaming GetLoadedLevel exec 0x144783660 reads offset 0x128. Linux Development client build passed; runtime execution pending."
   }
 ]

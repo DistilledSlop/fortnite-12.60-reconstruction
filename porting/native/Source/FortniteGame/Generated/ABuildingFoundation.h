@@ -18,6 +18,7 @@
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 
+class AActor;
 class AFortHLODSMActor;
 class ALODActor;
 class UBuildingGroup;
@@ -192,6 +193,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FTransform DynamicFoundationTransform;
+
+	UFUNCTION(BlueprintCallable)
+	bool DoesBuildingFoundationContainActor(AActor* Actor) const;
 
 	UFUNCTION(BlueprintCallable)
 	void EditorOnlyClearAdditionalWorlds();
