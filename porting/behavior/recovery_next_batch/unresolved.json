@@ -1,0 +1,23 @@
+[
+  {
+    "class": "AFortMinigame",
+    "function": "RemoveEndCondition",
+    "exec": "0x1429c4f70",
+    "native": "0x1420a2810",
+    "blocker": "Helper 0x14207d1c0 compares subtype-filtered class and team fields; type and predicate mapping remain unresolved."
+  },
+  {
+    "class": "AFortMission",
+    "function": "AddGoalToAssignment",
+    "exec": "0x1429dc6f0",
+    "native": "0x1420b02d0",
+    "blocker": "Helper 0x14168a9b0 validates weak actor/vector and deduplicates with 0x1416556f0; field mapping and equality remain unresolved."
+  },
+  {
+    "class": "AFortGameModePvE",
+    "function": "RemoveAllowIdlePlayerLocation",
+    "exec": "0x1428f3580",
+    "native": "0x1424f0870",
+    "blocker": "Helper 0x1424f0660 removes a weak-object key from a sparse hash set at offset 0xa20; the owning field and element type need identification."
+  }
+]
