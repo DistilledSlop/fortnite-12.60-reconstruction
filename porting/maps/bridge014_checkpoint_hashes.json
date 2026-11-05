@@ -1,0 +1,23 @@
+{
+  "selection_sha256": "5884b815c83cce309d960c5b9cccd5f1a9c67509a387e7f5a99e578e00cf8f6f",
+  "assets": {
+    "Athena/Apollo/Environments/BuildingActors/Bridges/Floors/Meshes/Materials/MI_MetalDeck.uasset": "40a8b32c3ce9196577a9412867e48ef8913b5c483e52068c408f4b82a6bad364",
+    "Athena/Apollo/Environments/BuildingActors/Bridges/Floors/Meshes/SM_NewRoadbridgeMain_Metal.uasset": "ff50f1ffe0410d52c58dd5568b893d18374b4e8b7f7aa38a0d56a73f4a214e57",
+    "Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/Materials/MI_SteelBridgeSupports.uasset": "7f156562736d65abd1d918558cad31a08722a5019a1cf54884287dee6d333b3e",
+    "Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/Materials/M_Cement1_Tile1.uasset": "ff3b1442e57ef8bd71602f2c1e7ad7707c693bc33774efb337925ab363716f2b",
+    "Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_01_Top.uasset": "d31299c5ec314509cae02ca98bfd34a2d5c7aa41b48ec2da21388f9d9edfa0ae",
+    "Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_02_Pillar.uasset": "89f4978e0acbbeeb1de7e11ae74eb70229e5cc88a1d761cfd13257117cc9ea39",
+    "Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_02_PillarTop.uasset": "8b7c9d6ce987ecf43f64c0dbfc082d379eba6555f657cc5aafa759f9d27899e1",
+    "Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_Bottom.uasset": "3400cc74eeae082fc8cfd9252a23575829a61cd1cb4814b760cfb479efa64eb8",
+    "Packages/DS_Fortnite_Terrain_NoLOD/Ground/Materials/Terrain_Mat.uasset": "2992e8a22e484db603a581b65214d585ba86e8c9ca4fbfba35c90505d3d59b81",
+    "Packages/DS_Fortnite_Terrain_NoLOD/Ground/S_Elevation_Ground_Z.uasset": "56c03539ffe428bc5bf470e52533a17dbeb10405df5ec9310f159accd081ffd2"
+  },
+  "glbs": {
+    "FortniteGame/Content/Athena/Apollo/Environments/BuildingActors/Bridges/Floors/Meshes/SM_NewRoadbridgeMain_Metal/SM_NewRoadbridgeMain_Metal.glb": "f21df1e8ffe847fe4fc82bd3eff73d371e916818fecdfa1531af203c9697d132",
+    "FortniteGame/Content/Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_01_Top/SM_Apollo_BridgeSupport_01_Top.glb": "1f0168bb8da7f617cc6e2050afd799b25613d9ecb6bd6b0c48a12e67abeae923",
+    "FortniteGame/Content/Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_02_Pillar/SM_Apollo_BridgeSupport_02_Pillar.glb": "137356bca864f8aa4e8936466d2f1646628c88826b5db430cd31aa9db8117e53",
+    "FortniteGame/Content/Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_02_PillarTop/SM_Apollo_BridgeSupport_02_PillarTop.glb": "1ba02ddf572dc8599122cffc684aabf347576c1b5cc111d192fc2456ed7df9cd",
+    "FortniteGame/Content/Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_Bottom/SM_Apollo_BridgeSupport_Bottom.glb": "f4cf54a28945cb32fee8b45f0138db497e93d916cde3cfa250df3d68e4c975dc",
+    "FortniteGame/Content/Packages/DS_Fortnite_Terrain_NoLOD/Ground/S_Elevation_Ground_Z/S_Elevation_Ground_Z.glb": "d9353f6198c901580ae333fa140033d2813f414add1d1f137a4b79c26f7b258d"
+  }
+}
