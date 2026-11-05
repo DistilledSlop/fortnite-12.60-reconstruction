@@ -94,6 +94,9 @@ public:
 	UFUNCTION()
 	void OnRep_LoadedLinkData();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ServerSetLinkCode(FString InLinkCode);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

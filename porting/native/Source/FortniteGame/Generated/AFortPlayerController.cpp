@@ -1129,6 +1129,12 @@ void AFortPlayerController::StartZeroingCameraRoll()
 	bZeroingCameraRoll = true;
 }
 
+void AFortPlayerController::TestStreamedVideo(FString URLInQuotes)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void AFortPlayerController::ToggleClientBot()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

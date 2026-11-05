@@ -1922,6 +1922,9 @@ public:
 	void StartZeroingCameraRoll();
 
 	UFUNCTION(Exec)
+	void TestStreamedVideo(FString URLInQuotes);
+
+	UFUNCTION(Exec)
 	void ToggleClientBot();
 
 	UFUNCTION(Server, Reliable)

@@ -33,6 +33,12 @@ void UFortPortalComponent::OnRep_LoadedLinkData()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortPortalComponent::ServerSetLinkCode(FString InLinkCode)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void UFortPortalComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

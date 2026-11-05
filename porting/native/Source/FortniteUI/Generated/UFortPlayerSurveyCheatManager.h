@@ -17,7 +17,13 @@ class FORTNITEUI_API UFortPlayerSurveyCheatManager : public UChildCheatManager
 
 public:
 	UFUNCTION(Exec)
+	void EnableCMSPlayerSurvey(FString SurveyID);
+
+	UFUNCTION(Exec)
 	void ListCMSPlayerSurveys();
+
+	UFUNCTION(Exec)
+	void TestCMSPlayerSurvey(FString SurveyID);
 
 protected:
 	UFUNCTION()

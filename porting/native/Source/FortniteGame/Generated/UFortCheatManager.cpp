@@ -39,6 +39,12 @@ void UFortCheatManager::AddDebugSpawnAIGroupTag(FName Tag)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::AddFavoriteIsland(FString IslandCode)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void UFortCheatManager::AddKillFeedMessage()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -583,6 +589,12 @@ void UFortCheatManager::ForceAILODs(EFortAILODLevel inForcedAILODValue)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::ForceAthenaCosmeticItem(FString TemplateId)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void UFortCheatManager::ForceByPassNavMeshForAISpawning(bool bInValue)
 {
 	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
@@ -901,6 +913,36 @@ void UFortCheatManager::HideHUDElement(FGameplayTag HUDElementTag)
 	return;
 }
 
+void UFortCheatManager::Island_Create(FString NewIslandTemplateId)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
+void UFortCheatManager::Island_Destroy(FString Island_ItemId)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
+void UFortCheatManager::Island_MMS(FString IslandCode)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
+void UFortCheatManager::JoinFriendGame(FString FriendId)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
+void UFortCheatManager::JoinFriendGameAsSpectator(FString FriendDisplayName)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void UFortCheatManager::KillBots(bool bKillPlayers, bool bKillNoneParticipants, uint8 TeamIndex)
 {
 	// CONFIDENCE: HIGH; wrapper invokes the captured bare-return native target.
@@ -1049,6 +1091,18 @@ void UFortCheatManager::ListWeapons() const
 	return;
 }
 
+void UFortCheatManager::LoadCreativePlotFromMnemonic(FString Mnemonic)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
+void UFortCheatManager::LoadGameFeaturePlugin(FString PluginURL)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void UFortCheatManager::LockDebugCamera()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1100,6 +1154,12 @@ void UFortCheatManager::MassSuicide()
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::McpApplyStash(FString StashName)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
 	return;
 }
 
@@ -1179,6 +1239,12 @@ void UFortCheatManager::McpHostGetPlayers()
 	return;
 }
 
+void UFortCheatManager::McpIssueCodeToken(FString TokenId)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void UFortCheatManager::McpLogout()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1214,6 +1280,12 @@ void UFortCheatManager::McpRefreshProfile()
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::McpTestFriendCodes(FString TokenId)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
 	return;
 }
 
@@ -1397,6 +1469,12 @@ void UFortCheatManager::RemoveDebugSpawnAIGroupTag(FName Tag)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::RemoveFavoriteIsland(FString IslandCode)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void UFortCheatManager::RequestNextCarouselOffer()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1485,6 +1563,12 @@ void UFortCheatManager::RetestFailedBanhammerActions()
 	return;
 }
 
+void UFortCheatManager::RunPawnScriptLocally(FString ProfileName)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void UFortCheatManager::RunPerfMemCheatScript(bool bStartStatFiles)
 {
 	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
@@ -1503,6 +1587,12 @@ void UFortCheatManager::ScriptedPawnIntervalFiring(float TimeBetweenShots, int32
 	// Native target 0x1406801c0.
 }
 
+void UFortCheatManager::SendRemoteBotCommand(FString CommandToSend)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void UFortCheatManager::ServerStartProfiling()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1516,6 +1606,12 @@ void UFortCheatManager::ServerStopProfiling()
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::SetActionMappingEnabled(FName Action, bool bEnabled)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the bare-return native target.
 	return;
 }
 
@@ -1621,6 +1717,12 @@ void UFortCheatManager::SetEncounterSpawnPointsCap(int32 SpawnPointsCap)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::SetEventCalendarTime(FString TimeString)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
 void UFortCheatManager::SetFrameSyncMode(int32 Mode)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
@@ -1649,6 +1751,12 @@ void UFortCheatManager::SetInfiniteAmmo(bool bInValue)
 {
 	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetInputPresetName(FString PresetName)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
 }
 
 void UFortCheatManager::SetInteractExtent(float Extent)
@@ -1846,6 +1954,12 @@ void UFortCheatManager::ShowSolarisEditor()
 	return;
 }
 
+void UFortCheatManager::SimulateLoot(FName TierGroup, int32 LootTier, int32 LootLevel)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the bare-return native target.
+	return;
+}
+
 void UFortCheatManager::SimulateLootDrops()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1867,6 +1981,12 @@ void UFortCheatManager::SkipSafeZones()
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::SpawnContainer(FString ContainerClassName)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
 	return;
 }
 
@@ -1974,6 +2094,12 @@ void UFortCheatManager::SwitchTeam()
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::TeleportToActor(FString ClassOrInstanceName)
+{
+	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
 	return;
 }
 

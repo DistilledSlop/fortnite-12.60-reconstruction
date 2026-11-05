@@ -15,6 +15,9 @@ class FORTNITEGAME_API UFortCheatManagerSTW : public UChildCheatManager
 
 public:
 	UFUNCTION(Exec)
+	void ApplyWeaponAlteration(FString AlterationName);
+
+	UFUNCTION(Exec)
 	void ChangeHeroClass(int32 Index);
 
 	UFUNCTION(Exec)
@@ -25,6 +28,12 @@ public:
 
 	UFUNCTION(Exec)
 	void EvolveHero();
+
+	UFUNCTION(Exec)
+	void ForceHeroType(FString HeroPersistentName);
+
+	UFUNCTION(Exec)
+	void ForceSetHeroRemoteCharacter(int32 PartyMemberIndex, bool bEnabled);
 
 	UFUNCTION(Exec)
 	void ForceUnlockHordeTiers(int32 MaxTierNumber);
@@ -78,10 +87,19 @@ public:
 	void McpHostGetAllPlayerCachedPersistence();
 
 	UFUNCTION(Exec)
+	void McpRecycleItem(FString ItemToRecycle);
+
+	UFUNCTION(Exec)
 	void McpRemoveAllTestProfileMocks();
 
 	UFUNCTION(Exec)
 	void McpResetPersistence();
+
+	UFUNCTION(Exec)
+	void McpSlotItem(FString ItemToSlot);
+
+	UFUNCTION(Exec)
+	void McpUpgradeItem(FString ItemToUpgrade);
 
 	UFUNCTION(Exec)
 	void SetHeroLevel(int32 Level);

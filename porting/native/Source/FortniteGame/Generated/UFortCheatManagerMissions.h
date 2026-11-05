@@ -15,6 +15,9 @@ class FORTNITEGAME_API UFortCheatManagerMissions : public UChildCheatManager
 
 public:
 	UFUNCTION(Exec)
+	void DumpActorsWithAssetTags(FString TagList);
+
+	UFUNCTION(Exec)
 	void DumpAllActiveMissions();
 
 	UFUNCTION(Exec)
@@ -27,10 +30,16 @@ public:
 	void ForceCompleteDisplayedObjective(int32 ObjectiveIndex);
 
 	UFUNCTION(Exec)
+	void ForceSaveMissionStateAndWorld(FString SaveFilename);
+
+	UFUNCTION(Exec)
 	void ListMissionGenerators();
 
 	UFUNCTION(Exec)
 	void ListMissions();
+
+	UFUNCTION(Exec)
+	void MissionForceFailure(FString MissionName);
 
 	UFUNCTION(Exec)
 	void MissionForcePrimaryFailure();

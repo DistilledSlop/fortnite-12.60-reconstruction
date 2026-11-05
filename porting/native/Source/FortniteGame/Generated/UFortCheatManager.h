@@ -145,6 +145,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void AddFavoriteIsland(FString IslandCode);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void AddKillFeedMessage();
 public:
 
@@ -503,6 +508,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ForceAthenaCosmeticItem(FString TemplateId);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void ForceByPassNavMeshForAISpawning(bool bInValue);
 public:
@@ -724,6 +734,31 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec)
+	void Island_Create(FString NewIslandTemplateId);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void Island_Destroy(FString Island_ItemId);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void Island_MMS(FString IslandCode);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void JoinFriendGame(FString FriendId);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void JoinFriendGameAsSpectator(FString FriendDisplayName);
+public:
+
+protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void KillBots(bool bKillPlayers, bool bKillNoneParticipants, uint8 TeamIndex);
 public:
@@ -820,6 +855,14 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void LoadCreativePlotFromMnemonic(FString Mnemonic);
+public:
+
+	UFUNCTION(Exec)
+	void LoadGameFeaturePlugin(FString PluginURL);
+
+protected:
+	UFUNCTION(Exec)
 	void LockDebugCamera();
 public:
 
@@ -851,6 +894,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void MassSuicide();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpApplyStash(FString StashName);
 public:
 
 protected:
@@ -905,6 +953,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void McpIssueCodeToken(FString TokenId);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void McpLogout();
 public:
 
@@ -926,6 +979,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void McpRefreshProfile();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpTestFriendCodes(FString TokenId);
 public:
 
 protected:
@@ -1050,6 +1108,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void RemoveFavoriteIsland(FString IslandCode);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void RequestNextCarouselOffer();
 public:
 
@@ -1105,6 +1168,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void RunPawnScriptLocally(FString ProfileName);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void RunPerfMemCheatScript(bool bStartStatFiles);
 public:
 
@@ -1119,6 +1187,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec)
+	void SendRemoteBotCommand(FString CommandToSend);
+public:
+
+protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void ServerStartProfiling();
 public:
@@ -1126,6 +1199,11 @@ public:
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void ServerStopProfiling();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetActionMappingEnabled(FName Action, bool bEnabled);
 public:
 
 protected:
@@ -1215,6 +1293,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void SetEventCalendarTime(FString TimeString);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void SetFrameSyncMode(int32 Mode);
 public:
 
@@ -1236,6 +1319,11 @@ public:
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void SetInfiniteAmmo(bool bInValue);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetInputPresetName(FString PresetName);
 public:
 
 protected:
@@ -1387,6 +1475,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec)
+	void SimulateLoot(FName TierGroup, int32 LootTier, int32 LootLevel);
+public:
+
+protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void SimulateLootDrops();
 public:
@@ -1399,6 +1492,11 @@ public:
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void SkipSafeZones();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SpawnContainer(FString ContainerClassName);
 public:
 
 protected:
@@ -1467,6 +1565,11 @@ public:
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void SwitchTeam();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TeleportToActor(FString ClassOrInstanceName);
 public:
 
 protected:
