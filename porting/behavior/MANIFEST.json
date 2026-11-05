@@ -63350,5 +63350,21 @@
       "SharedFortGameLog.h"
     ],
     "notes": "Native 0x141dda420 updates first matching UID, preserves current radius as previous and bounds extent only on exact location/radius change. Lifecycle and runtime validation pending."
+  },
+  {
+    "class": "AFortWindManager",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "function": "NativeGetWindImpulseCylinder",
+    "signature": "bool NativeGetWindImpulseCylinder(const FFortWindImpulseHandle& ImpulseHandle, FFortWindImpulseCylinder& OutImpulse)",
+    "inc_path": "porting/behavior/maps_wind_cylinder_lookup_runtime/AFortWindManager_NativeGetWindImpulseCylinder.inc",
+    "address": "0x141dcf3f0",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Original dedicated-server and Fort.Wind gates; first UID match copies all cylinder fields, leaves output unchanged on failure. No sampling-initialized gate. Sampling caller remains unintegrated."
   }
 ]

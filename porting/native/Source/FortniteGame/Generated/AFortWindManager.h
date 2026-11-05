@@ -198,5 +198,6 @@ public:
 	static bool NativeAdvanceWindDelta(FFortWindImpulseCylinderDelta& D);
 	static FScalarParameterValue* NativeFindWindScalarOverride(UMaterialInstance* Instance, const FName& Name);
 	void NativeSetupAnimatingMaterials(FFortWindResponder& Responder);
+	bool NativeGetWindImpulseCylinder(const FFortWindImpulseHandle& ImpulseHandle, FFortWindImpulseCylinder& OutImpulse);
 };
 
