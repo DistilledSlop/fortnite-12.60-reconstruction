@@ -4652,11 +4652,10 @@ TYPE_DECL_RE = {
     "delegate": re.compile(r"\bDECLARE_(?:DYNAMIC_)?(?:MULTICAST_)?(?:SPARSE_)?DELEGATE\w*\(\s*(F[A-Za-z0-9_]+)"),
 }
 ENGINE_ROOT_DEFAULT = os.environ.get("FN_ENGINE_ROOT", "/opt/fortnite/UnrealEngine/Engine")
-# OnlineSubsystemUtils declares the party and spectator beacon state types (PartyBeaconState.h, SpectatorBeaconState.h)
-# that the beacon RPCs use. Only that plugin is scanned: the rest of Plugins/Online would add headers of modules that
-# the project's Build.cs does not list (WebBrowser, LoginFlow). Only usable modules are indexed (ModuleRegistry).
+# Scan the enabled OnlineSubsystem and OnlineSubsystemUtils plugins for their public types; unrelated Online
+# plugins remain outside the scan. Only usable modules are indexed (ModuleRegistry).
 ENGINE_SCAN_DIRS = ("Source/Runtime", "Plugins/Runtime", "Plugins/Developer", "Source/Developer",
-                    "Plugins/Online/OnlineSubsystemUtils", "Plugins/FX/Niagara")
+                    "Plugins/Online/OnlineSubsystemUtils", "Plugins/Online/OnlineSubsystem", "Plugins/FX/Niagara")
 # A namespaced enum (UE: `namespace ECollisionEnabled { enum Type {...}; }`) is named ECollisionEnabled::Type in C++.
 # TYPE_DECL_RE only sees `enum E...` at the start of a line, so the namespaced form is indexed by this pattern.
 _NAMESPACE_ENUM_GAP = r"(?:\s|/\*[\s\S]*?\*/|//[^\n]*)*"

@@ -62645,5 +62645,62 @@
     "status": "ported",
     "notes": "Wrapper steps input parameters and calls the shared bare-return native target; build and runtime pending.",
     "class": "UFortCheatManager"
+  },
+  {
+    "class": "UMcpProfileGroup",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Explicit logical support state only; owner-group setup and connection remain unimplemented. See profile_support_setup_runtime/evidence.json.",
+    "function": "NativeSetTimerContext",
+    "signature": "void NativeSetTimerContext(bool bHasSupport, FSoftObjectPtr& ContextObject, FTimerManager*& ContextTimer, UObject* Owner, FTimerManager* Timer)",
+    "address": "0x141110010",
+    "includes": [
+      "UObject/SoftObjectPtr.h",
+      "TimerManager.h"
+    ],
+    "inc_path": "porting/behavior/profile_support_setup_runtime/NativeSetTimerContext.inc"
+  },
+  {
+    "class": "UMcpProfileGroup",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Explicit logical support state only; owner-group setup and connection remain unimplemented. See profile_support_setup_runtime/evidence.json.",
+    "function": "NativeGetTimerContext",
+    "signature": "void NativeGetTimerContext(bool bHasSupport, const FSoftObjectPtr& ContextObject, FTimerManager* ContextTimer, UObject*& OutOwner, FTimerManager*& OutTimer)",
+    "address": "0x1410ff760",
+    "includes": [
+      "UObject/SoftObjectPtr.h",
+      "TimerManager.h"
+    ],
+    "inc_path": "porting/behavior/profile_support_setup_runtime/NativeGetTimerContext.inc"
+  },
+  {
+    "class": "UMcpProfileGroup",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Explicit logical support state only; owner-group setup and connection remain unimplemented. See profile_support_setup_runtime/evidence.json.",
+    "function": "NativeResolveTimerManager",
+    "signature": "FTimerManager* NativeResolveTimerManager(const FSoftObjectPtr& ContextObject, FTimerManager* ContextTimer, IOnlineSubsystem* Subsystem)",
+    "address": "0x1410ff860",
+    "includes": [
+      "UObject/SoftObjectPtr.h",
+      "TimerManager.h",
+      "OnlineSubsystem.h",
+      "Engine/GameEngine.h",
+      "Engine/World.h"
+    ],
+    "inc_path": "porting/behavior/profile_support_setup_runtime/NativeResolveTimerManager.inc"
   }
 ]

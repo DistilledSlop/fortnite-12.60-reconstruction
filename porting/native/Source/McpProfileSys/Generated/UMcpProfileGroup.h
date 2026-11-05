@@ -6,8 +6,13 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "Engine/GameEngine.h"
+#include "Engine/World.h"
 #include "FProfileEntry.h"
 #include "Misc/Timespan.h"
+#include "OnlineSubsystem.h"
+#include "TimerManager.h"
+#include "UObject/SoftObjectPtr.h"
 
 class UMcpProfile;
 
@@ -91,5 +96,11 @@ public:
 	UPROPERTY(Config)
 	int32 MaxChangesToForwardInUpdate;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeSetTimerContext(bool bHasSupport, FSoftObjectPtr& ContextObject, FTimerManager*& ContextTimer, UObject* Owner, FTimerManager* Timer);
+	static void NativeGetTimerContext(bool bHasSupport, const FSoftObjectPtr& ContextObject, FTimerManager* ContextTimer, UObject*& OutOwner, FTimerManager*& OutTimer);
+	static FTimerManager* NativeResolveTimerManager(const FSoftObjectPtr& ContextObject, FTimerManager* ContextTimer, IOnlineSubsystem* Subsystem);
 };
 
