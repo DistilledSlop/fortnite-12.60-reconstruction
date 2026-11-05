@@ -63451,5 +63451,35 @@
       "UnrealEngine.h"
     ],
     "notes": "Original movement threshold, static shared query scratch, strict bounds-center distance filters and independent update/audio caches. Engine RandHelper maps original Windows CRT scaling; platform random stream parity unverified. Audio caller pending."
+  },
+  {
+    "class": "AFortWindManager",
+    "kind": "helper",
+    "function": "NativeBuildWindSectionBoxes",
+    "signature": "void NativeBuildWindSectionBoxes(const FFortWindImpulseCylinderDelta& Delta, TArray<FBox>& OutBoxes)",
+    "static": true,
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141dcb5d0",
+    "inc_path": "porting/behavior/maps_wind_section_boxes_runtime/AFortWindManager_NativeBuildWindSectionBoxes.inc",
+    "includes": [
+      "Math/Box.h"
+    ],
+    "notes": "Original XY-only overlap; appends copied outer-box strips in right/top/left/bottom order or whole outer on nonintersection. Preserves validity, all Z values and overlapping corners; sampling caller pending."
+  },
+  {
+    "class": "AFortWindManager",
+    "kind": "helper",
+    "function": "NativeStartQueuedWindDelta",
+    "signature": "void NativeStartQueuedWindDelta()",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141ddef30",
+    "inc_path": "porting/behavior/maps_wind_delta_queue_runtime/AFortWindManager_NativeStartQueuedWindDelta.inc",
+    "notes": "Direct first-cylinder UID match; clear pending/set changing; UHT Creation event consumes cylinder and delta default handle IDs before input copies. Missing-cylinder deltas swap-removed without shrinking; no enable/dedicated gates."
   }
 ]

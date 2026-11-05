@@ -192,6 +192,31 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static FFortWindImpulseRadius MakeWindImpulseRadius(const FVector& ImpulseLocation, float ImpulseRadius, float ImpulseMagnitude, float ImpulseBlendTime);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWindAudioBecameActive(UAudioComponent* WindAudioComp);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWindAudioBecameInactive(UAudioComponent* WindAudioComp);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWindImpulseCylinderCreation(const FFortWindImpulseCylinder& WindImpulseCylinder, const FFortWindImpulseCylinderDelta& WindImpulseCylinderDelta);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWindImpulseCylinderDeath(const FFortWindImpulseCylinder& WindImpulseCylinder);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWindImpulseCylinderDeltaComplete(const FFortWindImpulseCylinder& WindImpulseCylinder);
+public:
+
 	UFUNCTION(BlueprintCallable)
 	void RemoveWindImpulse(const FFortWindImpulseHandle& ImpulseHandle, float BlendTime);
 
@@ -212,5 +237,7 @@ public:
 	void NativeRegisterWindResponder(FFortWindResponder& Responder);
 	void NativeDiscoverWindResponders();
 	void NativeRefreshNearbyCache(const FVector& ViewerPosition);
+	static void NativeBuildWindSectionBoxes(const FFortWindImpulseCylinderDelta& Delta, TArray<FBox>& OutBoxes);
+	void NativeStartQueuedWindDelta();
 };
 

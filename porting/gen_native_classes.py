@@ -2000,6 +2000,13 @@ with open(os.path.join(os.path.dirname(__file__), "behavior", "delivery_events17
         UI_PARAMETERIZED_BLUEPRINT_EVENTS.setdefault(_owner, {}).update(_events)
 
 
+# Recovered wind callbacks; UHT owns the original ProcessEvent parameter construction.
+with open(os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_events_runtime",
+                       "blueprint-events.json"), encoding="utf-8") as _wind_event_policy_file:
+    for _owner, _events in json.load(_wind_event_policy_file).items():
+        UI_PARAMETERIZED_BLUEPRINT_EVENTS.setdefault(_owner, {}).update(_events)
+
+
 def build_functions_promoted(functions, resolver, notify_names, owner_fns, splice_names=frozenset(),
                              blueprint_events=frozenset(), parameterized_blueprint_events=None, native_event_names=frozenset()):
     """Emit RPCs, RepNotify targets, snippet functions and narrowly selected observed Blueprint events.
