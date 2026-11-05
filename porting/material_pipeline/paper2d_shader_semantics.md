@@ -21,9 +21,7 @@ The original receipt below predates HitProxy support. A later bounded decode
 boundaries, shader targets and archive identities agree; the corresponding
 current UE shader declarations support the parameter types, but their original
 semantic names have not been independently established. Alternative zero-byte
-parameter lengths fail the map-hash check. The prefix reader still reports
-`complete_serialized_shader_map=false`: it does not consume the cooking marker.
-The parent resource is independently bounded at `[2084,14476)`. The later
+parameter lengths fail the map-hash check. The parent resource is independently bounded at `[2084,14476)`. The later
 `parent-shadow-prefix.json` decodes four shadow-depth vertex records at resource
 offsets 604..2336, with archive indices 1510..1513. Each has six bytes between
 the LocalVF parameters and the shader output hash, decoded as one scalar
@@ -75,12 +73,28 @@ reach offset 9128.
 (archive index 2475). It contains one six-byte unbound scalar parameter,
 consistent with the current `MobileColorValue` declaration; its original field
 name remains unverified. Existing uniform-mesh VS/GS decoders then reach offset
-10318. All 23 decoded parent records pass declared boundaries, map/resource
-identity, target and exact archive association. The next unsupported structure
-is a mesh shader-pipeline array with count three at offset 10318; all 2074 bytes
-from its count onward remain unconsumed. The prefix reader now preserves this
-verified boundary instead of failing after the known records. It still reports
-`complete_serialized_shader_map=false` and does not parse or skip those pipelines.
+10318. All 23 standalone parent records pass declared boundaries, map/resource
+identity, target and exact archive association. `parent-pipelines-prefix.json`
+continues from offset 10318 through three mesh shader pipelines and five full
+stage records. UE 4.24's pre-freeze `TShaderMap::SerializeInline` writes a
+pipeline type, stage count and full shader record for each stage. The original
+bytes match that grammar, and current renderer declarations corroborate each
+pipeline's stage membership; stage order below is serialized order:
+
+- `DepthNoColorOutputPipeline` (10322..11152): `FDepthOnlyPS<false>` and
+  `TDepthOnlyVS<false>`, archive indices 2476 and 2477.
+- `DepthNoPixelPipeline` (11152..11564): `TDepthOnlyVS<false>`, index 668.
+- `VelocityPipeline` (11564..12388): `FVelocityPS` and `FVelocityVS`, indices
+  2478 and 2479.
+
+All five stages pass the same record checks, including each stage's embedded
+pipeline identity and archive hash/target/size. The pipeline count and stage
+membership are validated against these observed declarations; unknown pipeline
+types are not decoded. UE 4.24 `FMaterialShaderMap::Serialize` reads `bCooked`
+after the mesh maps, corroborating the final four-byte true marker. The parent
+and instance reports now consume their bounded resources exactly: 28 and 14
+records respectively, including pipeline stages. Complete serialized metadata
+does not establish runtime loading or parity.
 Neither asset has been attached to the runtime using this decode; mesh shader-map construction also remains
 necessary.
 
@@ -131,4 +145,4 @@ The separate legacy native-tail decoder now proves the current stock instance's 
 4. Run `shader_archive.py` with `--shader-index 3378 --shader-index 857 --max-shaders 2`, then `inspect_d3d_code.py` on its extraction report.
 5. Run the existing `vkd3d2-compiled/bin/vkd3d-compiler -x dxbc-tpf -b d3d-asm --formatting=signatures,offsets` on each extracted DXBC, setting LD_LIBRARY_PATH to that tool prefix's lib directory.
 
-`test_paper2d_shader_prefix.py` passes three meaningful fail-closed checks: an unknown record does not consume or seek through even a malicious end offset; a known record cannot exceed the resource; and an unsupported vertex factory fails before records. Artifact/tool/input SHA256 values are in `receipt.json`, with the full archive hash additionally in both prefix reports. Neither DXBC execution nor a UE draw has been tested.
+`test_paper2d_shader_prefix.py` passes four meaningful fail-closed checks: unknown pipelines preserve their unconsumed boundary; an unknown record does not consume or seek through even a malicious end offset; a known record cannot exceed the resource; and an unsupported vertex factory fails before records. Artifact/tool/input SHA256 values are in `receipt.json`, with the full archive hash additionally in both prefix reports. Neither DXBC execution nor a UE draw has been tested.

@@ -36,18 +36,29 @@ def paper2d_mesh_maps(reader,count,map_hash,expression_counts):
                 return maps
             parsed.append(records.shader_record(reader,map_hash,expression_counts,vf))
         pipeline_offset=reader.cursor
-        pipelines=reader.count()
-        if pipelines:
-            # Preserve the verified records without consuming an unknown grammar.
-            reader.cursor=pipeline_offset
-            item['first_unknown']={'offset':pipeline_offset,
-                                   'kind':'mesh_shader_pipelines','count':pipelines}
-            return maps
-        item.update(pipeline_count=pipelines,end=reader.cursor)
+        pipeline_count=reader.count()
+        if pipeline_count:
+            # Unknown pipeline grammars remain an unconsumed prefix boundary.
+            try:
+                first=reader.name()
+            except ValueError:
+                first=None
+            reader.cursor=pipeline_offset+4
+            if (first is None or first['number'] or
+                    first['name'] not in records.PAPER2D_PIPELINE_STAGES):
+                reader.cursor=pipeline_offset
+                item['first_unknown']={'offset':pipeline_offset,
+                                       'kind':'mesh_shader_pipelines','count':pipeline_count}
+                return maps
+        pipelines=[records.paper2d_mesh_pipeline(reader,map_hash,expression_counts,vf)
+                   for _ in range(pipeline_count)]
+        if len({p['type']['name'] for p in pipelines}) != pipeline_count:
+            raise ValueError('duplicate mesh shader pipeline type')
+        item.update(pipeline_count=pipeline_count,pipelines=pipelines,end=reader.cursor)
     return maps
 
 def parse_prefix(data, names):
-    """Return only the verified prefix; never assert a complete shader map.
+    """Decode supported metadata, stopping before unsupported structures.
 
     Nonempty VT stacks and parameter-binding arrays remain unsupported.
     """
@@ -110,7 +121,17 @@ def parse_prefix(data, names):
         [arrays[name]['count'] for name in ARRAYS[:6]] + [arrays['texture_2d_array']['count']])
     mesh_maps = paper2d_mesh_maps(reader, shader_records['mesh_shader_maps_count'], shader_map_hash,
         [arrays[name]['count'] for name in ARRAYS[:6]] + [arrays['texture_2d_array']['count']])
-    return {'complete_serialized_shader_map': False, 'runtime_loading_verified': False,
+    unknown = next((m['first_unknown'] for m in mesh_maps if 'first_unknown' in m), None)
+    cooking = None
+    if unknown is None:
+        # FMaterialShaderMap::Serialize reads bCooked after its mesh maps.
+        cooking_offset = reader.cursor
+        if reader.read('I') != 1:
+            raise ValueError('only cooked original material shader maps are supported')
+        if reader.cursor != len(data):
+            raise ValueError(f'unexpected trailing shader-map bytes at {reader.cursor}')
+        cooking = {'offset': cooking_offset, 'value': True, 'end': reader.cursor}
+    return {'complete_serialized_shader_map': unknown is None, 'runtime_loading_verified': False,
             'cooked': cooked, 'valid': valid, 'quality_level': quality, 'feature_level': feature,
             'shader_platform': platform, 'cooked_shader_map_id_hash': shader_map_hash,
             'friendly_name': friendly, 'material_path': path, 'uniform_expression_arrays': arrays,
@@ -119,8 +140,8 @@ def parse_prefix(data, names):
             'debug_description': debug_description, 'material_shaders': shader_records,
             'mesh_shader_maps': mesh_maps, 'decoded_prefix_bytes': reader.cursor,
             'undecoded_bytes': len(data)-reader.cursor,
-            'first_unknown': next((m['first_unknown'] for m in mesh_maps if 'first_unknown' in m), None),
-            'limitation': 'Stops at first unsupported structure; no exact EOF or runtime/parity claim'}
+            'first_unknown': unknown, 'cooking': cooking,
+            'limitation': 'Only observed shader and pipeline types are supported; no runtime/parity claim'}
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
@@ -140,10 +161,14 @@ def main():
     if hashlib.sha256(data).hexdigest()!=framing['resource_sha256']: raise ValueError('resource changed')
     result=parse_prefix(data,framing['names'])
     result['shader_record_count']=len(result['material_shaders']['records'])+sum(
-        len(m['records']) for m in result['mesh_shader_maps'])
+        len(m['records']) + sum(len(p['stages']) for p in m.get('pipelines', []))
+        for m in result['mesh_shader_maps'])
     archive_module=sibling('shader_archive')
     with archive_module.ShaderArchive(args.shader_archive,layout='fortnite-12.60') as archive:
         legacy.associate_library(result,archive)
+        for mesh_map in result['mesh_shader_maps']:
+            for pipeline in mesh_map.get('pipelines', []):
+                legacy.associate_library({'material_shaders': {'records': pipeline['stages']}}, archive)
     result['input_sha256']={str(p):archive_module.sha256(p) for p in [args.uexp,args.resource_report,args.shader_archive,Path(__file__),Path(legacy.__file__),Path(records.__file__)]}
     args.report.parent.mkdir(parents=True,exist_ok=True)
     args.report.write_text(json.dumps(result,indent=2)+'\n')

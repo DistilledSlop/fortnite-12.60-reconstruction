@@ -214,6 +214,38 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
         reader.limit = old_limit
 
 
+# Stage ordering is serialized by FShaderPipelineType::GetStages(), not by
+# graphics execution order. These are the three observed Paper2D pipelines;
+# their VS/PS membership is corroborated by DepthRendering.cpp and
+# VelocityRendering.cpp. Unknown pipeline types remain unsupported.
+PAPER2D_PIPELINE_STAGES = {
+    'DepthNoColorOutputPipeline': ('FDepthOnlyPS<false>', 'TDepthOnlyVS<false>'),
+    'DepthNoPixelPipeline': ('TDepthOnlyVS<false>',),
+    'VelocityPipeline': ('FVelocityPS', 'FVelocityVS'),
+}
+
+
+def paper2d_mesh_pipeline(reader, map_hash, expression_counts, vertex_factory):
+    # UE 4.24 TShaderMap::SerializeInline: pipeline type, stage count, then
+    # each stage as a full SerializeShaderForSaving record.
+    start = reader.cursor
+    pipeline_type = reader.name()
+    expected = PAPER2D_PIPELINE_STAGES.get(pipeline_type['name'])
+    if pipeline_type['number'] or expected is None:
+        raise ValueError(f'unsupported mesh shader pipeline at {start}')
+    count = reader.count()
+    if count != len(expected):
+        raise ValueError('shader pipeline stage count mismatch')
+    stages = []
+    for stage_type in expected:
+        stage = shader_record(reader, map_hash, expression_counts, vertex_factory)
+        if stage['type'] != {'name': stage_type, 'number': 0} or stage['pipeline'] != pipeline_type:
+            raise ValueError('shader pipeline stage identity mismatch')
+        stages.append(stage)
+    return {'offset': start, 'type': pipeline_type, 'stage_count': count,
+            'stages': stages, 'end': reader.cursor}
+
+
 def material_shader_records(reader, map_hash, expression_counts):
     start = reader.cursor
     count = reader.count()
