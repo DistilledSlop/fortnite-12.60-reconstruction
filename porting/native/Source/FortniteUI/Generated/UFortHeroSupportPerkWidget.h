@@ -49,10 +49,19 @@ public:
 	bool IsHeroInSupportSlot() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPerkActive() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPerkEmpty() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPerkHighlighted() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPerkInCorrectSlot() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPerkUnlocked() const;
 
 };
 

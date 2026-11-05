@@ -29,6 +29,12 @@ public:
 	UPROPERTY()
 	float MaxGammaValue;
 
+	UFUNCTION(BlueprintCallable)
+	void AnonymousCharacterModeChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void AnonymousModeChanged(bool bInChecked);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetAimAssistState() const;
 
@@ -193,6 +199,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetTouchVerticalSensitivityValue() const;
+
+	UFUNCTION(BlueprintCallable)
+	void HoldToSwapPickupChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void MouseSensitivityMultiplierForAircraftChanged(float NewValue);
 
 	UFUNCTION(BlueprintCallable)
 	void SetAllowGameVolumeWhenMinimized(EFortAllowBackgroundAudioSetting NewValue);

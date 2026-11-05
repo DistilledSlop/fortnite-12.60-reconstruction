@@ -8,6 +8,8 @@
 
 #include "FOnCurrentPageIndexChanged.h"
 
+class UWidget;
+
 #include "UCommonWidgetCarousel.generated.h"
 
 UCLASS()
@@ -23,6 +25,9 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FOnCurrentPageIndexChanged OnCurrentPageIndexChanged;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UWidget* GetWidgetAtIndex(int32 Index) const;
 
 };
 

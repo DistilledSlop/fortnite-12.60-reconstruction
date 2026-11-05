@@ -29,5 +29,8 @@ public:
 	UPROPERTY()
 	float TransitionDuration;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasWidgets() const;
+
 };
 

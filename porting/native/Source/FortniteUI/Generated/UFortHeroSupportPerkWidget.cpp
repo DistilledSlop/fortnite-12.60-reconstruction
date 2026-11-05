@@ -9,6 +9,16 @@ bool UFortHeroSupportPerkWidget::IsHeroInSupportSlot() const
 	return false;
 }
 
+bool UFortHeroSupportPerkWidget::IsPerkActive() const
+{
+	// Behaviour snippet: UFortHeroSupportPerkWidget::IsPerkActive, UFortHeroSupportPerkWidget::IsPerkHighlighted, UFortHeroSupportPerkWidget::IsPerkUnlocked (body only; spliced into the generated member function).
+	// Original address: 0x144ec5b30 (via exec wrapper 0x145257c70)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	HeroToRepresent.IsValid();
+	return false;
+}
+
 bool UFortHeroSupportPerkWidget::IsPerkEmpty() const
 {
 	// Behaviour snippet: UFortHeroSupportPerkWidget::IsPerkEmpty (body only; spliced into the generated member function).
@@ -19,11 +29,31 @@ bool UFortHeroSupportPerkWidget::IsPerkEmpty() const
 	return true;
 }
 
+bool UFortHeroSupportPerkWidget::IsPerkHighlighted() const
+{
+	// Behaviour snippet: UFortHeroSupportPerkWidget::IsPerkActive, UFortHeroSupportPerkWidget::IsPerkHighlighted, UFortHeroSupportPerkWidget::IsPerkUnlocked (body only; spliced into the generated member function).
+	// Original address: 0x144ec5b30 (via exec wrapper 0x145257c70)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	HeroToRepresent.IsValid();
+	return false;
+}
+
 bool UFortHeroSupportPerkWidget::IsPerkInCorrectSlot() const
 {
 	// Original address: 0x140a02a40.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
+	return false;
+}
+
+bool UFortHeroSupportPerkWidget::IsPerkUnlocked() const
+{
+	// Behaviour snippet: UFortHeroSupportPerkWidget::IsPerkActive, UFortHeroSupportPerkWidget::IsPerkHighlighted, UFortHeroSupportPerkWidget::IsPerkUnlocked (body only; spliced into the generated member function).
+	// Original address: 0x144ec5b30 (via exec wrapper 0x145257c70)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	HeroToRepresent.IsValid();
 	return false;
 }
 

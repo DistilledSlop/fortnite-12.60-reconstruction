@@ -8,6 +8,7 @@
 
 class UCommonPopupMenu;
 class UMenuAnchor;
+class UWidget;
 
 #include "UCommonPopupButton.generated.h"
 
@@ -24,6 +25,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonPopupMenu* PopupMenu;
+
+private:
+	UFUNCTION()
+	UWidget* GetMenuAnchorWidget();
+public:
 
 };
 

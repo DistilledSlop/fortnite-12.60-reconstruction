@@ -9,6 +9,40 @@
 #include "UFortClientSettingsRecord.h"
 #include "UFortLocalPlayer.h"
 
+void UFortSettingsContext::AnonymousCharacterModeChanged(bool bInChecked)
+{
+	// Behaviour snippet: UFortSettingsContext::AnonymousCharacterModeChanged (body only; spliced into the generated member function).
+	// Original address: 0x144cf6c80 (via exec wrapper 0x1452cd1e0)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord != nullptr)
+	{
+		if (SettingsRecord->bAnonymousCharacterMode != bInChecked)
+		{
+			SettingsRecord->bAnonymousCharacterMode = bInChecked;
+			SettingsRecord->bDirty = true;
+		}
+	}
+}
+
+void UFortSettingsContext::AnonymousModeChanged(bool bInChecked)
+{
+	// Behaviour snippet: UFortSettingsContext::AnonymousModeChanged (body only; spliced into the generated member function).
+	// Original address: 0x144cf6cb0 (via exec wrapper 0x1452cd270)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord != nullptr)
+	{
+		if (SettingsRecord->bAnonymousMode != bInChecked)
+		{
+			SettingsRecord->bAnonymousMode = bInChecked;
+			SettingsRecord->bDirty = true;
+		}
+	}
+}
+
 bool UFortSettingsContext::GetAimAssistState() const
 {
 	// CONFIDENCE: high
@@ -452,6 +486,34 @@ float UFortSettingsContext::GetTouchVerticalSensitivityValue() const
 	// Native 0x144d0d630.
 	const UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
 	return Record ? Record->TouchVerticalMultiplier : 0.0f;
+}
+
+void UFortSettingsContext::HoldToSwapPickupChanged(bool bInChecked)
+{
+	// Behaviour snippet: UFortSettingsContext::HoldToSwapPickupChanged (body only; spliced into the generated member function).
+	// Original address: 0x144d12b30 (via exec wrapper 0x1452cf560)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord != nullptr && bInChecked != SettingsRecord->bUseHoldToSwapPickup)
+	{
+	    SettingsRecord->bUseHoldToSwapPickup = bInChecked;
+	    SettingsRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::MouseSensitivityMultiplierForAircraftChanged(float NewValue)
+{
+	// Behaviour snippet: UFortSettingsContext::MouseSensitivityMultiplierForAircraftChanged (body only; spliced into the generated member function).
+	// Original address: 0x144d14cb0 (via exec wrapper 0x1452cf910)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord != nullptr && FMath::Abs(NewValue - SettingsRecord->MouseSensitivityMultiplierForAircraftValue) > 1e-08f)
+	{
+		SettingsRecord->MouseSensitivityMultiplierForAircraftValue = NewValue;
+		SettingsRecord->bDirty = true;
+	}
 }
 
 void UFortSettingsContext::SetAllowGameVolumeWhenMinimized(EFortAllowBackgroundAudioSetting NewValue)
