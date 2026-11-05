@@ -1,0 +1,30 @@
+{
+  "counts": {
+    "changed_index": 2,
+    "changed_offset": 26,
+    "source_path_match": 72,
+    "requires_factory_metadata": 28
+  },
+  "resource_descriptors": 100,
+  "inputs": [
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/paper2d-shader-semantics/shader-manifest.json",
+      "sha256": "3947aea9f3cd2e1d61441334d256e8aeeb9d1cf8cd83fce5eef35236165b0876"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/paper2d-shader-semantics/original-uniform-contracts.json",
+      "sha256": "324e920dd534aa8ffc4e81f6fb5582bf8d195271167ffe475816b1fdd4d98b5c"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/paper2d_material_uniform_layout_runtime/evidence.json",
+      "sha256": "81dfa22f5fe642b8791479e160e0a815b73cd3f37dc9d79d030fd68a60130c09"
+    }
+  ],
+  "output": {
+    "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/paper2d-shader-semantics/resource-paths.json",
+    "sha256": "bdd54e6b1ec1ea45f9aa38f50328d7a2805adad70b64d334bb3269792492e908"
+  },
+  "runtime_verified": false,
+  "limits": "Full paths and resource types identify source candidates only. Current indices use ascending offsets, original indices use recovered traversal order. Factory metadata, producer values, resource ownership, shader binding and rendering remain unverified.",
+  "reproduction": "python3 porting/material_pipeline/paper2d_resource_paths.py"
+}

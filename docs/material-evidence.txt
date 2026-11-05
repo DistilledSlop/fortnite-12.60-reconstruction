@@ -8,6 +8,16 @@ records all match the original archive. See [the Paper2D evidence](paper2d_shade
 for layouts and remaining runtime mesh-map construction; these results do not
 establish original frontend loading or rendering parity.
 
+The two observed Paper2D expression shapes share an original 80-byte Material
+uniform layout: two vector entries, one packed scalar entry, a texture and three
+samplers. `paper2d_material_layout_contract.py` reconstructs it from original
+instructions and verifies all 42 serialized debug layouts and 14 active bindings
+against legacy resource hash 89655304. Original initializer bytes independently
+resolve the struct FName to `Material`. The native contract producer requires the
+factory's actual expression-set metadata to match every member and resource;
+compilation, provider attachment, expression evaluation and runtime texture
+ownership remain unfinished.
+
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 
 | Explicit layout | Index | Compression |
