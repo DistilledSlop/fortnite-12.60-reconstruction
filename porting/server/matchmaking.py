@@ -12,9 +12,11 @@ The matchmaking routes take no bearer token, as the earlier smoke test expects.
 """
 
 import base64
+import binascii
 import hashlib
 import hmac
 import json
+import os
 import re
 import secrets
 import threading
@@ -62,6 +64,31 @@ def _message(name, **fields):
     return {MESSAGE_NAME_FIELD: name, "payload": fields}
 
 
+def _configured_network_key():
+    """Read the same optional key configuration as the native dedicated server."""
+    value = os.environ.get("FORTNITE_NET_ENCRYPTION_KEY", "")
+    if not value:
+        path = os.environ.get("FORTNITE_NET_ENCRYPTION_KEY_FILE", "")
+        if not path:
+            return None
+        try:
+            with open(path, encoding="utf-8") as key_file:
+                value = key_file.read()
+        except (OSError, UnicodeError):
+            raise ValueError("Cannot read FORTNITE_NET_ENCRYPTION_KEY_FILE") from None
+    value = value.strip()
+    try:
+        if len(value) == SESSION_KEY_BYTES * 2 and re.fullmatch(r"[0-9a-fA-F]+", value):
+            key = bytes.fromhex(value)
+        else:
+            key = base64.b64decode(value, validate=True)
+    except (ValueError, binascii.Error):
+        raise ValueError("Invalid configured network encryption key") from None
+    if len(key) != SESSION_KEY_BYTES:
+        raise ValueError("Invalid configured network encryption key length")
+    return key
+
+
 class MatchmakingService:
     """Ticket, websocket, session and key state for one backend instance."""
 
@@ -83,6 +110,7 @@ class MatchmakingService:
         self._lock = threading.Lock()
         # [guess] Per-process secret used to HMAC the ticket payload. Never persisted.
         self._ticket_signing_key = secrets.token_bytes(32)
+        self._network_key = _configured_network_key()
         self._tickets = {}
         self._sessions = {}
         self._session_keys = {}
@@ -201,8 +229,8 @@ class MatchmakingService:
     def session_key(self, account_id, session_id):
         """Answer GET .../matchmaking/account/{acct}/session/{sid}. None if the session is unknown.
 
-        The key is 32 random bytes, created on first request for a session player
-        and kept in memory only.
+        Use the dedicated server's configured key when present; otherwise create
+        a random 32-byte key on first request. Keys are kept in memory only.
         """
         with self._lock:
             session = self._sessions.get(session_id)
@@ -210,7 +238,7 @@ class MatchmakingService:
                 return None
             key = self._session_keys.get(session_id)
             if key is None:
-                key = secrets.token_bytes(SESSION_KEY_BYTES)
+                key = self._network_key or secrets.token_bytes(SESSION_KEY_BYTES)
                 self._session_keys[session_id] = key
         return 200, {"accountId": account_id, "sessionId": session_id,
                      SESSION_KEY_FIELD: base64.b64encode(key).decode("ascii")}

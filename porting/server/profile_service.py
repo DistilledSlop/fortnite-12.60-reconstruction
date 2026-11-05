@@ -178,6 +178,18 @@ def _invalid(message):
     return ApiError(400, Err.INVALID_PAYLOAD, message)
 
 
+def _check_variant_updates(body):
+    # The reflected request and response types identify variant fields, but do
+    # not establish the server's ownership and update rules. Never acknowledge
+    # a style change while silently discarding it.
+    updates = body.get("variantUpdates", [])
+    if not isinstance(updates, list):
+        raise _invalid("variantUpdates must be a list.")
+    if updates:
+        raise ApiError(400, Err.OPERATION_NOT_FOUND,
+                       "Cosmetic variant updates are not implemented by the local stand-in.")
+
+
 def _locker(ctx, locker_id):
     tx = ctx.tx("athena")
     item = tx.item(locker_id)
@@ -275,8 +287,9 @@ def _set_item_favorite_batch(ctx):
 
 
 @command("SetCosmeticLockerSlot", ("athena",), "observed",
-         "lockerItem, category, itemToSlot, slotIndex (inferred). variantUpdates ignored.")
+         "lockerItem, category, itemToSlot, slotIndex (inferred). Nonempty variantUpdates unsupported.")
 def _set_cosmetic_locker_slot(ctx):
+    _check_variant_updates(ctx.body)
     locker_id = ctx.str_field("lockerItem")
     category = ctx.str_field("category")
     item_id = ctx.str_field("itemToSlot", allow_empty=True, required=False) or ""
@@ -295,6 +308,7 @@ def _set_cosmetic_locker_slots(ctx):
     for entry in entries:
         if not isinstance(entry, dict):
             raise _invalid("loadoutData must contain objects.")
+        _check_variant_updates(entry)
         fields = CommandContext(ctx.service, ctx.account_id, ctx.profile_id, entry)
         category = fields.str_field("slotName")
         item_id = fields.str_field("itemToSlot", allow_empty=True)
