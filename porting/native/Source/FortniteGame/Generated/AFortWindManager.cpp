@@ -47,6 +47,7 @@
 #include "SharedFortGameLog.h"
 #include "Sound/SoundBase.h"
 #include "Stats/Stats.h"
+#include "UBuildingStructuralSupportSystem.h"
 #include "UObject/NoExportTypes.h"
 #include "UnrealEngine.h"
 
@@ -1477,8 +1478,9 @@ FBox AFortWindManager::NativeGetInitialWindBounds()
 	    }
 
 	    const AFortGameStateZone* GameState = World->GetGameState<AFortGameStateZone>();
-	    if (GameState && GameState->StructuralSupportSystem)
-	        Bounds = NativeClipWindImpulseBounds(Bounds, GameState->StructuralSupportSystem->NativeWorldBounds_0x384);
+	    UBuildingStructuralSupportSystem* Support = GameState ? GameState->StructuralSupportSystem : nullptr;
+	    if (Support)
+	        Bounds = NativeClipWindImpulseBounds(Bounds, Support->NativeWorldBounds_0x384);
 	    return Bounds;
 }
 

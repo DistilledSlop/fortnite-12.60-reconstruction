@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "7723c13197324310db3e70969f4e372274005fe0",
- "subject": "Recover original PIE difficulty selection and document world lifecycle gaps",
- "date": "2026-11-05T15:11:12-05:00",
+ "head": "c177be54a58c4d5e18a92173e45a6ff718a4fda4",
+ "subject": "Convert original Epic logo texture material for reconstructed sign-in UI",
+ "date": "2026-11-05T15:11:28-05:00",
  "overall_pct": 29.124,
  "measured_pct": 28.255,
  "objective_pct": 28.254,
