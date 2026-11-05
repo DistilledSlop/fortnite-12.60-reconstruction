@@ -1145,7 +1145,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation, locker changes and active-loadout consistency after copying; the original copy semantics remain unverified. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Cosmetic variant changes remain unimplemented and are rejected. Game client login and profile integration and full protocol behavior remain unverified."
+          "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation, locker changes and active-loadout consistency after copying; the original copy semantics remain unverified. Profile snapshots and committed transactions now detach mutable caller data so locker state cannot silently diverge from saved revisions; focused ownership and restart tests pass. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Cosmetic variant changes remain unimplemented and are rejected. Game client login and profile integration and full protocol behavior remain unverified."
         },
         {
           "id": "backend.progression",
@@ -1517,7 +1517,7 @@
               "material_original_maps"
             ]
           },
-          "rationale": "Four original resources parse to exact EOF with 76 records. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
+          "rationale": "Four original resources parse to exact EOF with 76 records. The additional original Paper2D instance now decodes all 14 shader records with archive identity matches, including HitProxy VS/PS; its cooking marker, parent shader map and runtime mesh attachment remain unfinished and receive no completion credit. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
           "evidence_links": [
             {
               "label": "Material pipeline evidence",
