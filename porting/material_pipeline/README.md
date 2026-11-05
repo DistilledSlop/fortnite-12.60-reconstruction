@@ -324,8 +324,8 @@ pixels remain unverified; Donut texture resources and actual root widgets are ne
 compatibility layer after its texture-size support. It preserves the original RVT
 parameter flag, parameter identity, referenced texture index and vector index,
 then constructs Unreal's existing RVT uniform expression. The native original
-reader also accepts `Abs`. VT stacks and nonstandard texture arrays still fail
-closed; these changes alone do not attach or render the original landscape map.
+reader also accepts `Abs`. The later VT stack extension is described below; these changes alone do not
+attach or render the original landscape map.
 
 ### Original landscape Vulkan translation
 
@@ -344,3 +344,20 @@ and reflection; their 460 explicit descriptor mappings have zero unmatched
 resource-table entries. These are compiler mappings: landscape factory
 construction, owner textures, runtime descriptor binding and rendering remain
 unverified. The receipt records hashes of translation and reflection reports.
+
+### Landscape VT stacks and factory construction
+
+`ue425-legacy-vt-stack-ingress.patch` follows the RVT numeric patch. It preserves
+original virtual texture slots and preallocated stack layer indices, constructs
+Unreal's existing stack representation, and validates the resulting uniform
+layout. D4 has 752 numeric bytes, 77 resources and a 1,376-byte aligned buffer.
+Unsupported nonvirtual texture arrays remain rejected. The owning material must
+still resolve original referenced-texture index 164 to its actual
+`URuntimeVirtualTexture`, including physical-space mode and layer count.
+
+`ue425-legacy-landscape-vf-factory.patch` follows the stack patch. Its detached
+factory retains separate maps for the original regular, XY-offset and fixed-grid
+landscape vertex factories, including each factory's pipelines and shader
+identities. The existing LocalVF entry point retains its restricted contract.
+Neither factory installs shaders on a landscape owner or supplies live vertex
+factory, material, view or pass bindings. The combined client build is pending.

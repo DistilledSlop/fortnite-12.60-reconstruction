@@ -14,7 +14,7 @@
 .leaf-label,.leaf-pct,.tm-head{fill:var(--tm-ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .leaf-pct{font-weight:700}
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.1% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit b568892 | Translate original Apollo landscape shaders to Vulkan | 2026-11-05T16:04:14-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
+.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.1% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit af0b658 | Restore reflected foundation streaming data model | 2026-11-05T16:07:47-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Gameplay classes (/Script/FortniteGame)
 17.1% complete
 effort weight 673 | source: derived
@@ -238,13 +238,13 @@ manual estimate (see rationale)</title>
 <rect class="tile-frame" x="95.4" y="563.6" width="64.9" height="63.4" rx="4"/>
 </g>
 <g><title>FortniteGame reflection declarations (not behavior)
-99.6% complete (2830/2842)
+99.6% complete (2831/2842)
 effort weight 15 | source: git
-2830 of 2842 tracked files (porting/native/Source/FortniteGame/Generated/[AU]*.h); total 2842 from totals.json uht_classes_named_by_package[/Script/FortniteGame]; also tracked, not counted: classes in other generated modules 100</title>
+2831 of 2842 tracked files (porting/native/Source/FortniteGame/Generated/[AU]*.h); total 2842 from totals.json uht_classes_named_by_package[/Script/FortniteGame]; also tracked, not counted: classes in other generated modules 100</title>
 <rect class="tile-body" x="162.3" y="406.6" width="62.6" height="65.8" rx="4"/>
 <clipPath id="stm-c14"><rect x="162.32" y="406.56" width="62.62" height="65.77" rx="4"/></clipPath>
-<g clip-path="url(#stm-c14)"><rect class="tile-fill" x="162.32" y="406.84" width="62.62" height="65.50"/>
-<rect class="tile-edge" x="162.32" y="405.84" width="62.62" height="2"/>
+<g clip-path="url(#stm-c14)"><rect class="tile-fill" x="162.32" y="406.82" width="62.62" height="65.52"/>
+<rect class="tile-edge" x="162.32" y="405.82" width="62.62" height="2"/>
 </g>
 <text class="leaf-pct" x="167.3" y="422.6" font-size="12">100%</text>
 <rect class="tile-frame" x="162.3" y="406.6" width="62.6" height="65.8" rx="4"/>

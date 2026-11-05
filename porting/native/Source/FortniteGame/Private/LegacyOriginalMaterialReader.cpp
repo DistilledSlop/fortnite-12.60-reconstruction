@@ -47,7 +47,7 @@ public:
         if (A > 2 || I < -1) Fail(TEXT("invalid parameter identity"));
         E.Parameter = FMaterialParameterInfo(N, static_cast<EMaterialParameterAssociation>(A), I);
     }
-    int32 Expression(int32 Depth, bool bTextureRoot = false, bool bDirectVectorRoot = false)
+    int32 Expression(int32 Depth, bool bTextureRoot = false, bool bDirectVectorRoot = false, bool bVirtualRoot = false)
     {
         if (Depth >= 64 || ++Nodes > 65536) { Fail(TEXT("expression complexity")); return INDEX_NONE; }
         FString T = Name().ToString(); const FString Prefix(TEXT("FMaterialUniformExpression"));
@@ -84,12 +84,14 @@ public:
             // FMaterialParameterInfo is NAME_None, GlobalParameter, INDEX_NONE.
             int32 Index=Read<int32>(); int16 Layer=Read<int16>(), Page=Read<int16>(); int32 Sampler=Read<int32>(); uint32 Virtual=Read<uint32>();
             if (Index < -1 || Layer < -1 || Page < -1 || Sampler < 0 || Sampler > 2 || Virtual > 1) Fail(TEXT("invalid texture expression"));
-            if (!bTextureRoot || Depth != 0 || Index < 0 || Layer != -1 || Page != -1 || Virtual != 0)
+            if (!bTextureRoot || Depth != 0 || Index < 0 ||
+                (bVirtualRoot ? (Layer < 0 || Page < 0 || Virtual != 1) : (Layer != -1 || Page != -1 || Virtual != 0)))
                 Fail(TEXT("unsupported texture expression"));
             FLegacyMaterialTextureParameter Texture;
             Texture.Parameter=E.Parameter; Texture.TextureIndex=Index; Texture.TextureLayerIndex=Layer;
             Texture.PageTableLayerIndex=Page; Texture.SamplerSource=uint8(Sampler); Texture.bVirtualTexture=Virtual != 0;
-            O.IR.Texture2DParameters.Add(MoveTemp(Texture));
+            if (bVirtualRoot) O.IR.VirtualTextureParameters.Add(MoveTemp(Texture));
+            else O.IR.Texture2DParameters.Add(MoveTemp(Texture));
             return INDEX_NONE;
         }
         else if (T == TEXT("TextureProperty"))
@@ -209,9 +211,22 @@ public:
         if(!bPaper2D && (!O.MaterialPath.StartsWith(TEXT("/Game/")) || !O.MaterialPath.EndsWith(TEXT(".")+O.FriendlyName))) Fail(TEXT("invalid material identity"));
         for(int32 A=0; A<8; ++A)
         {
-            if(A==7 && Count()!=0) Fail(TEXT("unsupported VT stacks"));
-            int32 N=Count(); if(A>2 && N) Fail(TEXT("unsupported texture root array")); if(A<6) Counts[A]=N; else if(A==7) Counts[6]=N;
-            for(int32 I=0;I<N;++I) { int32 X=Expression(0, A==2, A==0); if(A==0) O.IR.VectorRoots.Add(X); else if(A==1) O.IR.ScalarRoots.Add(X); }
+            if(A==7)
+            {
+                const int32 StackCount=Count();
+                if(StackCount>128) Fail(TEXT("too many VT stacks"));
+                for(int32 S=0; S<StackCount && bOk; ++S)
+                {
+                    FLegacyMaterialVTStack Stack;
+                    const uint32 Layers=Read<uint32>();
+                    if(Layers>8) { Fail(TEXT("unsupported VT stack layer count")); break; }
+                    for(uint32 L=0; L<Layers; ++L) Stack.LayerUniformExpressionIndices.Add(Read<int32>());
+                    Stack.PreallocatedStackTextureIndex=Read<int32>();
+                    O.IR.VTStacks.Add(MoveTemp(Stack));
+                }
+            }
+            int32 N=Count(); if(A>2 && A!=5 && N) Fail(TEXT("unsupported texture root array")); if(A<4) Counts[A]=N; else if(A==4) Counts[5]=N; else if(A==5) Counts[6]=N; else if(A==7) Counts[4]=N;
+            for(int32 I=0;I<N;++I) { int32 X=Expression(0, A==2 || A==5, A==0, A==5); if(A==0) O.IR.VectorRoots.Add(X); else if(A==1) O.IR.ScalarRoots.Add(X); }
         }
         for (const auto& Pending : PendingTextureSizes)
         {

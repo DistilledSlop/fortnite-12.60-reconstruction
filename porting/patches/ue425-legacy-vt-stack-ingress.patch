@@ -1,0 +1,122 @@
+--- a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+@@ -44,26 +44,58 @@
+  if (Material.Platform != SP_VULKAN_SM5 || Material.FeatureLevel != ERHIFeatureLevel::SM5 ||
+      Material.OriginalMapHash == FSHAHash() || Material.Expressions.Num() > 8192 ||
+      Material.VectorRoots.Num() > 1024 || Material.ScalarRoots.Num() > 1024 ||
+-     Material.Texture2DParameters.Num() > 128 || Material.UniformBufferSize > 65535)
++     Material.Texture2DParameters.Num() > 128 || Material.VirtualTextureParameters.Num() > 128 ||
++     Material.VTStacks.Num() > 128 || Material.UniformBufferSize > 65535)
+   return Fail(TEXT("Unsupported original material identity, platform or slot layout"));
+ 
+- // Each Standard2D expression contributes a texture and its sampler after the
+- // packed numeric slots. UE appends the two built-in world-group samplers.
+- // Reject unsupported serialized shapes before metadata construction, then
+- // independently compare CreateBufferStruct's actual layout below.
+- const uint32 NumericBytes = uint32(Material.VectorRoots.Num()) * sizeof(FVector4) +
++ // Runtime-VT stack indices address original virtual texture slots; all slots
++ // must be represented exactly once, with the preallocated owner reference.
++ TArray<bool> SeenVirtual;
++ SeenVirtual.Init(false, Material.VirtualTextureParameters.Num());
++ for (const FLegacyMaterialVTStack& Stack : Material.VTStacks)
++ {
++  if (Stack.PreallocatedStackTextureIndex < 0 || Stack.LayerUniformExpressionIndices.Num() < 1 || Stack.LayerUniformExpressionIndices.Num() > 8)
++   return Fail(TEXT("Unsupported original VT stack"));
++  bool bSinglePhysicalSpace = true, bSeparatePhysicalSpaces = true;
++  for (int32 Layer = 0; Layer < Stack.LayerUniformExpressionIndices.Num(); ++Layer)
++  {
++   const int32 Index = Stack.LayerUniformExpressionIndices[Layer];
++   if (!Material.VirtualTextureParameters.IsValidIndex(Index) || SeenVirtual[Index])
++    return Fail(TEXT("Invalid original VT stack expression index"));
++   const auto& Texture = Material.VirtualTextureParameters[Index];
++   if (!Texture.bVirtualTexture || Texture.TextureIndex != Stack.PreallocatedStackTextureIndex ||
++       Texture.TextureLayerIndex != Layer || Texture.PageTableLayerIndex < 0 ||
++       Texture.SamplerSource > uint8(SSM_Clamp_WorldGroupSettings) || Texture.Parameter.Association > GlobalParameter ||
++       (Texture.Parameter.Name.IsNone() && (Texture.Parameter.Association != GlobalParameter || Texture.Parameter.Index != INDEX_NONE)) ||
++       (Texture.Parameter.Association == GlobalParameter ? Texture.Parameter.Index != INDEX_NONE : Texture.Parameter.Index < 0))
++    return Fail(TEXT("Unsupported original runtime VT parameter"));
++   bSinglePhysicalSpace &= Texture.PageTableLayerIndex == 0;
++   bSeparatePhysicalSpaces &= Texture.PageTableLayerIndex == Layer;
++   SeenVirtual[Index] = true;
++  }
++  if (!bSinglePhysicalSpace && !bSeparatePhysicalSpaces)
++   return Fail(TEXT("Unsupported original VT physical space layout"));
++ }
++ for (bool Seen : SeenVirtual) if (!Seen) return Fail(TEXT("Unmapped original virtual texture"));
++ const uint32 NumericBytes = uint32(Material.VTStacks.Num()) * 2u * sizeof(FVector4) +
++  uint32(Material.VirtualTextureParameters.Num()) * sizeof(FVector4) +
++  uint32(Material.VectorRoots.Num()) * sizeof(FVector4) +
+   ((uint32(Material.ScalarRoots.Num()) + 3u) / 4u) * sizeof(FVector4);
+- const int32 TextureResourceCount = Material.Texture2DParameters.Num() * 2;
+- const int32 ResourceCount = TextureResourceCount + 2;
+- const uint32 ExpectedSize = Align(NumericBytes + uint32(ResourceCount) * SHADER_PARAMETER_POINTER_ALIGNMENT, SHADER_PARAMETER_STRUCT_ALIGNMENT);
+- if (Material.Resources.Num() != ResourceCount || Material.UniformBufferSize != ExpectedSize)
++ TArray<EUniformBufferBaseType> ResourceTypes;
++ for (int32 I=0; I<Material.Texture2DParameters.Num(); ++I) { ResourceTypes.Add(UBMT_TEXTURE); ResourceTypes.Add(UBMT_SAMPLER); }
++ for (const auto& Stack : Material.VTStacks)
++ {
++  ResourceTypes.Add(UBMT_TEXTURE);
++  if (Stack.LayerUniformExpressionIndices.Num() > 4) ResourceTypes.Add(UBMT_TEXTURE);
++ }
++ for (int32 I=0; I<Material.VirtualTextureParameters.Num(); ++I) { ResourceTypes.Add(UBMT_SRV); ResourceTypes.Add(UBMT_SAMPLER); }
++ ResourceTypes.Add(UBMT_SAMPLER); ResourceTypes.Add(UBMT_SAMPLER);
++ const uint32 ExpectedSize = Align(NumericBytes + uint32(ResourceTypes.Num()) * SHADER_PARAMETER_POINTER_ALIGNMENT, SHADER_PARAMETER_STRUCT_ALIGNMENT);
++ if (Material.Resources.Num() != ResourceTypes.Num() || Material.UniformBufferSize != ExpectedSize)
+   return Fail(TEXT("Unsupported original uniform resource size/count"));
+- for (int32 I = 0; I < ResourceCount; ++I)
+- {
+-  const EUniformBufferBaseType Type = I < TextureResourceCount && I % 2 == 0 ? UBMT_TEXTURE : UBMT_SAMPLER;
+-  if (Material.Resources[I].Offset != NumericBytes + uint32(I) * SHADER_PARAMETER_POINTER_ALIGNMENT || Material.Resources[I].BaseType != Type)
++ for (int32 I = 0; I < ResourceTypes.Num(); ++I)
++  if (Material.Resources[I].Offset != NumericBytes + uint32(I) * SHADER_PARAMETER_POINTER_ALIGNMENT || Material.Resources[I].BaseType != ResourceTypes[I])
+    return Fail(TEXT("Unsupported original uniform resource layout"));
+- }
+ 
+  TRefCountPtr<FMaterialShaderMap> Map = new FMaterialShaderMap();
+  FMaterialShaderMapContent* Content = new FMaterialShaderMapContent(Material.Platform);
+@@ -102,6 +134,23 @@
+   P.TextureIndex = N.TextureIndex;
+   P.SamplerSource = ESamplerSourceMode(N.SamplerSource);
+   P.VirtualTextureLayerIndex = uint8(N.TextureLayerIndex);
++ }
++
++ for (const FLegacyMaterialTextureParameter& N : Material.VirtualTextureParameters)
++ {
++  auto& P = Uniforms.UniformTextureParameters[uint32(EMaterialTextureParameterType::Virtual)].AddDefaulted_GetRef();
++  P.ParameterInfo = FHashedMaterialParameterInfo(N.Parameter);
++  P.ParameterName = N.Parameter.Name.ToString();
++  P.TextureIndex = N.TextureIndex;
++  P.SamplerSource = ESamplerSourceMode(N.SamplerSource);
++  P.VirtualTextureLayerIndex = uint8(N.TextureLayerIndex);
++ }
++ for (const FLegacyMaterialVTStack& Source : Material.VTStacks)
++ {
++  FMaterialVirtualTextureStack Stack(Source.PreallocatedStackTextureIndex);
++  for (int32 I=0; I<Source.LayerUniformExpressionIndices.Num(); ++I)
++   Stack.SetLayer(I, Source.LayerUniformExpressionIndices[I]);
++  Uniforms.VTStacks.Add(Stack);
+  }
+ 
+  TArray<TRefCountPtr<FMaterialUniformExpression>> Nodes;
+--- a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
++++ b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+@@ -44,12 +44,19 @@
+  uint8 SamplerSource = 0;
+  bool bVirtualTexture = false;
+ };
++struct FLegacyMaterialVTStack
++{
++ TArray<int32> LayerUniformExpressionIndices;
++ int32 PreallocatedStackTextureIndex = INDEX_NONE;
++};
+ struct FLegacyMaterialIR
+ {
+  TArray<FLegacyMaterialExpression> Expressions;
+  TArray<int32> VectorRoots;
+  TArray<int32> ScalarRoots;
+  TArray<FLegacyMaterialTextureParameter> Texture2DParameters;
++ TArray<FLegacyMaterialTextureParameter> VirtualTextureParameters;
++ TArray<FLegacyMaterialVTStack> VTStacks;
+  TArray<FLegacyMaterialResource> Resources;
+  uint32 UniformBufferSize = 0;
+  uint32 UsedSceneTextures = 0;
