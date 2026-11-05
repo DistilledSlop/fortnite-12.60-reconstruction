@@ -424,7 +424,7 @@ class ProfileService:
                 return item_id
 
     def profile(self, account_id, profile_id):
-        """The stored profile, created with defaults on first use. Callers must not edit it."""
+        """Return a snapshot of the profile, created with defaults on first use."""
         key = (account_id, profile_id)
         if key not in self._profiles:
             if self._database is not None:
@@ -433,7 +433,7 @@ class ProfileService:
                                      key).fetchone()
                 if row is not None:
                     self._profiles[key] = json.loads(row[0])
-                    return self._profiles[key]
+                    return copy.deepcopy(self._profiles[key])
             items, attributes = build(self.ctx, account_id, profile_id)
             now = self.ctx.iso()
             profile = {
@@ -454,7 +454,7 @@ class ProfileService:
                     db.execute("INSERT INTO profiles (account_id, profile_id, data) VALUES (?, ?, ?)",
                                (account_id, profile_id, json.dumps(profile, separators=(",", ":"))))
             self._profiles[key] = profile
-        return self._profiles[key]
+        return copy.deepcopy(self._profiles[key])
 
     def _store(self, account_id, txs, command_profile=None):
         now = self.ctx.iso()
@@ -474,7 +474,7 @@ class ProfileService:
                 db.executemany("INSERT OR REPLACE INTO profiles (account_id, profile_id, data) "
                                "VALUES (?, ?, ?)", rows)
         for profile_id, tx in txs.items():
-            self._profiles[(account_id, profile_id)] = tx.profile
+            self._profiles[(account_id, profile_id)] = copy.deepcopy(tx.profile)
 
     def grant_item(self, account_id, profile_id, template_id, attributes=None):
         """Add an owned item without a client command. Used by tests and by future grant paths."""
