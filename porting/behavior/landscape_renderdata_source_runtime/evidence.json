@@ -27,10 +27,9 @@
     "For original cooked records, reuse/cache render data and release compressed bytes even in editor hosts; stock UE4.25 DDC and authoring behavior stays on its existing path."
   ],
   "remaining": [
-    "Original proxy registration and component lifecycle/streaming-manager integration.",
-    "Mobile stream-in/out class integration, cancellation and async lifetime.",
     "Renderer LOD selection must respect current resident LODs.",
     "Compilation and actual original terrain loading/rendering under checkpoint cadence."
   ],
-  "engine_source_commit": "3cdc92cd0"
+  "engine_source_commit": "3cdc92cd0",
+  "subsequent_integration": "Proxy/component/streaming updates integrated in engine c620ace33; see landscape_streaming_integration_runtime/evidence.json. Build/runtime pending."
 }

@@ -41,15 +41,15 @@ The four dashboard milestones remain the product acceptance gates.
   `bash porting/prepare_ue_landscape.sh`; Apollo launch/probe scripts pass
   `-FortniteLegacyLandscapeData` to select this reader for unversioned packages.
   Shared mobile render data now preserves the original first-LOD state and
-  cooked-data cache ownership. The LOD proxy and stream-in/out source drafts
-  follow the original 4.25-era interface; proxy, streaming and renderer LOD
-  selection integration remain pending.
+  cooked-data cache ownership. The LOD proxy, component lifecycle, streaming-manager registration and
+  asynchronous stream-in/out updates are now integrated using the original
+  4.25-era interface. Renderer resident-LOD selection remains pending.
   The new engine reader is also build/runtime pending. These changes do not establish
   original map loading, terrain fidelity, or a completed world.
 - The client is `FortniteClient-12.60-CL-13477524`, a packaged Win64 build.
 - The adjacent engine checkout is based on Epic's public UE 4.25.0 release
   `f8f4b403eb682ffc055613c7caf9d2ba5df7f319`, with local compatibility commit
-  `3cdc92cd0` (landscape reader/render data; build pending). See `HANDOFF.md` for required
+  `c620ace33` (landscape reader/proxy/streaming updates; build pending). See `HANDOFF.md` for required
   build state and preserved local edits.
 - All 31 game paks use pak version 10 and have encrypted indexes. Version 10
   is Unreal's path-hash index format. The public UE 4.25 source only defines

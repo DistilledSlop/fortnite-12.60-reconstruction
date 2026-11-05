@@ -1,12 +1,403 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.cpp b/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.cpp
+new file mode 100644
+index 000000000..66e535a1b
+--- /dev/null
++++ b/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.cpp
+@@ -0,0 +1,303 @@
++// Copyright Epic Games, Inc. All Rights Reserved.
++#include "Streaming/LandscapeMeshMobileUpdate.h"
++#include "LandscapeComponent.h"
++#include "LandscapeRenderMobile.h"
++#include "RHICommandList.h"
++#include "Streaming/RenderAssetUpdate.inl"
++
++template class TRenderAssetUpdate<FLandscapeMeshMobileUpdateContext>;
++
++FLandscapeMeshMobileUpdateContext::FLandscapeMeshMobileUpdateContext(ULandscapeLODStreamingProxy* Proxy, EThreadType Thread)
++    : LandscapeProxy(Proxy), RenderData(Proxy ? Proxy->GetRenderData().Get() : nullptr), CurrentThread(Thread)
++{
++    check(Proxy);
++    checkSlow(Thread != FRenderAssetUpdate::TT_Render || IsInRenderingThread());
++}
++FLandscapeMeshMobileUpdateContext::FLandscapeMeshMobileUpdateContext(UStreamableRenderAsset* Proxy, EThreadType Thread)
++    : FLandscapeMeshMobileUpdateContext(CastChecked<ULandscapeLODStreamingProxy>(Proxy), Thread) {}
++UStreamableRenderAsset* FLandscapeMeshMobileUpdateContext::GetRenderAsset() const { return LandscapeProxy; }
++
++FLandscapeMeshMobileUpdate::FLandscapeMeshMobileUpdate(
++    ULandscapeLODStreamingProxy* Proxy, int32 RequestedMips)
++    : TRenderAssetUpdate<FLandscapeMeshMobileUpdateContext>(Proxy, RequestedMips)
++{
++    TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> RenderData = Proxy->GetRenderData();
++    if (!RenderData.IsValid())
++    {
++        PendingFirstMip = INDEX_NONE;
++        this->RequestedMips = INDEX_NONE;
++        bIsCancelled = true;
++        CurrentFirstLODIdx = INDEX_NONE;
++    }
++    else
++    {
++        CurrentFirstLODIdx = RenderData->CurrentFirstLODIdx;
++    }
++}
++
++// Original 0x1445d5620. PushTask is inlined in the capture: thread 1,
++// callback bound to this, cancellation thread 0, null cancellation callback.
++FLandscapeMeshMobileStreamOut::FLandscapeMeshMobileStreamOut(
++    ULandscapeLODStreamingProxy* Proxy, int32 RequestedMips)
++    : FLandscapeMeshMobileUpdate(Proxy, RequestedMips)
++{
++    PushTask(FContext(Proxy, TT_None), TT_Render,
++        SRA_UPDATE_CALLBACK(ShrinkResources), TT_None, nullptr);
++}
++
++// Original 0x1445f4db0. The proxy accessors preserve direct cached-byte
++// reads and writes in editor builds as well.
++void FLandscapeMeshMobileStreamOut::ShrinkResources(const FContext& Context)
++{
++    ULandscapeLODStreamingProxy* Proxy = const_cast<ULandscapeLODStreamingProxy*>(Context.LandscapeProxy);
++    FLandscapeMobileRenderData* RenderData = Context.RenderData;
++    if (!IsCancelled() && Proxy && RenderData)
++    {
++        const uint8 OldResidentLODs = Proxy->GetResidentLODsFromStreaming();
++        RenderData->CurrentFirstLODIdx = static_cast<uint8>(PendingFirstMip);
++        const uint8 NewResidentLODs = static_cast<uint8>(Proxy->GetNumMipsForStreaming() - PendingFirstMip);
++        Proxy->SetResidentLODsFromStreaming(NewResidentLODs);
++
++        const int32 OldSize = Proxy->CalcCumulativeLODSize(OldResidentLODs);
++        const int32 NewSizeWithoutInline = Proxy->CalcCumulativeLODSize(NewResidentLODs);
++        const int32 SizeDelta = NewSizeWithoutInline - OldSize;
++        if (SizeDelta != 0)
++        {
++            FLandscapeVertexBufferMobile::UpdateMemoryStat(SizeDelta);
++            FRHIVertexBuffer* OldBuffer = RenderData->VertexBuffer->VertexBufferRHI;
++            const int32 NewSize = static_cast<int32>(OldBuffer->GetSize()) + SizeDelta;
++            FRHIResourceCreateInfo CreateInfo;
++            FVertexBufferRHIRef NewBuffer = RHICreateVertexBuffer(NewSize, BUF_Static, CreateInfo);
++            FRHICommandListExecutor::GetImmediateCommandList().CopyBufferRegion(NewBuffer, 0, OldBuffer, 0, NewSize);
++            TRHIResourceUpdateBatcher<1> Batcher;
++            Batcher.QueueUpdateRequest(OldBuffer, NewBuffer);
++        }
++    }
++}
++
++FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::FLandscapeMeshMobileStreamIn_IO_AsyncReallocate(
++    ULandscapeLODStreamingProxy* Proxy, int32 RequestedMips, bool bHighPrio)
++    : FLandscapeMeshMobileUpdate(Proxy, RequestedMips)
++    , IntermediateVertexBuffer(nullptr)
++    , bHighPrioIORequest(bHighPrio)
++{
++    FMemory::Memzero(StagingLODDataArray, sizeof(StagingLODDataArray));
++    FMemory::Memzero(StagingLODDataSizes, sizeof(StagingLODDataSizes));
++    FMemory::Memzero(IORequests, sizeof(IORequests));
++    PushTask(FContext(Proxy, TT_None), TT_Async,
++        SRA_UPDATE_CALLBACK(DoInitiateIO), TT_None, nullptr);
++}
++
++// Original 0x1445e56c0. Inline GetIOFilename and SetIORequest from the
++// analogous UE 4.26 flow; the original ignores the filename helper's result.
++void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::DoInitiateIO(const FContext& Context)
++{
++    FString IOFilename;
++    const ULandscapeLODStreamingProxy* Proxy = Context.LandscapeProxy;
++    if (!IsCancelled() && Proxy)
++    {
++        Proxy->GetMipDataFilename(PendingFirstMip, IOFilename); // 0x143aca8e0
++        if (!IsCancelled())
++        {
++            if (Proxy)
++            {
++                // 0x1445dfaa0 -> 0x1445da5b0. Context is captured even
++                // though the recovered callback uses only this and cancellation.
++                AsyncFileCallback = [this, Context](bool bWasCancelled, IBulkDataIORequest* Request)
++                {
++                    TaskSynchronization.Decrement();
++                    if (bWasCancelled) { MarkAsCancelled(); }
++                    Tick(TT_None);
++                };
++                for (int32 Index = PendingFirstMip; Index < CurrentFirstLODIdx; ++Index)
++                {
++                    auto& BulkData = Proxy->GetStreamingLODBulkData(Index);
++                    if (BulkData.GetBulkDataSize() != 0)
++                    {
++                        // The recovered path does not handle a null request. A failed
++                        // submission can therefore leave synchronization outstanding.
++                        TaskSynchronization.Increment();
++#if !WITH_EDITORONLY_DATA && USE_BULKDATA_STREAMING_TOKEN
++                        FUntypedBulkData::BulkDataRangeArray BulkDataArray;
++                        BulkDataArray.Add(&BulkData);
++                        IORequests[Index] = FUntypedBulkData::CreateStreamingRequestForRange(
++                            IOFilename, BulkDataArray, bHighPrioIORequest ? AIOP_BelowNormal : AIOP_Low,
++                            &AsyncFileCallback);
++#else
++                        IORequests[Index] = BulkData.CreateStreamingRequest(
++                            bHighPrioIORequest ? AIOP_BelowNormal : AIOP_Low, &AsyncFileCallback, nullptr);
++#endif
++                    }
++                }
++            }
++            else
++            {
++                MarkAsCancelled();
++            }
++        }
++    }
++    else
++    {
++        MarkAsCancelled();
++    }
++    PushTask(Context, TT_Async, SRA_UPDATE_CALLBACK(DoGetIORequestResults),
++        TT_Async, SRA_UPDATE_CALLBACK(DoCancelIO));
++}
++
++void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::DoGetIORequestResults(const FContext& Context)
++{
++    if (!IsCancelled() && Context.LandscapeProxy && Context.RenderData)
++    {
++        for (int32 Index = PendingFirstMip; Index < CurrentFirstLODIdx; ++Index)
++        {
++            IBulkDataIORequest* Request = IORequests[Index];
++            if (Request)
++            {
++                IORequests[Index] = nullptr;
++                while (!Request->PollCompletion())
++                {
++                    FPlatformProcess::Sleep(0.000001f);
++                }
++                StagingLODDataArray[Index] = Request->GetReadResults();
++                StagingLODDataSizes[Index] = Request->GetSize();
++                delete Request;
++            }
++        }
++    }
++    ClearIORequest(Context); // 0x1445e0c50
++    PushTask(Context, TT_Render, SRA_UPDATE_CALLBACK(DoExpandResources),
++        Context.GetCurrentThread(), SRA_UPDATE_CALLBACK(DoCancel));
++}
++
++// Original 0x1445da650, reached by closure 0x1445dfab0. The capture's
++// first argument is closure storage containing this, not this directly.
++void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::DoCancelIO(const FContext& Context)
++{
++    ClearIORequest(Context); // 0x1445e0c50
++    PushTask(Context, TT_None, nullptr,
++        Context.GetCurrentThread(), SRA_UPDATE_CALLBACK(DoCancel));
++}
++
++// Original 0x1445e0c50. Context is unused in the binary; the parameter
++// keeps the signature consistent with the corresponding 4.26 helper.
++void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::ClearIORequest(const FContext& Context)
++{
++    for (int32 Index = PendingFirstMip; Index < CurrentFirstLODIdx; ++Index)
++    {
++        IBulkDataIORequest*& Request = IORequests[Index];
++        if (Request)
++        {
++            if (!Request->PollCompletion())
++            {
++                Request->Cancel();
++                Request->WaitCompletion(0.0f);
++            }
++            delete Request;
++            Request = nullptr;
++        }
++    }
++}
++
++// Original 0x1445d99b0, reached by closure 0x1445df9a0.
++void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::DoExpandResources(const FContext& Context)
++{
++    ExpandResources(Context); // 0x1445e8fe0
++    PushTask(Context, TT_Render, SRA_UPDATE_CALLBACK(DoFinishUpdate),
++        Context.GetCurrentThread(), SRA_UPDATE_CALLBACK(DoCancel));
++}
++
++// Original 0x1445e35e0, reached by closure 0x1445df910. Free is inferred
++// from the UE analogue and the allocator callee 0x142bee710.
++void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::DoCancel(const FContext& Context)
++{
++    for (int32 Index = 0; Index < 8; ++Index)
++    {
++        FMemory::Free(StagingLODDataArray[Index]);
++        StagingLODDataArray[Index] = nullptr;
++        StagingLODDataSizes[Index] = 0;
++    }
++    DoFinishUpdate(Context); // 0x1445e44a0
++}
++
++// Original 0x1445e8fe0. Buffer creation, lock, unlock and queued copy are
++// expressed using the 4.25/4.26 RHI API corresponding to captured RHI calls.
++void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::ExpandResources(const FContext& Context)
++{
++    FLandscapeMobileRenderData* RenderData = Context.RenderData;
++    if (!IsCancelled() && Context.LandscapeProxy && RenderData)
++    {
++        const uint32 OldSize = RenderData->VertexBuffer->VertexBufferRHI->GetSize();
++        uint32 NewSize = OldSize;
++        for (int32 Index = CurrentFirstLODIdx - 1; Index >= PendingFirstMip; --Index)
++        {
++            NewSize += StagingLODDataSizes[Index];
++        }
++        if (NewSize != OldSize)
++        {
++            FRHIResourceCreateInfo CreateInfo;
++            IntermediateVertexBuffer = RHICreateVertexBuffer(NewSize, BUF_Static, CreateInfo);
++            uint8* Dest = static_cast<uint8*>(RHILockVertexBuffer(IntermediateVertexBuffer, OldSize, NewSize - OldSize, RLM_WriteOnly));
++            for (int32 Index = CurrentFirstLODIdx - 1; Index >= PendingFirstMip; --Index)
++            {
++                if (StagingLODDataSizes[Index] > 0)
++                {
++                    FMemory::Memcpy(Dest, StagingLODDataArray[Index], StagingLODDataSizes[Index]);
++                    Dest += StagingLODDataSizes[Index];
++                    FMemory::Free(StagingLODDataArray[Index]);
++                    StagingLODDataArray[Index] = nullptr;
++                    StagingLODDataSizes[Index] = 0;
++                }
++            }
++            RHIUnlockVertexBuffer(IntermediateVertexBuffer);
++            FRHICommandListExecutor::GetImmediateCommandList().CopyBufferRegion(
++                IntermediateVertexBuffer, 0, RenderData->VertexBuffer->VertexBufferRHI, 0, OldSize);
++        }
++    }
++}
++
++// Original 0x1445e44a0, reached by closure 0x1445dfb40 and DoCancel.
++void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::DoFinishUpdate(const FContext& Context)
++{
++    ULandscapeLODStreamingProxy* Proxy = const_cast<ULandscapeLODStreamingProxy*>(Context.LandscapeProxy);
++    FLandscapeMobileRenderData* RenderData = Context.RenderData;
++    if (!IsCancelled() && Proxy && RenderData)
++    {
++        if (IntermediateVertexBuffer)
++        {
++            FLandscapeVertexBufferMobile* VertexBuffer = RenderData->VertexBuffer;
++            FLandscapeVertexBufferMobile::UpdateMemoryStat(IntermediateVertexBuffer->GetSize() - VertexBuffer->VertexBufferRHI->GetSize());
++            TRHIResourceUpdateBatcher<1> Batcher;
++            Batcher.QueueUpdateRequest(VertexBuffer->VertexBufferRHI, IntermediateVertexBuffer);
++        }
++        RenderData->CurrentFirstLODIdx = static_cast<uint8>(PendingFirstMip);
++        Proxy->SetResidentLODsFromStreaming(static_cast<uint8>(Proxy->GetNumMipsForStreaming() - PendingFirstMip));
++    }
++    IntermediateVertexBuffer.SafeRelease();
++}
++
++void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::Abort()
++{
++    if (!IsCancelled() && !IsCompleted())
++    {
++        FLandscapeMeshMobileUpdate::Abort();
++        for (int32 Index = 0; Index < 8; ++Index)
++        {
++            if (IORequests[Index])
++            {
++                (new FAutoDeleteAsyncTask<FCancelIORequestsTask>(this))->StartBackgroundTask();
++                return;
++            }
++        }
++    }
++}
++
++void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::FCancelIORequestsTask::DoWork()
++{
++    const ETaskState PreviousState = PendingUpdate->DoLock();
++    for (int32 Index = 0; Index < 8; ++Index)
++    {
++        if (PendingUpdate->IORequests[Index])
++            PendingUpdate->IORequests[Index]->Cancel();
++    }
++    PendingUpdate->DoUnlock(PreviousState);
++}
+diff --git a/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.h b/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.h
+new file mode 100644
+index 000000000..fc8f7e87e
+--- /dev/null
++++ b/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.h
+@@ -0,0 +1,74 @@
++// Copyright Epic Games, Inc. All Rights Reserved.
++#pragma once
++
++#include "CoreMinimal.h"
++#include "RenderAssetUpdate.h"
++#include "RHIResources.h"
++#include "Serialization/BulkData.h"
++#include "Async/AsyncFileHandle.h"
++#include "Async/AsyncWork.h"
++
++class ULandscapeLODStreamingProxy;
++struct FLandscapeMobileRenderData;
++
++struct FLandscapeMeshMobileUpdateContext
++{
++	using EThreadType = FRenderAssetUpdate::EThreadType;
++	FLandscapeMeshMobileUpdateContext(ULandscapeLODStreamingProxy* Proxy, EThreadType Thread);
++	FLandscapeMeshMobileUpdateContext(UStreamableRenderAsset* Proxy, EThreadType Thread);
++	UStreamableRenderAsset* GetRenderAsset() const;
++	EThreadType GetCurrentThread() const { return CurrentThread; }
++	ULandscapeLODStreamingProxy* LandscapeProxy;
++	FLandscapeMobileRenderData* RenderData;
++	EThreadType CurrentThread;
++};
++
++extern template class TRenderAssetUpdate<FLandscapeMeshMobileUpdateContext>;
++
++class FLandscapeMeshMobileUpdate : public TRenderAssetUpdate<FLandscapeMeshMobileUpdateContext>
++{
++public:
++	FLandscapeMeshMobileUpdate(ULandscapeLODStreamingProxy* Proxy, int32 RequestedMips);
++protected:
++	virtual ~FLandscapeMeshMobileUpdate() = default;
++	int32 CurrentFirstLODIdx;
++};
++
++class FLandscapeMeshMobileStreamOut : public FLandscapeMeshMobileUpdate
++{
++public:
++	ENGINE_API FLandscapeMeshMobileStreamOut(ULandscapeLODStreamingProxy* Proxy, int32 RequestedMips);
++private:
++	void ShrinkResources(const FContext& Context);
++};
++
++class FLandscapeMeshMobileStreamIn_IO_AsyncReallocate : public FLandscapeMeshMobileUpdate
++{
++public:
++	ENGINE_API FLandscapeMeshMobileStreamIn_IO_AsyncReallocate(ULandscapeLODStreamingProxy* Proxy, int32 RequestedMips, bool bHighPrio);
++	virtual void Abort() override;
++private:
++	class FCancelIORequestsTask : public FNonAbandonableTask
++	{
++	public:
++		explicit FCancelIORequestsTask(FLandscapeMeshMobileStreamIn_IO_AsyncReallocate* Update) : PendingUpdate(Update) {}
++		void DoWork();
++		FORCEINLINE TStatId GetStatId() const { RETURN_QUICK_DECLARE_CYCLE_STAT(FCancelIORequestsTask_LandscapeMeshMobile, STATGROUP_ThreadPoolAsyncTasks); }
++	private:
++		TRefCountPtr<FLandscapeMeshMobileStreamIn_IO_AsyncReallocate> PendingUpdate;
++	};
++	void DoInitiateIO(const FContext& Context);
++	void DoGetIORequestResults(const FContext& Context);
++	void DoCancelIO(const FContext& Context);
++	void ClearIORequest(const FContext& Context);
++	void DoExpandResources(const FContext& Context);
++	void ExpandResources(const FContext& Context);
++	void DoCancel(const FContext& Context);
++	void DoFinishUpdate(const FContext& Context);
++	FVertexBufferRHIRef IntermediateVertexBuffer;
++	void* StagingLODDataArray[8];
++	int64 StagingLODDataSizes[8];
++	IBulkDataIORequest* IORequests[8];
++	FBulkDataIORequestCallBack AsyncFileCallback;
++	bool bHighPrioIORequest;
++};
 diff --git a/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h b/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
-index 5c3036a99..f7ba64268 100644
+index 5c3036a99..dc9f2167c 100644
 --- a/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
 +++ b/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
-@@ -11,2 +11,3 @@
+@@ -11,2 +11,5 @@
  #include "LandscapeWeightmapUsage.h"
 +#include "Serialization/BulkData.h"
++#include "Engine/StreamableRenderAsset.h"
++#include "RenderAssetUpdate.h"
  
-@@ -109,2 +110,8 @@ class FLandscapeComponentDerivedData
+@@ -109,2 +112,8 @@ class FLandscapeComponentDerivedData
  	TArray<uint8> CompressedLandscapeData;
 +
 +#if !WITH_EDITORONLY_DATA && USE_BULKDATA_STREAMING_TOKEN
@@ -15,15 +406,17 @@ index 5c3036a99..f7ba64268 100644
 +	TArray<FByteBulkData> StreamingLODDataArray;
 +#endif
  	
-@@ -113,2 +120,7 @@ class FLandscapeComponentDerivedData
+@@ -113,2 +122,9 @@ class FLandscapeComponentDerivedData
  
 +	FString CachedLODDataFileName;
 +
 +	/** Set only by the loading-only original cooked-data reader. */
 +	bool bLegacyCookedData = false;
 +
++	friend class ULandscapeLODStreamingProxy;
++
  public:
-@@ -129,3 +141,8 @@ public:
+@@ -129,3 +145,8 @@ public:
  	{
 -		return CompressedLandscapeData.Num();
 +		int32 Size = CompressedLandscapeData.Num();
@@ -33,22 +426,273 @@ index 5c3036a99..f7ba64268 100644
 +		}
 +		return Size;
  	}
-@@ -150,2 +167,5 @@ public:
+@@ -150,2 +171,5 @@ public:
  	friend FArchive& operator<<(FArchive& Ar, FLandscapeComponentDerivedData& Data);
 +
 +	/** Read the original 12.60 cooked mobile data, including streamed LODs. */
 +	void SerializeLegacyCookedData(FArchive& Ar, UObject* Owner);
  };
+@@ -360,2 +384,44 @@ enum ELandscapeClearMode
+ 
++/** Original 12.60 interface for streaming mobile landscape vertex LODs. */
++UCLASS()
++class LANDSCAPE_API ULandscapeLODStreamingProxy : public UStreamableRenderAsset
++{
++	GENERATED_UCLASS_BODY()
++public:
++	virtual bool IsReadyForFinishDestroy() override;
++	virtual int32 GetLODGroupForStreaming() const override { return 0; }
++	virtual int32 GetNumMipsForStreaming() const override;
++	virtual int32 GetNumNonStreamingMips() const override { return 1; }
++	virtual int32 CalcNumOptionalMips() const override { return 0; }
++	virtual int32 CalcCumulativeLODSize(int32 NumLODs) const override;
++	virtual bool GetMipDataFilename(int32 MipIndex, FString& OutBulkDataFilename) const override;
++	virtual bool DoesMipDataExist(int32 MipIndex) const override;
++	virtual bool IsReadyForStreaming() const override;
++	virtual int32 GetNumResidentMips() const override;
++	virtual int32 GetNumRequestedMips() const override;
++	virtual bool CancelPendingMipChangeRequest() override;
++	virtual bool HasPendingUpdate() const override;
++	virtual bool IsPendingUpdateLocked() const override;
++	virtual bool StreamOut(int32 NewMipCount) override;
++	virtual bool StreamIn(int32 NewMipCount, bool bHighPrio) override;
++	virtual bool UpdateStreamingStatus(bool bWaitForMipFading = false) override;
++
++#if !WITH_EDITORONLY_DATA && USE_BULKDATA_STREAMING_TOKEN
++	using BulkDataType = FBulkDataStreamingToken;
++#else
++	using BulkDataType = FByteBulkData;
++#endif
++	TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> GetRenderData() const;
++	BulkDataType& GetStreamingLODBulkData(int32 LODIdx) const;
++	uint8 GetResidentLODsFromStreaming() const { return CachedNumResidentLODs; }
++	void SetResidentLODsFromStreaming(uint8 Count) { CachedNumResidentLODs = Count; }
++	void LinkStreaming();
++	void UnlinkStreaming();
++
++private:
++	bool TickPendingUpdate();
++	ULandscapeComponent* LandscapeComponent;
++	TRefCountPtr<FRenderAssetUpdate> PendingUpdate;
++};
++
+ UCLASS(hidecategories=(Display, Attachment, Physics, Debug, Collision, Movement, Rendering, PrimitiveComponent, Object, Transform, Mobility, VirtualTexture), showcategories=("Rendering|Material"), MinimalAPI, Within=LandscapeProxy)
+@@ -474,2 +540,6 @@ private:
+ 
++	/** Component-owned proxy serialized by original cooked landscapes. */
++	UPROPERTY()
++	ULandscapeLODStreamingProxy* LODStreamingProxy;
++
+ public:
+@@ -586,2 +656,4 @@ public:
+ 
++	friend class ULandscapeLODStreamingProxy;
++
+ 	/** Grass data for generation **/
 diff --git a/Engine/Source/Runtime/Landscape/Private/Landscape.cpp b/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
-index 7fe59f51e..713e471e9 100644
+index 7fe59f51e..8f32df993 100644
 --- a/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
 +++ b/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
-@@ -53,2 +53,4 @@ Landscape.cpp: Terrain rendering
+@@ -53,2 +53,7 @@ Landscape.cpp: Terrain rendering
  #include "LandscapeSubsystem.h"
 +#include "Misc/CommandLine.h"
 +#include "Misc/Parse.h"
++#include "ContentStreaming.h"
++#include "HAL/FileManager.h"
++#include "Streaming/LandscapeMeshMobileUpdate.h"
  
-@@ -525,3 +527,14 @@ void ULandscapeComponent::Serialize(FArchive& Ar)
+@@ -146,2 +151,186 @@ FAutoConsoleCommand CmdPrintNumLandscapeShadows(
+ 
++// Original 12.60 proxy lifecycle and old render-asset streaming interface.
++ULandscapeLODStreamingProxy::ULandscapeLODStreamingProxy(const FObjectInitializer& ObjectInitializer)
++	: Super(ObjectInitializer)
++	, LandscapeComponent(Cast<ULandscapeComponent>(GetOuter()))
++{
++	CachedNumResidentLODs = 1;
++}
++
++int32 ULandscapeLODStreamingProxy::CalcCumulativeLODSize(int32 NumLODs) const
++{
++	const auto& LODs = LandscapeComponent->PlatformData.StreamingLODDataArray;
++	int64 Size = 0;
++	for (int32 Index = LODs.Num() - 1; Index >= LODs.Num() - NumLODs + 1; --Index)
++	{
++		Size += static_cast<uint32>(LODs[Index].GetBulkDataSize());
++	}
++	return static_cast<int32>(Size);
++}
++
++int32 ULandscapeLODStreamingProxy::GetNumMipsForStreaming() const
++{
++	return LandscapeComponent->PlatformData.StreamingLODDataArray.Num() + 1;
++}
++
++bool ULandscapeLODStreamingProxy::GetMipDataFilename(int32 MipIndex, FString& OutBulkDataFilename) const
++{
++	const auto& PlatformData = LandscapeComponent->PlatformData;
++	if (MipIndex < 0 || MipIndex >= PlatformData.StreamingLODDataArray.Num())
++	{
++		return false;
++	}
++	OutBulkDataFilename = PlatformData.CachedLODDataFileName;
++	return true;
++}
++
++bool ULandscapeLODStreamingProxy::IsReadyForStreaming() const
++{
++	return LandscapeComponent->PlatformData.CachedRenderData.IsValid();
++}
++
++int32 ULandscapeLODStreamingProxy::GetNumResidentMips() const
++{
++	const auto& PlatformData = LandscapeComponent->PlatformData;
++	const int32 FirstLOD = PlatformData.CachedRenderData.IsValid()
++		? PlatformData.CachedRenderData->CurrentFirstLODIdx
++		: PlatformData.StreamingLODDataArray.Num();
++	return GetNumMipsForStreaming() - FirstLOD;
++}
++
++int32 ULandscapeLODStreamingProxy::GetNumRequestedMips() const
++{
++	return PendingUpdate && !PendingUpdate->IsCancelled()
++		? PendingUpdate->GetNumRequestedMips() : CachedNumResidentLODs;
++}
++
++bool ULandscapeLODStreamingProxy::CancelPendingMipChangeRequest()
++{
++	if (!PendingUpdate)
++	{
++		return false;
++	}
++	if (!PendingUpdate->IsCancelled())
++	{
++		PendingUpdate->Abort();
++	}
++	return true;
++}
++
++bool ULandscapeLODStreamingProxy::HasPendingUpdate() const
++{
++	return !!PendingUpdate;
++}
++
++bool ULandscapeLODStreamingProxy::IsPendingUpdateLocked() const
++{
++	return PendingUpdate && PendingUpdate->IsLocked();
++}
++
++bool ULandscapeLODStreamingProxy::TickPendingUpdate()
++{
++	if (PendingUpdate)
++	{
++		if (IsEngineExitRequested() || !LandscapeComponent->PlatformData.CachedRenderData.IsValid())
++		{
++			PendingUpdate->Abort();
++		}
++		FRenderAssetUpdate::EThreadType TickThread = GIsThreadedRendering
++			? FRenderAssetUpdate::TT_None : FRenderAssetUpdate::TT_Render;
++		if (HasAnyFlags(RF_BeginDestroyed) && PendingUpdate->GetRelevantThread() == FRenderAssetUpdate::TT_Async)
++		{
++			TickThread = FRenderAssetUpdate::TT_GameRunningAsync;
++		}
++		PendingUpdate->Tick(TickThread);
++		if (!PendingUpdate->IsCompleted())
++		{
++			return true;
++		}
++		PendingUpdate.SafeRelease();
++	}
++	return false;
++}
++
++
++// UE 4.25 exposes this query separately; 12.60's recovered proxy has no
++// corresponding vtable slot. Check the actual backing data for this API.
++bool ULandscapeLODStreamingProxy::DoesMipDataExist(int32 MipIndex) const
++{
++	const auto& PlatformData = LandscapeComponent->PlatformData;
++	if (MipIndex == PlatformData.StreamingLODDataArray.Num())
++	{
++		return PlatformData.HasValidRuntimeData();
++	}
++	if (!PlatformData.StreamingLODDataArray.IsValidIndex(MipIndex))
++	{
++		return false;
++	}
++#if !WITH_EDITORONLY_DATA && USE_BULKDATA_STREAMING_TOKEN
++	return PlatformData.StreamingLODDataArray[MipIndex].IsValid()
++		&& IFileManager::Get().FileExists(*PlatformData.CachedLODDataFileName);
++#else
++	return PlatformData.StreamingLODDataArray[MipIndex].DoesExist();
++#endif
++}
++
++TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> ULandscapeLODStreamingProxy::GetRenderData() const
++{
++	return LandscapeComponent->PlatformData.CachedRenderData;
++}
++
++ULandscapeLODStreamingProxy::BulkDataType& ULandscapeLODStreamingProxy::GetStreamingLODBulkData(int32 LODIdx) const
++{
++	return LandscapeComponent->PlatformData.StreamingLODDataArray[LODIdx];
++}
++
++bool ULandscapeLODStreamingProxy::StreamOut(int32 NewMipCount)
++{
++	if (bIsStreamable && !PendingUpdate && IsReadyForStreaming() && NewMipCount < GetNumResidentMips())
++	{
++		PendingUpdate = new FLandscapeMeshMobileStreamOut(this, NewMipCount);
++		return !PendingUpdate->IsCancelled();
++	}
++	return false;
++}
++
++bool ULandscapeLODStreamingProxy::StreamIn(int32 NewMipCount, bool bHighPrio)
++{
++	if (bIsStreamable && !PendingUpdate && IsReadyForStreaming() && NewMipCount > GetNumResidentMips())
++	{
++		PendingUpdate = new FLandscapeMeshMobileStreamIn_IO_AsyncReallocate(this, NewMipCount, bHighPrio);
++		return !PendingUpdate->IsCancelled();
++	}
++	return false;
++}
++
++bool ULandscapeLODStreamingProxy::UpdateStreamingStatus(bool bWaitForMipFading)
++{
++	return TickPendingUpdate();
++}
++
++bool ULandscapeLODStreamingProxy::IsReadyForFinishDestroy()
++{
++	return !TickPendingUpdate();
++}
++
++void ULandscapeLODStreamingProxy::LinkStreaming()
++{
++	if (!IsTemplate() && IStreamingManager::Get().IsTextureStreamingEnabled() && IsStreamingRenderAsset(this))
++	{
++		IStreamingManager::Get().GetTextureStreamingManager().AddStreamingRenderAsset(this);
++	}
++	else
++	{
++		StreamingIndex = INDEX_NONE;
++	}
++}
++
++void ULandscapeLODStreamingProxy::UnlinkStreaming()
++{
++	if (!IsTemplate() && IStreamingManager::Get().IsTextureStreamingEnabled())
++	{
++		IStreamingManager::Get().GetTextureStreamingManager().RemoveStreamingRenderAsset(this);
++	}
++}
++
+ ULandscapeComponent::ULandscapeComponent(const FObjectInitializer& ObjectInitializer)
+@@ -194,2 +383,3 @@ ULandscapeComponent::ULandscapeComponent(const FObjectInitializer& ObjectInitial
+ 	TranslucencySortPriority = -1;
++	LODStreamingProxy = CreateDefaultSubobject<ULandscapeLODStreamingProxy>(TEXT("LandscapeLODStreamingProxy"));
+ }
+@@ -525,3 +715,14 @@ void ULandscapeComponent::Serialize(FArchive& Ar)
  			}
 -			Ar << PlatformData;
 +			const FLinkerLoad* SourceLinker = Cast<FLinkerLoad>(Ar.GetLinker());
@@ -64,7 +708,17 @@ index 7fe59f51e..713e471e9 100644
 +				Ar << PlatformData;
 +			}
  		}
-@@ -3360,2 +3373,41 @@ FArchive& operator<<(FArchive& Ar, FLandscapeComponentDerivedData& Data)
+@@ -1356,2 +1557,3 @@ void ULandscapeComponent::BeginDestroy()
+ 	Super::BeginDestroy();
++	LODStreamingProxy->UnlinkStreaming();
+ 
+@@ -1403,2 +1605,5 @@ FPrimitiveSceneProxy* ULandscapeComponent::CreateSceneProxy()
+ 		{
++			LODStreamingProxy->UnlinkStreaming();
++			LODStreamingProxy->bIsStreamable = !LODStreamingProxy->NeverStream && LODStreamingProxy->GetNumMipsForStreaming() > 1;
++			LODStreamingProxy->LinkStreaming();
+ 			Proxy = new FLandscapeComponentSceneProxyMobile(this);
+@@ -3360,2 +3565,41 @@ FArchive& operator<<(FArchive& Ar, FLandscapeComponentDerivedData& Data)
  
 +// Original 12.60 implementation: 0x143accef0. This is a loading-only
 +// compatibility path; UE 4.25 authoring and DDC retain their existing format.
@@ -107,25 +761,30 @@ index 7fe59f51e..713e471e9 100644
 +
  bool FLandscapeComponentDerivedData::LoadFromDDC(const FGuid& StateId, UObject* Component)
 diff --git a/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp b/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
-index b48664278..85cfc2bc9 100644
+index b48664278..63cc8a17d 100644
 --- a/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
 +++ b/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
-@@ -254,87 +254,79 @@ void SerializeLandscapeMobileHoleData(FMemoryArchive& Ar, FLandscapeMobileHoleDa
+@@ -254,87 +254,84 @@ void SerializeLandscapeMobileHoleData(FMemoryArchive& Ar, FLandscapeMobileHoleDa
  
 -/**
 - * Container for FLandscapeVertexBufferMobile that we can reference from a thread-safe shared pointer
 - * while ensuring the vertex buffer is always destroyed on the render thread.
 - **/
 -struct FLandscapeMobileRenderData
-+FLandscapeMobileRenderData::FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData, uint8 InCurFirstLODIdx)
-+	: CurrentFirstLODIdx(InCurFirstLODIdx)
++void FLandscapeVertexBufferMobile::UpdateMemoryStat(int32 Delta)
  {
 -	FLandscapeVertexBufferMobile* VertexBuffer = nullptr;
 -	FLandscapeMobileHoleData* HoleData = nullptr;
 -	FOccluderVertexArraySP OccluderVerticesSP;
-+	FMemoryReader MemAr(InPlatformData);
++	INC_DWORD_STAT_BY(STAT_LandscapeVertexMem, Delta);
++}
  
 -	FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData)
++FLandscapeMobileRenderData::FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData, uint8 InCurFirstLODIdx)
++	: CurrentFirstLODIdx(InCurFirstLODIdx)
++{
++	FMemoryReader MemAr(InPlatformData);
++
 +	int32 NumHoleLods;
 +	MemAr << NumHoleLods;
 +	if (NumHoleLods > 0)
@@ -256,16 +915,16 @@ index b48664278..85cfc2bc9 100644
 +
 +
  
-@@ -472,3 +464,3 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
+@@ -472,3 +469,3 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
  
 -	if (FPlatformProperties::RequiresCookedData() && CachedRenderData.IsValid())
 +	if ((FPlatformProperties::RequiresCookedData() || bLegacyCookedData) && CachedRenderData.IsValid())
  	{
-@@ -480,2 +472,3 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
+@@ -480,2 +477,3 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
  		check(CompressedLandscapeData.Num() > 0);
 +		CachedRenderData.Reset();
  
-@@ -501,6 +494,6 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
+@@ -501,6 +499,6 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
  
 -		TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> RenderData = MakeShareable(new FLandscapeMobileRenderData(MoveTemp(UncompressedData)));
 +		TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> RenderData = MakeShareable(new FLandscapeMobileRenderData(MoveTemp(UncompressedData), static_cast<uint8>(StreamingLODDataArray.Num())));
@@ -275,11 +934,14 @@ index b48664278..85cfc2bc9 100644
 +		if (FPlatformProperties::RequiresCookedData() || bLegacyCookedData)
  		{
 diff --git a/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h b/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
-index e10bb433f..b36bd14f5 100644
+index e10bb433f..7ea3c6fa8 100644
 --- a/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
 +++ b/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
-@@ -108,2 +108,14 @@ public:
- 
+@@ -106,2 +106,15 @@ public:
+ 	virtual void InitRHI() override;
++	static LANDSCAPE_API void UpdateMemoryStat(int32 Delta);
++};
++
 +/** Shared mobile terrain resources. Original 12.60 first streamed LOD is at +0x20. */
 +struct FLandscapeMobileRenderData
 +{
@@ -290,6 +952,4 @@ index e10bb433f..b36bd14f5 100644
 +
 +	FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData, uint8 InCurFirstLODIdx);
 +	~FLandscapeMobileRenderData();
-+};
-+
- //
+ };
