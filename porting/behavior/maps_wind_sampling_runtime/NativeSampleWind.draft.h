@@ -2,6 +2,7 @@
 // Read evidence.json before integration. Hooks are required effects, never no-op fallbacks.
 // Includes assume Generated/ is an include root in a future integration translation unit.
 #pragma once
+#include <xmmintrin.h> // Original x86 SSE reciprocal-square-root seed.
 #include "AFortWindManager.h"
 #include "ABuildingSMActor.h"
 #include "Curves/CurveLinearColor.h"
@@ -49,46 +50,81 @@ struct FEffects
     virtual void SetVectorByIndex_14433b1f0(UMaterialInstanceDynamic*, int32, const FLinearColor&) = 0;
 };
 
-inline bool InBoundsInclusive(const FBox& B, const FVector& P)
+// All three sampling paths use the same assembly predicate. Minimum NaNs reject;
+// maximum NaNs pass. FBox::IsValid is not consulted. Decompiled conditional minima
+// were an expression-recovery artifact (141ddfee0..ff1c / 141de009d..00d9).
+inline bool InCaptureBounds(const FBox& B, const FVector& P)
 {
-    // Native code compares coordinates, ignoring FBox::IsValid.
-    return B.Min.X <= P.X && P.X <= B.Max.X && B.Min.Y <= P.Y && P.Y <= B.Max.Y
-        && B.Min.Z <= P.Z && P.Z <= B.Max.Z;
+    return P.X >= B.Min.X && !(P.X > B.Max.X)
+        && P.Y >= B.Min.Y && !(P.Y > B.Max.Y)
+        && P.Z >= B.Min.Z && !(P.Z > B.Max.Z);
 }
 
-// Keep the capture's short-circuit topology. Two minimum-coordinate tests are
-// conditional on another coordinate equalling its maximum. This is unusual and
-// must be checked against machine code before replacing it with a standard box test.
-inline bool InRadiusCaptureBounds(const FBox& B, const FVector& P)
+inline bool ZeroOrUnordered(float V) { return !(V < 0.0f) && !(V > 0.0f); }
+
+// Requires ordinary scalar float evaluation, no contraction/reassociation. The
+// second refinement reuses HalfSquared; it does not recompute S * 0.5f.
+inline float RefinedReciprocalSqrt(float S)
 {
-    return B.Min.X <= P.X && (P.X < B.Max.X || P.X == B.Max.X) && B.Min.Y <= P.Y
-        && (P.Y < B.Max.Y || (P.Y == B.Max.Y && B.Min.Z <= P.Z))
-        && (P.Z < B.Max.Z || P.Z == B.Max.Z);
-}
-inline bool InCylinderCaptureBounds(const FBox& B, const FVector& P)
-{
-    return B.Min.X <= P.X && (P.X < B.Max.X || (P.X == B.Max.X && B.Min.Y <= P.Y))
-        && (P.Y < B.Max.Y || P.Y == B.Max.Y) && B.Min.Z <= P.Z
-        && (P.Z < B.Max.Z || P.Z == B.Max.Z);
+    float R = _mm_cvtss_f32(_mm_rsqrt_ss(_mm_set_ss(S)));
+    const float HalfSquared = S * 0.5f;
+    float Square = R * R;
+    float Error = 0.5f - HalfSquared * Square;
+    R = R + R * Error;
+    Square = R * R;
+    Error = 0.5f - HalfSquared * Square;
+    R = R + R * Error;
+    return R;
 }
 
-inline FVector CylinderDirectionWithFalloff(const FFortWindImpulseCylinder& C, const FVector& P)
+inline FVector RadiusContribution(const FFortWindImpulseRadius& R, const FVector& P)
 {
-    if (C.OuterRadius <= 0.0f) return FVector::ZeroVector;
-    const float DX = P.X - C.Location.X, DY = P.Y - C.Location.Y;
-    const float DistanceSquared = DX * DX + DY * DY;
-    const float Distance = FMath::Sqrt(DistanceSquared);
-    if (Distance >= C.OuterRadius) return FVector::ZeroVector;
-    FVector Direction = C.WindDirection;
-    if (Direction == FVector::ZeroVector)
+    if (!(R.CurrentRadius > 0.0f)) return FVector::ZeroVector;
+    const FVector V = P - R.Location;
+    const float Distance = FMath::Sqrt((V.X * V.X + V.Y * V.Y) + V.Z * V.Z);
+    FVector Direction = FVector::ZeroVector;
+    if (Distance > 1.e-8f)
     {
-        // Native uses rsqrtss plus two Newton refinements at squared threshold 1e-8.
-        // Scalar sqrt is a semantic draft; numeric/NaN parity is not closed.
-        Direction = DistanceSquared <= 1.e-8f ? FVector::ZeroVector
-            : FVector(DX / Distance, DY / Distance, 0.0f);
+        const float Reciprocal = 1.0f / Distance;
+        Direction = FVector(Reciprocal * V.X, Reciprocal * V.Y, Reciprocal * V.Z);
     }
-    if (C.InnerRadius < Distance)
-        Direction *= 1.0f - (Distance - C.InnerRadius) / (C.OuterRadius - C.InnerRadius);
+    // COMISS/JB enters for unordered distance, too. NaN distance therefore
+    // produces NaN magnitude times zero direction, not an early zero return.
+    if (Distance >= R.CurrentRadius) return FVector::ZeroVector;
+    const float Magnitude = R.CurrentMagnitude - (R.CurrentMagnitude / R.CurrentRadius) * Distance;
+    return FVector(Magnitude * Direction.X, Magnitude * Direction.Y, Magnitude * Direction.Z);
+}
+
+inline FVector CylinderDirectionWithFalloff(const FFortWindImpulseCylinder& C, const FVector& P,
+    bool bDelta = false, bool bDistanceXY = false)
+{
+    if (!(C.OuterRadius > 0.0f)) return FVector::ZeroVector;
+    const float DX = P.X - C.Location.X, DY = P.Y - C.Location.Y;
+    const float XX = DX * DX, YY = DY * DY;
+    FVector Direction = C.WindDirection;
+    // UCOMISS/JNE sees unordered as equal. Preserve Z even on the radial
+    // path: it can be -0 or NaN; native only replaces X and Y here.
+    if (ZeroOrUnordered(Direction.X) && ZeroOrUnordered(Direction.Y) && ZeroOrUnordered(Direction.Z))
+    {
+        const float S = bDelta ? XX + YY : YY + XX;
+        Direction.X = 0.0f;
+        Direction.Y = 0.0f;
+        if (S > 1.e-8f)
+        {
+            const float Reciprocal = RefinedReciprocalSqrt(S);
+            Direction.X = Reciprocal * DX;
+            Direction.Y = Reciprocal * DY;
+        }
+    }
+    // Regular cylinders and four delta branches sum YY+XX; outer/inward
+    // delta sums XX+YY. Keep this distinction for NaN operand propagation.
+    const float Distance = FMath::Sqrt(bDistanceXY ? XX + YY : YY + XX);
+    if (Distance >= C.OuterRadius) return FVector::ZeroVector;
+    if (Distance > C.InnerRadius)
+    {
+        const float Falloff = 1.0f - (Distance - C.InnerRadius) / (C.OuterRadius - C.InnerRadius);
+        Direction = FVector(Falloff * Direction.X, Falloff * Direction.Y, Direction.Z * Falloff);
+    }
     return Direction;
 }
 
@@ -97,18 +133,10 @@ inline FVector Sample(AFortWindManager& M, const FVector& P,
 {
     FVector Wind = M.NativeWindVector_0x430;
     for (const FFortWindImpulseRadius& R : M.WindImpulses)
-    {
-        if (!InRadiusCaptureBounds(R.WorldBounds, P) || R.CurrentRadius <= 0.0f) continue;
-        const FVector Offset = P - R.Location;
-        const float Distance = Offset.Size();
-        if (Distance < R.CurrentRadius)
-        {
-            const FVector Direction = Distance <= 1.e-8f ? FVector::ZeroVector : Offset / Distance;
-            Wind += Direction * (R.CurrentMagnitude - R.CurrentMagnitude / R.CurrentRadius * Distance);
-        }
-    }
+        if (InCaptureBounds(R.WorldBounds, P)) Wind += RadiusContribution(R, P);
     for (const FFortWindImpulseCylinder& C : M.WindImpulseCylinders)
-        if (!C.bIsChanging && C.Magnitude != 0.0f && InCylinderCaptureBounds(C.WorldBounds, P))
+        // UCOMISS/JE skips zero and unordered magnitude.
+        if (!C.bIsChanging && !ZeroOrUnordered(C.Magnitude) && InCaptureBounds(C.WorldBounds, P))
             Wind += CylinderDirectionWithFalloff(C, P) * C.Magnitude;
 
     if (bHaveDeltaCylinder && M.WindImpulseCylinderDeltas.Num() > 0)
@@ -132,7 +160,9 @@ inline FVector Sample(AFortWindManager& M, const FVector& P,
                 Magnitude = D.SectionCurrentMagnitude;
             else
                 Magnitude = D.bRippleOutward ? D.PreviousMagnitude : D.DesiredMagnitude;
-            Wind += CylinderDirectionWithFalloff(DeltaCylinder, P) * Magnitude;
+            const bool bOuterInward = Distance >= D.InnerSectionRadius
+                && Distance > D.OuterSectionRadius && !D.bRippleOutward;
+            Wind += CylinderDirectionWithFalloff(DeltaCylinder, P, true, bOuterInward) * Magnitude;
         }
     }
     return Wind;
@@ -224,7 +254,11 @@ inline void RemoveResponder(AFortWindManager& M, int32 Removed, FEffects& E)
     --M.NextNearbyIndexToUpdate;
 }
 
-inline float Smooth(float T) { return 3.0f * T * T - 2.0f * T * T * T; }
+inline float Smooth(float T)
+{
+    const float T2 = T * T;
+    return T2 * 3.0f - (T2 + T2) * T;
+}
 
 inline void UpdateRadiusImpulses(AFortWindManager& M, float DeltaSeconds)
 {
@@ -277,9 +311,19 @@ inline void UpdateDeltaImpulses(AFortWindManager& M, float DeltaSeconds, FEffect
                 {
                     const float Target = (D.DesiredMagnitude - D.PreviousMagnitude)
                         * Smooth(1.0f - D.SectionCurrentBlendTime / D.SectionBlendTime) + D.PreviousMagnitude;
-                    D.SectionCurrentMagnitude = FMath::Clamp(Target,
-                        FMath::Min(D.DesiredMagnitude, D.PreviousMagnitude),
-                        FMath::Max(D.DesiredMagnitude, D.PreviousMagnitude));
+                    float Lower;
+                    float Upper;
+                    if (D.DesiredMagnitude - D.PreviousMagnitude < 0.0f)
+                    { Lower = D.DesiredMagnitude; Upper = D.PreviousMagnitude; }
+                    else
+                    { Lower = D.PreviousMagnitude; Upper = D.DesiredMagnitude; }
+                    float Result = Lower;
+                    if (Lower <= Target)
+                    {
+                        Result = Target;
+                        if (Upper <= Target) Result = Upper;
+                    }
+                    D.SectionCurrentMagnitude = Result;
                     bSectionComplete = D.SectionCurrentMagnitude == D.DesiredMagnitude;
                 }
             }
@@ -360,9 +404,14 @@ inline void SampleWind_141ddfad0(AFortWindManager& M, FState State, float DeltaS
                 const FVector Wind = M.bAllowWindImpulses ? Sample(M,
                     E.ActorRootLocationOrZero(R.WindUpdatingBuildingSMActor), bHaveDeltaCylinder, DeltaCylinder)
                     : M.NativeWindVector_0x430;
-                const float Length = Wind.Size();
-                const FVector Direction = Length <= 1.e-8f ? FVector::ZeroVector : Wind / Length;
-                const float Speed = FMath::Clamp(Length, 0.0f, 1.0f);
+                const float Length = FMath::Sqrt((Wind.X * Wind.X + Wind.Y * Wind.Y) + Wind.Z * Wind.Z);
+                const float Reciprocal = Length > 1.e-8f ? 1.0f / Length : 0.0f;
+                const FVector Direction = Length > 1.e-8f
+                    ? FVector(Wind.X * Reciprocal, Wind.Y * Reciprocal, Wind.Z * Reciprocal)
+                    : FVector::ZeroVector;
+                // COMISS/JAE maps unordered length to +0; upper comparison
+                // maps equality/+infinity to 1. Signed zero survives lower test.
+                const float Speed = !(Length >= 0.0f) ? 0.0f : (Length < 1.0f ? Length : 1.0f);
                 // Direction-only changes do not cause a material write.
                 if (FMath::Abs(Speed - R.WindSpeed) > 1.e-8f)
                     UpdateMaterials(M, R, Speed, Direction, WorldTime, DeltaSeconds, E);

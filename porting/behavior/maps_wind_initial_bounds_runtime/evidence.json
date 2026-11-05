@@ -1,0 +1,34 @@
+{
+  "status": "PARTIAL_RECOVERY_NOT_INTEGRATED",
+  "function": "0x141dc7100",
+  "signature": "FBox AFortWindManager::GetInitialWindBounds() (name provisional; Win64 hidden return pointer in RDX)",
+  "evidence": [
+    "The 0x141dd0980 caller passes a 28-byte result slot, reads float at result +8 (FBox.Min.Z), stores it at manager +0x43c, then samples with delta time zero. The decompiler omits the returned hidden output pointer, but the caller consumes RAX as that pointer.",
+    "0x142ae9790 identifies FortStaticMeshActor. The native loop has EActorIteratorFlags value 5, matching UE OnlyActiveLevels | SkipPendingKill; it gathers that actor class for the manager's UWorld. Actor level is obtained via 0x143f76730, level world settings via level +0x240 / 0x143dd18e0. If settings are AFortWorldSettings and its byte +0x3c8 lacks bit 0x80, skip the actor.",
+    "GetPathName(level, nullptr) begins with /Game/Maps/Skybox/ => exclude; otherwise, if it begins with /Game/Maps/Zones/TheFarmstead/, exclude only if it also begins with /Game/Maps/Zones/TheFarmstead/GameStart_Cine or /Game/Maps/Zones/TheFarmstead/Homebase. Assembly at 0x141dc76df, 0x141dc777d, 0x141dc7799, and 0x141dc7837 sets r8d=1 for prefix helper 0x142bb4660, selecting case-insensitive comparison.",
+    "For each included actor call its virtual +0x548 with two false flags, corresponding to AActor::GetComponentsBoundingBox(false, false). Accumulate valid FBoxes by initializing from the first valid actor box and then componentwise union with later valid boxes. Invalid boxes are ignored; initial FBox is ForceInit (zero Min/Max and invalid).",
+    "0x141c77490 looks up the world context's game state, checks AFortGameStateZone (0x142927a60), and returns game state +0xb60 (0x141e9e770). When nonnull, 0x141dc7100 intersects the accumulated FBox with the returned object's FBox at +0x384 via 0x142c59040. The intersection performs ordered coordinate comparisons regardless of IsValid and returns a valid overlap or ForceInit. Existing exact implementation: porting/behavior/maps_wind_delta_runtime/AdvanceDeltaSection.draft.h."
+  ],
+  "closure_gaps": [
+    "FortStaticMeshActor is not present among the generated native class headers; its class must be recovered or a genuinely equivalent class identity established before iteration can be concretely integrated.",
+    "Exact copied padding and initial constants are not meaningful to the logical FBox but require binary proof if byte identity matters. Full implementation, build and runtime verification remain pending.",
+    "StructuralSupportSystem native FBox+0x384 constructor/setter lifecycle needs integration. FortStaticMeshActor class identity recovery remains pending."
+  ],
+  "sources": [
+    "porting/generated/maps-wind-quadtree/_adhoc/0x141dc7100__141dc7100.c",
+    "porting/generated/maps-wind-live-consumers/_adhoc/0x141dd0980__141dd0980.c",
+    "porting/generated/maps-wind-initial-bounds-callees/_adhoc/0x142ae9790__142ae9790.c",
+    "porting/generated/maps-wind-initial-bounds-callees/_adhoc/0x142bb4660__142bb4660.c",
+    "porting/generated/maps-wind-initial-bounds-callees/_adhoc/0x143dd18e0__143dd18e0.c",
+    "porting/generated/maps-wind-postinit-callees/_adhoc/0x141e9e770__141e9e770.c",
+    "porting/generated/maps-wind-postinit-callees/_adhoc/0x142927a60__142927a60.c",
+    "porting/generated/native107-impl/0x141c77490.c",
+    "porting/generated/native145-virtual-helpers/0x142ec9d30.c",
+    "/opt/fortnite/UnrealEngine4260/Engine/Source/Runtime/Engine/Public/EngineUtils.h",
+    "/opt/fortnite/UnrealEngine4260/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h"
+  ],
+  "resolved_fields": {
+    "AFortWorldSettings+0x3c8bit0x80": "bUseProceduralFoliage: reflected SetBit142b5f9b0 machinebytes8089c803000080c3 OR byte[RCX+3c8],80;ret",
+    "AFortGameStateZone+0xb60": "StructuralSupportSystem property reflection index, type UBuildingStructuralSupportSystem (class142759290). GetInitialWindBounds clips against its native-only FBox+0x384."
+  }
+}
