@@ -13,8 +13,13 @@ SLATE_PS = {'TSlateMaterialShaderPS' + suffix for suffix in
             ('GrayscaleFont', 'Default', 'Custom', 'ColorFont', 'Border')}
 MESH_VS = {'TTranslucencyShadowDepthVS<' + mode + '>' for mode in
            ('TranslucencyShadowDepth_Standard', 'TranslucencyShadowDepth_PerspectiveCorrect')}
+SHADOW_DEPTH_VS = {
+            'TShadowDepthVSVertexShadowDepth_PerspectiveCorrectfalse',
+            'TShadowDepthVSVertexShadowDepth_OutputDepthfalse',
+            'TShadowDepthVSVertexShadowDepth_OnePassPointLightfalse',
+            'TShadowDepthVSForGSVertexShadowDepth_OnePassPointLight'}
 MESH_VS |= {'TBasePassVSFSimpleNoLightmapLightingPolicy', 'TBasePassVSFNoLightMapPolicy',
-            'FConvertToUniformMeshVS', 'FHitProxyVS'}
+            'FConvertToUniformMeshVS', 'FHitProxyVS'} | SHADOW_DEPTH_VS
 MESH_PS = {'TTranslucencyShadowDepthPS<' + mode + '>' for mode in
            ('TranslucencyShadowDepth_Standard', 'TranslucencyShadowDepth_PerspectiveCorrect')}
 MESH_PS |= {'TBasePassPS' + policy + sky for policy in
@@ -115,6 +120,10 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
             elif kind.startswith('TTranslucencyShadowDepthPS'):
                 # Original 0x143237540 adds one scalar FShaderParameter.
                 result['shadow_depth_parameter'] = parameters(reader)
+            elif kind in SHADOW_DEPTH_VS:
+                # FShadowDepthVS declares one scalar parameter (LayerId) in
+                # ShadowDepthRendering.cpp; original identity remains unverified.
+                result['shadow_depth_vs_parameter'] = parameters(reader)
             elif kind == 'FHitProxyVS':
                 # Paper2D's original record requires four bytes here. The
                 # current FHitProxyVS declares a resource parameter at this

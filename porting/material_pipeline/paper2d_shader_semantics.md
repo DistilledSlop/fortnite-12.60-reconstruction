@@ -23,12 +23,18 @@ current UE shader declarations support the parameter types, but their original
 semantic names have not been independently established. Alternative zero-byte
 parameter lengths fail the map-hash check. The prefix reader still reports
 `complete_serialized_shader_map=false`: it does not consume the cooking marker.
-The parent resource is independently bounded at `[2084,14476)`; its prefix
-stops before `TShadowDepthVSVertexShadowDepth_PerspectiveCorrectfalse` at
-resource offset 604, leaving 11788 bytes uninterpreted. Recover that record's
-original serializer before extending the parent decoder. Neither asset has been
-attached to the runtime using this decode; mesh shader-map construction also
-remains necessary.
+The parent resource is independently bounded at `[2084,14476)`. The later
+`parent-shadow-prefix.json` decodes four shadow-depth vertex records at resource
+offsets 604..2336, with archive indices 1510..1513. Each has six bytes between
+the LocalVF parameters and the shader output hash, decoded as one scalar
+parameter. The current `FShadowDepthVS` declares one `FShaderParameter` named
+`LayerId`; the original field name is not independently verified. All four
+records pass declared-end, map-hash, target, resource identity and exact archive
+output-hash association checks. Their scalar values are all zero. The next
+unsupported record is `TShadowDepthPSPixelShadowDepth_PerspectiveCorrectfalse`
+at offset 2336; 10056 resource bytes remain uninterpreted. Neither asset has
+been attached to the runtime using this decode; mesh shader-map construction
+also remains necessary.
 
 `extraction.json` records selected exact archive entries. `wrappers.json` verifies the complete D3D wrapper framing, resource-table bindings, DXBC extent and optional-data extent. The assembly files are vkd3d 2.0's direct DXBC disassembly; no engine shader compiler or cook was invoked.
 
