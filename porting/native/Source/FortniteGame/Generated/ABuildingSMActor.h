@@ -768,6 +768,9 @@ protected:
 	void TransferFromDuplicationData(FBuildingDuplicationData SourceData);
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool WillRegisterWithStructuralGrid() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

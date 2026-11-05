@@ -333,6 +333,14 @@ void ABuildingSMActor::TransferFromDuplicationData(FBuildingDuplicationData Sour
 	}
 }
 
+bool ABuildingSMActor::WillRegisterWithStructuralGrid() const
+{
+	// CONFIDENCE: high; complete native wrapper behavior.
+	{
+		return bRegisterWithStructuralGrid && !bIsForPreviewing;
+	}
+}
+
 void ABuildingSMActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

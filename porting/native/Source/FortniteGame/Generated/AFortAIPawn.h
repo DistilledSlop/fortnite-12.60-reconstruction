@@ -59,6 +59,7 @@ class UFortAbilitySystemComponent;
 class UFortAccountItem;
 class UFortCharacterAttrSet;
 class UFortGameplayModifierItemDefinition;
+class UFortItem;
 class UFortNavObstacleComponent;
 class UFortSimpleMiniMapIndicator;
 class UFortWeaponAttrSet;
@@ -821,6 +822,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void GiveAmmo(int32 AmmoQuantity);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* K2_GetDefenderItem() const;
 
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_BatchedDamageCues(const FFortAIBatchedDamageCues& Data);

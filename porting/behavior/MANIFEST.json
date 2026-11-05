@@ -59824,5 +59824,37 @@
     "reflection_flags": "0x54020401",
     "confidence": "high",
     "status": "ported"
+  },
+  {
+    "function": "WillRegisterWithStructuralGrid",
+    "kind": "exec",
+    "signature": "bool WillRegisterWithStructuralGrid() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/body_hunt_new/ABuildingSMActor_WillRegisterWithStructuralGrid.inc",
+    "address": "0x1427586d0",
+    "reflection_flags": "0x54020405",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "The complete wrapper reads byte 0x6ac mask 0x10 and byte 0x6a9 mask 0x04; bool_bits.json maps these to bRegisterWithStructuralGrid and bIsForPreviewing respectively.",
+    "class": "ABuildingSMActor"
+  },
+  {
+    "function": "K2_GetDefenderItem",
+    "kind": "exec",
+    "signature": "UFortItem* K2_GetDefenderItem() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/body_hunt_new/AFortAIPawn_K2_GetDefenderItem.inc",
+    "address": "0x1427a50e0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "The complete wrapper returns the pointer at 0x1fc0. Reflection maps DefenderItem to offset 8128 (0x1fc0); generated field is UFortAccountItem*, and the reflected return class is UFortItem.",
+    "class": "AFortAIPawn"
   }
 ]

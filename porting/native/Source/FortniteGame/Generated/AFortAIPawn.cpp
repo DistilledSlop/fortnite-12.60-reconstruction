@@ -3,6 +3,7 @@
 #include "EFortMovementUrgency.h"
 #include "EScoreDistributionType.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "UFortAccountItem.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortAIPawn::FastSharedReplication_Implementation(const FFortAISharedRepMovement& SharedRepMovement)
@@ -80,6 +81,14 @@ void AFortAIPawn::GiveAmmo(int32 AmmoQuantity)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+UFortItem* AFortAIPawn::K2_GetDefenderItem() const
+{
+	// CONFIDENCE: high; complete native wrapper behavior.
+	{
+		return static_cast<UFortAccountItem*>(DefenderItem);
+	}
 }
 
 void AFortAIPawn::NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data)
