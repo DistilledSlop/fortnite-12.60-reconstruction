@@ -2,6 +2,8 @@
 
 #if PLATFORM_LINUX && !UE_SERVER
 #include "LegacyMaterialManifestSHA256.h"
+#include "LegacyOriginalUniformContracts.h"
+#include "LegacyOriginalUniformLayout.h"
 #include "Dom/JsonObject.h"
 #include "Misc/FileHelper.h"
 #include "Serialization/JsonReader.h"
@@ -90,6 +92,69 @@ bool BuildLegacyPaper2DLooseContracts(const FLegacyOriginalRecord& Record,
         }
     }
     Out = MoveTemp(Result); Error.Reset(); return true;
+}
+
+bool PrepareLegacyPaper2DOutputBatch(const FLegacyOriginalMaterial& Material,
+    const FString& ManifestPath, const FString& ExpectedManifestSHA256, const FString& OwnerPath,
+    const FString& ContractPath, const FString& ExpectedContractSHA256,
+    const FShaderParametersMetadata& Metadata, TArray<FLegacyLocalVFRecordContracts>& RecordContracts,
+    TArray<FLegacyMaterialShaderInput>& Outputs, TArray<FLegacyMaterialPipelineInput>& Pipelines, FString& Error)
+{
+    auto Fail = [&Error](const TCHAR* Message) { Error = Message; return false; };
+    TArray<FLegacyOriginalUniformContractBinding> Bindings;
+    if (!LoadLegacyOriginalUniformBindings(ContractPath, ExpectedContractSHA256, Bindings, Error)) return false;
+    TArray<uint8> Bytes;
+    if (ManifestPath.IsEmpty() || OwnerPath.IsEmpty() || !FFileHelper::LoadFileToArray(Bytes, *ManifestPath) ||
+        !Bytes.Num() || !DigestMatches(Bytes, ExpectedManifestSHA256)) return Fail(TEXT("manifest read or pinned SHA-256 mismatch"));
+    FString Json; FFileHelper::BufferToString(Json, Bytes.GetData(), Bytes.Num());
+    FObject Root; FString Schema;
+    const TArray<TSharedPtr<FJsonValue>>* Owners = nullptr;
+    if (!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Json), Root) ||
+        !String(Root, TEXT("schema"), Schema) || Schema != TEXT("paper2d-original-shader-manifest-v1") ||
+        !ArrayField(Root, TEXT("owners"), Owners)) return Fail(TEXT("invalid shader manifest"));
+    FObject Owner;
+    for (const auto& Value : *Owners)
+    {
+        FObject Candidate = Value.IsValid() ? Value->AsObject() : nullptr; FString Path;
+        if (!String(Candidate, TEXT("owner_path"), Path)) return Fail(TEXT("invalid manifest owner"));
+        if (Path == OwnerPath) { if (Owner.IsValid()) return Fail(TEXT("duplicate manifest owner")); Owner = Candidate; }
+    }
+    const TArray<TSharedPtr<FJsonValue>>* Records = nullptr;
+    if (!ArrayField(Owner, TEXT("shader_records"), Records) || Records->Num() != Material.Records.Num() || !Records->Num())
+        return Fail(TEXT("owner record inventory mismatch"));
+    TArray<FLegacyLocalVFRecordContracts> NewContracts;
+    NewContracts.Reserve(Records->Num());
+    for (int32 I = 0; I < Records->Num(); ++I)
+    {
+        FObject Occurrence = (*Records)[I].IsValid() ? (*Records)[I]->AsObject() : nullptr; int32 Index;
+        if (!Integer(Occurrence, TEXT("archive_index"), Index)) return Fail(TEXT("invalid occurrence archive index"));
+        auto& Record = NewContracts.AddDefaulted_GetRef();
+        if (!BuildLegacyPaper2DLooseContracts(Material.Records[I], Record.Loose, Error)) return false;
+        for (const auto& Binding : Bindings) if (Binding.ShaderIndex == uint32(Index))
+        {
+            FLegacyLocalUniformContract Contract;
+            if (Binding.ParameterName == TEXT("Material"))
+            {
+                if (!BuildLegacyPaper2DMaterialUniformContract(Material, Binding.SourceRegister,
+                    Binding.SourceResourceLayoutHash, Metadata, Contract, Error)) return false;
+            }
+            else
+            {
+                Contract = Binding.Contract;
+                TSharedPtr<FLegacyOriginalUniformLayout> Layout;
+                if (!BuildLegacyOriginalUniformLayout(Contract, Layout, Error)) return false;
+                auto& Target = Record.OriginalTargets.AddDefaulted_GetRef();
+                Target.SourceRegister = Binding.SourceRegister; Target.Layout = MoveTemp(Layout);
+            }
+            Record.Uniforms.Add(MoveTemp(Contract));
+        }
+    }
+    TArray<FLegacyMaterialShaderInput> NewOutputs;
+    TArray<FLegacyMaterialPipelineInput> NewPipelines;
+    if (!BuildLegacyLocalVFOutputBatch(Material, ManifestPath, ExpectedManifestSHA256, OwnerPath,
+        Metadata, NewContracts, NewOutputs, NewPipelines, Error)) return false;
+    RecordContracts = MoveTemp(NewContracts); Outputs = MoveTemp(NewOutputs); Pipelines = MoveTemp(NewPipelines);
+    Error.Reset(); return true;
 }
 
 bool BuildLegacyLocalVFOutputBatch(const FLegacyOriginalMaterial& Material,

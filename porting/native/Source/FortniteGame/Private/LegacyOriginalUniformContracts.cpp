@@ -138,14 +138,13 @@ uint32 Hash(uint32 Size, const TArray<FResource>& R)
 }
 }
 
-bool LoadLegacyOriginalUniformContract(const FString& Path, const FString& ExpectedSHA256,
-    uint32 ShaderIndex, const FString& ParameterName, uint16 SourceRegister,
-    uint32 SourceResourceLayoutHash, FLegacyLocalUniformContract& Out, FString& Error)
+static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
+    bool bResolveAllMetadata, TArray<FLegacyOriginalUniformContractBinding>& Out, FString& Error)
 {
     static const TCHAR* Names[]={TEXT("View"),TEXT("LocalVF"),TEXT("TranslucentDepthPass"),TEXT("ShadowDepthPass"),TEXT("LightmapDensityPass"),TEXT("TranslucentBasePass")};
     static const TCHAR* Types[]={TEXT("FViewUniformShaderParameters"),TEXT("FLocalVertexFactoryUniformShaderParameters"),TEXT("FTranslucencyDepthPassUniformParameters"),TEXT("FShadowDepthPassUniformParameters"),TEXT("FLightmapDensityPassUniformParameters"),TEXT("FTranslucentBasePassUniformParameters")};
     static const uint32 ExpectedCounts[]={30,15,3,4,1,2};
-    if (ExpectedSHA256.Len()!=64 || SourceRegister>=32 || ParameterName==TEXT("Material")) return Fail(Error,TEXT("invalid pin, register, or unsupported Material contract"));
+    if (ExpectedSHA256.Len()!=64) return Fail(Error,TEXT("invalid pin"));
     TArray<uint8> Bytes;
     if (!FFileHelper::LoadFileToArray(Bytes,*Path) || !Bytes.Num() || Bytes.Num()>16*1024*1024) return Fail(Error,TEXT("contract file unavailable or too large"));
     uint8 Digest[32]; LegacyManifestSHA256(Bytes.GetData(),uint32(Bytes.Num()),Digest);
@@ -185,7 +184,8 @@ bool LoadLegacyOriginalUniformContract(const FString& Path, const FString& Expec
             FLegacyMaterialResource Rsrc; Rsrc.Offset=uint16(Offset); Rsrc.BaseType=Mapped; Result.OriginalResources.Add(Rsrc);
         }
     }
-    uint32 Counts[6]={}, Materials=0; bool Found=false; TSet<FString> Uses, Slots;
+    uint32 Counts[6]={}, Materials=0; TSet<FString> Uses, Slots;
+    TArray<FLegacyOriginalUniformContractBinding> Result;
     for (const auto& V:*Bindings) {
         if (!V.IsValid() || V->Type!=EJson::Object) return Fail(Error,TEXT("invalid binding")); FObj B=V->AsObject();
         FString Name,Status; uint32 Shader,Register,Recorded; bool Active;
@@ -195,14 +195,41 @@ bool LoadLegacyOriginalUniformContract(const FString& Path, const FString& Expec
         int32 I=0; while (I<6 && Name!=Names[I]) ++I;
         if (I==6) { if (Name!=TEXT("Material") || Status!=TEXT("requires_original_material_expression_contract")) return Fail(Error,TEXT("unknown binding")); ++Materials; }
         else { if (Status!=TEXT("original_fixed_layout_decoded") || Recorded!=(Active ? Hashes[I] : 0)) return Fail(Error,TEXT("binding resource hash inconsistent")); ++Counts[I];
-            if (Shader==ShaderIndex && Name==ParameterName) { if (Register!=SourceRegister || Recorded!=SourceResourceLayoutHash) return Fail(Error,TEXT("selected binding does not match source")); Found=true; All[I].SourceRegister=SourceRegister; All[I].OriginalResourceLayoutHash=Recorded; }
         }
+        auto& Binding=Result.AddDefaulted_GetRef();
+        Binding.ShaderIndex=Shader; Binding.ParameterName=Name; Binding.SourceRegister=uint16(Register); Binding.SourceResourceLayoutHash=Recorded;
+        if (I<6) { Binding.Contract=All[I]; Binding.Contract.SourceRegister=uint16(Register); Binding.Contract.OriginalResourceLayoutHash=Recorded; }
     }
-    int32 Selected=0; while (Selected<6 && ParameterName!=Names[Selected]) ++Selected;
     for (int32 I=0; I<6; ++I) if (!Seen[I] || Counts[I]!=ExpectedCounts[I]) return Fail(Error,TEXT("incomplete binding inventory"));
-    if (Materials!=14 || Selected==6 || !Found) return Fail(Error,TEXT("selected binding unavailable"));
-    auto* Metadata=FShaderParametersMetadata::GetNameStructMap().FindRef(FHashedName(*ParameterName));
-    if (!Metadata || Metadata->GetUseCase()!=FShaderParametersMetadata::EUseCase::UniformBuffer || !Metadata->GetShaderVariableName() || ParameterName!=Metadata->GetShaderVariableName()) return Fail(Error,TEXT("current named uniform is not registered"));
-    All[Selected].CurrentMetadata=Metadata; Out=MoveTemp(All[Selected]); Error.Reset(); return true;
+    if (Materials!=14) return Fail(Error,TEXT("incomplete Material binding inventory"));
+    for (auto& Binding : Result) if (bResolveAllMetadata && Binding.ParameterName!=TEXT("Material")) {
+        auto* Metadata=FShaderParametersMetadata::GetNameStructMap().FindRef(FHashedName(*Binding.ParameterName));
+        if (!Metadata || Metadata->GetUseCase()!=FShaderParametersMetadata::EUseCase::UniformBuffer || !Metadata->GetShaderVariableName() || Binding.ParameterName!=Metadata->GetShaderVariableName()) return Fail(Error,TEXT("current named uniform is not registered"));
+        Binding.Contract.CurrentMetadata=Metadata;
+    }
+    Out=MoveTemp(Result); Error.Reset(); return true;
+}
+
+bool LoadLegacyOriginalUniformBindings(const FString& Path, const FString& ExpectedSHA256,
+    TArray<FLegacyOriginalUniformContractBinding>& Out, FString& Error)
+{
+    return LoadBindings(Path, ExpectedSHA256, true, Out, Error);
+}
+
+bool LoadLegacyOriginalUniformContract(const FString& Path, const FString& ExpectedSHA256,
+    uint32 ShaderIndex, const FString& ParameterName, uint16 SourceRegister,
+    uint32 SourceResourceLayoutHash, FLegacyLocalUniformContract& Out, FString& Error)
+{
+    if (SourceRegister>=32 || ParameterName==TEXT("Material")) return Fail(Error,TEXT("invalid register or unsupported Material contract"));
+    TArray<FLegacyOriginalUniformContractBinding> Bindings;
+    if (!LoadBindings(Path,ExpectedSHA256,false,Bindings,Error)) return false;
+    for (auto& Binding : Bindings) if (Binding.ShaderIndex==ShaderIndex && Binding.ParameterName==ParameterName) {
+        if (Binding.SourceRegister!=SourceRegister || Binding.SourceResourceLayoutHash!=SourceResourceLayoutHash) return Fail(Error,TEXT("selected binding does not match source"));
+        auto* Metadata=FShaderParametersMetadata::GetNameStructMap().FindRef(FHashedName(*ParameterName));
+        if (!Metadata || Metadata->GetUseCase()!=FShaderParametersMetadata::EUseCase::UniformBuffer || !Metadata->GetShaderVariableName() || ParameterName!=Metadata->GetShaderVariableName()) return Fail(Error,TEXT("current named uniform is not registered"));
+        Binding.Contract.CurrentMetadata=Metadata;
+        Out=MoveTemp(Binding.Contract); Error.Reset(); return true;
+    }
+    return Fail(Error,TEXT("selected binding unavailable"));
 }
 #endif

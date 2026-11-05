@@ -4,6 +4,9 @@
   "sources": [
     "porting/native/Source/FortniteGame/Private/LegacyLocalVFOutputBatch.h",
     "porting/native/Source/FortniteGame/Private/LegacyLocalVFOutputBatch.cpp",
+    "porting/native/Source/FortniteGame/Private/LegacyOriginalUniformContracts.h",
+    "porting/native/Source/FortniteGame/Private/LegacyOriginalUniformContracts.cpp",
+    "porting/native/Source/FortniteGame/Private/LegacyOriginalUniformLayout.h",
     "porting/behavior/paper2d_loose_contracts_runtime/evidence.json"
   ],
   "inventory": {
@@ -19,11 +22,15 @@
   "source_review": [
     "Batch constructs per-record outputs and preserves repeated occurrences and ordered pipeline stages.",
     "Caller-pinned manifest SHA-256, owner/resource identity and record, shader and pipeline identities are checked before publication; output arrays remain unchanged on failure.",
-    "Native loose-contract producer uses independently recovered original constructor/serializer names and rejects unsupported nonempty allocation shapes."
+    "Native loose-contract producer uses independently recovered original constructor/serializer names and rejects unsupported nonempty allocation shapes.",
+    "Bulk contract loader validates the full caller-pinned inventory once and returns fixed contracts and Material binding receipts by archive shader index, retaining the existing single-selection API.",
+    "PrepareLegacyPaper2DOutputBatch combines the pinned manifest and contract bundle with decoded occurrences, recovered loose contracts and actual factory Material metadata; each fixed contract gets an independently constructed original target, while Material has no original target.",
+    "Returned record contracts retain original fixed contracts and layout owners for subsequent buffer construction; all output arrays remain unchanged on failure."
   ],
   "limitations": [
     "The three observed pipelines use unique stages on Vulkan SM5; shared-stage pipeline linking is explicitly rejected until reconstructed.",
     "Source review does not establish a successful build, runtime execution, shader binding or rendering.",
-    "Provider attachment, binding and value producers remain unfinished."
+    "Provider attachment, binding and value producers remain unfinished.",
+    "Callers must retain original layout owners while their layouts are in use; missing producer values require explicit repacker inputs."
   ]
 }
