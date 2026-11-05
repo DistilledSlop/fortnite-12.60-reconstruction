@@ -8,6 +8,7 @@
 
 #include "EFortCrucibleControlType.h"
 #include "EFortCrucibleStatId.h"
+#include "EFortCrucibleStatType.h"
 #include "FCrucibleCourseData.h"
 #include "FCrucibleCourseResults.h"
 #include "FCrucibleLatestCourseResultsUpdated.h"
@@ -49,6 +50,11 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentControlType)
 	EFortCrucibleControlType CurrentControlType;
 
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x4f1): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x4f1;
+public:
+
 	// table index 1, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_LatestCourseResults)
 	FCrucibleCourseResults LatestCourseResults;
@@ -67,6 +73,9 @@ public:
 	bool GetCourseSegmentData(int32 SegmentId, FCrucibleSegmentData& OutSegmentData) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortCrucibleControlType GetCurrentControlState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FCrucibleCourseResults GetLatestCourseResults(bool& OutIsInProgress, bool& OutHasBeenCanceled) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -82,6 +91,9 @@ public:
 	bool GetParticipantBestTime(EFortCrucibleStatId StatId, FCrucibleStatValue& OutStatValue) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetParticipantBestTimeCurrentControlState(EFortCrucibleStatType StatType, FCrucibleStatValue& OutStatValue) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetServerTimeContinuous() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -90,8 +102,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLeaderboardSwitchingDisabled() const;
 
+protected:
 	UFUNCTION()
 	void OnRep_CurrentControlType();
+public:
 
 	UFUNCTION()
 	void OnRep_LatestCourseResults();
@@ -99,8 +113,10 @@ public:
 	UFUNCTION()
 	void OnRep_LatestServerTime();
 
+protected:
 	UFUNCTION()
 	void OnRep_ParticipantBestTimes();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
