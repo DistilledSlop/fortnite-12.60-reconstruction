@@ -7,6 +7,7 @@
 #include "Engine/DataAsset.h"
 
 #include "EFortMissionType.h"
+#include "Engine/DataTable.h"
 #include "FFortEncounterProfile.h"
 #include "FFortEncounterSequenceSettings.h"
 #include "FFortMissionConfigDataParams.h"
@@ -15,6 +16,7 @@
 #include "FFortMissionTaggedRewards.h"
 #include "FFortMultiSizeBrush.h"
 #include "FFortObjectiveBlock.h"
+#include "FFortWindIntensityAndDirection.h"
 #include "FMissionPerDifficultyProperties.h"
 #include "GameplayTagContainer.h"
 
@@ -212,5 +214,10 @@ public:
 	UPROPERTY()
 	FFortMissionConfigDataParams ConfigParams;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	int32 NativeFindWindDifficultyIndex(const FDataTableRowHandle& Difficulty) const;
+	bool NativeFindGlobalWindForDifficulty(const FDataTableRowHandle& Difficulty, FFortWindIntensityAndDirection& OutWind);
 };
 

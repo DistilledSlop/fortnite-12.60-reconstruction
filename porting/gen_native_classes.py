@@ -1333,6 +1333,21 @@ def static_reflected_self_test(check):
     res = attach_snippets("ASelfTest", [dict(fn2, body=None)], [dict(entry, includes=["Missing.h"])], support_ctx,
                          "/Script/FortniteGame")
     check("support authorization does not allow other headers", bool(res["rejected"]))
+    manual_header = '#include "Engine/StaticMeshActor.h"\nUCLASS()\nclass FORTNITEGAME_API AFortStaticMeshActor : public AStaticMeshActor { GENERATED_BODY() };'
+    manual = validate_manual_map_support(manual_header, set(), {"AFortStaticMeshActor": "manual"}, "/Script/FortniteGame")
+    manual_ctx = dict(ctx, manual_support_classes=manual, other_promoted={"AFortStaticMeshActor"})
+    incs, problems = body_refs("AFortStaticMeshActor* Actor;", "ASelfTest", "/Script/FortniteGame", manual_ctx)
+    check("handwritten map class resolves its actual header", incs == {"FortniteMapClasses.h"} and not problems)
+    check("handwritten map header restricted to owner", not usable_include("FortniteMapClasses.h", manual_ctx, "/Script/CommonUI"))
+    _, problems = body_refs("AFortStaticMeshActor* Actor;", "ASelfTest", "/Script/CommonUI", manual_ctx)
+    check("handwritten map class restricted to owner", bool(problems))
+    try:
+        validate_manual_map_support(manual_header.replace("AStaticMeshActor", "AActor"), set(),
+                                    {"AFortStaticMeshActor": "manual"}, "/Script/FortniteGame")
+        stale_rejected = False
+    except ValueError:
+        stale_rejected = True
+    check("stale handwritten map declaration rejected", stale_rejected)
     res = attach_snippets("ASelfTest", [dict(fn2, body=None)],
                           [dict(entry, reflection_flags="0x14022401")], ctx, "/Script/FortniteGame")
     check("original reflection flags accepted", not res["rejected"])
@@ -2789,7 +2804,13 @@ def body_refs(body, name, package, ctx):
         # Native IInterface bodies need the emitted UINTERFACE header as well.
         if tok in ctx.get("interface_packages", {}):
             tok = "U" + tok[1:]
-        if tok in ctx["class_pkg"]:
+        if tok in ctx.get("manual_support_classes", {}):
+            owner, header = ctx["manual_support_classes"][tok]
+            if package != owner:
+                problems.append("body uses %s, a handwritten class of another module" % tok)
+            else:
+                includes.add(header)
+        elif tok in ctx["class_pkg"]:
             # These recovered dependency edges are present in module rules.
             allowed_edges = {('/Script/FortniteUI', '/Script/FortniteGame'),
                              ('/Script/FortniteUI', '/Script/CommonInput'),
@@ -2893,11 +2914,23 @@ def helper_type_names(ret, params):
     return names, texts
 
 
-def usable_include(inc, ctx):
-    """Accept indexed engine headers or support headers emitted by a validated policy."""
+def validate_manual_map_support(header, listed, blocklist, package):
+    """Authorize the existing FortniteGame stand-in only while its ownership is intact."""
+    name = "AFortStaticMeshActor"
+    declaration = r"\bUCLASS\s*\(\s*\)\s*class\s+FORTNITEGAME_API\s+AFortStaticMeshActor\s*:\s*public\s+AStaticMeshActor\s*\{\s*GENERATED_BODY\s*\(\s*\)"
+    if (package != "/Script/FortniteGame" or name in listed or name not in blocklist or
+            len(re.findall(declaration, strip_comments(header))) != 1 or
+            '#include "Engine/StaticMeshActor.h"' not in header):
+        raise ValueError("handwritten AFortStaticMeshActor support declaration or ownership changed")
+    return {name: (package, "FortniteMapClasses.h")}
+
+
+def usable_include(inc, ctx, package):
+    """Accept indexed engine headers and validated support headers for their owning module."""
+    manual_headers = {header for owner, header in ctx.get("manual_support_classes", {}).values() if owner == package}
     return (isinstance(inc, str) and inc.endswith(".h") and
             (inc in ctx["gate"].engine.module_of_inc or
-             inc in ctx.get("generated_support_headers", set())))
+             inc in ctx.get("generated_support_headers", set()) or inc in manual_headers))
 
 
 def type_include(tok, package, ctx):
@@ -2997,7 +3030,7 @@ def check_helper_entry(e, name, package, ctx, by_name, all_names, taken):
     if kind == "static_helper" and access is not None:
         return None, "a static helper is not a member and takes no access"
     explicit = list(e.get("includes") or [])
-    bad = [inc for inc in explicit if not usable_include(inc, ctx)]
+    bad = [inc for inc in explicit if not usable_include(inc, ctx, package)]
     if bad:
         return None, "includes not in the engine header index: %s" % ", ".join(str(b) for b in bad)
     names, texts = helper_type_names(ret, params)
@@ -3131,7 +3164,7 @@ def check_field_entry(e, name, package, ctx, taken_names):
     if default == "":
         default = None
     explicit = list(e.get("includes") or [])
-    bad = [inc for inc in explicit if not usable_include(inc, ctx)]
+    bad = [inc for inc in explicit if not usable_include(inc, ctx, package)]
     if bad:
         return None, "includes not in the engine header index: %s" % ", ".join(str(b) for b in bad)
     inc_sig, fwd, problems = helper_type_refs(set(TYPE_NAME_RE.findall(typ)), [typ], package, ctx, bool(explicit))
@@ -3303,7 +3336,7 @@ def attach_snippets(name, functions, entries, ctx, package, skipped=(), member_n
             reject("; ".join(problems))
             continue
         explicit_includes = e.get("includes") or []
-        if not isinstance(explicit_includes, list) or any(not usable_include(inc, ctx) for inc in explicit_includes):
+        if not isinstance(explicit_includes, list) or any(not usable_include(inc, ctx, package) for inc in explicit_includes):
             reject("snippet includes not in the engine header index")
             continue
         includes.update(explicit_includes)
@@ -4171,7 +4204,13 @@ def promote(args):
     struct_index = {}
     for info in tables.by_fn.values():
         struct_index.setdefault(info.cpp_name.split("::")[0], info)
+    manual_support_classes = {}
+    if splice_on and 'AFortWindManager' in listed:
+        manual_support_classes = validate_manual_map_support(
+            Path(os.path.join(PROJECT_NATIVE_DIR, 'Source/FortniteGame/Public/FortniteMapClasses.h')).read_text(),
+            listed, blocklist, package_of.get('AFortWindManager'))
     splice_ctx = {
+        "manual_support_classes": manual_support_classes,
         "class_pkg": package_of, "struct_index": struct_index, "gate": gate,
         "interface_packages": iface_packages,
         # Only headers actually scheduled for emission qualify; arbitrary source-tree

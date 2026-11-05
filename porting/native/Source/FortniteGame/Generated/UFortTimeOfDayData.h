@@ -7,7 +7,9 @@
 #include "Engine/DataAsset.h"
 
 #include "FFortTimeOfDayTheme.h"
+#include "FFortWindIntensityAndDirection.h"
 #include "FWorldAmbientPropertiesMatchingGameContext.h"
+#include "GameplayTagContainer.h"
 
 class AFortTimeOfDayManager;
 
@@ -29,5 +31,7 @@ public:
 	static void NativeAppendTimeOfDayClasses(TArray<TSoftClassPtr<AFortTimeOfDayManager>>& Destination, const TArray<TSoftClassPtr<AFortTimeOfDayManager>>& Source);
 	static void NativeRebuildValidTimeOfDayManagers(FFortTimeOfDayTheme& Theme);
 	static TSoftClassPtr<AFortTimeOfDayManager> NativeSelectTimeOfDayManager(FFortTimeOfDayTheme& Theme);
+	bool NativeFindGlobalWindForContext(const FGameplayTagContainer& ContextTags, FFortWindIntensityAndDirection& OutWind);
+	static UFortTimeOfDayData* NativeGetGlobalWindData();
 };
 

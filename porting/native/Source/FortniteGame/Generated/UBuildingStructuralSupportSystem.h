@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "Math/Box.h"
+
 class ABuildingLayoutRequirement;
 class AController;
 class AFortNavigationGraph;
@@ -25,6 +27,9 @@ public:
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<ABuildingLayoutRequirement*> LayoutRequirementActorsToRegister;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x384): not a UPROPERTY, not replicated.
+	FBox NativeWorldBounds_0x384 = FBox(ForceInit);
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)

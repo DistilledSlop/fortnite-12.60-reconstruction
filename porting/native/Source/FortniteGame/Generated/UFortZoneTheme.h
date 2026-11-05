@@ -7,7 +7,9 @@
 #include "Engine/DataAsset.h"
 
 #include "EFortZoneType.h"
+#include "Engine/DataTable.h"
 #include "FDeployableBaseSupportSettings.h"
+#include "FFortWindIntensityAndDirection.h"
 #include "FZoneThemeDifficultyProperties.h"
 #include "GameplayTagContainer.h"
 
@@ -145,5 +147,10 @@ public:
 	UPROPERTY()
 	TArray<FZoneThemeDifficultyProperties> DifficultyProperties;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	int32 NativeFindWindDifficultyIndex(const FDataTableRowHandle& Difficulty) const;
+	bool NativeFindGlobalWindForDifficulty(const FDataTableRowHandle& Difficulty, FFortWindIntensityAndDirection& OutWind);
 };
 

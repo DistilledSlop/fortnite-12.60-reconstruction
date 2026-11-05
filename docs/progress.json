@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "e06ead9deee6bf6c940f9da8f2f3bc18a2b72d4f",
- "subject": "Bridge recovered landscape proxies into host asset streaming",
- "date": "2026-11-05T14:42:42-05:00",
+ "head": "5d17686d87b7bb6bcd9683724bf9c87021831b70",
+ "subject": "Publish fresh reconstruction UI and Apollo terrain screenshots",
+ "date": "2026-11-05T15:00:45-05:00",
  "overall_pct": 29.12,
  "measured_pct": 28.251,
  "objective_pct": 28.25,

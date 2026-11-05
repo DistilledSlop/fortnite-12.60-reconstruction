@@ -1,0 +1,48 @@
+{
+  "implemented": {
+    "0x141fc1750": "UFortTimeOfDayData::NativeFindGlobalWindForContext",
+    "0x141fc0b70": "UFortTimeOfDayData::NativeGetGlobalWindData",
+    "0x1420b7ef0": "UFortMissionInfo::NativeFindWindDifficultyIndex",
+    "0x1420bc010": "UFortMissionInfo::NativeFindGlobalWindForDifficulty",
+    "0x1425f34d0": "UFortZoneTheme::NativeFindWindDifficultyIndex",
+    "0x1425f3c40": "UFortZoneTheme::NativeFindGlobalWindForDifficulty"
+  },
+  "capture_directory": "porting/generated/maps-world-wind-discovery-callees/_adhoc",
+  "validation": "Six asset-side helpers integrated into global manifest and generated Native source; generator accepted4007 entries with zero rejects. This source is after screenshot build6d0f22d8; build/runtime verification pending. Complete world fallback and wrapper remain unimplemented pending ownership proof.",
+  "remaining": {
+    "0x141f87000": {
+      "status": "unimplemented; full fallback required",
+      "contracts": [
+        "WorldManager+0x6c0/+0x6c8 source is an unreflected array-shaped collection; first element+0x18 is FFortZoneInstanceDetails. Need writer/constructor proof of concrete collection type and member ownership. CurrentWorldRecord+0x120 is ZoneInstanceInfo. Cannot remove this branch or replace it with a fabricated empty value.",
+        "0x141f88c60 validates typed FGameDifficultyInfo rows through0x141e88ca0 ->0x1416b7770. Capture0x1416b7770 to prove row struct check and native warning semantics before substituting GetRow<FGameDifficultyInfo>."
+      ]
+    },
+    "0x141f87230": {
+      "status": "unimplemented; requires complete fallback",
+      "semantics": "Ordered negative InitialGlobalWind intensity triggers fallback; NaN bypasses fallback. Success returns fallback values. Failure logs and then overwrites output from InitialGlobalWind and returns ordered intensity>=0. Initial local0.1/45 is overwritten by fallback packed sentinel0x42340000b8d1b717, not a0.1 default."
+    }
+  },
+  "mandatory_next_captures": [],
+  "known_mappings": {
+    "0x142927a60": "AFortGameStateZone",
+    "0x1428ea8f0": "AFortGameMode; existing native323-callees capture",
+    "0x142eeab70": "UObject; existing native108-impl capture",
+    "0x1446939f0": "WorldType byte+0x11a==3 (PIE)",
+    "0x1424e4940": "UGameDataSTW::ResolveTimeOfDayDataNative already integrated",
+    "0x141ed8de0": "UFortGameInstance::NativeIsGameMode141ed8de0 already integrated",
+    "game_mode_vtable_0x980": "AFortGameMode::GetGameContextTagsNative already integrated",
+    "game_state_0xb68": "AFortGameStateZone.ZoneDifficultyInfoRow",
+    "0x143e933d0": "FGameplayTagQuery::Matches wrapper; native307-callees capture and timeofday_spawn_selection usage"
+  },
+  "recursive_capture_directory": "porting/generated/maps-world-wind-discovery-recursive/_adhoc",
+  "resolved_contracts": {
+    "0x1420b7ef0/0x1425f34d0": "First difficulty entry with empty ValidDifficulties or first exact table/full FName equal candidate; equality0x14418a050 captured quest-objective-helper-probe.",
+    "0x141f3b020": "FFortZoneInstanceInfo valid iff ZoneThemeClass path is nonempty AND (WorldId length>=1 OR TheaterId length>=1); original FString stored count includes terminator.",
+    "0x141f7dbe0": "Default FFortZoneInstanceDetails: empty strings/soft pointers/reward containers; TileIndex=-1.",
+    "0x141f123d0/0x141f125e0": "Resolve cached typed subclass; otherwise delayed-load raw UClass; TrackAsset typed subclass or null even for empty path; return raw UClass wrapper. Outer checks subclass then CDO. Zone outer rereads soft-pointer Get rather than relying only on wrapper.",
+    "0x1417528b0": "PrimaryMissionInfo: empty path returns without tracking; resolve Get then delayed load on missing/wrong type; track typed object or null after nonempty attempt.",
+    "0x141df61e0/0x141de9e00": "Existing shared FFortAssets::Get().TrackAsset provides concrete singleton retention.",
+    "0x141f87000_stack": "Raw assembly in /tmp/wind-discovery-raw.bin confirms two distinct handles: initialized empty local at RSP20, GS.ZoneDifficultyInfoRow copy at RSP30. GS handle is only checked for null; PIE fills RSP20. Both mission141f8717d and zone141f871f5 pass RSP20. Do not copy GS handle into selection input.",
+    "class_factories": "1429e1d40 FortMissionGenerator;142b5d7d0 FortZoneTheme;1429e53e0 FortMissionInfo."
+  }
+}

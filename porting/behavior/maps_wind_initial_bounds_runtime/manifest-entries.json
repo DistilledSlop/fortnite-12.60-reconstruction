@@ -1,0 +1,35 @@
+[
+  {
+    "class": "AFortWindManager",
+    "kind": "helper",
+    "function": "NativeGetInitialWindBounds",
+    "signature": "FBox NativeGetInitialWindBounds()",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141dc7100",
+    "inc_path": "porting/behavior/maps_wind_initial_bounds_runtime/AFortWindManager_NativeGetInitialWindBounds.inc",
+    "includes": [
+      "EngineUtils.h",
+      "Engine/Level.h",
+      "FortniteMapClasses.h"
+    ],
+    "notes": "Collects active static mesh actor bounds, filters level settings and paths, and clips against structural support world bounds using NativeClipWindImpulseBounds. Caller integration and build/runtime verification remain pending."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "kind": "member_field",
+    "function": "NativeWorldBounds_0x384",
+    "signature": "FBox NativeWorldBounds_0x384",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x384",
+    "inc_path": null,
+    "confidence": "high",
+    "status": "ported",
+    "address": null,
+    "default": "FBox(ForceInit)",
+    "notes": "Native constructor 0x141c5a700 zeros +0x384, +0x390..+0x39b; UObject zero allocation supplies remaining coordinates and validity byte. Original offset identifies the field, not host ABI. Setter lifecycle remains unresolved."
+  }
+]

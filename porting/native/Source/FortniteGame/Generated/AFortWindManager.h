@@ -13,6 +13,7 @@
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Curves/CurveLinearColor.h"
+#include "Engine/Level.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "FFortWindImpulseCylinder.h"
@@ -22,6 +23,7 @@
 #include "FFortWindResponder.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
+#include "FortniteMapClasses.h"
 #include "GenericQuadTree.h"
 #include "HAL/IConsoleManager.h"
 #include "Kismet/KismetMaterialLibrary.h"
@@ -250,5 +252,6 @@ public:
 	void NativeStartQueuedWindDelta();
 	void NativeUpdateWindAudio(float DeltaSeconds);
 	void NativeSampleWind(float DeltaSeconds);
+	FBox NativeGetInitialWindBounds();
 };
 
