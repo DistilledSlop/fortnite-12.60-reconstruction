@@ -63666,5 +63666,22 @@
     "address": "0x1425f3c40",
     "inc_path": "porting/behavior/maps_world_wind_discovery_runtime/UFortZoneTheme_NativeFindGlobalWindForDifficulty.inc",
     "notes": "Cached random choice in the first matching difficulty entry. Empty mission list preserves output; empty zone list writes0/45. UE FMath::RandHelper adapts Win32 rand scaling."
+  },
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeGetDifficultyRowForPIE",
+    "kind": "helper",
+    "signature": "bool NativeGetDifficultyRowForPIE(FDataTableRowHandle& OutDifficulty)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f88c60",
+    "inc_path": "porting/behavior/maps_world_wind_discovery_runtime/AFortWorldManager_NativeGetDifficultyRowForPIE.inc",
+    "includes": [
+      "Engine/DataTable.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Original override and global STW PIE row selection with typed FGameDifficultyInfo validation and original LogFortGameDifficulty log messages. Build pending."
   }
 ]

@@ -22,6 +22,7 @@
 #include "FWorldTileSubArray.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
+#include "SharedFortGameLog.h"
 
 class ABuildingFoundation;
 class UFortUserCloudHelperComponent;
@@ -247,5 +248,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static AFortWorldManager* NativeResolveWorldManager(const UObject* WorldContextObject);
+	bool NativeGetDifficultyRowForPIE(FDataTableRowHandle& OutDifficulty);
 };
 

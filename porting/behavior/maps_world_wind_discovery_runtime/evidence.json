@@ -5,20 +5,22 @@
     "0x1420b7ef0": "UFortMissionInfo::NativeFindWindDifficultyIndex",
     "0x1420bc010": "UFortMissionInfo::NativeFindGlobalWindForDifficulty",
     "0x1425f34d0": "UFortZoneTheme::NativeFindWindDifficultyIndex",
-    "0x1425f3c40": "UFortZoneTheme::NativeFindGlobalWindForDifficulty"
+    "0x1425f3c40": "UFortZoneTheme::NativeFindGlobalWindForDifficulty",
+    "0x141f88c60": "AFortWorldManager::NativeGetDifficultyRowForPIE"
   },
   "capture_directory": "porting/generated/maps-world-wind-discovery-callees/_adhoc",
-  "validation": "Six asset-side helpers integrated into global manifest and generated Native source; generator accepted4007 entries with zero rejects. This source is after screenshot build6d0f22d8; build/runtime verification pending. Complete world fallback and wrapper remain unimplemented pending ownership proof.",
+  "validation": "Seven asset/difficulty helpers integrated into the global manifest and generated Native source; generator accepts4008 entries with zero rejects. Initial wind bounds collection and its structural bounds field are also integrated. Source is after screenshot build6d0f22d8; build/runtime verification pending. Complete world fallback and wrapper remain unmanifested pending action-record type/lifecycle proof.",
   "remaining": {
     "0x141f87000": {
-      "status": "unimplemented; full fallback required",
+      "status": "Full source exists but intentionally unmanifested. World-record action support remains unimplemented; no ready native body claimed.",
       "contracts": [
-        "WorldManager+0x6c0/+0x6c8 source is an unreflected array-shaped collection; first element+0x18 is FFortZoneInstanceDetails. Need writer/constructor proof of concrete collection type and member ownership. CurrentWorldRecord+0x120 is ZoneInstanceInfo. Cannot remove this branch or replace it with a fabricated empty value.",
-        "0x141f88c60 validates typed FGameDifficultyInfo rows through0x141e88ca0 ->0x1416b7770. Capture0x1416b7770 to prove row struct check and native warning semantics before substituting GetRow<FGameDifficultyInfo>."
+        "Source requires native field NativeWorldRecordActions_0x6c0 with typed .ZoneInstanceInfo, preserving all action-owned state. See resolved_contracts.world_record_action_schema for proven fields and explicit remaining type/lifecycle gaps.",
+        "PIE row helper is source-complete and locally manifested as seventh entry; root owns category/native integration.",
+        "Do not manifest fallback or dependent wrapper before the complete typed action ownership contract is implemented."
       ]
     },
     "0x141f87230": {
-      "status": "unimplemented; requires complete fallback",
+      "status": "Full source exists but intentionally unmanifested; dependency on complete fallback remains.",
       "semantics": "Ordered negative InitialGlobalWind intensity triggers fallback; NaN bypasses fallback. Success returns fallback values. Failure logs and then overwrites output from InitialGlobalWind and returns ordered intensity>=0. Initial local0.1/45 is overwritten by fallback packed sentinel0x42340000b8d1b717, not a0.1 default."
     }
   },
@@ -43,6 +45,42 @@
     "0x1417528b0": "PrimaryMissionInfo: empty path returns without tracking; resolve Get then delayed load on missing/wrong type; track typed object or null after nonempty attempt.",
     "0x141df61e0/0x141de9e00": "Existing shared FFortAssets::Get().TrackAsset provides concrete singleton retention.",
     "0x141f87000_stack": "Raw assembly in /tmp/wind-discovery-raw.bin confirms two distinct handles: initialized empty local at RSP20, GS.ZoneDifficultyInfoRow copy at RSP30. GS handle is only checked for null; PIE fills RSP20. Both mission141f8717d and zone141f871f5 pass RSP20. Do not copy GS handle into selection input.",
-    "class_factories": "1429e1d40 FortMissionGenerator;142b5d7d0 FortZoneTheme;1429e53e0 FortMissionInfo."
+    "class_factories": "1429e1d40 FortMissionGenerator;142b5d7d0 FortZoneTheme;1429e53e0 FortMissionInfo.",
+    "0x1416b7770/0x1428ec720": "Typed UDataTable::FindRow<FGameDifficultyInfo>: checks nonnull RowStruct, struct inheritance, non-None name and map entry; logs standard table errors/warnings.1428ec720 explicitly constructs GameDifficultyInfo. FDataTableRowHandle::GetRow<FGameDifficultyInfo> preserves this contract.",
+    "world_record_action_ownership": "WorldManager constructor141f7c920 initializes native6c0 pointer and6c8/6cc counts.141f8e5b0 appends element stride0x1f8, grows via141f96d50, constructs via141f7d310. Constructor owns FFortZoneInstanceDetails at+18, copies source via140683960; array destructor141f7e890 destroys each element and details via141f7f050. Concrete remaining record payload types still under recovery; do not substitute a details-only array.",
+    "0x1402cf880": "Initializer explicitly names LogFortGameDifficulty for148134990, default Warning and compile-time All.",
+    "world_record_action_schema": {
+      "constructor": "0x141f7d310",
+      "array_append": "0x141f8e5b0",
+      "array_growth": "0x141f96d50",
+      "array_destructor": "0x141f7e890",
+      "original_stride": "0x1f8",
+      "fields": {
+        "0x0": "action byte; ctor parameter2",
+        "0x1": "previous state byte; ctor11",
+        "0x2": "current state byte; ctor0",
+        "0x8": "owned FString; ctor empty, dtor frees allocation",
+        "0x18": "owned FFortZoneInstanceDetails; ctor141f7dbe0 then copy140683960; dtor141f7f050",
+        "0x140": "owned FString; empty default",
+        "0x150": "32-bit ctor parameter4",
+        "0x158": "owned FString; empty default",
+        "0x168": "owned FString; empty default",
+        "0x178": "owned no-argument delegate (FSimpleDelegate semantics); dtor140692d60, caller93820 copies then executes without arguments",
+        "0x188": "double start-time state; zero default",
+        "0x190": "double creation-time QueryPerformanceCounter*seconds-per-cycle+16777216",
+        "0x198": "40-byte polymorphic shared-reference wrapper, vtable145a95888; likely FUniqueNetIdRepl but identity remains unproven",
+        "0x1c0": "owned TArray of56-byte entries; destructor141f7e7e0; starts with same40-byte wrapper, bool+28, weakUObject+2c",
+        "0x1d0": "owned trivially-destructed TArray; element type and stride UNKNOWN; array allocation freed directly by141f7e890",
+        "0x1e0": "owned TArray of40-byte polymorphic shared-reference wrappers; destructor1411aa280",
+        "0x1f0": "boolean state; written by93820",
+        "0x1f1": "boolean initialized true"
+      },
+      "unknowns": [
+        "Exact identity/shared-pointer mode for wrapper145a95888; no RTTI/type-name proof yet. Existing hidetoast evidence also marks FUniqueNetIdRepl association unverified.",
+        "Exact0x1d0 array element type/stride and any behavioral ownership effects.",
+        "Full typed56-byte1c0 entry semantics and complete action state/copy/move lifecycle."
+      ],
+      "integration_rule": "Do not replace the native action array with a details-only projection or opaque POD record; preserve typed ownership/destruction of every owned member."
+    }
   }
 }
