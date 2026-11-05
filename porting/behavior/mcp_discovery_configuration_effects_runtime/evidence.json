@@ -28,9 +28,10 @@
       "Collection searches existing records in order, compares Client then Key with ASCII-only case folding and NUL termination, and preserves the first match including its third field.",
       "On no match, appends all three fields and clears the incoming record.",
       "Paired override path queries AuthClient= before AuthSecret= with separator stopping enabled; only two successful getters copy the externally supplied first field and submit the record.",
-      "Explicit NUL-terminated caller-supplied command-line overload uses Engine FParse::Value for the paired ASCII argument names; no process command line is read."
+      "Explicit NUL-terminated caller-supplied command-line overload uses Engine FParse::Value for the paired ASCII argument names; no process command line is read.",
+      "Current engine command-line overload calls FCommandLine::Get separately for each attempted FParse::Value query, preserving the paired branch short circuit; it does not log argument values."
     ],
-    "integration_boundary": "The caller supplies the command-line stream or an argument callback; global first-field identity, embedded fallback branches and live discovery registration remain unresolved.",
+    "integration_boundary": "The caller supplies the first field and may supply a command-line stream or argument callback; the production overload uses the engine current command line. Global first-field identity, embedded fallback branches and live discovery registration remain unresolved.",
     "verification": "Original bounded instruction review and native source review only; build and runtime pending.",
     "instruction_windows": [
       {
@@ -72,6 +73,21 @@
         "address": "0x1465de450",
         "size": 10,
         "sha256": "8d10d1f0c37f511192e8f14eab5dde9d4594d01ff3142551688e54a77dcaeab1"
+      },
+      {
+        "address": "0x142c70dc0",
+        "size": 108,
+        "sha256": "5d82cfa5fde3e97466028e2e13323d5aff89e64d00a8059bd80843abfd26beea"
+      },
+      {
+        "address": "0x142c7f120",
+        "size": 192,
+        "sha256": "81e0041481354b99094086caf4d0ef7d33d3821152d96be133422a177a71611e"
+      },
+      {
+        "address": "0x1422c05b1",
+        "size": 71,
+        "sha256": "a7a2ca86eddf67fd190283d30408f0b9f4c0c62abcaf6f233a309b0d7626ac1f"
       }
     ],
     "comparison_proof": "0x142bcf790 loads UTF-16 words until NUL. On unequal ASCII words, 0x142bcf7ab-0x142bcf7c8 uses the table at 0x1465b3720; all 128 entries independently match A-Z to lowercase, all others unchanged. Unequal non-ASCII words are not case-folded. 0x140d4b877 compares both record/input +0x10; 0x140d4b8a3 compares both +0 only after that succeeds.",
@@ -80,6 +96,10 @@
       "0x142caabb0 scans outside double-quoted regions, toggling on each quote, and requires the preceding character not be an ASCII letter or digit. Matching is ASCII case insensitive for these ASCII keys; 0x142bcf940 uses ASCII-only folding for the remainder. The first match wins. Quotes have no escape handling in this scan.",
       "Immediately after a match, an opening double quote selects quoted extraction through the next double quote or NUL; separators and whitespace are retained. Otherwise it skips leading space, CR, LF and tab, then stops at the first of those characters and, when the fifth argument is true, comma or closing parenthesis. Empty values succeed.",
       "Engine Core/Private/Misc/Parse.cpp FParse::Value and Core/Public/Misc/CString.h Strifind implement the same wrapper, scan and extraction for the two fixed ASCII keys. This comparison does not assert equivalent non-ASCII matching for arbitrary keys."
+    ],
+    "command_line_source_proof": [
+      "0x142c70dc0 checks byte 0x14821d220; when clear it enters diagnostic handling, then returns the address 0x14821d230. At 0x142c7f120, the routine takes a source pointer, conditionally copies it into two 16384-TCHAR buffers when the same flag is clear, always copies it into two other 16384-TCHAR buffers including 0x14821d230, calls a helper, then sets the flag. The structure and buffer selection match Engine Core/Private/Misc/CommandLine.cpp FCommandLine::Set and FCommandLine::Get, including initialized-only original copies and current CmdLine always updated. This identifies the returned buffer as current CmdLine rather than the original or logging copies.",
+      "0x1422c05b1 calls the getter before the AuthClient parser; only on parser success does 0x1422c05d5 call it again before the AuthSecret parser. The current-command-line adapter obtains the stream inside each ReadArgument call to retain that timing and short circuit. No runtime command-line data was read."
     ]
   }
 }

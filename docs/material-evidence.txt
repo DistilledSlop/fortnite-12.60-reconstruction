@@ -68,6 +68,21 @@ remain unchanged on failure. This bridge is source-reviewed only and installs no
 provider or renderer binding; missing producer values still require explicit
 repacker inputs.
 
+`BindLegacyLocalVFUniformBuffers` connects a prepared record to actual mesh draw
+uniform bindings. It checks the installed RHI shader output hash and draw layout,
+reconstructs fixed buffers from explicit current CPU parameters, and binds them
+using converted Vulkan indices. Material uses the actual supplied expression
+buffer. All checks precede binding mutation; returned RHI references must outlive
+the raw draw bindings. No pass or provider calls this bridge yet, and loose
+parameters, missing producer values and runtime verification remain open.
+
+Original View producer recovery now locates the atmosphere copy and shared
+start-depth/slice helper. Its finite-input formulas match current kilometer-based
+source, but upstream radius units, exact input semantics and exceptional floating
+point behavior still need proof. See
+`porting/behavior/view_missing_producer_runtime/evidence.json`; no automatic
+member aliases or values are inferred from that comparison.
+
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 
 | Explicit layout | Index | Compression |

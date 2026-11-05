@@ -1,4 +1,5 @@
 #include "LegacyMcpConfiguration.h"
+#include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 
 // Original collection helpers 0x140d4b820 and 0x1422b28b0; comparator
@@ -34,6 +35,15 @@ public:
 private:
     const TCHAR* Stream;
 };
+
+class FCurrentMcpConfigurationArguments final : public ILegacyMcpConfigurationArguments
+{
+public:
+    virtual bool ReadArgument(const TCHAR* Match, FString& Out, bool bStopOnSeparator) override
+    {
+        return FParse::Value(FCommandLine::Get(), Match, Out, bStopOnSeparator);
+    }
+};
 }
 
 int32 AppendLegacyMcpConfiguration(TArray<FLegacyMcpConfigurationRecord>& Records,
@@ -67,5 +77,12 @@ bool ApplyLegacyMcpConfigurationOverrides(const FString& Key,
     const TCHAR* CommandLine, TArray<FLegacyMcpConfigurationRecord>& Records)
 {
     FExplicitMcpConfigurationArguments Arguments(CommandLine);
+    return ApplyLegacyMcpConfigurationOverrides(Key, Arguments, Records);
+}
+
+bool ApplyLegacyMcpConfigurationOverrides(const FString& Key,
+    TArray<FLegacyMcpConfigurationRecord>& Records)
+{
+    FCurrentMcpConfigurationArguments Arguments;
     return ApplyLegacyMcpConfigurationOverrides(Key, Arguments, Records);
 }

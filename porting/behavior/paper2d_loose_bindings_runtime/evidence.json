@@ -1,0 +1,33 @@
+{
+  "schema": "paper2d-loose-draw-binding-source-review-v1",
+  "sources": [
+    "porting/native/Source/FortniteGame/Private/LegacyLocalVFLooseBindings.h",
+    "porting/native/Source/FortniteGame/Private/LegacyLocalVFLooseBindings.cpp",
+    "porting/behavior/paper2d_loose_contracts_runtime/evidence.json"
+  ],
+  "implemented": [
+    "Rebuilds original name and source allocation contracts from the decoded record using the existing recovered contract producer and requires exact agreement with the prepared contracts.",
+    "Requires exactly one caller-supplied byte array of the correct size per recovered name and complete one-to-one coverage of the installed shader loose allocations.",
+    "Uses converted ParameterMap buffer indices and byte allocations, verifies installed shader platform, frequency, binding layout and RHI compiled output hash, and checks everything before changing draw bindings.",
+    "Provides separate preparation and non-failing application so callers can validate loose values before other draw-binding writes.",
+    "Uses exact-size 4, 8, 12 and 16 byte value wrappers for the engine's templated Add, avoiding pointer-sized copies and truncation."
+  ],
+  "engine_contracts": {
+    "binding": "Renderer/Public/MeshDrawShaderBindings.h: FMeshDrawSingleShaderBindings::Add(FShaderParameter, const ParameterType&) locates packed loose data by buffer and base index and copies min(sizeof(ParameterType), parameter size).",
+    "output_identity": "RenderCore/Private/ShaderResource.cpp: the inline shader map resource sets the compiled output hash on the RHI shader; FShader::GetOutputHash is editor-only."
+  },
+  "verification": "Bounded source/API review and diff checks only; no build or runtime verification.",
+  "remaining": [
+    "No pass or provider invokes this bridge.",
+    "The caller must supply the actual exact bytes for every recovered parameter, and the corresponding decoded record, prepared contracts and converted output. No producer values or defaults are inferred.",
+    "Other mesh resources and uniform buffers require their own bindings."
+  ],
+  "combined_draw_api": {
+    "sources": [
+      "porting/native/Source/FortniteGame/Private/LegacyLocalVFDrawBindings.h",
+      "porting/native/Source/FortniteGame/Private/LegacyLocalVFDrawBindings.cpp"
+    ],
+    "behavior": "Checks original record identity, prepares and owns all explicit loose values before calling uniform binding, then applies the validated loose snapshot without a failure path. A rejected loose value cannot leave uniform bindings partially changed.",
+    "limits": "No live pass/provider hookup or producer values. Shader, values, retained RHI references and thread requirements remain those of the underlying APIs."
+  }
+}

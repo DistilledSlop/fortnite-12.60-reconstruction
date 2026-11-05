@@ -36,3 +36,7 @@ bool ApplyLegacyMcpConfigurationOverrides(const FString& Key,
 // process command line. A null stream causes the first query to fail.
 bool ApplyLegacyMcpConfigurationOverrides(const FString& Key,
     const TCHAR* CommandLine, TArray<FLegacyMcpConfigurationRecord>& Records);
+
+// Obtains the current engine command line separately for each attempted query.
+bool ApplyLegacyMcpConfigurationOverrides(const FString& Key,
+    TArray<FLegacyMcpConfigurationRecord>& Records);
