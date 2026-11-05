@@ -24,6 +24,13 @@ def preamble(model):
     ]
 
 
+def apply_struct(info, model):
+    if _validate(model):
+        # The original Blueprint-callable query takes this struct as input.
+        model['blueprint_type'] = True
+    return model
+
+
 def declarations(model):
     if not _validate(model):
         return []

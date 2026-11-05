@@ -7,6 +7,60 @@
 #include "FFortWindImpulseRadius.h"
 #include "Math/Vector.h"
 
+void AFortWindManager::BreakWindImpulseCylinder(const FFortWindImpulseCylinder& InWindImpulseCylinder, FVector& ImpulseLocation, float& ImpulseInnerRadius, float& ImpulseOuterRadius, float& ImpulseMagnitude, FVector& ImpulseDirection)
+{
+	// CONFIDENCE: HIGH
+	ImpulseLocation = InWindImpulseCylinder.Location;
+	ImpulseInnerRadius = InWindImpulseCylinder.InnerRadius;
+	ImpulseOuterRadius = InWindImpulseCylinder.OuterRadius;
+	ImpulseMagnitude = InWindImpulseCylinder.Magnitude;
+	ImpulseDirection = InWindImpulseCylinder.WindDirection;
+}
+
+void AFortWindManager::BreakWindImpulseCylinderAdvanced(const FFortWindImpulseCylinder& WindImpulseCylinder, FVector& WindLocation, float& WindInnerRadius, float& WindOuterRadius, FVector& WindWorldDirection, float& WindMagnitude, FBox& WindWorldBounds, bool& bIsWindChanging, bool& bIsWindChangePending)
+{
+	// CONFIDENCE: HIGH
+	WindLocation = WindImpulseCylinder.Location;
+	WindInnerRadius = WindImpulseCylinder.InnerRadius;
+	WindOuterRadius = WindImpulseCylinder.OuterRadius;
+	WindWorldDirection = WindImpulseCylinder.WindDirection;
+	WindMagnitude = WindImpulseCylinder.Magnitude;
+	WindWorldBounds = WindImpulseCylinder.WorldBounds;
+	bIsWindChanging = WindImpulseCylinder.bIsChanging;
+	bIsWindChangePending = WindImpulseCylinder.bIsChangePending;
+}
+
+void AFortWindManager::BreakWindImpulseCylinderDelta(const FFortWindImpulseCylinderDelta& WindImpulseCylinderDelta, FVector& WindDeltaCenter, bool& bWindImpulseInitialized, bool& bWindRipplesOutward, float& WindDeltaSectionWidth, float& WindDeltaInnerSectionRadius, float& WindDeltaOuterSectionRadius, float& WindDeltaMaximumRadius, float& WindDeltaDesiredOverallBlendTime, float& WindDeltaSectionBlendTime, float& WindDeltaSectionCurrentBlendTime, float& WindDeltaPreviousMagnitude, float& WindDeltaSectionCurrentMagnitude, float& WindDeltaDesiredMagnitude, FBox& WindDeltaOuterWorldBounds, FBox& WindDeltaInnerWorldBounds, FBox& WindImpulseBounds, FFortWindImpulseHandle& WindImpulseHandleToModify)
+{
+	// CONFIDENCE: HIGH
+	WindDeltaCenter = WindImpulseCylinderDelta.DeltaCenter;
+	bWindImpulseInitialized = WindImpulseCylinderDelta.bInitialized;
+	bWindRipplesOutward = WindImpulseCylinderDelta.bRippleOutward;
+	WindDeltaSectionWidth = WindImpulseCylinderDelta.SectionWidth;
+	WindDeltaInnerSectionRadius = WindImpulseCylinderDelta.InnerSectionRadius;
+	WindDeltaOuterSectionRadius = WindImpulseCylinderDelta.OuterSectionRadius;
+	WindDeltaMaximumRadius = WindImpulseCylinderDelta.MaximumRadius;
+	WindDeltaDesiredOverallBlendTime = WindImpulseCylinderDelta.DesiredOverallBlendTime;
+	WindDeltaSectionBlendTime = WindImpulseCylinderDelta.SectionBlendTime;
+	WindDeltaSectionCurrentBlendTime = WindImpulseCylinderDelta.SectionCurrentBlendTime;
+	WindDeltaPreviousMagnitude = WindImpulseCylinderDelta.PreviousMagnitude;
+	WindDeltaSectionCurrentMagnitude = WindImpulseCylinderDelta.SectionCurrentMagnitude;
+	WindDeltaDesiredMagnitude = WindImpulseCylinderDelta.DesiredMagnitude;
+	WindDeltaOuterWorldBounds = WindImpulseCylinderDelta.OuterWorldBounds;
+	WindDeltaInnerWorldBounds = WindImpulseCylinderDelta.InnerWorldBounds;
+	WindImpulseBounds = WindImpulseCylinderDelta.WindImpulseBounds;
+	WindImpulseHandleToModify = WindImpulseCylinderDelta.WindImpulseHandleToModify;
+}
+
+void AFortWindManager::BreakWindImpulseRadius(const FFortWindImpulseRadius& InWindImpulseRadius, FVector& ImpulseLocation, float& ImpulseRadius, float& ImpulseMagnitude, float& ImpulseBlendTime)
+{
+	// CONFIDENCE: HIGH
+	ImpulseLocation = InWindImpulseRadius.Location;
+	ImpulseRadius = InWindImpulseRadius.Radius;
+	ImpulseMagnitude = InWindImpulseRadius.Magnitude;
+	ImpulseBlendTime = InWindImpulseRadius.BlendTime;
+}
+
 void AFortWindManager::GetGlobalWindIntensityAndDirection(float& WindIntensity, FVector& WindDirection) const
 {
 	// CONFIDENCE: high; original source recovery, build/runtime pending.

@@ -9,7 +9,7 @@
 
 #include "FFortWindImpulseCylinder.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortWindImpulseCylinder : public FFortWindImpulseCylinderRadial
 {
 	GENERATED_BODY()

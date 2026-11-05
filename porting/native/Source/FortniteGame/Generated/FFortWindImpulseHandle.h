@@ -13,7 +13,7 @@ namespace FortWindNative
     FORTNITEGAME_API uint32 AllocateImpulseUID();
 }
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortWindImpulseHandle
 {
 	GENERATED_BODY()

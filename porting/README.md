@@ -61,6 +61,8 @@ The four dashboard milestones remain the product acceptance gates.
   zero-seeded UID sequence across modules, including reflected-call temporary
   handles; the impulse query checks radius and cylinder handles. Wind responder
   storage now preserves native bounds and effective distance with layout checks.
+  The four original wind impulse break functions now expose radius, cylinder,
+  advanced cylinder and delta fields, preserving const inputs and Blueprint types.
   Building responder registration and material updates remain incomplete; these are source
   changes without visual/runtime credit.
   The new engine reader is also build/runtime pending. These changes do not establish

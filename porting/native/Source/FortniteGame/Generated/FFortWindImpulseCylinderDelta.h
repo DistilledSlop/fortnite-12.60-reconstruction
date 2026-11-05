@@ -10,7 +10,7 @@
 
 #include "FFortWindImpulseCylinderDelta.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortWindImpulseCylinderDelta
 {
 	GENERATED_BODY()

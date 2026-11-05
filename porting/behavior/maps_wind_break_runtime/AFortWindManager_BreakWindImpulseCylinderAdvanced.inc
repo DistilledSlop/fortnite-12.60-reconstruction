@@ -1,0 +1,9 @@
+// CONFIDENCE: HIGH
+WindLocation = WindImpulseCylinder.Location;
+WindInnerRadius = WindImpulseCylinder.InnerRadius;
+WindOuterRadius = WindImpulseCylinder.OuterRadius;
+WindWorldDirection = WindImpulseCylinder.WindDirection;
+WindMagnitude = WindImpulseCylinder.Magnitude;
+WindWorldBounds = WindImpulseCylinder.WorldBounds;
+bIsWindChanging = WindImpulseCylinder.bIsChanging;
+bIsWindChangePending = WindImpulseCylinder.bIsChangePending;

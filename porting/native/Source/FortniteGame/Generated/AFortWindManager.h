@@ -11,6 +11,7 @@
 #include "FFortWindImpulseHandle.h"
 #include "FFortWindImpulseRadius.h"
 #include "FFortWindResponder.h"
+#include "Math/Box.h"
 #include "Math/Vector.h"
 
 class ABuildingSMActor;
@@ -134,6 +135,18 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x430): not a UPROPERTY, not replicated.
 	FVector NativeWindVector_0x430 = FVector::ZeroVector;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static void BreakWindImpulseCylinder(const FFortWindImpulseCylinder& InWindImpulseCylinder, FVector& ImpulseLocation, float& ImpulseInnerRadius, float& ImpulseOuterRadius, float& ImpulseMagnitude, FVector& ImpulseDirection);
+
+	UFUNCTION(BlueprintCallable)
+	static void BreakWindImpulseCylinderAdvanced(const FFortWindImpulseCylinder& WindImpulseCylinder, FVector& WindLocation, float& WindInnerRadius, float& WindOuterRadius, FVector& WindWorldDirection, float& WindMagnitude, FBox& WindWorldBounds, bool& bIsWindChanging, bool& bIsWindChangePending);
+
+	UFUNCTION(BlueprintCallable)
+	static void BreakWindImpulseCylinderDelta(const FFortWindImpulseCylinderDelta& WindImpulseCylinderDelta, FVector& WindDeltaCenter, bool& bWindImpulseInitialized, bool& bWindRipplesOutward, float& WindDeltaSectionWidth, float& WindDeltaInnerSectionRadius, float& WindDeltaOuterSectionRadius, float& WindDeltaMaximumRadius, float& WindDeltaDesiredOverallBlendTime, float& WindDeltaSectionBlendTime, float& WindDeltaSectionCurrentBlendTime, float& WindDeltaPreviousMagnitude, float& WindDeltaSectionCurrentMagnitude, float& WindDeltaDesiredMagnitude, FBox& WindDeltaOuterWorldBounds, FBox& WindDeltaInnerWorldBounds, FBox& WindImpulseBounds, FFortWindImpulseHandle& WindImpulseHandleToModify);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static void BreakWindImpulseRadius(const FFortWindImpulseRadius& InWindImpulseRadius, FVector& ImpulseLocation, float& ImpulseRadius, float& ImpulseMagnitude, float& ImpulseBlendTime);
 
 	UFUNCTION(BlueprintCallable)
 	void GetGlobalWindIntensityAndDirection(float& WindIntensity, FVector& WindDirection) const;

@@ -42,5 +42,6 @@
       "sha256": "eaef76962b170855c762098b004d8d64406b7ae503789642c0dee6b9de3a6cda"
     }
   },
-  "signature_policy": "The reflected const reference input is restored before snippet validation, preserving Blueprint input semantics and allowing UHT-generated temporary handles."
+  "signature_policy": "The reflected const reference input is restored before snippet validation, preserving Blueprint input semantics and allowing UHT-generated temporary handles.",
+  "blueprint_exposure": "Restore BlueprintType on the struct inputs required by the original Blueprint-callable functions. Shipping tables omit editor metadata; callable signatures establish exposure. Native member layout and property exposure remain unchanged."
 }

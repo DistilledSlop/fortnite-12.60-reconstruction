@@ -1,0 +1,34 @@
+{
+  "status": "ported source; build and runtime pending",
+  "reflection": "porting/generated/reflection/native_funcs.json: AFortWindManager names, addresses, flags, parameter types, flags and order",
+  "captures": {
+    "0x142b55af0": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x142b55af0__142b55af0.c",
+      "sha256": "1bec86a0b1d4e1b840e69bb4476f05a2a397217930d876b83aa15ddc610d3f83"
+    },
+    "0x142b54de0": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x142b54de0__142b54de0.c",
+      "sha256": "35e133c14f967f4bc33e8b6bc4369c8285dcf2c71d0b7699de9a7013d10059a0"
+    },
+    "0x142b55070": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x142b55070__142b55070.c",
+      "sha256": "9d014260a6817bcfa45dd699ec921690496318d302e098bc070068a619d4be90"
+    },
+    "0x142b553f0": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x142b553f0__142b553f0.c",
+      "sha256": "9c2add425d08032fdd92a8e45a0e5c39ece81cfdecf1437e09ba842a67aedc01"
+    },
+    "0x141dc6f70": {
+      "path": "porting/generated/maps-wind-break-helper/_adhoc/0x141dc6f70__141dc6f70.c",
+      "sha256": "93ee701eb37e17de41aa5a163631f90f1d514069b99ce6fee222b2fdcc9b915c"
+    },
+    "0x141dc6ff0": {
+      "path": "porting/generated/maps-wind-break-helper/_adhoc/0x141dc6ff0__141dc6ff0.c",
+      "sha256": "f1094cd8ddfcd52c646d8c2b9d07b6e1828362d041948114d7adbba42907a3e3"
+    }
+  },
+  "behavior": "Radius and Cylinder execs copy selected fields inline. Advanced exec calls 0x141dc6f70 and Delta exec calls 0x141dc6ff0; those helpers copy all output fields in argument order. The lifted bodies retain this order.",
+  "wrapper_effect": "Each exec default-constructs its input temporary, consuming one shared handle UID. Delta additionally default-constructs its handle output temporary, consuming another UID. The shared handle constructor must remain enabled; bodies do not allocate UIDs.",
+  "signature_policy": "Each input carries CPF_ConstParm, CPF_Parm, CPF_OutParm, and CPF_ReferenceParm (0x10000008000182); restore const input reference by exact function identity and parameter contract. Output references retain reflected output flags.",
+  "blueprint_exposure": "Restore BlueprintType on the struct inputs required by the original Blueprint-callable functions. Shipping tables omit editor metadata; callable signatures establish exposure. Native member layout and property exposure remain unchanged."
+}

@@ -15,12 +15,7 @@
     "0x141dbeb60 copies the four initial object pointers, independently allocates and copies mild and intense pointer arrays, deep-copies MaterialsData using 0x141dbc1c0, copies the int32, independently allocates and copies the 36-byte paired-variable array, then copies bounds, both floats and the setup byte. 0x141dbf1c0 destroys three nested arrays per 72-byte material-data element and frees its outer array. Discovery separately frees paired, intense, and mild arrays.",
     "The curve and audio resolvers reject empty soft paths, inspect cached weak references and attempt path resolution; when missing or of the wrong class they call 0x141e12f10 with the caller flag. The result is class-checked. After a nonempty resolution attempt they call 0x141df61e0 and 0x141de9e00 with the resolved object only if it satisfies a second class check; their tracking/lifetime effects remain unknown. The material resolver applies the same general pattern per 40-byte soft pointer and compacts successful objects."
   ],
-  "blocking_callees": {
-    "0x141e12f10": "fallback soft path loader, including whether loading is synchronous or async",
-    "0x141df61e0": "tracker or manager acquisition; exact semantics unresolved",
-    "0x141de9e00": "resolved-object tracking and lifetime effects",
-    "0x141dbc1c0": "deep copy of 72-byte FFortWindMaterialData elements, including nested arrays"
-  },
+  "blocking_callees": {},
   "additional_dependencies": "Actor virtual slots 0x390 and 0x548, component virtual slot 0x860, class and object lookup, manager spatial tree allocation/destruction and cvars, actor iterator/eligibility, logging and array allocation. This evidence does not establish the material-application routine.",
   "storage_integration": "Source policy adds only neutral 28-byte bounds storage at0x68 and effective-distance float at0x88, without default values. Generated compile-time assertions pin the0x90 stride, alignment and known offsets. The metadata unknown setup offset is not rewritten; native copy establishes the actual0x8c placement.",
   "dependent_captures": {
@@ -51,6 +46,28 @@
     "0x141dd0bb0": {
       "path": "porting/generated/maps-wind-responder-deps/_adhoc/0x141dd0bb0__141dd0bb0.c",
       "sha256": "e907592c205369dd2775a6b7e22f2bb6b2ab54ef281c5b71d9c8741158d213d0"
+    },
+    "0x141e12f10": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x141e12f10__141e12f10.c",
+      "sha256": "e767e7d81fda32641c28450b95766998a898f522b6f1ed6f9c9efb7a1ab4a9fe"
+    },
+    "0x141df61e0": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x141df61e0__141df61e0.c",
+      "sha256": "48dcff4f53c5b27ac35aa886ac4430917de45f3da13a8684c0d23a24ce44869f"
+    },
+    "0x141de9e00": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x141de9e00__141de9e00.c",
+      "sha256": "ccae8b25b6b63a93411100d9844454ecca6d3ad9a26cf9749195230472037848"
+    },
+    "0x141dbc1c0": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x141dbc1c0__141dbc1c0.c",
+      "sha256": "77e86e63a4a8d4e9fc0fe8eef9c7067459aa87923698b8f51f34baa54e1d6312"
     }
-  }
+  },
+  "resolved_asset_dependencies": {
+    "fallback_load": "0x141e12f10 is existing FortLoadDelayedObject in FortDelayedObjectLoader.h: synchronous streamable-manager load when AssetManager is valid, otherwise soft-path TryLoad. ShowDelayLoadTimes controls timing only.",
+    "retention": "0x141df61e0 returns the shared FFortAssets singleton and0x141de9e00 tracks the resolved object under its lock; existing FortAssets.h owns startup/post-startup sets and GC. Reuse this owner rather than a second keepalive.",
+    "material_copy": "0x141dbc1c0 deep-copies72-byte FFortWindMaterialData entries, whose three nested arrays lie at0x18/0x28/0x38; existing reflected types retain those arrays. Direct raw memcpy of material-data entries would be unfaithful."
+  },
+  "remaining_construction_work": "Confirm the resolver secondary class test and selected component virtual0x860 against original class identity/slot, then lift using existing loader and shared asset owner. Full manager registration still needs the original spatial tree and distance-dependent caches. Native storage integration alone does not implement those behaviors."
 }

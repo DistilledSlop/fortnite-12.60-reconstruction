@@ -10,7 +10,7 @@
 
 #include "FFortWindImpulseRadius.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortWindImpulseRadius
 {
 	GENERATED_BODY()
