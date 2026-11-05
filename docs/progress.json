@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "b64c4a5485ae371ca8de0c256e03bc6b672b92d0",
- "subject": "Recover MCP profile timer context and fallback helpers",
- "date": "2026-11-04T23:17:01-05:00",
+ "head": "7058e892c62471c8e2b794581441d7c44a0ad206",
+ "subject": "Refresh original shader map and profile source progress",
+ "date": "2026-11-04T23:17:59-05:00",
  "overall_pct": 28.572,
  "measured_pct": 27.702,
  "objective_pct": 27.701,
