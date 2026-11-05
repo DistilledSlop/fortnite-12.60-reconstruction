@@ -418,6 +418,12 @@ public:
 	void NotifyEndFailedGameplayVoteLockout(const EFortVoteType& VoteType);
 	void NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void NotifySurvivorDead();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void NotifySurvivorSpawned();
+
 	UFUNCTION()
 	void OnRep_ActiveGameplayModifiers();
 

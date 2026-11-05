@@ -573,6 +573,12 @@ void AFortPlayerController::OnRep_UpdatedUnsavedPrimaryMissionProgress()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerController::OpenVoteDialog()
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	OnOpenVoteDialog.Broadcast();
+}
+
 void AFortPlayerController::PrintEventInfo()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

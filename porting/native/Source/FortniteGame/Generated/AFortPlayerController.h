@@ -1560,6 +1560,9 @@ public:
 	UFUNCTION()
 	void OnRep_UpdatedUnsavedPrimaryMissionProgress();
 
+	UFUNCTION(BlueprintCallable)
+	void OpenVoteDialog();
+
 	UFUNCTION(Exec)
 	void PrintEventInfo();
 

@@ -102,7 +102,13 @@ public:
 	void ResetMaxHealth();
 
 	UFUNCTION(BlueprintCallable)
+	void ResetMovementSpeedMultiplier();
+
+	UFUNCTION(BlueprintCallable)
 	void ResetOverrideDamage();
+
+	UFUNCTION(BlueprintCallable)
+	void ResetScoreDistribution();
 
 	UFUNCTION(BlueprintCallable)
 	void ResetScorePoints();

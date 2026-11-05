@@ -201,6 +201,18 @@ void AFortGameStateZone::NotifyEndFailedGameplayVoteLockout_Implementation(const
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateZone::NotifySurvivorDead()
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	if (GetLocalRole() == ROLE_Authority) NumSurvivorsDead = static_cast<int32>(static_cast<uint32>(NumSurvivorsDead) + 1u);
+}
+
+void AFortGameStateZone::NotifySurvivorSpawned()
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	if (GetLocalRole() == ROLE_Authority) NumSurvivorsSpawned = static_cast<int32>(static_cast<uint32>(NumSurvivorsSpawned) + 1u);
+}
+
 void AFortGameStateZone::OnRep_ActiveGameplayModifiers()
 {
 	// Body not recovered: reflection-derived stub.
