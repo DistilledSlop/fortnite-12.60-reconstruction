@@ -7,6 +7,13 @@ import sys
 
 allowed_exact = {".gitignore", ".gitattributes", ".githooks/pre-commit", ".githooks/post-commit", "AGENTS.md", "README.md"}
 allowed_exact.add("porting/native/FortniteLinux.uproject")
+# Reviewed reconstruction screenshots requested for the project wiki.
+allowed_exact.update({
+    "docs/screenshots/2026-11-05/root-layout.png",
+    "docs/screenshots/2026-11-05/world-initial.png",
+    "docs/screenshots/2026-11-05/world-opposite.png",
+    "docs/screenshots/2026-11-05/world-overview.png",
+})
 forbidden_directories = (
     "porting/generated/", "porting/build/", "porting/.venv/",
     "porting/cue4inspect/bin/", "porting/cue4inspect/obj/",

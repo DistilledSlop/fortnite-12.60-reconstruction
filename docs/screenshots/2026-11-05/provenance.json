@@ -1,0 +1,33 @@
+{
+  "capture_date_utc": "2026-11-05T19:54:25.102813+00:00",
+  "source_revision": "6d0f22d80d86c788a1df18cf2c5c4130505d83ac",
+  "client_binary_sha256": "902ef0bbbb9184ecbe75c849b24bc1a220d6d97d3527dd17cef10d088c3f968b",
+  "client_build_exit": 0,
+  "images": [
+    {
+      "file": "root-layout.png",
+      "scene": "RootLayout_Athena attached to Entry world with diagnostic widget probe",
+      "limitations": "Partial UI; overlapping notifications, unresolved input labels and black background. This is not a working lobby or account flow."
+    },
+    {
+      "file": "world-initial.png",
+      "capture_run_started_utc": "2026-11-05T19:59:43.039509+00:00",
+      "scene": "Apollo standalone terrain preview, fresh reconstructed client",
+      "limitations": "61 staged terrain meshes; missing buildings, vegetation and gameplay. White patches, seams and incomplete materials remain. This does not verify native landscape streaming parity."
+    },
+    {
+      "file": "world-opposite.png",
+      "capture_run_started_utc": "2026-11-05T19:59:43.039509+00:00",
+      "scene": "Apollo standalone terrain preview, fresh reconstructed client",
+      "limitations": "61 staged terrain meshes; missing buildings, vegetation and gameplay. White patches, seams and incomplete materials remain. This does not verify native landscape streaming parity."
+    },
+    {
+      "file": "world-overview.png",
+      "capture_run_started_utc": "2026-11-05T19:59:43.039509+00:00",
+      "scene": "Apollo standalone terrain preview, fresh reconstructed client",
+      "limitations": "61 staged terrain meshes; missing buildings, vegetation and gameplay. White patches, seams and incomplete materials remain. This does not verify native landscape streaming parity."
+    }
+  ],
+  "runtime": "Fresh reconstructed Linux client, software Vulkan, 1280x720. Original cooked UI assets rendered through reconstructed project code.",
+  "server_build_exit": 0
+}
