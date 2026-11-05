@@ -31,6 +31,7 @@ RENDERER_API void UpdateNoiseTextureParameters(FViewUniformShaderParameters& Par
 #include "LegacySlateMaterial.h"
 #include "LegacyMaterialAsset.h"
 #include "LegacyOriginalMaterialReader.h"
+#include "LegacyLandscapeDecodeProbe.h"
 #include "LegacyLocalVFAdapter.h"
 #include "LegacyMaterialManifestSHA256.h"
 #include "Dom/JsonObject.h"
@@ -3490,6 +3491,7 @@ void RegisterLegacyOriginalMaterialProvider()
 void ProbeLegacyOriginalMaterial()
 {
 #if PLATFORM_LINUX && !UE_SERVER
+    if (ProbeLegacyLandscapeDecode()) return;
     if (!FParse::Param(FCommandLine::Get(),TEXT("FortniteProbeLegacyOriginalMaterial"))) return;
     FString OwnerPath=GLegacyLockerPath;
     FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialProbeOwner="),OwnerPath);

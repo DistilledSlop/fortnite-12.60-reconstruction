@@ -366,6 +366,28 @@ The native record-reader extension also preserves the original landscape VS
 parameters, grass and virtual texture shader records, and the three observed
 mesh pipeline types. Support is bounded to the original `M_CommonLandscape`
 identity. Its incremental Linux client build passed; execution against both
-original resources remains unverified. This does
+original resources now passes in the native probe described below. This does
 not yet connect these records to converted output construction or landscape
 owner installation.
+
+### Native landscape decoder execution
+
+The rebuilt Linux client accepts the diagnostic option
+`-FortniteProbeLegacyLandscapeDecode=/absolute/path/apollo-d4-landscape-ingress.json`.
+It checks both maps through the C++ reader before the pinned-owner workflow,
+preserving the original bytes and using their original serialized base offsets.
+The local null-RHI run exited 0 with 68 records in each map and all 136 record
+identities, boundaries and uniform layouts matching the decoded receipt. A zeroed
+shader end word was rejected with exit 1. This verifies decoding, not rendering;
+unrelated staged package errors remain. See
+`behavior/maps_terrain_material_runtime/native-reader-checkpoint.json`.
+
+`export_landscape_shader_manifest.py` composes the digest-pinned translation
+reports into the adapter's existing shader-object shape. Its generated manifest
+retains 43 shaders, 136 occurrences and 20 pipeline stages, including five
+reflected VT feedback UAV descriptors. All 70 vertex occurrences carry the six
+original VF parameter names, validated against their decoded loose allocations
+and reflected buffer spans. Capture hashes pin the original Bind, Serialize and
+element-binding evidence. This is offline evidence composition; complete
+uniform member layouts, pass parameter names, direct-resource bindings and
+live owner installation remain open.

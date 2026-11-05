@@ -21,6 +21,13 @@ public:
         if (!bOk || P < 0 || sizeof(T) > uint32(Limit - P)) { Fail(TEXT("truncated field")); return V; }
         FMemory::Memcpy(&V, O.Bytes.GetData() + P, sizeof(T)); P += sizeof(T); return V;
     }
+    int64 EndOffset()
+    {
+        const int64 Absolute = Read<int64>();
+        if (O.SerializedOffset < 0 || Absolute < O.SerializedOffset || Absolute - O.SerializedOffset > O.Bytes.Num())
+        { Fail(TEXT("invalid serialized end offset")); return 0; }
+        return Absolute - O.SerializedOffset;
+    }
     int32 Count() { int32 N = Read<int32>(); if (N < 0 || N > 4096) Fail(TEXT("invalid array count")); return bOk ? N : 0; }
     FName Name()
     {
@@ -129,7 +136,7 @@ public:
     }
     void Record(bool Mesh, FName VF, FName ExpectedPipeline=NAME_None)
     {
-        FLegacyOriginalRecord R; R.Begin=P; FName Type=Name(); R.Type=Type.ToString(); int64 End=Read<int64>();
+        FLegacyOriginalRecord R; R.Begin=P; FName Type=Name(); R.Type=Type.ToString(); int64 End=EndOffset();
         static const TSet<FString> Allowed = {
             TEXT("TSlateMaterialShaderVStrue"), TEXT("TSlateMaterialShaderVSfalse"),
             TEXT("TSlateMaterialShaderPSGrayscaleFont"), TEXT("TSlateMaterialShaderPSDefault"), TEXT("TSlateMaterialShaderPSCustom"), TEXT("TSlateMaterialShaderPSColorFont"), TEXT("TSlateMaterialShaderPSBorder"),
@@ -166,7 +173,7 @@ public:
         if (!Mesh) { for(int32 I=0; I<(VS?2:3); ++I) R.AdditionalParameters.Add(Param()); if(PS) { R.AdditionalParameters.Add(Param(true)); R.AdditionalParameters.Add(Param(true)); } }
         else
         {
-            R.Pass=Uniform(); FName V=Name(); uint8 F=Read<uint8>(), Platform=Read<uint8>(); R.VFParameterSourceHash=Hash(); int64 VEnd=Read<int64>();
+            R.Pass=Uniform(); FName V=Name(); uint8 F=Read<uint8>(), Platform=Read<uint8>(); R.VFParameterSourceHash=Hash(); int64 VEnd=EndOffset();
             if(V!=VF || F!=(VS?0:PS?3:4) || Platform!=0 || VEnd<P || VEnd>Limit) Fail(TEXT("invalid vertex factory identity"));
             if(VS && VF==FName(TEXT("FLocalVertexFactory"))) { uint32 SpeedTree=Read<uint32>(); if(SpeedTree>1) Fail(TEXT("invalid speedtree flag")); R.bSpeedTree=SpeedTree!=0; R.VFLod=Param(); }
             else if(VS && bLandscape)

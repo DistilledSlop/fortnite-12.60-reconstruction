@@ -1,0 +1,57 @@
+{
+  "schema": "fortnite.native-landscape-reader-checkpoint.v1",
+  "scope": "Native decoding only; no landscape owner attachment, GPU draw or streaming parity claim.",
+  "input": {
+    "path": "porting/generated/material_pipeline/apollo-d4-landscape-ingress.json",
+    "sha256": "2541a59962d32d6c891c24a6fe42ed60160402b0048b122f8eb171c468142b7d"
+  },
+  "build": {
+    "target": "FortniteLinux Linux Development",
+    "exit_code": 0,
+    "execution_seconds": 140.65,
+    "log": "porting/generated/apollo-material-evidence/landscape-native-decode-client.build.2.log"
+  },
+  "execution": {
+    "rhi": "nullrhi",
+    "exit_code": 0,
+    "log": "porting/generated/apollo-material-evidence/landscape-native-decode-run.log",
+    "maps": [
+      {
+        "index": 0,
+        "quality": 0,
+        "feature": 3,
+        "records": 68,
+        "map_hash": "7d220286ded3b95b346e4dfa6e644fdd4a58608e"
+      },
+      {
+        "index": 1,
+        "quality": 1,
+        "feature": 3,
+        "records": 68,
+        "map_hash": "545a5f68f4285c51da41da779fafe1effb569064"
+      }
+    ],
+    "checked": "Every record type, output hash, begin/end and uniform layout offset/type; map hashes and identities, quality/feature and exact resource consumption.",
+    "uniform_layout": {
+      "bytes": 1376,
+      "resources": 77,
+      "occurrences": 136
+    }
+  },
+  "negative_case": {
+    "mutation": "Zero the first original mesh shader record serialized end word; preserve original receipt.",
+    "exit_code": 1,
+    "result": "map 0: invalid shader envelope at resource offset 4374",
+    "log": "porting/generated/apollo-material-evidence/landscape-native-decode-bad-end.log"
+  },
+  "source_sha256": {
+    "porting/native/Source/FortniteGame/Private/LegacyLandscapeDecodeProbe.cpp": "e7272540660d97413583cebff27ccaa987e22782838bb57dcc907209d90c8bfc",
+    "porting/native/Source/FortniteGame/Private/LegacyLandscapeDecodeProbe.h": "2bfb4d22cfe840409d68fd1dfd670e8a93453fa13db64cd4d92d5ab7b3073a46",
+    "porting/native/Source/FortniteGame/Private/LegacyOriginalMaterialReader.cpp": "247a1fdf3f73d35b738e31c9f2584ceb0524a7b13547b40118cf90a522726610",
+    "porting/native/Source/FortniteGame/Private/LegacyOriginalMaterialReader.h": "a9284a5fdfecf85d5cbb30e1bb7854c833da600178dacc1f2ecce197ba4b06b6"
+  },
+  "limitations": [
+    "Execution uses existing staged content and null RHI; unrelated package loading errors remain in the log.",
+    "Runtime material ownership, original uniform values, VF/pass/direct resource bindings, rendering and visual parity remain incomplete."
+  ]
+}

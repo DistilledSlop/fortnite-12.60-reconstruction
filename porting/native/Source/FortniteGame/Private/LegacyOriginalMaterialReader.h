@@ -45,6 +45,8 @@ struct FLegacyOriginalPipeline
 struct FLegacyOriginalMaterial
 {
     TArray<uint8> Bytes;
+    // Original resource offset of Bytes[0]; serialized end positions are absolute.
+    int64 SerializedOffset = 0;
     TArray<FName> Names;
     FLegacyMaterialIR IR;
     FString MaterialPath, FriendlyName;
