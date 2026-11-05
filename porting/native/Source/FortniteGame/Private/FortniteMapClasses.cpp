@@ -14,6 +14,11 @@ void UFortKismetLibrary::DebugCapsuleSendToAll(UObject* WorldContextObject, cons
 void UFortKismetLibrary::DebugOrientedBoxSendToAll(UObject* WorldContextObject, const FVector& Center, const FVector& Extent, const FRotator& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness) {}
 void UFortKismetLibrary::DebugSphereSendToAll(UObject* WorldContextObject, const FVector& Center, float Radius, int32 Segments, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness) {}
 
+void UFortKismetLibrary::CustomHandleActorStreamedInEditor(AActor* SourceActor) {}
+void UFortKismetLibrary::K2_RemoveItemFromAllPlayers(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 AmountToRemove) {}
+void UFortKismetLibrary::K2_GiveItemToAllPlayers(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer) {}
+void UFortKismetLibrary::K2_GiveItemToPlayer(AFortPlayerController* PlayerController, const UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer) {}
+
 AFortSkydivingShadowProxy::AFortSkydivingShadowProxy()
 {
     DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultSceneRoot"));

@@ -1,0 +1,205 @@
+{
+  "CustomHandleActorStreamedInEditor": {
+    "create_func": "0x142961660",
+    "exec_addr": "0x1428d5a60",
+    "flags": "0x4022401",
+    "params": [
+      {
+        "array_dim": 1,
+        "index": 0,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "SourceActor",
+        "object_flags": "0x45",
+        "offset": 0,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x1446ab9e0"
+        }
+      }
+    ],
+    "source": "lea"
+  },
+  "K2_GiveItemToAllPlayers": {
+    "create_func": "0x14295f880",
+    "exec_addr": "0x1429733e0",
+    "flags": "0x4022405",
+    "params": [
+      {
+        "array_dim": 1,
+        "bitfield": true,
+        "element_size": 1,
+        "index": 0,
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "name": "bNotifyPlayer",
+        "object_flags": "0x45",
+        "offset": null,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "size_of_outer": 24
+      },
+      {
+        "array_dim": 1,
+        "index": 1,
+        "kind": "Int",
+        "kind_raw": "0x3",
+        "name": "NumberToGive",
+        "object_flags": "0x45",
+        "offset": 16,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 2,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "ItemDefinition",
+        "object_flags": "0x45",
+        "offset": 8,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142b56ce0"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 3,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "WorldContextObject",
+        "object_flags": "0x45",
+        "offset": 0,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142eea520"
+        }
+      }
+    ],
+    "source": "lea"
+  },
+  "K2_GiveItemToPlayer": {
+    "create_func": "0x14295f940",
+    "exec_addr": "0x1429733e0",
+    "flags": "0x4022405",
+    "params": [
+      {
+        "array_dim": 1,
+        "bitfield": true,
+        "element_size": 1,
+        "index": 0,
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "name": "bNotifyPlayer",
+        "object_flags": "0x45",
+        "offset": null,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "size_of_outer": 24
+      },
+      {
+        "array_dim": 1,
+        "index": 1,
+        "kind": "Int",
+        "kind_raw": "0x3",
+        "name": "NumberToGive",
+        "object_flags": "0x45",
+        "offset": 16,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 2,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "ItemDefinition",
+        "object_flags": "0x45",
+        "offset": 8,
+        "property_flags": "0x10000000000082",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142b56ce0"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 3,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "PlayerController",
+        "object_flags": "0x45",
+        "offset": 0,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142a35ea0"
+        }
+      }
+    ],
+    "source": "lea"
+  },
+  "K2_RemoveItemFromAllPlayers": {
+    "create_func": "0x14295fcb0",
+    "exec_addr": "0x142973820",
+    "flags": "0x4022405",
+    "params": [
+      {
+        "array_dim": 1,
+        "index": 0,
+        "kind": "Int",
+        "kind_raw": "0x3",
+        "name": "AmountToRemove",
+        "object_flags": "0x45",
+        "offset": 16,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 1,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "ItemDefinition",
+        "object_flags": "0x45",
+        "offset": 8,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142b56ce0"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 2,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "WorldContextObject",
+        "object_flags": "0x45",
+        "offset": 0,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142eea520"
+        }
+      }
+    ],
+    "source": "lea"
+  }
+}

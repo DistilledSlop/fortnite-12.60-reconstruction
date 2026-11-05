@@ -455,6 +455,10 @@ def m_tracked_regex(spec, ctx):
 HANDWRITTEN_KISMET_NAMES = frozenset({
     "DebugBoxSendToAll", "DebugLineSendToAll", "DebugCapsuleSendToAll",
     "DebugOrientedBoxSendToAll", "DebugSphereSendToAll",
+    "CustomHandleActorStreamedInEditor",
+    "K2_RemoveItemFromAllPlayers",
+    "K2_GiveItemToAllPlayers",
+    "K2_GiveItemToPlayer",
 })
 
 
@@ -496,13 +500,34 @@ def _verified_handwritten_kismet(files):
     return done
 
 
+def _verified_handwritten_kismet_extra(files):
+    """Credit reviewed empty bodies only while their source and reflection are unchanged."""
+    reflection = files.get("porting/progress/handwritten_kismet_extra_reflection.json", "")
+    if hashlib.sha256(reflection.encode()).hexdigest() != '78cabfcbb8298b7bd5d820eef120b0be2f3175317173597ea8bd30642ba75744':
+        return set()
+    header = files.get("porting/native/Source/FortniteGame/Public/FortniteMapClasses.h", "")
+    source = files.get("porting/native/Source/FortniteGame/Private/FortniteMapClasses.cpp", "")
+    expected = {'CustomHandleActorStreamedInEditor': 'e8c3bca35e2a6459b78e442e3e23c6486e361820713b0ef0723c7f160a4e54fe', 'K2_RemoveItemFromAllPlayers': 'd9879ee6e400b060889aa530b9d887202fcfb543d2a6aecfa7f55c638fa39e49', 'K2_GiveItemToAllPlayers': 'adfc8e62f8151ed2b2130183b7fcf7e0b2a99f1c718f261dc11fae614423a48b', 'K2_GiveItemToPlayer': '443ec38834f54f82c98bdb73df3c7e98abb0a54ab744df4e0b074613e8e008d4'}
+    done = set()
+    for name, digest in expected.items():
+        escaped = re.escape(name)
+        decl = re.findall(r'(?m)^    UFUNCTION\([^\n]*\)\n    static void ' + escaped + r'\([^\n]*\);$', header)
+        body = re.findall(r'(?m)^void UFortKismetLibrary::' + escaped + r'\([^\n]*\) \{\}$', source)
+        if (len(decl) == len(body) == 1
+                and len(re.findall(r'\b' + escaped + r'\s*\(', header)) == 1
+                and len(re.findall(r'\bUFortKismetLibrary::' + escaped + r'\s*\(', source)) == 1
+                and hashlib.sha256((decl[0] + "\n" + body[0]).encode()).hexdigest() == digest):
+            done.add(("UFortKismetLibrary", name))
+    return done
+
+
 def m_native_manifest(spec, ctx):
     """Count committed function bodies independently of the last test checkpoint."""
     entries = parse_json_or_none(ctx.files.get(spec["file"])) or []
     units = {(e["class"], e["function"]) for e in entries
                 if e.get("status") == "ported" and e.get("kind") != "member_field"
                 and e.get("inc_path") in ctx.files and e.get("class") and e.get("function")}
-    units = _without_handwritten_kismet(units) | _verified_handwritten_kismet(ctx.files)
+    units = _without_handwritten_kismet(units) | _verified_handwritten_kismet(ctx.files) | _verified_handwritten_kismet_extra(ctx.files)
     done = len(units)
     total, tnote = ctx.total_value(spec)
     return {"pct": 100.0 * min(done, total) / total if total else 0.0,
@@ -927,7 +952,7 @@ def _grid_reflection_recovery(spec, ctx):
 def _grid_native_behavior(spec, ctx):
     units = _unit_data("funcs", _load_funcs)
     done = (_without_handwritten_kismet(_unit_data("manifest", _load_manifest_ported))
-            | _verified_handwritten_kismet(ctx.files))
+            | _verified_handwritten_kismet(ctx.files) | _verified_handwritten_kismet_extra(ctx.files))
     return [(f"{c}::{fn}", c) for c, fn in units], {f"{c}::{fn}" for c, fn in done}
 
 

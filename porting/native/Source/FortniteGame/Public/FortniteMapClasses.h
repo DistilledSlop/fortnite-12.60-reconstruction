@@ -12,6 +12,9 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "FortniteMapClasses.generated.h"
 
+class UFortWorldItemDefinition;
+class AFortPlayerController;
+
 // Classes that are not in the promoted native set (porting/native_class_set.txt) stay hand-written here.
 // AFortWorldSettings, AFortAthenaMapInfo, AFortPoiManager and AFortWorldManager are generated in
 // Generated/ from the reflection tables and are not declared here.
@@ -76,6 +79,18 @@ public:
 
     UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
     static void DebugSphereSendToAll(UObject* WorldContextObject, const FVector& Center, float Radius, int32 Segments, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
+
+    UFUNCTION(BlueprintCallable)
+    static void CustomHandleActorStreamedInEditor(AActor* SourceActor);
+
+    UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, meta=(WorldContext="WorldContextObject"))
+    static void K2_RemoveItemFromAllPlayers(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 AmountToRemove);
+
+    UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, meta=(WorldContext="WorldContextObject"))
+    static void K2_GiveItemToAllPlayers(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer);
+
+    UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+    static void K2_GiveItemToPlayer(AFortPlayerController* PlayerController, const UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer);
 
     UFUNCTION(BlueprintPure)
     static bool IsAssetNull(TSoftObjectPtr<UObject> Asset);
