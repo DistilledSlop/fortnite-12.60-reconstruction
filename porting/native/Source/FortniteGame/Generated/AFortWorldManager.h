@@ -8,6 +8,8 @@
 
 #include "EFortWorldManagerState.h"
 #include "Engine/DataTable.h"
+#include "Engine/Engine.h"
+#include "Engine/World.h"
 #include "FFortDeferredNewActorData.h"
 #include "FFortLevelStreamingInfo.h"
 #include "FFortMissionEntry.h"
@@ -241,5 +243,9 @@ public:
 	void OnRep_InitialGlobalWind();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static AFortWorldManager* NativeResolveWorldManager(const UObject* WorldContextObject);
 };
 

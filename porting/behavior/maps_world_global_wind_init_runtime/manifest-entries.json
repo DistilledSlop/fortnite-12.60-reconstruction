@@ -1,0 +1,20 @@
+[
+  {
+    "class": "AFortWorldManager",
+    "function": "NativeResolveWorldManager",
+    "kind": "helper",
+    "signature": "AFortWorldManager* NativeResolveWorldManager(const UObject* WorldContextObject)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/maps_world_global_wind_init_runtime/AFortWorldManager_NativeResolveWorldManager.inc",
+    "address": "0x141f88460",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h"
+    ],
+    "notes": "Resolve context world, cast its game state to AFortGameState and return its WorldManager; build and runtime validation pending."
+  }
+]
