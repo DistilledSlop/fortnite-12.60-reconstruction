@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "58eaf7f6f3de9bdade5f61d94b8d5869920d0592",
- "subject": "Persist local username accounts and lockers",
- "date": "2026-11-04T22:14:02-05:00",
+ "head": "4435f9066c07390cce98f5ef31805297903b3fd9",
+ "subject": "Support atomic bulk locker updates",
+ "date": "2026-11-04T22:16:54-05:00",
  "overall_pct": 28.571,
  "measured_pct": 27.701,
  "objective_pct": 27.7,
