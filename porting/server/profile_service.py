@@ -281,6 +281,24 @@ def _set_cosmetic_locker_slot(ctx):
     _equip(ctx, locker_id, category, item_id, index)
 
 
+@command("SetCosmeticLockerSlots", ("athena",), "observed",
+         "lockerItem and loadoutData (reflected names; JSON casing inferred).")
+def _set_cosmetic_locker_slots(ctx):
+    locker_id = ctx.str_field("lockerItem")
+    entries = ctx.list_field("loadoutData")
+    # Validate the locker even for an empty batch. Changes stay on the private
+    # transaction copy until all entries have been successfully applied.
+    _locker(ctx, locker_id)
+    for entry in entries:
+        if not isinstance(entry, dict):
+            raise _invalid("loadoutData must contain objects.")
+        fields = CommandContext(ctx.service, ctx.account_id, ctx.profile_id, entry)
+        category = fields.str_field("slotName")
+        item_id = fields.str_field("itemToSlot", allow_empty=True)
+        index = fields.int_field("indexWithinSlot", maximum=MAX_SLOT_INDEX)
+        _equip(ctx, locker_id, category, item_id, index)
+
+
 @command("EquipBattleRoyaleCustomization", ("athena",), "guess",
          "slotName, itemToSlot, indexWithinSlot (inferred). Targets the last applied loadout.")
 def _equip_battle_royale_customization(ctx):
@@ -300,13 +318,19 @@ def _set_cosmetic_locker_name(ctx):
 
 
 @command("SetCosmeticLockerBanner", ("athena",), "observed",
-         "lockerItem, bannerIconTemplate and/or bannerColorTemplate (inferred).")
+         "lockerItem, bannerIconTemplateName, bannerColorTemplateName (reflected; JSON casing inferred).")
 def _set_cosmetic_locker_banner(ctx):
     locker_id = ctx.str_field("lockerItem")
-    icon = ctx.str_field("bannerIconTemplate", required=False, pattern=r"[A-Za-z0-9_]{1,64}")
-    color = ctx.str_field("bannerColorTemplate", required=False, pattern=r"[A-Za-z0-9_]{1,64}")
+    def banner_field(name, legacy):
+        if name in ctx.body and legacy in ctx.body and ctx.body[name] != ctx.body[legacy]:
+            raise _invalid(f"{name} and {legacy} must agree when both are supplied.")
+        key = name if name in ctx.body else legacy
+        return ctx.str_field(key, required=False, pattern=r"[A-Za-z0-9_]{1,64}")
+
+    icon = banner_field("bannerIconTemplateName", "bannerIconTemplate")
+    color = banner_field("bannerColorTemplateName", "bannerColorTemplate")
     if icon is None and color is None:
-        raise _invalid("bannerIconTemplate or bannerColorTemplate is required.")
+        raise _invalid("bannerIconTemplateName or bannerColorTemplateName is required.")
     tx, _ = _locker(ctx, locker_id)
     if icon is not None:
         tx.set_item_attr(locker_id, "banner_icon_template", icon)

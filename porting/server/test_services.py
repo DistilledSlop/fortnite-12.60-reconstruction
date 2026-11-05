@@ -688,6 +688,31 @@ class ProfileTests(ServiceTestCase):
         self.assertError(mcp(self.base, self.token, LOCAL, "SetCosmeticLockerBanner",
                              body={"lockerItem": locker}), 400, Err.INVALID_PAYLOAD)
 
+    def test_bulk_locker_slots_are_atomic_and_banner_uses_reflected_names(self):
+        profile = self.profile_of()
+        locker = profile["stats"]["attributes"]["last_applied_loadout"]
+        dance = self.backend.profiles.grant_item(LOCAL, "athena", "AthenaDance:eid_warehouse")
+        valid = {"slotName": "Dance", "itemToSlot": dance, "indexWithinSlot": 1}
+        before = self.profile_of()
+        bad = {"slotName": "Dance", "itemToSlot": "missing", "indexWithinSlot": 2}
+        self.assertError(mcp(self.base, self.token, LOCAL, "SetCosmeticLockerSlots", body={
+            "lockerItem": locker, "loadoutData": [valid, bad]}), 400, Err.INVALID_PAYLOAD)
+        self.assertEqual(self.profile_of(), before)
+        status, _, _ = mcp(self.base, self.token, LOCAL, "SetCosmeticLockerSlots", body={
+            "lockerItem": locker, "loadoutData": [valid]})
+        self.assertEqual(status, 200)
+        self.assertEqual(self.locker_slots()["Dance"]["items"][1], "AthenaDance:eid_warehouse")
+        status, _, _ = mcp(self.base, self.token, LOCAL, "SetCosmeticLockerBanner", body={
+            "lockerItem": locker, "bannerIconTemplateName": "StandardBanner7",
+            "bannerColorTemplateName": "DefaultColor3"})
+        self.assertEqual(status, 200)
+        attrs = self.profile_of()["items"][locker]["attributes"]
+        self.assertEqual((attrs["banner_icon_template"], attrs["banner_color_template"]),
+                         ("StandardBanner7", "DefaultColor3"))
+        self.assertError(mcp(self.base, self.token, LOCAL, "SetCosmeticLockerBanner", body={
+            "lockerItem": locker, "bannerIconTemplateName": "StandardBanner7",
+            "bannerIconTemplate": "StandardBanner8"}), 400, Err.INVALID_PAYLOAD)
+
     def test_set_battle_royale_banner_reports_the_mirrored_profile_in_multi_update(self):
         status, body, _ = mcp(self.base, self.token, LOCAL, "SetBattleRoyaleBanner",
                               body={"bannerIconTemplate": "StandardBanner7", "bannerColorTemplate": "DefaultColor3"})
