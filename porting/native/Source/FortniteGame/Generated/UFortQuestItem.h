@@ -10,6 +10,7 @@
 #include "FCompletionCountEntry.h"
 #include "FFortMissionInstancedConfigData.h"
 #include "Misc/DateTime.h"
+#include "Misc/Timespan.h"
 
 class UFortQuestItemDefinition;
 class UFortQuestObjectiveInfo;
@@ -115,6 +116,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortQuestState GetQuestState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FTimespan GetRemainingExpirationDuration(FDateTime UtcNow) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FString GetTwitchBroadcasterChannelId() const;

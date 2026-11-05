@@ -128,6 +128,15 @@ EFortQuestState UFortQuestItem::GetQuestState() const
 	return quest_state;
 }
 
+FTimespan UFortQuestItem::GetRemainingExpirationDuration(FDateTime UtcNow) const
+{
+	// Behaviour snippet: UFortQuestItem::GetRemainingExpirationDuration (body only; spliced into the generated member function).
+	// Original address: 0x142442190 (via exec wrapper 0x142ab3e90)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return expiry_time - UtcNow;
+}
+
 FString UFortQuestItem::GetTwitchBroadcasterChannelId() const
 {
 	// Behaviour snippet: UFortQuestItem::GetTwitchBroadcasterChannelId (body only; spliced into the generated member function).

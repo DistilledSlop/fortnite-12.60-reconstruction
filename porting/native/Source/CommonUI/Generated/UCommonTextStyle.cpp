@@ -13,6 +13,13 @@ void UCommonTextStyle::GetColor(FLinearColor& OutColor) const
 	FMemory::Memcpy(reinterpret_cast<uint8*>(&OutColor) + 8, &Upper, 8);
 }
 
+float UCommonTextStyle::GetLineHeightPercentage() const
+{
+	// CONFIDENCE: HIGH
+	// Reviewed against captured wrapper and implementation; build and runtime pending.
+	return LineHeightPercentage;
+}
+
 void UCommonTextStyle::GetShadowColor(FLinearColor& OutColor) const
 {
 	// Behaviour snippet: UCommonTextStyle::GetShadowColor (body only; spliced into the generated member function).

@@ -16,6 +16,17 @@ int32 UCommonButtonGroup::FindButtonIndex(UCommonButton* ButtonToFind) const
 	return INDEX_NONE;
 }
 
+UCommonButton* UCommonButtonGroup::GetButtonAtIndex(int32 Index) const
+{
+	// CONFIDENCE: HIGH
+	// Reviewed against captured wrapper and implementation; build and runtime pending.
+	if (!NativeButtonGroupWidgets.IsValidIndex(Index))
+	{
+	    return nullptr;
+	}
+	return NativeButtonGroupWidgets[Index].Get();
+}
+
 int32 UCommonButtonGroup::GetButtonCount() const
 {
 	// Behaviour snippet: UCommonButtonGroup::GetButtonCount (body only; spliced into the generated member function).

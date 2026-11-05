@@ -79,6 +79,9 @@ public:
 	bool HasExpeditionExpired(FDateTime UtcNow) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsExpeditionCompleted(FDateTime UtcNow) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsExpeditionInProgress() const;
 
 };

@@ -56,6 +56,9 @@ public:
 	void GetColor(FLinearColor& OutColor) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetLineHeightPercentage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	void GetShadowColor(FLinearColor& OutColor) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

@@ -57,6 +57,9 @@ public:
 	int32 FindButtonIndex(UCommonButton* ButtonToFind) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonButton* GetButtonAtIndex(int32 Index) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetButtonCount() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
