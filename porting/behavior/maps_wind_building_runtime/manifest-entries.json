@@ -1,0 +1,24 @@
+[
+  {
+    "class": "AFortWindManager",
+    "function": "NativeBuildWindResponder",
+    "kind": "helper",
+    "signature": "FFortWindResponder NativeBuildWindResponder(ABuildingSMActor* Building)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/maps_wind_building_runtime/AFortWindManager_NativeBuildWindResponder.inc",
+    "address": "0x141de5910",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/StaticMeshComponent.h",
+      "Curves/CurveLinearColor.h",
+      "Materials/MaterialInterface.h",
+      "Sound/SoundBase.h",
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ],
+    "notes": "Return-by-value adaptation of native out-constructor; requires nonnull building. Original UStaticMeshComponent vtable0x146a4e948 slot0x860 targets0x1440ecae0, whose body matches UMeshComponent::GetMaterials. Reuses original shared asset owner and delayed loader. Build and runtime pending."
+  }
+]

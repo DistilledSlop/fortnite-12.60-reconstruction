@@ -2422,6 +2422,10 @@ _maps_wind_break_spec = _common_activation_import.spec_from_file_location(
     "maps_wind_break_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_break_runtime", "source_policy.py"))
 _maps_wind_break_policy = _common_activation_import.module_from_spec(_maps_wind_break_spec)
 _maps_wind_break_spec.loader.exec_module(_maps_wind_break_policy)
+_maps_wind_make_spec = _common_activation_import.spec_from_file_location(
+    "maps_wind_make_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_make_runtime", "source_policy.py"))
+_maps_wind_make_policy = _common_activation_import.module_from_spec(_maps_wind_make_spec)
+_maps_wind_make_spec.loader.exec_module(_maps_wind_make_policy)
 _maps_visibility_spec = _common_activation_import.spec_from_file_location(
     "maps_visibility_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_visibility_evaluate_runtime", "source_policy.py"))
 _maps_visibility_policy = _common_activation_import.module_from_spec(_maps_visibility_spec)
@@ -2593,6 +2597,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     _definition_queries_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _maps_wind_handle_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _maps_wind_break_policy.apply_signatures(name, block, functions, owner_fns, function_view)
+    _maps_wind_make_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _dayphase_callback_policy.apply_signatures(name, block, functions, owner_fns, function_view, snippets)
     splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped,
                               {m["name"] for m in members})

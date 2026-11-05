@@ -1,0 +1,32 @@
+[
+  {
+    "function": "MakeWindImpulseRadius",
+    "kind": "exec",
+    "signature": "FFortWindImpulseRadius MakeWindImpulseRadius(const FVector& ImpulseLocation, float ImpulseRadius, float ImpulseMagnitude, float ImpulseBlendTime)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/maps_wind_make_runtime/AFortWindManager_MakeWindImpulseRadius.inc",
+    "address": "0x142b56430",
+    "reflection_flags": "0x14c22401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Typed local consumes one shared handle UID; const vector inputs require targeted reflection policy. Build and runtime verification pending.",
+    "class": "AFortWindManager"
+  },
+  {
+    "function": "MakeWindImpulseCylinder",
+    "kind": "exec",
+    "signature": "FFortWindImpulseCylinder MakeWindImpulseCylinder(const FVector& ImpulseLocation, float ImpulseInnerRadius, float ImpulseOuterRadius, float ImpulseMagnitude, const FVector& ImpulseDirection)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/maps_wind_make_runtime/AFortWindManager_MakeWindImpulseCylinder.inc",
+    "address": "0x142b561d0",
+    "reflection_flags": "0x14c22401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Typed local consumes one shared handle UID; const vector inputs require targeted reflection policy. Build and runtime verification pending.",
+    "class": "AFortWindManager"
+  }
+]

@@ -1,5 +1,5 @@
 {
-  "status": "native responder storage integrated; constructor/registration and runtime validation pending",
+  "status": "native responder storage and construction integrated; manager registration and runtime validation pending",
   "scope": "Building wind responder construction, registration, and discovery. No function is claimed ported.",
   "captures": {
     "construction": "porting/generated/maps-wind-actor-ingress/_adhoc/0x141de5910__141de5910.c",
@@ -69,5 +69,5 @@
     "retention": "0x141df61e0 returns the shared FFortAssets singleton and0x141de9e00 tracks the resolved object under its lock; existing FortAssets.h owns startup/post-startup sets and GC. Reuse this owner rather than a second keepalive.",
     "material_copy": "0x141dbc1c0 deep-copies72-byte FFortWindMaterialData entries, whose three nested arrays lie at0x18/0x28/0x38; existing reflected types retain those arrays. Direct raw memcpy of material-data entries would be unfaithful."
   },
-  "remaining_construction_work": "Confirm the resolver secondary class test and selected component virtual0x860 against original class identity/slot, then lift using existing loader and shared asset owner. Full manager registration still needs the original spatial tree and distance-dependent caches. Native storage integration alone does not implement those behaviors."
+  "remaining_construction_work": "Constructor resolver types and component GetMaterials call are now resolved; see constructor-evidence.json. Full manager registration still needs the original spatial tree and distance-dependent caches. World-ready lifecycle and material update consumers remain unported."
 }

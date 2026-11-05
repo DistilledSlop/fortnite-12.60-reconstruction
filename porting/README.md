@@ -63,6 +63,9 @@ The four dashboard milestones remain the product acceptance gates.
   storage now preserves native bounds and effective distance with layout checks.
   The four original wind impulse break functions now expose radius, cylinder,
   advanced cylinder and delta fields, preserving const inputs and Blueprint types.
+  Radius/cylinder creation now preserves the original bounds, blend state and
+  shared handle allocation. Building responder construction restores CDO-to-actor
+  asset fallback, shared asset retention and compact material merging.
   Building responder registration and material updates remain incomplete; these are source
   changes without visual/runtime credit.
   The new engine reader is also build/runtime pending. These changes do not establish

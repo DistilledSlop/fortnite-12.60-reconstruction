@@ -1,0 +1,17 @@
+{
+  "status": "ported source; build and runtime pending",
+  "reflection": "porting/generated/reflection/native_funcs.json: AFortWindManager function names, addresses, flags, parameter types, flags and order",
+  "captures": {
+    "0x142b56430": {
+      "path": "porting/generated/maps-wind-make-and-class/_adhoc/0x142b56430__142b56430.c",
+      "sha256": "ecde26fd8a8b8231116e92c30ae581f3903c3f37b2cf36552527c04e5cc3878c"
+    },
+    "0x142b561d0": {
+      "path": "porting/generated/maps-wind-make-and-class/_adhoc/0x142b561d0__142b561d0.c",
+      "sha256": "3cfd25e66742356044dbe168e0e565caf0c717fe311002e787f8fa7cf721257c"
+    }
+  },
+  "behavior": "Radius copies location, radius, magnitude and blend time; current blend time equals blend time, other current/previous fields are zero, and both valid bounds endpoints equal location. Cylinder copies input fields and direction, clears both change flags, and sets valid bounds from (X - outer radius, Y - outer radius, Z) to (X + outer radius, Y + outer radius, Z + 100000). Casts of packed location words in decompilation represent float field values.",
+  "handle": "Each function allocates exactly one UID via the default-constructed typed result handle; return copies the handle.",
+  "signature_policy": "Vector inputs have flags 0x10000008000182 and are const references; policy checks exact function identity, flags and parameter contracts."
+}

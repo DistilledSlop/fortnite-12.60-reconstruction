@@ -6,13 +6,19 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "Components/StaticMeshComponent.h"
+#include "Curves/CurveLinearColor.h"
 #include "FFortWindImpulseCylinder.h"
 #include "FFortWindImpulseCylinderDelta.h"
 #include "FFortWindImpulseHandle.h"
 #include "FFortWindImpulseRadius.h"
 #include "FFortWindResponder.h"
+#include "FortAssets.h"
+#include "FortDelayedObjectLoader.h"
+#include "Materials/MaterialInterface.h"
 #include "Math/Box.h"
 #include "Math/Vector.h"
+#include "Sound/SoundBase.h"
 
 class ABuildingSMActor;
 class UAudioComponent;
@@ -157,9 +163,16 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasWindImpulse(const FFortWindImpulseHandle& WindImpulseHandle) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FFortWindImpulseCylinder MakeWindImpulseCylinder(const FVector& ImpulseLocation, float ImpulseInnerRadius, float ImpulseOuterRadius, float ImpulseMagnitude, const FVector& ImpulseDirection);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FFortWindImpulseRadius MakeWindImpulseRadius(const FVector& ImpulseLocation, float ImpulseRadius, float ImpulseMagnitude, float ImpulseBlendTime);
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	void NativeSetGlobalWind(float Intensity, const FVector& Direction);
+	static FFortWindResponder NativeBuildWindResponder(ABuildingSMActor* Building);
 };
 
