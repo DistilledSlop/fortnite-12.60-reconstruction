@@ -211,5 +211,6 @@ public:
 	bool NativeGetWindImpulseCylinder(const FFortWindImpulseHandle& ImpulseHandle, FFortWindImpulseCylinder& OutImpulse);
 	void NativeRegisterWindResponder(FFortWindResponder& Responder);
 	void NativeDiscoverWindResponders();
+	void NativeRefreshNearbyCache(const FVector& ViewerPosition);
 };
 

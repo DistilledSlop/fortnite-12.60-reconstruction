@@ -76,14 +76,9 @@
     "local_delta_regions": "TArray<FBox> at lStack188/uStack180;141dcb5d0 appends28-byte elements. Its contents unused here and allocation freed before final cleanup."
   },
   "essential_missing_effects": {
-    "0x141dcf3f0": "Get cylinder by handle UID: duplicate dedicated/cvar guards, copies0x48-byte cylinder on success, warning verbosity3 on miss. Draft requires hook, preserving failure/log effects.",
-    "0x141ddae00": "728-line animating-material setup: component/material validation, MID creation, scalar/vector parameter lookup/interpolation data, paired panner variables, setup flag. Required to close actual material writes; not lifted by this bounded task.",
-    "0x141dd61e0 and0x141dd0bb0": "Spatial remove and insert with XY-projected responder bounds, index and insertion flag0; preserve shared tree contract from registration.",
-    "0x141dd9880": "Resets SectionCurrentBlendTime=SectionBlendTime and SectionCurrentMagnitude=PreviousMagnitude; advances section radii inward or outward, builds/clips outer box and inner box using0.70710677*inner radius, returns false at endpoint.",
     "0x141dcb5d0": "Appends OuterWorldBounds minus InnerWorldBounds region boxes to TArray<FBox>. No mutation of delta observed. Hook retained despite unused output.",
     "0x141ddef30": "Starts first queued delta with valid matching cylinder, clearing pending and setting changing; dispatches142b53dd0 with cylinder and delta. Swap-removes queued deltas missing cylinders until match/empty.",
     "0x142b54060 and0x142b53fa0": "Cylinder by-value event wrappers: each consumes shared UID before copying incoming cylinder and dispatching virtual0x210 with distinct reflected function token. Call-site142b53fa0 second argument needs assembly confirmation; decompiler omits it.",
-    "0x14433ac70/0x14433b1f0": "Scalar/vector material writes by cached parameter index; exact stock-engine symbols/signatures must be verified. No no-op fallback supplied.",
     "platform/lifetime": "143f7a920 platform/server predicate;143f6c200 Destroy; GUObjectArray item flag0x20000000; root scene component world location; stat/log effects. Draft exposes required hooks."
   },
   "preserved_details": [
@@ -99,13 +94,20 @@
   ],
   "closure_gaps": [
     "All required FEffects methods are declarations only. This is a typed algorithm draft, not an integrated helper or executable fallback. Do not add ported manifest coverage.",
-    "One non-reflected budget field0x220 requires constructor evidence and generator policy. Existing actor Tick is base implementation; do not introduce Tick override without explicit lifecycle evidence. Separate world-ready interface remains unintegrated.",
+    "Non-reflected update budget0x220 constructor value confirmed256; generator field remains pending. Original primaryvtable slot3f8 proves TickActor override141dde360 calls sampling, audio, thenAActor::TickActor. Whole lifecycle remains pending; no incomplete TickActor installed.",
     "Exact float parity is not established: draft replaces rsqrtss with scalar divide/sqrt and smoothstep expression may reorder operations; FMath::Clamp comparisons may differ for NaNs.",
     "Capture bounding predicates have unusual short-circuit topology: radius minimum Z is tested only when Y equals maximum; cylinder minimum Y only when X equals maximum. Draft preserves these expression shapes; verify machine code before normalization.",
     "Delta piecewise sampling is algebraically condensed from repeated capture branches; its degenerate radii, NaNs and inferred live-register scalar values need assembly validation before native porting.",
     "Default cylinder temporary must consume exactly one UID and use zero vectors/floats, invalid zero bounds and false flags; do not replace it with an aggregate without handle constructor. Delta/radius default policy is owned by root.",
-    "Curve virtual at embedded curve base+0x50 has been expressed as GetLinearColorValue; confirm exact engine implementation/signature and numeric behavior.",
+    "CurveLinearColor GetLinearColorValue signature confirmed via actual curve-owner interface slot0x50; numeric sampling parity still pending.",
     "Array swap removal must preserve responder nested-array destruction and source shrink flags; delegates may mutate arrays, so no extra defensive copies or reordering are authorized by this draft."
   ],
-  "validation": "Source review against bounded decompiler captures and paired-parameter sampling machine code141de0e45..0e7d. No builds/tests run per assigned scope."
+  "validation": "Source review against bounded decompiler captures and paired-parameter sampling machine code141de0e45..0e7d. No builds/tests run per assigned scope.",
+  "recovered_dependencies": {
+    "0x141dcf3f0": "NativeGetWindImpulseCylinder integrated in maps_wind_cylinder_lookup_runtime; original guards/copy/log preserved. Draft hook still needs replacement.",
+    "0x141ddae00": "NativeSetupAnimatingMaterials integrated in maps_wind_material_setup_runtime. Cached-vs-Legacy engine parameter default compatibility remains unverified. Draft hook still needs replacement.",
+    "0x141dd61e0 and0x141dd0bb0": "Engine TQuadTree<int32,16> exact remove/insert correspondence recovered; manager-owned tree and original configuration/lifetime integrated with registration. Insertion argument is nullable TCHAR* source label, not a flag. Draft hook still needs replacement.",
+    "0x141dd9880": "NativeAdvanceWindDelta integrated maps_wind_delta_runtime; draft hook needs replacement.",
+    "0x14433ac70/0x14433b1f0": "Matched UMaterialInstanceDynamic::SetScalarParameterByIndex / SetVectorParameterByIndex; see maps_wind_parameter_runtime evidence."
+  }
 }

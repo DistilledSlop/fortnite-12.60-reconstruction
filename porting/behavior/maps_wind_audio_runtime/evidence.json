@@ -9,5 +9,6 @@
     "porting/generated/maps-wind-audio-spatial-deps/_adhoc/0x141ddf5c0__141ddf5c0.c": "57d9f1d7e0d36866d1961c69d8b52d4df014c685a351869975cab30ecbd50e3f"
   },
   "event_arguments": "141de2132 loads mapped PreviousActor component at entry+8 into RDX before142b53d90;141de217d loads mapped CurrentActor component before142b53d50. Wrappers pass one8-byte event parameter. Event name-global mapping remains pending.",
-  "remaining": "See UpdateWindAudio.draft.md. Tree querying, component acquisition/reoutering/activation and cleanup require original effects; no incomplete TickActor override installed."
+  "remaining": "Complete audio acquisition/reoutering/activation, cleanup and event name-global mapping remain required. No incomplete TickActor override installed. Earlier draft dependency notes are superseded by recovered_dependencies.",
+  "recovered_dependencies": "Registration and owning TQuadTree<int32,16> are integrated; cache helper141ddf5c0 nowNativeRefreshNearbyCache. Original query order, capacity16, configuration and lifetime established. See maps_wind_registration_runtime, maps_wind_spatial_runtime and maps_wind_cache_runtime."
 }

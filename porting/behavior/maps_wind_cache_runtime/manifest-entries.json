@@ -1,0 +1,19 @@
+[
+  {
+    "class": "AFortWindManager",
+    "kind": "helper",
+    "function": "NativeRefreshNearbyCache",
+    "signature": "void NativeRefreshNearbyCache(const FVector& ViewerPosition)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141ddf5c0",
+    "inc_path": "porting/behavior/maps_wind_cache_runtime/AFortWindManager_NativeRefreshNearbyCache.inc",
+    "includes": [
+      "GenericQuadTree.h",
+      "UnrealEngine.h"
+    ],
+    "notes": "Original movement threshold, static shared query scratch, strict bounds-center distance filters and independent update/audio caches. Engine RandHelper maps original Windows CRT scaling; platform random stream parity unverified. Audio caller pending."
+  }
+]
