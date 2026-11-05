@@ -36,6 +36,7 @@ NAMES += ['TLightMapDensityVSFDummyLightMapPolicy', 'TLightMapDensityPSFDummyLig
           'TBasePassVSFSimpleDirectionalLightLightingPolicy',
           'TBasePassPSFSimpleDirectionalLightLightingPolicySkylight',
           'FLandscapeGrassWeightVS', 'FLandscapeGrassWeightPS']
+NAMES += ['FVelocityVS', 'FVelocityPS', 'VelocityPipeline', 'FLandscapeVertexFactory']
 
 
 def name(index):
@@ -91,7 +92,7 @@ def mesh_resource(type_index=16, frequency=0, landscape=False):
     # Reuse the independently checked common material-parameter fixture.
     material = original[slate['body_offset']:slate['output_hash']['offset'] - 12]
     prefix = original[:parsed['material_shaders']['mesh_shader_maps_count_offset']]
-    vf_name = 22 if landscape else 15
+    vf_name = 32 if landscape == 'regular' else 22 if landscape else 15
     prefix += pack('i', 1) + name(vf_name) + pack('i', 1)
     body_offset = len(prefix) + 16
     vf_head = pack('HI', 1, 1) + name(vf_name) + pack('BB', frequency, 0) + bytes(20)
@@ -269,6 +270,12 @@ class LegacyPrefixTests(unittest.TestCase):
                 with self.subTest(frequency=frequency, declared=declared), self.assertRaises(ValueError):
                     parse_prefix(data, NAMES)
 
+    def test_regular_landscape_factory_uses_same_vertex_parameters(self):
+        data = mesh_resource(16, 0, landscape='regular')
+        record = parse_prefix(data, NAMES)['mesh_shader_maps'][0]['records'][0]
+        self.assertEqual(record['vertex_factory']['name'], 'FLandscapeVertexFactory')
+        self.assertEqual(record['vertex_factory_parameters']['landscape_parameters']['lod_values']['base_index'], 32)
+
     def test_terrain_shader_variants_enforce_record_boundaries(self):
         for index, frequency in ((23, 0), (24, 3), (25, 0), (26, 3), (27, 0), (28, 3)):
             with self.subTest(shader=NAMES[index]):
@@ -285,6 +292,48 @@ class LegacyPrefixTests(unittest.TestCase):
                 damaged[record['offset'] + 8:record['offset'] + 16] = pack('q', record['end'] - 1)
                 with self.assertRaises(ValueError):
                     parse_prefix(damaged, NAMES)
+
+    def test_mesh_pipeline_stages_are_counted_and_associated(self):
+        data = bytearray(mesh_resource())
+        pipeline_offset = len(data) - 8
+        stages = bytearray()
+        for index, frequency in ((30, 3), (29, 0)):
+            original = mesh_resource(index, frequency)
+            record = parse_prefix(original, NAMES)['mesh_shader_maps'][0]['records'][0]
+            stage_start = pipeline_offset + 4 + 12 + len(stages)
+            delta = stage_start - record['offset']
+            stage = bytearray(original[record['offset']:record['end']])
+            stage[8:16] = pack('q', record['end'] + delta)
+            vf = record['vertex_factory_parameters']
+            field = vf['offset'] + 30 - record['offset']
+            stage[field:field + 8] = pack('q', vf['end'] + delta)
+            field = record['output_hash']['offset'] + 40 - record['offset']
+            stage[field:field + 8] = name(31)
+            # Give each stage a distinct resource hash for archive association.
+            output = bytes([frequency + 1]) * 20
+            field = record['output_hash']['offset'] - record['offset']
+            stage[field:field + 20] = output
+            field = record['resource']['output_hash']['offset'] - record['offset']
+            stage[field:field + 20] = output
+            stages += stage
+        data[pipeline_offset:pipeline_offset + 4] = pack('i', 1) + name(31) + pack('i', 2) + stages
+        parsed = parse_prefix(data, NAMES)
+        pipeline = parsed['mesh_shader_maps'][0]['pipelines'][0]
+        self.assertEqual([s['frequency'] for s in pipeline['stages']], [3, 0])
+        self.assertEqual(parsed['shader_record_count'], 4)
+        self.assertIs(module.all_records(parsed)[-2], pipeline['stages'][0])
+        hashes = [bytes.fromhex(s['output_hash']['hash']) for s in
+                  parsed['material_shaders']['records'] + parsed['mesh_shader_maps'][0]['records'] + pipeline['stages']]
+        archive = SimpleNamespace(shader_lookup={h: i for i, h in enumerate(hashes)},
+            shaders=[(0, 1, 1095, frequency) for frequency in (0, 0, 3, 0)])
+        # The standalone synthetic records share a hash and target.
+        module.associate_library(parsed, archive)
+        self.assertEqual([s['library_association']['frequency'] for s in pipeline['stages']], [3, 0])
+        for offset in (pipeline['offset'] + 8, pipeline['stages'][0]['offset'] + 8):
+            damaged = bytearray(data)
+            damaged[offset:offset + 4] = pack('i', 0)
+            with self.assertRaises(ValueError):
+                parse_prefix(damaged, NAMES)
 
     def test_debug_counts_use_material_texture_type_order(self):
         arrays = [[VECTOR], [SCALAR], [TEXTURE], [], [], [TEXTURE, TEXTURE], [], [TEXTURE]]

@@ -50,8 +50,7 @@ def validate_source(raw, framing):
 
 
 def all_records(material):
-    return material['material_shaders']['records'] + [
-        record for mesh in material['mesh_shader_maps'] for record in mesh['records']]
+    return decoder.all_records(material)
 
 
 def verify_fixture(material, fixture):

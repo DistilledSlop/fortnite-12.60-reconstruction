@@ -5,10 +5,15 @@ The output is bridge evidence, not a UE material, shader header or runtime draw.
 """
 import argparse
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 
 GENERATED = Path(__file__).resolve().parents[1] / 'generated'
+_spec = importlib.util.spec_from_file_location('legacy_shader_records',
+                                                Path(__file__).with_name('legacy_shader_records.py'))
+_records = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_records)
 
 
 def digest(data):
@@ -69,8 +74,7 @@ def main():
             if decoded['shader_library']['sha256'] != mapped['archive_sha256']:
                 raise ValueError('material records reference a different shader library')
             rows = []
-            shader_records = decoded['material_shaders']['records'] + [
-                r for mesh in decoded.get('mesh_shader_maps', []) for r in mesh['records']]
+            shader_records = _records.all_records(decoded)
             for record in shader_records:
                 index = record['library_association']['index']
                 mapped_shader, reflected_shader = mapped_shaders[index], reflected_shaders[index]
@@ -88,11 +92,14 @@ def main():
                     raise ValueError('serialized original material layout disagrees with numeric span')
                 remaining = [d for d in reflected_shader['descriptors'] if linked is None or
                              (d['set'], d['binding']) != (linked['descriptor_set'], linked['descriptor_binding'])]
-                rows.append(dict(shader_type=record['type']['name'], shader_index=index,
+                row = dict(shader_type=record['type']['name'], shader_index=index,
                     vertex_factory=record['vertex_factory']['name'],
                     output_hash=record['output_hash']['hash'], frequency=record['frequency'],
                     spirv_sha256=code_hash, material_uniform_binding=linked,
-                    remaining_descriptors=remaining))
+                    remaining_descriptors=remaining)
+                if record['pipeline']['name'] != 'None':
+                    row.update(pipeline=record['pipeline']['name'], record_offset=record['offset'])
+                rows.append(row)
             materials.append(dict(material_path=decoded['material_path'], resource_sha256=decoded['resource_sha256'],
                 decoded_report_sha256=digest(decoded_raw), uniform_report_sha256=digest(uniforms_raw),
                 numeric_path=str(numeric_path), numeric_sha256=digest(numeric), numeric_bytes=len(numeric),

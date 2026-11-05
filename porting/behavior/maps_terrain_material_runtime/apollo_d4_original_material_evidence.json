@@ -82,7 +82,7 @@
       0,
       1
     ],
-    "original_resource_parse_first_failure": "First map: unsupported nonempty mesh shader pipelines at map-relative offset 22140 (pipeline count 3)",
+    "original_resource_parse_first_failure": "First shader map: unsupported mesh shader-map vertex factory FLandscapeFixedGridVertexFactory at resource-relative offset 46676",
     "first_runtime_virtual_texture_uniforms": {
       "offsets": [
         226,
@@ -203,7 +203,6 @@
       ],
       "first_map_shader_records_end": 22140,
       "first_map_shader_record_count": 26,
-      "next_unsupported": "Three mesh shader pipelines, first DepthNoColorOutputPipeline with two stages; full pipeline parsing is not enabled here",
       "additional_shader_record_evidence": {
         "density_dummy_policy": "UE 4.24 LightMapDensityRendering.cpp instantiates TUniformLightMapPolicy<LMP_DUMMY>; LightMapRendering.h serializes three uniform buffers; both D4 stages pass identity and declared record boundaries.",
         "simple_directional_base_pass": "UE 4.24 BasePassRendering.cpp instantiates the uniform policy. D4 vertex and both pixel records pass identity and declared record boundaries.",
@@ -214,6 +213,69 @@
           "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Renderer/Private/BasePassRendering.cpp",
           "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Landscape/Private/LandscapeGrass.cpp"
         ]
+      },
+      "mesh_shader_pipelines": {
+        "first_vertex_factory": "FLandscapeXYOffsetVertexFactory",
+        "second_vertex_factory": "FLandscapeVertexFactory",
+        "each_factory_standalone_records": 26,
+        "each_factory_pipeline_stages": 5,
+        "pipelines_per_factory": 3,
+        "first_factory_pipelines": [
+          {
+            "type": "DepthNoColorOutputPipeline",
+            "offset": 22144,
+            "end": 23460,
+            "stage_offsets": [
+              22156,
+              22749
+            ]
+          },
+          {
+            "type": "DepthNoPixelPipeline",
+            "offset": 23460,
+            "end": 24183,
+            "stage_offsets": [
+              23472
+            ]
+          },
+          {
+            "type": "VelocityPipeline",
+            "offset": 24183,
+            "end": 25511,
+            "stage_offsets": [
+              24195,
+              24800
+            ]
+          }
+        ],
+        "second_factory_pipelines": [
+          {
+            "type": "DepthNoColorOutputPipeline",
+            "offset": 43309,
+            "end": 44625
+          },
+          {
+            "type": "DepthNoPixelPipeline",
+            "offset": 44625,
+            "end": 45348
+          },
+          {
+            "type": "VelocityPipeline",
+            "offset": 45348,
+            "end": 46676
+          }
+        ],
+        "second_factory_first_record_offset": 25523,
+        "next_vertex_factory_offset": 46676,
+        "next_vertex_factory": "FLandscapeFixedGridVertexFactory",
+        "next_shader_type": "TVirtualTextureVSWorldHeight",
+        "evidence": "Both factory maps decode all standalone records and pipeline stages with matching identities, targets, and declared record boundaries. The regular and XY-offset landscape vertex factories use the same parameter class in engine source.",
+        "limitations": [
+          "Pipeline stages have not been matched to an original shader archive.",
+          "The fixed-grid factory and virtual texture shaders are not decoded.",
+          "These offsets apply only to the first shader map; the second serialized map has not been decoded."
+        ],
+        "source": "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp"
       }
     }
   },

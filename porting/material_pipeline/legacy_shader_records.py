@@ -121,7 +121,8 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
                         raise ValueError('invalid LocalVF speedtree bool')
                     vf['any_speedtree_parameter_bound'] = bool(speedtree)
                     vf['lod_parameter'] = parameters(reader)
-                elif expected_frequency == 0 and vertex_factory['name'] == 'FLandscapeXYOffsetVertexFactory':
+                elif expected_frequency == 0 and vertex_factory['name'] in {
+                        'FLandscapeVertexFactory', 'FLandscapeXYOffsetVertexFactory'}:
                     # UE 4.24 FLandscapeVertexFactoryVertexShaderParameters::Serialize.
                     # Original 0x143af1010 serializes these six fields in this order.
                     names = ('lod_values', 'forced_lod', 'lod_tessellation',
@@ -230,7 +231,7 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
 
 
 # Stage ordering is serialized by FShaderPipelineType::GetStages(), not by
-# graphics execution order. These are the three observed Paper2D pipelines;
+# graphics execution order. These are the three observed Paper2D and D4 pipelines;
 # their VS/PS membership is corroborated by DepthRendering.cpp and
 # VelocityRendering.cpp. Unknown pipeline types remain unsupported.
 PAPER2D_PIPELINE_STAGES = {
@@ -240,7 +241,7 @@ PAPER2D_PIPELINE_STAGES = {
 }
 
 
-def paper2d_mesh_pipeline(reader, map_hash, expression_counts, vertex_factory):
+def mesh_pipeline(reader, map_hash, expression_counts, vertex_factory):
     # UE 4.24 TShaderMap::SerializeInline: pipeline type, stage count, then
     # each stage as a full SerializeShaderForSaving record.
     start = reader.cursor
@@ -259,6 +260,10 @@ def paper2d_mesh_pipeline(reader, map_hash, expression_counts, vertex_factory):
         stages.append(stage)
     return {'offset': start, 'type': pipeline_type, 'stage_count': count,
             'stages': stages, 'end': reader.cursor}
+
+
+# Retain the existing prefix decoder's entry point.
+paper2d_mesh_pipeline = mesh_pipeline
 
 
 def material_shader_records(reader, map_hash, expression_counts):
@@ -280,13 +285,26 @@ def mesh_shader_maps(reader, count, map_hash, expression_counts):
     for _ in range(count):
         start = reader.cursor
         vf = reader.name()
-        if vf['number'] or vf['name'] not in {'FLocalVertexFactory', 'FLandscapeXYOffsetVertexFactory'}:
+        if vf['number'] or vf['name'] not in {'FLocalVertexFactory', 'FLandscapeVertexFactory',
+                                              'FLandscapeXYOffsetVertexFactory'}:
             raise ValueError('unsupported mesh shader-map vertex factory')
         shader_count = reader.count()
         records = [shader_record(reader, map_hash, expression_counts, vf) for _ in range(shader_count)]
         pipeline_count = reader.count()
-        if pipeline_count:
-            raise ValueError('unsupported nonempty mesh shader pipelines')
-        maps.append({'offset': start, 'vertex_factory': vf, 'count': shader_count,
-                     'records': records, 'pipeline_count': pipeline_count, 'end': reader.cursor})
+        pipelines = [mesh_pipeline(reader, map_hash, expression_counts, vf)
+                     for _ in range(pipeline_count)]
+        mesh_map = {'offset': start, 'vertex_factory': vf, 'count': shader_count,
+                    'records': records, 'pipeline_count': pipeline_count, 'end': reader.cursor}
+        if pipelines:
+            mesh_map['pipelines'] = pipelines
+        maps.append(mesh_map)
     return maps
+
+
+def all_records(material):
+    """Return original record objects, including every serialized pipeline stage."""
+    maps = material.get('mesh_shader_maps', [])
+    return material['material_shaders']['records'] + [
+        record for mesh in maps for record in mesh['records']] + [
+        stage for mesh in maps for pipeline in mesh.get('pipelines', [])
+        for stage in pipeline['stages']]

@@ -33,6 +33,7 @@ def _load_sibling(name):
 
 _records = _load_sibling('legacy_shader_records')
 material_shader_records, mesh_shader_maps = _records.material_shader_records, _records.mesh_shader_maps
+all_records = _records.all_records
 
 MAX_BYTES = 64 * 1024 * 1024
 ARRAYS = ('vector', 'scalar', 'texture_2d', 'texture_cube', 'texture_volume',
@@ -242,8 +243,8 @@ def parse_prefix(data, names):
             'runtime_loading_verified': False,
             'limitations': ['Complete serialized metadata does not establish runtime loading, shader semantics or draw parity',
                 'VT stack serialization follows local UE source and original asset bytes; original runtime serializer is not captured',
-                'Nonempty parameter-binding arrays and shader pipelines are unsupported',
-                'Only observed Slate, LocalVF and landscape XY-offset mesh shader types are supported',
+                'Nonempty parameter-binding arrays and material shader pipelines are unsupported; mesh pipelines are limited to observed types',
+                'Only observed Slate, LocalVF and landscape mesh shader types are supported',
                 'Landscape vertex-factory parameter order is confirmed by original serializer 0x143af1010'],
             'cooked': cooked, 'valid': valid,
             'quality_level': quality, 'feature_level': feature,
@@ -255,7 +256,8 @@ def parse_prefix(data, names):
             'compilation_output_flags': compilation_flags,
             'debug_description': debug_description, 'material_shaders': shader_records,
             'mesh_shader_maps': mesh_maps,
-            'shader_record_count': shader_records['count'] + sum(m['count'] for m in mesh_maps),
+            'shader_record_count': shader_records['count'] + sum(
+                m['count'] + sum(p['stage_count'] for p in m.get('pipelines', [])) for m in mesh_maps),
             'cooking': {'offset': cooking_offset, 'value': True, 'end': reader.cursor},
             'original_serializer_evidence': {
                 'runtime_dump_sha256': '604900985a724144b6e0fc6e033b0cef2adb74a295a65a4fe01aceebb52df93d',
@@ -279,9 +281,7 @@ def parse_prefix(data, names):
 
 def associate_library(result, archive):
     """Associate parsed record identities with a fully validated archive index."""
-    records = result['material_shaders']['records'] + [
-        record for mesh_map in result.get('mesh_shader_maps', []) for record in mesh_map['records']]
-    for record in records:
+    for record in all_records(result):
         index = archive.shader_lookup.get(bytes.fromhex(record['output_hash']['hash']))
         if index is None:
             raise ValueError('decoded shader hash is absent from supplied library')
