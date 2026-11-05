@@ -1,3 +1,16 @@
+diff --git a/Engine/Source/Runtime/Engine/Classes/Engine/StreamableRenderAsset.h b/Engine/Source/Runtime/Engine/Classes/Engine/StreamableRenderAsset.h
+--- a/Engine/Source/Runtime/Engine/Classes/Engine/StreamableRenderAsset.h
++++ b/Engine/Source/Runtime/Engine/Classes/Engine/StreamableRenderAsset.h
+@@ -23,6 +23,9 @@
+ 		return -1;
+ 	}
+ 
++	/** Landscape radius screen-size threshold, in renderer LOD order. */
++	virtual float GetStreamingLODScreenSize(int32 LODIndex) const { return 0.f; }
++
+ 	/** Get the total number of LODs including non-streamable and optional LODs */
+ 	virtual int32 GetNumMipsForStreaming() const
+ 	{
 diff --git a/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.cpp b/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.cpp
 new file mode 100644
 --- /dev/null
@@ -319,7 +332,6 @@ new file mode 100644
 +}
 diff --git a/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.h b/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.h
 new file mode 100644
-index 000000000..fc8f7e87e
 --- /dev/null
 +++ b/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.h
 @@ -0,0 +1,74 @@
@@ -397,17 +409,132 @@ index 000000000..fc8f7e87e
 +	FBulkDataIORequestCallBack AsyncFileCallback;
 +	bool bHighPrioIORequest;
 +};
+diff --git a/Engine/Source/Runtime/Engine/Private/Streaming/StreamingManagerTexture.cpp b/Engine/Source/Runtime/Engine/Private/Streaming/StreamingManagerTexture.cpp
+--- a/Engine/Source/Runtime/Engine/Private/Streaming/StreamingManagerTexture.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Streaming/StreamingManagerTexture.cpp
+@@ -776,6 +776,11 @@
+ void FRenderAssetStreamingManager::AddStreamingRenderAsset(USkeletalMesh* SkeletalMesh)
+ {
+ 	AddStreamingRenderAsset_Internal(SkeletalMesh, FStreamingRenderAsset::AT_SkeletalMesh);
++}
++
++void FRenderAssetStreamingManager::AddStreamingRenderAsset(UStreamableRenderAsset* LandscapeAsset)
++{
++	AddStreamingRenderAsset_Internal(LandscapeAsset, FStreamingRenderAsset::AT_Landscape);
+ }
+ 
+ /**
+diff --git a/Engine/Source/Runtime/Engine/Private/Streaming/StreamingManagerTexture.h b/Engine/Source/Runtime/Engine/Private/Streaming/StreamingManagerTexture.h
+--- a/Engine/Source/Runtime/Engine/Private/Streaming/StreamingManagerTexture.h
++++ b/Engine/Source/Runtime/Engine/Private/Streaming/StreamingManagerTexture.h
+@@ -134,6 +134,7 @@
+ 	virtual void AddStreamingRenderAsset( UTexture2D* Texture ) override;
+ 	virtual void AddStreamingRenderAsset(UStaticMesh* StaticMesh) override;
+ 	virtual void AddStreamingRenderAsset(USkeletalMesh* SkeletalMesh) override;
++	virtual void AddStreamingRenderAsset(UStreamableRenderAsset* LandscapeAsset) override;
+ 
+ 	/** Removes a texture/mesh from the streaming manager. */
+ 	virtual void RemoveStreamingRenderAsset( UStreamableRenderAsset* RenderAsset ) override;
+@@ -249,6 +250,12 @@
+ 			case FStreamingRenderAsset::AT_StaticMesh:
+ 				OutArray = NumStreamedMips_StaticMesh.GetData();
+ 				return NumStreamedMips_StaticMesh.Num();
++			case FStreamingRenderAsset::AT_Landscape:
++			{
++				static const int32 NumStreamedLandscapeLODs[] = { -1 };
++				OutArray = NumStreamedLandscapeLODs;
++				return UE_ARRAY_COUNT(NumStreamedLandscapeLODs);
++			}
+ 			case FStreamingRenderAsset::AT_SkeletalMesh:
+ 				OutArray = NumStreamedMips_SkeletalMesh.GetData();
+ 				return NumStreamedMips_SkeletalMesh.Num();
+diff --git a/Engine/Source/Runtime/Engine/Private/Streaming/StreamingTexture.cpp b/Engine/Source/Runtime/Engine/Private/Streaming/StreamingTexture.cpp
+--- a/Engine/Source/Runtime/Engine/Private/Streaming/StreamingTexture.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Streaming/StreamingTexture.cpp
+@@ -83,6 +83,14 @@
+ 					LODScreenSizes[Idx] = StaticMesh->RenderData->ScreenSize[LODIdx].GetValueForFeatureLevel(GMaxRHIFeatureLevel) * 0.5f;
+ 				}
+ 			}
++			else if (RenderAssetType == AT_Landscape)
++			{
++				for (int32 Idx = 0; Idx < MaxNumMeshLODs; ++Idx)
++				{
++					const int32 LODIdx = FMath::Max(MipCount - Idx - 1, 0);
++					LODScreenSizes[Idx] = RenderAsset->GetStreamingLODScreenSize(LODIdx);
++				}
++			}
+ 			else // AT_SkeletalMesh
+ 			{
+ 				USkeletalMesh* SkeletalMesh = CastChecked<USkeletalMesh>(RenderAsset);
+@@ -305,7 +313,7 @@
+ 	{
+ 		check(MinAllowedMips >= 1);
+ 		check(MaxAllowedMips <= MipCount);
+-		check(RenderAssetType == AT_StaticMesh || RenderAssetType == AT_SkeletalMesh);
++		check(RenderAssetType == AT_StaticMesh || RenderAssetType == AT_SkeletalMesh || RenderAssetType == AT_Landscape);
+ 		if (Size != FLT_MAX)
+ 		{
+ 			const float NormalizedSize = Size / MaxScreenSizeOverAllViews;
+diff --git a/Engine/Source/Runtime/Engine/Private/Streaming/StreamingTexture.h b/Engine/Source/Runtime/Engine/Private/Streaming/StreamingTexture.h
+--- a/Engine/Source/Runtime/Engine/Private/Streaming/StreamingTexture.h
++++ b/Engine/Source/Runtime/Engine/Private/Streaming/StreamingTexture.h
+@@ -39,6 +39,7 @@
+ 		AT_Texture,
+ 		AT_StaticMesh,
+ 		AT_SkeletalMesh,
++		AT_Landscape,
+ 		AT_Num
+ 	};
+ 
+@@ -81,6 +82,8 @@
+ 			return TEXT("StaticMesh");
+ 		case AT_SkeletalMesh:
+ 			return TEXT("SkeletalMesh");
++		case AT_Landscape:
++			return TEXT("Landscape");
+ 		default:
+ 			return TEXT("Unkown");
+ 		}
+diff --git a/Engine/Source/Runtime/Engine/Private/Streaming/TextureInstanceView.cpp b/Engine/Source/Runtime/Engine/Private/Streaming/TextureInstanceView.cpp
+--- a/Engine/Source/Runtime/Engine/Private/Streaming/TextureInstanceView.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Streaming/TextureInstanceView.cpp
+@@ -510,7 +510,7 @@
+ 		}
+ 		else
+ 		{
+-			check(AssetType == FStreamingRenderAsset::AT_StaticMesh || AssetType == FStreamingRenderAsset::AT_SkeletalMesh);
++			check(AssetType == FStreamingRenderAsset::AT_StaticMesh || AssetType == FStreamingRenderAsset::AT_SkeletalMesh || AssetType == FStreamingRenderAsset::AT_Landscape);
+ 			check(-TexelFactor <= MAX_MESH_LOD_COUNT);
+ 			MaxNumForcedLODs = FMath::Max(MaxNumForcedLODs, static_cast<int32>(-TexelFactor));
+ 		}
+diff --git a/Engine/Source/Runtime/Engine/Public/ContentStreaming.h b/Engine/Source/Runtime/Engine/Public/ContentStreaming.h
+--- a/Engine/Source/Runtime/Engine/Public/ContentStreaming.h
++++ b/Engine/Source/Runtime/Engine/Public/ContentStreaming.h
+@@ -427,6 +427,8 @@
+ 	virtual void AddStreamingRenderAsset(UTexture2D* Texture) = 0;
+ 	virtual void AddStreamingRenderAsset(UStaticMesh* StaticMesh) = 0;
+ 	virtual void AddStreamingRenderAsset(USkeletalMesh* SkeletalMesh) = 0;
++	/** Register a landscape LOD proxy without depending on the Landscape module. */
++	virtual void AddStreamingRenderAsset(UStreamableRenderAsset* LandscapeAsset) = 0;
+ 
+ 	/** Removes a texture/mesh from the streaming manager. */
+ 	virtual void RemoveStreamingRenderAsset(UStreamableRenderAsset* RenderAsset) = 0;
 diff --git a/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h b/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
-index 5c3036a99..dc9f2167c 100644
 --- a/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
 +++ b/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
-@@ -11,2 +11,5 @@
+@@ -9,6 +9,9 @@
+ #include "Components/PrimitiveComponent.h"
+ #include "PerPlatformProperties.h"
  #include "LandscapeWeightmapUsage.h"
 +#include "Serialization/BulkData.h"
 +#include "Engine/StreamableRenderAsset.h"
 +#include "RenderAssetUpdate.h"
  
-@@ -109,2 +112,8 @@ class FLandscapeComponentDerivedData
+ #include "LandscapeComponent.generated.h"
+ 
+@@ -107,10 +110,23 @@
+ 	/** The compressed Landscape component data for mobile rendering. Serialized to disk. 
+ 	    On device, freed once it has been decompressed. */
  	TArray<uint8> CompressedLandscapeData;
 +
 +#if !WITH_EDITORONLY_DATA && USE_BULKDATA_STREAMING_TOKEN
@@ -416,7 +543,8 @@ index 5c3036a99..dc9f2167c 100644
 +	TArray<FByteBulkData> StreamingLODDataArray;
 +#endif
  	
-@@ -113,2 +122,9 @@ class FLandscapeComponentDerivedData
+ 	/** Cached render data. Only valid on device. */
+ 	TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe > CachedRenderData;
  
 +	FString CachedLODDataFileName;
 +
@@ -426,7 +554,11 @@ index 5c3036a99..dc9f2167c 100644
 +	friend class ULandscapeLODStreamingProxy;
 +
  public:
-@@ -129,3 +145,8 @@ public:
+ 	/** Returns true if there is any valid platform data */
+ 	bool HasValidPlatformData() const
+@@ -127,7 +143,12 @@
+ 	/** Returns the size of the platform data if there is any. */
+ 	int32 GetPlatformDataSize() const
  	{
 -		return CompressedLandscapeData.Num();
 +		int32 Size = CompressedLandscapeData.Num();
@@ -436,13 +568,21 @@ index 5c3036a99..dc9f2167c 100644
 +		}
 +		return Size;
  	}
-@@ -150,2 +171,5 @@ public:
+ 
+ 	/** Initializes the compressed data from an uncompressed source. */
+@@ -148,6 +169,9 @@
+ 
+ 	/* Serializer */
  	friend FArchive& operator<<(FArchive& Ar, FLandscapeComponentDerivedData& Data);
 +
 +	/** Read the original 12.60 cooked mobile data, including streamed LODs. */
 +	void SerializeLegacyCookedData(FArchive& Ar, UObject* Owner);
  };
-@@ -360,2 +384,44 @@ enum ELandscapeClearMode
+ 
+ /* Used to uniquely reference a landscape vertex in a component. */
+@@ -358,6 +382,49 @@
+ 	Clear_All = Clear_Weightmap | Clear_Heightmap UMETA(DisplayName = "All")
+ };
  
 +/** Original 12.60 interface for streaming mobile landscape vertex LODs. */
 +UCLASS()
@@ -452,6 +592,7 @@ index 5c3036a99..dc9f2167c 100644
 +public:
 +	virtual bool IsReadyForFinishDestroy() override;
 +	virtual int32 GetLODGroupForStreaming() const override { return 0; }
++	virtual float GetStreamingLODScreenSize(int32 LODIndex) const override;
 +	virtual int32 GetNumMipsForStreaming() const override;
 +	virtual int32 GetNumNonStreamingMips() const override { return 1; }
 +	virtual int32 CalcNumOptionalMips() const override { return 0; }
@@ -487,23 +628,34 @@ index 5c3036a99..dc9f2167c 100644
 +};
 +
  UCLASS(hidecategories=(Display, Attachment, Physics, Debug, Collision, Movement, Rendering, PrimitiveComponent, Object, Transform, Mobility, VirtualTexture), showcategories=("Rendering|Material"), MinimalAPI, Within=LandscapeProxy)
-@@ -474,2 +540,6 @@ private:
+ class ULandscapeComponent : public UPrimitiveComponent
+ {
+@@ -472,6 +539,10 @@
+ 	UPROPERTY(TextExportTransient)
+ 	TArray<UTexture2D*> WeightmapTextures;
  
 +	/** Component-owned proxy serialized by original cooked landscapes. */
 +	UPROPERTY()
 +	ULandscapeLODStreamingProxy* LODStreamingProxy;
 +
  public:
-@@ -586,2 +656,4 @@ public:
  
-+	friend class ULandscapeLODStreamingProxy;
+ 	/** Uniquely identifies this component's built map data. */
+@@ -583,6 +654,8 @@
+ public:
+ 	/** Platform Data where don't support texture sampling in vertex buffer */
+ 	FLandscapeComponentDerivedData PlatformData;
 +
++	friend class ULandscapeLODStreamingProxy;
+ 
  	/** Grass data for generation **/
+ 	TSharedRef<FLandscapeComponentGrassData, ESPMode::ThreadSafe> GrassData;
 diff --git a/Engine/Source/Runtime/Landscape/Private/Landscape.cpp b/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
-index 7fe59f51e..8f32df993 100644
 --- a/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
 +++ b/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
-@@ -53,2 +53,7 @@ Landscape.cpp: Terrain rendering
+@@ -51,6 +51,11 @@
+ #include "ComponentRecreateRenderStateContext.h"
+ #include "LandscapeWeightmapUsage.h"
  #include "LandscapeSubsystem.h"
 +#include "Misc/CommandLine.h"
 +#include "Misc/Parse.h"
@@ -511,7 +663,11 @@ index 7fe59f51e..8f32df993 100644
 +#include "HAL/FileManager.h"
 +#include "Streaming/LandscapeMeshMobileUpdate.h"
  
-@@ -146,2 +151,186 @@ FAutoConsoleCommand CmdPrintNumLandscapeShadows(
+ #if WITH_EDITOR
+ #include "LandscapeEdit.h"
+@@ -144,6 +149,202 @@
+ 	FConsoleCommandDelegate::CreateStatic(PrintNumLandscapeShadows)
+ 	);
  
 +// Original 12.60 proxy lifecycle and old render-asset streaming interface.
 +ULandscapeLODStreamingProxy::ULandscapeLODStreamingProxy(const FObjectInitializer& ObjectInitializer)
@@ -669,7 +825,14 @@ index 7fe59f51e..8f32df993 100644
 +
 +bool ULandscapeLODStreamingProxy::UpdateStreamingStatus(bool bWaitForMipFading)
 +{
-+	return TickPendingUpdate();
++	const bool bPending = TickPendingUpdate();
++	bCachedReadyForStreaming = IsReadyForStreaming();
++	// The render-thread completion callbacks own the resident byte while pending.
++	if (!bPending)
++	{
++		CachedNumResidentLODs = GetNumResidentMips();
++	}
++	return bPending;
 +}
 +
 +bool ULandscapeLODStreamingProxy::IsReadyForFinishDestroy()
@@ -679,6 +842,11 @@ index 7fe59f51e..8f32df993 100644
 +
 +void ULandscapeLODStreamingProxy::LinkStreaming()
 +{
++	bCachedReadyForStreaming = IsReadyForStreaming();
++	if (!PendingUpdate)
++	{
++		CachedNumResidentLODs = GetNumResidentMips();
++	}
 +	if (!IsTemplate() && IStreamingManager::Get().IsTextureStreamingEnabled() && IsStreamingRenderAsset(this))
 +	{
 +		IStreamingManager::Get().GetTextureStreamingManager().AddStreamingRenderAsset(this);
@@ -698,11 +866,19 @@ index 7fe59f51e..8f32df993 100644
 +}
 +
  ULandscapeComponent::ULandscapeComponent(const FObjectInitializer& ObjectInitializer)
-@@ -194,2 +383,3 @@ ULandscapeComponent::ULandscapeComponent(const FObjectInitializer& ObjectInitial
+ : Super(ObjectInitializer)
+ #if WITH_EDITORONLY_DATA
+@@ -192,6 +393,7 @@
+ 
+ 	// Default sort priority of landscape to -1 so that it will default to the first thing rendered in any runtime virtual texture
  	TranslucencySortPriority = -1;
 +	LODStreamingProxy = CreateDefaultSubobject<ULandscapeLODStreamingProxy>(TEXT("LandscapeLODStreamingProxy"));
  }
-@@ -525,3 +715,14 @@ void ULandscapeComponent::Serialize(FArchive& Ar)
+ 
+ int32 ULandscapeComponent::GetMaterialInstanceCount(bool InDynamic) const
+@@ -523,7 +725,18 @@
+ 			{
+ 				check(PlatformData.HasValidPlatformData());
  			}
 -			Ar << PlatformData;
 +			const FLinkerLoad* SourceLinker = Cast<FLinkerLoad>(Ar.GetLinker());
@@ -718,17 +894,29 @@ index 7fe59f51e..8f32df993 100644
 +				Ar << PlatformData;
 +			}
  		}
-@@ -1356,2 +1557,3 @@ void ULandscapeComponent::BeginDestroy()
+ 	}
+ #endif
+@@ -1354,6 +1567,7 @@
+ void ULandscapeComponent::BeginDestroy()
+ {
  	Super::BeginDestroy();
 +	LODStreamingProxy->UnlinkStreaming();
  
-@@ -1403,2 +1605,5 @@ FPrimitiveSceneProxy* ULandscapeComponent::CreateSceneProxy()
+ #if WITH_EDITOR
+ 	// Ask render thread to destroy EditToolRenderData
+@@ -1401,6 +1615,9 @@
+ 	{
+ 		if (PlatformData.HasValidRuntimeData())
  		{
 +			LODStreamingProxy->UnlinkStreaming();
 +			LODStreamingProxy->bIsStreamable = !LODStreamingProxy->NeverStream && LODStreamingProxy->GetNumMipsForStreaming() > 1;
 +			LODStreamingProxy->LinkStreaming();
  			Proxy = new FLandscapeComponentSceneProxyMobile(this);
-@@ -3360,2 +3565,41 @@ FArchive& operator<<(FArchive& Ar, FLandscapeComponentDerivedData& Data)
+ 		}
+ 	}
+@@ -3358,6 +3575,45 @@
+ 	return Ar << Data.CompressedLandscapeData;
+ }
  
 +// Original 12.60 implementation: 0x143accef0. This is a loading-only
 +// compatibility path; UE 4.25 authoring and DDC retain their existing format.
@@ -770,11 +958,45 @@ index 7fe59f51e..8f32df993 100644
 +}
 +
  bool FLandscapeComponentDerivedData::LoadFromDDC(const FGuid& StateId, UObject* Component)
+ {
+ 	return GetDerivedDataCacheRef().GetSynchronous(*GetDDCKeyString(StateId), CompressedLandscapeData, Component->GetPathName());
 diff --git a/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp b/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp
-index f33b40ad2..a51fb726c 100644
 --- a/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp
 +++ b/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp
-@@ -835,2 +835,12 @@ void FLandscapeRenderSystem::PrepareView(const FSceneView* View)
+@@ -70,6 +70,30 @@
+ 	ECVF_Scalability
+ );
+ 
++// Share the renderer's actual landscape thresholds with the host asset streamer.
++// DistanceScale is one for streaming: the renderer cancels its static-mesh scale
++// by applying the same factor to its view screen-size metric.
++static float GetLandscapeLODScreenSize(const ULandscapeComponent* Component, int32 LODIndex, float DistanceScale)
++{
++	const ALandscapeProxy* Proxy = Component->GetLandscapeProxy();
++	float ScreenSize = Proxy->LOD0ScreenSize / DistanceScale;
++	if (LODIndex > 0)
++	{
++		ScreenSize /= FMath::Max(Proxy->LOD0DistributionSetting * GLandscapeLOD0DistributionScale, 1.01f);
++		const float Divider = FMath::Max(Proxy->LODDistributionSetting * GLandscapeLODDistributionScale, 1.01f);
++		for (int32 Index = 1; Index < LODIndex; ++Index)
++		{
++			ScreenSize /= Divider;
++		}
++	}
++	return ScreenSize;
++}
++
++float ULandscapeLODStreamingProxy::GetStreamingLODScreenSize(int32 LODIndex) const
++{
++	return GetLandscapeLODScreenSize(LandscapeComponent, LODIndex, 1.f);
++}
++
+ float GShadowMapWorldUnitsToTexelFactor = -1.0f;
+ static FAutoConsoleVariableRef CVarShadowMapWorldUnitsToTexelFactor(
+ 	TEXT("Landscape.ShadowMapWorldUnitsToTexelFactor"),
+@@ -833,6 +857,16 @@
+ 
+ void FLandscapeRenderSystem::PrepareView(const FSceneView* View)
  {
 +	// Snapshot on the render thread before workers read per-view LOD values.
 +	// This bridges the streamed mobile vertex layout to the UE 4.25 renderer;
@@ -787,39 +1009,115 @@ index f33b40ad2..a51fb726c 100644
 +	}
 +
  	const bool bExecuteInParallel = FApp::ShouldUseThreadingForPerformance()
-@@ -920,3 +930,5 @@ void FLandscapeRenderSystem::ComputeSectionPerViewParameters(
+ 		&& GRenderingThread; // Rendering thread is required to safely use rendering resources in parallel.
+ 
+@@ -918,7 +952,9 @@
+ 		ForcedLODLevel = DrawCollisionLODOverride >= 0 ? DrawCollisionLODOverride : ForcedLODLevel;
+ 		ForcedLODLevel = FMath::Min<int32>(ForcedLODLevel, SectionLODSettings[EntityIndex].LastLODIndex);
  
 -		NewSectionLODValues[EntityIndex] = ForcedLODLevel >= 0 ? ForcedLODLevel : FractionalLOD;
 +		const float FirstResidentLOD = static_cast<float>(SectionCurrentFirstLODIndices[EntityIndex]);
 +		NewSectionLODValues[EntityIndex] = FMath::Max(FirstResidentLOD,
 +			ForcedLODLevel >= 0 ? static_cast<float>(ForcedLODLevel) : FractionalLOD);
  
-@@ -3023,3 +3035,4 @@ void FLandscapeComponentSceneProxy::GetDynamicMeshElements(const TArray<const FS
+ 		if (TessellationFalloffSettings.UseTessellationComponentScreenSizeFalloff && NumEntitiesWithTessellation > 0)
+ 		{
+@@ -1267,26 +1303,15 @@
+ 		HeightmapSubsectionOffsetV = ((float)(InComponent->SubsectionSizeQuads + 1) / (float)FMath::Max<int32>(1, HeightmapTexture->GetSizeY()));
+ 	}
+ 
+-	float ScreenSizeRatioDivider = FMath::Max(InComponent->GetLandscapeProxy()->LOD0DistributionSetting * GLandscapeLOD0DistributionScale, 1.01f);
+-	// Cancel out so that landscape is not affected by r.StaticMeshLODDistanceScale
+-	float CurrentScreenSizeRatio = InComponent->GetLandscapeProxy()->LOD0ScreenSize / CVarStaticMeshLODDistanceScale.GetValueOnAnyThread();
+-
++	const float StaticMeshDistanceScale = CVarStaticMeshLODDistanceScale.GetValueOnAnyThread();
+ 	LODScreenRatioSquared.AddUninitialized(MaxLOD + 1);
+-
+-	// LOD 0 handling
+-	LODScreenRatioSquared[0] = FMath::Square(CurrentScreenSizeRatio);
+-	LODSettings.LOD0ScreenSizeSquared = FMath::Square(CurrentScreenSizeRatio);
+-	CurrentScreenSizeRatio /= ScreenSizeRatioDivider;
+-	LODSettings.LOD1ScreenSizeSquared = FMath::Square(CurrentScreenSizeRatio);
+-	ScreenSizeRatioDivider = FMath::Max(InComponent->GetLandscapeProxy()->LODDistributionSetting * GLandscapeLODDistributionScale, 1.01f);
+-	LODSettings.LODOnePlusDistributionScalarSquared = FMath::Square(ScreenSizeRatioDivider);
+-
+-	// Other LODs
+-	for (int32 LODIndex = 1; LODIndex <= MaxLOD; ++LODIndex) // This should ALWAYS be calculated from the component size, not user MaxLOD override
+-	{
+-		LODScreenRatioSquared[LODIndex] = FMath::Square(CurrentScreenSizeRatio);
+-		CurrentScreenSizeRatio /= ScreenSizeRatioDivider;
+-	}
++	for (int32 LODIndex = 0; LODIndex <= MaxLOD; ++LODIndex)
++	{
++		LODScreenRatioSquared[LODIndex] = FMath::Square(GetLandscapeLODScreenSize(InComponent, LODIndex, StaticMeshDistanceScale));
++	}
++	LODSettings.LOD0ScreenSizeSquared = LODScreenRatioSquared[0];
++	LODSettings.LOD1ScreenSizeSquared = FMath::Square(GetLandscapeLODScreenSize(InComponent, 1, StaticMeshDistanceScale));
++	LODSettings.LODOnePlusDistributionScalarSquared = FMath::Square(FMath::Max(InComponent->GetLandscapeProxy()->LODDistributionSetting * GLandscapeLODDistributionScale, 1.01f));
+ 
+ 	FirstLOD = 0;
+ 	LastLOD = MaxLOD;	// we always need to go to MaxLOD regardless of LODBias as we could need the lowest LODs due to streaming.
+@@ -3021,7 +3046,8 @@
+ 
+ 			const float LODScale = View->LODDistanceFactor * CVarStaticMeshLODDistanceScale.GetValueOnRenderThread();
  			const float MeshScreenSizeSquared = ComputeBoundsScreenRadiusSquared(GetBounds().Origin, GetBounds().SphereRadius, *View);
 -			const int32 LODToRender = ForcedLODLevel >= 0 ? ForcedLODLevel : GetLODFromScreenSize(MeshScreenSizeSquared, LODScale * LODScale);
 +			const int32 LODToRender = FMath::Max<int32>(GetCurrentFirstLODIdx_RenderThread(),
 +				ForcedLODLevel >= 0 ? ForcedLODLevel : GetLODFromScreenSize(MeshScreenSizeSquared, LODScale * LODScale));
  
+ 			FMeshBatch& Mesh = Collector.AllocateMesh();
+ 			GetStaticMeshElement(LODToRender, false, ForcedLODLevel >= 0, Mesh, ParameterArray.ElementParams);
+@@ -4804,6 +4830,14 @@
+ 	}
+ 
+ 	ERHIFeatureLevel::Type FeatureLevel = LevelContext.GetFeatureLevel();
++	if (FeatureLevel <= ERHIFeatureLevel::ES3_1 && IsStreamingRenderAsset(LODStreamingProxy))
++	{
++		const int32 NumLODs = LODStreamingProxy->GetNumMipsForStreaming();
++		const float MeshTexelFactor = ForcedLOD >= 0
++			? -static_cast<float>(NumLODs - FMath::Clamp<int32>(ForcedLOD, 0, NumLODs - 1))
++			: (IsRegistered() ? Bounds.SphereRadius * 2.f : 0.f);
++		new (OutStreamingRenderAssets) FStreamingRenderAssetPrimitiveInfo(LODStreamingProxy, Bounds, MeshTexelFactor, PackedRelativeBox_Identity, true);
++	}
+ 	int32 MaterialInstanceCount = FeatureLevel >= ERHIFeatureLevel::SM5 ? GetMaterialInstanceCount() : MobileMaterialInterfaces.Num();
+ 
+ 	for (int32 MaterialIndex = 0; MaterialIndex < MaterialInstanceCount; ++MaterialIndex)
 diff --git a/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp b/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
-index b48664278..964ae9079 100644
 --- a/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
 +++ b/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
-@@ -254,87 +254,84 @@ void SerializeLandscapeMobileHoleData(FMemoryArchive& Ar, FLandscapeMobileHoleDa
+@@ -252,91 +252,88 @@
+ 	}
+ }
  
 -/**
 - * Container for FLandscapeVertexBufferMobile that we can reference from a thread-safe shared pointer
 - * while ensuring the vertex buffer is always destroyed on the render thread.
 - **/
 -struct FLandscapeMobileRenderData
-+void FLandscapeVertexBufferMobile::UpdateMemoryStat(int32 Delta)
- {
+-{
 -	FLandscapeVertexBufferMobile* VertexBuffer = nullptr;
 -	FLandscapeMobileHoleData* HoleData = nullptr;
 -	FOccluderVertexArraySP OccluderVerticesSP;
+-
+-	FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData)
+-	{
+-		FMemoryReader MemAr(InPlatformData);
+-
+-		int32 NumHoleLods;
+-		MemAr << NumHoleLods;
+-		if (NumHoleLods > 0)
+-		{
+-			HoleData = new FLandscapeMobileHoleData;
+-			HoleData->NumHoleLods = NumHoleLods;
+-
+-			bool b16BitIndices;
+-			MemAr << b16BitIndices;
+-			if (b16BitIndices)
++void FLandscapeVertexBufferMobile::UpdateMemoryStat(int32 Delta)
++{
 +	INC_DWORD_STAT_BY(STAT_LandscapeVertexMem, Delta);
 +}
- 
--	FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData)
++
 +FLandscapeMobileRenderData::FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData, uint8 InCurFirstLODIdx)
 +	: CurrentFirstLODIdx(InCurFirstLODIdx)
 +{
@@ -828,45 +1126,20 @@ index b48664278..964ae9079 100644
 +	int32 NumHoleLods;
 +	MemAr << NumHoleLods;
 +	if (NumHoleLods > 0)
- 	{
--		FMemoryReader MemAr(InPlatformData);
++	{
 +		HoleData = new FLandscapeMobileHoleData;
 +		HoleData->NumHoleLods = NumHoleLods;
- 
--		int32 NumHoleLods;
--		MemAr << NumHoleLods;
--		if (NumHoleLods > 0)
++
 +		bool b16BitIndices;
 +		MemAr << b16BitIndices;
 +		if (b16BitIndices)
- 		{
--			HoleData = new FLandscapeMobileHoleData;
--			HoleData->NumHoleLods = NumHoleLods;
--
--			bool b16BitIndices;
--			MemAr << b16BitIndices;
--			if (b16BitIndices)
--			{
--				SerializeLandscapeMobileHoleData<uint16>(MemAr, *HoleData);
--			}
--			else
--			{
--				SerializeLandscapeMobileHoleData<uint32>(MemAr, *HoleData);
--			}
++		{
 +			SerializeLandscapeMobileHoleData<uint16>(MemAr, *HoleData);
- 		}
--
++		}
 +		else
- 		{
--			int32 VertexCount;
--			MemAr << VertexCount;
--			TArray<uint8> VertexData;
--			VertexData.SetNumUninitialized(VertexCount*sizeof(FLandscapeMobileVertex));
--			MemAr.Serialize(VertexData.GetData(), VertexData.Num());
--			VertexBuffer = new FLandscapeVertexBufferMobile(MoveTemp(VertexData));
++		{
 +			SerializeLandscapeMobileHoleData<uint32>(MemAr, *HoleData);
- 		}
--		
++		}
 +	}
 +
 +	{
@@ -882,7 +1155,51 @@ index b48664278..964ae9079 100644
 +		int32 NumOccluderVertices;
 +		MemAr << NumOccluderVertices;
 +		if (NumOccluderVertices > 0)
- 		{
++		{
++			OccluderVerticesSP = MakeShared<FOccluderVertexArray, ESPMode::ThreadSafe>();
++			OccluderVerticesSP->SetNumUninitialized(NumOccluderVertices);
++			MemAr.Serialize(OccluderVerticesSP->GetData(), NumOccluderVertices * sizeof(FVector));
++
++			INC_DWORD_STAT_BY(STAT_LandscapeOccluderMem, OccluderVerticesSP->GetAllocatedSize());
++		}
++	}
++}
++
++FLandscapeMobileRenderData::~FLandscapeMobileRenderData()
++{
++	// Make sure the vertex buffer is always destroyed from the render thread
++	if (VertexBuffer != nullptr)
++	{
++		if (IsInRenderingThread())
++		{
++			delete VertexBuffer;
++			delete HoleData;
++		}
++		else
++		{
++			FLandscapeVertexBufferMobile* InVertexBuffer = VertexBuffer;
++			FLandscapeMobileHoleData* InHoleData = HoleData;
++			ENQUEUE_RENDER_COMMAND(InitCommand)(
++				[InVertexBuffer, InHoleData](FRHICommandListImmediate& RHICmdList)
+ 			{
+-				SerializeLandscapeMobileHoleData<uint16>(MemAr, *HoleData);
+-			}
+-			else
+-			{
+-				SerializeLandscapeMobileHoleData<uint32>(MemAr, *HoleData);
+-			}
+-		}
+-
+-		{
+-			int32 VertexCount;
+-			MemAr << VertexCount;
+-			TArray<uint8> VertexData;
+-			VertexData.SetNumUninitialized(VertexCount*sizeof(FLandscapeMobileVertex));
+-			MemAr.Serialize(VertexData.GetData(), VertexData.Num());
+-			VertexBuffer = new FLandscapeVertexBufferMobile(MoveTemp(VertexData));
+-		}
+-		
+-		{
 -			int32 NumOccluderVertices;
 -			MemAr << NumOccluderVertices;
 -			if (NumOccluderVertices > 0)
@@ -890,27 +1207,17 @@ index b48664278..964ae9079 100644
 -				OccluderVerticesSP = MakeShared<FOccluderVertexArray, ESPMode::ThreadSafe>();
 -				OccluderVerticesSP->SetNumUninitialized(NumOccluderVertices);
 -				MemAr.Serialize(OccluderVerticesSP->GetData(), NumOccluderVertices * sizeof(FVector));
-+			OccluderVerticesSP = MakeShared<FOccluderVertexArray, ESPMode::ThreadSafe>();
-+			OccluderVerticesSP->SetNumUninitialized(NumOccluderVertices);
-+			MemAr.Serialize(OccluderVerticesSP->GetData(), NumOccluderVertices * sizeof(FVector));
- 
+-
 -				INC_DWORD_STAT_BY(STAT_LandscapeOccluderMem, OccluderVerticesSP->GetAllocatedSize());
 -			}
-+			INC_DWORD_STAT_BY(STAT_LandscapeOccluderMem, OccluderVerticesSP->GetAllocatedSize());
- 		}
- 	}
-+}
- 
+-		}
+-	}
+-
 -	~FLandscapeMobileRenderData()
-+FLandscapeMobileRenderData::~FLandscapeMobileRenderData()
-+{
-+	// Make sure the vertex buffer is always destroyed from the render thread
-+	if (VertexBuffer != nullptr)
- 	{
+-	{
 -		// Make sure the vertex buffer is always destroyed from the render thread 
 -		if (VertexBuffer != nullptr)
-+		if (IsInRenderingThread())
- 		{
+-		{
 -			if (IsInRenderingThread())
 -			{
 -				delete VertexBuffer;
@@ -927,25 +1234,19 @@ index b48664278..964ae9079 100644
 -					delete InHoleData;
 -				});
 -			}
-+			delete VertexBuffer;
-+			delete HoleData;
- 		}
+-		}
 -
 -		if (OccluderVerticesSP.IsValid())
-+		else
- 		{
+-		{
 -			DEC_DWORD_STAT_BY(STAT_LandscapeOccluderMem, OccluderVerticesSP->GetAllocatedSize());
-+			FLandscapeVertexBufferMobile* InVertexBuffer = VertexBuffer;
-+			FLandscapeMobileHoleData* InHoleData = HoleData;
-+			ENQUEUE_RENDER_COMMAND(InitCommand)(
-+				[InVertexBuffer, InHoleData](FRHICommandListImmediate& RHICmdList)
-+			{
+-		}
+-	}
+-};
 +				delete InVertexBuffer;
 +				delete InHoleData;
 +			});
- 		}
- 	}
--};
++		}
++	}
 +
 +	if (OccluderVerticesSP.IsValid())
 +	{
@@ -955,16 +1256,28 @@ index b48664278..964ae9079 100644
 +
 +
  
-@@ -472,3 +469,3 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
+ FLandscapeComponentSceneProxyMobile::FLandscapeComponentSceneProxyMobile(ULandscapeComponent* InComponent)
+ 	: FLandscapeComponentSceneProxy(InComponent)
+@@ -470,7 +467,7 @@
+ 	// This function is expected to be called from either the GameThread or via ParallelFor from the GameThread
+ 	check(!IsInRenderingThread());
  
 -	if (FPlatformProperties::RequiresCookedData() && CachedRenderData.IsValid())
 +	if ((FPlatformProperties::RequiresCookedData() || bLegacyCookedData) && CachedRenderData.IsValid())
  	{
-@@ -480,2 +477,3 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
+ 		// on device we can re-use the cached data if we are re-registering our component.
+ 		return CachedRenderData;
+@@ -478,6 +475,7 @@
+ 	else
+ 	{
  		check(CompressedLandscapeData.Num() > 0);
 +		CachedRenderData.Reset();
  
-@@ -501,6 +499,6 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
+ 		FMemoryReader Ar(CompressedLandscapeData);
+ 
+@@ -499,10 +497,10 @@
+ 
+ 		verify(FCompression::UncompressMemory(NAME_Zlib, UncompressedData.GetData(), UncompressedSize, CompressedData.GetData(), CompressedSize));
  
 -		TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> RenderData = MakeShareable(new FLandscapeMobileRenderData(MoveTemp(UncompressedData)));
 +		TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> RenderData = MakeShareable(new FLandscapeMobileRenderData(MoveTemp(UncompressedData), static_cast<uint8>(StreamingLODDataArray.Num())));
@@ -973,7 +1286,11 @@ index b48664278..964ae9079 100644
 -		if (FPlatformProperties::RequiresCookedData())
 +		if (FPlatformProperties::RequiresCookedData() || bLegacyCookedData)
  		{
-@@ -529 +527,11 @@ void FLandscapeComponentSceneProxyMobile::ApplyMeshElementModifier(FMeshBatchEle
+ 			// free the compressed data now that we have used it to create the render data.
+ 			CompressedLandscapeData.Empty();
+@@ -527,3 +525,13 @@
+ 		InOutMeshElement.MaxVertexIndex = HoleData.MaxHoleIndex;
+ 	}
  }
 +
 +// Compatibility integration follows the UE 4.26 mobile residency query.
@@ -986,25 +1303,33 @@ index b48664278..964ae9079 100644
 +	return MobileRenderData->CurrentFirstLODIdx;
 +}
 diff --git a/Engine/Source/Runtime/Landscape/Public/LandscapeRender.h b/Engine/Source/Runtime/Landscape/Public/LandscapeRender.h
-index dc71b5c0c..95ceda767 100644
 --- a/Engine/Source/Runtime/Landscape/Public/LandscapeRender.h
 +++ b/Engine/Source/Runtime/Landscape/Public/LandscapeRender.h
-@@ -546,2 +546,4 @@ struct FLandscapeRenderSystem
+@@ -544,6 +544,8 @@
+ 	} TessellationFalloffSettings;
+ 
  	TArray<LODSettingsComponent> SectionLODSettings;
 +	// Render-thread snapshot for parallel per-view mobile mesh LOD selection.
 +	TArray<uint8> SectionCurrentFirstLODIndices;
  	TResourceArray<float> SectionLODValues;
-@@ -997,2 +999,5 @@ protected:
- 
+ 	TResourceArray<float> SectionLODBiases;
+ 	TResourceArray<float> SectionTessellationFalloffC;
+@@ -994,6 +996,9 @@
+ 	bool GetMeshElementForVirtualTexture(int32 InLodIndex, ERuntimeVirtualTextureMaterialType MaterialType, UMaterialInterface* InMaterialInterface, FMeshBatch& OutMeshBatch, TArray<FLandscapeBatchElementParams>& OutStaticBatchParamArray) const;
+ 	template<class ArrayType> bool GetStaticMeshElement(int32 LODIndex, bool bForToolMesh, bool bForcedLOD, FMeshBatch& MeshBatch, ArrayType& OutStaticBatchParamArray) const;
+ 	void BuildDynamicMeshElement(const FViewCustomDataLOD* InPrimitiveCustomData, bool InToolMesh, bool InHasTessellation, bool InDisableTessellation, FMeshBatch& OutMeshBatch, TArray<FLandscapeBatchElementParams, SceneRenderingAllocator>& OutStaticBatchParamArray) const;
++
 +	// Desktop landscapes have their complete vertex data resident.
 +	virtual uint8 GetCurrentFirstLODIdx_RenderThread() const { return 0; }
-+
+ 
  	virtual void ApplyMeshElementModifier(FMeshBatchElement& InOutMeshElement, int32 InLodIndex) const {}
+ 
 diff --git a/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h b/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
-index e10bb433f..8d179c7df 100644
 --- a/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
 +++ b/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
-@@ -106,2 +106,15 @@ public:
+@@ -104,6 +104,19 @@
+ 	* Initialize the RHI for this rendering resource 
+ 	*/
  	virtual void InitRHI() override;
 +	static LANDSCAPE_API void UpdateMemoryStat(int32 Delta);
 +};
@@ -1020,7 +1345,13 @@ index e10bb433f..8d179c7df 100644
 +	FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData, uint8 InCurFirstLODIdx);
 +	~FLandscapeMobileRenderData();
  };
-@@ -127,2 +140,3 @@ public:
+ 
+ //
+@@ -125,6 +138,7 @@
+ 
+ 	friend class FLandscapeVertexBufferMobile;
  
 +	virtual uint8 GetCurrentFirstLODIdx_RenderThread() const override;
  	virtual void ApplyMeshElementModifier(FMeshBatchElement& InOutMeshElement, int32 InLodIndex) const override;
+ };
+ 

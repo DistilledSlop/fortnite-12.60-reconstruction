@@ -12,13 +12,15 @@
     "UE4.25-only DoesMipDataExist queries actual bulk-data backing; original proxy has no matching vtable slot.",
     "CalcCumulativeLODSize accumulates original unsigned 32-bit bulk sizes in 64 bits and returns the int32 required by the local base API.",
     "Unconditional cached-resident accessors preserve original byte reads/writes in editor hosts.",
-    "2026-11-05 fresh visual build: CopyBufferRegion is gated by RHI_RAYTRACING in the local Engine and unavailable on Linux. Preserve the exact retained vertex prefix with synchronized RHI readback/upload; stream-in uses one write lock covering retained prefix and appended LODs to avoid discard on a second write lock. This adds a CPU synchronization cost versus the original GPU copy."
+    "2026-11-05 fresh visual build: CopyBufferRegion is gated by RHI_RAYTRACING in the local Engine and unavailable on Linux. Preserve the exact retained vertex prefix with synchronized RHI readback/upload; stream-in uses one write lock covering retained prefix and appended LODs to avoid discard on a second write lock. This adds a CPU synchronization cost versus the original GPU copy.",
+    "2026-11-05 fresh visual build: add explicit landscape asset classification and generic registration to the host streamer. Share the existing landscape renderer screen-threshold calculation, supply mobile component primitive references and forced LOD counts, and refresh cached readiness plus settled resident LOD state. This is a host compatibility bridge; original binary streaming selection policy is not established by this adaptation."
   ],
   "verification": [
     "Read-only review against local bulk-data, render-asset-update and RHI API declarations found no further interface mismatches.",
     "Source whitespace checks passed; compatibility patch reverse-application check confirms the patch matches the current Engine tree.",
     "No build, runtime or automated tests run under the deferred native-body checkpoint rule.",
-    "Fresh client build exposed the two unsupported CopyBufferRegion calls. Correction applied to both the tracked compatibility patch and local Engine; rebuild/runtime verification pending."
+    "Fresh client build exposed the two unsupported CopyBufferRegion calls. Correction applied to both the tracked compatibility patch and local Engine; rebuild/runtime verification pending.",
+    "Merged the streaming-manager bridge into the existing replayable compatibility patch; reverse-application check passes against the updated local Engine. Fresh client rebuild is running."
   ],
   "remaining": [
     "Build and actual original terrain loading/rendering under checkpoint cadence.",
