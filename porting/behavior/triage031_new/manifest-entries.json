@@ -1,0 +1,19 @@
+[
+  {
+    "class": "UFortCheatManager",
+    "function": "CreateProfileGoCollectionForCreativeIslands",
+    "kind": "exec",
+    "signature": "void CreateProfileGoCollectionForCreativeIslands(int32 GridStepsX, int32 GridStepsY, int32 RotationSteps, int32 Quad)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage031_new/UFortCheatManager_CreateProfileGoCollectionForCreativeIslands.inc",
+    "address": "0x1428023e0",
+    "native_body_address": "0x1406801c0",
+    "reflection_flags": "0x80605",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Wrapper parses four integer inputs and calls shared bare-return native target; no output parameters."
+  }
+]

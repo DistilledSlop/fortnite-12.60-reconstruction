@@ -49,5 +49,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TMap<FUniqueNetIdRepl, UAthenaRemotePlayerViewData*> GetPlayerDataMap() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TMap<uint8, UAthenaRemoteSquadViewData*> GetSquadDataMap() const;
+
 };
 

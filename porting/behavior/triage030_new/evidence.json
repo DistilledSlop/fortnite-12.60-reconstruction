@@ -1,0 +1,20 @@
+[
+  {
+    "function": "SetReplayContext",
+    "wrapper": "porting/generated/native228-fresh-callees/0x1452bec50.c",
+    "native_body": "porting/generated/native228-fresh-callees/0x144ff0280.c",
+    "assembly": "porting/generated/native228-fresh-callees/0x144ff0280.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "behavior": "Reflected ReplayContext offset 0x298; native body compares and conditionally stores pointer.",
+    "class": "UFortReplayBase"
+  },
+  {
+    "function": "SetIsFaded",
+    "wrapper": "porting/generated/native228-fresh-callees/0x1452b69b0.c",
+    "native_body": "porting/generated/native228-fresh-callees/0x1450fd630.c",
+    "assembly": "porting/generated/native228-fresh-callees/0x1450fd630.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "behavior": "Existing recovered byte field offset 0x569 also backs GetIsFaded.",
+    "class": "UFortQuestMapEventCallout"
+  }
+]

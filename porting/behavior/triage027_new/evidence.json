@@ -1,0 +1,20 @@
+[
+  {
+    "function": "K2_IsInProgress",
+    "class": "AFortMinigame",
+    "wrapper_capture": "porting/generated/native-triage016/0x1429c3e90.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "enum_evidence": "porting/generated/reflection/enum_blocks.json (block 0x147ad72c8)",
+    "behavior": "Writes 0 for CurrentState values 1 through 5 and 1 for all other byte values.",
+    "dependency": "EFortMinigameExec reflected enum: Yes=0, No=1; header is not currently generated."
+  },
+  {
+    "function": "K2_HasStarted",
+    "class": "AFortMinigame",
+    "wrapper_capture": "porting/generated/native-triage016/0x1429c3df0.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "enum_evidence": "porting/generated/reflection/enum_blocks.json (block 0x147ad72c8)",
+    "behavior": "Writes 1 when CurrentState is zero and 0 otherwise.",
+    "dependency": "EFortMinigameExec reflected enum: Yes=0, No=1; header is not currently generated."
+  }
+]

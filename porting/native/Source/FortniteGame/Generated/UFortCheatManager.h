@@ -306,6 +306,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void CreateProfileGoCollectionForCreativeIslands(int32 GridStepsX, int32 GridStepsY, int32 RotationSteps, int32 Quad);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void CycleDebugAbilitySystem();
 public:

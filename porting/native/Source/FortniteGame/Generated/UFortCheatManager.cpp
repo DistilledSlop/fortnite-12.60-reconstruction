@@ -295,6 +295,12 @@ void UFortCheatManager::CraftFree()
 	return;
 }
 
+void UFortCheatManager::CreateProfileGoCollectionForCreativeIslands(int32 GridStepsX, int32 GridStepsY, int32 RotationSteps, int32 Quad)
+{
+	// CONFIDENCE: HIGH; wrapper invokes the captured bare-return native target.
+	// Native target 0x1406801c0 is a bare return.
+}
+
 void UFortCheatManager::CycleDebugAbilitySystem()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

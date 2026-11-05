@@ -1,0 +1,34 @@
+[
+  {
+    "function": "SetReplayContext",
+    "kind": "exec",
+    "signature": "void SetReplayContext(UFortReplayContext* InReplayContext)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/triage030_new/UFortReplayBase_SetReplayContext.inc",
+    "confidence": "high",
+    "address": "0x1452bec50",
+    "native_body_address": "0x144ff0280",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Reflected ReplayContext offset 0x298; native body compares and conditionally stores pointer.",
+    "class": "UFortReplayBase"
+  },
+  {
+    "function": "SetIsFaded",
+    "kind": "exec",
+    "signature": "void SetIsFaded(bool Faded)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/triage030_new/UFortQuestMapEventCallout_SetIsFaded.inc",
+    "confidence": "high",
+    "address": "0x1452b69b0",
+    "native_body_address": "0x1450fd630",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Existing recovered byte field offset 0x569 also backs GetIsFaded.",
+    "class": "UFortQuestMapEventCallout"
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "class": "UFortCheatManager",
+    "function": "CreateProfileGoCollectionForCreativeIslands",
+    "wrapper_capture": "porting/generated/native-triage021/0x1428023e0.asm",
+    "wrapper_decompilation": "porting/generated/native-triage021/0x1428023e0.c",
+    "native_body": "porting/generated/native437-callees/0x1406801c0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "proof": "Wrapper parses four integer inputs, advances frame, calls 0x1406801c0, and returns without additional effects; target is RET. Reflection parameter offsets order inputs GridStepsX, GridStepsY, RotationSteps, Quad, and show no output or return parameter.",
+    "manual_policy_check": "No matching function in porting Python policy files or existing manifest entries at review time."
+  }
+]

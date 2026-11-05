@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	UFortReplayContext* ReplayContext;
 
+	UFUNCTION(BlueprintCallable)
+	void SetReplayContext(UFortReplayContext* InReplayContext);
+
 };
 

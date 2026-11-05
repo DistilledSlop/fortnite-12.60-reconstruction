@@ -110,5 +110,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsFaded() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetIsFaded(bool Faded);
+
 };
 

@@ -9,6 +9,7 @@
 #include "EAthenaGamePhase.h"
 #include "EFortMinigameClassResetType.h"
 #include "EFortMinigameEnd.h"
+#include "EFortMinigameExec.h"
 #include "EFortMinigamePlayerSpawnLocationSetting.h"
 #include "EFortMinigamePostGameSpawnLocationSetting.h"
 #include "EFortMinigameState.h"
@@ -737,6 +738,12 @@ protected:
 	void K2_ExitedVolumeEvent(AFortPlayerState* LeftPlayerState);
 	virtual void K2_ExitedVolumeEvent_Implementation(AFortPlayerState* LeftPlayerState);
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void K2_HasStarted(EFortMinigameExec& OutExec);
+
+	UFUNCTION(BlueprintCallable)
+	void K2_IsInProgress(EFortMinigameExec& OutExec);
 
 	UFUNCTION()
 	void OnGamePhaseChanged(EAthenaGamePhase GamePhase);
