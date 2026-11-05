@@ -59630,5 +59630,47 @@
     ],
     "notes": "Requires WaterConsoleVariable.cpp compiled exactly once in FortniteGame.",
     "class": "AFortPlayerPawn"
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "IsGamePhaseNotificationSkipped",
+    "kind": "exec",
+    "signature": "bool IsGamePhaseNotificationSkipped(EAthenaGamePhaseStep GamePhaseToSkip) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x14291ff20",
+    "native_body_address": "0x14199e4a0",
+    "inc_path": "porting/behavior/gamestate_playlist_queries_runtime/IsGamePhaseNotificationSkipped.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Selects override playlist or base playlist and calls existing UFortPlaylistAthenaHelper native body 0x141a4a8e0."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "IsLargePreviewDisabledOnMobile",
+    "kind": "exec",
+    "signature": "bool IsLargePreviewDisabledOnMobile() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x14291ffb0",
+    "native_body_address": "0x14199e4c0",
+    "inc_path": "porting/behavior/gamestate_playlist_queries_runtime/IsLargePreviewDisabledOnMobile.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Selects override playlist or base playlist and calls existing UFortPlaylistAthenaHelper native body 0x141a4ad90."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "IsPlaygroundModePlaylist",
+    "kind": "exec",
+    "signature": "bool IsPlaygroundModePlaylist() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1429200a0",
+    "native_body_address": "0x14199e830",
+    "inc_path": "porting/behavior/gamestate_playlist_queries_runtime/IsPlaygroundModePlaylist.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Selects override playlist or base playlist and calls existing UFortPlaylistAthenaHelper native body 0x141a4b0d0."
   }
 ]

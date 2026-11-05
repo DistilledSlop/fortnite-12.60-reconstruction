@@ -975,6 +975,15 @@ public:
 	bool IsCreativeUtilitySpawningAllowedPlaylist() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsGamePhaseNotificationSkipped(EAthenaGamePhaseStep GamePhaseToSkip) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLargePreviewDisabledOnMobile() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlaygroundModePlaylist() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTeleportToCreativeHubAllowed(AFortPlayerState* PlayerState) const;
 
 	UFUNCTION()

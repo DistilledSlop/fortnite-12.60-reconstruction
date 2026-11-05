@@ -20,6 +20,7 @@
 #include "UFortMutatorListComponent.h"
 #include "UFortMutatorOwner.h"
 #include "UFortPlaylistAthena.h"
+#include "UFortPlaylistAthenaHelper.h"
 #include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
@@ -382,6 +383,24 @@ bool AFortGameStateAthena::IsCreativeUtilitySpawningAllowedPlaylist() const
 	// CONFIDENCE: HIGH
 	// Evidence: porting/behavior/playlist_mode_evidence.md
 	return PlaylistAllowsCreativeUtilitySpawning(GetCurrentPlaylistAthena());
+}
+
+bool AFortGameStateAthena::IsGamePhaseNotificationSkipped(EAthenaGamePhaseStep GamePhaseToSkip) const
+{
+	// CONFIDENCE: HIGH; captured native playlist selection and helper dispatch.
+	return UFortPlaylistAthenaHelper::IsGamePhaseNotificationSkipped(GetCurrentPlaylistAthena(), GamePhaseToSkip);
+}
+
+bool AFortGameStateAthena::IsLargePreviewDisabledOnMobile() const
+{
+	// CONFIDENCE: HIGH; captured native playlist selection and helper dispatch.
+	return UFortPlaylistAthenaHelper::IsLargePreviewDisabledOnMobile(GetCurrentPlaylistAthena());
+}
+
+bool AFortGameStateAthena::IsPlaygroundModePlaylist() const
+{
+	// CONFIDENCE: HIGH; captured native playlist selection and helper dispatch.
+	return UFortPlaylistAthenaHelper::IsPlaygroundModePlaylist(GetCurrentPlaylistAthena());
 }
 
 bool AFortGameStateAthena::IsTeleportToCreativeHubAllowed(AFortPlayerState* PlayerState) const
