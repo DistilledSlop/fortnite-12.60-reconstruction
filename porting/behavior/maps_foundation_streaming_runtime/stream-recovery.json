@@ -42,5 +42,26 @@
     "parent_offset": "0xd78",
     "assembly": "MOV RCX,[RCX+0xd78] immediately before recursive CALL confirms parent receiver",
     "scope": "Complete recursive predicate only; visibility and unload caller effects remain incomplete."
+  },
+  "replication_callback_evidence": {
+    "on_rep_level_to_stream": {
+      "address": "0x141be5bc0",
+      "branches": [
+        "If foundation byte +0xb68 has mask 0x40, clear that bit and return immediately (0x141be5bc6-0x141be5be1). Its identity and writers are not established.",
+        "Otherwise, only state byte +0xb6a == 1 proceeds. Call streaming body 0x141bed450(this, false) unless shared switch is enabled, either StreamingData array count is nonzero, and actor role byte +0xf0 is not 3 (0x141be5be2-0x141be5c22)."
+      ],
+      "next_evidence": "Identify all writes and semantics of +0xb68 mask 0x40 and recover shared switch/state and 0x141bed450 before implementing this callback."
+    },
+    "on_rep_server_streamed_in_level": {
+      "address": "0x141be5c60",
+      "branches": [
+        "If foundation byte +0xb68 has mask 0x80, clear that bit and return immediately (0x141be5c66-0x141be5c81). Its identity and writers are not established.",
+        "Otherwise return if +0xb68 mask 0x02 is clear. Reflection names bServerStreamedInLevel and its setter 0x14273efd0 sets exactly this bit.",
+        "With the bit set, a static foundation with no dynamic parent tail-calls shared switch getter 0x141d54630; a dynamic foundation or parent looks up an entry using virtual slot 0x150, then tail-calls 0x141d59c70(entry value or null, this, 3). See 0x141be5c82-0x141be5d1b."
+      ],
+      "next_evidence": "Resolve writes and purpose of +0xb68 mask 0x80, the lookup container and virtual slot 0x150, and the effects and null contract of 0x141d59c70. Do not replace this path with an unconditional load or visibility change."
+    },
+    "reproduction": "objdump -d -Mintel --start-address=0x141be5bc0 --stop-address=0x141be5d1c porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe; objdump -d -Mintel --start-address=0x14273efd0 --stop-address=0x14273efd8 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+    "limit": "Static branch evidence only; neither callback is complete enough to port."
   }
 }

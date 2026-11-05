@@ -1,0 +1,767 @@
+{
+  "schema": "landscape-original-uniform-contract-v1",
+  "image": {
+    "path": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+    "sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680"
+  },
+  "contracts": [
+    {
+      "parameter_name": "LandscapeParameters",
+      "struct_type": "FLandscapeUniformShaderParameters",
+      "original": {
+        "struct_size": 240,
+        "members": [
+          {
+            "name": "ComponentBaseX",
+            "offset": 0,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "143af6790"
+          },
+          {
+            "name": "ComponentBaseY",
+            "offset": 4,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "143af6830"
+          },
+          {
+            "name": "SubsectionSizeVerts",
+            "offset": 8,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "143af6fb0"
+          },
+          {
+            "name": "NumSubsections",
+            "offset": 12,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "143af6e70"
+          },
+          {
+            "name": "LastLOD",
+            "offset": 16,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "143af6b50"
+          },
+          {
+            "name": "HeightmapUVScaleBias",
+            "offset": 32,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "143af6a10"
+          },
+          {
+            "name": "WeightmapUVScaleBias",
+            "offset": 48,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "143af70f0"
+          },
+          {
+            "name": "LandscapeLightmapScaleBias",
+            "offset": 64,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "143af6ab0"
+          },
+          {
+            "name": "SubsectionSizeVertsLayerUVPan",
+            "offset": 80,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "143af7050"
+          },
+          {
+            "name": "SubsectionOffsetParams",
+            "offset": 96,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "143af6f10"
+          },
+          {
+            "name": "LightmapSubsectionOffsetParams",
+            "offset": 112,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "143af6bf0"
+          },
+          {
+            "name": "LocalToWorldNoScaling",
+            "offset": 128,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 4,
+            "columns": 4,
+            "elements": 0,
+            "size": 64,
+            "shader_type": "",
+            "helper": "143af6c90"
+          },
+          {
+            "name": "HeightmapTexture",
+            "offset": 192,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "143af68d0",
+            "resource_index": 0
+          },
+          {
+            "name": "HeightmapTextureSampler",
+            "offset": 200,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "143af6970",
+            "resource_index": 1
+          },
+          {
+            "name": "NormalmapTexture",
+            "offset": 208,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "143af6d30",
+            "resource_index": 2
+          },
+          {
+            "name": "NormalmapTextureSampler",
+            "offset": 216,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "143af6dd0",
+            "resource_index": 3
+          },
+          {
+            "name": "XYOffsetmapTexture",
+            "offset": 224,
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "helper": "143af7190",
+            "resource_index": 4
+          },
+          {
+            "name": "XYOffsetmapTextureSampler",
+            "offset": 232,
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "helper": "143af7230",
+            "resource_index": 5
+          }
+        ]
+      },
+      "original_resource_layout_hash": 100467976,
+      "resources": [
+        {
+          "offset": 192,
+          "base_type": 5,
+          "path": "HeightmapTexture",
+          "resource_index": 0
+        },
+        {
+          "offset": 200,
+          "base_type": 8,
+          "path": "HeightmapTextureSampler",
+          "resource_index": 1
+        },
+        {
+          "offset": 208,
+          "base_type": 5,
+          "path": "NormalmapTexture",
+          "resource_index": 2
+        },
+        {
+          "offset": 216,
+          "base_type": 8,
+          "path": "NormalmapTextureSampler",
+          "resource_index": 3
+        },
+        {
+          "offset": 224,
+          "base_type": 5,
+          "path": "XYOffsetmapTexture",
+          "resource_index": 4
+        },
+        {
+          "offset": 232,
+          "base_type": 8,
+          "path": "XYOffsetmapTextureSampler",
+          "resource_index": 5
+        }
+      ],
+      "identity_literal_address": "0x1467b66b0",
+      "uniform_literal_address": "0x1467b6688",
+      "provenance": [
+        {
+          "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/apollo-material-evidence/terrain-uniform-initializers/0x140506010.asm",
+          "sha256": "bed28619bf7e6c6ff5f93c56e2b1f1324e0e3bfdc94c42517fd95fe39ac1d273"
+        },
+        {
+          "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/apollo-material-evidence/terrain-uniform-chain-landscape/member-chain.json",
+          "sha256": "72270e2b2d1a6fd67a46f383a38f6887af75fc53b9fb2db05ec40bd546dfff8b"
+        }
+      ],
+      "original_shader_associations": [
+        {
+          "shader_index": 1752,
+          "uniform_buffer": 5,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1753,
+          "uniform_buffer": 5,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1754,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1755,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57809,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57810,
+          "uniform_buffer": 5,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1760,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57811,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57812,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 63205,
+          "uniform_buffer": 2,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 63207,
+          "uniform_buffer": 2,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 63208,
+          "uniform_buffer": 2,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 63209,
+          "uniform_buffer": 2,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57818,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57819,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 63802,
+          "uniform_buffer": 2,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1773,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1774,
+          "uniform_buffer": 5,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1775,
+          "uniform_buffer": 5,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1776,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1777,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57822,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57823,
+          "uniform_buffer": 5,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1780,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57824,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57825,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57826,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57827,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 1785,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 57828,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 63803,
+          "uniform_buffer": 1,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 63804,
+          "uniform_buffer": 1,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        },
+        {
+          "shader_index": 63805,
+          "uniform_buffer": 1,
+          "resource_table_active": true,
+          "original_layout_hash": 100467976
+        }
+      ]
+    },
+    {
+      "parameter_name": "LandscapeContinuousLODParameters",
+      "struct_type": "FLandscapeSectionLODUniformParameters",
+      "original": {
+        "struct_size": 48,
+        "members": [
+          {
+            "name": "Min",
+            "offset": 0,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 2,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "",
+            "helper": "143af63d0"
+          },
+          {
+            "name": "Size",
+            "offset": 8,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 2,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "",
+            "helper": "143af66f0"
+          },
+          {
+            "name": "SectionLOD",
+            "offset": 16,
+            "base_type": 6,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Buffer<float>",
+            "helper": "143af6470",
+            "resource_index": 0
+          },
+          {
+            "name": "SectionLODBias",
+            "offset": 24,
+            "base_type": 6,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Buffer<float>",
+            "helper": "143af6510",
+            "resource_index": 1
+          },
+          {
+            "name": "SectionTessellationFalloffC",
+            "offset": 32,
+            "base_type": 6,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Buffer<float>",
+            "helper": "143af65b0",
+            "resource_index": 2
+          },
+          {
+            "name": "SectionTessellationFalloffK",
+            "offset": 40,
+            "base_type": 6,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Buffer<float>",
+            "helper": "143af6650",
+            "resource_index": 3
+          }
+        ]
+      },
+      "original_resource_layout_hash": 104203782,
+      "resources": [
+        {
+          "offset": 16,
+          "base_type": 6,
+          "path": "SectionLOD",
+          "resource_index": 0
+        },
+        {
+          "offset": 24,
+          "base_type": 6,
+          "path": "SectionLODBias",
+          "resource_index": 1
+        },
+        {
+          "offset": 32,
+          "base_type": 6,
+          "path": "SectionTessellationFalloffC",
+          "resource_index": 2
+        },
+        {
+          "offset": 40,
+          "base_type": 6,
+          "path": "SectionTessellationFalloffK",
+          "resource_index": 3
+        }
+      ],
+      "identity_literal_address": "0x1467b6520",
+      "uniform_literal_address": "0x1467b64d0",
+      "provenance": [
+        {
+          "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/apollo-material-evidence/terrain-uniform-initializers/0x140505f00.asm",
+          "sha256": "7771cd1c79496afdcdf9d590fca10bae125fa923e08dd204efaaa2f9122cffdc"
+        },
+        {
+          "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/apollo-material-evidence/terrain-uniform-chain-continuous/member-chain.json",
+          "sha256": "ebda3e8fd7a28bdb126be108060e64cc5ad6a60d82845df3bd7561cccfce30f2"
+        }
+      ],
+      "original_shader_associations": [
+        {
+          "shader_index": 1752,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1753,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1754,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1755,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57809,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57810,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1760,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57811,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57812,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57818,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57819,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1773,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1774,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1775,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1776,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1777,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57822,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57823,
+          "uniform_buffer": 4,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1780,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57824,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57825,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57826,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 57827,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        },
+        {
+          "shader_index": 1785,
+          "uniform_buffer": 3,
+          "resource_table_active": true,
+          "original_layout_hash": 104203782
+        }
+      ]
+    }
+  ],
+  "shader_report": {
+    "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/apollo-d4-landscape-spirv/d3d-report.json",
+    "sha256": "c764c937cb49fa8259a1c655b73504719c190c72a68ac7d29e6279400d3d253b"
+  },
+  "runtime_verified": false,
+  "limits": "Original metadata ABI only; runtime value semantics, binding and rendering remain unverified. Resource hashes are corroborated by the captured shader wrappers."
+}

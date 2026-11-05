@@ -391,3 +391,15 @@ and reflected buffer spans. Capture hashes pin the original Bind, Serialize and
 element-binding evidence. This is offline evidence composition; complete
 uniform member layouts, pass parameter names, direct-resource bindings and
 live owner installation remain open.
+
+The native output adapter now has a landscape-only entry point for the three
+original landscape factories. It checks each recovered VF parameter name against
+its own serialized slot and retains the existing uniform and descriptor checks.
+The Linux Development client builds with this adapter; execution and attachment
+are still pending, and VT feedback remains rejected. Original initializer and
+member-chain captures also recover `LandscapeParameters` (240 bytes, 18
+members) and `LandscapeContinuousLODParameters` (48 bytes, six members): see
+`behavior/maps_terrain_material_runtime/landscape-uniform-contract.json`. Their resource hashes agree with all 33 and 24 active original shader wrapper
+associations, respectively. The original material shader constructor binds the name
+`VTFeedbackBuffer`; its renderer binding path remains unverified, as documented
+in `behavior/maps_terrain_material_runtime/vt-feedback-contract.json`.
