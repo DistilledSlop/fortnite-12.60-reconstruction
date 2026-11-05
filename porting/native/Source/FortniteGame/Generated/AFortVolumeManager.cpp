@@ -25,6 +25,26 @@ bool AFortVolumeManager::AreIslandsLoading() const
 	return static_cast<uint32>(NativePredicateStorage_0x50c) > 0;
 }
 
+void AFortVolumeManager::DecrementUserIslandLoading()
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	{
+	    --NativePredicateStorage_0x50c;
+	    if (bInSpawningStartup && NativePredicateStorage_0x50c == 0)
+	    {
+	        bInSpawningStartup = false;
+	    }
+	}
+}
+
+void AFortVolumeManager::IncrementUserIslandLoading()
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	{
+	    ++NativePredicateStorage_0x50c;
+	}
+}
+
 AFortVolume* AFortVolumeManager::NativeFindVolumeAtLocation(const FVector& Location) const
 {
 	// CONFIDENCE: HIGH

@@ -117,6 +117,12 @@ public:
 	UFUNCTION()
 	bool AreIslandsLoading() const;
 
+	UFUNCTION()
+	void DecrementUserIslandLoading();
+
+	UFUNCTION()
+	void IncrementUserIslandLoading();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

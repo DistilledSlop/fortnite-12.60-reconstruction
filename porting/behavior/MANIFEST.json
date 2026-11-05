@@ -60391,5 +60391,37 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Delegate at original offset 0xf58; old parameter followed by current field at 0x13b4."
+  },
+  {
+    "function": "IncrementUserIslandLoading",
+    "kind": "exec",
+    "signature": "void IncrementUserIslandLoading()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/batch_005_new/AFortVolumeManager_IncrementUserIslandLoading.inc",
+    "address": "0x142b3c9b0",
+    "reflection_flags": "0x20401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Increments the 32-bit count at 0x50c.",
+    "class": "AFortVolumeManager"
+  },
+  {
+    "function": "DecrementUserIslandLoading",
+    "kind": "exec",
+    "signature": "void DecrementUserIslandLoading()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/batch_005_new/AFortVolumeManager_DecrementUserIslandLoading.inc",
+    "address": "0x142b3b3c0",
+    "reflection_flags": "0x20401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Decrements count at 0x50c; clears bit 0 at 0x508 when the resulting count is zero.",
+    "class": "AFortVolumeManager"
   }
 ]
