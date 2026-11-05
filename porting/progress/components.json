@@ -1118,7 +1118,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "Local websocket status uses the ticket roster for player and ready counts. Local backend tests cover portions of the implementation; original-client integration and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md."
         },
         {
           "id": "backend.game_profile",
@@ -1220,7 +1220,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "Local party invites and pings expire, with configured invite TTL behavior inferred; HTTP tests cover expiry. XMPP, original-client integration and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md."
         },
         {
           "id": "backend.session_beacon",
