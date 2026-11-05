@@ -1,0 +1,10 @@
+[
+  {
+    "class": "UFortVehicleSeatWeaponComponent",
+    "function": "OnRep_OverheatValueRepped",
+    "capture": "porting/generated/native-triage008/0x142b31fa0.c and .asm: wrapper tail-jumps to 0x141a87700, which copies the four bytes at +0xf0 to +0xec and returns",
+    "reflection": "porting/generated/reflection/fortnite_game_reflection.json: OverheatValueRepped float +0xf0 uses this rep notify; CachedOverheatValue float +0xec. native_funcs.json records no parameters and flags 0x80401.",
+    "represented_fields": "porting/native/Source/FortniteGame/Generated/UFortVehicleSeatWeaponComponent.h contains both floats and the OnRep declaration.",
+    "manual_policy_check": "No entry for this function in behavior manifests or porting Python policies; class absent from native_class_blocklist.txt."
+  }
+]

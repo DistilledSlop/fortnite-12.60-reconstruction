@@ -31,5 +31,11 @@ public:
 	UPROPERTY()
 	AFortPlayerController* Builder;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(ABuildingActor*& _Building, TEnumAsByte<EFortBuildingType::Type>& _BuildingType, AFortPlayerController*& _Builder);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(ABuildingActor* _Building, EFortBuildingType::Type _BuildingType, AFortPlayerController* _Builder, UFortPlayerBuiltParams*& ThisParam);
+
 };
 

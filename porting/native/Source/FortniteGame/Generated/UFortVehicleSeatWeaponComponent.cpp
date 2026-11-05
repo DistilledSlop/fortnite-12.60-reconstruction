@@ -32,7 +32,8 @@ float UFortVehicleSeatWeaponComponent::GetOverheatScaler()
 
 void UFortVehicleSeatWeaponComponent::OnRep_OverheatValueRepped()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH; the original copies the replicated float into the cached float.
+	CachedOverheatValue = OverheatValueRepped;
 }
 
 void UFortVehicleSeatWeaponComponent::OnRep_ShotsFired()

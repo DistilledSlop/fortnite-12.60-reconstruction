@@ -29,5 +29,11 @@ public:
 	UPROPERTY()
 	int32 AmountDropped;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(UFortWorldItemDefinition*& _DroppedItemDefinition, AFortPlayerController*& _DroppedBy, int32& _AmountCollected);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(UFortWorldItemDefinition* _DroppedItemDefinition, AFortPlayerController* _DroppedBy, int32 _AmountCollected, UFortItemDroppedParams*& ThisParam);
+
 };
 

@@ -25,5 +25,11 @@ public:
 	UPROPERTY()
 	AController* KilledBy;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortPlayerPawn*& _KilledPlayer, AController*& _KilledBy);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortPlayerPawn* _KilledPlayer, AController* _KilledBy, UFortPlayerDBNOEnterParams*& ThisParam);
+
 };
 

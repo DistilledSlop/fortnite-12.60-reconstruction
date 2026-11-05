@@ -25,5 +25,11 @@ public:
 	UPROPERTY()
 	AController* RevivedBy;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortPlayerPawn*& _RevivedPlayer, AController*& _RevivedBy);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortPlayerPawn* _RevivedPlayer, AController* _RevivedBy, UFortPlayerDBNORevivedParams*& ThisParam);
+
 };
 

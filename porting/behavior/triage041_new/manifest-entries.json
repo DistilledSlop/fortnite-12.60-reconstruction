@@ -1,0 +1,62 @@
+[
+  {
+    "class": "UFortPlayerDBNOEnterParams",
+    "function": "SetParams",
+    "kind": "exec",
+    "signature": "void SetParams(AFortPlayerPawn* _KilledPlayer, AController* _KilledBy, UFortPlayerDBNOEnterParams*& ThisParam)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage041_new/UFortPlayerDBNOEnterParams_SetParams.inc",
+    "address": "0x142b77780",
+    "native_body_address": "0x1420ee6f0",
+    "reflection_flags": "0x4420401",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "UFortPlayerDBNORevivedParams",
+    "function": "SetParams",
+    "kind": "exec",
+    "signature": "void SetParams(AFortPlayerPawn* _RevivedPlayer, AController* _RevivedBy, UFortPlayerDBNORevivedParams*& ThisParam)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage041_new/UFortPlayerDBNORevivedParams_SetParams.inc",
+    "address": "0x142b77780",
+    "native_body_address": "0x1420ee6f0",
+    "reflection_flags": "0x4420401",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "UFortPlayerBuiltParams",
+    "function": "SetParams",
+    "kind": "exec",
+    "signature": "void SetParams(ABuildingActor* _Building, EFortBuildingType::Type _BuildingType, AFortPlayerController* _Builder, UFortPlayerBuiltParams*& ThisParam)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage041_new/UFortPlayerBuiltParams_SetParams.inc",
+    "address": "0x142b76c60",
+    "native_body_address": "0x1420ee580",
+    "reflection_flags": "0x4420401",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "UFortBuildingDestroyedParams",
+    "function": "SetParams",
+    "kind": "exec",
+    "signature": "void SetParams(ABuildingActor* _Building, EFortBuildingType::Type _BuildingType, AController* _Destroyer, UFortBuildingDestroyedParams*& ThisParam)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage041_new/UFortBuildingDestroyedParams_SetParams.inc",
+    "address": "0x142b76c60",
+    "native_body_address": "0x1420ee580",
+    "reflection_flags": "0x4420401",
+    "confidence": "high",
+    "status": "ported"
+  }
+]

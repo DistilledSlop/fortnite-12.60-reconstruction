@@ -31,5 +31,11 @@ public:
 	UPROPERTY()
 	AController* Destroyer;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(ABuildingActor*& _Building, TEnumAsByte<EFortBuildingType::Type>& _BuildingType, AController*& _Destroyer);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(ABuildingActor* _Building, EFortBuildingType::Type _BuildingType, AController* _Destroyer, UFortBuildingDestroyedParams*& ThisParam);
+
 };
 

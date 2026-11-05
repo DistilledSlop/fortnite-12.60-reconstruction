@@ -1,0 +1,72 @@
+[
+  {
+    "class": "UFortPlayerDBNOEnterParams",
+    "function": "BreakParams",
+    "kind": "exec",
+    "signature": "void BreakParams(AFortPlayerPawn*& _KilledPlayer, AController*& _KilledBy)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/multi_event_params_verified/UFortPlayerDBNOEnterParams_BreakParams.inc",
+    "address": "0x142b765d0",
+    "reflection_flags": "0x14420401",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "UFortPlayerDBNORevivedParams",
+    "function": "BreakParams",
+    "kind": "exec",
+    "signature": "void BreakParams(AFortPlayerPawn*& _RevivedPlayer, AController*& _RevivedBy)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/multi_event_params_verified/UFortPlayerDBNORevivedParams_BreakParams.inc",
+    "address": "0x142b765d0",
+    "reflection_flags": "0x14420401",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "UFortPlayerBuiltParams",
+    "function": "BreakParams",
+    "kind": "exec",
+    "signature": "void BreakParams(ABuildingActor*& _Building, TEnumAsByte<EFortBuildingType::Type>& _BuildingType, AFortPlayerController*& _Builder)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/multi_event_params_verified/UFortPlayerBuiltParams_BreakParams.inc",
+    "address": "0x142b75bf0",
+    "reflection_flags": "0x14420401",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "UFortBuildingDestroyedParams",
+    "function": "BreakParams",
+    "kind": "exec",
+    "signature": "void BreakParams(ABuildingActor*& _Building, TEnumAsByte<EFortBuildingType::Type>& _BuildingType, AController*& _Destroyer)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/multi_event_params_verified/UFortBuildingDestroyedParams_BreakParams.inc",
+    "address": "0x142b75bf0",
+    "reflection_flags": "0x14420401",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "UFortItemCraftedParams",
+    "function": "BreakParams",
+    "kind": "exec",
+    "signature": "void BreakParams(UFortSchematicItemDefinition*& _SchematicDefinition, AFortPlayerController*& _CraftedBy, int32& _AmountCrafted, bool& _bItemWasQuickCrafted)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/multi_event_params_verified/UFortItemCraftedParams_BreakParams.inc",
+    "address": "0x142b76300",
+    "reflection_flags": "0x14420401",
+    "confidence": "high",
+    "status": "ported"
+  }
+]

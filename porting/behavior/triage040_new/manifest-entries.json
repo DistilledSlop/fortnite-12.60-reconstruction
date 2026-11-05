@@ -1,0 +1,19 @@
+[
+  {
+    "class": "UFortVehicleSeatWeaponComponent",
+    "function": "OnRep_OverheatValueRepped",
+    "kind": "onrep",
+    "signature": "void OnRep_OverheatValueRepped()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage040_new/UFortVehicleSeatWeaponComponent_OnRep_OverheatValueRepped.inc",
+    "address": "0x142b31fa0",
+    "native_body_address": "0x141a87700",
+    "reflection_flags": "0x80401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Copies the replicated overheat value to the cached value."
+  }
+]
