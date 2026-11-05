@@ -13,3 +13,21 @@ void UCommonTextStyle::GetColor(FLinearColor& OutColor) const
 	FMemory::Memcpy(reinterpret_cast<uint8*>(&OutColor) + 8, &Upper, 8);
 }
 
+void UCommonTextStyle::GetShadowColor(FLinearColor& OutColor) const
+{
+	// Behaviour snippet: UCommonTextStyle::GetShadowColor (body only; spliced into the generated member function).
+	// Original address: 0x1407c5100 (via exec wrapper 0x1408150a0)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	OutColor = ShadowColor;
+}
+
+void UCommonTextStyle::GetShadowOffset(FVector2D& OutShadowOffset) const
+{
+	// Behaviour snippet: UCommonTextStyle::GetShadowOffset (body only; spliced into the generated member function).
+	// Original address: 0x1407c5110 (via exec wrapper 0x140815130)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	OutShadowOffset = ShadowOffset;
+}
+

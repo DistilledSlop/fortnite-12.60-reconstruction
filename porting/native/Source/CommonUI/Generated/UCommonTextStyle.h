@@ -55,5 +55,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	void GetColor(FLinearColor& OutColor) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetShadowColor(FLinearColor& OutColor) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetShadowOffset(FVector2D& OutShadowOffset) const;
+
 };
 

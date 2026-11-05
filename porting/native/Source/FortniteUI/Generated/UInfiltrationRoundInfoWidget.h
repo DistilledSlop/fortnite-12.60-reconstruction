@@ -54,5 +54,10 @@ protected:
 	bool HasWinningTeam() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetWinningTeam(uint8 NewWinningTeam);
+public:
+
 };
 

@@ -124,8 +124,10 @@ public:
 	UPROPERTY(Transient)
 	ABuildingSMActor* AttachedFloorActor;
 
+protected:
 	UFUNCTION()
 	void OnRep_AllowSecondInteraction();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

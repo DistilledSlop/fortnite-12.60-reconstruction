@@ -3426,6 +3426,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsShippingBuild() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetEnableMainMenuSocialButton(bool NewValue);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldShowLeaderboardPrivacySettings() const;
 
