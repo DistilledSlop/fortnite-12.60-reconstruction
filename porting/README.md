@@ -213,16 +213,24 @@ payload before extraction. It reports a JSON line per package and its
 
 `bash porting/prepare_ue_fieldpath.sh` backports UE 4.26's Fortnite branch
 field-path owner version check into the adjacent UE 4.25 checkout and logs a
-cooked field path before UE's unresolved-path assertion. The script is
-idempotent. `bash porting/prepare_ue_linker.sh` optionally adds invalid export
+cooked field path before UE's unresolved-path assertion. It also includes the
+existing `-FortniteLegacyFieldPaths` opt-in for the original unversioned
+full-path representation without a serialized owner index. Apollo launch and
+capture scripts pass this option on both client and server; versioned packages
+retain their normal serialization. The script is idempotent.
+`bash porting/prepare_ue_linker.sh` optionally adds invalid export
 index details to a linker assertion. These patches help diagnose Blueprint
-compatibility; the three sampled **original cooked** Apollo gameplay
-Blueprints still crash on load. New Linux cooked replacement packages load.
+compatibility; the historical original cooked Apollo gameplay Blueprint crashes
+were recorded without the legacy option. Their compatibility with it remains
+unverified. New Linux cooked replacement packages load.
 The repository stores only patches; the supplied UE source remains outside Git.
 
-`python3 porting/probe_apollo_blueprints.py` tests the four staged Apollo
-Blueprint dependencies separately and restores the stage after each run.
-Its per-case logs stay ignored. The staged executable and `.sym` file must
+`python3 porting/probe_apollo_blueprints.py` temporarily stages each of the four
+original Apollo Blueprint dependencies from the full extraction, preserving and
+restoring the existing staged packages after each run. It passes the legacy
+field-path option and records source hashes, commands and exits beside its
+ignored per-case logs. Streaming probes also record held-package hashes without
+assuming those files are original. The staged executable and `.sym` file must
 match to get an accurate crash stack.
 `python3 porting/stage_native_blueprints.py` copies the four generated Linux
 cooked replacements into the ignored staged build after validating all

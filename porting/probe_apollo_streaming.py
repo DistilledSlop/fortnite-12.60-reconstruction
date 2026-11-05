@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 import resource
 import subprocess
 from pathlib import Path
@@ -44,6 +46,12 @@ def main() -> int:
         if not source.is_file() or target.exists():
             parser.error(f"Expected held source and absent staged target: {source}, {target}")
 
+    hashes = []
+    for source, _ in paths:
+        with source.open("rb") as stream:
+            digest = hashlib.file_digest(stream, "sha256").hexdigest()
+        hashes.append({"source": str(source.resolve()), "sha256": digest})
+
     destination.mkdir(parents=True, exist_ok=True)
     moved: list[tuple[Path, Path]] = []
     try:
@@ -53,6 +61,7 @@ def main() -> int:
         command = [
             str(executable), "/Game/Athena/Apollo/Maps/Apollo_Terrain",
             "-nullrhi", "-nosound", "-unattended", "-log",
+            "-FortniteLegacyFieldPaths",
         ]
         try:
             result = subprocess.run(
@@ -70,6 +79,10 @@ def main() -> int:
                 log = log.decode(errors="replace")
         log_path = porting / f"generated/apollo-streaming-{args.level.lower()}.log"
         log_path.write_text(log)
+        log_path.with_suffix(".json").write_text(json.dumps({
+            "source": "held streaming files; extraction provenance not verified",
+            "packages": hashes, "command": command, "cwd": str(stage), "exit": code,
+        }, indent=2) + "\n")
         lines = log.splitlines()
         failures = [
             line.strip() for line in lines

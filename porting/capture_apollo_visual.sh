@@ -23,7 +23,7 @@ if [[ ! -x "$server" || ! -x "$client" ]]; then
 fi
 rm -f "$png"
 
-"$server" "$map" -nullrhi -nosound -unattended -port="$port" -log > "$server_log" 2>&1 &
+"$server" "$map" -FortniteLegacyFieldPaths -nullrhi -nosound -unattended -port="$port" -log > "$server_log" 2>&1 &
 server_pid=$!
 trap 'kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true' EXIT
 for ((attempt=0; attempt<150; attempt++)); do
@@ -35,7 +35,7 @@ done
 ulimit -c 0
 export CAPTURE_PNG="$png" CAPTURE_DELAY="$delay" CAPTURE_CLIENT_ARGS="${CAPTURE_CLIENT_ARGS:-}"
 xvfb-run -a -s '-screen 0 1280x720x24' bash -c '
-    "$0" 127.0.0.1:"$1" -vulkan -ResX=1280 -ResY=720 -windowed -nosound -log $CAPTURE_CLIENT_ARGS > "$2" 2>&1 &
+    "$0" 127.0.0.1:"$1" -FortniteLegacyFieldPaths -vulkan -ResX=1280 -ResY=720 -windowed -nosound -log $CAPTURE_CLIENT_ARGS > "$2" 2>&1 &
     client_pid=$!
     sleep "$CAPTURE_DELAY"
     ffmpeg -loglevel error -y -f x11grab -video_size 1280x720 -i "$DISPLAY" -frames:v 1 "$CAPTURE_PNG" || true

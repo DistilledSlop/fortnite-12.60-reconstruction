@@ -4,6 +4,9 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
+import shutil
 import resource
 import subprocess
 from pathlib import Path
@@ -24,6 +27,8 @@ def disable_core_dumps() -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--timeout", type=int, default=30)
+    parser.add_argument("--original-content", type=Path,
+                        default=Path("/mnt/vibrato/fortnite-extracted-full/FortniteGame/Content"))
     parser.add_argument("--only", choices=("none", *BLUEPRINTS, "all"),
                         help="run one package selection")
     args = parser.parse_args()
@@ -37,14 +42,22 @@ def main() -> int:
     if not executable.is_file():
         parser.error(f"Missing staged executable: {executable}")
 
-    originals = {
-        name: [content / (stem + suffix) for suffix in (".uasset", ".uexp")]
+    packages = {
+        name: [(args.original_content / (stem + suffix), content / (stem + suffix))
+               for suffix in (".uasset", ".uexp")]
         for name, stem in BLUEPRINTS.items()
     }
-    for paths in originals.values():
-        for path in paths:
-            if not path.is_file() or path.with_suffix(path.suffix + ".disabled").exists():
-                parser.error(f"Package is absent or already disabled: {path}")
+    # Validate every input and backup destination before changing any staged file.
+    hashes = {}
+    for name, paths in packages.items():
+        hashes[name] = []
+        for source, target in paths:
+            backup = target.with_suffix(target.suffix + ".disabled")
+            if not source.is_file() or not target.is_file() or backup.exists():
+                parser.error(f"Expected original source, staged file, and absent backup: {source}, {target}, {backup}")
+            with source.open("rb") as stream:
+                digest = hashlib.file_digest(stream, "sha256").hexdigest()
+            hashes[name].append({"source": str(source.resolve()), "sha256": digest})
 
     output = porting / "generated/apollo-blueprint-isolation"
     output.mkdir(parents=True, exist_ok=True)
@@ -54,18 +67,25 @@ def main() -> int:
             continue
         renamed: list[tuple[Path, Path]] = []
         try:
-            for name, paths in originals.items():
-                if name in enabled:
-                    continue
-                for path in paths:
+            for name, paths in packages.items():
+                for source, path in paths:
                     disabled = path.with_suffix(path.suffix + ".disabled")
                     path.rename(disabled)
                     renamed.append((disabled, path))
+                    if name in enabled:
+                        shutil.copyfile(source, path)
+                        with path.open("rb") as stream:
+                            digest = hashlib.file_digest(stream, "sha256").hexdigest()
+                        expected = next(item["sha256"] for item in hashes[name]
+                                        if item["source"] == str(source.resolve()))
+                        if digest != expected:
+                            raise RuntimeError(f"Staged package differs from checked source: {source}")
 
             command = [
                 str(executable),
                 "/Game/Athena/Apollo/Maps/Apollo_Terrain",
                 "-nullrhi", "-nosound", "-unattended", "-ExecCmds=Quit", "-log",
+                "-FortniteLegacyFieldPaths",
             ]
             try:
                 result = subprocess.run(
@@ -87,6 +107,11 @@ def main() -> int:
                 if isinstance(log, bytes):
                     log = log.decode(errors="replace")
             (output / f"{label}.log").write_text(log)
+            (output / f"{label}.json").write_text(json.dumps({
+                "source": "original-content directory supplied to probe",
+                "packages": {name: hashes[name] for name in enabled},
+                "command": command, "cwd": str(stage), "exit": code,
+            }, indent=2) + "\n")
             lines = log.splitlines()
             assertions = [line.strip() for line in lines if line.startswith("Assertion failed:")]
             field_errors = [line.strip() for line in lines if "Unresolved cooked field path:" in line]
@@ -99,6 +124,7 @@ def main() -> int:
             )
         finally:
             for disabled, path in reversed(renamed):
+                path.unlink(missing_ok=True)
                 disabled.rename(path)
     return 0
 

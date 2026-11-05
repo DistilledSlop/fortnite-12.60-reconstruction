@@ -2,9 +2,7 @@ diff --git a/Engine/Source/Runtime/Core/Public/UObject/FortniteMainBranchObjectV
 index a969aa84a..7c43b23f5 100644
 --- a/Engine/Source/Runtime/Core/Public/UObject/FortniteMainBranchObjectVersion.h
 +++ b/Engine/Source/Runtime/Core/Public/UObject/FortniteMainBranchObjectVersion.h
-@@ -102,6 +102,12 @@ struct CORE_API FFortniteMainBranchObjectVersion
- 		// Anim layer node names are now conformed by Guid
- 		AnimLayerGuidConformation,
+@@ -104,2 +104,8 @@ struct CORE_API FFortniteMainBranchObjectVersion
  
 +		// Ocean collision component has become dynamic
 +		MakeOceanCollisionTransient,
@@ -13,23 +11,20 @@ index a969aa84a..7c43b23f5 100644
 +		FFieldPathOwnerSerialization,
 +
  		// -----<new versions can be added above this line>-------------------------------------------------
- 		VersionPlusOne,
- 		LatestVersion = VersionPlusOne - 1
 diff --git a/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp b/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp
-index 8a5edfaae..ba564f9a1 100644
+index 8a5edfaae..3c2ea74f0 100644
 --- a/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp
 +++ b/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp
-@@ -9,6 +9,7 @@
- #include "UObject/Package.h"
- #include "UObject/UObjectArray.h"
+@@ -11,2 +11,3 @@
  #include "UObject/ReleaseObjectVersion.h"
 +#include "UObject/FortniteMainBranchObjectVersion.h"
  #include "UObject/LinkerLoad.h"
- #include "UObject/UObjectThreadContext.h"
+@@ -14,2 +15,4 @@
  #include "UObject/PropertyHelper.h"
-@@ -265,6 +266,12 @@ FField* FFieldPath::TryToResolvePath(UStruct* InCurrentStruct, FFieldPath::EPath
- 	if (Owner && Path.Num())
- 	{
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ #include "Algo/Reverse.h"
+@@ -267,2 +270,8 @@ FField* FFieldPath::TryToResolvePath(UStruct* InCurrentStruct, FFieldPath::EPath
  		int32 PathIndex = Path.Num() - 1;
 +		if (PathIndex > 1)
 +		{
@@ -38,15 +33,16 @@ index 8a5edfaae..ba564f9a1 100644
 +				InCurrentStruct ? *InCurrentStruct->GetPathName() : TEXT("none"));
 +		}
  		check(PathIndex <= 1);
- 		Result = FindFProperty<FField>(Owner, Path[PathIndex]);
- 		if (Result)
-@@ -342,7 +349,8 @@ FArchive& operator<<(FArchive& Ar, FFieldPath& InOutPropertyPath)
- 		{
- 			InOutPropertyPath.Path.Empty();
+@@ -344,3 +353,11 @@ FArchive& operator<<(FArchive& Ar, FFieldPath& InOutPropertyPath)
  		}
 -		if (Ar.CustomVer(FReleaseObjectVersion::GUID) >= FReleaseObjectVersion::FFieldPathOwnerSerialization)
-+		if (Ar.CustomVer(FReleaseObjectVersion::GUID) >= FReleaseObjectVersion::FFieldPathOwnerSerialization ||
-+			Ar.CustomVer(FFortniteMainBranchObjectVersion::GUID) >= FFortniteMainBranchObjectVersion::FFieldPathOwnerSerialization)
++		// Fortnite 12.60 cooked packages omit version records and use full field
++		// paths without an owner index. Opt in only for unversioned packages: the
++		// loader otherwise substitutes the current version for missing records.
++		const FLinkerLoad* SourceLinker = Cast<FLinkerLoad>(Ar.GetLinker());
++		const bool bLegacyUnversionedFieldPath = SourceLinker && SourceLinker->Summary.bUnversioned &&
++			FParse::Param(FCommandLine::Get(), TEXT("FortniteLegacyFieldPaths"));
++		if (!bLegacyUnversionedFieldPath &&
++			(Ar.CustomVer(FReleaseObjectVersion::GUID) >= FReleaseObjectVersion::FFieldPathOwnerSerialization ||
++			 Ar.CustomVer(FFortniteMainBranchObjectVersion::GUID) >= FFortniteMainBranchObjectVersion::FFieldPathOwnerSerialization))
  		{
- 			UStruct* SerializedOwner = InOutPropertyPath.ResolvedOwner.Get();
- 			Ar << SerializedOwner;
