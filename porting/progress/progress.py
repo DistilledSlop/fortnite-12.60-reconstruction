@@ -859,10 +859,17 @@ def _load_classes():
 def _load_funcs():
     """class::function units with an exec address (the native_behavior denominator)."""
     nf = json.loads(_local_read("porting/generated/reflection/native_funcs.json"))
+    # Functions the stock UE 4.25 engine source declares with a matching signature are provided by the
+    # rebuilt engine, so they need no ported body (porting/engine_natives.py; declaration-level evidence).
+    try:
+        engine = json.loads(_local_read("porting/progress/engine_provided_natives.json")).get("verified", {})
+    except Exception:
+        engine = {}
     units = []
     for cls in sorted(nf):
+        skip = set(engine.get(cls, ()))
         for fn, meta in nf[cls].items():
-            if meta.get("exec_addr"):
+            if meta.get("exec_addr") and fn not in skip:
                 units.append((cls, fn))
     return units
 

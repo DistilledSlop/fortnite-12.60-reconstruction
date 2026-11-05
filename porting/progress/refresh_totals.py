@@ -157,19 +157,31 @@ def build():
     # ---- native functions with an execution address
     nf_path = os.path.join(GEN, "reflection", "native_funcs.json")
     nf = load_json(nf_path)
+    ep_path = os.path.join(REPO, "porting", "progress", "engine_provided_natives.json")
+    engine = load_json(ep_path).get("verified", {}) if os.path.isfile(ep_path) else {}
     funcs = 0
     with_exec = 0
-    for fns in nf.values():
-        for meta in fns.values():
+    engine_provided = 0
+    for cls, fns in nf.items():
+        skip = set(engine.get(cls, ()))
+        for fn, meta in fns.items():
             funcs += 1
             if meta.get("exec_addr"):
-                with_exec += 1
+                if fn in skip:
+                    engine_provided += 1
+                else:
+                    with_exec += 1
     totals["native_functions_total"] = entry(
         funcs, nf_path, "functions in reflection/native_funcs.json, over all classes")
     totals["native_functions_with_exec"] = entry(
         with_exec, nf_path,
-        "functions in reflection/native_funcs.json with a non-null exec_addr (ported bodies are "
-        "measured against this denominator)")
+        "functions in reflection/native_funcs.json with a non-null exec_addr, excluding those the stock UE "
+        "4.25 engine source declares with a matching signature (progress/engine_provided_natives.json); "
+        "ported bodies are measured against this denominator")
+    totals["native_functions_engine_provided"] = entry(
+        engine_provided, ep_path,
+        "functions with an exec_addr that the stock UE 4.25 headers declare with a matching parameter count "
+        "(declaration-level evidence from porting/engine_natives.py; Epic fork body differences are not tested)")
 
     # ---- asset registry (class-based counts, cue4inspect --registry)
     reg_path = os.path.join(GEN, "asset-registry-summary.txt")
