@@ -2406,6 +2406,10 @@ _inventory_entry_spec = _common_activation_import.spec_from_file_location(
     "inventory_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "inventory_entry_copy_runtime", "source_policy.py"))
 _inventory_entry_policy = _common_activation_import.module_from_spec(_inventory_entry_spec)
 _inventory_entry_spec.loader.exec_module(_inventory_entry_policy)
+_maps_fog_spec = _common_activation_import.spec_from_file_location(
+    "maps_fog_raster_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_fog_raster_runtime", "source_policy.py"))
+_maps_fog_policy = _common_activation_import.module_from_spec(_maps_fog_spec)
+_maps_fog_spec.loader.exec_module(_maps_fog_policy)
 _quickbar_refresh_spec = _common_activation_import.spec_from_file_location(
     "quickbar_refresh_policy", os.path.join(os.path.dirname(__file__), "behavior", "quickbar_refresh110_runtime", "source_policy.py"))
 _quickbar_refresh_policy = _common_activation_import.module_from_spec(_quickbar_refresh_spec)
@@ -5100,6 +5104,7 @@ class TypeGate:
                 model["blueprint_type"] = True
             model = _native_checkpoint2040_policy.apply_struct(info, model)
             model = _native_checkpoint3058_policy.apply_struct(info, model)
+            model = _maps_fog_policy.apply_struct(info, model)
             model = _confirmation_policy.apply_struct(self, info, model)
             model = _common_input_policy.apply_struct(info, model)
             model = _input_platform_policy.apply_struct(info, model)
@@ -5399,6 +5404,8 @@ def render_struct_header(model, source_label):
         lines.append("\t%s" % m["decl"])
         lines.append("")
         lines.extend(_inventory_entry_policy.fields_after(model, m))
+        lines.extend(_maps_fog_policy.fields_after(model, m))
+    lines.extend(_maps_fog_policy.declarations(model))
     lines.extend(_common_activation_policy.struct_declarations(model))
     lines.extend(_quickbar_refresh_policy.declarations(model))
     lines.extend(_cursor_settings_policy.struct_declarations(model))

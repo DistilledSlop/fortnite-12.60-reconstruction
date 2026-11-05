@@ -16,9 +16,86 @@ struct FTeamMapInfo
 	UPROPERTY()
 	TArray<uint8> ReplicatedSeedPack;
 
+	// Recovered native storage; offsets name original Win64 fields, not this host layout.
+	// The original fourth array at +0x30 and trailing native flags remain unrecovered.
+	TArray<uint8> NativeRevealBits_0x10;
+	TArray<uint8> NativeFogPixels_0x20;
+	int32 NativeTouchedCount_0x40 = 0;
+
 	// table index 0, offset 68, flags 0x10000000000000
 	UPROPERTY()
-	uint8 TeamId;
+	uint8 TeamId = 0;
+
+	// Partial raster helpers; original ABI and fast-mode dispatch are unresolved.
+	// Caller supplies a 256x256 pixel array and valid native arithmetic inputs.
+	void NativeDrawFogGradient(int32 CenterX, int32 CenterY,
+	    float InnerRadius, float FadeInRadius, float FadeOutRadius, float OuterRadius, uint8 Opacity)
+	{
+	    const int32 Offset = FMath::FloorToInt(-OuterRadius);
+	    const int32 MinX = FMath::Max(CenterX + Offset, 0);
+	    const int32 MinY = FMath::Max(CenterY + Offset, 0);
+	    const int32 MaxX = FMath::Min(CenterX - Offset, 255);
+	    const int32 MaxY = FMath::Min(CenterY - Offset, 255);
+	    for (int32 Y = MinY; Y <= MaxY; ++Y)
+	    {
+	        for (int32 X = MinX; X <= MaxX; ++X)
+	        {
+	            const int32 DX = CenterX - X;
+	            const int32 DY = CenterY - Y;
+	            const float DistanceSquared = float(DX * DX + DY * DY);
+	            if (DistanceSquared < OuterRadius * OuterRadius)
+	            {
+	                uint8& Pixel = NativeFogPixels_0x20[Y * 256 + X];
+	                NativeTouchedCount_0x40 += Pixel == 0;
+	                uint8 Value;
+	                if (DistanceSquared < InnerRadius * InnerRadius)
+	                {
+	                    Value = 255;
+	                }
+	                else if (DistanceSquared < FadeInRadius * FadeInRadius)
+	                {
+	                    const float Alpha = (FMath::Sqrt(DistanceSquared) - InnerRadius) / (FadeInRadius - InnerRadius);
+	                    Value = uint8(int32(Alpha * float(int32(Opacity) - 255) + 255.0f) & 0xff);
+	                }
+	                else if (DistanceSquared < FadeOutRadius * FadeOutRadius)
+	                {
+	                    Value = Opacity;
+	                }
+	                else
+	                {
+	                    const float Alpha = (FMath::Sqrt(DistanceSquared) - FadeOutRadius) / (OuterRadius - FadeOutRadius);
+	                    Value = uint8(int32(float(Opacity) - Alpha * float(Opacity)) & 0xff);
+	                }
+	                Pixel = FMath::Max(Pixel, Value);
+	            }
+	        }
+	    }
+	}
+
+	void NativeDrawFogFastDisk(int32 CenterX, int32 CenterY,
+	    float Radius)
+	{
+	    const int32 Offset = FMath::FloorToInt(-Radius);
+	    const int32 IntegerRadius = -Offset;
+	    const int32 MinX = FMath::Max(CenterX + Offset, 0);
+	    const int32 MinY = FMath::Max(CenterY + Offset, 0);
+	    const int32 MaxX = FMath::Min(CenterX + IntegerRadius, 255);
+	    const int32 MaxY = FMath::Min(CenterY + IntegerRadius, 255);
+	    for (int32 Y = MinY; Y <= MaxY; ++Y)
+	    {
+	        for (int32 X = MinX; X <= MaxX; ++X)
+	        {
+	            const int32 DX = CenterX - X;
+	            const int32 DY = CenterY - Y;
+	            if (DX * DX + DY * DY < IntegerRadius * IntegerRadius)
+	            {
+	                uint8& Pixel = NativeFogPixels_0x20[Y * 256 + X];
+	                NativeTouchedCount_0x40 += Pixel == 0;
+	                Pixel = 255;
+	            }
+	        }
+	    }
+	}
 
 };
 
