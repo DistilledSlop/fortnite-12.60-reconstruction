@@ -1,0 +1,17 @@
+{
+  "scope": "Source reconstruction only; no runtime validation claimed.",
+  "source_policy": "porting/behavior/target_filter163_runtime/source_policy.py",
+  "native_evidence": "porting/behavior/target_filter163_runtime/native-evidence.json",
+  "manifest_source": "porting/behavior/target_filter163_runtime/manifest-entries.json",
+  "selected_entries": 29,
+  "selected_functions": [
+    "NativeGetPlayerStateForPawn163",
+    "NativeGetSpectatingPlayerState163",
+    "NativeGetTeam163",
+    "NativeGetVehicleInterface163",
+    "NativeSpectatingPlayerState163"
+  ],
+  "limitations": [
+    "The source draft records unresolved mandatory replay spectator override and incomplete interface graph; see porting/behavior/target_filter163_runtime/unresolved.json."
+  ]
+}

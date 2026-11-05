@@ -1,13 +1,30 @@
 [
   {
     "class": "AFortVisibilityManager",
+    "function": "NativeObservers_0x218",
+    "kind": "member_field",
+    "signature": "TArray<AActor*> NativeObservers_0x218",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x218",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "draft",
+    "notes": "Original constructor 0x14261fdd0 clears the TArray header at 0x218/0x220; per-record refresh resolves the entries as actor team interfaces."
+  },
+  {
+    "class": "AFortVisibilityManager",
     "function": "NativeRefreshVisibilityRecord",
     "kind": "helper",
     "signature": "void NativeRefreshVisibilityRecord(FVisibilityInfo& Item, bool bForce)",
     "signature_status": "proposed",
     "access": "public",
     "inc_path": "porting/behavior/maps_visibility_notification_runtime/AFortVisibilityManager_NativeRefreshVisibilityRecord.inc",
-    "includes": ["UFortTeamActorInterface.h", "UFortVisibilityComponent.h"],
+    "includes": [
+      "UFortTeamActorInterface.h",
+      "UFortVisibilityComponent.h"
+    ],
     "address": "0x142654460",
     "confidence": "medium",
     "status": "draft"
@@ -23,5 +40,22 @@
     "address": "0x14263c500",
     "confidence": "high",
     "status": "draft"
+  },
+  {
+    "class": "AFortInGameMapManager",
+    "function": "OnRep_ClearAllFog",
+    "kind": "exec",
+    "signature": "void OnRep_ClearAllFog()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/maps_visibility_notification_runtime/AFortInGameMapManager_OnRep_ClearAllFog.inc",
+    "address": "0x14294c930",
+    "native_body_address": "0x141ecc540",
+    "confidence": "high",
+    "status": "draft",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Native byte receiver confirmed from assembly: visibility refresh receives GameState.VisibilityManager, including when the current team index is invalid."
   }
 ]

@@ -1,0 +1,42 @@
+{
+  "graph_complete": false,
+  "integration_allowed": false,
+  "implemented_bodies": 0,
+  "mandatory_override": {
+    "class": "AFortReplaySpectator",
+    "function": "NativeGetSpectatingPlayerState163",
+    "signature": "AFortPlayerState* NativeGetSpectatingPlayerState163()",
+    "address": "0x14246bc30",
+    "virtual_byte_offset": "0x2058"
+  },
+  "closed_dependencies": "porting/behavior/replay_spectator216_runtime/manifest-entries.json",
+  "blockers": [
+    {
+      "contract": "UDemoNetDriver native byte0xad5",
+      "required_evidence": "Original named accessor or writer resolving flag identity. Constructor144186d50 leaves individual flag unnamed; adjacent engine declarations alone do not prove the match."
+    },
+    {
+      "contract": "AFortPlayerStateZone native byte0xd00 mask0x01",
+      "required_evidence": "Exact state identity and original writer semantics for validator1423d97f0. This is bit0, not mask0x02 or reflected bIsAnAthenaGameParticipant at0x13b6."
+    },
+    {
+      "contract": "AFortPlayerPawn native multicast at0xa28",
+      "required_evidence": "Shared declaration and original broadcast producers proving its argument types and preserving all bindings. Getter must remove old pawn bindings and add weak UObject callback1423c6694."
+    },
+    {
+      "contract": "Replay callback1423dead0 concrete Fort effect context",
+      "required_evidence": "Emitted concrete FFortGameplayEffectContext with original virtualD0 dispatch. Existing ability_large99_runtime context draft is unintegrated; substituting reflected data or ignoring callback is forbidden."
+    },
+    {
+      "contract": "Shared global multicast1478dec78",
+      "required_evidence": "Original registration/removal producers and concrete shared provider. A new private multicast would drop existing listeners. Root owns support/global startup."
+    }
+  ],
+  "capture_requests_sent_to_root": [
+    "Original xrefs/containing functions for global1478dec78 registration and removal",
+    "Original DemoNetDriver+AD5 named accessor or writer",
+    "Original PlayerStateZone+D00 mask01 writers",
+    "Original PlayerPawn+A28 delegate broadcast producer and signature"
+  ],
+  "stop_reason": "Root requested a bounded evidence freeze; team integration remains gated. No speculative body or null-return fallback emitted."
+}

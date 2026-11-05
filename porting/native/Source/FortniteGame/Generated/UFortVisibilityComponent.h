@@ -53,5 +53,19 @@ public:
 	UPROPERTY()
 	float Radius;
 
+public:
+    UFortVisibilityComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get())
+        : Super(ObjectInitializer)
+    {
+        // Original class flags at +0xb0 are 0x25 on zero-initialized storage.
+        bRegisterWithVisibilityManager = true;
+        bObserver = false;
+        bDistanceCheck2D = true;
+        bCheckFacing = false;
+        bCheckLOS = false;
+        bRevealWithMap = true;
+        VisibilityBehavior = EFortVisibilityBehavior::Proximity;
+        Radius = 1000.0f;
+    }
 };
 

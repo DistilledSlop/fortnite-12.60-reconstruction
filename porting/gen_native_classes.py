@@ -2410,6 +2410,10 @@ _maps_fog_spec = _common_activation_import.spec_from_file_location(
     "maps_fog_raster_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_fog_raster_runtime", "source_policy.py"))
 _maps_fog_policy = _common_activation_import.module_from_spec(_maps_fog_spec)
 _maps_fog_spec.loader.exec_module(_maps_fog_policy)
+_maps_visibility_spec = _common_activation_import.spec_from_file_location(
+    "maps_visibility_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_visibility_evaluate_runtime", "source_policy.py"))
+_maps_visibility_policy = _common_activation_import.module_from_spec(_maps_visibility_spec)
+_maps_visibility_spec.loader.exec_module(_maps_visibility_policy)
 _quickbar_refresh_spec = _common_activation_import.spec_from_file_location(
     "quickbar_refresh_policy", os.path.join(os.path.dirname(__file__), "behavior", "quickbar_refresh110_runtime", "source_policy.py"))
 _quickbar_refresh_policy = _common_activation_import.module_from_spec(_quickbar_refresh_spec)
@@ -3513,6 +3517,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     if rep:
         lines.append("\tvirtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;")
     lines.extend(render_helper_declarations(model))
+    lines.extend(_maps_visibility_policy.declarations(model))
     lines.extend(_controller_analytics_policy.class_declarations(model["name"]))
     if model.get("source_context_phases"):
         lines.extend(BLUEPRINT_CONTEXT_PHASE_DECLS.rstrip("\n").split("\n"))

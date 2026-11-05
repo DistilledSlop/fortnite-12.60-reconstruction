@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "182f84fd999c99ee1a63f8b587cc15cf4a5407dd",
- "subject": "Restore team-map storage lifetime and fog texture upload source",
- "date": "2026-11-05T11:52:15-05:00",
+ "head": "969e2519ecfc479dde6e34326629f789b98b7d6b",
+ "subject": "Recover visibility evaluation contract and notification source draft",
+ "date": "2026-11-05T12:00:33-05:00",
  "overall_pct": 29.104,
  "measured_pct": 28.234,
  "objective_pct": 28.233,

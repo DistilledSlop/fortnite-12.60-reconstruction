@@ -163,8 +163,35 @@
     }
   ],
   "blockers": [
-    "Confirm exact symbolic base AFortGameState virtual slot 0x770 API; derived AFortGameStateZone NativeAreFriendlyActors163 implementation alone does not establish base API.",
-    "Confirm actor virtual slot 0x5f8 source identity before using GetActorEyesViewPoint in source."
+    "Team-interface source graph is not integrated: mandatory ReplaySpectator override requires shared native delegates and original flag contracts. See maps_team_interface_runtime/evidence.json."
   ],
-  "scope": "Read-only decompiled-method analysis and this evidence file only; no runtime implementation, source integration, build, Ghidra invocation, or tests."
+  "scope": "Read-only decompiled-method analysis and this evidence file only; no runtime implementation, source integration, build, Ghidra invocation, or tests.",
+  "resolved_symbolic_mappings": {
+    "friendship": {
+      "constructor": "0x141e8a600",
+      "vtable": "0x145fffdf8",
+      "slot": "0x770",
+      "target": "0x141ea6f10",
+      "meaning": "Base AFortGameState friendship routine; isolated target_filter163 draft was previously attributed only to Zone."
+    },
+    "eyes": {
+      "vtable": "0x1469fec60",
+      "slot": "0x5f8",
+      "target": "0x143f72d70",
+      "meaning": "AActor GetActorEyesViewPoint default body copies actor location and rotation; matches UE4.25 Actor.cpp."
+    }
+  },
+  "class_defaults": {
+    "source_policy": "porting/behavior/maps_visibility_evaluate_runtime/source_policy.py",
+    "constructor": "0x142623b40",
+    "flags": "0x25",
+    "behavior": "Proximity",
+    "radius": 1000,
+    "scope": "Restores class-owned reflected defaults; remaining lifecycle and notification source graph is not integrated."
+  },
+  "generation": {
+    "status": "completed",
+    "scope": "class-owned reflected constructor defaults only",
+    "remaining_helpers": "isolated drafts; not in global MANIFEST"
+  }
 }

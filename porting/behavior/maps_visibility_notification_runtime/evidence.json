@@ -13,9 +13,8 @@
     "Shift uses team modulo 32 and storage truncates to 16 bits; null observers resolve to team 0 and are passed to the virtual."
   ],
   "unresolved": [
-    "NativeObservers_0x218 is a proposed TArray<AActor*> field; ownership, precise type and construction require confirmation.",
-    "NativeEvaluateVisibility(AActor*, bool) is a proposed component virtual name and dependency, not implemented or integrated here; validate its full contract against 0x14262adc0.",
-    "No global manifest or generated files were changed; signatures are proposed."
+    "Team interface dependency remains unintegrated because ReplaySpectator getter requires original shared state/delegate contracts; see maps_replay_team_runtime/unresolved.json.",
+    "Component evaluation and notification bodies are drafted; no global manifest integration or runtime validation."
   ],
   "capture_sha256": {
     "refresh_all": {
