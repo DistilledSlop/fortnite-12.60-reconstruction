@@ -1,0 +1,19 @@
+{
+  "scope": "Capture-backed source proposals; build and runtime verification pending.",
+  "entries": [
+    {
+      "function": "UFortAlterationItem::GetAlterationDefinitionBP",
+      "wrapper": "porting/generated/native108-broad/0x1427ae690.c",
+      "class_getter": "porting/generated/native108-impl/0x1427acc10.c",
+      "contract": "The wrapper calls virtual slot +0x3e8 once, returns it only if it is a FortAlterationItemDefinition, otherwise null. The class getter names FortAlterationItemDefinition. The slot is identified as GetItemDefinitionBP in porting/behavior/item_queries_runtime/manifest-entries.json."
+    },
+    {
+      "function": "UFortCardPackItem::IsChoicePack",
+      "wrapper": "porting/generated/native194-fresh-bulk/0x14285ccc0.c",
+      "body": "porting/generated/native197-fresh-callees/0x14254c020.c",
+      "class_index": "porting/generated/reflection/native_class_index.json",
+      "field_evidence": "porting/behavior/MANIFEST.json",
+      "contract": "The body calls virtual slot +0x3e8 once, checks class 0x1428596a0, then returns the byte at +0x389; a failed cast returns false. The class index identifies that class getter as UFortCardPackItemDefinition; the existing definition IsChoicePack entry identifies the byte as bIsChoicePack."
+    }
+  ]
+}
