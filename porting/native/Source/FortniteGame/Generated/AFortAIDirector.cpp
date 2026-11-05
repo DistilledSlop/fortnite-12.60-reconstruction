@@ -5,8 +5,11 @@
 #include "AFortPlayerPawn.h"
 #include "EFortEncounterDirection.h"
 #include "EFortEncounterState.h"
+#include "EWardAffectType.h"
 #include "FFortAIEncounterRift.h"
+#include "GameFramework/Actor.h"
 #include "Math/Rotator.h"
+#include "Math/UnrealMathUtility.h"
 #include "Math/Vector.h"
 #include "UFortAIEncounterInfo.h"
 #include "UFortAIEncounterRiftManager.h"
@@ -103,6 +106,94 @@ bool AFortAIDirector::IsAnyEncounterGoalWithinDistanceOfPoint(FVector& Point, fl
 	        }
 	    }
 	}
+	return false;
+}
+
+bool AFortAIDirector::IsLineTooCloseToPatrolWards(FVector& LineStart, FVector& LineEnd) const
+{
+	// CONFIDENCE: high; captured native flow and typed dependency behavior.
+	// Native 0x1416638f0 iterates PatrolWards backwards, prunes null or non-AActor elements,
+	// invokes GetAffectingDistance via ProcessEvent (0x142a17460), computes the closest point
+	// on the line segment using FMath::ClosestPointOnSegment (0x142c4b0a0), and tests if the
+	// ward location is within AffectingDistance of the segment.
+	static const FName FuncName_GetAffectingDistance(TEXT("GetAffectingDistance"));
+
+	for (int32 Index = PatrolWards.Num() - 1; Index >= 0; --Index)
+	{
+	    UObject* WardObject = PatrolWards[Index].GetObject();
+	    if (!WardObject || !WardObject->IsA<AActor>())
+	    {
+	        const_cast<AFortAIDirector*>(this)->PatrolWards.RemoveAt(Index, 1, false);
+	        continue;
+	    }
+
+	    AActor* WardActor = static_cast<AActor*>(WardObject);
+	    const FVector WardLocation = WardActor->GetActorLocation();
+
+	    float AffectingDistance = 0.0f;
+	    if (UFunction* Func = WardObject->FindFunction(FuncName_GetAffectingDistance))
+	    {
+	        WardObject->ProcessEvent(Func, &AffectingDistance);
+	    }
+
+	    const FVector ClosestPoint = FMath::ClosestPointOnSegment(WardLocation, LineStart, LineEnd);
+	    if (FVector::DistSquared(WardLocation, ClosestPoint) <= AffectingDistance * AffectingDistance)
+	    {
+	        return true;
+	    }
+	}
+
+	return false;
+}
+
+bool AFortAIDirector::IsPointTooCloseToPatrolWards(FVector& Point, EWardAffectType WardEffectTypeFilter) const
+{
+	// CONFIDENCE: high; captured native flow and typed dependency behavior.
+	// Native 0x141663ad0 iterates PatrolWards backwards, prunes null or non-AActor elements,
+	// queries GetAffectingType via ProcessEvent (0x142a174b0) to filter by EWardAffectType,
+	// queries GetAffectingDistance via ProcessEvent (0x142a17460), and tests whether Point
+	// is within AffectingDistance of the ward location.
+	static const FName FuncName_GetAffectingType(TEXT("GetAffectingType"));
+	static const FName FuncName_GetAffectingDistance(TEXT("GetAffectingDistance"));
+
+	for (int32 Index = PatrolWards.Num() - 1; Index >= 0; --Index)
+	{
+	    UObject* WardObject = PatrolWards[Index].GetObject();
+	    if (!WardObject || !WardObject->IsA<AActor>())
+	    {
+	        const_cast<AFortAIDirector*>(this)->PatrolWards.RemoveAt(Index, 1, false);
+	        continue;
+	    }
+
+	    uint8 AffectTypeByte = 0;
+	    if (UFunction* FuncType = WardObject->FindFunction(FuncName_GetAffectingType))
+	    {
+	        WardObject->ProcessEvent(FuncType, &AffectTypeByte);
+	    }
+	    const EWardAffectType AffectType = static_cast<EWardAffectType>(AffectTypeByte);
+
+	    if (WardEffectTypeFilter != EWardAffectType::AffectsBothStartAndEndPoints &&
+	        AffectType != EWardAffectType::AffectsBothStartAndEndPoints &&
+	        WardEffectTypeFilter != AffectType)
+	    {
+	        continue;
+	    }
+
+	    AActor* WardActor = static_cast<AActor*>(WardObject);
+	    const FVector WardLocation = WardActor->GetActorLocation();
+
+	    float AffectingDistance = 0.0f;
+	    if (UFunction* FuncDist = WardObject->FindFunction(FuncName_GetAffectingDistance))
+	    {
+	        WardObject->ProcessEvent(FuncDist, &AffectingDistance);
+	    }
+
+	    if (FVector::DistSquared(Point, WardLocation) <= AffectingDistance * AffectingDistance)
+	    {
+	        return true;
+	    }
+	}
+
 	return false;
 }
 

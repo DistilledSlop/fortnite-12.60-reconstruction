@@ -60077,5 +60077,45 @@
     "status": "ported",
     "includes": [],
     "notes": "Original helper applies Unreal class cast after the pawn-owner lookup."
+  },
+  {
+    "class": "AFortAIDirector",
+    "function": "IsLineTooCloseToPatrolWards",
+    "kind": "exec",
+    "signature": "bool IsLineTooCloseToPatrolWards(FVector& LineStart, FVector& LineEnd) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/aidirector_patrol_recovery/AFortAIDirector_IsLineTooCloseToPatrolWards.inc",
+    "address": "0x1427946c0",
+    "native_body_address": "0x1416638f0",
+    "reflection_flags": "0x54c20401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Actor.h",
+      "Math/UnrealMathUtility.h"
+    ],
+    "notes": "Recovered native body 0x1416638f0. Iterates PatrolWards array backwards; cleans up null or non-AActor elements via RemoveAt. For each ward actor, calls 0x142a17460 (ProcessEvent GetAffectingDistance), projects ward location onto line segment [LineStart, LineEnd] using FMath::ClosestPointOnSegment (0x142c4b0a0), and tests squared distance against AffectingDistance * AffectingDistance. Returns true if within range, false otherwise."
+  },
+  {
+    "class": "AFortAIDirector",
+    "function": "IsPointTooCloseToPatrolWards",
+    "kind": "exec",
+    "signature": "bool IsPointTooCloseToPatrolWards(FVector& Point, EWardAffectType WardEffectTypeFilter) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/aidirector_patrol_recovery/AFortAIDirector_IsPointTooCloseToPatrolWards.inc",
+    "address": "0x1427947c0",
+    "native_body_address": "0x141663ad0",
+    "reflection_flags": "0x54c20401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Actor.h",
+      "Math/UnrealMathUtility.h"
+    ],
+    "notes": "Recovered native body 0x141663ad0. Iterates PatrolWards array backwards; cleans up null or non-AActor elements via RemoveAt. For each ward actor, calls 0x142a174b0 (ProcessEvent GetAffectingType: EWardAffectType); if WardEffectTypeFilter matches or either is AffectsBothStartAndEndPoints (0), queries 0x142a17460 (ProcessEvent GetAffectingDistance) and tests squared distance from Point to ward location against AffectingDistance * AffectingDistance. Returns true if within range, false otherwise."
   }
 ]

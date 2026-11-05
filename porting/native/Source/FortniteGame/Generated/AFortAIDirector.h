@@ -9,6 +9,7 @@
 #include "EDespawnAIType.h"
 #include "EFortAIUtility.h"
 #include "EFortEncounterDirection.h"
+#include "EWardAffectType.h"
 #include "Engine/CurveTable.h"
 #include "Engine/DataTable.h"
 #include "FAIPawnUpdateInfo.h"
@@ -429,6 +430,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsAnyEncounterGoalWithinDistanceOfPoint(FVector& Point, float Distance, bool bOnlyActiveEncounters) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLineTooCloseToPatrolWards(FVector& LineStart, FVector& LineEnd) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPointTooCloseToPatrolWards(FVector& Point, EWardAffectType WardEffectTypeFilter) const;
 
 };
 
