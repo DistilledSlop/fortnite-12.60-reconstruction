@@ -3,27 +3,27 @@
   "result": "pass",
   "mode": "Linux Development client, null RHI",
   "bindings": 143,
-  "decoded": 89,
-  "unresolved": 54,
+  "decoded": 134,
+  "unresolved": 9,
   "corrupt_digest_rejected": true,
   "static_slots_known": false,
   "runtime_rendering_verified": false,
   "files": {
     "bundle": {
       "path": "porting/generated/material_pipeline/apollo-d4-landscape-spirv/original-uniform-contracts.json",
-      "sha256": "df90b5c15d4c4974d5f78107bcbbc5e3c267b31c9cceaaef81dc694f6d95797d"
+      "sha256": "93bbf5406ff8eb3194325bd146d31eeb961b983837807f40705d2237ac6aa6a9"
     },
     "client": {
       "path": "porting/native/Binaries/Linux/FortniteLinux",
-      "sha256": "42c90ef9838ea28484a970ce36a8008072079ef16a437fbd93c3ef913f06fa79"
+      "sha256": "0731cd4ff8361f3256b7860107a31dfd46ae5275c05d5a81f34812d2bc500a45"
     },
     "build_log": {
-      "path": "porting/generated/apollo-material-evidence/landscape-contract-probe-client.build.2.log",
-      "sha256": "68ba254fa16c7ca480a9386e6e3ca0625b805eb3bdcf228747cb9f8f760d7b62"
+      "path": "porting/generated/apollo-material-evidence/landscape-seven-contract-client.build.log",
+      "sha256": "1d244bf7ff25d79e73fcc8371756452840c0d4e3832a5f93d0529f73716718b8"
     },
     "run_log": {
-      "path": "porting/generated/apollo-material-evidence/landscape-contract-probe-run.log",
-      "sha256": "7c7929c39a63a7008328d59c87f16385bcf6f639a2a5c991514aa4b768d372e5"
+      "path": "porting/generated/apollo-material-evidence/landscape-seven-contract-run.log",
+      "sha256": "1c277901663cce728ef3ad315fefbdd8bcf6033365a7b1c45b53b3ef7ed29fd4"
     }
   },
   "limits": "The native probe validates loader inventory and digest rejection only. No current uniform metadata, value provider, descriptor binding, or draw is verified. Staged Water package errors remain."

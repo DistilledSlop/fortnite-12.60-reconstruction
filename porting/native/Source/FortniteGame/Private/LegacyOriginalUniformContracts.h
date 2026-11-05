@@ -23,9 +23,9 @@ struct FLegacyOriginalUniformContractBinding
 bool LoadLegacyOriginalUniformBindings(const FString& Path, const FString& ExpectedSHA256,
     TArray<FLegacyOriginalUniformContractBinding>& Out, FString& Error);
 
-// Landscape inventory: landscape, Primitive and PrecomputedLightingBuffer
-// layouts are decoded. The latter two have no active wrapper hash corroboration.
-// Other roles have empty contracts. Static slots and runtime mappings are unknown;
+// Landscape inventory: seven fixed layouts are decoded. Primitive,
+// PrecomputedLightingBuffer and ShadowDepthPass have no active wrapper hash
+// corroboration. Material roles have empty contracts. Static slots and runtime mappings are unknown;
 // no current metadata is resolved and these results are not construction-ready.
 bool LoadLegacyLandscapeOriginalUniformBindings(const FString& Path, const FString& ExpectedSHA256,
     TArray<FLegacyOriginalUniformContractBinding>& Out, FString& Error);

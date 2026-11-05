@@ -410,13 +410,20 @@ entries, so those wrappers do not independently corroborate the computed layout
 hashes. Runtime values and bindings are still required for both.
 
 `python3 porting/material_pipeline/export_landscape_uniform_contracts.py`
-produces a separate native loader bundle with four recovered layouts and all
-143 named shader associations. The two landscape layouts have active wrapper
-hash corroboration; `Primitive` and `PrecomputedLightingBuffer` do not. The
-remaining 54 associations are explicitly unresolved. The loader does not infer original static slots or resolve
+produces a separate native loader bundle with seven recovered layouts and all
+143 named shader associations. `Primitive`, `PrecomputedLightingBuffer` and
+`ShadowDepthPass` have no active wrapper hash corroboration. The nine Material
+associations remain explicitly unresolved. The loader does not infer original static slots or resolve
 current metadata, and its output is not yet suitable for buffer construction.
-The Linux client executed this loader against the generated bundle: all 143
-associations passed the inventory checks, and a corrupted copy was rejected by
-its SHA-256 pin. This was a null-RHI loader probe, not a draw; staged Water
+The seven-layout Linux client probe checked all 143 associations and rejected a
+corrupted copy by its SHA-256 pin. This was a null-RHI loader probe, not a draw; staged Water
 package errors remain. See
 `behavior/maps_terrain_material_runtime/uniform-loader-checkpoint.json`.
+
+`ue425-legacy-landscape-vf-bindings.patch` supplies the recovered per-element
+`LodValues` and fixed-grid zero `LodBias` from landscape batch data. Other
+original loose parameters, including `ForcedLod`, are not yet supplied; the
+factory must continue rejecting shaders that require them. The original
+continuous-LOD uniform producer's field assignments are captured in
+`behavior/landscape_lod_uniform_producer_runtime/evidence.json`; matching
+resource contents, runtime uniform binding and rendering remain unverified.

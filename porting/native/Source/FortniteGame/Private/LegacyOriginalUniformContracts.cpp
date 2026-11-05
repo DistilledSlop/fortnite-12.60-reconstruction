@@ -144,15 +144,15 @@ static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
     static const TCHAR* PaperNames[]={TEXT("View"),TEXT("LocalVF"),TEXT("TranslucentDepthPass"),TEXT("ShadowDepthPass"),TEXT("LightmapDensityPass"),TEXT("TranslucentBasePass")};
     static const TCHAR* PaperTypes[]={TEXT("FViewUniformShaderParameters"),TEXT("FLocalVertexFactoryUniformShaderParameters"),TEXT("FTranslucencyDepthPassUniformParameters"),TEXT("FShadowDepthPassUniformParameters"),TEXT("FLightmapDensityPassUniformParameters"),TEXT("FTranslucentBasePassUniformParameters")};
     static const uint32 PaperCounts[]={30,15,3,4,1,2};
-    static const TCHAR* LandscapeNames[]={TEXT("LandscapeParameters"),TEXT("LandscapeContinuousLODParameters"),TEXT("Primitive"),TEXT("PrecomputedLightingBuffer")};
-    static const TCHAR* LandscapeTypes[]={TEXT("FLandscapeUniformShaderParameters"),TEXT("FLandscapeSectionLODUniformParameters"),TEXT("FPrimitiveUniformShaderParameters"),TEXT("FPrecomputedLightingUniformParameters")};
-    static const uint32 LandscapeCounts[]={33,24,30,2};
-    static const TCHAR* UnresolvedNames[]={TEXT("View"),TEXT("Material"),TEXT("ShadowDepthPass"),TEXT("LightmapDensityPass")};
-    static const uint32 UnresolvedExpected[]={37,9,6,2};
+    static const TCHAR* LandscapeNames[]={TEXT("LandscapeParameters"),TEXT("LandscapeContinuousLODParameters"),TEXT("Primitive"),TEXT("PrecomputedLightingBuffer"),TEXT("View"),TEXT("ShadowDepthPass"),TEXT("LightmapDensityPass")};
+    static const TCHAR* LandscapeTypes[]={TEXT("FLandscapeUniformShaderParameters"),TEXT("FLandscapeSectionLODUniformParameters"),TEXT("FPrimitiveUniformShaderParameters"),TEXT("FPrecomputedLightingUniformParameters"),TEXT("FViewUniformShaderParameters"),TEXT("FShadowDepthPassUniformParameters"),TEXT("FLightmapDensityPassUniformParameters")};
+    static const uint32 LandscapeCounts[]={33,24,30,2,37,6,2};
+    static const TCHAR* UnresolvedNames[]={TEXT("Material")};
+    static const uint32 UnresolvedExpected[]={9};
     const TCHAR* const* Names=bLandscape ? LandscapeNames : PaperNames;
     const TCHAR* const* Types=bLandscape ? LandscapeTypes : PaperTypes;
     const uint32* ExpectedCounts=bLandscape ? LandscapeCounts : PaperCounts;
-    const int32 ContractCount=bLandscape ? 4 : 6;
+    const int32 ContractCount=bLandscape ? 7 : 6;
     if (ExpectedSHA256.Len()!=64) return UniformContractsFail(Error,TEXT("invalid pin"));
     TArray<uint8> Bytes;
     if (!FFileHelper::LoadFileToArray(Bytes,*Path) || !Bytes.Num() || Bytes.Num()>16*1024*1024) return UniformContractsFail(Error,TEXT("contract file unavailable or too large"));
@@ -171,7 +171,7 @@ static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
         FObj R=Obj(Root,Key); FString P,H;
         if (!Keys(R,{TEXT("path"),TEXT("sha256")}) || !Str(R,TEXT("path"),P) || P.IsEmpty() || !Str(R,TEXT("sha256"),H) || H.Len()!=64) return UniformContractsFail(Error,TEXT("invalid evidence receipt"));
     }
-    FLegacyLocalUniformContract All[6]; bool Seen[6]={}; uint32 Hashes[6]={};
+    FLegacyLocalUniformContract All[7]; bool Seen[7]={}; uint32 Hashes[7]={};
     for (const auto& V : *Contracts) {
         if (!V.IsValid() || V->Type!=EJson::Object) return UniformContractsFail(Error,TEXT("invalid contract entry"));
         FObj C=V->AsObject(); FString Name,Struct,Slot,Address,UniformAddress;
@@ -194,7 +194,7 @@ static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
             FLegacyMaterialResource Rsrc; Rsrc.Offset=uint16(Offset); Rsrc.BaseType=Mapped; Result.OriginalResources.Add(Rsrc);
         }
     }
-    uint32 Counts[6]={}, Materials=0, UnresolvedCounts[6]={}; TSet<FString> Uses, Slots;
+    uint32 Counts[7]={}, Materials=0, UnresolvedCounts[1]={}; TSet<FString> Uses, Slots;
     TArray<FLegacyOriginalUniformContractBinding> Result;
     for (const auto& V:*Bindings) {
         if (!V.IsValid() || V->Type!=EJson::Object) return UniformContractsFail(Error,TEXT("invalid binding")); FObj B=V->AsObject();
@@ -205,12 +205,12 @@ static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
         int32 I=0; while (I<ContractCount && Name!=Names[I]) ++I;
         if (I==ContractCount) {
             if (bLandscape) {
-                int32 U=0; while (U<4 && Name!=UnresolvedNames[U]) ++U;
-                if (U==4 || Status!=TEXT("original_layout_unresolved") || (!Active && Recorded!=0)) return UniformContractsFail(Error,TEXT("unknown landscape binding"));
+                int32 U=0; while (U<1 && Name!=UnresolvedNames[U]) ++U;
+                if (U==1 || Status!=TEXT("original_layout_unresolved") || (!Active && Recorded!=0)) return UniformContractsFail(Error,TEXT("unknown landscape binding"));
                 ++UnresolvedCounts[U];
             } else { if (Name!=TEXT("Material") || Status!=TEXT("requires_original_material_expression_contract")) return UniformContractsFail(Error,TEXT("unknown binding")); ++Materials; }
         }
-        else { const bool bNoActiveWrapperHash=bLandscape && I>=2;
+        else { const bool bNoActiveWrapperHash=bLandscape && (I==2 || I==3 || I==5);
             if (Status!=(bNoActiveWrapperHash ? TEXT("original_fixed_layout_decoded_no_active_wrapper_hash") : TEXT("original_fixed_layout_decoded")) || (bNoActiveWrapperHash && Active) || Recorded!=(Active ? Hashes[I] : 0)) return UniformContractsFail(Error,TEXT("binding resource hash inconsistent")); ++Counts[I];
         }
         auto& Binding=Result.AddDefaulted_GetRef();
@@ -219,7 +219,7 @@ static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
         if (I<ContractCount) { Binding.Contract=All[I]; Binding.Contract.SourceRegister=uint16(Register); Binding.Contract.OriginalResourceLayoutHash=Recorded; }
     }
     for (int32 I=0; I<ContractCount; ++I) if (!Seen[I] || Counts[I]!=ExpectedCounts[I]) return UniformContractsFail(Error,TEXT("incomplete binding inventory"));
-    if (bLandscape) { for (int32 I=0; I<4; ++I) if (UnresolvedCounts[I]!=UnresolvedExpected[I]) return UniformContractsFail(Error,TEXT("incomplete unresolved landscape inventory")); }
+    if (bLandscape) { for (int32 I=0; I<1; ++I) if (UnresolvedCounts[I]!=UnresolvedExpected[I]) return UniformContractsFail(Error,TEXT("incomplete unresolved landscape inventory")); }
     else if (Materials!=14) return UniformContractsFail(Error,TEXT("incomplete Material binding inventory"));
     for (auto& Binding : Result) if (bResolveAllMetadata && Binding.ParameterName!=TEXT("Material")) {
         auto* Metadata=FShaderParametersMetadata::GetNameStructMap().FindRef(FHashedName(*Binding.ParameterName));

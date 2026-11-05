@@ -11,9 +11,10 @@ import landscape_layout_contract as landscape
 ROOT = fixed.ROOT
 CONTRACT = ROOT / 'behavior/maps_terrain_material_runtime/landscape-uniform-contract.json'
 OUTPUT = ROOT / 'generated/material_pipeline/apollo-d4-landscape-spirv/original-uniform-contracts.json'
-NAMES = ('LandscapeParameters', 'LandscapeContinuousLODParameters',
-         'Primitive', 'PrecomputedLightingBuffer')
-UNCORROBORATED = {'Primitive', 'PrecomputedLightingBuffer'}
+TERRAIN_NAMES = ('LandscapeParameters', 'LandscapeContinuousLODParameters',
+                 'Primitive', 'PrecomputedLightingBuffer')
+COMMON_NAMES = ('View', 'ShadowDepthPass', 'LightmapDensityPass')
+UNCORROBORATED = {'Primitive', 'PrecomputedLightingBuffer', 'ShadowDepthPass'}
 EXPECTED = {'View': 37, 'LandscapeParameters': 33, 'Primitive': 30,
             'LandscapeContinuousLODParameters': 24, 'Material': 9,
             'ShadowDepthPass': 6, 'PrecomputedLightingBuffer': 2, 'LightmapDensityPass': 2}
@@ -32,12 +33,12 @@ def build():
     if len(rows) != 43 or len({r['shader_index'] for r in rows}) != 43:
         raise ValueError('incomplete landscape shader inventory')
     recorded = {c['parameter_name']: c for c in recovered['contracts']}
-    if len(recorded) != len(recovered['contracts']) or not set(NAMES) <= set(recorded):
+    if len(recorded) != len(recovered['contracts']) or not set(TERRAIN_NAMES) <= set(recorded):
         raise ValueError('missing or duplicate recovered landscape contracts')
     contracts = []
     with fixed.IMAGE.open('rb') as image:
         source_rows = {row[0]: row for row in landscape.FIXED}
-        for name in NAMES:
+        for name in TERRAIN_NAMES:
             contract = landscape.decode(source_rows[name], image)
             contract['original_shader_associations'] = landscape.verify_wrappers(contract, report, source_rows[name][-1])
             if name in UNCORROBORATED and any(a['resource_table_active'] for a in contract['original_shader_associations']):
@@ -45,6 +46,10 @@ def build():
             if contract != recorded[name]:
                 raise ValueError('recovered landscape contract differs from original captures: ' + name)
             del contract['original_shader_associations']
+            contracts.append(contract)
+        for name in COMMON_NAMES:
+            contract = fixed.decode(name, image)
+            del contract['static_slot_name']
             contracts.append(contract)
     by_name = {c['parameter_name']: c for c in contracts}
     bindings, counts = [], Counter()
@@ -79,7 +84,7 @@ def build():
     return dict(schema='landscape-original-uniform-contracts-v1', image=recovered['image'],
                 inventory=fixed.receipt(landscape.SHADER_REPORT), contracts=contracts,
                 bindings=bindings, runtime_verified=False,
-                limits='Original ABI evidence only. Primitive and PrecomputedLightingBuffer have no active wrapper layout hash corroboration. Static slots, other original uniform layouts, runtime values, RHI binding and rendering remain unverified.')
+                limits='Original ABI evidence only. Primitive, PrecomputedLightingBuffer and ShadowDepthPass have no active wrapper layout hash corroboration. Static slots, other original uniform layouts, runtime values, RHI binding and rendering remain unverified.')
 
 
 def main():

@@ -141,7 +141,7 @@ bool CheckUniformBindings(const FString& Path, const FString& Pin, FString& Erro
         int32 I=0; while (I<8 && Binding.ParameterName!=Names[I]) ++I;
         if (I==8) { Error=TEXT("unexpected uniform role"); return false; }
         ++Counts[I];
-        const bool Decoded=I<4;
+        const bool Decoded=I!=5;
         const auto& Contract=Binding.Contract;
         if (Binding.bOriginalLayoutResolved!=Decoded || Binding.bOriginalStaticSlotKnown || Contract.CurrentMetadata ||
             (Decoded && (Contract.ParameterName!=Binding.ParameterName || Contract.SourceRegister!=Binding.SourceRegister ||
@@ -167,7 +167,7 @@ bool CheckUniformBindings(const FString& Path, const FString& Pin, FString& Erro
     IFileManager::Get().Delete(*Temp);
     if (Accepted || !CorruptError.Contains(TEXT("digest mismatch")) || Sentinel.Num()!=1 || Sentinel[0].ParameterName!=TEXT("sentinel"))
     { Error=TEXT("corrupted bundle was not rejected by digest pin with output unchanged"); return false; }
-    UE_LOG(LogTemp,Display,TEXT("Legacy landscape uniform loader: 143 bindings, 89 decoded, 54 unresolved; static slots unknown; corrupted bundle rejected"));
+    UE_LOG(LogTemp,Display,TEXT("Legacy landscape uniform loader: 143 bindings, 134 decoded, 9 unresolved; static slots unknown; corrupted bundle rejected"));
     return true;
 }
 
