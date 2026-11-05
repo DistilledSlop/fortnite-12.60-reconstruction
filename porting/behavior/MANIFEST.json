@@ -60255,5 +60255,77 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Captured direct wrapper: porting/generated/native-triage004/0x14292c050.c; source recovery, build pending."
+  },
+  {
+    "function": "LockBehaviorResource",
+    "kind": "exec",
+    "signature": "void LockBehaviorResource()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1427948a0",
+    "native_body_address": "0x141664f60",
+    "inc_path": "porting/behavior/batch_007_new/AFortAIController_LockBehaviorResource.inc",
+    "includes": [
+      "BrainComponent.h"
+    ],
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "notes": "The native body checks BrainComponent, then calls LockResource with priority 2 (HardScript).",
+    "class": "AFortAIController"
+  },
+  {
+    "function": "LockMovementResource",
+    "kind": "exec",
+    "signature": "void LockMovementResource()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x1427948c0",
+    "native_body_address": "0x141664f80",
+    "inc_path": "porting/behavior/batch_007_new/AFortAIController_LockMovementResource.inc",
+    "includes": [
+      "Navigation/PathFollowingComponent.h"
+    ],
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "notes": "The native body checks PathFollowingComponent, then calls LockResource with priority 2 (HardScript).",
+    "class": "AFortAIController"
+  },
+  {
+    "function": "UnlockBehaviorResource",
+    "kind": "exec",
+    "signature": "void UnlockBehaviorResource()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x142795230",
+    "native_body_address": "0x141677880",
+    "inc_path": "porting/behavior/batch_007_new/AFortAIController_UnlockBehaviorResource.inc",
+    "includes": [
+      "BrainComponent.h"
+    ],
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "notes": "The native body checks BrainComponent, then calls ClearResourceLock with priority 2 (HardScript).",
+    "class": "AFortAIController"
+  },
+  {
+    "function": "UnlockMovementResource",
+    "kind": "exec",
+    "signature": "void UnlockMovementResource()",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x142795250",
+    "native_body_address": "0x1416778a0",
+    "inc_path": "porting/behavior/batch_007_new/AFortAIController_UnlockMovementResource.inc",
+    "includes": [
+      "Navigation/PathFollowingComponent.h"
+    ],
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "notes": "The native body checks PathFollowingComponent, then calls ClearResourceLock with priority 2 (HardScript).",
+    "class": "AFortAIController"
   }
 ]

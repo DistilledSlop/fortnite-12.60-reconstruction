@@ -84,7 +84,19 @@ public:
 	static bool IsIgnoringProximity(AFortAIController* FortAIController);
 
 	UFUNCTION(BlueprintCallable)
+	void LockBehaviorResource();
+
+	UFUNCTION(BlueprintCallable)
+	void LockMovementResource();
+
+	UFUNCTION(BlueprintCallable)
 	void SetAlwaysGameplayRelevant(bool bInAlwaysGameplayRelevant);
+
+	UFUNCTION(BlueprintCallable)
+	void UnlockBehaviorResource();
+
+	UFUNCTION(BlueprintCallable)
+	void UnlockMovementResource();
 
 };
 
