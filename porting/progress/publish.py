@@ -10,6 +10,7 @@ from out/progress.json. Stdlib only, offline, deterministic for a given out/.
     python3 porting/progress/publish.py --check        # exit 1 if docs/README are stale
 """
 import json
+import math
 import re
 import subprocess
 import sys
@@ -81,13 +82,36 @@ def badge(label, message, color, logo=None):
 
 
 def water_badge():
-    """Estimated water use; figure is stored by porting/water_badge.py so this stays offline."""
+    """Saved inference scenario range; never read private logs during publication."""
     try:
-        gal = json.loads((ROOT / "porting" / "progress" / "water.json").read_text())["gallons"]
+        data = json.loads((ROOT / "porting" / "progress" / "water.json").read_text())
+        low, central, high = data["estimate"]["gallons"]
     except (OSError, KeyError, ValueError):
         return []
-    color = "4c1" if gal < 10 else "dfb317" if gal < 100 else "fe7d37" if gal < 1000 else "e05d44"
-    return [badge("water used", f"{gal:,.1f} gal", color)]
+    title = (f"Central scenario {central:,.1f} US gal; refreshed {data['updated_at']}. "
+             "Partial recorded usage; assumptions and coverage in report.")
+    def fmt(value):
+        if value == 0:
+            return "0"
+        decimals = 1 - math.floor(math.log10(abs(value)))
+        return f"{round(value, decimals):,.{max(0, decimals)}f}"
+    return ['<a href="porting/progress/WATER_REPORT.md" title="' + title + '">'
+            + badge("AI water est.", f"~{fmt(central)} gal ({fmt(low)}–{fmt(high)})", "2a78d6") + '</a>']
+
+
+def refresh_water_only(text):
+    """Preserve independently edited dashboard/progress content."""
+    pattern = r'(?:<a\b[^>]*>)?<img\b[^>]*alt="(?:water used|AI water est\.)[^"\n]*"[^>]*>(?:</a>)?'
+    replacement = water_badge()
+    if not replacement:
+        raise ValueError("No current water scenario snapshot to publish")
+    result, count = re.subn(pattern, lambda _: replacement[0], text)
+    if count == 0 and BSTART in text and BEND in text:
+        # A publisher using a different snapshot schema may have omitted it.
+        return text.replace(BEND, '<p align="center">' + replacement[0] + '</p>\n' + BEND, 1)
+    if count != 1:
+        raise ValueError(f"Expected one water badge, found {count}")
+    return result
 
 
 def badges(d):
@@ -238,6 +262,15 @@ def render_readme(d):
 
 def main():
     check = "--check" in sys.argv
+    if "--water-only" in sys.argv:
+        text = README.read_text()
+        updated = refresh_water_only(text)
+        if check:
+            print("up to date" if updated == text else "stale: README water badge")
+            sys.exit(0 if updated == text else 1)
+        README.write_text(updated)
+        print("refreshed README water estimate only")
+        return
     d = json.loads((OUT / "progress.json").read_text())
     files = {n: (OUT / n).read_bytes() for n in PAGES}
     for p in sorted(OUT.glob("*.txt")):

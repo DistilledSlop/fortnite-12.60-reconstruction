@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "description": "Illustrative inference scenarios, not measured rates for these proprietary model names or statistical confidence bounds. Energy includes serving infrastructure once; known token overlaps are normalized; Antigravity input/cache separation is an explicit assumption.",
+  "scenarios": [
+    "low",
+    "central",
+    "high"
+  ],
+  "tiers": {
+    "small": {
+      "input_kwh_per_million": [
+        0.02,
+        0.1,
+        0.5
+      ],
+      "output_kwh_per_million": [
+        0.1,
+        0.5,
+        2.5
+      ]
+    },
+    "standard": {
+      "input_kwh_per_million": [
+        0.05,
+        0.25,
+        1.25
+      ],
+      "output_kwh_per_million": [
+        0.25,
+        1.25,
+        6.25
+      ]
+    },
+    "large": {
+      "input_kwh_per_million": [
+        0.1,
+        0.5,
+        2.5
+      ],
+      "output_kwh_per_million": [
+        0.5,
+        2.5,
+        12.5
+      ]
+    },
+    "unknown": {
+      "input_kwh_per_million": [
+        0.02,
+        0.25,
+        2.5
+      ],
+      "output_kwh_per_million": [
+        0.1,
+        1.25,
+        12.5
+      ]
+    }
+  },
+  "cache_read_input_multiplier": [
+    0.02,
+    0.1,
+    0.3
+  ],
+  "cache_write_input_multiplier": [
+    1.0,
+    1.2,
+    1.5
+  ],
+  "cloud_pue": [
+    1.2,
+    1.2,
+    1.2
+  ],
+  "cloud_site_liters_per_it_kwh": [
+    0.0,
+    0.36,
+    1.5
+  ],
+  "electricity_liters_per_facility_kwh": [
+    0.1,
+    4.52,
+    10.0
+  ],
+  "model_overrides": {},
+  "sources": [
+    {
+      "url": "https://services.google.com/fh/files/misc/measuring_the_environmental_impact_of_delivering_ai_at_google_scale.pdf",
+      "supports": "Measured Gemini Apps median prompt energy, serving boundary and WUE method; NOT these token coefficients."
+    },
+    {
+      "url": "https://eta-publications.lbl.gov/sites/default/files/2024-12/lbnl-2024-united-states-data-center-energy-usage-report.pdf",
+      "supports": "2024 LBNL US data center report: approximately 0.36 L/IT-kWh direct WUE and 4.52 L/facility-kWh electricity water in 2023. Historical US proxies, not actual provider regions."
+    },
+    {
+      "url": "https://arxiv.org/abs/2509.20241",
+      "supports": "Inference energy varies with throughput, power, overhead and test-time scaling; NOT exact rates for project models."
+    },
+    {
+      "url": "https://arxiv.org/abs/2511.05597",
+      "supports": "Input/output length, architecture, hardware and batching matter; NOT exact rates for project models."
+    }
+  ]
+}

@@ -1,5 +1,617 @@
 {
- "gallons": 20.6,
- "tokens": 96763241,
- "gal_per_token": 2.125e-07
+  "schema_version": 2,
+  "updated_at": "2026-11-05T21:14:35+00:00",
+  "scope": "Fortnite inference with recorded usage",
+  "usage_first_at": "2026-10-30T03:58:44.528000+00:00",
+  "usage_last_at": "2026-11-05T21:14:24.073000+00:00",
+  "records_without_timestamps": 0,
+  "recorded_requests": 80959,
+  "range_kind": "illustrative scenarios; not confidence bounds or bounds on missing usage",
+  "scenarios": [
+    "low",
+    "central",
+    "high"
+  ],
+  "estimate": {
+    "energy_kwh": [
+      19.966743329200003,
+      243.305650455,
+      3005.946340875
+    ],
+    "cooling_liters": [
+      0.0,
+      72.2780380515,
+      3725.52893375
+    ],
+    "electricity_liters": [
+      1.9966743329200003,
+      1099.7415400566,
+      30059.463408749998
+    ],
+    "total_liters": [
+      1.9966743329200003,
+      1172.0195781081,
+      33784.992342499994
+    ],
+    "gallons": [
+      0.5274655564183134,
+      309.614817352748,
+      8925.050766022552
+    ]
+  },
+  "tokens": 8079435687,
+  "token_types": {
+    "input_tokens": 127903141,
+    "cache_read_tokens": 7888405075,
+    "cache_write_tokens": 28649144,
+    "output_tokens": 20343333,
+    "reasoning_tokens": 14134994
+  },
+  "models": [
+    {
+      "provider": "anthropic",
+      "model": "claude-haiku-5-5",
+      "input_tokens": 13684,
+      "cache_read_tokens": 1023492207,
+      "cache_write_tokens": 21741574,
+      "output_tokens": 4060089,
+      "reasoning_tokens": 6521071,
+      "requests": 6680,
+      "clients": [
+        "claude"
+      ],
+      "provider_details": [],
+      "tier": "small",
+      "energy_kwh": [
+        1.9026180428,
+        18.13585935,
+        196.28975354999997
+      ],
+      "cooling_liters": [
+        0.0,
+        5.4407578050000005,
+        245.36219193749997
+      ],
+      "electricity_liters": [
+        0.19026180428,
+        81.97408426199999,
+        1962.8975354999998
+      ],
+      "total_liters": [
+        0.19026180428,
+        87.414842067,
+        2208.2597274375
+      ],
+      "gallons": [
+        0.05026185132201195,
+        23.092558235402798,
+        583.3605043370097
+      ]
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-5-5",
+      "input_tokens": 351,
+      "cache_read_tokens": 12045353,
+      "cache_write_tokens": 817443,
+      "output_tokens": 59558,
+      "reasoning_tokens": 18855,
+      "requests": 171,
+      "clients": [
+        "claude"
+      ],
+      "provider_details": [],
+      "tier": "large",
+      "energy_kwh": [
+        0.14507660600000002,
+        1.28894145,
+        13.080466
+      ],
+      "cooling_liters": [
+        0.0,
+        0.386682435,
+        16.3505825
+      ],
+      "electricity_liters": [
+        0.014507660600000003,
+        5.826015354,
+        130.80465999999998
+      ],
+      "total_liters": [
+        0.014507660600000003,
+        6.212697789,
+        147.15524249999999
+      ],
+      "gallons": [
+        0.003832518475617448,
+        1.641221125601061,
+        38.874302426486025
+      ]
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-sonnet-5",
+      "input_tokens": 26,
+      "cache_read_tokens": 2066984,
+      "cache_write_tokens": 351476,
+      "output_tokens": 5509,
+      "reasoning_tokens": 320,
+      "requests": 13,
+      "clients": [
+        "claude"
+      ],
+      "provider_details": [],
+      "tier": "standard",
+      "energy_kwh": [
+        0.021099333999999997,
+        0.16441015000000003,
+        1.47060025
+      ],
+      "cooling_liters": [
+        0.0,
+        0.04932304500000001,
+        1.8382503125
+      ],
+      "electricity_liters": [
+        0.0021099333999999997,
+        0.7431338780000001,
+        14.7060025
+      ],
+      "total_liters": [
+        0.0021099333999999997,
+        0.792456923,
+        16.5442528125
+      ],
+      "gallons": [
+        0.0005573854366170061,
+        0.2093449717543332,
+        4.370529220210194
+      ]
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-sonnet-5-5",
+      "input_tokens": 7348,
+      "cache_read_tokens": 497074557,
+      "cache_write_tokens": 5738651,
+      "output_tokens": 1541212,
+      "reasoning_tokens": 839580,
+      "requests": 3157,
+      "clients": [
+        "claude"
+      ],
+      "provider_details": [],
+      "tier": "standard",
+      "energy_kwh": [
+        1.3795725070000002,
+        17.126286225,
+        212.0520645
+      ],
+      "cooling_liters": [
+        0.0,
+        5.1378858675000005,
+        265.065080625
+      ],
+      "electricity_liters": [
+        0.13795725070000003,
+        77.410813737,
+        2120.520645
+      ],
+      "total_liters": [
+        0.13795725070000003,
+        82.5486996045,
+        2385.585725625
+      ],
+      "gallons": [
+        0.03644445005510662,
+        21.807059394017042,
+        630.205077214659
+      ]
+    },
+    {
+      "provider": "google",
+      "model": "gemini-3.8-flash-n",
+      "input_tokens": 32412315,
+      "cache_read_tokens": 176968180,
+      "cache_write_tokens": 0,
+      "output_tokens": 527594,
+      "reasoning_tokens": 691391,
+      "requests": 5925,
+      "clients": [
+        "antigravity"
+      ],
+      "provider_details": [],
+      "tier": "small",
+      "energy_kwh": [
+        0.8409320720000001,
+        5.6204057999999995,
+        45.798847
+      ],
+      "cooling_liters": [
+        0.0,
+        1.68612174,
+        57.24855875
+      ],
+      "electricity_liters": [
+        0.08409320720000002,
+        25.404234215999995,
+        457.98847
+      ],
+      "total_liters": [
+        0.08409320720000002,
+        27.090355955999996,
+        515.23702875
+      ],
+      "gallons": [
+        0.02221507513540303,
+        7.156514932009309,
+        136.11122333580184
+      ]
+    },
+    {
+      "provider": "local",
+      "model": "deepseek-v4.1-flash-1017-coder-iq2xxs-remote",
+      "input_tokens": 39815,
+      "cache_read_tokens": 494039,
+      "cache_write_tokens": 0,
+      "output_tokens": 4533,
+      "reasoning_tokens": 0,
+      "requests": 19,
+      "clients": [
+        "opencode"
+      ],
+      "provider_details": [
+        "llamacpp"
+      ],
+      "tier": "unknown",
+      "energy_kwh": [
+        0.0014472156,
+        0.027970975,
+        0.52672925
+      ],
+      "cooling_liters": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "electricity_liters": [
+        0.00014472156,
+        0.12642880699999998,
+        5.2672925
+      ],
+      "total_liters": [
+        0.00014472156,
+        0.12642880699999998,
+        5.2672925
+      ],
+      "gallons": [
+        3.823139152567292e-05,
+        0.03339895742238223,
+        1.3914714700956825
+      ]
+    },
+    {
+      "provider": "local",
+      "model": "qwen3.8-27b",
+      "input_tokens": 920245,
+      "cache_read_tokens": 52968139,
+      "cache_write_tokens": 0,
+      "output_tokens": 637297,
+      "reasoning_tokens": 0,
+      "requests": 535,
+      "clients": [
+        "opencode"
+      ],
+      "provider_details": [
+        "llamacpp"
+      ],
+      "tier": "standard",
+      "energy_kwh": [
+        0.258304639,
+        2.350885975,
+        24.996464625
+      ],
+      "cooling_liters": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "electricity_liters": [
+        0.025830463900000003,
+        10.626004607,
+        249.96464625000002
+      ],
+      "total_liters": [
+        0.025830463900000003,
+        10.626004607,
+        249.96464625000002
+      ],
+      "gallons": [
+        0.006823686661826063,
+        2.8070934453983303,
+        66.03367361684106
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "input_tokens": 5618205,
+      "cache_read_tokens": 80369408,
+      "cache_write_tokens": 0,
+      "output_tokens": 538111,
+      "reasoning_tokens": 174842,
+      "requests": 2603,
+      "clients": [
+        "codex"
+      ],
+      "provider_details": [],
+      "tier": "small",
+      "energy_kwh": [
+        0.2158071632,
+        1.72199108,
+        16.6468962
+      ],
+      "cooling_liters": [
+        0.0,
+        0.516597324,
+        20.80862025
+      ],
+      "electricity_liters": [
+        0.021580716320000002,
+        7.7833996816,
+        166.468962
+      ],
+      "total_liters": [
+        0.021580716320000002,
+        8.2999970056,
+        187.27758225
+      ],
+      "gallons": [
+        0.005701022121613389,
+        2.1926272435358385,
+        49.47350326365444
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-6-sol",
+      "input_tokens": 3512119,
+      "cache_read_tokens": 444664320,
+      "cache_write_tokens": 0,
+      "output_tokens": 548577,
+      "reasoning_tokens": 267041,
+      "requests": 3401,
+      "clients": [
+        "codex"
+      ],
+      "provider_details": [],
+      "tier": "standard",
+      "energy_kwh": [
+        0.8241747700000001,
+        13.01416025,
+        176.23688125
+      ],
+      "cooling_liters": [
+        0.0,
+        3.9042480750000004,
+        220.29610156250004
+      ],
+      "electricity_liters": [
+        0.08241747700000002,
+        58.824004329999994,
+        1762.3688125
+      ],
+      "total_liters": [
+        0.08241747700000002,
+        62.72825240499999,
+        1982.6649140625002
+      ],
+      "gallons": [
+        0.021772394049270498,
+        16.571051178668807,
+        523.7646594863827
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-6.1-sol",
+      "input_tokens": 40244467,
+      "cache_read_tokens": 3263568384,
+      "cache_write_tokens": 0,
+      "output_tokens": 5371026,
+      "reasoning_tokens": 4710085,
+      "requests": 21744,
+      "clients": [
+        "codex"
+      ],
+      "provider_details": [],
+      "tier": "standard",
+      "energy_kwh": [
+        7.796069484000001,
+        104.25171510000001,
+        1337.1506715
+      ],
+      "cooling_liters": [
+        0.0,
+        31.275514530000006,
+        1671.4383393750002
+      ],
+      "electricity_liters": [
+        0.7796069484000001,
+        471.217752252,
+        13371.506715
+      ],
+      "total_liters": [
+        0.7796069484000001,
+        502.49326678200003,
+        15042.945054374999
+      ],
+      "gallons": [
+        0.20595036759150115,
+        132.74467758195155,
+        3973.925668525102
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-6.1-terra",
+      "input_tokens": 45128434,
+      "cache_read_tokens": 2334691840,
+      "cache_write_tokens": 0,
+      "output_tokens": 7049815,
+      "reasoning_tokens": 911792,
+      "requests": 36710,
+      "clients": [
+        "codex"
+      ],
+      "provider_details": [],
+      "tier": "standard",
+      "energy_kwh": [
+        6.581515290000001,
+        79.60141325,
+        981.68002625
+      ],
+      "cooling_liters": [
+        0.0,
+        23.880423974999996,
+        1227.1000328124999
+      ],
+      "electricity_liters": [
+        0.6581515290000002,
+        359.79838788999996,
+        9816.800262499999
+      ],
+      "total_liters": [
+        0.6581515290000002,
+        383.67881186499994,
+        11043.900295312498
+      ],
+      "gallons": [
+        0.17386524017858349,
+        101.35721917671295,
+        2917.489807051464
+      ]
+    },
+    {
+      "provider": "unknown",
+      "model": "deepseek-v4.1-flash-free",
+      "input_tokens": 6132,
+      "cache_read_tokens": 1664,
+      "cache_write_tokens": 0,
+      "output_tokens": 12,
+      "reasoning_tokens": 17,
+      "requests": 1,
+      "clients": [
+        "opencode"
+      ],
+      "provider_details": [
+        "opencode"
+      ],
+      "tier": "unknown",
+      "energy_kwh": [
+        0.00012620560000000002,
+        0.0016108499999999998,
+        0.0169405
+      ],
+      "cooling_liters": [
+        0.0,
+        0.0004832549999999999,
+        0.021175625
+      ],
+      "electricity_liters": [
+        1.2620560000000003e-05,
+        0.007281041999999999,
+        0.169405
+      ],
+      "total_liters": [
+        1.2620560000000003e-05,
+        0.007764296999999999,
+        0.190580625
+      ],
+      "gallons": [
+        3.3339992371091544e-06,
+        0.0020511102736082143,
+        0.05034607484594865
+      ]
+    }
+  ],
+  "coverage": {
+    "codex": {
+      "files": 1289,
+      "scoped_files": 1280,
+      "usage_records": 64458,
+      "missing_usage_files": 1,
+      "malformed_lines": 0,
+      "unreadable_files": 0,
+      "fallback_files": 1279,
+      "unaccounted_events": 0,
+      "limitations": [
+        "Local session logs only; cumulative fallback cannot identify every request."
+      ]
+    },
+    "claude": {
+      "files": 176,
+      "scoped_files": 175,
+      "usage_records": 10021,
+      "missing_usage_files": 5,
+      "malformed_lines": 0,
+      "unreadable_files": 0,
+      "missing_message_ids": 0,
+      "limitations": [
+        "Local session logs only; calls without usage or stable message IDs are excluded."
+      ],
+      "excluded_zero_records": 9
+    },
+    "opencode": {
+      "files": 1,
+      "scoped_files": 8,
+      "usage_records": 555,
+      "missing_usage_files": 2,
+      "unreadable_files": 0,
+      "limitations": [
+        "OpenCode normalizes stored output to exclude reasoning and input to exclude cache; older versions may differ.",
+        "Only locally retained OpenCode messages are included; direct fnrunner/llama-server calls do not retain usage here."
+      ]
+    },
+    "antigravity": {
+      "files": 500,
+      "scoped_files": 500,
+      "usage_records": 5925,
+      "missing_usage_files": 0,
+      "unreadable_files": 0,
+      "malformed_metadata": 0,
+      "missing_ids": 0,
+      "missing_databases": 323,
+      "google_cache_exceeds_input": 4791,
+      "google_output_components_match": 5925,
+      "limitations": [
+        "Only retained local conversations with a project workspace are included; missing databases are unknown, not zero usage.",
+        "Generation-only records lack timestamps; step creation time is not necessarily request time.",
+        "Workspace attribution is conversation-wide; mixed-workspace activity cannot be separated.",
+        "Input and cache fields are treated as separate; their provider-specific semantics are not fully verified.",
+        "Generator-only fallback without an identifier is excluded when step usage exists."
+      ]
+    },
+    "gemini": {
+      "files": 0,
+      "scoped_files": 0,
+      "usage_records": 0,
+      "missing_usage_files": 0,
+      "unscoped_files": 0,
+      "unreadable_files": 0,
+      "unaccounted_tool_tokens": 0,
+      "limitations": [
+        "No native Gemini session files found means usage is unavailable, not measured zero; sessions without attributable project roots are excluded.",
+        "JSONL session format and unrecorded calls are not included; tool token overlap is unverified."
+      ]
+    }
+  },
+  "retained_historical_records": 0,
+  "assumptions_file": "porting/water_profiles.json",
+  "limitations": [
+    "Missing logs and unreported token categories are excluded, never treated as known zero.",
+    "Specific model names use heuristic family profiles unless explicitly overridden.",
+    "Uncertain geography, hardware, batching and long-context effects prevent calibrated error bounds.",
+    "Inference only: excludes training, hardware manufacture, network, builds and game runtime."
+  ]
 }
