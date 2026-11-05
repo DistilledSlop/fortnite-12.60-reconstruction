@@ -931,10 +931,22 @@ void AFortPlayerPawn::PlayGroupEmote(UFortMontageItemDefinitionBase* EmoteAsset)
 	// CONFIDENCE: HIGH
 }
 
+void AFortPlayerPawn::PopAnimBPOverride(int32 Priority, TSubclassOf<UAnimInstance> InAnimBPOverride)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the bare-return native body.
+	return;
+}
+
 void AFortPlayerPawn::PopFootstepBankOverride(int32 Priority, UFortFootstepAudioBank* InFootstepBankOverride)
 {
 	// CONFIDENCE: HIGH; wrappers call the captured shared bare-return target.
 	// The original native target is an empty function.
+	return;
+}
+
+void AFortPlayerPawn::PushAnimBPOverride(int32 Priority, TSubclassOf<UAnimInstance> InAnimBPOverride)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the bare-return native body.
 	return;
 }
 

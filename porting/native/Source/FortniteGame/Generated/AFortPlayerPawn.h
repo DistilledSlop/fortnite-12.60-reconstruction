@@ -1719,7 +1719,13 @@ public:
 	void PlayGroupEmote(UFortMontageItemDefinitionBase* EmoteAsset);
 
 	UFUNCTION()
+	void PopAnimBPOverride(int32 Priority, TSubclassOf<UAnimInstance> InAnimBPOverride);
+
+	UFUNCTION()
 	void PopFootstepBankOverride(int32 Priority, UFortFootstepAudioBank* InFootstepBankOverride);
+
+	UFUNCTION()
+	void PushAnimBPOverride(int32 Priority, TSubclassOf<UAnimInstance> InAnimBPOverride);
 
 	UFUNCTION()
 	void PushFootstepBankOverride(int32 Priority, UFortFootstepAudioBank* InFootstepBankOverride);

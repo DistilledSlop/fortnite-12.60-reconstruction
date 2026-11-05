@@ -62069,5 +62069,37 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Shared wrapper steps one GameplayTag argument and invokes bare-return native target."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "PopAnimBPOverride",
+    "kind": "exec",
+    "signature": "void PopAnimBPOverride(int32 Priority, TSubclassOf<UAnimInstance> InAnimBPOverride)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage066_new/empty.inc",
+    "address": "0x142a7e2c0",
+    "native_body_address": "0x1406801c0",
+    "reflection_flags": "0x20401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Shared wrapper steps int and class parameters before calling the bare-return native target."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "PushAnimBPOverride",
+    "kind": "exec",
+    "signature": "void PushAnimBPOverride(int32 Priority, TSubclassOf<UAnimInstance> InAnimBPOverride)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage066_new/empty.inc",
+    "address": "0x142a7e2c0",
+    "native_body_address": "0x1406801c0",
+    "reflection_flags": "0x20401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Shared wrapper steps int and class parameters before calling the bare-return native target."
   }
 ]
