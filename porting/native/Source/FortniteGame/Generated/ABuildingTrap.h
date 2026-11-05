@@ -181,6 +181,12 @@ public:
 	virtual FVector GetCenter();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetDamageDelay() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetFireDelay() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetTrapLevel() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -196,5 +202,9 @@ public:
 	bool UseAttachedToWhenTargeted();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool NativeHasTrapData() const;
 };
 

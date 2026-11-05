@@ -4268,6 +4268,21 @@ def promote(args):
     for model in class_models:
         for fn, kinds in model["used"].items():
             seeds.setdefault(fn, set()).update(kinds)
+    # Accepted native bodies can name promoted types absent from reflected signatures.
+    # Root their headers as well as their transitive dependencies, or a generated
+    # source include may refer to a type that was never emitted.
+    for model in class_models:
+        accepted = set(model["splice"]["accepted"])
+        for entry in snippets_by_class.get(model["name"], []):
+            if ("%s::%s" % (model["name"], entry.get("function"))) not in accepted:
+                continue
+            for token in set(re.findall(r"[A-Za-z_]\w*", strip_comments(entry.get("body") or ""))):
+                info = splice_ctx["struct_index"].get(token)
+                if info is not None and info.package in PROMOTE_PACKAGES:
+                    reason = gate.reason(info)
+                    if reason is not None:
+                        raise ValueError("native body type %s cannot be emitted: %s" % (token, reason))
+                    seeds.setdefault(info.fn, set()).add("")
     _native_checkpoint3058_policy.add_roots(gate, seeds)
     _common_input_policy.add_roots(gate, seeds)
     if 'CommonUI' in module_deps:

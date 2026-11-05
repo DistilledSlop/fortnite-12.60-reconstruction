@@ -59409,5 +59409,57 @@
       "Components/PanelSlot.h"
     ],
     "notes": "Native 0x1407c5860 bounds-checks Slots then returns Content; no slot null check. Build and runtime pending."
+  },
+  {
+    "function": "NativeHasTrapData",
+    "kind": "helper",
+    "signature": "bool NativeHasTrapData() const",
+    "access": "public",
+    "static": false,
+    "virtual": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141c3dd40",
+    "inc_path": "porting/behavior/trap_data454_runtime/ABuildingTrap_NativeHasTrapData.inc",
+    "includes": [],
+    "notes": "Original primary virtual slot +0xf68. Name is proposed; preserve virtual dispatch.",
+    "class": "ABuildingTrap"
+  },
+  {
+    "function": "GetDamageDelay",
+    "kind": "exec",
+    "signature": "float GetDamageDelay() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "virtual": true,
+    "inc_path": "porting/behavior/trap_data454_runtime/ABuildingTrap_GetDamageDelay.inc",
+    "address": "0x14275c2a0",
+    "native_body_address": "0x141c39890",
+    "reflection_flags": "0x54020400",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Virtual slot 0xef0; requires promotion of reflected FFortTrapStats and NativeHasTrapData helper. Native performs no null check on returned row.",
+    "class": "ABuildingTrap"
+  },
+  {
+    "function": "GetFireDelay",
+    "kind": "exec",
+    "signature": "float GetFireDelay() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "virtual": true,
+    "inc_path": "porting/behavior/trap_data454_runtime/ABuildingTrap_GetFireDelay.inc",
+    "address": "0x14275c360",
+    "native_body_address": "0x141c39b00",
+    "reflection_flags": "0x54020400",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Virtual slot 0xee8; requires promotion of reflected FFortTrapStats and NativeHasTrapData helper. Native performs no null check on returned row.",
+    "class": "ABuildingTrap"
   }
 ]
