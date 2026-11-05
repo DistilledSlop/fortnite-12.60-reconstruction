@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "a987465bf289a970295c23d5318518823c35bcf5",
- "subject": "Connect local matchmaking URLs and preserve service state",
- "date": "2026-11-04T22:27:51-05:00",
+ "head": "7072320acd89eaf88a5588726933a5a3467fc23c",
+ "subject": "Align matchmaking key and reject unsupported locker styles",
+ "date": "2026-11-04T22:32:07-05:00",
  "overall_pct": 28.571,
  "measured_pct": 27.701,
  "objective_pct": 27.7,
@@ -1242,7 +1242,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "Local websocket status uses the ticket roster and its advertised origin can be configured for a local service; an HTTP/WebSocket test follows that URL. Original-client integration and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md.",
+     "rationale": "Local matchmaking can return the configured native server encryption key and advertise a local websocket origin. HTTP/WebSocket tests pass; an encrypted matchmaking-to-game join and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md.",
      "evidence_links": []
     },
     {
@@ -1270,7 +1270,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Game client login and profile integration and full protocol behavior remain unverified.",
+     "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Cosmetic variant changes remain unimplemented and are rejected. Game client login and profile integration and full protocol behavior remain unverified.",
      "evidence_links": []
     },
     {
@@ -3236,7 +3236,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "Local websocket status uses the ticket roster and its advertised origin can be configured for a local service; an HTTP/WebSocket test follows that URL. Original-client integration and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md.",
+   "rationale": "Local matchmaking can return the configured native server encryption key and advertise a local websocket origin. HTTP/WebSocket tests pass; an encrypted matchmaking-to-game join and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md.",
    "evidence_links": []
   },
   {
@@ -3264,7 +3264,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Game client login and profile integration and full protocol behavior remain unverified.",
+   "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Cosmetic variant changes remain unimplemented and are rejected. Game client login and profile integration and full protocol behavior remain unverified.",
    "evidence_links": []
   },
   {
