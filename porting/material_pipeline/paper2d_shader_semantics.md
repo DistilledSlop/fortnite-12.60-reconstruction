@@ -245,3 +245,9 @@ scene-texture table and shift subsequent fields. Its computed legacy hash is
 and store zero hashes, so they cannot corroborate that computed hash. The shared
 metadata decoder now validates embedded original struct identities and sizes
 directly. A current pass buffer cannot satisfy this whole-layout contract.
+
+LightmapDensityPass is independently decoded at 336 bytes versus 352 in current
+source, with the same nested SceneTextures expansion shifting all five trailing
+members by 16 bytes. Its computed original resource hash, 206963205, matches the
+active table in shader 2470. This corroborates the original nested-resource
+order while confirming that the current pass layout requires explicit mapping.
