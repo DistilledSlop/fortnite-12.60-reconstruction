@@ -16,7 +16,7 @@
       "evidence": "0x144e41760 checks interactions+0x418 through 0x142ee7880. When present it constructs credentials containing type epic and copies its two input FString values, then calls 0x1410e7db0 on the resolved account. Failure and missing account follow other setup paths; success changes another interaction state. 0x1410e7db0 logs UOnlineAccountCommon::AutoLogin, checks online identity, controller ID under four, and not already logging in/out, copies credentials into account storage, and calls account virtual +0x2f0; it returns one only on initiating this path. Failure calls account virtual +0x2d0 and returns zero."
     }
   ],
-  "unresolved": "The concrete account virtual +0x2f0 implementation, its backend requirements, and original successful local selected-account completion remain unproven. The normal epic credential handler cannot be assumed to complete a username-only local flow. No direct delegate broadcast or frontend travel is established.",
+  "unresolved": "For a UFortOnlineAccount instance, account virtual +0x2f0 resolves to 0x142233030 and delegates to the common login scheduler; see account_dispatch_followup. The actual resolved runtime account class, callback execution, identity/backend requirements and original successful local selected-account completion remain unproven. The epic credential handler cannot be assumed to complete a username-only local flow. No direct delegate broadcast or frontend travel is established.",
   "instruction_windows": [
     {
       "address": "0x140692d60",
@@ -39,5 +39,6 @@
       "sha256": "351fbdd94f5715dfea5cd242484b73dc09539dff71ed60c3003b5790cfe1a0ff"
     }
   ],
-  "verification": "Read-only Ghidra decompilation and instruction inspection plus local UE delegate source and generated reflection; no build or runtime login test. Ghidra project bookkeeping changed, program not saved."
+  "verification": "Read-only Ghidra decompilation and instruction inspection plus local UE delegate source and generated reflection; no build or runtime login test. Ghidra project bookkeeping changed, program not saved.",
+  "account_dispatch_followup": "../account_login_dispatch_runtime/evidence.json"
 }

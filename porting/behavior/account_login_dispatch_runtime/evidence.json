@@ -1,0 +1,58 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "findings": [
+    {
+      "name": "Concrete reflected account vtable",
+      "evidence": "UFortOnlineAccount reflection GPSC 0x142a07490 registers /Script/FortniteGame FortOnlineAccount, size 0x858, with constructor wrapper 0x142a07a00. The wrapper loads the constructed object and jumps to constructor 0x142202590, which calls 0x1410be350 then stores vtable 0x1460e2a68 at object+0. The mapped image qword at 0x1460e2d58 (vtable+0x2f0) is 0x142233030. This identifies the dispatch for an actual UFortOnlineAccount instance; the concrete runtime class of the account resolved by the sign-in interaction has not independently been verified."
+    },
+    {
+      "name": "Fortnite StartLogin override",
+      "evidence": "0x142233030 sets account+0x738 to zero. It calls 0x1409f0710 and tests 0x1442f92d0; on the false branch it retrieves an object via 0x1442f3c00, performs a class test and calls 0x141e613c0. When the resulting object exists and its byte +0x118 is nonzero, it logs that P1 matchmaking is being cancelled before P2 login and calls 0x1421cb250(object,3). It then unconditionally tail-calls 0x1410e6b40. Names beyond the logged intent and offsets are unproven."
+    },
+    {
+      "name": "Common state-machine initiation",
+      "evidence": "0x1410e6b40 logs UOnlineAccountCommon::StartLogin, copies the eight-byte global at 0x1480e8a38 into account+0x338, then tail-calls 0x1410c3c30(account, global). 0x1410c3c30 first calls account virtual +0x150 and returns if it is null. Otherwise it builds an allocated 0x30-byte weak-object callback capturing the account and supplied state, clones the delegate, calls 0x1410cefe0(account), and passes its result and the callback to 0x144627d90, before delegate cleanup. This records scheduling/dispatch structure, not successful execution or completion."
+    }
+  ],
+  "unresolved": "Confirm the resolved runtime account class (and possible subclass overrides), identify the global state and callback target, and trace 0x144627d90 and the state-machine sequence into identity completion. The concrete online identity/backend requirements, original successful local selected-account bootstrap and profile continuation remain unproven. Do not replace them with an assumed state flip, direct broadcast or frontend travel.",
+  "instruction_windows": [
+    {
+      "address": "0x142a07490",
+      "size": 178,
+      "sha256": "b555d3a63503be8fd5af93150e8f4dd2fec4473a3f1758a781f6a04e3bd5fdf3"
+    },
+    {
+      "address": "0x142a07a00",
+      "size": 13,
+      "sha256": "13f5ca47af67302d4f404d4c4567534866b43ee6b49a1a6629400502ff59c4f8"
+    },
+    {
+      "address": "0x142202590",
+      "size": 351,
+      "sha256": "c2c4f17e6327a01061d75222f301afc5c3e139360b0994a28d521aea684a5a7c"
+    },
+    {
+      "address": "0x1460e2d58",
+      "size": 8,
+      "sha256": "f061355798cb3a0de6f2101e67be7b814b198a9926cc3898d6d8a37d03fed02f"
+    },
+    {
+      "address": "0x142233030",
+      "size": 193,
+      "sha256": "f9ac5356099c0c1b90dfaf8cae381e08c17380602a20959b6fdc7e7e64b2452f"
+    },
+    {
+      "address": "0x1410e6b40",
+      "size": 86,
+      "sha256": "a61522136efe7327c8e67240adfd8a5c71d4be67e58aa030ffbafcc862e505d9"
+    },
+    {
+      "address": "0x1410c3c30",
+      "size": 421,
+      "sha256": "d8437aab6381764c9263ce7b06a7323ac97589f462ce936e5d351756695244be"
+    }
+  ],
+  "verification": "Read-only Ghidra decompilation and instruction inspection, constructor wrapper disassembly, plus original mapped-image vtable qword read. Ghidra project bookkeeping changed; program not saved. No builds or runtime login test."
+}

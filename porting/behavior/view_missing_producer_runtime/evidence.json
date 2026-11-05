@@ -377,9 +377,10 @@
     "typed_view_bridge": {
       "function": "BuildLegacySkyAtmosphereViewMemberValues",
       "original_caller": "0x1434eff1e..0x1434eff63",
-      "behavior": "Validates the original View identity/size and all eight exact scalar names, offsets and shapes from +0xad4 through +0xaf0 before calculating. Copies original supplied radius words and six helper outputs into complete typed View member overrides accepted by the original uniform data repacker and draw binding bridge. Output is replaced only on success.",
-      "limits": "Only the original active-atmosphere value path; no branch selection, current Km aliases, CVar acquisition, renderer provider attachment or runtime compatibility claim. Original scene radius words and original depth inputs remain caller supplied. Other missing View members require independent values.",
-      "verification": "Source review against the pinned eight original scalar leaves and caller copy instructions; native build and runtime pending."
+      "behavior": "Validates the original View identity/size and all eight exact scalar names, offsets and shapes from +0xad4 through +0xaf0. For the caller-selected active branch, copies original supplied radius words and six helper outputs into complete typed View member overrides accepted by the original uniform data repacker and draw binding bridge. For the caller-selected disabled branch, supplies the original eight 1.0f words without evaluating the helper or reading supplied atmosphere inputs, including the apply-volume flag. Output is replaced only on success.",
+      "limits": "The caller supplies the original render-branch decision; this does not reproduce that decision, alias current Km values, acquire CVars or attach a renderer provider. Original scene radius words and depth inputs remain caller supplied in the active branch. Other missing View members require independent values. No runtime compatibility claim.",
+      "verification": "Source review against the pinned eight original scalar leaves and caller copy instructions; native build and runtime pending.",
+      "disabled_branch": "0x1434f0234..0x1434f0290"
     },
     "input_identity_followup": "../atmosphere_input_fields_runtime/evidence.json"
   },

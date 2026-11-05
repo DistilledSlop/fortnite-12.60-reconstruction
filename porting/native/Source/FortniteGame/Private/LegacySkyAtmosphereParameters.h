@@ -37,15 +37,17 @@ struct FLegacySkyAtmosphereDepthParameters
 FLegacySkyAtmosphereDepthParameters ComputeLegacySkyAtmosphereDepthParameters(
     const FLegacySkyAtmosphereDepthInputs& Inputs);
 
-// Produce complete typed overrides for the eight original active-atmosphere
-// View members at +0xad4..+0xaf0. Radii must be the original proxy values;
-// this does not convert current Km fields or select the active/fallback branch.
+// Produce complete typed overrides for the eight original atmosphere View
+// members at +0xad4..+0xaf0. The caller supplies the original render-branch
+// decision. In the active branch radii must be the original proxy values;
+// this does not convert current Km fields. The disabled branch writes the
+// original eight 1.0f values and does not evaluate the helper or use inputs.
 // Contract must come from the independently pinned original View metadata.
 // On success, pass these values to BuildLegacyOriginalUniformData (or the draw
 // binding bridge); other missing View members still require their own producers.
 // OutValues is unchanged on failure and replaced on success. No RHI work occurs.
 bool BuildLegacySkyAtmosphereViewMemberValues(const FLegacyLocalUniformContract& Contract,
-    float OriginalBottomRadius, float OriginalTopRadius,
+    bool bRenderSkyAtmosphere, float OriginalBottomRadius, float OriginalTopRadius,
     const FLegacySkyAtmosphereDepthInputs& Inputs,
     TArray<FLegacyOriginalUniformMemberValue>& OutValues, FString& Error);
 #endif

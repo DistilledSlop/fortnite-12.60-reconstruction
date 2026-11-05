@@ -42,7 +42,7 @@ FLegacySkyAtmosphereDepthParameters ComputeLegacySkyAtmosphereDepthParameters(
 }
 
 bool BuildLegacySkyAtmosphereViewMemberValues(const FLegacyLocalUniformContract& Contract,
-    float OriginalBottomRadius, float OriginalTopRadius,
+    bool bRenderSkyAtmosphere, float OriginalBottomRadius, float OriginalTopRadius,
     const FLegacySkyAtmosphereDepthInputs& Inputs,
     TArray<FLegacyOriginalUniformMemberValue>& OutValues, FString& Error)
 {
@@ -94,14 +94,24 @@ bool BuildLegacySkyAtmosphereViewMemberValues(const FLegacyLocalUniformContract&
         Value.Type = *Found;
         Value.Bytes.SetNumUninitialized(sizeof(float));
     }
-    const FLegacySkyAtmosphereDepthParameters Depth = ComputeLegacySkyAtmosphereDepthParameters(Inputs);
-    // Original caller 0x1434eff1e..0x1434eff63 copies two radius words and all six
-    // helper words consecutively. Preserve those bytes, including NaN payloads.
-    FMemory::Memcpy(Values[0].Bytes.GetData(), &OriginalBottomRadius, sizeof(float));
-    FMemory::Memcpy(Values[1].Bytes.GetData(), &OriginalTopRadius, sizeof(float));
-    for (uint32 Index = 0; Index < 6; ++Index)
-        FMemory::Memcpy(Values[Index + 2].Bytes.GetData(),
-            reinterpret_cast<const uint8*>(&Depth) + Index * sizeof(float), sizeof(float));
+    if (bRenderSkyAtmosphere)
+    {
+        const FLegacySkyAtmosphereDepthParameters Depth = ComputeLegacySkyAtmosphereDepthParameters(Inputs);
+        // Original caller 0x1434eff1e..0x1434eff63 copies two radius words and all
+        // six helper words. Preserve those bytes, including NaN payloads.
+        FMemory::Memcpy(Values[0].Bytes.GetData(), &OriginalBottomRadius, sizeof(float));
+        FMemory::Memcpy(Values[1].Bytes.GetData(), &OriginalTopRadius, sizeof(float));
+        for (uint32 Index = 0; Index < 6; ++Index)
+            FMemory::Memcpy(Values[Index + 2].Bytes.GetData(),
+                reinterpret_cast<const uint8*>(&Depth) + Index * sizeof(float), sizeof(float));
+    }
+    else
+    {
+        // Original 0x1434f0234..0x1434f0290, including the apply-volume flag.
+        const float DisabledValue = 1.0f;
+        for (auto& Value : Values)
+            FMemory::Memcpy(Value.Bytes.GetData(), &DisabledValue, sizeof(float));
+    }
     OutValues = MoveTemp(Values);
     Error.Reset();
     return true;
