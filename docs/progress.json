@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "e60cfb75e6fd9a88a3e3a3583c4dfbaaaa024bf2",
- "subject": "Prepare original terrain material and vertex layouts",
- "date": "2026-11-05T17:03:32-05:00",
+ "head": "095a9a6d3d90c7c457726a73766ba3940315dfd6",
+ "subject": "Validate original terrain material metadata",
+ "date": "2026-11-05T17:17:50-05:00",
  "overall_pct": 29.127,
  "measured_pct": 28.258,
  "objective_pct": 28.256,
