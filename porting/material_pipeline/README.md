@@ -2,6 +2,12 @@
 
 `shader_archive.py` reads the supplied shader libraries without changing them, finds exact library-hash candidates in material `.uexp` bytes, and exports a bounded selection of the original shader wrappers and DXBC containers. It does not create replacement material graphs or claim that DXBC can render through the Linux Vulkan RHI.
 
+The original Paper2D parent and instance shader maps now decode to exact resource
+EOF, including three parent pipelines and both cooked markers. Their 28 and 14
+records all match the original archive. See [the Paper2D evidence](paper2d_shader_semantics.md)
+for layouts and remaining runtime mesh-map construction; these results do not
+establish original frontend loading or rendering parity.
+
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 
 | Explicit layout | Index | Compression |

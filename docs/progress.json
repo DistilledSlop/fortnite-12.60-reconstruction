@@ -1,11 +1,11 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "3bcd26d7d571783ea000c0f43e1053667861fa2c",
- "subject": "Refresh original material and profile recovery progress",
- "date": "2026-11-04T23:02:30-05:00",
- "overall_pct": 28.571,
- "measured_pct": 27.701,
- "objective_pct": 27.7,
+ "head": "b64c4a5485ae371ca8de0c256e03bc6b672b92d0",
+ "subject": "Recover MCP profile timer context and fallback helpers",
+ "date": "2026-11-04T23:17:01-05:00",
+ "overall_pct": 28.572,
+ "measured_pct": 27.702,
+ "objective_pct": 27.701,
  "weight_by_basis": {
   "documented": 4.359,
   "git": 26.449,
@@ -15,7 +15,7 @@
  },
  "estimated_pct": 0.87,
  "manual_weight_pct": 55.535,
- "manual_full_pct": 83.236,
+ "manual_full_pct": 83.237,
  "milestones": [
   {
    "id": "m1",
@@ -553,7 +553,7 @@
    "name": "Gameplay classes (/Script/FortniteGame)",
    "kind": "group",
    "weight": 673.0,
-   "pct": 15.427,
+   "pct": 15.43,
    "children": [
     {
      "id": "gameplay.framework",
@@ -938,10 +938,10 @@
      "name": "Native function bodies ported (behaviour)",
      "kind": "leaf",
      "weight": 150.0,
-     "pct": 17.532,
-     "done": 3607,
+     "pct": 17.546,
+     "done": 3610,
      "total": 20574,
-     "evidence": "3607 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
+     "evidence": "3610 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
      "basis": "git",
      "carried": false,
      "rationale": "Done: committed manifest .inc function bodies and five separately verified handwritten UFortKismetLibrary debug bodies. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported' excluding supporting member_field declarations, with a committed inc_path; counted directly from MANIFEST.json independently of the last build/test checkpoint), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort. The handwritten debug bodies are counted only when their committed declarations and definitions match reviewed source and their frozen native reflection records match; they are deduplicated against manifest entries. EFF-008: body recovery/transcription across modules only. The manifest is not an inventory of all maintained generator-policy bodies; absence there does not mean source is absent. Feature leaves own additional assembly/integration/runtime verification. A 12-case purposive sample supports this boundary, not a numeric effort extrapolation.",
@@ -1214,7 +1214,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending. Original profile-initializer dispatch and borrowed string lifetime are now traced, but group support setup and full MCP manager integration remain unfinished; frontend loading and online login remain unverified. The remaining effort estimate needs review.",
+     "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending. Original profile-initializer dispatch, borrowed string lifetime and support-field ownership are traced. Three explicit-state timer-context helpers are now promoted as source, with native build/runtime checks pending; group ownership integration remains unfinished. The original login parent directly selects its existing credentials child. Game-service URL and registration effects, full MCP manager integration, frontend loading and online login remain unfinished or unverified. The remaining effort estimate needs review.",
      "evidence_links": []
     },
     {
@@ -1675,7 +1675,7 @@
      "evidence": "1 of 1 checks pass in the evidence ledger: material_original_maps pass (exit 0, age unknown)",
      "basis": "git",
      "carried": false,
-     "rationale": "Four original resources parse to exact EOF with 76 records. The additional original Paper2D instance now decodes all 14 shader records with archive identity matches, including HitProxy VS/PS. Seven original parent shadow-depth records now decode with matching archive identities (four vertex, three pixel); the next parent blocker is light-map-density decoding. Remaining parent records, the instance cooking marker and runtime mesh attachment are unfinished and receive no completion credit. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
+     "rationale": "Six original resources now parse to exact EOF with 118 shader records. The original Paper2D parent contributes 28 records, including five stages in three pipelines; its instance contributes 14. All records match the original archive, and both cooked markers are consumed. This adds serialized mesh-map coverage; runtime mesh-map construction, original frontend loading and rendering parity remain unfinished. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
      "evidence_links": [
       {
        "label": "Material pipeline evidence",
@@ -2950,10 +2950,10 @@
    "name": "Native function bodies ported (behaviour)",
    "kind": "leaf",
    "weight": 150.0,
-   "pct": 17.532,
-   "done": 3607,
+   "pct": 17.546,
+   "done": 3610,
    "total": 20574,
-   "evidence": "3607 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
+   "evidence": "3610 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
    "basis": "git",
    "carried": false,
    "rationale": "Done: committed manifest .inc function bodies and five separately verified handwritten UFortKismetLibrary debug bodies. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported' excluding supporting member_field declarations, with a committed inc_path; counted directly from MANIFEST.json independently of the last build/test checkpoint), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort. The handwritten debug bodies are counted only when their committed declarations and definitions match reviewed source and their frozen native reflection records match; they are deduplicated against manifest entries. EFF-008: body recovery/transcription across modules only. The manifest is not an inventory of all maintained generator-policy bodies; absence there does not mean source is absent. Feature leaves own additional assembly/integration/runtime verification. A 12-case purposive sample supports this boundary, not a numeric effort extrapolation.",
@@ -3208,7 +3208,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending. Original profile-initializer dispatch and borrowed string lifetime are now traced, but group support setup and full MCP manager integration remain unfinished; frontend loading and online login remain unverified. The remaining effort estimate needs review.",
+   "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending. Original profile-initializer dispatch, borrowed string lifetime and support-field ownership are traced. Three explicit-state timer-context helpers are now promoted as source, with native build/runtime checks pending; group ownership integration remains unfinished. The original login parent directly selects its existing credentials child. Game-service URL and registration effects, full MCP manager integration, frontend loading and online login remain unfinished or unverified. The remaining effort estimate needs review.",
    "evidence_links": []
   },
   {
@@ -3642,7 +3642,7 @@
    "evidence": "1 of 1 checks pass in the evidence ledger: material_original_maps pass (exit 0, age unknown)",
    "basis": "git",
    "carried": false,
-   "rationale": "Four original resources parse to exact EOF with 76 records. The additional original Paper2D instance now decodes all 14 shader records with archive identity matches, including HitProxy VS/PS. Seven original parent shadow-depth records now decode with matching archive identities (four vertex, three pixel); the next parent blocker is light-map-density decoding. Remaining parent records, the instance cooking marker and runtime mesh attachment are unfinished and receive no completion credit. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
+   "rationale": "Six original resources now parse to exact EOF with 118 shader records. The original Paper2D parent contributes 28 records, including five stages in three pipelines; its instance contributes 14. All records match the original archive, and both cooked markers are consumed. This adds serialized mesh-map coverage; runtime mesh-map construction, original frontend loading and rendering parity remain unfinished. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
    "evidence_links": [
     {
      "label": "Material pipeline evidence",
