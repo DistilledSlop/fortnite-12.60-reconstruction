@@ -1,0 +1,10 @@
+{
+  "source": [
+    "porting/native/Source/FortniteGame/Private/LegacyMcpServiceUrl.h",
+    "porting/native/Source/FortniteGame/Private/LegacyMcpServiceUrl.cpp"
+  ],
+  "basis": "evidence.json provider 0x140a468e0 and initial callee 0x140d4a810; service defaults and configuration boundaries are in ../mcp_service_discovery_runtime/evidence.json and ../mcp_service_configuration_runtime/evidence.json.",
+  "implementation": "The caller supplies current protocol, domain, base path and service name and a required integration context for certificate pinning, severity-2 log suppression and diagnostic, and RequestExit. Pinning precedes protocol comparisons; bad protocol or domain requests non-forced exit regardless of logging. If it returns, assembly proceeds, reading the fields after the gate. BasePath gets a slash only if it contains none; nonempty ServiceName always gets a slash. The production overload calls FSslModule::Get().GetCertificateManager().IsDomainPinned, uses severity Error in LogLegacyMcp, and calls FPlatformMisc::RequestExit. FortniteGame explicitly depends on SSL.",
+  "boundary": "The production overload supplies actual Engine SSL/log/exit integration; LogLegacyMcp is an explicit equivalent category, not a recovered original category identity. The helper is not yet connected to reconstructed service configuration/discovery. Constructor defaults http and <unconfigured> do not establish deployed configuration. Components must be supplied by the caller; no host or pin configuration is guessed.",
+  "validation": "Bounded source review only. No build, runtime or tests; validation deferred to the next native checkpoint."
+}

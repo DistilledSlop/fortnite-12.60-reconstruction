@@ -18,6 +18,14 @@ factory's actual expression-set metadata to match every member and resource;
 compilation, provider attachment, expression evaluation and runtime texture
 ownership remain unfinished.
 
+`paper2d_resource_paths.py` resolves every original nonconstant descriptor to its
+full recovered uniform member path. Of 100 resource descriptors, 72 have matching
+fixed current-source paths and types; 28 belong to Material and require the
+factory's actual metadata. LightmapDensityPass moves GridTexture and its sampler
+from resource indices 33/34 to 36/37. Across the inventory, 26 resource byte offsets
+move. The report preserves original indices separately from current indices;
+matching source paths do not prove producer values, ownership or runtime binding.
+
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 
 | Explicit layout | Index | Compression |

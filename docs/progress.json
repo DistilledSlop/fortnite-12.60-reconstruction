@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "50d0bc9c1a683c8902528b7c2ceb0a4e0edd12f9",
- "subject": "Resolve Paper2D resource descriptors to recovered uniform member paths",
- "date": "2026-11-05T00:26:06-05:00",
+ "head": "0598fed8e7a639e280fe6d387d80f7483c8a53ca",
+ "subject": "Implement recovered MCP deployment resolver and trace discovery state writes",
+ "date": "2026-11-05T00:26:56-05:00",
  "overall_pct": 29.1,
  "measured_pct": 28.23,
  "objective_pct": 28.229,

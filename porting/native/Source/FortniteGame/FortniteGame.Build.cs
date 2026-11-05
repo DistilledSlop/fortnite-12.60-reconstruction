@@ -6,6 +6,7 @@ public class FortniteGame : ModuleRules
     public FortniteGame(ReadOnlyTargetRules Target) : base(Target)
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+        PrivateDependencyModuleNames.Add("SSL");
         PublicDependencyModuleNames.AddRange(new[] { "Core", "CoreUObject", "Engine", "Analytics", "InputCore", "NavigationSystem", "AIModule", "Json", "PlayspaceFramework", "GameplayAbilities", "GameplayTags", "SlateCore", "Slate", "UMG", "JsonUtilities",
             // Engine modules that generated classes include (porting/generated/reflection/required_modules.json).
             "CinematicCamera", "ClientPilot", "LiveLinkInterface", "MediaAssets", "Water", "AssetRegistry", "Overlay", "LevelSequence", "HeadMountedDisplay",
