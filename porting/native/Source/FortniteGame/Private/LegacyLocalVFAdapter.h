@@ -6,6 +6,7 @@
 #include "ShaderParameterMetadata.h"
 
 class FJsonObject;
+class FLegacyOriginalUniformLayout;
 
 // Offsets refer to the renamed module, never the conversion receipt's module.
 struct FLegacySpirvDescriptor
@@ -49,6 +50,14 @@ struct FLegacyLocalLooseContract
     uint16 SourceBuffer = 0, ByteOffset = 0, ByteSize = 0;
 };
 
+// Explicit shader-output ABI target; CurrentMetadata remains the registered
+// input used by the data repacker. Material continues to use factory metadata.
+struct FLegacyLocalOriginalUniformTarget
+{
+    uint16 SourceRegister = 0;
+    TSharedPtr<FLegacyOriginalUniformLayout> Layout;
+};
+
 /** Produce the independently recovered 64-byte/eight-member original LocalVF
  * contract, after global uniform metadata has been initialized. Current metadata
  * is compared against fixed original values; it is never copied as source proof.
@@ -84,5 +93,20 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
     const TSharedPtr<FJsonObject>& ConvertedShader,
     const TArray<FLegacyLocalUniformContract>& UniformContracts,
     const TArray<FLegacyLocalLooseContract>& LooseContracts,
+    FLegacyMaterialShaderInput& Out, FString& Error);
+
+/** Construct outputs for explicit original-layout targets. Each target must
+ * match the complete independently recovered member tree, size and resources.
+ * Original table indices are validated before mapping to the target RHI's
+ * resource order. Untargeted uniforms retain the strict existing validation.
+ * This writes shader headers only; it neither creates nor binds uniform buffers.
+ * The renderer must bind original-ABI bytes/buffers for every explicit target.
+ * Out remains unchanged on failure. No runtime provider is installed.
+ */
+bool BuildLegacyLocalVFOutputWithOriginalUniforms(const FLegacyOriginalRecord& Original,
+    const TSharedPtr<FJsonObject>& ConvertedShader,
+    const TArray<FLegacyLocalUniformContract>& UniformContracts,
+    const TArray<FLegacyLocalLooseContract>& LooseContracts,
+    const TArray<FLegacyLocalOriginalUniformTarget>& OriginalTargets,
     FLegacyMaterialShaderInput& Out, FString& Error);
 #endif

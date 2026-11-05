@@ -6,6 +6,7 @@
 #include "Misc/FileHelper.h"
 #include "Misc/SecureHash.h"
 #include "LegacyMaterialManifestSHA256.h"
+#include "LegacyOriginalUniformLayout.h"
 #include "Serialization/MemoryWriter.h"
 #include "VulkanCommon.h"
 #include "vulkan.h"
@@ -165,6 +166,39 @@ bool SameUniform(const FLegacyLocalUniformContract& Contract)
     for (int32 I = 0; I < Layout.Resources.Num(); ++I)
         if (Contract.OriginalResources[I].Offset != Layout.Resources[I].MemberOffset ||
             Contract.OriginalResources[I].BaseType != Layout.Resources[I].MemberType) return false;
+    return true;
+}
+
+bool OriginalUniformTarget(const FLegacyLocalUniformContract& C,
+    const FShaderParametersMetadata& Target, TArray<uint16>& ResourceIndices)
+{
+    const auto* Current = C.CurrentMetadata;
+    // The current registered input is a distinct contract from this complete
+    // original output ABI. BuildLegacyOriginalUniformData validates its contents.
+    if (!Current || C.ParameterName == TEXT("Material") ||
+        Current->GetUseCase() != FShaderParametersMetadata::EUseCase::UniformBuffer ||
+        !Current->GetShaderVariableName() || C.ParameterName != Current->GetShaderVariableName() ||
+        FShaderParametersMetadata::GetNameStructMap().FindRef(Current->GetShaderVariableHashedName()) != Current ||
+        Target.GetUseCase() != FShaderParametersMetadata::EUseCase::DataDrivenUniformBuffer ||
+        C.ParameterName.IsEmpty() || !Target.GetShaderVariableName() || C.ParameterName != Target.GetShaderVariableName() ||
+        C.OriginalStructTypeName != Target.GetStructTypeName() || !C.OriginalStaticSlotName.IsEmpty() || Target.HasStaticSlot() ||
+        C.OriginalSize != Target.GetSize() || !SameMembers(C.OriginalMembers, Target, 0)) return false;
+    const auto& Layout = Target.GetLayout();
+    if (!Layout.GetHash() || Layout.ConstantBufferSize != C.OriginalSize ||
+        Layout.Resources.Num() != C.OriginalResources.Num()) return false;
+    TSet<uint16> Used;
+    for (const auto& Resource : C.OriginalResources)
+    {
+        int32 Index = INDEX_NONE;
+        for (int32 I = 0; I < Layout.Resources.Num(); ++I)
+            if (Resource.Offset == Layout.Resources[I].MemberOffset && Resource.BaseType == Layout.Resources[I].MemberType)
+            {
+                if (Index != INDEX_NONE) return false;
+                Index = I;
+            }
+        if (Index == INDEX_NONE || Index > UINT16_MAX || Used.Contains(uint16(Index))) return false;
+        Used.Add(uint16(Index)); ResourceIndices.Add(uint16(Index));
+    }
     return true;
 }
 
@@ -337,10 +371,11 @@ bool BuildLegacyPaper2DMaterialUniformContract(const FLegacyOriginalMaterial& Ma
     return true;
 }
 
-bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
+static bool BuildLegacyLocalVFOutputInternal(const FLegacyOriginalRecord& Original,
     const TSharedPtr<FJsonObject>& ConvertedShader,
     const TArray<FLegacyLocalUniformContract>& UniformContracts,
     const TArray<FLegacyLocalLooseContract>& LooseContracts,
+    const TArray<FLegacyLocalOriginalUniformTarget>& OriginalTargets,
     FLegacyMaterialShaderInput& Out, FString& Error)
 {
     // UE's constructor/bindings expect source records, not a subset with their
@@ -422,6 +457,15 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
         if (U.First >= 32 || U.Second || SourceUniformSlots.Contains(U.First)) return Fail(Error, TEXT("unsupported original UB allocation"));
         SourceUniformSlots.Add(U.First);
     }
+    TMap<uint32, const FShaderParametersMetadata*> ExplicitTargets;
+    for (const auto& Target : OriginalTargets)
+    {
+        if (!Target.Layout.IsValid() || !SourceUniformSlots.Contains(Target.SourceRegister) || ExplicitTargets.Contains(Target.SourceRegister))
+            return Fail(Error, TEXT("invalid or duplicate original uniform target"));
+        ExplicitTargets.Add(Target.SourceRegister, &Target.Layout->GetMetadata());
+    }
+    TArray<const FShaderParametersMetadata*> BindingMetadata;
+    TArray<TArray<uint16>> BindingResources;
     for (uint32 I = 0; I < 32; ++I)
     {
         uint32 Hash = 0;
@@ -441,8 +485,22 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
         const auto& C = UniformContracts[I];
         if (!SourceUniformSlots.Contains(C.SourceRegister) || UniformIndices.Contains(C.SourceRegister) ||
             !SourceUniformNames.IsValidIndex(C.SourceRegister) || SourceUniformNames[C.SourceRegister] != C.ParameterName ||
-            ParameterNames.Contains(C.ParameterName) || !SameUniform(C))
+            ParameterNames.Contains(C.ParameterName))
             return Fail(Error, TEXT("source/current uniform member contract mismatch"));
+        TArray<uint16> ResourceIndices;
+        const auto* const* Explicit = ExplicitTargets.Find(C.SourceRegister);
+        const FShaderParametersMetadata* Target = Explicit ? *Explicit : C.CurrentMetadata;
+        if (Explicit)
+        {
+            if (!OriginalUniformTarget(C, *Target, ResourceIndices))
+                return Fail(Error, TEXT("complete original uniform target differs from recovered contract"));
+        }
+        else
+        {
+            if (!SameUniform(C)) return Fail(Error, TEXT("source/current uniform member contract mismatch"));
+            for (int32 J = 0; J < C.OriginalResources.Num(); ++J) ResourceIndices.Add(uint16(J));
+        }
+        BindingMetadata.Add(Target); BindingResources.Add(MoveTemp(ResourceIndices));
         uint32 SourceLayoutHash = 0;
         if (LayoutHashes->IsValidIndex(C.SourceRegister))
         {
@@ -518,10 +576,11 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
     Header.SpirvCRC = Crc;
     // Header indices are independent of the D3D CB register. Resource-only UBs
     // still need a header/ParameterMap entry, without a phantom descriptor.
-    for (const auto& C : UniformContracts)
+    for (int32 I = 0; I < UniformContracts.Num(); ++I)
     {
+        const auto& C = UniformContracts[I];
         auto& U = Header.UniformBuffers.AddDefaulted_GetRef();
-        U.LayoutHash = C.CurrentMetadata->GetLayout().GetHash();
+        U.LayoutHash = BindingMetadata[I]->GetLayout().GetHash();
         U.ConstantDataOriginalBindingIndex = UINT16_MAX;
         U.bOnlyHasResources = 1;
         Header.UniformBufferSpirvInfos.Emplace(UINT32_MAX, UINT32_MAX);
@@ -627,7 +686,7 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
             G.TypeIndex = Header.GlobalDescriptorTypes.Add(static_cast<VkDescriptorType>(DescriptorType));
             Header.GlobalSpirvInfos.Emplace(Decoration->SetOffset, Decoration->BindingOffset);
             auto& R = Header.UniformBuffers[*UBIndex].ResourceEntries.AddDefaulted_GetRef();
-            R.SourceUBResourceIndex = ResourceIndex; R.OriginalBindingIndex = RegisterIndex;
+            R.SourceUBResourceIndex = BindingResources[*UBIndex][ResourceIndex]; R.OriginalBindingIndex = RegisterIndex;
             R.GlobalIndex = GlobalIndex; R.UBBaseType = BaseType;
             if (bSampler) ++SamplerCount;
         }
@@ -713,5 +772,25 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
     Result.Output.GenerateOutputHash();
     Out = MoveTemp(Result);
     return true;
+}
+
+bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
+    const TSharedPtr<FJsonObject>& ConvertedShader,
+    const TArray<FLegacyLocalUniformContract>& UniformContracts,
+    const TArray<FLegacyLocalLooseContract>& LooseContracts,
+    FLegacyMaterialShaderInput& Out, FString& Error)
+{
+    const TArray<FLegacyLocalOriginalUniformTarget> Targets;
+    return BuildLegacyLocalVFOutputInternal(Original, ConvertedShader, UniformContracts, LooseContracts, Targets, Out, Error);
+}
+
+bool BuildLegacyLocalVFOutputWithOriginalUniforms(const FLegacyOriginalRecord& Original,
+    const TSharedPtr<FJsonObject>& ConvertedShader,
+    const TArray<FLegacyLocalUniformContract>& UniformContracts,
+    const TArray<FLegacyLocalLooseContract>& LooseContracts,
+    const TArray<FLegacyLocalOriginalUniformTarget>& OriginalTargets,
+    FLegacyMaterialShaderInput& Out, FString& Error)
+{
+    return BuildLegacyLocalVFOutputInternal(Original, ConvertedShader, UniformContracts, LooseContracts, OriginalTargets, Out, Error);
 }
 #endif

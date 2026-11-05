@@ -1,0 +1,60 @@
+diff --git a/Engine/Source/Runtime/RHI/Public/RHIResources.h b/Engine/Source/Runtime/RHI/Public/RHIResources.h
+index 39a236d68..752ef4809 100644
+--- a/Engine/Source/Runtime/RHI/Public/RHIResources.h
++++ b/Engine/Source/Runtime/RHI/Public/RHIResources.h
+@@ -14,6 +14,7 @@
+ #include "HAL/ThreadSafeCounter.h"
+ #include "RHIDefinitions.h"
+ #include "Templates/RefCounting.h"
++#include "Templates/SharedPointer.h"
+ #include "PixelFormat.h"
+ #include "Containers/LockFreeList.h"
+ #include "Misc/SecureHash.h"
+@@ -438,6 +439,13 @@ inline bool operator==(const FRHIUniformBufferLayout& A, const FRHIUniformBuffer
+ 		&& A.Resources == B.Resources;
+ }
+ 
++/** Optional owner for a dynamically constructed uniform buffer layout. */
++class FRHIUniformBufferLayoutLifetime
++{
++public:
++	virtual ~FRHIUniformBufferLayoutLifetime() = default;
++};
++
+ class FRHIUniformBuffer : public FRHIResource
+ {
+ public:
+@@ -463,6 +471,11 @@ public:
+ 	{
+ 		const FRHIUniformBufferLayout* LocalLayout = Layout;
+ 
++#if VALIDATE_UNIFORM_BUFFER_LAYOUT_LIFETIME
++		// Release may immediately delete this object before the debug layout access below.
++		TSharedPtr<const FRHIUniformBufferLayoutLifetime, ESPMode::ThreadSafe> LocalLayoutLifetimeOwner = LayoutLifetimeOwner;
++#endif
++
+ #if VALIDATE_UNIFORM_BUFFER_LIFETIME
+ 		int32 LocalNumMeshCommandReferencesForDebugging = NumMeshCommandReferencesForDebugging;
+ #endif
+@@ -491,6 +504,13 @@ public:
+ 	}
+ 	const FRHIUniformBufferLayout& GetLayout() const { return *Layout; }
+ 
++	/** Set once immediately after creation, before publishing the buffer to any other thread. */
++	void SetLayoutLifetimeOwner(TSharedRef<const FRHIUniformBufferLayoutLifetime, ESPMode::ThreadSafe> InOwner)
++	{
++		check(!LayoutLifetimeOwner.IsValid());
++		LayoutLifetimeOwner = InOwner;
++	}
++
+ 	bool HasStaticSlot() const
+ 	{
+ 		return IsUniformBufferStaticSlotValid(Layout->StaticSlot);
+@@ -503,6 +523,7 @@ public:
+ private:
+ 	/** Layout of the uniform buffer. */
+ 	const FRHIUniformBufferLayout* Layout;
++	TSharedPtr<const FRHIUniformBufferLayoutLifetime, ESPMode::ThreadSafe> LayoutLifetimeOwner;
+ 
+ 	uint32 LayoutConstantBufferSize;
+ };

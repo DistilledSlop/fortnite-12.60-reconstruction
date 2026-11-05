@@ -1,0 +1,18 @@
+{
+  "source": [
+    "porting/native/Source/FortniteGame/Private/LegacyOriginalUniformBuffer.h",
+    "porting/native/Source/FortniteGame/Private/LegacyOriginalUniformBuffer.cpp"
+  ],
+  "engine_patch": {
+    "path": "porting/patches/ue425-uniform-layout-lifetime.patch",
+    "sha256": "21dfc2a8f80370e77ac8334ccd0fe5d839f48e8a7cd569488e5a7fa6fb5bbe85"
+  },
+  "implementation": "CreateLegacyOriginalUniformBuffer reconstructs original bytes from registered current metadata and explicit complete values, builds original metadata, validates byte/layout extent and explicit usage/null-resource policy, then invokes RHICreateUniformBuffer on the rendering thread (or game thread with single-threaded rendering).",
+  "lifetime": "FRHIUniformBuffer retains a thread-safe layout lifetime anchor through actual RHI deletion. The anchor exclusively owns the moved original metadata pointer; no default-mode shared-pointer control block is shared independently across threads. The Release layout-debug path retains a local anchor through its post-release access. No global deletion/GPU flush is introduced.",
+  "resources": "Caller must retain valid non-null resource pointers through creation. Vulkan extracts resources in sorted layout order and retains them as TRefCountPtr entries. Explicit null validation mirrors the Vulkan policy, including the ES3.1 SRV exception; allowing null does not establish original producer-value equivalence.",
+  "output_bridge": "BuildLegacyLocalVFOutputWithOriginalUniforms accepts explicit original-layout owners separately from CurrentMetadata. It checks the complete recovered target tree and original resource coverage, emits the actual target layout hash, and maps original resource indices to actual sorted RHI indices. Original source indices remain unchanged for receipt/hash/table validation. Untargeted uniforms use existing SameUniform; Material must use actual factory metadata.",
+  "limits": "The caller must bind the reconstructed buffers for explicit output targets. No renderer/provider attachment, buffer update scheduling, current/original producer-value proof or visual parity is established. Source review only; compilation and runtime checks are deferred to the agreed checkpoint.",
+  "runtime_verified": false,
+  "engine_commit": "b58cef2ca",
+  "validation": "Bounded source review of RHI creation, deferred/immediate deletion, debug Release lifetime and Vulkan sorted resource-table indexing. Removed an unnecessary current C++ struct-name equality requirement: current parameter registration and original target identity remain separate. Portable Engine patch reverse-apply check passed. No build/runtime/tests; deferred to the agreed checkpoint."
+}

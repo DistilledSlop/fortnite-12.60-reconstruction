@@ -26,6 +26,14 @@ from resource indices 33/34 to 36/37. Across the inventory, 26 resource byte off
 move. The report preserves original indices separately from current indices;
 matching source paths do not prove producer values, ownership or runtime binding.
 
+`LegacyOriginalUniformLayout` builds and retains actual original-layout metadata
+alongside current registered buffers. Its data-driven root avoids global uniform
+name collisions; the accompanying Engine patch enables its recovered nested
+structures while retaining the graph-resource, resource-array and static-slot
+restrictions. Complete member trees and sorted RHI resources are checked before
+publication. The caller must retain the owner through eventual RHI buffer use.
+RHI buffer creation, renderer binding and runtime verification remain unfinished.
+
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 
 | Explicit layout | Index | Compression |
