@@ -94,6 +94,18 @@ class Reader:
         if kind in ('VectorParameter', 'ScalarParameter'):
             result['parameter'] = self.parameter()
             result['default'] = self.read('4f' if kind == 'VectorParameter' else 'f')
+        elif kind == 'RuntimeVirtualTextureUniform':
+            # Original serializer 0x144364a00 and UE 4.24 pre-freeze Serialize
+            # write all four members, including
+            # ParameterInfo even when bParameter is false:
+            # https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L1283
+            enabled = self.read('I')
+            if enabled not in (0, 1):
+                raise ValueError(f'invalid runtime virtual texture parameter flag at {start}')
+            parameter = self.parameter()
+            texture_index, vector_index = self.read('ii')
+            result.update(is_parameter=bool(enabled), parameter=parameter,
+                          texture_index=texture_index, vector_index=vector_index)
         elif kind in ('Texture', 'TextureParameter'):
             if kind == 'TextureParameter':
                 result['parameter'] = self.parameter()

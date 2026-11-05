@@ -1,0 +1,131 @@
+{
+  "source": "extracted Fortnite 12.60 original packages; generated preview M_CommonLandscape is a different material",
+  "landscape": {
+    "package": "/Game/Athena/Apollo/Maps/Landscape/Apollo_Terrain_LS_D4",
+    "proxy": "LandscapeStreamingProxy_D4",
+    "component": "LandscapeComponent_104",
+    "material_chain": [
+      "LandscapeMaterialInstanceConstant_1",
+      "LandscapeMaterialInstanceConstant_0",
+      "/Game/Athena/Apollo/Environments/Landscape/Materials/Biome/LandscapeBiomeMaterials/M_CommonLandscape"
+    ],
+    "weightmap": "Texture2D_20",
+    "heightmap": "Texture2D_0",
+    "layer_mask_channels": {
+      "Gravel": 0,
+      "Asphalt": 1,
+      "BiomeC": 2,
+      "Mud": 3
+    },
+    "static_layer_weightmap_index": 0,
+    "static_layers_weight_based_blend": false
+  },
+  "master": {
+    "uses_material_attributes": true,
+    "tangent_space_normals": false,
+    "attributes_input": "MaterialExpressionMaterialFunctionCall_1 (MF_LS_DEBUG)",
+    "surviving_expression_exports": 32,
+    "expression_slots": 107,
+    "retained_layer_blend": [
+      "Gravel",
+      "Mud",
+      "Sand",
+      "Asphalt"
+    ],
+    "retained_layer_blend_type": "LB_WeightBlend",
+    "layer_blend_inputs": "MaterialExpressionConstant_13, stripped",
+    "shading_path_switch_input": "MaterialExpressionReroute_9, stripped",
+    "limitations": [
+      "Retained graph does not establish blend or roughness, specular and normal outputs",
+      "Material attributes can override the inspector typed shading-model default"
+    ]
+  },
+  "function": {
+    "path": "CommonMaterials/MF_CommonLandscapeLayers",
+    "surviving_calls": [
+      "MF_Common_Gravel",
+      "MF_Common_Mud",
+      "MF_Common_Asphalt",
+      "MF_BlendLandscapeLayers"
+    ],
+    "gravel": {
+      "surviving_expression_exports": 11,
+      "textures": [
+        "T_Apollo_Dirt_D_01",
+        "T_Apollo_Dirt_N_01",
+        "T_Apollo_Dirt_S_01",
+        "T_Apollo_Gravel_D_01",
+        "T_Apollo_Gravel_N_01",
+        "T_Apollo_Gravel_S_01"
+      ],
+      "texture_directory": "Environments/Apollo/Sets/Terrain/Textures",
+      "dirt_dns_coordinate_scale": 4.5,
+      "gravel_dn_coordinate_scale": 4,
+      "gravel_s_serialized_coordinate_input": null,
+      "limitations": [
+        "Texture channel meaning and final output remain unproven"
+      ]
+    }
+  },
+  "original_shader_resource": {
+    "export": "LandscapeMaterialInstanceConstant_0",
+    "wrapper_offset": 500570,
+    "resource_offset": 504047,
+    "bytes": 101268,
+    "sha256": "73bd93d83493b0cd3ca7e99fbabe2907a0a7ac579679e664d6257512f9b300fa",
+    "shader_map_offsets": [
+      0,
+      50634
+    ],
+    "feature_level": 3,
+    "quality_levels": [
+      0,
+      1
+    ],
+    "original_resource_parse_first_failure": "unsupported FMaterialUniformExpressionAbs at resource offset 1783",
+    "first_runtime_virtual_texture_uniforms": {
+      "offsets": [
+        226,
+        259,
+        292
+      ],
+      "ends": [
+        259,
+        292,
+        325
+      ],
+      "parameter_name": "RVT Sample Target",
+      "parameter_number": 0,
+      "association": 2,
+      "parameter_index": -1,
+      "texture_index": 164,
+      "vector_indices": [
+        2,
+        1,
+        0
+      ]
+    },
+    "limitations": [
+      "Remaining shader records and archive association are not validated",
+      "Linux landscape vertex factory and runtime virtual texture bindings are not implemented",
+      "No runtime loading or visual parity was verified"
+    ]
+  },
+  "reports": [
+    "porting/generated/apollo-material-evidence/master-current.json",
+    "porting/generated/apollo-material-evidence/d4-current.json",
+    "porting/generated/apollo-material-evidence/common-layers.json",
+    "porting/generated/apollo-material-evidence/gravel.json",
+    "porting/generated/apollo-material-evidence/d4-export-map.json",
+    "porting/generated/apollo-material-evidence/d4-resource.json"
+  ],
+  "method": "Cue4Inspect --loose --material-report or --export-map-json and inspect_material_resource.py --export-index 15; decoder tested against the original D4 uexp resource",
+  "rvt_serialization_source": "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L1283",
+  "rvt_original_serializer": {
+    "type_registry": "0x147cde788",
+    "factory": "0x1443645e0",
+    "vtable": "0x146ac1fe8",
+    "serialize": "0x144364a00",
+    "observed_order": "32-bit parameter flag; parameter info via 0x14431dec0; 32-bit texture index; 32-bit vector index"
+  }
+}

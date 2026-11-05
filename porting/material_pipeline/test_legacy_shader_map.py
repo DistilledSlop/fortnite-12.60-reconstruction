@@ -120,6 +120,32 @@ class OriginalMaxSaturateTests(unittest.TestCase):
             Reader(nested, names).expression()
 
 
+class RuntimeVirtualTextureUniformTests(unittest.TestCase):
+    def test_non_parameter_still_consumes_parameter_info(self):
+        names = NAMES + [PREFIX + 'RuntimeVirtualTextureUniform']
+        encoded = name(len(NAMES)) + pack('I', 0) + parameter(13) + pack('ii', 164, 2)
+        reader = Reader(encoded + CONSTANT, names)
+        parsed = reader.expression()
+        self.assertFalse(parsed['is_parameter'])
+        self.assertEqual(parsed['parameter']['name']['name'], 'None')
+        self.assertEqual(parsed['end'], len(encoded))
+        self.assertEqual(reader.expression()['end'], len(encoded + CONSTANT))
+
+    def test_parameter_payload_and_truncation(self):
+        names = NAMES + [PREFIX + 'RuntimeVirtualTextureUniform']
+        encoded = name(len(NAMES)) + pack('I', 1) + parameter(8) + pack('ii', 164, 2)
+        parsed = Reader(encoded, names).expression()
+        self.assertEqual(parsed, dict(offset=0, end=len(encoded), type=names[-1],
+            is_parameter=True, parameter=dict(name=dict(name='Tint', number=0),
+            association=2, index=-1), texture_index=164, vector_index=2))
+        for cut in range(len(encoded)):
+            with self.assertRaises(ValueError):
+                Reader(encoded[:cut], names).expression()
+        for bad in (2, 0xffffffff):
+            with self.assertRaisesRegex(ValueError, 'parameter flag'):
+                Reader(encoded[:8] + pack('I', bad) + encoded[12:], names).expression()
+
+
 class LegacyPrefixTests(unittest.TestCase):
     def test_recursive_values_and_exact_boundary(self):
         data = resource()
