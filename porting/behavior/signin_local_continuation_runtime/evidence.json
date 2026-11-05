@@ -11,7 +11,7 @@
       "name": "UFortSignInWidget::StartSignIn",
       "exec_wrapper": "0x1452ddc10",
       "body": "0x144de3880",
-      "evidence": "The wrapper increments the script frame code pointer when present and tail-jumps to the body. The body checks the control at widget+0x470 and requires nonempty text at widget+0x450. It copies the latter into widget+0x440 and invokes virtual slot +0x48 of the interface pointer at widget+0x410, passing text from widget+0x450 and widget+0x458; widget+0x418 controls pointer validity. No frontend travel is present in this body."
+      "evidence": "The wrapper increments the script frame code pointer when present and tail-jumps to the body. The body checks control widget+0x470 and nonempty text at widget+0x450, then copies the latter to widget+0x440. Native delegate storage at widget+0x410 uses allocation size at +0x418 to select its delegate instance; virtual +0x48 executes it with text from controls +0x450 and +0x458. This is native delegate dispatch, not an unidentified object interface. No frontend travel is present in this body."
     },
     {
       "name": "UFortSignInWidget::HandleTextCommitted",
@@ -45,12 +45,12 @@
       "evidence": "At 0x1422367b2 calls TriggerLoginComplete after calls to 0x140684de0 on another object+0x360 and 0x14221de80(account), then continues additional work. Caller identity and prerequisites are not established."
     },
     {
-      "name": "Widget construction and interface storage",
+      "name": "Widget construction and native delegate storage",
       "class_get_private_static_class": "0x1452dac10",
       "constructor_helper": "0x1452db9b0",
       "constructor": "0x144da86a0",
       "widget_vtable": "0x146d77500",
-      "evidence": "GetPrivateStaticClass identifies FortSignInWidget, object size 0x480, and constructor helper 0x1452db9b0. Runtime helper jumps to constructor 0x144da86a0, which installs vtable 0x146d77500, zeros widget+0x410 and the dword at +0x418. Destructor at vtable slot 0 calls 0x140692d60 on widget+0x410. Constructor does not acquire the interface. The interface setter, dynamic type, and virtual slot +0x48 target remain unidentified."
+      "evidence": "GetPrivateStaticClass identifies FortSignInWidget, object size 0x480 and constructor helper 0x1452db9b0. The helper jumps to constructor 0x144da86a0, which installs vtable 0x146d77500 and initializes delegate allocation/size at +0x410/+0x418. Destructor slot 0 invokes 0x140692d60 on that storage; this matches native delegate unbinding and allocator cleanup. Parent interaction construction 0x144e4e140 binds its SignIn_Credentials child to handler 0x144e41760; see the follow-up evidence."
     },
     {
       "name": "ELoginResult::Success",
@@ -59,7 +59,7 @@
       "evidence": "The reflected /Script/Account ELoginResult identifies Success as value 2, consistent with TriggerLoginComplete passing 2 to the account delegate."
     }
   ],
-  "unresolved": "Identity of the widget interface virtual slot +0x48, safe local-account completion entry, and downstream success subscribers remain unproven. Do not substitute a direct state flip or frontend travel on the basis of these findings.",
+  "unresolved": "The bound handler initiates UOnlineAccountCommon::AutoLogin through 0x1410e7db0. Its concrete account virtual +0x2f0 implementation, required online state and original successful local selected-account completion remain unresolved. Do not substitute a direct state flip, broadcast or frontend travel.",
   "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
   "verification": "Read-only original instruction recovery; no local login continuation installed, build or runtime verification.",
   "instruction_windows": [
@@ -78,5 +78,6 @@
       "size": 128,
       "sha256": "2e42a15187643a7adaefcb57c275009bab0845216128d67c593730d45c2527ce"
     }
-  ]
+  ],
+  "delegate_followup": "../signin_interface_type_runtime/evidence.json"
 }

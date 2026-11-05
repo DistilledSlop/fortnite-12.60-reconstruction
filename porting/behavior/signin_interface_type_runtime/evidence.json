@@ -1,0 +1,43 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "findings": [
+    {
+      "name": "Native delegate storage and dispatch",
+      "evidence": "Widget+0x410 is FDelegateBase-style native delegate storage. At 0x140692d60, nonzero dword +8 selects the allocated delegate instance; its virtual destructor +0x38 is called, allocation resized to zero via 0x142bfd200, and size cleared. Final allocator cleanup uses 0x142bee710. UE 4.25 DelegateBase.h Unbind and GetDelegateInstanceProtected match. Widget StartSignIn 0x144de3880 invokes delegate instance virtual +0x48 (Execute) with text from controls +0x450 and +0x458. The dword is allocation size, not an interface validity or weak object serial field. This dispatch does not check IsSafeToExecute."
+    },
+    {
+      "name": "Binding of credential sign-in callback",
+      "evidence": "UFortLoginInteractions constructor 0x145284090 installs vtable 0x146f72038. Its virtual +0x308, 0x144e4e140, at 0x144e4e45d loads interactions+0x4b8, creates a UObject delegate instance bound to interactions and method 0x144e41760, and virtual +0x40 copies it into child+0x410. Reflection identifies offset 0x4b8 as UFortLoginInteractions::SignIn_Credentials; generated UFortLoginInteractions.h declares UFortSignInWidget*. Thus 0x144e41760 is the bound target for this widget when this setup executes."
+    },
+    {
+      "name": "Credential handler and login call",
+      "evidence": "0x144e41760 checks interactions+0x418 through 0x142ee7880. When present it constructs credentials containing type epic and copies its two input FString values, then calls 0x1410e7db0 on the resolved account. Failure and missing account follow other setup paths; success changes another interaction state. 0x1410e7db0 logs UOnlineAccountCommon::AutoLogin, checks online identity, controller ID under four, and not already logging in/out, copies credentials into account storage, and calls account virtual +0x2f0; it returns one only on initiating this path. Failure calls account virtual +0x2d0 and returns zero."
+    }
+  ],
+  "unresolved": "The concrete account virtual +0x2f0 implementation, its backend requirements, and original successful local selected-account completion remain unproven. The normal epic credential handler cannot be assumed to complete a username-only local flow. No direct delegate broadcast or frontend travel is established.",
+  "instruction_windows": [
+    {
+      "address": "0x140692d60",
+      "size": 100,
+      "sha256": "4d47081f222812d7a816d17fc92e11a3463ec22672c1b7afee8645545cf3d2c0"
+    },
+    {
+      "address": "0x144e4e45d",
+      "size": 160,
+      "sha256": "cdb619a90acfa73b3a025c6392cfbf3ccb3e20131e7e0f13f5fa5065580d8a34"
+    },
+    {
+      "address": "0x144e41760",
+      "size": 128,
+      "sha256": "a0de338d00f095e67646d375c25eccb86d5a46a153f40c0d547debf5795025f2"
+    },
+    {
+      "address": "0x1410e7db0",
+      "size": 128,
+      "sha256": "351fbdd94f5715dfea5cd242484b73dc09539dff71ed60c3003b5790cfe1a0ff"
+    }
+  ],
+  "verification": "Read-only Ghidra decompilation and instruction inspection plus local UE delegate source and generated reflection; no build or runtime login test. Ghidra project bookkeeping changed, program not saved."
+}

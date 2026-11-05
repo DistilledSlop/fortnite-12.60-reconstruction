@@ -33,5 +33,6 @@
     }
   ],
   "unresolved": "The setter/acquisition and concrete slot +0x48 implementation remain unidentified. The bounded displacement scan does not exclude writes through another offset, generic copying or initialization code, or code outside the scanned range. Dynamic observation of a constructed sign-in widget and the value at +0x410/+0x418, or a wider typed data-flow investigation, is required to connect the dispatch to its concrete implementation. Do not infer login completion, broadcast or frontend travel from this scan.",
-  "verification": "Read-only Ghidra decompilation and runtime image vtable inspection. No build or runtime login test. Ghidra program was not saved; project bookkeeping changed during probes."
+  "verification": "Read-only Ghidra decompilation and runtime image vtable inspection. No build or runtime login test. Ghidra program was not saved; project bookkeeping changed during probes.",
+  "superseded_interpretation": "The earlier object-interface interpretation was corrected by ../signin_interface_type_runtime/evidence.json: widget+0x410/+0x418 are native delegate allocation/size, and parent construction binds method 0x144e41760. The unsuccessful narrow scans below are retained as investigation history, not current evidence that the binding is unknown."
 }
