@@ -69,7 +69,7 @@ bool BuildLegacyLocalVFUniformContract(uint16 SourceRegister, uint32 SourceResou
  * failure. The caller must retain all occurrences and ordered pipeline stages.
  *
  * Deliberately NOT connected to the runtime provider: original complete member
- * contracts are not yet recovered for every View, LocalVF and pass buffer.
+ * contracts and compatible bindings are not yet established for every View and pass buffer.
  */
 bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
     const TSharedPtr<FJsonObject>& ConvertedShader,
