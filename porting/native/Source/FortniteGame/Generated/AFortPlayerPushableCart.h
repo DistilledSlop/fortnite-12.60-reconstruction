@@ -134,6 +134,9 @@ public:
 	void GetCheckPointTransforms(TArray<FTransform>& OutTransforms) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetDefenderTeam() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetDesiredSpeed() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -146,11 +149,17 @@ public:
 	uint8 GetLastReachedCheckPointIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetNextCheckPointIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetPercentProgressTowardsNextCheckPoint() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
 	UShapeComponent* GetPushAreaShapeComponent() const;
 	virtual UShapeComponent* GetPushAreaShapeComponent_Implementation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetPusherTeam() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetPushingStrength() const;

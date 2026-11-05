@@ -8,3 +8,11 @@ AFortWaterBodyActor* UFortWaterInteractionComponent::GetCurrentWaterBody() const
 	return NativeRecoveredAFortWaterBodyActor_0x100;
 }
 
+bool UFortWaterInteractionComponent::IsInWater() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	{
+		return NativeRecoveredAFortWaterBodyActor_0x100 != nullptr;
+	}
+}
+

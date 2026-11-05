@@ -40,6 +40,14 @@ void AFortPlayerPushableCart::GetCheckPointTransforms(TArray<FTransform>& OutTra
 	}
 }
 
+uint8 AFortPlayerPushableCart::GetDefenderTeam() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	{
+		return TeamRoles.DefenderTeam;
+	}
+}
+
 float AFortPlayerPushableCart::GetDesiredSpeed() const
 {
 	// CONFIDENCE: high; native wrapper and body captured.
@@ -86,6 +94,14 @@ uint8 AFortPlayerPushableCart::GetLastReachedCheckPointIndex() const
 	return CurrentCheckPoint;
 }
 
+uint8 AFortPlayerPushableCart::GetNextCheckPointIndex() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	{
+		return static_cast<uint8>(FMath::Min(SplineCheckPointIndices.Num() - 1, static_cast<int32>(CurrentCheckPoint) + 1));
+	}
+}
+
 float AFortPlayerPushableCart::GetPercentProgressTowardsNextCheckPoint() const
 {
 	// CONFIDENCE: high; native wrapper and body captured.
@@ -110,6 +126,14 @@ UShapeComponent* AFortPlayerPushableCart::GetPushAreaShapeComponent_Implementati
 {
 	// Native target 0x140680300; CONFIDENCE: high.
 	return nullptr;
+}
+
+uint8 AFortPlayerPushableCart::GetPusherTeam() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	{
+		return TeamRoles.PusherTeam;
+	}
 }
 
 int32 AFortPlayerPushableCart::GetPushingStrength() const

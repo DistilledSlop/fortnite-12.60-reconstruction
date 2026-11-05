@@ -54,6 +54,9 @@ public:
 	FGameplayTag AlwaysShowPropertyTag;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector2D GetStickPosition() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocked() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

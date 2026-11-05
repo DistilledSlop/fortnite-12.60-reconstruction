@@ -93,5 +93,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortWaterBodyActor* GetCurrentWaterBody() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInWater() const;
+
 };
 

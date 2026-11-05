@@ -166,5 +166,8 @@ public:
 	UPROPERTY(Transient)
 	FEndZoneScoreAndAwards EndZoneScoreAndAwards;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetPlayerName() const;
+
 };
 
