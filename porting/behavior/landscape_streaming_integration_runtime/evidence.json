@@ -19,7 +19,6 @@
     "No build, runtime or automated tests run under the deferred native-body checkpoint rule."
   ],
   "remaining": [
-    "Renderer LOD selection must respect resident LODs.",
     "Build and actual original terrain loading/rendering under checkpoint cadence.",
     "Original map/material/streaming parity remains unverified."
   ],
@@ -45,5 +44,6 @@
     "landscape_proxy_declaration_runtime/evidence.json",
     "landscape_streamin_lifetime_source_runtime/evidence.json",
     "landscape_streamin_completion_source_runtime/evidence.json"
-  ]
+  ],
+  "renderer_integration": "Engine 564d98bdd; UE4.26 compatibility adaptation, build/runtime pending. See landscape_resident_lod_runtime/evidence.json."
 }

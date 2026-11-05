@@ -24,5 +24,8 @@ public:
 	UPROPERTY(Transient)
 	FSlateBrush AboveBelowBrush;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x22c): not a UPROPERTY, not replicated.
+	float NativeViewableDistance_0x22c;
+
 };
 

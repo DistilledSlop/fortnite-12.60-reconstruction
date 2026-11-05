@@ -856,8 +856,10 @@ public:
 	UFUNCTION()
 	void OnRep_Inventory();
 
+protected:
 	UFUNCTION()
 	void OnRep_MinimapViewableDistance();
+public:
 
 	UFUNCTION()
 	void OnRep_ReplicatedAnimMontage();

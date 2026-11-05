@@ -4,6 +4,7 @@
 #include "EScoreDistributionType.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "UFortAccountItem.h"
+#include "UFortSimpleMiniMapIndicator.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortAIPawn::FastSharedReplication_Implementation(const FFortAISharedRepMovement& SharedRepMovement)
@@ -142,7 +143,12 @@ void AFortAIPawn::OnRep_Inventory()
 
 void AFortAIPawn::OnRep_MinimapViewableDistance()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH -- original exec 0x1427a5350, target 0x1422e1c80.
+	UFortSimpleMiniMapIndicator* Indicator = MiniMapIndicator;
+	if (Indicator)
+	{
+	    Indicator->NativeViewableDistance_0x22c = MinimapViewableDistance;
+	}
 }
 
 void AFortAIPawn::OnRep_ReplicatedAnimMontage()

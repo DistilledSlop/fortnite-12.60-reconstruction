@@ -27,9 +27,9 @@
     "For original cooked records, reuse/cache render data and release compressed bytes even in editor hosts; stock UE4.25 DDC and authoring behavior stays on its existing path."
   ],
   "remaining": [
-    "Renderer LOD selection must respect current resident LODs.",
     "Compilation and actual original terrain loading/rendering under checkpoint cadence."
   ],
   "engine_source_commit": "3cdc92cd0",
-  "subsequent_integration": "Proxy/component/streaming updates integrated in engine c620ace33; see landscape_streaming_integration_runtime/evidence.json. Build/runtime pending."
+  "subsequent_integration": "Proxy/component/streaming updates integrated in engine c620ace33; see landscape_streaming_integration_runtime/evidence.json. Build/runtime pending.",
+  "renderer_integration": "Engine 564d98bdd; UE4.26 compatibility adaptation, build/runtime pending. See landscape_resident_lod_runtime/evidence.json."
 }

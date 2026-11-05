@@ -1,0 +1,40 @@
+{
+  "status": "Integrated source compatibility adaptation; build/runtime pending. No original body or world-runtime completion credit.",
+  "engine_source_commit": "564d98bdd",
+  "implementation": "porting/patches/ue425-landscape-platform-compatibility.patch",
+  "source_basis": "Adjacent UE4.26 implementation, not proof of an original 12.60 Windows renderer clamp. Its platform guard defaults to disabled on Windows/Linux, which explains the absence of the getter in the captured original Windows mobile vtable.",
+  "changes": [
+    "Snapshot each landscape proxy first resident LOD on the render thread before per-view worker dispatch.",
+    "Clamp section forced/fractional LOD values and dynamic mesh draw LOD to that resident index.",
+    "Desktop getter returns zero; mobile getter reads the existing shared render-data CurrentFirstLODIdx.",
+    "Allow this compatibility path on Linux because the explicit legacy reader can load original mobile vertex data there; stock nonstreamed mobile data starts at LOD zero."
+  ],
+  "reference_files": [
+    {
+      "path": "/opt/fortnite/UnrealEngine4260/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp",
+      "sha256": "f2e1bfc4519a2d36bb196631b245972ca70ce14de724be99addb31d970549724"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine4260/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp",
+      "sha256": "ec6b1a635b9611d0a88d5b7e326a93d637205a318084657984820d342793236e"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine4260/Engine/Source/Runtime/Landscape/Public/LandscapeRender.h",
+      "sha256": "654323ccbab8e2a5d053bea9df36eacf4c54aed97de72cb455c7599d0abbdfa8"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine4260/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h",
+      "sha256": "2b155e391291dd7995c571407676f4ec781a97cd2016bed581180ff86b00965e"
+    }
+  ],
+  "checks": [
+    "Read-only independent source review against UE4.26 found no concrete API/access/selection mismatch.",
+    "Source whitespace and patch reverse-application checks passed.",
+    "No build, runtime or tests under the deferred checkpoint cadence."
+  ],
+  "remaining": [
+    "Current Apollo launch uses Vulkan without forcing a mobile feature level; mobile proxy reachability and actual terrain loading remain unverified.",
+    "Build/runtime validation and original materials are still required.",
+    "No claim of other original renderer entry points or Windows runtime parity."
+  ]
+}

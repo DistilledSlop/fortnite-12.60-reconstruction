@@ -1039,8 +1039,10 @@ public:
 	UFUNCTION()
 	void OnRep_GoldenPoiLocationTags();
 
+protected:
 	UFUNCTION()
 	void OnRep_MapInfo();
+public:
 
 	UFUNCTION()
 	void OnRep_MeshNetworkStatus();

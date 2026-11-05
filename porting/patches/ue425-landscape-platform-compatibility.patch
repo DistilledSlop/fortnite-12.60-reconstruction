@@ -760,8 +760,38 @@ index 7fe59f51e..8f32df993 100644
 +}
 +
  bool FLandscapeComponentDerivedData::LoadFromDDC(const FGuid& StateId, UObject* Component)
+diff --git a/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp b/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp
+index f33b40ad2..a51fb726c 100644
+--- a/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp
++++ b/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp
+@@ -835,2 +835,12 @@ void FLandscapeRenderSystem::PrepareView(const FSceneView* View)
+ {
++	// Snapshot on the render thread before workers read per-view LOD values.
++	// This bridges the streamed mobile vertex layout to the UE 4.25 renderer;
++	// the corresponding implementation is present in UE 4.26.
++	SectionCurrentFirstLODIndices.SetNumUninitialized(SceneProxies.Num());
++	for (int32 Index = 0; Index < SceneProxies.Num(); ++Index)
++	{
++		const FLandscapeComponentSceneProxy* Proxy = SceneProxies[Index];
++		SectionCurrentFirstLODIndices[Index] = Proxy ? Proxy->GetCurrentFirstLODIdx_RenderThread() : 0;
++	}
++
+ 	const bool bExecuteInParallel = FApp::ShouldUseThreadingForPerformance()
+@@ -920,3 +930,5 @@ void FLandscapeRenderSystem::ComputeSectionPerViewParameters(
+ 
+-		NewSectionLODValues[EntityIndex] = ForcedLODLevel >= 0 ? ForcedLODLevel : FractionalLOD;
++		const float FirstResidentLOD = static_cast<float>(SectionCurrentFirstLODIndices[EntityIndex]);
++		NewSectionLODValues[EntityIndex] = FMath::Max(FirstResidentLOD,
++			ForcedLODLevel >= 0 ? static_cast<float>(ForcedLODLevel) : FractionalLOD);
+ 
+@@ -3023,3 +3035,4 @@ void FLandscapeComponentSceneProxy::GetDynamicMeshElements(const TArray<const FS
+ 			const float MeshScreenSizeSquared = ComputeBoundsScreenRadiusSquared(GetBounds().Origin, GetBounds().SphereRadius, *View);
+-			const int32 LODToRender = ForcedLODLevel >= 0 ? ForcedLODLevel : GetLODFromScreenSize(MeshScreenSizeSquared, LODScale * LODScale);
++			const int32 LODToRender = FMath::Max<int32>(GetCurrentFirstLODIdx_RenderThread(),
++				ForcedLODLevel >= 0 ? ForcedLODLevel : GetLODFromScreenSize(MeshScreenSizeSquared, LODScale * LODScale));
+ 
 diff --git a/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp b/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
-index b48664278..63cc8a17d 100644
+index b48664278..964ae9079 100644
 --- a/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
 +++ b/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
 @@ -254,87 +254,84 @@ void SerializeLandscapeMobileHoleData(FMemoryArchive& Ar, FLandscapeMobileHoleDa
@@ -933,8 +963,35 @@ index b48664278..63cc8a17d 100644
 -		if (FPlatformProperties::RequiresCookedData())
 +		if (FPlatformProperties::RequiresCookedData() || bLegacyCookedData)
  		{
+@@ -529 +527,11 @@ void FLandscapeComponentSceneProxyMobile::ApplyMeshElementModifier(FMeshBatchEle
+ }
++
++// Compatibility integration follows the UE 4.26 mobile residency query.
++// Unlike its platform-guarded version, original mobile cooked data can also be
++// loaded on the Linux host through the explicit legacy landscape reader.
++uint8 FLandscapeComponentSceneProxyMobile::GetCurrentFirstLODIdx_RenderThread() const
++{
++	check(IsInRenderingThread());
++	check(MobileRenderData.IsValid());
++	return MobileRenderData->CurrentFirstLODIdx;
++}
+diff --git a/Engine/Source/Runtime/Landscape/Public/LandscapeRender.h b/Engine/Source/Runtime/Landscape/Public/LandscapeRender.h
+index dc71b5c0c..95ceda767 100644
+--- a/Engine/Source/Runtime/Landscape/Public/LandscapeRender.h
++++ b/Engine/Source/Runtime/Landscape/Public/LandscapeRender.h
+@@ -546,2 +546,4 @@ struct FLandscapeRenderSystem
+ 	TArray<LODSettingsComponent> SectionLODSettings;
++	// Render-thread snapshot for parallel per-view mobile mesh LOD selection.
++	TArray<uint8> SectionCurrentFirstLODIndices;
+ 	TResourceArray<float> SectionLODValues;
+@@ -997,2 +999,5 @@ protected:
+ 
++	// Desktop landscapes have their complete vertex data resident.
++	virtual uint8 GetCurrentFirstLODIdx_RenderThread() const { return 0; }
++
+ 	virtual void ApplyMeshElementModifier(FMeshBatchElement& InOutMeshElement, int32 InLodIndex) const {}
 diff --git a/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h b/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
-index e10bb433f..7ea3c6fa8 100644
+index e10bb433f..8d179c7df 100644
 --- a/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
 +++ b/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
 @@ -106,2 +106,15 @@ public:
@@ -953,3 +1010,7 @@ index e10bb433f..7ea3c6fa8 100644
 +	FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData, uint8 InCurFirstLODIdx);
 +	~FLandscapeMobileRenderData();
  };
+@@ -127,2 +140,3 @@ public:
+ 
++	virtual uint8 GetCurrentFirstLODIdx_RenderThread() const override;
+ 	virtual void ApplyMeshElementModifier(FMeshBatchElement& InOutMeshElement, int32 InLodIndex) const override;

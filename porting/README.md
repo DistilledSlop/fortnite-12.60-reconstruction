@@ -34,7 +34,9 @@ The four dashboard milestones remain the product acceptance gates.
 - Map source recovery now includes the original main-map visibility setter and
   query, minimap visibility setter, capture-location reset, and playset level
   loading query. Both visibility flags use their recovered enabled defaults.
-  Generated source accepts all five bodies with no rejected snippets; build/runtime
+  Map-info replication now copies original chest/ammo spawn data, and AI minimap
+  distance replication updates the indicator. Generated source accepts all seven
+  bodies with no rejected snippets; build/runtime
   verification is pending under the native-body checkpoint cadence. The
   landscape compatibility patch now reads the original cooked mobile platform
   data, including streamed LOD bulk data and its filename. Apply it with
@@ -43,13 +45,15 @@ The four dashboard milestones remain the product acceptance gates.
   Shared mobile render data now preserves the original first-LOD state and
   cooked-data cache ownership. The LOD proxy, component lifecycle, streaming-manager registration and
   asynchronous stream-in/out updates are now integrated using the original
-  4.25-era interface. Renderer resident-LOD selection remains pending.
+  4.25-era interface. Renderer section and dynamic-draw selection now clamp to the resident vertex
+  LOD using a UE4.26 compatibility adaptation; original Linux terrain loading
+  and visual parity remain unverified.
   The new engine reader is also build/runtime pending. These changes do not establish
   original map loading, terrain fidelity, or a completed world.
 - The client is `FortniteClient-12.60-CL-13477524`, a packaged Win64 build.
 - The adjacent engine checkout is based on Epic's public UE 4.25.0 release
   `f8f4b403eb682ffc055613c7caf9d2ba5df7f319`, with local compatibility commit
-  `c620ace33` (landscape reader/proxy/streaming updates; build pending). See `HANDOFF.md` for required
+  `564d98bdd` (landscape reader/proxy/streaming/renderer; build pending). See `HANDOFF.md` for required
   build state and preserved local edits.
 - All 31 game paks use pak version 10 and have encrypted indexes. Version 10
   is Unreal's path-hash index format. The public UE 4.25 source only defines
