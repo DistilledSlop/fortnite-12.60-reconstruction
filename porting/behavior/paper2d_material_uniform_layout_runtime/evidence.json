@@ -3,13 +3,10 @@
     "function": "0x14434c060",
     "constructor": "0x143a74db0",
     "constructor_use_case_raw": 2,
-    "constructor_layout_name_literal": "MaterialUniforms",
+    "constructor_layout_name_literal": "Material",
     "constructor_shader_variable_literal": "Material",
     "constructor_r8_global": "0x148336168",
-    "struct_type_name": "Material",
-    "struct_type_initializer": "0x140549be0",
-    "struct_type_fname_index": 456909,
-    "struct_type_fname_number": 0,
+    "struct_type_name": "MaterialUniforms",
     "layout_name_observed_in_all_debug_records": "Material",
     "struct_size": 80,
     "members": [
@@ -83,7 +80,29 @@
         "shader_type": "SamplerState",
         "resource_index": 3
       }
-    ]
+    ],
+    "constructor_struct_type_literal": "MaterialUniforms",
+    "layout_name_initializer": "0x140549be0",
+    "layout_name_fname_index": 456909,
+    "layout_name_fname_number": 0,
+    "constructor_field_identity_evidence": {
+      "constructor_stores": [
+        "0x143a74dc2 stores R9 at metadata +0x8",
+        "0x143a74ddb stores stack argument at metadata +0x10",
+        "0x143a74df4 stores dereferenced R8 FName at metadata +0x38"
+      ],
+      "paper2d_caller": [
+        "0x14434d2c3 sets R9 to MaterialUniforms",
+        "0x14434d2ca loads Material for stack argument",
+        "0x14434d2d5 sets R8 to the Material FName global"
+      ],
+      "independent_landscape_initializer": [
+        "0x1405060c6 sets R9 to FLandscapeUniformShaderParameters",
+        "0x1405060e3 loads LandscapeParameters for stack argument",
+        "0x1405060f7 calls the same constructor"
+      ],
+      "interpretation": "The R9 pointer is struct type, stack pointer is shader variable, and R8 FName is layout identity. The prior report incorrectly called the layout FName the struct type."
+    }
   },
   "owners": [
     {
@@ -293,7 +312,9 @@
     "0x146ac25e0": "Wrap_WorldGroupSettings",
     "0x146ac2610": "Clamp_WorldGroupSettings",
     "0x146ac2648": "MaterialUniforms",
-    "0x146708740": "Material"
+    "0x146708740": "Material",
+    "0x1467b66b0": "FLandscapeUniformShaderParameters",
+    "0x1467b6688": "LandscapeParameters"
   },
   "capture_evidence": [
     {
@@ -307,6 +328,14 @@
     {
       "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/paper2d-shader-semantics/conversion/d3d.json",
       "sha256": "72297e49189bb5c0f355eab8926dfb13c4d5947e9a54a2280ed6a72dee9da1f1"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/apollo-material-evidence/uniform-ctor/0x143a74db0.asm",
+      "sha256": "51313d743cc9efb86e55348946da8d9952ae4196a753e4b8e48051f183e29359"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/apollo-material-evidence/terrain-uniform-initializers/0x140506010.asm",
+      "sha256": "bed28619bf7e6c6ff5f93c56e2b1f1324e0e3bfdc94c42517fd95fe39ac1d273"
     }
   ],
   "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",

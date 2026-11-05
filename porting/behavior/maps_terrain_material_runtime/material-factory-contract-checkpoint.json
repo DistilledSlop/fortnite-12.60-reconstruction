@@ -1,0 +1,47 @@
+{
+  "scope": "Original Apollo landscape material expression layout through the detached Unreal material factory; no shader construction or rendering",
+  "maps": [
+    {
+      "index": 0,
+      "quality": 0,
+      "records": 68,
+      "vertex_factory_contracts": 35,
+      "hash": "7d220286ded3b95b346e4dfa6e644fdd4a58608e"
+    },
+    {
+      "index": 1,
+      "quality": 1,
+      "records": 68,
+      "vertex_factory_contracts": 35,
+      "hash": "545a5f68f4285c51da41da779fafe1effb569064"
+    }
+  ],
+  "material_contract": {
+    "struct_type": "MaterialUniforms",
+    "shader_variable": "Material",
+    "uniform_buffer_bytes": 1376,
+    "resources": 77,
+    "original_resource_hash": 224723792,
+    "numeric_members": [
+      "VTPackedPageTableUniform",
+      "VTPackedUniform",
+      "VectorExpressions",
+      "ScalarExpressions"
+    ]
+  },
+  "validation": {
+    "linux_development_client_build": "PASS",
+    "nullrhi_probe_exit_code": 0,
+    "factory_callback_reached_both_maps": true,
+    "member_and_resource_comparison": "PASS",
+    "callback_stopped_before_shader_construction": true,
+    "build_log": "porting/generated/apollo-material-evidence/landscape-factory-contract.build.4.log",
+    "run_log": "porting/generated/apollo-material-evidence/landscape-factory-contract.run.2.log"
+  },
+  "limitations": [
+    "No shader map constructed, attached, or rendered.",
+    "Original virtual texture ownership, feedback UAV, pass bindings and forced LOD remain unresolved.",
+    "Existing staged Water content errors remain.",
+    "Batch output adapter is compiled but has not been exercised against live bindings."
+  ]
+}

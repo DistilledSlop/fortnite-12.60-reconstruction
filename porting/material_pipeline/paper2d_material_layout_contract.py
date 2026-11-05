@@ -12,6 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 ASM = ROOT/'generated/material_pipeline/paper2d-material-layout/14434c060.asm'
 MANIFEST = ROOT/'generated/paper2d-shader-semantics/shader-manifest.json'
 REPORT = ROOT/'generated/paper2d-shader-semantics/conversion/d3d.json'
+CTOR = ROOT/'generated/apollo-material-evidence/uniform-ctor/0x143a74db0.asm'
+LANDSCAPE_INIT = ROOT/'generated/apollo-material-evidence/terrain-uniform-initializers/0x140506010.asm'
 
 
 def require(condition, message):
@@ -28,7 +30,8 @@ def main():
                  0x146ac2330:'Texture2D_%d', 0x146ac2350:'Texture2D_%dSampler',
                  0x14668ca80:'Texture2D', 0x14668cc10:'SamplerState',
                  0x146ac25e0:'Wrap_WorldGroupSettings', 0x146ac2610:'Clamp_WorldGroupSettings',
-                 0x146ac2648:'MaterialUniforms', 0x146708740:'Material'}
+                 0x146ac2648:'MaterialUniforms', 0x146708740:'Material',
+                 0x1467b66b0:'FLandscapeUniformShaderParameters', 0x1467b6688:'LandscapeParameters'}
     with IMAGE.open('rb') as image:
         require(all(literal(image, a) == s for a, s in addresses.items()), 'original literal mismatch')
         # Original FName initializer, independent of current metadata naming.
@@ -42,6 +45,15 @@ def main():
         image.seek(0x148336168 - 0x140000000)
         require(struct.unpack('<II', image.read(8)) == (0x6f8cd, 0), 'original Material FName global mismatch')
     asm = ASM.read_text()
+    ctor = ' '.join(CTOR.read_text().split())
+    landscape_init = ' '.join(LANDSCAPE_INIT.read_text().split())
+    require(all(x in ctor for x in ('143a74dc2 MOV qword ptr [RCX + 0x8],R9',
+        '143a74dd3 MOV RAX,qword ptr [RSP + 0x70]', '143a74ddb MOV qword ptr [RCX + 0x10],RAX',
+        '143a74de9 MOV RAX,qword ptr [R8]', '143a74df4 MOV qword ptr [RCX + 0x38],RAX')),
+        'original constructor field stores mismatch')
+    require(all(x in landscape_init for x in ('1405060c6 LEA R9,[0x1467b66b0]',
+        '1405060e3 LEA RAX,[0x1467b6688]', '1405060f2 MOV qword ptr [RSP + 0x20],RAX',
+        '1405060f7 CALL 0x143a74db0')), 'landscape constructor identity mismatch')
     # Check the original member stores and control flow, not just literal references.
     checks = [
         '14434c179 MOV EDX,dword ptr [R13 + 0x18]', '14434c1b2 LEA RAX,[0x146ac22e0]',
@@ -117,11 +129,19 @@ def main():
         bindings.append(dict(shader_index=row['shader_index'], slot=slot, active=active, hash=actual))
     require(len(bindings) == 14 and all(x['active'] for x in bindings), 'expected 14 active Material bindings')
     result = dict(original_metadata=dict(function='0x14434c060', constructor='0x143a74db0', constructor_use_case_raw=2,
-        constructor_layout_name_literal='MaterialUniforms', constructor_shader_variable_literal='Material', constructor_r8_global='0x148336168',
-        struct_type_name='Material', struct_type_initializer='0x140549be0', struct_type_fname_index=0x6f8cd, struct_type_fname_number=0,
+        constructor_layout_name_literal='Material', constructor_struct_type_literal='MaterialUniforms',
+        constructor_shader_variable_literal='Material', constructor_r8_global='0x148336168',
+        struct_type_name='MaterialUniforms', layout_name_initializer='0x140549be0', layout_name_fname_index=0x6f8cd, layout_name_fname_number=0,
+        constructor_field_identity_evidence=dict(constructor_stores=['0x143a74dc2 stores R9 at metadata +0x8',
+            '0x143a74ddb stores stack argument at metadata +0x10', '0x143a74df4 stores dereferenced R8 FName at metadata +0x38'],
+            paper2d_caller=['0x14434d2c3 sets R9 to MaterialUniforms', '0x14434d2ca loads Material for stack argument',
+                '0x14434d2d5 sets R8 to the Material FName global'],
+            independent_landscape_initializer=['0x1405060c6 sets R9 to FLandscapeUniformShaderParameters',
+                '0x1405060e3 loads LandscapeParameters for stack argument', '0x1405060f7 calls the same constructor'],
+            interpretation='The R9 pointer is struct type, stack pointer is shader variable, and R8 FName is layout identity. The prior report incorrectly called the layout FName the struct type.'),
         layout_name_observed_in_all_debug_records='Material', **layout), owners=owners, computed_legacy_resource_hash=h,
         shader_bindings=bindings, original_instruction_checks=checks, original_literals={hex(a):s for a,s in addresses.items()},
-        capture_evidence=[receipt(p) for p in (ASM, MANIFEST, REPORT)], image_sha256=IMAGE_HASH,
+        capture_evidence=[receipt(p) for p in (ASM, MANIFEST, REPORT, CTOR, LANDSCAPE_INIT)], image_sha256=IMAGE_HASH,
         limitations=['Only the two observed expression shapes are supported; other Material layouts are not inferred.',
           'The constructor R8 FName is resolved by original initializer bytes and the original Material literal, independently of current source.',
           'Original metadata is recovered offline; current source and runtime binding/rendering are not verified.'],

@@ -1,0 +1,28 @@
+{
+ "address": "0x141d398d0",
+ "label": "",
+ "name": "FUN_141d398d0",
+ "status": "ok",
+ "body_bytes": 52,
+ "instructions": 11,
+ "called": [
+  {
+   "address": "0x141d39910",
+   "name": "FUN_141d39910"
+  }
+ ],
+ "indirect_calls": 0,
+ "strings": [],
+ "callers": [
+  {
+   "address": "0x141d2c800",
+   "name": "FUN_141d2c800",
+   "ref": "data"
+  }
+ ],
+ "reference_counts": {
+  "data": 1
+ },
+ "thunk": false,
+ "error": null
+}

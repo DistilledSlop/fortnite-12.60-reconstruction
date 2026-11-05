@@ -77,6 +77,12 @@ bool BuildLegacyPaper2DMaterialUniformContract(const FLegacyOriginalMaterial& Ma
     uint16 SourceRegister, uint32 SourceResourceLayoutHash,
     const FShaderParametersMetadata& Metadata, FLegacyLocalUniformContract& Out, FString& Error);
 
+/** Validate the captured Apollo terrain Material member recipe against factory
+ * metadata and every original debug resource layout. Does not supply values. */
+bool BuildLegacyLandscapeMaterialUniformContract(const FLegacyOriginalMaterial& Material,
+    uint16 SourceRegister, uint32 SourceResourceLayoutHash,
+    const FShaderParametersMetadata& Metadata, FLegacyLocalUniformContract& Out, FString& Error);
+
 /** Complete output-construction kernel for an original inventory occurrence.
  * ConvertedShader is one shader-manifest.json shaders[] entry, not an owner
  * occurrence, from a digest-pinned, offline-verified manifest. This kernel checks

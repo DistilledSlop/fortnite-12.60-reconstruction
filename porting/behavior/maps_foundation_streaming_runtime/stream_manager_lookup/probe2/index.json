@@ -1,0 +1,49 @@
+{
+ "_meta": {
+  "generated": "2026-11-05T17:09:06",
+  "elapsed_s": 12.4,
+  "count": 2,
+  "rolled_back": true,
+  "project_files_changed": [
+   "/opt/fortnite/ghidra-projects/fortnite-slim.rep/idata/~index.bak",
+   "/opt/fortnite/ghidra-projects/fortnite-slim.rep/idata/~index.dat",
+   "/opt/fortnite/ghidra-projects/fortnite-slim.rep/project.prp",
+   "/opt/fortnite/ghidra-projects/fortnite-slim.rep/versioned/~index.bak",
+   "/opt/fortnite/ghidra-projects/fortnite-slim.rep/versioned/~index.dat"
+  ]
+ },
+ "functions": [
+  {
+   "address": "0x1409f0300",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_1409f0300",
+   "body_bytes": 175,
+   "instructions": 44,
+   "direct_callees": 4,
+   "indirect_calls": 0,
+   "callers": 7,
+   "ref_counts": {
+    "data": 1,
+    "call": 6
+   }
+  },
+  {
+   "address": "0x141d2c800",
+   "label": "",
+   "created_in_memory": false,
+   "status": "ok",
+   "name": "FUN_141d2c800",
+   "body_bytes": 3925,
+   "instructions": 879,
+   "direct_callees": 18,
+   "indirect_calls": 25,
+   "callers": 2,
+   "ref_counts": {
+    "data": 1,
+    "jump": 1
+   }
+  }
+ ]
+}

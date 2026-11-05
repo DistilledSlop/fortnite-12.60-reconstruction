@@ -1,0 +1,147 @@
+{
+ "address": "0x141d2c800",
+ "label": "",
+ "name": "FUN_141d2c800",
+ "status": "ok",
+ "body_bytes": 3925,
+ "instructions": 879,
+ "called": [
+  {
+   "address": "0x1409ef640",
+   "name": "FUN_1409ef640"
+  },
+  {
+   "address": "0x142ecc600",
+   "name": "FUN_142ecc600"
+  },
+  {
+   "address": "0x142c71b90",
+   "name": "FUN_142c71b90"
+  },
+  {
+   "address": "0x142cd49c0",
+   "name": "FUN_142cd49c0"
+  },
+  {
+   "address": "0x141384ca0",
+   "name": "FUN_141384ca0"
+  },
+  {
+   "address": "0x141384cb0",
+   "name": "FMemory_Free"
+  },
+  {
+   "address": "0x140694750",
+   "name": "FUN_140694750"
+  },
+  {
+   "address": "0x142bfd200",
+   "name": "FMemory_Realloc"
+  },
+  {
+   "address": "0x142ee3b30",
+   "name": "FUN_142ee3b30"
+  },
+  {
+   "address": "0x142bad740",
+   "name": "FUN_142bad740"
+  },
+  {
+   "address": "0x140690780",
+   "name": "FUN_140690780"
+  },
+  {
+   "address": "0x1406911b0",
+   "name": "FUN_1406911b0"
+  },
+  {
+   "address": "0x140690dd0",
+   "name": "FUN_140690dd0"
+  },
+  {
+   "address": "0x142bee710",
+   "name": "FMemory_Free"
+  },
+  {
+   "address": "0x142bcee40",
+   "name": "FUN_142bcee40"
+  },
+  {
+   "address": "0x141d5f000",
+   "name": "FUN_141d5f000"
+  },
+  {
+   "address": "0x140685370",
+   "name": "FMulticastDelegateBase_CompactInvocationList"
+  },
+  {
+   "address": "0x145803c70",
+   "name": "FUN_145803c70"
+  }
+ ],
+ "indirect_calls": 25,
+ "strings": [
+  {
+   "text": "AthenaBuildingFoundationStreamInDistance",
+   "address": "0x145f98b10"
+  },
+  {
+   "text": "FortSignificanceManager",
+   "address": "0x145f98b68"
+  },
+  {
+   "text": "AthenaBuildingFoundationStreamOutDistance",
+   "address": "0x145f98ba0"
+  },
+  {
+   "text": "PlayerPawn",
+   "address": "0x145f98bf8"
+  },
+  {
+   "text": "AIPawn",
+   "address": "0x145f98c04"
+  },
+  {
+   "text": "VFX",
+   "address": "0x145f98c0c"
+  },
+  {
+   "text": "BuildingFoundation",
+   "address": "0x145f98c10"
+  },
+  {
+   "text": "HLODProxy",
+   "address": "0x145f98c28"
+  },
+  {
+   "text": "AthenaPlayerPawn",
+   "address": "0x145f98c38"
+  },
+  {
+   "text": "FortAthenaSKVehicle",
+   "address": "0x145f98c50"
+  },
+  {
+   "text": "FortSprayDecal",
+   "address": "0x145f98c68"
+  }
+ ],
+ "callers": [
+  {
+   "address": "0x1485b286c",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x142ad8b16",
+   "name": null,
+   "ref": "jump"
+  }
+ ],
+ "reference_counts": {
+  "data": 1,
+  "jump": 1
+ },
+ "thunk": false,
+ "error": null
+}

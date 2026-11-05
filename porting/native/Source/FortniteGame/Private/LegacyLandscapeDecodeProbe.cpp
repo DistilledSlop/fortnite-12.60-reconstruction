@@ -4,6 +4,8 @@
 #include "LegacyOriginalUniformContracts.h"
 #include "LegacyOriginalMaterialLayout.h"
 #include "LegacyLocalVFOutputBatch.h"
+#include "LegacySlateMaterial.h"
+#include "MaterialShared.h"
 #include "HAL/FileManager.h"
 #include "HAL/PlatformProcess.h"
 #include "Misc/Guid.h"
@@ -101,6 +103,22 @@ bool Decode(const FString& Path, FString& Error)
         FLegacyMaterialIR Prepared;
         if (!PrepareLegacyOriginalMaterialLayout(Native,Prepared,Error) || Prepared.UniformBufferSize!=1376 || Prepared.Resources.Num()!=77)
         { if (Error.IsEmpty()) Error=TEXT("unexpected landscape Material layout"); return false; }
+        FLegacyOriginalMaterial ContractMaterial=Native; ContractMaterial.IR=Prepared;
+        bool bReachedFactoryOutputs=false; FString FactoryError;
+        TRefCountPtr<FMaterialShaderMap> FactoryMap=FMaterialShaderMap::CreateLegacyLandscapeVertexFactoryMap(
+            Prepared, [&](const FUniformExpressionSet&, const FShaderParametersMetadata& Metadata,
+                TArray<FLegacyMaterialShaderInput>&, TArray<FLegacyMaterialPipelineInput>&, FString& OutError) -> bool
+            {
+                FLegacyLocalUniformContract Contract;
+                if (!BuildLegacyLandscapeMaterialUniformContract(ContractMaterial,0,224723792,Metadata,Contract,OutError))
+                { OutError+=FString::Printf(TEXT(" (engine struct: %s)"),Metadata.GetStructTypeName()); return false; }
+                bReachedFactoryOutputs=true;
+                OutError=TEXT("probe stopped before shader construction");
+                return false;
+            }, FactoryError);
+        if (FactoryMap.IsValid() || !bReachedFactoryOutputs || FactoryError!=TEXT("probe stopped before shader construction"))
+        { Error=FString::Printf(TEXT("map %d material factory: %s"),MapIndex,*FactoryError); return false; }
+        UE_LOG(LogTemp,Display,TEXT("Legacy landscape material factory: map=%d expression metadata validated; shader construction not attempted"),MapIndex);
         auto BadLayout=Native; BadLayout.Records[0].LayoutOffsets[0]++;
         FLegacyMaterialIR Sentinel; Sentinel.UniformBufferSize=7; FString Reject;
         if (PrepareLegacyOriginalMaterialLayout(BadLayout,Sentinel,Reject) || Sentinel.UniformBufferSize!=7)

@@ -1,0 +1,64 @@
+{
+ "address": "0x141d394f0",
+ "label": "",
+ "name": "FUN_141d394f0",
+ "status": "ok",
+ "body_bytes": 992,
+ "instructions": 209,
+ "called": [
+  {
+   "address": "0x140690bb0",
+   "name": "TArray8_ResizeGrow"
+  },
+  {
+   "address": "0x1406d9b10",
+   "name": "FUN_1406d9b10"
+  },
+  {
+   "address": "0x14580938f",
+   "name": "powf"
+  },
+  {
+   "address": "0x14072b9f0",
+   "name": "FUN_14072b9f0"
+  },
+  {
+   "address": "0x142bee710",
+   "name": "FMemory_Free"
+  }
+ ],
+ "indirect_calls": 0,
+ "strings": [],
+ "callers": [
+  {
+   "address": "0x1485b32a4",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x1474bfdfc",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x1474bfe54",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x1474bfe64",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x141d2c800",
+   "name": "FUN_141d2c800",
+   "ref": "data"
+  }
+ ],
+ "reference_counts": {
+  "data": 5
+ },
+ "thunk": false,
+ "error": null
+}

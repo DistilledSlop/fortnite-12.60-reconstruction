@@ -322,6 +322,103 @@ bool BuildLegacyLocalVFUniformContract(uint16 SourceRegister, uint32 SourceResou
     return true;
 }
 
+bool BuildLegacyLandscapeMaterialUniformContract(const FLegacyOriginalMaterial& Material,
+    uint16 SourceRegister, uint32 SourceResourceLayoutHash,
+    const FShaderParametersMetadata& Metadata, FLegacyLocalUniformContract& Out, FString& Error)
+{
+    const auto& IR = Material.IR;
+    if (SourceRegister >= 32 || Material.MaterialPath != TEXT("/Game/Athena/Apollo/Environments/Landscape/Materials/Biome/LandscapeBiomeMaterials/M_CommonLandscape.M_CommonLandscape") ||
+        IR.VectorRoots.Num() != 35 || IR.ScalarRoots.Num() != 26 || IR.Texture2DParameters.Num() != 34 ||
+        IR.VirtualTextureParameters.Num() != 3 || IR.VTStacks.Num() != 1 ||
+        IR.VTStacks[0].LayerUniformExpressionIndices.Num() != 3 || !Material.Records.Num() ||
+        IR.UniformBufferSize != 1376 || IR.Resources.Num() != 77 ||
+        Metadata.GetUseCase() != FShaderParametersMetadata::EUseCase::DataDrivenUniformBuffer)
+        return Fail(Error, TEXT("unsupported original landscape Material expression shape"));
+
+    FLegacyLocalUniformContract Result;
+    Result.SourceRegister = SourceRegister; Result.ParameterName = TEXT("Material");
+    Result.OriginalStructTypeName = TEXT("MaterialUniforms"); Result.OriginalSize = 1376;
+    Result.OriginalResourceLayoutHash = SourceResourceLayoutHash; Result.CurrentMetadata = &Metadata;
+    uint32 Offset = 0;
+    const auto Numeric = [&Result, &Offset](const TCHAR* Name, EUniformBufferBaseType Type,
+        EShaderPrecisionModifier::Type Precision, uint32 Count)
+    {
+        auto& M = Result.OriginalMembers.AddDefaulted_GetRef();
+        M.Name = Name; M.Offset = Offset; M.BaseType = Type; M.Precision = Precision;
+        M.Rows = 1; M.Columns = 4; M.Elements = Count; Offset += Count * 16;
+    };
+    const auto Resource = [&Result, &Offset](const FString& Name, const TCHAR* ShaderType, EUniformBufferBaseType Type)
+    {
+        auto& M = Result.OriginalMembers.AddDefaulted_GetRef();
+        M.Name = Name; M.ShaderType = ShaderType; M.Offset = Offset; M.BaseType = Type;
+        M.Rows = M.Columns = 1;
+        auto& R = Result.OriginalResources.AddDefaulted_GetRef(); R.Offset = uint16(Offset); R.BaseType = Type;
+        Offset += 8;
+    };
+    // Original constructor 14434c060 builds these in this order, using uint4
+    // VT arrays and half-precision float4 expression arrays.
+    Numeric(TEXT("VTPackedPageTableUniform"), UBMT_UINT32, EShaderPrecisionModifier::Float, 2);
+    Numeric(TEXT("VTPackedUniform"), UBMT_UINT32, EShaderPrecisionModifier::Float, 3);
+    Numeric(TEXT("VectorExpressions"), UBMT_FLOAT32, EShaderPrecisionModifier::Half, 35);
+    Numeric(TEXT("ScalarExpressions"), UBMT_FLOAT32, EShaderPrecisionModifier::Half, 7);
+    for (int32 I = 0; I < 34; ++I)
+    {
+        Resource(FString::Printf(TEXT("Texture2D_%d"), I), TEXT("Texture2D"), UBMT_TEXTURE);
+        Resource(FString::Printf(TEXT("Texture2D_%dSampler"), I), TEXT("SamplerState"), UBMT_SAMPLER);
+    }
+    Resource(TEXT("VirtualTexturePageTable0_0"), TEXT("Texture2D<uint4>"), UBMT_TEXTURE);
+    for (int32 I = 0; I < 3; ++I)
+    {
+        Resource(FString::Printf(TEXT("VirtualTexturePhysicalTable_%d"), I), TEXT("Texture2D"), UBMT_SRV);
+        Resource(FString::Printf(TEXT("VirtualTexturePhysicalTable_%dSampler"), I), TEXT("SamplerState"), UBMT_SAMPLER);
+    }
+    Resource(TEXT("Wrap_WorldGroupSettings"), TEXT("SamplerState"), UBMT_SAMPLER);
+    Resource(TEXT("Clamp_WorldGroupSettings"), TEXT("SamplerState"), UBMT_SAMPLER);
+    if (Align(Offset, 16u) != Result.OriginalSize) return Fail(Error, TEXT("landscape Material size mismatch"));
+    for (int32 I = 0; I < IR.Resources.Num(); ++I)
+    {
+        const auto& R = Result.OriginalResources[I];
+        if (IR.Resources[I].Offset != R.Offset || IR.Resources[I].BaseType != R.BaseType)
+            return Fail(Error, TEXT("landscape Material IR resource layout mismatch"));
+        const uint8 OriginalType = R.BaseType == UBMT_TEXTURE ? 5 : R.BaseType == UBMT_SRV ? 6 : 8;
+        for (const auto& Record : Material.Records)
+            if (Record.LayoutSize != Result.OriginalSize || Record.LayoutOffsets.Num() != IR.Resources.Num() ||
+                Record.LayoutTypes.Num() != IR.Resources.Num() || Record.LayoutOffsets[I] != R.Offset || Record.LayoutTypes[I] != OriginalType)
+                return Fail(Error, TEXT("landscape Material debug resource layout mismatch"));
+    }
+    uint32 DerivedHash;
+    if (!OriginalResourceHash(Result, DerivedHash) || (SourceResourceLayoutHash && DerivedHash != SourceResourceLayoutHash))
+        return Fail(Error, TEXT("landscape Material original resource hash mismatch"));
+    if (!SameUniform(Result))
+    {
+        const auto& Members = Metadata.GetMembers();
+        if (Members.Num() != Result.OriginalMembers.Num())
+            Error = FString::Printf(TEXT("landscape Material member count: expected %d got %d"), Result.OriginalMembers.Num(), Members.Num());
+        else
+        {
+            for (int32 I = 0; I < Members.Num(); ++I)
+            {
+                const auto& A = Result.OriginalMembers[I]; const auto& B = Members[I];
+                if (A.Name != B.GetName() || A.ShaderType != (B.GetShaderType() ? B.GetShaderType() : TEXT("")) ||
+                    A.Offset != B.GetOffset() || A.BaseType != B.GetBaseType() || A.Precision != B.GetPrecision() ||
+                    A.Rows != B.GetNumRows() || A.Columns != B.GetNumColumns() || A.Elements != B.GetNumElements() || B.GetStructMetadata())
+                {
+                    Error = FString::Printf(TEXT("landscape Material member %d expected %s/%s off=%u type=%u precision=%u rows=%u cols=%u count=%u; got %s/%s off=%u type=%u precision=%u rows=%u cols=%u count=%u nested=%d"),
+                        I, *A.Name, *A.ShaderType, A.Offset, uint32(A.BaseType), uint32(A.Precision), A.Rows, A.Columns, A.Elements,
+                        B.GetName(), B.GetShaderType() ? B.GetShaderType() : TEXT(""), B.GetOffset(), uint32(B.GetBaseType()), uint32(B.GetPrecision()), B.GetNumRows(), B.GetNumColumns(), B.GetNumElements(), B.GetStructMetadata() != nullptr);
+                    return false;
+                }
+            }
+            Error = FString::Printf(TEXT("landscape Material uniform header/layout mismatch: struct=%s variable=%s size=%u expected=%u resources=%d expected=%d layout_size=%u hash=%u"),
+                Metadata.GetStructTypeName(), Metadata.GetShaderVariableName() ? Metadata.GetShaderVariableName() : TEXT(""), Metadata.GetSize(), Result.OriginalSize,
+                Metadata.GetLayout().Resources.Num(), Result.OriginalResources.Num(), Metadata.GetLayout().ConstantBufferSize, Metadata.GetLayout().GetHash());
+        }
+        return false;
+    }
+    Out = MoveTemp(Result);
+    return true;
+}
+
 bool BuildLegacyPaper2DMaterialUniformContract(const FLegacyOriginalMaterial& Material,
     uint16 SourceRegister, uint32 SourceResourceLayoutHash,
     const FShaderParametersMetadata& Metadata, FLegacyLocalUniformContract& Out, FString& Error)
@@ -336,9 +433,9 @@ bool BuildLegacyPaper2DMaterialUniformContract(const FLegacyOriginalMaterial& Ma
         return Fail(Error, TEXT("unsupported original Paper2D Material expression shape"));
     FLegacyLocalUniformContract Result;
     Result.SourceRegister = SourceRegister; Result.ParameterName = TEXT("Material");
-    // Original FName global 148336168 is initialized from Material by 140549be0.
-    // Member construction is independently captured in 14434c060.
-    Result.OriginalStructTypeName = TEXT("Material"); Result.OriginalSize = 80;
+    // The original constructor uses Material as the layout FName and
+    // MaterialUniforms as the struct type; see the captured constructor stores.
+    Result.OriginalStructTypeName = TEXT("MaterialUniforms"); Result.OriginalSize = 80;
     Result.OriginalResourceLayoutHash = SourceResourceLayoutHash; Result.CurrentMetadata = &Metadata;
     const auto Numeric = [&Result](const TCHAR* Name, uint32 Offset, uint32 Count)
     {
