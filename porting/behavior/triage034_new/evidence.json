@@ -1,0 +1,38 @@
+[
+  {
+    "class": "AFortAthenaMutator_Encounter",
+    "function": "HandleAISpawned",
+    "wrapper_capture": "porting/generated/native-triage015/0x1427e19f0.asm",
+    "target_capture": "porting/generated/callee_probe/stubs/0x1406801c0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "type_resolution": "porting/generated/reflection/class_ref_map.json and class_name_map.json",
+    "behavior": "Wrapper steps object arguments and calls the bare-return native leaf; no reflected output parameters."
+  },
+  {
+    "class": "AFortMission_RiftSpawners",
+    "function": "HandleAISpawned",
+    "wrapper_capture": "porting/generated/native-triage015/0x1427e19f0.asm",
+    "target_capture": "porting/generated/callee_probe/stubs/0x1406801c0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "type_resolution": "porting/generated/reflection/class_ref_map.json and class_name_map.json",
+    "behavior": "Wrapper steps object arguments and calls the bare-return native leaf; no reflected output parameters."
+  },
+  {
+    "class": "AFortAthenaMutator_Encounter",
+    "function": "HandleRiftDying",
+    "wrapper_capture": "porting/generated/native-triage021/0x142801f10.asm",
+    "target_capture": "porting/generated/callee_probe/stubs/0x1406801c0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "type_resolution": "porting/generated/reflection/class_ref_map.json and class_name_map.json",
+    "behavior": "Wrapper steps object arguments and calls the bare-return native leaf; no reflected output parameters."
+  },
+  {
+    "class": "UFortVolumeObjectTrackingComponent",
+    "function": "RemoveActor",
+    "wrapper_capture": "porting/generated/native-triage021/0x142801f10.asm",
+    "target_capture": "porting/generated/callee_probe/stubs/0x1406801c0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "type_resolution": "porting/generated/reflection/class_ref_map.json and class_name_map.json",
+    "behavior": "Wrapper steps object arguments and calls the bare-return native leaf; no reflected output parameters."
+  }
+]

@@ -19,5 +19,8 @@ public:
 	UFUNCTION()
 	static float GetDistanceBetweenTwoVectors(FVector Source, FVector Dest);
 
+	UFUNCTION()
+	static FVector MakeVector(float X, float Y, float Z);
+
 };
 

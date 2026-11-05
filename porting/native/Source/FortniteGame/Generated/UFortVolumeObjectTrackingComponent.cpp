@@ -12,6 +12,12 @@ void UFortVolumeObjectTrackingComponent::OnRep_BudgetTracker()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortVolumeObjectTrackingComponent::RemoveActor(AActor* Actor, UActorComponent* ActorComponent, APawn* InstigatorPawn, AFortVolume* Volume)
+{
+	// Original exec 0x142801f10; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortVolumeObjectTrackingComponent::UpdateVolumeInformation()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

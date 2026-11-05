@@ -12,6 +12,9 @@
 #include "FFortRiftSpawnerData.h"
 #include "GameplayTagContainer.h"
 
+class AFortAIPawn;
+class UFortAIEncounterInfo;
+
 #include "AFortMission_RiftSpawners.generated.h"
 
 UCLASS(config=Game, abstract)
@@ -107,6 +110,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	bool bCalendarAllowsSpawning;
+
+	UFUNCTION()
+	void HandleAISpawned(UFortAIEncounterInfo* Encounter, AFortAIPawn* SpawnedEnemy);
 
 };
 

@@ -8,6 +8,10 @@
 
 #include "AttributeSet.h"
 
+class AActor;
+class ABuildingRift;
+class AController;
+class AFortAIPawn;
 class UAnimationSharingSetup;
 class UFortAIEncounterInfo;
 class UFortDifficultyEncounterSettings;
@@ -43,6 +47,16 @@ public:
 	// table index 0, flags 0x20080000012001
 	UPROPERTY(Transient)
 	FName LootTierGroupOverride;
+
+protected:
+	UFUNCTION()
+	void HandleAISpawned(UFortAIEncounterInfo* Encounter, AFortAIPawn* SpawnedEnemy);
+public:
+
+protected:
+	UFUNCTION()
+	void HandleRiftDying(UFortAIEncounterInfo* Encounter, ABuildingRift* Rift, AController* Controller, AActor* DamageActor);
+public:
 
 };
 

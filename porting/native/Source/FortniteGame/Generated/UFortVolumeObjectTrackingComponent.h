@@ -11,7 +11,9 @@
 #include "FFortCreativeClassInstanceTracker.h"
 #include "FObjectTracker.h"
 
+class AActor;
 class AFortVolume;
+class APawn;
 
 #include "UFortVolumeObjectTrackingComponent.generated.h"
 
@@ -106,6 +108,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_BudgetTracker();
+
+	UFUNCTION()
+	void RemoveActor(AActor* Actor, UActorComponent* ActorComponent, APawn* InstigatorPawn, AFortVolume* Volume);
 
 	UFUNCTION()
 	void UpdateVolumeInformation();
