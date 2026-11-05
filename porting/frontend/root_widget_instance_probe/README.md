@@ -35,3 +35,12 @@ The independent viewport report preserves attachment evidence if a later phase
 fails. Successful membership does not establish rendered pixels, input routing,
 authentic startup or parity. Overall validation still rejects unresolved imports
 and Blueprint errors.
+
+For a manual screenshot run, the binary also accepts
+`-RootWidgetInstanceProbe -RootWidgetInstanceAttach -RootWidgetCaptureSeconds=60`.
+This keeps the widget attached for at least three frames and the requested hold
+(up to 300 seconds). `-RootWidgetInstanceClass=/Game/.../Widget.Widget_C` selects
+another existing reconstructed widget class for diagnostic inspection. The
+Root class and three-frame lifecycle remain the defaults. These capture flags
+are diagnostic attachment, not a normal frontend startup or login transition;
+record the selected class and current build revision with any published image.
