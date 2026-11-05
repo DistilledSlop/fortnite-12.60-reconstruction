@@ -59190,5 +59190,69 @@
     "static": false,
     "access": "public",
     "notes": "Reviewed against Gemini decompilation and reflected delegate signature; build and runtime pending."
+  },
+  {
+    "class": "UFortTabListWidgetBase",
+    "function": "IsFirstTabActive",
+    "kind": "exec",
+    "signature": "bool IsFirstTabActive() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/gemini_review5_runtime/UFortTabListWidgetBase_IsFirstTabActive.inc",
+    "confidence": "high",
+    "address": "0x1452fffe0",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Reviewed target and reflected array; GetActiveTab exposes recovered base FName. Build and runtime pending."
+  },
+  {
+    "class": "UFortTabListWidgetBase",
+    "function": "IsLastTabActive",
+    "kind": "exec",
+    "signature": "bool IsLastTabActive() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/gemini_review5_runtime/UFortTabListWidgetBase_IsLastTabActive.inc",
+    "confidence": "high",
+    "address": "0x145300070",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Reviewed target and reflected array; GetActiveTab exposes recovered base FName. Build and runtime pending."
+  },
+  {
+    "class": "USocialChatMessageEntry",
+    "function": "CanInteract",
+    "signature": "bool CanInteract() const",
+    "address": "0x1412d9d60",
+    "notes": "Shared exec wrapper calls 0x1406801d0, a constant true native; SocialUMG reflection flags independently checked. Build and runtime pending.",
+    "kind": "exec",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/terra_review3_runtime/USocialChatMessageEntry_CanInteract.inc",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54080401",
+    "static": false,
+    "access": "public",
+    "includes": []
+  },
+  {
+    "class": "USocialInteractionMenu",
+    "function": "GetFirstEntryToCenter",
+    "signature": "UWidget* GetFirstEntryToCenter() const",
+    "address": "0x1412d9ed0",
+    "notes": "Exec forwards to 0x1412c66a0. Its count and array access helpers map to UDynamicEntryBoxBase::GetNumEntries and GetAllEntries; engine source confirms both use active widget pool. Native dereferences both pointers without null guards. Build and runtime pending.",
+    "kind": "exec",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/terra_review3_runtime/USocialInteractionMenu_GetFirstEntryToCenter.inc",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54080401",
+    "static": false,
+    "access": "public",
+    "includes": [
+      "Components/DynamicEntryBox.h"
+    ]
   }
 ]

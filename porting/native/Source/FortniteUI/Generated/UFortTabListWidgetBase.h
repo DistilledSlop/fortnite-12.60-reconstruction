@@ -30,5 +30,11 @@ public:
 	UPROPERTY()
 	TMap<FName, FFortTabButtonLabelInfo> PendingTabLabelInfoMap;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsFirstTabActive() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLastTabActive() const;
+
 };
 

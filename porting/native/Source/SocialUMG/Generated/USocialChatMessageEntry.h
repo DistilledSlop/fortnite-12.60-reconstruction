@@ -31,5 +31,10 @@ public:
 	UPROPERTY()
 	UButton* Button_MessageButton;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanInteract() const;
+public:
+
 };
 

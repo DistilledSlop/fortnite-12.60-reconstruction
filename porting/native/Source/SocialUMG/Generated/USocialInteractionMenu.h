@@ -12,6 +12,7 @@
 class UDynamicEntryBox;
 class USpacer;
 class UTextBlock;
+class UWidget;
 
 #include "USocialInteractionMenu.generated.h"
 
@@ -48,6 +49,11 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonButton* Button_Decline;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UWidget* GetFirstEntryToCenter() const;
+public:
 
 };
 
