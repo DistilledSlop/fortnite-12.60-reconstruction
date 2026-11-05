@@ -17,7 +17,7 @@ if [[ ! -f "$stage_dir/FortniteLinux/Config/ApolloLandscapeGrid.json" ]]; then
     exit 2
 fi
 
-"$server" "$map" -FortniteLegacyFieldPaths -nullrhi -nosound -unattended -port=7777 -log > "$server_log" 2>&1 &
+"$server" "$map" -FortniteLegacyFieldPaths -FortniteLegacyLandscapeData -nullrhi -nosound -unattended -port=7777 -log > "$server_log" 2>&1 &
 server_pid=$!
 cleanup() {
     kill "$server_pid" 2>/dev/null || true
@@ -42,4 +42,4 @@ if (( ready == 0 )); then
     exit 1
 fi
 
-"$client" 127.0.0.1:7777 -FortniteLegacyFieldPaths -vulkan -log "$@"
+"$client" 127.0.0.1:7777 -FortniteLegacyFieldPaths -FortniteLegacyLandscapeData -vulkan -log "$@"

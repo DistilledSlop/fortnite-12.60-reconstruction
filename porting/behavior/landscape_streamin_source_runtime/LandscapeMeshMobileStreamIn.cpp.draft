@@ -1,0 +1,94 @@
+// Unintegrated, uncounted 12.60 source recovery. Depends on the types and
+// context in landscape_streamout_source_runtime, mobile platform data, and
+// the unresolved functions declared below. Not a compilable replacement.
+// Member names and the IO request API are informed by UE 4.26, not ABI proof.
+
+class FLandscapeMeshMobileStreamIn_IO_AsyncReallocate : public FLandscapeMeshMobileUpdate
+{
+public:
+    FLandscapeMeshMobileStreamIn_IO_AsyncReallocate(
+        ULandscapeLODStreamingProxy* Proxy, int32 RequestedMips, bool bHighPrio);
+private:
+    void DoInitiateIO(const FContext& Context); // 0x1445e56c0
+    // Subsequent stages are lifted in landscape_streamin_completion_source_runtime.
+    void DoGetIORequestResults(const FContext& Context); // wrapper 0x1445dfcd0 -> 0x1445e4960
+    void DoCancelIO(const FContext& Context); // wrapper 0x1445dfab0 -> 0x1445da650
+    void ClearIORequest(const FContext& Context);
+    void DoExpandResources(const FContext& Context);
+    void ExpandResources(const FContext& Context);
+    void DoCancel(const FContext& Context);
+    void DoFinishUpdate(const FContext& Context);
+
+    FVertexBufferRHIRef IntermediateVertexBuffer;
+    void* StagingLODDataArray[8];
+    int64 StagingLODDataSizes[8];
+    IBulkDataIORequest* IORequests[8];
+    FBulkDataIORequestCallBack AsyncFileCallback;
+    bool bHighPrioIORequest;
+};
+
+// Original 0x1445d5350, wrapper 0x1445dfc60 forwards captured this to
+// DoInitiateIO; its decompiler omits the context argument. Individual layers
+// are flattened here because the original capture inlines their initialization.
+FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::FLandscapeMeshMobileStreamIn_IO_AsyncReallocate(
+    ULandscapeLODStreamingProxy* Proxy, int32 RequestedMips, bool bHighPrio)
+    : FLandscapeMeshMobileUpdate(Proxy, RequestedMips)
+    , IntermediateVertexBuffer(nullptr)
+    , bHighPrioIORequest(bHighPrio)
+{
+    FMemory::Memzero(StagingLODDataArray, sizeof(StagingLODDataArray));
+    FMemory::Memzero(StagingLODDataSizes, sizeof(StagingLODDataSizes));
+    FMemory::Memzero(IORequests, sizeof(IORequests));
+    PushTask(FContext(Proxy, TT_None), TT_Async,
+        SRA_UPDATE_CALLBACK(DoInitiateIO), TT_None, nullptr);
+}
+
+// Original 0x1445e56c0. Inline GetIOFilename and SetIORequest from the
+// analogous UE 4.26 flow; the original ignores the filename helper's result.
+void FLandscapeMeshMobileStreamIn_IO_AsyncReallocate::DoInitiateIO(const FContext& Context)
+{
+    FString IOFilename;
+    const ULandscapeLODStreamingProxy* Proxy = Context.LandscapeProxy;
+    if (!IsCancelled() && Proxy)
+    {
+        Proxy->GetMipDataFilename(PendingFirstMip, IOFilename); // 0x143aca8e0
+        if (!IsCancelled())
+        {
+            if (Proxy)
+            {
+                // 0x1445dfaa0 -> 0x1445da5b0. Context is captured even
+                // though the recovered callback uses only this and cancellation.
+                AsyncFileCallback = [this, Context](bool bWasCancelled, IBulkDataIORequest* Request)
+                {
+                    TaskSynchronization.Decrement();
+                    if (bWasCancelled) { MarkAsCancelled(); }
+                    Tick(TT_None);
+                };
+                for (int32 Index = PendingFirstMip; Index < CurrentFirstLODIdx; ++Index)
+                {
+                    FUntypedBulkData::BulkDataRangeArray BulkDataArray;
+                    BulkDataArray.Add(&Proxy->GetStreamingLODBulkData(Index)); // 0x143acaa90
+                    if (BulkDataArray[0]->GetBulkDataSize() != 0)
+                    {
+                        TaskSynchronization.Increment();
+                        // 0x142d4b4e0: range/open/read behavior captured; API/signature inferred.
+                        IORequests[Index] = FUntypedBulkData::CreateStreamingRequestForRange(
+                            IOFilename, BulkDataArray,
+                            bHighPrioIORequest ? AIOP_BelowNormal : AIOP_Low,
+                            &AsyncFileCallback);
+                    }
+                }
+            }
+            else
+            {
+                MarkAsCancelled();
+            }
+        }
+    }
+    else
+    {
+        MarkAsCancelled();
+    }
+    PushTask(Context, TT_Async, SRA_UPDATE_CALLBACK(DoGetIORequestResults),
+        TT_Async, SRA_UPDATE_CALLBACK(DoCancelIO));
+}

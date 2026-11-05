@@ -1,0 +1,104 @@
+diff --git a/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h b/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
+index 5c3036a99..ffdf730f5 100644
+--- a/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
++++ b/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
+@@ -11,2 +11,3 @@
+ #include "LandscapeWeightmapUsage.h"
++#include "Serialization/BulkData.h"
+ 
+@@ -109,2 +110,8 @@ class FLandscapeComponentDerivedData
+ 	TArray<uint8> CompressedLandscapeData;
++
++#if !WITH_EDITORONLY_DATA && USE_BULKDATA_STREAMING_TOKEN
++	TArray<FBulkDataStreamingToken> StreamingLODDataArray;
++#else
++	TArray<FByteBulkData> StreamingLODDataArray;
++#endif
+ 	
+@@ -113,2 +120,4 @@ class FLandscapeComponentDerivedData
+ 
++	FString CachedLODDataFileName;
++
+ public:
+@@ -129,3 +138,8 @@ public:
+ 	{
+-		return CompressedLandscapeData.Num();
++		int32 Size = CompressedLandscapeData.Num();
++		for (const auto& LODData : StreamingLODDataArray)
++		{
++			Size += static_cast<int32>(LODData.GetBulkDataSize());
++		}
++		return Size;
+ 	}
+@@ -150,2 +164,5 @@ public:
+ 	friend FArchive& operator<<(FArchive& Ar, FLandscapeComponentDerivedData& Data);
++
++	/** Read the original 12.60 cooked mobile data, including streamed LODs. */
++	void SerializeLegacyCookedData(FArchive& Ar, UObject* Owner);
+ };
+diff --git a/Engine/Source/Runtime/Landscape/Private/Landscape.cpp b/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
+index 7fe59f51e..cd45384e9 100644
+--- a/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
++++ b/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
+@@ -53,2 +53,4 @@ Landscape.cpp: Terrain rendering
+ #include "LandscapeSubsystem.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ 
+@@ -525,3 +527,14 @@ void ULandscapeComponent::Serialize(FArchive& Ar)
+ 			}
+-			Ar << PlatformData;
++			const FLinkerLoad* SourceLinker = Cast<FLinkerLoad>(Ar.GetLinker());
++			const bool bOriginalCookedLandscape = Ar.IsLoading() && SourceLinker &&
++				SourceLinker->Summary.bUnversioned &&
++				FParse::Param(FCommandLine::Get(), TEXT("FortniteLegacyLandscapeData"));
++			if (bOriginalCookedLandscape)
++			{
++				PlatformData.SerializeLegacyCookedData(Ar, this);
++			}
++			else
++			{
++				Ar << PlatformData;
++			}
+ 		}
+@@ -3360,2 +3373,40 @@ FArchive& operator<<(FArchive& Ar, FLandscapeComponentDerivedData& Data)
+ 
++// Original 12.60 implementation: 0x143accef0. This is a loading-only
++// compatibility path; UE 4.25 authoring and DDC retain their existing format.
++void FLandscapeComponentDerivedData::SerializeLegacyCookedData(FArchive& Ar, UObject* Owner)
++{
++	check(Ar.IsLoading());
++	Ar << CompressedLandscapeData;
++	int32 NumStreamingLODs = 0;
++	Ar << NumStreamingLODs;
++	if (Ar.IsError() || NumStreamingLODs < 0)
++	{
++		Ar.SetError();
++		return;
++	}
++	StreamingLODDataArray.Empty(NumStreamingLODs);
++	StreamingLODDataArray.AddDefaulted(NumStreamingLODs);
++	CachedLODDataFileName.Empty();
++	for (int32 Idx = 0; Idx < NumStreamingLODs; ++Idx)
++	{
++#if !WITH_EDITORONLY_DATA && USE_BULKDATA_STREAMING_TOKEN
++		FByteBulkData LODData;
++		LODData.Serialize(Ar, Owner, Idx);
++		StreamingLODDataArray[Idx] = LODData.CreateStreamingToken();
++#else
++		FByteBulkData& LODData = StreamingLODDataArray[Idx];
++		LODData.Serialize(Ar, Owner, Idx);
++#endif
++		if (Ar.IsError())
++		{
++			return;
++		}
++		if (CachedLODDataFileName.IsEmpty() &&
++			(LODData.GetBulkDataFlags() & BULKDATA_Force_NOT_InlinePayload))
++		{
++			CachedLODDataFileName = LODData.GetFilename();
++		}
++	}
++}
++
+ bool FLandscapeComponentDerivedData::LoadFromDDC(const FGuid& StateId, UObject* Component)

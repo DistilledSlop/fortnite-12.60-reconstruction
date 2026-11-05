@@ -36,14 +36,19 @@ The four dashboard milestones remain the product acceptance gates.
   loading query. Both visibility flags use their recovered enabled defaults.
   Generated source accepts all five bodies with no rejected snippets; build/runtime
   verification is pending under the native-body checkpoint cadence. The
-  landscape LOD proxy has an uncounted source draft based on its original
-  4.25-era streaming interface; mobile platform data and streaming update
-  implementations still prevent integration. These changes do not establish
+  landscape compatibility patch now reads the original cooked mobile platform
+  data, including streamed LOD bulk data and its filename. Apply it with
+  `bash porting/prepare_ue_landscape.sh`; Apollo launch/probe scripts pass
+  `-FortniteLegacyLandscapeData` to select this reader for unversioned packages.
+  The LOD proxy and stream-in/out source drafts follow the original 4.25-era
+  streaming interface; render data and streaming integration remain pending.
+  The new engine reader is also build/runtime pending. These changes do not establish
   original map loading, terrain fidelity, or a completed world.
 - The client is `FortniteClient-12.60-CL-13477524`, a packaged Win64 build.
 - The adjacent engine checkout is based on Epic's public UE 4.25.0 release
   `f8f4b403eb682ffc055613c7caf9d2ba5df7f319`, with local compatibility commit
-  `f716e0cb6`. See `HANDOFF.md` for required build state and preserved local edits.
+  `185b16561` (landscape reader; build pending). See `HANDOFF.md` for required
+  build state and preserved local edits.
 - All 31 game paks use pak version 10 and have encrypted indexes. Version 10
   is Unreal's path-hash index format. The public UE 4.25 source only defines
   pak versions through 9, so its `UnrealPak` cannot simply read these files.

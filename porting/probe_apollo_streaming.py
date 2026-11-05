@@ -61,7 +61,7 @@ def main() -> int:
         command = [
             str(executable), "/Game/Athena/Apollo/Maps/Apollo_Terrain",
             "-nullrhi", "-nosound", "-unattended", "-log",
-            "-FortniteLegacyFieldPaths",
+            "-FortniteLegacyFieldPaths", "-FortniteLegacyLandscapeData",
         ]
         try:
             result = subprocess.run(
