@@ -1,9 +1,8 @@
 diff --git a/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.cpp b/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.cpp
 new file mode 100644
-index 000000000..66e535a1b
 --- /dev/null
 +++ b/Engine/Source/Runtime/Engine/Private/Streaming/LandscapeMeshMobileUpdate.cpp
-@@ -0,0 +1,303 @@
+@@ -0,0 +1,314 @@
 +// Copyright Epic Games, Inc. All Rights Reserved.
 +#include "Streaming/LandscapeMeshMobileUpdate.h"
 +#include "LandscapeComponent.h"
@@ -74,7 +73,13 @@ index 000000000..66e535a1b
 +            const int32 NewSize = static_cast<int32>(OldBuffer->GetSize()) + SizeDelta;
 +            FRHIResourceCreateInfo CreateInfo;
 +            FVertexBufferRHIRef NewBuffer = RHICreateVertexBuffer(NewSize, BUF_Static, CreateInfo);
-+            FRHICommandListExecutor::GetImmediateCommandList().CopyBufferRegion(NewBuffer, 0, OldBuffer, 0, NewSize);
++            // The 4.26 Vulkan RHI exposes no general buffer-region copy. Preserve
++            // the retained prefix through its synchronized readback/upload API.
++            const void* Source = RHILockVertexBuffer(OldBuffer, 0, NewSize, RLM_ReadOnly);
++            void* Destination = RHILockVertexBuffer(NewBuffer, 0, NewSize, RLM_WriteOnly);
++            FMemory::Memcpy(Destination, Source, NewSize);
++            RHIUnlockVertexBuffer(NewBuffer);
++            RHIUnlockVertexBuffer(OldBuffer);
 +            TRHIResourceUpdateBatcher<1> Batcher;
 +            Batcher.QueueUpdateRequest(OldBuffer, NewBuffer);
 +        }
@@ -242,7 +247,14 @@ index 000000000..66e535a1b
 +        {
 +            FRHIResourceCreateInfo CreateInfo;
 +            IntermediateVertexBuffer = RHICreateVertexBuffer(NewSize, BUF_Static, CreateInfo);
-+            uint8* Dest = static_cast<uint8*>(RHILockVertexBuffer(IntermediateVertexBuffer, OldSize, NewSize - OldSize, RLM_WriteOnly));
++            // Use a single write lock for prefix and new LODs: a second write
++            // lock may discard an earlier upload on this engine's RHI.
++            FRHIVertexBuffer* OldBuffer = RenderData->VertexBuffer->VertexBufferRHI;
++            const void* Source = RHILockVertexBuffer(OldBuffer, 0, OldSize, RLM_ReadOnly);
++            uint8* Dest = static_cast<uint8*>(RHILockVertexBuffer(IntermediateVertexBuffer, 0, NewSize, RLM_WriteOnly));
++            FMemory::Memcpy(Dest, Source, OldSize);
++            RHIUnlockVertexBuffer(OldBuffer);
++            Dest += OldSize;
 +            for (int32 Index = CurrentFirstLODIdx - 1; Index >= PendingFirstMip; --Index)
 +            {
 +                if (StagingLODDataSizes[Index] > 0)
@@ -255,8 +267,6 @@ index 000000000..66e535a1b
 +                }
 +            }
 +            RHIUnlockVertexBuffer(IntermediateVertexBuffer);
-+            FRHICommandListExecutor::GetImmediateCommandList().CopyBufferRegion(
-+                IntermediateVertexBuffer, 0, RenderData->VertexBuffer->VertexBufferRHI, 0, OldSize);
 +        }
 +    }
 +}
