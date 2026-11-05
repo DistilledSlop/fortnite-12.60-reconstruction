@@ -69,6 +69,12 @@ class CheckpointTests(unittest.TestCase):
                 sidecar.unlink()
                 record['input'] = m.input_fingerprint(root, name)
 
+    def test_explicit_ground_only(self):
+        ground = 'FortniteGame/Content/Packages/DS_Fortnite_Terrain_NoLOD/Ground/S_Elevation_Ground_Z'
+        self.assertEqual(m.package_path(ground), ground)
+        with self.assertRaises(ValueError):
+            m.package_path(ground + '_High')
+
     def test_bad_glb_and_unsafe_package(self):
         with tempfile.TemporaryDirectory() as d:
             path = Path(d) / 'bad.glb'

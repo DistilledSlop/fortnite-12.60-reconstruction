@@ -1,0 +1,17 @@
+{
+  "selection_basis": "Bridge_014 static component recipe: four support meshes resolved through Blueprint CDOs, the direct road bridge mesh and the direct ground mesh. Excludes foliage and HLOD.",
+  "sources": [
+    {
+      "map": "/Game/Athena/Apollo/Maps/POI/Apollo_POI_Bridge_014",
+      "packages": [
+        "FortniteGame/Content/Athena/Apollo/Environments/BuildingActors/Bridges/Floors/Meshes/SM_NewRoadbridgeMain_Metal",
+        "FortniteGame/Content/Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_01_Top",
+        "FortniteGame/Content/Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_02_Pillar",
+        "FortniteGame/Content/Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_02_PillarTop",
+        "FortniteGame/Content/Athena/Apollo/Environments/BuildingActors/Bridges/Walls/Meshes/SM_Apollo_BridgeSupport_Bottom",
+        "FortniteGame/Content/Packages/DS_Fortnite_Terrain_NoLOD/Ground/S_Elevation_Ground_Z"
+      ]
+    }
+  ],
+  "method": "Reproduce porting/maps/bridge014_recipe.py with original reports and extracted packages; select distinct meshPackage paths from placements."
+}

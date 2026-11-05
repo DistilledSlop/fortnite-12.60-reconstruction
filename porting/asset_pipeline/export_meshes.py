@@ -16,6 +16,10 @@ import time
 PORTING = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = Path('/mnt/vibrato/fortnite-extracted-full')
 PREFIX = 'SM_'
+# Proven StaticMesh export used by the Bridge_014 map; never discovered by prefix scans.
+EXPLICIT_NONPREFIX_PACKAGES = frozenset({
+    'FortniteGame/Content/Packages/DS_Fortnite_Terrain_NoLOD/Ground/S_Elevation_Ground_Z',
+})
 DEFAULT_TOOL = PORTING / 'cue4inspect/bin/Release/net10.0'
 DEFAULT_OUTPUT = PORTING / 'generated/asset_pipeline'
 
@@ -76,8 +80,8 @@ def package_path(value):
         raise ValueError('unsafe package path')
     in_content = p.parts[:2] == ('FortniteGame', 'Content') or p.parts[:2] == ('Engine', 'Content') or (
         p.parts[:2] == ('FortniteGame', 'Plugins') and 'Content' in p.parts[2:-1])
-    if len(p.parts) < 4 or not in_content or not p.name.startswith(PREFIX) or p.suffix:
-        raise ValueError('expected extensionless {FortniteGame,Engine}/Content or FortniteGame/Plugins/**/Content .../<prefix> package')
+    if len(p.parts) < 4 or not in_content or (not p.name.startswith(PREFIX) and p.as_posix() not in EXPLICIT_NONPREFIX_PACKAGES) or p.suffix:
+        raise ValueError('expected extensionless content package with selected prefix or explicitly supported mesh path')
     return p.as_posix()
 
 

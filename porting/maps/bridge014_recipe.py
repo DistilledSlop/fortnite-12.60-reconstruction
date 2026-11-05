@@ -120,8 +120,16 @@ def main():
     parser.add_argument('--proof', type=Path, default=Path('porting/generated/streamed_levels/bridge014-proof'))
     parser.add_argument('--extracted', type=Path, default=Path('/mnt/vibrato/fortnite-extracted-full'))
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--check-mesh-selection', type=Path, help='verify import selection matches all recipe placements')
     args = parser.parse_args()
     result = build(args.raw, args.proof, args.extracted)
+    if args.check_mesh_selection:
+        selection = json.loads(args.check_mesh_selection.read_text())
+        selected = [name for source in selection['sources'] for name in source['packages']]
+        expected = sorted({'FortniteGame/Content/' + p['meshPackage'].removeprefix('/Game/')
+                           for p in result['placements']})
+        require(len(selected) == len(set(selected)) and sorted(selected) == expected,
+                'mesh selection differs from recipe placements')
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(result['coverage']))
