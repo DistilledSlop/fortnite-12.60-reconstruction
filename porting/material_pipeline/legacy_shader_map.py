@@ -154,14 +154,20 @@ class Reader:
         return result
 
 
-def parse_prefix(data, names):
-    """Return the verified serialized shader map with exact resource EOF.
+def parse_prefix(data, names, start=0, end=None):
+    """Decode one map within explicit bounds, preserving resource-relative offsets.
 
-    Nonempty parameter-binding arrays remain unsupported.
+    Declared record ends use offsets in the full data buffer. The map must
+    consume its bounds exactly. Nonempty parameter-binding arrays remain unsupported.
     """
     if len(data) > MAX_BYTES:
         raise ValueError('legacy resource exceeds size bound')
+    end = len(data) if end is None else end
+    if not 0 <= start < end <= len(data):
+        raise ValueError('invalid shader-map bounds')
+    map_start = start
     reader = Reader(data, names)
+    reader.cursor, reader.limit = map_start, end
     cooked, valid, quality, feature = reader.read('4I')
     if cooked != 1 or valid != 1 or quality > 5 or feature > 6:
         raise ValueError('unexpected cooked material resource header')
@@ -236,7 +242,7 @@ def parse_prefix(data, names):
     cooking_offset = reader.cursor
     if reader.read('I') != 1:
         raise ValueError('only cooked original material shader maps are supported')
-    if reader.cursor != len(data):
+    if reader.cursor != end:
         raise ValueError(f'unexpected trailing shader-map bytes at {reader.cursor}')
     cursor = reader.cursor
     return {'complete_shader_map': True, 'complete_serialized_shader_map': True,
@@ -273,10 +279,10 @@ def parse_prefix(data, names):
             'tail_grammar_sources': [
                 'https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L106',
                 'https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp#L489'],
-            'decoded_prefix_bytes': cursor,
+            'decoded_prefix_bytes': cursor - map_start,
             'first_unknown': None,
-            'undecoded_bytes': len(data) - cursor,
-            'resource_sha256': hashlib.sha256(data).hexdigest()}
+            'undecoded_bytes': end - cursor,
+            'resource_sha256': hashlib.sha256(data[map_start:end]).hexdigest()}
 
 
 def associate_library(result, archive):

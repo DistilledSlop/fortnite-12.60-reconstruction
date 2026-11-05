@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "63641c9b2cbb499bf7b5248a0607aa9855a76eac",
- "subject": "Decode landscape mesh shader pipelines",
- "date": "2026-11-05T15:49:14-05:00",
+ "head": "e84761515a438b83a50e1da219582679fdcdaba3",
+ "subject": "Validate and promote recorded bridge import checkpoint",
+ "date": "2026-11-05T15:51:21-05:00",
  "overall_pct": 29.126,
  "measured_pct": 28.256,
  "objective_pct": 28.255,

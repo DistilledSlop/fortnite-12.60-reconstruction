@@ -1,4 +1,4 @@
-# Fortnite 12.60 Linux reconstruction
+# Fortnite Chapter 2 Season 2 Unreal Engine reconstruction
 
 This repository tracks new porting code and notes only. The supplied Windows
 client and the separate Unreal Engine source checkout remain outside Git.

@@ -82,7 +82,6 @@
       0,
       1
     ],
-    "original_resource_parse_first_failure": "First shader map: unsupported mesh shader-map vertex factory FLandscapeFixedGridVertexFactory at resource-relative offset 46676",
     "first_runtime_virtual_texture_uniforms": {
       "offsets": [
         226,
@@ -106,9 +105,8 @@
       ]
     },
     "limitations": [
-      "Remaining shader records and archive association are not validated",
       "Linux landscape vertex factory and runtime virtual texture bindings are not implemented",
-      "No runtime loading or visual parity was verified"
+      "No runtime loading, shader semantics or visual parity was verified"
     ],
     "abs_expressions": {
       "offsets": [
@@ -155,7 +153,7 @@
         50634
       ],
       "serialization_source": "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp",
-      "evidence": "Original uexp SHA-256 matches d4-resource.json; both independently framed 50634-byte maps reach the same unsupported vertex factory after decoding the stack. The subsequent shader-map payload is not validated.",
+      "evidence": "Original uexp SHA-256 matches d4-resource.json; both 50634-byte maps decode through exact map boundaries, including the VT stacks.",
       "limitations": [
         "Original runtime VT stack serializer has not been captured; source layout and asset bytes do not independently prove its implementation."
       ]
@@ -199,7 +197,7 @@
       "limitations": [
         "Original landscape vertex-factory serializer 0x143af1010 confirms the six-field order.",
         "Second map record end offsets use resource-relative coordinates; independently slicing it does not validate its records.",
-        "Shader archive association and runtime loading have not been validated."
+        "Archive identities are associated; runtime loading has not been validated."
       ],
       "first_map_shader_records_end": 22140,
       "first_map_shader_record_count": 26,
@@ -271,12 +269,86 @@
         "next_shader_type": "TVirtualTextureVSWorldHeight",
         "evidence": "Both factory maps decode all standalone records and pipeline stages with matching identities, targets, and declared record boundaries. The regular and XY-offset landscape vertex factories use the same parameter class in engine source.",
         "limitations": [
-          "Pipeline stages have not been matched to an original shader archive.",
-          "The fixed-grid factory and virtual texture shaders are not decoded.",
-          "These offsets apply only to the first shader map; the second serialized map has not been decoded."
+          "This entry documents the first two factory maps; fixed-grid records and both serialized maps are covered by complete_shader_map_evidence."
         ],
         "source": "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp"
       }
+    },
+    "complete_shader_map_evidence": {
+      "resource_relative_boundaries": [
+        0,
+        50634,
+        101268
+      ],
+      "quality_levels": [
+        0,
+        1
+      ],
+      "records_per_map": 68,
+      "map_factory_offsets": [
+        [
+          4346,
+          25511,
+          46676
+        ],
+        [
+          54980,
+          76145,
+          97310
+        ]
+      ],
+      "fixed_grid_record_offsets_first_map": [
+        46688,
+        47381,
+        48074,
+        48767,
+        49372,
+        49999
+      ],
+      "fixed_grid_record_end_first_map": 50626,
+      "fixed_grid_factory_end_first_map": 50630,
+      "fixed_grid_record_types": [
+        "TVirtualTextureVSWorldHeight",
+        "TVirtualTextureVSBaseColorNormalSpecular",
+        "TVirtualTextureVSBaseColor",
+        "TVirtualTexturePSWorldHeight",
+        "TVirtualTexturePSBaseColorNormalSpecular",
+        "TVirtualTexturePSBaseColor"
+      ],
+      "fixed_grid_parameter_evidence": "The vertex factory parameter payload has the six inherited landscape shader parameters for VS and an empty payload for PS; each reaches its declared end. Local UE 4.26 source declares a fixed-grid parameter class inheriting the landscape vertex parameters with no added serialized fields. The virtual texture draw classes add no shader parameter fields in that source.",
+      "archive_association": {
+        "archive": "ShaderArchive-FortniteGame-PCD3D_SM5.ushaderbytecode",
+        "sha256": "2e795bd21c5e9bd69a6fdb520ef73f6fd70822c011c4232ce1ba08ccf10aef21",
+        "bytes": 348683409,
+        "records_per_map": 68,
+        "checks": [
+          "output hash",
+          "shader frequency",
+          "uncompressed byte count"
+        ],
+        "fixed_grid_indices_by_quality": [
+          [
+            57828,
+            57828,
+            57828,
+            2111,
+            63803,
+            63804
+          ],
+          [
+            57828,
+            57828,
+            57828,
+            2111,
+            63805,
+            63804
+          ]
+        ]
+      },
+      "limitations": [
+        "Archive association validates identities and sizes, not shader behavior or runtime loading.",
+        "Fixed-grid and virtual texture field identities use local UE 4.26 source and exact original record boundaries; original serializers were not independently captured."
+      ]
     }
   },
   "reports": [

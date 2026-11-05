@@ -37,6 +37,10 @@ NAMES += ['TLightMapDensityVSFDummyLightMapPolicy', 'TLightMapDensityPSFDummyLig
           'TBasePassPSFSimpleDirectionalLightLightingPolicySkylight',
           'FLandscapeGrassWeightVS', 'FLandscapeGrassWeightPS']
 NAMES += ['FVelocityVS', 'FVelocityPS', 'VelocityPipeline', 'FLandscapeVertexFactory']
+NAMES += ['FLandscapeFixedGridVertexFactory', 'TVirtualTextureVSWorldHeight',
+          'TVirtualTexturePSWorldHeight', 'TVirtualTextureVSBaseColorNormalSpecular',
+          'TVirtualTexturePSBaseColorNormalSpecular', 'TVirtualTextureVSBaseColor',
+          'TVirtualTexturePSBaseColor']
 
 
 def name(index):
@@ -92,7 +96,7 @@ def mesh_resource(type_index=16, frequency=0, landscape=False):
     # Reuse the independently checked common material-parameter fixture.
     material = original[slate['body_offset']:slate['output_hash']['offset'] - 12]
     prefix = original[:parsed['material_shaders']['mesh_shader_maps_count_offset']]
-    vf_name = 32 if landscape == 'regular' else 22 if landscape else 15
+    vf_name = 33 if landscape == 'fixed' else 32 if landscape == 'regular' else 22 if landscape else 15
     prefix += pack('i', 1) + name(vf_name) + pack('i', 1)
     body_offset = len(prefix) + 16
     vf_head = pack('HI', 1, 1) + name(vf_name) + pack('BB', frequency, 0) + bytes(20)
@@ -275,6 +279,44 @@ class LegacyPrefixTests(unittest.TestCase):
         record = parse_prefix(data, NAMES)['mesh_shader_maps'][0]['records'][0]
         self.assertEqual(record['vertex_factory']['name'], 'FLandscapeVertexFactory')
         self.assertEqual(record['vertex_factory_parameters']['landscape_parameters']['lod_values']['base_index'], 32)
+
+    def test_fixed_grid_virtual_texture_variants_and_boundaries(self):
+        for index in range(34, 40):
+            frequency = 0 if 'VS' in NAMES[index] else 3
+            original = mesh_resource(index, frequency, landscape='fixed')
+            record = parse_prefix(original, NAMES)['mesh_shader_maps'][0]['records'][0]
+            vf = record['vertex_factory_parameters']
+            self.assertEqual(record['end'], record['serialized_end_offset'])
+            self.assertEqual(vf['end'], vf['serialized_end_offset'])
+            self.assertEqual('landscape_parameters' in vf, frequency == 0)
+            for field, end in ((record['offset'] + 8, record['end']),
+                               (vf['offset'] + 30, vf['end'])):
+                for declared in (end - 1, end + 1):
+                    damaged = bytearray(original)
+                    damaged[field:field + 8] = pack('q', declared)
+                    with self.subTest(index=index, field=field, declared=declared), self.assertRaises(ValueError):
+                        parse_prefix(damaged, NAMES)
+
+    def test_bounded_second_map_retains_resource_relative_offsets(self):
+        first = mesh_resource(34, 0, landscape='fixed')
+        parsed = parse_prefix(first, NAMES)
+        second = bytearray(first)
+        records = parsed['material_shaders']['records'] + parsed['mesh_shader_maps'][0]['records']
+        for record in records:
+            field = record['offset'] + 8
+            second[field:field + 8] = pack('q', record['end'] + len(first))
+            if 'vertex_factory_parameters' in record:
+                vf = record['vertex_factory_parameters']
+                field = vf['offset'] + 30
+                second[field:field + 8] = pack('q', vf['end'] + len(first))
+        combined = first + second
+        actual = parse_prefix(combined, NAMES, len(first), len(combined))
+        record = actual['mesh_shader_maps'][0]['records'][0]
+        self.assertEqual(record['serialized_end_offset'], record['end'])
+        self.assertEqual(record['vertex_factory_parameters']['serialized_end_offset'],
+                         record['vertex_factory_parameters']['end'])
+        with self.assertRaises(ValueError):
+            parse_prefix(combined, NAMES, len(first), len(combined) - 1)
 
     def test_terrain_shader_variants_enforce_record_boundaries(self):
         for index, frequency in ((23, 0), (24, 3), (25, 0), (26, 3), (27, 0), (28, 3)):

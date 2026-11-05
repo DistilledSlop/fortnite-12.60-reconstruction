@@ -25,7 +25,8 @@ MESH_VS |= {'TBasePassVSFSimpleNoLightmapLightingPolicy', 'TBasePassVSFNoLightMa
             # Current TDepthOnlyVS declares no additional serialized fields.
             'TDepthOnlyVS<false>',
             # Current FVelocityVS declares no additional serialized fields.
-            'FVelocityVS'} | SHADOW_DEPTH_VS
+            'FVelocityVS'} | {'TVirtualTextureVS' + policy for policy in
+                              ('WorldHeight', 'BaseColor', 'BaseColorNormalSpecular')} | SHADOW_DEPTH_VS
 MESH_PS = {'TTranslucencyShadowDepthPS<' + mode + '>' for mode in
            ('TranslucencyShadowDepth_Standard', 'TranslucencyShadowDepth_PerspectiveCorrect')}
 MESH_PS |= {'TBasePassPS' + policy + sky for policy in
@@ -36,7 +37,8 @@ SHADOW_DEPTH_PS = {'TShadowDepthPSPixelShadowDepth_' + mode + 'false' for mode i
 # Current FVelocityPS also declares no additional serialized fields.
 MESH_PS |= {'FHitProxyPS', 'TLightMapDensityPSFNoLightMapPolicy',
             'TLightMapDensityPSFDummyLightMapPolicy', 'FVelocityPS', 'FLandscapeGrassWeightPS',
-            'FDepthOnlyPS<false>'} | SHADOW_DEPTH_PS
+            'FDepthOnlyPS<false>'} | {'TVirtualTexturePS' + policy for policy in
+                                      ('WorldHeight', 'BaseColor', 'BaseColorNormalSpecular')} | SHADOW_DEPTH_PS
 # FOnePassPointShadowDepthGS adds no fields beyond FMeshMaterialShader.
 MESH_GS = {'FConvertToUniformMeshGS', 'FOnePassPointShadowDepthGS'}
 
@@ -122,9 +124,11 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
                     vf['any_speedtree_parameter_bound'] = bool(speedtree)
                     vf['lod_parameter'] = parameters(reader)
                 elif expected_frequency == 0 and vertex_factory['name'] in {
-                        'FLandscapeVertexFactory', 'FLandscapeXYOffsetVertexFactory'}:
-                    # UE 4.24 FLandscapeVertexFactoryVertexShaderParameters::Serialize.
-                    # Original 0x143af1010 serializes these six fields in this order.
+                        'FLandscapeVertexFactory', 'FLandscapeXYOffsetVertexFactory',
+                        'FLandscapeFixedGridVertexFactory'}:
+                    # UE 4.24 landscape serializer and original 0x143af1010
+                    # serialize six fields. UE 4.26 fixed-grid parameters inherit
+                    # that class without declaring additional fields.
                     names = ('lod_values', 'forced_lod', 'lod_tessellation',
                              'neighbor_section_lod', 'lod_bias', 'section_lods')
                     vf['landscape_parameters'] = {name: parameters(reader) for name in names}
@@ -286,7 +290,7 @@ def mesh_shader_maps(reader, count, map_hash, expression_counts):
         start = reader.cursor
         vf = reader.name()
         if vf['number'] or vf['name'] not in {'FLocalVertexFactory', 'FLandscapeVertexFactory',
-                                              'FLandscapeXYOffsetVertexFactory'}:
+                                              'FLandscapeXYOffsetVertexFactory', 'FLandscapeFixedGridVertexFactory'}:
             raise ValueError('unsupported mesh shader-map vertex factory')
         shader_count = reader.count()
         records = [shader_record(reader, map_hash, expression_counts, vf) for _ in range(shader_count)]
