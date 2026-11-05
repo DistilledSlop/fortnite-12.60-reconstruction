@@ -20,5 +20,11 @@ public:
 	UPROPERTY()
 	AFortPlayerController* NewPlayerController;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortPlayerController*& _NewPlayerController);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortPlayerController* _NewPlayerController, UFortNewPlayerParams*& ThisParam);
+
 };
 

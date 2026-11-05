@@ -20,5 +20,11 @@ public:
 	UPROPERTY()
 	AFortObjectiveBase* SucceededObjective;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortObjectiveBase*& _SucceededObjective);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortObjectiveBase* _SucceededObjective, UFortObjectiveSucceededParams*& ThisParam);
+
 };
 

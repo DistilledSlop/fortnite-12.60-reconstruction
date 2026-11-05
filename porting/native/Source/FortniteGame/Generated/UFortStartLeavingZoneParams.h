@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	AFortPlayerController* PlayerControllerRequestingLeaving;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortPlayerController*& _PlayerControllerRequestingLeaving);
+
 };
 

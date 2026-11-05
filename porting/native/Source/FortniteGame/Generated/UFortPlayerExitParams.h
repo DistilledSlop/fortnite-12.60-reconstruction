@@ -20,5 +20,11 @@ public:
 	UPROPERTY()
 	AFortPlayerController* ExitingPlayerController;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortPlayerController*& _ExitingPlayerController);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortPlayerController* _ExitingPlayerController, UFortPlayerExitParams*& ThisParam);
+
 };
 

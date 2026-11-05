@@ -20,5 +20,11 @@ public:
 	UPROPERTY()
 	AFortMission* NeutrallyCompletedMission;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortMission*& _NeutrallyCompletedMission);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortMission* _NeutrallyCompletedMission, UFortMissionNeutralCompleteParams*& ThisParam);
+
 };
 

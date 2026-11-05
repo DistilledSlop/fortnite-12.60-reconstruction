@@ -20,5 +20,11 @@ public:
 	UPROPERTY()
 	AFortObjectiveBase* NeutrallyCompletedObjective;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortObjectiveBase*& _NeutrallyCompletedObjective);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortObjectiveBase* _NeutrallyCompletedObjective, UFortObjectiveNeutralCompleteParams*& ThisParam);
+
 };
 

@@ -20,5 +20,11 @@ public:
 	UPROPERTY()
 	AFortPlayerController* ReconnectedPlayerPC;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortPlayerController*& _ReconnectedPlayerPC);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortPlayerController* _ReconnectedPlayerPC, UFortPlayerReconnectedParams*& ThisParam);
+
 };
 
