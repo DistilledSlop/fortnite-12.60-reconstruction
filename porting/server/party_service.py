@@ -21,7 +21,7 @@ Evidence (see the 12.60 binary strings and DefaultEngine.ini):
 
 Not implemented: XMPP and the party chat channel, join requests that wait for approval
 (confirm and reject answer 404 applicant_not_found because no request can exist),
-invite and ping expiry (expires_at is informational only), voice conferences
+voice conferences
 (the /conferences/connection route is not registered, so it answers 404).
 """
 
@@ -67,7 +67,15 @@ class PartyService:
         party = self._parties.get(party_id)
         if party is None:
             raise ApiError(404, Err.PARTY_NOT_FOUND, "The party was not found.")
+        self._expire_invites(party)
         return party
+
+    def _expire_invites(self, party):
+        now = self.ctx.iso()
+        active = [invite for invite in party["invites"] if invite["expires_at"] > now]
+        if len(active) != len(party["invites"]):
+            party["invites"] = active
+            self._touch(party)
 
     @staticmethod
     def _member(party, account_id):
@@ -143,6 +151,9 @@ class PartyService:
         size = config["maxSize"]
         if isinstance(size, bool) or not isinstance(size, int) or not 1 <= size <= MAX_PARTY_SIZE:
             raise ApiError(400, Err.INVALID_PAYLOAD, f"maxSize must be between 1 and {MAX_PARTY_SIZE}.")
+        ttl = config["invite_ttl_seconds"]
+        if isinstance(ttl, bool) or not isinstance(ttl, int) or ttl < 1:
+            raise ApiError(400, Err.INVALID_PAYLOAD, "invite_ttl_seconds must be a positive integer.")
         return config
 
     @staticmethod
@@ -258,7 +269,7 @@ class PartyService:
         if self._find_invite(party, target) is not None:
             raise ApiError(409, Err.INVITE_ALREADY_EXISTS, "An invite for this user already exists.")
         body = req.json_object()
-        ttl = body.get("ttl", INVITE_TTL_SEC)
+        ttl = body.get("ttl", party["config"]["invite_ttl_seconds"])
         if isinstance(ttl, bool) or not isinstance(ttl, int) or ttl < 1:
             raise ApiError(400, Err.INVALID_PAYLOAD, "ttl must be a positive integer.")
         meta = self._dict(body.get("meta"), "meta")
@@ -372,6 +383,10 @@ class PartyService:
         caller = self._caller(req)
         if caller != account_id:
             raise ApiError(403, Err.MISSING_PERMISSION, "A user can only read its own party state.")
+        for party in self._parties.values():
+            self._expire_invites(party)
+        now = self.ctx.iso()
+        self._pings = [ping for ping in self._pings if ping["expires_at"] > now]
         current = [copy.deepcopy(party) for party in self._parties.values()
                    if self._member(party, account_id) is not None]
         invites = []

@@ -103,7 +103,9 @@ class ProfileTx:
         return True
 
     def add_item(self, item_id, template_id, attributes, quantity=1):
-        item = {"templateId": template_id, "attributes": dict(attributes), "quantity": quantity}
+        # The profile owns its item data; callers may reuse or mutate nested
+        # attribute values after a grant without changing stored state.
+        item = {"templateId": template_id, "attributes": copy.deepcopy(attributes), "quantity": quantity}
         self.profile["items"][item_id] = item
         self.changes.append({"changeType": "itemAdded", "itemId": item_id, "item": copy.deepcopy(item)})
 
@@ -459,7 +461,9 @@ class ProfileService:
             raise ValueError(f"unknown profile {profile_id}")
         tx = ProfileTx(self.ctx, self.profile(account_id, profile_id))
         item_id = self._new_item_id("item", tx.profile)
-        tx.add_item(item_id, template_id, attributes or {"item_seen": False, "favorite": False, "variants": []})
+        if attributes is None:
+            attributes = {"item_seen": False, "favorite": False, "variants": []}
+        tx.add_item(item_id, template_id, attributes)
         self._store(account_id, {profile_id: tx})
         return item_id
 
