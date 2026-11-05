@@ -30,11 +30,19 @@ the LocalVF parameters and the shader output hash, decoded as one scalar
 parameter. The current `FShadowDepthVS` declares one `FShaderParameter` named
 `LayerId`; the original field name is not independently verified. All four
 records pass declared-end, map-hash, target, resource identity and exact archive
-output-hash association checks. Their scalar values are all zero. The next
-unsupported record is `TShadowDepthPSPixelShadowDepth_PerspectiveCorrectfalse`
-at offset 2336; 10056 resource bytes remain uninterpreted. Neither asset has
-been attached to the runtime using this decode; mesh shader-map construction
-also remains necessary.
+output-hash association checks. Their scalar values are all zero.
+
+`parent-shadow-ps-prefix.json` continues through three shadow-depth pixel
+records at resource offsets 2336..3632, with archive indices 2467..2469. Each
+contains 32 zero bytes between LocalVF parameters and the output hash. The
+current `FShadowDepthBasePS` declares four `FRWShaderParameter` fields, each
+serialized as SRV and UAV resource parameters (four bytes each), which supports
+this layout; the original field names and individual semantics remain unverified.
+The same record-end, identity, target and exact archive checks pass. The next
+unsupported record is `TLightMapDensityVSFNoLightMapPolicy` at offset 3632;
+8760 resource bytes remain uninterpreted. Neither asset has been attached to
+the runtime using this decode; mesh shader-map construction also remains
+necessary.
 
 `extraction.json` records selected exact archive entries. `wrappers.json` verifies the complete D3D wrapper framing, resource-table bindings, DXBC extent and optional-data extent. The assembly files are vkd3d 2.0's direct DXBC disassembly; no engine shader compiler or cook was invoked.
 

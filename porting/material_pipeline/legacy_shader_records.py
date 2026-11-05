@@ -24,7 +24,9 @@ MESH_PS = {'TTranslucencyShadowDepthPS<' + mode + '>' for mode in
            ('TranslucencyShadowDepth_Standard', 'TranslucencyShadowDepth_PerspectiveCorrect')}
 MESH_PS |= {'TBasePassPS' + policy + sky for policy in
             ('FSimpleNoLightmapLightingPolicy', 'FNoLightMapPolicy') for sky in ('', 'Skylight')}
-MESH_PS.add('FHitProxyPS')
+SHADOW_DEPTH_PS = {'TShadowDepthPSPixelShadowDepth_' + mode + 'false' for mode in
+                   ('PerspectiveCorrect', 'OnePassPointLight', 'NonPerspectiveCorrect')}
+MESH_PS |= {'FHitProxyPS'} | SHADOW_DEPTH_PS
 MESH_GS = {'FConvertToUniformMeshGS'}
 
 
@@ -120,6 +122,12 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
             elif kind.startswith('TTranslucencyShadowDepthPS'):
                 # Original 0x143237540 adds one scalar FShaderParameter.
                 result['shadow_depth_parameter'] = parameters(reader)
+            elif kind in SHADOW_DEPTH_PS:
+                # Current FShadowDepthBasePS declares four FRWShaderParameters,
+                # each serialized as an SRV and a UAV resource parameter.
+                result['shadow_depth_rw_parameters'] = [
+                    {'srv': parameters(reader, resource=True),
+                     'uav': parameters(reader, resource=True)} for _ in range(4)]
             elif kind in SHADOW_DEPTH_VS:
                 # FShadowDepthVS declares one scalar parameter (LayerId) in
                 # ShadowDepthRendering.cpp; original identity remains unverified.
