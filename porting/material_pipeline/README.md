@@ -32,7 +32,7 @@ name collisions; the accompanying Engine patch enables its recovered nested
 structures while retaining the graph-resource, resource-array and static-slot
 restrictions. Complete member trees and sorted RHI resources are checked before
 publication. The caller must retain the owner through eventual RHI buffer use.
-RHI buffer creation, renderer binding and runtime verification remain unfinished.
+Renderer binding and runtime verification remain unfinished.
 
 `CreateLegacyOriginalUniformBuffer` now connects reconstructed original bytes to
 actual RHI creation. The buffer retains its metadata through deferred deletion
@@ -42,6 +42,18 @@ output API checks the complete target ABI and maps original resource indices to
 its actual RHI resource order. Current metadata stays separate for repacking.
 Rendering must still bind those buffers; provider attachment, updates, producer
 values and runtime verification remain unfinished.
+
+`LegacyLocalVFOutputBatch` constructs outputs per decoded occurrence, retaining the
+42 Paper2D records (28 parent, 14 instance), their 33 distinct archive shaders,
+and all three pipelines with five stages. The native loose-contract producer
+covers the five occurrences containing seven allocations using independently
+recovered original constructor/serializer names; it does not infer values. The
+batch requires a caller-pinned manifest digest, matching owner and resource bytes,
+and strict record and pipeline identity; outputs and pipelines remain unchanged
+on failure. This is source review, not a build or runtime result. Provider
+attachment, binding and value producers remain unfinished. See the
+[batch evidence receipt](../behavior/paper2d_output_batch_runtime/evidence.json)
+and [original loose identity evidence](../behavior/paper2d_loose_contracts_runtime/evidence.json).
 
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 

@@ -1,0 +1,177 @@
+{
+  "schema": "paper2d-original-loose-parameter-identities-v1",
+  "image": {
+    "path": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+    "sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+    "address_layout": "VA = 0x140000000 + file offset"
+  },
+  "manifest_sha256": "3947aea9f3cd2e1d61441334d256e8aeeb9d1cf8cd83fce5eef35236165b0876",
+  "instruction_windows": [
+    {
+      "address": "0x1432f19f0",
+      "size": 389,
+      "sha256": "5c036e5917d2f7b7d449ba75f3d7acb986a798ca16d47741b5dfb022338567e5"
+    },
+    {
+      "address": "0x1434d4d00",
+      "size": 235,
+      "sha256": "07b2cb230b723c02fdde8e13237549d574a48fb6f4213af63ea6fa3dd20501f2"
+    },
+    {
+      "address": "0x143558d50",
+      "size": 212,
+      "sha256": "b1057adba69fd8ba3eae768188322106625c7e7e1da8854fdb11b8f2a1c31806"
+    },
+    {
+      "address": "0x143237540",
+      "size": 63,
+      "sha256": "3ed293e550205b6a79adb231f3570b691a70a72ac40a7634d354bbf65e0f7b9d"
+    },
+    {
+      "address": "0x1432e77c0",
+      "size": 149,
+      "sha256": "5d60eb708fa2970863211d94c57314b6bae7727e6aba9bb44121ed736ae88898"
+    },
+    {
+      "address": "0x143a7aee0",
+      "size": 293,
+      "sha256": "0b2800cb18f7437ff4b60aa171f2410d4479b08be3ea6ead48cf6d7fda12d4e2"
+    },
+    {
+      "address": "0x143a81450",
+      "size": 1020,
+      "sha256": "8dfd52ceeed156d267be4372f935b7b2e9f6f8806360b7b115385464fe0ac163"
+    }
+  ],
+  "literal_addresses": {
+    "BuiltLightingAndSelectedFlags": "0x1466b6218",
+    "LightMapResolutionScale": "0x1466b6258",
+    "LightMapDensityDisplayOptions": "0x1466b6288",
+    "HitProxyId": "0x1466fba70",
+    "TranslucentShadowStartOffset": "0x146710ac0"
+  },
+  "original_code_evidence": [
+    "Constructor 0x1432f19f0 binds BuiltLightingAndSelectedFlags, LightMapResolutionScale and LightMapDensityDisplayOptions into object offsets 0xec, 0xf2 and 0xf8 respectively via 0x143a81450. Its vtable 0x1466b2288 slot +0x10 points to serializer 0x1432e77c0, which serializes those same fields in that order after three uniform-buffer fields.",
+    "Constructor 0x1434d4d00 binds HitProxyId at object offset 0xe0; constructor 0x143558d50 binds TranslucentShadowStartOffset at 0xe0. Both install vtable 0x146694000, whose slot +0x10 points to serializer 0x143237540. It serializes field 0xe0 after the mesh-material base.",
+    "The binding helper 0x143a81450 passes object offsets +0, +2 and +4 to parameter-map lookup; serializer 0x143a7aee0 reads three 16-bit values into +2, +4 and +0 in that order. The decoder consequently reads base_index, byte_count, buffer_index in serialized order."
+  ],
+  "occurrences": [
+    {
+      "shader_index": 2470,
+      "owner": "/Paper2D/DefaultSpriteMaterial.DefaultSpriteMaterial",
+      "record_path": [
+        "mesh_shader_maps",
+        0,
+        "records",
+        8
+      ],
+      "record_offset": 4068,
+      "output_hash": "f8ddea7ca2c27cf8b0ba7c867bb904dd67e0b75a",
+      "parameters": [
+        {
+          "name": "BuiltLightingAndSelectedFlags",
+          "base_index": 32,
+          "byte_count": 12,
+          "buffer_index": 0
+        },
+        {
+          "name": "LightMapResolutionScale",
+          "base_index": 20,
+          "byte_count": 8,
+          "buffer_index": 0
+        },
+        {
+          "name": "LightMapDensityDisplayOptions",
+          "base_index": 48,
+          "byte_count": 16,
+          "buffer_index": 0
+        }
+      ]
+    },
+    {
+      "shader_index": 2474,
+      "owner": "/Paper2D/DefaultSpriteMaterial.DefaultSpriteMaterial",
+      "record_path": [
+        "mesh_shader_maps",
+        0,
+        "records",
+        19
+      ],
+      "record_offset": 8716,
+      "output_hash": "6af3c93a0a5abde00f3a29326d1140e8e2c91542",
+      "parameters": [
+        {
+          "name": "HitProxyId",
+          "base_index": 32,
+          "byte_count": 16,
+          "buffer_index": 0
+        }
+      ]
+    },
+    {
+      "shader_index": 3376,
+      "owner": "/Paper2D/TranslucentUnlitSpriteMaterial.TranslucentUnlitSpriteMaterial",
+      "record_path": [
+        "mesh_shader_maps",
+        0,
+        "records",
+        2
+      ],
+      "record_offset": 1506,
+      "output_hash": "69837f68408f84f9223ad014cfabf63716f38c80",
+      "parameters": [
+        {
+          "name": "TranslucentShadowStartOffset",
+          "base_index": 20,
+          "byte_count": 4,
+          "buffer_index": 0
+        }
+      ]
+    },
+    {
+      "shader_index": 3377,
+      "owner": "/Paper2D/TranslucentUnlitSpriteMaterial.TranslucentUnlitSpriteMaterial",
+      "record_path": [
+        "mesh_shader_maps",
+        0,
+        "records",
+        3
+      ],
+      "record_offset": 1918,
+      "output_hash": "9586ae038f7c9664dcc0a6b335c8d15e05895eb7",
+      "parameters": [
+        {
+          "name": "TranslucentShadowStartOffset",
+          "base_index": 20,
+          "byte_count": 4,
+          "buffer_index": 0
+        }
+      ]
+    },
+    {
+      "shader_index": 712,
+      "owner": "/Paper2D/TranslucentUnlitSpriteMaterial.TranslucentUnlitSpriteMaterial",
+      "record_path": [
+        "mesh_shader_maps",
+        0,
+        "records",
+        11
+      ],
+      "record_offset": 5434,
+      "output_hash": "cfb55f79fd0299dcc71ffc3b270c4082fcae83ce",
+      "parameters": [
+        {
+          "name": "HitProxyId",
+          "base_index": 32,
+          "byte_count": 16,
+          "buffer_index": 0
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Identity and serialized allocations only; values, current binding compatibility, shader execution and rendering are not established.",
+    "Record decoder and association with shader archive hashes are existing generated inputs; this report preserves each original record occurrence."
+  ],
+  "reproduce": "python3 porting/material_pipeline/paper2d_loose_contracts.py"
+}

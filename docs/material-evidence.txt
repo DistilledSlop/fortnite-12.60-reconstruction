@@ -34,6 +34,15 @@ restrictions. Complete member trees and sorted RHI resources are checked before
 publication. The caller must retain the owner through eventual RHI buffer use.
 RHI buffer creation, renderer binding and runtime verification remain unfinished.
 
+`CreateLegacyOriginalUniformBuffer` now connects reconstructed original bytes to
+actual RHI creation. The buffer retains its metadata through deferred deletion
+using the accompanying RHI lifetime patch. Resource pointers must remain valid
+through creation; Vulkan then retains resource references. The explicit-original
+output API checks the complete target ABI and maps original resource indices to
+its actual RHI resource order. Current metadata stays separate for repacking.
+Rendering must still bind those buffers; provider attachment, updates, producer
+values and runtime verification remain unfinished.
+
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 
 | Explicit layout | Index | Compression |

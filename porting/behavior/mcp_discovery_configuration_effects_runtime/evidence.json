@@ -1,0 +1,20 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "method": "Bounded original mapped runtime x86-64 disassembly, Intel syntax, VMA 0x140000000; UTF-16 literal identification. No runtime experiment.",
+  "prior_evidence": ["../mcp_discovery_callback_context_runtime/evidence.json"],
+  "input_roles": [
+    "At 0x1422c04db helper 0x1422c04b0 saves argument3 in rbx; 0x1422c0513 passes it to 0x142ce9f90. 0x1422c051e-0x1422c0567 creates and converts UTF-16 MCP:EMBEDDED (0x145b92928), and calls 0x142bace90 with the converted literal and converted argument3; 0x1422c0570-0x1422c0573 records whether its return differs from -1. The exact search direction and case semantics remain unverified.",
+    "0x1422c04e1 saves argument1 (discovery group output) in rsi. In the embedded branch, 0x1422c074a-0x1422c075e and 0x1422c07b7-0x1422c07d1 compare its string contents against UTF-16 Prod (0x145bc3a60) and Stage (0x1460e3cf0), selecting subsequent constants. Argument2 (canonical deployment) has no established effect in this bounded trace.",
+    "0x1422c04bf saves argument4 in its incoming stack slot; 0x1422c06a7-0x1422c06b6 retrieves it and passes argument4+0xa8 and a local three-string record to 0x1422b28b0. The latter is a collection mutation, detailed below."
+  ],
+  "override_branch": [
+    "0x1422c05b1-0x1422c05cd calls 0x142caa880 on the object from 0x142c70dc0 with UTF-16 AuthClient= at 0x14610b448, output local rbp+0xf, and r9b=1. If true, 0x1422c05d5-0x1422c05f3 repeats with AuthSecret= at 0x14610b460 and output rbp-0x1. Only if both calls return nonzero does execution take the path at 0x1422c05f9.",
+    "0x1422c05f9-0x1422c06a2 copies three FString-shaped values into adjacent locals rbp-0x39, rbp-0x29 and rbp-0x19: respectively global string at 0x1480df850, AuthClient output, and AuthSecret output. 0x1422c06a7-0x1422c06b6 passes the resulting 0x30-byte record to the collection at argument4+0xa8. Then 0x1422c06bb-0x1422c06e4 cleans up remaining temporary buffers and branches to shared cleanup. The called getter's precise parser behavior and the semantic identity of the global string are not established."
+  ],
+  "collection_effect": [
+    "0x1422b28b0 first calls 0x140d4b820 for a match. That routine iterates 0x30-byte records (0x140d4b834-0x140d4b849 and 0x140d4b8ac) and compares string fields at offsets +0x10 and +0 via 0x142bcf780 (0x140d4b851-0x140d4b8aa). If the call returns -1, 0x1422b28d3-0x1422b28f4 increments collection count at +0x8, grows capacity as needed, and indexes a new 0x30-byte element. 0x1422b28fa-0x1422b2959 transfers all three FString-shaped fields at record offsets +0, +0x10, +0x20 and clears the source fields. A matching pair causes no append. The third string does not participate in the comparisons visible here; an existing matching record is not overwritten by this helper.",
+    "Another path reaches the same collection call at 0x1422c141a-0x1422c1429 with a record copied from the global string and selected embedded constants. Those constants may be credential material and are intentionally not reproduced. The bounded trace does not establish which value is a client identifier or secret for each constant."
+  ],
+  "limits": "Branches beyond the explicit paired overrides and selected embedded-constant path were not exhaustively traced. 0x1422c1472 checks collection count after a separate call path and may perform additional actions, not characterized here. No concrete host or endpoint assignment, complete fallback configuration tree, canonical deployment effects, or live behavior is established. No native edits, build, runtime, or tests."
+}

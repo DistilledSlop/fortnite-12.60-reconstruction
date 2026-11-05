@@ -1,0 +1,29 @@
+{
+  "schema": "paper2d-output-batch-source-review-v1",
+  "evidence_type": "source review; no build or runtime verification",
+  "sources": [
+    "porting/native/Source/FortniteGame/Private/LegacyLocalVFOutputBatch.h",
+    "porting/native/Source/FortniteGame/Private/LegacyLocalVFOutputBatch.cpp",
+    "porting/behavior/paper2d_loose_contracts_runtime/evidence.json"
+  ],
+  "inventory": {
+    "parent_occurrences": 28,
+    "instance_occurrences": 14,
+    "total_occurrences": 42,
+    "unique_archive_shaders": 33,
+    "pipelines": 3,
+    "pipeline_stages": 5,
+    "loose_contract_occurrences": 5,
+    "loose_allocations": 7
+  },
+  "source_review": [
+    "Batch constructs per-record outputs and preserves repeated occurrences and ordered pipeline stages.",
+    "Caller-pinned manifest SHA-256, owner/resource identity and record, shader and pipeline identities are checked before publication; output arrays remain unchanged on failure.",
+    "Native loose-contract producer uses independently recovered original constructor/serializer names and rejects unsupported nonempty allocation shapes."
+  ],
+  "limitations": [
+    "The three observed pipelines use unique stages on Vulkan SM5; shared-stage pipeline linking is explicitly rejected until reconstructed.",
+    "Source review does not establish a successful build, runtime execution, shader binding or rendering.",
+    "Provider attachment, binding and value producers remain unfinished."
+  ]
+}
