@@ -369,11 +369,12 @@ try
         var registryBytes = provider.SaveAsset("FortniteGame/AssetRegistry.bin");
         var registry = new FAssetRegistryState(new FByteArchive("AssetRegistry.bin", registryBytes, provider.Versions));
         var pluginRoots = BuildPluginContentRoots(provider.Files.Keys);
+        bool PackageExists(string path) => provider.Files.ContainsKey(path + ".uasset") || provider.Files.ContainsKey(path + ".umap");
         foreach (var asset in registry.PreallocatedAssetDataBuffers)
         {
             var packageName = asset.PackageName.Text;
-            var target = ResolvePackageRoot(packageName, pluginRoots, path => provider.Files.ContainsKey(path + ".uasset"));
-            bool present = target is not null && provider.Files.ContainsKey(target + ".uasset");
+            var target = ResolvePackageRoot(packageName, pluginRoots, PackageExists);
+            bool present = target is not null && PackageExists(target);
             Console.WriteLine($"{target ?? "#unresolved:" + packageName}\t{asset.AssetClass.Text}\t{(present ? "present" : "absent")}");
         }
         return 0;
@@ -485,6 +486,16 @@ try
         var visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var queued = new HashSet<string>(StringComparer.OrdinalIgnoreCase); // unique packages ever queued: pending is a frontier count, not queue entries
         var pluginRoots = BuildPluginContentRoots(provider.Files.Keys);
+        var unresolved = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var unresolvedSoftCandidates = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        bool PackageExists(string path) => provider.Files.ContainsKey(path + ".uasset") || provider.Files.ContainsKey(path + ".umap");
+        void RecordUnresolved(string root, bool softCandidate = false)
+        {
+            var roots = softCandidate ? unresolvedSoftCandidates : unresolved;
+            if (root.StartsWith("/", StringComparison.Ordinal) &&
+                !root.StartsWith("/Script/", StringComparison.OrdinalIgnoreCase) && roots.Add(root))
+                Console.Error.WriteLine($"Unresolved {(softCandidate ? "raw soft-path candidate" : "imported package root")}: {root}");
+        }
         if (seedList)
         {
             // --seed-list: the positional argument is a file of package paths (FortniteGame/Content/... or Engine/Content/...).
@@ -512,21 +523,22 @@ try
                 SaveRecoveredFiles(files, closureOutput);
                 foreach (var root in package.ImportMap.Select(import => RootImportName(package, import)).Distinct())
                 {
-                    var target = ResolvePackageRoot(root, pluginRoots, path => provider.Files.ContainsKey(path + ".uasset"));
-                    if (target is not null)
+                    var target = ResolvePackageRoot(root, pluginRoots, PackageExists);
+                    if (target is not null && PackageExists(target))
                     {
                         if (queued.Add(target)) pending.Enqueue(target);
                     }
-                    else if (root.StartsWith("/", StringComparison.Ordinal) &&
-                             !root.StartsWith("/Script/", StringComparison.Ordinal))
-                        Console.Error.WriteLine($"Unmapped package root: {root}");
+                    else
+                        RecordUnresolved(root);
                 }
                 if (followSoft)
                 {
                     foreach (var soft in SoftPackageRoots(files))
                     {
-                        var target = ResolvePackageRoot(soft, pluginRoots, path => provider.Files.ContainsKey(path + ".uasset"));
-                        if (target is not null && provider.Files.ContainsKey(target + ".uasset") && !visited.Contains(target) && queued.Add(target))
+                        var target = ResolvePackageRoot(soft, pluginRoots, PackageExists);
+                        if (target is null || !PackageExists(target))
+                            RecordUnresolved(soft, softCandidate: true);
+                        else if (!visited.Contains(target) && queued.Add(target))
                         {
                             pending.Enqueue(target);
                             softFollowed++;
@@ -541,9 +553,9 @@ try
             }
             if (visited.Count % 25 == 0) Console.Error.WriteLine($"Recovered {visited.Count} package(s); pending {pending.Count}");
         }
-        Console.Error.WriteLine($"Closure: {visited.Count} visited, {failed} failed, {pending.Count} pending");
-        if (followSoft) Console.Error.WriteLine($"Soft references enqueued: {softFollowed}");
-        return failed == 0 && pending.Count == 0 ? 0 : 1;
+        Console.Error.WriteLine($"Closure: {visited.Count} visited, {failed} failed, {pending.Count} pending, {unresolved.Count} unresolved roots");
+        if (followSoft) Console.Error.WriteLine($"Soft references enqueued: {softFollowed}; unresolved raw candidates: {unresolvedSoftCandidates.Count} (heuristic, not proven dependencies)");
+        return failed == 0 && pending.Count == 0 && unresolved.Count == 0 && unresolvedSoftCandidates.Count == 0 ? 0 : 1;
     }
 
     if (saveFolder)

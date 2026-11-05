@@ -210,6 +210,13 @@ is reported as `-1`; it must not be inferred from a newer engine's enum.
 Use `--sizes` with a newline list of package paths to estimate mounted pak
 payload before extraction. It reports a JSON line per package and its
 `.uasset`/`.umap` and payload files without extracting or staging assets.
+Dependency recovery with `--save-closure` and registry presence checks recognize
+both package extensions, including maps stored under plugin content roots.
+Closure recovery returns nonzero for unresolved imported package roots as well
+as failed loads or a remaining frontier. With `--follow-soft`, unresolved raw
+path candidates also prevent success; they are reported separately because
+byte scanning does not establish that every candidate is a real dependency.
+This source update awaits the next tool build and integration checkpoint.
 
 `bash porting/prepare_ue_fieldpath.sh` backports UE 4.26's Fortnite branch
 field-path owner version check into the adjacent UE 4.25 checkout and logs a

@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "41bf533ed4a5d2546b20957233f096c39bf657ab",
- "subject": "Materialize selected local accounts for the recovered identity user-account consumer",
- "date": "2026-11-05T10:05:38-05:00",
+ "head": "1bd96e6b8fbd079c8a015fe3628965d9e61b7ebd",
+ "subject": "Use legacy field paths for Apollo and isolate original Blueprint packages",
+ "date": "2026-11-05T10:15:18-05:00",
  "overall_pct": 29.1,
  "measured_pct": 28.23,
  "objective_pct": 28.229,
@@ -515,7 +515,7 @@
      "evidence": "0 of 87 (documented; total 87 from totals.json apollo_streaming_levels)",
      "basis": "documented",
      "carried": false,
-     "rationale": "None of the 87 streamed levels load (typed count, documented). The denominator is the figure in the tracked map_compatibility.md report (totals.json). EFF-013: Owns original sublevel hierarchy, dependency loading, streaming transitions and runtime verification; neither landscape export nor declaration coverage establishes this.",
+     "rationale": "No original streamed level has verified runtime loading. The denominator is the 87-level hierarchy in the tracked map_compatibility.md report (totals.json). Apollo launch/capture and isolation probes now enable the existing legacy field-path reader; original Blueprint isolation stages extracted packages and records hashes instead of relying on staged replacements. These source changes await runtime verification and earn no loaded-level credit. LandscapeLODStreamingProxy is a real export in 62 cached level reports; its streaming implementation and original material compatibility remain unresolved. EFF-013: Owns original sublevel hierarchy, dependency loading, streaming transitions and runtime verification; neither landscape export nor declaration coverage establishes this.",
      "evidence_links": []
     },
     {
@@ -2536,7 +2536,7 @@
    "evidence": "0 of 87 (documented; total 87 from totals.json apollo_streaming_levels)",
    "basis": "documented",
    "carried": false,
-   "rationale": "None of the 87 streamed levels load (typed count, documented). The denominator is the figure in the tracked map_compatibility.md report (totals.json). EFF-013: Owns original sublevel hierarchy, dependency loading, streaming transitions and runtime verification; neither landscape export nor declaration coverage establishes this.",
+   "rationale": "No original streamed level has verified runtime loading. The denominator is the 87-level hierarchy in the tracked map_compatibility.md report (totals.json). Apollo launch/capture and isolation probes now enable the existing legacy field-path reader; original Blueprint isolation stages extracted packages and records hashes instead of relying on staged replacements. These source changes await runtime verification and earn no loaded-level credit. LandscapeLODStreamingProxy is a real export in 62 cached level reports; its streaming implementation and original material compatibility remain unresolved. EFF-013: Owns original sublevel hierarchy, dependency loading, streaming transitions and runtime verification; neither landscape export nor declaration coverage establishes this.",
    "evidence_links": []
   },
   {
