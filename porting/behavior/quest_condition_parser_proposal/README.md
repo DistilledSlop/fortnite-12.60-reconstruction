@@ -9,3 +9,5 @@ Evidence: `porting/generated/quest-row-post-probe3/0x14240d370.{c,asm,json}`, `p
 Unresolved: construction, lifetime and destruction of the quest parser singleton at `0x14815f750`; token consumers at singleton +0x50; grammar at +0x68; all token node types and operator precedence/associativity; exact log category; evaluation and tag extraction; and compiler/runtime compatibility of the proposed C++ object layout and move operations. Further recovery should identify singleton initialization and its registration callees before implementing parser behavior. The separate row post-serialization closure remains blocked. No build or runtime tests were run.
 
 Singleton initialization, ordered token registrations and grammar evidence are recorded in [grammar-evidence.md](grammar-evidence.md); the parser remains blocked.
+
+Evaluation tables, tag extraction and remaining handler dependencies are recorded in [evaluation-evidence.md](evaluation-evidence.md).
