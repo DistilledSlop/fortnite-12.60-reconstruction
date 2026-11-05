@@ -1,0 +1,5144 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "original_metadata": {
+    "uniform_name": "TranslucentBasePass",
+    "uniform_name_va": "0x146685f38",
+    "type_name": "FTranslucentBasePassUniformParameters",
+    "type_name_va": "0x146685f60",
+    "initializer": "0x1404912e0",
+    "metadata_object": "0x148273f20",
+    "first_helper": "0x1432374a0",
+    "layout": {
+      "struct_size": 2464,
+      "members": [
+        {
+          "name": "Shared",
+          "offset": 0,
+          "base_type": 17,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 2048,
+          "shader_type": "FSharedBasePassUniformParameters",
+          "helper": "143235eb0",
+          "metadata_object": "0x148273e00",
+          "members": [
+            {
+              "name": "Forward",
+              "offset": 0,
+              "base_type": 17,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 640,
+              "shader_type": "FForwardLightData",
+              "helper": "1432367d0",
+              "metadata_object": "0x14829ef30",
+              "members": [
+                {
+                  "name": "NumLocalLights",
+                  "offset": 0,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327b30"
+                },
+                {
+                  "name": "NumReflectionCaptures",
+                  "offset": 4,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327bd0"
+                },
+                {
+                  "name": "HasDirectionalLight",
+                  "offset": 8,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "1433276d0"
+                },
+                {
+                  "name": "NumGridCells",
+                  "offset": 12,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327a90"
+                },
+                {
+                  "name": "CulledGridSize",
+                  "offset": 16,
+                  "base_type": 2,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "143326b70"
+                },
+                {
+                  "name": "MaxCulledLightsPerCell",
+                  "offset": 28,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "1433278b0"
+                },
+                {
+                  "name": "LightGridPixelSizeShift",
+                  "offset": 32,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327770"
+                },
+                {
+                  "name": "LightGridZParams",
+                  "offset": 48,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "143327810"
+                },
+                {
+                  "name": "DirectionalLightDirection",
+                  "offset": 64,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "143326df0"
+                },
+                {
+                  "name": "DirectionalLightColor",
+                  "offset": 80,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "143326cb0"
+                },
+                {
+                  "name": "DirectionalLightVolumetricScatteringIntensity",
+                  "offset": 92,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "1433273a0"
+                },
+                {
+                  "name": "DirectionalLightShadowMapChannelMask",
+                  "offset": 96,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143326f30"
+                },
+                {
+                  "name": "DirectionalLightDistanceFadeMAD",
+                  "offset": 104,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 2,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "",
+                  "helper": "143326e90"
+                },
+                {
+                  "name": "NumDirectionalLightCascades",
+                  "offset": 112,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "1433279f0"
+                },
+                {
+                  "name": "CascadeEndDepths",
+                  "offset": 128,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "143326a30"
+                },
+                {
+                  "name": "DirectionalLightWorldToShadowMatrix",
+                  "offset": 144,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 4,
+                  "columns": 4,
+                  "elements": 4,
+                  "size": 256,
+                  "shader_type": "",
+                  "helper": "143327440"
+                },
+                {
+                  "name": "DirectionalLightShadowmapMinMax",
+                  "offset": 400,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 4,
+                  "size": 64,
+                  "shader_type": "",
+                  "helper": "143327110"
+                },
+                {
+                  "name": "DirectionalLightShadowmapAtlasBufferSize",
+                  "offset": 464,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "143327070"
+                },
+                {
+                  "name": "DirectionalLightDepthBias",
+                  "offset": 480,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143326d50"
+                },
+                {
+                  "name": "DirectionalLightUseStaticShadowing",
+                  "offset": 484,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327300"
+                },
+                {
+                  "name": "SimpleLightsEndIndex",
+                  "offset": 488,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327d10"
+                },
+                {
+                  "name": "ClusteredDeferredSupportedEndIndex",
+                  "offset": 492,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143326ad0"
+                },
+                {
+                  "name": "DirectionalLightStaticShadowBufferSize",
+                  "offset": 496,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "1433271c0"
+                },
+                {
+                  "name": "DirectionalLightWorldToStaticShadow",
+                  "offset": 512,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 4,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 64,
+                  "shader_type": "",
+                  "helper": "1433274f0"
+                },
+                {
+                  "name": "DirectionalLightShadowmapAtlas",
+                  "offset": 576,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "Texture2D",
+                  "helper": "143326fd0",
+                  "resource_index": 0
+                },
+                {
+                  "name": "ShadowmapSampler",
+                  "offset": 584,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "143327c70",
+                  "resource_index": 1
+                },
+                {
+                  "name": "DirectionalLightStaticShadowmap",
+                  "offset": 592,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "Texture2D",
+                  "helper": "143327260",
+                  "resource_index": 2
+                },
+                {
+                  "name": "StaticShadowmapSampler",
+                  "offset": 600,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "143327db0",
+                  "resource_index": 3
+                },
+                {
+                  "name": "ForwardLocalLightBuffer",
+                  "offset": 608,
+                  "base_type": 6,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "StrongTypedBuffer<float4>",
+                  "helper": "143327630",
+                  "resource_index": 4
+                },
+                {
+                  "name": "NumCulledLightsGrid",
+                  "offset": 616,
+                  "base_type": 6,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "StrongTypedBuffer<uint>",
+                  "helper": "143327950",
+                  "resource_index": 5
+                },
+                {
+                  "name": "CulledLightDataGrid",
+                  "offset": 624,
+                  "base_type": 6,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "StrongTypedBuffer<uint>",
+                  "helper": "143326c10",
+                  "resource_index": 6
+                },
+                {
+                  "name": "DummyRectLightSourceTexture",
+                  "offset": 632,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "Texture2D",
+                  "helper": "143327590",
+                  "resource_index": 7
+                }
+              ]
+            },
+            {
+              "name": "ForwardISR",
+              "offset": 640,
+              "base_type": 17,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 640,
+              "shader_type": "FForwardLightData",
+              "helper": "143236880",
+              "metadata_object": "0x14829ef30",
+              "members": [
+                {
+                  "name": "NumLocalLights",
+                  "offset": 0,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327b30"
+                },
+                {
+                  "name": "NumReflectionCaptures",
+                  "offset": 4,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327bd0"
+                },
+                {
+                  "name": "HasDirectionalLight",
+                  "offset": 8,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "1433276d0"
+                },
+                {
+                  "name": "NumGridCells",
+                  "offset": 12,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327a90"
+                },
+                {
+                  "name": "CulledGridSize",
+                  "offset": 16,
+                  "base_type": 2,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "143326b70"
+                },
+                {
+                  "name": "MaxCulledLightsPerCell",
+                  "offset": 28,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "1433278b0"
+                },
+                {
+                  "name": "LightGridPixelSizeShift",
+                  "offset": 32,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327770"
+                },
+                {
+                  "name": "LightGridZParams",
+                  "offset": 48,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "143327810"
+                },
+                {
+                  "name": "DirectionalLightDirection",
+                  "offset": 64,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "143326df0"
+                },
+                {
+                  "name": "DirectionalLightColor",
+                  "offset": 80,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "143326cb0"
+                },
+                {
+                  "name": "DirectionalLightVolumetricScatteringIntensity",
+                  "offset": 92,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "1433273a0"
+                },
+                {
+                  "name": "DirectionalLightShadowMapChannelMask",
+                  "offset": 96,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143326f30"
+                },
+                {
+                  "name": "DirectionalLightDistanceFadeMAD",
+                  "offset": 104,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 2,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "",
+                  "helper": "143326e90"
+                },
+                {
+                  "name": "NumDirectionalLightCascades",
+                  "offset": 112,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "1433279f0"
+                },
+                {
+                  "name": "CascadeEndDepths",
+                  "offset": 128,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "143326a30"
+                },
+                {
+                  "name": "DirectionalLightWorldToShadowMatrix",
+                  "offset": 144,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 4,
+                  "columns": 4,
+                  "elements": 4,
+                  "size": 256,
+                  "shader_type": "",
+                  "helper": "143327440"
+                },
+                {
+                  "name": "DirectionalLightShadowmapMinMax",
+                  "offset": 400,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 4,
+                  "size": 64,
+                  "shader_type": "",
+                  "helper": "143327110"
+                },
+                {
+                  "name": "DirectionalLightShadowmapAtlasBufferSize",
+                  "offset": 464,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "143327070"
+                },
+                {
+                  "name": "DirectionalLightDepthBias",
+                  "offset": 480,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143326d50"
+                },
+                {
+                  "name": "DirectionalLightUseStaticShadowing",
+                  "offset": 484,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327300"
+                },
+                {
+                  "name": "SimpleLightsEndIndex",
+                  "offset": 488,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143327d10"
+                },
+                {
+                  "name": "ClusteredDeferredSupportedEndIndex",
+                  "offset": 492,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "143326ad0"
+                },
+                {
+                  "name": "DirectionalLightStaticShadowBufferSize",
+                  "offset": 496,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "1433271c0"
+                },
+                {
+                  "name": "DirectionalLightWorldToStaticShadow",
+                  "offset": 512,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 4,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 64,
+                  "shader_type": "",
+                  "helper": "1433274f0"
+                },
+                {
+                  "name": "DirectionalLightShadowmapAtlas",
+                  "offset": 576,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "Texture2D",
+                  "helper": "143326fd0",
+                  "resource_index": 0
+                },
+                {
+                  "name": "ShadowmapSampler",
+                  "offset": 584,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "143327c70",
+                  "resource_index": 1
+                },
+                {
+                  "name": "DirectionalLightStaticShadowmap",
+                  "offset": 592,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "Texture2D",
+                  "helper": "143327260",
+                  "resource_index": 2
+                },
+                {
+                  "name": "StaticShadowmapSampler",
+                  "offset": 600,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "143327db0",
+                  "resource_index": 3
+                },
+                {
+                  "name": "ForwardLocalLightBuffer",
+                  "offset": 608,
+                  "base_type": 6,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "StrongTypedBuffer<float4>",
+                  "helper": "143327630",
+                  "resource_index": 4
+                },
+                {
+                  "name": "NumCulledLightsGrid",
+                  "offset": 616,
+                  "base_type": 6,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "StrongTypedBuffer<uint>",
+                  "helper": "143327950",
+                  "resource_index": 5
+                },
+                {
+                  "name": "CulledLightDataGrid",
+                  "offset": 624,
+                  "base_type": 6,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "StrongTypedBuffer<uint>",
+                  "helper": "143326c10",
+                  "resource_index": 6
+                },
+                {
+                  "name": "DummyRectLightSourceTexture",
+                  "offset": 632,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "Texture2D",
+                  "helper": "143327590",
+                  "resource_index": 7
+                }
+              ]
+            },
+            {
+              "name": "Reflection",
+              "offset": 1280,
+              "base_type": 17,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 96,
+              "shader_type": "FReflectionUniformParameters",
+              "helper": "1432369e0",
+              "metadata_object": "0x14829ebb0",
+              "members": [
+                {
+                  "name": "SkyLightParameters",
+                  "offset": 0,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14332dee0"
+                },
+                {
+                  "name": "SkyLightCubemapBrightness",
+                  "offset": 16,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "14332dda0"
+                },
+                {
+                  "name": "SkyLightCubemap",
+                  "offset": 24,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "TextureCube",
+                  "helper": "14332dd00",
+                  "resource_index": 0
+                },
+                {
+                  "name": "SkyLightCubemapSampler",
+                  "offset": 32,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "14332de40",
+                  "resource_index": 1
+                },
+                {
+                  "name": "SkyLightBlendDestinationCubemap",
+                  "offset": 40,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "TextureCube",
+                  "helper": "14332dbc0",
+                  "resource_index": 2
+                },
+                {
+                  "name": "SkyLightBlendDestinationCubemapSampler",
+                  "offset": 48,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "14332dc60",
+                  "resource_index": 3
+                },
+                {
+                  "name": "ReflectionCubemap",
+                  "offset": 56,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "TextureCubeArray",
+                  "helper": "14332da80",
+                  "resource_index": 4
+                },
+                {
+                  "name": "ReflectionCubemapSampler",
+                  "offset": 64,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "14332db20",
+                  "resource_index": 5
+                },
+                {
+                  "name": "PreIntegratedGF",
+                  "offset": 72,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "Texture2D",
+                  "helper": "14332d940",
+                  "resource_index": 6
+                },
+                {
+                  "name": "PreIntegratedGFSampler",
+                  "offset": 80,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "14332d9e0",
+                  "resource_index": 7
+                }
+              ]
+            },
+            {
+              "name": "PlanarReflection",
+              "offset": 1376,
+              "base_type": 17,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 336,
+              "shader_type": "FPlanarReflectionUniformParameters",
+              "helper": "143236930",
+              "metadata_object": "0x1482c30f0",
+              "members": [
+                {
+                  "name": "ReflectionPlane",
+                  "offset": 0,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "1433f53d0"
+                },
+                {
+                  "name": "PlanarReflectionOrigin",
+                  "offset": 16,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "1433f4d70"
+                },
+                {
+                  "name": "PlanarReflectionXAxis",
+                  "offset": 32,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "1433f51e0"
+                },
+                {
+                  "name": "PlanarReflectionYAxis",
+                  "offset": 48,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "1433f5280"
+                },
+                {
+                  "name": "InverseTransposeMirrorMatrix",
+                  "offset": 64,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 3,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 48,
+                  "shader_type": "",
+                  "helper": "1433f4cd0"
+                },
+                {
+                  "name": "PlanarReflectionParameters",
+                  "offset": 112,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "1433f4eb0"
+                },
+                {
+                  "name": "PlanarReflectionParameters2",
+                  "offset": 128,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 2,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "",
+                  "helper": "1433f4e10"
+                },
+                {
+                  "name": "ProjectionWithExtraFOV",
+                  "offset": 144,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 4,
+                  "columns": 4,
+                  "elements": 2,
+                  "size": 128,
+                  "shader_type": "",
+                  "helper": "1433f5320"
+                },
+                {
+                  "name": "PlanarReflectionScreenScaleBias",
+                  "offset": 272,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 2,
+                  "size": 32,
+                  "shader_type": "",
+                  "helper": "1433f5090"
+                },
+                {
+                  "name": "PlanarReflectionScreenBound",
+                  "offset": 304,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 2,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "",
+                  "helper": "1433f4ff0"
+                },
+                {
+                  "name": "bIsStereo",
+                  "offset": 312,
+                  "base_type": 3,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "1433f5470"
+                },
+                {
+                  "name": "PlanarReflectionTexture",
+                  "offset": 320,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "Texture2D",
+                  "helper": "1433f5140",
+                  "resource_index": 0
+                },
+                {
+                  "name": "PlanarReflectionSampler",
+                  "offset": 328,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "1433f4f50",
+                  "resource_index": 1
+                }
+              ]
+            },
+            {
+              "name": "Fog",
+              "offset": 1712,
+              "base_type": 17,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 160,
+              "shader_type": "FFogUniformParameters",
+              "helper": "143236670",
+              "metadata_object": "0x14828cb50",
+              "members": [
+                {
+                  "name": "ExponentialFogParameters",
+                  "offset": 0,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d530"
+                },
+                {
+                  "name": "ExponentialFogParameters2",
+                  "offset": 16,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d3f0"
+                },
+                {
+                  "name": "ExponentialFogColorParameter",
+                  "offset": 32,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d350"
+                },
+                {
+                  "name": "ExponentialFogParameters3",
+                  "offset": 48,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d490"
+                },
+                {
+                  "name": "InscatteringLightDirection",
+                  "offset": 64,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d7b0"
+                },
+                {
+                  "name": "DirectionalInscatteringColor",
+                  "offset": 80,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d2b0"
+                },
+                {
+                  "name": "SinCosInscatteringColorCubemapRotation",
+                  "offset": 96,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 2,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "",
+                  "helper": "14329d990"
+                },
+                {
+                  "name": "FogInscatteringTextureParameters",
+                  "offset": 112,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "14329d710"
+                },
+                {
+                  "name": "ApplyVolumetricFog",
+                  "offset": 124,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "14329d210"
+                },
+                {
+                  "name": "FogInscatteringColorCubemap",
+                  "offset": 128,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "TextureCube",
+                  "helper": "14329d5d0",
+                  "resource_index": 0
+                },
+                {
+                  "name": "FogInscatteringColorSampler",
+                  "offset": 136,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "14329d670",
+                  "resource_index": 1
+                },
+                {
+                  "name": "IntegratedLightScattering",
+                  "offset": 144,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "Texture3D",
+                  "helper": "14329d850",
+                  "resource_index": 2
+                },
+                {
+                  "name": "IntegratedLightScatteringSampler",
+                  "offset": 152,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "14329d8f0",
+                  "resource_index": 3
+                }
+              ]
+            },
+            {
+              "name": "FogISR",
+              "offset": 1872,
+              "base_type": 17,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 160,
+              "shader_type": "FFogUniformParameters",
+              "helper": "143236720",
+              "metadata_object": "0x14828cb50",
+              "members": [
+                {
+                  "name": "ExponentialFogParameters",
+                  "offset": 0,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d530"
+                },
+                {
+                  "name": "ExponentialFogParameters2",
+                  "offset": 16,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d3f0"
+                },
+                {
+                  "name": "ExponentialFogColorParameter",
+                  "offset": 32,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d350"
+                },
+                {
+                  "name": "ExponentialFogParameters3",
+                  "offset": 48,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d490"
+                },
+                {
+                  "name": "InscatteringLightDirection",
+                  "offset": 64,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d7b0"
+                },
+                {
+                  "name": "DirectionalInscatteringColor",
+                  "offset": 80,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 4,
+                  "elements": 0,
+                  "size": 16,
+                  "shader_type": "",
+                  "helper": "14329d2b0"
+                },
+                {
+                  "name": "SinCosInscatteringColorCubemapRotation",
+                  "offset": 96,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 2,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "",
+                  "helper": "14329d990"
+                },
+                {
+                  "name": "FogInscatteringTextureParameters",
+                  "offset": 112,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 3,
+                  "elements": 0,
+                  "size": 12,
+                  "shader_type": "",
+                  "helper": "14329d710"
+                },
+                {
+                  "name": "ApplyVolumetricFog",
+                  "offset": 124,
+                  "base_type": 4,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 4,
+                  "shader_type": "",
+                  "helper": "14329d210"
+                },
+                {
+                  "name": "FogInscatteringColorCubemap",
+                  "offset": 128,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "TextureCube",
+                  "helper": "14329d5d0",
+                  "resource_index": 0
+                },
+                {
+                  "name": "FogInscatteringColorSampler",
+                  "offset": 136,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "14329d670",
+                  "resource_index": 1
+                },
+                {
+                  "name": "IntegratedLightScattering",
+                  "offset": 144,
+                  "base_type": 5,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "Texture3D",
+                  "helper": "14329d850",
+                  "resource_index": 2
+                },
+                {
+                  "name": "IntegratedLightScatteringSampler",
+                  "offset": 152,
+                  "base_type": 8,
+                  "precision": 0,
+                  "rows": 1,
+                  "columns": 1,
+                  "elements": 0,
+                  "size": 8,
+                  "shader_type": "SamplerState",
+                  "helper": "14329d8f0",
+                  "resource_index": 3
+                }
+              ]
+            },
+            {
+              "name": "SSProfilesTexture",
+              "offset": 2032,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "143236a90",
+              "resource_index": 0
+            }
+          ]
+        },
+        {
+          "name": "SceneTextures",
+          "offset": 2048,
+          "base_type": 17,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 272,
+          "shader_type": "FSceneTexturesUniformParameters",
+          "helper": "143236f90",
+          "metadata_object": "0x1482d2390",
+          "members": [
+            {
+              "name": "SceneColorTexture",
+              "offset": 0,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "1434666e0",
+              "resource_index": 0
+            },
+            {
+              "name": "SceneColorTextureSampler",
+              "offset": 8,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "143466780",
+              "resource_index": 1
+            },
+            {
+              "name": "SceneDepthTexture",
+              "offset": 16,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "143466820",
+              "resource_index": 2
+            },
+            {
+              "name": "SceneDepthTextureSampler",
+              "offset": 24,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "1434668c0",
+              "resource_index": 3
+            },
+            {
+              "name": "SceneDepthTextureNonMS",
+              "offset": 32,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D<float>",
+              "helper": "14346d8a0",
+              "resource_index": 4
+            },
+            {
+              "name": "GBufferATexture",
+              "offset": 40,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "14346cc20",
+              "resource_index": 5
+            },
+            {
+              "name": "GBufferBTexture",
+              "offset": 48,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "14346ce00",
+              "resource_index": 6
+            },
+            {
+              "name": "GBufferCTexture",
+              "offset": 56,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "14346cfe0",
+              "resource_index": 7
+            },
+            {
+              "name": "GBufferDTexture",
+              "offset": 64,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "14346d1c0",
+              "resource_index": 8
+            },
+            {
+              "name": "GBufferETexture",
+              "offset": 72,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "14346d3a0",
+              "resource_index": 9
+            },
+            {
+              "name": "GBufferVelocityTexture",
+              "offset": 80,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "14346d580",
+              "resource_index": 10
+            },
+            {
+              "name": "GBufferATextureNonMS",
+              "offset": 88,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D<float4>",
+              "helper": "14346ccc0",
+              "resource_index": 11
+            },
+            {
+              "name": "GBufferBTextureNonMS",
+              "offset": 96,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D<float4>",
+              "helper": "14346cea0",
+              "resource_index": 12
+            },
+            {
+              "name": "GBufferCTextureNonMS",
+              "offset": 104,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D<float4>",
+              "helper": "14346d080",
+              "resource_index": 13
+            },
+            {
+              "name": "GBufferDTextureNonMS",
+              "offset": 112,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D<float4>",
+              "helper": "14346d260",
+              "resource_index": 14
+            },
+            {
+              "name": "GBufferETextureNonMS",
+              "offset": 120,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D<float4>",
+              "helper": "14346d440",
+              "resource_index": 15
+            },
+            {
+              "name": "GBufferVelocityTextureNonMS",
+              "offset": 128,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D<float4>",
+              "helper": "14346d620",
+              "resource_index": 16
+            },
+            {
+              "name": "GBufferATextureSampler",
+              "offset": 136,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "14346cd60",
+              "resource_index": 17
+            },
+            {
+              "name": "GBufferBTextureSampler",
+              "offset": 144,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "14346cf40",
+              "resource_index": 18
+            },
+            {
+              "name": "GBufferCTextureSampler",
+              "offset": 152,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "14346d120",
+              "resource_index": 19
+            },
+            {
+              "name": "GBufferDTextureSampler",
+              "offset": 160,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "14346d300",
+              "resource_index": 20
+            },
+            {
+              "name": "GBufferETextureSampler",
+              "offset": 168,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "14346d4e0",
+              "resource_index": 21
+            },
+            {
+              "name": "GBufferVelocityTextureSampler",
+              "offset": 176,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "14346d6c0",
+              "resource_index": 22
+            },
+            {
+              "name": "ScreenSpaceAOTexture",
+              "offset": 184,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "14346d9e0",
+              "resource_index": 23
+            },
+            {
+              "name": "ScreenSpaceAOTextureSampler",
+              "offset": 192,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "14346da80",
+              "resource_index": 24
+            },
+            {
+              "name": "CustomDepthTextureNonMS",
+              "offset": 200,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D<float>",
+              "helper": "14346c9a0",
+              "resource_index": 25
+            },
+            {
+              "name": "CustomDepthTexture",
+              "offset": 208,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "14346c900",
+              "resource_index": 26
+            },
+            {
+              "name": "CustomDepthTextureSampler",
+              "offset": 216,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "14346ca40",
+              "resource_index": 27
+            },
+            {
+              "name": "CustomStencilTexture",
+              "offset": 224,
+              "base_type": 6,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D<uint2>",
+              "helper": "14346cae0",
+              "resource_index": 28
+            },
+            {
+              "name": "SceneStencilTexture",
+              "offset": 232,
+              "base_type": 6,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D<uint2>",
+              "helper": "14346d940",
+              "resource_index": 29
+            },
+            {
+              "name": "EyeAdaptation",
+              "offset": 240,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "14346cb80",
+              "resource_index": 30
+            },
+            {
+              "name": "SceneColorCopyTexture",
+              "offset": 248,
+              "base_type": 5,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "Texture2D",
+              "helper": "14346d760",
+              "resource_index": 31
+            },
+            {
+              "name": "SceneColorCopyTextureSampler",
+              "offset": 256,
+              "base_type": 8,
+              "precision": 0,
+              "rows": 1,
+              "columns": 1,
+              "elements": 0,
+              "size": 8,
+              "shader_type": "SamplerState",
+              "helper": "14346d800",
+              "resource_index": 32
+            }
+          ]
+        },
+        {
+          "name": "HZBUvFactorAndInvFactor",
+          "offset": 2320,
+          "base_type": 4,
+          "precision": 0,
+          "rows": 1,
+          "columns": 4,
+          "elements": 0,
+          "size": 16,
+          "shader_type": "",
+          "helper": "143236c70"
+        },
+        {
+          "name": "PrevScreenPositionScaleBias",
+          "offset": 2336,
+          "base_type": 4,
+          "precision": 0,
+          "rows": 1,
+          "columns": 4,
+          "elements": 0,
+          "size": 16,
+          "shader_type": "",
+          "helper": "143236ef0"
+        },
+        {
+          "name": "PrevSceneColorPreExposureInv",
+          "offset": 2352,
+          "base_type": 4,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 4,
+          "shader_type": "",
+          "helper": "143236db0"
+        },
+        {
+          "name": "HZBTexture",
+          "offset": 2360,
+          "base_type": 5,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "Texture2D",
+          "helper": "143236bd0",
+          "resource_index": 0
+        },
+        {
+          "name": "HZBSampler",
+          "offset": 2368,
+          "base_type": 8,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "SamplerState",
+          "helper": "143236b30",
+          "resource_index": 1
+        },
+        {
+          "name": "PrevSceneColor",
+          "offset": 2376,
+          "base_type": 5,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "Texture2D",
+          "helper": "143236d10",
+          "resource_index": 2
+        },
+        {
+          "name": "PrevSceneColorSampler",
+          "offset": 2384,
+          "base_type": 8,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "SamplerState",
+          "helper": "143236e50",
+          "resource_index": 3
+        },
+        {
+          "name": "TranslucencyLightingVolumeAmbientInner",
+          "offset": 2392,
+          "base_type": 5,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "Texture3D",
+          "helper": "143237040",
+          "resource_index": 4
+        },
+        {
+          "name": "TranslucencyLightingVolumeAmbientInnerSampler",
+          "offset": 2400,
+          "base_type": 8,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "SamplerState",
+          "helper": "1432370e0",
+          "resource_index": 5
+        },
+        {
+          "name": "TranslucencyLightingVolumeAmbientOuter",
+          "offset": 2408,
+          "base_type": 5,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "Texture3D",
+          "helper": "143237180",
+          "resource_index": 6
+        },
+        {
+          "name": "TranslucencyLightingVolumeAmbientOuterSampler",
+          "offset": 2416,
+          "base_type": 8,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "SamplerState",
+          "helper": "143237220",
+          "resource_index": 7
+        },
+        {
+          "name": "TranslucencyLightingVolumeDirectionalInner",
+          "offset": 2424,
+          "base_type": 5,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "Texture3D",
+          "helper": "1432372c0",
+          "resource_index": 8
+        },
+        {
+          "name": "TranslucencyLightingVolumeDirectionalInnerSampler",
+          "offset": 2432,
+          "base_type": 8,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "SamplerState",
+          "helper": "143237360",
+          "resource_index": 9
+        },
+        {
+          "name": "TranslucencyLightingVolumeDirectionalOuter",
+          "offset": 2440,
+          "base_type": 5,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "Texture3D",
+          "helper": "143237400",
+          "resource_index": 10
+        },
+        {
+          "name": "TranslucencyLightingVolumeDirectionalOuterSampler",
+          "offset": 2448,
+          "base_type": 8,
+          "precision": 0,
+          "rows": 1,
+          "columns": 1,
+          "elements": 0,
+          "size": 8,
+          "shader_type": "SamplerState",
+          "helper": "1432374a0",
+          "resource_index": 11
+        }
+      ]
+    }
+  },
+  "current_source": {
+    "struct_size": 2480,
+    "members": [
+      {
+        "name": "Shared",
+        "base_type": 17,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 2048,
+        "shader_type": "FSharedBasePassUniformParameters",
+        "members": [
+          {
+            "name": "Forward",
+            "base_type": 17,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 640,
+            "shader_type": "FForwardLightData",
+            "members": [
+              {
+                "name": "NumLocalLights",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 0
+              },
+              {
+                "name": "NumReflectionCaptures",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 4
+              },
+              {
+                "name": "HasDirectionalLight",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 8
+              },
+              {
+                "name": "NumGridCells",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 12
+              },
+              {
+                "name": "CulledGridSize",
+                "base_type": 2,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 16
+              },
+              {
+                "name": "MaxCulledLightsPerCell",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 28
+              },
+              {
+                "name": "LightGridPixelSizeShift",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 32
+              },
+              {
+                "name": "LightGridZParams",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 48
+              },
+              {
+                "name": "DirectionalLightDirection",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 64
+              },
+              {
+                "name": "DirectionalLightColor",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 80
+              },
+              {
+                "name": "DirectionalLightVolumetricScatteringIntensity",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 92
+              },
+              {
+                "name": "DirectionalLightShadowMapChannelMask",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 96
+              },
+              {
+                "name": "DirectionalLightDistanceFadeMAD",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 2,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "",
+                "offset": 104
+              },
+              {
+                "name": "NumDirectionalLightCascades",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 112
+              },
+              {
+                "name": "CascadeEndDepths",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 128
+              },
+              {
+                "name": "DirectionalLightWorldToShadowMatrix",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 4,
+                "columns": 4,
+                "elements": 4,
+                "size": 256,
+                "shader_type": "",
+                "offset": 144
+              },
+              {
+                "name": "DirectionalLightShadowmapMinMax",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 4,
+                "size": 64,
+                "shader_type": "",
+                "offset": 400
+              },
+              {
+                "name": "DirectionalLightShadowmapAtlasBufferSize",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 464
+              },
+              {
+                "name": "DirectionalLightDepthBias",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 480
+              },
+              {
+                "name": "DirectionalLightUseStaticShadowing",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 484
+              },
+              {
+                "name": "SimpleLightsEndIndex",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 488
+              },
+              {
+                "name": "ClusteredDeferredSupportedEndIndex",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 492
+              },
+              {
+                "name": "DirectionalLightStaticShadowBufferSize",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 496
+              },
+              {
+                "name": "DirectionalLightWorldToStaticShadow",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 4,
+                "columns": 4,
+                "elements": 0,
+                "size": 64,
+                "shader_type": "",
+                "offset": 512
+              },
+              {
+                "name": "DirectionalLightShadowmapAtlas",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "Texture2D",
+                "offset": 576
+              },
+              {
+                "name": "ShadowmapSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 584
+              },
+              {
+                "name": "DirectionalLightStaticShadowmap",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "Texture2D",
+                "offset": 592
+              },
+              {
+                "name": "StaticShadowmapSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 600
+              },
+              {
+                "name": "ForwardLocalLightBuffer",
+                "base_type": 6,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "StrongTypedBuffer<float4>",
+                "offset": 608
+              },
+              {
+                "name": "NumCulledLightsGrid",
+                "base_type": 6,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "StrongTypedBuffer<uint>",
+                "offset": 616
+              },
+              {
+                "name": "CulledLightDataGrid",
+                "base_type": 6,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "StrongTypedBuffer<uint>",
+                "offset": 624
+              },
+              {
+                "name": "DummyRectLightSourceTexture",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "Texture2D",
+                "offset": 632
+              }
+            ],
+            "offset": 0
+          },
+          {
+            "name": "ForwardISR",
+            "base_type": 17,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 640,
+            "shader_type": "FForwardLightData",
+            "members": [
+              {
+                "name": "NumLocalLights",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 0
+              },
+              {
+                "name": "NumReflectionCaptures",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 4
+              },
+              {
+                "name": "HasDirectionalLight",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 8
+              },
+              {
+                "name": "NumGridCells",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 12
+              },
+              {
+                "name": "CulledGridSize",
+                "base_type": 2,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 16
+              },
+              {
+                "name": "MaxCulledLightsPerCell",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 28
+              },
+              {
+                "name": "LightGridPixelSizeShift",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 32
+              },
+              {
+                "name": "LightGridZParams",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 48
+              },
+              {
+                "name": "DirectionalLightDirection",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 64
+              },
+              {
+                "name": "DirectionalLightColor",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 80
+              },
+              {
+                "name": "DirectionalLightVolumetricScatteringIntensity",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 92
+              },
+              {
+                "name": "DirectionalLightShadowMapChannelMask",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 96
+              },
+              {
+                "name": "DirectionalLightDistanceFadeMAD",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 2,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "",
+                "offset": 104
+              },
+              {
+                "name": "NumDirectionalLightCascades",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 112
+              },
+              {
+                "name": "CascadeEndDepths",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 128
+              },
+              {
+                "name": "DirectionalLightWorldToShadowMatrix",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 4,
+                "columns": 4,
+                "elements": 4,
+                "size": 256,
+                "shader_type": "",
+                "offset": 144
+              },
+              {
+                "name": "DirectionalLightShadowmapMinMax",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 4,
+                "size": 64,
+                "shader_type": "",
+                "offset": 400
+              },
+              {
+                "name": "DirectionalLightShadowmapAtlasBufferSize",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 464
+              },
+              {
+                "name": "DirectionalLightDepthBias",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 480
+              },
+              {
+                "name": "DirectionalLightUseStaticShadowing",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 484
+              },
+              {
+                "name": "SimpleLightsEndIndex",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 488
+              },
+              {
+                "name": "ClusteredDeferredSupportedEndIndex",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 492
+              },
+              {
+                "name": "DirectionalLightStaticShadowBufferSize",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 496
+              },
+              {
+                "name": "DirectionalLightWorldToStaticShadow",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 4,
+                "columns": 4,
+                "elements": 0,
+                "size": 64,
+                "shader_type": "",
+                "offset": 512
+              },
+              {
+                "name": "DirectionalLightShadowmapAtlas",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "Texture2D",
+                "offset": 576
+              },
+              {
+                "name": "ShadowmapSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 584
+              },
+              {
+                "name": "DirectionalLightStaticShadowmap",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "Texture2D",
+                "offset": 592
+              },
+              {
+                "name": "StaticShadowmapSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 600
+              },
+              {
+                "name": "ForwardLocalLightBuffer",
+                "base_type": 6,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "StrongTypedBuffer<float4>",
+                "offset": 608
+              },
+              {
+                "name": "NumCulledLightsGrid",
+                "base_type": 6,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "StrongTypedBuffer<uint>",
+                "offset": 616
+              },
+              {
+                "name": "CulledLightDataGrid",
+                "base_type": 6,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "StrongTypedBuffer<uint>",
+                "offset": 624
+              },
+              {
+                "name": "DummyRectLightSourceTexture",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "Texture2D",
+                "offset": 632
+              }
+            ],
+            "offset": 640
+          },
+          {
+            "name": "Reflection",
+            "base_type": 17,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 96,
+            "shader_type": "FReflectionUniformParameters",
+            "members": [
+              {
+                "name": "SkyLightParameters",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 0
+              },
+              {
+                "name": "SkyLightCubemapBrightness",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 16
+              },
+              {
+                "name": "SkyLightCubemap",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "TextureCube",
+                "offset": 24
+              },
+              {
+                "name": "SkyLightCubemapSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 32
+              },
+              {
+                "name": "SkyLightBlendDestinationCubemap",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "TextureCube",
+                "offset": 40
+              },
+              {
+                "name": "SkyLightBlendDestinationCubemapSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 48
+              },
+              {
+                "name": "ReflectionCubemap",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "TextureCubeArray",
+                "offset": 56
+              },
+              {
+                "name": "ReflectionCubemapSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 64
+              },
+              {
+                "name": "PreIntegratedGF",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "Texture2D",
+                "offset": 72
+              },
+              {
+                "name": "PreIntegratedGFSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 80
+              }
+            ],
+            "offset": 1280
+          },
+          {
+            "name": "PlanarReflection",
+            "base_type": 17,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 336,
+            "shader_type": "FPlanarReflectionUniformParameters",
+            "members": [
+              {
+                "name": "ReflectionPlane",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 0
+              },
+              {
+                "name": "PlanarReflectionOrigin",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 16
+              },
+              {
+                "name": "PlanarReflectionXAxis",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 32
+              },
+              {
+                "name": "PlanarReflectionYAxis",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 48
+              },
+              {
+                "name": "InverseTransposeMirrorMatrix",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 3,
+                "columns": 4,
+                "elements": 0,
+                "size": 48,
+                "shader_type": "",
+                "offset": 64
+              },
+              {
+                "name": "PlanarReflectionParameters",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 112
+              },
+              {
+                "name": "PlanarReflectionParameters2",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 2,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "",
+                "offset": 128
+              },
+              {
+                "name": "ProjectionWithExtraFOV",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 4,
+                "columns": 4,
+                "elements": 2,
+                "size": 128,
+                "shader_type": "",
+                "offset": 144
+              },
+              {
+                "name": "PlanarReflectionScreenScaleBias",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 2,
+                "size": 32,
+                "shader_type": "",
+                "offset": 272
+              },
+              {
+                "name": "PlanarReflectionScreenBound",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 2,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "",
+                "offset": 304
+              },
+              {
+                "name": "bIsStereo",
+                "base_type": 3,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 312
+              },
+              {
+                "name": "PlanarReflectionTexture",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "Texture2D",
+                "offset": 320
+              },
+              {
+                "name": "PlanarReflectionSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 328
+              }
+            ],
+            "offset": 1376
+          },
+          {
+            "name": "Fog",
+            "base_type": 17,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 160,
+            "shader_type": "FFogUniformParameters",
+            "members": [
+              {
+                "name": "ExponentialFogParameters",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 0
+              },
+              {
+                "name": "ExponentialFogParameters2",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 16
+              },
+              {
+                "name": "ExponentialFogColorParameter",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 32
+              },
+              {
+                "name": "ExponentialFogParameters3",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 48
+              },
+              {
+                "name": "InscatteringLightDirection",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 64
+              },
+              {
+                "name": "DirectionalInscatteringColor",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 80
+              },
+              {
+                "name": "SinCosInscatteringColorCubemapRotation",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 2,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "",
+                "offset": 96
+              },
+              {
+                "name": "FogInscatteringTextureParameters",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 112
+              },
+              {
+                "name": "ApplyVolumetricFog",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 124
+              },
+              {
+                "name": "FogInscatteringColorCubemap",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "TextureCube",
+                "offset": 128
+              },
+              {
+                "name": "FogInscatteringColorSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 136
+              },
+              {
+                "name": "IntegratedLightScattering",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "Texture3D",
+                "offset": 144
+              },
+              {
+                "name": "IntegratedLightScatteringSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 152
+              }
+            ],
+            "offset": 1712
+          },
+          {
+            "name": "FogISR",
+            "base_type": 17,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 160,
+            "shader_type": "FFogUniformParameters",
+            "members": [
+              {
+                "name": "ExponentialFogParameters",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 0
+              },
+              {
+                "name": "ExponentialFogParameters2",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 16
+              },
+              {
+                "name": "ExponentialFogColorParameter",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 32
+              },
+              {
+                "name": "ExponentialFogParameters3",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 48
+              },
+              {
+                "name": "InscatteringLightDirection",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 64
+              },
+              {
+                "name": "DirectionalInscatteringColor",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 4,
+                "elements": 0,
+                "size": 16,
+                "shader_type": "",
+                "offset": 80
+              },
+              {
+                "name": "SinCosInscatteringColorCubemapRotation",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 2,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "",
+                "offset": 96
+              },
+              {
+                "name": "FogInscatteringTextureParameters",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 3,
+                "elements": 0,
+                "size": 12,
+                "shader_type": "",
+                "offset": 112
+              },
+              {
+                "name": "ApplyVolumetricFog",
+                "base_type": 4,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 4,
+                "shader_type": "",
+                "offset": 124
+              },
+              {
+                "name": "FogInscatteringColorCubemap",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "TextureCube",
+                "offset": 128
+              },
+              {
+                "name": "FogInscatteringColorSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 136
+              },
+              {
+                "name": "IntegratedLightScattering",
+                "base_type": 5,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "Texture3D",
+                "offset": 144
+              },
+              {
+                "name": "IntegratedLightScatteringSampler",
+                "base_type": 8,
+                "precision": 0,
+                "rows": 1,
+                "columns": 1,
+                "elements": 0,
+                "size": 8,
+                "shader_type": "SamplerState",
+                "offset": 152
+              }
+            ],
+            "offset": 1872
+          },
+          {
+            "name": "SSProfilesTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 2032
+          }
+        ],
+        "offset": 0
+      },
+      {
+        "name": "SceneTextures",
+        "base_type": 17,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 288,
+        "shader_type": "FSceneTexturesUniformParameters",
+        "members": [
+          {
+            "name": "SceneColorTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 0
+          },
+          {
+            "name": "SceneColorTextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 8
+          },
+          {
+            "name": "SceneDepthTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 16
+          },
+          {
+            "name": "SceneDepthTextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 24
+          },
+          {
+            "name": "SceneDepthTextureNonMS",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float>",
+            "offset": 32
+          },
+          {
+            "name": "GBufferATexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 40
+          },
+          {
+            "name": "GBufferBTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 48
+          },
+          {
+            "name": "GBufferCTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 56
+          },
+          {
+            "name": "GBufferDTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 64
+          },
+          {
+            "name": "GBufferETexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 72
+          },
+          {
+            "name": "GBufferFTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 80
+          },
+          {
+            "name": "GBufferVelocityTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 88
+          },
+          {
+            "name": "GBufferATextureNonMS",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "offset": 96
+          },
+          {
+            "name": "GBufferBTextureNonMS",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "offset": 104
+          },
+          {
+            "name": "GBufferCTextureNonMS",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "offset": 112
+          },
+          {
+            "name": "GBufferDTextureNonMS",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "offset": 120
+          },
+          {
+            "name": "GBufferETextureNonMS",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "offset": 128
+          },
+          {
+            "name": "GBufferFTextureNonMS",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "offset": 136
+          },
+          {
+            "name": "GBufferVelocityTextureNonMS",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float4>",
+            "offset": 144
+          },
+          {
+            "name": "GBufferATextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 152
+          },
+          {
+            "name": "GBufferBTextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 160
+          },
+          {
+            "name": "GBufferCTextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 168
+          },
+          {
+            "name": "GBufferDTextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 176
+          },
+          {
+            "name": "GBufferETextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 184
+          },
+          {
+            "name": "GBufferFTextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 192
+          },
+          {
+            "name": "GBufferVelocityTextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 200
+          },
+          {
+            "name": "ScreenSpaceAOTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 208
+          },
+          {
+            "name": "ScreenSpaceAOTextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 216
+          },
+          {
+            "name": "CustomDepthTextureNonMS",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<float>",
+            "offset": 224
+          },
+          {
+            "name": "CustomDepthTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 232
+          },
+          {
+            "name": "CustomDepthTextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 240
+          },
+          {
+            "name": "CustomStencilTexture",
+            "base_type": 6,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<uint2>",
+            "offset": 248
+          },
+          {
+            "name": "SceneStencilTexture",
+            "base_type": 6,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D<uint2>",
+            "offset": 256
+          },
+          {
+            "name": "EyeAdaptation",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 264
+          },
+          {
+            "name": "SceneColorCopyTexture",
+            "base_type": 5,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "Texture2D",
+            "offset": 272
+          },
+          {
+            "name": "SceneColorCopyTextureSampler",
+            "base_type": 8,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 8,
+            "shader_type": "SamplerState",
+            "offset": 280
+          }
+        ],
+        "offset": 2048
+      },
+      {
+        "name": "HZBUvFactorAndInvFactor",
+        "base_type": 4,
+        "precision": 0,
+        "rows": 1,
+        "columns": 4,
+        "elements": 0,
+        "size": 16,
+        "shader_type": "",
+        "offset": 2336
+      },
+      {
+        "name": "PrevScreenPositionScaleBias",
+        "base_type": 4,
+        "precision": 0,
+        "rows": 1,
+        "columns": 4,
+        "elements": 0,
+        "size": 16,
+        "shader_type": "",
+        "offset": 2352
+      },
+      {
+        "name": "PrevSceneColorPreExposureInv",
+        "base_type": 4,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 4,
+        "shader_type": "",
+        "offset": 2368
+      },
+      {
+        "name": "HZBTexture",
+        "base_type": 5,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Texture2D",
+        "offset": 2376
+      },
+      {
+        "name": "HZBSampler",
+        "base_type": 8,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "SamplerState",
+        "offset": 2384
+      },
+      {
+        "name": "PrevSceneColor",
+        "base_type": 5,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Texture2D",
+        "offset": 2392
+      },
+      {
+        "name": "PrevSceneColorSampler",
+        "base_type": 8,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "SamplerState",
+        "offset": 2400
+      },
+      {
+        "name": "TranslucencyLightingVolumeAmbientInner",
+        "base_type": 5,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Texture3D",
+        "offset": 2408
+      },
+      {
+        "name": "TranslucencyLightingVolumeAmbientInnerSampler",
+        "base_type": 8,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "SamplerState",
+        "offset": 2416
+      },
+      {
+        "name": "TranslucencyLightingVolumeAmbientOuter",
+        "base_type": 5,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Texture3D",
+        "offset": 2424
+      },
+      {
+        "name": "TranslucencyLightingVolumeAmbientOuterSampler",
+        "base_type": 8,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "SamplerState",
+        "offset": 2432
+      },
+      {
+        "name": "TranslucencyLightingVolumeDirectionalInner",
+        "base_type": 5,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Texture3D",
+        "offset": 2440
+      },
+      {
+        "name": "TranslucencyLightingVolumeDirectionalInnerSampler",
+        "base_type": 8,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "SamplerState",
+        "offset": 2448
+      },
+      {
+        "name": "TranslucencyLightingVolumeDirectionalOuter",
+        "base_type": 5,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "Texture3D",
+        "offset": 2456
+      },
+      {
+        "name": "TranslucencyLightingVolumeDirectionalOuterSampler",
+        "base_type": 8,
+        "precision": 0,
+        "rows": 1,
+        "columns": 1,
+        "elements": 0,
+        "size": 8,
+        "shader_type": "SamplerState",
+        "offset": 2464
+      }
+    ]
+  },
+  "comparison": {
+    "exact_source_layout_match": false,
+    "differences": [
+      {
+        "name": "HZBSampler",
+        "changes": {
+          "offset": [
+            2368,
+            2384
+          ],
+          "resource_index": [
+            69,
+            72
+          ]
+        }
+      },
+      {
+        "name": "HZBTexture",
+        "changes": {
+          "offset": [
+            2360,
+            2376
+          ],
+          "resource_index": [
+            68,
+            71
+          ]
+        }
+      },
+      {
+        "name": "HZBUvFactorAndInvFactor",
+        "changes": {
+          "offset": [
+            2320,
+            2336
+          ]
+        }
+      },
+      {
+        "name": "PrevSceneColor",
+        "changes": {
+          "offset": [
+            2376,
+            2392
+          ],
+          "resource_index": [
+            70,
+            73
+          ]
+        }
+      },
+      {
+        "name": "PrevSceneColorPreExposureInv",
+        "changes": {
+          "offset": [
+            2352,
+            2368
+          ]
+        }
+      },
+      {
+        "name": "PrevSceneColorSampler",
+        "changes": {
+          "offset": [
+            2384,
+            2400
+          ],
+          "resource_index": [
+            71,
+            74
+          ]
+        }
+      },
+      {
+        "name": "PrevScreenPositionScaleBias",
+        "changes": {
+          "offset": [
+            2336,
+            2352
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.CustomDepthTexture",
+        "changes": {
+          "offset": [
+            2256,
+            2280
+          ],
+          "resource_index": [
+            61,
+            64
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.CustomDepthTextureNonMS",
+        "changes": {
+          "offset": [
+            2248,
+            2272
+          ],
+          "resource_index": [
+            60,
+            63
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.CustomDepthTextureSampler",
+        "changes": {
+          "offset": [
+            2264,
+            2288
+          ],
+          "resource_index": [
+            62,
+            65
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.CustomStencilTexture",
+        "changes": {
+          "offset": [
+            2272,
+            2296
+          ],
+          "resource_index": [
+            63,
+            66
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.EyeAdaptation",
+        "changes": {
+          "offset": [
+            2288,
+            2312
+          ],
+          "resource_index": [
+            65,
+            68
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferATextureNonMS",
+        "changes": {
+          "offset": [
+            2136,
+            2144
+          ],
+          "resource_index": [
+            46,
+            47
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferATextureSampler",
+        "changes": {
+          "offset": [
+            2184,
+            2200
+          ],
+          "resource_index": [
+            52,
+            54
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferBTextureNonMS",
+        "changes": {
+          "offset": [
+            2144,
+            2152
+          ],
+          "resource_index": [
+            47,
+            48
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferBTextureSampler",
+        "changes": {
+          "offset": [
+            2192,
+            2208
+          ],
+          "resource_index": [
+            53,
+            55
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferCTextureNonMS",
+        "changes": {
+          "offset": [
+            2152,
+            2160
+          ],
+          "resource_index": [
+            48,
+            49
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferCTextureSampler",
+        "changes": {
+          "offset": [
+            2200,
+            2216
+          ],
+          "resource_index": [
+            54,
+            56
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferDTextureNonMS",
+        "changes": {
+          "offset": [
+            2160,
+            2168
+          ],
+          "resource_index": [
+            49,
+            50
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferDTextureSampler",
+        "changes": {
+          "offset": [
+            2208,
+            2224
+          ],
+          "resource_index": [
+            55,
+            57
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferETextureNonMS",
+        "changes": {
+          "offset": [
+            2168,
+            2176
+          ],
+          "resource_index": [
+            50,
+            51
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferETextureSampler",
+        "changes": {
+          "offset": [
+            2216,
+            2232
+          ],
+          "resource_index": [
+            56,
+            58
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferFTexture",
+        "changes": {
+          "presence": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferFTextureNonMS",
+        "changes": {
+          "presence": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferFTextureSampler",
+        "changes": {
+          "presence": [
+            false,
+            true
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferVelocityTexture",
+        "changes": {
+          "offset": [
+            2128,
+            2136
+          ],
+          "resource_index": [
+            45,
+            46
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferVelocityTextureNonMS",
+        "changes": {
+          "offset": [
+            2176,
+            2192
+          ],
+          "resource_index": [
+            51,
+            53
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.GBufferVelocityTextureSampler",
+        "changes": {
+          "offset": [
+            2224,
+            2248
+          ],
+          "resource_index": [
+            57,
+            60
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.SceneColorCopyTexture",
+        "changes": {
+          "offset": [
+            2296,
+            2320
+          ],
+          "resource_index": [
+            66,
+            69
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.SceneColorCopyTextureSampler",
+        "changes": {
+          "offset": [
+            2304,
+            2328
+          ],
+          "resource_index": [
+            67,
+            70
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.SceneStencilTexture",
+        "changes": {
+          "offset": [
+            2280,
+            2304
+          ],
+          "resource_index": [
+            64,
+            67
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.ScreenSpaceAOTexture",
+        "changes": {
+          "offset": [
+            2232,
+            2256
+          ],
+          "resource_index": [
+            58,
+            61
+          ]
+        }
+      },
+      {
+        "name": "SceneTextures.ScreenSpaceAOTextureSampler",
+        "changes": {
+          "offset": [
+            2240,
+            2264
+          ],
+          "resource_index": [
+            59,
+            62
+          ]
+        }
+      },
+      {
+        "name": "TranslucencyLightingVolumeAmbientInner",
+        "changes": {
+          "offset": [
+            2392,
+            2408
+          ],
+          "resource_index": [
+            72,
+            75
+          ]
+        }
+      },
+      {
+        "name": "TranslucencyLightingVolumeAmbientInnerSampler",
+        "changes": {
+          "offset": [
+            2400,
+            2416
+          ],
+          "resource_index": [
+            73,
+            76
+          ]
+        }
+      },
+      {
+        "name": "TranslucencyLightingVolumeAmbientOuter",
+        "changes": {
+          "offset": [
+            2408,
+            2424
+          ],
+          "resource_index": [
+            74,
+            77
+          ]
+        }
+      },
+      {
+        "name": "TranslucencyLightingVolumeAmbientOuterSampler",
+        "changes": {
+          "offset": [
+            2416,
+            2432
+          ],
+          "resource_index": [
+            75,
+            78
+          ]
+        }
+      },
+      {
+        "name": "TranslucencyLightingVolumeDirectionalInner",
+        "changes": {
+          "offset": [
+            2424,
+            2440
+          ],
+          "resource_index": [
+            76,
+            79
+          ]
+        }
+      },
+      {
+        "name": "TranslucencyLightingVolumeDirectionalInnerSampler",
+        "changes": {
+          "offset": [
+            2432,
+            2448
+          ],
+          "resource_index": [
+            77,
+            80
+          ]
+        }
+      },
+      {
+        "name": "TranslucencyLightingVolumeDirectionalOuter",
+        "changes": {
+          "offset": [
+            2440,
+            2456
+          ],
+          "resource_index": [
+            78,
+            81
+          ]
+        }
+      },
+      {
+        "name": "TranslucencyLightingVolumeDirectionalOuterSampler",
+        "changes": {
+          "offset": [
+            2448,
+            2464
+          ],
+          "resource_index": [
+            79,
+            82
+          ]
+        }
+      }
+    ],
+    "member_order_match": false,
+    "nested_differences": [
+      {
+        "path": "",
+        "field": "struct_size",
+        "values": [
+          2464,
+          2480
+        ]
+      },
+      {
+        "path": "HZBSampler",
+        "field": "offset",
+        "values": [
+          2368,
+          2384
+        ]
+      },
+      {
+        "path": "HZBTexture",
+        "field": "offset",
+        "values": [
+          2360,
+          2376
+        ]
+      },
+      {
+        "path": "HZBUvFactorAndInvFactor",
+        "field": "offset",
+        "values": [
+          2320,
+          2336
+        ]
+      },
+      {
+        "path": "PrevSceneColor",
+        "field": "offset",
+        "values": [
+          2376,
+          2392
+        ]
+      },
+      {
+        "path": "PrevSceneColorPreExposureInv",
+        "field": "offset",
+        "values": [
+          2352,
+          2368
+        ]
+      },
+      {
+        "path": "PrevSceneColorSampler",
+        "field": "offset",
+        "values": [
+          2384,
+          2400
+        ]
+      },
+      {
+        "path": "PrevScreenPositionScaleBias",
+        "field": "offset",
+        "values": [
+          2336,
+          2352
+        ]
+      },
+      {
+        "path": "SceneTextures",
+        "field": "size",
+        "values": [
+          272,
+          288
+        ]
+      },
+      {
+        "path": "SceneTextures",
+        "field": "struct_size",
+        "values": [
+          272,
+          288
+        ]
+      },
+      {
+        "path": "SceneTextures",
+        "field": "member_order",
+        "values": [
+          [
+            "SceneColorTexture",
+            "SceneColorTextureSampler",
+            "SceneDepthTexture",
+            "SceneDepthTextureSampler",
+            "SceneDepthTextureNonMS",
+            "GBufferATexture",
+            "GBufferBTexture",
+            "GBufferCTexture",
+            "GBufferDTexture",
+            "GBufferETexture",
+            "GBufferVelocityTexture",
+            "GBufferATextureNonMS",
+            "GBufferBTextureNonMS",
+            "GBufferCTextureNonMS",
+            "GBufferDTextureNonMS",
+            "GBufferETextureNonMS",
+            "GBufferVelocityTextureNonMS",
+            "GBufferATextureSampler",
+            "GBufferBTextureSampler",
+            "GBufferCTextureSampler",
+            "GBufferDTextureSampler",
+            "GBufferETextureSampler",
+            "GBufferVelocityTextureSampler",
+            "ScreenSpaceAOTexture",
+            "ScreenSpaceAOTextureSampler",
+            "CustomDepthTextureNonMS",
+            "CustomDepthTexture",
+            "CustomDepthTextureSampler",
+            "CustomStencilTexture",
+            "SceneStencilTexture",
+            "EyeAdaptation",
+            "SceneColorCopyTexture",
+            "SceneColorCopyTextureSampler"
+          ],
+          [
+            "SceneColorTexture",
+            "SceneColorTextureSampler",
+            "SceneDepthTexture",
+            "SceneDepthTextureSampler",
+            "SceneDepthTextureNonMS",
+            "GBufferATexture",
+            "GBufferBTexture",
+            "GBufferCTexture",
+            "GBufferDTexture",
+            "GBufferETexture",
+            "GBufferFTexture",
+            "GBufferVelocityTexture",
+            "GBufferATextureNonMS",
+            "GBufferBTextureNonMS",
+            "GBufferCTextureNonMS",
+            "GBufferDTextureNonMS",
+            "GBufferETextureNonMS",
+            "GBufferFTextureNonMS",
+            "GBufferVelocityTextureNonMS",
+            "GBufferATextureSampler",
+            "GBufferBTextureSampler",
+            "GBufferCTextureSampler",
+            "GBufferDTextureSampler",
+            "GBufferETextureSampler",
+            "GBufferFTextureSampler",
+            "GBufferVelocityTextureSampler",
+            "ScreenSpaceAOTexture",
+            "ScreenSpaceAOTextureSampler",
+            "CustomDepthTextureNonMS",
+            "CustomDepthTexture",
+            "CustomDepthTextureSampler",
+            "CustomStencilTexture",
+            "SceneStencilTexture",
+            "EyeAdaptation",
+            "SceneColorCopyTexture",
+            "SceneColorCopyTextureSampler"
+          ]
+        ]
+      },
+      {
+        "path": "SceneTextures.CustomDepthTexture",
+        "field": "offset",
+        "values": [
+          208,
+          232
+        ]
+      },
+      {
+        "path": "SceneTextures.CustomDepthTextureNonMS",
+        "field": "offset",
+        "values": [
+          200,
+          224
+        ]
+      },
+      {
+        "path": "SceneTextures.CustomDepthTextureSampler",
+        "field": "offset",
+        "values": [
+          216,
+          240
+        ]
+      },
+      {
+        "path": "SceneTextures.CustomStencilTexture",
+        "field": "offset",
+        "values": [
+          224,
+          248
+        ]
+      },
+      {
+        "path": "SceneTextures.EyeAdaptation",
+        "field": "offset",
+        "values": [
+          240,
+          264
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferATextureNonMS",
+        "field": "offset",
+        "values": [
+          88,
+          96
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferATextureSampler",
+        "field": "offset",
+        "values": [
+          136,
+          152
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferBTextureNonMS",
+        "field": "offset",
+        "values": [
+          96,
+          104
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferBTextureSampler",
+        "field": "offset",
+        "values": [
+          144,
+          160
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferCTextureNonMS",
+        "field": "offset",
+        "values": [
+          104,
+          112
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferCTextureSampler",
+        "field": "offset",
+        "values": [
+          152,
+          168
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferDTextureNonMS",
+        "field": "offset",
+        "values": [
+          112,
+          120
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferDTextureSampler",
+        "field": "offset",
+        "values": [
+          160,
+          176
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferETextureNonMS",
+        "field": "offset",
+        "values": [
+          120,
+          128
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferETextureSampler",
+        "field": "offset",
+        "values": [
+          168,
+          184
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferVelocityTexture",
+        "field": "offset",
+        "values": [
+          80,
+          88
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferVelocityTextureNonMS",
+        "field": "offset",
+        "values": [
+          128,
+          144
+        ]
+      },
+      {
+        "path": "SceneTextures.GBufferVelocityTextureSampler",
+        "field": "offset",
+        "values": [
+          176,
+          200
+        ]
+      },
+      {
+        "path": "SceneTextures.SceneColorCopyTexture",
+        "field": "offset",
+        "values": [
+          248,
+          272
+        ]
+      },
+      {
+        "path": "SceneTextures.SceneColorCopyTextureSampler",
+        "field": "offset",
+        "values": [
+          256,
+          280
+        ]
+      },
+      {
+        "path": "SceneTextures.SceneStencilTexture",
+        "field": "offset",
+        "values": [
+          232,
+          256
+        ]
+      },
+      {
+        "path": "SceneTextures.ScreenSpaceAOTexture",
+        "field": "offset",
+        "values": [
+          184,
+          208
+        ]
+      },
+      {
+        "path": "SceneTextures.ScreenSpaceAOTextureSampler",
+        "field": "offset",
+        "values": [
+          192,
+          216
+        ]
+      },
+      {
+        "path": "TranslucencyLightingVolumeAmbientInner",
+        "field": "offset",
+        "values": [
+          2392,
+          2408
+        ]
+      },
+      {
+        "path": "TranslucencyLightingVolumeAmbientInnerSampler",
+        "field": "offset",
+        "values": [
+          2400,
+          2416
+        ]
+      },
+      {
+        "path": "TranslucencyLightingVolumeAmbientOuter",
+        "field": "offset",
+        "values": [
+          2408,
+          2424
+        ]
+      },
+      {
+        "path": "TranslucencyLightingVolumeAmbientOuterSampler",
+        "field": "offset",
+        "values": [
+          2416,
+          2432
+        ]
+      },
+      {
+        "path": "TranslucencyLightingVolumeDirectionalInner",
+        "field": "offset",
+        "values": [
+          2424,
+          2440
+        ]
+      },
+      {
+        "path": "TranslucencyLightingVolumeDirectionalInnerSampler",
+        "field": "offset",
+        "values": [
+          2432,
+          2448
+        ]
+      },
+      {
+        "path": "TranslucencyLightingVolumeDirectionalOuter",
+        "field": "offset",
+        "values": [
+          2440,
+          2456
+        ]
+      },
+      {
+        "path": "TranslucencyLightingVolumeDirectionalOuterSampler",
+        "field": "offset",
+        "values": [
+          2448,
+          2464
+        ]
+      }
+    ]
+  },
+  "computed_resource_layout_hash": 127927067,
+  "shader_associations": [
+    {
+      "shader_index": 857,
+      "uniform_buffer": 0,
+      "resource_table_active": true,
+      "original_layout_hash": 127927067
+    },
+    {
+      "shader_index": 3378,
+      "uniform_buffer": 1,
+      "resource_table_active": true,
+      "original_layout_hash": 127927067
+    }
+  ],
+  "hash_corroborated": true,
+  "capture_evidence": [
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-depth-scene/member-chain.json",
+      "sha256": "0903441cfb7496590b32dbca350f48fc2ef99c9471f5b0575552c04a45daee4b"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-depth-nested/1404c9240.asm",
+      "sha256": "77444f309d6fc5eb19c608189133e98f698ac498ee02d1098b737d41a5e03132"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-forward/member-chain.json",
+      "sha256": "184ca9cf59d5714a16b9c79bfead10ec22dc917fbd81f2f4c289eec58ab18b19"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-nested/1404abad0.asm",
+      "sha256": "2c7b9b59bcd9d3a9d3fd38ac15d0b816f663db8db8766d7c753eccc569353836"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-reflection/member-chain.json",
+      "sha256": "fffec61e7cd02b9635682ea37e28d43b89bfe9b88c121656282c8e6c5b771fd4"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-nested/1404ac240.asm",
+      "sha256": "ef8192305a5143af6cf87d286cbd769144b4c83e1819df1bdd5f05bdc9b06cef"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-planar/member-chain.json",
+      "sha256": "7b8a4a804ca67812845e4263d84eb6bf032856e7f15c5d1891d5fc9dc9ea9f85"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-nested/1404c08e0.asm",
+      "sha256": "7573d65fe0ac8d458e786dcceac32f3a407e31c29632f30c1d7513eeb43fe4d5"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-fog/member-chain.json",
+      "sha256": "0aeff08e2b7755d19e1be7c079fd32118329fdbd4407d7f927a88db3f4f040a1"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-nested/14049fd60.asm",
+      "sha256": "20cbcfccd4995e10e2e9f169eded779af9c0ff408563cb0156baf766cd66a083"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-shared/member-chain.json",
+      "sha256": "2ebb2e527746e42fd9ad95dc4a11d23f54c25e4d4aaf02c252b34d2ea3676e4f"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-shared/1404911d0.asm",
+      "sha256": "a31ee80e614c078c1d4fab0713f17dbe8c97265babfde13b1afcf6693a17a85f"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-identity/refs.json",
+      "sha256": "504f175fbfdbe4e7b0f6adfc2b43b9370af1320a0e4b48402baf711b611e1243"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-shared/refs.json",
+      "sha256": "fee73e0d4205f9fc908dff7ccb4a26906423e809f2c2b36a9547fd03383cecff"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-nested/refs.json",
+      "sha256": "e9cf7f983529aac4ee02eb4214d0167f7c2ace8902bc329c2d04fa3ac3906b33"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-identity/member-chain.json",
+      "sha256": "8534b99e6eb940df14e3ef78637df3d12f7806a043fcca5cb237b81a0ffec3b0"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/translucent-base-identity/1404912e0.asm",
+      "sha256": "81b1fd138e9edb94715792d9ccce9e779edbe063093036ae174a88e5a309eebc"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/paper2d-shader-semantics/conversion/d3d.json",
+      "sha256": "72297e49189bb5c0f355eab8926dfb13c4d5947e9a54a2280ed6a72dee9da1f1"
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Private/BasePassRendering.h",
+      "sha256": "8cea36f04b13b13c1e832d00a1c073b0912490d8a3724e0a845ac03a5402e217"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Private/SceneRendering.h",
+      "sha256": "cb724dc37c6e35f77e14cfeda1d6b7838505dfdbee384e05b293ff90e0b7719e"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Private/ReflectionEnvironment.h",
+      "sha256": "83cc70d4fce1a0f29c781d5a9960d35faf4407c29b80d7cd89b6bc1c4fb57b35"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Private/PlanarReflectionRendering.h",
+      "sha256": "74dbd82f5d813f074ea6ba5947eab7f4685de0b5a4038ffe927a71fa2557c4d5"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Private/FogRendering.h",
+      "sha256": "b6aa4a3d809b9c467fa84f975e44f0de5e048479b3035e524ade98529f770e7d"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Public/SceneRenderTargetParameters.h",
+      "sha256": "ca4896e8f654e1bff763d7bb25b61e6aaaa03ea6965b651d0f78b6d82301beff"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/RenderCore/Public/ShaderParameterMacros.h",
+      "sha256": "6d85c6bd15b08234c93cacc78d4cc4a029e1b0017939425a381216eff457956b"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/RHI/Public/RHI.h",
+      "sha256": "fdfc50563d8d71197229036a34e619ccc4d2717fac2e74632433669afeeda110"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/RHI/Public/RHIDefinitions.h",
+      "sha256": "a81b5e11cc2b0dac79eaf908560baa5c1bba38b638a8e705f90323b1671123a6"
+    },
+    {
+      "path": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Public/Matrix3x4.h",
+      "sha256": "3a4f90c48ed9f4bc4ccc65a355c91985356f21e0a8b1ae44d62b6f2e03d7cafb"
+    }
+  ],
+  "conclusion": "Original and current source layouts differ; both associated Paper2D shader wrappers have active resource tables with matching original resource layout hash. This is static metadata evidence, not a runtime compatibility receipt.",
+  "reproduction": "From repository root: porting/.venv/bin/python -I porting/material_pipeline/view_original_probe.py --strings 146685f38 146685f60 --out porting/generated/material_pipeline/translucent-base-identity; porting/.venv/bin/python -I porting/material_pipeline/view_original_probe.py --chain 1432374a0 --out porting/generated/material_pipeline/translucent-base-identity; porting/.venv/bin/python -I porting/material_pipeline/view_original_probe.py --strings 148273e00 --chain 143236a90 --out porting/generated/material_pipeline/translucent-base-shared; porting/.venv/bin/python -I porting/material_pipeline/view_original_probe.py --strings 14829ef30 14829ebb0 1482c30f0 14828cb50 --out porting/generated/material_pipeline/translucent-base-nested; capture chains 143327590, 14332d9e0, 1433f4f50, 14329d8f0 respectively into translucent-base-forward, translucent-base-reflection, translucent-base-planar, translucent-base-fog using the same probe; reuse SceneTextures captures documented in porting/behavior/translucent_depth_uniform_layout_runtime/evidence.json; python3 porting/material_pipeline/translucent_base_layout_contract.py"
+}

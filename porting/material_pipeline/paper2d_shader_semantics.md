@@ -258,3 +258,21 @@ layout, including SceneTextures, LPV and both matrix arrays. Current source is
 observed wrappers have inactive ShadowDepthPass resource tables and zero hashes;
 the computed original hash 191892491 is therefore not corroborated by them.
 This pass also needs explicit original/current binding adaptation.
+
+TranslucentBasePass recovery completes the six fixed original uniform layouts
+used by this inventory. Its recursive Shared parameters match current source;
+its SceneTextures expansion shifts later members, producing 2464 original bytes
+versus 2480 currently. Both active wrappers corroborate original hash 127927067.
+`export_original_uniform_contracts.py` reparses the original captures, verifies
+type and variable-name literals against the pinned original image, and exports
+all six original trees and 55 fixed bindings. Fourteen Material bindings remain
+explicitly expression-dependent, without a fabricated fixed contract.
+
+`LegacyOriginalUniformData` reconstructs original bytes from bounded current
+contents using exact semantic member paths, shapes, precision and resource
+enumeration. It supports moved members, recursive structs and numeric arrays;
+missing or changed members require complete typed original values. Only padding
+is zeroed. Resource slots preserve borrowed pointer bytes, including explicit
+nulls, without assuming pointer validity. Publication is atomic on failure.
+This is a data-construction kernel, not an RHI buffer or renderer integration;
+producer values, dedicated original-layout binding and rendering remain pending.
