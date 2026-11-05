@@ -1,0 +1,23 @@
+{
+  "image": "image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "windows": [
+    {
+      "address": "0x1410f0920",
+      "length": "0x318",
+      "sha256": "e9ea12b857b935ad13b0c6cd19e611618a5c2d8cb488c0385cec1e14dd723fd4"
+    },
+    {
+      "address": "0x141e5b450",
+      "length": "0xf0",
+      "sha256": "a980f2f3865d55bcec7cc36bc430abe0584a0c4b6906bd959bc3b414ad31bff4"
+    },
+    {
+      "address": "0x142547b10",
+      "length": "0x80",
+      "sha256": "8f395b2209a6f0c4247551b8cd1ffa00be8897ec957e97e2bcc2b676abf4b274"
+    }
+  ],
+  "note": "Windows are identity pins, not function-bound assertions."
+}
