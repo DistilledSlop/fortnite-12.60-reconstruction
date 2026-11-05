@@ -2,6 +2,13 @@
 #include "UFortTrackMovementComponent.h"
 #include "Net/UnrealNetwork.h"
 
+void UFortTrackMovementComponent::FlipDirection()
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	// Original native body 0x1420fa050; see evidence.json.
+	TrackMovement.bReverseDirectionAlongSpline = !TrackMovement.bReverseDirectionAlongSpline;
+}
+
 float UFortTrackMovementComponent::GetDistanceAlongSpline() const
 {
 	// Exact original embedded struct scalar leaf; see README.md.

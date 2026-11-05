@@ -156,5 +156,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMaxMapZoomLevel() const;
 
+	UFUNCTION(BlueprintCallable)
+	void ToggleHighlightsListVisibility();
+
+	UFUNCTION(BlueprintCallable)
+	void TogglePlayerListVisibility();
+
 };
 

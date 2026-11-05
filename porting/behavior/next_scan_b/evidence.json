@@ -1,0 +1,18 @@
+{
+  "sources": [
+    "porting/generated/native-triage008/index.json",
+    "porting/generated/native-triage008/0x142b18ed0.c",
+    "porting/generated/native-triage008/0x142b18ed0.asm",
+    "porting/generated/native-triage008/0x142ac75a0.c",
+    "porting/generated/native-triage008/0x142ac7670.c",
+    "porting/generated/reflection/fortnite_game_reflection.json",
+    "porting/native/Source/FortniteGame/Generated/FTrackMovement.h",
+    "porting/decompilation_notes.md"
+  ],
+  "findings": [
+    "FlipDirection writes the Boolean byte at object +0x14c; TrackMovement is at +0x140, its direction Boolean follows pointer and float at +0x0c.",
+    "ToggleHighlightsListVisibility invokes the script multicast dispatcher on delegate +0xf0, OnToggleHighlightsListEvent, with null arguments.",
+    "TogglePlayerListVisibility invokes the same dispatcher on delegate +0xe0, OnToggleReplayPlayerList, with null arguments."
+  ],
+  "validation": "Source inspection only; no build or tests requested."
+}

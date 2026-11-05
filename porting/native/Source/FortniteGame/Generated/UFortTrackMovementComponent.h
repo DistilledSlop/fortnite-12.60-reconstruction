@@ -71,6 +71,9 @@ public:
 	UPROPERTY(Transient)
 	float ClientPredictionSpeedModifier;
 
+	UFUNCTION(BlueprintCallable)
+	void FlipDirection();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetDistanceAlongSpline() const;
 

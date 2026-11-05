@@ -60117,5 +60117,68 @@
       "Math/UnrealMathUtility.h"
     ],
     "notes": "Recovered native body 0x141663ad0. Iterates PatrolWards array backwards; cleans up null or non-AActor elements via RemoveAt. For each ward actor, calls 0x142a174b0 (ProcessEvent GetAffectingType: EWardAffectType); if WardEffectTypeFilter matches or either is AffectsBothStartAndEndPoints (0), queries 0x142a17460 (ProcessEvent GetAffectingDistance) and tests squared distance from Point to ward location against AffectingDistance * AffectingDistance. Returns true if within range, false otherwise."
+  },
+  {
+    "function": "FlipDirection",
+    "kind": "exec",
+    "signature": "void FlipDirection()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/next_scan_b/UFortTrackMovementComponent_FlipDirection.inc",
+    "address": "0x142b18ed0",
+    "native_body_address": "0x1420fa050",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native body toggles byte at +0x14c: TrackMovement at +0x140 and its bReverseDirectionAlongSpline at +0x0c.",
+    "class": "UFortTrackMovementComponent"
+  },
+  {
+    "function": "ToggleHighlightsListVisibility",
+    "kind": "exec",
+    "signature": "void ToggleHighlightsListVisibility()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/next_scan_b/UFortReplayContext_ToggleHighlightsListVisibility.inc",
+    "address": "0x142ac75a0",
+    "native_body_address": "0x14248cf00",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native body passes object +0xf0 with null parameter block to multicast dispatcher 0x1406a9dc0.",
+    "class": "UFortReplayContext"
+  },
+  {
+    "function": "TogglePlayerListVisibility",
+    "kind": "exec",
+    "signature": "void TogglePlayerListVisibility()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/next_scan_b/UFortReplayContext_TogglePlayerListVisibility.inc",
+    "address": "0x142ac7670",
+    "native_body_address": "0x1421aa440",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native body passes object +0xe0 with null parameter block to multicast dispatcher 0x1406a9dc0.",
+    "class": "UFortReplayContext"
+  },
+  {
+    "class": "UAthenaChallengePageView",
+    "function": "OnPageCycledIn",
+    "kind": "exec",
+    "signature": "void OnPageCycledIn()",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/next_scan_a/UAthenaChallengePageView_OnPageCycledIn.inc",
+    "confidence": "high",
+    "address": "0x145189610",
+    "status": "ported",
+    "reflection_flags": "0x4080401",
+    "static": false,
+    "access": "public",
+    "notes": "Sets reflected PageState at 0x318 to enum value 2 (Displayed)."
   }
 ]

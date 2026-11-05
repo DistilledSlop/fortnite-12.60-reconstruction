@@ -47,5 +47,10 @@ public:
 	UPROPERTY()
 	EAthenaChallengePageState PageState;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void OnPageCycledIn();
+public:
+
 };
 

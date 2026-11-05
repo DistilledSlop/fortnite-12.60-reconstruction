@@ -38,3 +38,17 @@ float UFortReplayContext::GetMaxMapZoomLevel() const
 	return GetDefault<UFortRuntimeOptions>()->AthenaMapZoomMax;
 }
 
+void UFortReplayContext::ToggleHighlightsListVisibility()
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	// Original native body 0x14248cf00; see evidence.json.
+	OnToggleHighlightsListEvent.Broadcast();
+}
+
+void UFortReplayContext::TogglePlayerListVisibility()
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	// Original native body 0x1421aa440; see evidence.json.
+	OnToggleReplayPlayerList.Broadcast();
+}
+
