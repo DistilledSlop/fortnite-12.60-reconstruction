@@ -84,6 +84,13 @@ static traces do not establish successful local account initialization. See
 `porting/behavior/waiting_room_completion_runtime/evidence.json`. The local widget
 adaptation still bypasses the original credential dispatch.
 
+`CreateSelectedOnlineUserAccount` now materializes the selected data as an owned
+`FUserOnlineAccount` snapshot for a future identity provider. It requires a valid
+provider-supplied ID matching the selected account and exposes the original
+consumer's `id`, display name, empty email and selected access token. The snapshot
+does not change login status or broadcast completion; provider wiring, token
+renewal, native build and runtime verification remain pending.
+
 Typed login-step append and anchor-relative insertion now have native source
 implementations, preserving duplicate entries and delegate cloning. Their
 33 original state names now have direct literal-initializer receipts, including

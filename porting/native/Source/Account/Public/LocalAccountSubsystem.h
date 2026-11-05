@@ -5,6 +5,9 @@
 #include "Interfaces/IHttpRequest.h"
 #include "LocalAccountSubsystem.generated.h"
 
+class FUserOnlineAccount;
+class FUniqueNetId;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FLocalAccountSelectionComplete, bool, bSuccess, const FString&, Error);
 
 /** Selects a local backend account. This does not sign in to the online subsystem. */
@@ -37,6 +40,14 @@ public:
 
     UFUNCTION(BlueprintPure, Category = "Local Account")
     bool IsSelectionPending() const { return PendingRequest.IsValid(); }
+
+    /** Materialize the selected account for an identity provider. The caller's
+     * real provider ID must be valid and match AccountId; no ID type is inferred.
+     * Returns an owned snapshot, independent of later selections. This does not
+     * install an identity provider, change login status or broadcast completion.
+     * Call on the game thread, like account selection. */
+    TSharedPtr<FUserOnlineAccount> CreateSelectedOnlineUserAccount(
+        const TSharedRef<const FUniqueNetId>& UserId, FString& Error) const;
 
     virtual void Deinitialize() override;
 
