@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "3476f547ddf20bd776e568a2a70dc305122dfe86",
- "subject": "Keep active locker consistent when copying loadouts",
- "date": "2026-11-04T22:42:59-05:00",
+ "head": "d7214d1b5f4bb8be869ca56fa14fe0852229d337",
+ "subject": "Adapt original sign-in controls for local username accounts",
+ "date": "2026-11-04T22:52:37-05:00",
  "overall_pct": 28.571,
  "measured_pct": 27.701,
  "objective_pct": 27.7,
@@ -1214,7 +1214,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The username entry point is not connected to the game online login or profile systems; complete account behavior remains unverified. The remaining effort estimate needs review.",
+     "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending; frontend loading, online login and original MCP profile-manager integration remain unverified. The remaining effort estimate needs review.",
      "evidence_links": []
     },
     {
@@ -3208,7 +3208,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The username entry point is not connected to the game online login or profile systems; complete account behavior remains unverified. The remaining effort estimate needs review.",
+   "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending; frontend loading, online login and original MCP profile-manager integration remain unverified. The remaining effort estimate needs review.",
    "evidence_links": []
   },
   {

@@ -1095,7 +1095,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The username entry point is not connected to the game online login or profile systems; complete account behavior remains unverified. The remaining effort estimate needs review."
+          "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending; frontend loading, online login and original MCP profile-manager integration remain unverified. The remaining effort estimate needs review."
         },
         {
           "id": "backend.matchmaking",
