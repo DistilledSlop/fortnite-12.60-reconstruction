@@ -1,0 +1,25 @@
+{
+  "original_body": "0x141bed450",
+  "status": "unresolved",
+  "captures": [
+    "porting/generated/apollo-material-evidence/foundation-stream",
+    "porting/generated/apollo-material-evidence/foundation-deps",
+    "porting/generated/apollo-material-evidence/foundation-role"
+  ],
+  "complete_callees_prepared": ["0x141be2550"],
+  "blocking_effects": {
+    "0x141bec0f0": "Reads global 0x1478c36ed through 0x141d54630, combines counts at this+0xd18/0xd28 and supplied role !=3. Global owner/initialization/writers unresolved; cannot replace its value with a default or engine net-mode guess.",
+    "0x141be3020": "Conditional authority-game-mode registration calls 0x141738f90. Fields 0xb9c/0xce4, selector global 0x14811f2bc and native game-mode registration contract unresolved.",
+    "0x141be3f50": "OnLevelStreamedIn has full actor/HLOD processing, per-instance visibility data, material/texture construction and render-thread work. Captured 478-line body remains unimplemented.",
+    "0x141be38f0": "OnLevelShown has visibility updates, original timing/global statistics, manager notifications and dependent callbacks. Captured 200-line body remains unimplemented.",
+    "0x141be5e90": "Preserves first streaming timestamp only, records BuildingStartedStreaming stat, increments process-global count and always stores global 0x147c31c54 at record+0x24. Shared telemetry ownership remains unresolved.",
+    "0x141bea280": "Visibility path includes foundation hierarchy, HLOD visibility, original actor iteration, game-mode checks and material effects. Captured 167-line body remains unimplemented."
+  },
+  "caller_observations": [
+    "The body consumes LevelToStream at 0xba0; it does not select an AdditionalWorlds candidate. Candidate selection occurs in upstream callers and must remain separate.",
+    "Streaming object creation uses ULevelStreaming, installs OnLevelStreamedIn/OnLevelShown bindings and changes networking state on nonauthority actors.",
+    "Transform scale comes from root RelativeScale3D, while translation is root world translation and rotation is virtual slot 0xec8. Copying a full component world transform changes behavior.",
+    "The existing-stream object path reactivates loading/visibility and updates streaming before invoking foundation visibility; skipping it would omit original behavior.",
+    "No incomplete streaming body or substituted callbacks have been proposed as callable recovered implementation."
+  ]
+}

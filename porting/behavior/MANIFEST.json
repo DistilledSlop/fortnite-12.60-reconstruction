@@ -63732,5 +63732,18 @@
     "signature_status": "proposed",
     "status": "ported",
     "confidence": "high"
+  },
+  {
+    "class": "ABuildingFoundation",
+    "function": "NativeIsDynamicFoundationOrParent",
+    "kind": "helper",
+    "signature": "bool NativeIsDynamicFoundationOrParent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141be2550",
+    "inc_path": "porting/behavior/maps_foundation_streaming_runtime/ABuildingFoundation_NativeIsDynamicFoundationOrParent.inc",
+    "notes": "Complete original nonvirtual predicate: nonzero DynamicFoundationType at 0xb6b, otherwise recursively query ParentFoundation at 0xd78. Both fields match reflection; assembly explicitly passes ParentFoundation as recursive this. Does not integrate the unresolved streaming caller 0x141bed450. Build/runtime pending."
   }
 ]
