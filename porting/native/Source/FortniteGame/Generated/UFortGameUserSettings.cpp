@@ -120,6 +120,29 @@ bool UFortGameUserSettings::IsHeadphoneModeEnabled() const
 	return UFortGameUserSettings::bUseHeadphoneMode;
 }
 
+void UFortGameUserSettings::SetCachedPlayerLevel(int32 Value)
+{
+	// Behaviour snippet: UFortGameUserSettings::SetCachedPlayerLevel (body only; spliced into the generated member function).
+	// Original address: 0x14292f6c0
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	CachedPlayerLevel = Value;
+}
+
+void UFortGameUserSettings::SetHasSeenPanningTip(bool bHasSeenIt)
+{
+	// Behaviour snippet: UFortGameUserSettings::SetHasSeenPanningTip (body only; spliced into the generated member function).
+	// Original address: 0x141eafbb0 (via exec wrapper 0x14292f970)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	if (!bHasSeenIt)
+	{
+		NumTimesSeeingPanningTip = 0;
+		return;
+	}
+	NumTimesSeeingPanningTip++;
+}
+
 void UFortGameUserSettings::SetLastSelectedFillOption(bool FillOption)
 {
 	// Native 0x1412a5bb0. CONFIDENCE: high
@@ -137,6 +160,15 @@ void UFortGameUserSettings::SetSafeZone(float Value)
 	// Original exec 0x14292fba0; inline store.
 	// CONFIDENCE: HIGH
 	this->SafeZone = Value;
+}
+
+void UFortGameUserSettings::SetShowCareerTabBang(bool Value)
+{
+	// Behaviour snippet: UFortGameUserSettings::SetShowCareerTabBang (body only; spliced into the generated member function).
+	// Original address: 0x14292fc20
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	bShowCareerTabBang = Value;
 }
 
 void UFortGameUserSettings::SetShowTemperature(bool bNewValue)

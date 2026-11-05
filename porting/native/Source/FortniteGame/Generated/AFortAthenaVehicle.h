@@ -37,6 +37,7 @@
 
 class AActor;
 class ABuildingActor;
+class AFortPlayerPawn;
 class AFortWaterBodyActor;
 class UAnimInstance;
 class UAthenaItemWrapDefinition;
@@ -665,9 +666,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CanDriveOnIncline() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool ContainsPlayers() const;
+
 	UFUNCTION(Client, Reliable)
 	void DebugDrawImpactBucket(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TArray<AFortPlayerPawn*> GetAllPassengers() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetBrakingDelta() const;
@@ -682,10 +689,16 @@ public:
 	float GetCurrentSignificance() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual AFortPlayerPawn* GetDriver() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetHealth() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetMaxHealth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual AFortPlayerPawn* GetPawnAtSeat(int32 SeatIdx) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetPreviousLinearAcceleration() const;

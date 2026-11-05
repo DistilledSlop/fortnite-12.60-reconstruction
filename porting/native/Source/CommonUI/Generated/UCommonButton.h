@@ -197,6 +197,9 @@ protected:
 	void BP_OnUnhovered();
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetShouldSelectUponReceivingFocus() const;
+
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnActionComplete();
@@ -216,6 +219,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnTriggeredInputActionChanged(const FDataTableRowHandle& NewTriggeredAction);
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetShouldSelectUponReceivingFocus(bool bInShouldSelectUponReceivingFocus);
 
 protected:
 	UFUNCTION(BlueprintCallable)

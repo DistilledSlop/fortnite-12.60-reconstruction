@@ -146,6 +146,9 @@ public:
 	void SetAxisScale(float NewValue);
 
 	UFUNCTION(BlueprintCallable)
+	void SetPresetNameOverride(FName NewValue);
+
+	UFUNCTION(BlueprintCallable)
 	void SetShowProgressCountDown(bool bShow);
 
 };

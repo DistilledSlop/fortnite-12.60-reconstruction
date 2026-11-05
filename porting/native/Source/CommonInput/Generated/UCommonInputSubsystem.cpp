@@ -15,6 +15,24 @@ ECommonGamepadType UCommonInputSubsystem::GetCurrentGamepadType() const
 	return GamepadInputType;
 }
 
+bool UCommonInputSubsystem::IsInputMethodActive(ECommonInputType InputMethod) const
+{
+	// Behaviour snippet: UCommonInputSubsystem::IsInputMethodActive (body only; spliced into the generated member function).
+	// Original address: 0x14081bf20 (via exec wrapper 0x14081efa0)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return CurrentInputType == InputMethod;
+}
+
+bool UCommonInputSubsystem::IsUsingPointerInput() const
+{
+	// Behaviour snippet: UCommonInputSubsystem::IsUsingPointerInput (body only; spliced into the generated member function).
+	// Original address: 0x14081c1d0 (via exec wrapper 0x14081f030)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return (static_cast<uint8>(LastInputType) & 0xfd) == 0;
+}
+
 ECommonInputType UCommonInputSubsystem::GetCurrentInputType() const
 {
     return CurrentInputType;

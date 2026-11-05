@@ -573,6 +573,12 @@ public:
 	bool IsHeadphoneModeEnabled() const;
 
 	UFUNCTION()
+	void SetCachedPlayerLevel(int32 Value);
+
+	UFUNCTION(BlueprintCallable)
+	void SetHasSeenPanningTip(bool bHasSeenIt);
+
+	UFUNCTION()
 	void SetLastSelectedFillOption(bool FillOption);
 
 	UFUNCTION(BlueprintCallable)
@@ -580,6 +586,9 @@ public:
 
 	UFUNCTION()
 	void SetSafeZone(float Value);
+
+	UFUNCTION()
+	void SetShowCareerTabBang(bool Value);
 
 	UFUNCTION()
 	void SetShowTemperature(bool bNewValue);

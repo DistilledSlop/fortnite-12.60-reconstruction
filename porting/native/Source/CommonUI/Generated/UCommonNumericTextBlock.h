@@ -78,5 +78,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetTargetValue() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInterpolatingNumericValue() const;
+
 };
 

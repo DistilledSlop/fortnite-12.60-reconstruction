@@ -105,6 +105,9 @@ public:
 	void GetAchievedCount(int32& OutTotalAchievedCount, int32& OutTotalRequiredCount, int32& OutLastKnownAchievedCount, bool UseLastKnownMcp) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetChallengeBundleId() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumObjectivesComplete() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -112,6 +115,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortQuestState GetQuestState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetTwitchBroadcasterChannelId() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasCompletedObjectiveWithName(FName BackendName) const;

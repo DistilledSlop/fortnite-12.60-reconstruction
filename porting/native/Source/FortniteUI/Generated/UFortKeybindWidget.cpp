@@ -24,6 +24,15 @@ void UFortKeybindWidget::SetAxisScale(float NewValue)
 	this->AxisScale = NewValue;
 }
 
+void UFortKeybindWidget::SetPresetNameOverride(FName NewValue)
+{
+	// Behaviour snippet: UFortKeybindWidget::SetPresetNameOverride (body only; spliced into the generated member function).
+	// Original address: 0x1452812d0
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	PresetNameOverride = NewValue;
+}
+
 void UFortKeybindWidget::SetShowProgressCountDown(bool bShow)
 {
 	// Native 0x144de1560. CONFIDENCE: high

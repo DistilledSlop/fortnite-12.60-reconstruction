@@ -9,6 +9,15 @@ bool UFortQuestItemDefinition::AllowsPlayNowNavigation() const
 	return bAllowPlayNowNavigation;
 }
 
+bool UFortQuestItemDefinition::AllowsTileMatching() const
+{
+	// Behaviour snippet: UFortQuestItemDefinition::AllowsTileMatching (body only; spliced into the generated member function).
+	// Original address: 0x142ab7a40
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return bAllowTileMatching;
+}
+
 bool UFortQuestItemDefinition::ExpandsStormShield() const
 {
 	// Original address: 0x142ab8130.

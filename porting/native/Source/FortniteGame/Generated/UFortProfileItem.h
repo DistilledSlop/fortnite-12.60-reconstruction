@@ -22,5 +22,8 @@ public:
 	UPROPERTY()
 	uint8 favorite : 1;
 
+	UFUNCTION(BlueprintCallable)
+	void MarkItemAsSeen();
+
 };
 

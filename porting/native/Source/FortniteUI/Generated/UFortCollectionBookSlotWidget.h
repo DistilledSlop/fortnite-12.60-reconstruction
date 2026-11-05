@@ -91,6 +91,9 @@ public:
 	bool NativeRecoveredBool_0x361;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetSlotRowName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItem* GetSlottedItemRepresentation() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

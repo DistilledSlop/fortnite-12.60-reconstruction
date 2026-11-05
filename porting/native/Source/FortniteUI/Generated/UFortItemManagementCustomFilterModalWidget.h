@@ -30,5 +30,10 @@ public:
 	UPROPERTY(Transient)
 	TSet<EFortInventoryCustomFilter> LocalCustomFilterSet;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCustomFilterEnabled(EFortInventoryCustomFilter Filter) const;
+public:
+
 };
 

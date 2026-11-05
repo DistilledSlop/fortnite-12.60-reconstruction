@@ -3,6 +3,27 @@
 #include "CommonButtonMetaData.h"
 #include "Widgets/SWidget.h"
 
+bool UCommonButton::GetShouldSelectUponReceivingFocus() const
+{
+	// Behaviour snippet: UCommonButton::GetShouldSelectUponReceivingFocus (body only; spliced into the generated member function).
+	// Original address: 0x1407c5120 (via exec wrapper 0x14080b860)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return bShouldSelectUponReceivingFocus;
+}
+
+void UCommonButton::SetShouldSelectUponReceivingFocus(bool bInShouldSelectUponReceivingFocus)
+{
+	// Behaviour snippet: UCommonButton::SetShouldSelectUponReceivingFocus (body only; spliced into the generated member function).
+	// Original address: 0x1407f9ae0 (via exec wrapper 0x14080d550)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	if (bSelectable || !bInShouldSelectUponReceivingFocus)
+	{
+	    bShouldSelectUponReceivingFocus = bInShouldSelectUponReceivingFocus;
+	}
+}
+
 void UCommonButton::StopDoubleClickPropagation()
 {
 	// Original address: 0x1407fd0d0 (shared native bit setter).

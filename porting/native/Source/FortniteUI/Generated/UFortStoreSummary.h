@@ -41,5 +41,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsInChoiceSelectionMode() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetIsInChoiceSelectionMode(bool InIsInChoiceSelectionMode);
+
 };
 

@@ -52,6 +52,15 @@ void UFortQuestItem::GetAchievedCount(int32& OutTotalAchievedCount, int32& OutTo
 	}
 }
 
+FString UFortQuestItem::GetChallengeBundleId() const
+{
+	// Behaviour snippet: UFortQuestItem::GetChallengeBundleId (body only; spliced into the generated member function).
+	// Original address: 0x14243ef00 (via exec wrapper 0x142ab3800)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return challenge_bundle_id;
+}
+
 int32 UFortQuestItem::GetNumObjectivesComplete() const
 {
 	// CONFIDENCE: HIGH
@@ -117,6 +126,15 @@ EFortQuestState UFortQuestItem::GetQuestState() const
 	// CONFIDENCE: HIGH
 	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
 	return quest_state;
+}
+
+FString UFortQuestItem::GetTwitchBroadcasterChannelId() const
+{
+	// Behaviour snippet: UFortQuestItem::GetTwitchBroadcasterChannelId (body only; spliced into the generated member function).
+	// Original address: 0x142442f10 (via exec wrapper 0x142ab3fc0)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return twitch_broadcaster_channel_id;
 }
 
 bool UFortQuestItem::HasCompletedObjectiveWithName(FName BackendName) const

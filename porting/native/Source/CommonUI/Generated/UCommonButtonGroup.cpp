@@ -16,6 +16,33 @@ int32 UCommonButtonGroup::FindButtonIndex(UCommonButton* ButtonToFind) const
 	return INDEX_NONE;
 }
 
+int32 UCommonButtonGroup::GetButtonCount() const
+{
+	// Behaviour snippet: UCommonButtonGroup::GetButtonCount (body only; spliced into the generated member function).
+	// Original address: 0x1407c1f50 (via exec wrapper 0x14080ff70)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return NativeButtonGroupWidgets.Num();
+}
+
+int32 UCommonButtonGroup::GetHoveredButtonIndex() const
+{
+	// Behaviour snippet: UCommonButtonGroup::GetHoveredButtonIndex (body only; spliced into the generated member function).
+	// Original address: 0x1407c2ed0 (via exec wrapper 0x140810010)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return NativeHoveredButtonIndex;
+}
+
+bool UCommonButtonGroup::HasAnyButtons() const
+{
+	// Behaviour snippet: UCommonButtonGroup::HasAnyButtons (body only; spliced into the generated member function).
+	// Original address: 0x1407cced0 (via exec wrapper 0x140810110)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return NativeButtonGroupWidgets.Num() > 0;
+}
+
 void UCommonButtonGroup::OnButtonHovered(UCommonButton* BaseButton)
 {
 	// CONFIDENCE: high. Native target 0x1407d55f0.

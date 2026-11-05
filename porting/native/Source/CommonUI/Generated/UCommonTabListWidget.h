@@ -68,6 +68,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetActiveTab() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonAnimatedSwitcher* GetLinkedSwitcher() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTabCount() const;
+
 protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void HandleTabCreated(FName TabNameID, UCommonButton* TabButton);

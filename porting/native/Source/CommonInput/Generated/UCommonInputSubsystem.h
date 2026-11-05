@@ -61,6 +61,12 @@ public:
 	ECommonGamepadType GetCurrentGamepadType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInputMethodActive(ECommonInputType InputMethod) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsUsingPointerInput() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	ECommonInputType GetCurrentInputType() const;
 
 	UFUNCTION(BlueprintCallable)

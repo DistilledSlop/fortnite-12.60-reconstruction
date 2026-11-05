@@ -56,6 +56,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 FindButtonIndex(UCommonButton* ButtonToFind) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetButtonCount() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetHoveredButtonIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasAnyButtons() const;
+
 protected:
 	UFUNCTION()
 	virtual void OnButtonHovered(UCommonButton* BaseButton);

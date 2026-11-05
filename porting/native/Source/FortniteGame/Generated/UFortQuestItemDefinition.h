@@ -212,6 +212,9 @@ public:
 	bool AllowsPlayNowNavigation() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AllowsTileMatching() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ExpandsStormShield() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

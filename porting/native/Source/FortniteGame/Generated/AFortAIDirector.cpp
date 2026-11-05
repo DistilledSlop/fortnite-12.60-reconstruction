@@ -7,6 +7,7 @@
 #include "EFortEncounterState.h"
 #include "FFortAIEncounterRift.h"
 #include "Math/Rotator.h"
+#include "Math/Vector.h"
 #include "UFortAIEncounterInfo.h"
 #include "UFortAIEncounterRiftManager.h"
 

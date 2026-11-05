@@ -7,6 +7,24 @@ FName UCommonTabListWidget::GetActiveTab() const
 	return NativeRecoveredName_0x310;
 }
 
+UCommonAnimatedSwitcher* UCommonTabListWidget::GetLinkedSwitcher() const
+{
+	// Behaviour snippet: UCommonTabListWidget::GetLinkedSwitcher (body only; spliced into the generated member function).
+	// Original address: 0x1407c3d90 (via exec wrapper 0x140814ea0)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return LinkedSwitcher.Get();
+}
+
+int32 UCommonTabListWidget::GetTabCount() const
+{
+	// Behaviour snippet: UCommonTabListWidget::GetTabCount (body only; spliced into the generated member function).
+	// Original address: 0x1407c5360 (via exec wrapper 0x140815250)
+	// Source: local-model fn runner; static checks only, not compiled or runtime verified.
+	// CONFIDENCE: HIGH
+	return RegisteredTabsByID.Num();
+}
+
 void UCommonTabListWidget::HandleTabCreated_Implementation(FName TabNameID, UCommonButton* TabButton)
 {
 	// CONFIDENCE: high

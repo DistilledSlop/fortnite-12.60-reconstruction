@@ -38,6 +38,9 @@ public:
 	TArray<FOperation> Operations;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonActivatablePanel* GetTopPanel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInputSuspended() const;
 
 	UFUNCTION(BlueprintCallable)

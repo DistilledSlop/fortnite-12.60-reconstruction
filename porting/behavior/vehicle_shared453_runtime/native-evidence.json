@@ -1,0 +1,50 @@
+[
+  {
+    "function": "GetDriver",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283b620.c",
+    "constructor": "porting/generated/native90-targets/0x141908660.c: secondary vtable 0x145decf00 at actor +0x3b0",
+    "virtual_target": "porting/generated/native214-hoagie-contract/0x14084bdd0.c",
+    "seat_component_virtual": "secondary vtable +0x408 -> porting/generated/native190-team-vehicle/0x14084c920.c; existing NativeGetSeatComponent163",
+    "component_helper": "porting/behavior/target_filter163_runtime/UFortVehicleSeatComponent_NativeGetDriverPawn163.inc (0x141d08bd0)",
+    "reflection": "porting/generated/reflection/fortnite_game_reflection.json: AFortAthenaVehicle GetDriver flags 0x54020402; ReturnValue class ref 0x142a74460 resolves to FortPlayerPawn in class_ref_map.json",
+    "semantics": "Direct call to driver helper after seat component virtual dispatch.",
+    "class": "AFortAthenaVehicle",
+    "vtable_slot": "Flat runtime image /mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin, base 0x140000000: secondary table 0x145decf00 + 0x540 = 0x14084bdd0; +0x408 = 0x14084c920."
+  },
+  {
+    "function": "ContainsPlayers",
+    "wrapper_capture": "porting/generated/native103-broad/0x14283a9d0.c",
+    "constructor": "porting/generated/native90-targets/0x141908660.c: secondary vtable 0x145decf00 at actor +0x3b0",
+    "virtual_target": "porting/generated/native180-interface-context/0x141910d30.c",
+    "seat_component_virtual": "secondary vtable +0x408 -> porting/generated/native190-team-vehicle/0x14084c920.c; existing NativeGetSeatComponent163",
+    "component_helper": "porting/behavior/target_filter163_runtime/UFortVehicleSeatComponent_NativeContainsPlayers163.inc (0x141d02da0)",
+    "reflection": "porting/generated/reflection/fortnite_game_reflection.json: AFortAthenaVehicle ContainsPlayers flags 0x54020402; Bool ReturnValue",
+    "semantics": "After seat component virtual dispatch, dispatches component vtable +0x3e8 to occupancy helper; virtual dispatch retained.",
+    "class": "AFortAthenaVehicle",
+    "vtable_slot": "Flat runtime image /mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin, base 0x140000000: secondary table 0x145decf00 + 0x110 = 0x141910d30; +0x408 = 0x14084c920."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "GetAllPassengers",
+    "reflection": "porting/generated/reflection/native_funcs.json AFortAthenaVehicle GetAllPassengers; class_ref_map.json resolves return class 0x142a74460 to FortPlayerPawn",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283b1b0.c",
+    "constructor": "porting/generated/native90-targets/0x141908660.c sets secondary table 0x145decf00 at actor +0x3b0",
+    "vtable_slot": "Flat runtime image image-125.runtime.bin base 0x140000000: table 0x145decf00 +0x548 = 0x14084ba80",
+    "virtual_target": "porting/generated/native180-interface-context/0x14084ba80.c",
+    "seat_component_virtual": "secondary +0x408 -> 0x14084c920, existing NativeGetSeatComponent163",
+    "component_helper": "porting/behavior/target_filter163_runtime/UFortVehicleSeatComponent_NativeGetAllPassengers163.inc",
+    "semantics": "The helper returns APawn pointers originating from reflected FAthenaCarPlayerSlot.Player FortPlayerPawn fields; convert to reflected return array element type while preserving order."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "GetPawnAtSeat",
+    "reflection": "porting/generated/reflection/native_funcs.json AFortAthenaVehicle GetPawnAtSeat; class_ref_map.json resolves return class 0x142a74460 to FortPlayerPawn",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283b770.c",
+    "constructor": "porting/generated/native90-targets/0x141908660.c sets secondary table 0x145decf00 at actor +0x3b0",
+    "vtable_slot": "Flat runtime image image-125.runtime.bin base 0x140000000: table 0x145decf00 +0x590 = 0x141917360",
+    "virtual_target": "porting/generated/native214-hoagie-contract/0x141917360.c",
+    "seat_component_virtual": "secondary +0x408 -> 0x14084c920, existing NativeGetSeatComponent163",
+    "component_helper": "porting/behavior/target_filter163_runtime/UFortVehicleSeatComponent_NativeGetPawnAtSeat163.inc",
+    "semantics": "Direct helper returns seat player with native index bounds checks."
+  }
+]
