@@ -133,5 +133,8 @@ public:
 	UPROPERTY()
 	TArray<UMaterialInstanceDynamic*> AdjacencyMIDs;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasValidMissionData() const;
+
 };
 

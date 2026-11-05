@@ -6,6 +6,12 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaJackalVehicle.h"
 
+#include "Math/Vector.h"
+
+class AActor;
+class AController;
+class UPrimitiveComponent;
+
 #include "AFortCampaignJackalVehicle.generated.h"
 
 UCLASS(config=Game)
@@ -29,6 +35,9 @@ public:
 	// table index 0, flags 0x20080000014001
 	UPROPERTY(Config)
 	float AggroRangeOverride;
+
+	UFUNCTION()
+	void HandleOnPlayerDamaged(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
 
 };
 

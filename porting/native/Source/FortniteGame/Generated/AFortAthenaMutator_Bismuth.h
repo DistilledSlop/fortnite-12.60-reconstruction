@@ -9,12 +9,16 @@
 #include "AttributeSet.h"
 #include "EDeathCause.h"
 #include "GameplayTagContainer.h"
+#include "Math/Vector.h"
 
+class AActor;
 class AAthenaBismuthSpawner;
+class AController;
 class AFortPlayerPawnAthena;
 class UEnvQuery;
 class UFortAthenaAIBotCustomizationData;
 class UGameplayEffect;
+class UPrimitiveComponent;
 
 #include "AFortAthenaMutator_Bismuth.generated.h"
 
@@ -75,6 +79,11 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	TArray<AFortPlayerPawnAthena*> BismuthAIBots;
+
+private:
+	UFUNCTION()
+	void AIBotPawnDeath(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
 
 private:
 	UFUNCTION()

@@ -7,13 +7,16 @@
 #include "AFortAthenaTutorialBase.h"
 
 #include "GameplayTagContainer.h"
+#include "Math/Vector.h"
 
 class AActor;
 class ABuildingSMActor;
 class ABuildingTrapFloor;
+class AController;
 class AFortAIPawn;
 class AFortAthenaAIBotController;
 class ATriggerBox;
+class UPrimitiveComponent;
 
 #include "AFortAthenaTutorial_Ambush.generated.h"
 
@@ -98,6 +101,16 @@ public:
 	// table index 0, flags 0x40000000000015
 	UPROPERTY()
 	float AmbushCameraOutSpeed;
+
+private:
+	UFUNCTION()
+	void HandleOnAIDummyDied(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
+
+private:
+	UFUNCTION()
+	void HandleOnPlayerDamaged(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
 
 };
 

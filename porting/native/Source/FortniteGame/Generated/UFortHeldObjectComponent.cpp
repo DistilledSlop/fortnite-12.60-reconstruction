@@ -18,6 +18,12 @@ UMeshComponent* UFortHeldObjectComponent::GetMeshComponent() const
 	return ReferenceMeshComponent;
 }
 
+void UFortHeldObjectComponent::HandleOwnerAsBuildingActorDestroyed(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum)
+{
+	// CONFIDENCE: HIGH; the wrapper calls the bare-return native target 0x1406801c0.
+	return;
+}
+
 void UFortHeldObjectComponent::HandleOwnerDestroyed(AActor* DestroyedActor)
 {
 	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.

@@ -10,8 +10,12 @@
 #include "FFortBaseWeaponStats.h"
 #include "FPatternBASEEffect.h"
 #include "GameplayTagContainer.h"
+#include "Math/Vector.h"
 
+class AActor;
+class AController;
 class UFortDamageSet;
+class UPrimitiveComponent;
 
 #include "AFortConstructorBASE.generated.h"
 
@@ -60,6 +64,11 @@ public:
 	// table index 0, flags 0x10000000082008
 	UPROPERTY(Transient)
 	UFortDamageSet* DamageAttributeSet;
+
+private:
+	UFUNCTION()
+	void OnNeighborDied(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
 
 };
 

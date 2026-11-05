@@ -21,6 +21,7 @@
 #include "Math/Vector.h"
 
 class AActor;
+class AController;
 class AFortDecoPreview;
 class AFortPlayerPawn;
 class AFortWeapon;
@@ -156,6 +157,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UMeshComponent* GetMeshComponent() const;
+
+private:
+	UFUNCTION()
+	void HandleOwnerAsBuildingActorDestroyed(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
 
 private:
 	UFUNCTION()
