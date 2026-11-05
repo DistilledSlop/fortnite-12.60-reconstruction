@@ -8,3 +8,10 @@ bool UFortGiftBoxItemDefinition::HasHeaderSubWidget() const
 	return GiftBoxHeaderSubWidgetRef.ToSoftObjectPath().GetAssetPathName() != NAME_None;
 }
 
+bool UFortGiftBoxItemDefinition::HasPreMessageWidget() const
+{
+	// CONFIDENCE: HIGH
+	// Reviewed against captured wrapper and native code; build and runtime pending.
+	return GiftBoxPreMessageWidgetRef.ToSoftObjectPath().GetAssetPathName() != NAME_None;
+}
+

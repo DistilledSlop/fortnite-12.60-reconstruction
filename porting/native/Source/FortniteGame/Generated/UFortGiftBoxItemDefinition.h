@@ -67,5 +67,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasHeaderSubWidget() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasPreMessageWidget() const;
+
 };
 

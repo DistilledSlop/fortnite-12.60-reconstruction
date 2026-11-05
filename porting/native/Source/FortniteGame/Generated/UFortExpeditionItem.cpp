@@ -43,6 +43,17 @@ float UFortExpeditionItem::GetTargetPowerLevel() const
 	return static_cast<float>(expedition_max_target_power);
 }
 
+bool UFortExpeditionItem::HasExpeditionExpired(FDateTime UtcNow) const
+{
+	// CONFIDENCE: HIGH
+	// Reviewed against captured wrapper and native code; build and runtime pending.
+	if (expedition_start_time < expedition_end_time)
+	{
+	    return false;
+	}
+	return (expedition_expiration_end_time - UtcNow).GetTotalSeconds() <= 0.0;
+}
+
 bool UFortExpeditionItem::IsExpeditionInProgress() const
 {
 	// CONFIDENCE: HIGH

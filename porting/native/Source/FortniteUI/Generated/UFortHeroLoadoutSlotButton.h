@@ -44,5 +44,10 @@ public:
 	UPROPERTY()
 	UMenuAnchor* ContextMenuAnchor;
 
+private:
+	UFUNCTION()
+	void HandleMenuOpenChanged(bool bIsMenuOpen);
+public:
+
 };
 

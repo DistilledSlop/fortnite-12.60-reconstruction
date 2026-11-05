@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	TArray<FFortSimpleWidgetAnimations> Animations;
 
+private:
+	UFUNCTION()
+	void ForwardOnAnimationsFinished(FName Name);
+public:
+
 };
 

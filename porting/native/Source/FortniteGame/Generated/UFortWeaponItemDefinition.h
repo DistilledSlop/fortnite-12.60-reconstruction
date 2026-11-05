@@ -282,6 +282,12 @@ public:
 	TSubclassOf<AFortWeapon> GetWeaponActorClass() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetWeaponRechargeAmmoQuantity(int32 InLevel) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetWeaponRechargeAmmoRate(int32 InLevel) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FDataTableRowHandle GetWeaponStatHandle() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

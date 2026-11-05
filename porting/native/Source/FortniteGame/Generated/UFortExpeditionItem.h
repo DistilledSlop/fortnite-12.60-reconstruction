@@ -76,6 +76,9 @@ public:
 	float GetTargetPowerLevel() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasExpeditionExpired(FDateTime UtcNow) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsExpeditionInProgress() const;
 
 };

@@ -288,6 +288,20 @@ TSubclassOf<AFortWeapon> UFortWeaponItemDefinition::GetWeaponActorClass() const
 	return Result;
 }
 
+float UFortWeaponItemDefinition::GetWeaponRechargeAmmoQuantity(int32 InLevel) const
+{
+	// CONFIDENCE: HIGH
+	// Reviewed against captured wrapper and native code; build and runtime pending.
+	return WeaponRechargeAmmoQuantity.GetValueAtLevel(static_cast<float>(InLevel));
+}
+
+float UFortWeaponItemDefinition::GetWeaponRechargeAmmoRate(int32 InLevel) const
+{
+	// CONFIDENCE: HIGH
+	// Reviewed against captured wrapper and native code; build and runtime pending.
+	return WeaponRechargeAmmoRate.GetValueAtLevel(static_cast<float>(InLevel));
+}
+
 FDataTableRowHandle UFortWeaponItemDefinition::GetWeaponStatHandle() const
 {
 	// CONFIDENCE: HIGH
