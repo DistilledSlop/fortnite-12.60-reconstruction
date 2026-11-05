@@ -10,6 +10,7 @@ allowed_exact.add("porting/native/FortniteLinux.uproject")
 # Reviewed reconstruction screenshots requested for the project wiki.
 allowed_exact.update({
     "docs/screenshots/2026-11-05/root-layout.png",
+    "docs/screenshots/2026-11-05/sign-in.png",
     "docs/screenshots/2026-11-05/world-initial.png",
     "docs/screenshots/2026-11-05/world-opposite.png",
     "docs/screenshots/2026-11-05/world-overview.png",

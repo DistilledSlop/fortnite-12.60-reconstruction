@@ -26,6 +26,15 @@
       "capture_run_started_utc": "2026-11-05T19:59:43.039509+00:00",
       "scene": "Apollo standalone terrain preview, fresh reconstructed client",
       "limitations": "61 staged terrain meshes; missing buildings, vegetation and gameplay. White patches, seams and incomplete materials remain. This does not verify native landscape streaming parity."
+    },
+    {
+      "file": "sign-in.png",
+      "source_revision": "e0ad5c03352e137a8b9b4bfa6f25bca984dd704b",
+      "client_binary_sha256": "d1b90e581647f8b3a3880bc012bbb2fc28d7487a360cd9b516827a8f5490e8b1",
+      "client_build_exit": 0,
+      "capture_run_started_utc": "2026-11-05T20:19:23.297685+00:00",
+      "scene": "Original cooked SignInWidget attached through diagnostic widget probe; restored EpicLogo material and username-only field",
+      "limitations": "Unresolved button text, overlapping emergency-notice text and black background. Account submission and lobby transition are not demonstrated."
     }
   ],
   "runtime": "Fresh reconstructed Linux client, software Vulkan, 1280x720. Original cooked UI assets rendered through reconstructed project code.",
