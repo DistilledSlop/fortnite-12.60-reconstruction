@@ -326,3 +326,21 @@ parameter flag, parameter identity, referenced texture index and vector index,
 then constructs Unreal's existing RVT uniform expression. The native original
 reader also accepts `Abs`. VT stacks and nonstandard texture arrays still fail
 closed; these changes alone do not attach or render the original landscape map.
+
+### Original landscape Vulkan translation
+
+After generating `apollo-d4-landscape-ingress.json`, translate and reflect its
+original shader payloads with the existing isolated vkd3d 2.0 tools:
+
+```sh
+python3 -I porting/material_pipeline/translate_landscape_ingress.py
+```
+
+The helper independently revalidates the decoded maps, original archive and
+every code association before translation. The local receipt at
+`generated/material_pipeline/apollo-d4-landscape-spirv/landscape-translation-receipt.json`
+covers all 136 occurrences of 43 unique shaders. All 43 pass SPIR-V validation
+and reflection; their 460 explicit descriptor mappings have zero unmatched
+resource-table entries. These are compiler mappings: landscape factory
+construction, owner textures, runtime descriptor binding and rendering remain
+unverified. The receipt records hashes of translation and reflection reports.
