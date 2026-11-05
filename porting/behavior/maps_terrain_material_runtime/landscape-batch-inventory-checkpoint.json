@@ -1,0 +1,19 @@
+{
+  "scope": "Execute original landscape output batch validation against the two captured shader inventories; no shader outputs built",
+  "manifest_sha256": "5753bd85e150c3b5468ce12688ce2f2b4cf35d587f412f3a968cb5a49d4c574f",
+  "map_sha256": [
+    "6a0c0f44ed8eadda6e97474b7db91259d9d1e0ea57eb8553daef57825ddffcd4",
+    "76ba8a03b7d4077f2333724c55ec431d1bd705c10db3800143d4b54285ba92fa"
+  ],
+  "result": "Both inventories passed association and pipeline validation, then failed at output adaptation with incomplete original uniform contracts, as required for intentionally empty binding lists. No partial outputs published.",
+  "validation": {
+    "client_build": "PASS",
+    "nullrhi_probe_exit_code": 0,
+    "build_log": "porting/generated/apollo-material-evidence/landscape-batch-real-inventory.build.2.log",
+    "run_log": "porting/generated/apollo-material-evidence/landscape-batch-real-inventory.run.2.log"
+  },
+  "limitations": [
+    "This does not exercise successful conversion, shader construction, live material attachment or rendering.",
+    "Original uniform bindings, static-slot semantics and VT feedback remain unresolved."
+  ]
+}

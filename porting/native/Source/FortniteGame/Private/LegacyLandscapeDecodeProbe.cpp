@@ -4,6 +4,7 @@
 #include "LegacyOriginalUniformContracts.h"
 #include "LegacyOriginalMaterialLayout.h"
 #include "LegacyLocalVFOutputBatch.h"
+#include "LegacyLandscapeVFOutputBatch.h"
 #include "LegacySlateMaterial.h"
 #include "MaterialShared.h"
 #include "HAL/FileManager.h"
@@ -78,6 +79,12 @@ bool Decode(const FString& Path, FString& Error)
         if (A<0 || B<0) { Error=TEXT("invalid resource hex"); return false; }
         Raw[I]=uint8((A<<4)|B);
     }
+    FString BatchPath, BatchHash, MapPins[2];
+    const bool bProbeBatch=FParse::Value(FCommandLine::Get(),TEXT("FortniteProbeLandscapeManifest="),BatchPath);
+    if (bProbeBatch && (!FParse::Value(FCommandLine::Get(),TEXT("FortniteProbeLandscapeManifestSHA256="),BatchHash) ||
+        !FParse::Value(FCommandLine::Get(),TEXT("FortniteProbeLandscapeMap0SHA256="),MapPins[0]) ||
+        !FParse::Value(FCommandLine::Get(),TEXT("FortniteProbeLandscapeMap1SHA256="),MapPins[1])))
+    { Error=TEXT("batch probe requires manifest and both map SHA-256 pins"); return false; }
     int32 PreviousEnd=0;
     for (int32 MapIndex=0; MapIndex<Maps->Num(); ++MapIndex)
     {
@@ -112,6 +119,19 @@ bool Decode(const FString& Path, FString& Error)
                 FLegacyLocalUniformContract Contract;
                 if (!BuildLegacyLandscapeMaterialUniformContract(ContractMaterial,0,224723792,Metadata,Contract,OutError))
                 { OutError+=FString::Printf(TEXT(" (engine struct: %s)"),Metadata.GetStructTypeName()); return false; }
+                if (bProbeBatch)
+                {
+                    TArray<FLegacyLocalVFRecordContracts> BatchContracts;
+                    BatchContracts.SetNum(Native.Records.Num());
+                    TArray<FLegacyMaterialShaderInput> BatchOutputs;
+                    TArray<FLegacyMaterialPipelineInput> BatchPipelines;
+                    FString BatchError;
+                    const bool bBuilt=BuildLegacyLandscapeVFOutputBatch(ContractMaterial,BatchPath,BatchHash,MapPins[MapIndex],
+                        MapIndex,Start,Metadata,BatchContracts,BatchOutputs,BatchPipelines,BatchError);
+                    if (bBuilt || BatchOutputs.Num() || BatchPipelines.Num() || BatchError!=TEXT("incomplete original uniform contracts"))
+                    { OutError=FString::Printf(TEXT("unexpected landscape batch result: %s"),*BatchError); return false; }
+                    UE_LOG(LogTemp,Display,TEXT("Legacy landscape batch: map=%d incomplete-contract rejection: %s"),MapIndex,*BatchError);
+                }
                 bReachedFactoryOutputs=true;
                 OutError=TEXT("probe stopped before shader construction");
                 return false;

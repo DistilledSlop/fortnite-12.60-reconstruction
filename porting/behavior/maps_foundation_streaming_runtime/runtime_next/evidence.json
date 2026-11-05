@@ -1,0 +1,25 @@
+{
+  "scope": "Follow-up analysis of the original foundation distance-change handler and its significance-manager lookup; no partial runtime body promoted.",
+  "lookup": {
+    "original": "0x1409f0300",
+    "identity": "USignificanceManager::GetManagedObjects(FName) const",
+    "evidence": "The binary finds the FName key in the map at manager +0x48, returns the value array at map-entry +8, or returns a function-local static empty array when absent. This agrees with the bundled engine implementation at Engine/Plugins/Runtime/SignificanceManager/Source/SignificanceManager/Private/SignificanceManager.cpp:278-288. The function is already implemented by the engine, so a duplicate port is unnecessary."
+  },
+  "distance_change_handler": {
+    "original": "0x141d427d0",
+    "object_flag": "ObjectFlags bit 0x10 is RF_ClassDefaultObject in the bundled engine; this branch skips the update and object loop but still caches both current distances.",
+    "update": "The changed-distance path passes the pointer and count from manager +0x30 to virtual slot +0x260. The authenticated FortSignificanceManager vtable at 0x145f987a8 contains 0x141d5ed50 at that slot; the callee copies the pointer/count argument and calls 0x141d58c30. This is consistent with virtual Update(TArrayView<const FTransform>) and the bundled base manager Viewpoints member, but the complete override remains unverified.",
+    "unordered_distance_comparison": "UCOMISS followed by JNZ means unordered compares are treated like equal for branching. The handler skips its update if each compared pair is either equal or unordered. Ordinary C++ != would differ for NaN.",
+    "unordered_significance": "With streaming enabled, COMISS against 2 followed by JNC and COMISS against zero followed by JA send an unordered significance value to 0x141bedfa0. Thus the unload branch includes NaN; ordinary C++ value <= 0 would not match. With streaming disabled, 0x141bed450 is called without inspecting significance.",
+    "cache_timing": "The handler reloads both global distances after Update and the object callbacks before storing them. Capturing the initial values for the final store would differ if callbacks change the globals."
+  },
+  "blockers": "The existing reflected UFortSignificanceManager has no recovered private cache fields or override. The streaming-switch binding, original stream-in/unload effects, delegate lifecycle, specialized record and its configuration remain unresolved. A body that fakes these dependencies or drops floating-point cases would not be faithful; no integration is proposed.",
+  "reproduction": [
+    "porting/generated/apollo-material-evidence/foundation-mode/0x141d427d0.asm",
+    "porting/behavior/maps_foundation_streaming_runtime/stream_manager_lookup/probe2/0x1409f0300.c",
+    "objdump -s --start-address=0x145f98a08 --stop-address=0x145f98a18 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+    "objdump -d -Mintel --start-address=0x141d5ed50 --stop-address=0x141d5ed83 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+    "/opt/fortnite/UnrealEngine/Engine/Plugins/Runtime/SignificanceManager/Source/SignificanceManager/Private/SignificanceManager.cpp:278",
+    "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:486"
+  ]
+}

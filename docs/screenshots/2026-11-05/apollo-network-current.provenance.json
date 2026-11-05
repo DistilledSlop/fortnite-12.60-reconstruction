@@ -1,0 +1,17 @@
+{
+  "capture_date_utc": "2026-11-05",
+  "description": "Reconstructed Linux client joined reconstructed local dedicated server and rendered Apollo terrain under software Vulkan.",
+  "image_sha256": "66113040c3532c40f17b1a49eb2622c1df2e28469b81b85a99aecdc06aef0da1",
+  "client_sha256": "8b4af1b302e06c03f0ba2d8fa9c64073875b4576948c09af3257fe2c53f328de",
+  "client_build": "Linux Development; built from repository after 9e73517b, with landscape diagnostic probe changes uncommitted at build time.",
+  "server": "Previously staged reconstructed Linux dedicated server; client log confirms server welcome and Apollo map load.",
+  "stage": "Isolated copy of generated/linux-stage/LinuxNoEditor, overlaid with the later existing Saved/Cooked/LinuxNoEditor assets and shader archives. Not a clean recook.",
+  "command": "CAPTURE_STAGE_DIR=<isolated-stage> CAPTURE_CLIENT_ARGS='-FortniteProbeLook=60,5' porting/capture_apollo_visual.sh visual-coherent-cook-test/apollo-current-build 17995 65",
+  "client_log": "porting/generated/visual-coherent-cook-test/apollo-current-build.log",
+  "server_log": "porting/generated/visual-coherent-cook-test/apollo-current-build-server.log",
+  "limitations": [
+    "Terrain material and world detail are incomplete.",
+    "Visual output is not proof of original landscape shader, native streaming, match gameplay, or original parity.",
+    "Water subsystem reports missing plugin assets."
+  ]
+}

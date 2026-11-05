@@ -14,6 +14,7 @@ allowed_exact.update({
     "docs/screenshots/2026-11-05/world-initial.png",
     "docs/screenshots/2026-11-05/world-opposite.png",
     "docs/screenshots/2026-11-05/world-overview.png",
+    "docs/screenshots/2026-11-05/apollo-network-current.png",
 })
 forbidden_directories = (
     "porting/generated/", "porting/build/", "porting/.venv/",
