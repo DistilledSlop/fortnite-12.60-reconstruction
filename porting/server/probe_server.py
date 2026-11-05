@@ -134,7 +134,7 @@ def make_handler(routes, record_path, stub=None):
             entry = {
                 "time": datetime.now(timezone.utc).isoformat(),
                 "method": self.command,
-                "path": url.path,
+                "path": api_common.log_safe_path(url.path),
                 "query_keys": sorted({key for key, _ in parse_qsl(url.query)}),
                 "content_type": self.headers.get("Content-Type", ""),
                 "body_bytes": len(body),

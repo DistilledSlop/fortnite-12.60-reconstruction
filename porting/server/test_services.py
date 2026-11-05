@@ -197,6 +197,17 @@ class DispatcherTests(ServiceTestCase):
             self.assertNotIn(secret, text)
         self.assertNotIn("authorization", text.lower())
 
+    def test_session_kill_token_is_redacted_from_both_logs(self):
+        token = self.sign_in()["access_token"]
+        status, _, _ = call(self.base, "DELETE", f"/account/api/oauth/sessions/kill/{token}", token=token)
+        self.assertEqual(status, 204)
+        entries = self.backend.recent_requests()
+        self.assertEqual(entries[-1]["path"], "/account/api/oauth/sessions/kill/<redacted>")
+        self.assertNotIn(token, json.dumps(entries))
+        recorded = RECORD.read_text(encoding="utf-8")
+        self.assertNotIn(token, recorded)
+        self.assertIn("/account/api/oauth/sessions/kill/<redacted>", recorded)
+
     def test_same_seed_and_clock_give_same_answers(self):
         def answers(backend):
             server = LiveServer(backend).start()

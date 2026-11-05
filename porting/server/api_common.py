@@ -31,6 +31,11 @@ CLIENT_ID = "3446cd72694c4a4485d81b77adbb2141"
 DEVICE_ID = "0" * 32
 
 
+def log_safe_path(path):
+    """Remove the bearer token carried in the OAuth session-kill URL."""
+    return re.sub(r"(?i)(/account/api/oauth/sessions/kill/).*", r"\1<redacted>", path)
+
+
 class Err:
     """Error codes. The comment says whether the code string appears in the 12.60 binary."""
 

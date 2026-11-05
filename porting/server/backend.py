@@ -32,7 +32,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import profile_service  # noqa: E402
 from account_service import AccountService
-from api_common import DEFAULT_SEED, ApiError, Context, Err, Request, Router, error_body
+from api_common import DEFAULT_SEED, ApiError, Context, Err, Request, Router, error_body, log_safe_path
 from chat_service import ChatService
 from cloudstorage_service import CloudStorageService
 from content_service import ContentService
@@ -99,7 +99,7 @@ class Backend:
         with self._lock:
             self.request_log.append({
                 "method": method,
-                "path": path,
+                "path": log_safe_path(path),
                 "route": route_name,
                 "status": status,
                 "index": next(self._sequence),
