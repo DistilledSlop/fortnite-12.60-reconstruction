@@ -443,5 +443,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPreparingMgmtMenu() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetPreparingMgmtMenu(bool bPreparing);
+
 };
 

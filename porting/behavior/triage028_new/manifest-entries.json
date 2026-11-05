@@ -1,0 +1,18 @@
+[
+  {
+    "class": "AFortAthenaMutator_Flag",
+    "function": "OnMutatorGameplayEvent",
+    "kind": "exec",
+    "signature": "void OnMutatorGameplayEvent(int32 EventId, int32 EventParam1, int32 EventParam2, int32 EventParam3)",
+    "signature_status": "proposed",
+    "static": false,
+    "access": "public",
+    "inc_path": "porting/behavior/triage028_new/AFortAthenaMutator_Flag_OnMutatorGameplayEvent.inc",
+    "address": "0x1428023e0",
+    "native_body_address": "0x1406801c0",
+    "reflection_flags": "0x80401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Wrapper decodes four input integers and calls shared bare-return native target."
+  }
+]

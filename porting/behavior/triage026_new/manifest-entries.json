@@ -1,0 +1,19 @@
+[
+  {
+    "class": "UFortHUDContext",
+    "function": "SetPreparingMgmtMenu",
+    "kind": "exec",
+    "signature": "void SetPreparingMgmtMenu(bool bPreparing)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage026_new/UFortHUDContext_SetPreparingMgmtMenu.inc",
+    "address": "0x1452587d0",
+    "native_body_address": "0x144ce8050",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Writes existing NativeRecoveredBool_0x55c, read by the already ported IsPreparingMgmtMenu."
+  }
+]

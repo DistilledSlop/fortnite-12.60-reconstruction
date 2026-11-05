@@ -32,6 +32,12 @@ void UFortQuestManager::EnableQuestStateLogging()
 	bDoQuestStateLogging = true;
 }
 
+void UFortQuestManager::ForceCompleteAccolades(float TimerDelay, bool bSkipAcknowledgements)
+{
+	// CONFIDENCE: HIGH; wrapper invokes the captured bare-return native target.
+	// Native target 0x1406801c0 is a bare return.
+}
+
 void UFortQuestManager::GetCompletedQuests(TArray<UFortQuestItem*>& OutCompletedQuests)
 {
 	// CONFIDENCE: HIGH; native 0x14243f700 and stable-sort helper 0x142431be0.

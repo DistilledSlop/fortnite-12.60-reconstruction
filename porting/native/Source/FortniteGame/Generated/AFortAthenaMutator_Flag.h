@@ -18,5 +18,10 @@ public:
 	UPROPERTY()
 	FText GameMsgText_Intro;
 
+protected:
+	UFUNCTION()
+	void OnMutatorGameplayEvent(int32 EventId, int32 EventParam1, int32 EventParam2, int32 EventParam3);
+public:
+
 };
 

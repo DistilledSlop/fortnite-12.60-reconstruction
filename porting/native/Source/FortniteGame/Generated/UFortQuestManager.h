@@ -218,6 +218,11 @@ private:
 	void EnableQuestStateLogging();
 public:
 
+private:
+	UFUNCTION(Exec)
+	void ForceCompleteAccolades(float TimerDelay, bool bSkipAcknowledgements);
+public:
+
 	UFUNCTION(BlueprintCallable)
 	void GetCompletedQuests(TArray<UFortQuestItem*>& OutCompletedQuests);
 

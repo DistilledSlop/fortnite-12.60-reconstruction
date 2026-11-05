@@ -1,0 +1,42 @@
+[
+  {
+    "function": "UFortCheatManager::AthenaForceVictory_Delayed",
+    "wrapper": "porting/generated/native-triage015/0x1409ad800.asm",
+    "decompile": "porting/generated/native-triage015/0x1409ad800.c",
+    "native_body": "porting/generated/native437-callees/0x1406801c0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "proof": "Wrapper parses reflected inputs, calls 0x1406801c0, and returns without further effects. Target is RET."
+  },
+  {
+    "function": "UFortCheatManager::SafeTeleport",
+    "wrapper": "porting/generated/native-triage007/0x14286cce0.asm",
+    "decompile": "porting/generated/native-triage007/0x14286cce0.c",
+    "native_body": "porting/generated/native437-callees/0x1406801c0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "proof": "Wrapper parses reflected inputs, calls 0x1406801c0, and returns without further effects. Target is RET."
+  },
+  {
+    "function": "UFortCheatManager::KillBots",
+    "wrapper": "porting/generated/native-triage006/0x14286c730.asm",
+    "decompile": "porting/generated/native-triage006/0x14286c730.c",
+    "native_body": "porting/generated/native437-callees/0x1406801c0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "proof": "Wrapper parses reflected inputs, calls 0x1406801c0, and returns without further effects. Target is RET."
+  },
+  {
+    "function": "UFortCheatManager::TestChangePartyPrivacy",
+    "wrapper": "porting/generated/native-triage006/0x14286f270.asm",
+    "decompile": "porting/generated/native-triage006/0x14286f270.c",
+    "native_body": "porting/generated/native437-callees/0x1406801c0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "proof": "Wrapper parses reflected inputs, calls 0x1406801c0, and returns without further effects. Target is RET."
+  },
+  {
+    "function": "UFortQuestManager::ForceCompleteAccolades",
+    "wrapper": "porting/generated/native-triage006/0x142ab8160.asm",
+    "decompile": "porting/generated/native-triage006/0x142ab8160.c",
+    "native_body": "porting/generated/native437-callees/0x1406801c0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "proof": "Wrapper parses reflected inputs, calls 0x1406801c0, and returns without further effects. Target is RET."
+  }
+]

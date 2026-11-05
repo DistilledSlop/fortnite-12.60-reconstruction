@@ -75,6 +75,12 @@ void UFortCheatManager::AthenaForceVictory(bool bVictory)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::AthenaForceVictory_Delayed(bool bVictory, float DelayTime)
+{
+	// CONFIDENCE: HIGH; wrapper invokes the captured bare-return native target.
+	// Native target 0x1406801c0 is a bare return.
+}
+
 void UFortCheatManager::BackpackSetSize(int32 Size)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
@@ -883,6 +889,12 @@ void UFortCheatManager::HideGameplayCaptureUI()
 	return;
 }
 
+void UFortCheatManager::KillBots(bool bKillPlayers, bool bKillNoneParticipants, uint8 TeamIndex)
+{
+	// CONFIDENCE: HIGH; wrapper invokes the captured bare-return native target.
+	// Native target 0x1406801c0 is a bare return.
+}
+
 void UFortCheatManager::KillPawns(TSubclassOf<AFortPawn> aClass)
 {
 	// CONFIDENCE: high
@@ -1461,6 +1473,12 @@ void UFortCheatManager::RunPerfMemCheatScript(bool bStartStatFiles)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::SafeTeleport(float X, float Y, float Z, float Pitch, float Yaw, float Roll)
+{
+	// CONFIDENCE: HIGH; wrapper invokes the captured bare-return native target.
+	// Native target 0x1406801c0 is a bare return.
+}
+
 void UFortCheatManager::ScriptedPawnIntervalFiring(float TimeBetweenShots, int32 BurstAmount, float TimeBetweenBursts)
 {
 	// CONFIDENCE: high
@@ -1965,6 +1983,12 @@ void UFortCheatManager::TestCancelLobby()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::TestChangePartyPrivacy(bool bPrivate, bool bLeaderFriendsOnly, bool bLeaderInvitesOnly)
+{
+	// CONFIDENCE: HIGH; wrapper invokes the captured bare-return native target.
+	// Native target 0x1406801c0 is a bare return.
 }
 
 void UFortCheatManager::TestChangePartySize(int32 NewSize)

@@ -283,6 +283,9 @@ public:
 	void GetSpawningDistanceMinMaxOverrideForAIEncounter(UFortAIEncounterInfo* Encounter, float& OutSpawningDistanceMin, float& OutSpawningDistanceMax) const;
 	virtual void GetSpawningDistanceMinMaxOverrideForAIEncounter_Implementation(UFortAIEncounterInfo* Encounter, float& OutSpawningDistanceMin, float& OutSpawningDistanceMax) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasMissionPar() const;
+
 	UFUNCTION()
 	void OnRep_ActiveObjectives();
 

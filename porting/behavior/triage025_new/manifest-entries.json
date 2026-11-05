@@ -1,0 +1,18 @@
+[
+  {
+    "class": "AFortMission",
+    "function": "HasMissionPar",
+    "kind": "exec",
+    "signature": "bool HasMissionPar() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage025_new/AFortMission_HasMissionPar.inc",
+    "address": "0x1429de8c0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Wrapper checks MissionInfo at 0x260, UnderParBadge at 0xa8, and positive ParTime at 0xa4."
+  }
+]

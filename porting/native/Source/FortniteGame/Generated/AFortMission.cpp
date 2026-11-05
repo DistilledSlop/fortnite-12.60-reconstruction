@@ -131,6 +131,12 @@ void AFortMission::GetSpawningDistanceMinMaxOverrideForAIEncounter_Implementatio
 	OutSpawningDistanceMax = -1.0f;
 }
 
+bool AFortMission::HasMissionPar() const
+{
+	// CONFIDENCE: high; the native wrapper checks both mission par fields.
+	return MissionInfo && MissionInfo->UnderParBadge && MissionInfo->ParTime > 0;
+}
+
 void AFortMission::OnRep_ActiveObjectives()
 {
 	// Body not recovered: reflection-derived stub.

@@ -167,6 +167,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void AthenaForceVictory_Delayed(bool bVictory, float DelayTime);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void BackpackSetSize(int32 Size);
 public:
@@ -707,6 +712,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void KillBots(bool bKillPlayers, bool bKillNoneParticipants, uint8 TeamIndex);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	virtual void KillPawns(TSubclassOf<AFortPawn> aClass);
 public:
@@ -1083,6 +1093,11 @@ public:
 
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SafeTeleport(float X, float Y, float Z, float Pitch, float Yaw, float Roll);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	virtual void ScriptedPawnIntervalFiring(float TimeBetweenShots, int32 BurstAmount, float TimeBetweenBursts);
 public:
 
@@ -1450,6 +1465,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void TestCancelLobby();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestChangePartyPrivacy(bool bPrivate, bool bLeaderFriendsOnly, bool bLeaderInvitesOnly);
 public:
 
 protected:
