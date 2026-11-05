@@ -5,8 +5,8 @@ the recovered 12.60 classes and cooked assets. The latest offline checksum
 model matches 4,617 of 4,617 generated classes, and 251 recovered
 behavior bodies are spliced into the build. Both native client/server direct
 joins pass. Most game behavior, interactive UI and usable content remain
-unfinished, so the project is not playable yet. Launcher, anti-cheat and
-entitlement compatibility remain required for the finished project.
+unfinished, so the project is not playable yet. The current local account
+flow is intended to use a username without a password, entitlement checks, or EAC.
 
 After the UE 4.25 source checkout is set up, build a Linux Development target:
 

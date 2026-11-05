@@ -139,11 +139,20 @@ uint32 Hash(uint32 Size, const TArray<FResource>& R)
 }
 
 static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
-    bool bResolveAllMetadata, TArray<FLegacyOriginalUniformContractBinding>& Out, FString& Error)
+    bool bResolveAllMetadata, bool bLandscape, TArray<FLegacyOriginalUniformContractBinding>& Out, FString& Error)
 {
-    static const TCHAR* Names[]={TEXT("View"),TEXT("LocalVF"),TEXT("TranslucentDepthPass"),TEXT("ShadowDepthPass"),TEXT("LightmapDensityPass"),TEXT("TranslucentBasePass")};
-    static const TCHAR* Types[]={TEXT("FViewUniformShaderParameters"),TEXT("FLocalVertexFactoryUniformShaderParameters"),TEXT("FTranslucencyDepthPassUniformParameters"),TEXT("FShadowDepthPassUniformParameters"),TEXT("FLightmapDensityPassUniformParameters"),TEXT("FTranslucentBasePassUniformParameters")};
-    static const uint32 ExpectedCounts[]={30,15,3,4,1,2};
+    static const TCHAR* PaperNames[]={TEXT("View"),TEXT("LocalVF"),TEXT("TranslucentDepthPass"),TEXT("ShadowDepthPass"),TEXT("LightmapDensityPass"),TEXT("TranslucentBasePass")};
+    static const TCHAR* PaperTypes[]={TEXT("FViewUniformShaderParameters"),TEXT("FLocalVertexFactoryUniformShaderParameters"),TEXT("FTranslucencyDepthPassUniformParameters"),TEXT("FShadowDepthPassUniformParameters"),TEXT("FLightmapDensityPassUniformParameters"),TEXT("FTranslucentBasePassUniformParameters")};
+    static const uint32 PaperCounts[]={30,15,3,4,1,2};
+    static const TCHAR* LandscapeNames[]={TEXT("LandscapeParameters"),TEXT("LandscapeContinuousLODParameters")};
+    static const TCHAR* LandscapeTypes[]={TEXT("FLandscapeUniformShaderParameters"),TEXT("FLandscapeSectionLODUniformParameters")};
+    static const uint32 LandscapeCounts[]={33,24};
+    static const TCHAR* UnresolvedNames[]={TEXT("View"),TEXT("Primitive"),TEXT("Material"),TEXT("ShadowDepthPass"),TEXT("PrecomputedLightingBuffer"),TEXT("LightmapDensityPass")};
+    static const uint32 UnresolvedExpected[]={37,30,9,6,2,2};
+    const TCHAR* const* Names=bLandscape ? LandscapeNames : PaperNames;
+    const TCHAR* const* Types=bLandscape ? LandscapeTypes : PaperTypes;
+    const uint32* ExpectedCounts=bLandscape ? LandscapeCounts : PaperCounts;
+    const int32 ContractCount=bLandscape ? 2 : 6;
     if (ExpectedSHA256.Len()!=64) return UniformContractsFail(Error,TEXT("invalid pin"));
     TArray<uint8> Bytes;
     if (!FFileHelper::LoadFileToArray(Bytes,*Path) || !Bytes.Num() || Bytes.Num()>16*1024*1024) return UniformContractsFail(Error,TEXT("contract file unavailable or too large"));
@@ -155,8 +164,8 @@ static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
         !Keys(Root,{TEXT("schema"),TEXT("image"),TEXT("inventory"),TEXT("contracts"),TEXT("bindings"),TEXT("runtime_verified"),TEXT("limits")})) return UniformContractsFail(Error,TEXT("invalid contract bundle schema"));
     FString Schema, Limits; bool Verified;
     const auto* Contracts=Arr(Root,TEXT("contracts")); const auto* Bindings=Arr(Root,TEXT("bindings"));
-    if (!Str(Root,TEXT("schema"),Schema) || Schema!=TEXT("paper2d-original-uniform-contracts-v1") || !Str(Root,TEXT("limits"),Limits) ||
-        !Root->TryGetBoolField(TEXT("runtime_verified"),Verified) || Verified || !Contracts || Contracts->Num()!=6 || !Bindings || Bindings->Num()!=69)
+    if (!Str(Root,TEXT("schema"),Schema) || (Schema!=(bLandscape ? TEXT("landscape-original-uniform-contracts-v1") : TEXT("paper2d-original-uniform-contracts-v1"))) || !Str(Root,TEXT("limits"),Limits) ||
+        !Root->TryGetBoolField(TEXT("runtime_verified"),Verified) || Verified || !Contracts || Contracts->Num()!=ContractCount || !Bindings || Bindings->Num()!=(bLandscape ? 143 : 69))
         return UniformContractsFail(Error,TEXT("unexpected contract bundle contents"));
     for (auto Key : {TEXT("image"),TEXT("inventory")}) {
         FObj R=Obj(Root,Key); FString P,H;
@@ -166,11 +175,12 @@ static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
     for (const auto& V : *Contracts) {
         if (!V.IsValid() || V->Type!=EJson::Object) return UniformContractsFail(Error,TEXT("invalid contract entry"));
         FObj C=V->AsObject(); FString Name,Struct,Slot,Address,UniformAddress;
-        if (!Keys(C,{TEXT("parameter_name"),TEXT("struct_type"),TEXT("static_slot_name"),TEXT("original"),TEXT("original_resource_layout_hash"),TEXT("resources"),TEXT("provenance"),TEXT("identity_literal_address"),TEXT("uniform_literal_address")}) ||
-            !Str(C,TEXT("parameter_name"),Name) || !Str(C,TEXT("struct_type"),Struct) || !Str(C,TEXT("static_slot_name"),Slot) || !Slot.IsEmpty() ||
+        if (!(bLandscape ? Keys(C,{TEXT("parameter_name"),TEXT("struct_type"),TEXT("original"),TEXT("original_resource_layout_hash"),TEXT("resources"),TEXT("provenance"),TEXT("identity_literal_address"),TEXT("uniform_literal_address")}) :
+            Keys(C,{TEXT("parameter_name"),TEXT("struct_type"),TEXT("static_slot_name"),TEXT("original"),TEXT("original_resource_layout_hash"),TEXT("resources"),TEXT("provenance"),TEXT("identity_literal_address"),TEXT("uniform_literal_address")})) ||
+            !Str(C,TEXT("parameter_name"),Name) || !Str(C,TEXT("struct_type"),Struct) || (!bLandscape && (!Str(C,TEXT("static_slot_name"),Slot) || !Slot.IsEmpty())) ||
             !Str(C,TEXT("identity_literal_address"),Address) || Address.IsEmpty() || !Str(C,TEXT("uniform_literal_address"),UniformAddress) || UniformAddress.IsEmpty()) return UniformContractsFail(Error,TEXT("invalid original contract identity"));
-        int32 I=0; while (I<6 && Name!=Names[I]) ++I;
-        if (I==6 || Seen[I] || Struct!=Types[I]) return UniformContractsFail(Error,TEXT("duplicate or unknown original contract"));
+        int32 I=0; while (I<ContractCount && Name!=Names[I]) ++I;
+        if (I==ContractCount || Seen[I] || Struct!=Types[I]) return UniformContractsFail(Error,TEXT("duplicate or unknown original contract"));
         Seen[I]=true; auto& Result=All[I]; Result.ParameterName=Name; Result.OriginalStructTypeName=Struct; Result.OriginalStaticSlotName=Slot;
         FObj Original=Obj(C,TEXT("original")); const auto* Tree=Arr(Original,TEXT("members")); const auto* Entries=Arr(C,TEXT("resources")); const auto* Provenance=Arr(C,TEXT("provenance"));
         if (!Keys(Original,{TEXT("struct_size"),TEXT("members")}) || !Num(Original,TEXT("struct_size"),Result.OriginalSize) || !Tree || !Entries || !Provenance || !Provenance->Num() || !Num(C,TEXT("original_resource_layout_hash"),Hashes[I])) return UniformContractsFail(Error,TEXT("invalid original layout"));
@@ -184,7 +194,7 @@ static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
             FLegacyMaterialResource Rsrc; Rsrc.Offset=uint16(Offset); Rsrc.BaseType=Mapped; Result.OriginalResources.Add(Rsrc);
         }
     }
-    uint32 Counts[6]={}, Materials=0; TSet<FString> Uses, Slots;
+    uint32 Counts[6]={}, Materials=0, UnresolvedCounts[6]={}; TSet<FString> Uses, Slots;
     TArray<FLegacyOriginalUniformContractBinding> Result;
     for (const auto& V:*Bindings) {
         if (!V.IsValid() || V->Type!=EJson::Object) return UniformContractsFail(Error,TEXT("invalid binding")); FObj B=V->AsObject();
@@ -192,16 +202,24 @@ static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
         if (!Keys(B,{TEXT("shader_index"),TEXT("source_register"),TEXT("parameter_name"),TEXT("resource_table_active"),TEXT("recorded_resource_layout_hash"),TEXT("status")}) || !Num(B,TEXT("shader_index"),Shader) || !Num(B,TEXT("source_register"),Register) || Register>=32 || !Str(B,TEXT("parameter_name"),Name) || !Str(B,TEXT("status"),Status) || !Num(B,TEXT("recorded_resource_layout_hash"),Recorded) || !B->TryGetBoolField(TEXT("resource_table_active"),Active)) return UniformContractsFail(Error,TEXT("invalid binding fields"));
         FString Use=FString::Printf(TEXT("%u:%s"),Shader,*Name), SlotKey=FString::Printf(TEXT("%u:%u"),Shader,Register);
         if (Uses.Contains(Use) || Slots.Contains(SlotKey)) return UniformContractsFail(Error,TEXT("duplicate binding")); Uses.Add(Use); Slots.Add(SlotKey);
-        int32 I=0; while (I<6 && Name!=Names[I]) ++I;
-        if (I==6) { if (Name!=TEXT("Material") || Status!=TEXT("requires_original_material_expression_contract")) return UniformContractsFail(Error,TEXT("unknown binding")); ++Materials; }
+        int32 I=0; while (I<ContractCount && Name!=Names[I]) ++I;
+        if (I==ContractCount) {
+            if (bLandscape) {
+                int32 U=0; while (U<6 && Name!=UnresolvedNames[U]) ++U;
+                if (U==6 || Status!=TEXT("original_layout_unresolved") || (!Active && Recorded!=0)) return UniformContractsFail(Error,TEXT("unknown landscape binding"));
+                ++UnresolvedCounts[U];
+            } else { if (Name!=TEXT("Material") || Status!=TEXT("requires_original_material_expression_contract")) return UniformContractsFail(Error,TEXT("unknown binding")); ++Materials; }
+        }
         else { if (Status!=TEXT("original_fixed_layout_decoded") || Recorded!=(Active ? Hashes[I] : 0)) return UniformContractsFail(Error,TEXT("binding resource hash inconsistent")); ++Counts[I];
         }
         auto& Binding=Result.AddDefaulted_GetRef();
         Binding.ShaderIndex=Shader; Binding.ParameterName=Name; Binding.SourceRegister=uint16(Register); Binding.SourceResourceLayoutHash=Recorded;
-        if (I<6) { Binding.Contract=All[I]; Binding.Contract.SourceRegister=uint16(Register); Binding.Contract.OriginalResourceLayoutHash=Recorded; }
+        Binding.bOriginalLayoutResolved=I<ContractCount; Binding.bOriginalStaticSlotKnown=!bLandscape;
+        if (I<ContractCount) { Binding.Contract=All[I]; Binding.Contract.SourceRegister=uint16(Register); Binding.Contract.OriginalResourceLayoutHash=Recorded; }
     }
-    for (int32 I=0; I<6; ++I) if (!Seen[I] || Counts[I]!=ExpectedCounts[I]) return UniformContractsFail(Error,TEXT("incomplete binding inventory"));
-    if (Materials!=14) return UniformContractsFail(Error,TEXT("incomplete Material binding inventory"));
+    for (int32 I=0; I<ContractCount; ++I) if (!Seen[I] || Counts[I]!=ExpectedCounts[I]) return UniformContractsFail(Error,TEXT("incomplete binding inventory"));
+    if (bLandscape) { for (int32 I=0; I<6; ++I) if (UnresolvedCounts[I]!=UnresolvedExpected[I]) return UniformContractsFail(Error,TEXT("incomplete unresolved landscape inventory")); }
+    else if (Materials!=14) return UniformContractsFail(Error,TEXT("incomplete Material binding inventory"));
     for (auto& Binding : Result) if (bResolveAllMetadata && Binding.ParameterName!=TEXT("Material")) {
         auto* Metadata=FShaderParametersMetadata::GetNameStructMap().FindRef(FHashedName(*Binding.ParameterName));
         if (!Metadata || Metadata->GetUseCase()!=FShaderParametersMetadata::EUseCase::UniformBuffer || !Metadata->GetShaderVariableName() || Binding.ParameterName!=Metadata->GetShaderVariableName()) return UniformContractsFail(Error,TEXT("current named uniform is not registered"));
@@ -213,7 +231,13 @@ static bool LoadBindings(const FString& Path, const FString& ExpectedSHA256,
 bool LoadLegacyOriginalUniformBindings(const FString& Path, const FString& ExpectedSHA256,
     TArray<FLegacyOriginalUniformContractBinding>& Out, FString& Error)
 {
-    return LoadBindings(Path, ExpectedSHA256, true, Out, Error);
+    return LoadBindings(Path, ExpectedSHA256, true, false, Out, Error);
+}
+
+bool LoadLegacyLandscapeOriginalUniformBindings(const FString& Path, const FString& ExpectedSHA256,
+    TArray<FLegacyOriginalUniformContractBinding>& Out, FString& Error)
+{
+    return LoadBindings(Path, ExpectedSHA256, false, true, Out, Error);
 }
 
 bool LoadLegacyOriginalUniformContract(const FString& Path, const FString& ExpectedSHA256,
@@ -222,7 +246,7 @@ bool LoadLegacyOriginalUniformContract(const FString& Path, const FString& Expec
 {
     if (SourceRegister>=32 || ParameterName==TEXT("Material")) return UniformContractsFail(Error,TEXT("invalid register or unsupported Material contract"));
     TArray<FLegacyOriginalUniformContractBinding> Bindings;
-    if (!LoadBindings(Path,ExpectedSHA256,false,Bindings,Error)) return false;
+    if (!LoadBindings(Path,ExpectedSHA256,false,false,Bindings,Error)) return false;
     for (auto& Binding : Bindings) if (Binding.ShaderIndex==ShaderIndex && Binding.ParameterName==ParameterName) {
         if (Binding.SourceRegister!=SourceRegister || Binding.SourceResourceLayoutHash!=SourceResourceLayoutHash) return UniformContractsFail(Error,TEXT("selected binding does not match source"));
         auto* Metadata=FShaderParametersMetadata::GetNameStructMap().FindRef(FHashedName(*ParameterName));
