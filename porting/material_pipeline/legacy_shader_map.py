@@ -244,7 +244,7 @@ def parse_prefix(data, names):
                 'VT stack serialization follows local UE source and original asset bytes; original runtime serializer is not captured',
                 'Nonempty parameter-binding arrays and shader pipelines are unsupported',
                 'Only observed Slate, LocalVF and landscape XY-offset mesh shader types are supported',
-                'Landscape vertex-factory parameters follow UE 4.24 source; original runtime serializer is not captured'],
+                'Landscape vertex-factory parameter order is confirmed by original serializer 0x143af1010'],
             'cooked': cooked, 'valid': valid,
             'quality_level': quality, 'feature_level': feature,
             'cooked_shader_map_id_hash': shader_map_hash, 'shader_platform': platform,

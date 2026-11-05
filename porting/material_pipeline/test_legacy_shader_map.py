@@ -32,6 +32,10 @@ NAMES += ['FLocalVertexFactory',
           'TBasePassVSFNoLightMapPolicy', 'TBasePassPSFNoLightMapPolicy',
           'FConvertToUniformMeshVS', 'FConvertToUniformMeshGS']
 NAMES += ['FLandscapeXYOffsetVertexFactory']
+NAMES += ['TLightMapDensityVSFDummyLightMapPolicy', 'TLightMapDensityPSFDummyLightMapPolicy',
+          'TBasePassVSFSimpleDirectionalLightLightingPolicy',
+          'TBasePassPSFSimpleDirectionalLightLightingPolicySkylight',
+          'FLandscapeGrassWeightVS', 'FLandscapeGrassWeightPS']
 
 
 def name(index):
@@ -98,6 +102,12 @@ def mesh_resource(type_index=16, frequency=0, landscape=False):
     body = material + vf_head + pack('q', vf_end) + vf_body
     if NAMES[type_index].startswith('TBasePass'):
         body += pack('HI', 0, 0) * 4
+    elif NAMES[type_index].startswith('TLightMapDensity'):
+        body += pack('HI', 0, 0) * 3
+        if frequency == 3:
+            body += pack('3H', 0, 0, 0) * 3
+    elif NAMES[type_index].startswith('FLandscapeGrassWeight'):
+        body += pack('3H', 0, 0, 0)
     elif NAMES[type_index].startswith('TTranslucencyShadowDepthPS'):
         body += pack('3H', 0, 0, 0)
     output_hash = bytes(reversed(range(20)))
@@ -258,6 +268,23 @@ class LegacyPrefixTests(unittest.TestCase):
                 data[field:field + 8] = pack('q', declared)
                 with self.subTest(frequency=frequency, declared=declared), self.assertRaises(ValueError):
                     parse_prefix(data, NAMES)
+
+    def test_terrain_shader_variants_enforce_record_boundaries(self):
+        for index, frequency in ((23, 0), (24, 3), (25, 0), (26, 3), (27, 0), (28, 3)):
+            with self.subTest(shader=NAMES[index]):
+                data = mesh_resource(index, frequency, landscape=True)
+                record = parse_prefix(data, NAMES)['mesh_shader_maps'][0]['records'][0]
+                self.assertEqual(record['end'], record['serialized_end_offset'])
+                if index in (23, 24):
+                    self.assertEqual(len(record['lightmap_policy_uniform_buffers']), 3)
+                    if frequency == 3:
+                        self.assertEqual(len(record['lightmap_density_parameters']), 3)
+                if index in (27, 28):
+                    self.assertIn('landscape_grass_scalar_parameter', record)
+                damaged = bytearray(data)
+                damaged[record['offset'] + 8:record['offset'] + 16] = pack('q', record['end'] - 1)
+                with self.assertRaises(ValueError):
+                    parse_prefix(damaged, NAMES)
 
     def test_debug_counts_use_material_texture_type_order(self):
         arrays = [[VECTOR], [SCALAR], [TEXTURE], [], [], [TEXTURE, TEXTURE], [], [TEXTURE]]

@@ -82,7 +82,7 @@
       0,
       1
     ],
-    "original_resource_parse_first_failure": "First map: unsupported shader type TLightMapDensityVSFDummyLightMapPolicy at map-relative offset 8628",
+    "original_resource_parse_first_failure": "First map: unsupported nonempty mesh shader pipelines at map-relative offset 22140 (pipeline count 3)",
     "first_runtime_virtual_texture_uniforms": {
       "offsets": [
         226,
@@ -169,20 +169,52 @@
         5828,
         6545,
         7262,
-        7899
+        7899,
+        8628,
+        9375,
+        10036,
+        10697,
+        11408,
+        12143,
+        12878,
+        13613,
+        14282,
+        14933,
+        15602,
+        16271,
+        16940,
+        17651,
+        18256,
+        18861,
+        19582,
+        20227,
+        20942,
+        21547
       ],
-      "first_unsupported_shader_record_offset": 8628,
-      "first_unsupported_shader_type": "TLightMapDensityVSFDummyLightMapPolicy",
       "vertex_parameter_encoding": "six FShaderParameter values, each three uint16 values, in UE 4.24 source serializer order",
       "first_vertex_parameter_payload_offset": 4739,
       "first_vertex_parameter_payload_end": 4775,
       "first_pixel_parameter_payload_bytes": 0,
       "source": "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Landscape/Private/LandscapeRender.cpp#L3953",
       "limitations": [
-        "Original landscape vertex-factory serializer has not been captured.",
+        "Original landscape vertex-factory serializer 0x143af1010 confirms the six-field order.",
         "Second map record end offsets use resource-relative coordinates; independently slicing it does not validate its records.",
         "Shader archive association and runtime loading have not been validated."
-      ]
+      ],
+      "first_map_shader_records_end": 22140,
+      "first_map_shader_record_count": 26,
+      "next_unsupported": "Three mesh shader pipelines, first DepthNoColorOutputPipeline with two stages; full pipeline parsing is not enabled here",
+      "additional_shader_record_evidence": {
+        "density_dummy_policy": "UE 4.24 LightMapDensityRendering.cpp instantiates TUniformLightMapPolicy<LMP_DUMMY>; LightMapRendering.h serializes three uniform buffers; both D4 stages pass identity and declared record boundaries.",
+        "simple_directional_base_pass": "UE 4.24 BasePassRendering.cpp instantiates the uniform policy. D4 vertex and both pixel records pass identity and declared record boundaries.",
+        "landscape_grass": "UE 4.24 LandscapeGrass.cpp declares one FShaderParameter in each stage; both D4 records pass identity and declared record boundaries.",
+        "sources": [
+          "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Renderer/Private/LightMapDensityRendering.cpp",
+          "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Renderer/Private/LightMapRendering.h",
+          "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Renderer/Private/BasePassRendering.cpp",
+          "https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Landscape/Private/LandscapeGrass.cpp"
+        ]
+      }
     }
   },
   "reports": [
@@ -201,5 +233,20 @@
     "vtable": "0x146ac1fe8",
     "serialize": "0x144364a00",
     "observed_order": "32-bit parameter flag; parameter info via 0x14431dec0; 32-bit texture index; 32-bit vector index"
+  },
+  "landscape_vf_original_serializer": {
+    "registration": "0x140506370",
+    "parameter_constructor": "0x143ae1e70",
+    "vertex_parameters_vtable": "0x1467ba288",
+    "serialize": "0x143af1010",
+    "bind": "0x143add1e0",
+    "fields": [
+      "LodValues",
+      "ForcedLod",
+      "LodTessellationParams",
+      "NeighborSectionLod",
+      "LodBias",
+      "SectionLods"
+    ]
   }
 }

@@ -14,7 +14,7 @@
 .leaf-label,.leaf-pct,.tm-head{fill:var(--tm-ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .leaf-pct{font-weight:700}
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.1% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit efca510 | Prepare original Bridge 014 static meshes | 2026-11-05T15:40:29-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
+.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.1% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit 7a883c0 | Decode terrain virtual texture stacks and landscape records | 2026-11-05T15:42:29-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Gameplay classes (/Script/FortniteGame)
 17.1% complete
 effort weight 673 | source: derived

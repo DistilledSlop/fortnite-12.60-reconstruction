@@ -19,8 +19,9 @@ SHADOW_DEPTH_VS = {
             'TShadowDepthVSVertexShadowDepth_OnePassPointLightfalse',
             'TShadowDepthVSForGSVertexShadowDepth_OnePassPointLight'}
 MESH_VS |= {'TBasePassVSFSimpleNoLightmapLightingPolicy', 'TBasePassVSFNoLightMapPolicy',
-            'FConvertToUniformMeshVS', 'FHitProxyVS',
-            'TLightMapDensityVSFNoLightMapPolicy',
+            'TBasePassVSFSimpleDirectionalLightLightingPolicy',
+            'FConvertToUniformMeshVS', 'FHitProxyVS', 'FLandscapeGrassWeightVS',
+            'TLightMapDensityVSFNoLightMapPolicy', 'TLightMapDensityVSFDummyLightMapPolicy',
             # Current TDepthOnlyVS declares no additional serialized fields.
             'TDepthOnlyVS<false>',
             # Current FVelocityVS declares no additional serialized fields.
@@ -28,11 +29,13 @@ MESH_VS |= {'TBasePassVSFSimpleNoLightmapLightingPolicy', 'TBasePassVSFNoLightMa
 MESH_PS = {'TTranslucencyShadowDepthPS<' + mode + '>' for mode in
            ('TranslucencyShadowDepth_Standard', 'TranslucencyShadowDepth_PerspectiveCorrect')}
 MESH_PS |= {'TBasePassPS' + policy + sky for policy in
-            ('FSimpleNoLightmapLightingPolicy', 'FNoLightMapPolicy') for sky in ('', 'Skylight')}
+            ('FSimpleNoLightmapLightingPolicy', 'FNoLightMapPolicy',
+             'FSimpleDirectionalLightLightingPolicy') for sky in ('', 'Skylight')}
 SHADOW_DEPTH_PS = {'TShadowDepthPSPixelShadowDepth_' + mode + 'false' for mode in
                    ('PerspectiveCorrect', 'OnePassPointLight', 'NonPerspectiveCorrect')}
 # Current FVelocityPS also declares no additional serialized fields.
-MESH_PS |= {'FHitProxyPS', 'TLightMapDensityPSFNoLightMapPolicy', 'FVelocityPS',
+MESH_PS |= {'FHitProxyPS', 'TLightMapDensityPSFNoLightMapPolicy',
+            'TLightMapDensityPSFDummyLightMapPolicy', 'FVelocityPS', 'FLandscapeGrassWeightPS',
             'FDepthOnlyPS<false>'} | SHADOW_DEPTH_PS
 # FOnePassPointShadowDepthGS adds no fields beyond FMeshMaterialShader.
 MESH_GS = {'FConvertToUniformMeshGS', 'FOnePassPointShadowDepthGS'}
@@ -120,7 +123,7 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
                     vf['lod_parameter'] = parameters(reader)
                 elif expected_frequency == 0 and vertex_factory['name'] == 'FLandscapeXYOffsetVertexFactory':
                     # UE 4.24 FLandscapeVertexFactoryVertexShaderParameters::Serialize.
-                    # Original binary serializer has not yet been captured.
+                    # Original 0x143af1010 serializes these six fields in this order.
                     names = ('lod_values', 'forced_lod', 'lod_tessellation',
                              'neighbor_section_lod', 'lod_bias', 'section_lods')
                     vf['landscape_parameters'] = {name: parameters(reader) for name in names}
@@ -134,7 +137,9 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
                 # All six observed base-pass types share 0x1431e2ea0.
                 result['base_pass_uniform_buffers'] = [uniform_buffer(reader) for _ in range(4)]
             elif kind in {'TLightMapDensityVSFNoLightMapPolicy',
-                          'TLightMapDensityPSFNoLightMapPolicy'}:
+                          'TLightMapDensityPSFNoLightMapPolicy',
+                          'TLightMapDensityVSFDummyLightMapPolicy',
+                          'TLightMapDensityPSFDummyLightMapPolicy'}:
                 # FUniformLightMapPolicyShaderParametersType serializes three
                 # FShaderUniformBufferParameters in LightMapRendering.h.
                 result['lightmap_policy_uniform_buffers'] = [uniform_buffer(reader) for _ in range(3)]
@@ -167,6 +172,10 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
                 # The original record requires six bytes here, consistent
                 # with the current FHitProxyPS scalar parameter declaration.
                 result['hit_proxy_scalar_parameter'] = parameters(reader)
+            elif kind in {'FLandscapeGrassWeightVS', 'FLandscapeGrassWeightPS'}:
+                # LandscapeGrass.cpp declares one scalar shader parameter per stage.
+                # Original semantic identity is not independently verified.
+                result['landscape_grass_scalar_parameter'] = parameters(reader)
         result['output_hash'] = hash_field(reader)
         result['material_shader_map_hash'] = hash_field(reader)
         if result['material_shader_map_hash']['hash'] != map_hash:
