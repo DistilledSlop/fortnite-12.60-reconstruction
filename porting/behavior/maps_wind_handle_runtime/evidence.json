@@ -1,0 +1,9 @@
+{
+  "status": "unported; shared handle constructor dependency",
+  "exec_address": "0x142b560c0",
+  "capture": "porting/generated/maps-wind-live-consumers/_adhoc/0x142b560c0__142b560c0.c",
+  "sha256": "feb4f11599c76f5a042dec5bcbbd83d11acca223106db656769f6547318baa63",
+  "body": "Scan WindImpulses handles at stride0x4c/offset0x48 followed by WindImpulseCylinders at stride0x48/offset0x38. Return whether UID matches.",
+  "required_wrapper_effect": "Before resolving the reference argument, default construction of the temporary handle reads and increments shared global0x148129b6c. Existing generated FFortWindImpulseHandle has only UID and no shared constructor policy. Other wrappers/creators share this counter.",
+  "next_step": "Recover shared handle counter initialization and implement struct-level default construction before adding this body; avoid a disconnected local counter."
+}

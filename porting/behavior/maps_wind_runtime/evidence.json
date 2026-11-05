@@ -39,6 +39,22 @@
     "resolve_world_manager": {
       "path": "porting/generated/maps-wind-initialization/_adhoc/0x141f88460__141f88460.c",
       "sha256": "1589080a89d8f810a46e010c1c7bb2d75e4f7dc0710b5209ca117f1dd8b4fa36"
+    },
+    "global_wind_fallback": {
+      "path": "porting/generated/maps-wind-actor-ingress/_adhoc/0x141f87000__141f87000.c",
+      "sha256": "001d22a651a9cad92b66336633243b3ffc855cee76f0fad285074603cfbec277"
+    },
+    "wind_actor_class": {
+      "path": "porting/generated/maps-wind-actor-ingress/_adhoc/0x142752f80__142752f80.c",
+      "sha256": "b34f47465bc0ab10f511046445f4232aca1b7ec6ca365b797ffedd743b039b1d"
+    },
+    "building_wind_material_data": {
+      "path": "porting/generated/maps-wind-actor-ingress/_adhoc/0x141de5910__141de5910.c",
+      "sha256": "fa2df42f7cec5653a3febf637013e5b4935d4de7380e446387595e177bb9c581"
+    },
+    "apply_building_wind_material_data": {
+      "path": "porting/generated/maps-wind-actor-ingress/_adhoc/0x141dd4d50__141dd4d50.c",
+      "sha256": "a2f40b429356ea7066823f5306714864197e545a949a72e18ed23c08b0c2fd59"
     }
   },
   "behavior": "Callback resolves the owner context world and casts its GameState, then uses its WindManager at 0x468. It rotates (1,0,0) around (0,0,1) by the replicated heading and passes intensity and direction to 0x141dd8f30. The setter compares all four floats and, only if changed and net mode is not dedicated server, stores intensity, direction and intensity times direction at 0x420, 0x424 and 0x430.",
@@ -71,6 +87,8 @@
     "status": "unported; no runtime credit",
     "initialize": "0x141dd0980 reads world manager global wind on non-dedicated instances, then always invokes 0x141dd5490. If bAllowWindImpulses and native byte0x44f is clear, client sampling initialization follows (0x141dc7100 and 0x141ddfad0).",
     "world_actor_impulses": "0x141dd5490 checks global pointer0x14812a5f8 and dedicated-server status, iterates world actors of class returned by0x142752f80, checks actor byte0x6ad mask8, constructs impulse data via0x141de5910 and applies via0x141dd4d50, then clears that actor bit. Class identity and dependent impulse helpers remain unresolved.",
-    "global_values": "0x141f87230 accepts nonnegative InitialGlobalWind.WindIntensity and rotates heading. Negative intensity uses0x141f87000 to discover values, with defaults intensity0.1/heading45. This fallback must be recovered before lifting the whole helper."
+    "global_values": "0x141f87230 accepts nonnegative InitialGlobalWind.WindIntensity and rotates heading. Negative intensity uses0x141f87000 to discover values, with defaults intensity0.1/heading45. This fallback must be recovered before lifting the whole helper.",
+    "world_actor_class": "0x142752f80 registers /Script/FortniteGame.BuildingSMActor. The initialization loop therefore discovers building material consumers, not generic impulse-volume actors. Actor bit0x6ad/0x08 is checked then cleared after processing; correlate reflection before naming this bit.",
+    "building_material_dependencies": "0x141de5910 collects soft references from actor archetype and actor: offsets0x7d0,0x7f8,0x830 and an array at0x820. It also obtains materials through a virtual0x860 call. 0x141dd4d50 consumes this record. Neither routine is integrated; preserve asynchronous asset/material lifetime behavior during recovery."
   }
 }
