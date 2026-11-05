@@ -66,5 +66,13 @@
     ],
     "facts": "A Vulkan global has OriginalBindingIndex, descriptor type index, no combined sampler alias, and corresponding GlobalSpirvInfos descriptor-set and binding word offsets. Compiler remaps a named global allocation to BufferIndex=FVulkanShaderHeader::Global, BaseIndex=header global index, Size=count, original parameter type; direct graphics UAV writes consume that global index. OriginalBindingIndex is the converted SPIR-V binding, not necessarily the original D3D u7."
   },
-  "next_dependency": "Establish the original renderer binding path or independently verify an equivalent target runtime View UAV mapping and resource layout; then construct and validate the descriptor and binding. Do not treat a synthetic View resource as an original D3D resource-table entry."
+  "next_dependency": "Establish the original renderer binding path or independently verify an equivalent target runtime View UAV mapping and resource layout; then construct and validate the descriptor and binding. Do not treat a synthetic View resource as an original D3D resource-table entry.",
+  "view_proxy_integration": {
+    "layout_evidence": "porting/generated/material_pipeline/view-identity/full-layout-contract.json",
+    "layout_difference": "The recovered original View has no VTFeedbackBuffer member; current View has RWBuffer<uint> VTFeedbackBuffer at offset 4016, resource index 59 in the captured current layout. The index is capture-specific and must be derived from live metadata when used.",
+    "proxy_construction": "LegacyOriginalUniformData.cpp builds bytes and resources only for original contract leaves, while LegacyOriginalUniformLayout.cpp builds the matching original metadata. LegacyLocalVFUniformBindings.cpp creates the original-layout buffer and checks its RHI layout against the prepared target. Therefore the current View UAV is not in that proxy resource table.",
+    "target_header_constraint": "LegacyLocalVFAdapter.cpp OriginalUniformTarget requires exact original members, size, and resource layout. Its descriptor loop accepts resource entries only from the captured original D3D table. VulkanCommands.cpp uses the resource index in the bound uniform buffer resource array, so indexing the current View resource from an original-layout proxy would be invalid.",
+    "possible_target_design": "An independently validated target-only resource extension or a separately bound actual current View buffer could supply the UAV, with a corresponding Vulkan global and UB resource entry. It must preserve constant-data ABI, use the actual bound buffer layout and resource index, validate lifetime and binding order, and not assert an original D3D table entry. A direct UAV bind additionally needs a proven caller and Vulkan global index.",
+    "limit": "No equivalent target runtime binding, shader integration, or live feedback semantics has yet been validated; the adapter continues to reject this parameter."
+  }
 }

@@ -756,6 +756,644 @@
           "original_layout_hash": 104203782
         }
       ]
+    },
+    {
+      "parameter_name": "Primitive",
+      "struct_type": "FPrimitiveUniformShaderParameters",
+      "original": {
+        "struct_size": 560,
+        "members": [
+          {
+            "name": "LocalToWorld",
+            "offset": 0,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 4,
+            "columns": 4,
+            "elements": 0,
+            "size": 64,
+            "shader_type": "",
+            "helper": "1432dbe00"
+          },
+          {
+            "name": "InvNonUniformScaleAndDeterminantSign",
+            "offset": 64,
+            "base_type": 4,
+            "precision": 1,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "144508d10"
+          },
+          {
+            "name": "ObjectWorldPositionAndRadius",
+            "offset": 80,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "1445092e0"
+          },
+          {
+            "name": "WorldToLocal",
+            "offset": 96,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 4,
+            "columns": 4,
+            "elements": 0,
+            "size": 64,
+            "shader_type": "",
+            "helper": "144509950"
+          },
+          {
+            "name": "PreviousLocalToWorld",
+            "offset": 160,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 4,
+            "columns": 4,
+            "elements": 0,
+            "size": 64,
+            "shader_type": "",
+            "helper": "144509610"
+          },
+          {
+            "name": "PreviousWorldToLocal",
+            "offset": 224,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 4,
+            "columns": 4,
+            "elements": 0,
+            "size": 64,
+            "shader_type": "",
+            "helper": "1445096b0"
+          },
+          {
+            "name": "ActorWorldPosition",
+            "offset": 288,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 3,
+            "elements": 0,
+            "size": 12,
+            "shader_type": "",
+            "helper": "144508a60"
+          },
+          {
+            "name": "UseSingleSampleShadowFromStationaryLights",
+            "offset": 300,
+            "base_type": 4,
+            "precision": 1,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "1445097f0"
+          },
+          {
+            "name": "ObjectBounds",
+            "offset": 304,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 3,
+            "elements": 0,
+            "size": 12,
+            "shader_type": "",
+            "helper": "144509190"
+          },
+          {
+            "name": "LpvBiasMultiplier",
+            "offset": 316,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "144509040"
+          },
+          {
+            "name": "DecalReceiverMask",
+            "offset": 320,
+            "base_type": 4,
+            "precision": 1,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "144508bb0"
+          },
+          {
+            "name": "PerObjectGBufferData",
+            "offset": 324,
+            "base_type": 4,
+            "precision": 1,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "144509420"
+          },
+          {
+            "name": "UseVolumetricLightmapShadowFromStationaryLights",
+            "offset": 328,
+            "base_type": 4,
+            "precision": 1,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "1445098a0"
+          },
+          {
+            "name": "DrawsVelocity",
+            "offset": 332,
+            "base_type": 4,
+            "precision": 1,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "144508c60"
+          },
+          {
+            "name": "ObjectOrientation",
+            "offset": 336,
+            "base_type": 4,
+            "precision": 1,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "144509230"
+          },
+          {
+            "name": "NonUniformScale",
+            "offset": 352,
+            "base_type": 4,
+            "precision": 1,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "1445090e0"
+          },
+          {
+            "name": "LocalObjectBoundsMin",
+            "offset": 368,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 3,
+            "elements": 0,
+            "size": 12,
+            "shader_type": "",
+            "helper": "144508fa0"
+          },
+          {
+            "name": "LightingChannelMask",
+            "offset": 380,
+            "base_type": 3,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "144508dc0"
+          },
+          {
+            "name": "LocalObjectBoundsMax",
+            "offset": 384,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 3,
+            "elements": 0,
+            "size": 12,
+            "shader_type": "",
+            "helper": "144508f00"
+          },
+          {
+            "name": "LightmapDataIndex",
+            "offset": 396,
+            "base_type": 3,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "144508e60"
+          },
+          {
+            "name": "PreSkinnedLocalBoundsMin",
+            "offset": 400,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 3,
+            "elements": 0,
+            "size": 12,
+            "shader_type": "",
+            "helper": "144509570"
+          },
+          {
+            "name": "SingleCaptureIndex",
+            "offset": 412,
+            "base_type": 2,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "144509750"
+          },
+          {
+            "name": "PreSkinnedLocalBoundsMax",
+            "offset": 416,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 3,
+            "elements": 0,
+            "size": 12,
+            "shader_type": "",
+            "helper": "1445094d0"
+          },
+          {
+            "name": "OutputVelocity",
+            "offset": 428,
+            "base_type": 3,
+            "precision": 0,
+            "rows": 1,
+            "columns": 1,
+            "elements": 0,
+            "size": 4,
+            "shader_type": "",
+            "helper": "144509380"
+          },
+          {
+            "name": "CustomPrimitiveData",
+            "offset": 432,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 8,
+            "size": 128,
+            "shader_type": "",
+            "helper": "0x144508b00"
+          }
+        ]
+      },
+      "original_resource_layout_hash": 36700160,
+      "resources": [],
+      "identity_literal_address": "0x146b1a450",
+      "uniform_literal_address": "0x146b1a438",
+      "provenance": [
+        {
+          "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/apollo-material-evidence/primitive-uniform-initializers/0x140555110.asm",
+          "sha256": "1ca2148fa97ef3bb77b406b37454cc56a2879d9e1ea16fd9e69714a79b8d1086"
+        },
+        {
+          "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/apollo-material-evidence/primitive-uniform-chain/member-chain.json",
+          "sha256": "d6fadbd98a967587b3ebbd576720f07e0deec15fa344a4abd035d8e179c00b07"
+        }
+      ],
+      "original_shader_associations": [
+        {
+          "shader_index": 1752,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1753,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1754,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1755,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57809,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57810,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1760,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57811,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57812,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 63205,
+          "uniform_buffer": 1,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 63206,
+          "uniform_buffer": 1,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 63207,
+          "uniform_buffer": 1,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 63208,
+          "uniform_buffer": 1,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 63209,
+          "uniform_buffer": 1,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57818,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57819,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1773,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1774,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1775,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1776,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1777,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57822,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57823,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1780,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57824,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57825,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57826,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57827,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 1785,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57828,
+          "uniform_buffer": 2,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        }
+      ]
+    },
+    {
+      "parameter_name": "PrecomputedLightingBuffer",
+      "struct_type": "FPrecomputedLightingUniformParameters",
+      "original": {
+        "struct_size": 240,
+        "members": [
+          {
+            "name": "StaticShadowMapMasks",
+            "offset": 0,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "1442ff000"
+          },
+          {
+            "name": "InvUniformPenumbraSizes",
+            "offset": 16,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "1442feb60"
+          },
+          {
+            "name": "LightMapCoordinateScaleBias",
+            "offset": 32,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "1442fecb0"
+          },
+          {
+            "name": "ShadowMapCoordinateScaleBias",
+            "offset": 48,
+            "base_type": 4,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 0,
+            "size": 16,
+            "shader_type": "",
+            "helper": "1442fef60"
+          },
+          {
+            "name": "LightMapScale",
+            "offset": 64,
+            "base_type": 4,
+            "precision": 1,
+            "rows": 1,
+            "columns": 4,
+            "elements": 2,
+            "size": 32,
+            "shader_type": "",
+            "helper": "1442fed50"
+          },
+          {
+            "name": "LightMapAdd",
+            "offset": 96,
+            "base_type": 4,
+            "precision": 1,
+            "rows": 1,
+            "columns": 4,
+            "elements": 2,
+            "size": 32,
+            "shader_type": "",
+            "helper": "1442fec00"
+          },
+          {
+            "name": "LightmapVTPackedPageTableUniform",
+            "offset": 128,
+            "base_type": 3,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 2,
+            "size": 32,
+            "shader_type": "",
+            "helper": "1442fee00"
+          },
+          {
+            "name": "LightmapVTPackedUniform",
+            "offset": 160,
+            "base_type": 3,
+            "precision": 0,
+            "rows": 1,
+            "columns": 4,
+            "elements": 5,
+            "size": 80,
+            "shader_type": "",
+            "helper": "0x1442feeb0"
+          }
+        ]
+      },
+      "original_resource_layout_hash": 15728640,
+      "resources": [],
+      "identity_literal_address": "0x146aaa400",
+      "uniform_literal_address": "0x146686278",
+      "provenance": [
+        {
+          "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/apollo-material-evidence/primitive-uniform-initializers/0x140546940.asm",
+          "sha256": "62d6b0427a51caf85cf9ec70a1a84ed4f209c924f19c5609891f54de3ca2e19d"
+        },
+        {
+          "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/apollo-material-evidence/precomputed-lighting-chain/member-chain.json",
+          "sha256": "d2d17b47e3f9e74d022170d04a8ed3220b89b0329c3c5f703f5d1384f8335e19"
+        }
+      ],
+      "original_shader_associations": [
+        {
+          "shader_index": 57810,
+          "uniform_buffer": 3,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        },
+        {
+          "shader_index": 57823,
+          "uniform_buffer": 3,
+          "resource_table_active": false,
+          "original_layout_hash": 0
+        }
+      ]
     }
   ],
   "shader_report": {
@@ -763,5 +1401,5 @@
     "sha256": "c764c937cb49fa8259a1c655b73504719c190c72a68ac7d29e6279400d3d253b"
   },
   "runtime_verified": false,
-  "limits": "Original metadata ABI only; runtime value semantics, binding and rendering remain unverified. Resource hashes are corroborated by the captured shader wrappers."
+  "limits": "Original metadata ABI only; runtime value semantics, binding and rendering remain unverified. Landscape resource hashes are corroborated by active captured shader wrappers. Primitive and PrecomputedLightingBuffer wrappers have no active resource-table entries, so they do not corroborate their computed resource hashes."
 }

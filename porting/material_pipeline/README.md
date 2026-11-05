@@ -403,3 +403,8 @@ members) and `LandscapeContinuousLODParameters` (48 bytes, six members): see
 associations, respectively. The original material shader constructor, lookup and serializer identify the
 decoded `VTFeedbackBuffer` resource field; its renderer binding path remains unverified, as documented
 in `behavior/maps_terrain_material_runtime/vt-feedback-contract.json`.
+The same original metadata capture now includes `Primitive` (560 bytes, 25
+members) and `PrecomputedLightingBuffer` (240 bytes, eight members). Their
+terrain shader wrappers name the uniforms but have no active resource-table
+entries, so those wrappers do not independently corroborate the computed layout
+hashes. Runtime values and bindings are still required for both.

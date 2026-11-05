@@ -13,15 +13,17 @@ ROOT = Path(__file__).resolve().parents[1]
 CAP = ROOT / 'generated/apollo-material-evidence'
 SHADER_REPORT = ROOT / 'generated/material_pipeline/apollo-d4-landscape-spirv/d3d-report.json'
 FIXED = (
-    ('LandscapeParameters', 'FLandscapeUniformShaderParameters', '140506010', 'landscape', '143af7230'),
-    ('LandscapeContinuousLODParameters', 'FLandscapeSectionLODUniformParameters', '140505f00', 'continuous', '143af6650'),
+    ('LandscapeParameters', 'FLandscapeUniformShaderParameters', '140506010', 'terrain-uniform-initializers', 'terrain-uniform-chain-landscape', '143af7230', True),
+    ('LandscapeContinuousLODParameters', 'FLandscapeSectionLODUniformParameters', '140505f00', 'terrain-uniform-initializers', 'terrain-uniform-chain-continuous', '143af6650', True),
+    ('Primitive', 'FPrimitiveUniformShaderParameters', '140555110', 'primitive-uniform-initializers', 'primitive-uniform-chain', '144508b00', False),
+    ('PrecomputedLightingBuffer', 'FPrecomputedLightingUniformParameters', '140546940', 'primitive-uniform-initializers', 'precomputed-lighting-chain', '1442feeb0', False),
 )
 
 
 def decode(row, image):
-    name, typ, address, label, head = row
-    asm = CAP / 'terrain-uniform-initializers' / ('0x' + address + '.asm')
-    chain_path = CAP / ('terrain-uniform-chain-' + label) / 'member-chain.json'
+    name, typ, address, initializer_dir, chain_dir, head, active_required = row
+    asm = CAP / initializer_dir / ('0x' + address + '.asm')
+    chain_path = CAP / chain_dir / 'member-chain.json'
     # The bounded initializer capture uses two spaces between address/instruction.
     text = '\n'.join(' '.join(line.split(None, 1)) for line in asm.read_text().splitlines())
     chains = json.loads(chain_path.read_text())
@@ -47,7 +49,7 @@ def decode(row, image):
                 provenance=[receipt(asm), receipt(chain_path)])
 
 
-def verify_wrappers(contract, report):
+def verify_wrappers(contract, report, active_required):
     name = contract['parameter_name']
     expected = contract['original_resource_layout_hash']
     associations = []
@@ -66,8 +68,8 @@ def verify_wrappers(contract, report):
             raise ValueError('original shader wrapper layout hash mismatch: ' + name)
         associations.append(dict(shader_index=record['shader_index'], uniform_buffer=index,
                                  resource_table_active=active, original_layout_hash=recorded))
-    if not any(row['resource_table_active'] for row in associations):
-        raise ValueError('no active original shader wrapper associations: ' + name)
+    if not associations or (active_required and not any(row['resource_table_active'] for row in associations)):
+        raise ValueError('missing original shader wrapper associations: ' + name)
     return associations
 
 
@@ -80,13 +82,13 @@ def main():
     with IMAGE.open('rb') as image:
         contracts = [decode(row, image) for row in FIXED]
     report = json.loads(SHADER_REPORT.read_text())
-    for contract in contracts:
-        contract['original_shader_associations'] = verify_wrappers(contract, report)
+    for row, contract in zip(FIXED, contracts):
+        contract['original_shader_associations'] = verify_wrappers(contract, report, row[-1])
     result = dict(schema='landscape-original-uniform-contract-v1',
                   image=dict(path=str(IMAGE), sha256=IMAGE_HASH), contracts=contracts,
                   shader_report=receipt(SHADER_REPORT),
                   runtime_verified=False,
-                  limits='Original metadata ABI only; runtime value semantics, binding and rendering remain unverified. Resource hashes are corroborated by the captured shader wrappers.')
+                  limits='Original metadata ABI only; runtime value semantics, binding and rendering remain unverified. Landscape resource hashes are corroborated by active captured shader wrappers. Primitive and PrecomputedLightingBuffer wrappers have no active resource-table entries, so they do not corroborate their computed resource hashes.')
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({c['parameter_name']: dict(size=c['original']['struct_size'], members=len(c['original']['members']), resources=len(c['resources']), hash=c['original_resource_layout_hash']) for c in contracts}))
