@@ -6,10 +6,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "Camera/PlayerCameraManager.h"
+#include "Components/AudioComponent.h"
 #include "Components/MeshComponent.h"
 #include "Components/PrimitiveComponent.h"
+#include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Curves/CurveLinearColor.h"
+#include "Engine/World.h"
 #include "EngineUtils.h"
 #include "FFortWindImpulseCylinder.h"
 #include "FFortWindImpulseCylinderDelta.h"
@@ -239,5 +243,6 @@ public:
 	void NativeRefreshNearbyCache(const FVector& ViewerPosition);
 	static void NativeBuildWindSectionBoxes(const FFortWindImpulseCylinderDelta& Delta, TArray<FBox>& OutBoxes);
 	void NativeStartQueuedWindDelta();
+	void NativeUpdateWindAudio(float DeltaSeconds);
 };
 

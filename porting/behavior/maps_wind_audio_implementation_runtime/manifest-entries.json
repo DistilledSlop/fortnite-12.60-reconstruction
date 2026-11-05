@@ -1,0 +1,21 @@
+[
+  {
+    "class": "AFortWindManager",
+    "kind": "helper",
+    "function": "NativeUpdateWindAudio",
+    "signature": "void NativeUpdateWindAudio(float DeltaSeconds)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141de18c0",
+    "inc_path": "porting/behavior/maps_wind_audio_implementation_runtime/AFortWindManager_NativeUpdateWindAudio.inc",
+    "includes": [
+      "Camera/PlayerCameraManager.h",
+      "Components/AudioComponent.h",
+      "Components/SceneComponent.h",
+      "Engine/World.h"
+    ],
+    "notes": "Original wind-enable/dedicated/world gates, closest cached audio responder, component acquisition and pool lifecycle, inactive/active events, and per-entry volume interpolation. Preserves PendingKill-only checks, direct Sound/initial volume writes, callback lookup ordering, NaN volume branch and default responder unspecified bounds/effective-distance storage. Source recovery only; no build/runtime validation."
+  }
+]

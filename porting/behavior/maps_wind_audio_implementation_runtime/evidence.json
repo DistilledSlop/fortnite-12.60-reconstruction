@@ -1,0 +1,33 @@
+{
+  "address": "0x141de18c0",
+  "source": "porting/generated/maps-wind-ready-dispatch/_adhoc/0x141de18c0__141de18c0.c",
+  "implementation": "porting/behavior/maps_wind_audio_implementation_runtime/AFortWindManager_NativeUpdateWindAudio.inc",
+  "confidence": "high",
+  "validation": "Integrated through global behavior manifest and native source generation: 3996 accepted snippets, zero rejected; generated type includes and whitespace checked. Build/runtime validation deferred under batching cadence.",
+  "dependencies": {
+    "wind_gate": "AFortWindManager::NativeIsWindEnabled",
+    "nearby_cache": "AFortWindManager::NativeRefreshNearbyCache",
+    "viewer_controller": "14468f240 returns first player controller from World+0x1c8 weak array if +0x1d0 count is positive; 142a3d9f0 checks FortPlayerController class.",
+    "viewer_camera": "PlayerCameraManager class1447b9610 ->142a40120 ->1447bb380 builder; constructor adapter1447ba0c0 ->144470cd0. Constructor LEA144470cec assigns primary vtable146b05250, whose slot+0x708 targets14447d4b0. This invokes virtual+0x660 to obtain cached POV and returns its first three floats. Engine PlayerCameraManager.cpp:838 GetCameraLocation() const returns GetCameraCachePOV().Location, establishing the concrete method. Root inspected local disassembly wind-camera-{class,builder,adapter,location}.bin.",
+    "audio_api_evidence": "porting/behavior/maps_wind_audio_api_runtime/engine-api-evidence.md",
+    "component_constructor": "1440943c0 installs table146a2a748; captures maps-wind-audio-component-ctor and maps-wind-audio-virtuals.",
+    "is_playing": "Virtual+0x540 target1440b4d10 reads component+0x86 bit1; matches UAudioComponent::IsPlaying() -> IsActive().",
+    "default_assignment": "141dbf770 is move assignment copying complete native responder including bounds/effective-distance bytes; default temporaries initialize reflected pointer/scalar fields and TArrays but leave bounds/effective-distance unspecified.",
+    "event_arguments": "Assembly141de2132 loads old mapped audio component into RDX before141de213e;141de217d loads new mapped audio component before141de2189. Inactive event precedes new lookup. Root restores protected BlueprintImplementableEvent declarations.",
+    "viewer_camera_field": "Controller+0x2b0 maps to inherited PlayerCameraManager; reflection/native layout and checked PlayerCameraManager vtable chain establish camera receiver."
+  },
+  "preserved_semantics": [
+    "Dedicated server and missing world exit before active responder snapshot. Global disabled wind resets; disabled responder audio retains active responder.",
+    "Refresh nearby cache before responder-audio enable check; candidate strict positive speed and strict radius/nearest comparison, first tie wins.",
+    "Bounds calculation reads exactly six floats via memcpy, ignores validity byte, preserves per-axis minimum-then-maximum short-circuit comparisons.",
+    "Same winning actor skips complete responder copy and component acquisition; changed actor copies responder before map lookup.",
+    "Pool pops once with shrinking allowed; null/PendingKill candidate is dropped; reusable candidate Rename(nullptr,actor,0x15). NewObject uses flags0x100040.",
+    "SetupAttachment, actor bounds, subtract cached root-world translation, direct relative location, direct Sound/VolumeMultiplier, RegisterComponent, IsPlaying, optional Play(0), map insertion.",
+    "Old mapped component copied before inactive callback; active responder/map re-read before active callback, allowing callback mutations.",
+    "Cache interpolation speed after callbacks; remove null keys/values without Stop or pooling; set active float parameter before volume branch.",
+    "Negative or signed-zero interpolated volume stops; >=1 or NaN becomes1; SetVolumeMultiplier only for changed values.",
+    "Stop then PendingKill check; live components unregister, detach KeepRelative3/false, manager RemoveOwnedComponent, Rename(nullptr,manager,0x15), pool append; remove map entry in either case."
+  ],
+  "unspecified_default_storage": "Default reset intentionally uses FFortWindResponder DefaultResponder; with explicitly initialized four pointers, MaterialParameterPairIndices, WindSpeed and bHasSetupAnimatingMaterials. NativeBounds_0x68 and NativeEffectiveDistance_0x88 remain unspecified and are unused while actor is null.",
+  "scope": "Native audio helper integrated; TickActor caller remains uninstalled, so this is source recovery and not a runtime wind milestone."
+}
