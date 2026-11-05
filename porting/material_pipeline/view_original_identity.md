@@ -48,3 +48,33 @@ Dump SHA-256: `604900985a724144b6e0fc6e033b0cef2adb74a295a65a4fe01aceebb52df93d`
 The Ghidra script never saves the program or starts an editing transaction.
 Opening/closing the project updates Ghidra index/property bookkeeping; the
 observed changes are reported in `project-integrity.json`.
+
+## Full View ABI recovery
+
+`python3 -I porting/material_pipeline/view_layout_contract.py` decodes all
+228 named member records from that existing helper chain, including numeric
+shapes, precision, array lengths, resource types and offsets. The terminal
+helper contributes no member. Original initializer assembly fixes the full
+struct size at 3,952 bytes; 59 members are resources. The recovered legacy
+resource-layout hash is **259395430**, matching all 19 active View resource
+tables in the original Paper2D shader selection. Constant-only View uses have
+no active table and a zero hash; they are retained without claiming hash
+corroboration.
+
+The same tool derives the complete current source layout from `SceneView.h`,
+type-info alignment declarations and array bounds: 233 members, 4,032 bytes,
+61 resources. Comparison finds 119 offset changes and 21 member-presence
+differences. For example, original `PrimitiveSceneData` is resource 48 at
+offset 3,856; its current source declaration remains resource 48 but moves to
+3,928. The first numeric mismatch is `CameraCut` at original offset 2,300
+versus current 2,304, following the added `DebugViewModeMask`. This preserves
+the narrower GameTime result above but rules out assuming full View ABI parity.
+
+The generated `view-identity/full-layout-contract.json` retains every member,
+source/capture hashes, wrapper associations and individual differences.
+`test_view_layout_contract.py` passes two checks: incomplete member recovery
+fails, and changing a recovered resource offset fails against the original
+wrapper hashes. No new Engine build or runtime metadata check was performed.
+Binding the current View buffer still requires proof for every shader-accessed
+constant and resource, or an explicit faithful remapping; equal buffer names
+or resource ordinals alone are insufficient.
