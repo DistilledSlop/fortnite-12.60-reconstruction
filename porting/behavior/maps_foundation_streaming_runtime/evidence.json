@@ -1,0 +1,61 @@
+{
+  "scope": "Original 12.60 client ABuildingFoundation streaming: static binary and reflection evidence, not runtime parity",
+  "image": "porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+  "image_base": "0x140000000",
+  "reflection": "porting/generated/reflection/fortnite_game_reflection.json",
+  "native_functions": "porting/generated/reflection/native_funcs.json",
+  "captured_streaming_body": "porting/generated/apollo-material-evidence/foundation-stream/0x141bed450.asm",
+  "identity": {
+    "class_registration": "0x14273ec00",
+    "constructor_wrapper": "0x14273dc10",
+    "constructor": "0x141bce060",
+    "evidence": "The registration references the wrapper; the wrapper calls the constructor. After its parent constructor returns, 0x141bce07e-0x141bce085 stores 0x145f0e530 at [this].",
+    "primary_vtable": "0x145f0e530",
+    "slots": {
+      "0xea8": {"target": "0x141be5bc0", "evidence": "The reflected OnRep_LevelToStream exec at 0x142740c90 dispatches through this slot."},
+      "0xeb0": {"target": "0x141be5c60", "evidence": "The reflected OnRep_ServerStreamedInLevel exec at 0x142740cb0 dispatches through this slot."},
+      "0xec0": {"target": "0x141bdd6e0", "evidence": "This base implementation directly calls the candidate-selection helper at 0x141bdd71d."},
+      "0xec8": {"target": "0x1417e3f70", "evidence": "The streaming body calls this virtual function to obtain a rotator before constructing the level transform."}
+    },
+    "rejected_candidate": "0x145f23c60 is not the primary table written by the authenticated constructor."
+  },
+  "selection": {
+    "additional_worlds_offset": "0xb40",
+    "additional_worlds_count_offset": "0xb48",
+    "element_stride": "0x28",
+    "level_to_stream_offset": "0xba0",
+    "helper": "0x141be60c0",
+    "evidence": [
+      "Reflection identifies AdditionalWorlds at 0xb40 and LevelToStream at 0xba0; 0x141be6209-0x141be6346 traverses the array at 0x28-byte stride and appends candidate records.",
+      "The authenticated vtable target 0x141bdd6e0 calls 0x141be60c0 with the same this pointer at 0x141bdd71d.",
+      "A second caller invokes the helper at 0x141bd5b35, selects a candidate and writes its name to this+0xba0 at 0x141bd5b72; its conditional path then calls 0x141bed450 at 0x141bd5b90."
+    ],
+    "limit": "The observed path selects a candidate. It does not establish that every AdditionalWorlds entry is simultaneously streamed or establish the complete selection policy."
+  },
+  "streaming_and_transform": {
+    "on_rep": "0x141be5bc0",
+    "streaming_body": "0x141bed450",
+    "evidence": [
+      "OnRep_LevelToStream conditionally calls 0x141bed450(this, false) at 0x141be5c1d. The body has additional role, state, world and level-name checks; the call is not unconditional.",
+      "At 0x141bedaa8 the body calls vtable slot 0xec8. The base target 0x1417e3f70 reads the root component at this+0x130 and derives a rotator from its world quaternion at component+0x1c0, using a cached conversion; the null-root fallback is zero rotation.",
+      "At 0x141bedaae-0x141bedaf4 the body reads world translation from root component+0x1d0 or a fallback vector. At 0x141bedc86-0x141bedcef it converts the rotator to a quaternion and writes streaming object offsets 0x80, 0x90 and 0xa0 as rotation, translation and scale respectively. Scale comes from root component+0x134; reflection identifies USceneComponent RelativeScale3D at offset 308 (0x134).",
+      "UE 4.25 Engine/Classes/Engine/LevelStreaming.h declares LevelTransform as the transform applied to actors after loading."
+    ],
+    "limits": [
+      "The vtable call can be overridden by a derived class; the target described is the authenticated base implementation.",
+      "The scale source is relative scale while rotation and translation are world values. Copying a full world transform may differ for attached or scaled parents.",
+      "The body later dereferences the root component for scale; the earlier null-root translation fallback does not establish that the entire path is safe without a root component.",
+      "Static disassembly and captured decompilation do not establish complete streaming, replication, visibility or runtime parity."
+    ]
+  },
+  "reproduction": {
+    "commands": [
+      "objdump -d -Mintel --start-address=0x14273ec00 --stop-address=0x14273ec90 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -d -Mintel --start-address=0x14273dc10 --stop-address=0x14273dc24 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -d -Mintel --start-address=0x141bce060 --stop-address=0x141bce090 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -s --start-address=0x145f0f3d0 --stop-address=0x145f0f400 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -d -Mintel --start-address=0x141be6209 --stop-address=0x141be6350 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -d -Mintel --start-address=0x141bedaa0 --stop-address=0x141bedcf2 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe"
+    ]
+  }
+}
