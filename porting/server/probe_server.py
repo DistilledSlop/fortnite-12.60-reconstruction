@@ -211,6 +211,10 @@ def main():
                        state_dir=None if args.ephemeral else args.state_dir,
                        matchmaking_ws_origin=args.matchmaking_ws_origin)
     server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record, stub))
+    if stub is not None and not args.matchmaking_ws_origin and not args.tls_cert and args.bind == "127.0.0.1":
+        # The default local HTTP server must advertise its own reachable socket,
+        # including the actual port when the caller requested port zero.
+        stub.DEFAULT.matchmaking.websocket_origin = f"ws://127.0.0.1:{server.server_port}"
     if args.tls_cert:
         import ssl
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)

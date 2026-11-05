@@ -126,8 +126,10 @@ def run_checks(base, port, ctx):
     check("ticket has serviceUrl, ticketType, payload, signature",
           set(ticket) == {"serviceUrl", "ticketType", "payload", "signature"}, str(sorted(ticket)))
     service = urllib.parse.urlsplit(ticket.get("serviceUrl", ""))
-    check("serviceUrl is a wss URL on the matchmaking host",
-          service.scheme == "wss" and service.hostname == matchmaking.MATCHMAKING_HOST, ticket.get("serviceUrl", ""))
+    expected = (("wss", matchmaking.MATCHMAKING_HOST) if ctx else ("ws", "127.0.0.1"))
+    check("serviceUrl uses the configured local or TLS origin",
+          (service.scheme, service.hostname) == expected and (ctx or service.port == port),
+          ticket.get("serviceUrl", ""))
     claims = json.loads(base64.b64decode(ticket.get("payload", "")) or b"{}")
     check("payload decodes and echoes the bucket id", claims.get("bucketId") == "UNKNOWN:0:1", str(sorted(claims)))
     ticket_id = service.path.rsplit("/", 1)[-1]

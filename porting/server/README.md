@@ -77,10 +77,11 @@ a new token after restarting the service. Only one probe server can use a state
 directory at a time; a second server exits instead of risking conflicting writes.
 Code embedding `Backend` directly must likewise use a single owner per state directory.
 
-For a local client, set `--matchmaking-ws-origin ws://127.0.0.1:8080` (using
-the actual listening address and port) so tickets advertise a reachable WebSocket.
-Use `wss://` when the server is configured with TLS. Without this option tickets
-retain the original-client probe's hostname and require its host mapping and TLS setup.
+The default loopback HTTP server advertises its actual local WebSocket address
+and port in matchmaking tickets. For other bind addresses or a different public
+address, set `--matchmaking-ws-origin` to the reachable `ws://` or `wss://` origin.
+TLS probes without an explicit origin retain the original-client hostname and
+require its host mapping and TLS setup.
 
 `probe_server.py` binds `127.0.0.1` by default and records method, path, route
 name, query keys, body length and status to ignored `porting/generated/server-requests.jsonl`.
