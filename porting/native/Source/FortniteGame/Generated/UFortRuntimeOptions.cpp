@@ -194,6 +194,14 @@ bool UFortRuntimeOptions::GetShowReplayTrailerButton_Athena() const
 	return UFortRuntimeOptions::bShowReplayTrailerButton_Athena;
 }
 
+TArray<FString> UFortRuntimeOptions::GetValidAffiliateNames() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	{
+	    return AffiliateNames;
+	}
+}
+
 bool UFortRuntimeOptions::IsGiftingDisabled() const
 {
 	// Original address: 0x142ace5b0.

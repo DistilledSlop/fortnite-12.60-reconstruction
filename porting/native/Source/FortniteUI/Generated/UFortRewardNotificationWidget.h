@@ -40,5 +40,10 @@ public:
 	UPROPERTY(Transient)
 	UFortMulchConfirmationModalWidget* MulchConfirmationModal;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void ResetAllRewardData();
+public:
+
 };
 

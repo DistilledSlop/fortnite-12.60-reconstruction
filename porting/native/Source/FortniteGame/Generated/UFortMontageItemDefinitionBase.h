@@ -88,5 +88,8 @@ protected:
 	void PreviewInPIE();
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldPlayRandomSectionByName() const;
+
 };
 

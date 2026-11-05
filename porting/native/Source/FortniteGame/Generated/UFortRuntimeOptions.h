@@ -3418,6 +3418,9 @@ public:
 	bool GetShowReplayTrailerButton_Athena() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<FString> GetValidAffiliateNames() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsGiftingDisabled() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

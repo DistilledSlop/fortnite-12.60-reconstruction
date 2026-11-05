@@ -1113,6 +1113,9 @@ public:
 	bool GetHideOtherPlayerNames() const;
 
 	UFUNCTION()
+	float GetHUDScale() const;
+
+	UFUNCTION()
 	float GetHUDScaleMultiplier() const;
 
 	UFUNCTION()

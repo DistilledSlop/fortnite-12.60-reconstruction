@@ -1,0 +1,18 @@
+[
+  {
+    "class": "UFortRewardNotificationWidget",
+    "function": "ResetAllRewardData",
+    "wrapper_capture": "porting/generated/native-triage001/0x1452c8f50.c",
+    "assembly": "porting/generated/native-triage001/0x1452c8f50.asm",
+    "reflection": "porting/generated/reflection/fortnite_game_reflection.json",
+    "behavior": "Sets Num of reflected pointer array NotificationDataList at 0x418 to zero while retaining its allocation under normal TArray invariants."
+  },
+  {
+    "class": "UFortStoreFrontOfferWidgetBase",
+    "function": "RemoveAllOffers",
+    "wrapper_capture": "porting/generated/native-triage001/0x1452f7f50.c",
+    "assembly": "porting/generated/native-triage001/0x1452f7f50.asm",
+    "reflection": "porting/generated/reflection/fortnite_game_reflection.json",
+    "behavior": "Sets Num of reflected pointer array GroupedOffers at 0xb78 to zero while retaining its allocation under normal TArray invariants."
+  }
+]

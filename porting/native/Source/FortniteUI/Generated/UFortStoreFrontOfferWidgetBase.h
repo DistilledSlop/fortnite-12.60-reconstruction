@@ -42,5 +42,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortStoreFrontOfferInfo* GetOfferInfo() const;
 
+	UFUNCTION(BlueprintCallable)
+	void RemoveAllOffers();
+
 };
 

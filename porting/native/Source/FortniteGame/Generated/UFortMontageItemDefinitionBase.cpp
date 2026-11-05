@@ -39,3 +39,9 @@ void UFortMontageItemDefinitionBase::PreviewInPIE()
 	return;
 }
 
+bool UFortMontageItemDefinitionBase::ShouldPlayRandomSectionByName() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	return PlayRandomSectionByName.Num() > 0;
+}
+

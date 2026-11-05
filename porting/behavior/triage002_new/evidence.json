@@ -1,0 +1,16 @@
+[
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "GetHUDScale",
+    "wrapper_capture": "porting/generated/native-triage002/0x14287dbf0.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "behavior": "Reads floats at 0x278 and 0x27c and returns their product; existing accessors read those same fields."
+  },
+  {
+    "class": "UFortMontageItemDefinitionBase",
+    "function": "ShouldPlayRandomSectionByName",
+    "wrapper_capture": "porting/generated/native-triage002/0x1429f5a30.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "behavior": "Tests whether the signed array count at 0x5f8 is positive; reflected PlayRandomSectionByName array begins at 0x5f0."
+  }
+]

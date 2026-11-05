@@ -344,6 +344,12 @@ bool UFortClientSettingsRecord::GetHideOtherPlayerNames() const
 	return UFortClientSettingsRecord::bHideOtherPlayerNames;
 }
 
+float UFortClientSettingsRecord::GetHUDScale() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	return GetHUDScaleMultiplier() * GetHUDScaleRaw();
+}
+
 float UFortClientSettingsRecord::GetHUDScaleMultiplier() const
 {
 	// CONFIDENCE: high; complete getter, storage evidence in report.json.
