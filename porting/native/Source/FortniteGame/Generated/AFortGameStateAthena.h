@@ -12,6 +12,7 @@
 #include "EAthenaGamePhaseStep.h"
 #include "EAthenaStormCapState.h"
 #include "EEventTournamentRound.h"
+#include "EFortPlaylistType.h"
 #include "EFriendlyFireType.h"
 #include "ESafeZoneStartUp.h"
 #include "Engine/NetSerialization.h"
@@ -940,6 +941,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FPlayersLeft GetPlayersLeft() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortPlaylistType GetPlaylistType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortSafeZoneIndicator* GetSafeZoneIndicator() const;

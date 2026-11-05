@@ -279,6 +279,12 @@ FPlayersLeft AFortGameStateAthena::GetPlayersLeft() const
 	return Result;
 }
 
+EFortPlaylistType AFortGameStateAthena::GetPlaylistType() const
+{
+	// CONFIDENCE: HIGH; native 0x1419967d0.
+	return UFortPlaylistAthenaHelper::GetPlaylistType(GetCurrentPlaylistAthena());
+}
+
 AFortSafeZoneIndicator* AFortGameStateAthena::GetSafeZoneIndicator() const
 {
 	// Behaviour snippet: AFortGameStateAthena::GetSafeZoneIndicator (body only; spliced into the generated member function).

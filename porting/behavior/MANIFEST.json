@@ -59689,5 +59689,19 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Calls checked globals accessor 0x141ed2350, then searches only explicit GameplayTags for valid Quest.Metadata.PartyAssist native tag at 0x1f30; no parent-tag match."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "GetPlaylistType",
+    "kind": "exec",
+    "signature": "EFortPlaylistType GetPlaylistType() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x14291f2d0",
+    "native_body_address": "0x1419967d0",
+    "inc_path": "porting/behavior/gamestate_playlist_type_runtime/GetPlaylistType.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Selects override or base playlist then tail-calls existing UFortPlaylistAthenaHelper::GetPlaylistType native body 0x141a46dc0."
   }
 ]
