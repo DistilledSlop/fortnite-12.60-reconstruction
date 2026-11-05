@@ -146,3 +146,43 @@ The separate legacy native-tail decoder now proves the current stock instance's 
 5. Run the existing `vkd3d2-compiled/bin/vkd3d-compiler -x dxbc-tpf -b d3d-asm --formatting=signatures,offsets` on each extracted DXBC, setting LD_LIBRARY_PATH to that tool prefix's lib directory.
 
 `test_paper2d_shader_prefix.py` passes four meaningful fail-closed checks: unknown pipelines preserve their unconsumed boundary; an unknown record does not consume or seek through even a malicious end offset; a known record cannot exceed the resource; and an unsupported vertex factory fails before records. Artifact/tool/input SHA256 values are in `receipt.json`, with the full archive hash additionally in both prefix reports. Neither DXBC execution nor a UE draw has been tested.
+
+## Complete original shader conversion
+
+The 28 parent and 14 instance shader-record occurrences, including every nested
+pipeline stage, reference 33 distinct original archive shaders. All 33 were
+extracted with `shader_archive.py`, inspected with `inspect_d3d_code.py`, converted
+with `translate_mapped_dxbc.py`, and reflected with `reflect_mapped_spirv.py`.
+Every converted shader passes `spirv-val --target-env vulkan1.0`. The conversion
+retains 163 explicit descriptors with zero unmatched original resource-table
+entries: 63 uniform buffers, 62 uniform texel buffers, 19 sampled images and 19
+samplers. All 42 original records have empty serialized parameter-binding arrays;
+their uniform-buffer, vertex-factory and pass bindings still require runtime
+construction.
+
+Generated receipts and exact code artifacts are under
+`porting/generated/paper2d-shader-semantics/conversion/`: `source.json`, `d3d.json`,
+`mapped/mapped-translation-report.json`, and `reflection.json`. Their cross-hashes
+bind the extracted wrappers, original DXBC, conversion tools and resulting
+SPIR-V. This establishes offline conversion and descriptor association, not
+compatible runtime uniform values, owner completeness, texture binding or a UE
+draw. The original material reader and provider still need the complete LocalVF
+and pipeline path; the existing seven-Slate-shader provider cannot load these
+resources.
+
+`python3 porting/material_pipeline/export_paper2d_shader_manifest.py` reparses
+both original resources and exports `shader-manifest.json`. It preserves the
+42 occurrences and three ordered pipeline stage lists, links them to all 33
+converted outputs, and verifies framing, archive bytes, report cross-hashes,
+SPIR-V reflection and original descriptor associations. The focused rejection
+test passes after a changed conversion input is rehashed into its report chain.
+
+The source-only Engine bridge patch
+`porting/patches/ue425-legacy-localvf-material-factory.patch` adds a separate
+`CreateLegacyLocalVertexFactoryMap` entry point. It constructs actual material
+and mesh shader objects and shared or unique shader pipelines, checks current
+registered type/permutation/target and complete binding consumption, and retains
+temporary mesh and unique-stage ownership through freezing or rejection. The
+existing strict seven-record Slate entry point remains separate. Patch
+reapplication and source review passed; compilation and runtime checks are
+pending. This factory is not yet connected to the original-material provider.

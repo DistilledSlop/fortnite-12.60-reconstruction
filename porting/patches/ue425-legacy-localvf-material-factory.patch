@@ -1,0 +1,367 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+index 7d223ed42..bb60735f4 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+@@ -2,10 +2,16 @@
+ #include "LegacySlateMaterial.h"
+ #include "MaterialUniformExpressions.h"
+ #include "MaterialShaderType.h"
++#include "MeshMaterialShaderType.h"
++#include "VertexFactory.h"
+ #include "ShaderParameterMetadata.h"
+ 
+ namespace
+ {
++struct FLegacyShaderDeleter
++{
++ void operator()(FShader* Shader) const { DeleteObjectFromLayout(Shader); }
++};
+ class FLegacyTextureSize2DExpression final : public FMaterialUniformExpression
+ {
+  DECLARE_MATERIALUNIFORMEXPRESSION_TYPE(FLegacyTextureSize2DExpression);
+@@ -29,8 +35,9 @@ static_assert(uint8(EMaterialPreshaderOpcode::TextureSize) == 37 &&
+  uint8(EMaterialPreshaderOpcode::LegacyTextureSize2D) == 42, "Legacy preshader opcode ordinals changed");
+ }
+ 
+-TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+- const FLegacyMaterialIR& Material, FLegacySlatePrepareOutputs PrepareOutputs, FString& Error)
++TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacyMaterialMap(
++ const FLegacyMaterialIR& Material,
++ TFunctionRef<bool(FMaterialShaderMap&, const FUniformExpressionSet&, const FShaderParametersMetadata&, FString&)> Populate, FString& Error)
+ {
+  Error.Reset();
+  auto Fail = [&Error](const TCHAR* Message) -> TRefCountPtr<FMaterialShaderMap> { Error = Message; return nullptr; };
+@@ -38,7 +45,7 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+      Material.OriginalMapHash == FSHAHash() || Material.Expressions.Num() > 8192 ||
+      Material.VectorRoots.Num() > 1024 || Material.ScalarRoots.Num() > 1024 ||
+      Material.Texture2DParameters.Num() > 128 || Material.UniformBufferSize > 65535)
+-  return Fail(TEXT("Unsupported original Slate material identity, platform or slot layout"));
++  return Fail(TEXT("Unsupported original material identity, platform or slot layout"));
+ 
+  // Each Standard2D expression contributes a texture and its sampler after the
+  // packed numeric slots. UE appends the two built-in world-group samplers.
+@@ -262,45 +269,7 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+  for (int32 I = 0; I < Material.Resources.Num(); ++I)
+   if (Layout.Resources[I].MemberOffset != Material.Resources[I].Offset || Layout.Resources[I].MemberType != Material.Resources[I].BaseType)
+    return Fail(TEXT("Current Material uniform resource layout differs from original"));
+- TArray<FLegacySlateShaderInput> Inputs;
+- if (!PrepareOutputs(Uniforms, *Metadata, Inputs, Error)) return nullptr;
+- static const TCHAR* Names[] = {
+-  TEXT("TSlateMaterialShaderVStrue"), TEXT("TSlateMaterialShaderVSfalse"),
+-  TEXT("TSlateMaterialShaderPSCustom"), TEXT("TSlateMaterialShaderPSDefault"),
+-  TEXT("TSlateMaterialShaderPSBorder"), TEXT("TSlateMaterialShaderPSGrayscaleFont"), TEXT("TSlateMaterialShaderPSColorFont")};
+- if (Inputs.Num() != UE_ARRAY_COUNT(Names)) return Fail(TEXT("Detached original Slate map requires exactly seven records"));
+- TArray<FShaderType*> Types;
+- uint32 Seen = 0;
+- for (FLegacySlateShaderInput& Input : Inputs)
+- {
+-  int32 NameIndex = INDEX_NONE;
+-  for (int32 I = 0; I < UE_ARRAY_COUNT(Names); ++I) if (Input.TypeName == Names[I]) { NameIndex = I; break; }
+-  if (NameIndex == INDEX_NONE || (Seen & (1u << NameIndex))) return Fail(TEXT("Unknown or duplicate original Slate shader type"));
+-  Seen |= 1u << NameIndex;
+-  FShaderType* Type = FindShaderTypeByName(FHashedName(*Input.TypeName));
+-  const auto& Output = Input.Output;
+-  const EShaderFrequency ExpectedFrequency = NameIndex < 2 ? SF_Vertex : SF_Pixel;
+-  if (!Type || !Type->GetMaterialShaderType() || Type->GetFrequency() != ExpectedFrequency || Input.PermutationId != 0 ||
+-      !Output.bSucceeded || Output.Target.GetPlatform() != Material.Platform || Output.Target.GetFrequency() != ExpectedFrequency ||
+-      Output.OutputHash == FSHAHash() || Output.ShaderCode.GetReadAccess().Num() == 0)
+-   return Fail(TEXT("Invalid output or unregistered current original Slate constructor"));
+-  // Verify the supplied identity really is generated from the supplied code/map.
+-  const FSHAHash KnownHash = Input.Output.OutputHash;
+-  Input.Output.GenerateOutputHash();
+-  if (KnownHash != Input.Output.OutputHash) return Fail(TEXT("Original Slate output hash does not match converted code"));
+-  Types.Add(Type);
+- }
+- FShaderMapResourceCode* Code = Map->GetResourceCode();
+- for (const auto& Input : Inputs) Code->AddShaderCompilerOutput(Input.Output);
+- // Hash insertion is sorted: resolve only after every output has been added.
+- for (int32 I = 0; I < Inputs.Num(); ++I)
+- {
+-  const auto& Input = Inputs[I];
+-  FMaterialShaderType::CompiledShaderInitializerType Init(Types[I], Input.PermutationId, Input.Output, Uniforms, Material.OriginalMapHash, nullptr, nullptr, Material.DebugDescription);
+-  FShader* Shader = Types[I]->ConstructCompiled(Init);
+-  Shader->Finalize(Code, Input.Output.OutputHash);
+-  Content->AddShader(Types[I]->GetHashedName(), Input.PermutationId, Shader);
+- }
++ if (!Populate(*Map, Uniforms, *Metadata, Error)) return nullptr;
+  Map->ShaderMapId.CookedShaderMapIdHash = Material.OriginalMapHash;
+  Map->ShaderMapId.QualityLevel = Material.QualityLevel;
+  Map->ShaderMapId.FeatureLevel = Material.FeatureLevel;
+@@ -308,3 +277,213 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+  Map->FinalizeContent();
+  return Map;
+ }
++
++TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
++ const FLegacyMaterialIR& Material, FLegacySlatePrepareOutputs PrepareOutputs, FString& Error)
++{
++ return CreateLegacyMaterialMap(Material, [&](FMaterialShaderMap& Map, const FUniformExpressionSet& Uniforms,
++  const FShaderParametersMetadata& Metadata, FString& OutError) -> bool
++ {
++  auto Fail = [&OutError](const TCHAR* Message) -> bool { OutError = Message; return false; };
++  TArray<FLegacySlateShaderInput> Inputs;
++  if (!PrepareOutputs(Uniforms, Metadata, Inputs, OutError)) return false;
++  static const TCHAR* Names[] = {
++   TEXT("TSlateMaterialShaderVStrue"), TEXT("TSlateMaterialShaderVSfalse"),
++   TEXT("TSlateMaterialShaderPSCustom"), TEXT("TSlateMaterialShaderPSDefault"),
++   TEXT("TSlateMaterialShaderPSBorder"), TEXT("TSlateMaterialShaderPSGrayscaleFont"), TEXT("TSlateMaterialShaderPSColorFont")};
++  if (Inputs.Num() != UE_ARRAY_COUNT(Names)) return Fail(TEXT("Detached original Slate map requires exactly seven records"));
++  TArray<FShaderType*> Types;
++  uint32 Seen = 0;
++  for (FLegacySlateShaderInput& Input : Inputs)
++  {
++   int32 NameIndex = INDEX_NONE;
++   for (int32 I = 0; I < UE_ARRAY_COUNT(Names); ++I) if (Input.TypeName == Names[I]) { NameIndex = I; break; }
++   if (NameIndex == INDEX_NONE || (Seen & (1u << NameIndex))) return Fail(TEXT("Unknown or duplicate original Slate shader type"));
++   Seen |= 1u << NameIndex;
++   FShaderType* Type = FindShaderTypeByName(FHashedName(*Input.TypeName));
++   const auto& Output = Input.Output;
++   const EShaderFrequency ExpectedFrequency = NameIndex < 2 ? SF_Vertex : SF_Pixel;
++   if (!Type || !Type->GetMaterialShaderType() || Type->GetFrequency() != ExpectedFrequency || Input.PermutationId != 0 ||
++       !Output.bSucceeded || Output.Target.GetPlatform() != Material.Platform || Output.Target.GetFrequency() != ExpectedFrequency ||
++       Output.OutputHash == FSHAHash() || Output.ShaderCode.GetReadAccess().Num() == 0)
++    return Fail(TEXT("Invalid output or unregistered current original Slate constructor"));
++   // Verify the supplied identity really is generated from the supplied code/map.
++   const FSHAHash KnownHash = Input.Output.OutputHash;
++   Input.Output.GenerateOutputHash();
++   if (KnownHash != Input.Output.OutputHash) return Fail(TEXT("Original Slate output hash does not match converted code"));
++   Types.Add(Type);
++  }
++  FShaderMapResourceCode* Code = Map.GetResourceCode();
++  for (const auto& Input : Inputs) Code->AddShaderCompilerOutput(Input.Output);
++  // Hash insertion is sorted: resolve only after every output has been added.
++  for (int32 I = 0; I < Inputs.Num(); ++I)
++  {
++   const auto& Input = Inputs[I];
++   FMaterialShaderType::CompiledShaderInitializerType Init(Types[I], Input.PermutationId, Input.Output, Uniforms, Material.OriginalMapHash, nullptr, nullptr, Material.DebugDescription);
++   FShader* Shader = Types[I]->ConstructCompiled(Init);
++   Shader->Finalize(Code, Input.Output.OutputHash);
++   Map.GetMutableContent()->AddShader(Types[I]->GetHashedName(), Input.PermutationId, Shader);
++  }
++  return true;
++ }, Error);
++}
++
++TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacyLocalVertexFactoryMap(
++ const FLegacyMaterialIR& Material, FLegacyMaterialPrepareOutputs PrepareOutputs, FString& Error)
++{
++ // The frozen map owns its copied content. Keep the temporary mesh map and
++ // unique pipeline shaders alive through freezing; TMemoryImagePtr is nonowning
++ // and the ordinary pipeline destructor only clears its stage pointers.
++ TUniquePtr<FMeshMaterialShaderMap> MeshOwner;
++ TArray<TUniquePtr<FShader, FLegacyShaderDeleter>> UniqueShaderOwners;
++ return CreateLegacyMaterialMap(Material, [&](FMaterialShaderMap& Map, const FUniformExpressionSet& Uniforms,
++  const FShaderParametersMetadata& Metadata, FString& OutError) -> bool
++ {
++  auto Fail = [&OutError](const TCHAR* Message) -> bool { OutError = Message; return false; };
++  TArray<FLegacyMaterialShaderInput> Inputs;
++  TArray<FLegacyMaterialPipelineInput> Pipelines;
++  if (!PrepareOutputs(Uniforms, Metadata, Inputs, Pipelines, OutError)) return false;
++  if (Inputs.Num() == 0 || Inputs.Num() > 4096 || Pipelines.Num() > 1024)
++   return Fail(TEXT("Invalid original LocalVF shader/pipeline inventory size"));
++  FVertexFactoryType* LocalVF = FVertexFactoryType::GetVFByName(FHashedName(TEXT("FLocalVertexFactory")));
++  if (!LocalVF || !LocalVF->IsUsedWithMaterials())
++   return Fail(TEXT("Original FLocalVertexFactory constructor is unavailable"));
++
++  TArray<FShaderType*> Types;
++  TArray<const FShaderPipelineType*> PipelineTypes;
++  TArray<int32> Owners, References;
++  Owners.Init(INDEX_NONE, Inputs.Num());
++  References.Init(0, Inputs.Num());
++  bool bHasLocalVF = false;
++  for (int32 I = 0; I < Inputs.Num(); ++I)
++  {
++   auto& Input = Inputs[I];
++   const bool bMesh = !Input.VertexFactoryName.IsEmpty();
++   if (bMesh && Input.VertexFactoryName != TEXT("FLocalVertexFactory"))
++    return Fail(TEXT("Unsupported original mesh vertex factory"));
++   bHasLocalVF |= bMesh;
++   FShaderType* Type = FindShaderTypeByName(FHashedName(*Input.TypeName));
++   if (!Type || Input.TypeName != Type->GetName() ||
++       (bMesh ? !Type->GetMeshMaterialShaderType() : !Type->GetMaterialShaderType()) ||
++       Input.PermutationId < 0 || Input.PermutationId >= Type->GetPermutationCount() ||
++       Type->GetFrequency() >= SF_NumGraphicsFrequencies || !Input.Output.bSucceeded ||
++       Input.Output.Target.GetPlatform() != Material.Platform || Input.Output.Target.GetFrequency() != Type->GetFrequency() ||
++       Input.Output.OutputHash == FSHAHash() || Input.Output.ShaderCode.GetReadAccess().Num() == 0)
++    return Fail(TEXT("Invalid original material/LocalVF constructor, permutation or output target"));
++   const FSHAHash KnownHash = Input.Output.OutputHash;
++   Input.Output.GenerateOutputHash();
++   if (KnownHash != Input.Output.OutputHash)
++    return Fail(TEXT("Original material/LocalVF output hash differs from converted code"));
++   // Compiler outputs must enter construction unbound. A pre-set bBound bit
++   // cannot prove that the current VF/material constructor consumed a binding.
++   for (auto& Parameter : Input.Output.ParameterMap.ParameterMap)
++   {
++    if (Parameter.Key.IsEmpty() || Parameter.Value.Type >= EShaderParameterType::Num || Parameter.Value.Size == 0)
++     return Fail(TEXT("Invalid original material/LocalVF resource parameter allocation"));
++    Parameter.Value.bBound = false;
++   }
++   TArray<FString> ValidationErrors;
++   if (!Type->ValidateCompiledResult(Material.Platform, Input.Output.ParameterMap, ValidationErrors))
++    return Fail(TEXT("Original material/LocalVF output failed constructor parameter validation"));
++   for (int32 J = 0; J < I; ++J)
++    if (Types[J] == Type && Inputs[J].PermutationId == Input.PermutationId &&
++        Inputs[J].VertexFactoryName == Input.VertexFactoryName && Inputs[J].PipelineName == Input.PipelineName)
++     return Fail(TEXT("Duplicate original material/LocalVF shader identity"));
++   Types.Add(Type);
++  }
++  if (!bHasLocalVF) return Fail(TEXT("Original LocalVF factory requires mesh shader records"));
++  for (int32 I = 0; I < Pipelines.Num(); ++I)
++  {
++   const auto& Input = Pipelines[I];
++   const FShaderPipelineType* Type = FShaderPipelineType::GetShaderPipelineTypeByName(FHashedName(*Input.TypeName));
++   const bool bMesh = !Input.VertexFactoryName.IsEmpty();
++   if (!Type || Input.TypeName != Type->GetName() ||
++       (bMesh && Input.VertexFactoryName != TEXT("FLocalVertexFactory")) ||
++       (bMesh ? !Type->IsMeshMaterialTypePipeline() : !Type->IsMaterialTypePipeline()) ||
++       Input.StageIndices.Num() != Type->GetStages().Num())
++    return Fail(TEXT("Invalid original pipeline type, vertex factory or stage count"));
++   for (int32 J = 0; J < I; ++J)
++    if (PipelineTypes[J] == Type && Pipelines[J].VertexFactoryName == Input.VertexFactoryName)
++     return Fail(TEXT("Duplicate original pipeline identity"));
++   const bool bUnique = Type->ShouldOptimizeUnusedOutputs(Material.Platform);
++   uint32 Frequencies = 0;
++   for (int32 Stage = 0; Stage < Input.StageIndices.Num(); ++Stage)
++   {
++    const int32 Index = Input.StageIndices[Stage];
++    if (!Inputs.IsValidIndex(Index) || Types[Index] != Type->GetStages()[Stage] ||
++        Inputs[Index].VertexFactoryName != Input.VertexFactoryName ||
++        (bUnique ? Inputs[Index].PipelineName != Input.TypeName : !Inputs[Index].PipelineName.IsEmpty()))
++     return Fail(TEXT("Original pipeline stage identity/order or sharing differs from current type"));
++    const uint32 Frequency = 1u << Types[Index]->GetFrequency();
++    if ((Frequencies & Frequency) || (bUnique && Owners[Index] != INDEX_NONE))
++     return Fail(TEXT("Duplicate original pipeline frequency or unique stage ownership"));
++    Frequencies |= Frequency;
++    if (bUnique) Owners[Index] = I;
++    ++References[Index];
++   }
++   PipelineTypes.Add(Type);
++  }
++  for (int32 I = 0; I < Inputs.Num(); ++I)
++   if ((!Inputs[I].PipelineName.IsEmpty() && (Owners[I] == INDEX_NONE || References[I] != 1)) ||
++       (Inputs[I].PipelineName.IsEmpty() && Owners[I] != INDEX_NONE))
++    return Fail(TEXT("Unowned or multiply owned original unique pipeline shader"));
++
++  // Validate the entire inventory before mutating content. All code must be
++  // inserted before resolving sorted resource indices in FShader::Finalize.
++  FShaderMapResourceCode* Code = Map.GetResourceCode();
++  for (const auto& Input : Inputs) Code->AddShaderCompilerOutput(Input.Output);
++  FMaterialShaderMapContent* Content = Map.GetMutableContent();
++  MeshOwner.Reset(new FMeshMaterialShaderMap(Material.Platform, LocalVF));
++  FMeshMaterialShaderMap* Mesh = MeshOwner.Get();
++  TArray<FShaderPipeline*> ConstructedPipelines;
++  for (int32 I = 0; I < Pipelines.Num(); ++I)
++  {
++   FShaderPipeline* Pipeline = new FShaderPipeline(PipelineTypes[I]);
++   (Pipelines[I].VertexFactoryName.IsEmpty() ? static_cast<FShaderMapContent*>(Content) : Mesh)->AddShaderPipeline(Pipeline);
++   ConstructedPipelines.Add(Pipeline);
++  }
++  TArray<FShader*> Shaders;
++  for (int32 I = 0; I < Inputs.Num(); ++I)
++  {
++   auto& Input = Inputs[I];
++   const bool bMesh = !Input.VertexFactoryName.IsEmpty();
++   const FShaderPipelineType* PipelineType = Owners[I] == INDEX_NONE ? nullptr : PipelineTypes[Owners[I]];
++   FShader* Shader;
++   if (bMesh)
++   {
++    FMeshMaterialShaderType::CompiledShaderInitializerType Init(Types[I], Input.PermutationId, Input.Output,
++     Uniforms, Material.OriginalMapHash, Material.DebugDescription, PipelineType, LocalVF);
++    Shader = Types[I]->ConstructCompiled(Init);
++   }
++   else
++   {
++    FMaterialShaderType::CompiledShaderInitializerType Init(Types[I], Input.PermutationId, Input.Output,
++     Uniforms, Material.OriginalMapHash, PipelineType, nullptr, Material.DebugDescription);
++    Shader = Types[I]->ConstructCompiled(Init);
++   }
++   // Retain each unfrozen unique stage until freezing or rejection completes.
++   if (Owners[I] != INDEX_NONE)
++   {
++    UniqueShaderOwners.Emplace(Shader);
++    ConstructedPipelines[Owners[I]]->AddShader(Shader, Input.PermutationId);
++   }
++   else (bMesh ? static_cast<FShaderMapContent*>(Mesh) : Content)->AddShader(Types[I]->GetHashedName(), Input.PermutationId, Shader);
++   Shaders.Add(Shader);
++   Shader->Finalize(Code, Input.Output.OutputHash);
++   // Binding mutates bBound without affecting the output hash. Match the normal
++   // compiler finish contract, but report an unsupported binding instead of a fatal.
++   for (const auto& Parameter : Input.Output.ParameterMap.GetParameterMap())
++    if (!Parameter.Value.bBound)
++     return Fail(TEXT("Original material/LocalVF output contains an unbound resource parameter"));
++  }
++  for (int32 I = 0; I < Pipelines.Num(); ++I)
++  {
++   if (!PipelineTypes[I]->ShouldOptimizeUnusedOutputs(Material.Platform))
++    for (int32 Index : Pipelines[I].StageIndices)
++     ConstructedPipelines[I]->AddShader(Shaders[Index], Inputs[Index].PermutationId);
++   ConstructedPipelines[I]->Validate(PipelineTypes[I]);
++  }
++  Content->AddMeshShaderMap(LocalVF, Mesh);
++  return true;
++ }, Error);
++}
+diff --git a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+index d9bf771d1..1f1edc0c8 100644
+--- a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
++++ b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+@@ -77,3 +77,32 @@ using FLegacySlatePrepareOutputs = TFunctionRef<bool(
+  const FShaderParametersMetadata& Metadata,
+  TArray<FLegacySlateShaderInput>& Outputs,
+  FString& Error)>;
++
++/** One converted original record. Empty VertexFactoryName denotes a material
++ * shader. The only supported nonempty factory is FLocalVertexFactory.
++ * PipelineName is nonempty only for a pipeline with unique stage shaders on the
++ * target platform; shared stages retain their standalone identity instead.
++ */
++struct FLegacyMaterialShaderInput : FLegacySlateShaderInput
++{
++ FString VertexFactoryName;
++ FString PipelineName;
++};
++/** Stage indices address the complete output array, in GetStages() order.
++ * Shared pipelines reference standalone records; unique pipelines reference
++ * records whose PipelineName is this TypeName. No shader record is discarded.
++ */
++struct FLegacyMaterialPipelineInput
++{
++ FString TypeName;
++ FString VertexFactoryName;
++ TArray<int32> StageIndices;
++};
++/** Same metadata lifetime/layout contract as FLegacySlatePrepareOutputs. The
++ * adapter must preserve the complete original record and pipeline inventory,
++ * convert every output including VF/pass bindings, and finalize output hashes.
++ * This factory does not establish owner-specific IsComplete or render parity.
++ */
++using FLegacyMaterialPrepareOutputs = TFunctionRef<bool(
++ const FUniformExpressionSet&, const FShaderParametersMetadata&,
++ TArray<FLegacyMaterialShaderInput>&, TArray<FLegacyMaterialPipelineInput>&, FString&)>;
+diff --git a/Engine/Source/Runtime/Engine/Public/MaterialShared.h b/Engine/Source/Runtime/Engine/Public/MaterialShared.h
+index df398a2d3..f89d274b3 100644
+--- a/Engine/Source/Runtime/Engine/Public/MaterialShared.h
++++ b/Engine/Source/Runtime/Engine/Public/MaterialShared.h
+@@ -1045,6 +1045,22 @@ public:
+ 		TFunctionRef<bool(const FUniformExpressionSet&, const FShaderParametersMetadata&, TArray<struct FLegacySlateShaderInput>&, FString&)> PrepareOutputs,
+ 		FString& Error);
+ 
++	/** Detached map retaining converted material and LocalVF records/pipelines.
++	 * Requires at least one LocalVF record. Does not register or attach the map.
++	 */
++	static ENGINE_API TRefCountPtr<FMaterialShaderMap> CreateLegacyLocalVertexFactoryMap(
++		const struct FLegacyMaterialIR& Material,
++		TFunctionRef<bool(const FUniformExpressionSet&, const FShaderParametersMetadata&,
++			TArray<struct FLegacyMaterialShaderInput>&, TArray<struct FLegacyMaterialPipelineInput>&, FString&)> PrepareOutputs,
++		FString& Error);
++
++private:
++	static TRefCountPtr<FMaterialShaderMap> CreateLegacyMaterialMap(
++		const struct FLegacyMaterialIR& Material,
++		TFunctionRef<bool(FMaterialShaderMap&, const FUniformExpressionSet&, const FShaderParametersMetadata&, FString&)> Populate,
++		FString& Error);
++public:
++
+ 	static TRefCountPtr<FMaterialShaderMap> FindId(const FMaterialShaderMapId& ShaderMapId, EShaderPlatform Platform);
+ 
+ #if ALLOW_SHADERMAP_DEBUG_DATA

@@ -1,0 +1,13 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "provider": "0x140a468e0",
+  "assembly_findings": [
+    "After calling 0x140d4a810 with this+0x10, the provider builds +0x48 + '://' + +0x58.",
+    "When +0x68 is nonempty, 0x141c40bb8 calls 0x142bace90 on it with '/' (0x145a95874), search parameters 0, 0, -1. If the result equals -1, 0x140a46a63 constructs '/' followed by the entire component; otherwise 0x14900e06f copies the component. This is a search for a slash anywhere, not a leading-slash test.",
+    "When +0x78 is nonempty, 0x140a46beb branches to append '/' and then the whole +0x78 component, regardless of its contents. Empty components add nothing.",
+    "The provider's 0x140a46d43 return path restores saved registers and returns the output address; no matching release call appears in that path. Its input components are copied into temporary/output FStrings."
+  ],
+  "remaining_blocker": "0x140d4a810 is not established to be a lock acquisition: it calls 0x1438bce20, invokes a virtual method with the address of service+0x58, and runs further conditional string/comparison logic. Its effects and all computed-return branches remain unresolved. It may read or mutate the state before assembly; therefore an explicit-state string-only helper is not a complete lift of 0x140a468e0 and no manifest/body is proposed yet. Recover this pre-assembly call (including its conditional destinations) and prove its side effects/lifetime semantics, then lift the provider or model those effects explicitly.",
+  "validation": "Static bounded capstone instruction traces only; no build or runtime tests."
+}
