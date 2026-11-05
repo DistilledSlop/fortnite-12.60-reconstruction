@@ -1118,7 +1118,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Local matchmaking can return the configured native server encryption key and advertise a local websocket origin. HTTP/WebSocket tests pass; an encrypted matchmaking-to-game join and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "Local matchmaking advertises its loopback websocket by default and can return the configured native server encryption key. HTTP/WebSocket tests pass; an encrypted matchmaking-to-game join and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md."
         },
         {
           "id": "backend.game_profile",
