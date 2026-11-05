@@ -31,5 +31,14 @@ public:
 	UPROPERTY()
 	AController* DamagedBy;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x40): not a UPROPERTY, not replicated.
+	float NativeDamageAmount_0x40;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(ABuildingActor*& _Building, TEnumAsByte<EFortBuildingType::Type>& _BuildingType, AController*& _DamagedBy, float& _DamageAmount);
+
+	UFUNCTION(BlueprintCallable)
+	void SetParams(ABuildingActor* _Building, EFortBuildingType::Type _BuildingType, AController* _DamagedBy, float _DamageAmount, UFortBuildingDamagedParams*& ThisParam);
+
 };
 

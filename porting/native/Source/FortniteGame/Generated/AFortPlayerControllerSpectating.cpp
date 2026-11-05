@@ -81,6 +81,20 @@ void AFortPlayerControllerSpectating::OnRep_FollowedPlayerRemoteClientInfo()
 	return;
 }
 
+void AFortPlayerControllerSpectating::SetShowBusPathsOnMap(bool bInShowBusPathsOnMap)
+{
+	// CONFIDENCE: HIGH; captured body stores the normalized boolean.
+	// Build and runtime verification pending.
+	this->NativeRecoveredBool_0x2ae7 = bInShowBusPathsOnMap;
+}
+
+void AFortPlayerControllerSpectating::SetShowPlayersOnMap(bool bInShowPlayersOnMap)
+{
+	// CONFIDENCE: HIGH; captured body stores the normalized boolean.
+	// Build and runtime verification pending.
+	this->NativeRecoveredBool_0x2ae5 = bInShowPlayersOnMap;
+}
+
 void AFortPlayerControllerSpectating::SetShowVehiclesOnMap(bool bInShowVehiclesOnMap)
 {
 	// Original exec 0x142a6ce90; pure writer 0x1423ec440.

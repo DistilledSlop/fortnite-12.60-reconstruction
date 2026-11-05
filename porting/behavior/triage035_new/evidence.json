@@ -1,0 +1,24 @@
+[
+  {
+    "function": "SetShowBusPathsOnMap",
+    "wrapper": "porting/generated/native228-fresh-callees/0x142a6cd70.c",
+    "native_body": "porting/generated/native228-fresh-callees/0x1423ec420.c",
+    "assembly": "porting/generated/native228-fresh-callees/0x1423ec420.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "represented_field": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerSpectating.h: NativeRecoveredBool_0x2ae7",
+    "behavior": "Wrapper normalizes the argument to boolean; native body writes the byte at 0x2ae7.",
+    "manual_policy_check": "No matching function in porting Python policy files or behavior manifest entries; class is absent from native_class_blocklist.txt.",
+    "class": "AFortPlayerControllerSpectating"
+  },
+  {
+    "function": "SetShowPlayersOnMap",
+    "wrapper": "porting/generated/native228-fresh-callees/0x142a6ce00.c",
+    "native_body": "porting/generated/native228-fresh-callees/0x1423ec430.c",
+    "assembly": "porting/generated/native228-fresh-callees/0x1423ec430.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "represented_field": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerSpectating.h: NativeRecoveredBool_0x2ae5",
+    "behavior": "Wrapper normalizes the argument to boolean; native body writes the byte at 0x2ae5.",
+    "manual_policy_check": "No matching function in porting Python policy files or behavior manifest entries; class is absent from native_class_blocklist.txt.",
+    "class": "AFortPlayerControllerSpectating"
+  }
+]

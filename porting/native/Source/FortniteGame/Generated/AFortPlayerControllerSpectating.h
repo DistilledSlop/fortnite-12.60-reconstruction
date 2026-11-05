@@ -275,6 +275,12 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable)
+	void SetShowBusPathsOnMap(bool bInShowBusPathsOnMap);
+
+	UFUNCTION(BlueprintCallable)
+	void SetShowPlayersOnMap(bool bInShowPlayersOnMap);
+
+	UFUNCTION(BlueprintCallable)
 	void SetShowVehiclesOnMap(bool bInShowVehiclesOnMap);
 
 	UFUNCTION()

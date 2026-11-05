@@ -7,6 +7,13 @@
 void AFortSkydivingShadowProxy::ShowShadowProxy_Implementation() {}
 void AFortSkydivingShadowProxy::HideShadowProxy_Implementation() {}
 
+// The original shipping wrappers call the shared bare-return native 0x1406801c0.
+void UFortKismetLibrary::DebugBoxSendToAll(UObject* WorldContextObject, const FVector& Center, const FVector& Extent, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness) {}
+void UFortKismetLibrary::DebugLineSendToAll(UObject* WorldContextObject, const FVector& LineStart, const FVector& LineEnd, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness) {}
+void UFortKismetLibrary::DebugCapsuleSendToAll(UObject* WorldContextObject, const FVector& Center, float HalfHeight, float Radius, const FQuat& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness) {}
+void UFortKismetLibrary::DebugOrientedBoxSendToAll(UObject* WorldContextObject, const FVector& Center, const FVector& Extent, const FRotator& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness) {}
+void UFortKismetLibrary::DebugSphereSendToAll(UObject* WorldContextObject, const FVector& Center, float Radius, int32 Segments, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness) {}
+
 AFortSkydivingShadowProxy::AFortSkydivingShadowProxy()
 {
     DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultSceneRoot"));

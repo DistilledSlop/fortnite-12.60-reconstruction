@@ -1,0 +1,34 @@
+[
+  {
+    "function": "SetShowBusPathsOnMap",
+    "kind": "exec",
+    "signature": "void SetShowBusPathsOnMap(bool bInShowBusPathsOnMap)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/triage035_new/AFortPlayerControllerSpectating_SetShowBusPathsOnMap.inc",
+    "confidence": "high",
+    "address": "0x142a6cd70",
+    "native_body_address": "0x1423ec420",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Writes existing recovered bool field at 0x2ae7.",
+    "class": "AFortPlayerControllerSpectating"
+  },
+  {
+    "function": "SetShowPlayersOnMap",
+    "kind": "exec",
+    "signature": "void SetShowPlayersOnMap(bool bInShowPlayersOnMap)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/triage035_new/AFortPlayerControllerSpectating_SetShowPlayersOnMap.inc",
+    "confidence": "high",
+    "address": "0x142a6ce00",
+    "native_body_address": "0x1423ec430",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Writes existing recovered bool field at 0x2ae5.",
+    "class": "AFortPlayerControllerSpectating"
+  }
+]

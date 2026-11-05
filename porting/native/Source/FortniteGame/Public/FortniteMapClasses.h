@@ -62,6 +62,21 @@ class FORTNITEGAME_API UFortKismetLibrary : public UBlueprintFunctionLibrary
     GENERATED_BODY()
 
 public:
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static void DebugBoxSendToAll(UObject* WorldContextObject, const FVector& Center, const FVector& Extent, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
+
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static void DebugLineSendToAll(UObject* WorldContextObject, const FVector& LineStart, const FVector& LineEnd, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
+
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static void DebugCapsuleSendToAll(UObject* WorldContextObject, const FVector& Center, float HalfHeight, float Radius, const FQuat& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
+
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static void DebugOrientedBoxSendToAll(UObject* WorldContextObject, const FVector& Center, const FVector& Extent, const FRotator& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
+
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static void DebugSphereSendToAll(UObject* WorldContextObject, const FVector& Center, float Radius, int32 Segments, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
+
     UFUNCTION(BlueprintPure)
     static bool IsAssetNull(TSoftObjectPtr<UObject> Asset);
 
