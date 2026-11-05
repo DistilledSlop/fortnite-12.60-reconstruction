@@ -1095,7 +1095,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; rebuilt-client startup and complete account behavior remain unverified. The remaining effort estimate needs review."
+          "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; an exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The username entry point is not connected to the game online login or profile systems; complete account behavior remains unverified. The remaining effort estimate needs review."
         },
         {
           "id": "backend.matchmaking",
@@ -1135,7 +1135,7 @@
             ],
             "stub_credit": 1.0
           },
-          "rationale": "Profile, world, enabled features, chat and twitch routes. Voice service routes belong to audio.voice. Only stub answers exist."
+          "rationale": "Profile, world, enabled features, chat and twitch route references. The local service implements selected profile behavior; these route counts do not establish protocol parity. Voice service routes belong to audio.voice."
         },
         {
           "id": "backend.game_profile.behavior",
@@ -1145,7 +1145,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. Client integration and full protocol behavior remain unverified."
+          "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Game client login and profile integration and full protocol behavior remain unverified."
         },
         {
           "id": "backend.progression",

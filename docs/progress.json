@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "4435f9066c07390cce98f5ef31805297903b3fd9",
- "subject": "Support atomic bulk locker updates",
- "date": "2026-11-04T22:16:54-05:00",
+ "head": "73d21a621e35efa1c40886ddb604642dcb22a93c",
+ "subject": "Add local account selection client subsystem",
+ "date": "2026-11-04T22:22:43-05:00",
  "overall_pct": 28.571,
  "measured_pct": 27.701,
  "objective_pct": 27.7,
@@ -1214,7 +1214,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; rebuilt-client startup and complete account behavior remain unverified. The remaining effort estimate needs review.",
+     "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; an exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The username entry point is not connected to the game online login or profile systems; complete account behavior remains unverified. The remaining effort estimate needs review.",
      "evidence_links": []
     },
     {
@@ -1256,7 +1256,7 @@
      "evidence": "14 of 14 client route templates have their literal path in committed server code (stub credit 1); templates from the static client scan",
      "basis": "git",
      "carried": false,
-     "rationale": "Profile, world, enabled features, chat and twitch routes. Voice service routes belong to audio.voice. Only stub answers exist.",
+     "rationale": "Profile, world, enabled features, chat and twitch route references. The local service implements selected profile behavior; these route counts do not establish protocol parity. Voice service routes belong to audio.voice.",
      "evidence_links": []
     },
     {
@@ -1270,7 +1270,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. Client integration and full protocol behavior remain unverified.",
+     "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Game client login and profile integration and full protocol behavior remain unverified.",
      "evidence_links": []
     },
     {
@@ -3208,7 +3208,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; rebuilt-client startup and complete account behavior remain unverified. The remaining effort estimate needs review.",
+   "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; an exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The username entry point is not connected to the game online login or profile systems; complete account behavior remains unverified. The remaining effort estimate needs review.",
    "evidence_links": []
   },
   {
@@ -3250,7 +3250,7 @@
    "evidence": "14 of 14 client route templates have their literal path in committed server code (stub credit 1); templates from the static client scan",
    "basis": "git",
    "carried": false,
-   "rationale": "Profile, world, enabled features, chat and twitch routes. Voice service routes belong to audio.voice. Only stub answers exist.",
+   "rationale": "Profile, world, enabled features, chat and twitch route references. The local service implements selected profile behavior; these route counts do not establish protocol parity. Voice service routes belong to audio.voice.",
    "evidence_links": []
   },
   {
@@ -3264,7 +3264,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. Client integration and full protocol behavior remain unverified.",
+   "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Game client login and profile integration and full protocol behavior remain unverified.",
    "evidence_links": []
   },
   {
