@@ -1,0 +1,28 @@
+{
+  "status": "promoted_source_build_pending",
+  "scope": "Reflected data model prerequisite only; no streaming behavior is implemented.",
+  "class": {
+    "name": "AFortHLODSMActor",
+    "reflection_block": "0x146405220",
+    "parent": "AFortStaticMeshActor",
+    "parent_source": "porting/generated/reflection/class_parent_map.json",
+    "parent_header": "porting/native/Source/FortniteGame/Public/FortniteMapClasses.h",
+    "native_function_count": 0
+  },
+  "struct": {
+    "name": "FBuildingFoundationStreamingData",
+    "reflection_block": "0x147902c60",
+    "size": 128,
+    "proxy_info_offset": 88,
+    "proxy_info_inner": "TLazyObjectPtr<AFortHLODSMActor>",
+    "proxy_info_class_ref": "0x14293dcf0",
+    "child_streaming_data_indices_offset": 104,
+    "source": "porting/generated/reflection/struct_blocks.json",
+    "class_ref_source": "porting/generated/reflection/class_ref_map.json"
+  },
+  "promotion": "porting/promote_native_classes.sh completed successfully; generated ABuildingFoundation::StreamingData, AFortWorldSettings::BuildingFoundationStreamingData, FBuildingFoundationStreamingData::ProxyInfo and ChildStreamingDataIndices inspected.",
+  "limitations": [
+    "The reflected source model is emitted; compilation and original streaming runtime behavior are not established by promotion.",
+    "Shared streaming command/state, callbacks, HLOD behavior and original serialized loading still require reconstruction."
+  ]
+}

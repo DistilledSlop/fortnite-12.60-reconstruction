@@ -9,6 +9,7 @@
 #include "EBuildingFoundationType.h"
 #include "EDynamicFoundationEnabledState.h"
 #include "EDynamicFoundationType.h"
+#include "FBuildingFoundationStreamingData.h"
 #include "FDynamicBuildingFoundationRepData.h"
 #include "GameplayTagContainer.h"
 #include "Math/Box.h"
@@ -17,6 +18,7 @@
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 
+class AFortHLODSMActor;
 class ALODActor;
 class UBuildingGroup;
 class ULevelStreaming;
@@ -131,9 +133,21 @@ public:
 	UPROPERTY()
 	FVector MapLocationTextOffset;
 
+	// table index 18, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FBuildingFoundationStreamingData StreamingData;
+
+	// table index 16, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<AFortHLODSMActor*> SpawnedLODActors;
+
 	// table index 14, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<float> SpawnedLODActorsMinDrawDistances;
+
+	// table index 12, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<AFortHLODSMActor*> ChildSpawnedLODActors;
 
 	// table index 10, flags 0x20080000002000
 	UPROPERTY(Transient)

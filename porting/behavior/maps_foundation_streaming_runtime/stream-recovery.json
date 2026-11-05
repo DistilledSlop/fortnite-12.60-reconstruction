@@ -12,7 +12,7 @@
     "0x141be2550"
   ],
   "blocking_effects": {
-    "0x141bec0f0": "Tests the process-global foundation streaming enabled byte, StreamingData.ProxyInfo.Num or ChildStreamingDataIndices.Num, and role != 3. The global defaults to 1 in the captured image but can be changed by console command Athena.BuildingFoundationStreamingEnabled; its handler also updates existing foundations. The generated native model lacks StreamingData and the shared command/state implementation, so this cannot be ported faithfully yet.",
+    "0x141bec0f0": "Tests the process-global foundation streaming enabled byte, StreamingData.ProxyInfo.Num or ChildStreamingDataIndices.Num, and role != 3. The global defaults to 1 in the captured image but can be changed by console command Athena.BuildingFoundationStreamingEnabled; its handler also updates existing foundations. The reflected StreamingData model is now emitted. The shared command/state implementation and its foundation updates remain missing, so the predicate is not yet callable recovered code.",
     "0x141be3020": "Conditional authority-game-mode registration calls 0x141738f90. Fields 0xb9c/0xce4, selector global 0x14811f2bc and native game-mode registration contract unresolved.",
     "0x141be3f50": "OnLevelStreamedIn has full actor/HLOD processing, per-instance visibility data, material/texture construction and render-thread work. Captured 478-line body remains unimplemented.",
     "0x141be38f0": "OnLevelShown has visibility updates, original timing/global statistics, manager notifications and dependent callbacks. Captured 200-line body remains unimplemented.",

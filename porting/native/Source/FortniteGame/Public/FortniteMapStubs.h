@@ -29,12 +29,4 @@
 #include "AI/NavigationSystemConfig.h"
 #include "NavSystemConfigOverride.h"
 #include "ABuildingFoundation.h"
-#include "FortniteMapStubs.generated.h"
-// STUB: layout unknown, replace with generated class
-// Parent guessed: AStaticMeshActor. Static mesh actor, name inference only; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortHLODSMActor : public AStaticMeshActor
-{
-    GENERATED_BODY()
-};
-
+#include "AFortHLODSMActor.h"

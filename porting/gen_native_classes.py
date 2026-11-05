@@ -4011,6 +4011,13 @@ def promote(args):
         # A class outside the project that the project may depend on: its module is usable (see ModuleRegistry).
         return package not in PROMOTE_PACKAGES and registry.usable_package(package)
 
+    # The map's verified handwritten base may supply the HLOD actor's parent.
+    manual_map_parent = {}
+    if 'AFortHLODSMActor' in listed:
+        manual_map_parent = validate_manual_map_support(
+            Path(os.path.join(PROJECT_NATIVE_DIR, 'Source/FortniteGame/Public/FortniteMapClasses.h')).read_text(),
+            listed, blocklist, (parents.get(name_to_block.get('AFortHLODSMActor')) or {}).get('package'))
+
     # Closure check: every class is in a promote package, is not blocked or an interface, and each parent is listed
     # or in a usable module.
     errors = []
@@ -4030,7 +4037,7 @@ def promote(args):
                 errors.append("%s: UINTERFACE extending %s, not generated" % (name, entry.get("parent_name")))
         else:
             parent = entry.get("parent_name")
-            if parent not in listed:
+            if parent not in listed and not (name == 'AFortHLODSMActor' and parent in manual_map_parent):
                 parent_entry = parents.get(str(entry.get("parent_va") or "").lower()) or {}
                 if not engine_like(parent_entry.get("package")):
                     errors.append("%s: parent %s (package %s) is neither listed nor in a usable module"
@@ -4310,6 +4317,8 @@ def promote(args):
         if parent in listed:
             parent_include = "%s.h" % parent
             parent_pkg = package_of.get(parent)
+        elif name == 'AFortHLODSMActor' and parent in manual_map_parent:
+            parent_pkg, parent_include = manual_map_parent[parent]
         else:
             parent_pkg = (parents.get(str(parents[block].get("parent_va") or "").lower()) or {}).get("package")
             parent_module = parent_pkg.rsplit("/", 1)[-1] if parent_pkg else None

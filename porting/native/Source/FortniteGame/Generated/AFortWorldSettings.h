@@ -8,6 +8,7 @@
 
 #include "Engine/World.h"
 #include "EngineUtils.h"
+#include "FBuildingFoundationStreamingData.h"
 #include "FortTrackedTimeOfDayClass.h"
 #include "GameFramework/Actor.h"
 #include "Math/IntPoint.h"
@@ -213,6 +214,10 @@ public:
 	// table index 5, flags 0x20080000000000
 	UPROPERTY()
 	UFortMusicManagerBank* ZoneThemeMusicManagerBank;
+
+	// table index 3, flags 0x20080000020015
+	UPROPERTY()
+	TArray<FBuildingFoundationStreamingData> BuildingFoundationStreamingData;
 
 	// table index 2, flags 0x40000000202000
 	UPROPERTY(Transient)

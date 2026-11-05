@@ -4672,3 +4672,6 @@ AFortHoagieVehicle
 
 UFortHoagieVehicleConfigs
 UFortAbilitySystemInterface
+
+# Reflected parent of foundation streaming proxy references.
+AFortHLODSMActor
