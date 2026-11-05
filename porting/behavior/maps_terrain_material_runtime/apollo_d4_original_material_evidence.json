@@ -82,7 +82,7 @@
       0,
       1
     ],
-    "original_resource_parse_first_failure": "unsupported FMaterialUniformExpressionAbs at resource offset 1783",
+    "original_resource_parse_first_failure": "unsupported nonempty VT stacks at resource offset 3440 (count 1)",
     "first_runtime_virtual_texture_uniforms": {
       "offsets": [
         226,
@@ -109,7 +109,30 @@
       "Remaining shader records and archive association are not validated",
       "Linux landscape vertex factory and runtime virtual texture bindings are not implemented",
       "No runtime loading or visual parity was verified"
-    ]
+    ],
+    "abs_expressions": {
+      "offsets": [
+        1783,
+        1824,
+        2312,
+        2353
+      ],
+      "ends": [
+        1816,
+        1857,
+        2345,
+        2386
+      ],
+      "child_type": "FMaterialUniformExpressionScalarParameter",
+      "serializer_evidence": {
+        "registry": "0x147cde748",
+        "factory": "0x144363f90",
+        "vtable": "0x146abfe38",
+        "serialize": "0x14433ce10",
+        "expression_pointer_serializer": "0x144344b40",
+        "serialization": "one nested expression pointer"
+      }
+    }
   },
   "reports": [
     "porting/generated/apollo-material-evidence/master-current.json",

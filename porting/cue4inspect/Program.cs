@@ -778,7 +778,36 @@ try
                     scale = new[] { transform.Scale3D.X, transform.Scale3D.Y, transform.Scale3D.Z }
                 };
             }).ToArray();
-        Console.WriteLine(JsonSerializer.Serialize(new { path = assetPath, streamingLevels = entries },
+        // Foundation actors reference additional worlds via soft paths rather than
+        // LevelStreaming exports. Report their component transforms as evidence;
+        // whether a runtime loader applies those transforms is a separate question.
+        var foundations = mapPackage.ExportMap.Select((export, index) => (export, index))
+            .Where(entry => entry.export.ClassName.StartsWith("LF_", StringComparison.Ordinal))
+            .Select(entry =>
+            {
+                var actor = mapPackage.ExportsLazy[entry.index].Value;
+                var worldsTag = actor.Properties.SingleOrDefault(p => p.Name.Text == "AdditionalWorlds");
+                if (worldsTag is null) return null;
+                if (worldsTag.Tag?.GenericValue is not UScriptArray worlds)
+                    throw new InvalidDataException($"Unsupported AdditionalWorlds on {actor.Name}");
+                var paths = worlds.Properties.Select(value => value.GenericValue is FSoftObjectPath path
+                    ? path.ToString()
+                    : throw new InvalidDataException($"Unsupported AdditionalWorlds element on {actor.Name}")).ToArray();
+                var component = actor.GetOrDefault<FPackageIndex?>("RootComponent")?.Load<USceneComponent>();
+                var transform = component?.GetComponentTransform();
+                return new
+                {
+                    index = entry.index + 1,
+                    name = actor.Name,
+                    type = entry.export.ClassName,
+                    additionalWorlds = paths,
+                    rootComponent = component?.Name,
+                    translation = transform is { } t ? new[] { t.Translation.X, t.Translation.Y, t.Translation.Z } : null,
+                    rotation = transform is { } r ? new[] { r.Rotation.X, r.Rotation.Y, r.Rotation.Z, r.Rotation.W } : null,
+                    scale = transform is { } s ? new[] { s.Scale3D.X, s.Scale3D.Y, s.Scale3D.Z } : null
+                };
+            }).Where(entry => entry is not null).ToArray();
+        Console.WriteLine(JsonSerializer.Serialize(new { path = assetPath, streamingLevels = entries, foundations },
             new JsonSerializerOptions { WriteIndented = true }));
         return 0;
     }

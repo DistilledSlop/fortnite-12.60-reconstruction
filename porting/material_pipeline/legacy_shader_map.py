@@ -124,9 +124,10 @@ class Reader:
                 raise ValueError(f'invalid texture property at {start}')
         elif kind == 'Constant':
             result['value'], result['value_type'] = self.read('4f'), self.read('B')
-        elif kind in ('ComponentSwizzle', 'FoldedMath', 'AppendVector', 'TrigMath', 'Max', 'Saturate'):
+        elif kind in ('ComponentSwizzle', 'FoldedMath', 'AppendVector', 'TrigMath', 'Max', 'Saturate', 'Abs'):
+            # Original Abs serializer 0x14433ce10 serializes one expression pointer.
             result['inputs'] = [self.expression(depth + 1)]
-            if kind not in ('ComponentSwizzle', 'Saturate'):
+            if kind not in ('ComponentSwizzle', 'Saturate', 'Abs'):
                 result['inputs'].append(self.expression(depth + 1))
             if kind == 'ComponentSwizzle':
                 channels = self.read('4b')

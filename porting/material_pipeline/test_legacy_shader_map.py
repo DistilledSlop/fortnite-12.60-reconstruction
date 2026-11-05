@@ -120,6 +120,20 @@ class OriginalMaxSaturateTests(unittest.TestCase):
             Reader(nested, names).expression()
 
 
+class OriginalAbsTests(unittest.TestCase):
+    def test_nested_expression_and_boundary(self):
+        names = NAMES + [PREFIX + 'Abs']
+        encoded = name(len(NAMES)) + SCALAR
+        reader = Reader(encoded + CONSTANT, names)
+        parsed = reader.expression()
+        self.assertEqual(parsed['end'], len(encoded))
+        self.assertEqual(parsed['inputs'][0]['type'], PREFIX + 'ScalarParameter')
+        self.assertEqual(reader.expression()['end'], len(encoded + CONSTANT))
+        for cut in range(len(encoded)):
+            with self.assertRaises(ValueError):
+                Reader(encoded[:cut], names).expression()
+
+
 class RuntimeVirtualTextureUniformTests(unittest.TestCase):
     def test_non_parameter_still_consumes_parameter_info(self):
         names = NAMES + [PREFIX + 'RuntimeVirtualTextureUniform']
