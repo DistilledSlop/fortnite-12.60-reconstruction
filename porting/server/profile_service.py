@@ -21,8 +21,9 @@ Revision model:
   * profileRevision (rvn) rises by 1 for each committed command that changed the
     profile. A no-op command leaves it alone.
   * profileCommandRevision rises by 1 for every executed command, changed or not.
-  * profileChangesBaseRevision is the revision before the command. The deltas in
-    profileChanges apply on top of that base.
+  * For deltas, profileChangesBaseRevision is the revision before the command.
+    A mismatched client rvn gets a full snapshot instead, based at its revision;
+    this recovery is a local policy, not captured server behavior.
   * A command is atomic. Any ApiError means the stored profile is unchanged.
   * multiUpdate lists the other profiles that a command changed.
 """
@@ -497,7 +498,7 @@ class ProfileService:
                             [{"changeType": "fullProfileUpdate", "profile": snapshot}])
         return self._envelope(entry, [], [])
 
-    def run(self, account_id, profile_id, command_name, body):
+    def run(self, account_id, profile_id, command_name, body, client_rvn=None):
         if command_name in UNIMPLEMENTED:
             raise ApiError(400, Err.OPERATION_NOT_FOUND,
                            f"Operation {command_name} is not implemented by the local stand-in.")
@@ -512,7 +513,14 @@ class ProfileService:
         cmd.fn(ctx)
         self._store(account_id, ctx.txs, command_profile=profile_id)
         primary = ctx.txs[profile_id]
-        entry = self._entry(profile_id, primary.profile, primary.base_rvn, primary.changes)
+        # Deltas only apply to the revision they were generated from. When the
+        # client supplies a different revision, send the resulting full profile
+        # instead (local recovery policy; exact server behavior is unobserved).
+        if client_rvn is not None and client_rvn != str(primary.base_rvn):
+            changes = [{"changeType": "fullProfileUpdate", "profile": copy.deepcopy(primary.profile)}]
+            entry = self._entry(profile_id, primary.profile, primary.profile["rvn"], changes)
+        else:
+            entry = self._entry(profile_id, primary.profile, primary.base_rvn, primary.changes)
         multi = [self._entry(other_id, tx.profile, tx.base_rvn, tx.changes)
                  for other_id, tx in ctx.txs.items() if other_id != profile_id and tx.changed]
         return self._envelope(entry, ctx.notifications, multi)
@@ -529,7 +537,7 @@ class ProfileService:
             raise ApiError(400, Err.PROFILE_ID_INVALID, f"{profile_id} is not a known profile id.")
         if command_name == "QueryProfile":
             return 200, self.query(account_id, profile_id)
-        return 200, self.run(account_id, profile_id, command_name, req.json_object())
+        return 200, self.run(account_id, profile_id, command_name, req.json_object(), req.query.get("rvn"))
 
     def register(self, router):
         router.add("POST", r"/fortnite/api/game/v2/profile/([^/]+)/(client|dedicated_server|public)/([A-Za-z]+)",
