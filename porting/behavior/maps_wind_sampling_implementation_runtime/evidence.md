@@ -1,0 +1,7 @@
+# Concrete wind sampling body
+
+This member-body include translates `maps_wind_sampling_runtime/NativeSampleWind.draft.h` and `maps_wind_sampling_effects_runtime/evidence.md` for native address `0x141ddfad0`. The draft's helpers are local lambdas and its effects are direct member, engine, material, quadtree, and restored event calls. It requires the existing wind helper and event declarations and generated struct types. The SSE reciprocal-square-root seed and two refinements preserve the draft's operation order; integration retains scalar float grouping and imports Math/UnrealMathSSE.h, which provides the x86 intrinsics.
+
+The responder and radius cycles use lexical engine stat scopes. The responder scope includes the single default construction of the temporary cylinder after the enabled, dedicated-server, and world gates, even with no delta. Pending-kill checks use the actor's native `IsPendingKill()`. Cursor checking, callback order and reentry, and swap-removal/shrink behavior follow the draft; engine event dispatch is by value as restored. `GetTimeSeconds()` reads world time; the local Engine World.h accessor returns TimeSeconds; the original samples world +0x548.
+
+Integrated through the global behavior manifest and source generation: 3998 accepted snippets, zero rejected. No build or runtime validation performed under the batching cadence. TickActor/lifecycle caller remains pending, so this does not establish live wind simulation.

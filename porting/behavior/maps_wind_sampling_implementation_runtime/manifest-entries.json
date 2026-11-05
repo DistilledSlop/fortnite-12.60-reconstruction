@@ -1,0 +1,23 @@
+[
+  {
+    "class": "AFortWindManager",
+    "function": "NativeSampleWind",
+    "kind": "helper",
+    "signature": "void NativeSampleWind(float DeltaSeconds)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/maps_wind_sampling_implementation_runtime/AFortWindManager_NativeSampleWind.inc",
+    "address": "0x141ddfad0",
+    "includes": [
+      "Math/UnrealMathSSE.h",
+      "Engine/World.h",
+      "Curves/CurveLinearColor.h",
+      "Materials/MaterialInstanceDynamic.h",
+      "SharedFortGameLog.h",
+      "Stats/Stats.h"
+    ],
+    "notes": "Concrete sampling, responder, radius and cylinder delta lifecycle body; requires native helper declarations and generated event declarations. Integrated source helper; TickActor caller and build/runtime validation pending. SSE seed/refinement requires x86 SSE and scalar floating-point grouping without reassociation."
+  }
+]

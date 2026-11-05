@@ -30,9 +30,11 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInterface.h"
 #include "Math/Box.h"
+#include "Math/UnrealMathSSE.h"
 #include "Math/Vector.h"
 #include "SharedFortGameLog.h"
 #include "Sound/SoundBase.h"
+#include "Stats/Stats.h"
 #include "UnrealEngine.h"
 
 class ABuildingSMActor;
@@ -247,5 +249,6 @@ public:
 	static void NativeBuildWindSectionBoxes(const FFortWindImpulseCylinderDelta& Delta, TArray<FBox>& OutBoxes);
 	void NativeStartQueuedWindDelta();
 	void NativeUpdateWindAudio(float DeltaSeconds);
+	void NativeSampleWind(float DeltaSeconds);
 };
 
