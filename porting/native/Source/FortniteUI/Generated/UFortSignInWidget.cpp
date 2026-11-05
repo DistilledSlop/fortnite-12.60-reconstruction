@@ -12,7 +12,7 @@ void UFortSignInWidget::NativeConstruct()
     {
         EditText_Email->SetHintText(FText::FromString(TEXT("USERNAME")));
         EditText_Email->OnTextChanged.AddUniqueDynamic(this, &UFortSignInWidget::HandleLocalUsernameChanged);
-        EditText_Email->OnTextCommitted.AddUniqueDynamic(this, &UFortSignInWidget::HandleLocalUsernameCommitted);
+        EditText_Email->OnTextCommitted.AddUniqueDynamic(this, &UFortSignInWidget::HandleTextCommitted);
     }
     if (Border_Password) Border_Password->SetVisibility(ESlateVisibility::Collapsed);
     if (EditText_Password) EditText_Password->SetVisibility(ESlateVisibility::Collapsed);
@@ -32,7 +32,7 @@ void UFortSignInWidget::NativeDestruct()
     if (EditText_Email)
     {
         EditText_Email->OnTextChanged.RemoveDynamic(this, &UFortSignInWidget::HandleLocalUsernameChanged);
-        EditText_Email->OnTextCommitted.RemoveDynamic(this, &UFortSignInWidget::HandleLocalUsernameCommitted);
+        EditText_Email->OnTextCommitted.RemoveDynamic(this, &UFortSignInWidget::HandleTextCommitted);
     }
     if (Button_SignIn) Button_SignIn->OnButtonClicked.RemoveDynamic(this, &UFortSignInWidget::HandleLocalSignInClicked);
     if (UGameInstance* GI = GetGameInstance())
@@ -63,11 +63,6 @@ void UFortSignInWidget::HandleLocalUsernameChanged(const FText& Text)
 {
     LocalSelectionStatus.Empty();
     UpdateLocalSignIn();
-}
-
-void UFortSignInWidget::HandleLocalUsernameCommitted(const FText& Text, ETextCommit::Type Method)
-{
-    if (Method == ETextCommit::OnEnter) SubmitLocalUsername();
 }
 
 void UFortSignInWidget::HandleLocalSignInClicked(UCommonButton* Button)
@@ -104,4 +99,19 @@ void UFortSignInWidget::HandleLocalSelectionComplete(bool bSuccess, const FStrin
     bLocalSelectionPending = false;
     LocalSelectionStatus = bSuccess ? TEXT("Account selected.") : Error;
     UpdateLocalSignIn();
+}
+
+void UFortSignInWidget::StartSignIn()
+{
+    SubmitLocalUsername();
+}
+
+void UFortSignInWidget::UpdateSignInButton(const FText& Text)
+{
+    UpdateLocalSignIn();
+}
+
+void UFortSignInWidget::HandleTextCommitted(const FText& Text, ETextCommit::Type CommitMethod)
+{
+    if (CommitMethod == ETextCommit::OnEnter) SubmitLocalUsername();
 }

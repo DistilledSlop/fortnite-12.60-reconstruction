@@ -2644,7 +2644,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _panel_queue_policy.apply(model, block, owner_fns, native_execs)
     model = _restart_modal_policy.apply(model, block, owner_fns, native_execs)
     model = _client_event_policy.apply(model, block, native_execs)
-    model = _local_signin_policy.apply(model)
+    model = _local_signin_policy.apply(model, block)
     model = _item_tag_interface_policy.apply(model, block, owner_fns)
     model = _pawn_ability_interface_policy.apply(model, block, owner_fns)
     model = _fort_ability_interface_policy.apply(model, block, owner_fns)

@@ -1,3 +1,10 @@
+protected:
+    UFUNCTION(BlueprintCallable)
+    void StartSignIn();
+    UFUNCTION(BlueprintCallable)
+    void UpdateSignInButton(const FText& Text);
+    UFUNCTION(BlueprintCallable)
+    void HandleTextCommitted(const FText& Text, ETextCommit::Type CommitMethod);
 public:
     // Local account selection is separate from the original online login state.
     UPROPERTY(BlueprintReadOnly, Category="Local Account")
@@ -9,8 +16,6 @@ protected:
     virtual void NativeDestruct() override;
     UFUNCTION()
     void HandleLocalUsernameChanged(const FText& Text);
-    UFUNCTION()
-    void HandleLocalUsernameCommitted(const FText& Text, ETextCommit::Type Method);
     UFUNCTION()
     void HandleLocalSignInClicked(UCommonButton* Button);
     UFUNCTION()
