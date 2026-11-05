@@ -385,7 +385,14 @@ def _copy_cosmetic_loadout(ctx):
     if target == len(loadouts):
         loadouts.append(new_id)
     else:
+        replaced_id = loadouts[target]
         loadouts[target] = new_id
+        # Local selection policy: preserve the selected slot and its ID when
+        # replacing it. The original server's behavior is unverified.
+        stats = tx.profile["stats"]["attributes"]
+        if (stats.get("active_loadout_index") == target and
+                stats.get("last_applied_loadout") == replaced_id):
+            tx.set_stat("last_applied_loadout", new_id)
     tx.set_stat("loadouts", loadouts)
 
 
