@@ -12,31 +12,31 @@ struct FDeploymentEntry
     const TCHAR* ThirdArgument;
 };
 
-const FDeploymentEntry Entries[] = {
+const FDeploymentEntry DeploymentEntries[] = {
 #include "LegacyMcpDeploymentTable.inl"
 };
 
-TCHAR FoldAscii(TCHAR Character)
+TCHAR DeploymentFoldAscii(TCHAR Character)
 {
     return Character >= TEXT('A') && Character <= TEXT('Z')
         ? Character + (TEXT('a') - TEXT('A')) : Character;
 }
 
-bool EqualAsciiInsensitive(const TCHAR* Left, const TCHAR* Right)
+bool DeploymentEqualAsciiInsensitive(const TCHAR* Left, const TCHAR* Right)
 {
-    while (*Left && *Right && FoldAscii(*Left) == FoldAscii(*Right))
+    while (*Left && *Right && DeploymentFoldAscii(*Left) == DeploymentFoldAscii(*Right))
     {
         ++Left;
         ++Right;
     }
-    return FoldAscii(*Left) == FoldAscii(*Right);
+    return DeploymentFoldAscii(*Left) == DeploymentFoldAscii(*Right);
 }
 
 bool StartsWithAsciiInsensitive(const TCHAR* Value, const TCHAR* Prefix)
 {
     while (*Prefix)
     {
-        if (!*Value || FoldAscii(*Value) != FoldAscii(*Prefix))
+        if (!*Value || DeploymentFoldAscii(*Value) != DeploymentFoldAscii(*Prefix))
         {
             return false;
         }
@@ -61,9 +61,9 @@ bool ContainsAsciiInsensitive(const TCHAR* Value, const TCHAR* Needle)
 
 FLegacyMcpDeploymentLookup LookupNormalized(const TCHAR* Normalized)
 {
-    for (const FDeploymentEntry& Entry : Entries)
+    for (const FDeploymentEntry& Entry : DeploymentEntries)
     {
-        if (EqualAsciiInsensitive(Normalized, Entry.Name))
+        if (DeploymentEqualAsciiInsensitive(Normalized, Entry.Name))
         {
             return { ELegacyMcpDeploymentResult::Resolved, FString(Entry.SecondArgument), FString(Entry.ThirdArgument) };
         }
@@ -137,7 +137,7 @@ FLegacyMcpDeploymentLookup LookupLegacyMcpDeployment(const FString& Input)
     const TCHAR* Normalized = *Input;
     int32 NormalizedLength = Input.Len();
     const TCHAR* Prefix = TEXT("Fortnite");
-    if (!EqualAsciiInsensitive(Normalized, Prefix) &&
+    if (!DeploymentEqualAsciiInsensitive(Normalized, Prefix) &&
         StartsWithAsciiInsensitive(Normalized, Prefix))
     {
         Normalized += 8;

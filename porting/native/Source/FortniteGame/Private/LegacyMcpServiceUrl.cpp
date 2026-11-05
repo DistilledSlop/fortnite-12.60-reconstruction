@@ -9,20 +9,20 @@ DEFINE_LOG_CATEGORY_STATIC(LogLegacyMcp, Log, All);
 // porting/behavior/mcp_url_provider_body_runtime/evidence.json.
 namespace
 {
-TCHAR FoldAscii(TCHAR Character)
+TCHAR ServiceUrlFoldAscii(TCHAR Character)
 {
     return Character >= TEXT('A') && Character <= TEXT('Z')
         ? Character + (TEXT('a') - TEXT('A')) : Character;
 }
 
-bool EqualAsciiInsensitive(const TCHAR* Left, const TCHAR* Right)
+bool ServiceUrlEqualAsciiInsensitive(const TCHAR* Left, const TCHAR* Right)
 {
-    while (*Left && *Right && FoldAscii(*Left) == FoldAscii(*Right))
+    while (*Left && *Right && ServiceUrlFoldAscii(*Left) == ServiceUrlFoldAscii(*Right))
     {
         ++Left;
         ++Right;
     }
-    return FoldAscii(*Left) == FoldAscii(*Right);
+    return ServiceUrlFoldAscii(*Left) == ServiceUrlFoldAscii(*Right);
 }
 
 class FEngineServiceUrlContext final : public ILegacyMcpServiceUrlContext
@@ -54,8 +54,8 @@ FString MakeLegacyMcpServiceUrl(const FLegacyMcpServiceUrlComponents& Components
     ILegacyMcpServiceUrlContext& Context)
 {
     const bool bBadDomain = !Context.IsDomainPinned(Components.Domain);
-    const bool bBadProtocol = !EqualAsciiInsensitive(*Components.Protocol, TEXT("https"))
-        && !EqualAsciiInsensitive(*Components.Protocol, TEXT("wss"));
+    const bool bBadProtocol = !ServiceUrlEqualAsciiInsensitive(*Components.Protocol, TEXT("https"))
+        && !ServiceUrlEqualAsciiInsensitive(*Components.Protocol, TEXT("wss"));
     if (bBadProtocol || bBadDomain)
     {
         if (Context.ShouldLogSeverity2())

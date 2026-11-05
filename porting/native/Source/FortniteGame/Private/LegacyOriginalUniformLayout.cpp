@@ -3,11 +3,11 @@
 #if PLATFORM_LINUX && !UE_SERVER
 namespace
 {
-constexpr uint32 MaxBytes = 65536, MaxNodes = 65536, MaxDepth = 16;
+constexpr uint32 UniformLayoutMaxBytes = 65536, UniformLayoutMaxNodes = 65536, UniformLayoutMaxDepth = 16;
 static_assert(sizeof(void*) == 8 && SHADER_PARAMETER_POINTER_ALIGNMENT == 8, "Unexpected resource ABI");
 static_assert(SHADER_PARAMETER_ARRAY_ELEMENT_ALIGNMENT == 16, "Unexpected numeric array ABI");
-bool Fail(FString& Error, const TCHAR* Why) { Error = Why; return false; }
-bool Identifier(const FString& S)
+bool UniformLayoutFail(FString& Error, const TCHAR* Why) { Error = Why; return false; }
+bool UniformLayoutIdentifier(const FString& S)
 {
     if (S.IsEmpty() || S.Len() > 256) return false;
     for (int32 I = 0; I < S.Len(); ++I)
@@ -15,7 +15,7 @@ bool Identifier(const FString& S)
               S[I] == TEXT('_') || (I && S[I] >= TEXT('0') && S[I] <= TEXT('9')))) return false;
     return true;
 }
-bool Resource(EUniformBufferBaseType T)
+bool UniformLayoutResource(EUniformBufferBaseType T)
 {
     return T == UBMT_TEXTURE || T == UBMT_SRV || T == UBMT_UAV || T == UBMT_SAMPLER;
 }
@@ -28,40 +28,40 @@ bool ValidString(const FString& S) { return S.Len() <= 4096 && FCString::Strlen(
 bool Validate(const TArray<FLegacyLocalMemberContract>& Members, uint32 Size, uint32 Base,
     uint32 Depth, uint32& Nodes, TArray<FLegacyMaterialResource>& Resources, FString& Error)
 {
-    if (Depth > MaxDepth || !Size || Size > MaxBytes || !Members.Num() || Members.Num() > int32(MaxNodes))
-        return Fail(Error, TEXT("invalid original uniform member tree bounds"));
+    if (Depth > UniformLayoutMaxDepth || !Size || Size > UniformLayoutMaxBytes || !Members.Num() || Members.Num() > int32(UniformLayoutMaxNodes))
+        return UniformLayoutFail(Error, TEXT("invalid original uniform member tree bounds"));
     TArray<uint8> Occupied; Occupied.SetNumZeroed(Size);
     TSet<FString> Names;
     for (const auto& M : Members)
     {
-        if (++Nodes > MaxNodes || !Identifier(M.Name) || Names.Contains(M.Name) || !ValidString(M.ShaderType) ||
-            M.Elements > MaxNodes || (M.Precision != EShaderPrecisionModifier::Float &&
+        if (++Nodes > UniformLayoutMaxNodes || !UniformLayoutIdentifier(M.Name) || Names.Contains(M.Name) || !ValidString(M.ShaderType) ||
+            M.Elements > UniformLayoutMaxNodes || (M.Precision != EShaderPrecisionModifier::Float &&
             M.Precision != EShaderPrecisionModifier::Half && M.Precision != EShaderPrecisionModifier::Fixed))
-            return Fail(Error, TEXT("invalid or duplicate original uniform member"));
+            return UniformLayoutFail(Error, TEXT("invalid or duplicate original uniform member"));
         Names.Add(M.Name);
         uint32 Stride, Alignment;
         if (Struct(M.BaseType))
         {
-            if (!Identifier(M.StructTypeName) || !M.StructSize || M.StructSize > MaxBytes || M.StructSize % 16 ||
+            if (!UniformLayoutIdentifier(M.StructTypeName) || !M.StructSize || M.StructSize > UniformLayoutMaxBytes || M.StructSize % 16 ||
                 M.Rows != 1 || M.Columns != 1 || (M.BaseType == UBMT_INCLUDED_STRUCT && M.Elements))
-                return Fail(Error, TEXT("invalid original inline struct"));
+                return UniformLayoutFail(Error, TEXT("invalid original inline struct"));
             Stride = M.StructSize; Alignment = 16;
         }
         else
         {
             if (!M.StructTypeName.IsEmpty() || M.StructSize || M.Members.Num())
-                return Fail(Error, TEXT("non-struct original member has child metadata"));
-            if (Resource(M.BaseType))
+                return UniformLayoutFail(Error, TEXT("non-struct original member has child metadata"));
+            if (UniformLayoutResource(M.BaseType))
             {
                 if (M.Elements || M.Rows != 1 || M.Columns != 1 || M.ShaderType.IsEmpty())
-                    return Fail(Error, TEXT("invalid or unsupported original resource shape"));
+                    return UniformLayoutFail(Error, TEXT("invalid or unsupported original resource shape"));
                 Stride = Alignment = 8;
             }
             else
             {
                 if ((M.BaseType != UBMT_FLOAT32 && M.BaseType != UBMT_INT32 && M.BaseType != UBMT_UINT32) ||
                     M.Rows < 1 || M.Rows > 4 || M.Columns < 1 || M.Columns > 4)
-                    return Fail(Error, TEXT("invalid or unsupported original numeric member"));
+                    return UniformLayoutFail(Error, TEXT("invalid or unsupported original numeric member"));
                 const uint32 ElementBytes = 4 * M.Rows * M.Columns;
                 Stride = M.Elements ? Align(ElementBytes, 16u) : ElementBytes;
                 Alignment = M.Elements ? 16 : 4;
@@ -70,10 +70,10 @@ bool Validate(const TArray<FLegacyLocalMemberContract>& Members, uint32 Size, ui
         const uint32 Count = M.Elements ? M.Elements : 1;
         const uint64 Span = uint64(Stride) * Count;
         if (M.Offset % Alignment || M.Offset > Size || Span > Size - M.Offset)
-            return Fail(Error, TEXT("original member extent exceeds uniform bounds"));
+            return UniformLayoutFail(Error, TEXT("original member extent exceeds uniform bounds"));
         for (uint32 I = M.Offset; I < M.Offset + uint32(Span); ++I)
         {
-            if (Occupied[I]) return Fail(Error, TEXT("overlapping original member extents"));
+            if (Occupied[I]) return UniformLayoutFail(Error, TEXT("overlapping original member extents"));
             Occupied[I] = 1;
         }
         if (Struct(M.BaseType))
@@ -81,9 +81,9 @@ bool Validate(const TArray<FLegacyLocalMemberContract>& Members, uint32 Size, ui
             for (uint32 I = 0; I < Count; ++I)
                 if (!Validate(M.Members, M.StructSize, Base + M.Offset + I * Stride, Depth + 1, Nodes, Resources, Error)) return false;
         }
-        else if (Resource(M.BaseType))
+        else if (UniformLayoutResource(M.BaseType))
         {
-            if (Base + M.Offset >= 65536) return Fail(Error, TEXT("original resource offset exceeds RHI limit"));
+            if (Base + M.Offset >= 65536) return UniformLayoutFail(Error, TEXT("original resource offset exceeds RHI limit"));
             FLegacyMaterialResource R; R.Offset = uint16(Base + M.Offset); R.BaseType = M.BaseType;
             Resources.Add(R);
         }
@@ -145,18 +145,18 @@ const FShaderParametersMetadata* FLegacyOriginalUniformLayout::BuildChild(const 
 bool BuildLegacyOriginalUniformLayout(const FLegacyLocalUniformContract& Contract,
     TSharedPtr<FLegacyOriginalUniformLayout>& Out, FString& Error)
 {
-    if (!Identifier(Contract.ParameterName) || !Identifier(Contract.OriginalStructTypeName) ||
+    if (!UniformLayoutIdentifier(Contract.ParameterName) || !UniformLayoutIdentifier(Contract.OriginalStructTypeName) ||
         !Contract.OriginalStaticSlotName.IsEmpty() || !Contract.OriginalSize ||
-        Contract.OriginalSize > MaxBytes || Contract.OriginalSize % 16)
-        return Fail(Error, TEXT("invalid original uniform root"));
+        Contract.OriginalSize > UniformLayoutMaxBytes || Contract.OriginalSize % 16)
+        return UniformLayoutFail(Error, TEXT("invalid original uniform root"));
     TArray<FLegacyMaterialResource> Resources;
     uint32 Nodes = 0;
     if (!Validate(Contract.OriginalMembers, Contract.OriginalSize, 0, 0, Nodes, Resources, Error)) return false;
     if (Resources.Num() != Contract.OriginalResources.Num())
-        return Fail(Error, TEXT("original resource count differs from member tree"));
+        return UniformLayoutFail(Error, TEXT("original resource count differs from member tree"));
     for (int32 I = 0; I < Resources.Num(); ++I)
         if (Resources[I].Offset != Contract.OriginalResources[I].Offset || Resources[I].BaseType != Contract.OriginalResources[I].BaseType)
-            return Fail(Error, TEXT("original resource order or type differs from member tree"));
+            return UniformLayoutFail(Error, TEXT("original resource order or type differs from member tree"));
 
     TSharedPtr<FLegacyOriginalUniformLayout> Result = MakeShareable(new FLegacyOriginalUniformLayout());
     TArray<FShaderParametersMetadata::FMember> Members;
@@ -174,14 +174,14 @@ bool BuildLegacyOriginalUniformLayout(const FLegacyLocalUniformContract& Contrac
     if (Metadata.GetSize() != Contract.OriginalSize || Metadata.GetUseCase() != FShaderParametersMetadata::EUseCase::DataDrivenUniformBuffer ||
         Metadata.HasStaticSlot() || Contract.OriginalStructTypeName != Metadata.GetStructTypeName() ||
         Contract.ParameterName != Metadata.GetShaderVariableName() || !VerifyTree(Contract.OriginalMembers, Metadata))
-        return Fail(Error, TEXT("constructed original metadata differs from contract"));
+        return UniformLayoutFail(Error, TEXT("constructed original metadata differs from contract"));
     Resources.Sort([](const FLegacyMaterialResource& A, const FLegacyMaterialResource& B) { return A.Offset < B.Offset; });
     const auto& RHIResources = Metadata.GetLayout().Resources;
     if (Metadata.GetLayout().ConstantBufferSize != Contract.OriginalSize || RHIResources.Num() != Resources.Num())
-        return Fail(Error, TEXT("constructed RHI layout size or resource count differs"));
+        return UniformLayoutFail(Error, TEXT("constructed RHI layout size or resource count differs"));
     for (int32 I = 0; I < Resources.Num(); ++I)
         if (RHIResources[I].MemberOffset != Resources[I].Offset || RHIResources[I].MemberType != Resources[I].BaseType)
-            return Fail(Error, TEXT("constructed RHI resource layout differs"));
+            return UniformLayoutFail(Error, TEXT("constructed RHI resource layout differs"));
     Out = MoveTemp(Result); Error.Reset(); return true;
 }
 #endif
