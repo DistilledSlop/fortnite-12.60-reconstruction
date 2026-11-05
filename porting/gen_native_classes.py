@@ -2342,6 +2342,10 @@ _client_event_spec = _common_activation_import.spec_from_file_location(
     "client_event_dispatch_policy", os.path.join(os.path.dirname(__file__), "frontend", "client_event_dispatch_runtime", "policy.py"))
 _client_event_policy = _common_activation_import.module_from_spec(_client_event_spec)
 _client_event_spec.loader.exec_module(_client_event_policy)
+_local_signin_spec = _common_activation_import.spec_from_file_location(
+    "local_username_signin_policy", os.path.join(os.path.dirname(__file__), "frontend", "local_username_signin", "policy.py"))
+_local_signin_policy = _common_activation_import.module_from_spec(_local_signin_spec)
+_local_signin_spec.loader.exec_module(_local_signin_policy)
 _native_gameplay_tags_spec = _common_activation_import.spec_from_file_location(
     "native_gameplay_tags_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_gameplay_tags_runtime", "source_policy.py"))
 _native_gameplay_tags_policy = _common_activation_import.module_from_spec(_native_gameplay_tags_spec)
@@ -2640,6 +2644,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _panel_queue_policy.apply(model, block, owner_fns, native_execs)
     model = _restart_modal_policy.apply(model, block, owner_fns, native_execs)
     model = _client_event_policy.apply(model, block, native_execs)
+    model = _local_signin_policy.apply(model)
     model = _item_tag_interface_policy.apply(model, block, owner_fns)
     model = _pawn_ability_interface_policy.apply(model, block, owner_fns)
     model = _fort_ability_interface_policy.apply(model, block, owner_fns)
@@ -3528,6 +3533,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_panel_queue_policy.declarations(model).splitlines())
     lines.extend(_restart_modal_policy.declarations(model).splitlines())
     lines.extend(_client_event_policy.declarations(model).splitlines())
+    lines.extend(_local_signin_policy.declarations(model).splitlines())
     lines.extend(_widget_route_policy.declarations(model).splitlines())
     lines.extend(_route_policy.declarations(model).splitlines())
     lines.extend(_metadata_policy.declarations(model).splitlines())
@@ -3706,6 +3712,7 @@ def render_promoted_cpp(model, source_label):
     result += _panel_queue_policy.definitions(model)
     result += _restart_modal_policy.definitions(model)
     result += _client_event_policy.definitions(model)
+    result += _local_signin_policy.definitions(model)
     return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model) + _progress_modal_policy.definitions(model) + _commonui_module_policy.definitions(model) + _root_slate_policy.definitions(model) + _lazy_image_policy.definitions(model) + _widget_route_policy.definitions(model) + _route_policy.definitions(model) + _metadata_policy.definitions(model) + _modality_policy.definitions(model) + _cursor_settings_policy.definitions(model)
 
 
@@ -4173,6 +4180,7 @@ def promote(args):
         model = _strict_panel_policy.header_prelude(model)
         model = _panel_queue_policy.header_prelude(model)
         _client_event_policy.configure_model(model)
+        _local_signin_policy.configure_model(model)
         if name == 'UCommonInputControllerData':
             _controller_brush_policy.validate_model(model)
         if model.get('common_input_settings_cache_runtime'):
@@ -4437,6 +4445,7 @@ def promote(args):
         _ui_config_policy.validate_output(model, *outputs[model['name']])
         _strict_panel_policy.validate_output(model, *outputs[model['name']])
         _client_event_policy.validate_output(model, *outputs[model['name']])
+        _local_signin_policy.validate_output(model, *outputs[model['name']])
         _modality_policy.validate_rendered(model, *outputs[model['name']])
         _cursor_settings_policy.validate_output(model, *outputs[model['name']])
         if model.get('activatable_route_bridge_runtime'):
@@ -4530,9 +4539,9 @@ def promote(args):
         # Keep dependencies on FortniteGame when actually needed; the cycle check
         # above already refuses a reverse dependency from FortniteGame.
         own = sorted((set(engine_shared) | module_deps[module]) - {module})
-        # The handwritten local-account subsystem uses the engine HTTP module.
+        # The handwritten local-account subsystem uses HTTP and JSON.
         if module == "Account":
-            own = sorted(set(own) | {"HTTP"})
+            own = sorted(set(own) | {"HTTP", "Json"})
         module_dir = os.path.join(args.source_root, module)
         os.makedirs(os.path.join(module_dir, "Private"), exist_ok=True)
         with open(os.path.join(module_dir, module + ".Build.cs"), "w", encoding="utf-8", newline="\n") as fh:

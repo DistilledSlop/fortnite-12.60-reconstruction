@@ -60,14 +60,21 @@ identity selector, not a password. For the original-client analysis harness, run
 its own launcher entitlement gate. The rebuilt client has not yet been verified through
 a full login-to-lobby flow.
 
-The handwritten `ULocalAccountSubsystem` is an unverified client integration
-point: `SelectUsername` requests this grant and exposes the selected account and
-token. It is not yet connected to the game's online login or profile systems;
-the native generator must be promoted before building it with its HTTP dependency.
+The handwritten `ULocalAccountSubsystem` requests this grant, then loads the
+authenticated full Athena profile. It publishes the account, token and validated
+profile snapshot together; a failed selection preserves the previous account.
+The original `UFortSignInWidget` now has a source adaptation that labels its first
+input USERNAME, hides password and forgotten-password controls, and submits through
+this subsystem on click or Enter. It uses `http://127.0.0.1:8080` by default;
+`-LocalBackend=http://127.0.0.1:PORT` selects another service origin.
+These native changes are build pending under the checkpoint cadence. The selected
+snapshot is not yet connected to the game's online login or MCP profile manager,
+and no lobby transition is implemented. The rebuilt launcher still joins directly;
+the original frontend loading path remains blocked by cooked-material compatibility.
 Original-client decompilation shows `UFortSignInWidget::StartSignIn` dispatching
 email and password through a native delegate at widget offset `0x410`; its binding
-site and recipient remain unidentified. This does not establish a username-only
-submission or profile-initialization path in the rebuilt client.
+site and recipient remain unidentified. The local widget adaptation bypasses that
+original credential dispatch and is not evidence of recovered online initialization.
 
 With `--stub`, `probe_server.py` persists account mappings, profile revisions and user
 cloud files under ignored `porting/generated/local-backend-state` by default. Set

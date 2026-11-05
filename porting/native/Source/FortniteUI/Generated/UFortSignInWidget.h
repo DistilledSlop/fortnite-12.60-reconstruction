@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "Components/EditableText.h"
 #include "UCommonBorder.h"
 #include "UCommonBorderStyle.h"
 #include "UCommonButton.h"
@@ -56,5 +57,26 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_ForgotPassword;
 
+public:
+    // Local account selection is separate from the original online login state.
+    UPROPERTY(BlueprintReadOnly, Category="Local Account")
+    FString LocalSelectionStatus;
+    UPROPERTY(BlueprintReadOnly, Category="Local Account")
+    bool bLocalSelectionPending = false;
+protected:
+    virtual void NativeConstruct() override;
+    virtual void NativeDestruct() override;
+    UFUNCTION()
+    void HandleLocalUsernameChanged(const FText& Text);
+    UFUNCTION()
+    void HandleLocalUsernameCommitted(const FText& Text, ETextCommit::Type Method);
+    UFUNCTION()
+    void HandleLocalSignInClicked(UCommonButton* Button);
+    UFUNCTION()
+    void HandleLocalSelectionComplete(bool bSuccess, const FString& Error);
+private:
+    bool IsLocalUsernameValid() const;
+    void UpdateLocalSignIn();
+    void SubmitLocalUsername();
 };
 

@@ -1,0 +1,100 @@
+void UFortSignInWidget::NativeConstruct()
+{
+    Super::NativeConstruct();
+    if (EditText_Email)
+    {
+        EditText_Email->SetHintText(FText::FromString(TEXT("USERNAME")));
+        EditText_Email->OnTextChanged.AddUniqueDynamic(this, &UFortSignInWidget::HandleLocalUsernameChanged);
+        EditText_Email->OnTextCommitted.AddUniqueDynamic(this, &UFortSignInWidget::HandleLocalUsernameCommitted);
+    }
+    if (Border_Password) Border_Password->SetVisibility(ESlateVisibility::Collapsed);
+    if (EditText_Password) EditText_Password->SetVisibility(ESlateVisibility::Collapsed);
+    if (Button_ForgotPassword) Button_ForgotPassword->SetVisibility(ESlateVisibility::Collapsed);
+    if (Button_SignIn) Button_SignIn->OnButtonClicked.AddUniqueDynamic(this, &UFortSignInWidget::HandleLocalSignInClicked);
+    if (UGameInstance* GI = GetGameInstance())
+        if (ULocalAccountSubsystem* Account = GI->GetSubsystem<ULocalAccountSubsystem>())
+        {
+            Account->OnSelectionComplete.AddUniqueDynamic(this, &UFortSignInWidget::HandleLocalSelectionComplete);
+            bLocalSelectionPending = Account->IsSelectionPending();
+        }
+    UpdateLocalSignIn();
+}
+
+void UFortSignInWidget::NativeDestruct()
+{
+    if (EditText_Email)
+    {
+        EditText_Email->OnTextChanged.RemoveDynamic(this, &UFortSignInWidget::HandleLocalUsernameChanged);
+        EditText_Email->OnTextCommitted.RemoveDynamic(this, &UFortSignInWidget::HandleLocalUsernameCommitted);
+    }
+    if (Button_SignIn) Button_SignIn->OnButtonClicked.RemoveDynamic(this, &UFortSignInWidget::HandleLocalSignInClicked);
+    if (UGameInstance* GI = GetGameInstance())
+        if (ULocalAccountSubsystem* Account = GI->GetSubsystem<ULocalAccountSubsystem>())
+            Account->OnSelectionComplete.RemoveDynamic(this, &UFortSignInWidget::HandleLocalSelectionComplete);
+    Super::NativeDestruct();
+}
+
+bool UFortSignInWidget::IsLocalUsernameValid() const
+{
+    if (!EditText_Email) return false;
+    const FString Name = EditText_Email->GetText().ToString().TrimStartAndEnd();
+    if (Name.IsEmpty() || Name.Len() > 64) return false;
+    return true;
+}
+
+void UFortSignInWidget::UpdateLocalSignIn()
+{
+    if (Button_SignIn) Button_SignIn->SetIsEnabled(!bLocalSelectionPending && IsLocalUsernameValid());
+    if (EditText_Email)
+    {
+        EditText_Email->SetIsEnabled(!bLocalSelectionPending);
+        EditText_Email->SetToolTipText(FText::FromString(LocalSelectionStatus));
+    }
+}
+
+void UFortSignInWidget::HandleLocalUsernameChanged(const FText& Text)
+{
+    LocalSelectionStatus.Empty();
+    UpdateLocalSignIn();
+}
+
+void UFortSignInWidget::HandleLocalUsernameCommitted(const FText& Text, ETextCommit::Type Method)
+{
+    if (Method == ETextCommit::OnEnter) SubmitLocalUsername();
+}
+
+void UFortSignInWidget::HandleLocalSignInClicked(UCommonButton* Button)
+{
+    SubmitLocalUsername();
+}
+
+void UFortSignInWidget::SubmitLocalUsername()
+{
+    if (bLocalSelectionPending || !IsLocalUsernameValid()) return;
+    UGameInstance* GI = GetGameInstance();
+    ULocalAccountSubsystem* Account = GI ? GI->GetSubsystem<ULocalAccountSubsystem>() : nullptr;
+    if (!Account)
+    {
+        LocalSelectionStatus = TEXT("Local account service is unavailable.");
+        UpdateLocalSignIn();
+        return;
+    }
+    FString Origin = TEXT("http://127.0.0.1:8080");
+    FParse::Value(FCommandLine::Get(), TEXT("LocalBackend="), Origin);
+    bLocalSelectionPending = true;
+    LocalSelectionStatus = TEXT("Selecting local account...");
+    UpdateLocalSignIn();
+    if (!Account->SelectUsername(Origin, EditText_Email->GetText().ToString().TrimStartAndEnd()))
+    {
+        bLocalSelectionPending = Account->IsSelectionPending();
+        LocalSelectionStatus = bLocalSelectionPending ? TEXT("Local account selection is already pending.") : TEXT("Could not start local account selection.");
+        UpdateLocalSignIn();
+    }
+}
+
+void UFortSignInWidget::HandleLocalSelectionComplete(bool bSuccess, const FString& Error)
+{
+    bLocalSelectionPending = false;
+    LocalSelectionStatus = bSuccess ? TEXT("Account selected.") : Error;
+    UpdateLocalSignIn();
+}

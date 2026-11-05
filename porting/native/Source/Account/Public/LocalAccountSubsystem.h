@@ -25,6 +25,11 @@ public:
     UPROPERTY(BlueprintReadOnly, Category = "Local Account")
     FString AccessToken;
 
+    /** Validated full Athena profile JSON for the selected account. This is a snapshot,
+     * not an instance of the original MCP profile manager. */
+    UPROPERTY(BlueprintReadOnly, Category = "Local Account")
+    FString AthenaProfileJson;
+
     /** BackendBaseUrl is the service origin, for example http://127.0.0.1:5595.
      * Returns false when a request is already pending or cannot be started. */
     UFUNCTION(BlueprintCallable, Category = "Local Account")
@@ -37,5 +42,11 @@ public:
 
 private:
     void HandleSelectionComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bConnected);
+    void HandleProfileComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bConnected);
+    void ClearCandidate();
     FHttpRequestPtr PendingRequest;
+    FString PendingOrigin;
+    FString PendingAccountId;
+    FString PendingDisplayName;
+    FString PendingAccessToken;
 };
