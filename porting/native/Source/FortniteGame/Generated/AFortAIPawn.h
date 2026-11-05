@@ -872,6 +872,9 @@ public:
 	void ResetAIRotationRateToDefault();
 
 	UFUNCTION(BlueprintCallable)
+	void SetCanSleep(bool InCanSleep);
+
+	UFUNCTION(BlueprintCallable)
 	void SetCurrentAimTarget(AActor* AimTarget);
 
 	UFUNCTION(BlueprintCallable)

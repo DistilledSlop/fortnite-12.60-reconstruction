@@ -61961,5 +61961,21 @@
     "confidence": "high",
     "status": "ported",
     "native_body_address": "0x1406801c0"
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "SetCanSleep",
+    "kind": "exec",
+    "signature": "void SetCanSleep(bool InCanSleep)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage055_new/AFortAIPawn_SetCanSleep.inc",
+    "address": "0x1427a5b60",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "native_body_address": "0x1427a5b60",
+    "notes": "Inline native body updates bCanSleep at 0x18dd mask 0x08 while preserving other bitfields. Source recovery; build pending."
   }
 ]

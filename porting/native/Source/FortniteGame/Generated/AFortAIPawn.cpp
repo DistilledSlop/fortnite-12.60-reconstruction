@@ -179,6 +179,12 @@ void AFortAIPawn::ResetAIRotationRateToDefault()
 	}
 }
 
+void AFortAIPawn::SetCanSleep(bool InCanSleep)
+{
+	// CONFIDENCE: HIGH; native mask matches the reflected bCanSleep bit.
+	bCanSleep = InCanSleep;
+}
+
 void AFortAIPawn::SetCurrentAimTarget(AActor* AimTarget)
 {
 	// Original exec 0x1427a5c80; pure writer 0x1422ec2c0.

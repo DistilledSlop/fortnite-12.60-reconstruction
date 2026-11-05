@@ -1,0 +1,12 @@
+[
+  {
+    "class": "AFortAIPawn",
+    "function": "SetCanSleep",
+    "wrapper_and_native_assembly": "porting/generated/native107-broad/0x1427a5b60.asm",
+    "wrapper_and_native_decompile": "porting/generated/native107-broad/0x1427a5b60.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "bitfield_reflection": "porting/generated/reflection/bool_bits.json",
+    "behavior": "Steps Bool InCanSleep and updates object dword +0x18dc mask 0x800, equivalent to byte +0x18dd mask 0x08; preserves other bits. Reflected bitfield identifies bCanSleep at offset 6365 (0x18dd), mask 8.",
+    "prior_blocker": "porting/behavior/haiku262_05_pawn_vehicle_runtime/unresolved.json listed the body as not fully read; inline assembly supplies it."
+  }
+]
