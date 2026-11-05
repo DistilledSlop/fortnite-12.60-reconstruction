@@ -61992,5 +61992,50 @@
     "static": false,
     "notes": "Wrapper steps reflected arguments, advances bytecode and calls Stub_Empty (0x1406801c0); build and runtime pending.",
     "class": "UFortFrontEndContext"
+  },
+  {
+    "function": "MakeGods",
+    "kind": "exec",
+    "signature": "void MakeGods(TSubclassOf<AFortPawn> aClass)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/triage059_new/UFortCheatManager_MakeGods.inc",
+    "address": "0x1406969b0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x80601",
+    "static": false,
+    "notes": "Shared wrapper steps one class argument and calls Stub_Empty; build and runtime pending.",
+    "class": "UFortCheatManager"
+  },
+  {
+    "function": "ToggleDrawTargetSelectionDebugByClass",
+    "kind": "exec",
+    "signature": "void ToggleDrawTargetSelectionDebugByClass(TSubclassOf<AActor> TargetSelectionDebugSourceClass)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/triage059_new/UFortCheatManager_ToggleDrawTargetSelectionDebugByClass.inc",
+    "address": "0x1406969b0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x80601",
+    "static": false,
+    "notes": "Shared wrapper steps one class argument and calls Stub_Empty; build and runtime pending.",
+    "class": "UFortCheatManager"
+  },
+  {
+    "function": "ManualReviveFromDBNO",
+    "kind": "exec",
+    "signature": "void ManualReviveFromDBNO(TSubclassOf<UGameplayEffect> ReviveGameplayEffectsOverride)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/triage059_new/AFortPlayerPawn_ManualReviveFromDBNO.inc",
+    "address": "0x1406969b0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020405",
+    "static": false,
+    "notes": "Shared wrapper steps one class argument and calls Stub_Empty; build and runtime pending.",
+    "class": "AFortPlayerPawn"
   }
 ]

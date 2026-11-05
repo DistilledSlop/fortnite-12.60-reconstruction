@@ -1,0 +1,95 @@
+[
+  {
+    "function": "MakeGods",
+    "address": "0x1406969b0",
+    "decompile": "porting/generated/native-triage005/0x1406969b0.c",
+    "reflection": {
+      "exec_addr": "0x1406969b0",
+      "flags": "0x80601",
+      "params": [
+        {
+          "index": 0,
+          "name": "aClass",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "meta_class": "0x142a16b50",
+            "class": "0x142e497d0"
+          }
+        }
+      ],
+      "create_func": "0x142862af0",
+      "source": "lea"
+    },
+    "proof": "Shared wrapper steps one pointer-sized class argument, advances bytecode, then calls Stub_Empty with no further effects. Class parameter type resolved through class_ref_map.json and class_name_map.json.",
+    "class": "UFortCheatManager"
+  },
+  {
+    "function": "ToggleDrawTargetSelectionDebugByClass",
+    "address": "0x1406969b0",
+    "decompile": "porting/generated/native-triage005/0x1406969b0.c",
+    "reflection": {
+      "exec_addr": "0x1406969b0",
+      "flags": "0x80601",
+      "params": [
+        {
+          "index": 0,
+          "name": "TargetSelectionDebugSourceClass",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "meta_class": "0x1446ab9e0",
+            "class": "0x142e497d0"
+          }
+        }
+      ],
+      "create_func": "0x142863d00",
+      "source": "lea"
+    },
+    "proof": "Shared wrapper steps one pointer-sized class argument, advances bytecode, then calls Stub_Empty with no further effects. Class parameter type resolved through class_ref_map.json and class_name_map.json.",
+    "class": "UFortCheatManager"
+  },
+  {
+    "function": "ManualReviveFromDBNO",
+    "address": "0x1406969b0",
+    "decompile": "porting/generated/native-triage005/0x1406969b0.c",
+    "reflection": {
+      "exec_addr": "0x1406969b0",
+      "flags": "0x4020405",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReviveGameplayEffectsOverride",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "meta_class": "0x140773c50",
+            "class": "0x142e497d0"
+          }
+        }
+      ],
+      "create_func": "0x142a73ec0",
+      "source": "lea"
+    },
+    "proof": "Shared wrapper steps one pointer-sized class argument, advances bytecode, then calls Stub_Empty with no further effects. Class parameter type resolved through class_ref_map.json and class_name_map.json.",
+    "class": "AFortPlayerPawn"
+  }
+]

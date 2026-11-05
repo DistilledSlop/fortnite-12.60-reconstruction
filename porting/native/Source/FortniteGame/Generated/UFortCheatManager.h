@@ -10,6 +10,7 @@
 #include "EFortReplicatedStat.h"
 #include "ERiftCosmeticState.h"
 
+class AActor;
 class AFortPawn;
 class AFortPlayerPawn;
 class UBuildingTextureData;
@@ -838,6 +839,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void MakeGods(TSubclassOf<AFortPawn> aClass);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void MassSuicide();
 public:
 
@@ -1575,6 +1581,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void ToggleDrawTargetSelectionDebug();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ToggleDrawTargetSelectionDebugByClass(TSubclassOf<AActor> TargetSelectionDebugSourceClass);
 public:
 
 protected:

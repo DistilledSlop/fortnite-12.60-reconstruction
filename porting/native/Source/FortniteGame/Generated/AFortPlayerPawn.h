@@ -1578,6 +1578,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual bool LocalIsTryingToGetPickup();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ManualReviveFromDBNO(TSubclassOf<UGameplayEffect> ReviveGameplayEffectsOverride);
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastUpdateVehicleInputStateReliable(const FFortAthenaVehicleInputStateReliable& ReliableInput);
 	void MulticastUpdateVehicleInputStateReliable_Implementation(const FFortAthenaVehicleInputStateReliable& ReliableInput);

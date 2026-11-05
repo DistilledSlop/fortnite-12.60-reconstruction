@@ -646,6 +646,12 @@ bool AFortPlayerPawn::LocalIsTryingToGetPickup()
 	return NativeRecoveredPointer_0x2680 != 0;
 }
 
+void AFortPlayerPawn::ManualReviveFromDBNO(TSubclassOf<UGameplayEffect> ReviveGameplayEffectsOverride)
+{
+	// CONFIDENCE: HIGH; shared exec wrapper calls the bare-return native body.
+	return;
+}
+
 void AFortPlayerPawn::MulticastUpdateVehicleInputStateReliable_Implementation(const FFortAthenaVehicleInputStateReliable& ReliableInput)
 {
 	// Body not recovered: reflection-derived stub.
