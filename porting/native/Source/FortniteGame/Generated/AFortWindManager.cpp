@@ -14,6 +14,7 @@
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
 #include "HAL/IConsoleManager.h"
+#include "Materials/MaterialInstance.h"
 #include "Materials/MaterialInterface.h"
 #include "Math/Box.h"
 #include "Math/Vector.h"
@@ -325,5 +326,20 @@ bool AFortWindManager::NativeAdvanceWindDelta(FFortWindImpulseCylinderDelta& D)
 	    D.InnerWorldBounds = InnerBox;
 	    D.InnerWorldBounds = NativeClipWindImpulseBounds(D.InnerWorldBounds, D.WindImpulseBounds);
 	    return true;
+}
+
+FScalarParameterValue* AFortWindManager::NativeFindWindScalarOverride(UMaterialInstance* Instance, const FName& Name)
+{
+	// CONFIDENCE: HIGH
+	while (Instance)
+	{
+	    for (FScalarParameterValue& Value : Instance->ScalarParameterValues)
+	    {
+	        if (Value.ParameterInfo.Name == Name)
+	            return &Value;
+	    }
+	    Instance = Cast<UMaterialInstance>(Instance->Parent);
+	}
+	return nullptr;
 }
 

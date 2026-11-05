@@ -1,0 +1,30 @@
+{
+  "status": "DRAFT_ONLY_NOT_NATIVE_INTEGRATED_NOT_BUILD_TESTED",
+  "inputs": {
+    "porting/generated/maps-wind-material-closure/_adhoc/0x141dccf40__141dccf40.c": "6e12fb6140cacc66bd2d872fa27ecaa5b291c22bb3fb7bedc43b056944c51b02",
+    "porting/generated/maps-wind-material-closure/_adhoc/0x144333900__144333900.c": "e39ec11a0533453f3672782272f359588ccbbf051a73f5b7508e11f5e2359ce1",
+    "porting/generated/maps-wind-material-closure/_adhoc/0x1443339a0__1443339a0.c": "35a85193cda27b3b5c0e7d2cbabc3744cc227f70576031a2998c5c85a59872d2",
+    "porting/generated/maps-wind-material-closure/_adhoc/0x14433ac70__14433ac70.c": "f8e0c08d11397b371f89bbc0f6949b4688f1865275df52db5c861223c0f28ec7",
+    "porting/generated/maps-wind-material-closure/_adhoc/0x14433b1f0__14433b1f0.c": "f600d663852d7201a7e9198ef96c17e9ca3ac3ddb3ca13786b5762dc268ca8fd",
+    "porting/generated/maps-wind-material-closure/setup.asm": "6ca34ab221ebf19e83426bccea0988353aa387fa5a769fbe1e3a1bea8c53403c",
+    "../UnrealEngine/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstanceDynamic.cpp": "a65560440abbb40e9577dc7e3b78876a17d08cb5acd470fa9dc51e1f8c2bef4e",
+    "../UnrealEngine/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp": "43c61494c4fa298cb60e7e613e152df6a8ef9066577743327bc28ecb336f69b6"
+  },
+  "mappings": {
+    "0x141dccf40": "AFortWindManager member, receiver unused; (UMaterialInstance*, const FName&) -> FScalarParameterValue*. Searches first scalar override by FName in each MI, then casts parent to MI. Comparison ignores association and index.",
+    "0x144333900": "UMaterialInstanceDynamic::InitializeScalarParameterAndGetIndex(const FName&, float, int32&) -> bool; sets index -1, calls scalar value internal setter, searches global parameter info association 2/index -1.",
+    "0x1443339a0": "UMaterialInstanceDynamic::InitializeVectorParameterAndGetIndex(const FName&, const FLinearColor&, int32&) -> bool; analogous vector implementation.",
+    "0x14433ac70": "UMaterialInstance::SetScalarParameterByIndexInternal(int32, float) -> bool, exposed through MID SetScalarParameterByIndex.",
+    "0x14433b1f0": "UMaterialInstance::SetVectorParameterByIndexInternal(int32, FLinearColor) -> bool, exposed through MID SetVectorParameterByIndex; native ABI receives value by pointer."
+  },
+  "setup_assembly": "Pair scalar initialization at 141ddb2ce and 141ddb2ea uses zero xmm2. At 141ddbcc3-141ddbcdf the first pair write takes xmm6 and index +4; second takes zero and index +0x10. Scalar interpolation init at 141ddb5bd receives previously loaded xmm2 from the first scalar endpoint. Vector initialization at 141ddb87f receives pointer to first vector endpoint; 141ddb37a receives constructed wind vector.",
+  "limitations": [
+    "Wrappers rely on the local UE material implementation and are not independently built or tested.",
+    "Exact reflected/project name for 0x141dccf40 is unconfirmed; source implementation deliberately preserves native name-only comparison.",
+    "Native internal scalar/vector update and cache side effects are delegated to local UE methods."
+  ],
+  "integration": {
+    "status": "NativeFindWindScalarOverride integrated source; build/runtime pending",
+    "engine_apis": "Four material init/set mappings use existing engine methods; no duplicate wrappers added."
+  }
+}

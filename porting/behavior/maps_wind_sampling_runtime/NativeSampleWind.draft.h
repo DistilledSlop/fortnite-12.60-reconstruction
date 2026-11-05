@@ -47,12 +47,6 @@ struct FEffects
     virtual void CylinderRemoved_142b53fa0(AFortWindManager&, const FFortWindImpulseCylinder&) = 0;
     virtual void SetScalarByIndex_14433ac70(UMaterialInstanceDynamic*, int32, float) = 0;
     virtual void SetVectorByIndex_14433b1f0(UMaterialInstanceDynamic*, int32, const FLinearColor&) = 0;
-    // Unresolved caller/setup contract, not an identified native helper. Sampling capture
-    // indexes PairedVariablesData by ID.PairIndex, but setup stores material variable IDs
-    // in that field while compacting PairedVariablesData. See evidence.json; neither
-    // direct indexing nor a MaterialVariableIndex search is authorized as the final lift.
-    virtual void ApplyPairedParameter_UnresolvedIndexMapping(UMaterialInstanceDynamic*,
-        const FFortWindMaterialParameterPairID&, const TArray<FFortWindResponderMaterialVariablePairData>&) = 0;
 };
 
 inline bool InBoundsInclusive(const FBox& B, const FVector& P)
@@ -179,7 +173,12 @@ inline void UpdateMaterials(AFortWindManager& M, FFortWindResponder& R,
                 (Vector.LerpToValue - Vector.LerpFromValue) * R.WindSpeed + Vector.LerpFromValue);
         for (const FFortWindMaterialParameterPairID& ID : Data.ParametersToSet)
         {
-            E.ApplyPairedParameter_UnresolvedIndexMapping(Data.MID, ID, R.PairedVariablesData);
+            // Machine code141de0e45..0e7d confirms direct compact-array indexing,
+            // even though setup stores material variable IDs here. Preserve shipping behavior.
+            if (!R.PairedVariablesData.IsValidIndex(ID.PairIndex)) continue;
+            const auto& Pair = R.PairedVariablesData[ID.PairIndex];
+            E.SetScalarByIndex_14433ac70(Data.MID, ID.SpeedParameter.VariableIndex, Pair.PreviousSpeed);
+            E.SetScalarByIndex_14433ac70(Data.MID, ID.OffsetParameter.VariableIndex, Pair.PreviousOffset);
         }
         // Original skips this write at zero speed, leaving the previous vector parameter.
         if (R.WindSpeed != 0.0f)

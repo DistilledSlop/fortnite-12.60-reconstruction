@@ -101,7 +101,8 @@
         "1406968f0": "lea rax,[rcx-218]; ret (owner)",
         "141dc1784": "sub rcx,218; jmp141dc1b20 (owner destructor)"
       },
-      "candidate": "AFortWorldSettings.ActorsNeedingWorldReady is reflected; no integrated actor interface provider located."
-    }
+      "candidate": "AFortWorldSettings.ActorsNeedingWorldReady at0x398 confirmed by reflection; native141fcd9c0 appends actor unconditionally. Registration helper now integrated; dispatch/provider recovery pending."
+    },
+    "tick_actor_correction": "Primary vtable145fcdc80+0x3f8 ->141dde360 is TickActor override: sampling141ddfad0, audio141de18c0 then AActor base143f874a0. Ordinary Tick slot450 is inherited, which does not rule out this TickActor override. Whole override remains unported pending both required effects."
   }
 }

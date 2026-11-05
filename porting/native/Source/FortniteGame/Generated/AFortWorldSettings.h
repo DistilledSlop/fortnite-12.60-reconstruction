@@ -9,6 +9,7 @@
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "FortTrackedTimeOfDayClass.h"
+#include "GameFramework/Actor.h"
 #include "Math/IntPoint.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
@@ -230,5 +231,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	AFortTimeOfDayManager* NativeSpawnTimeOfDayManager();
 	AFortTimeOfDayManager* NativeRefreshTimeOfDayManager();
+	void NativeRegisterActorForWorldReady(AActor* Actor);
 };
 

@@ -16,6 +16,7 @@
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
 #include "HAL/IConsoleManager.h"
+#include "Materials/MaterialInstance.h"
 #include "Materials/MaterialInterface.h"
 #include "Math/Box.h"
 #include "Math/Vector.h"
@@ -184,5 +185,6 @@ public:
 	static bool NativeIsWindEnabled();
 	static FBox NativeClipWindImpulseBounds(const FBox& A, const FBox& B);
 	static bool NativeAdvanceWindDelta(FFortWindImpulseCylinderDelta& D);
+	static FScalarParameterValue* NativeFindWindScalarOverride(UMaterialInstance* Instance, const FName& Name);
 };
 

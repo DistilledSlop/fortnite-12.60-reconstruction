@@ -7,6 +7,7 @@
 #include "EngineUtils.h"
 #include "FWorldAmbientPropertiesMatchingGameContext.h"
 #include "FortTrackedTimeOfDayClass.h"
+#include "GameFramework/Actor.h"
 #include "GameplayTagContainer.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
@@ -117,5 +118,11 @@ AFortTimeOfDayManager* AFortWorldSettings::NativeRefreshTimeOfDayManager()
 	TimeOfDayManager->Destroy(false, true);
 	TimeOfDayManager = NativeSpawnTimeOfDayManager();
 	return TimeOfDayManager;
+}
+
+void AFortWorldSettings::NativeRegisterActorForWorldReady(AActor* Actor)
+{
+	// CONFIDENCE: HIGH
+	ActorsNeedingWorldReady.Add(Actor);
 }
 

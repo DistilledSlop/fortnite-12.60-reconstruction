@@ -44,6 +44,12 @@
     "porting/generated/maps-wind-handle-constructors/_adhoc/0x142b53fa0__142b53fa0.c": {
       "sha256": "7753d2d48540689f4c040d3309e30bbb6cd0f9fef2411615216217fe3ec196e6",
       "lines": 60
+    },
+    "porting/generated/maps-wind-material-closure/sampling.asm": {
+      "sha256": "c6412411b6961e1deacec0023128b2e71158057dee3037c2e34b2a1e7ef26e87",
+      "lines": 2229,
+      "relevant_lines": "1186-1199",
+      "relevant_addresses": "0x141de0e45..0x141de0e7d"
     }
   },
   "call_sequence": [
@@ -78,8 +84,7 @@
     "0x141ddef30": "Starts first queued delta with valid matching cylinder, clearing pending and setting changing; dispatches142b53dd0 with cylinder and delta. Swap-removes queued deltas missing cylinders until match/empty.",
     "0x142b54060 and0x142b53fa0": "Cylinder by-value event wrappers: each consumes shared UID before copying incoming cylinder and dispatching virtual0x210 with distinct reflected function token. Call-site142b53fa0 second argument needs assembly confirmation; decompiler omits it.",
     "0x14433ac70/0x14433b1f0": "Scalar/vector material writes by cached parameter index; exact stock-engine symbols/signatures must be verified. No no-op fallback supplied.",
-    "platform/lifetime": "143f7a920 platform/server predicate;143f6c200 Destroy; GUObjectArray item flag0x20000000; root scene component world location; stat/log effects. Draft exposes required hooks.",
-    "paired_parameter_mapping": "Not an additional native callee: ApplyPairedParameter_UnresolvedIndexMapping marks unresolved inlined sampling/setup data contract. Sampling capture appears to index compact array with material-variable ID; setup uses equality search against MaterialVariableIndex. Requires original assembly/invariant confirmation, without silently fixing a possible shipping bug."
+    "platform/lifetime": "143f7a920 platform/server predicate;143f6c200 Destroy; GUObjectArray item flag0x20000000; root scene component world location; stat/log effects. Draft exposes required hooks."
   },
   "preserved_details": [
     "When bAllowWindImpulses is false, all cached responders are visited, using global vector; UID snapshot construction still happens, but lifecycle updates do not.",
@@ -89,7 +94,8 @@
     "Curve channels0..3 select WindSpeedCurve RGBA,4..7 WindPannerSpeedCurve RGBA; unknown channels produce0. Paired panner speed/offset equations retain world-time continuity.",
     "Invalid responder removal fixes only first matching moved-last index in each cache. Source checks cursor against responder count, then indexes responder using cached value; draft preserves this unusual guard.",
     "Radius blends smoothstep over remaining time, swap-removes settled zero desired/current magnitude only inside changed-state branch. Source does not recompute bounds in completion branches.",
-    "Completed first delta is swap-removed; matching cylinder gets final magnitude and changing state based on first remaining matching delta index. Changed event precedes setting pending. Zero idle cylinder removal precedes starting next delta, with final reverse cleanup thereafter."
+    "Completed first delta is swap-removed; matching cylinder gets final magnitude and changing state based on first remaining matching delta index. Changed event precedes setting pending. Zero idle cylinder removal precedes starting next delta, with final reverse cleanup thereafter.",
+    "Paired parameter writes directly index PairedVariablesData by ID.PairIndex with range guard. Machine code141de0e45..0e7d proves this: movslq ParametersToSet+0 into rax, test/js and cmp responder+0x60/jge reject invalid indices, load paired data from responder+0x58, lea(rax,rax,8) followed by scale4 loads at+0/+4 gives stride36 PreviousSpeed/PreviousOffset, then two14433ac70 calls. Setup141ddae00 lines233-293 stores material variable IDs in PairIndex and compacts paired entries; final setup lines702-713 searches by MaterialVariableIndex. Despite apparent sparse-ID inconsistency, original sampling uses direct indexing and must not be replaced with a search. This is resolved original behavior, not a closure blocker."
   ],
   "closure_gaps": [
     "All required FEffects methods are declarations only. This is a typed algorithm draft, not an integrated helper or executable fallback. Do not add ported manifest coverage.",
@@ -99,8 +105,7 @@
     "Delta piecewise sampling is algebraically condensed from repeated capture branches; its degenerate radii, NaNs and inferred live-register scalar values need assembly validation before native porting.",
     "Default cylinder temporary must consume exactly one UID and use zero vectors/floats, invalid zero bounds and false flags; do not replace it with an aggregate without handle constructor. Delta/radius default policy is owned by root.",
     "Curve virtual at embedded curve base+0x50 has been expressed as GetLinearColorValue; confirm exact engine implementation/signature and numeric behavior.",
-    "Array swap removal must preserve responder nested-array destruction and source shrink flags; delegates may mutate arrays, so no extra defensive copies or reordering are authorized by this draft.",
-    "Paired parameter ID contract conflicts across captures: sampling141ddfad0 lines737-746 reads ParametersToSet element+0 as iVar6, checks0<=iVar6<PairedVariablesData.Num, and directly loads PairedVariablesData[iVar6] PreviousSpeed/+4 PreviousOffset (stride0x24). Setup141ddae00 lines233-269 appends PairedVariablesData only for found variable IDs and stores material-variable ID at paired entry+0x10. Lines272-293 store the same material-variable ID in ParametersToSet.PairIndex; final setup lines702-713 compares ParametersToSet.PairIndex with paired.MaterialVariableIndex. No compact-index rewrite observed. A sparse variable set therefore makes direct sampling indexing inconsistent with setup. Draft now exposes required ApplyPairedParameter_UnresolvedIndexMapping instead of choosing direct indexing or searching by variable ID; machine code or missing invariant must resolve this before porting."
+    "Array swap removal must preserve responder nested-array destruction and source shrink flags; delegates may mutate arrays, so no extra defensive copies or reordering are authorized by this draft."
   ],
-  "validation": "Source review only against bounded decompiler captures. No builds/tests run per assigned scope."
+  "validation": "Source review against bounded decompiler captures and paired-parameter sampling machine code141de0e45..0e7d. No builds/tests run per assigned scope."
 }

@@ -1,0 +1,19 @@
+[
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortWindManager",
+    "function": "NativeFindWindScalarOverride",
+    "signature": "FScalarParameterValue* NativeFindWindScalarOverride(UMaterialInstance* Instance, const FName& Name)",
+    "static": true,
+    "inc_path": "porting/behavior/maps_wind_parameter_runtime/AFortWindManager_NativeFindWindScalarOverride.inc",
+    "address": "0x141dccf40",
+    "includes": [
+      "Materials/MaterialInstance.h"
+    ],
+    "notes": "Receiver unused in original. First scalar override matching FName, ignoring association/index, then parent MI chain. Engine generic parameter lookup differs."
+  }
+]

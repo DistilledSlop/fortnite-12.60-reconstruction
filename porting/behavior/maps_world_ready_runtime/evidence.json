@@ -1,0 +1,18 @@
+{
+  "status": "registration helper integrated source; lifecycle remains unported",
+  "captures": {
+    "porting/generated/maps-wind-ready-dispatch/_adhoc/0x141fcd9c0__141fcd9c0.c": "4507f340591c2314f456c063a01fb527b3e022ef7a5ef2c11c379fba15770a23",
+    "porting/generated/maps-wind-lifecycle-virtuals/_adhoc/0x141dd2400__141dd2400.c": "ed042f2f3789781be0e882e960ed42b083629d424981e7e773ebf9d7e914141f",
+    "porting/generated/maps-wind-lifecycle-virtuals/_adhoc/0x141dde360__141dde360.c": "5549b260709e6168c2ee0a24653dc5cbcc1cc567bf1a0e04bf6c107b74caaea0",
+    "porting/generated/maps-wind-ready-dispatch/_adhoc/0x143f874a0__143f874a0.c": "c998bf986625ef887e0b25c116279fe7b3355bcccb933eb30ba56cf69fe31f92"
+  },
+  "registration": "141fcd9c0 appends Actor to world settings0x398 array. Reflection property offset920 confirms name ActorsNeedingWorldReady. No uniqueness/null validation.",
+  "lifecycle_correction": "AFortWindManager primary vtable145fcdc80 slot0x3f8 ->141dde360. Wrapper calls sampling141ddfad0, audio141de18c0, base143f874a0. This is TickActor; prior rejection based only on inherited Tick slot0x450 was incorrect. Base143f874a0 checks pending kill/world then calls virtual0x450, matching Actor::TickActor.",
+  "runtime": "No runtime credit. No incomplete TickActor or PostInitializeComponents override installed.",
+  "post_initialize_components": "Primary vtable0x480 ->141dd2400 calls base143f7e3a0, gets world settings143f79440, checks FortWorldSettings class142b5dca0, invokes registration141fcd9c0; then discovers interpolation names from wind material. Base143f7e3a0 contains STAT_Actor_PostInitComponents and matches AActor::PostInitializeComponents; whole override pending.",
+  "generation": {
+    "spliced": 3983,
+    "rejected": 0,
+    "rep_notify_downgraded": 0
+  }
+}

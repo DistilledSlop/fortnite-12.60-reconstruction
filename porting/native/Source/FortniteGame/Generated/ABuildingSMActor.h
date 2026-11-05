@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ABuildingActor.h"
 
+#include "Components/MeshComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "EBuildingAnim.h"
 #include "EBuildingAttachmentSlot.h"
 #include "EBuildingAttachmentType.h"
@@ -37,6 +39,7 @@
 #include "GameplayEffectTypes.h"
 #include "GameplayPrediction.h"
 #include "GameplayTagContainer.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 
@@ -772,5 +775,9 @@ public:
 	bool WillRegisterWithStructuralGrid() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	UMaterialInstanceDynamic* NativeGetOrCreateMID(UMeshComponent* Mesh, int32 Slot);
 };
 
