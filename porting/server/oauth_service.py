@@ -12,6 +12,8 @@ Policy (local, deliberate):
   * An exchange_code that GET .../oauth/exchange issued is single use and maps to
     its own account. Any other non-empty exchange_code signs in the local account.
     The earlier login capture used an arbitrary auth password, so this keeps it working.
+  * The local_username grant and the local-username: exchange-code prefix select
+    a persistent local account by username without a password.
   * Every token response is synthetic. No real account, client secret or key is used.
 """
 
@@ -24,6 +26,7 @@ from api_common import (CLIENT_ID, DEVICE_ID, LOCAL_ACCOUNT_ID, ApiError, Err)
 ACCESS_TTL_SEC = 28800  # the field value from the earlier stub
 REFRESH_TTL_SEC = 115200  # the field value from the earlier stub
 EXCHANGE_CODE_TTL_SEC = 300  # guess
+LOCAL_USERNAME_PREFIX = "local-username:"
 
 
 @dataclass
@@ -128,6 +131,12 @@ class OAuthService:
 
     # Handlers ----------------------------------------------------------
 
+    def _username_account_id(self, username):
+        try:
+            return self.accounts.get_or_create_username(username)["id"]
+        except ValueError as exc:
+            raise ApiError(400, Err.OAUTH_INVALID_REQUEST, str(exc)) from exc
+
     def token(self, req, match):
         form = req.form
         grant = form.get("grant_type", "")
@@ -136,6 +145,9 @@ class OAuthService:
             raise ApiError(400, Err.OAUTH_INVALID_REQUEST, "grant_type is required.")
         if grant == "client_credentials":
             session = self._issue(grant, None, client_id)
+        elif grant == "local_username":
+            account_id = self._username_account_id(form.get("username", ""))
+            session = self._issue(grant, account_id, client_id)
         elif grant == "exchange_code":
             code = form.get("exchange_code", "")
             if not code:
@@ -145,6 +157,8 @@ class OAuthService:
                 account_id, expires = issued
                 if expires <= self.ctx.now():
                     raise ApiError(400, Err.OAUTH_INVALID_GRANT, "The exchange code has expired.")
+            elif code.startswith(LOCAL_USERNAME_PREFIX):
+                account_id = self._username_account_id(code[len(LOCAL_USERNAME_PREFIX):])
             else:
                 account_id = LOCAL_ACCOUNT_ID
             session = self._issue(grant, account_id, client_id)

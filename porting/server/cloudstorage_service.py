@@ -1,4 +1,4 @@
-"""Cloud storage: system files from a local directory, and per-account user files in memory.
+"""Cloud storage: system files and per-account user files.
 
 Evidence:
   observed  GET /fortnite/api/cloudstorage/system and .../system/{filename}, and
@@ -16,6 +16,8 @@ been shown to need. Do not point it at the extracted DefaultEngine.ini unless yo
 import hashlib
 import mimetypes
 import re
+import sqlite3
+from contextlib import closing
 from pathlib import Path
 
 from api_common import ApiError, Err, Raw
@@ -24,11 +26,45 @@ FILENAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}")
 
 
 class CloudStorageService:
-    def __init__(self, ctx, oauth, system_dir=None):
+    def __init__(self, ctx, oauth, system_dir=None, state_dir=None):
         self.ctx = ctx
         self.oauth = oauth
         self.system_dir = Path(system_dir) if system_dir else None
         self._user = {}
+        self._user_db = None
+        if state_dir is not None:
+            state_dir = Path(state_dir)
+            state_dir.mkdir(parents=True, exist_ok=True)
+            self._user_db = state_dir / "cloudstorage.sqlite3"
+            with closing(sqlite3.connect(self._user_db)) as db, db:
+                db.execute("CREATE TABLE IF NOT EXISTS user_files ("
+                           "account_id TEXT NOT NULL, name TEXT NOT NULL, "
+                           "data BLOB NOT NULL, uploaded REAL NOT NULL, "
+                           "PRIMARY KEY (account_id, name))")
+
+    def _user_files(self, account_id):
+        if self._user_db is None:
+            return dict(self._user.get(account_id, {}))
+        with closing(sqlite3.connect(self._user_db)) as db, db:
+            rows = db.execute("SELECT name, data, uploaded FROM user_files WHERE account_id = ?",
+                              (account_id,)).fetchall()
+        return {name: (data, uploaded) for name, data, uploaded in rows}
+
+    def _user_file(self, account_id, name):
+        if self._user_db is None:
+            return self._user.get(account_id, {}).get(name)
+        with closing(sqlite3.connect(self._user_db)) as db, db:
+            return db.execute("SELECT data, uploaded FROM user_files WHERE account_id = ? AND name = ?",
+                              (account_id, name)).fetchone()
+
+    def _put_user_file(self, account_id, name, data, uploaded):
+        if self._user_db is None:
+            self._user.setdefault(account_id, {})[name] = (data, uploaded)
+            return
+        with closing(sqlite3.connect(self._user_db)) as db, db:
+            db.execute("INSERT INTO user_files (account_id, name, data, uploaded) VALUES (?, ?, ?, ?) "
+                       "ON CONFLICT(account_id, name) DO UPDATE SET data = excluded.data, "
+                       "uploaded = excluded.uploaded", (account_id, name, data, uploaded))
 
     def _system_files(self):
         """Regular files in the system directory, sorted by name. Hidden files are skipped."""
@@ -75,14 +111,14 @@ class CloudStorageService:
     def user_list(self, req, match):
         account_id = match.group(1)
         self.oauth.authenticate(req, account_id=account_id)
-        stored = self._user.get(account_id, {})
+        stored = self._user_files(account_id)
         return 200, [self._describe(name, data, uploaded, self.ctx)
                      for name, (data, uploaded) in sorted(stored.items())]
 
     def user_get(self, req, match):
         account_id, name = match.group(1), match.group(2)
         self.oauth.authenticate(req, account_id=account_id)
-        entry = self._user.get(account_id, {}).get(name)
+        entry = self._user_file(account_id, name)
         if entry is None:
             raise ApiError(404, Err.CLOUD_FILE_NOT_FOUND, "The user storage file was not found.")
         data, _ = entry
@@ -93,7 +129,7 @@ class CloudStorageService:
         self.oauth.authenticate(req, account_id=account_id)
         if not FILENAME.fullmatch(name):
             raise ApiError(400, Err.INVALID_PAYLOAD, "The file name is not valid.")
-        self._user.setdefault(account_id, {})[name] = (bytes(req.body), self.ctx.now())
+        self._put_user_file(account_id, name, bytes(req.body), self.ctx.now())
         return 204, None
 
     def register(self, router):

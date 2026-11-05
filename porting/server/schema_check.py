@@ -56,7 +56,7 @@ ENVELOPE_FIELDS = {
                     "evidence": "reflection: ProfileUpdate.MultiUpdate"},
 }
 
-_STRUCT_RE = re.compile(r"USTRUCT\(\)\s*struct\s+(\w+)\s*(?::\s*public\s+(\w+))?\s*\{(.*?)\n\};", re.DOTALL)
+_STRUCT_RE = re.compile(r"USTRUCT\(\)\s*struct\s+(?:\w+_API\s+)?(\w+)\s*(?::\s*public\s+(\w+))?\s*\{(.*?)\n\};", re.DOTALL)
 _MEMBER_RE = re.compile(r"UPROPERTY\([^)]*\)\s*\n\s*([^;]+?)\s+(\w+)\s*;")
 
 

@@ -89,13 +89,13 @@
         },
         {
           "id": "platform.launch_security",
-          "name": "Rebuilt launch, security and entitlement compatibility",
+          "name": "Rebuilt local startup compatibility",
           "weight": 10,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Recover and verify the shipped startup, anti-cheat and entitlement interactions for the rebuilt client; Wine engine startup alone is not this deliverable. EFF-017 ownership: rebuilt launcher/anti-cheat/entitlement compatibility behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope."
+          "rationale": "Recover and verify startup of the rebuilt local client. Per user instruction, the rebuilt project has no entitlement or anti-cheat requirement. Wine engine startup is an oracle check, not rebuilt-client acceptance; the remaining effort estimate needs review."
         },
         {
           "id": "platform.rendering",
@@ -1089,13 +1089,13 @@
         },
         {
           "id": "backend.oauth_account.behavior",
-          "name": "Authentication, entitlement and account behavior",
+          "name": "Local username and account behavior",
           "weight": 12.5,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md. EFF-017 ownership: local account and authentication/token service behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope."
+          "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; rebuilt-client startup and complete account behavior remain unverified. The remaining effort estimate needs review."
         },
         {
           "id": "backend.matchmaking",
@@ -1145,7 +1145,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. Client integration and full protocol behavior remain unverified."
         },
         {
           "id": "backend.progression",
@@ -1155,7 +1155,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Reconstruct and verify original account progression, profile persistence and related gameplay integration. Q-02: residual integration/inventory/acceptance scope after declarations and separately funded body recovery; do not allocate the same native reconstruction twice."
+          "rationale": "Local account and profile state now persists across service restarts; original progression behavior and gameplay integration remain unverified. Do not allocate native reconstruction effort twice."
         },
         {
           "id": "backend.local_tests",

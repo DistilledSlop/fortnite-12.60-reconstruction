@@ -14,7 +14,7 @@ Services (each module registers its own routes and keeps its own state):
   profile_service    MCP profile store and command set
   party_service      party v1 and presence
   content_service    lightswitch, version check, storefront, calendar, datarouter
-  cloudstorage_service  system files (local directory) and user files (memory)
+  cloudstorage_service  system files and optional persistent user files
   frontend_stubs     friends, social ban, receipts, billing and other guess answers
   chat_service       game chat room reservation (empty room lists)
   matchmaking        ticket, session and session-key routes, and the websocket
@@ -47,14 +47,14 @@ INTERNAL_ERROR = "errors.com.epicgames.common.internal_error"  # guess: not in t
 
 class Backend:
     def __init__(self, *, clock=None, seed=DEFAULT_SEED, cloudstorage_dir=None,
-                 state_step_sec=None, log_size=1000):
+                 state_dir=None, state_step_sec=None, log_size=1000):
         self.ctx = Context(clock=clock, seed=seed)
-        self.accounts = AccountService(self.ctx)
+        self.accounts = AccountService(self.ctx, state_dir=state_dir)
         self.oauth = OAuthService(self.ctx, self.accounts)
-        self.profiles = ProfileService(self.ctx, self.accounts, self.oauth)
+        self.profiles = ProfileService(self.ctx, self.accounts, self.oauth, state_dir=state_dir)
         self.party = PartyService(self.ctx, self.accounts, self.oauth)
         self.content = ContentService(self.ctx)
-        self.cloud = CloudStorageService(self.ctx, self.oauth, cloudstorage_dir)
+        self.cloud = CloudStorageService(self.ctx, self.oauth, cloudstorage_dir, state_dir=state_dir)
         self.frontend = FrontendStubs(self.ctx)
         self.chat = ChatService(self.ctx, self.oauth)
         if state_step_sec is None:

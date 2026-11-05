@@ -28,8 +28,13 @@ Revision model:
 """
 
 import copy
+import json
 import re
+import secrets
+import sqlite3
+from contextlib import closing
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Callable
 
 from api_common import ApiError, Err
@@ -334,7 +339,7 @@ def _copy_cosmetic_loadout(ctx):
     attributes = copy.deepcopy(source_item["attributes"])
     if new_name:
         attributes["locker_name"] = new_name
-    new_id = ctx.service.ctx.new_id("loadout")
+    new_id = ctx.service._new_item_id("loadout", tx.profile)
     tx.add_item(new_id, source_item["templateId"], attributes, 1)
     if target == len(loadouts):
         loadouts.append(new_id)
@@ -344,21 +349,46 @@ def _copy_cosmetic_loadout(ctx):
 
 
 class ProfileService:
-    def __init__(self, ctx, accounts, oauth):
+    def __init__(self, ctx, accounts, oauth, state_dir=None):
         self.ctx = ctx
         self.accounts = accounts
         self.oauth = oauth
         self._profiles = {}
+        self._database = None
+        if state_dir is not None:
+            directory = Path(state_dir)
+            directory.mkdir(parents=True, exist_ok=True)
+            self._database = directory / "profiles.sqlite3"
+            with closing(sqlite3.connect(self._database)) as db, db:
+                db.execute("CREATE TABLE IF NOT EXISTS profiles ("
+                           "account_id TEXT NOT NULL, profile_id TEXT NOT NULL, "
+                           "data TEXT NOT NULL, PRIMARY KEY (account_id, profile_id))")
 
     # Store -------------------------------------------------------------
+
+    def _new_item_id(self, kind, profile):
+        # The deterministic Context counter restarts with the process. Persistent
+        # profiles need IDs that remain fresh across restarts.
+        while True:
+            item_id = (secrets.token_hex(16) if self._database is not None
+                       else self.ctx.new_id(kind))
+            if item_id not in profile["items"]:
+                return item_id
 
     def profile(self, account_id, profile_id):
         """The stored profile, created with defaults on first use. Callers must not edit it."""
         key = (account_id, profile_id)
         if key not in self._profiles:
+            if self._database is not None:
+                with closing(sqlite3.connect(self._database)) as db, db:
+                    row = db.execute("SELECT data FROM profiles WHERE account_id = ? AND profile_id = ?",
+                                     key).fetchone()
+                if row is not None:
+                    self._profiles[key] = json.loads(row[0])
+                    return self._profiles[key]
             items, attributes = build(self.ctx, account_id, profile_id)
             now = self.ctx.iso()
-            self._profiles[key] = {
+            profile = {
                 "_id": account_id,
                 "created": now,
                 "updated": now,
@@ -371,6 +401,11 @@ class ProfileService:
                 "stats": {"attributes": attributes},
                 "commandRevision": 1,
             }
+            if self._database is not None:
+                with closing(sqlite3.connect(self._database)) as db, db:
+                    db.execute("INSERT INTO profiles (account_id, profile_id, data) VALUES (?, ?, ?)",
+                               (account_id, profile_id, json.dumps(profile, separators=(",", ":"))))
+            self._profiles[key] = profile
         return self._profiles[key]
 
     def _store(self, account_id, txs, command_profile=None):
@@ -382,6 +417,14 @@ class ProfileService:
         if command_profile is not None:
             primary = txs[command_profile]
             primary.profile["commandRevision"] = primary.base_command_revision + 1
+        if self._database is not None:
+            # One database transaction covers every profile changed by a command.
+            # Publish to the in-memory cache only after the durable commit succeeds.
+            rows = [(account_id, profile_id, json.dumps(tx.profile, separators=(",", ":")))
+                    for profile_id, tx in txs.items()]
+            with closing(sqlite3.connect(self._database)) as db, db:
+                db.executemany("INSERT OR REPLACE INTO profiles (account_id, profile_id, data) "
+                               "VALUES (?, ?, ?)", rows)
         for profile_id, tx in txs.items():
             self._profiles[(account_id, profile_id)] = tx.profile
 
@@ -390,7 +433,7 @@ class ProfileService:
         if profile_id not in PROFILE_IDS:
             raise ValueError(f"unknown profile {profile_id}")
         tx = ProfileTx(self.ctx, self.profile(account_id, profile_id))
-        item_id = self.ctx.new_id("item")
+        item_id = self._new_item_id("item", tx.profile)
         tx.add_item(item_id, template_id, attributes or {"item_seen": False, "favorite": False, "variants": []})
         self._store(account_id, {profile_id: tx})
         return item_id

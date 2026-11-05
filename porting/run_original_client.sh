@@ -2,7 +2,7 @@
 # Run the original Win64 client under Wine, with EAC/BattlEye disabled, inside a
 # private network namespace alongside the local backend. Host names resolve to
 # loopback via the prefix hosts file, so nothing reaches the real Epic services.
-# Usage: run_original_client.sh [seconds] [extra client args...]
+# Usage: run_original_client.sh [--username NAME] [seconds] [extra client args...]
 # FN_ACTIONS="60:shot 70:click,640,600 80:key,Return" runs X11 actions at those seconds after
 # launch; screenshots go to generated/shots/ (debug aids, never committed).
 set -euo pipefail
@@ -11,11 +11,20 @@ porting_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 install_dir=$(cd -- "$porting_dir/.." && pwd)
 bin_dir="$install_dir/Fortnite/FortniteGame/Binaries/Win64"
 generated="$porting_dir/generated"
+username=${FN_USERNAME:-LocalPlayer}
+if [[ "${1:-}" == --username ]]; then
+    if [[ $# -lt 2 || -z "$2" ]]; then
+        printf "Usage: %s [--username NAME] [seconds] [extra client args...]\n" "$0" >&2
+        exit 2
+    fi
+    username=$2
+    shift 2
+fi
 seconds=${1:-120}
 shift || true
 
 if [[ -z "${FN_NETNS_INNER:-}" ]]; then
-    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_ACTIONS="${FN_ACTIONS:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_ACTIONS="${FN_ACTIONS:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -65,5 +74,5 @@ fi
 exec wine FortniteClient-Win64-Shipping.exe "$@"' "$bin_dir" \
     "$FN_PORTAL_ARG" -nosound -NoSplash -log -epicapp=Fortnite -epicenv="$FN_EPICENV" \
     -epiclocale=en-us -skippatchcheck -nobe -noeac -fromfl=none \
-    -AUTH_LOGIN=unused -AUTH_PASSWORD=localexchangecode -AUTH_TYPE=exchangecode "$@" \
+    -AUTH_LOGIN=unused "-AUTH_PASSWORD=local-username:$username" -AUTH_TYPE=exchangecode "$@" \
     > "$generated/original-client-run.out" 2>&1 || true

@@ -185,14 +185,19 @@ def main():
     parser.add_argument("--tls-key", type=Path)
     parser.add_argument("--cloudstorage-dir", type=Path,
                         help="with --stub: directory whose files are listed as cloud storage system files")
+    parser.add_argument("--state-dir", type=Path,
+                        default=Path(__file__).resolve().parents[1] / "generated/local-backend-state",
+                        help="with --stub: persistent local account, profile and user-file directory")
+    parser.add_argument("--ephemeral", action="store_true",
+                        help="with --stub: keep account, profile and user-file state in memory")
     args = parser.parse_args()
     args.record.parent.mkdir(parents=True, exist_ok=True)
     routes = load_fixtures(args.fixtures)
     stub = None
     if args.stub:
         import fortnite_stub as stub
-        if args.cloudstorage_dir:
-            stub.configure(cloudstorage_dir=args.cloudstorage_dir)
+        stub.configure(cloudstorage_dir=args.cloudstorage_dir,
+                       state_dir=None if args.ephemeral else args.state_dir)
     server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record, stub))
     if args.tls_cert:
         import ssl

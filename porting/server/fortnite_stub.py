@@ -4,8 +4,8 @@ Keeps the module-level respond() and websocket_route() that probe_server.py and 
 smoke tests call. configure() replaces the default backend, for example to set a
 cloud storage directory before the server starts.
 
-The default backend has a process-wide state: accounts, tokens, profiles, parties and
-matchmaking sessions. Restart the probe to clear it.
+The default backend has process-wide state. Configure state_dir to persist profiles
+and user cloud files across restarts; tokens, parties and matchmaking sessions remain in memory.
 """
 
 from api_common import LOCAL_ACCOUNT_ID as ACCOUNT_ID

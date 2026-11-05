@@ -233,7 +233,7 @@ def main():
 
     port = args.port or free_port()
     args.record.parent.mkdir(parents=True, exist_ok=True)
-    command = [sys.executable, str(SERVER), "--bind", "127.0.0.1", "--port", str(port), "--stub",
+    command = [sys.executable, str(SERVER), "--bind", "127.0.0.1", "--port", str(port), "--stub", "--ephemeral",
                "--record", str(args.record)]
     scheme = "http"
     ctx = None

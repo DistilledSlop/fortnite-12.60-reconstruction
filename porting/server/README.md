@@ -20,7 +20,7 @@ Evidence for each route is in `porting/server_surface.md`.
 | `profile_defaults.py` | Default athena, common_core, common_public, campaign and creative profiles. |
 | `party_service.py` | Party v1 (create, join, invite, decline, member and party meta, promote, leave/kick, disconnect, ping) and presence. |
 | `content_service.py` | Lightswitch, version check, enabled features, calendar, storefront, keychain, datarouter. |
-| `cloudstorage_service.py` | System files from `--cloudstorage-dir` (default: none). User files in memory. |
+| `cloudstorage_service.py` | System files from `--cloudstorage-dir` (default: none); local user files can persist. |
 | `frontend_stubs.py` | Friends, social ban, receipts, billing and other menu answers. Labelled guess. |
 | `matchmaking.py` | Ticket, session and session-key routes. Websocket state machine (`local_ws.py` is the RFC 6455 side). |
 | `fortnite_stub.py` | Compatibility facade for `probe_server.py --stub`. Keeps the earlier `respond()` and `websocket_route()` names. |
@@ -38,12 +38,33 @@ Evidence for each route is in `porting/server_surface.md`.
 ## Running
 
 ```sh
-python3 -I porting/server/test_services.py          # 72 tests, about 5 s, no sudo, no subprocess
+python3 -I porting/server/test_services.py          # backend HTTP service tests
 python3 -I porting/server/smoke_matchmaking.py      # lobby-to-match smoke test
-python3 -I porting/server/probe_server.py --stub --port 8080 [--cloudstorage-dir DIR]
+python3 -I porting/server/probe_server.py --stub --port 8080 [--state-dir DIR] [--cloudstorage-dir DIR]
 python3 -I porting/server/backend.py --routes       # route table with evidence labels
 python3 -I porting/server/backend.py --commands     # MCP command table
 ```
+
+### Username-only local accounts
+
+The local service selects an account by username, without a password, entitlement check,
+or anti-cheat. The same username (case-insensitive, ignoring surrounding whitespace)
+reopens the same local account and locker. Different usernames have separate profiles
+and cloud files. This is local identity selection, not identity verification.
+
+For a client that supports the local grant, POST `/account/api/oauth/token` with form
+`grant_type=local_username` and `username=<chosen name>`. The existing client exchange-code
+transport can instead use `exchange_code=local-username:<chosen name>`; this is an
+identity selector, not a password. For the original-client analysis harness, run
+`porting/run_original_client.sh --username "Name"`; the original binary may still stop at
+its own launcher entitlement gate. The rebuilt client has not yet been verified through
+a full login-to-lobby flow.
+
+With `--stub`, `probe_server.py` persists account mappings, profile revisions and user
+cloud files under ignored `porting/generated/local-backend-state` by default. Set
+`--state-dir DIR` to choose a different local directory, or `--ephemeral` for fresh
+in-memory state. Tokens, parties and matchmaking sessions remain process-local; obtain
+a new token after restarting the service.
 
 `probe_server.py` binds `127.0.0.1` by default and records method, path, route
 name, query keys, body length and status to ignored `porting/generated/server-requests.jsonl`.
@@ -158,8 +179,8 @@ method answers 405. Party and presence routes that are not in the table, such as
 
 ### Exchange code policy
 
-The client's `exchangecode` login sends an auth password that is not checked
-anywhere. So any non-empty `exchange_code` signs in the local account. A code issued
+The `local-username:` exchange-code prefix selects a named local account. Other
+unissued non-empty `exchange_code` values retain the legacy LocalPlayer fallback. A code issued
 by `GET /account/api/oauth/exchange` is single use and maps to its own account. Once
 used, it falls back to the local account. This is a local policy, not Epic behaviour.
 

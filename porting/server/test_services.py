@@ -16,6 +16,7 @@ import base64
 import json
 import shutil
 import sys
+import tempfile
 import threading
 import unittest
 import urllib.error
@@ -449,6 +450,62 @@ def mcp(base, token, account, command, profile="athena", body=None, scope="clien
     query = f"?profileId={profile}" if profile else ""
     return jcall(base, "POST", f"/fortnite/api/game/v2/profile/{account}/{scope}/{command}{query}",
                  token=token, body={} if body is None else body)
+
+
+class DurableLocalStateTests(ServiceTestCase):
+    def test_username_accounts_profile_and_cloud_survive_restart(self):
+        state = tempfile.TemporaryDirectory(dir=GENERATED)
+        self.addCleanup(state.cleanup)
+        self.start_backend(Backend(clock=self.clock, state_step_sec=0, state_dir=state.name))
+
+        def login(form):
+            status, body, _ = jcall(self.base, "POST", "/account/api/oauth/token", form=form)
+            self.assertEqual(status, 200)
+            return body["account_id"], body["access_token"]
+
+        def query(account, token):
+            status, body, _ = mcp(self.base, token, account, "QueryProfile")
+            self.assertEqual(status, 200)
+            return body["profileChanges"][0]["profile"]
+
+        alice, alice_token = login({"grant_type": "local_username", "username": "Alice"})
+        bob, bob_token = login({"grant_type": "local_username", "username": "Bob"})
+        self.assertNotEqual(alice, bob)
+        alice_profile = query(alice, alice_token)
+        bob_profile = query(bob, bob_token)
+        locker = alice_profile["stats"]["attributes"]["last_applied_loadout"]
+        status, _, _ = mcp(self.base, alice_token, alice, "SetCosmeticLockerName",
+                           body={"lockerItem": locker, "name": "Alice locker"})
+        self.assertEqual(status, 200)
+        # The first item is valid; a later invalid item must roll back the entire command.
+        item = next(iter(alice_profile["items"]))
+        self.assertError(mcp(self.base, alice_token, alice, "SetItemFavoriteStatusBatch",
+                             body={"itemIds": [item, DEAD_ITEM], "itemFavStatus": [True, True]}),
+                         400, Err.INVALID_PAYLOAD)
+        expected_alice = query(alice, alice_token)
+        self.assertFalse(expected_alice["items"][item]["attributes"]["favorite"])
+        self.assertEqual(expected_alice["items"][locker]["attributes"]["locker_name"], "Alice locker")
+        for account, token, payload in ((alice, alice_token, b"alice settings"),
+                                        (bob, bob_token, b"bob settings")):
+            path = f"/fortnite/api/cloudstorage/user/{account}/GameUserSettings.ini"
+            self.assertEqual(call(self.base, "PUT", path, token=token, body=payload)[0], 204)
+
+        self.clock.now += 60  # A recreated default profile would have a different creation time.
+        self.start_backend(Backend(clock=self.clock, state_step_sec=0, state_dir=state.name))
+        alice_again, alice_token = login({"grant_type": "local_username", "username": "Alice"})
+        bob_again, bob_token = login({"grant_type": "exchange_code", "exchange_code": "local-username:Bob"})
+        self.assertEqual((alice_again, bob_again), (alice, bob))
+        self.assertEqual(query(alice, alice_token), expected_alice)
+        # An untouched initial profile must retain its original timestamps and contents.
+        self.assertEqual(query(bob, bob_token), bob_profile)
+        for account, token, payload in ((alice, alice_token, b"alice settings"),
+                                        (bob, bob_token, b"bob settings")):
+            path = f"/fortnite/api/cloudstorage/user/{account}/GameUserSettings.ini"
+            status, _, data = call(self.base, "GET", path, token=token)
+            self.assertEqual((status, data), (200, payload))
+        self.assertError(jcall(self.base, "GET", f"/fortnite/api/cloudstorage/user/{alice}", token=bob_token),
+                         403, Err.MISSING_PERMISSION)
+        self.assertError(mcp(self.base, bob_token, alice, "QueryProfile"), 403, Err.MISSING_PERMISSION)
 
 
 class ProfileTests(ServiceTestCase):
