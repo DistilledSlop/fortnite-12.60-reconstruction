@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "addeddc9892d827a0b18b78a7191ef36e7ab8713",
- "subject": "Recover original foundation enabled ancestry predicate",
- "date": "2026-11-05T16:21:14-05:00",
+ "head": "04133f240b84e9a568fbdb08146ea2dcf05ca4e8",
+ "subject": "Verify both original landscape maps in native reader",
+ "date": "2026-11-05T16:24:07-05:00",
  "overall_pct": 29.127,
  "measured_pct": 28.257,
  "objective_pct": 28.256,

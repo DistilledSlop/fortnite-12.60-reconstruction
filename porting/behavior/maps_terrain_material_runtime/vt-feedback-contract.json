@@ -1,0 +1,44 @@
+{
+  "schema": "terrain-vt-feedback-contract-v1",
+  "status": "evidence_and_candidate_only; original runtime binding and Vulkan runtime acceptance not established",
+  "captured_original": {
+    "ingress": "porting/generated/material_pipeline/apollo-d4-landscape-ingress.json",
+    "reflection": "porting/generated/material_pipeline/apollo-d4-landscape-spirv/reflection.json",
+    "d3d_report": "porting/generated/material_pipeline/apollo-d4-landscape-spirv/d3d-report.json",
+    "record_join": "Within each map, join decoded record offset to record_code_associations.location.record_offset and library_index. Twenty associations (four each for 63205..63209) have decoded vt_feedback_buffer base_index=7, resource_count=1. All five are pixel shaders.",
+    "descriptor": "Each corresponding reflected SPIR-V has one D3D uav space 0 index 7, uint32 storage texel buffer (VkDescriptorType 5), no resource-table entries; mapped descriptor binding is 7 for 63206 and 11 for the others.",
+    "d3d_wrapper": "Each original D3D wrapper has an empty UAV resource table and packed uavs count 8. Count is register extent, not eight independently proven descriptors.",
+    "caveat": "The original constructor establishes the parameter name, but these captures do not establish the renderer binding function or independently join that named allocation to the decoded u7 record.",
+    "original_parameter_name": "VTFeedbackBuffer: original material shader constructors at 0x143509060 and 0x1435091c0 call 0x143a822e0 with that name and the parameter map. Captures: porting/generated/apollo-material-evidence/terrain-uniform-initializers/0x143509060.c and 0x1435091c0.c."
+  },
+  "serialization_comparison": {
+    "native_reader": "porting/native/Source/FortniteGame/Private/LegacyOriginalMaterialReader.cpp:49,172",
+    "native_fields": "Param(true) reads two uint16 fields BaseIndex and Size (Size means resource count here), leaves BufferIndex at its default 0; no BufferIndex is serialized in this path.",
+    "ue426_source": "/opt/fortnite/UnrealEngine4260/Engine/Source/Runtime/RenderCore/Private/ShaderParameters.cpp:44",
+    "ue426_contract": "FShaderResourceParameter::Bind passes an unused local buffer index to FindParameterAllocation and uses BaseIndex and NumResources; operator<< serializes those two fields. This is source analogy, not captured original serializer."
+  },
+  "current_engine": {
+    "paths": [
+      "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Public/SceneView.h:817",
+      "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Private/SceneRendering.cpp:1653",
+      "/opt/fortnite/UnrealEngine/Engine/Shaders/Private/BasePassPixelShader.usf:1488",
+      "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Renderer/Public/MaterialShader.h:171",
+      "/opt/fortnite/UnrealEngine4260/Engine/Source/Runtime/Renderer/Private/ShaderBaseClasses.cpp:68",
+      "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/VulkanRHI/Private/VulkanCommands.cpp:497",
+      "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/VulkanRHI/Private/VulkanPendingState.cpp:610"
+    ],
+    "facts": "Current View uniform parameters contain UAV RWBuffer<uint> VTFeedbackBuffer, populated from scene feedback; base pass shader uses View.VTFeedbackBuffer. MaterialShader.h retains a historical comment saying its resource parameter is only for unbound error and UAV binds with render targets; UE 4.26 FMaterialShader constructor and GetShaderBindings do not bind that field. Do not assume this comment describes the original or the current Vulkan path.",
+    "vulkan_ub_path": "VulkanCommands UBMT_UAV uses FUBResourceInfo.SourceUBResourceIndex to read the actual bound UB resource and GlobalIndex to find the global descriptor remap. A buffer-view UAV is written as a texel-buffer view by SetUAVForUBResource.",
+    "direct_path": "RHISetUAVParameter on a pixel shader delegates to SetUAVForStage, which resolves a Vulkan Global parameter index, not a D3D register number."
+  },
+  "vulkan_header_requirements": {
+    "sources": [
+      "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/VulkanRHI/Public/VulkanShaderResources.h:62",
+      "/opt/fortnite/UnrealEngine/Engine/Source/Developer/VulkanShaderFormat/Private/VulkanShaderCompiler.cpp:450",
+      "/opt/fortnite/UnrealEngine/Engine/Source/Developer/VulkanShaderFormat/Private/VulkanShaderCompiler.cpp:910",
+      "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/VulkanRHI/Private/VulkanShaders.cpp:187"
+    ],
+    "facts": "A Vulkan global has OriginalBindingIndex, descriptor type index, no combined sampler alias, and corresponding GlobalSpirvInfos descriptor-set and binding word offsets. Compiler remaps a named global allocation to BufferIndex=FVulkanShaderHeader::Global, BaseIndex=header global index, Size=count, original parameter type; direct graphics UAV writes consume that global index. OriginalBindingIndex is the converted SPIR-V binding, not necessarily the original D3D u7."
+  },
+  "next_dependency": "Establish the original renderer binding path or independently verify an equivalent target runtime View UAV mapping and resource layout; then construct and validate the descriptor and binding. Do not treat a synthetic View resource as an original D3D resource-table entry."
+}

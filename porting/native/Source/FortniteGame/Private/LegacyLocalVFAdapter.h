@@ -109,4 +109,16 @@ bool BuildLegacyLocalVFOutputWithOriginalUniforms(const FLegacyOriginalRecord& O
     const TArray<FLegacyLocalLooseContract>& LooseContracts,
     const TArray<FLegacyLocalOriginalUniformTarget>& OriginalTargets,
     FLegacyMaterialShaderInput& Out, FString& Error);
+/** Landscape-only variant for the three recovered landscape vertex factories.
+ * Bound serialized landscape VF slots require independently supplied loose
+ * contracts under their original names. All ordinary uniform, descriptor and
+ * complete loose-allocation checks still apply, including unsupported VT feedback.
+ * This constructs shader output only; it does not provide or bind runtime data.
+ */
+bool BuildLegacyLandscapeVFOutputWithOriginalUniforms(const FLegacyOriginalRecord& Original,
+    const TSharedPtr<FJsonObject>& ConvertedShader,
+    const TArray<FLegacyLocalUniformContract>& UniformContracts,
+    const TArray<FLegacyLocalLooseContract>& LooseContracts,
+    const TArray<FLegacyLocalOriginalUniformTarget>& OriginalTargets,
+    FLegacyMaterialShaderInput& Out, FString& Error);
 #endif

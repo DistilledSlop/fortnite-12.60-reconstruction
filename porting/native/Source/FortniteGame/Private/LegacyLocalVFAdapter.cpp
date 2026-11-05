@@ -376,12 +376,17 @@ static bool BuildLegacyLocalVFOutputInternal(const FLegacyOriginalRecord& Origin
     const TArray<FLegacyLocalUniformContract>& UniformContracts,
     const TArray<FLegacyLocalLooseContract>& LooseContracts,
     const TArray<FLegacyLocalOriginalUniformTarget>& OriginalTargets,
-    FLegacyMaterialShaderInput& Out, FString& Error)
+    bool bLandscape, FLegacyMaterialShaderInput& Out, FString& Error)
 {
+    const bool bSupportedVF = bLandscape
+        ? (Original.VertexFactory == FName(TEXT("FLandscapeVertexFactory")) ||
+           Original.VertexFactory == FName(TEXT("FLandscapeXYOffsetVertexFactory")) ||
+           Original.VertexFactory == FName(TEXT("FLandscapeFixedGridVertexFactory")))
+        : (Original.VertexFactory.IsNone() || Original.VertexFactory == FName(TEXT("FLocalVertexFactory")));
     // UE's constructor/bindings expect source records, not a subset with their
     // identity changed. Geometry stages are part of the original LocalVF map.
     if ((Original.Frequency != SF_Vertex && Original.Frequency != SF_Pixel && Original.Frequency != SF_Geometry) ||
-        (!Original.VertexFactory.IsNone() && Original.VertexFactory != FName(TEXT("FLocalVertexFactory"))) ||
+        !bSupportedVF || (bLandscape && Original.VFLod.Size) ||
         Original.Type.IsEmpty() || Original.bSpeedTree || Original.Samplers.Num() || Original.SRVs.Num() ||
         Original.BindingWord || Original.RootParameterBufferIndex != UINT16_MAX)
         return Fail(Error, TEXT("unsupported original LocalVF record shape"));
@@ -721,6 +726,34 @@ static bool BuildLegacyLocalVFOutputInternal(const FLegacyOriginalRecord& Origin
             if (C.SourceBuffer == P.BufferIndex && C.ByteOffset == P.BaseIndex && C.ByteSize == P.Size) return true;
         return false;
     };
+    if (bLandscape)
+    {
+        // These serialized VF slots have independently recovered names. A bound
+        // slot must match its own named contract, not merely another allocation
+        // with the same extent; an unbound slot must not invent a binding.
+        const struct { const TCHAR* Name; const FLegacyOriginalParameter* Parameter; } Slots[] = {
+            {TEXT("LodValues"), &Original.LandscapeLodValues},
+            {TEXT("ForcedLod"), &Original.LandscapeForcedLod},
+            {TEXT("LodTessellationParams"), &Original.LandscapeLodTessellation},
+            {TEXT("NeighborSectionLod"), &Original.LandscapeNeighborSectionLod},
+            {TEXT("LodBias"), &Original.LandscapeLodBias},
+            {TEXT("SectionLods"), &Original.LandscapeSectionLods},
+        };
+        for (const auto& Slot : Slots)
+        {
+            int32 Matches = 0;
+            for (const auto& C : LooseContracts)
+            {
+                if (C.ParameterName != Slot.Name) continue;
+                ++Matches;
+                if (!Slot.Parameter->Size || C.SourceBuffer != Slot.Parameter->BufferIndex ||
+                    C.ByteOffset != Slot.Parameter->BaseIndex || C.ByteSize != Slot.Parameter->Size)
+                    return Fail(Error, TEXT("landscape VF named loose contract mismatch"));
+            }
+            if (Matches != (Slot.Parameter->Size ? 1 : 0))
+                return Fail(Error, TEXT("missing or duplicate landscape VF named loose contract"));
+        }
+    }
     if (!LooseCovered(Original.VFLod) || Original.VTFeedback.Size)
         return Fail(Error, TEXT("unsupported/uncovered original VF or VT parameter"));
     for (const auto& P : Original.AdditionalParameters)
@@ -781,7 +814,7 @@ bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
     FLegacyMaterialShaderInput& Out, FString& Error)
 {
     const TArray<FLegacyLocalOriginalUniformTarget> Targets;
-    return BuildLegacyLocalVFOutputInternal(Original, ConvertedShader, UniformContracts, LooseContracts, Targets, Out, Error);
+    return BuildLegacyLocalVFOutputInternal(Original, ConvertedShader, UniformContracts, LooseContracts, Targets, false, Out, Error);
 }
 
 bool BuildLegacyLocalVFOutputWithOriginalUniforms(const FLegacyOriginalRecord& Original,
@@ -791,6 +824,15 @@ bool BuildLegacyLocalVFOutputWithOriginalUniforms(const FLegacyOriginalRecord& O
     const TArray<FLegacyLocalOriginalUniformTarget>& OriginalTargets,
     FLegacyMaterialShaderInput& Out, FString& Error)
 {
-    return BuildLegacyLocalVFOutputInternal(Original, ConvertedShader, UniformContracts, LooseContracts, OriginalTargets, Out, Error);
+    return BuildLegacyLocalVFOutputInternal(Original, ConvertedShader, UniformContracts, LooseContracts, OriginalTargets, false, Out, Error);
+}
+bool BuildLegacyLandscapeVFOutputWithOriginalUniforms(const FLegacyOriginalRecord& Original,
+    const TSharedPtr<FJsonObject>& ConvertedShader,
+    const TArray<FLegacyLocalUniformContract>& UniformContracts,
+    const TArray<FLegacyLocalLooseContract>& LooseContracts,
+    const TArray<FLegacyLocalOriginalUniformTarget>& OriginalTargets,
+    FLegacyMaterialShaderInput& Out, FString& Error)
+{
+    return BuildLegacyLocalVFOutputInternal(Original, ConvertedShader, UniformContracts, LooseContracts, OriginalTargets, true, Out, Error);
 }
 #endif
