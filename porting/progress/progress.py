@@ -21,6 +21,7 @@ Usage:
 import argparse
 import fcntl
 import fnmatch
+import hashlib
 import html
 import io
 import json
@@ -451,12 +452,58 @@ def m_tracked_regex(spec, ctx):
     return {"pct": pct, "done": done, "total": total, "evidence": f"{done} of {total} ({what}; {tnote})"}
 
 
+HANDWRITTEN_KISMET_NAMES = frozenset({
+    "DebugBoxSendToAll", "DebugLineSendToAll", "DebugCapsuleSendToAll",
+    "DebugOrientedBoxSendToAll", "DebugSphereSendToAll",
+})
+
+
+def _without_handwritten_kismet(units):
+    return {(cls, fn) for cls, fn in units
+            if cls != "UFortKismetLibrary" or fn not in HANDWRITTEN_KISMET_NAMES}
+
+
+def _verified_handwritten_kismet(files):
+    """Only the five reviewed bare-return bodies, with their frozen reflection records.
+
+    Hashes bind the complete extracted reflection records and exact declaration/definition
+    pairs; edits require a new review. These are committed snapshot inputs, including in
+    history replay. Exec wrappers share a native implementation but are distinct units.
+    """
+    reflection = files.get("porting/progress/handwritten_kismet_reflection.json", "")
+    if hashlib.sha256(reflection.encode()).hexdigest() != "7a3c08e27320c09eac4509d6a0dec785b4d98c3f2226fb65a9ef6c96c9f88df6":
+        return set()
+    header = files.get("porting/native/Source/FortniteGame/Public/FortniteMapClasses.h", "")
+    source = files.get("porting/native/Source/FortniteGame/Private/FortniteMapClasses.cpp", "")
+    expected = {
+        "DebugBoxSendToAll": "173d2e441238d05bbf3fbd9676312fc4422ec741844f1cb2d0fb8f3d77b572fa",
+        "DebugLineSendToAll": "ca754fd5108083fb96c8c13188786ad1217070eda25e984a6cba690a05b02c9e",
+        "DebugCapsuleSendToAll": "867b5108c377ec8095e5a26e0f999c4337d80f2040a9b27e5e160df81f649f94",
+        "DebugOrientedBoxSendToAll": "22dbbd8eaaa508c13cdf96553075e30744a504e986c6b44a3a083313da952bd0",
+        "DebugSphereSendToAll": "2ec2bf2d6fad88c306cde2533ef311943d5f8a349eedef406ce5bda97584d2b5",
+    }
+    done = set()
+    for name, digest in expected.items():
+        escaped = re.escape(name)
+        decl = re.findall(r'(?m)^    UFUNCTION\(BlueprintCallable, meta=\(WorldContext="WorldContextObject"\)\)\n    static void ' + escaped + r'\([^\n]*\);$', header)
+        body = re.findall(r'(?m)^void UFortKismetLibrary::' + escaped + r'\([^\n]*\) \{\}$', source)
+        # A second declaration/definition, even with a different signature, invalidates credit.
+        if (len(decl) == len(body) == 1
+                and len(re.findall(r'\b' + escaped + r'\s*\(', header)) == 1
+                and len(re.findall(r'\bUFortKismetLibrary::' + escaped + r'\s*\(', source)) == 1
+                and hashlib.sha256((decl[0] + "\n" + body[0]).encode()).hexdigest() == digest):
+            done.add(("UFortKismetLibrary", name))
+    return done
+
+
 def m_native_manifest(spec, ctx):
     """Count committed function bodies independently of the last test checkpoint."""
     entries = parse_json_or_none(ctx.files.get(spec["file"])) or []
-    done = len({(e["class"], e["function"]) for e in entries
+    units = {(e["class"], e["function"]) for e in entries
                 if e.get("status") == "ported" and e.get("kind") != "member_field"
-                and e.get("inc_path") in ctx.files and e.get("class") and e.get("function")})
+                and e.get("inc_path") in ctx.files and e.get("class") and e.get("function")}
+    units = _without_handwritten_kismet(units) | _verified_handwritten_kismet(ctx.files)
+    done = len(units)
     total, tnote = ctx.total_value(spec)
     return {"pct": 100.0 * min(done, total) / total if total else 0.0,
             "done": done, "total": total,
@@ -879,7 +926,8 @@ def _grid_reflection_recovery(spec, ctx):
 
 def _grid_native_behavior(spec, ctx):
     units = _unit_data("funcs", _load_funcs)
-    done = _unit_data("manifest", _load_manifest_ported)
+    done = (_without_handwritten_kismet(_unit_data("manifest", _load_manifest_ported))
+            | _verified_handwritten_kismet(ctx.files))
     return [(f"{c}::{fn}", c) for c, fn in units], {f"{c}::{fn}" for c, fn in done}
 
 

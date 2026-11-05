@@ -1,0 +1,645 @@
+{
+  "DebugBoxSendToAll": {
+    "create_func": "0x142961750",
+    "exec_addr": "0x1429688a0",
+    "flags": "0x4c22401",
+    "params": [
+      {
+        "array_dim": 1,
+        "index": 0,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "Thickness",
+        "object_flags": "0x45",
+        "offset": 48,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 1,
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "name": "DepthPriority",
+        "object_flags": "0x45",
+        "offset": 44,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 2,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "LifeTime",
+        "object_flags": "0x45",
+        "offset": 40,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "bitfield": true,
+        "element_size": 1,
+        "index": 3,
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "name": "bPersistentLines",
+        "object_flags": "0x45",
+        "offset": null,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "size_of_outer": 56
+      },
+      {
+        "array_dim": 1,
+        "index": 4,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Color",
+        "object_flags": "0x45",
+        "offset": 32,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eeaf80"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 5,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Extent",
+        "object_flags": "0x45",
+        "offset": 20,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eea590"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 6,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Center",
+        "object_flags": "0x45",
+        "offset": 8,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eea590"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 7,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "WorldContextObject",
+        "object_flags": "0x45",
+        "offset": 0,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142eea520"
+        }
+      }
+    ],
+    "source": "lea"
+  },
+  "DebugCapsuleSendToAll": {
+    "create_func": "0x1429618a0",
+    "exec_addr": "0x142968b10",
+    "flags": "0x4c22401",
+    "params": [
+      {
+        "array_dim": 1,
+        "index": 0,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "Thickness",
+        "object_flags": "0x45",
+        "offset": 64,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 1,
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "name": "DepthPriority",
+        "object_flags": "0x45",
+        "offset": 60,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 2,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "LifeTime",
+        "object_flags": "0x45",
+        "offset": 56,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "bitfield": true,
+        "element_size": 1,
+        "index": 3,
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "name": "bPersistentLines",
+        "object_flags": "0x45",
+        "offset": null,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "size_of_outer": 80
+      },
+      {
+        "array_dim": 1,
+        "index": 4,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Color",
+        "object_flags": "0x45",
+        "offset": 48,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eeaf80"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 5,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Rotation",
+        "object_flags": "0x45",
+        "offset": 32,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eeb6d0"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 6,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "Radius",
+        "object_flags": "0x45",
+        "offset": 24,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 7,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "HalfHeight",
+        "object_flags": "0x45",
+        "offset": 20,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 8,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Center",
+        "object_flags": "0x45",
+        "offset": 8,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eea590"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 9,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "WorldContextObject",
+        "object_flags": "0x45",
+        "offset": 0,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142eea520"
+        }
+      }
+    ],
+    "source": "lea"
+  },
+  "DebugLineSendToAll": {
+    "create_func": "0x142961b10",
+    "exec_addr": "0x1429688a0",
+    "flags": "0x4c22403",
+    "params": [
+      {
+        "array_dim": 1,
+        "index": 0,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "Thickness",
+        "object_flags": "0x45",
+        "offset": 48,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 1,
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "name": "DepthPriority",
+        "object_flags": "0x45",
+        "offset": 44,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 2,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "LifeTime",
+        "object_flags": "0x45",
+        "offset": 40,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "bitfield": true,
+        "element_size": 1,
+        "index": 3,
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "name": "bPersistentLines",
+        "object_flags": "0x45",
+        "offset": null,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "size_of_outer": 56
+      },
+      {
+        "array_dim": 1,
+        "index": 4,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Color",
+        "object_flags": "0x45",
+        "offset": 32,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eeaf80"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 5,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "LineEnd",
+        "object_flags": "0x45",
+        "offset": 20,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eea590"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 6,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "LineStart",
+        "object_flags": "0x45",
+        "offset": 8,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eea590"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 7,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "WorldContextObject",
+        "object_flags": "0x45",
+        "offset": 0,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142eea520"
+        }
+      }
+    ],
+    "source": "lea"
+  },
+  "DebugOrientedBoxSendToAll": {
+    "create_func": "0x142961c40",
+    "exec_addr": "0x142968e00",
+    "flags": "0x4c22403",
+    "params": [
+      {
+        "array_dim": 1,
+        "index": 0,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "Thickness",
+        "object_flags": "0x45",
+        "offset": 60,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 1,
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "name": "DepthPriority",
+        "object_flags": "0x45",
+        "offset": 56,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 2,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "LifeTime",
+        "object_flags": "0x45",
+        "offset": 52,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "bitfield": true,
+        "element_size": 1,
+        "index": 3,
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "name": "bPersistentLines",
+        "object_flags": "0x45",
+        "offset": null,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "size_of_outer": 64
+      },
+      {
+        "array_dim": 1,
+        "index": 4,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Color",
+        "object_flags": "0x45",
+        "offset": 44,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eeaf80"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 5,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Rotation",
+        "object_flags": "0x45",
+        "offset": 32,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eeb730"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 6,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Extent",
+        "object_flags": "0x45",
+        "offset": 20,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eea590"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 7,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Center",
+        "object_flags": "0x45",
+        "offset": 8,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eea590"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 8,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "WorldContextObject",
+        "object_flags": "0x45",
+        "offset": 0,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142eea520"
+        }
+      }
+    ],
+    "source": "lea"
+  },
+  "DebugSphereSendToAll": {
+    "create_func": "0x142961d40",
+    "exec_addr": "0x1429690c0",
+    "flags": "0x4c22403",
+    "params": [
+      {
+        "array_dim": 1,
+        "index": 0,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "Thickness",
+        "object_flags": "0x45",
+        "offset": 44,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 1,
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "name": "DepthPriority",
+        "object_flags": "0x45",
+        "offset": 40,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 2,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "LifeTime",
+        "object_flags": "0x45",
+        "offset": 36,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "bitfield": true,
+        "element_size": 1,
+        "index": 3,
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "name": "bPersistentLines",
+        "object_flags": "0x45",
+        "offset": null,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "size_of_outer": 48
+      },
+      {
+        "array_dim": 1,
+        "index": 4,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Color",
+        "object_flags": "0x45",
+        "offset": 28,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eeaf80"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 5,
+        "kind": "Int",
+        "kind_raw": "0x3",
+        "name": "Segments",
+        "object_flags": "0x45",
+        "offset": 24,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 6,
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "name": "Radius",
+        "object_flags": "0x45",
+        "offset": 20,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false
+      },
+      {
+        "array_dim": 1,
+        "index": 7,
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "name": "Center",
+        "object_flags": "0x45",
+        "offset": 8,
+        "property_flags": "0x10000008000182",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "struct": "0x142eea590"
+        }
+      },
+      {
+        "array_dim": 1,
+        "index": 8,
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "name": "WorldContextObject",
+        "object_flags": "0x45",
+        "offset": 0,
+        "property_flags": "0x10000000000080",
+        "rep_notify": null,
+        "replicated": false,
+        "type_refs": {
+          "class": "0x142eea520"
+        }
+      }
+    ],
+    "source": "lea"
+  }
+}
