@@ -186,3 +186,11 @@ temporary mesh and unique-stage ownership through freezing or rejection. The
 existing strict seven-record Slate entry point remains separate. Patch
 reapplication and source review passed; compilation and runtime checks are
 pending. This factory is not yet connected to the original-material provider.
+
+The native `LegacyOriginalMaterialReader` now has the corresponding source
+decoder for the exact Paper2D shader-map identity, observed shader bodies and
+three pipelines. It retains bindings, resource identities and ordered stage
+indices alongside every record and the raw resource bytes. Source review
+matches the verified Python body layouts; native execution remains pending.
+The provider still needs to construct converted outputs with the original
+View, LocalVF, pass and texture bindings before calling the new factory.

@@ -9,7 +9,7 @@ class FReader
     FString& Error;
     int32 P = 0, Limit, Nodes = 0;
     int32 Counts[7] = {};
-    bool bOk = true;
+    bool bOk = true, bPaper2D = false;
     struct FPendingTextureSize { int32 Node; FLegacyMaterialTextureParameter Texture; };
     TArray<FPendingTextureSize> PendingTextureSizes;
 public:
@@ -38,8 +38,9 @@ public:
         FString R(UTF8_TO_TCHAR(S)); P += N; return R;
     }
     FSHAHash Hash() { FSHAHash H; for (uint8& B : H.Hash) B = Read<uint8>(); return H; }
-    void Uniform() { Read<uint16>(); if (Read<uint32>() > 1) Fail(TEXT("invalid uniform binding")); }
-    void Param(bool Resource = false) { Read<uint16>(); Read<uint16>(); if (!Resource) Read<uint16>(); }
+    FLegacyOriginalUniformBinding Uniform() { FLegacyOriginalUniformBinding B; B.BaseIndex=Read<uint16>(); uint32 Bound=Read<uint32>(); if (Bound>1) Fail(TEXT("invalid uniform binding")); B.bBound=Bound!=0; return B; }
+    FLegacyOriginalParameter Param(bool Resource = false) { FLegacyOriginalParameter B; B.BaseIndex=Read<uint16>(); B.Size=Read<uint16>(); if (!Resource) B.BufferIndex=Read<uint16>(); return B; }
+    FLegacyOriginalPair Pair() { FLegacyOriginalPair V; V.First=Read<uint16>(); V.Second=Read<uint16>(); return V; }
     void ParameterInfo(FLegacyMaterialExpression& E)
     {
         FName N = Name(); uint8 A = Read<uint8>(); int32 I = Read<int32>();
@@ -112,7 +113,7 @@ public:
         else { Fail(TEXT("unsupported expression")); return INDEX_NONE; }
         return O.IR.Expressions.Add(MoveTemp(E));
     }
-    void Record(bool Mesh, FName VF)
+    void Record(bool Mesh, FName VF, FName ExpectedPipeline=NAME_None)
     {
         FLegacyOriginalRecord R; R.Begin=P; FName Type=Name(); R.Type=Type.ToString(); int64 End=Read<int64>();
         static const TSet<FString> Allowed = {
@@ -121,45 +122,70 @@ public:
             TEXT("TTranslucencyShadowDepthVS<TranslucencyShadowDepth_Standard>"), TEXT("TTranslucencyShadowDepthVS<TranslucencyShadowDepth_PerspectiveCorrect>"),
             TEXT("TTranslucencyShadowDepthPS<TranslucencyShadowDepth_Standard>"), TEXT("TTranslucencyShadowDepthPS<TranslucencyShadowDepth_PerspectiveCorrect>"),
             TEXT("TBasePassVSFSimpleNoLightmapLightingPolicy"), TEXT("TBasePassVSFNoLightMapPolicy"), TEXT("FConvertToUniformMeshVS"), TEXT("FConvertToUniformMeshGS"),
-            TEXT("TBasePassPSFSimpleNoLightmapLightingPolicy"), TEXT("TBasePassPSFSimpleNoLightmapLightingPolicySkylight"),
-            TEXT("TBasePassPSFNoLightMapPolicy"), TEXT("TBasePassPSFNoLightMapPolicySkylight") };
-        bool VS = R.Type.StartsWith(TEXT("TSlateMaterialShaderVS")) || R.Type.StartsWith(TEXT("TTranslucencyShadowDepthVS<")) || R.Type.StartsWith(TEXT("TBasePassVS")) || R.Type == TEXT("FConvertToUniformMeshVS");
-        bool PS = R.Type.StartsWith(TEXT("TSlateMaterialShaderPS")) || R.Type.StartsWith(TEXT("TTranslucencyShadowDepthPS<")) || R.Type.StartsWith(TEXT("TBasePassPS"));
-        bool GS = R.Type == TEXT("FConvertToUniformMeshGS");
-        if (!Allowed.Contains(R.Type) || (!VS && !PS && !GS) || End <= P || End > Limit || (Mesh == R.Type.StartsWith(TEXT("TSlateMaterialShader")))) { Fail(TEXT("invalid shader envelope")); return; }
+            TEXT("TBasePassPSFSimpleNoLightmapLightingPolicy"), TEXT("TBasePassPSFSimpleNoLightmapLightingPolicySkylight"), TEXT("TBasePassPSFNoLightMapPolicy"), TEXT("TBasePassPSFNoLightMapPolicySkylight") };
+        static const TSet<FString> PaperVS = { TEXT("FHitProxyVS"), TEXT("TLightMapDensityVSFNoLightMapPolicy"), TEXT("TDepthOnlyVS<false>"), TEXT("FVelocityVS"), TEXT("TShadowDepthVSVertexShadowDepth_PerspectiveCorrectfalse"), TEXT("TShadowDepthVSVertexShadowDepth_OutputDepthfalse"), TEXT("TShadowDepthVSVertexShadowDepth_OnePassPointLightfalse"), TEXT("TShadowDepthVSForGSVertexShadowDepth_OnePassPointLight") };
+        static const TSet<FString> PaperPS = { TEXT("FHitProxyPS"), TEXT("TLightMapDensityPSFNoLightMapPolicy"), TEXT("FVelocityPS"), TEXT("FDepthOnlyPS<false>"), TEXT("TShadowDepthPSPixelShadowDepth_PerspectiveCorrectfalse"), TEXT("TShadowDepthPSPixelShadowDepth_OnePassPointLightfalse"), TEXT("TShadowDepthPSPixelShadowDepth_NonPerspectiveCorrectfalse") };
+        bool VS = R.Type.StartsWith(TEXT("TSlateMaterialShaderVS")) || R.Type.StartsWith(TEXT("TTranslucencyShadowDepthVS<")) || R.Type.StartsWith(TEXT("TBasePassVS")) || R.Type == TEXT("FConvertToUniformMeshVS") || (bPaper2D && PaperVS.Contains(R.Type));
+        bool PS = R.Type.StartsWith(TEXT("TSlateMaterialShaderPS")) || R.Type.StartsWith(TEXT("TTranslucencyShadowDepthPS<")) || R.Type.StartsWith(TEXT("TBasePassPS")) || (bPaper2D && PaperPS.Contains(R.Type));
+        bool GS = R.Type == TEXT("FConvertToUniformMeshGS") || (bPaper2D && R.Type == TEXT("FOnePassPointShadowDepthGS"));
+        if (!(Allowed.Contains(R.Type) || (bPaper2D && (PaperVS.Contains(R.Type) || PaperPS.Contains(R.Type) || R.Type == TEXT("FOnePassPointShadowDepthGS")))) || (!VS && !PS && !GS) || End <= P || End > Limit || (Mesh == R.Type.StartsWith(TEXT("TSlateMaterialShader")))) { Fail(TEXT("invalid shader envelope")); return; }
         int32 Outer=Limit; Limit=int32(End);
-        Uniform(); Uniform(); for (int32 I=Count(); I-- > 0;) Uniform();
+        R.SceneTextures=Uniform(); R.Material=Uniform(); for (int32 I=Count(); I-- > 0;) R.CollectionBuffers.Add(Uniform());
         for (int32 I=0; I<7; ++I) if (Count()!=Counts[I]) Fail(TEXT("expression count mismatch"));
         if (Name()!=FName(TEXT("Material"))) Fail(TEXT("invalid shader layout name"));
-        uint32 Size=Read<uint32>(); TArray<uint16> Offsets; for(int32 I=Count(); I-- > 0;) Offsets.Add(Read<uint16>());
-        int32 TypeCount=Count(); for(int32 I=0; I<TypeCount; ++I) Read<uint8>();
-        if (Size>65536 || TypeCount!=Offsets.Num()) Fail(TEXT("invalid debug layout"));
-        for(uint16 Offset:Offsets) if(uint32(Offset)+8>Size) Fail(TEXT("invalid debug offset"));
-        String(); Param(true);
-        if (!Mesh) { for(int32 I=0; I<(VS?2:3); ++I) Param(); if(PS) { Param(true); Param(true); } }
+        R.LayoutSize=Read<uint32>(); for(int32 I=Count(); I-- > 0;) R.LayoutOffsets.Add(Read<uint16>());
+        int32 TypeCount=Count(); for(int32 I=0; I<TypeCount; ++I) R.LayoutTypes.Add(Read<uint8>());
+        if (R.LayoutSize>65536 || TypeCount!=R.LayoutOffsets.Num()) Fail(TEXT("invalid debug layout"));
+        for(uint16 Offset:R.LayoutOffsets) if(uint32(Offset)+8>R.LayoutSize) Fail(TEXT("invalid debug offset"));
+        R.DebugDescription=String(); R.VTFeedback=Param(true);
+        if (!Mesh) { for(int32 I=0; I<(VS?2:3); ++I) R.AdditionalParameters.Add(Param()); if(PS) { R.AdditionalParameters.Add(Param(true)); R.AdditionalParameters.Add(Param(true)); } }
         else
         {
-            Uniform(); FName V=Name(); uint8 F=Read<uint8>(), Platform=Read<uint8>(); Hash(); int64 VEnd=Read<int64>();
+            R.Pass=Uniform(); FName V=Name(); uint8 F=Read<uint8>(), Platform=Read<uint8>(); R.VFParameterSourceHash=Hash(); int64 VEnd=Read<int64>();
             if(V!=VF || F!=(VS?0:PS?3:4) || Platform!=0 || VEnd<P || VEnd>Limit) Fail(TEXT("invalid vertex factory identity"));
-            if(VS) { if(Read<uint32>()>1) Fail(TEXT("invalid speedtree flag")); Param(); }
+            if(VS) { uint32 SpeedTree=Read<uint32>(); if(SpeedTree>1) Fail(TEXT("invalid speedtree flag")); R.bSpeedTree=SpeedTree!=0; R.VFLod=Param(); }
             if(P!=VEnd) Fail(TEXT("vertex factory boundary mismatch"));
-            if(R.Type.StartsWith(TEXT("TBasePass"))) for(int32 I=0;I<4;++I) Uniform();
-            else if(R.Type.StartsWith(TEXT("TTranslucencyShadowDepthPS"))) Param();
+            if(R.Type.StartsWith(TEXT("TBasePass"))) for(int32 I=0;I<4;++I) R.AdditionalUniforms.Add(Uniform());
+            else if(R.Type.StartsWith(TEXT("TTranslucencyShadowDepthPS"))) R.AdditionalParameters.Add(Param());
+            else if(bPaper2D && R.Type.StartsWith(TEXT("TLightMapDensity"))) { for(int32 I=0;I<3;++I) R.AdditionalUniforms.Add(Uniform()); if(PS) for(int32 I=0;I<3;++I) R.AdditionalParameters.Add(Param()); }
+            else if(bPaper2D && R.Type.StartsWith(TEXT("TShadowDepthPS"))) for(int32 I=0;I<8;++I) R.AdditionalParameters.Add(Param(true));
+            else if(bPaper2D && (R.Type.StartsWith(TEXT("TShadowDepthVS")) || R.Type==TEXT("FDepthOnlyPS<false>") || R.Type==TEXT("FHitProxyPS"))) R.AdditionalParameters.Add(Param());
+            else if(bPaper2D && R.Type==TEXT("FHitProxyVS")) R.AdditionalParameters.Add(Param(true));
         }
         R.OutputHash=Hash(); if(Hash()!=O.IR.OriginalMapHash) Fail(TEXT("map hash mismatch"));
-        Name(); FName RecordVF=Name(); if(Mesh && RecordVF!=VF) Fail(TEXT("vertex factory mismatch")); Hash();
-        if(Name()!=Type) Fail(TEXT("shader type mismatch")); Read<int32>(); Hash(); R.Frequency=Read<uint32>(); uint32 Platform=Read<uint32>();
+        R.Pipeline=Name(); R.VertexFactory=Name(); if(Mesh && R.VertexFactory!=VF) Fail(TEXT("vertex factory mismatch")); R.VertexFactorySourceHash=Hash();
+        if(bPaper2D && R.Pipeline!=ExpectedPipeline) Fail(TEXT("shader pipeline identity mismatch"));
+        if(Name()!=Type) Fail(TEXT("shader type mismatch")); R.PermutationId=Read<int32>(); R.SourceHash=Hash(); R.Frequency=Read<uint32>(); uint32 Platform=Read<uint32>();
         if(R.Frequency!=(VS?0u:PS?3u:4u) || Platform) Fail(TEXT("shader target mismatch"));
-        for(int32 I=Count(); I-- > 0;) { Name(); Uniform(); }
-        Name(); Read<int32>(); uint32 RF=Read<uint32>(), RP=Read<uint32>(); FSHAHash RH=Hash();
+        for(int32 I=Count(); I-- > 0;) { FLegacyOriginalNamedUniform B; B.Name=Name(); B.Binding=Uniform(); R.UniformParameters.Add(B); }
+        R.ResourceType=Name(); R.ResourcePermutationId=Read<int32>(); uint32 RF=Read<uint32>(), RP=Read<uint32>(); FSHAHash RH=Hash();
         if(RF!=R.Frequency || RP || RH!=R.OutputHash) Fail(TEXT("shader resource mismatch"));
-        Read<uint32>(); for(int32 A=0;A<3;++A) for(int32 I=Count();I-- > 0;) { Read<uint16>(); Read<uint16>(); }
-        for(int32 I=Count();I-- > 0;) { Read<uint16>(); Read<uint16>(); for(int32 J=Count();J-- > 0;) { Read<uint16>(); Read<uint16>(); } }
+        R.InstructionCount=Read<uint32>(); for(int32 I=Count();I-- > 0;) R.UniformBuffers.Add(Pair()); for(int32 I=Count();I-- > 0;) R.Samplers.Add(Pair()); for(int32 I=Count();I-- > 0;) R.SRVs.Add(Pair());
+        for(int32 I=Count();I-- > 0;) { FLegacyOriginalLooseBuffer B; B.Header=Pair(); for(int32 J=Count();J-- > 0;) B.Parameters.Add(Pair()); R.LooseBuffers.Add(MoveTemp(B)); }
         R.UncompressedBytes=Read<uint32>(); if(R.UncompressedBytes>64*1024*1024 || Read<uint32>()!=1) Fail(TEXT("invalid library resource"));
-        for(int32 I=0;I<3;++I) if(Count()) Fail(TEXT("unsupported parameter bindings")); Read<uint32>(); Read<uint16>();
+        for(int32 I=0;I<3;++I) if(Count()) Fail(TEXT("unsupported parameter bindings")); R.BindingWord=Read<uint32>(); R.RootParameterBufferIndex=Read<uint16>();
         if(P!=End) Fail(TEXT("shader boundary mismatch")); R.End=P; O.Records.Add(MoveTemp(R)); Limit=Outer;
     }
-    void Records(bool Mesh=false, FName VF=NAME_None) { for(int32 I=Count();I-- > 0;) Record(Mesh,VF); if(Count()) Fail(TEXT("unsupported shader pipelines")); }
+    void Records(bool Mesh=false, FName VF=NAME_None)
+    {
+        for(int32 I=Count();I-- > 0;) Record(Mesh,VF);
+        int32 Pipelines=Count();
+        if(!bPaper2D || !Mesh) { if(Pipelines) Fail(TEXT("unsupported shader pipelines")); return; }
+        TSet<FName> Seen;
+        for(int32 I=0; I<Pipelines && bOk; ++I)
+        {
+            FLegacyOriginalPipeline Pipeline; Pipeline.Begin=P; Pipeline.Type=Name(); Pipeline.VertexFactory=VF;
+            TArray<FName> Expected;
+            if(Pipeline.Type==FName(TEXT("DepthNoColorOutputPipeline"))) { Expected.Add(FName(TEXT("FDepthOnlyPS<false>"))); Expected.Add(FName(TEXT("TDepthOnlyVS<false>"))); }
+            else if(Pipeline.Type==FName(TEXT("DepthNoPixelPipeline"))) Expected.Add(FName(TEXT("TDepthOnlyVS<false>")));
+            else if(Pipeline.Type==FName(TEXT("VelocityPipeline"))) { Expected.Add(FName(TEXT("FVelocityPS"))); Expected.Add(FName(TEXT("FVelocityVS"))); }
+            else { Fail(TEXT("unsupported shader pipeline")); return; }
+            if(Seen.Contains(Pipeline.Type) || Count()!=Expected.Num()) { Fail(TEXT("invalid shader pipeline stages")); return; }
+            Seen.Add(Pipeline.Type);
+            for(FName Stage:Expected) { int32 Index=O.Records.Num(); Record(true,VF,Pipeline.Type); if(!bOk) return; if(O.Records[Index].Type!=Stage.ToString()) { Fail(TEXT("shader pipeline stage mismatch")); return; } Pipeline.StageIndices.Add(Index); }
+            Pipeline.End=P; O.Pipelines.Add(MoveTemp(Pipeline));
+        }
+    }
     bool Run()
     {
         if(O.Bytes.Num()>64*1024*1024 || Read<uint32>()!=1 || Read<uint32>()!=1) return Fail(TEXT("invalid resource header"));
@@ -167,7 +193,8 @@ public:
         O.IR.QualityLevel=static_cast<EMaterialQualityLevel::Type>(Q); O.IR.FeatureLevel=static_cast<ERHIFeatureLevel::Type>(F);
         O.IR.OriginalMapHash=Hash(); if(Read<uint32>()!=0) Fail(TEXT("unsupported original platform"));
         O.FriendlyName=String(); O.MaterialPath=String(); O.IR.DebugDescription=O.FriendlyName;
-        if(!O.MaterialPath.StartsWith(TEXT("/Game/")) || !O.MaterialPath.EndsWith(TEXT(".")+O.FriendlyName)) Fail(TEXT("invalid material identity"));
+        bPaper2D=O.MaterialPath==TEXT("/Paper2D/DefaultSpriteMaterial.DefaultSpriteMaterial") && O.FriendlyName==TEXT("DefaultSpriteMaterial");
+        if(!bPaper2D && (!O.MaterialPath.StartsWith(TEXT("/Game/")) || !O.MaterialPath.EndsWith(TEXT(".")+O.FriendlyName))) Fail(TEXT("invalid material identity"));
         for(int32 A=0; A<8; ++A)
         {
             if(A==7 && Count()!=0) Fail(TEXT("unsupported VT stacks"));
