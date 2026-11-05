@@ -392,7 +392,7 @@ def build_members(props, resolver, promote=False, struct_mode=False):
     return members, notes
 
 
-def decode_params(params, resolver, enum_args=None):
+def decode_params(params, resolver, enum_args=None, owner_name=None, function_name=None):
     """Return (return_type, [arg decls]) for a decoded parameter table. A by-value enum parameter is spelled as
     the plain enum (UHT's out-of-line signature), not TEnumAsByte<E>; its decl is appended to enum_args."""
     ret = "void"
@@ -419,6 +419,12 @@ def decode_params(params, resolver, enum_args=None):
                 ctype = ctype + " const&" if ctype.endswith("*") else "const " + ctype + "&"
             else:
                 ctype = ctype + "&"
+        # The replay widget context uses the same const-pointee spelling as UE world-context APIs.
+        # Restrict this to the observed property: ConstParm alone is not generally sufficient evidence.
+        if (owner_name == "UAthenaWidgetLibrary" and function_name == "IsPlayingReplay"
+                and entry.get("name") == "WorldContextObject" and entry.get("kind") == "Object"
+                and pf == 0x10000000000082 and ctype == "UObject*"):
+            ctype = "const UObject*"
         decl = "%s %s" % (ctype, entry.get("name") or "Param%d" % len(args))
         if by_value_enum and enum_args is not None:
             enum_args.append(decl)
@@ -433,7 +439,7 @@ def decode_params(params, resolver, enum_args=None):
     return ret, args
 
 
-def build_functions(functions, resolver):
+def build_functions(functions, resolver, owner_name=None):
     out = []
     for fn in functions:
         name = fn.get("name") or "UnnamedFunction"
@@ -457,7 +463,7 @@ def build_functions(functions, resolver):
         if flags is None:
             todo.append("flags not joined (%s)" % (fn.get("note") or "ambiguous"))
         if fn.get("params") is not None:
-            ret, args = decode_params(fn["params"], resolver)
+            ret, args = decode_params(fn["params"], resolver, owner_name=owner_name, function_name=name)
         else:
             ret, args = "void", []
             todo.append("parameter table not decoded (%s)" % (fn.get("params_note") or "no FFunctionParams"))
@@ -514,7 +520,7 @@ def build_class(block, name, resolver, order, parent_entry=None):
     else:
         parent_expr = parent
     members, notes = build_members(block.get("properties") or [], resolver)
-    functions = build_functions(block.get("functions") or [], resolver)
+    functions = build_functions(block.get("functions") or [], resolver, name)
     decl_members = list(reversed(members)) if order == "declaration" else list(members)
     rep_members = [m for m in members if m["replicated"]]
     function_names = {f["name"] for f in functions}
@@ -1009,6 +1015,17 @@ def types_self_test(check):
         PARAM_ORDER = "table"
         check("params: table order kept when selected",
               decode_params(listed, Resolver({}))[1] == ["int32 Second", "int32 First"])
+        replay_context = {"name": "WorldContextObject", "kind": "Object",
+                          "property_flags": "0x10000000000082", "type_refs": {"class": "0x1"}}
+        def replay_arg(entry, owner="UAthenaWidgetLibrary", function="IsPlayingReplay", type_name="UObject"):
+            return decode_params([entry], Resolver({"0x1": type_name}),
+                                 owner_name=owner, function_name=function)[1][0]
+        check("replay context: const pointee", replay_arg(replay_context) == "const UObject* WorldContextObject")
+        check("replay context: other owner unchanged", replay_arg(replay_context, owner="UOther") == "UObject* WorldContextObject")
+        check("replay context: other function unchanged", replay_arg(replay_context, function="Other") == "UObject* WorldContextObject")
+        check("replay context: other name unchanged", replay_arg(dict(replay_context, name="Other")) == "UObject* Other")
+        check("replay context: other flags unchanged", replay_arg(dict(replay_context, property_flags="0x10000000000080")) == "UObject* WorldContextObject")
+        check("replay context: other type unchanged", replay_arg(replay_context, type_name="UActor") == "UActor* WorldContextObject")
         # The Enum's UnderlyingType record (Int kind here) is paired with the enum, not emitted as a member.
         enum_rows = [{"name": "E", "kind": "Enum", "property_flags": "0x10000000000080", "offset": 8,
                       "type_refs": {"enum": "0x1"}},
@@ -1273,6 +1290,15 @@ def static_reflected_self_test(check):
     fn = {"name": "Find", "flags": ["0x14022401"], "params": []}
     functions = build_functions_promoted([fn], resolver, set(), set(), {"Find"})
     check("static reflected function emitted from flags", len(functions) == 1 and functions[0]["static"])
+    replay_param = {"name": "WorldContextObject", "kind": "Object",
+                    "property_flags": "0x10000000000082", "type_refs": {"class": "0x1"}}
+    replay_fn = {"name": "IsPlayingReplay", "flags": ["0x14022401"], "params": [replay_param]}
+    replay_resolver = Resolver({"0x1": "UObject"})
+    replay_resolver.skipped = []
+    replay = build_functions_promoted([replay_fn], replay_resolver, set(), set(), {"IsPlayingReplay"},
+                                      owner_name="UAthenaWidgetLibrary")
+    check("promoted replay signature retains const pointee",
+          len(replay) == 1 and replay[0]["args"] == ["const UObject* WorldContextObject"])
     ctx = {"class_pkg": {"ASelfTest": "/Script/FortniteGame"}, "struct_index": {},
            "gate": None, "other_promoted": set()}
     entry = {"kind": "getter", "function": "Find", "signature": "void Find()", "static": True,
@@ -2023,7 +2049,8 @@ with open(os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_events_
 
 
 def build_functions_promoted(functions, resolver, notify_names, owner_fns, splice_names=frozenset(),
-                             blueprint_events=frozenset(), parameterized_blueprint_events=None, native_event_names=frozenset()):
+                             blueprint_events=frozenset(), parameterized_blueprint_events=None, native_event_names=frozenset(),
+                             owner_name=None):
     """Emit RPCs, RepNotify targets, snippet functions and narrowly selected observed Blueprint events.
     A function whose flags cannot be classified is recorded, since it might be an RPC."""
     emitted = []
@@ -2136,7 +2163,7 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
         resolver.wire_used = False
         resolver.used = {}
         enum_args = []
-        ret, args = decode_params(params, resolver, enum_args)
+        ret, args = decode_params(params, resolver, enum_args, owner_name, name)
         used = resolver.used
         new_tokens = resolver.tokens[mark:]
         if new_tokens:
@@ -2626,7 +2653,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
                           and e.get("function", "").endswith("_Implementation")}
     functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns,
                                          splice_names, UI_BLUEPRINT_EVENTS.get(name, frozenset()),
-                                         UI_PARAMETERIZED_BLUEPRINT_EVENTS.get(name, {}), native_event_names)
+                                         UI_PARAMETERIZED_BLUEPRINT_EVENTS.get(name, {}), native_event_names, name)
     _native_checkpoint3058_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _definition_queries_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _maps_wind_handle_policy.apply_signatures(name, block, functions, owner_fns, function_view)
