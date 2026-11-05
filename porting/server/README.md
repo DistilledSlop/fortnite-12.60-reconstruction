@@ -64,6 +64,10 @@ The handwritten `ULocalAccountSubsystem` is an unverified client integration
 point: `SelectUsername` requests this grant and exposes the selected account and
 token. It is not yet connected to the game's online login or profile systems;
 the native generator must be promoted before building it with its HTTP dependency.
+Original-client decompilation shows `UFortSignInWidget::StartSignIn` dispatching
+email and password through a native delegate at widget offset `0x410`; its binding
+site and recipient remain unidentified. This does not establish a username-only
+submission or profile-initialization path in the rebuilt client.
 
 With `--stub`, `probe_server.py` persists account mappings, profile revisions and user
 cloud files under ignored `porting/generated/local-backend-state` by default. Set
