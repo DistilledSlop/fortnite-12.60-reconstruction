@@ -59,6 +59,15 @@ struct FLegacyLocalLooseContract
 bool BuildLegacyLocalVFUniformContract(uint16 SourceRegister, uint32 SourceResourceLayoutHash,
     FLegacyLocalUniformContract& Out, FString& Error);
 
+/** The two observed Paper2D expression shapes share an independently recovered
+ * 80-byte Material ABI. Metadata must be the factory's actual expression-set
+ * metadata. This validates its complete layout; it does not evaluate expressions
+ * or establish texture ownership. Out is unchanged on failure.
+ */
+bool BuildLegacyPaper2DMaterialUniformContract(const FLegacyOriginalMaterial& Material,
+    uint16 SourceRegister, uint32 SourceResourceLayoutHash,
+    const FShaderParametersMetadata& Metadata, FLegacyLocalUniformContract& Out, FString& Error);
+
 /** Complete output-construction kernel for an original inventory occurrence.
  * ConvertedShader is one shader-manifest.json shaders[] entry, not an owner
  * occurrence, from a digest-pinned, offline-verified manifest. This kernel checks

@@ -288,6 +288,55 @@ bool BuildLegacyLocalVFUniformContract(uint16 SourceRegister, uint32 SourceResou
     return true;
 }
 
+bool BuildLegacyPaper2DMaterialUniformContract(const FLegacyOriginalMaterial& Material,
+    uint16 SourceRegister, uint32 SourceResourceLayoutHash,
+    const FShaderParametersMetadata& Metadata, FLegacyLocalUniformContract& Out, FString& Error)
+{
+    constexpr uint32 OriginalHash = 89655304;
+    const auto& IR = Material.IR;
+    if (SourceRegister >= 32 || SourceResourceLayoutHash != OriginalHash ||
+        Material.MaterialPath != TEXT("/Paper2D/DefaultSpriteMaterial.DefaultSpriteMaterial") ||
+        IR.VectorRoots.Num() != 2 || (IR.ScalarRoots.Num() != 1 && IR.ScalarRoots.Num() != 2) ||
+        IR.Texture2DParameters.Num() != 1 || IR.UniformBufferSize != 80 || IR.Resources.Num() != 4 ||
+        Metadata.GetUseCase() != FShaderParametersMetadata::EUseCase::DataDrivenUniformBuffer)
+        return Fail(Error, TEXT("unsupported original Paper2D Material expression shape"));
+    FLegacyLocalUniformContract Result;
+    Result.SourceRegister = SourceRegister; Result.ParameterName = TEXT("Material");
+    // Original FName global 148336168 is initialized from Material by 140549be0.
+    // Member construction is independently captured in 14434c060.
+    Result.OriginalStructTypeName = TEXT("Material"); Result.OriginalSize = 80;
+    Result.OriginalResourceLayoutHash = SourceResourceLayoutHash; Result.CurrentMetadata = &Metadata;
+    const auto Numeric = [&Result](const TCHAR* Name, uint32 Offset, uint32 Count)
+    {
+        auto& M = Result.OriginalMembers.AddDefaulted_GetRef();
+        M.Name = Name; M.Offset = Offset; M.BaseType = UBMT_FLOAT32;
+        M.Precision = EShaderPrecisionModifier::Half; M.Rows = 1; M.Columns = 4; M.Elements = Count;
+    };
+    const auto Resource = [&Result](const TCHAR* Name, const TCHAR* ShaderType, uint16 Offset,
+        EUniformBufferBaseType Type)
+    {
+        auto& M = Result.OriginalMembers.AddDefaulted_GetRef();
+        M.Name = Name; M.ShaderType = ShaderType; M.Offset = Offset; M.BaseType = Type;
+        M.Rows = M.Columns = 1;
+        auto& R = Result.OriginalResources.AddDefaulted_GetRef(); R.Offset = Offset; R.BaseType = Type;
+    };
+    Numeric(TEXT("VectorExpressions"), 0, 2);
+    Numeric(TEXT("ScalarExpressions"), 32, 1);
+    Resource(TEXT("Texture2D_0"), TEXT("Texture2D"), 48, UBMT_TEXTURE);
+    Resource(TEXT("Texture2D_0Sampler"), TEXT("SamplerState"), 56, UBMT_SAMPLER);
+    Resource(TEXT("Wrap_WorldGroupSettings"), TEXT("SamplerState"), 64, UBMT_SAMPLER);
+    Resource(TEXT("Clamp_WorldGroupSettings"), TEXT("SamplerState"), 72, UBMT_SAMPLER);
+    for (int32 I = 0; I < IR.Resources.Num(); ++I)
+        if (IR.Resources[I].Offset != Result.OriginalResources[I].Offset ||
+            IR.Resources[I].BaseType != Result.OriginalResources[I].BaseType)
+            return Fail(Error, TEXT("original Material IR resource layout differs from recovered contract"));
+    uint32 DerivedHash;
+    if (!OriginalResourceHash(Result, DerivedHash) || DerivedHash != OriginalHash || !SameUniform(Result))
+        return Fail(Error, TEXT("factory Material metadata differs from recovered original contract"));
+    Out = MoveTemp(Result);
+    return true;
+}
+
 bool BuildLegacyLocalVFOutput(const FLegacyOriginalRecord& Original,
     const TSharedPtr<FJsonObject>& ConvertedShader,
     const TArray<FLegacyLocalUniformContract>& UniformContracts,
