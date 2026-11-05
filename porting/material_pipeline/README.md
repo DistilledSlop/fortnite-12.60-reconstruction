@@ -333,7 +333,7 @@ After generating `apollo-d4-landscape-ingress.json`, translate and reflect its
 original shader payloads with the existing isolated vkd3d 2.0 tools:
 
 ```sh
-python3 -I porting/material_pipeline/translate_landscape_ingress.py
+python3 porting/material_pipeline/translate_landscape_ingress.py
 ```
 
 The helper independently revalidates the decoded maps, original archive and
@@ -400,6 +400,6 @@ are still pending, and VT feedback remains rejected. Original initializer and
 member-chain captures also recover `LandscapeParameters` (240 bytes, 18
 members) and `LandscapeContinuousLODParameters` (48 bytes, six members): see
 `behavior/maps_terrain_material_runtime/landscape-uniform-contract.json`. Their resource hashes agree with all 33 and 24 active original shader wrapper
-associations, respectively. The original material shader constructor binds the name
-`VTFeedbackBuffer`; its renderer binding path remains unverified, as documented
+associations, respectively. The original material shader constructor, lookup and serializer identify the
+decoded `VTFeedbackBuffer` resource field; its renderer binding path remains unverified, as documented
 in `behavior/maps_terrain_material_runtime/vt-feedback-contract.json`.

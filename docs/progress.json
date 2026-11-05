@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "531a7cebd47dab95b0967c0dd7cb282d668b32c6",
- "subject": "Prepare landscape shader output and capture VT feedback binding",
- "date": "2026-11-05T16:34:34-05:00",
+ "head": "a8c6e0e0b8031b75a99325e1f64ce9dfb9999845",
+ "subject": "Recover landscape uniform layouts and streaming callback evidence",
+ "date": "2026-11-05T16:35:13-05:00",
  "overall_pct": 29.127,
  "measured_pct": 28.257,
  "objective_pct": 28.256,

@@ -8,8 +8,34 @@
     "record_join": "Within each map, join decoded record offset to record_code_associations.location.record_offset and library_index. Twenty associations (four each for 63205..63209) have decoded vt_feedback_buffer base_index=7, resource_count=1. All five are pixel shaders.",
     "descriptor": "Each corresponding reflected SPIR-V has one D3D uav space 0 index 7, uint32 storage texel buffer (VkDescriptorType 5), no resource-table entries; mapped descriptor binding is 7 for 63206 and 11 for the others.",
     "d3d_wrapper": "Each original D3D wrapper has an empty UAV resource table and packed uavs count 8. Count is register extent, not eight independently proven descriptors.",
-    "caveat": "The original constructor establishes the parameter name, but these captures do not establish the renderer binding function or independently join that named allocation to the decoded u7 record.",
-    "original_parameter_name": "VTFeedbackBuffer: original material shader constructors at 0x143509060 and 0x1435091c0 call 0x143a822e0 with that name and the parameter map. Captures: porting/generated/apollo-material-evidence/terrain-uniform-initializers/0x143509060.c and 0x1435091c0.c."
+    "caveat": "Original constructor, lookup and serializer identify the decoded two-word field as VTFeedbackBuffer. Correlation with the unique reflected u7 is supported by the register index and resource count; renderer binding remains unverified.",
+    "original_parameter_name": "VTFeedbackBuffer: original material shader constructors at 0x143509060 and 0x1435091c0 call 0x143a822e0 with that name and the parameter map. Captures: porting/generated/apollo-material-evidence/terrain-uniform-initializers/0x143509060.c and 0x1435091c0.c.",
+    "serialization_identity": {
+      "facts": "Original constructor 0x143509060 binds VTFeedbackBuffer into object offset 0xb8. Original FMaterialShader serializer 0x1434f9590 calls 0x143a796d0 on that same offset immediately after the debug description; that helper serializes two uint16 values in order. The bind routine 0x143a822e0 passes object offsets 0 and 2 to parameter-map lookup 0x143a95870; lookup writes the second and third uint16 allocation fields there, while the first goes to a temporary. This connects the decoded two-word field to the named original parameter; the five associated pixel shader records have base index 7, count 1 and each has one reflected u7 storage texel buffer.",
+      "captures": [
+        {
+          "path": "porting/generated/apollo-material-evidence/terrain-uniform-initializers/0x143509060.c",
+          "sha256": "b2da37a269597f086c362d067a85d542b87e57150509eb6d5775a24d593adeb4"
+        },
+        {
+          "path": "porting/generated/apollo-material-evidence/material-serializer/0x1434f9590.c",
+          "sha256": "44c6c74c353927b5babbd005dc25edff81464132d27e88209731db9aca1027b8"
+        },
+        {
+          "path": "porting/generated/apollo-material-evidence/vt-bind-capture/0x143a822e0.asm",
+          "sha256": "ca068229dc52bb3de6faa3daef9eb70da3d014a0fc58963c984a3b79b08fbc4c"
+        },
+        {
+          "path": "porting/generated/apollo-material-evidence/vt-lookup-capture/0x143a95870.c",
+          "sha256": "1419f3ae080be928f3e0577eb5586ed0969880f19dc96972845448713c71dd4d"
+        },
+        {
+          "path": "porting/generated/apollo-material-evidence/vt-resource-serializer/0x143a796d0.c",
+          "sha256": "2ab74819f236937eaa4a376b7ff32e5abe1a04c3fd77a94fa6439bf047a6d7c3"
+        }
+      ],
+      "limit": "The original renderer binding path and live feedback semantics remain unverified."
+    }
   },
   "serialization_comparison": {
     "native_reader": "porting/native/Source/FortniteGame/Private/LegacyOriginalMaterialReader.cpp:49,172",
