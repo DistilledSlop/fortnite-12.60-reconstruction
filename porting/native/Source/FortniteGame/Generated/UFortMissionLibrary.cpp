@@ -18,3 +18,9 @@ bool UFortMissionLibrary::HasTags(FGameplayTagContainer& ContainerToCheck, FGame
 	return bRequireAll ? ContainerToCheck.HasAll(TagsToCheck) : ContainerToCheck.HasAny(TagsToCheck);
 }
 
+void UFortMissionLibrary::SpawnAndCollectPlayerPickups(UObject* WorldContextObject, AFortPlayerController* PlayerController, FVector StartPosition, FName LootTierGroup, int32 LootTier)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the shared bare-return native target.
+	// Original native target 0x1406801c0 returns immediately.
+}
+

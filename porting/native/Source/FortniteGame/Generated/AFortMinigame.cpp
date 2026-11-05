@@ -850,6 +850,12 @@ void AFortMinigame::ResetStats()
 	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
 }
 
+void AFortMinigame::ServerEventLogRoundEnded(AFortPlayerController* InstigatorPC, EFortMinigameEnd EndMethod, EFortMinigameState NextState)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the shared bare-return native target.
+	// Original native target 0x1406801c0 returns immediately.
+}
+
 void AFortMinigame::SetClassSlotInventory(uint8 ClassSlotIndex, TArray<FItemAndCount>& InventoryItems)
 {
 	// Native 0x1420a3c70. CONFIDENCE: high

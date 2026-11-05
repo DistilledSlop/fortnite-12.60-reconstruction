@@ -791,6 +791,11 @@ protected:
 	void ResetStats();
 public:
 
+private:
+	UFUNCTION()
+	void ServerEventLogRoundEnded(AFortPlayerController* InstigatorPC, EFortMinigameEnd EndMethod, EFortMinigameState NextState);
+public:
+
 	UFUNCTION(BlueprintCallable)
 	void SetClassSlotInventory(uint8 ClassSlotIndex, TArray<FItemAndCount>& InventoryItems);
 

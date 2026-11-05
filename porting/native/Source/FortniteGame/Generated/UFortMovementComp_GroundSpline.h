@@ -156,6 +156,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSplineDistance() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGroundSplineSpeedData GetTargetSpeeds() const;
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastTeleportToDistanceOnSpline(USplineComponent* NewTravelSpline, float Distance);
 	void MulticastTeleportToDistanceOnSpline_Implementation(USplineComponent* NewTravelSpline, float Distance);

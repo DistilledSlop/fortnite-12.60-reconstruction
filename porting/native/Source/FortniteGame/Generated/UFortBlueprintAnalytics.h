@@ -6,6 +6,13 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "EEnvironmentalItemEndReason.h"
+#include "EIDScannerResult.h"
+#include "Math/Vector.h"
+
+class AActor;
+class AFortPlayerController;
+
 #include "UFortBlueprintAnalytics.generated.h"
 
 UCLASS()
@@ -14,5 +21,11 @@ class FORTNITEGAME_API UFortBlueprintAnalytics : public UBlueprintFunctionLibrar
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static void FireAnalyticEventEnvironmentalItemUsed(AFortPlayerController* FortPC, AActor* EnvironmentalItem, float SessionLength, EEnvironmentalItemEndReason SessionEndReason, AActor* OptionalSecondaryItem);
+
+	UFUNCTION(BlueprintCallable)
+	static void FireAnalyticEventItemIDScannerUsed(AFortPlayerController* FortPC, AActor* ConnectedActor, FVector ScanneraPos, EIDScannerResult IdScannerResult);
+
 };
 

@@ -1,0 +1,18 @@
+[
+  {
+    "class": "UFortMovementComp_GroundSpline",
+    "function": "GetTargetSpeeds",
+    "kind": "exec",
+    "signature": "FGroundSplineSpeedData GetTargetSpeeds() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage024_new/UFortMovementComp_GroundSpline_GetTargetSpeeds.inc",
+    "address": "0x1429f7ba0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Wrapper copies 20 bytes at 0x198, matching reflected FGroundSplineSpeedData TargetSpeeds."
+  }
+]

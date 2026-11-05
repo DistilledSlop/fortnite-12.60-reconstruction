@@ -107,5 +107,10 @@ protected:
 	bool GetZoneCompleted() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetZoneCompleted(bool bValue);
+public:
+
 };
 

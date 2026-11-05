@@ -7,9 +7,12 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 
 #include "GameplayTagContainer.h"
+#include "Math/Vector.h"
 
 class ABuildingActor;
 class AFortPlacementActor;
+class AFortPlayerController;
+class UObject;
 
 #include "UFortMissionLibrary.generated.h"
 
@@ -24,6 +27,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	static bool HasTags(FGameplayTagContainer& ContainerToCheck, FGameplayTagContainer& TagsToCheck, bool bRequireAll, bool bCountEmptyAsMatch);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static void SpawnAndCollectPlayerPickups(UObject* WorldContextObject, AFortPlayerController* PlayerController, FVector StartPosition, FName LootTierGroup, int32 LootTier);
 
 };
 

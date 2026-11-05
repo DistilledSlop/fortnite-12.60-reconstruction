@@ -25,6 +25,12 @@ float UFortMovementComp_GroundSpline::GetSplineDistance() const
 	return NativeRecoveredFloat_0x1c8;
 }
 
+FGroundSplineSpeedData UFortMovementComp_GroundSpline::GetTargetSpeeds() const
+{
+	// CONFIDENCE: high; native wrapper copies the reflected TargetSpeeds field.
+	return TargetSpeeds;
+}
+
 void UFortMovementComp_GroundSpline::MulticastTeleportToDistanceOnSpline_Implementation(USplineComponent* NewTravelSpline, float Distance)
 {
 	// Body not recovered: reflection-derived stub.

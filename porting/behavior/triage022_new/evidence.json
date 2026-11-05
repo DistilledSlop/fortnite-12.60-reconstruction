@@ -1,0 +1,38 @@
+[
+  {
+    "function": "ServerEventLogRoundEnded",
+    "wrapper_capture": "porting/generated/native-triage022/0x1429c5320.c",
+    "assembly": "porting/generated/native-triage022/0x1429c5320.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "behavior": "Wrapper decodes parameters then calls shared bare-return function 0x1406801c0; no result or output parameters.",
+    "caveat": "Parameter qualifiers and declaration compatibility require generator review.",
+    "class": "AFortMinigame"
+  },
+  {
+    "function": "SpawnAndCollectPlayerPickups",
+    "wrapper_capture": "porting/generated/native-triage022/0x1429eba10.c",
+    "assembly": "porting/generated/native-triage022/0x1429eba10.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "behavior": "Wrapper decodes parameters then calls shared bare-return function 0x1406801c0; no result or output parameters.",
+    "caveat": "Parameter qualifiers and declaration compatibility require generator review.",
+    "class": "UFortMissionLibrary"
+  },
+  {
+    "function": "FireAnalyticEventEnvironmentalItemUsed",
+    "wrapper_capture": "porting/generated/native-triage022/0x142846720.c",
+    "assembly": "porting/generated/native-triage022/0x142846720.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "behavior": "Wrapper decodes parameters then calls shared bare-return function 0x1406801c0; no result or output parameters.",
+    "caveat": "Parameter qualifiers and declaration compatibility require generator review.",
+    "class": "UFortBlueprintAnalytics"
+  },
+  {
+    "function": "FireAnalyticEventItemIDScannerUsed",
+    "wrapper_capture": "porting/generated/native-triage022/0x1428468a0.c",
+    "assembly": "porting/generated/native-triage022/0x1428468a0.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "behavior": "Wrapper decodes parameters then calls shared bare-return function 0x1406801c0; no result or output parameters.",
+    "caveat": "Parameter qualifiers and declaration compatibility require generator review.",
+    "class": "UFortBlueprintAnalytics"
+  }
+]
