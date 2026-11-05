@@ -360,4 +360,12 @@ factory retains separate maps for the original regular, XY-offset and fixed-grid
 landscape vertex factories, including each factory's pipelines and shader
 identities. The existing LocalVF entry point retains its restricted contract.
 Neither factory installs shaders on a landscape owner or supplies live vertex
-factory, material, view or pass bindings. The combined client build is pending.
+factory, material, view or pass bindings. The combined Linux Development client build passed all 886 actions.
+
+The native record-reader extension also preserves the original landscape VS
+parameters, grass and virtual texture shader records, and the three observed
+mesh pipeline types. Support is bounded to the original `M_CommonLandscape`
+identity. Its incremental Linux client build passed; execution against both
+original resources remains unverified. This does
+not yet connect these records to converted output construction or landscape
+owner installation.

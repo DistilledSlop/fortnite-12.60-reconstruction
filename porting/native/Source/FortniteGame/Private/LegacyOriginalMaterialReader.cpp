@@ -9,7 +9,7 @@ class FReader
     FString& Error;
     int32 P = 0, Limit, Nodes = 0;
     int32 Counts[7] = {};
-    bool bOk = true, bPaper2D = false;
+    bool bOk = true, bPaper2D = false, bLandscape = false;
     struct FPendingTextureSize { int32 Node; FLegacyMaterialTextureParameter Texture; };
     TArray<FPendingTextureSize> PendingTextureSizes;
 public:
@@ -139,10 +139,21 @@ public:
             TEXT("TBasePassPSFSimpleNoLightmapLightingPolicy"), TEXT("TBasePassPSFSimpleNoLightmapLightingPolicySkylight"), TEXT("TBasePassPSFNoLightMapPolicy"), TEXT("TBasePassPSFNoLightMapPolicySkylight") };
         static const TSet<FString> PaperVS = { TEXT("FHitProxyVS"), TEXT("TLightMapDensityVSFNoLightMapPolicy"), TEXT("TDepthOnlyVS<false>"), TEXT("FVelocityVS"), TEXT("TShadowDepthVSVertexShadowDepth_PerspectiveCorrectfalse"), TEXT("TShadowDepthVSVertexShadowDepth_OutputDepthfalse"), TEXT("TShadowDepthVSVertexShadowDepth_OnePassPointLightfalse"), TEXT("TShadowDepthVSForGSVertexShadowDepth_OnePassPointLight") };
         static const TSet<FString> PaperPS = { TEXT("FHitProxyPS"), TEXT("TLightMapDensityPSFNoLightMapPolicy"), TEXT("FVelocityPS"), TEXT("FDepthOnlyPS<false>"), TEXT("TShadowDepthPSPixelShadowDepth_PerspectiveCorrectfalse"), TEXT("TShadowDepthPSPixelShadowDepth_OnePassPointLightfalse"), TEXT("TShadowDepthPSPixelShadowDepth_NonPerspectiveCorrectfalse") };
-        bool VS = R.Type.StartsWith(TEXT("TSlateMaterialShaderVS")) || R.Type.StartsWith(TEXT("TTranslucencyShadowDepthVS<")) || R.Type.StartsWith(TEXT("TBasePassVS")) || R.Type == TEXT("FConvertToUniformMeshVS") || (bPaper2D && PaperVS.Contains(R.Type));
-        bool PS = R.Type.StartsWith(TEXT("TSlateMaterialShaderPS")) || R.Type.StartsWith(TEXT("TTranslucencyShadowDepthPS<")) || R.Type.StartsWith(TEXT("TBasePassPS")) || (bPaper2D && PaperPS.Contains(R.Type));
-        bool GS = R.Type == TEXT("FConvertToUniformMeshGS") || (bPaper2D && R.Type == TEXT("FOnePassPointShadowDepthGS"));
-        if (!(Allowed.Contains(R.Type) || (bPaper2D && (PaperVS.Contains(R.Type) || PaperPS.Contains(R.Type) || R.Type == TEXT("FOnePassPointShadowDepthGS")))) || (!VS && !PS && !GS) || End <= P || End > Limit || (Mesh == R.Type.StartsWith(TEXT("TSlateMaterialShader")))) { Fail(TEXT("invalid shader envelope")); return; }
+        // Only shader types present in the verified M_CommonLandscape fixture.
+        static const TSet<FString> LandscapeVS = {
+            TEXT("FHitProxyVS"), TEXT("FLandscapeGrassWeightVS"), TEXT("TLightMapDensityVSFNoLightMapPolicy"), TEXT("TLightMapDensityVSFDummyLightMapPolicy"),
+            TEXT("TDepthOnlyVS<false>"), TEXT("FVelocityVS"), TEXT("TShadowDepthVSVertexShadowDepth_PerspectiveCorrectfalse"), TEXT("TShadowDepthVSVertexShadowDepth_OutputDepthfalse"),
+            TEXT("TShadowDepthVSVertexShadowDepth_OnePassPointLightfalse"), TEXT("TShadowDepthVSForGSVertexShadowDepth_OnePassPointLight"),
+            TEXT("TBasePassVSFSimpleDirectionalLightLightingPolicy"), TEXT("TVirtualTextureVSWorldHeight"), TEXT("TVirtualTextureVSBaseColor"), TEXT("TVirtualTextureVSBaseColorNormalSpecular") };
+        static const TSet<FString> LandscapePS = {
+            TEXT("FHitProxyPS"), TEXT("FLandscapeGrassWeightPS"), TEXT("TLightMapDensityPSFNoLightMapPolicy"), TEXT("TLightMapDensityPSFDummyLightMapPolicy"),
+            TEXT("FVelocityPS"), TEXT("FDepthOnlyPS<false>"), TEXT("TShadowDepthPSPixelShadowDepth_PerspectiveCorrectfalse"),
+            TEXT("TBasePassPSFSimpleDirectionalLightLightingPolicy"), TEXT("TBasePassPSFSimpleDirectionalLightLightingPolicySkylight"),
+            TEXT("TVirtualTexturePSWorldHeight"), TEXT("TVirtualTexturePSBaseColor"), TEXT("TVirtualTexturePSBaseColorNormalSpecular") };
+        bool VS = R.Type.StartsWith(TEXT("TSlateMaterialShaderVS")) || R.Type.StartsWith(TEXT("TTranslucencyShadowDepthVS<")) || R.Type.StartsWith(TEXT("TBasePassVS")) || R.Type == TEXT("FConvertToUniformMeshVS") || ((bPaper2D && PaperVS.Contains(R.Type)) || (bLandscape && LandscapeVS.Contains(R.Type)));
+        bool PS = R.Type.StartsWith(TEXT("TSlateMaterialShaderPS")) || R.Type.StartsWith(TEXT("TTranslucencyShadowDepthPS<")) || R.Type.StartsWith(TEXT("TBasePassPS")) || ((bPaper2D && PaperPS.Contains(R.Type)) || (bLandscape && LandscapePS.Contains(R.Type)));
+        bool GS = R.Type == TEXT("FConvertToUniformMeshGS") || ((bPaper2D || bLandscape) && R.Type == TEXT("FOnePassPointShadowDepthGS"));
+        if (!(Allowed.Contains(R.Type) || (bPaper2D && (PaperVS.Contains(R.Type) || PaperPS.Contains(R.Type) || R.Type == TEXT("FOnePassPointShadowDepthGS"))) || (bLandscape && (LandscapeVS.Contains(R.Type) || LandscapePS.Contains(R.Type) || R.Type == TEXT("FOnePassPointShadowDepthGS")))) || (!VS && !PS && !GS) || End <= P || End > Limit || (Mesh == R.Type.StartsWith(TEXT("TSlateMaterialShader")))) { Fail(TEXT("invalid shader envelope")); return; }
         int32 Outer=Limit; Limit=int32(End);
         R.SceneTextures=Uniform(); R.Material=Uniform(); for (int32 I=Count(); I-- > 0;) R.CollectionBuffers.Add(Uniform());
         for (int32 I=0; I<7; ++I) if (Count()!=Counts[I]) Fail(TEXT("expression count mismatch"));
@@ -157,18 +168,24 @@ public:
         {
             R.Pass=Uniform(); FName V=Name(); uint8 F=Read<uint8>(), Platform=Read<uint8>(); R.VFParameterSourceHash=Hash(); int64 VEnd=Read<int64>();
             if(V!=VF || F!=(VS?0:PS?3:4) || Platform!=0 || VEnd<P || VEnd>Limit) Fail(TEXT("invalid vertex factory identity"));
-            if(VS) { uint32 SpeedTree=Read<uint32>(); if(SpeedTree>1) Fail(TEXT("invalid speedtree flag")); R.bSpeedTree=SpeedTree!=0; R.VFLod=Param(); }
+            if(VS && VF==FName(TEXT("FLocalVertexFactory"))) { uint32 SpeedTree=Read<uint32>(); if(SpeedTree>1) Fail(TEXT("invalid speedtree flag")); R.bSpeedTree=SpeedTree!=0; R.VFLod=Param(); }
+            else if(VS && bLandscape)
+            {
+                R.LandscapeLodValues=Param(); R.LandscapeForcedLod=Param(); R.LandscapeLodTessellation=Param();
+                R.LandscapeNeighborSectionLod=Param(); R.LandscapeLodBias=Param(); R.LandscapeSectionLods=Param();
+            }
             if(P!=VEnd) Fail(TEXT("vertex factory boundary mismatch"));
             if(R.Type.StartsWith(TEXT("TBasePass"))) for(int32 I=0;I<4;++I) R.AdditionalUniforms.Add(Uniform());
             else if(R.Type.StartsWith(TEXT("TTranslucencyShadowDepthPS"))) R.AdditionalParameters.Add(Param());
-            else if(bPaper2D && R.Type.StartsWith(TEXT("TLightMapDensity"))) { for(int32 I=0;I<3;++I) R.AdditionalUniforms.Add(Uniform()); if(PS) for(int32 I=0;I<3;++I) R.AdditionalParameters.Add(Param()); }
-            else if(bPaper2D && R.Type.StartsWith(TEXT("TShadowDepthPS"))) for(int32 I=0;I<8;++I) R.AdditionalParameters.Add(Param(true));
-            else if(bPaper2D && (R.Type.StartsWith(TEXT("TShadowDepthVS")) || R.Type==TEXT("FDepthOnlyPS<false>") || R.Type==TEXT("FHitProxyPS"))) R.AdditionalParameters.Add(Param());
-            else if(bPaper2D && R.Type==TEXT("FHitProxyVS")) R.AdditionalParameters.Add(Param(true));
+            else if((bPaper2D || bLandscape) && R.Type.StartsWith(TEXT("TLightMapDensity"))) { for(int32 I=0;I<3;++I) R.AdditionalUniforms.Add(Uniform()); if(PS) for(int32 I=0;I<3;++I) R.AdditionalParameters.Add(Param()); }
+            else if((bPaper2D || bLandscape) && R.Type.StartsWith(TEXT("TShadowDepthPS"))) for(int32 I=0;I<8;++I) R.AdditionalParameters.Add(Param(true));
+            else if((bPaper2D || bLandscape) && (R.Type.StartsWith(TEXT("TShadowDepthVS")) || R.Type==TEXT("FDepthOnlyPS<false>") || R.Type==TEXT("FHitProxyPS"))) R.AdditionalParameters.Add(Param());
+            else if((bPaper2D || bLandscape) && R.Type==TEXT("FHitProxyVS")) R.AdditionalParameters.Add(Param(true));
+            else if(bLandscape && (R.Type==TEXT("FLandscapeGrassWeightVS") || R.Type==TEXT("FLandscapeGrassWeightPS"))) R.AdditionalParameters.Add(Param());
         }
         R.OutputHash=Hash(); if(Hash()!=O.IR.OriginalMapHash) Fail(TEXT("map hash mismatch"));
         R.Pipeline=Name(); R.VertexFactory=Name(); if(Mesh && R.VertexFactory!=VF) Fail(TEXT("vertex factory mismatch")); R.VertexFactorySourceHash=Hash();
-        if(bPaper2D && R.Pipeline!=ExpectedPipeline) Fail(TEXT("shader pipeline identity mismatch"));
+        if((bPaper2D || bLandscape) && R.Pipeline!=ExpectedPipeline) Fail(TEXT("shader pipeline identity mismatch"));
         if(Name()!=Type) Fail(TEXT("shader type mismatch")); R.PermutationId=Read<int32>(); R.SourceHash=Hash(); R.Frequency=Read<uint32>(); uint32 Platform=Read<uint32>();
         if(R.Frequency!=(VS?0u:PS?3u:4u) || Platform) Fail(TEXT("shader target mismatch"));
         for(int32 I=Count(); I-- > 0;) { FLegacyOriginalNamedUniform B; B.Name=Name(); B.Binding=Uniform(); R.UniformParameters.Add(B); }
@@ -184,7 +201,7 @@ public:
     {
         for(int32 I=Count();I-- > 0;) Record(Mesh,VF);
         int32 Pipelines=Count();
-        if(!bPaper2D || !Mesh) { if(Pipelines) Fail(TEXT("unsupported shader pipelines")); return; }
+        if((!bPaper2D && !bLandscape) || !Mesh) { if(Pipelines) Fail(TEXT("unsupported shader pipelines")); return; }
         TSet<FName> Seen;
         for(int32 I=0; I<Pipelines && bOk; ++I)
         {
@@ -208,6 +225,7 @@ public:
         O.IR.OriginalMapHash=Hash(); if(Read<uint32>()!=0) Fail(TEXT("unsupported original platform"));
         O.FriendlyName=String(); O.MaterialPath=String(); O.IR.DebugDescription=O.FriendlyName;
         bPaper2D=O.MaterialPath==TEXT("/Paper2D/DefaultSpriteMaterial.DefaultSpriteMaterial") && O.FriendlyName==TEXT("DefaultSpriteMaterial");
+        bLandscape=O.MaterialPath==TEXT("/Game/Athena/Apollo/Environments/Landscape/Materials/Biome/LandscapeBiomeMaterials/M_CommonLandscape.M_CommonLandscape") && O.FriendlyName==TEXT("M_CommonLandscape");
         if(!bPaper2D && (!O.MaterialPath.StartsWith(TEXT("/Game/")) || !O.MaterialPath.EndsWith(TEXT(".")+O.FriendlyName))) Fail(TEXT("invalid material identity"));
         for(int32 A=0; A<8; ++A)
         {
@@ -247,7 +265,9 @@ public:
         O.IR.UsedSceneTextures=O.UsedSceneTextures; O.IR.EstimatedTextureSamplesVS=O.TextureSamplesVS; O.IR.EstimatedTextureSamplesPS=O.TextureSamplesPS; O.IR.EstimatedVirtualTextureLookups=O.VirtualTextureLookups; O.IR.UsedUVScalars=O.UVScalars; O.IR.UsedCustomInterpolatorScalars=O.CustomInterpolatorScalars; O.IR.RuntimeVirtualTextureOutputAttributeMask=O.VirtualTextureMask; O.IR.CompilationFlags=O.Flags;
         if(O.Flags&0x80) Fail(TEXT("invalid compilation flags"));
         O.IR.DebugDescription=String(); Records(); int32 Meshes=Count();
-        for(int32 I=0;I<Meshes;++I) { FName VF=Name(); if(VF!=FName(TEXT("FLocalVertexFactory"))) Fail(TEXT("unsupported vertex factory")); Records(true,VF); }
+        for(int32 I=0;I<Meshes;++I) { FName VF=Name();
+            const bool bLandscapeVF=VF==FName(TEXT("FLandscapeVertexFactory")) || VF==FName(TEXT("FLandscapeXYOffsetVertexFactory")) || VF==FName(TEXT("FLandscapeFixedGridVertexFactory"));
+            if(bLandscape ? !bLandscapeVF : VF!=FName(TEXT("FLocalVertexFactory"))) Fail(TEXT("unsupported vertex factory")); Records(true,VF); }
         if(Read<uint32>()!=1 || P!=Limit) Fail(TEXT("resource boundary mismatch"));
         return bOk;
     }

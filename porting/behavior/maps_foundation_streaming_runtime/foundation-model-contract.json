@@ -1,5 +1,5 @@
 {
-  "status": "promoted_source_build_pending",
+  "status": "promoted_source_client_build_passed",
   "scope": "Reflected data model prerequisite only; no streaming behavior is implemented.",
   "class": {
     "name": "AFortHLODSMActor",
@@ -22,7 +22,15 @@
   },
   "promotion": "porting/promote_native_classes.sh completed successfully; generated ABuildingFoundation::StreamingData, AFortWorldSettings::BuildingFoundationStreamingData, FBuildingFoundationStreamingData::ProxyInfo and ChildStreamingDataIndices inspected.",
   "limitations": [
-    "The reflected source model is emitted; compilation and original streaming runtime behavior are not established by promotion.",
+    "The reflected source model passes the Linux client build; original serialized loading and streaming runtime behavior are not established by compilation.",
     "Shared streaming command/state, callbacks, HLOD behavior and original serialized loading still require reconstruction."
-  ]
+  ],
+  "build": {
+    "target": "FortniteLinux Linux Development",
+    "source_commit": "d957c627",
+    "exit_code": 0,
+    "actions": 886,
+    "execution_seconds": 334.33,
+    "log": "porting/generated/apollo-material-evidence/landscape-vt-factory-client.build.log"
+  }
 }

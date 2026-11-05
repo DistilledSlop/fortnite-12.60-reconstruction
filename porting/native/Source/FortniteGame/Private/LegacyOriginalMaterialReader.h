@@ -24,6 +24,8 @@ struct FLegacyOriginalRecord
     TArray<FLegacyOriginalUniformBinding> CollectionBuffers, AdditionalUniforms;
     TArray<FLegacyOriginalParameter> AdditionalParameters;
     FLegacyOriginalParameter VTFeedback, VFLod;
+    FLegacyOriginalParameter LandscapeLodValues, LandscapeForcedLod, LandscapeLodTessellation;
+    FLegacyOriginalParameter LandscapeNeighborSectionLod, LandscapeLodBias, LandscapeSectionLods;
     bool bSpeedTree = false;
     uint32 LayoutSize = 0, InstructionCount = 0, BindingWord = 0;
     uint16 RootParameterBufferIndex = 0;
