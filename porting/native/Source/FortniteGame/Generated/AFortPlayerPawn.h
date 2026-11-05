@@ -1409,7 +1409,13 @@ public:
 	UFXSystemComponent* GetActivePlayerHandSplashInWaterComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFXSystemComponent* GetActivePlayerInWaterComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFXSystemComponent* GetActivePlayerJumpSplashInWaterComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFXSystemComponent* GetActivePlayerSwimmingComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFXSystemComponent* GetActivePlayerWaterBoostComponent() const;
@@ -1530,6 +1536,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInVortex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsNiagaraProceduralWaterSim() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsNiagaraSimpleWaterSim() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsParachuteForcedOpen() const;

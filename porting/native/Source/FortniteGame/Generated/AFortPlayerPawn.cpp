@@ -6,6 +6,7 @@
 #include "AFortPlayerState.h"
 #include "EFortCustomMovement.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "SkeletalMeshComponentBudgeted.h"
 #include "UFortFootstepAudioBank.h"
 #include "UFortMovementComp_Character.h"
@@ -97,6 +98,21 @@ UFXSystemComponent* AFortPlayerPawn::GetActivePlayerHandSplashInWaterComponent()
 	return NiagaraPlayerHandSplashInWater;
 }
 
+UFXSystemComponent* AFortPlayerPawn::GetActivePlayerInWaterComponent() const
+{
+	// CONFIDENCE: HIGH
+	extern int32 GFortPlayerWaterType;
+	if (GFortPlayerWaterType == 1)
+	{
+	    return NiagaraPlayerStandingInWater;
+	}
+	if (GFortPlayerWaterType == 2)
+	{
+	    return nullptr;
+	}
+	return PSC_PlayerInWater;
+}
+
 UFXSystemComponent* AFortPlayerPawn::GetActivePlayerJumpSplashInWaterComponent() const
 {
 	// Behaviour snippet: AFortPlayerPawn::GetActivePlayerJumpSplashInWaterComponent (body only; spliced into the generated member function).
@@ -107,6 +123,21 @@ UFXSystemComponent* AFortPlayerPawn::GetActivePlayerJumpSplashInWaterComponent()
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return NiagaraPlayerJumpSplashInWater;
+}
+
+UFXSystemComponent* AFortPlayerPawn::GetActivePlayerSwimmingComponent() const
+{
+	// CONFIDENCE: HIGH
+	extern int32 GFortPlayerWaterType;
+	if (GFortPlayerWaterType == 1)
+	{
+	    return NiagaraPlayerSwimmingInWater;
+	}
+	if (GFortPlayerWaterType == 2)
+	{
+	    return nullptr;
+	}
+	return PSC_PlayerInWaterSurfaceSwimming;
 }
 
 UFXSystemComponent* AFortPlayerPawn::GetActivePlayerWaterBoostComponent() const
@@ -500,6 +531,20 @@ bool AFortPlayerPawn::IsInVortex() const
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bIsInVortex;
+}
+
+bool AFortPlayerPawn::IsNiagaraProceduralWaterSim() const
+{
+	// CONFIDENCE: HIGH
+	extern int32 GFortPlayerWaterType;
+	return GFortPlayerWaterType == 2;
+}
+
+bool AFortPlayerPawn::IsNiagaraSimpleWaterSim() const
+{
+	// CONFIDENCE: HIGH
+	extern int32 GFortPlayerWaterType;
+	return GFortPlayerWaterType == 1;
 }
 
 bool AFortPlayerPawn::IsParachuteForcedOpen() const

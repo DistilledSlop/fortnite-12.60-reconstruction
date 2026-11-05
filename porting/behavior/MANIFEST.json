@@ -59566,5 +59566,69 @@
     "confidence": "high",
     "status": "ported",
     "includes": []
+  },
+  {
+    "function": "IsNiagaraProceduralWaterSim",
+    "kind": "exec",
+    "signature": "bool IsNiagaraProceduralWaterSim() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/player_water_queries_recovery_runtime/IsNiagaraProceduralWaterSim.inc",
+    "address": "0x142a7d2f0",
+    "native_body_address": "0x142331900",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Requires WaterConsoleVariable.cpp compiled exactly once in FortniteGame.",
+    "class": "AFortPlayerPawn"
+  },
+  {
+    "function": "IsNiagaraSimpleWaterSim",
+    "kind": "exec",
+    "signature": "bool IsNiagaraSimpleWaterSim() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/player_water_queries_recovery_runtime/IsNiagaraSimpleWaterSim.inc",
+    "address": "0x142a7d320",
+    "native_body_address": "0x142331920",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Requires WaterConsoleVariable.cpp compiled exactly once in FortniteGame.",
+    "class": "AFortPlayerPawn"
+  },
+  {
+    "function": "GetActivePlayerInWaterComponent",
+    "kind": "exec",
+    "signature": "UFXSystemComponent* GetActivePlayerInWaterComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/player_water_queries_recovery_runtime/GetActivePlayerInWaterComponent.inc",
+    "address": "0x142a7bb50",
+    "native_body_address": "0x142318e80",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Particles/ParticleSystemComponent.h"
+    ],
+    "notes": "Requires WaterConsoleVariable.cpp compiled exactly once in FortniteGame.",
+    "class": "AFortPlayerPawn"
+  },
+  {
+    "function": "GetActivePlayerSwimmingComponent",
+    "kind": "exec",
+    "signature": "UFXSystemComponent* GetActivePlayerSwimmingComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/player_water_queries_recovery_runtime/GetActivePlayerSwimmingComponent.inc",
+    "address": "0x142a7bba0",
+    "native_body_address": "0x142318ec0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Particles/ParticleSystemComponent.h"
+    ],
+    "notes": "Requires WaterConsoleVariable.cpp compiled exactly once in FortniteGame.",
+    "class": "AFortPlayerPawn"
   }
 ]

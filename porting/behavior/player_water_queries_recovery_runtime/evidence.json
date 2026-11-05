@@ -1,0 +1,8 @@
+{
+  "scope": "Four AFortPlayerPawn water-mode queries; source lifts, integration and build pending.",
+  "wrappers": "porting/generated/native96-broad/0x142a7d2f0.c, 0x142a7d320.c, 0x142a7bb50.c, 0x142a7bba0.c",
+  "bodies": "porting/generated/callee_probe/blocking/0x142331900.c, 0x142331920.c, 0x142318e80.c, 0x142318ec0.c",
+  "global_and_fields": "porting/behavior/pawn_water290_runtime/native-evidence.json",
+  "initial_value": "The original PE .data section contains little-endian 01 00 00 00 at RVA 0x78c4478 (VA 0x1478c4478); this is the registration backing int32. The executable was read directly and is not included in Git.",
+  "integration": "WaterConsoleVariable.cpp must be compiled exactly once into FortniteGame, and its global must be shared by all four bodies and any future readers/writers. The source registers the variable at static initialization, with the original name, help and flags. Confirm there is no duplicate registration when integrating. The global registration and proposed bodies have not been built or exercised."
+}
