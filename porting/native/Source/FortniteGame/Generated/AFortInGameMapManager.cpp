@@ -3,6 +3,26 @@
 #include "FTeamMapExplorationEvent.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortInGameMapManager::AllowShowMainMap(bool bAllowShow)
+{
+	// CONFIDENCE: HIGH
+	{
+	    if (NativeMainMapVisible_0x231 != static_cast<uint8>(bAllowShow))
+	    {
+	        NativeMainMapVisible_0x231 = bAllowShow;
+	        OnAllowShowMainMapChanged.Broadcast(bAllowShow);
+	    }
+	}
+}
+
+void AFortInGameMapManager::AllowShowMiniMap(bool bAllowShow)
+{
+	// CONFIDENCE: HIGH
+	{
+	    NativeMiniMapVisible_0x230 = bAllowShow;
+	}
+}
+
 void AFortInGameMapManager::BroadcastExplorationEvents_Implementation(const TArray<FTeamMapExplorationEvent>& Events)
 {
 	// CONFIDENCE: high. Native target 0x141ecbc10.
@@ -46,6 +66,14 @@ void AFortInGameMapManager::ServerClearAllFog()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+bool AFortInGameMapManager::ShouldShowMainMap()
+{
+	// CONFIDENCE: HIGH
+	{
+	    return NativeMainMapVisible_0x231 != 0;
+	}
 }
 
 void AFortInGameMapManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

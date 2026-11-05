@@ -1,0 +1,113 @@
+{
+  "status": "source counterpart draft; not built or runtime validated; not integrated",
+  "original_class": "ULandscapeLODStreamingProxy, 0x50 bytes, UStreamableRenderAsset 4.25-era API",
+  "methods": {
+    "0x143ac7840": "constructor: outer cast to landscape component, pending update null, cached resident LODs 1",
+    "0x143ac8bb0": "CalcCumulativeLODSize: sums unsigned 32-bit token sizes from last streaming LOD down through count - NumLODs + 1",
+    "0x143aca920": "GetNumMipsForStreaming: streaming LOD count + 1",
+    "0x143aca8e0": "GetMipDataFilename: copy cached filename only for an in-range streaming index",
+    "0x143acac50": "IsReadyForStreaming: cached render data pointer is non-null",
+    "0x143afae90": "GetNumResidentMips: total LODs minus render data first LOD, or streaming LOD count if no render data",
+    "0x143aca930": "GetNumRequestedMips: pending requested count unless absent or cancelled; otherwise cached resident count",
+    "0x143ac8c00": "CancelPendingMipChangeRequest: false if no update, otherwise abort if not already cancelled and return true",
+    "0x143acaae0": "HasPendingUpdate: pending pointer non-null",
+    "0x143acaaf0": "IsPendingUpdateLocked: pending task state equals locked",
+    "0x143ace140": "UpdateStreamingStatus: abort on engine exit or missing render data; tick with render/threaded and begin-destroy/async selection; release on completion; return true while in flight"
+  },
+  "unlifted": {
+    "0x143acaba0": "Same update/tick/release sequence with inverted result; caller and exact lifecycle method mapping need confirmation.",
+    "0x143acdcb0": "StreamOut checks streamability, no pending update, render data and requested count less than resident, then constructs original 0x110-byte mobile stream-out update. Constructor/body unavailable.",
+    "0x143acdc00": "StreamIn checks streamability, no pending update, render data and requested count greater than resident, then constructs original 0x220-byte mobile stream-in update with priority. Constructor/body unavailable."
+  },
+  "dependencies": [
+    "Recover the component mobile platform data: 8-byte streaming entries containing uint32 size, cached render data, and cached filename, with original serialization and lifetimes.",
+    "Recover mobile render data including first LOD, render resource setup and streaming lifecycle.",
+    "Recover the 12.60 mobile stream-in and stream-out FRenderAssetUpdate subclasses and their IO, render-thread, cancellation and resource-finalization behavior; 4.26 implementations are not proof of original behavior.",
+    "Add appropriate original-era proxy declaration and TRefCountPtr<FRenderAssetUpdate> PendingUpdate; establish remaining virtual mappings before integrating."
+  ],
+  "caveats": [
+    "Original binary uses cached resident byte directly; draft deliberately avoids the editor-dependent GetCachedNumResidentLODs accessor.",
+    "No bounds normalization is added to the cumulative size calculation; callers must satisfy the original precondition.",
+    "4.26 platform field names are descriptive counterparts, not evidence that its memory layout or resource state matches 12.60.",
+    "Raw capture prototypes are unresolved; parameter types and method names are inferred from UE 4.25 interface and corresponding behavior.",
+    "The draft uses the current int32 cumulative-size interface; the original decompile accumulates and returns a 64-bit value. Confirm the original call contract before integrating size narrowing."
+  ],
+  "captures": [
+    {
+      "address": "0x143ac7840",
+      "path": "porting/generated/maps-original-recovery/maps-original-next/ULandscapeLODStreamingProxy/NativeConstructor__143ac7840.c",
+      "sha256": "cf85cf76f9cdab7c317eae7b1e2fea90f2c11d9174ec8c117def4395aba785fa"
+    },
+    {
+      "address": "0x143ac8bb0",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143ac8bb0__143ac8bb0.c",
+      "sha256": "ca465b357aa665c32d0b60469f30609d6e1d69d70f7e30a4034203216a4a3ed4"
+    },
+    {
+      "address": "0x143ac8c00",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143ac8c00__143ac8c00.c",
+      "sha256": "cc5dc4e8f0c3ade83f4261759ab77050100026c5a216d0d4c66ad359798d81ca"
+    },
+    {
+      "address": "0x143aca8e0",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143aca8e0__143aca8e0.c",
+      "sha256": "228539140f9b00b28014382b13d060d2928ab31cc7523daf836b06fd775022bf"
+    },
+    {
+      "address": "0x143aca920",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143aca920__143aca920.c",
+      "sha256": "1c8b772b7abbe9a3c2be4f4fa336d6ef53a130e0c12de2de9dfb557e648f47ee"
+    },
+    {
+      "address": "0x143aca930",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143aca930__143aca930.c",
+      "sha256": "fedbb0d903f8c3cdb2a935ff3bcb586680131b6cebc2df1fb4509de0062a1170"
+    },
+    {
+      "address": "0x143acaae0",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143acaae0__143acaae0.c",
+      "sha256": "f415262e61862826b2beba7443ddd3692b3190eb234f0b2639cbe6e96ec9b2ae"
+    },
+    {
+      "address": "0x143acaaf0",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143acaaf0__143acaaf0.c",
+      "sha256": "2da6d29006c7b2525433c1d9ff1e5f5eda86dcb69111014c8d8df1efab20ed29"
+    },
+    {
+      "address": "0x143acaba0",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143acaba0__143acaba0.c",
+      "sha256": "11787b833de49cac600aa528f853703530b2aeb3cc9f20aff8bc356e2f5f7f3e"
+    },
+    {
+      "address": "0x143acac50",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143acac50__143acac50.c",
+      "sha256": "d24477f5deff58474045d3adfcc61167371855ef1b4aa0058d89680fb14c1545"
+    },
+    {
+      "address": "0x143acdc00",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143acdc00__143acdc00.c",
+      "sha256": "8b3f965522b10165b2b1917c94b6259d657320a160e7c111b8ffbc93138497d3"
+    },
+    {
+      "address": "0x143acdcb0",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143acdcb0__143acdcb0.c",
+      "sha256": "81d4bae32eea4de31f2792d106d8f07e962327c4370d47e93a23d3600ef8a27d"
+    },
+    {
+      "address": "0x143ace140",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143ace140__143ace140.c",
+      "sha256": "78c9cf52892f9b008ee11fc08c3dd417e751cee59d338b47ac4bc3b70f5679d3"
+    },
+    {
+      "address": "0x143afae90",
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143afae90__143afae90.c",
+      "sha256": "f4b57cd5e0916142ae1cc6331b0c8cc2860b3b438441af102f036a6053920b18"
+    },
+    {
+      "address": "0x143afbce0",
+      "path": "porting/generated/maps-original-recovery/maps-lod-registration/143afbce0.c",
+      "sha256": "71b18555d7a4f9fe1b8ec6cf96ec89764cef39e33ee12a9918c9de3b7b4cab3a"
+    }
+  ],
+  "source_accounting": "Uncounted integration draft; no Native body, class registration, original package load or streaming parity credit."
+}

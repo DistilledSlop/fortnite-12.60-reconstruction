@@ -1,0 +1,72 @@
+[
+  {
+    "class": "AFortInGameMapManager",
+    "function": "NativeMiniMapVisible_0x230",
+    "kind": "member_field",
+    "signature": "uint8 NativeMiniMapVisible_0x230",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x230",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original AllowShowMiniMap stores a complete byte at this offset; the rebuilt class keeps a separate native byte alongside the main-map visibility byte."
+  },
+  {
+    "class": "AFortInGameMapManager",
+    "function": "AllowShowMiniMap",
+    "kind": "exec",
+    "signature": "void AllowShowMiniMap(bool bAllowShow)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/maps_poi_source_runtime/AFortInGameMapManager_AllowShowMiniMap.inc",
+    "address": "0x14294b2f0",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "The original exec parses the boolean and writes its normalized value to the byte at 0x230."
+  },
+  {
+    "function": "NativeMainMapVisible_0x231",
+    "kind": "member_field",
+    "signature": "uint8 NativeMainMapVisible_0x231",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x231",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native byte observed by AllowShowMainMap and ShouldShowMainMap.",
+    "class": "AFortInGameMapManager"
+  },
+  {
+    "function": "AllowShowMainMap",
+    "kind": "exec",
+    "signature": "void AllowShowMainMap(bool bAllowShow)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/maps_poi_source_runtime/AFortInGameMapManager_AllowShowMainMap.inc",
+    "address": "0x14294b260",
+    "native_body_address": "0x141ec99d0",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Updates byte 0x231 and broadcasts OnAllowShowMainMapChanged only on change.",
+    "class": "AFortInGameMapManager"
+  },
+  {
+    "function": "ShouldShowMainMap",
+    "kind": "exec",
+    "signature": "bool ShouldShowMainMap()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/maps_poi_source_runtime/AFortInGameMapManager_ShouldShowMainMap.inc",
+    "address": "0x14294cf40",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Returns the byte at 0x231.",
+    "class": "AFortInGameMapManager"
+  }
+]

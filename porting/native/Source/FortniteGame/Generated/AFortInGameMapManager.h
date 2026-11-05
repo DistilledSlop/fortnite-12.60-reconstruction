@@ -33,6 +33,12 @@ public:
 	UPROPERTY()
 	FOnAllowShowMainMapChanged OnAllowShowMainMapChanged;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x230): not a UPROPERTY, not replicated.
+	uint8 NativeMiniMapVisible_0x230;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x231): not a UPROPERTY, not replicated.
+	uint8 NativeMainMapVisible_0x231;
+
 	// table index 34, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_MapData)
 	TArray<FTeamMapInfo> MapData;
@@ -172,6 +178,12 @@ public:
 	UPROPERTY()
 	uint32 MobileMapLocationFontSizeOverride;
 
+	UFUNCTION(BlueprintCallable)
+	void AllowShowMainMap(bool bAllowShow);
+
+	UFUNCTION(BlueprintCallable)
+	void AllowShowMiniMap(bool bAllowShow);
+
 	UFUNCTION(NetMulticast, Reliable)
 	void BroadcastExplorationEvents(const TArray<FTeamMapExplorationEvent>& Events);
 	void BroadcastExplorationEvents_Implementation(const TArray<FTeamMapExplorationEvent>& Events);
@@ -189,6 +201,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void ServerClearAllFog();
+
+	UFUNCTION(BlueprintCallable)
+	bool ShouldShowMainMap();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

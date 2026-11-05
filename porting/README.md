@@ -31,6 +31,14 @@ express the no-stripping constraint, not the deliverable.
 Read the current snapshot in `HANDOFF.md` before the historical probes below.
 The four dashboard milestones remain the product acceptance gates.
 
+- Map source recovery now includes the original main-map visibility setter and
+  query, minimap visibility setter, and playset level loading query. Generated
+  source accepts all four bodies with no rejected snippets; build/runtime
+  verification is pending under the native-body checkpoint cadence. The
+  landscape LOD proxy has an uncounted source draft based on its original
+  4.25-era streaming interface; mobile platform data and streaming update
+  implementations still prevent integration. These changes do not establish
+  original map loading, terrain fidelity, or a completed world.
 - The client is `FortniteClient-12.60-CL-13477524`, a packaged Win64 build.
 - The adjacent engine checkout is based on Epic's public UE 4.25.0 release
   `f8f4b403eb682ffc055613c7caf9d2ba5df7f319`, with local compatibility commit

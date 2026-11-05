@@ -55,6 +55,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortPlaysetItemDefinition* GetCurrentPlayset() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLoading() const;
+
 	UFUNCTION()
 	void OnRep_ClientPlaysetData();
 
