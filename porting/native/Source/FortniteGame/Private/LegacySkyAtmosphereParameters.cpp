@@ -9,7 +9,7 @@ static_assert(sizeof(FLegacySkyAtmosphereDepthParameters) == 24 &&
     STRUCT_OFFSET(FLegacySkyAtmosphereDepthParameters, DepthResolutionInv) == 8 &&
     STRUCT_OFFSET(FLegacySkyAtmosphereDepthParameters, DepthSliceLength) == 12 &&
     STRUCT_OFFSET(FLegacySkyAtmosphereDepthParameters, DepthSliceLengthInv) == 16 &&
-    STRUCT_OFFSET(FLegacySkyAtmosphereDepthParameters, ViewPointerFlag) == 20,
+    STRUCT_OFFSET(FLegacySkyAtmosphereDepthParameters, ApplyCameraAerialPerspectiveVolume) == 20,
     "original atmosphere helper has six consecutive float32 outputs");
 
 // Original 0x143579e10..0x143579eb2; the pinned instruction evidence is in
@@ -25,7 +25,7 @@ FLegacySkyAtmosphereDepthParameters ComputeLegacySkyAtmosphereDepthParameters(
     const __m128 One = _mm_set_ss(1.0f);
     const __m128 Extent = _mm_max_ss(_mm_set_ss(Inputs.DepthExtent), One);
     const __m128 SliceLength = _mm_div_ss(Extent, ResolutionValue);
-    _mm_store_ss(&Result.ViewPointerFlag, Inputs.bViewPointer4E20NonNull ? One : _mm_setzero_ps());
+    _mm_store_ss(&Result.ApplyCameraAerialPerspectiveVolume, Inputs.bAerialPerspectiveVolumeNonNull ? One : _mm_setzero_ps());
     _mm_store_ss(&Result.DepthResolution, ResolutionValue);
     _mm_store_ss(&Result.DepthResolutionInv, _mm_div_ss(One, ResolutionValue));
     _mm_store_ss(&Result.DepthSliceLength, SliceLength);
@@ -39,5 +39,71 @@ FLegacySkyAtmosphereDepthParameters ComputeLegacySkyAtmosphereDepthParameters(
     Start = _mm_mul_ss(Start, ToSmallUnits);
     _mm_store_ss(&Result.StartDepth, Start);
     return Result;
+}
+
+bool BuildLegacySkyAtmosphereViewMemberValues(const FLegacyLocalUniformContract& Contract,
+    float OriginalBottomRadius, float OriginalTopRadius,
+    const FLegacySkyAtmosphereDepthInputs& Inputs,
+    TArray<FLegacyOriginalUniformMemberValue>& OutValues, FString& Error)
+{
+    if (Contract.ParameterName != TEXT("View") ||
+        Contract.OriginalStructTypeName != TEXT("FViewUniformShaderParameters") ||
+        Contract.OriginalSize != 3952)
+    {
+        Error = TEXT("atmosphere values require the original View contract");
+        return false;
+    }
+    static const TCHAR* Names[] = {
+        TEXT("SkyAtmosphereBottomRadius"),
+        TEXT("SkyAtmosphereTopRadius"),
+        TEXT("SkyAtmosphereAerialPerspectiveStartDepth"),
+        TEXT("SkyAtmosphereCameraAerialPerspectiveVolumeDepthResolution"),
+        TEXT("SkyAtmosphereCameraAerialPerspectiveVolumeDepthResolutionInv"),
+        TEXT("SkyAtmosphereCameraAerialPerspectiveVolumeDepthSliceLength"),
+        TEXT("SkyAtmosphereCameraAerialPerspectiveVolumeDepthSliceLengthInv"),
+        TEXT("SkyAtmosphereApplyCameraAerialPerspectiveVolume")
+    };
+    // Validate the entire requested metadata subset before evaluating the helper.
+    // Copy original leaf types, never current metadata or guessed field aliases.
+    TArray<FLegacyOriginalUniformMemberValue> Values;
+    Values.Reserve(UE_ARRAY_COUNT(Names));
+    for (uint32 Index = 0; Index < UE_ARRAY_COUNT(Names); ++Index)
+    {
+        const FLegacyLocalMemberContract* Found = nullptr;
+        for (const auto& Member : Contract.OriginalMembers)
+        {
+            if (Member.Name != Names[Index]) continue;
+            if (Found)
+            {
+                Error = TEXT("duplicate original atmosphere View member");
+                return false;
+            }
+            Found = &Member;
+        }
+        if (!Found || Found->Offset != 0xad4 + Index * sizeof(float) ||
+            Found->BaseType != UBMT_FLOAT32 || Found->Precision != EShaderPrecisionModifier::Float ||
+            Found->Rows != 1 || Found->Columns != 1 || Found->Elements ||
+            Found->StructSize || Found->Members.Num() ||
+            !Found->ShaderType.IsEmpty() || !Found->StructTypeName.IsEmpty())
+        {
+            Error = FString(TEXT("original atmosphere View scalar contract mismatch: ")) + Names[Index];
+            return false;
+        }
+        auto& Value = Values.AddDefaulted_GetRef();
+        Value.Path = FString(TEXT("View.")) + Names[Index];
+        Value.Type = *Found;
+        Value.Bytes.SetNumUninitialized(sizeof(float));
+    }
+    const FLegacySkyAtmosphereDepthParameters Depth = ComputeLegacySkyAtmosphereDepthParameters(Inputs);
+    // Original caller 0x1434eff1e..0x1434eff63 copies two radius words and all six
+    // helper words consecutively. Preserve those bytes, including NaN payloads.
+    FMemory::Memcpy(Values[0].Bytes.GetData(), &OriginalBottomRadius, sizeof(float));
+    FMemory::Memcpy(Values[1].Bytes.GetData(), &OriginalTopRadius, sizeof(float));
+    for (uint32 Index = 0; Index < 6; ++Index)
+        FMemory::Memcpy(Values[Index + 2].Bytes.GetData(),
+            reinterpret_cast<const uint8*>(&Depth) + Index * sizeof(float), sizeof(float));
+    OutValues = MoveTemp(Values);
+    Error.Reset();
+    return true;
 }
 #endif

@@ -1,0 +1,64 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "method": "Read-only Ghidra instruction captures via porting/material_pipeline/view_original_probe.py in /tmp/atmosphere-fields{,2,3}; no program save. SHA-256 windows below independently extracted from current mapped image. Ghidra project bookkeeping changed during open/close.",
+  "windows": {
+    "near_compute": {
+      "va": "0x1444fce2a",
+      "length": "0x45",
+      "bytes": "f30f10058abc53010f2f83ac0200008883100d0000f30f108bb8020000730af30f118b300d0000eb1cf30f10059db84a01f30f5cc1f30f5e83a8020000f30f1183300d0000",
+      "sha256": "b51874793847a9afe6722744e7a2ef3c414d8dca4d18eb6c0b0f669496c20034"
+    },
+    "near_copy": {
+      "va": "0x143475ddd",
+      "length": "0xc",
+      "bytes": "8b87300d00008983300d0000",
+      "sha256": "3d2a1f41e44a03b59f49c4914443300bac259d1640b05b1b55248695d30611e0"
+    },
+    "view_constructor_call": {
+      "va": "0x1434c5e0f",
+      "length": "0xb",
+      "bytes": "488bda488bf9e836f9faff",
+      "sha256": "d0d6603da973ccf5dc440c8814c7b6a2958daaeab6473e51912f592921e481ba"
+    },
+    "volume_null": {
+      "va": "0x1434c628f",
+      "length": "0x15",
+      "bytes": "4889b7184e00004889b7204e00004889b7284e0000",
+      "sha256": "04a322dcdf77d8a3b817b3f319f09a5070e1016714df97947aea1864f2221bdd"
+    },
+    "volume_allocate": {
+      "va": "0x1435675e9",
+      "length": "0x35",
+      "bytes": "c644243800488d052bc41a03c6442430014d8d8d204e0000c6442428014c8d45a0498bd44889442420488d0d87597004e852cc5200",
+      "sha256": "1576458234de7eef84d46dccda564f855e6b50a5922d5e46b70f9f8bd7585b50"
+    },
+    "helper_near": {
+      "va": "0x143579e86",
+      "length": "0x2c",
+      "bytes": "488b05d3f2d604f30f104004f30f5fc3f30f5905b2674a02f30f5f81300d0000f30f59050eec4b02f30f1102",
+      "sha256": "62ed68cb8ff3bbe0555c8037435854a694ff6b4c886f9ab8267dfa3ac5dd5665"
+    },
+    "helper_volume": {
+      "va": "0x143579e34",
+      "length": "0x2e",
+      "bytes": "4883b9204e000000488b0565f3d60466410f6ee0f30f1050040f5be4f30f5fd1f30f5ed475050f57c0eb030f28c1",
+      "sha256": "37f60a2b53553acab27fd5f56fcc21d8684ddb35f2dfb38634dbb348ebbc501c"
+    }
+  },
+  "near_depth": {
+    "original_assignment": "0x1444fce2a..0x1444fce6e compares float32 0x145a38abc (approximately 1e-5) with [RBX+0x2ac]. If COMISS does not set carry, stores (1.0 - [RBX+0x2b8]) / [RBX+0x2a8] to [RBX+0xd30]; otherwise stores [RBX+0x2b8]. Follow instruction flags for unordered values.",
+    "copy_to_view": "0x1434c5e0f..15 invokes 0x143475750 with source RDX and destination RCX. Inside it 0x143475ddd..e9 copies source+0xd30 to destination+0xd30; the same destination later initializes +0x4e20. Helper 0x143579e9e reads [RCX+0xd30].",
+    "semantic_comparison": "Current Engine SceneView.cpp:594-612 derives View.NearClippingDistance from projection matrix M[2][3], M[3][2], M[2][2] with exactly the two corresponding formulas and threshold. This is strong structural evidence that original +0xd30 is NearClippingDistance; matching original layout of +0x2ac/+0x2b8/+0x2a8 to those projection entries and actual instance/callchain is not independently proven here.",
+    "missing": "Trace original construction and matrix writes to establish the source projection layout and actual source-to-helper instance if an unconditional field alias is required."
+  },
+  "volume": {
+    "original_initialization": "0x1434c5e1a zeros ESI; 0x1434c6296 stores RSI to [RDI+0x4e20].",
+    "original_producer": "0x1435675ee loads address 0x146713a20 (UTF-16 View.SkyAtmosphereCameraAerialPerspectiveVolume); 0x1435675fa takes address [R13+0x4e20] as R9, then 0x143567619 calls 0x143a94270. Same function at 0x1435675e4 invokes the allocator for adjacent +0x4e28 with a 2D LUT descriptor, whereas the +0x4e20 descriptor is 3D and labeled UnknownTextureVolume.",
+    "original_consumer": "0x143579e34 checks [RCX+0x4e20] against zero and outputs float 0 or 1. 0x1434efe8c also loads this field and if nonzero reads its +0x10.",
+    "semantic_comparison": "Current SkyAtmosphereRendering.cpp:1024-1031 allocates the named aerial perspective volume into the view field using the render target pool; lines 300-316 use field nullness for ApplyCameraAerialPerspectiveVolume. Original string, address, allocation call, and helper nullness identify +0x4e20 as the corresponding pooled volume reference.",
+    "missing": "Original allocator 0x143a94270 assignment behavior and runtime instance selection were not traced; use the original field nullness, not assumed availability based on current renderer, when connecting the helper."
+  },
+  "scope": "Static analysis only; no Native/Engine edits, build, runtime or graphics validation."
+}

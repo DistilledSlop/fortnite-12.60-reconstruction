@@ -94,7 +94,16 @@ member aliases or values are inferred from that comparison. The native
 helper with scalar SSE, including conversion, MAXSS operand order and exact scale
 constant bits. It requires explicit original inputs and does not acquire current
 CVars, create View overrides or attach a provider; generated-code and runtime
-checks remain pending. Original component-to-proxy radius writes also show a
+checks remain pending. A typed View bridge now validates all eight original
+scalar names, offsets and shapes at +0xad4 through +0xaf0, then supplies the
+original radius words and all six helper outputs to the existing repacker/draw
+binding override contract. Original inputs and active-branch selection remain
+caller responsibilities; no current Km aliases or live provider are inferred.
+The original labeled allocation identifies the +0x4e20 volume reference used
+by the helper flag; the +0xd30 near-depth formula matches current source,
+while its full original projection layout and source instance remain unproved.
+See `porting/behavior/atmosphere_input_fields_runtime/evidence.json`.
+Original component-to-proxy radius writes also show a
 direct bottom-radius copy and bottom-plus-height top radius with no scaling.
 The scene constructor installs the candidate vtable and publishes it through the
 field used by the component; the producer slot returns that scene unchanged.

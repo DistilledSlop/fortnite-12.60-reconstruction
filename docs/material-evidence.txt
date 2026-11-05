@@ -96,7 +96,11 @@ constant bits. It requires explicit original inputs and does not acquire current
 CVars, create View overrides or attach a provider; generated-code and runtime
 checks remain pending. Original component-to-proxy radius writes also show a
 direct bottom-radius copy and bottom-plus-height top radius with no scaling.
-The final scene vtable identity and physical units remain unproved.
+The scene constructor installs the candidate vtable and publishes it through the
+field used by the component; the producer slot returns that scene unchanged.
+This closes the conditional static bridge, while actual instance identity,
+factory branch and physical units remain unproved. See
+`porting/behavior/scene_radius_vtable_runtime/evidence.json`.
 
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 

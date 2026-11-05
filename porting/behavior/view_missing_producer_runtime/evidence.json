@@ -373,7 +373,15 @@
     "limits": [
       "Inputs are explicit original values; this API does not read current CVars, identify the original view fields, obtain scene objects or attach a renderer provider.",
       "Source/instruction review only; build, generated instruction selection, special floating-point behavior and runtime output are pending verification."
-    ]
+    ],
+    "typed_view_bridge": {
+      "function": "BuildLegacySkyAtmosphereViewMemberValues",
+      "original_caller": "0x1434eff1e..0x1434eff63",
+      "behavior": "Validates the original View identity/size and all eight exact scalar names, offsets and shapes from +0xad4 through +0xaf0 before calculating. Copies original supplied radius words and six helper outputs into complete typed View member overrides accepted by the original uniform data repacker and draw binding bridge. Output is replaced only on success.",
+      "limits": "Only the original active-atmosphere value path; no branch selection, current Km aliases, CVar acquisition, renderer provider attachment or runtime compatibility claim. Original scene radius words and original depth inputs remain caller supplied. Other missing View members require independent values.",
+      "verification": "Source review against the pinned eight original scalar leaves and caller copy instructions; native build and runtime pending."
+    },
+    "input_identity_followup": "../atmosphere_input_fields_runtime/evidence.json"
   },
   "current_image_verification": {
     "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
