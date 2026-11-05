@@ -3,7 +3,7 @@
     "class": "UAthenaWidgetLibrary",
     "function": "IsPlayingReplay",
     "kind": "exec",
-    "signature": "bool IsPlayingReplay(const UObject* WorldContextObject)",
+    "signature": "bool IsPlayingReplay(UObject* WorldContextObject)",
     "signature_status": "proposed",
     "inc_path": "porting/behavior/athena_replay_widget_runtime/IsPlayingReplay.inc",
     "confidence": "high",
@@ -13,7 +13,9 @@
     "reflection_flags": "0x14022401",
     "static": true,
     "access": "public",
-    "includes": ["Engine/World.h"],
-    "notes": "Wrapper passes the context to 0x144b38c80, which null-checks it and its GetWorld virtual result before calling 0x144693a30. The latter is the same engine replay predicate previously identified for AFortAthenaSupplyDrop::IsPlayingAReplay."
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Wrapper passes the context to 0x144b38c80, which null-checks it and its GetWorld virtual result before calling 0x144693a30. The latter is the same engine replay predicate previously identified for AFortAthenaSupplyDrop::IsPlayingAReplay. Reflection marks the parameter const; this manifest spelling matches the generator\u2019s current parameter decoding."
   }
 ]

@@ -1,0 +1,18 @@
+[
+  {
+    "function": "UCommonActivatablePanel::IsIntroed",
+    "wrapper": "porting/generated/native368-callees/0x14080bb80.c",
+    "assembly": "porting/generated/native368-callees/0x14080bb80.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "proof": "Exec advances the script frame and copies byte at this +0x303 directly to its result. The existing frontend panel implementation represents this state as bNativeIsIntroed.",
+    "integration": "The frontend panel generator/policy must supply the member before promoting this body. No generated source was changed."
+  },
+  {
+    "function": "UCommonActivatablePanel::IsInActivationStack",
+    "wrapper": "porting/generated/native368-callees/0x14080bb30.c",
+    "assembly": "porting/generated/native368-callees/0x14080bb30.asm",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "proof": "Exec advances the script frame and copies byte at this +0x304 directly to its result. The existing frontend panel implementation represents this state as bNativeInActivationStack.",
+    "integration": "The frontend panel generator/policy must supply the member before promoting this body. No generated source was changed."
+  }
+]

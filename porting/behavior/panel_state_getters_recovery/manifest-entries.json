@@ -1,0 +1,36 @@
+[
+  {
+    "class": "UCommonActivatablePanel",
+    "function": "IsIntroed",
+    "kind": "exec",
+    "signature": "bool IsIntroed() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/panel_state_getters_recovery/UCommonActivatablePanel_IsIntroed.inc",
+    "address": "0x14080bb80",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "decompile_source": "porting/generated/native368-callees/0x14080bb80.c",
+    "notes": "Original exec directly reads byte at +0x303. Reuses frontend-injected bNativeIsIntroed; requires common panel runtime integration. Source proposal, build pending."
+  },
+  {
+    "class": "UCommonActivatablePanel",
+    "function": "IsInActivationStack",
+    "kind": "exec",
+    "signature": "bool IsInActivationStack() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/panel_state_getters_recovery/UCommonActivatablePanel_IsInActivationStack.inc",
+    "address": "0x14080bb30",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "decompile_source": "porting/generated/native368-callees/0x14080bb30.c",
+    "notes": "Original exec directly reads byte at +0x304. Reuses frontend-injected bNativeInActivationStack; requires common panel runtime integration. Source proposal, build pending."
+  }
+]
