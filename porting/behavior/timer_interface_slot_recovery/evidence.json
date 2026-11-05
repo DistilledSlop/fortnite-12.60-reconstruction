@@ -1,0 +1,15 @@
+{
+  "status": "implementation_blocked",
+  "interface": "IFortMissionTimerInterface",
+  "setters": ["0x141f49630", "0x141f496b0"],
+  "slot": "0x18",
+  "concrete_class": "AFortMission",
+  "constructor": "0x1420abbd0",
+  "constructor_interface_offset": "0x258",
+  "vtable": "0x146091a98",
+  "slot_implementation": "0x1429db700",
+  "implementation": "Subtract 0x258 from interface pointer, resolve the FName at 0x1481a6b38 on the owning object, and invoke ProcessEvent with no parameters.",
+  "event_name_evidence": "Static initializer at 0x1404006b0 initializes FName global 0x1481a6b38 from UTF-16 string at 0x146458c60, MissionTimerVisibilityOverrideSet.",
+  "reflection": "AFortMission.MissionTimerVisibilityOverrideSet: no parameters, flags 0x8020800, create function 0x1429d9bf0, Blueprint event; porting/generated/reflection/fortnite_game_reflection.json",
+  "blocker": "Generated AFortMission has no IFortMissionTimerInterface inheritance, no MissionTimerVisibilityOverrideSet event, and generated interface has no virtual callbacks. A full recovery needs generator support for native interface inheritance, event declaration/dispatch, all interface implementors, and their callbacks. Adding only the setters would silently omit the event or make casts fail. Other vtable callbacks at +0x10 and +0x20 also require recovery."
+}
