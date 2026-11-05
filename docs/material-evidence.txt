@@ -73,8 +73,16 @@ uniform bindings. It checks the installed RHI shader output hash and draw layout
 reconstructs fixed buffers from explicit current CPU parameters, and binds them
 using converted Vulkan indices. Material uses the actual supplied expression
 buffer. All checks precede binding mutation; returned RHI references must outlive
-the raw draw bindings. No pass or provider calls this bridge yet, and loose
-parameters, missing producer values and runtime verification remain open.
+the raw draw bindings. No pass or provider calls this bridge yet; missing producer values and runtime
+verification remain open.
+
+`PrepareLegacyLocalVFLooseParameters` validates all seven recovered allocations
+against the original record and installed shader, then copies explicit values
+into owned exact-size blocks. `BindLegacyLocalVFDrawParameters` prepares those
+values before committing any uniform binding and applies them afterward without
+a failure path. The combined API covers uniforms and loose constants for a record;
+actual value producers, pass/provider integration, vertex streams and runtime
+verification remain unfinished.
 
 Original View producer recovery now locates the atmosphere copy and shared
 start-depth/slice helper. Its finite-input formulas match current kilometer-based

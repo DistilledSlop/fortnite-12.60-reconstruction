@@ -225,11 +225,11 @@
   "current_source_comparison_notes": [
     "SkyAtmosphereRendering.cpp:246-275 and 300-316 computes the same helper formula for ordinary finite inputs: max truncated resolution with 4, max depth with 1, divide and reciprocal, and max the nonnegative start cvar multiplied by 100000 with NearClippingDistance, then multiply by CM_TO_KM. This is formula evidence, not independent proof that original [RCX+0xd30] is the same view property or that exceptional floating point behavior matches.",
     "SceneRendering.cpp:1269-1278 assigns current Km fields from atmosphere setup and shared helper, while 1322-1329 assigns 1.0 on its fallback.",
-    "SkyAtmosphereCommonData.cpp:42-43 constructs current bottom radius from component BottomRadius and top radius from BottomRadius + AtmosphereHeight. No original instruction establishing corresponding RBX fields is yet recovered."
+    "SkyAtmosphereCommonData.cpp:42-43 constructs current bottom radius from component BottomRadius and top radius from BottomRadius + AtmosphereHeight. The original component-to-proxy instructions independently establish matching arithmetic, but the scene vtable identity and units remain open."
   ],
   "bounded_radii_followup": {
-    "result": "Radii units remain unproved; do not infer an alias from the current source. The source-object producer of the pointer loaded at 0x1434efe62 has not been identified.",
-    "next_trace": "0x1434efe62 reads RBX = [[R15+0x1420]], then 0x1434eff1e..2a copies RBX+0x10/+0x14 into View +0xad4/+0xad8. Identify the instruction that constructs or stores the pointee of [R15+0x1420] and trace the two fields.",
+    "result": "Original component-to-proxy radius arithmetic is proven with no scaling; matching scene-to-View bridge recovered, but scene virtual table identity and original physical units remain unproved.",
+    "next_trace": "Verify the scene object used at 0x144136c2c installs vtable 0x1466f23a8, and find original property metadata or conversion establishing units.",
     "component_constructor_candidate": "SkyAtmosphereComponent class singleton 0x1447eaff0 registers constructor thunk 0x1447ebd10, which jumps to 0x14412d9d0. The latter installs vtable 0x146a50e18 and writes float defaults 6360 at component +0x1f0 and 60 at +0x1f8; these offsets and values do not prove connection to the View producer object or the units.",
     "component_constructor_assembly": [
       "14412d9de MOVAPS XMM0,xmmword ptr [0x14603bb20]",
@@ -277,6 +277,101 @@
       "1447eb08e CALL 0x142d698b0"
     ],
     "thunk_bytes": "48 8b 01 48 85 c0 74 0b 48 8b d1 48 8b c8 e9 ad 1c 94 ff c3; jump at 0x1447ebd1e targets 0x14412d9d0",
-    "limitation": "The vtable probe of the first 160 entries yielded no verified producer of the radius fields; do not treat unrelated hits as evidence."
+    "limitation": "The vtable probe of the first 160 entries yielded no verified producer of the radius fields; do not treat unrelated hits as evidence.",
+    "original_setup_radius_trace": {
+      "windows": [
+        {
+          "name": "component_vtable_slot",
+          "va": "0x146a510e8",
+          "length": "0x8",
+          "sha256": "d1c0542ed5fa1a62a3ade2756a2d87d86f579ac74cf160ed5ed610d2d92678b1",
+          "bytes": "006a134401000000"
+        },
+        {
+          "name": "component_create_proxy",
+          "va": "0x144136a82",
+          "length": "0x31",
+          "sha256": "9969cb29f3f0ed8471442eea920226dd2649639ab23a5a550cd97103bbfbb649",
+          "bytes": "48896c2450b9e80000004889742458e80ae224fd33ed488bf04885c00f8492000000488bd78818488d4810e88eed56000f"
+        },
+        {
+          "name": "component_submit_proxy",
+          "va": "0x144136c1c",
+          "length": "0x16",
+          "sha256": "90e4b1bde6a86729e269afd7a53c88ce9c8b4e82d0d20250acdf18eee53e6d58",
+          "bytes": "41b001488b06488bce488b9788020000ff90b8010000"
+        },
+        {
+          "name": "setup_radius_writes",
+          "va": "0x1446a5852",
+          "length": "0x2f",
+          "sha256": "d5f45a2cc35451681038aeeb12246424cd3495404a96ceee64258642634f13d3",
+          "bytes": "8b82f0010000488bda8901488bf9f30f1082f8010000f30f5882f00100004881c2f40100000f29742430f30f114104"
+        },
+        {
+          "name": "renderer_command_pack",
+          "va": "0x14355b9e0",
+          "length": "0x2a",
+          "sha256": "b7e48e0ed07a7d6863d8b76dfbe10b00b04a681d66bff1176fd1db236a8ae744",
+          "bytes": "4c8bdc4883ec7849894ba8488d055e94440233c9498953b0380de6b8ce04458843b8480f45c149894310"
+        },
+        {
+          "name": "renderer_add_command",
+          "va": "0x143559950",
+          "length": "0x86",
+          "sha256": "da1483fc94968a9d2ff8eb39b711b9f75fd6c665f30d6fe1360fe8e9506ada32",
+          "bytes": "48895c24084889742410574883ec20488b39488bd94863b7301400008d46018987301400003b87341400007e0e8bd6488d8f28140000e8257213fd488b8f28140000488b4308488904f1b9e0000000e8fcb2e2fd4885c07411488b5308488bc8e87bedffff488bc8eb0233c9488b430848894808488b4308488b0b488b400848898120140000"
+        },
+        {
+          "name": "renderer_wrapper_constructor",
+          "va": "0x143558730",
+          "length": "0xb",
+          "sha256": "009f17012707a0abf5b3a7b6f3e6dfe77d74d4a32fec39b247ee338df723ae91",
+          "bytes": "405356574883ec60488911"
+        },
+        {
+          "name": "view_pointer_and_copy",
+          "va": "0x1434efe54",
+          "length": "0x11",
+          "sha256": "5cca55a85a85332e92bd23fcac41179ffc65d1c1ade6200cf00703547c807e06",
+          "bytes": "498b8f20140000488b81c8000000488b19"
+        },
+        {
+          "name": "view_radius_copy",
+          "va": "0x1434eff1e",
+          "length": "0x12",
+          "sha256": "2c2f021af12626ab6c417ad2a3eb402e50df07d32f522297f47993ab3309d261",
+          "bytes": "8b43108987d40a00008b43148987d80a0000"
+        },
+        {
+          "name": "renderer_vtable_slot_candidate",
+          "va": "0x1466f2560",
+          "length": "0x8",
+          "sha256": "ca164aa46aac741be866cff970595b0a7999e6818cfa4a53074d833160c61cf2",
+          "bytes": "e0b9554301000000"
+        }
+      ],
+      "capture": "porting/generated/view-radius-source (read-only Ghidra instruction listings, no program save)",
+      "component_vtable_and_call": "Component constructor installs vtable 0x146a50e18; vtable +0x2d0 points to 0x144136a00. That function allocates 0xe8 bytes and calls 0x1446a5840 with RCX = allocation + 0x10, RDX = component. It stores the allocation into component +0x288 and passes it as RDX to scene virtual slot +0x1b8.",
+      "formula": "0x1446a5852..587c copies component +0x1f0 as 32-bit bits to allocation +0x10, and stores float32(component +0x1f8 + component +0x1f0) to allocation +0x14; there is no scaling in these writes.",
+      "renderer_bridge": "0x14355b9e0 saves incoming scene RCX and proxy RDX into the command at stack +0x20/+0x28; 0x143559950 receives that command, allocates a wrapper, calls 0x143558730 with RDX=proxy, then stores wrapper to scene+0x1420. 0x143558738 sets wrapper+0 to proxy. View reads [[scene+0x1420]] then proxy+0x10/+0x14. Removal path 0x14355969e..a2 selects the last remaining proxy wrapper at scene+0x1420.",
+      "qualification": "0x14355b9e0 is found in original image at 0x1466f2560, consistent with a scene vtable base of 0x1466f23a8 and virtual slot +0x1b8, but this bounded capture does not independently prove that vtable is installed on the scene object reached by the component call. Thus the matching renderer bridge remains a well-supported candidate, not a complete runtime identity proof. Default values and comparison with current source support kilometre interpretation but do not independently prove original units; do not promote a units alias solely on this evidence."
+    }
+  },
+  "native_depth_kernel": {
+    "sources": [
+      "porting/native/Source/FortniteGame/Private/LegacySkyAtmosphereParameters.h",
+      "porting/native/Source/FortniteGame/Private/LegacySkyAtmosphereParameters.cpp"
+    ],
+    "original_function": "0x143579e10",
+    "instruction_window": {
+      "size": 163,
+      "sha256": "4b07125afbbb0db1dccc704cc420bfffaaf8f81c662b9e9e07bf239c3ccd1580"
+    },
+    "lift": "Explicit-input Linux x86 scalar-SSE implementation of all six original helper outputs. CVTTSS2SI then signed clamp to4; MAXSS depth with1; float32 division/reciprocals; original flag output; MAXSS start with0, multiply0x47c35000, MAXSS with supplied View+0xd30 value, multiply0x3727c5ac. Original operand order is retained rather than using current FMath aliases.",
+    "limits": [
+      "Inputs are explicit original values; this API does not read current CVars, identify the original view fields, obtain scene objects or attach a renderer provider.",
+      "Source/instruction review only; build, generated instruction selection, special floating-point behavior and runtime output are pending verification."
+    ]
   }
 }

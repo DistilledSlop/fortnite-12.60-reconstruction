@@ -1,0 +1,82 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "sources": [
+    "porting/generated/reflection/native_funcs.json",
+    "read-only Ghidra view_original_probe.py",
+    "runtime image instruction bytes"
+  ],
+  "findings": [
+    {
+      "name": "UFortSignInWidget::StartSignIn",
+      "exec_wrapper": "0x1452ddc10",
+      "body": "0x144de3880",
+      "evidence": "The wrapper increments the script frame code pointer when present and tail-jumps to the body. The body checks the control at widget+0x470 and requires nonempty text at widget+0x450. It copies the latter into widget+0x440 and invokes virtual slot +0x48 of the interface pointer at widget+0x410, passing text from widget+0x450 and widget+0x458; widget+0x418 controls pointer validity. No frontend travel is present in this body."
+    },
+    {
+      "name": "UFortSignInWidget::HandleTextCommitted",
+      "exec_wrapper": "0x1452dd6f0",
+      "body": "0x144dc5230",
+      "evidence": "On commit method 1, checks control at widget+0x458 and validator 0x144dc8370; successful validation calls StartSignIn body."
+    },
+    {
+      "name": "UOnlineAccountCommon::TriggerLoginComplete",
+      "body": "0x1410e6ba0",
+      "evidence": "Log literal identifies function. Sets account+0x368 to 2 and calls 0x140693420 on account+0x3c0 with result 2 and a value returned by 0x1407c2c80. The account delegate is also accessed by UFortLoginInteractions::HandleLoginRequestComplete. This does not establish that invoking this function alone creates a valid authenticated account."
+    },
+    {
+      "name": "UOnlineAccountCommon::LoginStep_Completed",
+      "body": "0x1410d63f0",
+      "evidence": "Log literal identifies function; after completion work it calls account virtual slot +0x408. The implementation at that slot is not established here."
+    },
+    {
+      "name": "UOnlineAccountCommon::LoginStep_OnLoginComplete",
+      "body": "0x1410db150",
+      "evidence": "On successful callback and further account checks, calls account virtual slots +0x308 and +0x3f8 and 0x1410c3c30 to continue the login process. Requires online identity state and is not established as an entry point for local account selection."
+    },
+    {
+      "name": "UFortLoginInteractions::HandleLoginRequestComplete",
+      "body": "0x144e3b7c0",
+      "evidence": "Log literal identifies function. It accesses the online account held at interactions+0x418 and account delegate +0x3c0. In the ordinary result-2 branch it does not call the error handling path; further success handling was not established by this function alone."
+    },
+    {
+      "name": "Direct caller of TriggerLoginComplete",
+      "body": "0x142236700",
+      "evidence": "At 0x1422367b2 calls TriggerLoginComplete after calls to 0x140684de0 on another object+0x360 and 0x14221de80(account), then continues additional work. Caller identity and prerequisites are not established."
+    },
+    {
+      "name": "Widget construction and interface storage",
+      "class_get_private_static_class": "0x1452dac10",
+      "constructor_helper": "0x1452db9b0",
+      "constructor": "0x144da86a0",
+      "widget_vtable": "0x146d77500",
+      "evidence": "GetPrivateStaticClass identifies FortSignInWidget, object size 0x480, and constructor helper 0x1452db9b0. Runtime helper jumps to constructor 0x144da86a0, which installs vtable 0x146d77500, zeros widget+0x410 and the dword at +0x418. Destructor at vtable slot 0 calls 0x140692d60 on widget+0x410. Constructor does not acquire the interface. The interface setter, dynamic type, and virtual slot +0x48 target remain unidentified."
+    },
+    {
+      "name": "ELoginResult::Success",
+      "reflection": "porting/generated/reflection/enum_blocks.json",
+      "enum_block": "0x14788e000",
+      "evidence": "The reflected /Script/Account ELoginResult identifies Success as value 2, consistent with TriggerLoginComplete passing 2 to the account delegate."
+    }
+  ],
+  "unresolved": "Identity of the widget interface virtual slot +0x48, safe local-account completion entry, and downstream success subscribers remain unproven. Do not substitute a direct state flip or frontend travel on the basis of these findings.",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "verification": "Read-only original instruction recovery; no local login continuation installed, build or runtime verification.",
+  "instruction_windows": [
+    {
+      "address": "0x1452ddc10",
+      "size": 32,
+      "sha256": "1755250ea64df5cd99485cadf9a7e9551936d2bb4ef1c72a187f764ff0f81f6f"
+    },
+    {
+      "address": "0x144de3880",
+      "size": 128,
+      "sha256": "6cfecc14d1c680753585d48a939500c7833096fcc8f4c7b2e993ec1968a7fae0"
+    },
+    {
+      "address": "0x1410e6ba0",
+      "size": 128,
+      "sha256": "2e42a15187643a7adaefcb57c275009bab0845216128d67c593730d45c2527ce"
+    }
+  ]
+}

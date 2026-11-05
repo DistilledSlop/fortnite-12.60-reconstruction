@@ -89,7 +89,14 @@ start-depth/slice helper. Its finite-input formulas match current kilometer-base
 source, but upstream radius units, exact input semantics and exceptional floating
 point behavior still need proof. See
 `porting/behavior/view_missing_producer_runtime/evidence.json`; no automatic
-member aliases or values are inferred from that comparison.
+member aliases or values are inferred from that comparison. The native
+`ComputeLegacySkyAtmosphereDepthParameters` now lifts the original six-output
+helper with scalar SSE, including conversion, MAXSS operand order and exact scale
+constant bits. It requires explicit original inputs and does not acquire current
+CVars, create View overrides or attach a provider; generated-code and runtime
+checks remain pending. Original component-to-proxy radius writes also show a
+direct bottom-radius copy and bottom-plus-height top radius with no scaling.
+The final scene vtable identity and physical units remain unproved.
 
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 
