@@ -2,188 +2,267 @@
  "_meta": {
   "caveat": "declaration-level only; Epic fork body differences are not tested",
   "counts": {
-   "not_declared": 78,
-   "param_count_mismatch": 23,
-   "verified": 5878,
-   "verified_via_base": 1
+   "gap_absent": 28,
+   "gap_declared_in_reference": 33,
+   "gap_not_in_reference": 18,
+   "gap_param": 23,
+   "verified": 5929
   },
-  "method": "declaration + parameter-count match in stock UE 4.25 headers (porting/engine_natives.py)"
+  "method": "declaration + parameter-count match in stock UE 4.25 headers, own class, its bases and the matching I-class for UINTERFACEs (porting/engine_natives.py)",
+  "reference_engine": "UnrealEngine4260"
  },
  "unverified": {
   "APlayerCameraManager": {
-   "PlayCameraShakeFromSource": "param count 5 vs declared [2] in Source/Runtime/Engine/Classes/Camera/PlayerCameraManager.h",
-   "StopAllCameraShakesFromSource": "not declared in Source/Runtime/Engine/Classes/Camera/PlayerCameraManager.h",
-   "StopAllInstancesOfCameraShakeFromSource": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Camera/PlayerCameraManager.h"
+   "PlayCameraShakeFromSource": {
+    "reason": "param count 5 vs declared [2] in Source/Runtime/Engine/Classes/Camera/PlayerCameraManager.h",
+    "reference_engine": "declared: APlayerCameraManager in Source/Runtime/Engine/Classes/Camera/PlayerCameraManager.h"
+   },
+   "StopAllCameraShakesFromSource": {
+    "reason": "not declared in Source/Runtime/Engine/Classes/Camera/PlayerCameraManager.h or its bases",
+    "reference_engine": "declared: APlayerCameraManager in Source/Runtime/Engine/Classes/Camera/PlayerCameraManager.h"
+   },
+   "StopAllInstancesOfCameraShakeFromSource": {
+    "reason": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Camera/PlayerCameraManager.h",
+    "reference_engine": "declared: APlayerCameraManager in Source/Runtime/Engine/Classes/Camera/PlayerCameraManager.h"
+   }
   },
   "APlayerController": {
-   "ClientSetCameraFade": "param count 6 vs declared [5] in Source/Runtime/Engine/Classes/GameFramework/PlayerController.h"
+   "ClientSetCameraFade": {
+    "reason": "param count 6 vs declared [5] in Source/Runtime/Engine/Classes/GameFramework/PlayerController.h",
+    "reference_engine": "declared: APlayerController in Source/Runtime/Engine/Classes/GameFramework/PlayerController.h"
+   }
   },
   "UAIBlueprintHelperLibrary": {
-   "SpawnAIFromClass": "param count 6 vs declared [7] in Source/Runtime/AIModule/Classes/Blueprint/AIBlueprintHelperLibrary.h"
+   "SpawnAIFromClass": {
+    "reason": "param count 6 vs declared [7] in Source/Runtime/AIModule/Classes/Blueprint/AIBlueprintHelperLibrary.h",
+    "reference_engine": "not matched: param count 6 vs declared [7] in Source/Runtime/AIModule/Classes/Blueprint/AIBlueprintHelperLibrary.h"
+   }
   },
   "UAbilitySystemGlobals": {
-   "ListPlayerAbilities": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h",
-   "ServerActivatePlayerAbility": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h",
-   "ServerCancelPlayerAbility": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h",
-   "ServerEndPlayerAbility": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h"
+   "ListPlayerAbilities": {
+    "reason": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h or its bases",
+    "reference_engine": "declared: UAbilitySystemGlobals in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h"
+   },
+   "ServerActivatePlayerAbility": {
+    "reason": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h or its bases",
+    "reference_engine": "declared: UAbilitySystemGlobals in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h"
+   },
+   "ServerCancelPlayerAbility": {
+    "reason": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h or its bases",
+    "reference_engine": "declared: UAbilitySystemGlobals in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h"
+   },
+   "ServerEndPlayerAbility": {
+    "reason": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h or its bases",
+    "reference_engine": "declared: UAbilitySystemGlobals in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemGlobals.h"
+   }
   },
   "UAbilityTask_ApplyRootMotionConstantForce": {
-   "ApplyRootMotionConstantForce": "param count 11 vs declared [10] in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/Tasks/AbilityTask_ApplyRootMotionConstantForce.h"
+   "ApplyRootMotionConstantForce": {
+    "reason": "param count 11 vs declared [10] in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/Tasks/AbilityTask_ApplyRootMotionConstantForce.h",
+    "reference_engine": "declared: UAbilityTask_ApplyRootMotionConstantForce in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/Tasks/AbilityTask_ApplyRootMotionConstantForce.h"
+   }
   },
   "UAnimInstance": {
-   "GetCurrentStateName": "param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
-   "GetInstanceAssetPlayerTime": "param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
-   "GetInstanceAssetPlayerTimeFraction": "param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
-   "GetInstanceMachineWeight": "param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
-   "GetInstanceStateWeight": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
-   "GetInstanceTransitionCrossfadeDuration": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
-   "GetRelevantAnimTime": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
-   "GetRelevantAnimTimeRemaining": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
-   "GetRelevantAnimTimeRemainingFraction": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h"
-  },
-  "UAssetRegistry": {
-   "GetAllAssets": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "GetAllCachedPaths": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "GetAssetByObjectPath": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "GetAssets": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "GetAssetsByClass": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "GetAssetsByPackageName": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "GetAssetsByPath": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "GetSubPaths": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "HasAssets": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "IsLoadingAssets": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "K2_GetDependencies": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "K2_GetReferencers": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "PrioritizeSearchPath": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "RunAssetsThroughFilter": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "ScanFilesSynchronous": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "ScanModifiedAssetFiles": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "ScanPathsSynchronous": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "SearchAllAssets": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h",
-   "UseFilterToExcludeAssets": "not declared in Source/Runtime/AssetRegistry/Public/IAssetRegistry.h"
+   "GetCurrentStateName": {
+    "reason": "param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
+    "reference_engine": "not matched: param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h"
+   },
+   "GetInstanceAssetPlayerTime": {
+    "reason": "param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
+    "reference_engine": "not matched: param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h"
+   },
+   "GetInstanceAssetPlayerTimeFraction": {
+    "reason": "param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
+    "reference_engine": "not matched: param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h"
+   },
+   "GetInstanceMachineWeight": {
+    "reason": "param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
+    "reference_engine": "not matched: param count 2 vs declared [1] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h"
+   },
+   "GetInstanceStateWeight": {
+    "reason": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
+    "reference_engine": "not matched: param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h"
+   },
+   "GetInstanceTransitionCrossfadeDuration": {
+    "reason": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
+    "reference_engine": "not matched: param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h"
+   },
+   "GetRelevantAnimTime": {
+    "reason": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
+    "reference_engine": "not matched: param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h"
+   },
+   "GetRelevantAnimTimeRemaining": {
+    "reason": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
+    "reference_engine": "not matched: param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h"
+   },
+   "GetRelevantAnimTimeRemainingFraction": {
+    "reason": "param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h",
+    "reference_engine": "not matched: param count 3 vs declared [2] in Source/Runtime/Engine/Classes/Animation/AnimInstance.h"
+   }
   },
   "UAudioComponent": {
-   "SetAudioBusSendPostEffect": "not declared in Source/Runtime/Engine/Classes/Components/AudioComponent.h",
-   "SetAudioBusSendPreEffect": "not declared in Source/Runtime/Engine/Classes/Components/AudioComponent.h"
+   "SetAudioBusSendPostEffect": {
+    "reason": "not declared in Source/Runtime/Engine/Classes/Components/AudioComponent.h or its bases",
+    "reference_engine": "declared: UAudioComponent in Source/Runtime/Engine/Classes/Components/AudioComponent.h"
+   },
+   "SetAudioBusSendPreEffect": {
+    "reason": "not declared in Source/Runtime/Engine/Classes/Components/AudioComponent.h or its bases",
+    "reference_engine": "declared: UAudioComponent in Source/Runtime/Engine/Classes/Components/AudioComponent.h"
+   }
   },
   "UAudioMixerBlueprintLibrary": {
-   "IsAudioBusActive": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h",
-   "MakeFullSpectrumSpectralAnalysisBandSettings": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h",
-   "MakeMusicalSpectralAnalysisBandSettings": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h",
-   "MakePresetSpectralAnalysisBandSettings": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h",
-   "StartAnalyzingOutput": "param count 7 vs declared [6] in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h",
-   "StartAudioBus": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h",
-   "StopAudioBus": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h"
-  },
-  "UBlackboardAssetProvider": {
-   "GetBlackboardAsset": "not declared in Source/Runtime/AIModule/Classes/BehaviorTree/BlackboardAssetProvider.h"
+   "IsAudioBusActive": {
+    "reason": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h or its bases",
+    "reference_engine": "declared: UAudioMixerBlueprintLibrary in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h"
+   },
+   "MakeFullSpectrumSpectralAnalysisBandSettings": {
+    "reason": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h or its bases",
+    "reference_engine": "declared: UAudioMixerBlueprintLibrary in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h"
+   },
+   "MakeMusicalSpectralAnalysisBandSettings": {
+    "reason": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h or its bases",
+    "reference_engine": "declared: UAudioMixerBlueprintLibrary in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h"
+   },
+   "MakePresetSpectralAnalysisBandSettings": {
+    "reason": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h or its bases",
+    "reference_engine": "declared: UAudioMixerBlueprintLibrary in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h"
+   },
+   "StartAnalyzingOutput": {
+    "reason": "param count 7 vs declared [6] in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h",
+    "reference_engine": "declared: UAudioMixerBlueprintLibrary in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h"
+   },
+   "StartAudioBus": {
+    "reason": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h or its bases",
+    "reference_engine": "declared: UAudioMixerBlueprintLibrary in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h"
+   },
+   "StopAudioBus": {
+    "reason": "not declared in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h or its bases",
+    "reference_engine": "declared: UAudioMixerBlueprintLibrary in Source/Runtime/AudioMixer/Public/AudioMixerBlueprintLibrary.h"
+   }
   },
   "UCameraShakeSourceComponent": {
-   "PlayCameraShake": "param count 4 vs declared [1] in Source/Runtime/Engine/Classes/Camera/CameraShakeSourceComponent.h",
-   "StopAllCameraShakesOfType": "not declared in Source/Runtime/Engine/Classes/Camera/CameraShakeSourceComponent.h"
+   "PlayCameraShake": {
+    "reason": "param count 4 vs declared [1] in Source/Runtime/Engine/Classes/Camera/CameraShakeSourceComponent.h",
+    "reference_engine": "not matched: not declared in Source/Runtime/Engine/Classes/Camera/CameraShakeSourceComponent.h or its bases"
+   },
+   "StopAllCameraShakesOfType": {
+    "reason": "not declared in Source/Runtime/Engine/Classes/Camera/CameraShakeSourceComponent.h or its bases",
+    "reference_engine": "declared: UCameraShakeSourceComponent in Source/Runtime/Engine/Classes/Camera/CameraShakeSourceComponent.h"
+   }
   },
   "UControlRig": {
-   "GetDeltaTime": "not declared in Plugins/Experimental/ControlRig/Source/ControlRig/Public/ControlRig.h"
-  },
-  "UCurveSourceInterface": {
-   "GetBindingName": "not declared in Source/Runtime/Engine/Classes/Animation/CurveSourceInterface.h",
-   "GetCurveValue": "not declared in Source/Runtime/Engine/Classes/Animation/CurveSourceInterface.h",
-   "GetCurves": "not declared in Source/Runtime/Engine/Classes/Animation/CurveSourceInterface.h"
+   "GetDeltaTime": {
+    "reason": "not declared in Plugins/Experimental/ControlRig/Source/ControlRig/Public/ControlRig.h or its bases",
+    "reference_engine": "not matched: not declared in Plugins/Experimental/ControlRig/Source/ControlRig/Public/ControlRig.h or its bases"
+   }
   },
   "UDynamicEntryBoxBase": {
-   "SetRadialSettings": "not declared in Source/Runtime/UMG/Public/Components/DynamicEntryBoxBase.h"
+   "SetRadialSettings": {
+    "reason": "not declared in Source/Runtime/UMG/Public/Components/DynamicEntryBoxBase.h or its bases",
+    "reference_engine": "declared: UDynamicEntryBoxBase in Source/Runtime/UMG/Public/Components/DynamicEntryBoxBase.h"
+   }
   },
   "UFXSystemComponent": {
-   "SetIntParameter": "not declared in Source/Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+   "SetIntParameter": {
+    "reason": "not declared in Source/Runtime/Engine/Classes/Particles/ParticleSystemComponent.h or its bases",
+    "reference_engine": "declared: UFXSystemComponent in Source/Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+   }
   },
   "UGameplayAbility": {
-   "K2_HasAuthority": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/GameplayAbility.h"
-  },
-  "UGameplayCueInterface": {
-   "ForwardGameplayCueToParent": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/GameplayCueInterface.h"
-  },
-  "UGameplayTagAssetInterface": {
-   "GetOwnedGameplayTags": "not declared in Source/Runtime/GameplayTags/Classes/GameplayTagAssetInterface.h",
-   "HasAllMatchingGameplayTags": "not declared in Source/Runtime/GameplayTags/Classes/GameplayTagAssetInterface.h",
-   "HasAnyMatchingGameplayTags": "not declared in Source/Runtime/GameplayTags/Classes/GameplayTagAssetInterface.h",
-   "HasMatchingGameplayTag": "not declared in Source/Runtime/GameplayTags/Classes/GameplayTagAssetInterface.h"
-  },
-  "UGizmoAxisSource": {
-   "GetDirection": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "GetOrigin": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "GetTangentVectors": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "HasTangentVectors": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h"
-  },
-  "UGizmoClickTarget": {
-   "UpdateHoverState": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h"
-  },
-  "UGizmoFloatParameterSource": {
-   "BeginModify": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "EndModify": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "GetParameter": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "SetParameter": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h"
-  },
-  "UGizmoStateTarget": {
-   "BeginUpdate": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "EndUpdate": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h"
-  },
-  "UGizmoTransformSource": {
-   "GetTransform": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "SetTransform": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h"
-  },
-  "UGizmoVec2ParameterSource": {
-   "BeginModify": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "EndModify": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "GetParameter": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h",
-   "SetParameter": "not declared in Source/Runtime/Experimental/InteractiveToolsFramework/Public/BaseGizmos/GizmoInterfaces.h"
+   "K2_HasAuthority": {
+    "reason": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/GameplayAbility.h or its bases",
+    "reference_engine": "declared: UGameplayAbility in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/GameplayAbility.h"
+   }
   },
   "ULevelStreamingDynamic": {
-   "LoadLevelInstance": "param count 6 vs declared [5] in Source/Runtime/Engine/Classes/Engine/LevelStreamingDynamic.h",
-   "LoadLevelInstanceBySoftObjectPtr": "param count 6 vs declared [5] in Source/Runtime/Engine/Classes/Engine/LevelStreamingDynamic.h"
+   "LoadLevelInstance": {
+    "reason": "param count 6 vs declared [5] in Source/Runtime/Engine/Classes/Engine/LevelStreamingDynamic.h",
+    "reference_engine": "declared: ULevelStreamingDynamic in Source/Runtime/Engine/Classes/Engine/LevelStreamingDynamic.h"
+   },
+   "LoadLevelInstanceBySoftObjectPtr": {
+    "reason": "param count 6 vs declared [5] in Source/Runtime/Engine/Classes/Engine/LevelStreamingDynamic.h",
+    "reference_engine": "declared: ULevelStreamingDynamic in Source/Runtime/Engine/Classes/Engine/LevelStreamingDynamic.h"
+   }
   },
   "UMediaPlayer": {
-   "GetTimeStamp": "not declared in Source/Runtime/MediaAssets/Public/MediaPlayer.h"
-  },
-  "UMovieSceneCustomClockSource": {
-   "OnRequestCurrentTime": "not declared in Source/Runtime/MovieScene/Public/Evaluation/IMovieSceneCustomClockSource.h",
-   "OnStartPlaying": "not declared in Source/Runtime/MovieScene/Public/Evaluation/IMovieSceneCustomClockSource.h",
-   "OnStopPlaying": "not declared in Source/Runtime/MovieScene/Public/Evaluation/IMovieSceneCustomClockSource.h",
-   "OnTick": "not declared in Source/Runtime/MovieScene/Public/Evaluation/IMovieSceneCustomClockSource.h"
-  },
-  "UNiagaraParticleCallbackHandler": {
-   "ReceiveParticleData": "not declared in Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraDataInterfaceExport.h"
+   "GetTimeStamp": {
+    "reason": "not declared in Source/Runtime/MediaAssets/Public/MediaPlayer.h or its bases",
+    "reference_engine": "declared: UMediaPlayer in Source/Runtime/MediaAssets/Public/MediaPlayer.h"
+   }
   },
   "URetainerBox": {
-   "SetRetainRendering": "not declared in Source/Runtime/UMG/Public/Components/RetainerBox.h"
+   "SetRetainRendering": {
+    "reason": "not declared in Source/Runtime/UMG/Public/Components/RetainerBox.h or its bases",
+    "reference_engine": "declared: URetainerBox in Source/Runtime/UMG/Public/Components/RetainerBox.h"
+   }
   },
   "URichTextBlock": {
-   "SetTextTransformPolicy": "not declared in Source/Runtime/UMG/Public/Components/RichTextBlock.h"
+   "SetTextTransformPolicy": {
+    "reason": "not declared in Source/Runtime/UMG/Public/Components/RichTextBlock.h or its bases",
+    "reference_engine": "declared: URichTextBlock in Source/Runtime/UMG/Public/Components/RichTextBlock.h"
+   }
   },
   "USceneCaptureComponent": {
-   "HideActorComponents": "param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Components/SceneCaptureComponent.h",
-   "RemoveShowOnlyActorComponents": "param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Components/SceneCaptureComponent.h",
-   "ShowOnlyActorComponents": "param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Components/SceneCaptureComponent.h"
+   "HideActorComponents": {
+    "reason": "param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Components/SceneCaptureComponent.h",
+    "reference_engine": "not matched: param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Components/SceneCaptureComponent.h"
+   },
+   "RemoveShowOnlyActorComponents": {
+    "reason": "param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Components/SceneCaptureComponent.h",
+    "reference_engine": "not matched: param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Components/SceneCaptureComponent.h"
+   },
+   "ShowOnlyActorComponents": {
+    "reason": "param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Components/SceneCaptureComponent.h",
+    "reference_engine": "not matched: param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Components/SceneCaptureComponent.h"
+   }
   },
   "USoundSubmix": {
-   "AddSpectralAnalysisDelegate": "not declared in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h",
-   "RemoveSpectralAnalysisDelegate": "not declared in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h",
-   "StartSpectralAnalysis": "not declared in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h",
-   "StopSpectralAnalysis": "not declared in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h"
+   "AddSpectralAnalysisDelegate": {
+    "reason": "not declared in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h or its bases",
+    "reference_engine": "declared: USoundSubmix in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h"
+   },
+   "RemoveSpectralAnalysisDelegate": {
+    "reason": "not declared in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h or its bases",
+    "reference_engine": "declared: USoundSubmix in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h"
+   },
+   "StartSpectralAnalysis": {
+    "reason": "not declared in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h or its bases",
+    "reference_engine": "declared: USoundSubmix in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h"
+   },
+   "StopSpectralAnalysis": {
+    "reason": "not declared in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h or its bases",
+    "reference_engine": "declared: USoundSubmix in Source/Runtime/Engine/Classes/Sound/SoundSubmix.h"
+   }
   },
   "UStaticMesh": {
-   "BuildFromStaticMeshDescriptions": "param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Engine/StaticMesh.h"
+   "BuildFromStaticMeshDescriptions": {
+    "reason": "param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Engine/StaticMesh.h",
+    "reference_engine": "not matched: param count 1 vs declared [2] in Source/Runtime/Engine/Classes/Engine/StaticMesh.h"
+   }
   },
   "USystemTimeTimecodeProvider": {
-   "SetFrameRate": "not declared in Source/Runtime/Engine/Classes/Engine/SystemTimeTimecodeProvider.h"
+   "SetFrameRate": {
+    "reason": "not declared in Source/Runtime/Engine/Classes/Engine/SystemTimeTimecodeProvider.h or its bases",
+    "reference_engine": "not matched: not declared in Source/Runtime/Engine/Classes/Engine/SystemTimeTimecodeProvider.h or its bases"
+   }
   },
   "UTimeSynthComponent": {
-   "GetMaxActiveClipLimit": "not declared in Plugins/Runtime/TimeSynth/Source/TimeSynth/Classes/TimeSynthComponent.h"
+   "GetMaxActiveClipLimit": {
+    "reason": "not declared in Plugins/Runtime/TimeSynth/Source/TimeSynth/Classes/TimeSynthComponent.h or its bases",
+    "reference_engine": "declared: UTimeSynthComponent in Plugins/Runtime/TimeSynth/Source/TimeSynth/Classes/TimeSynthComponent.h"
+   }
   },
   "UUserWidget": {
-   "GetOwningPlayerCameraManager": "not declared in Source/Runtime/UMG/Public/Blueprint/UserWidget.h"
+   "GetOwningPlayerCameraManager": {
+    "reason": "not declared in Source/Runtime/UMG/Public/Blueprint/UserWidget.h or its bases",
+    "reference_engine": "declared: UUserWidget in Source/Runtime/UMG/Public/Blueprint/UserWidget.h"
+   }
   },
   "UWidgetLayoutLibrary": {
-   "ProjectWorldLocationToWidgetPosition": "param count 3 vs declared [4] in Source/Runtime/UMG/Public/Blueprint/WidgetLayoutLibrary.h"
+   "ProjectWorldLocationToWidgetPosition": {
+    "reason": "param count 3 vs declared [4] in Source/Runtime/UMG/Public/Blueprint/WidgetLayoutLibrary.h",
+    "reference_engine": "not matched: param count 3 vs declared [4] in Source/Runtime/UMG/Public/Blueprint/WidgetLayoutLibrary.h"
+   }
   }
  },
  "verified": {
@@ -1655,6 +1734,27 @@
   "UArrowComponent": [
    "SetArrowColor"
   ],
+  "UAssetRegistry": [
+   "GetAllAssets",
+   "GetAllCachedPaths",
+   "GetAssetByObjectPath",
+   "GetAssets",
+   "GetAssetsByClass",
+   "GetAssetsByPackageName",
+   "GetAssetsByPath",
+   "GetSubPaths",
+   "HasAssets",
+   "IsLoadingAssets",
+   "K2_GetDependencies",
+   "K2_GetReferencers",
+   "PrioritizeSearchPath",
+   "RunAssetsThroughFilter",
+   "ScanFilesSynchronous",
+   "ScanModifiedAssetFiles",
+   "ScanPathsSynchronous",
+   "SearchAllAssets",
+   "UseFilterToExcludeAssets"
+  ],
   "UAssetRegistryHelpers": [
    "CreateAssetData",
    "GetAsset",
@@ -1848,6 +1948,9 @@
    "SetSprite",
    "SetSpriteAndUV",
    "SetUV"
+  ],
+  "UBlackboardAssetProvider": [
+   "GetBlackboardAsset"
   ],
   "UBlackboardComponent": [
    "ClearValue",
@@ -2397,6 +2500,11 @@
   "UCurveLinearColorAtlas": [
    "GetCurvePosition"
   ],
+  "UCurveSourceInterface": [
+   "GetBindingName",
+   "GetCurveValue",
+   "GetCurves"
+  ],
   "UCurveVector": [
    "GetVectorValue"
   ],
@@ -2855,6 +2963,9 @@
    "SetCanBeCanceled",
    "SetShouldBlockOtherAbilities"
   ],
+  "UGameplayCueInterface": [
+   "ForwardGameplayCueToParent"
+  ],
   "UGameplayCueNotify_Static": [
    "OnActive",
    "OnExecute",
@@ -2990,6 +3101,12 @@
    "SuggestProjectileVelocity_CustomArc",
    "UnloadStreamLevel"
   ],
+  "UGameplayTagAssetInterface": [
+   "GetOwnedGameplayTags",
+   "HasAllMatchingGameplayTags",
+   "HasAnyMatchingGameplayTags",
+   "HasMatchingGameplayTag"
+  ],
   "UGameplayTagReponseTable": [
    "TagResponseEvent"
   ],
@@ -3018,9 +3135,38 @@
    "ApplyPhysicsField",
    "SetNotifyBreaks"
   ],
+  "UGizmoAxisSource": [
+   "GetDirection",
+   "GetOrigin",
+   "GetTangentVectors",
+   "HasTangentVectors"
+  ],
   "UGizmoBaseComponent": [
    "UpdateHoverState",
    "UpdateWorldLocalState"
+  ],
+  "UGizmoClickTarget": [
+   "UpdateHoverState"
+  ],
+  "UGizmoFloatParameterSource": [
+   "BeginModify",
+   "EndModify",
+   "GetParameter",
+   "SetParameter"
+  ],
+  "UGizmoStateTarget": [
+   "BeginUpdate",
+   "EndUpdate"
+  ],
+  "UGizmoTransformSource": [
+   "GetTransform",
+   "SetTransform"
+  ],
+  "UGizmoVec2ParameterSource": [
+   "BeginModify",
+   "EndModify",
+   "GetParameter",
+   "SetParameter"
   ],
   "UGranularSynth": [
    "GetCurrentPlayheadTime",
@@ -5056,6 +5202,12 @@
    "GetShotDisplayName",
    "SetShotDisplayName"
   ],
+  "UMovieSceneCustomClockSource": [
+   "OnRequestCurrentTime",
+   "OnStartPlaying",
+   "OnStopPlaying",
+   "OnTick"
+  ],
   "UMovieSceneLevelVisibilitySection": [
    "GetLevelNames",
    "GetVisibility",
@@ -5302,6 +5454,9 @@
    "SetVector2DParameter",
    "SetVector4Parameter",
    "SetVectorParameter"
+  ],
+  "UNiagaraParticleCallbackHandler": [
+   "ReceiveParticleData"
   ],
   "UNiagaraPreviewAxis": [
    "ApplyToPreview",

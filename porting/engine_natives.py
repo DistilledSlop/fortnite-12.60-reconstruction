@@ -121,12 +121,50 @@ def build_ue_index(ue):
     return idx
 
 
+def real_param_count(meta):
+    """Real parameters only: CPF_Parm (0x80) set, CPF_ReturnParm (0x400) clear. Nested entries (array element
+    types, enum underlying types) carry no CPF_Parm and are not parameters."""
+    def _flags(p):
+        v = p.get("property_flags") or 0
+        return int(v, 16) if isinstance(v, str) else v
+    return len([p for p in meta.get("params") or [] if _flags(p) & 0x80 and not _flags(p) & 0x400])
+
+
+def classify(ue, cls, fn, n):
+    """('verified', where) | ('param', detail) | ('absent', detail) against one engine index."""
+    if cls not in ue:
+        return "absent", "class not in engine"
+    header, decls, bases = ue[cls]
+    cands = [(cls, header, decls)]
+    # UINTERFACE classes: the reflected UFoo's functions are declared on the C++ IFoo class.
+    iface = "I" + cls[1:]
+    if iface in ue:
+        cands.append((iface, ue[iface][0], ue[iface][1]))
+    todo, seen = list(bases), set()
+    while todo:
+        b = todo.pop()
+        if b in seen or b not in ue:
+            continue
+        seen.add(b)
+        cands.append((b, ue[b][0], ue[b][1]))
+        todo += ue[b][2]
+    declared = None
+    for name, h, d in cands:
+        if fn in d:
+            if n in d[fn]:
+                return "verified", "%s in %s" % (name, h)
+            declared = declared or "param count %d vs declared %s in %s" % (n, sorted(d[fn]), h)
+    return ("param", declared) if declared else ("absent", "not declared in %s or its bases" % header)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ue", required=True)
+    ap.add_argument("--ref", help="reference engine (e.g. UE 4.26) used only to annotate the gaps")
     ap.add_argument("--out", default=os.path.join(ROOT, "progress", "engine_provided_natives.json"))
     a = ap.parse_args()
     ue = build_ue_index(a.ue)
+    ref = build_ue_index(a.ref) if a.ref else None
     nf = json.load(open(NATIVE))
     verified = collections.defaultdict(list)
     unverified = collections.defaultdict(dict)
@@ -134,41 +172,25 @@ def main():
     for cls, fns in sorted(nf.items()):
         if cls not in ue:
             continue
-        header, decls, _b = ue[cls]
         for fn, meta in sorted(fns.items()):
             if not meta.get("exec_addr"):
                 continue
-            ps = meta.get("params") or []
-            # Real parameters only: CPF_Parm (0x80) set, CPF_ReturnParm (0x400) clear. Nested entries (array
-            # element types, enum underlying types) carry no CPF_Parm and are not parameters.
-            def _flags(p):
-                v = p.get("property_flags") or 0
-                return int(v, 16) if isinstance(v, str) else v
-            n = len([p for p in ps if _flags(p) & 0x80 and not _flags(p) & 0x400])
-            if fn not in decls:
-                found = None
-                todo = list(ue[cls][2]); seen = set()
-                while todo and not found:
-                    b = todo.pop()
-                    if b in seen or b not in ue:
-                        continue
-                    seen.add(b)
-                    if fn in ue[b][1]:
-                        found = (b, ue[b][1][fn], ue[b][0])
-                    todo += ue[b][2]
-                if found and n in found[1]:
-                    verified[cls].append(fn)
-                    stats["verified_via_base"] += 1
-                    continue
-                unverified[cls][fn] = "not declared in %s" % header
-                stats["not_declared"] += 1
-            elif n not in decls[fn]:
-                unverified[cls][fn] = "param count %d vs declared %s in %s" % (n, sorted(decls[fn]), header)
-                stats["param_count_mismatch"] += 1
-            else:
+            n = real_param_count(meta)
+            status, detail = classify(ue, cls, fn, n)
+            if status == "verified":
                 verified[cls].append(fn)
                 stats["verified"] += 1
-    out = {"_meta": {"method": "declaration + parameter-count match in stock UE 4.25 headers (porting/engine_natives.py)",
+                continue
+            rec = {"reason": detail}
+            if ref is not None:
+                rs, rd = classify(ref, cls, fn, n)
+                rec["reference_engine"] = ("declared: " + rd) if rs == "verified" else ("not matched: " + rd)
+                stats["gap_declared_in_reference" if rs == "verified" else "gap_not_in_reference"] += 1
+            unverified[cls][fn] = rec
+            stats["gap_" + status] += 1
+    out = {"_meta": {"method": "declaration + parameter-count match in stock UE 4.25 headers, own class, its bases "
+                               "and the matching I-class for UINTERFACEs (porting/engine_natives.py)",
+                     "reference_engine": a.ref and os.path.basename(os.path.dirname(a.ref.rstrip("/"))) or None,
                      "caveat": "declaration-level only; Epic fork body differences are not tested",
                      "counts": dict(stats)},
            "verified": verified, "unverified": unverified}
