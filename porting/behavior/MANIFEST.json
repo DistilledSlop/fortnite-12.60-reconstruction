@@ -59794,5 +59794,22 @@
     "includes": [],
     "class": "AFortAthenaMutator_Crucible",
     "notes": "Recovered getter with its required CurrentControlType and ParticipantBestTimes replication callbacks in this closure."
+  },
+  {
+    "class": "UFortGameplayAbility_AITurnTransition",
+    "function": "GetTurnTransitionMontageSectionNameAndYawRotationRate",
+    "kind": "exec",
+    "signature": "void GetTurnTransitionMontageSectionNameAndYawRotationRate(FName& MontageSectionName, float& TurnYawRotationRate) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/haiku262_04_ability_runtime/UFortGameplayAbility_AITurnTransition_GetTurnTransitionMontageSectionNameAndYawRotationRate.inc",
+    "address": "0x1428fe220",
+    "native_body_address": "0x1416005e0",
+    "reflection_flags": "0x54480401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Two field copies to out parameters; signature order taken from parameter offsets (flagged in evidence); build pending; source proposal, not runtime parity."
   }
 ]

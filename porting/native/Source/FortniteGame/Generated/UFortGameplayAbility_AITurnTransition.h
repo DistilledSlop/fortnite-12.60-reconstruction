@@ -37,5 +37,10 @@ public:
 	UPROPERTY()
 	float PickedTurnYawRotationRate;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetTurnTransitionMontageSectionNameAndYawRotationRate(FName& MontageSectionName, float& TurnYawRotationRate) const;
+public:
+
 };
 
