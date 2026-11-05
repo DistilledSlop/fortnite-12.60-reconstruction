@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'porting/ghidra'))
 import decompile_targets as base
-ap=argparse.ArgumentParser();ap.add_argument('--strings',nargs='*',default=[]);ap.add_argument('--functions',nargs='*',default=[]);ap.add_argument('--chain');ap.add_argument('--out',required=True);args=ap.parse_args()
+ap=argparse.ArgumentParser();ap.add_argument('--strings',nargs='*',default=[]);ap.add_argument('--functions',nargs='*',default=[]);ap.add_argument('--chain');ap.add_argument('--asm-only',action='store_true',help='Capture instructions without decompiler work');ap.add_argument('--out',required=True);args=ap.parse_args()
 out=Path(args.out);out.mkdir(parents=True,exist_ok=True)
 import pyghidra
 from pyghidra.launcher import HeadlessPyGhidraLauncher
@@ -45,13 +45,14 @@ try:
    entry=row['next']
   (out/'member-chain.json').write_text(json.dumps(chain,indent=2)+'\n')
   print('chain',len(chain),'GameTime',[(i,r['function']) for i,r in enumerate(chain) if any(s['text']=='GameTime' for s in r['strings'])],flush=True)
- dec=DecompInterface();dec.openProgram(program)
+ dec=None if args.asm_only else DecompInterface()
+ if dec:dec.openProgram(program)
  for a,f in funcs.items():
-  res=dec.decompileFunction(f,90,TaskMonitor.DUMMY)
-  if res.decompileCompleted():(out/(a+'.c')).write_text(str(res.getDecompiledFunction().getC()))
+  res=dec.decompileFunction(f,90,TaskMonitor.DUMMY) if dec else None
+  if res and res.decompileCompleted():(out/(a+'.c')).write_text(str(res.getDecompiledFunction().getC()))
   (out/(a+'.asm')).write_text('\n'.join(str(i.getAddress())+' '+str(i) for i in ls.getInstructions(f.getBody(),True)))
-  print(a,f.getBody().getNumAddresses(),res.decompileCompleted(),flush=True)
- dec.dispose()
+  print(a,f.getBody().getNumAddresses(),res.decompileCompleted() if res else 'assembly only',flush=True)
+ if dec:dec.dispose()
 finally:
  program.release(consumer);project.close()
 

@@ -276,3 +276,18 @@ is zeroed. Resource slots preserve borrowed pointer bytes, including explicit
 nulls, without assuming pointer validity. Publication is atomic on failure.
 This is a data-construction kernel, not an RHI buffer or renderer integration;
 producer values, dedicated original-layout binding and rendering remain pending.
+
+The consumed-lane analysis in `paper2d_view_lanes.py` narrows the View work
+further: 28 of 30 identified View shaders consume only same-offset/same-shape
+words. It resolves the 17 padding-only cases while retaining the unchanged
+physical-load inventory. Only shaders 857 and 3378 retain consumed layout
+mismatches. Unknown operations, dynamic extraction and cycles retain lanes;
+this is no claim about runtime values or resource bindings.
+
+`LegacyOriginalUniformContracts` now loads a selected fixed binding from the
+exported bundle using a mandatory caller-supplied SHA-256 pin. It validates
+original member trees, embedded types, resource indices, legacy hashes, duplicate
+keys and the complete binding inventory, then locates registered current metadata
+for the reconstruction kernel. The original and current layouts may differ at
+this data-construction boundary. Shader-output compatibility checks remain
+strict, and no renderer provider is installed.
