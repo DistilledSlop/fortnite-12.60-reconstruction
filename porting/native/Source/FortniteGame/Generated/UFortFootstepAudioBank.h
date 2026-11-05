@@ -6,9 +6,13 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "EFortFootstepAudioType.h"
+#include "EFortFootstepPosition.h"
 #include "EFortFootstepSurfaceType.h"
 #include "FFortFootstepAttenuationData.h"
 #include "FFortFootstepSurfaceAudioData.h"
+
+class USoundBase;
 
 #include "UFortFootstepAudioBank.generated.h"
 
@@ -61,6 +65,12 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	int32 VersionNumber;
+
+	UFUNCTION()
+	float GetFootstepVolumeMultiplier(bool bIsLocal, bool bApplyTeammateVolume, EFortFootstepAudioType::Type StepType);
+
+	UFUNCTION()
+	USoundBase* GetSoundAsset(bool bIsLocal, EFortFootstepAudioType::Type StepType, EFortFootstepSurfaceType::Type SurfaceType, EFortFootstepPosition::Type StepPosition);
 
 };
 

@@ -1,0 +1,32 @@
+[
+  {
+    "function": "GetFootstepVolumeMultiplier",
+    "signature": "float GetFootstepVolumeMultiplier(bool bIsLocal, bool bApplyTeammateVolume, EFortFootstepAudioType::Type StepType)",
+    "address": "0x1428e8060",
+    "native_body_address": "0x1424ab270",
+    "class": "UFortFootstepAudioBank",
+    "kind": "exec",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/footstep_port_a_runtime/GetFootstepVolumeMultiplier.inc",
+    "confidence": "high",
+    "status": "ported",
+    "includes": []
+  },
+  {
+    "function": "GetSoundAsset",
+    "signature": "USoundBase* GetSoundAsset(bool bIsLocal, EFortFootstepAudioType::Type StepType, EFortFootstepSurfaceType::Type SurfaceType, EFortFootstepPosition::Type StepPosition)",
+    "address": "0x1428e8570",
+    "native_body_address": "0x1424aea20",
+    "class": "UFortFootstepAudioBank",
+    "kind": "exec",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/footstep_port_a_runtime/GetSoundAsset.inc",
+    "confidence": "high",
+    "status": "ported",
+    "includes": []
+  }
+]
