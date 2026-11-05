@@ -11,7 +11,6 @@ from out/progress.json. Stdlib only, offline, deterministic for a given out/.
 """
 import json
 import re
-import shutil
 import subprocess
 import sys
 import urllib.parse
@@ -217,33 +216,15 @@ def badges(d):
 
 
 def block(d):
-    short = d["head"][:8]
-    date = d["date"][:10]
-    lines = [START, ""]
-    lines.append(
-        f"**Overall: {d['overall_pct']:.1f}%** · evidence-based {d['measured_pct']:.1f}% · "
-        f"objective {d['objective_pct']:.1f}% · milestones {d['milestones_done']}/{d['milestones_total']} · "
-        f"snapshot `{short}` ({date})"
-    )
-    lines += ["", "| Milestone | Status |", "|---|---|"]
+    lines = [START, "", f"**Estimated reconstruction effort: {d['overall_pct']:.1f}%** · "
+             f"runtime milestones: {d['milestones_done']}/{d['milestones_total']} · "
+             f"snapshot `{d['head'][:8]}` ({d['date'][:10]})", "",
+             "| Runtime milestone | Status |", "|---|---|"]
     for m in d["milestones"]:
-        lines.append(f"| {m['text']} | {'✅ done' if m['done'] else '⬜ open'} |")
-    lines += ["", "| Area | Progress | % | Effort weight |", "|---|---|--:|--:|"]
-    total = sum(g["weight"] for g in d["groups"]) or 1
-    for g in d["groups"]:
-        lines.append(
-            f"| {g['name']} | `{bar(g['pct'])}` | {g['pct']:.1f}% | {100 * g['weight'] / total:.0f}% |"
-        )
-    lines += [
-        "",
-        "<sub>Percentages are effort-weighted estimates of reconstruction work, not a measure "
-        "of the playable-game definition, which is far from met. "
-        "`objective` counts only computed evidence; `evidence-based` adds documented counts; "
-        "the rest is manual estimate. Method: "
-        "[porting/progress/README.md](porting/progress/README.md).</sub>",
-        "",
-        END,
-    ]
+        lines.append(f"| {m['text']} | {'Complete' if m['done'] else 'Open'} |")
+    lines += ["", "Percentages estimate implementation and verification effort. Recovered source, "
+              "extracted assets, and offline checks do not prove a playable feature. "
+              "[Dashboard methodology](porting/progress/README.md).", "", END]
     return "\n".join(lines)
 
 

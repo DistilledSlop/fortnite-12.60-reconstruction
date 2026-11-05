@@ -1,17 +1,16 @@
 <div align="center">
 
-# Fortnite 12.60 → Linux
+# Fortnite Chapter 2 Season 2 → Unreal Engine Project
 
-**A from-scratch reconstruction of Fortnite 12.60 (CL 13477524) as a buildable Unreal Engine 4.25 project, with a reimplemented dedicated server and local backend.**
+Reconstructing Fortnite Chapter 2 Season 2 as an Unreal Engine project, with recovered C++ source, a dedicated server, and local backend services.
 
-[Dashboard](#progress-dashboard) ·
-[Treemap SVG](docs/progress.svg) ·
-[Data](docs/progress.json) ·
-[Handoff](porting/HANDOFF.md) ·
-[Master plan](porting/master_plan.md)
+[Wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) ·
+[Source reference](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Source-and-API-Index) ·
+[Progress](#progress) ·
+[Setup](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Setup-and-Workflow)
 
 <!-- badges:start -->
-<p align="center"><img alt="overall: 29.1%" src="https://img.shields.io/static/v1?label=overall&amp;message=29.1%25&amp;color=2a78d6"> <img alt="evidence: 28.2%" src="https://img.shields.io/static/v1?label=evidence&amp;message=28.2%25&amp;color=3987e5"> <img alt="objective: 28.2%" src="https://img.shields.io/static/v1?label=objective&amp;message=28.2%25&amp;color=5a9cec"> <img alt="milestones: 0/4" src="https://img.shields.io/static/v1?label=milestones&amp;message=0%2F4&amp;color=d6a02a"> <img alt="units: 1.34M/1.38M" src="https://img.shields.io/static/v1?label=units&amp;message=1.34M%2F1.38M&amp;color=0e7490"> <img alt="snapshot: 888d5a72" src="https://img.shields.io/static/v1?label=snapshot&amp;message=888d5a72&amp;color=9f9f9f&amp;logo=git"> <img alt="updated: 2026-11-05" src="https://img.shields.io/static/v1?label=updated&amp;message=2026-11-05&amp;color=9f9f9f"></p>
+<p align="center"><img alt="overall: 29.1%" src="https://img.shields.io/static/v1?label=overall&amp;message=29.1%25&amp;color=2a78d6"> <img alt="evidence: 28.2%" src="https://img.shields.io/static/v1?label=evidence&amp;message=28.2%25&amp;color=3987e5"> <img alt="objective: 28.2%" src="https://img.shields.io/static/v1?label=objective&amp;message=28.2%25&amp;color=5a9cec"> <img alt="milestones: 0/4" src="https://img.shields.io/static/v1?label=milestones&amp;message=0%2F4&amp;color=d6a02a"> <img alt="units: 1.34M/1.38M" src="https://img.shields.io/static/v1?label=units&amp;message=1.34M%2F1.38M&amp;color=0e7490"> <img alt="snapshot: a49c79bd" src="https://img.shields.io/static/v1?label=snapshot&amp;message=a49c79bd&amp;color=9f9f9f&amp;logo=git"> <img alt="updated: 2026-11-05" src="https://img.shields.io/static/v1?label=updated&amp;message=2026-11-05&amp;color=9f9f9f"></p>
 <p align="center"><img alt="M1 menu: open" src="https://img.shields.io/static/v1?label=M1%20menu&amp;message=open&amp;color=9f9f9f"> <img alt="M2 lobby: open" src="https://img.shields.io/static/v1?label=M2%20lobby&amp;message=open&amp;color=9f9f9f"> <img alt="M3 matchmaking: open" src="https://img.shields.io/static/v1?label=M3%20matchmaking&amp;message=open&amp;color=9f9f9f"> <img alt="M4 match: open" src="https://img.shields.io/static/v1?label=M4%20match&amp;message=open&amp;color=9f9f9f"> <img alt="client: unstripped" src="https://img.shields.io/static/v1?label=client&amp;message=unstripped&amp;color=7d4cdb"> <img alt="server: reconstructed" src="https://img.shields.io/static/v1?label=server&amp;message=reconstructed&amp;color=e8a317"> <img alt="goal: full A/V" src="https://img.shields.io/static/v1?label=goal&amp;message=full%20A%2FV&amp;color=a41e22"></p>
 <p align="center"><img alt="platform: 26.0%" src="https://img.shields.io/static/v1?label=platform&amp;message=26.0%25&amp;color=97ca00"> <img alt="assets: 65.8%" src="https://img.shields.io/static/v1?label=assets&amp;message=65.8%25&amp;color=2e8540"> <img alt="maps: 13.9%" src="https://img.shields.io/static/v1?label=maps&amp;message=13.9%25&amp;color=dfb317"> <img alt="gameplay: 17.1%" src="https://img.shields.io/static/v1?label=gameplay&amp;message=17.1%25&amp;color=dfb317"> <img alt="network: 27.1%" src="https://img.shields.io/static/v1?label=network&amp;message=27.1%25&amp;color=97ca00"> <img alt="backend: 46.3%" src="https://img.shields.io/static/v1?label=backend&amp;message=46.3%25&amp;color=97ca00"> <img alt="audio: 27.3%" src="https://img.shields.io/static/v1?label=audio&amp;message=27.3%25&amp;color=97ca00"></p>
 <p align="center"><img alt="visuals: 22.4%" src="https://img.shields.io/static/v1?label=visuals&amp;message=22.4%25&amp;color=dfb317"> <img alt="frontend UI: 23.1%" src="https://img.shields.io/static/v1?label=frontend%20UI&amp;message=23.1%25&amp;color=dfb317"> <img alt="components: 136" src="https://img.shields.io/static/v1?label=components&amp;message=136&amp;color=2a78d6"> <img alt="areas: 9" src="https://img.shields.io/static/v1?label=areas&amp;message=9&amp;color=7d4cdb"> <img alt="class parity: 4,617/4,617" src="https://img.shields.io/static/v1?label=class%20parity&amp;message=4%2C617%2F4%2C617&amp;color=2e8540"> <img alt="git-measured: 61 leaves" src="https://img.shields.io/static/v1?label=git-measured&amp;message=61%20leaves&amp;color=4eaa25"> <img alt="manual: 60 leaves" src="https://img.shields.io/static/v1?label=manual&amp;message=60%20leaves&amp;color=9f9f9f"></p>
@@ -19,113 +18,65 @@
 <p align="center"><img alt="paks: 31 · v10" src="https://img.shields.io/static/v1?label=paks&amp;message=31%20%C2%B7%20v10&amp;color=5b4a8a"> <img alt="pak entries: 963,427" src="https://img.shields.io/static/v1?label=pak%20entries&amp;message=963%2C427&amp;color=0e7490"> <img alt=".uasset: 450,951" src="https://img.shields.io/static/v1?label=.uasset&amp;message=450%2C951&amp;color=2e8540"> <img alt="maps: 3,694" src="https://img.shields.io/static/v1?label=maps&amp;message=3%2C694&amp;color=b08800"> <img alt="plugins: 123" src="https://img.shields.io/static/v1?label=plugins&amp;message=123&amp;color=a41e22"> <img alt="modules: 6" src="https://img.shields.io/static/v1?label=modules&amp;message=6&amp;color=512bd4"> <img alt="API routes: 59" src="https://img.shields.io/static/v1?label=API%20routes&amp;message=59&amp;color=e8a317"></p>
 <p align="center"><img alt="extraction: CUE4Parse" src="https://img.shields.io/static/v1?label=extraction&amp;message=CUE4Parse&amp;color=512bd4"> <img alt="decompiler: Ghidra 12.2" src="https://img.shields.io/static/v1?label=decompiler&amp;message=Ghidra%2012.2&amp;color=b5301f"> <img alt="pak index: v10" src="https://img.shields.io/static/v1?label=pak%20index&amp;message=v10&amp;color=5b4a8a"> <img alt="net: IpNetDriver" src="https://img.shields.io/static/v1?label=net&amp;message=IpNetDriver&amp;color=a41e22"> <img alt="UI: CommonUI" src="https://img.shields.io/static/v1?label=UI&amp;message=CommonUI&amp;color=7d4cdb"> <img alt="parity: checksum" src="https://img.shields.io/static/v1?label=parity&amp;message=checksum&amp;color=2e8540"> <img alt="tooling: Python" src="https://img.shields.io/static/v1?label=tooling&amp;message=Python&amp;color=3776ab&amp;logo=python"></p>
 <p align="center"><img alt="C++: 4,876 .cpp" src="https://img.shields.io/static/v1?label=C%2B%2B&amp;message=4%2C876%20.cpp&amp;color=00599c&amp;logo=cplusplus"> <img alt="headers: 8,274 .h" src="https://img.shields.io/static/v1?label=headers&amp;message=8%2C274%20.h&amp;color=0e7490"> <img alt="recovered: 3,322 .inc" src="https://img.shields.io/static/v1?label=recovered&amp;message=3%2C322%20.inc&amp;color=d97757"> <img alt="Python: 598 scripts" src="https://img.shields.io/static/v1?label=Python&amp;message=598%20scripts&amp;color=3776ab&amp;logo=python"> <img alt="C#: 24 files" src="https://img.shields.io/static/v1?label=C%23&amp;message=24%20files&amp;color=512bd4"> <img alt="shell: 17 scripts" src="https://img.shields.io/static/v1?label=shell&amp;message=17%20scripts&amp;color=4eaa25&amp;logo=gnubash"> <img alt="patches: 18" src="https://img.shields.io/static/v1?label=patches&amp;message=18&amp;color=6e5494"></p>
-<p align="center"><img alt="C++ lines: 459.1k" src="https://img.shields.io/static/v1?label=C%2B%2B%20lines&amp;message=459.1k&amp;color=00599c"> <img alt="Python lines: 83.3k" src="https://img.shields.io/static/v1?label=Python%20lines&amp;message=83.3k&amp;color=3776ab"> <img alt="C# lines: 2,736" src="https://img.shields.io/static/v1?label=C%23%20lines&amp;message=2%2C736&amp;color=512bd4"> <img alt="shell lines: 787" src="https://img.shields.io/static/v1?label=shell%20lines&amp;message=787&amp;color=4eaa25"> <img alt="docs: 29.3k lines" src="https://img.shields.io/static/v1?label=docs&amp;message=29.3k%20lines&amp;color=0e7490"> <img alt="markdown: 607 files" src="https://img.shields.io/static/v1?label=markdown&amp;message=607%20files&amp;color=6e5494"> <img alt="data: 1137 JSON" src="https://img.shields.io/static/v1?label=data&amp;message=1137%20JSON&amp;color=b08800"></p>
-<p align="center"><img alt="native: 12.9k files" src="https://img.shields.io/static/v1?label=native&amp;message=12.9k%20files&amp;color=00599c"> <img alt="behavior: 4,961 files" src="https://img.shields.io/static/v1?label=behavior&amp;message=4%2C961%20files&amp;color=b5301f"> <img alt="frontend: 788 files" src="https://img.shields.io/static/v1?label=frontend&amp;message=788%20files&amp;color=7d4cdb"> <img alt="server: 41 files" src="https://img.shields.io/static/v1?label=server&amp;message=41%20files&amp;color=e8a317"> <img alt="assets: 16 files" src="https://img.shields.io/static/v1?label=assets&amp;message=16%20files&amp;color=2e8540"> <img alt="materials: 128 files" src="https://img.shields.io/static/v1?label=materials&amp;message=128%20files&amp;color=d97757"> <img alt="dashboard: 59 files" src="https://img.shields.io/static/v1?label=dashboard&amp;message=59%20files&amp;color=2a78d6"></p>
-<p align="center"><img alt="tracked files: 19.0k" src="https://img.shields.io/static/v1?label=tracked%20files&amp;message=19.0k&amp;color=0e7490"> <img alt="commits: 1,072" src="https://img.shields.io/static/v1?label=commits&amp;message=1%2C072&amp;color=1f6feb&amp;logo=git"> <img alt="branches: 14" src="https://img.shields.io/static/v1?label=branches&amp;message=14&amp;color=7d4cdb"> <img alt="since: 2026-10-30" src="https://img.shields.io/static/v1?label=since&amp;message=2026-10-30&amp;color=9f9f9f"> <img alt="authored by: Codex" src="https://img.shields.io/static/v1?label=authored%20by&amp;message=Codex&amp;color=10a37f"> <img alt="authored by: Claude" src="https://img.shields.io/static/v1?label=authored%20by&amp;message=Claude&amp;color=d97757&amp;logo=anthropic"> <img alt="status: WIP" src="https://img.shields.io/static/v1?label=status&amp;message=WIP&amp;color=dfb317"></p>
+<p align="center"><img alt="C++ lines: 459.1k" src="https://img.shields.io/static/v1?label=C%2B%2B%20lines&amp;message=459.1k&amp;color=00599c"> <img alt="Python lines: 83.3k" src="https://img.shields.io/static/v1?label=Python%20lines&amp;message=83.3k&amp;color=3776ab"> <img alt="C# lines: 2,736" src="https://img.shields.io/static/v1?label=C%23%20lines&amp;message=2%2C736&amp;color=512bd4"> <img alt="shell lines: 787" src="https://img.shields.io/static/v1?label=shell%20lines&amp;message=787&amp;color=4eaa25"> <img alt="docs: 29.3k lines" src="https://img.shields.io/static/v1?label=docs&amp;message=29.3k%20lines&amp;color=0e7490"> <img alt="markdown: 608 files" src="https://img.shields.io/static/v1?label=markdown&amp;message=608%20files&amp;color=6e5494"> <img alt="data: 1138 JSON" src="https://img.shields.io/static/v1?label=data&amp;message=1138%20JSON&amp;color=b08800"></p>
+<p align="center"><img alt="native: 12.9k files" src="https://img.shields.io/static/v1?label=native&amp;message=12.9k%20files&amp;color=00599c"> <img alt="behavior: 4,963 files" src="https://img.shields.io/static/v1?label=behavior&amp;message=4%2C963%20files&amp;color=b5301f"> <img alt="frontend: 788 files" src="https://img.shields.io/static/v1?label=frontend&amp;message=788%20files&amp;color=7d4cdb"> <img alt="server: 41 files" src="https://img.shields.io/static/v1?label=server&amp;message=41%20files&amp;color=e8a317"> <img alt="assets: 16 files" src="https://img.shields.io/static/v1?label=assets&amp;message=16%20files&amp;color=2e8540"> <img alt="materials: 128 files" src="https://img.shields.io/static/v1?label=materials&amp;message=128%20files&amp;color=d97757"> <img alt="dashboard: 59 files" src="https://img.shields.io/static/v1?label=dashboard&amp;message=59%20files&amp;color=2a78d6"></p>
+<p align="center"><img alt="tracked files: 19.0k" src="https://img.shields.io/static/v1?label=tracked%20files&amp;message=19.0k&amp;color=0e7490"> <img alt="commits: 1,073" src="https://img.shields.io/static/v1?label=commits&amp;message=1%2C073&amp;color=1f6feb&amp;logo=git"> <img alt="branches: 14" src="https://img.shields.io/static/v1?label=branches&amp;message=14&amp;color=7d4cdb"> <img alt="since: 2026-10-30" src="https://img.shields.io/static/v1?label=since&amp;message=2026-10-30&amp;color=9f9f9f"> <img alt="authored by: Codex" src="https://img.shields.io/static/v1?label=authored%20by&amp;message=Codex&amp;color=10a37f"> <img alt="authored by: Claude" src="https://img.shields.io/static/v1?label=authored%20by&amp;message=Claude&amp;color=d97757&amp;logo=anthropic"> <img alt="status: WIP" src="https://img.shields.io/static/v1?label=status&amp;message=WIP&amp;color=dfb317"></p>
 <p align="center"><img alt="agents: ≤3 at once" src="https://img.shields.io/static/v1?label=agents&amp;message=%E2%89%A43%20at%20once&amp;color=d97757&amp;logo=anthropic"> <img alt="commits: each batch" src="https://img.shields.io/static/v1?label=commits&amp;message=each%20batch&amp;color=1f6feb"> <img alt="history: per commit" src="https://img.shields.io/static/v1?label=history&amp;message=per%20commit&amp;color=2a78d6"> <img alt="evidence: ledgered" src="https://img.shields.io/static/v1?label=evidence&amp;message=ledgered&amp;color=2e8540"> <img alt="keys: git-ignored" src="https://img.shields.io/static/v1?label=keys&amp;message=git-ignored&amp;color=e05d44"> <img alt="assets: git-ignored" src="https://img.shields.io/static/v1?label=assets&amp;message=git-ignored&amp;color=fe7d37"> <img alt="checks: batched" src="https://img.shields.io/static/v1?label=checks&amp;message=batched&amp;color=dfb317"> <img alt="water used: 20.6 gal" src="https://img.shields.io/static/v1?label=water%20used&amp;message=20.6%20gal&amp;color=dfb317"></p>
 <!-- badges:end -->
 
 </div>
 
----
+The reference build is **12.60, CL 13477524**. The current development environment uses Unreal Engine 4.25 on Linux; the project's goal is to recover the game as an Unreal Engine project. It is under active reconstruction and is not yet a complete, playable release.
 
-## Progress dashboard
+## Scope
 
-Area is estimated effort, fill is percent complete. Click the treemap for the full-size SVG. The interactive
-page with per-component evidence and the per-commit history chart is [`docs/index.html`](docs/index.html) (download it,
-or run `porting/progress/serve.sh`); GitHub only shows HTML as source unless Pages is enabled for the repo.
+- Recover the client's classes, function behavior, assets pipeline, frontend, and world systems from the supplied build.
+- Reconstruct the dedicated server and local account, profile, matchmaking, session, party, and XMPP services.
+- Verify the rebuilt client through the main menu, lobby, matchmaking, and a full match with working audio and visuals.
 
-<p align="center">
-  <a href="docs/progress.svg">
-    <img src="docs/progress.svg" alt="Treemap of port progress: area is effort weight, fill is percent complete" width="100%">
-  </a>
-</p>
+The original executable is a reference for analysis. The deliverable is the rebuilt Unreal Engine project and its services.
+
+## Documentation
+
+The [wiki](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki) collects project setup, architecture, source and API guides, Maps & World documentation, and the indexed technical archive. Historical handoffs are separated from current guidance.
+
+| Start here | Contents |
+|---|---|
+| [Project status](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Project-Status) | Current limitations and acceptance milestones |
+| [Source and API index](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Source-and-API-Index) | Source layout, recovery conventions, and code references |
+| [Maps and world](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Maps-and-world) | Apollo, streaming, terrain, wind, and remaining integration |
+| [Documentation index](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Documentation-Index) | Technical notes grouped by subsystem |
+
+## Progress
+
+[![Reconstruction progress by area](docs/progress.svg)](docs/progress.svg)
 
 <!-- progress:start -->
 
-**Overall: 29.1%** · evidence-based 28.2% · objective 28.2% · milestones 0/4 · snapshot `888d5a72` (2026-11-05)
+**Estimated reconstruction effort: 29.1%** · runtime milestones: 0/4 · snapshot `a49c79bd` (2026-11-05)
 
-| Milestone | Status |
+| Runtime milestone | Status |
 |---|---|
-| The rebuilt client reaches the main menu with feature parity to the 12.60 original | ⬜ open |
-| The client joins a lobby on the reconstructed server | ⬜ open |
-| The client matchmakes to the reconstructed UE dedicated server | ⬜ open |
-| A full match is played with audio and visuals working | ⬜ open |
+| The rebuilt client reaches the main menu with feature parity to the 12.60 original | Open |
+| The client joins a lobby on the reconstructed server | Open |
+| The client matchmakes to the reconstructed UE dedicated server | Open |
+| A full match is played with audio and visuals working | Open |
 
-| Area | Progress | % | Effort weight |
-|---|---|--:|--:|
-| Platform and Linux runtime | `█████░░░░░░░░░░░░░░░` | 26.0% | 5% |
-| Asset pipeline | `█████████████░░░░░░░` | 65.8% | 14% |
-| Maps and world (Apollo island) | `███░░░░░░░░░░░░░░░░░` | 13.9% | 9% |
-| Gameplay classes (/Script/FortniteGame) | `███░░░░░░░░░░░░░░░░░` | 17.1% | 33% |
-| Network protocol and replication | `█████░░░░░░░░░░░░░░░` | 27.1% | 10% |
-| Backend services (reconstructed server) | `█████████░░░░░░░░░░░` | 46.3% | 11% |
-| Audio | `█████░░░░░░░░░░░░░░░` | 27.3% | 4% |
-| Visuals parity | `████░░░░░░░░░░░░░░░░` | 22.4% | 5% |
-| Frontend and lobby UI | `█████░░░░░░░░░░░░░░░` | 23.1% | 10% |
-
-<sub>Percentages are effort-weighted estimates of reconstruction work, not a measure of the playable-game definition, which is far from met. `objective` counts only computed evidence; `evidence-based` adds documented counts; the rest is manual estimate. Method: [porting/progress/README.md](porting/progress/README.md).</sub>
+Percentages estimate implementation and verification effort. Recovered source, extracted assets, and offline checks do not prove a playable feature. [Dashboard methodology](porting/progress/README.md).
 
 <!-- progress:end -->
 
-> The dashboard is generated from tracked files by [`porting/progress/progress.py`](porting/progress/progress.py)
-> and refreshed after every commit. Each figure carries its basis (`git`, `local`, `documented`, `manual`), so the
-> subjective part is always visible.
+The [interactive dashboard](docs/index.html) contains area estimates and evidence. To view it locally, run `porting/progress/serve.sh`. The dashboard refreshes after commits.
 
-## The goal
-
-Done means: **login, lobby, matchmaking and a full match, with audio and visuals, verified end to end.**
-
-| Piece | What it has to be |
-|---|---|
-| **Client** | The exact same client as the supplied 12.60 original, every feature and structure, rebuilt into a UE project. Decompiling it into source is the point, not a fallback. Nothing is stripped to make networking work. |
-| **Server** | Every structure and feature the original dedicated server would have. Epic never shipped it, so it is rebuilt from the engine source plus local stand-ins for the Epic backend (account, profile, matchmaking, session, party, XMPP). |
-| **Reference** | The supplied 12.60 build defines completeness. The original binary under Wine is an analysis oracle for decrypted code, requests and gates, not the deliverable. |
-
-## How it is built
-
-```
-12.60 paks ──► decrypt + index ──► asset extraction ──► reflection dump ──► generated UClasses
- (31, v10)      (cue4inspect)       (963k files)        (types, vtables)         │
-                                                                                 ▼
- Wine oracle ──► code recovery ──► decompiled bodies ──► native module ──► UE 4.25 Linux
- (analysis)      (Ghidra)          (spliced, checked)    (client + server)  build + stage
-                                                                                 │
-                              reconstructed backend  ◄── direct join / smokes ◄─┘
-```
-
-- **Native classes** are generated from the game's own reflection data and checked against an offline network-checksum model, so replication layouts match the original.
-- **Function bodies** are recovered from the binary and spliced into the generated classes, each with a behavior record. Source coverage is tracked separately from runtime parity.
-- **Server** (`porting/server/`) is a local stand-in for Epic's services, with a test suite run on every regression.
-- **Assets** are extracted from the supplied paks into ignored local storage and converted (meshes, textures, materials) for the Linux cook.
-
-## Repository layout
+## Repository
 
 | Path | Contents |
 |---|---|
-| [`porting/native/`](porting/native) | The UE project: generated classes, recovered bodies, plugins, build targets |
-| [`porting/behavior/`](porting/behavior) | Recovered function behavior, manifests, and checkers |
-| [`porting/frontend/`](porting/frontend) | Frontend/lobby UI recovery: CommonUI, Slate, and per-widget runtime probes |
-| [`porting/server/`](porting/server) | Reimplemented backend services and evidence |
-| [`porting/asset_pipeline/`](porting/asset_pipeline), [`material_pipeline/`](porting/material_pipeline) | Pak extraction, mesh/texture/material conversion |
-| [`porting/progress/`](porting/progress) | The dashboard generator, effort model, evidence ledger |
-| [`docs/`](docs) | Published dashboard snapshot (HTML, SVG, JSON, evidence), ready for GitHub Pages |
-| [`porting/README.md`](porting/README.md) | Detailed evidence log and the work still needed |
-| [`porting/HANDOFF.md`](porting/HANDOFF.md) | Current state, build recipe, next steps |
+| [porting/native](porting/native) | Unreal Engine project, generated classes, recovered implementations, and plugins |
+| [porting/behavior](porting/behavior) | Function implementations, manifests, and recovery evidence |
+| [porting/frontend](porting/frontend) | Frontend and lobby reconstruction |
+| [porting/server](porting/server) | Local backend services |
+| [porting/asset_pipeline](porting/asset_pipeline) and [porting/material_pipeline](porting/material_pipeline) | Asset conversion tools |
+| [porting/progress](porting/progress) | Dashboard and evidence accounting |
 
-## What is in and out of Git
-
-This repository tracks **only new porting code, notes, and the dashboard**. The supplied Windows client, the
-Unreal Engine source checkout, extracted assets, build products and every encryption key stay outside Git
-(see [`.gitignore`](.gitignore)). Nothing here redistributes Fortnite content.
-
-## Working with the dashboard
-
-```sh
-python3 porting/progress/progress.py --no-record   # render HEAD into porting/progress/out/
-python3 porting/progress/publish.py                # copy it to docs/ and refresh the block above
-python3 porting/progress/publish.py --check        # CI-style staleness check
-porting/progress/serve.sh                          # serve out/ on the LAN (port 8765)
-```
-
-Details of the model, bases and evidence ledger are in [`porting/progress/README.md`](porting/progress/README.md).
+The repository contains reconstruction code, tools, and documentation. The supplied game files, Unreal Engine checkout, extracted assets, build products, and encryption keys stay outside Git. See [.gitignore](.gitignore).
