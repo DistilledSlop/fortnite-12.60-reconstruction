@@ -10,6 +10,12 @@ bool UFortGlobals::AllowContainersInCreativeItemLists()
 	return UFortGlobals::NativeGetGlobals()->bAllowContainersInCreativeItemLists;
 }
 
+bool UFortGlobals::AreFriendCodesEnabled()
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	return UFortGlobals::NativeGetGlobals()->bEnableFriendCodes;
+}
+
 EFortAccountLinkingUIConfig UFortGlobals::GetAccountLinkingUIConfig()
 {
 	// Native body 0x141ed2420. CONFIDENCE: high

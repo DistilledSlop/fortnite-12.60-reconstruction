@@ -1,0 +1,10 @@
+{
+  "UFortGlobals::AreFriendCodesEnabled": {
+    "wrapper": "porting/generated/native-triage010/0x142933c00.c",
+    "singleton_callee": "porting/generated/native-broad80/0x141ed2350.c",
+    "existing_helper": "porting/behavior/building_lazy_setting61_runtime/UFortGlobals_NativeGetGlobals.inc",
+    "field_mapping": "porting/generated/reflection/bool_bits.json: UFortGlobals.bEnableFriendCodes offset 200 (0xc8), byte bool",
+    "reflection": "porting/generated/reflection/native_funcs.json: UFortGlobals.AreFriendCodesEnabled",
+    "scope": "No build or runtime checks performed; staging proposal only."
+  }
+}

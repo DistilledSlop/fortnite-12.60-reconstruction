@@ -578,6 +578,18 @@ bool AFortMinigame::HasStarted() const
 	return static_cast<uint8>(CurrentState) != 0;
 }
 
+bool AFortMinigame::IsGameWinnerShown() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	return FMath::Abs(GameWinnerDisplayTime) > 1.e-8f;
+}
+
+bool AFortMinigame::IsInProgress() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	return static_cast<uint8>(static_cast<uint8>(CurrentState) - 1) < 5;
+}
+
 bool AFortMinigame::IsInSetup() const
 {
 	// Original address: 0x1429c2dc0.
@@ -931,6 +943,12 @@ bool AFortMinigame::ShouldDropOrDestroyItem_Implementation(bool& bShouldDrop, bo
 	// CONFIDENCE: high
 	// Native target 0x1414a4890.
 	return bShouldDrop;
+}
+
+bool AFortMinigame::WasInProgress() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper.
+	return static_cast<uint8>(static_cast<uint8>(PreviousState) - 4) < 2;
 }
 
 void AFortMinigame::NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context)

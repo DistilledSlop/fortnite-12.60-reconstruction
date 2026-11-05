@@ -1,0 +1,23 @@
+[
+  {
+    "function": "IsInProgress",
+    "wrapper_capture": "porting/generated/native-triage011/0x1429c2d90.c",
+    "reflection": "porting/generated/reflection/fortnite_game_reflection.json: AFortMinigame properties; native_funcs.json: signature and flags",
+    "behavior": "CurrentState at 0x870; unsigned byte subtraction yields true for values 1 through 5.",
+    "class": "AFortMinigame"
+  },
+  {
+    "function": "WasInProgress",
+    "wrapper_capture": "porting/generated/native-triage011/0x1429c68f0.c",
+    "reflection": "porting/generated/reflection/fortnite_game_reflection.json: AFortMinigame properties; native_funcs.json: signature and flags",
+    "behavior": "PreviousState at 0x871; unsigned byte subtraction yields true for values 4 and 5.",
+    "class": "AFortMinigame"
+  },
+  {
+    "function": "IsGameWinnerShown",
+    "wrapper_capture": "porting/generated/native-triage011/0x1429c2d10.c",
+    "reflection": "porting/generated/reflection/fortnite_game_reflection.json: AFortMinigame properties; native_funcs.json: signature and flags",
+    "behavior": "GameWinnerDisplayTime float at 0x7a8; original compares absolute value strictly above 1e-8.",
+    "class": "AFortMinigame"
+  }
+]

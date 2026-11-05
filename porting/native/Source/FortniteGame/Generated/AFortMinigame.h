@@ -673,6 +673,12 @@ public:
 	bool HasStarted() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsGameWinnerShown() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInProgress() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInSetup() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -813,6 +819,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	bool ShouldDropOrDestroyItem(bool& bShouldDrop, bool& bShouldDestroy, AFortPlayerController* PC, UFortWorldItemDefinition* ItemDef) const;
 	virtual bool ShouldDropOrDestroyItem_Implementation(bool& bShouldDrop, bool& bShouldDestroy, AFortPlayerController* PC, UFortWorldItemDefinition* ItemDef) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool WasInProgress() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

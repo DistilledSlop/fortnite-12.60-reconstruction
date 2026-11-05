@@ -607,6 +607,9 @@ public:
 	static bool AllowContainersInCreativeItemLists();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool AreFriendCodesEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static EFortAccountLinkingUIConfig GetAccountLinkingUIConfig();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
