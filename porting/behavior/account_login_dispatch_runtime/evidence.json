@@ -16,7 +16,7 @@
       "evidence": "0x1410e6b40 logs UOnlineAccountCommon::StartLogin, copies the eight-byte global at 0x1480e8a38 into account+0x338, then tail-calls 0x1410c3c30(account, global). 0x1410c3c30 first calls account virtual +0x150 and returns if it is null. Otherwise it builds an allocated 0x30-byte weak-object callback capturing the account and supplied state, clones the delegate, calls 0x1410cefe0(account), and passes its result and the callback to 0x144627d90, before delegate cleanup. This records scheduling/dispatch structure, not successful execution or completion."
     }
   ],
-  "unresolved": "Confirm the resolved runtime account class (and possible subclass overrides), identify the global state and callback target, and trace 0x144627d90 and the state-machine sequence into identity completion. The concrete online identity/backend requirements, original successful local selected-account bootstrap and profile continuation remain unproven. Do not replace them with an assumed state flip, direct broadcast or frontend travel.",
+  "unresolved": "Confirm the resolved runtime account class and possible subclass overrides, original state names/values, concrete initialization and successful identity/backend completion. The registered next-tick callback and ContinueLoggingIn dispatcher are identified in state_callback_followup; execution, concrete initialization path, virtual state-change effects and waiting-room completion remain unverified. Existing local account HTTP/profile selection does not establish original successful login bootstrap; do not replace missing effects with a state flip, broadcast or frontend travel.",
   "instruction_windows": [
     {
       "address": "0x142a07490",
@@ -54,5 +54,6 @@
       "sha256": "d8437aab6381764c9263ce7b06a7323ac97589f462ce936e5d351756695244be"
     }
   ],
-  "verification": "Read-only Ghidra decompilation and instruction inspection, constructor wrapper disassembly, plus original mapped-image vtable qword read. Ghidra project bookkeeping changed; program not saved. No builds or runtime login test."
+  "verification": "Read-only Ghidra decompilation and instruction inspection, constructor wrapper disassembly, plus original mapped-image vtable qword read. Ghidra project bookkeeping changed; program not saved. No builds or runtime login test.",
+  "state_callback_followup": "../account_state_callback_runtime/evidence.json"
 }

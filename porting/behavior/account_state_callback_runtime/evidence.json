@@ -1,0 +1,58 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "findings": [
+    {
+      "name": "Next-tick callback execution",
+      "evidence": "The callback allocated by 0x1410c3c30 has final vtable 0x145bf80d0; its +0x50 entry is 0x1410cc660. That ExecuteIfSafe implementation calls 0x142ee7880 on its weak-object field at +8; on success it calls 0x1410e7160 with the captured account at +0x10 and state at +0x18 and returns true, otherwise returns false. The prior 0x144627d90 call is FTimerManager::SetTimerForNextTick, independently recorded in profile_support_setup_runtime/evidence.json. Registration alone does not establish that the timer ran or the object remained valid."
+    },
+    {
+      "name": "ContinueLoggingIn transition and dispatch",
+      "evidence": "0x1410e7160 identifies itself by log as UOnlineAccountCommon::ContinueLoggingIn. After a pending-action check, it compares the captured state with account+0x338; mismatch reports unexpected logout/state change and invokes virtual +0x300 with code 0x19. On match it searches 0x20-byte entries in account array +0x390 for the current state and selects the following entry; for initial global state 0x1480e8a38 with no match it selects the first entry. Entries flagged at +8 are skipped for secondary players unless 0x1442f92d0 returns true. For an eligible entry it writes the entry state to account+0x338, calls account virtual +0x3e8, then executes the entry delegate through +0x48. The virtual call and actual delegate can have further effects; neither has been observed running."
+    },
+    {
+      "name": "Concrete waiting-room step and ordering",
+      "evidence": "Initialization 0x1410d0730 appends entries with 0x1410c2f30. On its branch where account+0x138 is zero and +0x130 is zero, the first appended entry captures target 0x1410d58c0, state global 0x1480e8a40 and secondary-player flag 1. If +0x130 is nonzero, it first appends state 0x1480e8a48 with target 0x1410d8540 before reaching the waiting-room entry; initialization and any Fortnite subclass modifications must still be established for the concrete runtime account. 0x1410d58c0 logs UOnlineAccountCommon::LoginStep_CheckWaitingRoom. Depending on virtual checks and AUTH_LOGIN, or a disabled waiting-room service byte, it schedules 0x1410c3c30(account, global 0x1480e8a40). A missing waiting-room service invokes account virtual +0x300 with code 0x17. When enabled, it constructs a weak-account callback targeting 0x1410df5d0 and begins a waiting-room operation via 0x140b5ab70; failure paths are present. These are conditional static paths, not evidence of the original successful branch."
+    }
+  ],
+  "unresolved": "Next recover 0x1410df5d0 and the waiting-room operation completion path, then identify subsequent initialized steps and concrete account subclass modifications and identity/backend completion. Establish actual runtime account, timer execution, state names/values, virtual +0x3e8 effects and branch conditions. Existing HTTP profile snapshot and username-only local account do not establish original successful login bootstrap or completion; do not replace missing effects with a state flip, broadcast or frontend travel.",
+  "instruction_windows": [
+    {
+      "address": "0x145bf80d0",
+      "size": 88,
+      "sha256": "816b6c493d62c35055ac3fd486c624e411d46cc30439b984aea6aac719fbb6c5"
+    },
+    {
+      "address": "0x1410cc660",
+      "size": 51,
+      "sha256": "1822933dc1a4c6af8e371efd8c1146e0354d19fea7869a107247d7614cb60155"
+    },
+    {
+      "address": "0x1410e7160",
+      "size": 1447,
+      "sha256": "b37a29125c3ab09588bf58d7cf60cfda1869f87f6bcf9f91860b8f0226af80bf"
+    },
+    {
+      "address": "0x1410c2f30",
+      "size": 129,
+      "sha256": "2f868c3045aa488111c6470400a234b09a1b4bd1bfe19dfe67ee5a4a43109c05"
+    },
+    {
+      "address": "0x1410d0730",
+      "size": 7571,
+      "sha256": "8b4d00d2a20e9ec627067c985461a07114d70504c05d60fd7c2442213dc69142"
+    },
+    {
+      "address": "0x1410d58c0",
+      "size": 2859,
+      "sha256": "ba72b6a66dac1e7d9ebc6726814b2c63459b198664e36ef0777ac1d880321c70"
+    },
+    {
+      "address": "0x1410d8540",
+      "size": 834,
+      "sha256": "18f47f6ea4a8567965c446d121d43dc17830702fc9061c63987c0a023ca40e80"
+    }
+  ],
+  "verification": "Read-only Ghidra decompilation and instruction inspection, original mapped-image vtable qword and instruction window reads. Ghidra project bookkeeping changed; program not saved. No builds or runtime login test."
+}

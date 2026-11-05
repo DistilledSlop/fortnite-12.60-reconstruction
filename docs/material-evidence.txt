@@ -97,8 +97,11 @@ CVars, create View overrides or attach a provider; generated-code and runtime
 checks remain pending. A typed View bridge now validates all eight original
 scalar names, offsets and shapes at +0xad4 through +0xaf0, then supplies the
 original radius words and all six helper outputs to the existing repacker/draw
-binding override contract. Original inputs and active-branch selection remain
-caller responsibilities; no current Km aliases or live provider are inferred.
+binding override contract. The caller selects the original render branch: the disabled branch supplies
+all eight original 1.0f values, including the apply-volume flag, without
+evaluating the helper or reading atmosphere inputs. Original active inputs
+and branch selection remain caller responsibilities; no current Km aliases or
+live provider are inferred.
 The original labeled allocation identifies the +0x4e20 volume reference used
 by the helper flag; the +0xd30 near-depth formula matches current source,
 while its full original projection layout and source instance remain unproved.
