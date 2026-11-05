@@ -1,0 +1,11 @@
+{
+  "captures": {
+    "porting/generated/native228-fresh-callees/0x1451cb690.c": "8089c58cd7a69ffb762c095635f39222d0953f2bb84274d2a2b4addde49e2ecc",
+    "porting/generated/native228-fresh-callees/0x144b38c80.c": "65da5e0749d653644ba5fe74ca9998041210727599cb45a6c86fb0f87e1e46fd",
+    "porting/generated/native228-fresh-callees/0x144b38c80.asm": "99f8bc8682fd8d5ceb9f61c09a51b0d2832beb622af9deebfe841238835de53c",
+    "porting/generated/native93-loot/0x144693a30.c": "30292837f4826410b76a6f1aaba757e223e78c203ddddd259f97d52554b1718b"
+  },
+  "reflection": "porting/generated/reflection/fortnite_game_reflection.json",
+  "related_contract": "porting/behavior/supplydrop_replay93_runtime/evidence.json",
+  "verification": "Original wrapper and body inspected; source proposal has not been compiled or runtime tested."
+}

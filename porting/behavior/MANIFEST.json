@@ -63773,5 +63773,24 @@
       "Engine/LevelStreaming.h"
     ],
     "notes": "Original exec 0x14273fc40 calls 0x141bd99a0. The body gets the actor typed outer ULevel, rejects null actor or level, then compares LevelStreamInfo loaded level to that level. Reflected LevelStreamInfo is at 0xda0; original ULevelStreaming GetLoadedLevel exec 0x144783660 reads offset 0x128. Linux Development client build passed; runtime execution pending."
+  },
+  {
+    "class": "UAthenaWidgetLibrary",
+    "function": "IsPlayingReplay",
+    "kind": "exec",
+    "signature": "bool IsPlayingReplay(const UObject* WorldContextObject)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/athena_replay_widget_runtime/IsPlayingReplay.inc",
+    "confidence": "high",
+    "address": "0x1451cb690",
+    "native_body_address": "0x144b38c80",
+    "status": "ported",
+    "reflection_flags": "0x14022401",
+    "static": true,
+    "access": "public",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Wrapper passes the context to 0x144b38c80, which null-checks it and its GetWorld virtual result before calling 0x144693a30. The latter is the same engine replay predicate previously identified for AFortAthenaSupplyDrop::IsPlayingAReplay."
   }
 ]
