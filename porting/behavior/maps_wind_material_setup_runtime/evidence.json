@@ -1,0 +1,112 @@
+{
+  "status": "DRAFT_ONLY_NOT_NATIVE_INTEGRATED_NOT_BUILD_TESTED",
+  "function": "0x141ddae00",
+  "proposed_name": "SetupAnimatingMaterials",
+  "source": "NativeSetupAnimatingMaterials.draft.h",
+  "ownership": "Only this new behavior directory; no native/generator/global-manifest edits, no builds/tests/Ghidra.",
+  "inputs": {
+    "porting/generated/maps-wind-sampling-deps/_adhoc/0x141ddae00__141ddae00.c": {
+      "sha256": "3a17919efcb21276d03fe8376ccacfcc710920b9269012883a5c5df7029fcb44",
+      "lines": 728
+    },
+    "porting/generated/maps-wind-responder-deps/_adhoc/0x141c07130__141c07130.c": {
+      "sha256": "9fc35401fd328d6b01f216b6568beda05f34304312085ad8cb22a79b69144ebb",
+      "lines": 19
+    },
+    "porting/behavior/maps_wind_sampling_runtime/evidence.json": {
+      "sha256": "1f5239ba75c0e7e365a33f22082752dea3008b28fea527aaa0d593695a099d32",
+      "lines": 106
+    },
+    "porting/behavior/maps_wind_sampling_runtime/NativeSampleWind.draft.h": {
+      "sha256": "e9c2a56dc4ddc015bb22ce34854ff1086010f10274ef921ce48dca3a319164eb",
+      "lines": 375
+    },
+    "porting/behavior/maps_wind_building_runtime/evidence.json": {
+      "sha256": "863761b6476303f22438daefc1405a3075563ebd39d7f405b24b6ace31adb905",
+      "lines": 73
+    },
+    "porting/behavior/maps_wind_building_runtime/constructor-evidence.json": {
+      "sha256": "cfa4ab3b2bddc2dbeae54db0bcc07b8dfc5e836cda55c718f2f23ceeb2d5b25e",
+      "lines": 48
+    },
+    "porting/behavior/maps_wind_material_setup_runtime/NativeSetupAnimatingMaterials.draft.h": {
+      "sha256": "105ce9fc3488f5e4d26891bec37512a29390f2e28e29d1d2cd2dbe9a26bfc9a0",
+      "lines": 202
+    },
+    "porting/native/Source/FortniteGame/Generated/AFortWindManager.h": {
+      "sha256": "c54ba50c711b7754401b7e4ebfb5300e0eb939c86281c25f80978a67ec8b51f5",
+      "lines": 186
+    },
+    "porting/native/Source/FortniteGame/Generated/FFortWindResponder.h": {
+      "sha256": "1eff139c194d44a6f8d2e3a2a4daae29b24688bf5c2eb29d340595298ce27845",
+      "lines": 82
+    },
+    "porting/native/Source/FortniteGame/Generated/FFortWindMaterialData.h": {
+      "sha256": "ce81ca536d4849394c88f4adf34092965889d0e56e32c91b66ba6bf7e2d8509a",
+      "lines": 49
+    },
+    "porting/native/Source/FortniteGame/Generated/FWindScalarMaterialInterpolationData.h": {
+      "sha256": "4d20130e7d338bb3b9967e38b42ba08178ef541fa1e6db515e0db0d22db89587",
+      "lines": 32
+    },
+    "porting/native/Source/FortniteGame/Generated/FWindVectorMaterialInterpolationData.h": {
+      "sha256": "102da25c2b0648c24b3782472d36f5059e62e53fc1c31795605fda1b3706f093",
+      "lines": 33
+    },
+    "porting/native/Source/FortniteGame/Generated/FFortWindResponderMaterialVariablePairData.h": {
+      "sha256": "0606aeb9b3d6058508a52b51f67b76c48a9267cc6d4c8da2c5f1092e2d0d06de",
+      "lines": 44
+    },
+    "porting/native/Source/FortniteGame/Generated/FFortWindMaterialParameterPairID.h": {
+      "sha256": "7a6ce431d2fea956f6dc83a2e7b64e552240deb13dccb02d580c881cb40155ad",
+      "lines": 29
+    },
+    "porting/native/Source/FortniteGame/Generated/FFortMaterialParameterID.h": {
+      "sha256": "9cd3d31b458d437e7707f1283f4a4ff85d68b937706fda14ff8fed23b5ab4d9a",
+      "lines": 24
+    },
+    "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstanceDynamic.cpp": {
+      "sha256": "a65560440abbb40e9577dc7e3b78876a17d08cb5acd470fa9dc51e1f8c2bef4e",
+      "lines": 402
+    }
+  },
+  "source_regions": {
+    "118-136": "Mesh getter 141c07130 returns actor+0x768; null marks setup complete immediately. Mesh virtual0x6a0 gives slot count.",
+    "137-203": "Per-slot zero material data, wind-vector index -1; mild direct index; required MID calls and warning effects; optional intense MID creation.",
+    "204-321": "Offset-name-count loop; skip special panner names only for pair4/5 by FName comparison index; six ordered parameter probes, local/global bitmasks, append unique pair variables <=7; parameter IDs keep variable index.",
+    "322-428": "Initialize wind vector candidate (1,0,0,bounds midpoint Z); only equal-base materials produce scalar interpolation; search MI overrides then shared base for missing side; append only unequal values.",
+    "429-578": "Vector interpolation repeats override-chain/base fallback logic; exact component equality, 44-byte records.",
+    "579-634": "Always append one72-byte material record per mesh slot, including missing mild. Deep-copy nested arrays; no Reset of existing responder arrays.",
+    "635-727": "Snapshot global pair count; assign speed/offset names (NAME_None when invalid index), evaluate appropriate curve at0, set PreviousSpeed and PreviousOffset0; match IDs by variable index over first slot-count material records; final setup byte1."
+  },
+  "preserved_contracts": [
+    "Manager offsets0x258 wind vector name,0x260/268 offset names/count,0x270/278 speed names/count,0x280/288 scalar interpolation names/count,0x290/298 vector names/count.",
+    "Responder layout0x90 and material data stride0x48 match generated structs; pair variable stride0x24 and parameter-pair stride0x1c. Existing NativeBounds_0x68 supplies actor bounds.",
+    "No setup reentry guard in this function; caller checks setup flag. Null mesh still completes setup. No null curve fallback: registration validates both curves.",
+    "D.MaterialParameterPairIndices is set before unsupported-pair guard; unsupported global pairs log and skip ID append. If global bit already exists, native proceeds with ID append even for index>7.",
+    "Only first32 mask bits exist; native shifts are masked to31. Array index preconditions and no-null-MID filtering of parameter probes preserved.",
+    "Final name assignment is speed array then offset array; curve channels0..3 speed curve RGBA,4..7 panner curve RGBA; other indices yield0.",
+    "Logs are required effects: missing mild at verbosity3; MID failure, both MID null and unsupported variable at verbosity2, each gated by native log verbosity. Hook implementations must retain message formats from capture."
+  ],
+  "required_dependencies": {
+    "0x141c0a630": "Two GetOrCreateMID calls per non-null mild slot. First capture lacks explicit slot arg, second includes it; call-site enum keeps ambiguity visible. Implementation must preserve repeated call effects and mesh material replacement.",
+    "0x1442ad650": "Intense MID Create(actor, material,0,0) candidate; exact signature/outer/name/flags unresolved. Native invokes even for a null intense entry.",
+    "0x141dccf40": "Parameter-existence helper returning pointer/nonzero; full helper needed. Do not equate to resolved getter without validating behavior.",
+    "0x141b3a3e0": "Common-base lookup including null handling unresolved; equal null bases enter interpolation path in capture.",
+    "MI_override_lookup": "Inline scalar0xe0/0xe8 array stride36 and vector0xf0/0xf8 stride48; full FName comparison, value at+0x10; parent+0xd0 only if parent is material instance (class144795e30). Hooks must preserve first-match and inheritance behavior.",
+    "base_defaults": "Virtual0x3e0 scalar and0x3f8 vector called with parameter info association2/index-1 and default-zero outputs. Captured out/return argument registers omitted.",
+    "0x144333900/0x1443339a0": "Likely InitializeScalarParameterAndGetIndex/InitializeVectorParameterAndGetIndex from local UE source (lines77-105). Source confirms these MUTATE parameters before index lookup. Mapping and hidden value/out args are not verified. Required role-specific effects expose inputs/outputs; no guessed implementation.",
+    "curve_virtual": "Embedded curve+0x28 virtual0x50 expressed as GetLinearColorValue(0); engine mapping/numeric parity requires confirmation.",
+    "0x14433ac70": "Final pair speed/offset indexed writes. Capture omits float arguments. Draft provides freshly initialized pair speed and offset as semantic inference; assembly required before implementation."
+  },
+  "closure_gaps": [
+    "All FEffects methods are declarations only; this folder is not a native port and must not receive manifest coverage.",
+    "Wind-vector initial value is inferred by adjacent stack locals; missing args prevent proof that1443339a0 consumes it or writes uStack_174 index. Confirm machine registers/out pointer.",
+    "The decompiler aliases integer variable indices as float fVar23 and scalar/vector payload bits as casts; draft treats them as typed indices and IEEE float fields. Assembly validation remains required.",
+    "Draft uses RAII temporary arrays and deep-copy Add(D). Verify UObject lifetime and destructor/callback observability when integrating.",
+    "Existing sampling draft treats ID.PairIndex as PairedVariablesData array index. Setup raw records the MATERIAL VARIABLE INDEX and searches for equality; sparse variables make these different. Consumer requires independent raw review before pipeline closure.",
+    "Existing sampling draft sets R.WindSpeed before setup; setup initializes pair curves at0, then sampling update computes new speed. Preserve ordering and required initial parameter writes.",
+    "First material slot count and pair count are snapshots. Unexpected callbacks/array mutation require original aliasing review; no defensive reshaping added."
+  ],
+  "validation": "Manual source review against728-line capture and existing generated fields/context only. No builds/tests/Ghidra, as assigned."
+}

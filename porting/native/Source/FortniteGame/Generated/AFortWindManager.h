@@ -182,5 +182,7 @@ public:
 	void NativeSetGlobalWind(float Intensity, const FVector& Direction);
 	static FFortWindResponder NativeBuildWindResponder(ABuildingSMActor* Building);
 	static bool NativeIsWindEnabled();
+	static FBox NativeClipWindImpulseBounds(const FBox& A, const FBox& B);
+	static bool NativeAdvanceWindDelta(FFortWindImpulseCylinderDelta& D);
 };
 

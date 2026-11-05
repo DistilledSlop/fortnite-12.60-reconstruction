@@ -1,0 +1,33 @@
+[
+  {
+    "class": "AFortWindManager",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "static": true,
+    "function": "NativeClipWindImpulseBounds",
+    "signature": "FBox NativeClipWindImpulseBounds(const FBox& A, const FBox& B)",
+    "inc_path": "porting/behavior/maps_wind_delta_runtime/AFortWindManager_NativeClipWindImpulseBounds.inc",
+    "address": "0x142c59040",
+    "includes": [
+      "Math/Box.h"
+    ],
+    "notes": "Original box overlap preserves ordered comparison topology; empty result ForceInit. Shared original helper, no runtime credit."
+  },
+  {
+    "class": "AFortWindManager",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "static": true,
+    "function": "NativeAdvanceWindDelta",
+    "signature": "bool NativeAdvanceWindDelta(FFortWindImpulseCylinderDelta& D)",
+    "inc_path": "porting/behavior/maps_wind_delta_runtime/AFortWindManager_NativeAdvanceWindDelta.inc",
+    "address": "0x141dd9880",
+    "notes": "Reset section interpolation before endpoint check; advance inward/outward radius and clip boxes. Not yet called by integrated sampling lifecycle."
+  }
+]

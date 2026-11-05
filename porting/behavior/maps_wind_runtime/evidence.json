@@ -86,9 +86,22 @@
   "initialization_followup": {
     "status": "unported; no runtime credit",
     "initialize": "0x141dd0980 reads world manager global wind on non-dedicated instances, then always invokes 0x141dd5490. If bAllowWindImpulses and native byte0x44f is clear, client sampling initialization follows (0x141dc7100 and 0x141ddfad0).",
-    "world_actor_impulses": "0x141dd5490 checks global pointer0x14812a5f8 and dedicated-server status, iterates world actors of class returned by0x142752f80, checks actor byte0x6ad mask8, constructs impulse data via0x141de5910 and applies via0x141dd4d50, then clears that actor bit. Class identity and dependent impulse helpers remain unresolved.",
+    "world_actor_impulses": "0x141dd5490 gated by Fort.Wind and dedicated-server status discovers BuildingSMActor instances, checks actor byte0x6ad mask8, constructs material responder via integrated NativeBuildWindResponder and registers through unported141dd4d50 spatial indexing; clears actor bit afterward.",
     "global_values": "0x141f87230 accepts nonnegative InitialGlobalWind.WindIntensity and rotates heading. Negative intensity uses0x141f87000 to discover values, with defaults intensity0.1/heading45. This fallback must be recovered before lifting the whole helper.",
     "world_actor_class": "0x142752f80 registers /Script/FortniteGame.BuildingSMActor. The initialization loop therefore discovers building material consumers, not generic impulse-volume actors. Actor bit0x6ad/0x08 is checked then cleared after processing; correlate reflection before naming this bit.",
-    "building_material_dependencies": "0x141de5910 collects soft references from actor archetype and actor: offsets0x7d0,0x7f8,0x830 and an array at0x820. It also obtains materials through a virtual0x860 call. 0x141dd4d50 consumes this record. Neither routine is integrated; preserve asynchronous asset/material lifetime behavior during recovery."
+    "building_material_dependencies": "0x141de5910 is integrated as NativeBuildWindResponder. Materials virtual0x860 confirmed GetMaterials from actual UStaticMeshComponent vtable and body. 0x141dd4d50 registration/spatial index and141ddae00 material setup remain unported.",
+    "ready_interface": {
+      "status": "registration/dispatch missing; do not substitute BeginPlay or ActorTick",
+      "secondary_offset": "0x218",
+      "vtable": "0x145fce2a8",
+      "callback": "141de3460 sets secondary+0x238 (owner+0x450) to1, calls owner init141dd0980 then Blueprint OnWorldReady142b54120",
+      "capture_sha256": "ce34893b463993b26faca34d4ab4399a0c2654d1306d6db170bae9c1c2c074cc",
+      "leaf_disassembly": {
+        "141dd14d0": "cmp byte [rcx+238],0; sete al; ret (pending until callback)",
+        "1406968f0": "lea rax,[rcx-218]; ret (owner)",
+        "141dc1784": "sub rcx,218; jmp141dc1b20 (owner destructor)"
+      },
+      "candidate": "AFortWorldSettings.ActorsNeedingWorldReady is reflected; no integrated actor interface provider located."
+    }
   }
 }
