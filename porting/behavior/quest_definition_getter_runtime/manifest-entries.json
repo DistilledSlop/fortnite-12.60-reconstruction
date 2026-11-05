@@ -1,0 +1,16 @@
+[
+  {
+    "class": "UFortQuestItem",
+    "function": "GetQuestDefinitionBP",
+    "kind": "exec",
+    "signature": "UFortQuestItemDefinition* GetQuestDefinitionBP() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "address": "0x142ab3d50",
+    "reflection_flags": "0x54020401",
+    "inc_path": "porting/behavior/quest_definition_getter_runtime/GetQuestDefinitionBP.inc",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Wrapper directly returns UFortPersistableItem::ItemDefinition at original offset 0x88, without dynamic cast or validation."
+  }
+]

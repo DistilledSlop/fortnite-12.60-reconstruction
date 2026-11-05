@@ -115,6 +115,9 @@ public:
 	float GetPercentageComplete(UFortQuestItemDefinition* KnownQuestDef) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortQuestItemDefinition* GetQuestDefinitionBP() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortQuestState GetQuestState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

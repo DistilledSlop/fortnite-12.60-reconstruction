@@ -120,6 +120,12 @@ float UFortQuestItem::GetPercentageComplete(UFortQuestItemDefinition* KnownQuest
 	return Denominator > 0 ? (Progress * 100.0f) / static_cast<float>(Denominator) : 0.0f;
 }
 
+UFortQuestItemDefinition* UFortQuestItem::GetQuestDefinitionBP() const
+{
+	// CONFIDENCE: HIGH; reflected wrapper 0x142ab3d50 returns the raw definition pointer at 0x88.
+	return static_cast<UFortQuestItemDefinition*>(ItemDefinition);
+}
+
 EFortQuestState UFortQuestItem::GetQuestState() const
 {
 	// Original address: 0x142ab3e30.
