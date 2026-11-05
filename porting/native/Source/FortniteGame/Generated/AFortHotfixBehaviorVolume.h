@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 class UBoxComponent;
+class UPrimitiveComponent;
 
 #include "AFortHotfixBehaviorVolume.generated.h"
 
@@ -22,6 +23,9 @@ public:
 
 	UFUNCTION()
 	void CopyToClipboard();
+
+	UFUNCTION()
+	void OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 };
 

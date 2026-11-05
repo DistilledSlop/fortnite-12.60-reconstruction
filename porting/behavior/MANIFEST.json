@@ -61946,5 +61946,20 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Native signed count at +0x2a8 is MissionData at +0x2a0, MissionGuid at struct +0, FString array count at +8. UE FString::IsEmpty uses count <= 1. Source recovery; build pending."
+  },
+  {
+    "class": "AFortHotfixBehaviorVolume",
+    "function": "OnOverlapEnd",
+    "kind": "exec",
+    "signature": "void OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage052_new/AFortHotfixBehaviorVolume_OnOverlapEnd.inc",
+    "address": "0x142946b70",
+    "reflection_flags": "0x20401",
+    "confidence": "high",
+    "status": "ported",
+    "native_body_address": "0x1406801c0"
   }
 ]
