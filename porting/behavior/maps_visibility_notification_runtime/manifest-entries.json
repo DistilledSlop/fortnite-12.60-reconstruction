@@ -1,0 +1,27 @@
+[
+  {
+    "class": "AFortVisibilityManager",
+    "function": "NativeRefreshVisibilityRecord",
+    "kind": "helper",
+    "signature": "void NativeRefreshVisibilityRecord(FVisibilityInfo& Item, bool bForce)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/maps_visibility_notification_runtime/AFortVisibilityManager_NativeRefreshVisibilityRecord.inc",
+    "includes": ["UFortTeamActorInterface.h", "UFortVisibilityComponent.h"],
+    "address": "0x142654460",
+    "confidence": "medium",
+    "status": "draft"
+  },
+  {
+    "class": "AFortVisibilityManager",
+    "function": "NativeRefreshAllVisibility",
+    "kind": "helper",
+    "signature": "void NativeRefreshAllVisibility()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/maps_visibility_notification_runtime/AFortVisibilityManager_NativeRefreshAllVisibility.inc",
+    "address": "0x14263c500",
+    "confidence": "high",
+    "status": "draft"
+  }
+]
