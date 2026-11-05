@@ -15,23 +15,27 @@ porting_dir=$script_dir
 reflection_dir="$porting_dir/generated/reflection"
 engine_classes="${FN_ENGINE_CLASSES:-/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Classes}"
 
-# Only generated trees are removed (Source/<Module>/Generated). Hand-written sources stay.
-for generated_dir in "$porting_dir"/native/Source/*/Generated; do
-    [ -d "$generated_dir" ] && rm -rf "$generated_dir"
-done
+# Generate in isolation so failed resolution or generation cannot alter live output.
+staging_dir=$(mktemp -d "${TMPDIR:-/tmp}/fortnite-promotion.XXXXXXXX")
+trap 'rm -rf -- "$staging_dir"' EXIT
+mkdir -p "$staging_dir/Source" "$staging_dir/reports"
 
 python3 -I "$porting_dir/resolve_class_refs.py" \
     --reflection "$reflection_dir/fortnite_game_reflection.json" \
     --evidence "$reflection_dir/class_name_map.evidence.json" \
-    --out "$reflection_dir/class_ref_map.json"
+    --out "$staging_dir/reports/class_ref_map.json"
 
 python3 -I "$porting_dir/gen_native_classes.py" --promote \
     --reflection "$reflection_dir/fortnite_game_reflection.json" \
     --name-map "$reflection_dir/class_name_map.json" \
     --evidence "$reflection_dir/class_name_map.evidence.json" \
     --parent-map "$reflection_dir/class_parent_map.json" \
-    --class-ref-map "$reflection_dir/class_ref_map.json" \
+    --class-ref-map "$staging_dir/reports/class_ref_map.json" \
     --class-list "$porting_dir/native_class_set.txt" \
     --engine-classes "$engine_classes" \
-    --source-root "$porting_dir/native/Source" \
-    --report-dir "$reflection_dir"
+    --source-root "$staging_dir/Source" \
+    --report-dir "$staging_dir/reports"
+
+python3 -I "$porting_dir/merge_promoted_classes.py" \
+    "$staging_dir/Source" "$porting_dir/native/Source" \
+    "$staging_dir/reports" "$reflection_dir"
