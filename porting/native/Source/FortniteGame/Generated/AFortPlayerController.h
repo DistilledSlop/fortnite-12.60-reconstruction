@@ -1426,6 +1426,9 @@ public:
 	void ClientUpdateServerOnPlayerChangedBuildMode_Implementation();
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void DropAllItems(UFortItemDefinition* IgnoreItemDef, UFortItemDefinition* AdditionalIgnoreItemDef, bool bIgnoreBuildingMaterials, bool bSpawnPickups);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void DropSpecificItem(UFortItemDefinition* DropItemDef);
 
 	UFUNCTION(Exec)

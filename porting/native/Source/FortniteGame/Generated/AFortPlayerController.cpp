@@ -296,6 +296,13 @@ void AFortPlayerController::ClientUpdateServerOnPlayerChangedBuildMode_Implement
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerController::DropAllItems(UFortItemDefinition* IgnoreItemDef, UFortItemDefinition* AdditionalIgnoreItemDef, bool bIgnoreBuildingMaterials, bool bSpawnPickups)
+{
+	// CONFIDENCE: HIGH; wrappers call the captured shared bare-return target.
+	// The original native target is an empty function.
+	return;
+}
+
 void AFortPlayerController::DropSpecificItem(UFortItemDefinition* DropItemDef)
 {
 	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.

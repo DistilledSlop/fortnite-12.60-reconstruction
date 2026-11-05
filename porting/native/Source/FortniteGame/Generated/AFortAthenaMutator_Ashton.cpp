@@ -19,6 +19,11 @@ EAshtonStoneStateType AFortAthenaMutator_Ashton::GetStoneState(EAshtonStoneType 
 	}
 }
 
+void AFortAthenaMutator_Ashton::OnPickupSpawnedAndReady(AFortGameModePickup* PickupObj, UFortItemDefinition* PickupItemDef)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls shared bare-return native target 0x1406801c0.
+}
+
 void AFortAthenaMutator_Ashton::OnRep_NumVillainRespawnsRemaining()
 {
 	// Body not recovered: reflection-derived stub.

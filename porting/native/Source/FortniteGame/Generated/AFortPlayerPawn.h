@@ -1715,6 +1715,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void PlayGroupEmote(UFortMontageItemDefinitionBase* EmoteAsset);
 
+	UFUNCTION()
+	void PopFootstepBankOverride(int32 Priority, UFortFootstepAudioBank* InFootstepBankOverride);
+
+	UFUNCTION()
+	void PushFootstepBankOverride(int32 Priority, UFortFootstepAudioBank* InFootstepBankOverride);
+
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerChooseGender(EFortCustomGender::Type Gender);
 	void ServerChooseGender_Implementation(EFortCustomGender::Type Gender);

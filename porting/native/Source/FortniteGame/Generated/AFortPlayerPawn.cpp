@@ -925,6 +925,20 @@ void AFortPlayerPawn::PlayGroupEmote(UFortMontageItemDefinitionBase* EmoteAsset)
 	// CONFIDENCE: HIGH
 }
 
+void AFortPlayerPawn::PopFootstepBankOverride(int32 Priority, UFortFootstepAudioBank* InFootstepBankOverride)
+{
+	// CONFIDENCE: HIGH; wrappers call the captured shared bare-return target.
+	// The original native target is an empty function.
+	return;
+}
+
+void AFortPlayerPawn::PushFootstepBankOverride(int32 Priority, UFortFootstepAudioBank* InFootstepBankOverride)
+{
+	// CONFIDENCE: HIGH; wrappers call the captured shared bare-return target.
+	// The original native target is an empty function.
+	return;
+}
+
 void AFortPlayerPawn::ServerChooseGender_Implementation(EFortCustomGender::Type Gender)
 {
 	// Body not recovered: reflection-derived stub.

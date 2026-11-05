@@ -1,0 +1,32 @@
+[
+  {
+    "class": "AFortAthenaMutator_Cobalt",
+    "function": "AudioFadeChangeEvent",
+    "kind": "exec",
+    "signature": "void AudioFadeChangeEvent(bool bFadeOut, float FadeTime)",
+    "signature_status": "proposed",
+    "access": "protected",
+    "static": false,
+    "inc_path": "porting/behavior/triage049_new/AFortAthenaMutator_Cobalt_AudioFadeChangeEvent.inc",
+    "address": "0x1409ad800",
+    "native_body_address": "0x1406801c0",
+    "reflection_flags": "0x40401",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "AFortAthenaMutator_Ashton",
+    "function": "OnPickupSpawnedAndReady",
+    "kind": "exec",
+    "signature": "void OnPickupSpawnedAndReady(AFortGameModePickup* PickupObj, UFortItemDefinition* PickupItemDef)",
+    "signature_status": "proposed",
+    "access": "private",
+    "static": false,
+    "inc_path": "porting/behavior/triage049_new/AFortAthenaMutator_Ashton_OnPickupSpawnedAndReady.inc",
+    "address": "0x1427e19f0",
+    "native_body_address": "0x1406801c0",
+    "reflection_flags": "0x80401",
+    "confidence": "high",
+    "status": "ported"
+  }
+]

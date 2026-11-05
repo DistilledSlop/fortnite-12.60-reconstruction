@@ -33,3 +33,17 @@ FIndicatedActorScaleAndOpacityData UFortIndicatedActorManagementLibrary::MakeInd
 	}
 }
 
+void UFortIndicatedActorManagementLibrary::RemoveActorFromIndicatedList(AFortPlayerControllerAthena* InstigatingController, AActor* IndicatedActor, bool bIncludeSquad)
+{
+	// CONFIDENCE: HIGH; wrappers call the captured shared bare-return target.
+	// The original native target is an empty function.
+	return;
+}
+
+void UFortIndicatedActorManagementLibrary::RemoveActorFromStenciledList(AFortPlayerControllerAthena* InstigatingController, AActor* StenciledActor, bool bIncludeSquad)
+{
+	// CONFIDENCE: HIGH; wrappers call the captured shared bare-return target.
+	// The original native target is an empty function.
+	return;
+}
+

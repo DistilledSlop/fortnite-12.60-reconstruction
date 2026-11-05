@@ -21,9 +21,11 @@
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
 
+class AFortGameModePickup;
 class AFortPlayerController;
 class AFortPlayerControllerAthena;
 class UFortGadgetItemDefinition;
+class UFortItemDefinition;
 class UFortWorldItemDefinition;
 
 #include "AFortAthenaMutator_Ashton.generated.h"
@@ -248,6 +250,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	EAshtonStoneStateType GetStoneState(EAshtonStoneType StoneType);
+
+protected:
+	UFUNCTION()
+	void OnPickupSpawnedAndReady(AFortGameModePickup* PickupObj, UFortItemDefinition* PickupItemDef);
+public:
 
 	UFUNCTION()
 	void OnRep_NumVillainRespawnsRemaining();

@@ -2,6 +2,11 @@
 #include "AFortAthenaMutator_Cobalt.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortAthenaMutator_Cobalt::AudioFadeChangeEvent(bool bFadeOut, float FadeTime)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the shared bare-return native target 0x1406801c0.
+}
+
 void AFortAthenaMutator_Cobalt::ClientCobaltRoundTimerComplete()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

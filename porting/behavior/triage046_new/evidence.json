@@ -1,0 +1,52 @@
+[
+  {
+    "class": "UFortIndicatedActorManagementLibrary",
+    "function": "RemoveActorFromIndicatedList",
+    "wrapper_capture": "porting/generated/native-triage019/0x14294ca50.c",
+    "wrapper_asm": "porting/generated/native-triage019/0x14294ca50.asm",
+    "native_body_capture": "porting/generated/native437-callees/0x1406801c0.c",
+    "behavior": "Wrapper steps all arguments and calls 0x1406801c0; its entire native body returns without effects.",
+    "reflection": "porting/generated/reflection/native_funcs.json; argument order follows reflected offsets and property ordering. Class references resolved through class_ref_map.json and native_class_index.json.",
+    "policy": "No matching class or function exclusion in native_class_blocklist.txt or porting Python policy files; function absent from canonical and existing batch manifests."
+  },
+  {
+    "class": "UFortIndicatedActorManagementLibrary",
+    "function": "RemoveActorFromStenciledList",
+    "wrapper_capture": "porting/generated/native-triage019/0x14294ca50.c",
+    "wrapper_asm": "porting/generated/native-triage019/0x14294ca50.asm",
+    "native_body_capture": "porting/generated/native437-callees/0x1406801c0.c",
+    "behavior": "Wrapper steps all arguments and calls 0x1406801c0; its entire native body returns without effects.",
+    "reflection": "porting/generated/reflection/native_funcs.json; argument order follows reflected offsets and property ordering. Class references resolved through class_ref_map.json and native_class_index.json.",
+    "policy": "No matching class or function exclusion in native_class_blocklist.txt or porting Python policy files; function absent from canonical and existing batch manifests."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "DropAllItems",
+    "wrapper_capture": "porting/generated/native-triage007/0x142a465d0.c",
+    "wrapper_asm": "porting/generated/native-triage007/0x142a465d0.asm",
+    "native_body_capture": "porting/generated/native437-callees/0x1406801c0.c",
+    "behavior": "Wrapper steps all arguments and calls 0x1406801c0; its entire native body returns without effects.",
+    "reflection": "porting/generated/reflection/native_funcs.json; argument order follows reflected offsets and property ordering. Class references resolved through class_ref_map.json and native_class_index.json.",
+    "policy": "No matching class or function exclusion in native_class_blocklist.txt or porting Python policy files; function absent from canonical and existing batch manifests."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "PushFootstepBankOverride",
+    "wrapper_capture": "porting/generated/native-triage016/0x142a7e2c0.c",
+    "wrapper_asm": "porting/generated/native-triage016/0x142a7e2c0.asm",
+    "native_body_capture": "porting/generated/native437-callees/0x1406801c0.c",
+    "behavior": "Wrapper steps all arguments and calls 0x1406801c0; its entire native body returns without effects.",
+    "reflection": "porting/generated/reflection/native_funcs.json; argument order follows reflected offsets and property ordering. Class references resolved through class_ref_map.json and native_class_index.json.",
+    "policy": "No matching class or function exclusion in native_class_blocklist.txt or porting Python policy files; function absent from canonical and existing batch manifests."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "PopFootstepBankOverride",
+    "wrapper_capture": "porting/generated/native-triage016/0x142a7e2c0.c",
+    "wrapper_asm": "porting/generated/native-triage016/0x142a7e2c0.asm",
+    "native_body_capture": "porting/generated/native437-callees/0x1406801c0.c",
+    "behavior": "Wrapper steps all arguments and calls 0x1406801c0; its entire native body returns without effects.",
+    "reflection": "porting/generated/reflection/native_funcs.json; argument order follows reflected offsets and property ordering. Class references resolved through class_ref_map.json and native_class_index.json.",
+    "policy": "No matching class or function exclusion in native_class_blocklist.txt or porting Python policy files; function absent from canonical and existing batch manifests."
+  }
+]

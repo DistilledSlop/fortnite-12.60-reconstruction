@@ -44,5 +44,10 @@ public:
 	UPROPERTY()
 	AAthenaChromeSpawnPlatform* SpawnPlatform;
 
+private:
+	UFUNCTION()
+	void GoalCaptured(AAthenaCapturePoint* CapturePoint, uint8 LockTeam, bool IsNewLock);
+public:
+
 };
 

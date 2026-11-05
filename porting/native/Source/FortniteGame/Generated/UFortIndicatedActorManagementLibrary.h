@@ -10,6 +10,8 @@
 #include "FIndicatedActorScaleAndOpacityData.h"
 #include "Math/Vector.h"
 
+class AActor;
+class AFortPlayerControllerAthena;
 class UParticleSystem;
 
 #include "UFortIndicatedActorManagementLibrary.generated.h"
@@ -25,6 +27,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static FIndicatedActorScaleAndOpacityData MakeIndicatedActorScaleAndOpacityData(float SmallSizeDistance, float LargestSizeDistance, float SmallScale, float LargestScale, float FarAwayScale, float FarAwayOpacity, float MaxScaleAndFadePercent);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static void RemoveActorFromIndicatedList(AFortPlayerControllerAthena* InstigatingController, AActor* IndicatedActor, bool bIncludeSquad);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static void RemoveActorFromStenciledList(AFortPlayerControllerAthena* InstigatingController, AActor* StenciledActor, bool bIncludeSquad);
 
 };
 

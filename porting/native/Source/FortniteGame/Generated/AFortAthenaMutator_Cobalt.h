@@ -375,6 +375,11 @@ public:
 
 private:
 	UFUNCTION()
+	void AudioFadeChangeEvent(bool bFadeOut, float FadeTime);
+public:
+
+private:
+	UFUNCTION()
 	void ClientCobaltRoundTimerComplete();
 public:
 
