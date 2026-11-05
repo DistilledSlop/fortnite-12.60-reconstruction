@@ -31,6 +31,7 @@ RENDERER_API void UpdateNoiseTextureParameters(FViewUniformShaderParameters& Par
 #include "LegacySlateMaterial.h"
 #include "LegacyMaterialAsset.h"
 #include "LegacyOriginalMaterialReader.h"
+#include "LegacyLocalVFAdapter.h"
 #include "LegacyMaterialManifestSHA256.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
@@ -39,91 +40,6 @@ RENDERER_API void UpdateNoiseTextureParameters(FViewUniformShaderParameters& Par
 #include "VulkanCommon.h"
 #include "vulkan.h"
 #include "VulkanShaderResources.h"
-
-// A descriptor's offsets are word offsets in the *renamed* module. The old
-// offsets in the reflection receipt are invalid after changing OpEntryPoint.
-struct FLegacySpirvDescriptor
-{
-    uint32 SetOffset = UINT32_MAX;
-    uint32 BindingOffset = UINT32_MAX;
-    uint32 Set = UINT32_MAX;
-    uint32 Binding = UINT32_MAX;
-};
-
-static bool RewriteLegacySpirv(const FString& Path, const FString& ExpectedSha1, const FString& ExpectedSha256,
-    uint32 ExpectedModel, TArray<uint32>& Words, uint32& Crc,
-    TMap<uint32, FLegacySpirvDescriptor>& Descriptors, FString& Error)
-{
-    TArray<uint8> Bytes;
-    if (!FFileHelper::LoadFileToArray(Bytes, *Path) || Bytes.Num() < 20 || Bytes.Num() % 4 || Bytes.Num() > 4 * 1024 * 1024)
-    { Error = TEXT("invalid SPIR-V file"); return false; }
-    FSHAHash Hash;
-    FSHA1::HashBuffer(Bytes.GetData(), Bytes.Num(), Hash.Hash);
-    if (ExpectedSha1.Len() != 40 || !Hash.ToString().Equals(ExpectedSha1, ESearchCase::IgnoreCase))
-    { Error = TEXT("SPIR-V digest mismatch"); return false; }
-    uint8 Digest[32]; LegacyManifestSHA256(Bytes.GetData(),uint32(Bytes.Num()),Digest);
-    if (ExpectedSha256.Len()!=64 || !BytesToHex(Digest,32).Equals(ExpectedSha256,ESearchCase::IgnoreCase))
-    { Error=TEXT("SPIR-V SHA-256 mismatch"); return false; }
-    Words.SetNumUninitialized(Bytes.Num() / 4);
-    FMemory::Memcpy(Words.GetData(), Bytes.GetData(), Bytes.Num());
-    if (Words[0] != 0x07230203 || Words[3] == 0 || Words[3] > 1000000)
-    { Error = TEXT("invalid SPIR-V header"); return false; }
-    int32 Entry = INDEX_NONE, OldNameWords = 0;
-    for (int32 I = 5; I < Words.Num(); )
-    {
-        const uint32 Count = Words[I] >> 16, Op = Words[I] & 0xffff;
-        if (!Count || Count > uint32(Words.Num() - I))
-        { Error = TEXT("invalid SPIR-V instruction"); return false; }
-        if (Op == 15)
-        {
-            if (Entry != INDEX_NONE || Count < 4 || Words[I + 1] != ExpectedModel)
-            { Error = TEXT("unexpected SPIR-V entry point"); return false; }
-            const ANSICHAR* Name = reinterpret_cast<const ANSICHAR*>(&Words[I + 3]);
-            const int32 MaxBytes = (Count - 3) * 4;
-            int32 Len = 0;
-            while (Len < MaxBytes && Name[Len]) ++Len;
-            if (Len != 4 || FCStringAnsi::Strncmp(Name, "main", 4) != 0)
-            { Error = TEXT("unexpected SPIR-V entry point name"); return false; }
-            Entry = I;
-            OldNameWords = (Len + 4) / 4;
-        }
-        I += Count;
-    }
-    if (Entry == INDEX_NONE) { Error = TEXT("missing SPIR-V entry point"); return false; }
-    Crc = FCrc::MemCrc32(Bytes.GetData(), Bytes.Num());
-    constexpr int32 NewNameWords = 6;
-    const uint32 NewBytes = (Words.Num() + NewNameWords - OldNameWords) * 4;
-    ANSICHAR NewName[24] = {};
-    FCStringAnsi::Snprintf(NewName, UE_ARRAY_COUNT(NewName), "main_%08x_%08x", NewBytes, Crc);
-    Words.RemoveAt(Entry + 3, OldNameWords);
-    Words.InsertZeroed(Entry + 3, NewNameWords);
-    FMemory::Memcpy(&Words[Entry + 3], NewName, sizeof(NewName));
-    Words[Entry] += (NewNameWords - OldNameWords) << 16;
-    Descriptors.Reset();
-    for (int32 I = 5; I < Words.Num(); )
-    {
-        const uint32 Count = Words[I] >> 16, Op = Words[I] & 0xffff;
-        if (!Count || Count > uint32(Words.Num() - I))
-        { Error = TEXT("invalid renamed SPIR-V instruction"); return false; }
-        // OpDecorate: DescriptorSet = 34, Binding = 33.
-        if (Op == 71 && Count >= 4 && (Words[I + 2] == 33 || Words[I + 2] == 34))
-        {
-            const uint32 Id = Words[I + 1];
-            if (!Id || Id >= Words[3] || Count != 4)
-            { Error = TEXT("invalid descriptor decoration"); return false; }
-            FLegacySpirvDescriptor& Descriptor = Descriptors.FindOrAdd(Id);
-            uint32& Offset = Words[I + 2] == 33 ? Descriptor.BindingOffset : Descriptor.SetOffset;
-            uint32& Value = Words[I + 2] == 33 ? Descriptor.Binding : Descriptor.Set;
-            if (Offset != UINT32_MAX) { Error = TEXT("duplicate descriptor decoration"); return false; }
-            Offset = I + 3; Value = Words[I + 3];
-        }
-        I += Count;
-    }
-    for (const auto& Pair : Descriptors)
-        if (Pair.Value.SetOffset == UINT32_MAX || Pair.Value.BindingOffset == UINT32_MAX)
-        { Error = TEXT("incomplete descriptor decoration"); return false; }
-    return true;
-}
 
 static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRHIUniformBufferLayout& Layout,
     FLegacySlateShaderInput& Input, FString& Error, bool bWriteArtifacts = true, bool bHasView = false)
@@ -142,7 +58,7 @@ static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRH
     TArray<uint32> Spirv;
     TMap<uint32, FLegacySpirvDescriptor> Decorations;
     uint32 Crc = 0;
-    if (!RewriteLegacySpirv(Reflection->GetStringField(TEXT("output")), Shader->GetStringField(TEXT("spirv_sha1")), Reflection->GetStringField(TEXT("spirv_sha256")),
+    if (!LegacyRewriteConvertedSpirv(Reflection->GetStringField(TEXT("output")), Shader->GetStringField(TEXT("spirv_sha1")), Reflection->GetStringField(TEXT("spirv_sha256")),
         bVertex ? 0 : 4, Spirv, Crc, Decorations, Error)) return false;
 
     FVulkanShaderHeader Header(FVulkanShaderHeader::EZero);

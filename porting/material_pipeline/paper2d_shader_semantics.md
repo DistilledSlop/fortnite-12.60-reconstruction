@@ -194,3 +194,21 @@ indices alongside every record and the raw resource bytes. Source review
 matches the verified Python body layouts; native execution remains pending.
 The provider still needs to construct converted outputs with the original
 View, LocalVF, pass and texture bindings before calling the new factory.
+
+`LegacyLocalVFAdapter` now implements the output-construction kernel for those
+bindings. Given an original record, its verified converted shader and explicit
+original uniform/loose parameter contracts, it checks recursive member layouts,
+current metadata registration, original resource tables and complete descriptor
+consumption before emitting the Vulkan header, parameter map and shader code.
+It handles uniform texel buffers, resource-only uniform buffers, packed loose
+parameters and the observed graphics frequencies. The caller's output remains
+unchanged on rejection. The existing Slate adapter shares its SPIR-V entry-point
+rewriter; the Slate mapping policy is unchanged.
+
+Source/schema review covers the 42 occurrences, 33 converted shaders and 163
+descriptors. Compilation and execution remain pending. This kernel is not
+connected to the provider: the [full View comparison](view_original_identity.md)
+now proves a whole-buffer mismatch, so supplying the current View by name would
+correctly fail its contract. Runtime work must establish compatible accessed
+members/resources or implement a faithful remapping, along with independently
+recovered LocalVF and pass contracts.
