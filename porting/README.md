@@ -55,8 +55,10 @@ The four dashboard milestones remain the product acceptance gates.
   entry-type claim.
   The world manager's initial global-wind replication callback now resolves the
   original wind manager and restores heading rotation, dedicated-server gating,
-  and native intensity/direction/vector state. Wind tick and rendering consumers
-  remain unrecovered; this is source integration without visual/runtime credit.
+  and native intensity/direction/vector state. The public wind queries now expose
+  that intensity/direction and resolve the world-specific wind manager through
+  the game state. Wind initialization and rendering consumers remain incomplete;
+  this is source integration without visual/runtime credit.
   The new engine reader is also build/runtime pending. These changes do not establish
   original map loading, terrain fidelity, or a completed world.
 - The client is `FortniteClient-12.60-CL-13477524`, a packaged Win64 build.

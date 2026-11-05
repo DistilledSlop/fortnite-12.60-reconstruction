@@ -23,6 +23,22 @@
     "native_callback": {
       "path": "porting/generated/maps-wind-construction/_adhoc/0x141f91b30__141f91b30.c",
       "sha256": "2b2e563bbf4964d2ab8520c22ecc94fbcc4016a1577b248460c8dfea4bfc6bef"
+    },
+    "initialize_wind": {
+      "path": "porting/generated/maps-wind-live-consumers/_adhoc/0x141dd0980__141dd0980.c",
+      "sha256": "5b345eb384598dd718fbf8be3d145bb1b23ec1902f301cf0b55f526c476031ec"
+    },
+    "initialize_world_actor_impulses": {
+      "path": "porting/generated/maps-wind-initialization/_adhoc/0x141dd5490__141dd5490.c",
+      "sha256": "274df2f850614604ddae37c1671ed4ec435572aa2f6eaa0c497b719a8cdfb5b6"
+    },
+    "find_global_wind_values": {
+      "path": "porting/generated/maps-wind-initialization/_adhoc/0x141f87230__141f87230.c",
+      "sha256": "104940b6be25b0e3c2568e80417ac27994791894b63db7e1ff56e7d82c5adced"
+    },
+    "resolve_world_manager": {
+      "path": "porting/generated/maps-wind-initialization/_adhoc/0x141f88460__141f88460.c",
+      "sha256": "1589080a89d8f810a46e010c1c7bb2d75e4f7dc0710b5209ca117f1dd8b4fa36"
     }
   },
   "behavior": "Callback resolves the owner context world and casts its GameState, then uses its WindManager at 0x468. It rotates (1,0,0) around (0,0,1) by the replicated heading and passes intensity and direction to 0x141dd8f30. The setter compares all four floats and, only if changed and net mode is not dedicated server, stores intensity, direction and intensity times direction at 0x420, 0x424 and 0x430.",
@@ -50,5 +66,11 @@
     "new_reflected_native_bodies": 1,
     "new_helpers": 1,
     "new_fields": 3
+  },
+  "initialization_followup": {
+    "status": "unported; no runtime credit",
+    "initialize": "0x141dd0980 reads world manager global wind on non-dedicated instances, then always invokes 0x141dd5490. If bAllowWindImpulses and native byte0x44f is clear, client sampling initialization follows (0x141dc7100 and 0x141ddfad0).",
+    "world_actor_impulses": "0x141dd5490 checks global pointer0x14812a5f8 and dedicated-server status, iterates world actors of class returned by0x142752f80, checks actor byte0x6ad mask8, constructs impulse data via0x141de5910 and applies via0x141dd4d50, then clears that actor bit. Class identity and dependent impulse helpers remain unresolved.",
+    "global_values": "0x141f87230 accepts nonnegative InitialGlobalWind.WindIntensity and rotates heading. Negative intensity uses0x141f87000 to discover values, with defaults intensity0.1/heading45. This fallback must be recovered before lifting the whole helper."
   }
 }

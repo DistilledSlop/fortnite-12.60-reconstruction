@@ -1,0 +1,25 @@
+{
+  "scope": "Source reconstruction only; build and runtime validation pending.",
+  "reflection": "porting/generated/reflection/native_funcs.json: AFortWindManager reflected names, exec addresses, flags, parameter kinds, flags and order by offsets.",
+  "captures": {
+    "intensity_direction_exec": {
+      "path": "porting/generated/maps-wind-consumer/_adhoc/0x142b55f10__142b55f10.c",
+      "sha256": "9b3996ece981d55a7cfd2b07b792a2d9f9d2a0eff69db74690d7aa8704ce01e3"
+    },
+    "intensity_direction_native": {
+      "path": "porting/generated/maps-wind-consumer-methods/_adhoc/0x141dcc030__141dcc030.c",
+      "sha256": "07a287ad7b48dc83f08ef3b161df1be2de4420552a25917d5c719d9d634f2e66"
+    },
+    "manager_lookup_native": {
+      "path": "porting/generated/maps-wind-current-playset/_adhoc/0x141dcf550__141dcf550.c",
+      "sha256": "9154719e53bec1c0db7d82f7998c9a3b9e97c49549e68b9ca52e9fbe7236fa0b"
+    },
+    "manager_lookup_exec": {
+      "path": "porting/generated/maps-wind-live-consumers/_adhoc/0x142b56040__142b56040.c",
+      "sha256": "a3ee1e8de7a8bc71baf4ca61588cc3f89db42525883ebad010f39c007f19302f"
+    }
+  },
+  "behavior": "The first exec forwards output arguments to 0x141dcc030, which copies intensity at 0x420 and direction at 0x424. The manager helper resolves the context world and returns the AFortGameState WindManager at 0x468, or null.",
+  "status": "ported source only; build/runtime pending",
+  "signature_note": "The context has CPF_ConstParm but no reference bit; the current generator emits UObject* for this object parameter. This source spelling does not change pointer ABI or the read-only lookup behavior."
+}

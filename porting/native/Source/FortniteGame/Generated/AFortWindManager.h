@@ -15,6 +15,7 @@
 class ABuildingSMActor;
 class UAudioComponent;
 class UMaterialInterface;
+class UObject;
 
 #include "AFortWindManager.generated.h"
 
@@ -132,6 +133,12 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x430): not a UPROPERTY, not replicated.
 	FVector NativeWindVector_0x430 = FVector::ZeroVector;
+
+	UFUNCTION(BlueprintCallable)
+	void GetGlobalWindIntensityAndDirection(float& WindIntensity, FVector& WindDirection) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static AFortWindManager* GetWindManager(UObject* WorldContextObject);
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

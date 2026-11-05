@@ -62985,5 +62985,39 @@
       "Engine/World.h"
     ],
     "notes": "Original wind replication source restored; build and runtime verification remain pending."
+  },
+  {
+    "function": "GetGlobalWindIntensityAndDirection",
+    "kind": "exec",
+    "signature": "void GetGlobalWindIntensityAndDirection(float& WindIntensity, FVector& WindDirection) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/maps_wind_queries_runtime/AFortWindManager_GetGlobalWindIntensityAndDirection.inc",
+    "address": "0x142b55f10",
+    "reflection_flags": "0x44c20401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original source recovery; build and runtime verification pending.",
+    "class": "AFortWindManager"
+  },
+  {
+    "function": "GetWindManager",
+    "kind": "exec",
+    "signature": "AFortWindManager* GetWindManager(UObject* WorldContextObject)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/maps_wind_queries_runtime/AFortWindManager_GetWindManager.inc",
+    "address": "0x142b56040",
+    "reflection_flags": "0x14022401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h"
+    ],
+    "notes": "Original source recovery; generated object parameter spelling follows the existing reflection decoder. Context is only read. Build and runtime verification pending.",
+    "class": "AFortWindManager"
   }
 ]
