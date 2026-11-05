@@ -47,7 +47,7 @@ INTERNAL_ERROR = "errors.com.epicgames.common.internal_error"  # guess: not in t
 
 class Backend:
     def __init__(self, *, clock=None, seed=DEFAULT_SEED, cloudstorage_dir=None,
-                 state_dir=None, state_step_sec=None, log_size=1000):
+                 state_dir=None, state_step_sec=None, log_size=1000, matchmaking_ws_origin=None):
         self.ctx = Context(clock=clock, seed=seed)
         self.accounts = AccountService(self.ctx, state_dir=state_dir)
         self.oauth = OAuthService(self.ctx, self.accounts)
@@ -58,9 +58,10 @@ class Backend:
         self.frontend = FrontendStubs(self.ctx)
         self.chat = ChatService(self.ctx, self.oauth)
         if state_step_sec is None:
-            self.matchmaking = MatchmakingService(self.ctx, self.accounts)
+            self.matchmaking = MatchmakingService(self.ctx, self.accounts, websocket_origin=matchmaking_ws_origin)
         else:
-            self.matchmaking = MatchmakingService(self.ctx, self.accounts, state_step_sec=state_step_sec)
+            self.matchmaking = MatchmakingService(self.ctx, self.accounts, state_step_sec=state_step_sec,
+                                                  websocket_origin=matchmaking_ws_origin)
         self.router = Router()
         for service in (self.oauth, self.accounts, self.profiles, self.party, self.content,
                         self.cloud, self.frontend, self.chat, self.matchmaking):

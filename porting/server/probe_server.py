@@ -191,6 +191,7 @@ def main():
                         help="with --stub: persistent local account, profile and user-file directory")
     parser.add_argument("--ephemeral", action="store_true",
                         help="with --stub: keep account, profile and user-file state in memory")
+    parser.add_argument("--matchmaking-ws-origin", help="with --stub: advertised ws:// or wss:// origin")
     args = parser.parse_args()
     args.record.parent.mkdir(parents=True, exist_ok=True)
     routes = load_fixtures(args.fixtures)
@@ -207,7 +208,8 @@ def main():
                 parser.error(f"state directory is already in use: {args.state_dir}")
         import fortnite_stub as stub
         stub.configure(cloudstorage_dir=args.cloudstorage_dir,
-                       state_dir=None if args.ephemeral else args.state_dir)
+                       state_dir=None if args.ephemeral else args.state_dir,
+                       matchmaking_ws_origin=args.matchmaking_ws_origin)
     server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record, stub))
     if args.tls_cert:
         import ssl

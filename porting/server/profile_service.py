@@ -477,7 +477,9 @@ class ProfileService:
             "profileRevision": profile["rvn"],
             "profileId": profile_id,
             "profileChangesBaseRevision": base_rvn,
-            "profileChanges": changes,
+            # Responses can outlive the dispatch lock while they are encoded or
+            # inspected by callers. Do not expose mutable cached profile values.
+            "profileChanges": copy.deepcopy(changes),
             "lockExpiration": LOCK_EXPIRATION_UNLOCKED,
             "notifications": [],
             "profileCommandRevision": profile["commandRevision"],

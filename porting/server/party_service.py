@@ -243,6 +243,7 @@ class PartyService:
         self._set_presence(account_id, "Offline", None)
         if not party["members"]:
             del self._parties[party_id]
+            self._pings = [ping for ping in self._pings if ping["party_id"] != party_id]
             return 204, None
         if was_captain and self._captain(party) is None:
             oldest = min(party["members"], key=lambda member: member["joined_at"])

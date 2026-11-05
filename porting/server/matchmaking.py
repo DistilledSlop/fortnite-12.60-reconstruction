@@ -19,6 +19,7 @@ import re
 import secrets
 import threading
 import time
+from urllib.parse import urlsplit
 
 import local_ws
 from api_common import ApiError, Err
@@ -64,10 +65,21 @@ def _message(name, **fields):
 class MatchmakingService:
     """Ticket, websocket, session and key state for one backend instance."""
 
-    def __init__(self, ctx, accounts, state_step_sec=STATE_STEP_SEC):
+    def __init__(self, ctx, accounts, state_step_sec=STATE_STEP_SEC, websocket_origin=None):
         self.ctx = ctx
         self.accounts = accounts
         self.state_step_sec = state_step_sec
+        origin = websocket_origin or f"wss://{MATCHMAKING_HOST}"
+        parts = urlsplit(origin)
+        try:
+            valid_port = parts.port is None or 1 <= parts.port <= 65535
+        except ValueError:
+            valid_port = False
+        if (parts.scheme not in ("ws", "wss") or not parts.hostname or not valid_port or
+                parts.username is not None or parts.password is not None or
+                parts.path not in ("", "/") or parts.query or parts.fragment):
+            raise ValueError("matchmaking websocket origin must be a ws:// or wss:// origin")
+        self.websocket_origin = origin.rstrip("/")
         self._lock = threading.Lock()
         # [guess] Per-process secret used to HMAC the ticket payload. Never persisted.
         self._ticket_signing_key = secrets.token_bytes(32)
@@ -123,7 +135,7 @@ class MatchmakingService:
                                         "playerCount": len(players)}
             self._sessions[session_id] = self._session_record(account_id, owner_name, players)
         body = {  # [observed] field names per section 3; values [guess]
-            "serviceUrl": f"wss://{MATCHMAKING_HOST}{MATCHMAKING_WS_PATH}/{ticket_id}",
+            "serviceUrl": f"{self.websocket_origin}{MATCHMAKING_WS_PATH}/{ticket_id}",
             "ticketType": TICKET_TYPE,
             "payload": payload,
             "signature": signature,
