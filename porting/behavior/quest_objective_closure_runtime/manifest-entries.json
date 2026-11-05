@@ -1,0 +1,65 @@
+[
+  {
+    "function": "GetObjectiveInfo",
+    "kind": "exec",
+    "signature": "UFortQuestObjectiveInfo* GetObjectiveInfo(FDataTableRowHandle ObjectiveStatHandle) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/quest_objective_closure_runtime/UFortQuestItem_GetObjectiveInfo.inc",
+    "address": "0x142ab3a40",
+    "native_body_address": "0x142440da0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "blocked",
+    "includes": [
+      "FFortQuestObjectiveStatTableRow.h",
+      "UFortQuestItemDefinition.h",
+      "UFortQuestObjectiveInfo.h"
+    ],
+    "notes": "Unintegrated source proposal; blocked on complete FortQuestObjectiveStatTableRow native cache, parser and post-serialization behavior.",
+    "class": "UFortQuestItem"
+  },
+  {
+    "function": "HasCompletedObjective",
+    "kind": "exec",
+    "signature": "bool HasCompletedObjective(FDataTableRowHandle ObjectiveStatHandle) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/quest_objective_closure_runtime/UFortQuestItem_HasCompletedObjective.inc",
+    "address": "0x142ab4040",
+    "native_body_address": "0x1424441d0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "blocked",
+    "includes": [
+      "FFortQuestObjectiveStatTableRow.h",
+      "UFortQuestItemDefinition.h",
+      "UFortQuestObjectiveInfo.h"
+    ],
+    "notes": "Unintegrated source proposal; blocked on complete FortQuestObjectiveStatTableRow native cache, parser and post-serialization behavior.",
+    "class": "UFortQuestItem"
+  },
+  {
+    "function": "IsObjectiveInProgress",
+    "kind": "exec",
+    "signature": "bool IsObjectiveInProgress(FDataTableRowHandle ObjectiveStatHandle) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/quest_objective_closure_runtime/UFortQuestItem_IsObjectiveInProgress.inc",
+    "address": "0x142ab4280",
+    "native_body_address": "0x142447110",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "blocked",
+    "includes": [
+      "FFortQuestObjectiveStatTableRow.h",
+      "UFortQuestItemDefinition.h",
+      "UFortQuestObjectiveInfo.h"
+    ],
+    "notes": "Unintegrated source proposal; blocked on complete FortQuestObjectiveStatTableRow native cache, parser and post-serialization behavior.",
+    "class": "UFortQuestItem"
+  }
+]
