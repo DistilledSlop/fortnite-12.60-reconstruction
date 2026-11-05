@@ -1,0 +1,25 @@
+{
+  "scope": "Associate pinned original landscape uniform inventory and recovered vertex-factory loose names with decoded map records in manifest order.",
+  "evidence": [
+    "porting/behavior/maps_terrain_material_runtime/uniform-loader-checkpoint.json",
+    "porting/behavior/maps_terrain_material_runtime/landscape-batch-inventory-checkpoint.json",
+    "porting/behavior/maps_terrain_material_runtime/landscape-uniform-contract.json"
+  ],
+  "implementation": "porting/native/Source/FortniteGame/Private/LegacyTerrainRuntimeInventory.cpp",
+  "validation": "Linux Development client build and null-RHI runtime probe passed for both original maps; invalid bundle pin rejected without changing output.",
+  "limitations": [
+    "Caller pins must independently identify a mutually corresponding map, manifest and contract bundle; pins authenticate bytes rather than establishing their provenance.",
+    "Uniform static slots and current metadata remain unresolved; entries are not construction-ready.",
+    "Only recovered vertex-factory loose names are returned; pass-specific loose allocations and VT feedback remain unresolved.",
+    "This is an inventory association only: no shader output, uniform buffer, runtime provider, attachment or draw is produced."
+  ],
+  "build_log": "porting/generated/apollo-material-evidence/landscape-inventory-bridge.build.log",
+  "runtime_counts": {
+    "maps": 2,
+    "records_per_map": 68,
+    "uniform_occurrences_per_map": 206,
+    "vf_loose_contracts_per_map": 70,
+    "static_slots_known": false
+  },
+  "run_log": "porting/generated/apollo-material-evidence/landscape-inventory-bridge.run.log"
+}

@@ -5,6 +5,7 @@
 #include "LegacyOriginalMaterialLayout.h"
 #include "LegacyLocalVFOutputBatch.h"
 #include "LegacyLandscapeVFOutputBatch.h"
+#include "LegacyTerrainRuntimeInventory.h"
 #include "LegacySlateMaterial.h"
 #include "MaterialShared.h"
 #include "HAL/FileManager.h"
@@ -85,6 +86,10 @@ bool Decode(const FString& Path, FString& Error)
         !FParse::Value(FCommandLine::Get(),TEXT("FortniteProbeLandscapeMap0SHA256="),MapPins[0]) ||
         !FParse::Value(FCommandLine::Get(),TEXT("FortniteProbeLandscapeMap1SHA256="),MapPins[1])))
     { Error=TEXT("batch probe requires manifest and both map SHA-256 pins"); return false; }
+    FString InventoryPath, InventoryPin;
+    const bool bProbeInventory=FParse::Value(FCommandLine::Get(),TEXT("FortniteProbeLandscapeInventory="),InventoryPath);
+    if (bProbeInventory && (!bProbeBatch || !FParse::Value(FCommandLine::Get(),TEXT("FortniteProbeLandscapeInventorySHA256="),InventoryPin) || InventoryPin.Len()!=64))
+    { Error=TEXT("inventory probe requires a uniform bundle pin and pinned batch manifest/maps"); return false; }
     int32 PreviousEnd=0;
     for (int32 MapIndex=0; MapIndex<Maps->Num(); ++MapIndex)
     {
@@ -107,6 +112,25 @@ bool Decode(const FString& Path, FString& Error)
         Native.SerializedOffset=Start;
         FString DecodeError;
         if (!DecodeLegacyOriginalMaterial(Native,DecodeError)) { Error=FString::Printf(TEXT("map %d: %s"),MapIndex,*DecodeError); return false; }
+        if (bProbeInventory)
+        {
+            TArray<FLegacyTerrainRuntimeInventoryRecord> Inventory;
+            if (!BuildLegacyTerrainRuntimeInventory(Native,BatchPath,BatchHash,MapPins[MapIndex],MapIndex,Start,InventoryPath,InventoryPin,Inventory,Error) || Inventory.Num()!=Count)
+            { if (Error.IsEmpty()) Error=TEXT("terrain inventory count mismatch"); return false; }
+            int32 UniformCount=0, LooseCount=0;
+            for (const auto& Row:Inventory)
+            {
+                UniformCount+=Row.Uniforms.Num(); LooseCount+=Row.VFLoose.Num();
+                for (const auto& Binding:Row.Uniforms)
+                    if (Binding.bOriginalStaticSlotKnown) { Error=TEXT("unexpected resolved landscape static slot"); return false; }
+            }
+            TArray<FLegacyTerrainRuntimeInventoryRecord> Sentinel; Sentinel.AddDefaulted(); Sentinel[0].ShaderIndex=123456;
+            FString Rejected, BadPin=InventoryPin; BadPin[0]=BadPin[0]==TEXT('0') ? TEXT('1') : TEXT('0');
+            if (BuildLegacyTerrainRuntimeInventory(Native,BatchPath,BatchHash,MapPins[MapIndex],MapIndex,Start,InventoryPath,BadPin,Sentinel,Rejected) ||
+                Sentinel.Num()!=1 || Sentinel[0].ShaderIndex!=123456)
+            { Error=TEXT("terrain inventory digest rejection failed"); return false; }
+            UE_LOG(LogTemp,Display,TEXT("Legacy terrain inventory: map=%d records=%d uniform occurrences=%d VF loose=%d; static slots unresolved"),MapIndex,Inventory.Num(),UniformCount,LooseCount);
+        }
         FLegacyMaterialIR Prepared;
         if (!PrepareLegacyOriginalMaterialLayout(Native,Prepared,Error) || Prepared.UniformBufferSize!=1376 || Prepared.Resources.Num()!=77)
         { if (Error.IsEmpty()) Error=TEXT("unexpected landscape Material layout"); return false; }

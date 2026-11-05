@@ -1,0 +1,20 @@
+{
+  "scope": "Original UFortSignificanceManager update override reached by the foundation distance-change handler; static evidence only, no callable body promoted.",
+  "override": {
+    "address": "0x141d5ed50",
+    "identity": "The authenticated FortSignificanceManager vtable slot +0x260 points here; it receives the manager and a pointer/count view. 0x141d427d0 passes the manager's array at +0x30 as this view.",
+    "order": [
+      "Calls 0x141d58c30 with the manager and view. This copies the input transforms into manager array +0x1d8, appends a 0x30-byte transform from +0x10 of each occupied 0x50-byte entry of the container at +0x178, then copies the resulting array to manager array +0x30. It copies the input before resetting +0x30, important when the view aliases that array.",
+      "Calls each nonempty callable at descriptor +0x10 across eight 0x140-byte descriptors starting at 0x1478c37a0, passing a reference to the manager pointer. The BuildingFoundation descriptor's +0x10 callable is 0x141d394f0, the prepared-viewpoint routine identified in stream_manager_lookup/callbacks.json.",
+      "Calls 0x1409f1a90 with the view of the augmented array +0x1d8. Its identity as the engine base Update needs independent confirmation; the local USignificanceManager::Update has compatible view semantics, but the target has not been fully authenticated here.",
+      "Calls each nonempty callable at descriptor +0x50 across the same eight descriptors, clears manager byte +0x159, then calls 0x141384cb0 with each pointer in array +0x1c8 and second argument 1, finally clearing the array count. The precise callable and object-destruction contracts remain unresolved."
+    ],
+    "blockers": "The extra-view container and mutation lifecycle, all descriptor callback contracts, temporary allocation/destruction, shared stream-switch and significance/streaming effects remain unrecovered. The reflected UFortSignificanceManager currently declares none of this native state. Substituting the base Update or fabricating those dependencies would omit original effects."
+  },
+  "reproduction": [
+    "porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input porting/behavior/maps_foundation_streaming_runtime/streaming_advance/input.json --out porting/behavior/maps_foundation_streaming_runtime/streaming_advance/probe --mem 8G",
+    "porting/behavior/maps_foundation_streaming_runtime/streaming_advance/probe/0x141d5ed50.asm",
+    "porting/behavior/maps_foundation_streaming_runtime/streaming_advance/probe/0x141d58c30.c",
+    "/opt/fortnite/UnrealEngine/Engine/Plugins/Runtime/SignificanceManager/Source/SignificanceManager/Private/SignificanceManager.cpp:389"
+  ]
+}
