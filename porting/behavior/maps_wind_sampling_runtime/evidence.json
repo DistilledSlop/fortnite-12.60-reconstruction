@@ -60,7 +60,7 @@
     "End responder stat. When impulses allowed, update radius interpolation/removals under impulse stat, then update first delta and clean inactive zero-magnitude cylinders. Sampling therefore observes state BEFORE this frame lifecycle advancement."
   ],
   "field_contracts": {
-    "0x220": "int32 candidate MaxRespondersPerUpdate; original reads (int)param1[0x44], clamps iteration count only when bAllowWindImpulses. Constructor/default and semantic name unresolved.",
+    "0x220": "int32 update budget; constructor initializes to 256, clamps iteration count only when bAllowWindImpulses. Integrated as NativeWindUpdateBudget_0x220=256; semantic name remains provisional.",
     "0x224": "bAllowWindImpulses byte",
     "0x2a0/0x2a8": "TArray<FFortWindImpulseRadius>, stride0x4c",
     "0x2b0/0x2b8": "TArray<FFortWindImpulseCylinderDelta>, stride0x90; only first entry advances in this function",
@@ -76,9 +76,9 @@
     "local_delta_regions": "TArray<FBox> at lStack188/uStack180;141dcb5d0 appends28-byte elements. Its contents unused here and allocation freed before final cleanup."
   },
   "essential_missing_effects": {
-    "0x141dcb5d0": "Appends OuterWorldBounds minus InnerWorldBounds region boxes to TArray<FBox>. No mutation of delta observed. Hook retained despite unused output.",
-    "0x141ddef30": "Starts first queued delta with valid matching cylinder, clearing pending and setting changing; dispatches142b53dd0 with cylinder and delta. Swap-removes queued deltas missing cylinders until match/empty.",
-    "0x142b54060 and0x142b53fa0": "Cylinder by-value event wrappers: each consumes shared UID before copying incoming cylinder and dispatching virtual0x210 with distinct reflected function token. Call-site142b53fa0 second argument needs assembly confirmation; decompiler omits it.",
+    "0x141dcb5d0": "NativeBuildWindSectionBoxes integrated; appends OuterWorldBounds minus InnerWorldBounds to TArray<FBox>, whose contents are unused here. Draft hook needs replacement.",
+    "0x141ddef30": "NativeStartQueuedWindDelta integrated; starts first matching queued cylinder, dispatching OnWindImpulseCylinderCreation, and swap-removes unmatched deltas. Draft hook needs replacement.",
+    "0x142b54060 and0x142b53fa0": "Restored BlueprintImplementableEvent declarations OnWindImpulseCylinderDeltaComplete and OnWindImpulseCylinderDeath dispatch these wrappers. Each parameter struct consumes one UID. Assembly 0x141de16c2..16d7 and 0x141de1770..1790 passes the current cylinder address in RDX at both death calls; 0x141de1691..169f does so for completion. UHT/build/runtime parity remains unverified.",
     "platform/lifetime": "143f7a920 platform/server predicate;143f6c200 Destroy; GUObjectArray item flag0x20000000; root scene component world location; stat/log effects. Draft exposes required hooks."
   },
   "preserved_details": [
@@ -93,21 +93,30 @@
     "Paired parameter writes directly index PairedVariablesData by ID.PairIndex with range guard. Machine code141de0e45..0e7d proves this: movslq ParametersToSet+0 into rax, test/js and cmp responder+0x60/jge reject invalid indices, load paired data from responder+0x58, lea(rax,rax,8) followed by scale4 loads at+0/+4 gives stride36 PreviousSpeed/PreviousOffset, then two14433ac70 calls. Setup141ddae00 lines233-293 stores material variable IDs in PairIndex and compacts paired entries; final setup lines702-713 searches by MaterialVariableIndex. Despite apparent sparse-ID inconsistency, original sampling uses direct indexing and must not be replaced with a search. This is resolved original behavior, not a closure blocker."
   ],
   "closure_gaps": [
-    "All required FEffects methods are declarations only. This is a typed algorithm draft, not an integrated helper or executable fallback. Do not add ported manifest coverage.",
-    "Non-reflected update budget0x220 constructor value confirmed256; generator field remains pending. Original primaryvtable slot3f8 proves TickActor override141dde360 calls sampling, audio, thenAActor::TickActor. Whole lifecycle remains pending; no incomplete TickActor installed.",
+    "All required FEffects methods are declarations only; several now have integrated counterparts documented under recovered_dependencies. This remains a typed algorithm draft, not an integrated helper or executable fallback. Do not add ported manifest coverage.",
+    "Non-reflected update budget0x220 constructor value confirmed256; integrated as NativeWindUpdateBudget_0x220=256. Original primaryvtable slot3f8 proves TickActor override141dde360 calls sampling, audio, thenAActor::TickActor. Whole lifecycle remains pending; no incomplete TickActor installed.",
     "Exact float parity is not established: draft replaces rsqrtss with scalar divide/sqrt and smoothstep expression may reorder operations; FMath::Clamp comparisons may differ for NaNs.",
     "Capture bounding predicates have unusual short-circuit topology: radius minimum Z is tested only when Y equals maximum; cylinder minimum Y only when X equals maximum. Draft preserves these expression shapes; verify machine code before normalization.",
-    "Delta piecewise sampling is algebraically condensed from repeated capture branches; its degenerate radii, NaNs and inferred live-register scalar values need assembly validation before native porting.",
     "Default cylinder temporary must consume exactly one UID and use zero vectors/floats, invalid zero bounds and false flags; do not replace it with an aggregate without handle constructor. Delta/radius default policy is owned by root.",
     "CurveLinearColor GetLinearColorValue signature confirmed via actual curve-owner interface slot0x50; numeric sampling parity still pending.",
-    "Array swap removal must preserve responder nested-array destruction and source shrink flags; delegates may mutate arrays, so no extra defensive copies or reordering are authorized by this draft."
+    "Array swap removal must preserve responder nested-array destruction and source shrink flags; delegates may mutate arrays, so no extra defensive copies or reordering are authorized by this draft.",
+    "Delta section selection and live magnitude registers are resolved in delta_sampling_assembly, including unordered section comparisons. Contribution direction/falloff still uses the shared semantic CylinderDirectionWithFalloff draft: its rsqrt, zero-direction comparisons, NaN and signed-zero behavior are not closed; no claim of full delta numeric parity."
   ],
-  "validation": "Source review against bounded decompiler captures and paired-parameter sampling machine code141de0e45..0e7d. No builds/tests run per assigned scope.",
+  "validation": "Source review against bounded decompiler captures and sampling machine code: paired-parameter indexing 0x141de0e45..0x141de0e7d; cylinder event arguments 0x141de1691..0x141de169f, 0x141de16c2..0x141de16d7, and 0x141de1770..0x141de1790. No builds/tests run per assigned scope. Delta selection reviewed against sampling assembly 0x141de02d1..0x141de0aad.",
   "recovered_dependencies": {
     "0x141dcf3f0": "NativeGetWindImpulseCylinder integrated in maps_wind_cylinder_lookup_runtime; original guards/copy/log preserved. Draft hook still needs replacement.",
     "0x141ddae00": "NativeSetupAnimatingMaterials integrated in maps_wind_material_setup_runtime. Cached-vs-Legacy engine parameter default compatibility remains unverified. Draft hook still needs replacement.",
     "0x141dd61e0 and0x141dd0bb0": "Engine TQuadTree<int32,16> exact remove/insert correspondence recovered; manager-owned tree and original configuration/lifetime integrated with registration. Insertion argument is nullable TCHAR* source label, not a flag. Draft hook still needs replacement.",
     "0x141dd9880": "NativeAdvanceWindDelta integrated maps_wind_delta_runtime; draft hook needs replacement.",
-    "0x14433ac70/0x14433b1f0": "Matched UMaterialInstanceDynamic::SetScalarParameterByIndex / SetVectorParameterByIndex; see maps_wind_parameter_runtime evidence."
+    "0x14433ac70/0x14433b1f0": "Matched UMaterialInstanceDynamic::SetScalarParameterByIndex / SetVectorParameterByIndex; see maps_wind_parameter_runtime evidence.",
+    "0x141dcb5d0": "NativeBuildWindSectionBoxes integrated (commit 8bcce234); draft hook needs replacement.",
+    "0x141ddef30": "NativeStartQueuedWindDelta integrated (commit 8bcce234); draft hook needs replacement.",
+    "0x142b53dd0/0x142b53fa0/0x142b54060 and audio events": "All five original Blueprint event declarations restored (commit 8bcce234): OnWindImpulseCylinderCreation, OnWindImpulseCylinderDeath, OnWindImpulseCylinderDeltaComplete, OnWindAudioBecameActive, OnWindAudioBecameInactive. UHT/build/runtime behavior remains unverified."
+  },
+  "delta_sampling_assembly": {
+    "section_selection": "0x141de032a..0x141de035b computes sqrt((Y-centerY)^2 + (X-centerX)^2), then COMISS distance, inner / JAE: unordered falls through to inner. 0x141de065e..0x141de0668 COMISS distance, outer / JBE: unordered takes band. Therefore inner if !(distance >= inner); otherwise band if !(distance > outer); otherwise outer. Equal inner selects band (unless outer smaller); equal outer selects band. Reversed radii have no band for ordered distance >= inner. No section-width division occurs in this selection.",
+    "live_magnitudes": "Delta +0x2c PreviousMagnitude, +0x30 SectionCurrentMagnitude, +0x34 DesiredMagnitude. 0x141de04bc and 0x141de0640 select Desired and Previous respectively for inner outward/inward; 0x141de0a9c selects SectionCurrent for band; 0x141de07cd and 0x141de093e select Previous and Desired respectively for outer outward/inward. These load/multiply live direction registers immediately before accumulation; no uninitialized decompiler scalar needs inference.",
+    "bounds_comparisons": "0x141de02e1..0x141de0324 tests each coordinate against min using COMISS/JB (unordered rejects) and max using COMISS/JA (unordered passes); bounds validity byte is not consulted. Updated draft preserves this comparison topology.",
+    "limits": "Scalar selection is resolved; shared cylinder direction/falloff numeric semantics remain unresolved, including unordered comparisons and rsqrt refinement. SSE COMISS can signal floating-point invalid exceptions for NaNs; portable C++ draft does not claim exception parity."
   }
 }

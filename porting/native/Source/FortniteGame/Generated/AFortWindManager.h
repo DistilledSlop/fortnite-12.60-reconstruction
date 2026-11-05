@@ -56,6 +56,9 @@ public:
 	UPROPERTY(Transient)
 	bool bAllowResponderAudio;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x220): not a UPROPERTY, not replicated.
+	int32 NativeWindUpdateBudget_0x220 = 256;
+
 	// table index 35, flags 0x40000000010001
 	UPROPERTY()
 	float SectionWidth;

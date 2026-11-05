@@ -1,0 +1,7 @@
+{
+  "constructor": "0x141dbdf70",
+  "source": "porting/generated/maps-wind-native-ctor/_adhoc/0x141dbdf70__141dbdf70.c",
+  "store": "*(undefined4 *)(param_1 + 0x44) = 0x100; param_1 is 8-byte pointer, offset0x220",
+  "consumer": "0x141ddfad0",
+  "validation": "Native constructor source correlation; no build/runtime claim."
+}

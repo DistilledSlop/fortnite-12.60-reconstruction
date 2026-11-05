@@ -9,10 +9,9 @@
 
 namespace FortWindSamplingDraft
 {
-// Non-reflected manager state still needs source-policy integration and constructor evidence.
+// NativeWindUpdateBudget_0x220 is integrated with constructor default 256.
 struct FState
 {
-    int32& MaxRespondersPerUpdate_0x220;
     // Manager global vector is already NativeWindVector_0x430; this is not viewer location.
 };
 
@@ -34,15 +33,16 @@ struct FEffects
         FFortWindImpulseCylinder&) = 0;
     virtual void SetupAnimatingMaterials_141ddae00(AFortWindManager&, FFortWindResponder&) = 0;
     virtual void SpatialRemove_141dd61e0(AFortWindManager&, int32, const FBox&) = 0;
-    virtual void SpatialInsert_141dd0bb0(AFortWindManager&, int32, const FBox&, int32) = 0;
+    virtual void SpatialInsert_141dd0bb0(AFortWindManager&, int32, const FBox&, const TCHAR*) = 0;
     // 141dd9880 resets time/current magnitude and advances radial section, clipping boxes.
     virtual bool AdvanceDeltaSection_141dd9880(FFortWindImpulseCylinderDelta&) = 0;
-    // 141dcb5d0 appends OuterWorldBounds minus InnerWorldBounds as 28-byte FBox entries.
+    // Integrated as NativeBuildWindSectionBoxes: appends OuterWorldBounds minus InnerWorldBounds.
     virtual void BuildSectionBoxes_141dcb5d0(const FFortWindImpulseCylinderDelta&, TArray<FBox>&) = 0;
+    // Integrated as NativeStartQueuedWindDelta.
     virtual void StartNextDelta_141ddef30(AFortWindManager&) = 0;
     // Both dispatch virtual0x210 and consume a UID for a by-value cylinder exec temporary.
-    // Second parameter of 142b53fa0 is absent at call sites in the no-parameter-ID capture:
-    // verify actual register argument before integration; do not silently omit this event.
+    // Sampling assembly passes the cylinder in RDX at both death call sites.
+    // Restored events are OnWindImpulseCylinderDeltaComplete and OnWindImpulseCylinderDeath.
     virtual void CylinderChanged_142b54060(AFortWindManager&, const FFortWindImpulseCylinder&) = 0;
     virtual void CylinderRemoved_142b53fa0(AFortWindManager&, const FFortWindImpulseCylinder&) = 0;
     virtual void SetScalarByIndex_14433ac70(UMaterialInstanceDynamic*, int32, float) = 0;
@@ -114,13 +114,21 @@ inline FVector Sample(AFortWindManager& M, const FVector& P,
     if (bHaveDeltaCylinder && M.WindImpulseCylinderDeltas.Num() > 0)
     {
         const FFortWindImpulseCylinderDelta& D = M.WindImpulseCylinderDeltas[0];
-        if (InBoundsInclusive(D.WindImpulseBounds, P))
+        // COMISS/JB rejects unordered minimum comparisons; COMISS/JA accepts
+        // unordered maximum comparisons. Preserve this asymmetry.
+        const FBox& B = D.WindImpulseBounds;
+        if (P.X >= B.Min.X && !(P.X > B.Max.X)
+            && P.Y >= B.Min.Y && !(P.Y > B.Max.Y)
+            && P.Z >= B.Min.Z && !(P.Z > B.Max.Z))
         {
-            const float Distance = FVector2D(P.X - D.DeltaCenter.X, P.Y - D.DeltaCenter.Y).Size();
+            const float DX = P.X - D.DeltaCenter.X, DY = P.Y - D.DeltaCenter.Y;
+            const float Distance = FMath::Sqrt(DY * DY + DX * DX);
             float Magnitude;
-            if (Distance < D.InnerSectionRadius)
+            // JAE selects the next test only for ordered Distance >= inner;
+            // JBE selects the band for ordered <= outer or unordered.
+            if (!(Distance >= D.InnerSectionRadius))
                 Magnitude = D.bRippleOutward ? D.DesiredMagnitude : D.PreviousMagnitude;
-            else if (Distance <= D.OuterSectionRadius)
+            else if (!(Distance > D.OuterSectionRadius))
                 Magnitude = D.SectionCurrentMagnitude;
             else
                 Magnitude = D.bRippleOutward ? D.PreviousMagnitude : D.DesiredMagnitude;
@@ -205,7 +213,7 @@ inline void RemoveResponder(AFortWindManager& M, int32 Removed, FEffects& E)
     {
         const FBox LastBounds = ResponderBounds(M.WindResponders[Last]);
         E.SpatialRemove_141dd61e0(M, Last, LastBounds);
-        E.SpatialInsert_141dd0bb0(M, Removed, LastBounds, 0);
+        E.SpatialInsert_141dd0bb0(M, Removed, LastBounds, nullptr);
         ReplaceFirst(M.NearbyCacheIndicesForUpdates, Last, Removed);
         ReplaceFirst(M.NearbyCacheIndicesForAudio, Last, Removed);
     }
@@ -337,7 +345,7 @@ inline void SampleWind_141ddfad0(AFortWindManager& M, FState State, float DeltaS
             M.WindImpulseCylinderDeltas[0].WindImpulseHandleToModify, DeltaCylinder);
     }
     const int32 Count = M.bAllowWindImpulses
-        ? FMath::Min(M.NearbyCacheIndicesForUpdates.Num(), State.MaxRespondersPerUpdate_0x220)
+        ? FMath::Min(M.NearbyCacheIndicesForUpdates.Num(), M.NativeWindUpdateBudget_0x220)
         : M.NearbyCacheIndicesForUpdates.Num();
     for (int32 Iteration = 0; Iteration < Count; ++Iteration)
     {
