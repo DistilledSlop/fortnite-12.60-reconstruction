@@ -408,3 +408,10 @@ members) and `PrecomputedLightingBuffer` (240 bytes, eight members). Their
 terrain shader wrappers name the uniforms but have no active resource-table
 entries, so those wrappers do not independently corroborate the computed layout
 hashes. Runtime values and bindings are still required for both.
+
+`python3 porting/material_pipeline/export_landscape_uniform_contracts.py`
+produces a separate native loader bundle with the two wrapper-verified
+landscape layouts and all 143 named shader associations. Other roles, including
+`Primitive` and `PrecomputedLightingBuffer`, are explicitly unresolved in this
+initial profile. The loader does not infer original static slots or resolve
+current metadata, and its output is not yet suitable for buffer construction.

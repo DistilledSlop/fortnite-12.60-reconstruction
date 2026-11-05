@@ -63,5 +63,20 @@
     },
     "reproduction": "objdump -d -Mintel --start-address=0x141be5bc0 --stop-address=0x141be5d1c porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe; objdump -d -Mintel --start-address=0x14273efd0 --stop-address=0x14273efd8 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
     "limit": "Static branch evidence only; neither callback is complete enough to port."
+  },
+  "console_transition_evidence": {
+    "handler": "0x141d409d0",
+    "argument_and_change": "With no arguments, invert the current byte; otherwise parse the first FString via 0x142bb8270. If the resulting byte equals the current value, return without any object traversal. Otherwise store the new byte before visiting objects (0x141d409d9-0x141d40a3f).",
+    "enabled": "0x141d40a45 obtains the authenticated ABuildingFoundation class from 0x14273ec00 and passes it to 0x142ee6350. The resulting pointers are copied before iteration. For each non-null pointer whose role byte at +0xf0 is not 3, call virtual slot 0x150 and look up the result in the container at 0x14785c5a0. Only if the entry and its value at +8 are non-null, call 0x141d59c70(value, foundation, 3) (0x141d40ae0-0x141d40b3c).",
+    "disabled": "0x141d40b92 obtains a class from 0x142ad8740, whose registration names FortSignificanceManager (UTF-16 at 0x14651fdea). It passes that class to the same enumerator, copies the pointers and calls 0x1409f1750(manager, qword [0x1478c3b60]) for each non-null entry (0x141d40c30-0x141d40c3e).",
+    "parser": "0x142bb8270 forwards the FString buffer, or an empty string for a zero-length FString, to 0x142c95320. That helper compares against literal True/Yes/On and False/No/Off as well as strings retrieved from another object; its final fallback calls the imported function through 0x1458fd9e0 and converts the integer result to a boolean. Comparison case sensitivity, localized strings and the imported function identity require separate verification.",
+    "limit": "The class enumeration filters, container/key and virtual slot identity, both transition callees, and parser details remain unresolved. A switch-only implementation would omit observed transition effects.",
+    "reproduction": [
+      "objdump -d -Mintel --start-address=0x141d409d0 --stop-address=0x141d40cb2 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -d -Mintel --start-address=0x142ad8740 --stop-address=0x142ad87b0 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -s --start-address=0x14651fdea --stop-address=0x14651fe1a porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -d -Mintel --start-address=0x142bb8270 --stop-address=0x142bb828a porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -d -Mintel --start-address=0x142c95320 --stop-address=0x142c95496 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe"
+    ]
   }
 }

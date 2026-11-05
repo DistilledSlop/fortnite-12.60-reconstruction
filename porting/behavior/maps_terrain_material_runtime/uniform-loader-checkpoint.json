@@ -1,0 +1,30 @@
+{
+  "schema": "landscape-uniform-loader-checkpoint-v1",
+  "result": "pass",
+  "mode": "Linux Development client, null RHI",
+  "bindings": 143,
+  "decoded": 89,
+  "unresolved": 54,
+  "corrupt_digest_rejected": true,
+  "static_slots_known": false,
+  "runtime_rendering_verified": false,
+  "files": {
+    "bundle": {
+      "path": "porting/generated/material_pipeline/apollo-d4-landscape-spirv/original-uniform-contracts.json",
+      "sha256": "df90b5c15d4c4974d5f78107bcbbc5e3c267b31c9cceaaef81dc694f6d95797d"
+    },
+    "client": {
+      "path": "porting/native/Binaries/Linux/FortniteLinux",
+      "sha256": "42c90ef9838ea28484a970ce36a8008072079ef16a437fbd93c3ef913f06fa79"
+    },
+    "build_log": {
+      "path": "porting/generated/apollo-material-evidence/landscape-contract-probe-client.build.2.log",
+      "sha256": "68ba254fa16c7ca480a9386e6e3ca0625b805eb3bdcf228747cb9f8f760d7b62"
+    },
+    "run_log": {
+      "path": "porting/generated/apollo-material-evidence/landscape-contract-probe-run.log",
+      "sha256": "7c7929c39a63a7008328d59c87f16385bcf6f639a2a5c991514aa4b768d372e5"
+    }
+  },
+  "limits": "The native probe validates loader inventory and digest rejection only. No current uniform metadata, value provider, descriptor binding, or draw is verified. Staged Water package errors remain."
+}

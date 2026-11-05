@@ -410,8 +410,13 @@ entries, so those wrappers do not independently corroborate the computed layout
 hashes. Runtime values and bindings are still required for both.
 
 `python3 porting/material_pipeline/export_landscape_uniform_contracts.py`
-produces a separate native loader bundle with the two wrapper-verified
-landscape layouts and all 143 named shader associations. Other roles, including
-`Primitive` and `PrecomputedLightingBuffer`, are explicitly unresolved in this
-initial profile. The loader does not infer original static slots or resolve
+produces a separate native loader bundle with four recovered layouts and all
+143 named shader associations. The two landscape layouts have active wrapper
+hash corroboration; `Primitive` and `PrecomputedLightingBuffer` do not. The
+remaining 54 associations are explicitly unresolved. The loader does not infer original static slots or resolve
 current metadata, and its output is not yet suitable for buffer construction.
+The Linux client executed this loader against the generated bundle: all 143
+associations passed the inventory checks, and a corrupted copy was rejected by
+its SHA-256 pin. This was a null-RHI loader probe, not a draw; staged Water
+package errors remain. See
+`behavior/maps_terrain_material_runtime/uniform-loader-checkpoint.json`.

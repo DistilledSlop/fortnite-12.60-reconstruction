@@ -11,7 +11,9 @@ import landscape_layout_contract as landscape
 ROOT = fixed.ROOT
 CONTRACT = ROOT / 'behavior/maps_terrain_material_runtime/landscape-uniform-contract.json'
 OUTPUT = ROOT / 'generated/material_pipeline/apollo-d4-landscape-spirv/original-uniform-contracts.json'
-NAMES = ('LandscapeParameters', 'LandscapeContinuousLODParameters')
+NAMES = ('LandscapeParameters', 'LandscapeContinuousLODParameters',
+         'Primitive', 'PrecomputedLightingBuffer')
+UNCORROBORATED = {'Primitive', 'PrecomputedLightingBuffer'}
 EXPECTED = {'View': 37, 'LandscapeParameters': 33, 'Primitive': 30,
             'LandscapeContinuousLODParameters': 24, 'Material': 9,
             'ShadowDepthPass': 6, 'PrecomputedLightingBuffer': 2, 'LightmapDensityPass': 2}
@@ -37,7 +39,9 @@ def build():
         source_rows = {row[0]: row for row in landscape.FIXED}
         for name in NAMES:
             contract = landscape.decode(source_rows[name], image)
-            contract['original_shader_associations'] = landscape.verify_wrappers(contract, report, True)
+            contract['original_shader_associations'] = landscape.verify_wrappers(contract, report, source_rows[name][-1])
+            if name in UNCORROBORATED and any(a['resource_table_active'] for a in contract['original_shader_associations']):
+                raise ValueError('unexpected active wrapper hash corroboration: ' + name)
             if contract != recorded[name]:
                 raise ValueError('recovered landscape contract differs from original captures: ' + name)
             del contract['original_shader_associations']
@@ -63,7 +67,8 @@ def build():
                 expected = by_name[name]['original_resource_layout_hash'] if active else 0
                 if actual != expected:
                     raise ValueError('wrapper layout hash mismatch: ' + name)
-                status = 'original_fixed_layout_decoded'
+                status = ('original_fixed_layout_decoded_no_active_wrapper_hash'
+                          if name in UNCORROBORATED else 'original_fixed_layout_decoded')
             else:
                 status = 'original_layout_unresolved'
             bindings.append(dict(shader_index=row['shader_index'], source_register=slot,
@@ -74,7 +79,7 @@ def build():
     return dict(schema='landscape-original-uniform-contracts-v1', image=recovered['image'],
                 inventory=fixed.receipt(landscape.SHADER_REPORT), contracts=contracts,
                 bindings=bindings, runtime_verified=False,
-                limits='Original ABI evidence only. Static slots, other original uniform layouts, runtime values, RHI binding and rendering remain unverified.')
+                limits='Original ABI evidence only. Primitive and PrecomputedLightingBuffer have no active wrapper layout hash corroboration. Static slots, other original uniform layouts, runtime values, RHI binding and rendering remain unverified.')
 
 
 def main():
