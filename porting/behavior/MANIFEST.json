@@ -63366,5 +63366,73 @@
       "SharedFortGameLog.h"
     ],
     "notes": "Original dedicated-server and Fort.Wind gates; first UID match copies all cylinder fields, leaves output unchanged on failure. No sampling-initialized gate. Sampling caller remains unintegrated."
+  },
+  {
+    "class": "AFortWindManager",
+    "kind": "member_field",
+    "function": "NativeWindResponderTree_0x2e0",
+    "signature": "TUniquePtr<TQuadTree<int32, 16>> NativeWindResponderTree_0x2e0",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "offset": "0x2e0",
+    "inc_path": null,
+    "address": null,
+    "includes": [
+      "GenericQuadTree.h"
+    ],
+    "notes": "Native constructor zeroes owning tree pointer; actual destructor141dbf460 recursively destroys tree and frees root. TUniquePtr preserves ownership; no reflected property or serialization."
+  },
+  {
+    "class": "AFortWindManager",
+    "kind": "member_field",
+    "function": "NativeNearbyCachePosition_0x30c",
+    "signature": "FVector NativeNearbyCachePosition_0x30c",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "offset": "0x30c",
+    "default": "FVector::ZeroVector",
+    "inc_path": null,
+    "address": null,
+    "notes": "Native constructor141dbdf70 copies zero vector148218630/638 to30c..317; used by registration and audio cache refresh."
+  },
+  {
+    "class": "AFortWindManager",
+    "kind": "helper",
+    "function": "NativeRegisterWindResponder",
+    "signature": "void NativeRegisterWindResponder(FFortWindResponder& Responder)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141dd4d50",
+    "inc_path": "porting/behavior/maps_wind_registration_runtime/AFortWindManager_NativeRegisterWindResponder.inc",
+    "includes": [
+      "Components/PrimitiveComponent.h",
+      "GenericQuadTree.h",
+      "HAL/IConsoleManager.h",
+      "SharedFortGameLog.h",
+      "UnrealEngine.h"
+    ],
+    "notes": "Requires both speed curves; restores bounds, component LOD-parent effective distance, duplicate append, lazy owned quadtree and independent nearby cache appends. Original initializer remains unintegrated; no runtime credit."
+  },
+  {
+    "class": "AFortWindManager",
+    "kind": "helper",
+    "function": "NativeDiscoverWindResponders",
+    "signature": "void NativeDiscoverWindResponders()",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x141dd5490",
+    "inc_path": "porting/behavior/maps_wind_registration_runtime/AFortWindManager_NativeDiscoverWindResponders.inc",
+    "includes": [
+      "EngineUtils.h"
+    ],
+    "notes": "Original wind-enable/dedicated gates; default active-level/pendingkill actor iteration; constructs and registers flagged building responders, clears flag even if registration rejected missing curves. Original initializer caller pending."
   }
 ]

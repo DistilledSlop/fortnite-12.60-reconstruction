@@ -7,8 +7,10 @@
 #include "GameFramework/Actor.h"
 
 #include "Components/MeshComponent.h"
+#include "Components/PrimitiveComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Curves/CurveLinearColor.h"
+#include "EngineUtils.h"
 #include "FFortWindImpulseCylinder.h"
 #include "FFortWindImpulseCylinderDelta.h"
 #include "FFortWindImpulseHandle.h"
@@ -16,6 +18,7 @@
 #include "FFortWindResponder.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
+#include "GenericQuadTree.h"
 #include "HAL/IConsoleManager.h"
 #include "Kismet/KismetMaterialLibrary.h"
 #include "Materials/Material.h"
@@ -26,6 +29,7 @@
 #include "Math/Vector.h"
 #include "SharedFortGameLog.h"
 #include "Sound/SoundBase.h"
+#include "UnrealEngine.h"
 
 class ABuildingSMActor;
 class UAudioComponent;
@@ -96,6 +100,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<FFortWindResponder> WindResponders;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2e0): not a UPROPERTY, not replicated.
+	TUniquePtr<TQuadTree<int32, 16>> NativeWindResponderTree_0x2e0;
+
 	// table index 14, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<int32> NearbyCacheIndicesForAudio;
@@ -107,6 +114,9 @@ public:
 	// table index 11, flags 0x40000000002000
 	UPROPERTY(Transient)
 	int32 NextNearbyIndexToUpdate;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x30c): not a UPROPERTY, not replicated.
+	FVector NativeNearbyCachePosition_0x30c = FVector::ZeroVector;
 
 	// table index 10, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -199,5 +209,7 @@ public:
 	static FScalarParameterValue* NativeFindWindScalarOverride(UMaterialInstance* Instance, const FName& Name);
 	void NativeSetupAnimatingMaterials(FFortWindResponder& Responder);
 	bool NativeGetWindImpulseCylinder(const FFortWindImpulseHandle& ImpulseHandle, FFortWindImpulseCylinder& OutImpulse);
+	void NativeRegisterWindResponder(FFortWindResponder& Responder);
+	void NativeDiscoverWindResponders();
 };
 
