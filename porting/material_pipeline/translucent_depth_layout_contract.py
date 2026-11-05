@@ -26,17 +26,20 @@ def read_original():
     return top, inputs
 
 def flatten(layout):
-    members=[]
-    for m in layout['members']:
-        if 'members' in m:
-            for child in m['members']:
-                c = dict(child, name=m['name']+'.'+child['name'], offset=m['offset']+child['offset'])
-                c.pop('resource_index', None)
-                members.append(c)
-        else:
-            members.append(dict(m))
-    for i, m in enumerate(x for x in members if x['base_type'] in (5,6,8)):
-        m['resource_index']=i
+    members = []
+    def visit(items, prefix='', base=0):
+        for member in items:
+            name = prefix + member['name']
+            offset = base + member['offset']
+            if 'members' in member:
+                visit(member['members'], name + '.', offset)
+            else:
+                child = dict(member, name=name, offset=offset)
+                child.pop('resource_index', None)
+                members.append(child)
+    visit(layout['members'])
+    for i, member in enumerate(x for x in members if x['base_type'] in (5, 6, 7, 8)):
+        member['resource_index'] = i
     return dict(struct_size=layout['struct_size'], members=members)
 
 def source(engine):

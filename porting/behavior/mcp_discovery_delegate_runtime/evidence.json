@@ -1,0 +1,20 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "source_comparison": "Current UnrealEngine/Engine/Source/Runtime/Core/Public/Delegates/{IDelegateInstance.h,DelegateBase.h,DelegateInstancesImpl.h}: FDelegateBase GetDelegateInstanceProtected uses DelegateSize as allocation-unit count and Unbind invokes the virtual destructor and resizes allocation to zero. TBaseStaticDelegateInstance stores a function pointer, payload and handle; its IsSafeToExecute returns true and Execute forwards parameters to the function.",
+  "candidate_vtable": {
+    "address": "0x14610a608",
+    "0x00_0x08": "Both 0x140680300 return zero, consistent with GetUObject and GetObjectForTimerManager.",
+    "0x10": "0x140680310 returns instance+8, consistent with GetBoundProgramCounterForTimerManager.",
+    "0x18": "0x1406801e0 returns false, consistent with HasSameObject.",
+    "0x20": "0x1406825a0 calls +0x28 and returns its negation, IsCompactable.",
+    "0x28": "0x1406801d0 returns true, IsSafeToExecute.",
+    "0x30": "0x140687ea0 returns the handle at instance+0x18.",
+    "0x38": "0x140683c20 is the scalar deleting destructor; edx bit 0 controls freeing, with size 0x20.",
+    "0x40": "0x1422c3220 allocates 0x20 and copies instance+8 and +0x18, consistent with CreateCopy.",
+    "0x48": "0x1422c4f30 rearranges the four post-this arguments and tail-jumps through instance+8, Execute.",
+    "0x50": "0x1422c5320 invokes instance+8 and returns true, ExecuteIfSafe."
+  },
+  "callback_candidate": "Construction writes 0x1422f3d30 at instance+8; it jumps to 0x148ff78bc, which saves all four callback argument registers, zeros two local 16-byte objects, and passes the second callback argument plus their addresses to 0x1422cb480 via 0x1422f3d90. The continuation at 0x1427da188 tests the returned low byte before a protected transfer to 0x1495a12e4. 0x1422cb480 begins by reading a pointer and 32-bit length from its first argument. The data meaning, branch destinations, resulting state writes and endpoint selection are not resolved by these bounded blocks. Assignment of the candidate to the discovery delegate remains unproven.",
+  "validation": "Read-only bounded raw-image disassembly and comparison with current engine delegate headers. No heap dereference, native changes, build, tests, or live callback identity claim."
+}

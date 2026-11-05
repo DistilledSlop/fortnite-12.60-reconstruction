@@ -4,7 +4,7 @@
   "service_setup": {
     "constructor": "0x140d17420 constructs service with section OnlineSubsystemMcp.GameServiceMcp and stores the shared pointer at subsystem+0x2e8. 0x140a12790 saves this section at service+0x1d8, initializes state at service+0x10, and initializes service+0x1e8 to empty. 0x140d11c90 only returns the stored service if its state byte service+0x10 is nonzero.",
     "reload": "Game-service vtable slot +0x28 (0x140a79fd0) copies old state, replaces it with defaults, invokes discovery helper 0x140d56db0, calls virtual +0x20 for ordinary and optional environment-suffixed passes, then invokes virtual +0x30. Slot +0x20 is a no-op for this vtable. Slot +0x30 (0x140a7a630) calls 0x140a7a3d0 then reads OnlineSubsystemMcp.GameServiceMcp plus service+0x1e8; 0x140a7a3d0 reads OnlineSubsystemMcp.BaseServiceMcp plus that suffix. The suffix can be empty or contain a space and an environment name. Additional change notifications depend on reload argument and old/new comparisons.",
-    "config_selection": "0x140d58600 first uses an external provider when available and enabled. Otherwise it parses command line EPICAPP=, then EPICENV= if still empty, then MCPCONFIG= if still empty, storing the result at state+8. The shared configuration loader has additional AppName, BackendEnvironment and Override passes; their exact section construction and precedence remain unresolved."
+    "config_selection": "0x140d58600 first executes an external environment delegate when bound and safe. Otherwise it parses command line EPICAPP=, then EPICENV= if still empty, then MCPCONFIG= if still empty, storing the result at state+8. The shared configuration loader has additional AppName, BackendEnvironment and Override passes; their exact section construction and precedence remain unresolved."
   },
   "shared_loader": {
     "entry": "0x140d56e90 -> 0x14934e801 -> 0x140d56ed2; Ghidra project disassembly is stale for scattered blocks, so instruction boundaries were decoded from the pinned runtime image. Runtime register R13 holds service+0x10. The loader reads an INI section into existing fields using config-cache calls; no claim is made that all discovery or pass behavior is closed.",
@@ -24,7 +24,7 @@
     "observations": "BaseServiceMcp specifies Protocol=https and GameDisplayName=Fortnite. GameServiceMcp Developer and Localhost specify Protocol=http; GameServiceMcp Fortnite supplies AltDomains; unsuffixed GameServiceMcp specifies bUpdatesConnectionStatus=true. The file has no GameServiceMcp Domain, BasePath or ServiceName entries. These observations do not establish the actual deployed values, which may come from discovery or other configuration sources."
   },
   "remaining": [
-    "Recover discovery provider, all shared-loader pass construction and precedence, and other configuration inputs before a complete native-state implementation.",
+    "Recover the registered discovery callback, all shared-loader pass construction and precedence, and other configuration inputs before a complete native-state implementation.",
     "Trace actual User-Agent construction and any later field setters; do not treat EngineName as the whole header.",
     "Do not substitute a local endpoint: original URL provider performs certificate pinning and protocol checks, documented in mcp_url_provider_body_runtime/evidence.json."
   ],
