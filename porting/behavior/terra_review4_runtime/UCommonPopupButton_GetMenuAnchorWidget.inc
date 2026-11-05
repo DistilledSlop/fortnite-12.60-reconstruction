@@ -1,3 +1,4 @@
 // CONFIDENCE: HIGH
 // Reviewed against captured native wrapper; build and runtime pending.
-return PopupMenu;
+UCommonPopupMenu* Menu = PopupMenu;
+return Menu;
