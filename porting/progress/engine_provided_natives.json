@@ -2,11 +2,11 @@
  "_meta": {
   "caveat": "declaration-level only; Epic fork body differences are not tested",
   "counts": {
-   "gap_absent": 28,
-   "gap_declared_in_reference": 33,
+   "gap_absent": 26,
+   "gap_declared_in_reference": 31,
    "gap_not_in_reference": 18,
    "gap_param": 23,
-   "verified": 5929
+   "verified": 5931
   },
   "method": "declaration + parameter-count match in stock UE 4.25 headers, own class, its bases and the matching I-class for UINTERFACEs (porting/engine_natives.py)",
   "reference_engine": "UnrealEngine4260"
@@ -168,12 +168,6 @@
     "reference_engine": "declared: UFXSystemComponent in Source/Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
    }
   },
-  "UGameplayAbility": {
-   "K2_HasAuthority": {
-    "reason": "not declared in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/GameplayAbility.h or its bases",
-    "reference_engine": "declared: UGameplayAbility in Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/Abilities/GameplayAbility.h"
-   }
-  },
   "ULevelStreamingDynamic": {
    "LoadLevelInstance": {
     "reason": "param count 6 vs declared [5] in Source/Runtime/Engine/Classes/Engine/LevelStreamingDynamic.h",
@@ -250,12 +244,6 @@
    "GetMaxActiveClipLimit": {
     "reason": "not declared in Plugins/Runtime/TimeSynth/Source/TimeSynth/Classes/TimeSynthComponent.h or its bases",
     "reference_engine": "declared: UTimeSynthComponent in Plugins/Runtime/TimeSynth/Source/TimeSynth/Classes/TimeSynthComponent.h"
-   }
-  },
-  "UUserWidget": {
-   "GetOwningPlayerCameraManager": {
-    "reason": "not declared in Source/Runtime/UMG/Public/Blueprint/UserWidget.h or its bases",
-    "reference_engine": "declared: UUserWidget in Source/Runtime/UMG/Public/Blueprint/UserWidget.h"
    }
   },
   "UWidgetLayoutLibrary": {
@@ -2951,6 +2939,7 @@
    "K2_EndAbility",
    "K2_ExecuteGameplayCue",
    "K2_ExecuteGameplayCueWithParams",
+   "K2_HasAuthority",
    "K2_RemoveGameplayCue",
    "MakeOutgoingGameplayEffectSpec",
    "MakeTargetLocationInfoFromOwnerActor",
@@ -6974,6 +6963,7 @@
    "GetAnchorsInViewport",
    "GetAnimationCurrentTime",
    "GetIsVisible",
+   "GetOwningPlayerCameraManager",
    "GetOwningPlayerPawn",
    "IsAnimationPlaying",
    "IsAnimationPlayingForward",
