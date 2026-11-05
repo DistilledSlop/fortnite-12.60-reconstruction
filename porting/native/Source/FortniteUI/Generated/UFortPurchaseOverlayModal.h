@@ -45,6 +45,11 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLastItem(int32 ItemIndex) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldShowAsRefund() const;
 public:
 

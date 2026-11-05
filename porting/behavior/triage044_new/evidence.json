@@ -1,0 +1,12 @@
+[
+  {
+    "class": "UFortPurchaseOverlayModal",
+    "function": "IsLastItem",
+    "wrapper_capture": "porting/generated/native235-fresh-bulk/0x1452b6710.c",
+    "helper_capture": "porting/generated/native240-fresh-callees/0x1450b9360.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "represented_fields": "porting/native/Source/FortniteUI/Generated/UFortPurchaseOverlayModal.h: NativePredicateStorage_0x6a0",
+    "behavior": "The thunk parses ItemIndex and returns the native helper comparison of the 32-bit field at +0x6a0 with that argument; comparison uses bit-equivalent uint32 conversion.",
+    "manual_policy_check": "Class absent from porting/native_class_blocklist.txt and porting Python policy files; no IsLastItem entry found in behavior manifests."
+  }
+]

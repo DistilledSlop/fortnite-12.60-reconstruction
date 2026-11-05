@@ -1,0 +1,62 @@
+[
+  {
+    "function": "BreakParams",
+    "kind": "exec",
+    "signature": "void BreakParams(AFortPawn*& _KilledPawn, AFortPlayerController*& _KilledBy)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "address": "0x142b760e0",
+    "native_body_address": "0x1420d9030",
+    "inc_path": "porting/behavior/triage043_new/UFortEnemyKilledParams_BreakParams.inc",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x14420401",
+    "class": "UFortEnemyKilledParams"
+  },
+  {
+    "function": "BreakParams",
+    "kind": "exec",
+    "signature": "void BreakParams(AFortPawn*& _DamagedPawn, AFortPlayerController*& _DamagedBy, float& _DamageAmount)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "address": "0x142b75fa0",
+    "native_body_address": "0x1420d9010",
+    "inc_path": "porting/behavior/triage043_new/UFortEnemyDamagedParams_BreakParams.inc",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x14420401",
+    "class": "UFortEnemyDamagedParams"
+  },
+  {
+    "function": "BreakParams",
+    "kind": "exec",
+    "signature": "void BreakParams(AFortPlayerPawn*& _KilledPlayer, AController*& _KilledPlayerController, AController*& _KilledBy)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "address": "0x142b766b0",
+    "native_body_address": "0x1420d90b0",
+    "inc_path": "porting/behavior/triage043_new/UFortPlayerDiedParams_BreakParams.inc",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x14420401",
+    "class": "UFortPlayerDiedParams"
+  },
+  {
+    "function": "BreakParams",
+    "kind": "exec",
+    "signature": "void BreakParams(ABuildingActor*& _OriginalBuilding, ABuildingActor*& _NewBuilding, TEnumAsByte<EFortBuildingType::Type>& _BuildingType, AFortPlayerController*& _Editor)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "address": "0x142b75d30",
+    "native_body_address": "0x1420d8fd0",
+    "inc_path": "porting/behavior/triage043_new/UFortBuildingUpgradedParams_BreakParams.inc",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x14420401",
+    "class": "UFortBuildingUpgradedParams"
+  }
+]

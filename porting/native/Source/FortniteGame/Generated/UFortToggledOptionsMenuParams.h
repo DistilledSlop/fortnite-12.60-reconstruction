@@ -24,6 +24,9 @@ public:
 	UPROPERTY()
 	bool bInOptionsMenu;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortPlayerController*& _PlayerThatToggledOptionsMenu, bool& Opened);
+
 	UFUNCTION(BlueprintCallable)
 	void SetParams(AFortPlayerController* _PlayerThatToggledOptionsMenu, bool Opened, UFortToggledOptionsMenuParams*& ThisParam);
 

@@ -1,0 +1,17 @@
+[
+  {
+    "class": "UFortPurchaseOverlayModal",
+    "function": "IsLastItem",
+    "kind": "exec",
+    "signature": "bool IsLastItem(int32 ItemIndex) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage044_new/UFortPurchaseOverlayModal_IsLastItem.inc",
+    "address": "0x1452b6710",
+    "native_body_address": "0x1450b9360",
+    "reflection_flags": "0x54080401",
+    "confidence": "high",
+    "status": "ported"
+  }
+]

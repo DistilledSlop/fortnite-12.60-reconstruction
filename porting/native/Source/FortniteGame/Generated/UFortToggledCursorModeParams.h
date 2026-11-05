@@ -24,6 +24,9 @@ public:
 	UPROPERTY()
 	bool bInCursorMode;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortPlayerController*& _PlayerThatToggledCursorMode, bool& InCursorMode);
+
 	UFUNCTION(BlueprintCallable)
 	void SetParams(AFortPlayerController* _PlayerThatToggledCursorMode, bool InCursorMode, UFortToggledCursorModeParams*& ThisParam);
 

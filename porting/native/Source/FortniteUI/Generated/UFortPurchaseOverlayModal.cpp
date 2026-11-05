@@ -15,6 +15,12 @@ bool UFortPurchaseOverlayModal::HasMultipleItems() const
 	return static_cast<int32>(NativePredicateStorage_0x6a0) > 1;
 }
 
+bool UFortPurchaseOverlayModal::IsLastItem(int32 ItemIndex) const
+{
+	// CONFIDENCE: high; the helper compares the stored 32-bit value with ItemIndex.
+	return NativePredicateStorage_0x6a0 == static_cast<uint32>(ItemIndex);
+}
+
 bool UFortPurchaseOverlayModal::ShouldShowAsRefund() const
 {
 	// Original address: 0x1452b6b60.

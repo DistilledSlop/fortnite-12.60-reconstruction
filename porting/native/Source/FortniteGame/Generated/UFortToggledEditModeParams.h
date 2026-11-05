@@ -29,6 +29,9 @@ public:
 	UPROPERTY()
 	bool bInEditMode;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void BreakParams(AFortPlayerController*& _PlayerThatToggledEditMode, ABuildingSMActor*& InEditableActor, bool& InEditMode);
+
 	UFUNCTION(BlueprintCallable)
 	void SetParams(AFortPlayerController* _PlayerThatToggledEditMode, ABuildingSMActor* InEditableActor, bool InEditMode, UFortToggledEditModeParams*& ThisParam);
 
