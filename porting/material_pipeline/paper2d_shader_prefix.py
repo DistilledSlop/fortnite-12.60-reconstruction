@@ -35,8 +35,14 @@ def paper2d_mesh_maps(reader,count,map_hash,expression_counts):
                 item['first_unknown']={'offset':start,'type':kind}
                 return maps
             parsed.append(records.shader_record(reader,map_hash,expression_counts,vf))
+        pipeline_offset=reader.cursor
         pipelines=reader.count()
-        if pipelines: raise ValueError('unsupported nonempty mesh shader pipelines')
+        if pipelines:
+            # Preserve the verified records without consuming an unknown grammar.
+            reader.cursor=pipeline_offset
+            item['first_unknown']={'offset':pipeline_offset,
+                                   'kind':'mesh_shader_pipelines','count':pipelines}
+            return maps
         item.update(pipeline_count=pipelines,end=reader.cursor)
     return maps
 
@@ -114,7 +120,7 @@ def parse_prefix(data, names):
             'mesh_shader_maps': mesh_maps, 'decoded_prefix_bytes': reader.cursor,
             'undecoded_bytes': len(data)-reader.cursor,
             'first_unknown': next((m['first_unknown'] for m in mesh_maps if 'first_unknown' in m), None),
-            'limitation': 'Stops at first unknown shader type; no exact EOF or runtime/parity claim'}
+            'limitation': 'Stops at first unsupported structure; no exact EOF or runtime/parity claim'}
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)

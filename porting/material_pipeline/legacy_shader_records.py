@@ -22,15 +22,20 @@ MESH_VS |= {'TBasePassVSFSimpleNoLightmapLightingPolicy', 'TBasePassVSFNoLightMa
             'FConvertToUniformMeshVS', 'FHitProxyVS',
             'TLightMapDensityVSFNoLightMapPolicy',
             # Current TDepthOnlyVS declares no additional serialized fields.
-            'TDepthOnlyVS<false>'} | SHADOW_DEPTH_VS
+            'TDepthOnlyVS<false>',
+            # Current FVelocityVS declares no additional serialized fields.
+            'FVelocityVS'} | SHADOW_DEPTH_VS
 MESH_PS = {'TTranslucencyShadowDepthPS<' + mode + '>' for mode in
            ('TranslucencyShadowDepth_Standard', 'TranslucencyShadowDepth_PerspectiveCorrect')}
 MESH_PS |= {'TBasePassPS' + policy + sky for policy in
             ('FSimpleNoLightmapLightingPolicy', 'FNoLightMapPolicy') for sky in ('', 'Skylight')}
 SHADOW_DEPTH_PS = {'TShadowDepthPSPixelShadowDepth_' + mode + 'false' for mode in
                    ('PerspectiveCorrect', 'OnePassPointLight', 'NonPerspectiveCorrect')}
-MESH_PS |= {'FHitProxyPS', 'TLightMapDensityPSFNoLightMapPolicy'} | SHADOW_DEPTH_PS
-MESH_GS = {'FConvertToUniformMeshGS'}
+# Current FVelocityPS also declares no additional serialized fields.
+MESH_PS |= {'FHitProxyPS', 'TLightMapDensityPSFNoLightMapPolicy', 'FVelocityPS',
+            'FDepthOnlyPS<false>'} | SHADOW_DEPTH_PS
+# FOnePassPointShadowDepthGS adds no fields beyond FMeshMaterialShader.
+MESH_GS = {'FConvertToUniformMeshGS', 'FOnePassPointShadowDepthGS'}
 
 
 def hash_field(reader):
@@ -139,6 +144,10 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
                 result['shadow_depth_rw_parameters'] = [
                     {'srv': parameters(reader, resource=True),
                      'uav': parameters(reader, resource=True)} for _ in range(4)]
+            elif kind == 'FDepthOnlyPS<false>':
+                # Current FDepthOnlyPS declares one scalar (MobileColorValue);
+                # the original semantic name is not independently verified.
+                result['depth_only_scalar_parameter'] = parameters(reader)
             elif kind in SHADOW_DEPTH_VS:
                 # FShadowDepthVS declares one scalar parameter (LayerId) in
                 # ShadowDepthRendering.cpp; original identity remains unverified.

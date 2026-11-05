@@ -58,9 +58,29 @@ parameters and the shader output hash, consistent with the current
 `TDepthOnlyVS` declaration. Its declared end, map hash, target, resource
 identity and archive association pass. Five previously supported base-pass
 records follow at offsets 4954..7092 (archive indices 1521, 1522, 2471, 2471,
-2472). The next unsupported record is `FVelocityVS` at offset 7092; 5300 resource
-bytes remain uninterpreted. No depth-only pixel record occurs in this decoded
-prefix, so its original payload is not inferred from the current declaration.
+2472). No depth-only pixel record occurs in this decoded prefix, so its original
+payload is not inferred from the current declaration.
+
+`parent-velocity-prefix.json` continues through `FVelocityVS` at 7092..7510
+and `FVelocityPS` at 7510..7904, associated with archive indices 1528 and 2473.
+Neither has bytes between its LocalVF parameters and output hash, consistent
+with the current UE declarations of both velocity shader types. Both pass
+declared-end, map-hash, target, resource-identity and archive-association checks.
+`parent-pointshadow-prefix.json` continues through `FOnePassPointShadowDepthGS`
+at 7904..8294 (archive index 812), with no additional serialized fields,
+consistent with its current UE declaration. The existing HitProxy decoders then
+reach offset 9128.
+
+`parent-depth-pixel-prefix.json` decodes `FDepthOnlyPS<false>` at 9128..9528
+(archive index 2475). It contains one six-byte unbound scalar parameter,
+consistent with the current `MobileColorValue` declaration; its original field
+name remains unverified. Existing uniform-mesh VS/GS decoders then reach offset
+10318. All 23 decoded parent records pass declared boundaries, map/resource
+identity, target and exact archive association. The next unsupported structure
+is a mesh shader-pipeline array with count three at offset 10318; all 2074 bytes
+from its count onward remain unconsumed. The prefix reader now preserves this
+verified boundary instead of failing after the known records. It still reports
+`complete_serialized_shader_map=false` and does not parse or skip those pipelines.
 Neither asset has been attached to the runtime using this decode; mesh shader-map construction also remains
 necessary.
 

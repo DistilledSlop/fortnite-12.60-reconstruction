@@ -11,6 +11,15 @@ spec.loader.exec_module(module)
 
 
 class Boundaries(unittest.TestCase):
+    def test_unknown_pipelines_preserve_unconsumed_boundary(self):
+        data = struct.pack('<iiiiq', 0, 0, 0, 2, 0x7fffffffffffffff)
+        reader = module.Reader(data, ['FLocalVertexFactory'])
+        result = module.paper2d_mesh_maps(reader, 1, '00' * 20, [0] * 7)
+        self.assertEqual(reader.cursor, 12)
+        self.assertEqual(result[0]['first_unknown'],
+                         {'offset': 12, 'kind': 'mesh_shader_pipelines', 'count': 2})
+        self.assertEqual(result[0]['records'], [])
+
     def test_unknown_record_does_not_consume_or_seek(self):
         # An attacker-controlled end offset must not let unknown types skip bytes.
         data = struct.pack('<iiiiiq', 0, 0, 1, 1, 0, 0x7fffffffffffffff)
