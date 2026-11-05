@@ -1517,7 +1517,7 @@
               "material_original_maps"
             ]
           },
-          "rationale": "Four original resources parse to exact EOF with 76 records. The additional original Paper2D instance now decodes all 14 shader records with archive identity matches, including HitProxy VS/PS. Four original parent shadow-depth vertex records now decode with matching archive identities; the parent pixel-shader records, instance cooking marker and runtime mesh attachment remain unfinished and receive no completion credit. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
+          "rationale": "Four original resources parse to exact EOF with 76 records. The additional original Paper2D instance now decodes all 14 shader records with archive identity matches, including HitProxy VS/PS. Seven original parent shadow-depth records now decode with matching archive identities (four vertex, three pixel); the next parent blocker is light-map-density decoding. Remaining parent records, the instance cooking marker and runtime mesh attachment are unfinished and receive no completion credit. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
           "evidence_links": [
             {
               "label": "Material pipeline evidence",
