@@ -236,3 +236,12 @@ conservative analysis. Three wrappers do not identify View. The compact evidence
 is in `behavior/paper2d_view_accesses_runtime/evidence.json`; the generated
 report retains every load and member mapping. This narrows remapping work but
 does not prove buffer values, resource compatibility or rendering parity.
+
+The original TranslucentDepthPass layout is also decoded, including independently
+recovered SceneTextures and TranslucentSelfShadow member tables. It is 496 bytes
+versus 512 in current source. Three added GBuffer F resources expand the nested
+scene-texture table and shift subsequent fields. Its computed legacy hash is
+183829507; the three corresponding wrappers use no active resource-table slot
+and store zero hashes, so they cannot corroborate that computed hash. The shared
+metadata decoder now validates embedded original struct identities and sizes
+directly. A current pass buffer cannot satisfy this whole-layout contract.

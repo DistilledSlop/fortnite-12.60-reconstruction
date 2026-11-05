@@ -1,11 +1,11 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "795d325a0f610bab4ae89bd4c723cd2727c30e02",
- "subject": "Build contract-validated Vulkan outputs for original LocalVF shaders",
- "date": "2026-11-04T23:44:09-05:00",
- "overall_pct": 28.572,
- "measured_pct": 27.702,
- "objective_pct": 27.701,
+ "head": "13ee5aa6f50f736137258b7e556c2c7af319301c",
+ "subject": "Resolve UINTERFACE natives in the engine check and classify the remaining gaps",
+ "date": "2026-11-04T23:54:22-05:00",
+ "overall_pct": 29.1,
+ "measured_pct": 28.23,
+ "objective_pct": 28.229,
  "weight_by_basis": {
   "documented": 4.359,
   "git": 26.449,
@@ -15,7 +15,7 @@
  },
  "estimated_pct": 0.87,
  "manual_weight_pct": 55.535,
- "manual_full_pct": 83.237,
+ "manual_full_pct": 83.765,
  "milestones": [
   {
    "id": "m1",
@@ -553,7 +553,7 @@
    "name": "Gameplay classes (/Script/FortniteGame)",
    "kind": "group",
    "weight": 673.0,
-   "pct": 15.43,
+   "pct": 17.013,
    "children": [
     {
      "id": "gameplay.framework",
@@ -938,13 +938,13 @@
      "name": "Native function bodies ported (behaviour)",
      "kind": "leaf",
      "weight": 150.0,
-     "pct": 17.546,
+     "pct": 24.65,
      "done": 3610,
-     "total": 20574,
-     "evidence": "3610 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
+     "total": 14645,
+     "evidence": "3610 committed function bodies of 14645 (total 14645 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
      "basis": "git",
      "carried": false,
-     "rationale": "Done: committed manifest .inc function bodies and five separately verified handwritten UFortKismetLibrary debug bodies. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported' excluding supporting member_field declarations, with a committed inc_path; counted directly from MANIFEST.json independently of the last build/test checkpoint), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort. The handwritten debug bodies are counted only when their committed declarations and definitions match reviewed source and their frozen native reflection records match; they are deduplicated against manifest entries. EFF-008: body recovery/transcription across modules only. The manifest is not an inventory of all maintained generator-policy bodies; absence there does not mean source is absent. Feature leaves own additional assembly/integration/runtime verification. A 12-case purposive sample supports this boundary, not a numeric effort extrapolation.",
+     "rationale": "Done: committed manifest .inc function bodies and five separately verified handwritten UFortKismetLibrary debug bodies. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json), excluding the 5,929 that the stock UE 4.25 engine source already declares with a matching signature (progress/engine_provided_natives.json, built by porting/engine_natives.py; declaration-level evidence only, Epic fork body differences are not tested; the 51 engine-class functions that fail the check stay in the total: 33 are declared in UE 4.26 and need a backport, 18 match neither version). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported' excluding supporting member_field declarations, with a committed inc_path; counted directly from MANIFEST.json independently of the last build/test checkpoint), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort. The handwritten debug bodies are counted only when their committed declarations and definitions match reviewed source and their frozen native reflection records match; they are deduplicated against manifest entries. EFF-008: body recovery/transcription across modules only. The manifest is not an inventory of all maintained generator-policy bodies; absence there does not mean source is absent. Feature leaves own additional assembly/integration/runtime verification. A 12-case purposive sample supports this boundary, not a numeric effort extrapolation.",
      "evidence_links": []
     },
     {
@@ -1675,7 +1675,7 @@
      "evidence": "1 of 1 checks pass in the evidence ledger: material_original_maps pass (exit 0, age unknown)",
      "basis": "git",
      "carried": false,
-     "rationale": "Six original resources now parse to exact EOF with 118 shader records. The original Paper2D parent contributes 28 records, including five stages in three pipelines; its instance contributes 14. All records match the original archive, and both cooked markers are consumed. The 42 Paper2D occurrences reference 33 distinct archive shaders; all 33 convert and pass SPIR-V validation, with 163 explicit descriptors and zero unmatched resource-table entries. A strict manifest exporter retains all occurrences and pipeline references. A separate LocalVF/mesh/pipeline map factory is implemented in an Engine patch, and the native reader retains the observed Paper2D records and ordered pipelines. An output-construction kernel now validates independent original/current uniform metadata and complete descriptor/loose allocation contracts before producing Vulkan headers. Full original View recovery independently reproduces shader resource hashes, but exposes a 3952-versus-4032-byte layout difference from current source. Compilation is pending; proven binding compatibility or remapping, provider attachment, texture binding, original frontend loading and rendering parity remain unfinished. See porting/material_pipeline/README.md.",
+     "rationale": "Six original resources now parse to exact EOF with 118 shader records. The original Paper2D parent contributes 28 records, including five stages in three pipelines; its instance contributes 14. All records match the original archive, and both cooked markers are consumed. The 42 Paper2D occurrences reference 33 distinct archive shaders; all 33 convert and pass SPIR-V validation, with 163 explicit descriptors and zero unmatched resource-table entries. A strict manifest exporter retains all occurrences and pipeline references. A separate LocalVF/mesh/pipeline map factory is implemented in an Engine patch, and the native reader retains the observed Paper2D records and ordered pipelines. An output-construction kernel now validates independent original/current uniform metadata and complete descriptor/loose allocation contracts before producing Vulkan headers. Full original View recovery independently reproduces shader resource hashes, but exposes a 3952-versus-4032-byte layout difference from current source. The original 64-byte/eight-member LocalVF layout matches current source and all 15 active wrapper hashes; a typed producer checks registered metadata before publication. Legacy hash derivation and table-bit consistency are now enforced independently of current header hashes. Compilation is pending; proven View binding compatibility or remapping, provider attachment, texture binding, original frontend loading and rendering parity remain unfinished. See porting/material_pipeline/README.md.",
      "evidence_links": [
       {
        "label": "Material pipeline evidence",
@@ -2950,13 +2950,13 @@
    "name": "Native function bodies ported (behaviour)",
    "kind": "leaf",
    "weight": 150.0,
-   "pct": 17.546,
+   "pct": 24.65,
    "done": 3610,
-   "total": 20574,
-   "evidence": "3610 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
+   "total": 14645,
+   "evidence": "3610 committed function bodies of 14645 (total 14645 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints",
    "basis": "git",
    "carried": false,
-   "rationale": "Done: committed manifest .inc function bodies and five separately verified handwritten UFortKismetLibrary debug bodies. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported' excluding supporting member_field declarations, with a committed inc_path; counted directly from MANIFEST.json independently of the last build/test checkpoint), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort. The handwritten debug bodies are counted only when their committed declarations and definitions match reviewed source and their frozen native reflection records match; they are deduplicated against manifest entries. EFF-008: body recovery/transcription across modules only. The manifest is not an inventory of all maintained generator-policy bodies; absence there does not mean source is absent. Feature leaves own additional assembly/integration/runtime verification. A 12-case purposive sample supports this boundary, not a numeric effort extrapolation.",
+   "rationale": "Done: committed manifest .inc function bodies and five separately verified handwritten UFortKismetLibrary debug bodies. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json), excluding the 5,929 that the stock UE 4.25 engine source already declares with a matching signature (progress/engine_provided_natives.json, built by porting/engine_natives.py; declaration-level evidence only, Epic fork body differences are not tested; the 51 engine-class functions that fail the check stay in the total: 33 are declared in UE 4.26 and need a backport, 18 match neither version). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported' excluding supporting member_field declarations, with a committed inc_path; counted directly from MANIFEST.json independently of the last build/test checkpoint), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort. The handwritten debug bodies are counted only when their committed declarations and definitions match reviewed source and their frozen native reflection records match; they are deduplicated against manifest entries. EFF-008: body recovery/transcription across modules only. The manifest is not an inventory of all maintained generator-policy bodies; absence there does not mean source is absent. Feature leaves own additional assembly/integration/runtime verification. A 12-case purposive sample supports this boundary, not a numeric effort extrapolation.",
    "evidence_links": []
   },
   {
@@ -3642,7 +3642,7 @@
    "evidence": "1 of 1 checks pass in the evidence ledger: material_original_maps pass (exit 0, age unknown)",
    "basis": "git",
    "carried": false,
-   "rationale": "Six original resources now parse to exact EOF with 118 shader records. The original Paper2D parent contributes 28 records, including five stages in three pipelines; its instance contributes 14. All records match the original archive, and both cooked markers are consumed. The 42 Paper2D occurrences reference 33 distinct archive shaders; all 33 convert and pass SPIR-V validation, with 163 explicit descriptors and zero unmatched resource-table entries. A strict manifest exporter retains all occurrences and pipeline references. A separate LocalVF/mesh/pipeline map factory is implemented in an Engine patch, and the native reader retains the observed Paper2D records and ordered pipelines. An output-construction kernel now validates independent original/current uniform metadata and complete descriptor/loose allocation contracts before producing Vulkan headers. Full original View recovery independently reproduces shader resource hashes, but exposes a 3952-versus-4032-byte layout difference from current source. Compilation is pending; proven binding compatibility or remapping, provider attachment, texture binding, original frontend loading and rendering parity remain unfinished. See porting/material_pipeline/README.md.",
+   "rationale": "Six original resources now parse to exact EOF with 118 shader records. The original Paper2D parent contributes 28 records, including five stages in three pipelines; its instance contributes 14. All records match the original archive, and both cooked markers are consumed. The 42 Paper2D occurrences reference 33 distinct archive shaders; all 33 convert and pass SPIR-V validation, with 163 explicit descriptors and zero unmatched resource-table entries. A strict manifest exporter retains all occurrences and pipeline references. A separate LocalVF/mesh/pipeline map factory is implemented in an Engine patch, and the native reader retains the observed Paper2D records and ordered pipelines. An output-construction kernel now validates independent original/current uniform metadata and complete descriptor/loose allocation contracts before producing Vulkan headers. Full original View recovery independently reproduces shader resource hashes, but exposes a 3952-versus-4032-byte layout difference from current source. The original 64-byte/eight-member LocalVF layout matches current source and all 15 active wrapper hashes; a typed producer checks registered metadata before publication. Legacy hash derivation and table-bit consistency are now enforced independently of current header hashes. Compilation is pending; proven View binding compatibility or remapping, provider attachment, texture binding, original frontend loading and rendering parity remain unfinished. See porting/material_pipeline/README.md.",
    "evidence_links": [
     {
      "label": "Material pipeline evidence",

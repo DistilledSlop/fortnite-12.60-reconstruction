@@ -19,7 +19,10 @@ def align(value, alignment):
     return (value + alignment - 1) // alignment * alignment
 
 
-def original(chain, initializer):
+def original(chain, initializer, nested=None):
+    # Keys are independently recovered metadata-object addresses. Values carry
+    # the original type name and decoded layout, never current source metadata.
+    nested = nested or {}
     size = re.findall(r'MOV dword ptr \[RSP \+ 0x28\],(0x[0-9a-f]+)', initializer)
     if len(size) != 1 or not chain:
         raise ValueError('missing original View size or helper chain')
@@ -59,13 +62,20 @@ def original(chain, initializer):
         if not (set(range(0, 21)) | set(range(24, 48))).issubset(known):
             raise ValueError('incomplete metadata member fields')
         strings = {int(s['address'], 16): s['text'] for s in helper['strings']}
-        if pointers.get(0) not in strings or int.from_bytes(values[40:48], 'little'):
-            raise ValueError('unsupported member name or nested metadata')
+        nested_pointer = int.from_bytes(values[40:48], 'little')
+        if pointers.get(0) not in strings:
+            raise ValueError('unsupported member name')
         offset, = struct.unpack_from('<I', values, 16)
         precision, rows, columns, elements = struct.unpack_from('<4I', values, 24)
         base = values[20]
-        if base not in (2, 3, 4, 5, 6, 8) or precision not in (0, 1) or not 1 <= rows <= 4 or not 1 <= columns <= 4 or elements > 4096:
+        if base not in (2, 3, 4, 5, 6, 8, 17) or precision not in (0, 1) or not 1 <= rows <= 4 or not 1 <= columns <= 4 or elements > 4096:
             raise ValueError('unsupported original member shape')
+        embedded = nested.get(nested_pointer) if base == 17 else None
+        if base == 17:
+            if not embedded or (rows, columns, elements, precision) != (1, 1, 0, 0):
+                raise ValueError('unsupported nested metadata')
+        elif nested_pointer:
+            raise ValueError('unexpected nested metadata pointer')
         if base in (5, 6, 8) and (rows != 1 or columns != 1 or elements):
             raise ValueError('unsupported original resource shape')
         # The captured numeric helpers use this verified UTF-16 empty string.
@@ -75,13 +85,17 @@ def original(chain, initializer):
             if base not in (2, 3, 4) or pointers.get(8) != 0x1459a4b30:
                 raise ValueError('unknown original shader type string')
             shader_type = ''
-        member_size = (align(4*rows*columns, 16)*elements if elements else 4*rows*columns) if base in (2, 3, 4) else 8
+        if embedded and shader_type != embedded['type']:
+            raise ValueError('nested metadata type identity mismatch')
+        member_size = embedded['layout']['struct_size'] if embedded else ((align(4*rows*columns, 16)*elements if elements else 4*rows*columns) if base in (2, 3, 4) else 8)
         if offset + member_size > size:
             raise ValueError('member exceeds original View size')
         members.append(dict(name=strings[pointers[0]], offset=offset, base_type=base,
                             precision=precision, rows=rows, columns=columns, elements=elements,
                             size=member_size, shader_type=shader_type,
                             helper=helper['function']))
+        if embedded:
+            members[-1].update(metadata_object=hex(nested_pointer), members=embedded['layout']['members'])
     members.reverse()
     if len({m['name'] for m in members}) != len(members) or any(a['offset']+a['size'] > b['offset'] for a, b in zip(members, members[1:])):
         raise ValueError('duplicate or overlapping original metadata members')
