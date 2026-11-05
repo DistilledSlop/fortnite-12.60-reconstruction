@@ -1,0 +1,57 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "findings": [
+    {
+      "name": "Disabled service and begin failure",
+      "evidence": "LoginStep_CheckWaitingRoom 0x1410d58c0 schedules 0x1410c3c30(account, state global 0x1480e8a40) when waiting-room service +0x420 is zero. In the enabled branch it stores a weak-account callback targeting 0x1410df5d0 in waiting-room state +0x68, and invokes 0x140b5ab70 using a weak waiting-room-state callback targeting 0x1410e7a10. A missing service, an already active operation, or a zero operation handle leads to account virtual +0x300 with code 0x17; the last cases construct the text Waiting room failure on BeginWait. This is a static branch, not evidence it ran."
+    },
+    {
+      "name": "Operation setup",
+      "evidence": "0x140b5ab70 reads GracePeriod from configuration and, if valid and nonnegative, stores a converted duration at service +0x348. It uses the supplied name or service default +0x198, checks enabled byte +0x420 and looks it up in service +0x350. On a match it allocates an operation, copies the supplied callback, initializes it via 0x140b834a0, assigns a generated nonzero handle and inserts it into service +0x3d0. It returns zero when disabled or lookup fails. The operation internals and actual backend responses are not established."
+    },
+    {
+      "name": "Waiting-room state update",
+      "evidence": "0x1410e7a10 logs UWaitingRoomState::UpdateWaitingRoomState. It counts consecutive status 3 errors and resets the count for other statuses. A non-complete status 3 returns; another non-complete status updates timing and, when the state string changes, stores state and remaining-time configuration. For a complete update it initializes a result: status 2 sets its first byte to 1, while other statuses set WaitingRoomFailure. It calls 0x1410c3a10 on the waiting-room state, then executes the stored +0x68 delegate through +0x50 only if present and safe through +0x28. These conditions do not prove delivery or the delegate's object lifetime."
+    },
+    {
+      "name": "Account completion callback",
+      "evidence": "0x1410df5d0 logs UOnlineAccountCommon::LoginStep_OnWaitingRoomStatusUpdated. If account state pair +0x338/+0x33c matches either global pair 0x1480e8a30 or 0x1480e8ac8, it returns without dispatch. Otherwise, if result byte +0 is zero and byte +0x40 is nonzero, it constructs an error using account virtual +0x360 and result +0x28 and invokes account virtual +0x300 with code 0x17. For all other result combinations it schedules 0x1410c3c30(account, state global 0x1480e8a40). The scheduled timer and subsequent transition are not observed."
+    },
+    {
+      "name": "Subsequent initialized login steps",
+      "evidence": "In the 0x1410d0730 initializer branch with account +0x138 zero and +0x130 zero, the waiting-room entry is followed conditionally by state global 0x1480e8a60 target 0x1410d7c30 if account virtual +0x2e0 returns nonzero, and then state global 0x1480e8a68 target 0x1410d7100. 0x1410d7c30 schedules continuation if 0x1410cda30 returns zero; otherwise it calls 0x1410d3330 with copied account credential fields and a callback. 0x1410d7100 identifies itself as LoginStep_LoggingIn: missing identity object account +0x140 calls virtual +0x300 code 0x19; already-logged-in identity status 2 obtains an identity, invokes account virtual +0x3f8, and schedules continuation, or reports InvalidUser if absent. Otherwise it registers weak callback 0x1410db150, and calls identity AutoLogin when credentials are invalid, or regular login with credential fields. This does not establish username-only credentials or successful login. A different initializer branch has target 0x1410c2400 after waiting-room, so concrete subclass and branch must be established."
+    }
+  ],
+  "unresolved": "Recover the concrete Fortnite account subclass initialization and selected ordered steps, identity provider and 0x1410db150 login completion, remaining backend/account effects, timer and weak-delegate execution, and state/global values. The evidence does not demonstrate original successful login bootstrap. Do not substitute a direct state flip, broadcast, or frontend travel for missing effects.",
+  "instruction_windows": [
+    {
+      "address": "0x1410df5d0",
+      "size": 926,
+      "sha256": "3323408b5bc31a07a40f60aef074c17c29c8eac19eb294de9ca9242e0513ecc2"
+    },
+    {
+      "address": "0x140b5ab70",
+      "size": 820,
+      "sha256": "3dc57f0b7f057cc58e7a4c2627b3a11882d560d5bd2264508f2745e44f649b6c"
+    },
+    {
+      "address": "0x1410e7a10",
+      "size": 924,
+      "sha256": "764a97ba43aca2536664e8d2d41a8a51f6e7dec056259d23f71a515902abdfb7"
+    },
+    {
+      "address": "0x1410d7c30",
+      "size": 294,
+      "sha256": "68fabd80f91181653f0e0957904b20326fe4468bfc62757574a447b8db5aef8c"
+    },
+    {
+      "address": "0x1410d7100",
+      "size": 953,
+      "sha256": "a4d992e034f05229f07c12a6e4e54dff849c20bcded74077363285eeccbec60a"
+    }
+  ],
+  "verification": "Read-only Ghidra decompilation and instruction inspection, original mapped-image instruction-window SHA-256 reads. Ghidra project bookkeeping changed; program not saved. No builds or runtime login test.",
+  "state_name_followup": "../login_state_names_runtime/evidence.json"
+}

@@ -75,9 +75,21 @@ snapshot is not yet connected to the game's online login or MCP profile manager,
 and no lobby transition is implemented. The rebuilt launcher still joins directly;
 the original frontend loading path remains blocked by cooked-material compatibility.
 Original-client decompilation shows `UFortSignInWidget::StartSignIn` dispatching
-email and password through a native delegate at widget offset `0x410`; its binding
-site and recipient remain unidentified. The local widget adaptation bypasses that
-original credential dispatch and is not evidence of recovered online initialization.
+email and password through a native delegate at widget offset `0x410`. The parent
+login-interactions panel binds it to its credentials handler, which initiates
+`UOnlineAccountCommon::AutoLogin`. The Fortnite override reaches a common
+next-tick state machine and conditional waiting-room/identity-login steps. These
+static traces do not establish successful local account initialization. See
+`porting/behavior/account_state_callback_runtime/evidence.json` and
+`porting/behavior/waiting_room_completion_runtime/evidence.json`. The local widget
+adaptation still bypasses the original credential dispatch.
+
+Typed login-step append and anchor-relative insertion now have native source
+implementations, preserving duplicate entries and delegate cloning. Their
+33 original state names now have direct literal-initializer receipts, including
+`Started`, `LoginWaitingRoom`, `LoggingIn` and `Completed`. Account registration
+wiring, build and runtime verification remain pending. See
+`porting/behavior/login_step_registry_runtime/evidence.json`.
 
 With `--stub`, `probe_server.py` persists account mappings, profile revisions and user
 cloud files under ignored `porting/generated/local-backend-state` by default. Set

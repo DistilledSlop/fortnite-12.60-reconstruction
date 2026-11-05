@@ -16,7 +16,7 @@
       "evidence": "Initialization 0x1410d0730 appends entries with 0x1410c2f30. On its branch where account+0x138 is zero and +0x130 is zero, the first appended entry captures target 0x1410d58c0, state global 0x1480e8a40 and secondary-player flag 1. If +0x130 is nonzero, it first appends state 0x1480e8a48 with target 0x1410d8540 before reaching the waiting-room entry; initialization and any Fortnite subclass modifications must still be established for the concrete runtime account. 0x1410d58c0 logs UOnlineAccountCommon::LoginStep_CheckWaitingRoom. Depending on virtual checks and AUTH_LOGIN, or a disabled waiting-room service byte, it schedules 0x1410c3c30(account, global 0x1480e8a40). A missing waiting-room service invokes account virtual +0x300 with code 0x17. When enabled, it constructs a weak-account callback targeting 0x1410df5d0 and begins a waiting-room operation via 0x140b5ab70; failure paths are present. These are conditional static paths, not evidence of the original successful branch."
     }
   ],
-  "unresolved": "Next recover 0x1410df5d0 and the waiting-room operation completion path, then identify subsequent initialized steps and concrete account subclass modifications and identity/backend completion. Establish actual runtime account, timer execution, state names/values, virtual +0x3e8 effects and branch conditions. Existing HTTP profile snapshot and username-only local account do not establish original successful login bootstrap or completion; do not replace missing effects with a state flip, broadcast or frontend travel.",
+  "unresolved": "Waiting-room completion and the conditional following identity step are traced in waiting_room_followup; full registration ordering and its typed append/insert source kernels are in registry_followup. Concrete runtime account and timer execution, account state-change virtual effects, initialization branches, identity/backend behavior and successful local selected-account completion remain unverified. Do not replace missing effects with a state flip, broadcast or frontend travel.",
   "instruction_windows": [
     {
       "address": "0x145bf80d0",
@@ -54,5 +54,8 @@
       "sha256": "18f47f6ea4a8567965c446d121d43dc17830702fc9061c63987c0a023ca40e80"
     }
   ],
-  "verification": "Read-only Ghidra decompilation and instruction inspection, original mapped-image vtable qword and instruction window reads. Ghidra project bookkeeping changed; program not saved. No builds or runtime login test."
+  "verification": "Read-only Ghidra decompilation and instruction inspection, original mapped-image vtable qword and instruction window reads. Ghidra project bookkeeping changed; program not saved. No builds or runtime login test.",
+  "waiting_room_followup": "../waiting_room_completion_runtime/evidence.json",
+  "registry_followup": "../login_step_registry_runtime/evidence.json",
+  "state_name_followup": "../login_state_names_runtime/evidence.json"
 }
