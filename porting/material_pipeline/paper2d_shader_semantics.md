@@ -13,7 +13,22 @@ Evidence lives in `porting/generated/paper2d-shader-semantics/`. No original/sou
 - PS: `de0821b9b3a3001a2e8ab773c0c380db3608db38`, archive index 3378, 2449 wrapper bytes, 2260 DXBC bytes.
 - VS: `ffd918ad5be5d564212cbd3fb0925b301d43a137`, archive index 857, 6684 wrapper bytes, 6476 DXBC bytes.
 
-The reader stops **before** unknown `FHitProxyVS` at resource offset 5012 (`.uexp` offset 6864), leaving 1610 bytes uninterpreted. It never reads that unknown record's end offset or skips its body. `complete_serialized_shader_map` is false. The parent resource is independently bounded at `[2084,14476)`; its prefix stops at the first shadow-depth VS at resource offset 604, leaving 11788 bytes uninterpreted. There is no claim that either entire shader map was decoded.
+The original receipt below predates HitProxy support. A later bounded decode
+(`mi-hitproxy-prefix.json`) reads all 14 instance records through resource offset
+6618, leaving the four-byte cooking marker unconsumed. `FHitProxyVS` spans
+5012..5434 and requires one four-byte resource parameter; `FHitProxyPS` spans
+5434..5824 and requires one six-byte scalar parameter. Their map hashes, record
+boundaries, shader targets and archive identities agree; the corresponding
+current UE shader declarations support the parameter types, but their original
+semantic names have not been independently established. Alternative zero-byte
+parameter lengths fail the map-hash check. The prefix reader still reports
+`complete_serialized_shader_map=false`: it does not consume the cooking marker.
+The parent resource is independently bounded at `[2084,14476)`; its prefix
+stops before `TShadowDepthVSVertexShadowDepth_PerspectiveCorrectfalse` at
+resource offset 604, leaving 11788 bytes uninterpreted. Recover that record's
+original serializer before extending the parent decoder. Neither asset has been
+attached to the runtime using this decode; mesh shader-map construction also
+remains necessary.
 
 `extraction.json` records selected exact archive entries. `wrappers.json` verifies the complete D3D wrapper framing, resource-table bindings, DXBC extent and optional-data extent. The assembly files are vkd3d 2.0's direct DXBC disassembly; no engine shader compiler or cook was invoked.
 

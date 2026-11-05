@@ -14,11 +14,12 @@ SLATE_PS = {'TSlateMaterialShaderPS' + suffix for suffix in
 MESH_VS = {'TTranslucencyShadowDepthVS<' + mode + '>' for mode in
            ('TranslucencyShadowDepth_Standard', 'TranslucencyShadowDepth_PerspectiveCorrect')}
 MESH_VS |= {'TBasePassVSFSimpleNoLightmapLightingPolicy', 'TBasePassVSFNoLightMapPolicy',
-            'FConvertToUniformMeshVS'}
+            'FConvertToUniformMeshVS', 'FHitProxyVS'}
 MESH_PS = {'TTranslucencyShadowDepthPS<' + mode + '>' for mode in
            ('TranslucencyShadowDepth_Standard', 'TranslucencyShadowDepth_PerspectiveCorrect')}
 MESH_PS |= {'TBasePassPS' + policy + sky for policy in
             ('FSimpleNoLightmapLightingPolicy', 'FNoLightMapPolicy') for sky in ('', 'Skylight')}
+MESH_PS.add('FHitProxyPS')
 MESH_GS = {'FConvertToUniformMeshGS'}
 
 
@@ -114,6 +115,15 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
             elif kind.startswith('TTranslucencyShadowDepthPS'):
                 # Original 0x143237540 adds one scalar FShaderParameter.
                 result['shadow_depth_parameter'] = parameters(reader)
+            elif kind == 'FHitProxyVS':
+                # Paper2D's original record requires four bytes here. The
+                # current FHitProxyVS declares a resource parameter at this
+                # position; its original semantic identity is not verified.
+                result['hit_proxy_resource_parameter'] = parameters(reader, resource=True)
+            elif kind == 'FHitProxyPS':
+                # The original record requires six bytes here, consistent
+                # with the current FHitProxyPS scalar parameter declaration.
+                result['hit_proxy_scalar_parameter'] = parameters(reader)
         result['output_hash'] = hash_field(reader)
         result['material_shader_map_hash'] = hash_field(reader)
         if result['material_shader_map_hash']['hash'] != map_hash:
