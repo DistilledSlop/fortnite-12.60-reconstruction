@@ -16,7 +16,7 @@ struct FFortWindImpulseCylinder : public FFortWindImpulseCylinderRadial
 
 	// table index 0, offset 60, flags 0x40000000000001
 	UPROPERTY()
-	FVector WindDirection;
+	FVector WindDirection = FVector::ZeroVector;
 
 };
 

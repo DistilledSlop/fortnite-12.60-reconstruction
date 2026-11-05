@@ -15,6 +15,7 @@
 #include "FFortWindResponder.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
+#include "HAL/IConsoleManager.h"
 #include "Materials/MaterialInterface.h"
 #include "Math/Box.h"
 #include "Math/Vector.h"
@@ -142,6 +143,12 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x430): not a UPROPERTY, not replicated.
 	FVector NativeWindVector_0x430 = FVector::ZeroVector;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x44f): not a UPROPERTY, not replicated.
+	bool NativeWindSamplingInitialized_0x44f = false;
+
+	UFUNCTION(BlueprintCallable)
+	FFortWindImpulseHandle AddWindImpulse(const FFortWindImpulseRadius& WindImpulse);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static void BreakWindImpulseCylinder(const FFortWindImpulseCylinder& InWindImpulseCylinder, FVector& ImpulseLocation, float& ImpulseInnerRadius, float& ImpulseOuterRadius, float& ImpulseMagnitude, FVector& ImpulseDirection);
 
@@ -174,5 +181,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	void NativeSetGlobalWind(float Intensity, const FVector& Direction);
 	static FFortWindResponder NativeBuildWindResponder(ABuildingSMActor* Building);
+	static bool NativeIsWindEnabled();
 };
 

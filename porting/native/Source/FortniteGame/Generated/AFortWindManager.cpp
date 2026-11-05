@@ -7,15 +7,29 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FFortWindImpulseCylinder.h"
+#include "FFortWindImpulseHandle.h"
 #include "FFortWindImpulseRadius.h"
 #include "FFortWindResponder.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
+#include "HAL/IConsoleManager.h"
 #include "Materials/MaterialInterface.h"
 #include "Math/Box.h"
 #include "Math/Vector.h"
 #include "Sound/SoundBase.h"
 #include "UObject/NoExportTypes.h"
+
+FFortWindImpulseHandle AFortWindManager::AddWindImpulse(const FFortWindImpulseRadius& WindImpulse)
+{
+	// CONFIDENCE: HIGH
+	if (GetNetMode() == NM_DedicatedServer || !NativeIsWindEnabled() || !NativeWindSamplingInitialized_0x44f)
+	{
+	    // The original failure path still consumes a new handle UID.
+	    return FFortWindImpulseHandle();
+	}
+	const int32 Index = WindImpulses.Add(WindImpulse);
+	return WindImpulses[Index].Handle;
+}
 
 void AFortWindManager::BreakWindImpulseCylinder(const FFortWindImpulseCylinder& InWindImpulseCylinder, FVector& ImpulseLocation, float& ImpulseInnerRadius, float& ImpulseOuterRadius, float& ImpulseMagnitude, FVector& ImpulseDirection)
 {
@@ -225,5 +239,14 @@ FFortWindResponder AFortWindManager::NativeBuildWindResponder(ABuildingSMActor* 
 	    }
 	}
 	return Responder;
+}
+
+bool AFortWindManager::NativeIsWindEnabled()
+{
+	// CONFIDENCE: HIGH
+	// Original registration retains the integer data pointer, rather than a cached value.
+	static const TConsoleVariableData<int32>* const WindVariable =
+	    IConsoleManager::Get().FindTConsoleVariableDataInt(TEXT("Fort.Wind"));
+	return WindVariable->GetValueOnGameThread() != 0;
 }
 

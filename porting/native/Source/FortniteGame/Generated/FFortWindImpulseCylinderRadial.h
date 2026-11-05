@@ -17,31 +17,31 @@ struct FFortWindImpulseCylinderRadial
 
 	// table index 7, offset 0, flags 0x20080000000001
 	UPROPERTY()
-	FVector Location;
+	FVector Location = FVector::ZeroVector;
 
 	// table index 6, offset 12, flags 0x20080000000000
 	UPROPERTY()
-	float InnerRadius;
+	float InnerRadius = 0.0f;
 
 	// table index 5, offset 16, flags 0x20080000000000
 	UPROPERTY()
-	float OuterRadius;
+	float OuterRadius = 0.0f;
 
 	// table index 4, offset 20, flags 0x20080000000000
 	UPROPERTY()
-	float Magnitude;
+	float Magnitude = 0.0f;
 
 	// table index 3, offset 24, flags 0x20080000000000
 	UPROPERTY()
-	FBox WorldBounds;
+	FBox WorldBounds = FBox(ForceInit);
 
 	// table index 2, offset None, flags 0x20080000000000
 	UPROPERTY()
-	bool bIsChanging;
+	bool bIsChanging = false;
 
 	// table index 1, offset None, flags 0x20080000000000
 	UPROPERTY()
-	bool bIsChangePending;
+	bool bIsChangePending = false;
 
 	// table index 0, offset 56, flags 0x40000000002000
 	UPROPERTY()

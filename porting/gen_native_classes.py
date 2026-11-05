@@ -2426,6 +2426,10 @@ _maps_wind_make_spec = _common_activation_import.spec_from_file_location(
     "maps_wind_make_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_make_runtime", "source_policy.py"))
 _maps_wind_make_policy = _common_activation_import.module_from_spec(_maps_wind_make_spec)
 _maps_wind_make_spec.loader.exec_module(_maps_wind_make_policy)
+_maps_wind_impulse_spec = _common_activation_import.spec_from_file_location(
+    "maps_wind_impulse_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_impulse_runtime", "source_policy.py"))
+_maps_wind_impulse_policy = _common_activation_import.module_from_spec(_maps_wind_impulse_spec)
+_maps_wind_impulse_spec.loader.exec_module(_maps_wind_impulse_policy)
 _maps_visibility_spec = _common_activation_import.spec_from_file_location(
     "maps_visibility_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_visibility_evaluate_runtime", "source_policy.py"))
 _maps_visibility_policy = _common_activation_import.module_from_spec(_maps_visibility_spec)
@@ -2598,6 +2602,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     _maps_wind_handle_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _maps_wind_break_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _maps_wind_make_policy.apply_signatures(name, block, functions, owner_fns, function_view)
+    _maps_wind_impulse_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _dayphase_callback_policy.apply_signatures(name, block, functions, owner_fns, function_view, snippets)
     splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped,
                               {m["name"] for m in members})
@@ -5131,6 +5136,7 @@ class TypeGate:
             model = _maps_fog_policy.apply_struct(info, model)
             model = _maps_wind_handle_policy.apply_struct(info, model)
             model = _maps_wind_break_policy.apply_struct(info, model)
+            model = _maps_wind_make_policy.apply_struct(info, model)
             model = _confirmation_policy.apply_struct(self, info, model)
             model = _common_input_policy.apply_struct(info, model)
             model = _input_platform_policy.apply_struct(info, model)
@@ -5435,6 +5441,7 @@ def render_struct_header(model, source_label):
         lines.extend(_maps_wind_building_policy.fields_after(model, m))
     lines.extend(_maps_fog_policy.declarations(model))
     lines.extend(_maps_wind_handle_policy.declarations(model))
+    lines.extend(_maps_wind_make_policy.declarations(model))
     lines.extend(_common_activation_policy.struct_declarations(model))
     lines.extend(_quickbar_refresh_policy.declarations(model))
     lines.extend(_cursor_settings_policy.struct_declarations(model))

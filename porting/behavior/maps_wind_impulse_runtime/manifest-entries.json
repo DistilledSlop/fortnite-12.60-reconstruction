@@ -1,0 +1,49 @@
+[
+  {
+    "class": "AFortWindManager",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "function": "NativeWindSamplingInitialized_0x44f",
+    "kind": "member_field",
+    "signature": "bool NativeWindSamplingInitialized_0x44f",
+    "offset": "0x44f",
+    "default": "false",
+    "inc_path": null,
+    "address": null,
+    "notes": "Native ctor QWORD write at0x448 zeros byte0x44f. Original initializer0x141dd0980 later sets it; that lifecycle remains unported."
+  },
+  {
+    "class": "AFortWindManager",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "function": "NativeIsWindEnabled",
+    "kind": "helper",
+    "signature": "bool NativeIsWindEnabled()",
+    "static": true,
+    "inc_path": "porting/behavior/maps_wind_impulse_runtime/AFortWindManager_NativeIsWindEnabled.inc",
+    "address": null,
+    "includes": [
+      "HAL/IConsoleManager.h"
+    ],
+    "notes": "Read the live integer data for original Fort.Wind scalability variable, registered once by FortWindConsoleVariable.cpp."
+  },
+  {
+    "class": "AFortWindManager",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "function": "AddWindImpulse",
+    "kind": "exec",
+    "signature": "FFortWindImpulseHandle AddWindImpulse(const FFortWindImpulseRadius& WindImpulse)",
+    "static": false,
+    "inc_path": "porting/behavior/maps_wind_impulse_runtime/AFortWindManager_AddWindImpulse.inc",
+    "address": "0x142b54b70",
+    "reflection_flags": "0x4420401",
+    "notes": "Native141dc4de0 checks dedicated-server, live Fort.Wind and sampling initialized; appends an exact radius impulse copy on success. Failure consumes a new UID. Sampling lifecycle and runtime validation pending."
+  }
+]

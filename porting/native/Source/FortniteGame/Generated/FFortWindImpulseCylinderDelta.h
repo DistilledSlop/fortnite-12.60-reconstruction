@@ -17,71 +17,74 @@ struct FFortWindImpulseCylinderDelta
 
 	// table index 16, offset 0, flags 0x40000000002000
 	UPROPERTY()
-	FVector DeltaCenter;
+	FVector DeltaCenter = FVector::ZeroVector;
 
 	// table index 15, offset None, flags 0x40000000002000
 	UPROPERTY()
-	bool bInitialized;
+	bool bInitialized = false;
 
 	// table index 14, offset None, flags 0x40000000002000
 	UPROPERTY()
-	bool bRippleOutward;
+	bool bRippleOutward = true;
 
 	// table index 13, offset 16, flags 0x40000000002000
 	UPROPERTY()
-	float SectionWidth;
+	float SectionWidth = 5000.0f;
 
 	// table index 12, offset 20, flags 0x40000000002000
 	UPROPERTY()
-	float InnerSectionRadius;
+	float InnerSectionRadius = 0.0f;
 
 	// table index 11, offset 24, flags 0x40000000002000
 	UPROPERTY()
-	float OuterSectionRadius;
+	float OuterSectionRadius = 0.0f;
 
 	// table index 10, offset 28, flags 0x40000000002000
 	UPROPERTY()
-	float MaximumRadius;
+	float MaximumRadius = 0.0f;
 
 	// table index 9, offset 32, flags 0x40000000002000
 	UPROPERTY()
-	float DesiredOverallBlendTime;
+	float DesiredOverallBlendTime = 0.0f;
 
 	// table index 8, offset 36, flags 0x40000000002000
 	UPROPERTY()
-	float SectionBlendTime;
+	float SectionBlendTime = 0.0f;
 
 	// table index 7, offset 40, flags 0x40000000002000
 	UPROPERTY()
-	float SectionCurrentBlendTime;
+	float SectionCurrentBlendTime = 0.0f;
 
 	// table index 6, offset 44, flags 0x40000000002000
 	UPROPERTY()
-	float PreviousMagnitude;
+	float PreviousMagnitude = 0.0f;
 
 	// table index 5, offset 48, flags 0x40000000002000
 	UPROPERTY()
-	float SectionCurrentMagnitude;
+	float SectionCurrentMagnitude = 0.0f;
 
 	// table index 4, offset 52, flags 0x40000000002000
 	UPROPERTY()
-	float DesiredMagnitude;
+	float DesiredMagnitude = 0.0f;
 
 	// table index 3, offset 56, flags 0x40000000002000
 	UPROPERTY()
-	FBox OuterWorldBounds;
+	FBox OuterWorldBounds = FBox(ForceInit);
 
 	// table index 2, offset 84, flags 0x40000000002000
 	UPROPERTY()
-	FBox InnerWorldBounds;
+	FBox InnerWorldBounds = FBox(ForceInit);
 
 	// table index 1, offset 112, flags 0x40000000002000
 	UPROPERTY()
-	FBox WindImpulseBounds;
+	FBox WindImpulseBounds = FBox(ForceInit);
 
 	// table index 0, offset 140, flags 0x40000000002000
 	UPROPERTY()
 	FFortWindImpulseHandle WindImpulseHandleToModify;
+
+	// Constructing the handle consumes a UID before the original invalid-target reset.
+	FFortWindImpulseCylinderDelta() { WindImpulseHandleToModify.UID = -1; }
 
 };
 

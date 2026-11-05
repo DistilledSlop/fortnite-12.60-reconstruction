@@ -1,0 +1,32 @@
+{
+  "status": "ported source only; sampling lifecycle and runtime pending",
+  "captures": {
+    "exec": {
+      "path": "porting/generated/maps-wind-add-dispatch/_adhoc/0x142b54b70__142b54b70.c",
+      "sha256": "21fb49c6b83a1aa6c98a3b8c6e26855f1466781c5d815fffd2e58db23e9a99b6"
+    },
+    "native": {
+      "path": "porting/generated/maps-wind-handle-constructors/_adhoc/0x141dc4de0__141dc4de0.c",
+      "sha256": "273abd3c1eb99f49918db643164a41d59df243144f32e26f851f29140ac0df0e"
+    },
+    "variable_registration": {
+      "path": "porting/generated/maps-wind-impulse-lifecycle/_adhoc/0x1402b6440__1402b6440.c",
+      "sha256": "1a177ed16f0f6b7c77b4b06e7c3e745af9c13def2bc2cffd3dcfd0a63500433c"
+    },
+    "constructor": {
+      "path": "porting/generated/maps-wind-native-ctor/_adhoc/0x141dbdf70__141dbdf70.c",
+      "sha256": "dbf2a707abce6cbb8b3ace80ccd8bf219e0d4975766a8878a7967d463a8cf4f4"
+    }
+  },
+  "behavior": "Exec142b54b70 dispatches native141dc4de0. Dedicated server, disabled Fort.Wind, or uninitialized sampling returns a newly allocated handle without modifying the list. Otherwise copies the full radius impulse and returns its existing handle without consuming an extra UID.",
+  "scalability_variable": {
+    "name": "Fort.Wind",
+    "default": 1,
+    "flags": "ECVF_Scalability (0x40)",
+    "help": "Controls whether wind shaders and logic are enabled. Set by EffectsQuality.",
+    "registration": "0x1402b6440",
+    "integer_data_global": "0x14812a5f8",
+    "source": "porting/native/Source/FortniteGame/Private/FortWindConsoleVariable.cpp"
+  },
+  "sampling_flag": "Original byte0x44f is zeroed by ctor141dbdf70 QWORD write0x3dcccccd at0x448. Initializer141dd0980 sets this byte before invoking0x141ddfad0; initialization and update are not yet integrated. No sampling or visual behavior credit."
+}

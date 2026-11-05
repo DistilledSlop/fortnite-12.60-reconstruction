@@ -17,43 +17,43 @@ struct FFortWindImpulseRadius
 
 	// table index 10, offset 0, flags 0x20080000000001
 	UPROPERTY()
-	FVector Location;
+	FVector Location = FVector::ZeroVector;
 
 	// table index 9, offset 12, flags 0x20080000000001
 	UPROPERTY()
-	float Radius;
+	float Radius = 0.0f;
 
 	// table index 8, offset 16, flags 0x20080000000000
 	UPROPERTY()
-	float CurrentRadius;
+	float CurrentRadius = 0.0f;
 
 	// table index 7, offset 20, flags 0x20080000000000
 	UPROPERTY()
-	float PreviousRadius;
+	float PreviousRadius = 0.0f;
 
 	// table index 6, offset 24, flags 0x20080000000001
 	UPROPERTY()
-	float Magnitude;
+	float Magnitude = 0.0f;
 
 	// table index 5, offset 28, flags 0x20080000000000
 	UPROPERTY()
-	float CurrentMagnitude;
+	float CurrentMagnitude = 0.0f;
 
 	// table index 4, offset 32, flags 0x20080000000000
 	UPROPERTY()
-	float PreviousMagnitude;
+	float PreviousMagnitude = 0.0f;
 
 	// table index 3, offset 36, flags 0x20080000000001
 	UPROPERTY()
-	float BlendTime;
+	float BlendTime = 0.0f;
 
 	// table index 2, offset 40, flags 0x20080000000000
 	UPROPERTY()
-	float CurrentBlendTime;
+	float CurrentBlendTime = 0.0f;
 
 	// table index 1, offset 44, flags 0x20080000000000
 	UPROPERTY()
-	FBox WorldBounds;
+	FBox WorldBounds = FBox(ForceInit);
 
 	// table index 0, offset 72, flags 0x40000000002000
 	UPROPERTY()
