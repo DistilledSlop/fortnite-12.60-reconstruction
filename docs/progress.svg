@@ -14,7 +14,7 @@
 .leaf-label,.leaf-pct,.tm-head{fill:var(--tm-ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .leaf-pct{font-weight:700}
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 28.6% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit aeb94db | Record stopped recovery scan | 2026-11-04T21:59:08-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
+.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 28.6% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit 58eaf7f | Persist local username accounts and lockers | 2026-11-04T22:14:02-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Gameplay classes (/Script/FortniteGame)
 15.4% complete
 effort weight 673 | source: derived
@@ -658,7 +658,7 @@ effort weight 12.5 | source: git+local
 <text class="leaf-pct" x="413.0" y="469.1" font-size="12">100%</text>
 <rect class="tile-frame" x="408.0" y="453.1" width="52.7" height="60.2" rx="4"/>
 </g>
-<g><title>Authentication, entitlement and account behavior
+<g><title>Local username and account behavior
 0.0% complete
 effort weight 12.5 | source: manual
 manual estimate (see rationale)</title>
@@ -1347,7 +1347,7 @@ manual estimate (see rationale)</title>
 <text class="leaf-pct" x="758.7" y="430.0" font-size="12">30%</text>
 <rect class="tile-frame" x="753.7" y="414.0" width="76.4" height="64.3" rx="4"/>
 </g>
-<g><title>Rebuilt launch, security and entitlement compatibility
+<g><title>Rebuilt local startup compatibility
 0.0% complete
 effort weight 10 | source: manual
 manual estimate (see rationale)</title>

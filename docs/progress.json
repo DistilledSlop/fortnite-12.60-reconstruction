@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "aeb94dba2da88dc38bfd895d9bedd49c4fc80827",
- "subject": "Record stopped recovery scan",
- "date": "2026-11-04T21:59:08-05:00",
+ "head": "58eaf7f6f3de9bdade5f61d94b8d5869920d0592",
+ "subject": "Persist local username accounts and lockers",
+ "date": "2026-11-04T22:14:02-05:00",
  "overall_pct": 28.571,
  "measured_pct": 27.701,
  "objective_pct": 27.7,
@@ -96,7 +96,7 @@
     },
     {
      "id": "platform.launch_security",
-     "name": "Rebuilt launch, security and entitlement compatibility",
+     "name": "Rebuilt local startup compatibility",
      "kind": "leaf",
      "weight": 10.0,
      "pct": 0.0,
@@ -105,7 +105,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "Recover and verify the shipped startup, anti-cheat and entitlement interactions for the rebuilt client; Wine engine startup alone is not this deliverable. EFF-017 ownership: rebuilt launcher/anti-cheat/entitlement compatibility behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+     "rationale": "Recover and verify startup of the rebuilt local client. Per user instruction, the rebuilt project has no entitlement or anti-cheat requirement. Wine engine startup is an oracle check, not rebuilt-client acceptance; the remaining effort estimate needs review.",
      "evidence_links": []
     },
     {
@@ -1205,7 +1205,7 @@
     },
     {
      "id": "backend.oauth_account.behavior",
-     "name": "Authentication, entitlement and account behavior",
+     "name": "Local username and account behavior",
      "kind": "leaf",
      "weight": 12.5,
      "pct": 0.0,
@@ -1214,7 +1214,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md. EFF-017 ownership: local account and authentication/token service behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+     "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; rebuilt-client startup and complete account behavior remain unverified. The remaining effort estimate needs review.",
      "evidence_links": []
     },
     {
@@ -1270,7 +1270,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+     "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. Client integration and full protocol behavior remain unverified.",
      "evidence_links": []
     },
     {
@@ -1284,7 +1284,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "Reconstruct and verify original account progression, profile persistence and related gameplay integration. Q-02: residual integration/inventory/acceptance scope after declarations and separately funded body recovery; do not allocate the same native reconstruction twice.",
+     "rationale": "Local account and profile state now persists across service restarts; original progression behavior and gameplay integration remain unverified. Do not allocate native reconstruction effort twice.",
      "evidence_links": []
     },
     {
@@ -2135,7 +2135,7 @@
   },
   {
    "id": "platform.launch_security",
-   "name": "Rebuilt launch, security and entitlement compatibility",
+   "name": "Rebuilt local startup compatibility",
    "kind": "leaf",
    "weight": 10.0,
    "pct": 0.0,
@@ -2144,7 +2144,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "Recover and verify the shipped startup, anti-cheat and entitlement interactions for the rebuilt client; Wine engine startup alone is not this deliverable. EFF-017 ownership: rebuilt launcher/anti-cheat/entitlement compatibility behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+   "rationale": "Recover and verify startup of the rebuilt local client. Per user instruction, the rebuilt project has no entitlement or anti-cheat requirement. Wine engine startup is an oracle check, not rebuilt-client acceptance; the remaining effort estimate needs review.",
    "evidence_links": []
   },
   {
@@ -3199,7 +3199,7 @@
   },
   {
    "id": "backend.oauth_account.behavior",
-   "name": "Authentication, entitlement and account behavior",
+   "name": "Local username and account behavior",
    "kind": "leaf",
    "weight": 12.5,
    "pct": 0.0,
@@ -3208,7 +3208,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md. EFF-017 ownership: local account and authentication/token service behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope.",
+   "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; rebuilt-client startup and complete account behavior remain unverified. The remaining effort estimate needs review.",
    "evidence_links": []
   },
   {
@@ -3264,7 +3264,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+   "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation and locker changes. Client integration and full protocol behavior remain unverified.",
    "evidence_links": []
   },
   {
@@ -3278,7 +3278,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "Reconstruct and verify original account progression, profile persistence and related gameplay integration. Q-02: residual integration/inventory/acceptance scope after declarations and separately funded body recovery; do not allocate the same native reconstruction twice.",
+   "rationale": "Local account and profile state now persists across service restarts; original progression behavior and gameplay integration remain unverified. Do not allocate native reconstruction effort twice.",
    "evidence_links": []
   },
   {
