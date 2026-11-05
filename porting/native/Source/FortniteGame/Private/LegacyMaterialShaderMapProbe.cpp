@@ -908,6 +908,8 @@ static const TCHAR* GLegacyHollowPath = TEXT("/Game/UI/Materials/Athena_HollowCi
 static const TCHAR* GLegacyHollowTexturePath = TEXT("/Game/UI/Materials/PolarCoords.PolarCoords");
 static const TCHAR* GLegacySocialPath = TEXT("/Game/UI/SocialPanel/Art/Materials/M_UI_SocialUserItemBorder_Master.M_UI_SocialUserItemBorder_Master");
 static const TCHAR* GLegacySocialTexturePath = TEXT("/Game/UI/SocialPanel/Art/CA_SocialPanel.CA_SocialPanel");
+static const TCHAR* GLegacyEpicLogoPath=TEXT("/Game/UI/Login/Art/M_EpicLogo_DF.M_EpicLogo_DF");
+static const TCHAR* GLegacyEpicLogoTexturePath=TEXT("/Game/UI/Login/Art/T_EpicLogo_DF.T_EpicLogo_DF");
 static const TCHAR* GLegacyGooglePath=TEXT("/Game/UI/Login/Art/M_TempIcon_Login_Google.M_TempIcon_Login_Google");
 static const TCHAR* GLegacyGoogleTexturePath=TEXT("/Game/UI/Login/Art/T_TempIcon_Login_Google.T_TempIcon_Login_Google");
 static const TCHAR* GLegacyMediaPath = TEXT("/Game/UI/Materials/M_MediaPlayerButton_Base.M_MediaPlayerButton_Base");
@@ -1010,7 +1012,7 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
             TArray<UTexture*> SourceReferences; SourceReferences.Add(Texture);
             return RestoreLegacyMaterialTextureReferences(Parent,SourceReferences,Error);
         }
-        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && SourceIdentity!=GLegacyGooglePath)
+        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && SourceIdentity!=GLegacyGooglePath && SourceIdentity!=GLegacyEpicLogoPath)
         {
             // Numeric-only manifests need no texture context. Only authenticated
             // base-material manifests may enter the general texture path.
@@ -1102,8 +1104,8 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
         { Error=TEXT("invalid original texture provenance"); return false; }
         const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
         const auto& Textures=Fixture->GetArrayField(TEXT("texture_2d_parameters"));
-        const bool bPlain=SourceIdentity==GLegacyKeybindPath || SourceIdentity==GLegacyHollowPath || SourceIdentity==GLegacySocialPath || SourceIdentity==GLegacyMediaPath;
-        const FString Expected=SourceIdentity==GLegacyGooglePath ? FString(GLegacyGoogleTexturePath) : SourceIdentity==GLegacyMediaPath ? FString(GLegacyMediaTexturePath) : SourceIdentity==GLegacySocialPath ? FString(GLegacySocialTexturePath) : SourceIdentity==GLegacyHollowPath ? FString(GLegacyHollowTexturePath) : bPlain ? FString(GLegacyKeybindTexturePath) : FString(TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon"));
+        const bool bPlain=SourceIdentity==GLegacyKeybindPath || SourceIdentity==GLegacyHollowPath || SourceIdentity==GLegacySocialPath || SourceIdentity==GLegacyMediaPath || SourceIdentity==GLegacyEpicLogoPath;
+        const FString Expected=SourceIdentity==GLegacyEpicLogoPath ? FString(GLegacyEpicLogoTexturePath) : SourceIdentity==GLegacyGooglePath ? FString(GLegacyGoogleTexturePath) : SourceIdentity==GLegacyMediaPath ? FString(GLegacyMediaTexturePath) : SourceIdentity==GLegacySocialPath ? FString(GLegacySocialTexturePath) : SourceIdentity==GLegacyHollowPath ? FString(GLegacyHollowTexturePath) : bPlain ? FString(GLegacyKeybindTexturePath) : FString(TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon"));
         if (SourceIdentity==GLegacyGooglePath)
         {
             const auto& T=Decoded.IR.Texture2DParameters[0];const TArray<TSharedPtr<FJsonValue>>* Refs=nullptr;
@@ -3312,6 +3314,7 @@ void RegisterLegacyOriginalMaterialProvider()
         {GLegacyFlogoPath, GLegacyFlogoParentPath, TEXT("d6b8dad3c9d015dca6a389a82eb5abc25a72aee3"), TEXT("ad8aee1ef762a6ecadee2807b485131a7f3f4426"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterialInstanceConstant"), GLegacyFlogoParentPath, GLegacyFlogoPath, false, false},
         {GLegacySocialPath, GLegacySocialPath, TEXT("d5c2198bee653b99a95b219f517870d82979dd5f"), TEXT("c505c4a9977115634e87809ccd0b5e981bfc417d"), FString(), TEXT("fortnite.legacy-material-ingress.v5"), TEXT("UMaterial"), FString(), GLegacySocialPath, false, false},
         {GLegacyMediaPath, GLegacyMediaPath, TEXT("a920df3ab39fdca2bb82a62f6a2a9ac4601b91d0"), TEXT("8c5013f615de83c1fbaf6d3435c6aaa7f3414a69"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterial"), FString(), GLegacyMediaPath, false, false},
+        {GLegacyEpicLogoPath,GLegacyEpicLogoPath,TEXT("fc2115d31cd8dfa18bf49dd4b70ecd9f1e63dd51"),TEXT("7b6f19ed809131439a35d6a51db689d652a3909b"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyEpicLogoPath,false,false},
         {GLegacyGooglePath,GLegacyGooglePath,TEXT("a519120049649f3c0835b5e341e27778aa4ee781"),TEXT("e91924af4f38c08d7c9648768835473df361c16e"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyGooglePath,false,false}
     };
     auto IsHex=[](const FString& Value, int32 Length)
