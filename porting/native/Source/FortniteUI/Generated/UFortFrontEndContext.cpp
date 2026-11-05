@@ -64,6 +64,12 @@ bool UFortFrontEndContext::IsViewingPhoenixTheater() const
 	return NativeRecoveredBool_0x408;
 }
 
+void UFortFrontEndContext::SelectGadgetForSlot(int32 Slot, UFortItemDefinition* GadgetDefinition)
+{
+	// CONFIDENCE: HIGH; wrapper invokes the shared bare-return native body.
+	return;
+}
+
 void UFortFrontEndContext::SendFrontendEnteredEvent()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

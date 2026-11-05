@@ -61977,5 +61977,20 @@
     "status": "ported",
     "native_body_address": "0x1427a5b60",
     "notes": "Inline native body updates bCanSleep at 0x18dd mask 0x08 while preserving other bitfields. Source recovery; build pending."
+  },
+  {
+    "function": "SelectGadgetForSlot",
+    "kind": "exec",
+    "signature": "void SelectGadgetForSlot(int32 Slot, UFortItemDefinition* GadgetDefinition)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/triage057_new/UFortFrontEndContext_SelectGadgetForSlot.inc",
+    "address": "0x142a7e2c0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "notes": "Wrapper steps reflected arguments, advances bytecode and calls Stub_Empty (0x1406801c0); build and runtime pending.",
+    "class": "UFortFrontEndContext"
   }
 ]

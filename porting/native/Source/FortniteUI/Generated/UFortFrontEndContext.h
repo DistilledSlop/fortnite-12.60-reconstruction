@@ -32,6 +32,7 @@
 #include "FVaultItemViewed.h"
 #include "FVaultItemsViewed.h"
 #include "FViewingPhoenixTheaterChangedDelegate.h"
+#include "UFortItemDefinition.h"
 
 class UFortServerBrowserHelper;
 
@@ -182,6 +183,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsViewingPhoenixTheater() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SelectGadgetForSlot(int32 Slot, UFortItemDefinition* GadgetDefinition);
 
 	UFUNCTION(BlueprintCallable)
 	void SendFrontendEnteredEvent();
