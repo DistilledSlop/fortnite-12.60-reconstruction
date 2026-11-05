@@ -18,6 +18,12 @@ struct FLegacyLocalVFRecordContracts
 bool BuildLegacyPaper2DLooseContracts(const FLegacyOriginalRecord& Record,
     TArray<FLegacyLocalLooseContract>& Out, FString& Error);
 
+// Recover only the six original landscape VF loose-parameter names. Each
+// bound field must match one unique serialized allocation. Pass-specific loose
+// parameters remain the caller's responsibility; Out is unchanged on failure.
+bool BuildLegacyLandscapeVFLooseContracts(const FLegacyOriginalRecord& Record,
+    TArray<FLegacyLocalLooseContract>& Out, FString& Error);
+
 // Complete Paper2D preparation inside FLegacyMaterialPrepareOutputs using its
 // actual Metadata. Both files are authenticated against caller-supplied pins.
 // RecordContracts retains each original target owner and original contract for

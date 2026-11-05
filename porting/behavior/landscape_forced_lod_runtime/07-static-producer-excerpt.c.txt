@@ -1,0 +1,51 @@
+    *(uint *)(param_5 + 0x88) =
+         *(uint *)(param_5 + 0x88) | (param_3 & 7) << 0x18 | bVar4 & 1 | 0x800000;
+    if (*(int *)(param_5 + 0x7c) != 1) {
+      FUN_143af0df0(param_5,1);
+    }
+    iVar5 = (int)param_6[1];
+    *(int *)(param_6 + 1) = iVar5 + 1;
+    if (*(int *)((longlong)param_6 + 0xc) < iVar5 + 1) {
+      FUN_14072b840(param_6,iVar5);
+    }
+    puVar13 = (undefined8 *)((longlong)iVar5 * 0x30 + *param_6);
+    if (puVar13 == (undefined8 *)0x0) {
+      puVar13 = (undefined8 *)0x0;
+    }
+    else {
+      *puVar13 = 0;
+      *(undefined4 *)((longlong)puVar13 + 0x2c) = 0xffffffff;
+    }
+    puVar13[1] = param_1 + 0x5e8;
+    puVar13[2] = param_1 + 0x490;
+    puVar13[3] = param_1;
+    *(int *)(puVar13 + 5) = param_2;
+    puVar13[4] = 0xffffffffffffffff;
+    uVar12 = *(undefined8 *)(param_1 + 0x140);
+    iVar5 = *(int *)(param_5 + 0x78);
+    uVar9 = *(ulonglong *)(*(longlong *)(*(longlong *)(param_1 + 0x558) + 0x40) + lVar15 * 8);
+    iVar6 = *(int *)(param_1 + 0x45c);
+    lVar10 = *(longlong *)(*(longlong *)(param_1 + 0x558) + 0x48);
+    iVar14 = (*(int *)(param_1 + 0x464) >> ((byte)param_2 & 0x1f)) + -1;
+    uVar7 = *(undefined4 *)(lVar10 + 0x20 + lVar15 * 0x28);
+    uVar8 = *(undefined4 *)(lVar10 + 0x24 + lVar15 * 0x28);
+    *(int *)(param_5 + 0x78) = iVar5 + 1;
+    if (*(int *)(param_5 + 0x7c) < iVar5 + 1) {
+      FUN_14083c960(param_5,iVar5);
+    }
+    lVar15 = *(longlong *)(param_5 + 0x70);
+    if (lVar15 != 0) {
+      param_5 = lVar15;
+    }
+    uVar11 = CONCAT71((int7)((ulonglong)lVar15 >> 8),1);
+    lVar15 = (longlong)iVar5 * 0x70;
+    *(undefined8 *)(param_5 + lVar15) = uVar12;
+    ((undefined8 *)(param_5 + lVar15))[1] = 0;
+    puVar1 = (ulonglong *)(param_5 + 0x10 + lVar15);
+    *puVar1 = CONCAT44(uStack_74,uStack_78) & 0xfffffffff8000000;
+    puVar1[1] = uVar9;
+    puVar2 = (undefined8 *)(param_5 + 0x20 + lVar15);
+    *puVar2 = 0;
+    puVar2[1] = puVar13;
+    plVar3 = (longlong *)(param_5 + 0x30 + lVar15);
+    *plVar3 = (ulonglong)(uint)(iVar6 * iVar6 * iVar14 * iVar14 * 2) << 0x20;

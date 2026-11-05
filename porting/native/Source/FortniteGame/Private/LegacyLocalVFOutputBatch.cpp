@@ -94,6 +94,41 @@ bool BuildLegacyPaper2DLooseContracts(const FLegacyOriginalRecord& Record,
     Out = MoveTemp(Result); Error.Reset(); return true;
 }
 
+bool BuildLegacyLandscapeVFLooseContracts(const FLegacyOriginalRecord& Record,
+    TArray<FLegacyLocalLooseContract>& Out, FString& Error)
+{
+    if (Record.Frequency != SF_Vertex ||
+        (Record.VertexFactory != FName(TEXT("FLandscapeVertexFactory")) &&
+         Record.VertexFactory != FName(TEXT("FLandscapeXYOffsetVertexFactory")) &&
+         Record.VertexFactory != FName(TEXT("FLandscapeFixedGridVertexFactory"))))
+    { Error=TEXT("unsupported landscape VF record"); return false; }
+    const struct { const TCHAR* Name; const FLegacyOriginalParameter* Param; } Slots[]={
+        {TEXT("LodValues"),&Record.LandscapeLodValues},
+        {TEXT("ForcedLod"),&Record.LandscapeForcedLod},
+        {TEXT("LodTessellationParams"),&Record.LandscapeLodTessellation},
+        {TEXT("NeighborSectionLod"),&Record.LandscapeNeighborSectionLod},
+        {TEXT("LodBias"),&Record.LandscapeLodBias},
+        {TEXT("SectionLods"),&Record.LandscapeSectionLods},
+    };
+    TArray<FLegacyLocalLooseContract> Result; TSet<uint64> Used;
+    for (const auto& Slot:Slots)
+    {
+        const auto& P=*Slot.Param;
+        if (!P.Size) continue;
+        int32 Matches=0;
+        for (const auto& Buffer:Record.LooseBuffers) if (Buffer.Header.First==P.BufferIndex)
+            for (const auto& Allocation:Buffer.Parameters)
+                if (Allocation.First==P.BaseIndex && Allocation.Second==P.Size) ++Matches;
+        const uint64 Key=(uint64(P.BufferIndex)<<32)|(uint32(P.BaseIndex)<<16)|P.Size;
+        if (Matches!=1 || Used.Contains(Key))
+        { Error=TEXT("landscape VF slot does not uniquely match a loose allocation"); return false; }
+        Used.Add(Key);
+        auto& C=Result.AddDefaulted_GetRef(); C.ParameterName=Slot.Name;
+        C.SourceBuffer=P.BufferIndex; C.ByteOffset=P.BaseIndex; C.ByteSize=P.Size;
+    }
+    Out=MoveTemp(Result); Error.Reset(); return true;
+}
+
 bool PrepareLegacyPaper2DOutputBatch(const FLegacyOriginalMaterial& Material,
     const FString& ManifestPath, const FString& ExpectedManifestSHA256, const FString& OwnerPath,
     const FString& ContractPath, const FString& ExpectedContractSHA256,

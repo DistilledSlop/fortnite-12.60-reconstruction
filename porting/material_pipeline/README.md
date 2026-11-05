@@ -427,3 +427,10 @@ factory must continue rejecting shaders that require them. The original
 continuous-LOD uniform producer's field assignments are captured in
 `behavior/landscape_lod_uniform_producer_runtime/evidence.json`; matching
 resource contents, runtime uniform binding and rendering remain unverified.
+
+The native landscape decoder probe now prepares the Material layout from all
+136 original record layouts and builds the six original named vertex-factory
+loose contracts for each of 70 vertex occurrences. Both maps passed in the
+Linux client; altered Material and vertex allocations were rejected. This is
+layout and contract preparation only, with no shader attachment or draw. See
+`behavior/maps_terrain_material_runtime/material-vf-layout-checkpoint.json`.

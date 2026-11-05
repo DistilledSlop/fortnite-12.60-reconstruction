@@ -84,5 +84,29 @@
     "exec": "0x14273fc40",
     "evidence": "The exec passes the Actor parameter to the native body. The body rejects null Actor, calls 0x143f76730 for an owning object of class Level (class registration 0x14477bcd0; 0x142eca940 walks outer objects), rejects null returned level and LevelStreamInfo at 0xda0, then compares that level with [LevelStreamInfo+0x128]. The original ULevelStreaming GetLoadedLevel exec 0x144783660 reads the same offset. UE Actor::GetLevel uses GetTypedOuter<ULevel>().",
     "scope": "Complete containment query only; does not implement streaming behavior. Source promoted and Linux Development client build passed; runtime execution pending."
+  },
+  "world_lookup_evidence": {
+    "slot": "0x150",
+    "base_target": "0x143f793a0",
+    "proof": "The authenticated ABuildingFoundation primary table at 0x145f0e530 has pointer 0x143f793a0 at offset 0x150. The target checks object and outer flags, calls the Level class registration 0x14477bcd0 and the typed-outer walker 0x142eca940, then returns the pointer at Level+0xb8 or null. The local UE engine AActor::GetWorld implementation checks the same conditions and returns GetLevel()->OwningWorld. This identifies the base virtual target as AActor::GetWorld; derived overrides remain possible.",
+    "impact": "The 0x14785c5a0 lookup in OnRep_ServerStreamedInLevel, the console enable transition, and OnRep_DynamicFoundationRepData uses the virtual GetWorld result as its key. The lookup value and effects of 0x141d59c70 remain unresolved; this does not make those callbacks complete.",
+    "reproduction": [
+      "objdump -s --start-address=0x145f0e680 --stop-address=0x145f0e690 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -d -Mintel --start-address=0x143f793a0 --stop-address=0x143f79430 porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Private/Actor.cpp:385"
+    ]
+  },
+  "dynamic_rep_callback_evidence": {
+    "exec": "0x142740c30",
+    "body": "0x141be55a0",
+    "observations": [
+      "The reflected parameterless exec tail-jumps directly to the body. When byte +0xb6b is zero, it calls virtual slot 0xea8 (OnRep_LevelToStream) only if enabled state +0xb6a equals 1, the LevelToStream FName at +0xba0 is non-none, and LevelStreamInfo at +0xda0 is null. It otherwise returns.",
+      "When byte +0xb6b is nonzero, the body checks values at +0xe30 through +0xe38; it may change the root component transform and consult the same world-keyed container, before calling 0x141bdffb0. The full branch and downstream effects are not reconstructed."
+    ],
+    "limit": "Static partial evidence; +0xb6b identity and nonzero branch remain unresolved. No callback implementation is justified.",
+    "reproduction": [
+      "objdump -d -Mintel --start-address=0x142740c30 --stop-address=0x142740c4a porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe",
+      "objdump -d -Mintel --start-address=0x141be55a0 --stop-address=0x141be58bd porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe"
+    ]
   }
 }

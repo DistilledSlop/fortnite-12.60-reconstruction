@@ -1,0 +1,30 @@
+{
+  "schema": "landscape-material-vf-layout-checkpoint-v1",
+  "result": "pass",
+  "mode": "Linux Development client, null RHI",
+  "maps": 2,
+  "records_per_map": 68,
+  "vertex_occurrences_per_map": 35,
+  "material_uniform_size": 1376,
+  "material_resource_count": 77,
+  "negative_checks": "Malformed Material resource offset and VF slot allocation rejected transactionally.",
+  "files": {
+    "ingress": {
+      "path": "porting/generated/material_pipeline/apollo-d4-landscape-ingress.json",
+      "sha256": "2541a59962d32d6c891c24a6fe42ed60160402b0048b122f8eb171c468142b7d"
+    },
+    "client": {
+      "path": "porting/native/Binaries/Linux/FortniteLinux",
+      "sha256": "c61bf94b4a84534eb5ee1db954a8d64ebba575d1492bbafdf365dca13bad7f8c"
+    },
+    "build_log": {
+      "path": "porting/generated/apollo-material-evidence/landscape-layout-vf-probe-client.build.2.log",
+      "sha256": "673055c75a36c3247d86bb039f0761f8e241f3709c26b49aac0e96a59679b5aa"
+    },
+    "run_log": {
+      "path": "porting/generated/apollo-material-evidence/landscape-layout-vf-probe-run.log",
+      "sha256": "c5b186aa918333f1abc1e4000489e91059f2e4b27f0ac2ee015ec57b173235fc"
+    }
+  },
+  "limits": "The probe exercises decoded records and detached contract preparation. It does not create shader output, supply runtime values or establish renderer binding, streaming or visual parity. Staged Water package errors remain."
+}

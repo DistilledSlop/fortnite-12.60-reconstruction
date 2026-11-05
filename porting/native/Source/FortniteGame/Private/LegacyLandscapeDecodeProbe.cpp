@@ -2,6 +2,8 @@
 #if PLATFORM_LINUX && !UE_SERVER
 #include "LegacyOriginalMaterialReader.h"
 #include "LegacyOriginalUniformContracts.h"
+#include "LegacyOriginalMaterialLayout.h"
+#include "LegacyLocalVFOutputBatch.h"
 #include "HAL/FileManager.h"
 #include "HAL/PlatformProcess.h"
 #include "Misc/Guid.h"
@@ -96,12 +98,20 @@ bool Decode(const FString& Path, FString& Error)
         Native.SerializedOffset=Start;
         FString DecodeError;
         if (!DecodeLegacyOriginalMaterial(Native,DecodeError)) { Error=FString::Printf(TEXT("map %d: %s"),MapIndex,*DecodeError); return false; }
+        FLegacyMaterialIR Prepared;
+        if (!PrepareLegacyOriginalMaterialLayout(Native,Prepared,Error) || Prepared.UniformBufferSize!=1376 || Prepared.Resources.Num()!=77)
+        { if (Error.IsEmpty()) Error=TEXT("unexpected landscape Material layout"); return false; }
+        auto BadLayout=Native; BadLayout.Records[0].LayoutOffsets[0]++;
+        FLegacyMaterialIR Sentinel; Sentinel.UniformBufferSize=7; FString Reject;
+        if (PrepareLegacyOriginalMaterialLayout(BadLayout,Sentinel,Reject) || Sentinel.UniformBufferSize!=7)
+        { Error=TEXT("invalid Material layout was not rejected transactionally"); return false; }
         FString Friendly, PathExpected, MapHash;
         if (!Expected->TryGetStringField(TEXT("friendly_name"),Friendly) || !Expected->TryGetStringField(TEXT("material_path"),PathExpected) ||
             !Expected->TryGetStringField(TEXT("cooked_shader_map_id_hash"),MapHash) || Native.FriendlyName!=Friendly || Native.MaterialPath!=PathExpected ||
             !Native.IR.OriginalMapHash.ToString().Equals(MapHash,ESearchCase::IgnoreCase) || int32(Native.IR.QualityLevel)!=Quality ||
             int32(Native.IR.FeatureLevel)!=Feature || Native.Records.Num()!=Count)
         { Error=TEXT("map identity mismatch"); return false; }
+        int32 VFCount=0; bool bNegativeChecked=false;
         for (int32 I=0; I<Count; ++I)
         {
             const auto& R=Native.Records[I]; const FObj& E=Records[I]; FObj Type, Hash, Layout; FString TypeName, HashValue; int32 Offset=0, EndOffset=0, Size=0;
@@ -113,12 +123,49 @@ bool Decode(const FString& Path, FString& Error)
                 R.Type!=TypeName || R.Begin+Start!=Offset || R.End+Start!=EndOffset || !R.OutputHash.ToString().Equals(HashValue,ESearchCase::IgnoreCase) ||
                 R.LayoutSize!=uint32(Size) || R.LayoutOffsets.Num()!=Offsets->Num() || R.LayoutTypes.Num()!=Types->Num())
             { Error=FString::Printf(TEXT("map %d record %d identity/layout mismatch"),MapIndex,I); return false; }
+            if (R.Frequency==SF_Vertex && !R.VertexFactory.IsNone())
+            {
+                FObj VF, Params;
+                if (!Object(E,TEXT("vertex_factory_parameters"),VF) || !Object(VF,TEXT("landscape_parameters"),Params))
+                { Error=TEXT("missing landscape VF receipt"); return false; }
+                const struct { const TCHAR* Name; const TCHAR* Key; } Slots[]={
+                    {TEXT("LodValues"),TEXT("lod_values")}, {TEXT("ForcedLod"),TEXT("forced_lod")},
+                    {TEXT("LodTessellationParams"),TEXT("lod_tessellation")}, {TEXT("NeighborSectionLod"),TEXT("neighbor_section_lod")},
+                    {TEXT("LodBias"),TEXT("lod_bias")}, {TEXT("SectionLods"),TEXT("section_lods")},
+                };
+                TArray<FLegacyLocalLooseContract> Contracts;
+                if (!BuildLegacyLandscapeVFLooseContracts(R,Contracts,Error)) return false;
+                int32 Bound=0;
+                for (const auto& Slot:Slots)
+                {
+                    FObj P; int32 Base, SlotSize, Buffer;
+                    if (!Object(Params,Slot.Key,P) || !Number(P,TEXT("base_index"),Base) ||
+                        !Number(P,TEXT("byte_count"),SlotSize) || !Number(P,TEXT("buffer_index"),Buffer))
+                    { Error=TEXT("invalid landscape VF receipt"); return false; }
+                    if (!SlotSize) continue;
+                    ++Bound; int32 Matches=0;
+                    for (const auto& C:Contracts)
+                        if (C.ParameterName==Slot.Name && C.SourceBuffer==Buffer && C.ByteOffset==Base && C.ByteSize==SlotSize) ++Matches;
+                    if (Matches!=1) { Error=TEXT("landscape VF name/allocation mismatch"); return false; }
+                }
+                if (Bound!=Contracts.Num()) { Error=TEXT("unexpected landscape VF contract"); return false; }
+                if (!bNegativeChecked && R.LandscapeLodValues.Size)
+                {
+                    auto Bad=R; Bad.LandscapeLodValues.BaseIndex=UINT16_MAX;
+                    TArray<FLegacyLocalLooseContract> VFTestSentinel; VFTestSentinel.AddDefaulted_GetRef().ParameterName=TEXT("sentinel"); FString VFReject;
+                    if (BuildLegacyLandscapeVFLooseContracts(Bad,VFTestSentinel,VFReject) || VFTestSentinel.Num()!=1 || VFTestSentinel[0].ParameterName!=TEXT("sentinel"))
+                    { Error=TEXT("invalid VF allocation was not rejected transactionally"); return false; }
+                    bNegativeChecked=true;
+                }
+                ++VFCount;
+            }
             for (int32 J=0; J<Offsets->Num(); ++J)
                 if (!(*Offsets)[J].IsValid() || (*Offsets)[J]->Type!=EJson::Number || !(*Types)[J].IsValid() || (*Types)[J]->Type!=EJson::Number ||
                     (*Offsets)[J]->AsNumber()!=R.LayoutOffsets[J] || (*Types)[J]->AsNumber()!=R.LayoutTypes[J])
                 { Error=TEXT("layout member mismatch"); return false; }
         }
-        UE_LOG(LogTemp,Display,TEXT("Legacy landscape decode: map=%d quality=%d feature=%d records=%d hash=%s"),MapIndex,Quality,Feature,Count,*MapHash);
+        if (VFCount!=35 || !bNegativeChecked) { Error=TEXT("landscape VF inventory mismatch"); return false; }
+        UE_LOG(LogTemp,Display,TEXT("Legacy landscape decode: map=%d quality=%d feature=%d records=%d VF contracts=%d hash=%s"),MapIndex,Quality,Feature,Count,VFCount,*MapHash);
         PreviousEnd=End;
     }
     if (PreviousEnd!=Raw.Num()) { Error=TEXT("resource has trailing bytes"); return false; }
