@@ -4530,6 +4530,9 @@ def promote(args):
         # Keep dependencies on FortniteGame when actually needed; the cycle check
         # above already refuses a reverse dependency from FortniteGame.
         own = sorted((set(engine_shared) | module_deps[module]) - {module})
+        # The handwritten local-account subsystem uses the engine HTTP module.
+        if module == "Account":
+            own = sorted(set(own) | {"HTTP"})
         module_dir = os.path.join(args.source_root, module)
         os.makedirs(os.path.join(module_dir, "Private"), exist_ok=True)
         with open(os.path.join(module_dir, module + ".Build.cs"), "w", encoding="utf-8", newline="\n") as fh:

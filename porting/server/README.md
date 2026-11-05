@@ -60,6 +60,11 @@ identity selector, not a password. For the original-client analysis harness, run
 its own launcher entitlement gate. The rebuilt client has not yet been verified through
 a full login-to-lobby flow.
 
+The handwritten `ULocalAccountSubsystem` is an unverified client integration
+point: `SelectUsername` requests this grant and exposes the selected account and
+token. It is not yet connected to the game's online login or profile systems;
+the native generator must be promoted before building it with its HTTP dependency.
+
 With `--stub`, `probe_server.py` persists account mappings, profile revisions and user
 cloud files under ignored `porting/generated/local-backend-state` by default. Set
 `--state-dir DIR` to choose a different local directory, or `--ephemeral` for fresh
