@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "Components/MeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Curves/CurveLinearColor.h"
 #include "FFortWindImpulseCylinder.h"
@@ -16,10 +17,14 @@
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
 #include "HAL/IConsoleManager.h"
+#include "Kismet/KismetMaterialLibrary.h"
+#include "Materials/Material.h"
 #include "Materials/MaterialInstance.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInterface.h"
 #include "Math/Box.h"
 #include "Math/Vector.h"
+#include "SharedFortGameLog.h"
 #include "Sound/SoundBase.h"
 
 class ABuildingSMActor;
@@ -177,6 +182,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static FFortWindImpulseRadius MakeWindImpulseRadius(const FVector& ImpulseLocation, float ImpulseRadius, float ImpulseMagnitude, float ImpulseBlendTime);
 
+	UFUNCTION(BlueprintCallable)
+	void RemoveWindImpulse(const FFortWindImpulseHandle& ImpulseHandle, float BlendTime);
+
+	UFUNCTION(BlueprintCallable)
+	bool SetWindImpulse(const FFortWindImpulseHandle& ImpulseHandle, const FFortWindImpulseRadius& WindImpulse);
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
@@ -186,5 +197,6 @@ public:
 	static FBox NativeClipWindImpulseBounds(const FBox& A, const FBox& B);
 	static bool NativeAdvanceWindDelta(FFortWindImpulseCylinderDelta& D);
 	static FScalarParameterValue* NativeFindWindScalarOverride(UMaterialInstance* Instance, const FName& Name);
+	void NativeSetupAnimatingMaterials(FFortWindResponder& Responder);
 };
 

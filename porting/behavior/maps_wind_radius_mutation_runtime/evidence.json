@@ -1,0 +1,12 @@
+{
+  "status": "source integrated; build and runtime pending",
+  "captures": {
+    "porting/generated/maps-wind-impulse-lifecycle/_adhoc/0x141dd6cc0__141dd6cc0.c": "e1d155c080bd1907dc877d162a91684a0d201faa0f4c7a385419d1017b0c7c76",
+    "porting/generated/maps-wind-impulse-lifecycle/_adhoc/0x141dda420__141dda420.c": "9bbfcc55db3243508536c87ca5ff85b90b6107e615666aadad77bd4225ab5504",
+    "porting/generated/maps-wind-live-consumers/_adhoc/0x142b565f0__142b565f0.c": "f91bed36cbf2ef97200d023ba51c9fb1a3cf59745efb2a227fe9015e78963ac3",
+    "porting/generated/maps-wind-log-category/_adhoc/0x1402d0320__1402d0320.c": "ac777f710cbab54912835890668c4013443612070aeb9def54ab0beeecdd9a42"
+  },
+  "reflection": "Remove create142b52940; Set create142b529a0; flags4420401. Struct inputs property flags10000008000182 => const reference. Strict generator policy covers identity, parameter names/kinds/flags and argument order.",
+  "native_behavior": "See evidence.md; no array removal until sampling fade completes. Preserve original logs and current radius as new bounds extent.",
+  "runtime": "Unported initializer still leaves sampling gate false; no runtime or visual credit."
+}

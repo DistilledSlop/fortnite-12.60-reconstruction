@@ -63291,5 +63291,64 @@
       "GameFramework/Actor.h"
     ],
     "notes": "Drain actor queue in detached batches, interface pending predicate before pending-kill check, callback, then process reentrant registrations. Original driver and interface providers not yet connected."
+  },
+  {
+    "class": "AFortWindManager",
+    "function": "NativeSetupAnimatingMaterials",
+    "kind": "helper",
+    "signature": "void NativeSetupAnimatingMaterials(FFortWindResponder& Responder)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/maps_wind_material_setup_runtime/AFortWindManager_NativeSetupAnimatingMaterials.inc",
+    "address": "0x141ddae00",
+    "includes": [
+      "Components/MeshComponent.h",
+      "Components/StaticMeshComponent.h",
+      "Curves/CurveLinearColor.h",
+      "Kismet/KismetMaterialLibrary.h",
+      "Materials/Material.h",
+      "Materials/MaterialInstance.h",
+      "Materials/MaterialInstanceDynamic.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Recovered setup builds per-slot MIDs and material parameter/interpolation records, initializes curve-driven paired values, preserves original warnings/errors and sparse variable indices. Sampling caller not yet integrated. Local base getter cached-vs-Legacy compatibility remains unverified."
+  },
+  {
+    "class": "AFortWindManager",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "function": "RemoveWindImpulse",
+    "kind": "exec",
+    "signature": "void RemoveWindImpulse(const FFortWindImpulseHandle& ImpulseHandle, float BlendTime)",
+    "static": false,
+    "inc_path": "porting/behavior/maps_wind_radius_mutation_runtime/AFortWindManager_RemoveWindImpulse.inc",
+    "address": "0x142b565f0",
+    "reflection_flags": "0x4420401",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native 0x141dd6cc0 gates sampling then starts magnitude fade on first matching UID. Native warning uses LogFortWind. Lifecycle and runtime validation pending."
+  },
+  {
+    "class": "AFortWindManager",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "function": "SetWindImpulse",
+    "kind": "exec",
+    "signature": "bool SetWindImpulse(const FFortWindImpulseHandle& ImpulseHandle, const FFortWindImpulseRadius& WindImpulse)",
+    "static": false,
+    "inc_path": "porting/behavior/maps_wind_radius_mutation_runtime/AFortWindManager_SetWindImpulse.inc",
+    "address": "0x142b567a0",
+    "reflection_flags": "0x4420401",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native 0x141dda420 updates first matching UID, preserves current radius as previous and bounds extent only on exact location/radius change. Lifecycle and runtime validation pending."
   }
 ]

@@ -1,8 +1,8 @@
 {
-  "status": "DRAFT_ONLY_NOT_NATIVE_INTEGRATED_NOT_BUILD_TESTED",
+  "status": "SOURCE_INTEGRATED_BUILD_AND_RUNTIME_PENDING",
   "function": "0x141ddae00",
   "proposed_name": "SetupAnimatingMaterials",
-  "source": "NativeSetupAnimatingMaterials.draft.h",
+  "source": "AFortWindManager_NativeSetupAnimatingMaterials.inc",
   "ownership": "Only this new behavior directory; no native/generator/global-manifest edits, no builds/tests/Ghidra.",
   "inputs": {
     "porting/generated/maps-wind-sampling-deps/_adhoc/0x141ddae00__141ddae00.c": {
@@ -30,8 +30,8 @@
       "lines": 48
     },
     "porting/behavior/maps_wind_material_setup_runtime/NativeSetupAnimatingMaterials.draft.h": {
-      "sha256": "b8b32f3122e9f6c2222a26f58ba7ade4378b877b2d0304ebcdb15b127d2f83bd",
-      "lines": 199
+      "sha256": "31eec41f29223481530f4e02d526928f92a711c2526de656c8bdcdeb8003cf32",
+      "lines": 18
     },
     "porting/native/Source/FortniteGame/Generated/AFortWindManager.h": {
       "sha256": "b6e20ac5a3e2bd8bbf3610d3ee105062c38660001e2374396988796de3c3edba",
@@ -116,6 +116,14 @@
     "../UnrealEngine/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp": {
       "sha256": "27f545ed924c60d3780a27033bd69112603bb0b228aef4359c7d5936cac1b87b",
       "lines": 5982
+    },
+    "porting/behavior/maps_wind_material_setup_runtime/AFortWindManager_NativeSetupAnimatingMaterials.inc": {
+      "sha256": "4e1a5a48f46257e8b7a5323567cecc070a0a100c710989ada18b6331e214ca15",
+      "lines": 191
+    },
+    "porting/generated/maps-wind-log-category/_adhoc/0x1402d0320__1402d0320.c": {
+      "sha256": "ac777f710cbab54912835890668c4013443612070aeb9def54ab0beeecdd9a42",
+      "lines": 24
     }
   },
   "source_regions": {
@@ -136,19 +144,16 @@
     "Final name assignment is speed array then offset array; curve channels0..3 speed curve RGBA,4..7 panner curve RGBA; other indices yield0.",
     "Logs are required effects: missing mild at verbosity3; MID failure, both MID null and unsupported variable at verbosity2, each gated by native log verbosity. Hook implementations must retain message formats from capture."
   ],
-  "required_dependencies": {
-    "logging": "Four required log effects preserve originals: missing mild verbosity3; MID failure, both MID null, unsupported pair verbosity2. Exact native log category pending; hooks must retain gating, object name formatting and original messages."
-  },
+  "required_dependencies": {},
   "closure_gaps": [
-    "Only four logging methods remain required pure virtual effects. No native setup integration or manifest coverage is claimed.",
-    "Curve embedded virtual+0x50 is expressed as GetLinearColorValue(0); exact implementation/numeric parity remains review work, consistent with sampling draft.",
+    "Complete proposed body is ready for root source review/promotion. Root owns native helper declaration/manifest and SharedFortGameLog LogFortWind declaration/definition. This task does not integrate or build it.",
     "GetBaseMaterial calls retain original non-null precondition even after failure logs. Do not add a null fallback or early return without separate authorization.",
     "Draft uses RAII temporary arrays and deep-copy Add(D). Verify UObject lifetime and callback/destructor observability when integrating.",
     "Setup assumes fresh arrays but does not reset them. Final write pass visits first NumSlots entries; snapshot counts and original sparse direct-index consumer behavior remain intact.",
     "No builds/tests were run; proposed header relies on root integrated NativeGetOrCreateMID and NativeFindWindScalarOverride declarations.",
     "Local public UMaterial scalar/vector getters use a newer cache; original client implementations traverse expressions matching local Legacy methods. Equivalence for duplicate/function/layer edge cases remains unproven. This is an engine compatibility caveat, not a missing setup algorithm."
   ],
-  "validation": "Manual source and bounded assembly review; JSON parses and all input hashes match. No builds/tests/Ghidra as assigned.",
+  "validation": "Manual source and bounded assembly/evidence review; JSON and input hashes verified; no builds/tests/Ghidra as assigned.",
   "resolved_dependencies": {
     "0x141c07130": "Direct actor StaticMeshComponent field; raw helper returns actor+0x768.",
     "0x141c0a630": "Actor NativeGetOrCreateMID(Mesh,Slot) source integrated by root. setup.asm141ddaf07 and141ddb04a both load r8d from same loop slot. Both calls retained.",
@@ -159,6 +164,26 @@
     "0x144333900/0x1443339a0": "Direct engine initialize APIs. Assembly proves pair values0, scalar interpolation first endpoint, vector first endpoint, wind-vector constructed stack value; returned indices stored in generated fields.",
     "0x14433ac70": "Direct SetScalarParameterByIndex calls: setup.asm141ddbcc6 uses curve-channel speed;141ddbcd5 uses zero offset.",
     "sparse_pair_index": "Root sampling assembly review confirms original consumer uses direct PairIndex, although setup stores variable index and may compact global pairs. Preserve original sparse behavior; do not rewrite ID.PairIndex into compact array index.",
-    "base_values": "UMaterial vtable0x3e0 ->144310970 GetScalarParameterValue and0x3f8 ->1443127b0 GetVectorParameterValue. Direct local public APIs use global FHashedMaterialParameterInfo(Name), zero initialized out, false override-only, ignored bool. Captured original FMaterialParameterInfo ABI and Legacy traversal differ from local cache implementation; see compatibility caveat."
-  }
+    "base_values": "UMaterial vtable0x3e0 ->144310970 GetScalarParameterValue and0x3f8 ->1443127b0 GetVectorParameterValue. Direct local public APIs use global FHashedMaterialParameterInfo(Name), zero initialized out, false override-only, ignored bool. Captured original FMaterialParameterInfo ABI and Legacy traversal differ from local cache implementation; see compatibility caveat.",
+    "logging": "1402d0320 constructs LogFortWind global148134960 with default3 Warning/compile7 All. Body uses UE_LOG Warning for missing mild and Error for MID failure, both MID null, unsupported pair; retains original four format strings and actor/mesh GetName.",
+    "curve": "Root confirms embedded FCurveOwnerInterface+0x28 virtual0x50 GetLinearColorValue, CurveLinearColor static class1446f0980; setup.asm141ddbc01..13 passes float0. Body calls GetLinearColorValue(0.f)."
+  },
+  "proposed_signature": "void AFortWindManager::NativeSetupAnimatingMaterials(FFortWindResponder& Responder)",
+  "required_includes": [
+    "AFortWindManager.h",
+    "ABuildingSMActor.h",
+    "FFortWindResponder.h",
+    "Curves/CurveLinearColor.h",
+    "Components/MeshComponent.h",
+    "Materials/MaterialInstanceDynamic.h",
+    "Materials/Material.h",
+    "Kismet/KismetMaterialLibrary.h",
+    "SharedFortGameLog.h"
+  ],
+  "generation": {
+    "spliced": 3987,
+    "rejected": 0,
+    "rep_notify_downgraded": 0
+  },
+  "logging": "Original initializer 0x1402d0320 registers LogFortWind at 0x148134960 with Warning default, All compile verbosity. SharedFortGameLog declares and defines the recovered category."
 }

@@ -1,0 +1,25 @@
+[
+  {
+    "class": "AFortWindManager",
+    "function": "NativeSetupAnimatingMaterials",
+    "kind": "helper",
+    "signature": "void NativeSetupAnimatingMaterials(FFortWindResponder& Responder)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/maps_wind_material_setup_runtime/AFortWindManager_NativeSetupAnimatingMaterials.inc",
+    "address": "0x141ddae00",
+    "includes": [
+      "Components/MeshComponent.h",
+      "Components/StaticMeshComponent.h",
+      "Curves/CurveLinearColor.h",
+      "Kismet/KismetMaterialLibrary.h",
+      "Materials/Material.h",
+      "Materials/MaterialInstance.h",
+      "Materials/MaterialInstanceDynamic.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Recovered setup builds per-slot MIDs and material parameter/interpolation records, initializes curve-driven paired values, preserves original warnings/errors and sparse variable indices. Sampling caller not yet integrated. Local base getter cached-vs-Legacy compatibility remains unverified."
+  }
+]

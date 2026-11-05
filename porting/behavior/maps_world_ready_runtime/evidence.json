@@ -8,7 +8,8 @@
     "porting/generated/maps-world-ready-list-lifecycle/_adhoc/0x141fbc600__141fbc600.c": "f6a710e1a517b0a3ee1c6a7465b9b5fc92ec0431d1e30b07c78f76bbe5fd6539",
     "porting/generated/maps-wind-base-values-and-ready-interface/_adhoc/0x14294cf90__14294cf90.c": "1bc7d7d453300da53f7e756d0b042db919f4a578bd4037c256bce2f1f03fe8c2",
     "porting/generated/maps-world-ready-settings-virtuals/_adhoc/0x141fc9240__141fc9240.c": "bc0a2fa40c9a04585a132204f0f656b06bf8a14da20d1c75971842aed64a89d0",
-    "porting/generated/maps-world-ready-settings-ctor/_adhoc/0x141fa4800__141fa4800.c": "13dbb49af0a2ab6b3e713520dd2a4dd1ba4f34238191b3fd41969c570a4db163"
+    "porting/generated/maps-world-ready-settings-ctor/_adhoc/0x141fa4800__141fa4800.c": "13dbb49af0a2ab6b3e713520dd2a4dd1ba4f34238191b3fd41969c570a4db163",
+    "porting/generated/maps-world-ready-driver/_adhoc/0x141f9da60__141f9da60.c": "409988aee6e32b78590eb0ab5d74b8f33538536b69d5413d620943d5aea9d37d"
   },
   "registration": "141fcd9c0 appends Actor to world settings0x398 array. Reflection property offset920 confirms name ActorsNeedingWorldReady. No uniqueness/null validation.",
   "lifecycle_correction": "AFortWindManager primary vtable145fcdc80 slot0x3f8 ->141dde360. Wrapper calls sampling141ddfad0, audio141de18c0, base143f874a0. This is TickActor; prior rejection based only on inherited Tick slot0x450 was incorrect. Base143f874a0 checks pending kill/world then calls virtual0x450, matching Actor::TickActor.",
@@ -32,5 +33,6 @@
     "binding": "No provider inheritance added until full native effects are implemented. No substitute callbacks.",
     "uht_evidence": "Engine/Source/Programs/UnrealHeaderTool/Private/CodeGenerator.cpp3175-3186 emits destructor and const _getUObject; no duplicate declaration added."
   },
-  "dispatcher": "141fbc600 moves array storage into a local detached batch, resets original, iterates actors; skips null; GetInterfaceAddress using FortInitializationInterface; calls pending virtual before pendingkill test; calls ready virtual. Frees detached storage; repeats while registrations remain. Duplicates remain; no AddUnique or premature pendingkill filtering."
+  "dispatcher": "141fbc600 moves array storage into a local detached batch, resets original, iterates actors; skips null; GetInterfaceAddress using FortInitializationInterface; calls pending virtual before pendingkill test; calls ready virtual. Frees detached storage; repeats while registrations remain. Duplicates remain; no AddUnique or premature pendingkill filtering.",
+  "driver": "Unintegrated original state-machine tick 0x141f9da60: direct call 0x141f9dcec reaches dispatcher 0x141fbc600 only in state 5, following 0x141f93820, nonnull world helper 0x141c77490 and 0x141f94050. Canonical entry established by chained exception unwind entries 141f9da91 ->141f9da6f ->141f9da60. State enum, owning class and readiness dependencies remain to recover; no unconditional BeginPlay substitute."
 }
