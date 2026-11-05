@@ -1,0 +1,24 @@
+diff --git a/Engine/Source/Runtime/RenderCore/Private/ShaderParameterMetadata.cpp b/Engine/Source/Runtime/RenderCore/Private/ShaderParameterMetadata.cpp
+index f249ae095..f35d68323 100644
+--- a/Engine/Source/Runtime/RenderCore/Private/ShaderParameterMetadata.cpp
++++ b/Engine/Source/Runtime/RenderCore/Private/ShaderParameterMetadata.cpp
+@@ -220,8 +220,8 @@ void FShaderParametersMetadata::InitializeLayout()
+ 	/** Resource array are currently only supported for shader parameter structures. */
+ 	const bool bAllowResourceArrays = UseCase == EUseCase::ShaderParameterStruct;
+ 
+-	/** White list all use cases that inline a structure within another. Data driven are not known to inline structures. */
+-	const bool bAllowStructureInlining = UseCase == EUseCase::ShaderParameterStruct || UseCase == EUseCase::UniformBuffer;
++	/** White list use cases that inline a structure within another. */
++	const bool bAllowStructureInlining = UseCase == EUseCase::ShaderParameterStruct || UseCase == EUseCase::UniformBuffer || UseCase == EUseCase::DataDrivenUniformBuffer;
+ 
+ 	for (int32 i = 0; i < MemberStack.Num(); ++i)
+ 	{
+@@ -278,7 +278,7 @@ void FShaderParametersMetadata::InitializeLayout()
+ 				{
+ 					UE_LOG(LogRendererCore, Fatal, TEXT("Shader parameter %s error: Shader parameter struct is not known inline other structures."), *CppName);
+ 				}
+-				else if (ChildStruct->GetUseCase() != EUseCase::ShaderParameterStruct && UseCase == EUseCase::ShaderParameterStruct)
++				else if (ChildStruct->GetUseCase() != EUseCase::ShaderParameterStruct && (UseCase == EUseCase::ShaderParameterStruct || UseCase == EUseCase::DataDrivenUniformBuffer))
+ 				{
+ 					UE_LOG(LogRendererCore, Fatal, TEXT("Shader parameter %s error: can only nests or include shader parameter struct define with BEGIN_SHADER_PARAMETER_STRUCT(), but %s is not."), *CppName, ChildStruct->GetStructTypeName());
+ 				}

@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "0598fed8e7a639e280fe6d387d80f7483c8a53ca",
- "subject": "Implement recovered MCP deployment resolver and trace discovery state writes",
- "date": "2026-11-05T00:26:56-05:00",
+ "head": "566f1d7bd41e2bf8800716eefb3025a187c02430",
+ "subject": "Implement original MCP URL gate with Engine SSL and trace callback failure path",
+ "date": "2026-11-05T00:30:34-05:00",
  "overall_pct": 29.1,
  "measured_pct": 28.23,
  "objective_pct": 28.229,
