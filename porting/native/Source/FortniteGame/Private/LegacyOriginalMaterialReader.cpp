@@ -61,6 +61,18 @@ public:
             ParameterInfo(E); E.Value.R=Read<float>();
             if (T == TEXT("VectorParameter")) { E.Value.G=Read<float>(); E.Value.B=Read<float>(); E.Value.A=Read<float>(); }
         }
+        else if (T == TEXT("RuntimeVirtualTextureUniform"))
+        {
+            // The original serializer always writes ParameterInfo, even for
+            // a non-parameter expression. Preserve all fields verbatim.
+            const uint32 Parameter = Read<uint32>();
+            if (Parameter > 1) Fail(TEXT("invalid runtime virtual texture parameter flag"));
+            E.Kind=ELegacyMaterialExpression::RuntimeVirtualTextureUniform; E.ValueType=MCT_Float4;
+            E.bRuntimeVirtualTextureParameter=Parameter != 0;
+            ParameterInfo(E);
+            E.RuntimeVirtualTextureIndex=Read<int32>();
+            E.RuntimeVirtualTextureVectorIndex=Read<int32>();
+        }
         else if (T == TEXT("TextureParameter") || T == TEXT("Texture"))
         {
             if (T == TEXT("TextureParameter"))
@@ -96,11 +108,11 @@ public:
             E.Kind=ELegacyMaterialExpression::TextureSize2D; E.ValueType=MCT_Float4;
             PendingTextureSizes.Add({O.IR.Expressions.Num(),Texture});
         }
-        else if (T == TEXT("Max") || T == TEXT("Saturate"))
+        else if (T == TEXT("Max") || T == TEXT("Saturate") || T == TEXT("Abs"))
         {
             E.A=Expression(Depth+1);
             if (T == TEXT("Max")) { E.B=Expression(Depth+1); E.Kind=ELegacyMaterialExpression::Max; }
-            else E.Kind=ELegacyMaterialExpression::Saturate;
+            else E.Kind=T == TEXT("Abs") ? ELegacyMaterialExpression::Abs : ELegacyMaterialExpression::Saturate;
         }
         else if (T == TEXT("ComponentSwizzle") || T == TEXT("FoldedMath") || T == TEXT("AppendVector") || T == TEXT("TrigMath"))
         {

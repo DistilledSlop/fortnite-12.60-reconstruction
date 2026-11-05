@@ -4,11 +4,15 @@
   "captures": [
     "porting/generated/apollo-material-evidence/foundation-stream",
     "porting/generated/apollo-material-evidence/foundation-deps",
-    "porting/generated/apollo-material-evidence/foundation-role"
+    "porting/generated/apollo-material-evidence/foundation-role",
+    "porting/generated/apollo-material-evidence/foundation-mode-refs.json",
+    "porting/generated/apollo-material-evidence/foundation-mode"
   ],
-  "complete_callees_prepared": ["0x141be2550"],
+  "complete_callees_prepared": [
+    "0x141be2550"
+  ],
   "blocking_effects": {
-    "0x141bec0f0": "Reads global 0x1478c36ed through 0x141d54630, combines counts at this+0xd18/0xd28 and supplied role !=3. Global owner/initialization/writers unresolved; cannot replace its value with a default or engine net-mode guess.",
+    "0x141bec0f0": "Tests the process-global foundation streaming enabled byte, StreamingData.ProxyInfo.Num or ChildStreamingDataIndices.Num, and role != 3. The global defaults to 1 in the captured image but can be changed by console command Athena.BuildingFoundationStreamingEnabled; its handler also updates existing foundations. The generated native model lacks StreamingData and the shared command/state implementation, so this cannot be ported faithfully yet.",
     "0x141be3020": "Conditional authority-game-mode registration calls 0x141738f90. Fields 0xb9c/0xce4, selector global 0x14811f2bc and native game-mode registration contract unresolved.",
     "0x141be3f50": "OnLevelStreamedIn has full actor/HLOD processing, per-instance visibility data, material/texture construction and render-thread work. Captured 478-line body remains unimplemented.",
     "0x141be38f0": "OnLevelShown has visibility updates, original timing/global statistics, manager notifications and dependent callbacks. Captured 200-line body remains unimplemented.",
@@ -21,5 +25,11 @@
     "Transform scale comes from root RelativeScale3D, while translation is root world translation and rotation is virtual slot 0xec8. Copying a full component world transform changes behavior.",
     "The existing-stream object path reactivates loading/visibility and updates streaming before invoking foundation visibility; skipping it would omit original behavior.",
     "No incomplete streaming body or substituted callbacks have been proposed as callable recovered implementation."
-  ]
+  ],
+  "predicate_evidence": {
+    "address": "0x141bec0f0",
+    "streaming_data": "Foundation StreamingData at 0xcb8; reflected struct BuildingFoundationStreamingData is 0x80 bytes. ProxyInfo at struct+0x58 and ChildStreamingDataIndices at struct+0x68: their TArray counts match foundation+0xd18 and +0xd28. See porting/generated/reflection/struct_blocks.json and fortnite_game_reflection.json.",
+    "global": "0x1478c36ed defaults to 1 in image .data; 0x141d54630 returns it. Console registration at 0x1402aa42c-0x1402aa480 binds handler 0x141d409d0 to Athena.BuildingFoundationStreamingEnabled. Handler toggles on no argument or parses an argument, and visits foundation state after a change. See foundation-mode captures and foundation-mode-refs.json.",
+    "limit": "The captured reference at 0x141d398d0 is outside a Ghidra function and reads the byte. The reference listing does not by itself prove all indirect writes or runtime initialization."
+  }
 }

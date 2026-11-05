@@ -317,3 +317,12 @@ change 4096 pixels. All 21 final emitted shader payloads, both builds and both
 joins pass. See `generated/material_pipeline/numeric-menu-checkpoint-results.json`
 and [UE_MATERIAL_INGRESS.md](UE_MATERIAL_INGRESS.md). Full View ABI and original
 pixels remain unverified; Donut texture resources and actual root widgets are next.
+
+### Original landscape RVT numeric ingress
+
+`ue425-legacy-rvt-uniform-ingress.patch` extends the existing `LegacySlateMaterial`
+compatibility layer after its texture-size support. It preserves the original RVT
+parameter flag, parameter identity, referenced texture index and vector index,
+then constructs Unreal's existing RVT uniform expression. The native original
+reader also accepts `Abs`. VT stacks and nonstandard texture arrays still fail
+closed; these changes alone do not attach or render the original landscape map.

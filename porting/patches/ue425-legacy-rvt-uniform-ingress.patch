@@ -1,0 +1,63 @@
+--- a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
++++ b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+@@ -10,7 +10,7 @@
+ {
+  Constant, ScalarParameter, VectorParameter, FoldedMath, AppendVector,
+  ComponentSwizzle, TrigMath, Sine, SquareRoot, Length, Periodic, Min, Max,
+- Clamp, Saturate, Abs, Floor, Ceil, Frac, Fmod, Logarithm2, Logarithm10, TextureSize2D
++ Clamp, Saturate, Abs, Floor, Ceil, Frac, Fmod, Logarithm2, Logarithm10, TextureSize2D, RuntimeVirtualTextureUniform
+ };
+ struct FLegacyMaterialExpression
+ {
+@@ -24,6 +24,8 @@
+  int8 Swizzle[4] = {0, -1, -1, -1};
+  // TextureSize2D only: serialized Standard2D expression slot, not a numeric child.
+  int32 TextureParameterIndex = INDEX_NONE;
++ bool bRuntimeVirtualTextureParameter = false;
++ int32 RuntimeVirtualTextureIndex = INDEX_NONE, RuntimeVirtualTextureVectorIndex = INDEX_NONE;
+ };
+ struct FLegacyMaterialResource
+ {
+--- a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+@@ -125,11 +125,26 @@
+   }
+   else if (N.TextureParameterIndex != INDEX_NONE)
+    return Fail(TEXT("Unexpected legacy texture-size slot on numeric expression"));
++  if (N.Kind == ELegacyMaterialExpression::RuntimeVirtualTextureUniform)
++  {
++   if (N.A != INDEX_NONE || N.B != INDEX_NONE || N.C != INDEX_NONE ||
++       N.ValueType != MCT_Float4 || N.RuntimeVirtualTextureIndex < INDEX_NONE ||
++       N.RuntimeVirtualTextureVectorIndex < INDEX_NONE)
++    return Fail(TEXT("Invalid original runtime virtual texture uniform"));
++   if (N.bRuntimeVirtualTextureParameter &&
++       (N.Parameter.Name.IsNone() || N.Parameter.Association > GlobalParameter ||
++        (N.Parameter.Association == GlobalParameter ? N.Parameter.Index != INDEX_NONE : N.Parameter.Index < 0)))
++    return Fail(TEXT("Invalid original runtime virtual texture parameter identity"));
++  }
++  else if (N.bRuntimeVirtualTextureParameter || N.RuntimeVirtualTextureIndex != INDEX_NONE ||
++           N.RuntimeVirtualTextureVectorIndex != INDEX_NONE)
++   return Fail(TEXT("Unexpected runtime virtual texture fields on numeric expression"));
+   int32 Arity = 1;
+   switch (N.Kind)
+   {
+    case ELegacyMaterialExpression::Constant: case ELegacyMaterialExpression::ScalarParameter:
+-   case ELegacyMaterialExpression::VectorParameter: case ELegacyMaterialExpression::TextureSize2D: Arity = 0; break;
++   case ELegacyMaterialExpression::VectorParameter: case ELegacyMaterialExpression::TextureSize2D:
++   case ELegacyMaterialExpression::RuntimeVirtualTextureUniform: Arity = 0; break;
+    case ELegacyMaterialExpression::FoldedMath: case ELegacyMaterialExpression::AppendVector:
+    case ELegacyMaterialExpression::Min: case ELegacyMaterialExpression::Max:
+    case ELegacyMaterialExpression::Fmod: Arity = 2; break;
+@@ -155,6 +170,12 @@
+   {
+    case ELegacyMaterialExpression::TextureSize2D:
+     Expression = new FLegacyTextureSize2DExpression(Material.Texture2DParameters[N.TextureParameterIndex].TextureIndex); break;
++   case ELegacyMaterialExpression::RuntimeVirtualTextureUniform:
++    if (N.bRuntimeVirtualTextureParameter)
++     Expression = new FMaterialUniformExpressionRuntimeVirtualTextureUniform(N.Parameter, N.RuntimeVirtualTextureIndex, N.RuntimeVirtualTextureVectorIndex);
++    else
++     Expression = new FMaterialUniformExpressionRuntimeVirtualTextureUniform(N.RuntimeVirtualTextureIndex, N.RuntimeVirtualTextureVectorIndex);
++    break;
+    case ELegacyMaterialExpression::Constant:
+     Expression = new FMaterialUniformExpressionConstant(N.Value, uint8(N.ValueType)); break;
+    case ELegacyMaterialExpression::ScalarParameter:
