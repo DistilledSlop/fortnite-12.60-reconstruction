@@ -141,7 +141,7 @@ class ServiceTestCase(unittest.TestCase):
             self.issued_tokens.append(body["access_token"])
         return body
 
-    def sign_in(self, code="local-test-code"):
+    def sign_in(self, code="local-username:LocalPlayer"):
         status, body, _ = jcall(self.base, "POST", "/account/api/oauth/token",
                                 form={"grant_type": "exchange_code", "exchange_code": code})
         self.assertEqual(status, 200)
@@ -225,7 +225,7 @@ class DispatcherTests(ServiceTestCase):
 
     def sign_in_on(self, base):
         status, body, _ = jcall(base, "POST", "/account/api/oauth/token",
-                                form={"grant_type": "exchange_code", "exchange_code": "x"})
+                                form={"grant_type": "exchange_code", "exchange_code": "local-username:LocalPlayer"})
         self.assertEqual(status, 200)
         return body["access_token"]
 
@@ -600,7 +600,7 @@ class ProfileTests(ServiceTestCase):
         self.assertEqual((second["profileRevision"], second["profileCommandRevision"]), (2, 3))
         self.clock.now += DAY
         # The access token lives 8 hours, so a new day needs a new sign-in.
-        self.token = self.sign_in(code="next-day")["access_token"]
+        self.token = self.sign_in()["access_token"]
         _, third, _ = mcp(self.base, self.token, LOCAL, "ClientQuestLogin")
         self.assertEqual((third["profileRevision"], third["profileCommandRevision"]), (3, 4))
         rewards = self.profile_of()["stats"]["attributes"]["daily_rewards"]

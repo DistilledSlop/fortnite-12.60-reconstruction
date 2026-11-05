@@ -19,10 +19,8 @@ class ExchangeCodeTests(ServiceTestCase):
         self.assertError(self.exchange(issued["code"]), 400, Err.OAUTH_INVALID_GRANT)
         self.assertError(self.exchange(issued["code"]), 400, Err.OAUTH_INVALID_GRANT)
 
-    def test_legacy_password_and_local_username_still_work(self):
-        status, local, _ = self.exchange("arbitrary-original-client-password")
-        self.assertEqual(status, 200)
-        self.assertEqual(local["account_id"], LOCAL)
+    def test_unknown_codes_do_not_select_another_account(self):
+        self.assertError(self.exchange("arbitrary-original-client-password"), 400, Err.OAUTH_INVALID_GRANT)
         status, named, _ = self.exchange("local-username:ExchangeUser")
         self.assertEqual(status, 200)
         self.assertEqual(named["displayName"], "ExchangeUser")

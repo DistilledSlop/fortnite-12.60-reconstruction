@@ -191,11 +191,10 @@ method answers 405. Party and presence routes that are not in the table, such as
 
 ### Exchange code policy
 
-The `local-username:` exchange-code prefix selects a named local account. Other
-non-empty `exchange_code` values retain the legacy LocalPlayer fallback unless they use the
-reserved `local-exchange:` prefix. A code issued by `GET /account/api/oauth/exchange`
-uses that prefix, is single use, and maps to its own account. Unknown, expired, and
-used codes with the reserved prefix are rejected. This is a local policy, not Epic behaviour.
+The `local-username:` exchange-code prefix selects a named local account. A code
+issued by `GET /account/api/oauth/exchange` uses the `local-exchange:` prefix, is
+single use, and maps to its own account. Unknown, expired and used codes are
+rejected rather than selecting a different account. This is a local policy, not Epic behaviour.
 
 ### MCP profile commands
 

@@ -10,9 +10,7 @@ Evidence:
 Policy (local, deliberate):
   * Access and refresh tokens are random per process. They live only in memory.
   * An exchange_code that GET .../oauth/exchange issued is single use and maps to
-    its own account. Unknown, expired and used issued-format codes are rejected.
-    Other non-empty exchange codes sign in the local account.
-    The earlier login capture used an arbitrary auth password, so this keeps it working.
+    its own account. Unknown, expired and used codes are rejected.
   * The local_username grant and the local-username: exchange-code prefix select
     a persistent local account by username without a password.
   * Every token response is synthetic. No real account, client secret or key is used.
@@ -22,7 +20,7 @@ import secrets
 from dataclasses import dataclass
 from typing import Optional
 
-from api_common import (CLIENT_ID, DEVICE_ID, LOCAL_ACCOUNT_ID, ApiError, Err)
+from api_common import (CLIENT_ID, DEVICE_ID, ApiError, Err)
 
 ACCESS_TTL_SEC = 28800  # the field value from the earlier stub
 REFRESH_TTL_SEC = 115200  # the field value from the earlier stub
@@ -164,7 +162,7 @@ class OAuthService:
             elif code.startswith(LOCAL_USERNAME_PREFIX):
                 account_id = self._username_account_id(code[len(LOCAL_USERNAME_PREFIX):])
             else:
-                account_id = LOCAL_ACCOUNT_ID
+                raise ApiError(400, Err.OAUTH_INVALID_GRANT, "The exchange code is invalid or has expired.")
             session = self._issue(grant, account_id, client_id)
         elif grant == "refresh_token":
             old = self._by_refresh.get(form.get("refresh_token", ""))
