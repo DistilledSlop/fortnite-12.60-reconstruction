@@ -1095,7 +1095,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending; frontend loading, online login and original MCP profile-manager integration remain unverified. The remaining effort estimate needs review."
+          "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending. Original profile-initializer dispatch and borrowed string lifetime are now traced, but group support setup and full MCP manager integration remain unfinished; frontend loading and online login remain unverified. The remaining effort estimate needs review."
         },
         {
           "id": "backend.matchmaking",
@@ -1517,7 +1517,7 @@
               "material_original_maps"
             ]
           },
-          "rationale": "Four original resources parse to exact EOF with 76 records. The additional original Paper2D instance now decodes all 14 shader records with archive identity matches, including HitProxy VS/PS; its cooking marker, parent shader map and runtime mesh attachment remain unfinished and receive no completion credit. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
+          "rationale": "Four original resources parse to exact EOF with 76 records. The additional original Paper2D instance now decodes all 14 shader records with archive identity matches, including HitProxy VS/PS. Four original parent shadow-depth vertex records now decode with matching archive identities; the parent pixel-shader records, instance cooking marker and runtime mesh attachment remain unfinished and receive no completion credit. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
           "evidence_links": [
             {
               "label": "Material pipeline evidence",
