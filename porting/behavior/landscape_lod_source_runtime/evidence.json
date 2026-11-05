@@ -15,13 +15,13 @@
     "0x143ace140": "UpdateStreamingStatus: abort on engine exit or missing render data; tick with render/threaded and begin-destroy/async selection; release on completion; return true while in flight"
   },
   "unlifted": {
-    "0x143acaba0": "Same update/tick/release sequence with inverted result; caller and exact lifecycle method mapping need confirmation.",
-    "0x143acdcb0": "StreamOut checks streamability, no pending update, render data and requested count less than resident, then constructs original 0x110-byte mobile stream-out update. Constructor/body unavailable.",
-    "0x143acdc00": "StreamIn checks streamability, no pending update, render data and requested count greater than resident, then constructs original 0x220-byte mobile stream-in update with priority. Constructor/body unavailable."
+    "0x143acaba0": "IsReadyForFinishDestroy confirmed by original vtable slot+0x88; original update/tick/release sequence with inverted result awaits source integration.",
+    "0x143acdcb0": "StreamOut guards streamability, no pending update, render data and decreasing resident count. Original 0x110-byte update is lifted in landscape_streamout_source_runtime; engine integration remains pending.",
+    "0x143acdc00": "StreamIn guards streamability, no pending update, render data and increasing resident count. Original 0x220-byte update constructor and stages are lifted in landscape_streamin_source_runtime and landscape_streamin_completion_source_runtime; async lifetime and integration remain pending."
   },
   "dependencies": [
-    "Recover the component mobile platform data: 8-byte streaming entries containing uint32 size, cached render data, and cached filename, with original serialization and lifetimes.",
-    "Recover mobile render data including first LOD, render resource setup and streaming lifecycle.",
+    "Original mobile platform-data reader integrated as source in ue425-landscape-platform-compatibility.patch; build/runtime pending.",
+    "Original mobile render-data first-LOD state and cache ownership integrated as source; render resource/streaming/renderer-LOD integration remains pending.",
     "Recover the 12.60 mobile stream-in and stream-out FRenderAssetUpdate subclasses and their IO, render-thread, cancellation and resource-finalization behavior; 4.26 implementations are not proof of original behavior.",
     "Add appropriate original-era proxy declaration and TRefCountPtr<FRenderAssetUpdate> PendingUpdate; establish remaining virtual mappings before integrating."
   ],

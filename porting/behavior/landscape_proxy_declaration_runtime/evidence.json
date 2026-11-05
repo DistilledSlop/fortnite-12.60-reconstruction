@@ -1,0 +1,66 @@
+{
+  "status": "Declaration draft only; not integrated, built, ABI-validated, or runtime-validated.",
+  "layout": {
+    "original_class": "/Script/Landscape.LandscapeLODStreamingProxy",
+    "base": "UStreamableRenderAsset",
+    "size": "0x50",
+    "alignment": 8,
+    "cached_resident_byte": "base +0x3c",
+    "component_pointer": "+0x40",
+    "pending_update": "+0x48, reference-counted"
+  },
+  "confirmed_vtable": {
+    "0x0": "0x143ac8420 destructor: release pending update via 0x1445f0430, call base 0x142ebd730; deleting destructor conditionally frees object",
+    "0x88": "0x143acaba0 IsReadyForFinishDestroy: abort/tick/release pending update, return ready only when finished",
+    "0x260": "0x140680300 GetLODGroupForStreaming returns 0",
+    "0x268": "0x143aca920 GetNumMipsForStreaming",
+    "0x270": "0x140833bf0 GetNumNonStreamingMips returns 1",
+    "0x278": "0x140680300 CalcNumOptionalMips returns 0",
+    "0x280": "0x143ac8bb0 CalcCumulativeLODSize",
+    "0x288": "0x143aca8e0 GetMipDataFilename",
+    "0x290": "0x143acac50 IsReadyForStreaming",
+    "0x298": "0x143afae90 GetNumResidentMips",
+    "0x2a0": "0x143aca930 GetNumRequestedMips",
+    "0x2a8": "0x143ac8c00 CancelPendingMipChangeRequest",
+    "0x2b0": "0x143acaae0 HasPendingUpdate",
+    "0x2b8": "0x143acaaf0 IsPendingUpdateLocked",
+    "0x2c0": "0x143acdcb0 StreamOut",
+    "0x2c8": "0x143acdc00 StreamIn",
+    "0x2d0": "0x143ace140 UpdateStreamingStatus"
+  },
+  "constraints": [
+    "Original vtable lacks the local UE 4.25 DoesMipDataExist slot between filename and readiness; establish its compatible behavior before use. The 0 optional-mip count means local StreamingTexture.cpp normally skips its optional-mip check, but is not a general implementation.",
+    "Verify base size, member offsets and derived size on Linux; original layout is Win64. Do not substitute UE 4.26 CachedSRRState.",
+    "Capture and reproduce component default-subobject creation and ownership, streaming manager insertion/removal, streaming state initialization and update, scene references, and render-resource setup and teardown in original order.",
+    "Finish mobile platform/render data and stream-in/out updates, including cancellation, asynchronous completion and teardown; release by destructor alone does not prove safe async lifetime.",
+    "Confirm inherited BeginDestroy, FinishDestroy, last-render-time and forced-residency targets; determine any superclass readiness checks.",
+    "Confirm cumulative-size return contract: local UE 4.25 requires int32 while decompiler reports 64-bit accumulation.",
+    "See adjacent landscape_lod_source_runtime evidence for source captures and existing unintegrated method drafts."
+  ],
+  "captures": [
+    {
+      "path": "porting/generated/maps-proxy-lifecycle/_adhoc/0x140680300__140680300.c",
+      "sha256": "35339f8d44b18cbadd006ceb7b045be0399897514fed6bf7292ced7fc09b86c2"
+    },
+    {
+      "path": "porting/generated/maps-proxy-lifecycle/_adhoc/0x140833bf0__140833bf0.c",
+      "sha256": "b4fd078517135780d28ccd3c5fa08bc6563aadb5cd7f511f2845cfaca41260ab"
+    },
+    {
+      "path": "porting/generated/maps-proxy-lifecycle/_adhoc/0x143ac8420__143ac8420.c",
+      "sha256": "26254d1d02ff431a1f653fec304ed1ed36d7767ea2697ddeb398f64ca7fe0418"
+    },
+    {
+      "path": "porting/generated/maps-mobile-render-setup/proxy-vtable.json",
+      "sha256": "e5d94cd5b62144cb2860e4d916c38409088164b1f03f024edd4fa05d2082c7c2"
+    },
+    {
+      "path": "porting/generated/maps-original-recovery/maps-original-methods/_adhoc/0x143acaba0__143acaba0.c",
+      "sha256": "11787b833de49cac600aa528f853703530b2aeb3cc9f20aff8bc356e2f5f7f3e"
+    },
+    {
+      "path": "porting/generated/maps-original-recovery/maps-lod-registration/143afbce0.c",
+      "sha256": "71b18555d7a4f9fe1b8ec6cf96ec89764cef39e33ee12a9918c9de3b7b4cab3a"
+    }
+  ]
+}

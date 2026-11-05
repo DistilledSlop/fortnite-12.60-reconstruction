@@ -1,5 +1,5 @@
 diff --git a/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h b/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
-index 5c3036a99..ffdf730f5 100644
+index 5c3036a99..f7ba64268 100644
 --- a/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
 +++ b/Engine/Source/Runtime/Landscape/Classes/LandscapeComponent.h
 @@ -11,2 +11,3 @@
@@ -15,12 +15,15 @@ index 5c3036a99..ffdf730f5 100644
 +	TArray<FByteBulkData> StreamingLODDataArray;
 +#endif
  	
-@@ -113,2 +120,4 @@ class FLandscapeComponentDerivedData
+@@ -113,2 +120,7 @@ class FLandscapeComponentDerivedData
  
 +	FString CachedLODDataFileName;
 +
++	/** Set only by the loading-only original cooked-data reader. */
++	bool bLegacyCookedData = false;
++
  public:
-@@ -129,3 +138,8 @@ public:
+@@ -129,3 +141,8 @@ public:
  	{
 -		return CompressedLandscapeData.Num();
 +		int32 Size = CompressedLandscapeData.Num();
@@ -30,14 +33,14 @@ index 5c3036a99..ffdf730f5 100644
 +		}
 +		return Size;
  	}
-@@ -150,2 +164,5 @@ public:
+@@ -150,2 +167,5 @@ public:
  	friend FArchive& operator<<(FArchive& Ar, FLandscapeComponentDerivedData& Data);
 +
 +	/** Read the original 12.60 cooked mobile data, including streamed LODs. */
 +	void SerializeLegacyCookedData(FArchive& Ar, UObject* Owner);
  };
 diff --git a/Engine/Source/Runtime/Landscape/Private/Landscape.cpp b/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
-index 7fe59f51e..cd45384e9 100644
+index 7fe59f51e..713e471e9 100644
 --- a/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
 +++ b/Engine/Source/Runtime/Landscape/Private/Landscape.cpp
 @@ -53,2 +53,4 @@ Landscape.cpp: Terrain rendering
@@ -61,13 +64,14 @@ index 7fe59f51e..cd45384e9 100644
 +				Ar << PlatformData;
 +			}
  		}
-@@ -3360,2 +3373,40 @@ FArchive& operator<<(FArchive& Ar, FLandscapeComponentDerivedData& Data)
+@@ -3360,2 +3373,41 @@ FArchive& operator<<(FArchive& Ar, FLandscapeComponentDerivedData& Data)
  
 +// Original 12.60 implementation: 0x143accef0. This is a loading-only
 +// compatibility path; UE 4.25 authoring and DDC retain their existing format.
 +void FLandscapeComponentDerivedData::SerializeLegacyCookedData(FArchive& Ar, UObject* Owner)
 +{
 +	check(Ar.IsLoading());
++	bLegacyCookedData = true;
 +	Ar << CompressedLandscapeData;
 +	int32 NumStreamingLODs = 0;
 +	Ar << NumStreamingLODs;
@@ -102,3 +106,190 @@ index 7fe59f51e..cd45384e9 100644
 +}
 +
  bool FLandscapeComponentDerivedData::LoadFromDDC(const FGuid& StateId, UObject* Component)
+diff --git a/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp b/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
+index b48664278..85cfc2bc9 100644
+--- a/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
++++ b/Engine/Source/Runtime/Landscape/Private/LandscapeRenderMobile.cpp
+@@ -254,87 +254,79 @@ void SerializeLandscapeMobileHoleData(FMemoryArchive& Ar, FLandscapeMobileHoleDa
+ 
+-/**
+- * Container for FLandscapeVertexBufferMobile that we can reference from a thread-safe shared pointer
+- * while ensuring the vertex buffer is always destroyed on the render thread.
+- **/
+-struct FLandscapeMobileRenderData
++FLandscapeMobileRenderData::FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData, uint8 InCurFirstLODIdx)
++	: CurrentFirstLODIdx(InCurFirstLODIdx)
+ {
+-	FLandscapeVertexBufferMobile* VertexBuffer = nullptr;
+-	FLandscapeMobileHoleData* HoleData = nullptr;
+-	FOccluderVertexArraySP OccluderVerticesSP;
++	FMemoryReader MemAr(InPlatformData);
+ 
+-	FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData)
++	int32 NumHoleLods;
++	MemAr << NumHoleLods;
++	if (NumHoleLods > 0)
+ 	{
+-		FMemoryReader MemAr(InPlatformData);
++		HoleData = new FLandscapeMobileHoleData;
++		HoleData->NumHoleLods = NumHoleLods;
+ 
+-		int32 NumHoleLods;
+-		MemAr << NumHoleLods;
+-		if (NumHoleLods > 0)
++		bool b16BitIndices;
++		MemAr << b16BitIndices;
++		if (b16BitIndices)
+ 		{
+-			HoleData = new FLandscapeMobileHoleData;
+-			HoleData->NumHoleLods = NumHoleLods;
+-
+-			bool b16BitIndices;
+-			MemAr << b16BitIndices;
+-			if (b16BitIndices)
+-			{
+-				SerializeLandscapeMobileHoleData<uint16>(MemAr, *HoleData);
+-			}
+-			else
+-			{
+-				SerializeLandscapeMobileHoleData<uint32>(MemAr, *HoleData);
+-			}
++			SerializeLandscapeMobileHoleData<uint16>(MemAr, *HoleData);
+ 		}
+-
++		else
+ 		{
+-			int32 VertexCount;
+-			MemAr << VertexCount;
+-			TArray<uint8> VertexData;
+-			VertexData.SetNumUninitialized(VertexCount*sizeof(FLandscapeMobileVertex));
+-			MemAr.Serialize(VertexData.GetData(), VertexData.Num());
+-			VertexBuffer = new FLandscapeVertexBufferMobile(MoveTemp(VertexData));
++			SerializeLandscapeMobileHoleData<uint32>(MemAr, *HoleData);
+ 		}
+-		
++	}
++
++	{
++		int32 VertexCount;
++		MemAr << VertexCount;
++		TArray<uint8> VertexData;
++		VertexData.SetNumUninitialized(VertexCount*sizeof(FLandscapeMobileVertex));
++		MemAr.Serialize(VertexData.GetData(), VertexData.Num());
++		VertexBuffer = new FLandscapeVertexBufferMobile(MoveTemp(VertexData));
++	}
++
++	{
++		int32 NumOccluderVertices;
++		MemAr << NumOccluderVertices;
++		if (NumOccluderVertices > 0)
+ 		{
+-			int32 NumOccluderVertices;
+-			MemAr << NumOccluderVertices;
+-			if (NumOccluderVertices > 0)
+-			{
+-				OccluderVerticesSP = MakeShared<FOccluderVertexArray, ESPMode::ThreadSafe>();
+-				OccluderVerticesSP->SetNumUninitialized(NumOccluderVertices);
+-				MemAr.Serialize(OccluderVerticesSP->GetData(), NumOccluderVertices * sizeof(FVector));
++			OccluderVerticesSP = MakeShared<FOccluderVertexArray, ESPMode::ThreadSafe>();
++			OccluderVerticesSP->SetNumUninitialized(NumOccluderVertices);
++			MemAr.Serialize(OccluderVerticesSP->GetData(), NumOccluderVertices * sizeof(FVector));
+ 
+-				INC_DWORD_STAT_BY(STAT_LandscapeOccluderMem, OccluderVerticesSP->GetAllocatedSize());
+-			}
++			INC_DWORD_STAT_BY(STAT_LandscapeOccluderMem, OccluderVerticesSP->GetAllocatedSize());
+ 		}
+ 	}
++}
+ 
+-	~FLandscapeMobileRenderData()
++FLandscapeMobileRenderData::~FLandscapeMobileRenderData()
++{
++	// Make sure the vertex buffer is always destroyed from the render thread
++	if (VertexBuffer != nullptr)
+ 	{
+-		// Make sure the vertex buffer is always destroyed from the render thread 
+-		if (VertexBuffer != nullptr)
++		if (IsInRenderingThread())
+ 		{
+-			if (IsInRenderingThread())
+-			{
+-				delete VertexBuffer;
+-				delete HoleData;
+-			}
+-			else
+-			{
+-				FLandscapeVertexBufferMobile* InVertexBuffer = VertexBuffer;
+-				FLandscapeMobileHoleData* InHoleData = HoleData;
+-				ENQUEUE_RENDER_COMMAND(InitCommand)(
+-					[InVertexBuffer, InHoleData](FRHICommandListImmediate& RHICmdList)
+-				{
+-					delete InVertexBuffer;
+-					delete InHoleData;
+-				});
+-			}
++			delete VertexBuffer;
++			delete HoleData;
+ 		}
+-
+-		if (OccluderVerticesSP.IsValid())
++		else
+ 		{
+-			DEC_DWORD_STAT_BY(STAT_LandscapeOccluderMem, OccluderVerticesSP->GetAllocatedSize());
++			FLandscapeVertexBufferMobile* InVertexBuffer = VertexBuffer;
++			FLandscapeMobileHoleData* InHoleData = HoleData;
++			ENQUEUE_RENDER_COMMAND(InitCommand)(
++				[InVertexBuffer, InHoleData](FRHICommandListImmediate& RHICmdList)
++			{
++				delete InVertexBuffer;
++				delete InHoleData;
++			});
+ 		}
+ 	}
+-};
++
++	if (OccluderVerticesSP.IsValid())
++	{
++		DEC_DWORD_STAT_BY(STAT_LandscapeOccluderMem, OccluderVerticesSP->GetAllocatedSize());
++	}
++}
++
++
+ 
+@@ -472,3 +464,3 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
+ 
+-	if (FPlatformProperties::RequiresCookedData() && CachedRenderData.IsValid())
++	if ((FPlatformProperties::RequiresCookedData() || bLegacyCookedData) && CachedRenderData.IsValid())
+ 	{
+@@ -480,2 +472,3 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
+ 		check(CompressedLandscapeData.Num() > 0);
++		CachedRenderData.Reset();
+ 
+@@ -501,6 +494,6 @@ TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> FLandscapeComponentD
+ 
+-		TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> RenderData = MakeShareable(new FLandscapeMobileRenderData(MoveTemp(UncompressedData)));
++		TSharedPtr<FLandscapeMobileRenderData, ESPMode::ThreadSafe> RenderData = MakeShareable(new FLandscapeMobileRenderData(MoveTemp(UncompressedData), static_cast<uint8>(StreamingLODDataArray.Num())));
+ 
+ 		// if running on device		
+-		if (FPlatformProperties::RequiresCookedData())
++		if (FPlatformProperties::RequiresCookedData() || bLegacyCookedData)
+ 		{
+diff --git a/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h b/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
+index e10bb433f..b36bd14f5 100644
+--- a/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
++++ b/Engine/Source/Runtime/Landscape/Public/LandscapeRenderMobile.h
+@@ -108,2 +108,14 @@ public:
+ 
++/** Shared mobile terrain resources. Original 12.60 first streamed LOD is at +0x20. */
++struct FLandscapeMobileRenderData
++{
++	FLandscapeVertexBufferMobile* VertexBuffer = nullptr;
++	struct FLandscapeMobileHoleData* HoleData = nullptr;
++	FOccluderVertexArraySP OccluderVerticesSP;
++	uint8 CurrentFirstLODIdx;
++
++	FLandscapeMobileRenderData(const TArray<uint8>& InPlatformData, uint8 InCurFirstLODIdx);
++	~FLandscapeMobileRenderData();
++};
++
+ //

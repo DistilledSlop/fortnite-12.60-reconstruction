@@ -33,7 +33,7 @@
   "scope": "Loading-only: unversioned cooked mobile packages with -FortniteLegacyLandscapeData. Existing UE4.25 writing, PIE and DDC formats retained.",
   "source_comparison": "../UnrealEngine4260/Engine/Source/Runtime/Landscape/Private/Landscape.cpp:3451",
   "limitations": [
-    "Original mobile render-data and proxy streaming implementations still require integration; reading LOD data does not establish rendering parity.",
+    "Original mobile render-data state/cache ownership is integrated as source; proxy and streaming implementations still require integration. No terrain or renderer parity is established.",
     "Editor builds retain FByteBulkData; runtime token builds retain the original eight-byte tokens.",
     "No builds/runtime/tests run under the user native-body checkpoint cadence."
   ],
@@ -41,5 +41,5 @@
     "0x143acdd40 LOD proxy initialization from mobile CreateSceneProxy",
     "0x143af7850 mobile scene-proxy constructor and render-data acquisition"
   ],
-  "engine_source_commit": "185b16561"
+  "engine_source_commit": "3cdc92cd0"
 }
