@@ -16,17 +16,25 @@ struct FTeamMapInfo
 	UPROPERTY()
 	TArray<uint8> ReplicatedSeedPack;
 
-	// Recovered native storage; offsets name original Win64 fields, not this host layout.
-	// The original fourth array at +0x30 and trailing native flags remain unrecovered.
+	// Native arrays: original copy uses byte elements for the first three.
 	TArray<uint8> NativeRevealBits_0x10;
 	TArray<uint8> NativeFogPixels_0x20;
+	// Fourth array copies trivial eight-byte payloads; semantic type is unresolved.
+	TArray<uint64> NativeEightByteEntries_0x30;
 	int32 NativeTouchedCount_0x40 = 0;
 
 	// table index 0, offset 68, flags 0x10000000000000
 	UPROPERTY()
 	uint8 TeamId = 0;
 
-	// Partial raster helpers; original ABI and fast-mode dispatch are unresolved.
+	uint8 NativeByte_0x45 = 0;
+	uint8 NativeFlag0_0x46 : 1;
+	uint8 NativeFlag1_0x46 : 1;
+
+	// Original constructor clears both logical flags; array constructors own their storage.
+	FTeamMapInfo() : NativeFlag0_0x46(0), NativeFlag1_0x46(0) {}
+
+	// Isolated raster paths; original fast-mode selection remains unresolved.
 	// Caller supplies a 256x256 pixel array and valid native arithmetic inputs.
 	void NativeDrawFogGradient(int32 CenterX, int32 CenterY,
 	    float InnerRadius, float FadeInRadius, float FadeOutRadius, float OuterRadius, uint8 Opacity)

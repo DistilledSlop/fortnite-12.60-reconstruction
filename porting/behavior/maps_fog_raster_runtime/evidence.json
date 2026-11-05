@@ -33,11 +33,11 @@
       "unresolved": "Capture warns parameter IDs and stack analysis are unreliable; original calling convention and argument mapping are provisional. Valid original inputs and native buffer length are assumed; overflow and nonfinite radii are not recovered."
     }
   ],
-  "status": "Known buffers/counter and isolated raster helpers integrated through generator policy; full fog dispatch and callbacks remain incomplete. Build/runtime pending.",
-  "integration": "porting/gen_native_classes.py imports source_policy.py to emit FTeamMapInfo native reveal bits, pixel buffer, zeroed counter and two inline raster helpers. TeamId defaults to zero as established by the original constructor.",
+  "status": "Recovered team-map native storage, constructor defaults and isolated raster helpers integrated through generator policy; fog dispatch and callbacks remain incomplete. Build/runtime pending.",
+  "integration": "Generator policy emits all four owned arrays, touched counter, TeamId, native trailing byte and two logical flag bits. The fourth array uses uint64 as a bit-preserving representation of the original trivial eight-byte elements. No semantic entry type is claimed. Array construction, copying and destruction follow the captured ownership operations.",
   "source_accounting": "No new reflected native exec body or complete original fog callback. Isolated helper integration does not establish fog UI behavior or world completion.",
   "remaining": [
-    "Original fourth native array at +0x30, native byte +0x45 and native flags +0x46 are not emitted; no opaque stand-in or ABI/layout claim is introduced.",
+    "Fourth-array entry semantics and trailing byte/flag names remain unresolved; storage, copy width and constructor defaults are established.",
     "DAT_14812fa79 mode selection and exact original dispatch ABI require further recovery.",
     "Connect decompression/reveal iteration, render texture upload and indicator visibility notification paths.",
     "Build/runtime validation under checkpoint cadence."
@@ -74,5 +74,10 @@
       "observation": "Original decompression helper identifies built-in ZLIB and GZIP paths by named profiling strings. MapData caller passes FName built from 0x101. Not yet integrated."
     }
   ],
-  "dispatch_observation": "Bounded existing-reference query found only the raster read of DAT_14812fa79 in the slim project; incomplete analysis does not prove there are no writers or establish the original mode configuration."
+  "dispatch_observation": "Bounded existing-reference query found only the raster read of DAT_14812fa79 in the slim project; incomplete analysis does not prove there are no writers or establish the original mode configuration.",
+  "copy_capture": {
+    "path": "porting/generated/maps-team-map-copy/_adhoc/0x14294a220__14294a220.c",
+    "sha256": "0de9105dcf92adb601258f81ed7263892790a644d3739375c7164364b57f21e2",
+    "observation": "Copies first three byte arrays through identical helper, fourth array using memcpy(count << 3), then counter at0x40, bytes44/45 and logical bits0/1 at0x46."
+  }
 }

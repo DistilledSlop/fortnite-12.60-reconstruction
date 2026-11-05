@@ -1,4 +1,4 @@
-"""Emit the evidenced, partial FTeamMapInfo fog storage and raster helpers."""
+"""Emit recovered FTeamMapInfo storage and the isolated fog raster paths."""
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -29,16 +29,26 @@ def includes(model):
 
 
 def fields_after(model, member):
-    if not _validate(model) or member['offset'] != 0:
+    if not _validate(model):
         return []
-    return [
-        '\t// Recovered native storage; offsets name original Win64 fields, not this host layout.',
-        '\t// The original fourth array at +0x30 and trailing native flags remain unrecovered.',
-        '\tTArray<uint8> NativeRevealBits_0x10;',
-        '\tTArray<uint8> NativeFogPixels_0x20;',
-        '\tint32 NativeTouchedCount_0x40 = 0;',
-        ''
-    ]
+    if member['offset'] == 0:
+        return [
+            '\t// Native arrays: original copy uses byte elements for the first three.',
+            '\tTArray<uint8> NativeRevealBits_0x10;',
+            '\tTArray<uint8> NativeFogPixels_0x20;',
+            '\t// Fourth array copies trivial eight-byte payloads; semantic type is unresolved.',
+            '\tTArray<uint64> NativeEightByteEntries_0x30;',
+            '\tint32 NativeTouchedCount_0x40 = 0;',
+            ''
+        ]
+    if member['offset'] == 68:
+        return [
+            '\tuint8 NativeByte_0x45 = 0;',
+            '\tuint8 NativeFlag0_0x46 : 1;',
+            '\tuint8 NativeFlag1_0x46 : 1;',
+            ''
+        ]
+    return []
 
 
 def declarations(model):
@@ -58,6 +68,9 @@ def declarations(model):
     body = body.replace(old_fast, 'void NativeDrawFogFastDisk(int32 CenterX, int32 CenterY,')
     body = body.replace('Pixels[', 'NativeFogPixels_0x20[').replace('TouchedCount +=', 'NativeTouchedCount_0x40 +=')
     return [
-        '\t// Partial raster helpers; original ABI and fast-mode dispatch are unresolved.',
+        '\t// Original constructor clears both logical flags; array constructors own their storage.',
+        '\tFTeamMapInfo() : NativeFlag0_0x46(0), NativeFlag1_0x46(0) {}',
+        '',
+        '\t// Isolated raster paths; original fast-mode selection remains unresolved.',
         '\t// Caller supplies a 256x256 pixel array and valid native arithmetic inputs.',
     ] + ['\t' + line[4:] if line.startswith('    ') else line for line in body.splitlines()] + ['']

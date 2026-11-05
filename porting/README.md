@@ -48,9 +48,11 @@ The four dashboard milestones remain the product acceptance gates.
   4.25-era interface. Renderer section and dynamic-draw selection now clamp to the resident vertex
   LOD using a UE4.26 compatibility adaptation; original Linux terrain loading
   and visual parity remain unverified.
-  Fog source now includes the known team-map buffers/counter and isolated
-  gradient/fast-disk raster helpers. Mode selection, remaining native storage,
-  texture upload and notification callbacks are still incomplete.
+  Fog source now restores all four team-map array lifetimes, the native counter
+  and trailing state, isolated gradient/fast-disk raster paths, and the borrowed
+  render-thread texture upload. Mode selection and notification callbacks remain
+  incomplete; the fourth array preserves eight-byte payloads without a semantic
+  entry-type claim.
   The new engine reader is also build/runtime pending. These changes do not establish
   original map loading, terrain fidelity, or a completed world.
 - The client is `FortniteClient-12.60-CL-13477524`, a packaged Win64 build.

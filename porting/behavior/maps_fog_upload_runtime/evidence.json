@@ -1,0 +1,33 @@
+{
+  "sources": [
+    {
+      "path": "porting/generated/maps-state-runtime-original/_adhoc/0x141edde40__141edde40.c",
+      "sha256": "1af8643cc739c039cbbffefd2babe31a999ec1fe95c8ebe6cd951969e49a7023"
+    },
+    {
+      "path": "porting/generated/maps-fog-required-callees/_adhoc/0x141ec7b10__141ec7b10.c",
+      "sha256": "132c1ba7f40087e302d88a89dc00cbfa861d56e9aa569dc71e9b662074012a88"
+    },
+    {
+      "path": "porting/generated/maps-state-runtime-original/_adhoc/0x141ebaf90__141ebaf90.c",
+      "observation": "Constructor initializes index to -1 and sets state bit 3, preserving other bits; UObject storage is initially zero.",
+      "sha256": "85b1090ae212c3e360c08be90d988694b24569db0b4d5d59de0bcfb20c8c332a"
+    },
+    {
+      "path": "../UnrealEngine/Engine/Source/Runtime/Engine/Private/Texture2D.cpp",
+      "observation": "UpdateTextureRegions shows the local engine's resource, current first mip and RHI update interfaces and render command dispatch.",
+      "sha256": "53101ce0584b954b48baa65f84fda8a25f7ef1f50e17dcb41fbc8be6b0dab7a2"
+    }
+  ],
+  "behavior": "Require texture and resource, then valid selected team index; a null pixel allocation returns without clearing the state bit. Capture resource, full 256 by 256 region, and borrowed data pointer by value for the render command. For mip zero, call RHIUpdateTexture2D only when current first mip is at most zero, with pitch 256 and one byte per pixel. After command dispatch clear bit 1 of the original state word, preserving other bits. Failure messages and error verbosity are captured; original log category remains unidentified and LogTemp substitutes for it.",
+  "unresolved": "Render-command execution borrows the array's storage and texture resource without extending their lifetime, as captured; callers must preserve both until execution. Allocation length is not checked by the original. The original log category and other semantics of the state word are unknown. Command dispatch uses the engine macro's immediate/queued paths. These artifacts do not connect any caller or establish behavior of other state bits. Names and offsets are semantic labels for original Win64 fields, not a host ABI claim.",
+  "validation": "Source reconstruction only; integration and build are delegated to the parent.",
+  "status": "Integrated generator inputs and generated helper source; build/runtime pending. No completed fog callback or original world runtime credit.",
+  "generation": {
+    "spliced_including_fields_and_helpers": 3960,
+    "rejected": 0,
+    "new_nonreflected_helpers": 1,
+    "new_member_fields": 2,
+    "new_reflected_native_bodies": 0
+  }
+}

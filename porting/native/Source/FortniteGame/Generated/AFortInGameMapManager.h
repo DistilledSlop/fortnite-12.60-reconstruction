@@ -8,6 +8,7 @@
 
 #include "EMapCaptureMethod.h"
 #include "Engine/CurveTable.h"
+#include "Engine/Texture2D.h"
 #include "FOnAllowShowMainMapChanged.h"
 #include "FOnMapExplorationThresholdReached.h"
 #include "FOnMapFullyExplored.h"
@@ -17,6 +18,9 @@
 #include "Layout/Margin.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
+#include "RHICommandList.h"
+#include "RenderingThread.h"
+#include "TextureResource.h"
 
 class ASceneCapture2D;
 class UMaterialInterface;
@@ -166,6 +170,12 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x4b4): not a UPROPERTY, not replicated.
 	uint8 NativeExplorationTeam;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x4b8): not a UPROPERTY, not replicated.
+	int32 NativeCurrentTeamMapIndex_0x4b8 = -1;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x4c0): not a UPROPERTY, not replicated.
+	uint32 NativeMapState_0x4c0 = 8;
+
 	// table index 3, flags 0x20080000000000
 	UPROPERTY()
 	float MapWorldScale;
@@ -213,5 +223,9 @@ public:
 	bool ShouldShowMainMap();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	void NativeUpdateMapTexture();
 };
 
