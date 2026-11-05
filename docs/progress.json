@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "eb455fe659e4e8083f6d2b93b0972d84a3568d61",
- "subject": "Preserve profile ownership and expire party invitations",
- "date": "2026-11-04T22:25:08-05:00",
+ "head": "a987465bf289a970295c23d5318518823c35bcf5",
+ "subject": "Connect local matchmaking URLs and preserve service state",
+ "date": "2026-11-04T22:27:51-05:00",
  "overall_pct": 28.571,
  "measured_pct": 27.701,
  "objective_pct": 27.7,
@@ -1242,7 +1242,7 @@
      "evidence": "manual estimate (see rationale)",
      "basis": "manual",
      "carried": false,
-     "rationale": "Local websocket status uses the ticket roster for player and ready counts. Local backend tests cover portions of the implementation; original-client integration and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md.",
+     "rationale": "Local websocket status uses the ticket roster and its advertised origin can be configured for a local service; an HTTP/WebSocket test follows that URL. Original-client integration and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md.",
      "evidence_links": []
     },
     {
@@ -3236,7 +3236,7 @@
    "evidence": "manual estimate (see rationale)",
    "basis": "manual",
    "carried": false,
-   "rationale": "Local websocket status uses the ticket roster for player and ready counts. Local backend tests cover portions of the implementation; original-client integration and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md.",
+   "rationale": "Local websocket status uses the ticket roster and its advertised origin can be configured for a local service; an HTTP/WebSocket test follows that URL. Original-client integration and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md.",
    "evidence_links": []
   },
   {

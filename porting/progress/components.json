@@ -1118,7 +1118,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Local websocket status uses the ticket roster for player and ready counts. Local backend tests cover portions of the implementation; original-client integration and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "Local websocket status uses the ticket roster and its advertised origin can be configured for a local service; an HTTP/WebSocket test follows that URL. Original-client integration and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md."
         },
         {
           "id": "backend.game_profile",
