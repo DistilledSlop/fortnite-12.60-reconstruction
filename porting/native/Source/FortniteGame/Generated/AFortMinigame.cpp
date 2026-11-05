@@ -945,6 +945,12 @@ bool AFortMinigame::ShouldDropOrDestroyItem_Implementation(bool& bShouldDrop, bo
 	return bShouldDrop;
 }
 
+bool AFortMinigame::UseTeamScoring() const
+{
+	// CONFIDENCE: HIGH; direct captured wrapper and reflected boolean offsets.
+	return bTeamMinigame && bTeamsAreStable;
+}
+
 bool AFortMinigame::WasInProgress() const
 {
 	// CONFIDENCE: HIGH; direct captured wrapper.

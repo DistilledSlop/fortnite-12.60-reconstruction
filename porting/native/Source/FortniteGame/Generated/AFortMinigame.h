@@ -821,6 +821,9 @@ public:
 	virtual bool ShouldDropOrDestroyItem_Implementation(bool& bShouldDrop, bool& bShouldDestroy, AFortPlayerController* PC, UFortWorldItemDefinition* ItemDef) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool UseTeamScoring() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool WasInProgress() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

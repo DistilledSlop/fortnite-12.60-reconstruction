@@ -60497,5 +60497,37 @@
     "includes": [],
     "notes": "Copies the FString array at 0x648 into the return value.",
     "class": "UFortRuntimeOptions"
+  },
+  {
+    "function": "GetMapWeaponTracersEnabled",
+    "kind": "exec",
+    "signature": "bool GetMapWeaponTracersEnabled() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage005_verified/AFortPlayerControllerSpectating_GetMapWeaponTracersEnabled.inc",
+    "address": "0x142a6b9f0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Tests bit 0 at 0x2bf0 and byte at 0x2ae5.",
+    "class": "AFortPlayerControllerSpectating"
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "UseTeamScoring",
+    "kind": "exec",
+    "signature": "bool UseTeamScoring() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/triage004_new/AFortMinigame_UseTeamScoring.inc",
+    "address": "0x1429c68b0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Captured wrapper checks nonzero bytes at 0x91a and 0x91b; reflected setters identify bTeamMinigame and bTeamsAreStable."
   }
 ]

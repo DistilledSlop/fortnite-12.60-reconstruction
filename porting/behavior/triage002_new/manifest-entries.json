@@ -3,7 +3,7 @@
     "class": "UFortClientSettingsRecord",
     "function": "GetHUDScale",
     "kind": "exec",
-    "signature": "float GetHUDScale()",
+    "signature": "float GetHUDScale() const",
     "signature_status": "proposed",
     "static": false,
     "access": "public",

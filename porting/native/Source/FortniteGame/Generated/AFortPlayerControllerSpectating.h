@@ -253,6 +253,9 @@ public:
 	virtual AFortPlayerState* GetFollowedPlayer() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetMapWeaponTracersEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
