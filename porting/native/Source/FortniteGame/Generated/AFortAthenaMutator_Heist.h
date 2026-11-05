@@ -12,6 +12,7 @@
 #include "FHeistExitCraftData.h"
 #include "FHeistExitCraftSpawnData.h"
 #include "FHeistTeamHoldingJewelInfo.h"
+#include "FSpecialActorRepData.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
@@ -224,6 +225,11 @@ public:
 	// table index 0, flags 0x20080000010015
 	UPROPERTY()
 	UTexture2D* IconToShowInSquadBar;
+
+protected:
+	UFUNCTION()
+	void OnSpecialActorRemoved(FSpecialActorRepData& SpecialActorData);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

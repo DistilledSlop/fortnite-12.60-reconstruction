@@ -200,6 +200,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void PlaceHeldObject();
 
+protected:
+	UFUNCTION()
+	void ThrownObjectStopped(FHitResult& ImpactResult);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

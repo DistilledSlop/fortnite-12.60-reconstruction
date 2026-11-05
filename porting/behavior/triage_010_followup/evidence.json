@@ -1,0 +1,32 @@
+[
+  {
+    "function": "ThrownObjectStopped",
+    "wrapper_capture": "porting/generated/native-triage010/0x1429380c0.c",
+    "reflection": "porting/generated/reflection/native_funcs.json and struct_blocks.json",
+    "behavior": "FHitResult argument; wrapper calls empty leaf after argument parsing.",
+    "class": "UFortHeldObjectComponent"
+  },
+  {
+    "function": "OnSpecialActorRemoved",
+    "wrapper_capture": "porting/generated/native-triage010/0x142809b50.c",
+    "reflection": "porting/generated/reflection/native_funcs.json and struct_blocks.json",
+    "behavior": "FSpecialActorRepData argument is constructed and destroyed in the exec wrapper; the native leaf is empty.",
+    "class": "AFortAthenaMutator_Heist"
+  },
+  {
+    "class": "UFortBaseAnimInstance",
+    "function": "TryGetFortPawn",
+    "wrapper_capture": "porting/generated/native-triage010/0x14284b280.c",
+    "implementation_capture": "porting/generated/triage010-followup/_adhoc/0x14184ebf0__14184ebf0.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "behavior": "Pawn owner lookup then Unreal cast to AFortPawn."
+  },
+  {
+    "class": "UFortAnimInstance",
+    "function": "TryGetFortAIPawn",
+    "wrapper_capture": "porting/generated/native-triage010/0x1427b66a0.c",
+    "implementation_capture": "porting/generated/triage010-followup/_adhoc/0x1418251c0__1418251c0.c",
+    "reflection": "porting/generated/reflection/native_funcs.json",
+    "behavior": "Pawn owner lookup then Unreal cast to AFortAIPawn."
+  }
+]

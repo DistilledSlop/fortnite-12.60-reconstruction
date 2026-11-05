@@ -109,6 +109,12 @@ void UFortHeldObjectComponent::PlaceHeldObject()
 	return;
 }
 
+void UFortHeldObjectComponent::ThrownObjectStopped(FHitResult& ImpactResult)
+{
+	// Original exec 0x1429380c0 calls Stub_Empty.
+	// CONFIDENCE: HIGH
+}
+
 void UFortHeldObjectComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -11,6 +11,8 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
+class AFortAIPawn;
+
 #include "UFortAnimInstance.generated.h"
 
 UCLASS(config=Game, transient)
@@ -189,6 +191,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortCardinalDirection GetCardinalDirectionFromAngle(float Angle, float DeadZoneAngle) const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortAIPawn* TryGetFortAIPawn();
+public:
 
 };
 

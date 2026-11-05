@@ -2,6 +2,12 @@
 #include "AFortAthenaMutator_Heist.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortAthenaMutator_Heist::OnSpecialActorRemoved(FSpecialActorRepData& SpecialActorData)
+{
+	// Original exec 0x142809b50 calls Stub_Empty.
+	// CONFIDENCE: HIGH
+}
+
 void AFortAthenaMutator_Heist::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

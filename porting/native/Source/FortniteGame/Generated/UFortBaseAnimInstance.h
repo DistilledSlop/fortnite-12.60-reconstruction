@@ -8,6 +8,8 @@
 
 #include "FGameplayTagNotifyDelegate.h"
 
+class AFortPawn;
+
 #include "UFortBaseAnimInstance.generated.h"
 
 UCLASS(config=Game, transient)
@@ -23,6 +25,11 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FGameplayTagNotifyDelegate OnGameplayTagNotifyEnd;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPawn* TryGetFortPawn();
+public:
 
 };
 
