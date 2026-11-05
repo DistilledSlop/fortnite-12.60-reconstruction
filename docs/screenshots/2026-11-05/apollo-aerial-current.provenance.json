@@ -1,0 +1,25 @@
+{
+  "capture_date_utc": "2026-11-05",
+  "scene": "Standalone Apollo terrain preview in freshly built reconstructed Linux client, software Vulkan, 1280x720.",
+  "client_sha256": "8b4af1b302e06c03f0ba2d8fa9c64073875b4576948c09af3257fe2c53f328de",
+  "stage": "Isolated copy of generated/linux-stage/LinuxNoEditor overlaid with existing later cooked assets and shader archives; not a clean recook.",
+  "views": [
+    {
+      "file": "apollo-aerial-current.png",
+      "camera": "BugItGo 16000 -16000 12000 -25 180 0",
+      "sha256": "9329bde84bd379195f5aececd8d371f5b408ac92e5ff6996f6dfb64c2db4b56b"
+    },
+    {
+      "file": "apollo-overhead-current.png",
+      "camera": "BugItGo 16000 -16000 50000 -65 70 0",
+      "sha256": "4ef30f08dbaf7435bf6555a5076e61cc109c827a2bdee265f118771648b92032"
+    }
+  ],
+  "source_log": "porting/generated/visual-coherent-cook-test/captures/world.log",
+  "capture_driver": "porting/generated/visual-coherent-cook-test/captures/capture.py",
+  "limits": [
+    "Standalone diagnostic capture; not a local-server join or a playable match.",
+    "61 converted terrain meshes reported; white terrain tiles, reflective materials, sparse objects and missing streaming packages remain.",
+    "Does not establish original terrain-material or native streaming parity."
+  ]
+}
