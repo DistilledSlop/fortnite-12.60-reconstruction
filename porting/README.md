@@ -57,8 +57,12 @@ The four dashboard milestones remain the product acceptance gates.
   original wind manager and restores heading rotation, dedicated-server gating,
   and native intensity/direction/vector state. The public wind queries now expose
   that intensity/direction and resolve the world-specific wind manager through
-  the game state. Wind initialization and rendering consumers remain incomplete;
-  this is source integration without visual/runtime credit.
+  the game state. Wind-handle default construction now shares the original
+  zero-seeded UID sequence across modules, including reflected-call temporary
+  handles; the impulse query checks radius and cylinder handles. Wind responder
+  storage now preserves native bounds and effective distance with layout checks.
+  Building responder registration and material updates remain incomplete; these are source
+  changes without visual/runtime credit.
   The new engine reader is also build/runtime pending. These changes do not establish
   original map loading, terrain fidelity, or a completed world.
 - The client is `FortniteClient-12.60-CL-13477524`, a packaged Win64 build.

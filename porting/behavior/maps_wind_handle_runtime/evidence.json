@@ -1,9 +1,46 @@
 {
-  "status": "unported; shared handle constructor dependency",
+  "status": "ported source; build and runtime pending",
   "exec_address": "0x142b560c0",
   "capture": "porting/generated/maps-wind-live-consumers/_adhoc/0x142b560c0__142b560c0.c",
   "sha256": "feb4f11599c76f5a042dec5bcbbd83d11acca223106db656769f6547318baa63",
   "body": "Scan WindImpulses handles at stride0x4c/offset0x48 followed by WindImpulseCylinders at stride0x48/offset0x38. Return whether UID matches.",
-  "required_wrapper_effect": "Before resolving the reference argument, default construction of the temporary handle reads and increments shared global0x148129b6c. Existing generated FFortWindImpulseHandle has only UID and no shared constructor policy. Other wrappers/creators share this counter.",
-  "next_step": "Recover shared handle counter initialization and implement struct-level default construction before adding this body; avoid a disconnected local counter."
+  "required_wrapper_effect": "The original wrapper default-constructs a temporary handle and increments shared global0x148129b6c before resolving the reference argument. The restored struct constructor and exported allocator now preserve this effect in generated wrappers.",
+  "shared_constructor": {
+    "implementation": "Default constructor calls one exported FortniteGame allocator shared across modules. It returns the current uint32 UID and increments with 32-bit wraparound, without locking. Copy/assignment remain ordinary value copies.",
+    "global_address": "0x148129b6c",
+    "initialization": "Zero-initialized PE .data tail: RVA0x8129b6c falls beyond .data SizeOfRawData, inside VirtualSize. Runtime capture contains UID7; that is observed current state, not the initial seed.",
+    "zero_seed_source": "Fortnite/FortniteGame/Binaries/Win64/FortniteClient-Win64-Shipping.exe",
+    "original_data_section": {
+      "virtual_address": "0x7812000",
+      "virtual_size": "0xbeebd0",
+      "size_of_raw_data": "0x8bc000"
+    },
+    "counter_abi": "uint32 arithmetic preserves machine wraparound; int32 UID retains original bits. An exported allocator avoids per-module disconnected counters.",
+    "source_policy": "porting/behavior/maps_wind_handle_runtime/source_policy.py",
+    "allocator": "porting/native/Source/FortniteGame/Private/FortWindImpulseHandle.cpp"
+  },
+  "reference_scan": {
+    "path": "porting/generated/maps-wind-handle-refs/functions.json",
+    "candidates": 64,
+    "scope": "Two captured executable sections; RIP-relative candidates with 0/1/4-byte trailing immediates. Candidates need instruction validation; no claim of indirect-reference completeness."
+  },
+  "captures": {
+    "0x141dc4de0": {
+      "path": "porting/generated/maps-wind-handle-constructors/_adhoc/0x141dc4de0__141dc4de0.c",
+      "sha256": "273abd3c1eb99f49918db643164a41d59df243144f32e26f851f29140ac0df0e"
+    },
+    "0x141dc4ef0": {
+      "path": "porting/generated/maps-wind-handle-constructors/_adhoc/0x141dc4ef0__141dc4ef0.c",
+      "sha256": "e96f7e9325f2019e1f6ea4f66d2540dae608c9e5b048417af050fa9611c91935"
+    },
+    "0x142b53fa0": {
+      "path": "porting/generated/maps-wind-handle-constructors/_adhoc/0x142b53fa0__142b53fa0.c",
+      "sha256": "7753d2d48540689f4c040d3309e30bbb6cd0f9fef2411615216217fe3ec196e6"
+    },
+    "0x142b54060": {
+      "path": "porting/generated/maps-wind-handle-constructors/_adhoc/0x142b54060__142b54060.c",
+      "sha256": "eaef76962b170855c762098b004d8d64406b7ae503789642c0dee6b9de3a6cda"
+    }
+  },
+  "signature_policy": "The reflected const reference input is restored before snippet validation, preserving Blueprint input semantics and allowing UHT-generated temporary handles."
 }

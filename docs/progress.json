@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "d2e69e1526cb9dcbddcb086d2f3d4c3ea870f189",
- "subject": "Restore public world wind queries in Unreal source",
- "date": "2026-11-05T12:29:28-05:00",
+ "head": "da6c78855eb959fd305e97add8cd31140b0269ec",
+ "subject": "Record building wind material initialization and handle dependencies",
+ "date": "2026-11-05T12:31:17-05:00",
  "overall_pct": 29.106,
  "measured_pct": 28.236,
  "objective_pct": 28.235,

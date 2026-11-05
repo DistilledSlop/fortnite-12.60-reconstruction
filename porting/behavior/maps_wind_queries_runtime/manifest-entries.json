@@ -17,7 +17,7 @@
   {
     "function": "GetWindManager",
     "kind": "exec",
-    "signature": "AFortWindManager* GetWindManager(UObject* WorldContextObject)",
+    "signature": "AFortWindManager* GetWindManager(const UObject* WorldContextObject)",
     "signature_status": "proposed",
     "access": "public",
     "static": true,
@@ -30,7 +30,7 @@
       "Engine/Engine.h",
       "Engine/World.h"
     ],
-    "notes": "Original source recovery; generated object parameter spelling follows the existing reflection decoder. Context is only read. Build and runtime verification pending.",
+    "notes": "Original source recovery; signature policy restores the reflected const object input qualifier. Build and runtime verification pending.",
     "class": "AFortWindManager"
   }
 ]

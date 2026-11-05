@@ -21,5 +21,5 @@
   },
   "behavior": "The first exec forwards output arguments to 0x141dcc030, which copies intensity at 0x420 and direction at 0x424. The manager helper resolves the context world and returns the AFortGameState WindManager at 0x468, or null.",
   "status": "ported source only; build/runtime pending",
-  "signature_note": "The context has CPF_ConstParm but no reference bit; the current generator emits UObject* for this object parameter. This source spelling does not change pointer ABI or the read-only lookup behavior."
+  "signature_note": "Wind signature policy restores CPF_ConstParm for the world context object and for HasWindImpulse input reference; strict reflection identity/flags checks precede overrides. No context or handle mutation occurs."
 }

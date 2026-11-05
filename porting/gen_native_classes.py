@@ -2410,6 +2410,14 @@ _maps_fog_spec = _common_activation_import.spec_from_file_location(
     "maps_fog_raster_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_fog_raster_runtime", "source_policy.py"))
 _maps_fog_policy = _common_activation_import.module_from_spec(_maps_fog_spec)
 _maps_fog_spec.loader.exec_module(_maps_fog_policy)
+_maps_wind_handle_spec = _common_activation_import.spec_from_file_location(
+    "maps_wind_handle_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_handle_runtime", "source_policy.py"))
+_maps_wind_handle_policy = _common_activation_import.module_from_spec(_maps_wind_handle_spec)
+_maps_wind_handle_spec.loader.exec_module(_maps_wind_handle_policy)
+_maps_wind_building_spec = _common_activation_import.spec_from_file_location(
+    "maps_wind_building_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_building_runtime", "source_policy.py"))
+_maps_wind_building_policy = _common_activation_import.module_from_spec(_maps_wind_building_spec)
+_maps_wind_building_spec.loader.exec_module(_maps_wind_building_policy)
 _maps_visibility_spec = _common_activation_import.spec_from_file_location(
     "maps_visibility_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_visibility_evaluate_runtime", "source_policy.py"))
 _maps_visibility_policy = _common_activation_import.module_from_spec(_maps_visibility_spec)
@@ -2579,6 +2587,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
                                          UI_PARAMETERIZED_BLUEPRINT_EVENTS.get(name, {}), native_event_names)
     _native_checkpoint3058_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _definition_queries_policy.apply_signatures(name, block, functions, owner_fns, function_view)
+    _maps_wind_handle_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _dayphase_callback_policy.apply_signatures(name, block, functions, owner_fns, function_view, snippets)
     splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped,
                               {m["name"] for m in members})
@@ -5396,6 +5405,7 @@ def render_struct_header(model, source_label):
                      % (name, net.get("vtable"), ", ".join(net.get("traits", []))))
         lines.append("// serialization is used until it is ported.")
     lines.extend(_inventory_entry_policy.preamble(model))
+    lines.extend(_maps_wind_handle_policy.preamble(model))
     lines.extend(_confirmation_policy.preamble(model))
     lines.append("USTRUCT(BlueprintType)" if model.get("blueprint_type") else "USTRUCT()")
     lines.append("struct %s%s%s" % (model.get("api", ""), name, " : public %s" % model["parent"] if model["parent"] else ""))
@@ -5410,7 +5420,9 @@ def render_struct_header(model, source_label):
         lines.append("")
         lines.extend(_inventory_entry_policy.fields_after(model, m))
         lines.extend(_maps_fog_policy.fields_after(model, m))
+        lines.extend(_maps_wind_building_policy.fields_after(model, m))
     lines.extend(_maps_fog_policy.declarations(model))
+    lines.extend(_maps_wind_handle_policy.declarations(model))
     lines.extend(_common_activation_policy.struct_declarations(model))
     lines.extend(_quickbar_refresh_policy.declarations(model))
     lines.extend(_cursor_settings_policy.struct_declarations(model))
@@ -5446,6 +5458,7 @@ def render_struct_header(model, source_label):
     if postlude:
         lines.append(postlude)
     lines.extend(_confirmation_policy.footer(model))
+    lines.extend(_maps_wind_building_policy.postamble(model))
     if delta:
         lines.append("template<>")
         lines.append("struct TStructOpsTypeTraits<%s> : public TStructOpsTypeTraitsBase2<%s>" % (name, name))

@@ -1,0 +1,17 @@
+[
+  {
+    "class": "AFortWindManager",
+    "function": "HasWindImpulse",
+    "kind": "exec",
+    "signature": "bool HasWindImpulse(const FFortWindImpulseHandle& WindImpulseHandle) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/maps_wind_handle_runtime/AFortWindManager_HasWindImpulse.inc",
+    "address": "0x142b560c0",
+    "reflection_flags": "0x54420401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Scans radius impulses followed by cylinders for a matching handle UID. The generated wrapper requires the shared FFortWindImpulseHandle default constructor to reproduce its temporary handle counter increment."
+  }
+]

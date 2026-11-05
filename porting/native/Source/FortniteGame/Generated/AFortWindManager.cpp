@@ -3,6 +3,8 @@
 #include "AFortGameState.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "FFortWindImpulseCylinder.h"
+#include "FFortWindImpulseRadius.h"
 #include "Math/Vector.h"
 
 void AFortWindManager::GetGlobalWindIntensityAndDirection(float& WindIntensity, FVector& WindDirection) const
@@ -12,7 +14,7 @@ void AFortWindManager::GetGlobalWindIntensityAndDirection(float& WindIntensity, 
 	WindDirection = NativeWindDirection_0x424;
 }
 
-AFortWindManager* AFortWindManager::GetWindManager(UObject* WorldContextObject)
+AFortWindManager* AFortWindManager::GetWindManager(const UObject* WorldContextObject)
 {
 	// CONFIDENCE: high; original source recovery, build/runtime pending.
 	if (!WorldContextObject)
@@ -22,6 +24,28 @@ AFortWindManager* AFortWindManager::GetWindManager(UObject* WorldContextObject)
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull);
 	AFortGameState* GameState = World ? Cast<AFortGameState>(World->GetGameState()) : nullptr;
 	return GameState ? GameState->WindManager : nullptr;
+}
+
+bool AFortWindManager::HasWindImpulse(const FFortWindImpulseHandle& WindImpulseHandle) const
+{
+	// CONFIDENCE: HIGH
+	for (const FFortWindImpulseRadius& Impulse : WindImpulses)
+	{
+		if (Impulse.Handle.UID == WindImpulseHandle.UID)
+		{
+			return true;
+		}
+	}
+
+	for (const FFortWindImpulseCylinder& Impulse : WindImpulseCylinders)
+	{
+		if (Impulse.Handle.UID == WindImpulseHandle.UID)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void AFortWindManager::NativeSetGlobalWind(float Intensity, const FVector& Direction)

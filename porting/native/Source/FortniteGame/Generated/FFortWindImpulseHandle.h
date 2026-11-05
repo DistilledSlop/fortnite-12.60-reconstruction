@@ -7,6 +7,12 @@
 
 #include "FFortWindImpulseHandle.generated.h"
 
+// One exported allocator shares the original counter across module boundaries.
+namespace FortWindNative
+{
+    FORTNITEGAME_API uint32 AllocateImpulseUID();
+}
+
 USTRUCT()
 struct FFortWindImpulseHandle
 {
@@ -15,6 +21,9 @@ struct FFortWindImpulseHandle
 	// table index 0, offset 0, flags 0x40000000000000
 	UPROPERTY()
 	int32 UID;
+
+	// The original default constructor consumes a UID even for exec temporaries.
+	FFortWindImpulseHandle() : UID(static_cast<int32>(FortWindNative::AllocateImpulseUID())) {}
 
 };
 

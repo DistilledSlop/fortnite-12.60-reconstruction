@@ -55,13 +55,28 @@ struct FFortWindResponder
 	UPROPERTY()
 	TArray<FFortWindResponderMaterialVariablePairData> PairedVariablesData;
 
+	// Actor bounds copied by native registration and responder copy.
+	uint8 NativeBounds_0x68[0x1c];
+
 	// table index 1, offset 132, flags 0x10000000002000
 	UPROPERTY()
 	float WindSpeed;
+
+	// Effective distance selected during native registration.
+	float NativeEffectiveDistance_0x88;
 
 	// table index 0, offset None, flags 0x10000000002000
 	UPROPERTY()
 	bool bHasSetupAnimatingMaterials;
 
 };
+
+static_assert(sizeof(FFortWindResponder) == 0x90, "FFortWindResponder native stride changed");
+static_assert(alignof(FFortWindResponder) == 8, "FFortWindResponder native alignment changed");
+static_assert(STRUCT_OFFSET(FFortWindResponder, MaterialParameterPairIndices) == 0x50, "FFortWindResponder pair index offset changed");
+static_assert(STRUCT_OFFSET(FFortWindResponder, PairedVariablesData) == 0x58, "FFortWindResponder paired data offset changed");
+static_assert(STRUCT_OFFSET(FFortWindResponder, NativeBounds_0x68) == 0x68, "FFortWindResponder bounds offset changed");
+static_assert(STRUCT_OFFSET(FFortWindResponder, WindSpeed) == 0x84, "FFortWindResponder speed offset changed");
+static_assert(STRUCT_OFFSET(FFortWindResponder, NativeEffectiveDistance_0x88) == 0x88, "FFortWindResponder distance offset changed");
+static_assert(STRUCT_OFFSET(FFortWindResponder, bHasSetupAnimatingMaterials) == 0x8c, "FFortWindResponder setup offset changed");
 

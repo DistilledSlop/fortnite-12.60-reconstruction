@@ -8,6 +8,7 @@
 
 #include "FFortWindImpulseCylinder.h"
 #include "FFortWindImpulseCylinderDelta.h"
+#include "FFortWindImpulseHandle.h"
 #include "FFortWindImpulseRadius.h"
 #include "FFortWindResponder.h"
 #include "Math/Vector.h"
@@ -138,7 +139,10 @@ public:
 	void GetGlobalWindIntensityAndDirection(float& WindIntensity, FVector& WindDirection) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	static AFortWindManager* GetWindManager(UObject* WorldContextObject);
+	static AFortWindManager* GetWindManager(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasWindImpulse(const FFortWindImpulseHandle& WindImpulseHandle) const;
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
