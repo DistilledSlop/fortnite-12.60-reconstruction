@@ -38,10 +38,30 @@ contains 32 zero bytes between LocalVF parameters and the output hash. The
 current `FShadowDepthBasePS` declares four `FRWShaderParameter` fields, each
 serialized as SRV and UAV resource parameters (four bytes each), which supports
 this layout; the original field names and individual semantics remain unverified.
-The same record-end, identity, target and exact archive checks pass. The next
-unsupported record is `TLightMapDensityVSFNoLightMapPolicy` at offset 3632;
-8760 resource bytes remain uninterpreted. Neither asset has been attached to
-the runtime using this decode; mesh shader-map construction also remains
+The same record-end, identity, target and exact archive checks pass.
+
+`parent-density-prefix.json` continues through the no-lightmap density vertex
+and pixel records at offsets 3632..4068 and 4068..4536, associated with archive
+indices 859 and 2470 respectively. Both contain three six-byte, unbound uniform
+buffer parameters after the LocalVF payload. The current
+`FUniformLightMapPolicyShaderParametersType::Serialize` declares three such
+buffers; `TUniformLightMapPolicy<LMP_NO_LIGHTMAP>` supplies this policy to the
+density shaders. The pixel record then contains three scalar parameters, with
+base/size/buffer values `(32,12,0)`, `(20,8,0)`, and `(48,16,0)`; the current
+`TLightMapDensityPS` declares three scalar fields in that order. Original field
+names remain independently unverified. Both records pass the declared-end,
+map-hash, target, resource identity, and exact archive output-hash checks.
+
+`parent-depth-prefix.json` decodes `TDepthOnlyVS<false>` at offsets 4536..4954,
+with archive index 1520. There are no additional bytes between its LocalVF
+parameters and the shader output hash, consistent with the current
+`TDepthOnlyVS` declaration. Its declared end, map hash, target, resource
+identity and archive association pass. Five previously supported base-pass
+records follow at offsets 4954..7092 (archive indices 1521, 1522, 2471, 2471,
+2472). The next unsupported record is `FVelocityVS` at offset 7092; 5300 resource
+bytes remain uninterpreted. No depth-only pixel record occurs in this decoded
+prefix, so its original payload is not inferred from the current declaration.
+Neither asset has been attached to the runtime using this decode; mesh shader-map construction also remains
 necessary.
 
 `extraction.json` records selected exact archive entries. `wrappers.json` verifies the complete D3D wrapper framing, resource-table bindings, DXBC extent and optional-data extent. The assembly files are vkd3d 2.0's direct DXBC disassembly; no engine shader compiler or cook was invoked.

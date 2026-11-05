@@ -19,14 +19,17 @@ SHADOW_DEPTH_VS = {
             'TShadowDepthVSVertexShadowDepth_OnePassPointLightfalse',
             'TShadowDepthVSForGSVertexShadowDepth_OnePassPointLight'}
 MESH_VS |= {'TBasePassVSFSimpleNoLightmapLightingPolicy', 'TBasePassVSFNoLightMapPolicy',
-            'FConvertToUniformMeshVS', 'FHitProxyVS'} | SHADOW_DEPTH_VS
+            'FConvertToUniformMeshVS', 'FHitProxyVS',
+            'TLightMapDensityVSFNoLightMapPolicy',
+            # Current TDepthOnlyVS declares no additional serialized fields.
+            'TDepthOnlyVS<false>'} | SHADOW_DEPTH_VS
 MESH_PS = {'TTranslucencyShadowDepthPS<' + mode + '>' for mode in
            ('TranslucencyShadowDepth_Standard', 'TranslucencyShadowDepth_PerspectiveCorrect')}
 MESH_PS |= {'TBasePassPS' + policy + sky for policy in
             ('FSimpleNoLightmapLightingPolicy', 'FNoLightMapPolicy') for sky in ('', 'Skylight')}
 SHADOW_DEPTH_PS = {'TShadowDepthPSPixelShadowDepth_' + mode + 'false' for mode in
                    ('PerspectiveCorrect', 'OnePassPointLight', 'NonPerspectiveCorrect')}
-MESH_PS |= {'FHitProxyPS'} | SHADOW_DEPTH_PS
+MESH_PS |= {'FHitProxyPS', 'TLightMapDensityPSFNoLightMapPolicy'} | SHADOW_DEPTH_PS
 MESH_GS = {'FConvertToUniformMeshGS'}
 
 
@@ -119,6 +122,14 @@ def shader_record(reader, map_hash, expression_counts, vertex_factory=None):
             if kind.startswith('TBasePass'):
                 # All six observed base-pass types share 0x1431e2ea0.
                 result['base_pass_uniform_buffers'] = [uniform_buffer(reader) for _ in range(4)]
+            elif kind in {'TLightMapDensityVSFNoLightMapPolicy',
+                          'TLightMapDensityPSFNoLightMapPolicy'}:
+                # FUniformLightMapPolicyShaderParametersType serializes three
+                # FShaderUniformBufferParameters in LightMapRendering.h.
+                result['lightmap_policy_uniform_buffers'] = [uniform_buffer(reader) for _ in range(3)]
+                if kind in MESH_PS:
+                    # Current TLightMapDensityPS declares three scalar parameters.
+                    result['lightmap_density_parameters'] = [parameters(reader) for _ in range(3)]
             elif kind.startswith('TTranslucencyShadowDepthPS'):
                 # Original 0x143237540 adds one scalar FShaderParameter.
                 result['shadow_depth_parameter'] = parameters(reader)
