@@ -1,0 +1,8 @@
+// Behaviour snippet: UAthenaXPWidgetBase::OnWidgetAnimationDone (body only; spliced into the generated member function).
+// Original address: 0x1451cf8f0
+// Decompile source: porting/generated/decomp/UAthenaXPWidgetBase/OnWidgetAnimationDone__1451cf8f0.c
+// Inferred: Decompile zeroes an 8-byte field at +0x2c0 and a 4-byte field at +0x2c8. Neither offset is reflected; storage names follow the NativeRecovered convention (member_field entries added with this batch).
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+// CONFIDENCE: MEDIUM
+NativeRecoveredQword_0x2c0 = 0;
+NativeRecoveredInt_0x2c8 = 0;

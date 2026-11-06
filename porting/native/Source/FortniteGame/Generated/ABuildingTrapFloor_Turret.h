@@ -143,6 +143,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ConsumeAmmo();
 
+	UFUNCTION(BlueprintCallable)
+	void FinishReload();
+
 	UFUNCTION()
 	AFortPawn* GetTarget();
 

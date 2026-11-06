@@ -14,6 +14,7 @@
 class AActor;
 class AFortPawn;
 class AFortPlayerPawn;
+class APlayerController;
 class UBuildingTextureData;
 class UChildCheatManager;
 
@@ -1438,6 +1439,9 @@ protected:
 	UFUNCTION(Exec)
 	void SetWorldDaysElapsed(float days);
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool ShouldUseNewHeroLoadoutUI(APlayerController* PC);
 
 protected:
 	UFUNCTION(Exec)

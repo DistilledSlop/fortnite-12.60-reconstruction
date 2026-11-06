@@ -446,6 +446,9 @@ public:
 	UPROPERTY(Replicated)
 	AFortPlayerState* MinigameStarter;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xab1): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xab1;
+
 	// table index 32, flags 0x20080000020005
 	UPROPERTY()
 	int32 TeamRotationSetting;
@@ -524,6 +527,12 @@ public:
 	// table index 7, flags 0x20080000000025
 	UPROPERTY(Replicated)
 	bool bAllowFriendlyFire;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xc60): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xc60;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xc61): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xc61;
 
 	// table index 6, flags 0x40000000000020
 	UPROPERTY(Replicated)
@@ -677,6 +686,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsGameWinnerShown() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInPlayMode() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInProgress() const;
@@ -833,6 +845,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	bool ShouldDropOrDestroyItem(bool& bShouldDrop, bool& bShouldDestroy, AFortPlayerController* PC, UFortWorldItemDefinition* ItemDef) const;
 	virtual bool ShouldDropOrDestroyItem_Implementation(bool& bShouldDrop, bool& bShouldDestroy, AFortPlayerController* PC, UFortWorldItemDefinition* ItemDef) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ToggleAutoRestartMinigame();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool UseTeamScoring() const;

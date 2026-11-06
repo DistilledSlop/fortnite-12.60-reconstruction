@@ -36,6 +36,11 @@ public:
 	UPROPERTY()
 	UFortExpeditionListViewWidget* ExpeditionListView;
 
+private:
+	UFUNCTION()
+	void HandleExpeditionTabButtonCreated(FName TabNameId, UCommonButton* TabButton);
+public:
+
 protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void OnExpeditionOverviewRefresh();

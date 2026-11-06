@@ -14,5 +14,16 @@ class FORTNITEUI_API UAthenaXPWidgetBase : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2c0): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredQword_0x2c0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2c8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x2c8;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void OnWidgetAnimationDone();
+public:
+
 };
 

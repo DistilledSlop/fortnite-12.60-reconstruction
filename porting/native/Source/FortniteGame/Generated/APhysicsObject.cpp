@@ -29,6 +29,28 @@ FString APhysicsObject::GetDisplayName() const
 	return GetFName().GetPlainNameString();
 }
 
+FVector APhysicsObject::GetPreviousLinearAcceleration() const
+{
+	// Behaviour snippet: APhysicsObject::GetPreviousLinearAcceleration (body only; spliced into the generated member function).
+	// Original address: 0x142b84450
+	// Decompile source: porting/generated/decomp/APhysicsObject/GetPreviousLinearAcceleration__142b84450.c
+	// Inferred: Decompile copies 8 bytes from +0x588 (X,Y) and 4 bytes from +0x590 (Z) into the FVector return: a 12-byte FVector at +0x588 (member_field NativeRecoveredVector_0x588).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return NativeRecoveredVector_0x588;
+}
+
+FVector APhysicsObject::GetPreviousLinearVelocity() const
+{
+	// Behaviour snippet: APhysicsObject::GetPreviousLinearVelocity (body only; spliced into the generated member function).
+	// Original address: 0x142b84480
+	// Decompile source: porting/generated/decomp/APhysicsObject/GetPreviousLinearVelocity__142b84480.c
+	// Inferred: Decompile copies 8 bytes from +0x570 (X,Y) and 4 bytes from +0x578 (Z) into the FVector return: a 12-byte FVector at +0x570 (member_field NativeRecoveredVector_0x570).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return NativeRecoveredVector_0x570;
+}
+
 bool APhysicsObject::HasPermissionToAlterBuildings() const
 {
 	// Original address: 0x1412d9d60.
@@ -81,7 +103,13 @@ void APhysicsObject::OnRep_AbilitySystemComponent()
 
 void APhysicsObject::OnRep_CorrectTargetOrientation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: APhysicsObject::OnRep_CorrectTargetOrientation (body only; spliced into the generated member function).
+	// Original address: 0x142b856b0
+	// Decompile source: porting/generated/decomp/APhysicsObject/OnRep_CorrectTargetOrientation__142b856b0.c
+	// Inferred: RepNotify of CorrectTargetOrientation. Decompile stores float 0x3f000000 (0.5f) at +0x554, the existing member_field NativeRecoveredFloat_0x554.
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	NativeRecoveredFloat_0x554 = 0.5f;
 }
 
 void APhysicsObject::OnRep_CurrentServerPhysicsState()

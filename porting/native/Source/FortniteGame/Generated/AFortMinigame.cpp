@@ -593,6 +593,15 @@ bool AFortMinigame::IsGameWinnerShown() const
 	return FMath::Abs(GameWinnerDisplayTime) > 1.e-8f;
 }
 
+bool AFortMinigame::IsInPlayMode() const
+{
+	// Original address: 0x1429c2d50.
+	// Decompile source: porting/generated/decomp/AFortMinigame/IsInPlayMode__1429c2d50.c
+	// Inferred: direct body (no tail jump): returns 0 only when both byte flags at +0xc61 and +0xc60 are zero, else 1. Both flags are unnamed in reflection and are declared as member_field storage (NativeRecoveredBool_0xc60, NativeRecoveredBool_0xc61).
+	// CONFIDENCE: HIGH
+	return NativeRecoveredBool_0xc61 || NativeRecoveredBool_0xc60;
+}
+
 bool AFortMinigame::IsInProgress() const
 {
 	// CONFIDENCE: HIGH; direct captured wrapper.
@@ -800,7 +809,11 @@ void AFortMinigame::OnRep_ClassSlotArray()
 
 void AFortMinigame::OnRep_CurrentRound()
 {
-	// Body not recovered: reflection-derived stub.
+	// Original address: 0x1429c49f0; native body 0x14209e320 (exec thunk tail-jumps there after Stack.Code bump).
+	// Decompile source: porting/generated/decomp/AFortMinigame/OnRep_CurrentRound__1429c49f0.c
+	// Inferred: target reads CurrentRound (int32 at +0x42c) and passes {this, CurrentRound} as the two-parameter argument block of OnCurrentRoundChangedDelegate (this+0x3e8, FOnCurrentRoundChanged(AFortMinigame*, int32)).
+	// CONFIDENCE: HIGH
+	OnCurrentRoundChangedDelegate.Broadcast(this, CurrentRound);
 }
 
 void AFortMinigame::OnRep_CurrentState()
@@ -815,7 +828,11 @@ void AFortMinigame::OnRep_MinigamePlayer()
 
 void AFortMinigame::OnRep_PlayerBuckets()
 {
-	// Body not recovered: reflection-derived stub.
+	// Original address: 0x1429c4a50; native body 0x14209e410 (exec thunk tail-jumps there after Stack.Code bump).
+	// Decompile source: porting/generated/decomp/AFortMinigame/OnRep_PlayerBuckets__1429c4a50.c
+	// Inferred: target body is `this+0x398` (MinigameTeamConfigUpdated, reflection offset 0x398) ProcessMulticastDelegate with no parameters (`xor edx,edx; jmp 0x1406a9dc0`). Broadcast with no arguments.
+	// CONFIDENCE: HIGH
+	MinigameTeamConfigUpdated.Broadcast();
 }
 
 void AFortMinigame::OnRep_ServerTime()
@@ -830,7 +847,11 @@ void AFortMinigame::OnRep_StatsChanged()
 
 void AFortMinigame::OnRep_TeamArray()
 {
-	// Body not recovered: reflection-derived stub.
+	// Original address: 0x1429c4a50; native body 0x14209e410 (shared with OnRep_PlayerBuckets).
+	// Decompile source: porting/generated/decomp/AFortMinigame/OnRep_TeamArray__1429c4a50.c
+	// Inferred: same folded body as OnRep_PlayerBuckets: broadcast of MinigameTeamConfigUpdated (this+0x398) with no parameters.
+	// CONFIDENCE: HIGH
+	MinigameTeamConfigUpdated.Broadcast();
 }
 
 void AFortMinigame::OnRep_Volume()
@@ -972,6 +993,18 @@ bool AFortMinigame::ShouldDropOrDestroyItem_Implementation(bool& bShouldDrop, bo
 	// CONFIDENCE: high
 	// Native target 0x1414a4890.
 	return bShouldDrop;
+}
+
+void AFortMinigame::ToggleAutoRestartMinigame()
+{
+	// Original address: 0x1429c6810; native body 0x1420a9070 (exec thunk tail-jumps there after Stack.Code bump).
+	// Decompile source: porting/generated/decomp/AFortMinigame/ToggleAutoRestartMinigame__1429c6810.c
+	// Inferred: only on the authority role (AActor Role byte at +0xf0 == ROLE_Authority, 3), the unnamed flag byte at +0xab1 is set to (flag == 0), i.e. toggled. The flag is declared as member_field storage (NativeRecoveredBool_0xab1).
+	// CONFIDENCE: HIGH
+	if (GetLocalRole() == ROLE_Authority)
+	{
+	    NativeRecoveredBool_0xab1 = !NativeRecoveredBool_0xab1;
+	}
 }
 
 bool AFortMinigame::UseTeamScoring() const

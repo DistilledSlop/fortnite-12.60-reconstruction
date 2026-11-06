@@ -139,6 +139,12 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x554): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x554;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x570): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredVector_0x570;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x588): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredVector_0x588;
+
 	// table index 19, flags 0x40000000010001
 	UPROPERTY()
 	FFortAttributeInitializationKey AttributeInitKey;
@@ -220,6 +226,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual FString GetDisplayName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetPreviousLinearAcceleration() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetPreviousLinearVelocity() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasPermissionToAlterBuildings() const;
