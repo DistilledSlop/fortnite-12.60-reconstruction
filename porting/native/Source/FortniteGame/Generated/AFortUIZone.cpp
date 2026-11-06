@@ -9,3 +9,30 @@ FName AFortUIZone::GetCurrentCursorModeAction()
 	}
 }
 
+void AFortUIZone::ToggleTargetInfo()
+{
+	// Original address: 0x142b29d10 (exec thunk; tail-forward target 0x142614070).
+	// Decompile source: porting/generated/decomp/AFortUIZone/ToggleTargetInfo__142614070.c
+	// Inferred: exec thunk runs the FFrame counter preamble and tail-jumps to the target body (statements below); no parameters.
+	// CONFIDENCE: HIGH
+	NativeRecoveredBool_0x61a = !NativeRecoveredBool_0x61a;
+}
+
+void AFortUIZone::ToggleTargetInfoPaths()
+{
+	// Original address: 0x142b29de0 (exec thunk; tail-forward target 0x1426148c0).
+	// Decompile source: porting/generated/decomp/AFortUIZone/ToggleTargetInfoPaths__1426148c0.c
+	// Inferred: exec thunk runs the FFrame counter preamble and tail-jumps to the target body (statements below); no parameters.
+	// CONFIDENCE: HIGH
+	NativeRecoveredBool_0x623 = !NativeRecoveredBool_0x623;
+}
+
+void AFortUIZone::ToggleTargetInfoSensing()
+{
+	// Original address: 0x142b29e00 (exec thunk; tail-forward target 0x1426148e0).
+	// Decompile source: porting/generated/decomp/AFortUIZone/ToggleTargetInfoSensing__1426148e0.c
+	// Inferred: exec thunk runs the FFrame counter preamble and tail-jumps to the target body (statements below); no parameters.
+	// CONFIDENCE: HIGH
+	NativeRecoveredBool_0x624 = !NativeRecoveredBool_0x624;
+}
+

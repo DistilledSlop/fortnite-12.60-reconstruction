@@ -284,6 +284,9 @@ public:
 	UPROPERTY(Transient)
 	bool bIsSlopeSliding;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1128): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x1128;
+
 	// table index 313, flags 0x10000000002015
 	UPROPERTY(Transient)
 	float SlopeSlidingPitch;
@@ -1514,6 +1517,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	UAnimMontage* FindEmoteToPlay(AFortPlayerController* FortPlayerController, EFortCustomBodyType::Type InBodyType, EFortCustomGender::Type InGender);
+
+	UFUNCTION()
+	void HandleBeginSkydiving();
 
 	UFUNCTION(BlueprintCallable)
 	void SetIsPatrolling(bool NewValue);

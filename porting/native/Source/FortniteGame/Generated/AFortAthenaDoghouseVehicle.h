@@ -181,6 +181,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ControlState)
 	FReplicatedControlState ControlState;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x156c): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x156c;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EAileronRollDirection GetAileronRollDirection() const;
 
@@ -209,8 +212,10 @@ public:
 	void MultiBeginAileronRoll(const EAileronRollDirection& Direction);
 	void MultiBeginAileronRoll_Implementation(const EAileronRollDirection& Direction);
 
+private:
 	UFUNCTION()
 	void OnRep_ControlState();
+public:
 
 	UFUNCTION(Server, Unreliable)
 	void ServerBeginAileronRoll(const EAileronRollDirection& Direction);

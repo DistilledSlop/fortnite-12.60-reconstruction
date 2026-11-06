@@ -165,6 +165,9 @@ public:
 	UPROPERTY()
 	uint8 bKeybindsHidden : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x330): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x330;
+
 	// table index 8, flags 0x20080000010005
 	UPROPERTY()
 	EFortItemCardSize ItemCardSize;
@@ -196,6 +199,11 @@ public:
 	// table index 0, flags 0x20080000000015
 	UPROPERTY()
 	TArray<FVector2D> SlotSizeBySlotUsage;
+
+protected:
+	UFUNCTION()
+	void OnMinigameEnded();
+public:
 
 };
 

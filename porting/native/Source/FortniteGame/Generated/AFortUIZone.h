@@ -62,12 +62,30 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x5d4): not a UPROPERTY, not replicated.
 	FName NativeRecoveredCursorModeAction_0x5d4 = NAME_None;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x61a): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x61a;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x623): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x623;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x624): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x624;
+
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<UFortSpottedActorIndicator*> SpottedActorIndicators;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetCurrentCursorModeAction();
+
+	UFUNCTION(Exec)
+	void ToggleTargetInfo();
+
+	UFUNCTION(Exec)
+	void ToggleTargetInfoPaths();
+
+	UFUNCTION(Exec)
+	void ToggleTargetInfoSensing();
 
 };
 
