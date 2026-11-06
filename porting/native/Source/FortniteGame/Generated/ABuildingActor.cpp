@@ -242,6 +242,12 @@ void ABuildingActor::PlacedByPlacementTool_Implementation()
 	return;
 }
 
+void ABuildingActor::RemoveEditorOnlyInstanceGameplayTags(FGameplayTagContainer& TagsToRemove)
+{
+	// CONFIDENCE: HIGH; captured wrapper invokes the bare-return native target.
+	return;
+}
+
 void ABuildingActor::SetCanBeSavedToCreativeVolume(bool bCanBeSaved)
 {
 	// CONFIDENCE: high; exact native store and storage mapping verified.

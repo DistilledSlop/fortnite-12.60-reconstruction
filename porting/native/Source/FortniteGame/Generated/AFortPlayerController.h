@@ -1904,6 +1904,9 @@ public:
 	void SetCinematicOverrideClass(TSubclassOf<UFortCinematicCamera> OverrideCameraClass);
 
 	UFUNCTION(BlueprintCallable)
+	void SetClientPawnNewRotation(FRotator& NewRotation);
+
+	UFUNCTION(BlueprintCallable)
 	void SetInputPitchScale(float InInputPitchScale);
 
 	UFUNCTION(BlueprintCallable)

@@ -879,6 +879,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetCurrentAimTarget(AActor* AimTarget);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetDisplayName(FText& Name);
+
 	UFUNCTION(BlueprintCallable)
 	void SetEncounterInfo(UFortAIEncounterInfo* InEncounterInfo);
 

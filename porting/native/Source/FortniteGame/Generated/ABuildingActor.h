@@ -711,6 +711,9 @@ public:
 	virtual void PlacedByPlacementTool_Implementation();
 
 	UFUNCTION(BlueprintCallable)
+	void RemoveEditorOnlyInstanceGameplayTags(FGameplayTagContainer& TagsToRemove);
+
+	UFUNCTION(BlueprintCallable)
 	void SetCanBeSavedToCreativeVolume(bool bCanBeSaved);
 
 	UFUNCTION(BlueprintCallable)

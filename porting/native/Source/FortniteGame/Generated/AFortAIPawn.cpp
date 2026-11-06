@@ -198,6 +198,12 @@ void AFortAIPawn::SetCurrentAimTarget(AActor* AimTarget)
 	this->CurrentAimTarget = AimTarget;
 }
 
+void AFortAIPawn::SetDisplayName(FText& Name)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the bare-return native target.
+	return;
+}
+
 void AFortAIPawn::SetEncounterInfo(UFortAIEncounterInfo* InEncounterInfo)
 {
 	// Original exec 0x1427a5e50; pure writer 0x1422ec430.

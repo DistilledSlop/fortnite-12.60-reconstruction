@@ -221,6 +221,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetDynamicFoundationEnabled(bool bEnabled);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetDynamicFoundationTransform(FTransform& NewTransform);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

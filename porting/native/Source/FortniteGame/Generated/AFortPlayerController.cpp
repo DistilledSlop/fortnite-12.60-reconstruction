@@ -1087,6 +1087,12 @@ void AFortPlayerController::SetCinematicOverrideClass(TSubclassOf<UFortCinematic
 	CinematicCameraClassOverride = OverrideCameraClass;
 }
 
+void AFortPlayerController::SetClientPawnNewRotation(FRotator& NewRotation)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the bare-return native target.
+	return;
+}
+
 void AFortPlayerController::SetInputPitchScale(float InInputPitchScale)
 {
 	// Native 0x142a4f370; CONFIDENCE: high.

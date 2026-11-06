@@ -67,6 +67,12 @@ void ABuildingFoundation::SetDynamicFoundationEnabled(bool bEnabled)
 	// CONFIDENCE: HIGH
 }
 
+void ABuildingFoundation::SetDynamicFoundationTransform(FTransform& NewTransform)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the bare-return native target.
+	return;
+}
+
 bool ABuildingFoundation::NativeIsDynamicFoundationOrParent() const
 {
 	// CONFIDENCE: HIGH

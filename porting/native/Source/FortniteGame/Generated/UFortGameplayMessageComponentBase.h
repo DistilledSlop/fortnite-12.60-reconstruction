@@ -56,6 +56,9 @@ public:
 	UFUNCTION()
 	void OnRep_ChannelIds();
 
+	UFUNCTION(BlueprintCallable)
+	void SetChannelId(FGameplayTagContainer& NewChannelIds);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

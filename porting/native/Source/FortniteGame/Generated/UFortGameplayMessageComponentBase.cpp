@@ -19,6 +19,12 @@ void UFortGameplayMessageComponentBase::OnRep_ChannelIds()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortGameplayMessageComponentBase::SetChannelId(FGameplayTagContainer& NewChannelIds)
+{
+	// CONFIDENCE: HIGH; captured wrapper invokes the bare-return native target.
+	return;
+}
+
 void UFortGameplayMessageComponentBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
