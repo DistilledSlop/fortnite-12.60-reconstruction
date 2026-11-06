@@ -39,5 +39,10 @@ public:
 	UPROPERTY()
 	bool bCollapseBottombar;
 
+protected:
+	UFUNCTION()
+	virtual void OnEventCinematicVideoFinished();
+public:
+
 };
 

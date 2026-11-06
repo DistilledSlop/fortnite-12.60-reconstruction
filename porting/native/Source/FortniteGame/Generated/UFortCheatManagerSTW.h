@@ -27,6 +27,9 @@ public:
 	void DevSkipTutorial();
 
 	UFUNCTION(Exec)
+	virtual void DumpAppliedHomebaseEffectsWithCoreAttributes();
+
+	UFUNCTION(Exec)
 	void EvolveHero();
 
 	UFUNCTION(Exec)

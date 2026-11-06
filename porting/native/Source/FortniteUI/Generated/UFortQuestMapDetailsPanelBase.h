@@ -29,5 +29,8 @@ public:
 	UPROPERTY()
 	FTimerHandle QuestUpdateTimerHandle;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void SetScrollWidget();
+
 };
 

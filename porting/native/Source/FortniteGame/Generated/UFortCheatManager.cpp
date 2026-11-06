@@ -277,6 +277,14 @@ void UFortCheatManager::ClearRespawnTimer()
 	return;
 }
 
+void UFortCheatManager::ClearScriptedPawnVariantChannels()
+{
+	// Original address: 0x14286bb50 (native exec thunk); virtual slot 0x480 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::CommunityVotingRefreshVotingState()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -307,6 +315,14 @@ void UFortCheatManager::CreateProfileGoCollectionForCreativeIslands(int32 GridSt
 	// Native target 0x1406801c0 is a bare return.
 }
 
+void UFortCheatManager::CycleCurrentEncounterToDebug()
+{
+	// Original address: 0x14286be10 (native exec thunk); virtual slot 0x550 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::CycleDebugAbilitySystem()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -331,10 +347,42 @@ void UFortCheatManager::CycleTheaterDisplayed()
 	return;
 }
 
+void UFortCheatManager::DBNO()
+{
+	// Original address: 0x14286be30 (native exec thunk); virtual slot 0x4f0 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::DebugAbilityTags()
+{
+	// Original address: 0x14286be50 (native exec thunk); virtual slot 0x4c8 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::DebugAttribute(FString& Attribute)
 {
 	// CONFIDENCE: high
 	// Native target 0x1406801c0.
+}
+
+void UFortCheatManager::DebugAttributeClear()
+{
+	// Original address: 0x14286bf20 (native exec thunk); virtual slot 0x4e8 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::DebugAttributeModifiers()
+{
+	// Original address: 0x14286bf40 (native exec thunk); virtual slot 0x4d8 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void UFortCheatManager::DebugBuildingDetection()
@@ -381,6 +429,30 @@ void UFortCheatManager::DebugKickPlayerDueToInactivity()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::DebugNativeActions()
+{
+	// Original address: 0x14286c040 (native exec thunk); virtual slot 0x4d0 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::DebugStructuralSupport()
+{
+	// Original address: 0x14080bd30 (native exec thunk); virtual slot 0x4c0 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::DebugThisAI()
+{
+	// Original address: 0x14080bc70 (native exec thunk); virtual slot 0x4b8 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
 	// CONFIDENCE: HIGH
 	return;
 }
@@ -605,6 +677,14 @@ void UFortCheatManager::ForceExternalRichPresenceUpdate()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::ForceReviveFromDBNO()
+{
+	// Original address: 0x14080bbd0 (native exec thunk); virtual slot 0x500 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
 	// CONFIDENCE: HIGH
 	return;
 }
@@ -1433,6 +1513,14 @@ void UFortCheatManager::ReleasePortal()
 	return;
 }
 
+void UFortCheatManager::ReleaseScriptedPawn()
+{
+	// Original address: 0x14286cc80 (native exec thunk); virtual slot 0x490 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::ReloadLevelStream()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1555,10 +1643,26 @@ void UFortCheatManager::RespawnPlayspacePlayer()
 	return;
 }
 
+void UFortCheatManager::RestartMinigame()
+{
+	// Original address: 0x14286cca0 (native exec thunk); virtual slot 0x518 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::RetestFailedBanhammerActions()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::ReviveFromDBNO()
+{
+	// Original address: 0x14286ccc0 (native exec thunk); virtual slot 0x4f8 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
 	// CONFIDENCE: HIGH
 	return;
 }
@@ -1585,6 +1689,30 @@ void UFortCheatManager::ScriptedPawnIntervalFiring(float TimeBetweenShots, int32
 {
 	// CONFIDENCE: high
 	// Native target 0x1406801c0.
+}
+
+void UFortCheatManager::ScriptedPawnStopIntervalFiring()
+{
+	// Original address: 0x14080bc90 (native exec thunk); virtual slot 0x4b0 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::ScriptedPawnToggleCrouch()
+{
+	// Original address: 0x14286cfc0 (native exec thunk); virtual slot 0x498 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::ScriptedPawnToggleFiringWithInfiniteAmmo()
+{
+	// Original address: 0x14286cfe0 (native exec thunk); virtual slot 0x4a0 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void UFortCheatManager::SendRemoteBotCommand(FString CommandToSend)
@@ -2106,6 +2234,14 @@ void UFortCheatManager::SwitchTeam()
 	return;
 }
 
+void UFortCheatManager::TakeoverScriptedPawn()
+{
+	// Original address: 0x14286eec0 (native exec thunk); virtual slot 0x488 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::TeleportToActor(FString ClassOrInstanceName)
 {
 	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
@@ -2254,6 +2390,14 @@ void UFortCheatManager::ToggleAISpawning()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::ToggleAutoRestartMinigame()
+{
+	// Original address: 0x14286f470 (native exec thunk); virtual slot 0x520 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
 	// CONFIDENCE: HIGH
 	return;
 }
@@ -2408,6 +2552,14 @@ void UFortCheatManager::ToggleInfiniteStamina()
 	return;
 }
 
+void UFortCheatManager::ToggleIntensityGraph()
+{
+	// Original address: 0x14286f490 (native exec thunk); virtual slot 0x530 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::ToggleIntensityHUD()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -2488,6 +2640,30 @@ void UFortCheatManager::TogglePickupSpline()
 	return;
 }
 
+void UFortCheatManager::TogglePIDContributionsGraph()
+{
+	// Original address: 0x14286f4b0 (native exec thunk); virtual slot 0x540 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::TogglePIDValuesGraph()
+{
+	// Original address: 0x14286f4d0 (native exec thunk); virtual slot 0x538 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::TogglePlayerNames()
+{
+	// Original address: 0x14286f4f0 (native exec thunk); virtual slot 0x528 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::ToggleRBAN()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -2548,6 +2724,14 @@ void UFortCheatManager::ToggleUseNewItemCards()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::ToggleUtilitiesGraph()
+{
+	// Original address: 0x14286f530 (native exec thunk); virtual slot 0x548 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
 	// CONFIDENCE: HIGH
 	return;
 }

@@ -29,6 +29,14 @@ void UFortCheatManagerSTW::DevSkipTutorial()
 	return;
 }
 
+void UFortCheatManagerSTW::DumpAppliedHomebaseEffectsWithCoreAttributes()
+{
+	// Original address: 0x142710860 (native exec thunk); virtual slot 0x260 dispatches through this vtable and the target
+	// is the folded stub 0x1406801c0 (ret 0), so the default body is empty.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManagerSTW::EvolveHero()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

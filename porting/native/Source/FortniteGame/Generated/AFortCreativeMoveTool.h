@@ -428,6 +428,24 @@ public:
 	bool GetShouldUsePrecisionGridSnapping() const;
 
 protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleCopyPickupReleased();
+	virtual void HandleCopyPickupReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleCycleNextPlaysetProp();
+	virtual void HandleCycleNextPlaysetProp_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleCyclePreviousPlaysetProp();
+	virtual void HandleCyclePreviousPlaysetProp_Implementation();
+public:
+
+protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMultiSelecting();
 public:

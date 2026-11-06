@@ -299,6 +299,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void ClearScriptedPawnVariantChannels();
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void CommunityVotingRefreshVotingState();
 public:
@@ -320,6 +325,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	virtual void CycleCurrentEncounterToDebug();
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void CycleDebugAbilitySystem();
 public:
 
@@ -334,8 +344,28 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void DBNO();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void DebugAbilityTags();
+public:
+
+protected:
 	UFUNCTION(Exec)
 	virtual void DebugAttribute(FString& Attribute);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void DebugAttributeClear();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void DebugAttributeModifiers();
 public:
 
 protected:
@@ -366,6 +396,21 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void DebugKickPlayerDueToInactivity();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void DebugNativeActions();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void DebugStructuralSupport();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void DebugThisAI();
 public:
 
 protected:
@@ -521,6 +566,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void ForceExternalRichPresenceUpdate();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void ForceReviveFromDBNO();
 public:
 
 protected:
@@ -1083,6 +1133,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void ReleaseScriptedPawn();
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void ReloadLevelStream();
 public:
@@ -1164,7 +1219,17 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	virtual void RestartMinigame();
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void RetestFailedBanhammerActions();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void ReviveFromDBNO();
 public:
 
 protected:
@@ -1185,6 +1250,21 @@ public:
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	virtual void ScriptedPawnIntervalFiring(float TimeBetweenShots, int32 BurstAmount, float TimeBetweenBursts);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void ScriptedPawnStopIntervalFiring();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void ScriptedPawnToggleCrouch();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void ScriptedPawnToggleFiringWithInfiniteAmmo();
 public:
 
 protected:
@@ -1572,6 +1652,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void TakeoverScriptedPawn();
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void TeleportToActor(FString ClassOrInstanceName);
 public:
@@ -1673,6 +1758,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	virtual void ToggleAutoRestartMinigame();
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void ToggleBuildingActorsTransparency();
 public:
 
@@ -1768,6 +1858,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	virtual void ToggleIntensityGraph();
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void ToggleIntensityHUD();
 public:
 
@@ -1818,6 +1913,21 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	virtual void TogglePIDContributionsGraph();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void TogglePIDValuesGraph();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void TogglePlayerNames();
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void ToggleRBAN();
 public:
 
@@ -1854,6 +1964,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void ToggleUseNewItemCards();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void ToggleUtilitiesGraph();
 public:
 
 protected:

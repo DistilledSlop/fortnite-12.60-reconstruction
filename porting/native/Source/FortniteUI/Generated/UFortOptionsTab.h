@@ -44,5 +44,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsXboxPlatform();
 
+	UFUNCTION(BlueprintCallable)
+	virtual void ResetOptionsToDefault();
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void TempNew_UpdateOptionsTab();
+public:
+
 };
 
