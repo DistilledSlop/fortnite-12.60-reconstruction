@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	TArray<UMaterialInterface*> MaterialOverrides;
 
+protected:
+	UFUNCTION()
+	void ApplyStormAlterations();
+public:
+
 };
 

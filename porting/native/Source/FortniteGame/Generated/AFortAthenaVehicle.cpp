@@ -52,6 +52,38 @@ void AFortAthenaVehicle::DebugDrawImpactBucket_Implementation(const FVector& Loc
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaVehicle::DemagnetizeFromSkyTube()
+{
+	// CONFIDENCE: medium
+	// Original address: 0x14283ab30
+	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
+	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
+	// virtual call on param_1 (vtable slot 0x908)
+	(*(void (**)(void *))((*(uint8 **)param_1) + 0x908))(param_1);
+}
+
+void AFortAthenaVehicle::DestroyVehicle()
+{
+	// CONFIDENCE: medium
+	// Original address: 0x14283ab50
+	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
+	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
+	// component at param_1+0x3b0, virtual call slot 0x30
+	uint8 *component = *(uint8 **)((uint8 *)param_1 + 0x3b0);
+	(*(void (**)(void *))((*(uint8 **)component) + 0x30))(component);
+}
+
+void AFortAthenaVehicle::EjectAllPlayers()
+{
+	// CONFIDENCE: medium
+	// Original address: 0x14283ac10
+	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
+	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
+	// component at param_1+0x3b0, virtual call slot 0x338
+	uint8 *component = *(uint8 **)((uint8 *)param_1 + 0x3b0);
+	(*(void (**)(void *))((*(uint8 **)component) + 0x338))(component);
+}
+
 TArray<AFortPlayerPawn*> AFortAthenaVehicle::GetAllPassengers() const
 {
 	// CONFIDENCE: high; secondary target 0x14084ba80 -> 0x1419452d0.
@@ -331,6 +363,17 @@ bool AFortAthenaVehicle::RearLateralFrictionHasReachedMax() const
 	return NativeRecoveredBool_0x449;
 }
 
+void AFortAthenaVehicle::ResetTrick()
+{
+	// CONFIDENCE: medium
+	// Original address: 0x14283ccf0
+	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
+	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
+	// component at param_1+0x3b0, virtual call slot 0x3e8
+	uint8 *component = *(uint8 **)((uint8 *)param_1 + 0x3b0);
+	(*(void (**)(void *))((*(uint8 **)component) + 0x3e8))(component);
+}
+
 void AFortAthenaVehicle::ServerSetIgnoreAllFallingDamage_Implementation(bool InIgnoreAllFallingDamage)
 {
 	// Body not recovered: reflection-derived stub.
@@ -351,6 +394,16 @@ void AFortAthenaVehicle::ServerUsingRiftPortal_Implementation(AActor* RiftPortal
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaVehicle::SetDyingPhysics()
+{
+	// CONFIDENCE: medium
+	// Original address: 0x14283d290
+	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
+	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
+	// virtual call on param_1 (vtable slot 0xca0)
+	(*(void (**)(void *))((*(uint8 **)param_1) + 0xca0))(param_1);
+}
+
 void AFortAthenaVehicle::UpdateClientWithVehicleTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity)
 {
 	// Body not recovered: reflection-derived stub.
@@ -360,6 +413,16 @@ bool AFortAthenaVehicle::VehicleIsInSkyTube() const
 {
 	// Native target 0x140857200; CONFIDENCE: high.
 	return NativeIsInSkyTube();
+}
+
+void AFortAthenaVehicle::WakeUp()
+{
+	// CONFIDENCE: medium
+	// Original address: 0x14283dc50
+	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
+	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
+	// virtual call on param_1 (vtable slot 0x778)
+	(*(void (**)(void *))((*(uint8 **)param_1) + 0x778))(param_1);
 }
 
 bool AFortAthenaVehicle::WheelsOnGround() const

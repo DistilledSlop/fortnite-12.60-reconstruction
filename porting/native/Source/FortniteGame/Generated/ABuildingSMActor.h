@@ -613,6 +613,11 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ProxyGameplayCueDamagePhysical)
 	FProxyGameplayCueDamagePhysical ProxyGameplayCueDamagePhysical;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void CancelAutoBuild();
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool CanDoBuildingAnimations() const;
 

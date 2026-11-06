@@ -23,6 +23,9 @@ public:
 	UFUNCTION()
 	void OnRep_KeybindingData(FFortClientAnnouncementData_Keybinding& PreviousKeybindingData);
 
+	UFUNCTION(BlueprintAuthorityOnly)
+	void ResetGamepadActionTextPairList();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

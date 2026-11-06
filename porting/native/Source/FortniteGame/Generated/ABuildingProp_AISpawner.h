@@ -52,6 +52,9 @@ public:
 	float DespawnRangeOverride;
 
 	UFUNCTION(BlueprintCallable)
+	void DestroyRift();
+
+	UFUNCTION(BlueprintCallable)
 	void SetSpawnLocation(USceneComponent* InSpawnLocation);
 
 	UFUNCTION(BlueprintCallable)

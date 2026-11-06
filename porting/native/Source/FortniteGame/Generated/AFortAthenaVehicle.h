@@ -673,6 +673,15 @@ public:
 	void DebugDrawImpactBucket(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 
+	UFUNCTION(BlueprintCallable)
+	void DemagnetizeFromSkyTube();
+
+	UFUNCTION(BlueprintCallable)
+	void DestroyVehicle();
+
+	UFUNCTION(BlueprintCallable)
+	void EjectAllPlayers();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TArray<AFortPlayerPawn*> GetAllPassengers() const;
 
@@ -794,6 +803,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool RearLateralFrictionHasReachedMax() const;
 
+	UFUNCTION(BlueprintCallable)
+	void ResetTrick();
+
 	UFUNCTION(Server, Reliable)
 	void ServerSetIgnoreAllFallingDamage(bool InIgnoreAllFallingDamage);
 	void ServerSetIgnoreAllFallingDamage_Implementation(bool InIgnoreAllFallingDamage);
@@ -810,12 +822,20 @@ public:
 	void ServerUsingRiftPortal(AActor* RiftPortal);
 	void ServerUsingRiftPortal_Implementation(AActor* RiftPortal);
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetDyingPhysics();
+public:
+
 	UFUNCTION(NetMulticast, Reliable)
 	void UpdateClientWithVehicleTestInput(const FVector& LinearVelocity, const FVector& AngularVelocity);
 	void UpdateClientWithVehicleTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool VehicleIsInSkyTube() const;
+
+	UFUNCTION(BlueprintCallable)
+	void WakeUp();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool WheelsOnGround() const;
