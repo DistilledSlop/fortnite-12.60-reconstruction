@@ -160,5 +160,9 @@ public:
 	void SetWeightForContainerLootRoll(float Weight);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void Native_14468fb70(int64 param_1, int64* param_2);
 };
 

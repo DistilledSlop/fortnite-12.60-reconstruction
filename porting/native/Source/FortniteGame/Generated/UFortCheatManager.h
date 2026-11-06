@@ -1972,5 +1972,9 @@ protected:
 	void WriteLootReport();
 public:
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void Native_140690ac0(uint64* param_1, int32 param_2, int32 param_3);
 };
 

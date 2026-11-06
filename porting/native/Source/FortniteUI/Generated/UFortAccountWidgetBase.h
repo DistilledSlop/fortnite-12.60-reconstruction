@@ -14,5 +14,9 @@ class FORTNITEUI_API UFortAccountWidgetBase : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void Native_14138d650(uint64* param_1);
 };
 

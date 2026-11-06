@@ -66,5 +66,9 @@ public:
 	void ServerOnInterruptResurrectionInteraction_Implementation(ABuildingGameplayActorSpawnMachine* SpawnMachine);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void Native_1440b2120(int64 param_1);
 };
 

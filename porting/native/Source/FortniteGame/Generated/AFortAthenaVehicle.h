@@ -829,5 +829,6 @@ public:
 	virtual UFortVehicleSeatComponent* NativeGetSeatComponent163();
 	virtual bool NativeCanPassengersTakeDamage163();
 	virtual bool NativeIsSeatFilterApplicable163(uint8 Seat);
+	static void Native_1406d93e0(uint64* param_1, int32 param_2, int32 param_3);
 };
 
