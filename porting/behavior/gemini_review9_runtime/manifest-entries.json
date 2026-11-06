@@ -1,0 +1,17 @@
+[
+  {
+    "class": "UFortStoreFrontOfferDetailsWidgetBase",
+    "function": "GetOfferInfoById",
+    "kind": "exec",
+    "signature": "UFortStoreFrontOfferInfo* GetOfferInfoById(FString& OfferId)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/gemini_review9_runtime/UFortStoreFrontOfferDetailsWidgetBase_GetOfferInfoById.inc",
+    "confidence": "high",
+    "address": "0x1452f1f30",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Reviewed against Gemini decompiler output and reflection; searches PagedItems and OfferData by OfferId. Build and runtime pending."
+  }
+]
