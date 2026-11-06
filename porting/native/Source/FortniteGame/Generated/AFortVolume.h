@@ -206,6 +206,9 @@ public:
 	bool IsPlayerAllowedInVolume(AFortPlayerController* NewUser);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsReadOnly() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsReady() const;
 
 	UFUNCTION()

@@ -23,7 +23,9 @@
 #include "Stats/Stats.h"
 #include "UObject/Object.h"
 
+class AFortMinigame;
 class AFortVolume;
+class APlayerState;
 class UAsyncOverlapQueue;
 class UAsyncTraceQueue;
 class UCreativeAssetCostDirectory;
@@ -119,6 +121,15 @@ public:
 
 	UFUNCTION()
 	void DecrementUserIslandLoading();
+
+	UFUNCTION(BlueprintCallable)
+	static AFortMinigame* GetMinigameForVolume(AFortVolume* Volume);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortVolume* GetVolumeForLocation(FVector Location) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortVolume* GetVolumeForPlayerState(APlayerState* PlayerState) const;
 
 	UFUNCTION()
 	void IncrementUserIslandLoading();

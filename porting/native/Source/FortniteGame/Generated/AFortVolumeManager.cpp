@@ -15,6 +15,7 @@
 #include "Math/BoxSphereBounds.h"
 #include "Math/Vector.h"
 #include "Stats/Stats.h"
+#include "UFortMinigameVolumeComponent.h"
 #include "UFortVolumeAccessor.h"
 #include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
@@ -35,6 +36,39 @@ void AFortVolumeManager::DecrementUserIslandLoading()
 	        bInSpawningStartup = false;
 	    }
 	}
+}
+
+AFortMinigame* AFortVolumeManager::GetMinigameForVolume(AFortVolume* Volume)
+{
+	// Behaviour snippet: AFortVolumeManager::GetMinigameForVolume (body only; spliced into the generated member function).
+	// Original address: 0x142b3b9c0
+	// Decompile source: porting/generated/native225-fresh-bulk/0x142b3b9c0.c
+	// Inferred: Static function (flags 0x4022403, no Const): the Volume parameter is stepped and passed to the static helper at 0x141c795a0 (UFortMinigameVolumeComponent::NativeResolveMinigameFromVolume, ported); no object is passed.
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return UFortMinigameVolumeComponent::NativeResolveMinigameFromVolume(Volume);
+}
+
+AFortVolume* AFortVolumeManager::GetVolumeForLocation(FVector Location) const
+{
+	// Behaviour snippet: AFortVolumeManager::GetVolumeForLocation (body only; spliced into the generated member function).
+	// Original address: 0x142b3be00
+	// Decompile source: porting/generated/native235-fresh-bulk/0x142b3be00.c
+	// Inferred: Thin wrapper: the FVector parameter is stepped into a local and passed by reference to the helper at 0x141c7cde0 (NativeFindVolumeAtLocation, ported); its result is returned.
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return NativeFindVolumeAtLocation(Location);
+}
+
+AFortVolume* AFortVolumeManager::GetVolumeForPlayerState(APlayerState* PlayerState) const
+{
+	// Behaviour snippet: AFortVolumeManager::GetVolumeForPlayerState (body only; spliced into the generated member function).
+	// Original address: 0x142b3c000
+	// Decompile source: porting/generated/native235-fresh-bulk/0x142b3c000.c
+	// Inferred: Thin wrapper: the PlayerState parameter is stepped, then the helper at 0x141c7d420 is called and its result returned (NativeFindPlayerVolume, ported).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return NativeFindPlayerVolume(PlayerState);
 }
 
 void AFortVolumeManager::IncrementUserIslandLoading()
