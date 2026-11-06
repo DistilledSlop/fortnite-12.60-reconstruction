@@ -97,13 +97,15 @@ should not be interpreted as a measured increase in physical water use.
 
 ## Collection and refresh
 
-Run on the host holding the logs:
+Run on the host where ccusage sees the agent usage (the default source):
 
 ```sh
 python3 porting/water_badge.py
 ```
 
-The collector scopes usage to the main checkout, registered reconstruction
+The default source is ccusage, described in [ccusage source](#ccusage-source-default)
+below. It is not project-scoped. The project-scoped log collectors remain available
+with `--logs` and scope usage to the main checkout, registered reconstruction
 worktrees, the Gemini/local-model worker packages, supporting Unreal Engine,
 FModel, Ghidra and SDK-dump directories, and sessions whose recorded
 workspace is exactly the parent `/opt/fortnite` project directory. Arbitrary
@@ -183,3 +185,59 @@ identities consistent with the native collector when importing overlapping calls
 The importer whitelists published fields and strips any extra private content.
 Do not estimate token counts from character counts and present them as measured
 usage. Missing history remains a limitation until reliable records are supplied.
+
+## ccusage source (default)
+
+```sh
+python3 porting/water_badge.py --publish
+```
+
+This is the default. It reads `ccusage daily -j --by-agent --offline --no-cost -z UTC`
+for every agent ccusage detects on the machine (Claude, Codex, OpenCode and
+Antigravity at the last refresh) from the first commit date (UTC day of
+`git log --reverse --format=%cI | head -1`, 2026-10-30) through today, with
+local models excluded (below). `--since` and `--until` override the window, and
+`--ccusage-bin` selects the executable. `--ccusage` is accepted as a no-op alias.
+`--logs` selects the project-scoped log collectors and rejects these three options.
+
+Limitations and choices:
+
+- Not project-scoped. ccusage has no project filter, so the window counts all
+  cloud agent usage on this machine, including non-Fortnite work. The snapshot
+  `scope`, the report and `limitations` say so. `--logs` remains the
+  project-scoped measurement.
+- Ledger replacement. Every ledger row inside the window is replaced by ccusage
+  rows, whatever produced it. Rows outside the window are kept as history. A
+  `--logs` refresh rebuilds from logs and drops ccusage-marked rows (reported on
+  stderr), so the two sources never count the same usage twice. The earlier
+  log-derived ledger remains in git history.
+- Token mapping. ccusage `inputTokens` excludes cache reads and writes, which it
+  reports separately, and `outputTokens` is used as reported. Its `totalTokens`
+  can exceed those fields on some agent rows (observed on antigravity and
+  opencode, about 0.01% of the window). The excess is recorded as reasoning and
+  charged at the output rate, so the estimate is unaffected by the split and
+  token totals reconcile to ccusage `totalTokens`. ccusage has no reasoning field.
+  Excluded local models are removed before this excess is allocated, so their
+  tokens never share in it. The residual is allocated across kept models only.
+- Requests. ccusage reports none. The report says so and the snapshot records
+  `requests_reported: false` with `recorded_requests: null`, never zero.
+- Timestamps. Each (day, agent, model) row is stamped 12:00 UTC, which makes
+  `usage_first_at` and `usage_last_at` day-resolution.
+- Local models. Models whose OpenCode DB rows have providerID `llamacpp` or
+  `local` (read-only, table `session_message`), plus `local_models` in
+  `porting/water_profiles.json`, are dropped by name together with their
+  per-day rows. At the last refresh these were qwen3.8-27b,
+  deepseek-v4.1-flash-1017-coder-iq2xxs-remote and ds41. Their token totals are
+  listed in the report and `coverage.ccusage.local_excluded_tokens`. A missing or
+  unreadable DB leaves the profile list in force (`opencode_db_status` records
+  which). Edge: a model name used by both local and cloud providers is excluded
+  everywhere, so its cloud usage is dropped too. ccusage rows carry no provider,
+  so name matching is the only available key.
+- Providers. Model names beginning `claude-` map to `anthropic`, `gpt-` to
+  `openai`, and `gemini-` to `google`. Everything else is `unknown`. The
+  estimator treats `unknown` as cloud-hosted, so `unknown` rows that are not
+  local (for example OpenCode's cloud deepseek-v4.1-flash-free, or Antigravity's
+  model_placeholder_m322) are estimated as cloud.
+- Live usage. Active sessions keep writing logs, so a fresh ccusage run can
+  differ slightly from a snapshot made a few minutes earlier. Totals were checked
+  exactly against a captured ccusage payload.

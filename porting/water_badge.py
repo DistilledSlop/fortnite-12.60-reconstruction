@@ -1,17 +1,23 @@
 #!/usr/bin/env python3
-"""Backfill Fortnite inference usage and render a documented water scenario range.
+"""Estimate AI inference water from usage and render a documented scenario range.
 
-Refresh: python3 porting/water_badge.py
+Refresh: python3 porting/water_badge.py [--publish]
+  Default source: ccusage for every agent it detects, from the first commit to today (UTC),
+  with local models excluded by name.
+  --logs: the older project-scoped log collectors (Fortnite workspace only).
 Details: porting/progress/WATER.md. Publishing never reads private logs.
 """
 import argparse
 from collections import defaultdict
 from datetime import datetime, timezone
+import hashlib
 import json
 import gzip
 import math
 import re
 from pathlib import Path
+import shutil
+import sqlite3
 import subprocess
 import sys
 
@@ -76,6 +82,10 @@ def clean_record(raw):
         if not re.fullmatch(r'[A-Za-z0-9_.:/+-]{1,100}', raw['provider_detail']):
             raise ValueError('invalid provider detail')
         row['provider_detail'] = raw['provider_detail']
+    if raw.get('method'):
+        if raw['method'] != 'ccusage':
+            raise ValueError('unsupported usage method')
+        row['method'] = raw['method']
     for k in (*COUNTS, 'requests'):
         value = raw.get(k, 0)
         if isinstance(value, bool) or not isinstance(value, int) or value < 0:
@@ -121,7 +131,194 @@ def merge_records(previous, current):
     return sorted(result.values(), key=lambda r: (r['provider'], r['model'], r['source']))
 
 
+CCUSAGE_TIMEZONE = 'UTC'
+CCUSAGE_FIELDS = (('input_tokens', 'inputTokens'), ('cache_read_tokens', 'cacheReadTokens'),
+                  ('cache_write_tokens', 'cacheCreationTokens'), ('output_tokens', 'outputTokens'))
+CCUSAGE_LIMITATIONS = [
+    'The default ccusage source counts all cloud agent usage detected on this machine in the window, including projects other than Fortnite; project scoping is unavailable (use --logs for the project-scoped collectors).',
+    'ccusage reports no request counts, so requests are reported as unavailable rather than zero.',
+    'ccusage has no reasoning field. Where its totalTokens exceeds the reported fields (antigravity and opencode rows, about 0.01%), the excess is recorded as reasoning, charged at the output rate.',
+    'Models whose provider is not claude, gpt or gemini and that are not local (for example OpenCode deepseek-v4.1-flash-free) are mapped to unknown and estimated as cloud-hosted.',
+]
+
+
+def ccusage_limitations(coverage):
+    local = coverage['ccusage'].get('local_models', [])
+    notes = [f"Local models excluded by name: {', '.join(local)}. Local status comes from OpenCode providerID llamacpp/local and porting/water_profiles.json local_models. A model name used by both local and cloud providers is excluded everywhere, so its cloud usage is dropped too."] if local else []
+    return [*CCUSAGE_LIMITATIONS, *notes]
+
+
+LOCAL_PROVIDER_IDS = ('llamacpp', 'local')  # OpenCode providerIDs that run locally (water_collectors._opencode)
+
+
+def local_models(profiles, opencode_db):
+    """Model names served locally: the profile list plus OpenCode rows with a local providerID.
+
+    A missing or unreadable OpenCode DB leaves the profile list in force; the status says which.
+    """
+    names = {_label(n, r'[^A-Za-z0-9_.:/<>+-]', 150, 'unknown') for n in profiles.get('local_models', [])}
+    status = 'missing'
+    path = Path(opencode_db)
+    if path.exists():
+        try:
+            with sqlite3.connect('file:' + str(path) + '?mode=ro', uri=True) as conn:
+                for (data,) in conn.execute('SELECT data FROM session_message'):
+                    try:
+                        obj = json.loads(data)
+                    except (TypeError, ValueError):
+                        continue
+                    model = obj.get('model') if isinstance(obj, dict) else None
+                    if (isinstance(model, dict) and str(model.get('providerID') or '').lower() in LOCAL_PROVIDER_IDS
+                            and model.get('id')):
+                        names.add(_label(model['id'], r'[^A-Za-z0-9_.:/<>+-]', 150, 'unknown'))
+            status = 'read'
+        except sqlite3.Error:
+            status = 'unreadable'
+    return names, status
+
+
+def ccusage_provider(model):
+    name = model.lower()
+    if name.startswith('claude-'):
+        return 'anthropic'
+    if name.startswith('gpt-'):
+        return 'openai'
+    if name.startswith('gemini-'):
+        return 'google'
+    return 'unknown'
+
+
+def _label(value, pattern, limit, fallback):
+    text = re.sub(pattern, '_', str(value or '')).strip('_')[:limit]
+    return text or fallback
+
+
+def first_commit_date(repo):
+    """UTC calendar day of the first commit listed by `git log --reverse`."""
+    out = subprocess.run(['git', '-C', str(repo), 'log', '--reverse', '--format=%cI'],
+                         capture_output=True, text=True, check=True).stdout.split()
+    if not out:
+        raise ValueError('repository has no commits')
+    return datetime.fromisoformat(out[0].replace('Z', '+00:00')).astimezone(timezone.utc).date().isoformat()
+
+
+def run_ccusage(binary, since, until):
+    command = [str(binary), 'daily', '-j', '--since', since, '--until', until,
+               '--by-agent', '--offline', '--no-cost', '-z', CCUSAGE_TIMEZONE]
+    done = subprocess.run(command, capture_output=True, text=True, timeout=900)
+    if done.returncode:
+        raise RuntimeError('ccusage failed: ' + done.stderr.strip()[-500:])
+    return json.loads(done.stdout)
+
+
+def ccusage_records(payload, since, until, excluded=frozenset(), stats=None):
+    """Normalize ccusage daily rows into one record per (day, agent, model).
+
+    Input excludes cache reads and writes, as ccusage's totalTokens sums them
+    separately. Output is recorded as reported; any totalTokens excess over the
+    reported fields is attributed to reasoning (see below), never added twice.
+    Models named in `excluded` (local models) are dropped by name; their token
+    totals go to stats['excluded'], and stats['unattributed'] takes any residual
+    that has no kept model to carry it.
+    """
+    stats = {} if stats is None else stats
+    stats.setdefault('excluded', {})
+    stats.setdefault('unattributed', 0)
+    if not isinstance(payload, dict) or not isinstance(payload.get('daily'), list):
+        raise ValueError('ccusage output lacks a daily list')
+    grouped = {}
+    for row in payload['daily']:
+        day = row.get('period') or row.get('date')
+        if not isinstance(day, str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}', day):
+            raise ValueError('ccusage row lacks a YYYY-MM-DD period')
+        if not since <= day <= until:
+            continue
+        if isinstance(row.get('agents'), list):
+            agent_rows = row['agents']
+        elif row.get('agent') not in (None, 'all'):
+            agent_rows = [row]
+        else:
+            raise ValueError('ccusage row lacks a per-agent breakdown; ccusage must run with --by-agent')
+        for agent_row in agent_rows:
+            agent = _label(str(agent_row.get('agent') or '').lower(), r'[^a-z0-9_-]', 40, 'unknown')
+            breakdowns = agent_row.get('modelBreakdowns')
+            if not isinstance(breakdowns, list):
+                raise ValueError(f'ccusage {agent} {day} lacks modelBreakdowns')
+            sums = {src: 0 for _, src in CCUSAGE_FIELDS}
+            placed = []
+            for item in breakdowns:
+                model = _label(item.get('modelName'), r'[^A-Za-z0-9_.:/<>+-]', 150, 'unknown')
+                values = {}
+                for field, src in CCUSAGE_FIELDS:
+                    value = item.get(src, 0)
+                    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+                        raise ValueError(f'invalid ccusage count: {src}')
+                    values[field] = value
+                    sums[src] += value
+                if model in excluded:
+                    stats['excluded'][model] = stats['excluded'].get(model, 0) + sum(values.values())
+                    continue
+                counts = grouped.setdefault((day, agent, model), dict.fromkeys(COUNTS, 0))
+                for field, value in values.items():
+                    counts[field] += value
+                placed.append((counts, values['output_tokens']))
+            # Agent-level totals must equal their model breakdowns, or tokens would vanish silently.
+            for src, total in sums.items():
+                if src in agent_row and agent_row[src] != total:
+                    raise ValueError(f'ccusage {agent} {day} {src} does not match its model breakdowns')
+            # ccusage totalTokens can exceed the four fields it reports (observed on antigravity and
+            # opencode rows, with no field to name it). The excess is reasoning, charged at the output
+            # rate. It is computed over every breakdown, so excluded tokens are subtracted out, and it is
+            # allocated over kept models only, so excluded tokens never reach a kept row.
+            residual = agent_row['totalTokens'] - sum(sums.values()) if 'totalTokens' in agent_row else 0
+            if residual < 0:
+                raise ValueError(f'ccusage {agent} {day} totalTokens is below its reported fields')
+            if residual and not placed:
+                stats['unattributed'] += residual
+            elif residual:
+                for (counts, _), part in zip(placed, _split_residual(residual, [out for _, out in placed])):
+                    counts['reasoning_tokens'] += part
+    records = []
+    for (day, agent, model), counts in sorted(grouped.items()):
+        identity = hashlib.sha256(f'ccusage:{day}:{agent}:{model}'.encode()).hexdigest()[:24]
+        records.append(dict(provider=ccusage_provider(model), model=model, client=agent, method='ccusage',
+                            timestamp=f'{day}T12:00:00+00:00', source=identity, requests=0, **counts))
+    return records
+
+
+def _split_residual(residual, weights):
+    """Split an integer residual by weight; the largest share absorbs rounding."""
+    total = sum(weights)
+    if total == 0:
+        weights, total = [1] + [0] * (len(weights) - 1), 1
+    parts = [residual * w // total for w in weights]
+    parts[weights.index(max(weights))] += residual - sum(parts)
+    return parts
+
+
+def ccusage_coverage(records, payload, since, until, local=None, stats=None):
+    local, stats = local or {}, stats or {}
+    excluded = dict(sorted(stats.get('excluded', {}).items()))
+    return {'ccusage': {
+        'command': f'ccusage daily -j --since {since} --until {until} --by-agent --offline --no-cost -z {CCUSAGE_TIMEZONE}',
+        'window': [since, until], 'daily_rows': len(payload['daily']), 'usage_records': len(records),
+        'agents': sorted({r['client'] for r in records}),
+        'project_scoping': 'none: all agent usage detected on this machine in the window',
+        'request_counts': 'not reported by ccusage',
+        'local_models': local.get('names', []), 'opencode_db': local.get('opencode_db'),
+        'local_excluded_tokens': excluded, 'local_excluded_total': sum(excluded.values()),
+        'unattributed_residual_tokens': stats.get('unattributed', 0)}}
+
+
+def scoped_history(previous, window):
+    """ccusage replaces ledger rows inside its window; default refreshes rebuild from logs only."""
+    if window:
+        return [r for r in previous if not (r.get('timestamp') and window[0] <= r['timestamp'][:10] <= window[1])]
+    return [r for r in previous if r.get('method') != 'ccusage']
+
+
 def summarize(records, coverage, profiles, timestamp, retained=0):
+    ccusage = 'ccusage' in coverage
     grouped = defaultdict(lambda: {k: 0 for k in (*COUNTS, 'requests')})
     for record in records:
         group = grouped[record['provider'], record['model']]
@@ -138,10 +335,13 @@ def summarize(records, coverage, profiles, timestamp, retained=0):
     totals = {k: [sum(row[k][i] for row in models) for i in range(3)]
               for k in ('energy_kwh', 'cooling_liters', 'electricity_liters', 'total_liters', 'gallons')}
     dated = [r['timestamp'] for r in records if r.get('timestamp')]
-    return {'schema_version': 2, 'updated_at': timestamp, 'scope': 'Fortnite inference with recorded usage',
+    return {'schema_version': 2, 'updated_at': timestamp,
+            'scope': ('Cloud agent usage detected by ccusage on this machine in the window, local models excluded; not project-scoped'
+                      if ccusage else 'Fortnite inference with recorded usage'),
             'usage_first_at': min(dated) if dated else None, 'usage_last_at': max(dated) if dated else None,
             'records_without_timestamps': len(records) - len(dated),
-            'recorded_requests': sum(r['requests'] for r in records),
+            'requests_reported': not ccusage,
+            'recorded_requests': None if ccusage else sum(r['requests'] for r in records),
             'range_kind': 'illustrative scenarios; not confidence bounds or bounds on missing usage',
             'scenarios': profiles['scenarios'], 'estimate': totals,
             'tokens': sum(sum(r[k] for k in COUNTS) for r in records),
@@ -151,7 +351,8 @@ def summarize(records, coverage, profiles, timestamp, retained=0):
             'limitations': ['Missing logs and unreported token categories are excluded, never treated as known zero.',
                             'Specific model names use heuristic family profiles unless explicitly overridden.',
                             'Uncertain geography, hardware, batching and long-context effects prevent calibrated error bounds.',
-                            'Inference only: excludes training, hardware manufacture, network, builds and game runtime.']}
+                            'Inference only: excludes training, hardware manufacture, network, builds and game runtime.']
+            + (ccusage_limitations(coverage) if ccusage else [])}
 
 
 def number(v):
@@ -165,10 +366,16 @@ def number(v):
 
 def report(data):
     e = data['estimate']
+    coverage_text = (f"Recorded **{data['recorded_requests']:,} requests** across **{len(data['models'])} model identifiers**. "
+                     if data['requests_reported'] else
+                     f"Request counts are not reported by ccusage; usage spans **{len(data['models'])} model identifiers**. ")
+    excluded = data['coverage'].get('ccusage', {}).get('local_excluded_tokens', {})
+    local_text = (' Excluded local models (by name, not counted): '
+                  + '; '.join(f'{m} {t / 1e6:,.1f}M tokens' for m, t in excluded.items()) + '.') if excluded else ''
     lines = ['# Estimated AI water for Fortnite', '',
              f"Refreshed **{data['updated_at']}**. Recorded inference usage only; missing usage remains unquantified.", '',
-             f"Recorded **{data['recorded_requests']:,} requests** across **{len(data['models'])} model identifiers**. "
-             "Token volume counts repeated cache reads across calls, not unique text.", '',
+             coverage_text +
+             "Token volume counts repeated cache reads across calls, not unique text." + local_text, '',
              f"**Central scenario: {number(e['gallons'][1])} US gallons. Scenario range: "
              f"{number(e['gallons'][0])}–{number(e['gallons'][2])} US gallons.**", '',
              'This is an assumption-driven scenario range, not a measurement, confidence interval, or bound on the entire project.', '',
@@ -177,10 +384,10 @@ def report(data):
                (('Serving energy (kWh)', 'energy_kwh'), ('Cooling water (L)', 'cooling_liters'),
                 ('Electricity generation water (L)', 'electricity_liters'), ('Total consumption (L)', 'total_liters'))], '',
              'Known token overlaps are removed: output excludes separately reported reasoning. Antigravity input/cache separation remains an explicit assumption; see coverage and methodology.', '',
-             '| Provider / model | Proxy | Input | Cache read | Cache write | Output | Reasoning | Central gal | Low–high gal |',
-             '|---|---|---:|---:|---:|---:|---:|---:|---:|']
+             '| Provider / model | Client | Proxy | Input | Cache read | Cache write | Output | Reasoning | Central gal | Low–high gal |',
+             '|---|---|---|---:|---:|---:|---:|---:|---:|---:|']
     for r in data['models']:
-        lines.append(f"| {r['provider']} / {r['model']} | {r['tier']} | "
+        lines.append(f"| {r['provider']} / {r['model']} | {', '.join(r['clients']) or 'not recorded'} | {r['tier']} | "
                      + ' | '.join(f'{r[k]:,}' for k in COUNTS)
                      + f" | {number(r['gallons'][1])} | {number(r['gallons'][0])}–{number(r['gallons'][2])} |")
     lines += ['', '## Collection coverage', '', '```json', json.dumps(data['coverage'], indent=2, sort_keys=True), '```', '',
@@ -189,25 +396,72 @@ def report(data):
     return '\n'.join(lines)
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
+def build_parser():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--output-dir', type=Path, default=HERE / 'progress')
     parser.add_argument('--profiles', type=Path, default=HERE / 'water_profiles.json')
     parser.add_argument('--project-root', type=Path, default=Path('/opt/fortnite'),
-                        help='Parent Fortnite workspace, also containing worker packages')
+                        help='--logs only: parent Fortnite workspace, also containing worker packages')
     for name in ('codex-root', 'claude-root', 'gemini-root', 'antigravity-root', 'opencode-db'):
-        parser.add_argument('--' + name, type=Path, default=None)
-    parser.add_argument('--replace-ledger', action='store_true', help='Rebuild from available logs only, discarding retained history')
+        parser.add_argument('--' + name, type=Path, default=None,
+                            help='--logs: log location override; opencode-db is also read for local-model names' if name == 'opencode-db' else None)
+    parser.add_argument('--replace-ledger', action='store_true',
+                        help='Discard retained ledger history before refreshing')
     parser.add_argument('--publish', action='store_true', help='Refresh only the README water badge after saving')
     parser.add_argument('--import-usage', action='append', type=Path, default=[],
                         help='Additional normalized JSONL usage; each record must declare project=fortnite-12.60-reconstruction')
+    parser.add_argument('--logs', action='store_true',
+                        help='Use the project-scoped log collectors instead of the default ccusage source')
+    parser.add_argument('--ccusage', action='store_true', help='Accepted for compatibility; ccusage is already the default')
+    parser.add_argument('--since', help='ccusage source: first day YYYY-MM-DD (default: first commit date)')
+    parser.add_argument('--until', help='ccusage source: last day YYYY-MM-DD (default: today, UTC)')
+    parser.add_argument('--ccusage-bin', type=Path, default=None, help='ccusage source: ccusage executable')
+    return parser
+
+
+def source_plan(args):
+    """Return the ccusage window (since, until), or None when the --logs collectors are used."""
+    if args.logs and args.ccusage:
+        raise ValueError('--logs and --ccusage are mutually exclusive (ccusage is the default)')
+    if args.logs:
+        if args.since or args.until or args.ccusage_bin:
+            raise ValueError('--since, --until and --ccusage-bin apply to the ccusage source and cannot be used with --logs')
+        return None
+    window = (args.since or first_commit_date(HERE.parent),
+              args.until or datetime.now(timezone.utc).date().isoformat())
+    if not all(re.fullmatch(r'\d{4}-\d{2}-\d{2}', day) for day in window) or window[0] > window[1]:
+        raise ValueError('--since/--until must be YYYY-MM-DD with since <= until')
+    return window
+
+
+def gather_usage(args, window):
+    """Usage records and coverage: ccusage over `window`, or the log collectors when window is None."""
+    if window is None:
+        from water_collectors import collect_usage
+        return collect_usage(project_root=str(args.project_root), repo=str(HERE.parent),
+                             **{name: getattr(args, name) for name in
+                                ('codex_root', 'claude_root', 'gemini_root', 'antigravity_root', 'opencode_db')})
+    profiles = json.loads(args.profiles.read_text())
+    local, status = local_models(profiles, args.opencode_db or Path.home() / '.local/share/opencode/opencode.db')
+    binary = args.ccusage_bin or shutil.which('ccusage') or Path.home() / '.local/bin/ccusage'
+    payload = run_ccusage(binary, *window)
+    stats = {}
+    current = ccusage_records(payload, *window, excluded=frozenset(local), stats=stats)
+    coverage = ccusage_coverage(current, payload, *window,
+                                local={'names': sorted(local), 'opencode_db': status}, stats=stats)
+    return current, coverage
+
+
+def main():
+    parser = build_parser()
     args = parser.parse_args()
     if args.publish and args.output_dir.resolve() != (HERE / 'progress').resolve():
         parser.error('--publish requires the default output directory')
-    from water_collectors import collect_usage
-    current, coverage = collect_usage(project_root=str(args.project_root), repo=str(HERE.parent),
-                                     **{name: getattr(args, name) for name in
-                                        ('codex_root', 'claude_root', 'gemini_root', 'antigravity_root', 'opencode_db')})
+    try:
+        window = source_plan(args)
+    except ValueError as error:
+        parser.error(str(error))
+    current, coverage = gather_usage(args, window)
     for path in args.import_usage:
         imported = []
         for line in path.read_text().splitlines():
@@ -226,6 +480,10 @@ def main():
         if saved['schema_version'] != 1:
             raise ValueError('Unsupported usage ledger schema')
         previous = saved['records']
+    stale = sum(r.get('method') == 'ccusage' for r in previous) if window is None else 0
+    previous = scoped_history(previous, window)
+    if stale:
+        print(f'Dropped {stale:,} ccusage ledger rows: --logs rebuilds from logs only', file=sys.stderr)
     records = merge_records(previous, current)
     if not records:
         raise ValueError('No attributable usage available; refusing to publish zero consumption')

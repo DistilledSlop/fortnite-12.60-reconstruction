@@ -82,6 +82,11 @@
     10.0
   ],
   "model_overrides": {},
+  "local_models": [
+    "qwen3.8-27b",
+    "deepseek-v4.1-flash-1017-coder-iq2xxs-remote",
+    "ds41"
+  ],
   "sources": [
     {
       "url": "https://services.google.com/fh/files/misc/measuring_the_environmental_impact_of_delivering_ai_at_google_scale.pdf",
