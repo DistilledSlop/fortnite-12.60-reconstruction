@@ -59,6 +59,13 @@ void AFortRemoteControlledPawnAthena::OnTriggeredHealthThreshold_Implementation(
 	// The original implementation returns without side effects.
 }
 
+uint8 AFortRemoteControlledPawnAthena::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x142442e50, IFortTeamActorInterface byte slot 0x28.
+	return static_cast<uint8>(RCTeam);
+}
+
 void AFortRemoteControlledPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

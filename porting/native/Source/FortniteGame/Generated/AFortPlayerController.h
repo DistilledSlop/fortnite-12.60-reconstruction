@@ -1947,6 +1947,7 @@ public:
 	virtual AFortInventory* NativeQuickBarInventory();
 	virtual AFortWeapon* NativeQuickBarHeldWeapon();
 	static void NativeRecordQuickBarSlotItem(AFortPlayerController* Controller, UFortItem* Item, EFortQuickBars Bar, int32 PreviousSlot, int32 NewSlot, UFortItem* ReplacedItem);
+	virtual uint8 NativeGetTeam163();
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 };

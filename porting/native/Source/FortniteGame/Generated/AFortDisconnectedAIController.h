@@ -14,5 +14,9 @@ class FORTNITEGAME_API AFortDisconnectedAIController : public AAIController
 	GENERATED_BODY()
 
 public:
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual uint8 NativeGetTeam163();
 };
 

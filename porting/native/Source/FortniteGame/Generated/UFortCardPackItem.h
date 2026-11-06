@@ -32,5 +32,8 @@ public:
 	UPROPERTY()
 	int32 override_loot_tier;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsChoicePack() const;
+
 };
 

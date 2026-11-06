@@ -260,6 +260,13 @@ AFortWeapon* AFortAIPawn::NativeQuickBarHeldWeapon()
 	return CurrentWeapon;
 }
 
+uint8 AFortAIPawn::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x1422d7930, IFortTeamActorInterface byte slot 0x28.
+	return static_cast<uint8>(Team);
+}
+
 void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

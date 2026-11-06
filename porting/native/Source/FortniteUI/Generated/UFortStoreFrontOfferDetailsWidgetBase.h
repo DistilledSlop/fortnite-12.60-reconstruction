@@ -107,6 +107,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortStoreFrontOfferInfo* GetOfferInfo() const;
 
+	UFUNCTION(BlueprintCallable)
+	UFortStoreFrontOfferInfo* GetOfferInfoById(FString OfferId);
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetSecondaryItem(UFortItem* Item);

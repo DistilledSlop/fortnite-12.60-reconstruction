@@ -359,5 +359,6 @@ public:
 	virtual AFortTeamInfo* GetPlayerTeam();
 	virtual bool NativeMatchesSpectatedUniqueId216(const FUniqueNetIdRepl& Id) const;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
+	virtual uint8 NativeGetTeam163();
 };
 

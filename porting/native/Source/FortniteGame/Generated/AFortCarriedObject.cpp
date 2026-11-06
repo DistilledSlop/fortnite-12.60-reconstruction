@@ -7,6 +7,13 @@ void AFortCarriedObject::OnRep_HolderInfo(FCarriedObjectAttachmentInfo& Previous
 	// Body not recovered: reflection-derived stub.
 }
 
+uint8 AFortCarriedObject::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x141cab8a0, IFortTeamActorInterface byte slot 0x28.
+	return static_cast<uint8>(Team);
+}
+
 void AFortCarriedObject::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

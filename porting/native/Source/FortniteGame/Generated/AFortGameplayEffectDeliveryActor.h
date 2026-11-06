@@ -15,6 +15,7 @@
 #include "GameFramework/Actor.h"
 #include "GameplayEffect.h"
 #include "GameplayTagContainer.h"
+#include "TargetSelectionVolumeNative.h"
 #include "TimerManager.h"
 
 class AFortPawn;
@@ -209,5 +210,7 @@ public:
 	void NativeCollectTouchingActors(TArray<AActor*>& Actors) const;
 	bool NativeCanApplyTouch() const;
 	virtual void NativePrepareTouchSpec(FGameplayEffectSpec& Spec);
+	virtual uint8 NativeGetTeam163();
+	bool NativeUseVolumeTargetFiltering163();
 };
 

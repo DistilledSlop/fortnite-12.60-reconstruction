@@ -6,6 +6,7 @@
 #include "GameplayEffect.h"
 #include "Math/Matrix.h"
 #include "Math/Vector.h"
+#include "TargetSelectionVolumeNative.h"
 #include "TimerManager.h"
 #include "Net/UnrealNetwork.h"
 
@@ -230,6 +231,20 @@ void AFortGameplayEffectDeliveryActor::NativePrepareTouchSpec(FGameplayEffectSpe
 {
 	// Native slot +0x660 -> 0x1406801c0; proven original empty hook. CONFIDENCE: high
 	// Retain the virtual hook for derived delivery actors.
+}
+
+uint8 AFortGameplayEffectDeliveryActor::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x14269fb50, IFortTeamActorInterface byte slot 0x28.
+	return static_cast<uint8>(SpawnContext.Team);
+}
+
+bool AFortGameplayEffectDeliveryActor::NativeUseVolumeTargetFiltering163()
+{
+	// CONFIDENCE: high
+	// 0x140245f70 startup registration and the 0x1415e4d4b read share one process global.
+	return FortNativeShouldPerformTargetSelectionVolumeChecks();
 }
 
 void AFortGameplayEffectDeliveryActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

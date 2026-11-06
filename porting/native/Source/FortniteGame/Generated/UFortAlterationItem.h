@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortAccountItem.h"
 
+class UFortAlterationItemDefinition;
+
 #include "UFortAlterationItem.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEGAME_API UFortAlterationItem : public UFortAccountItem
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortAlterationItemDefinition* GetAlterationDefinitionBP() const;
+
 };
 

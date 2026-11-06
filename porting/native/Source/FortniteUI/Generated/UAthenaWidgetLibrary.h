@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class UObject;
+
 #include "UAthenaWidgetLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEUI_API UAthenaWidgetLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsPlayingReplay(const UObject* WorldContextObject);
+
 };
 

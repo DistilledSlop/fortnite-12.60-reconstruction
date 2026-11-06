@@ -268,6 +268,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void AddDynamicGameplayEffectContainer(FGameplayTag& ApplicationTag, FFortGameplayEffectContainer& Container);
 
+	UFUNCTION(BlueprintCallable)
+	void EquipVehicleWeapon(UFortWeaponItemDefinition* WeaponDefinition, int32 SeatIndex, int32 ItemLevel);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortAbilitySystemComponent* GetActivatingAbilityComponent() const;
 

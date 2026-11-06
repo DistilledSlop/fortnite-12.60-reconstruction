@@ -1081,5 +1081,6 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 	virtual bool NativeIsLocalPlayer() const;
 	bool IsDead() const;
+	virtual uint8 NativeGetTeam163();
 };
 

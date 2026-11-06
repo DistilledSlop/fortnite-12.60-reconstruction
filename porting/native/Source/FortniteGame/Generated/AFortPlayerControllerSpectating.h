@@ -291,5 +291,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	AFortPlayerState* NativeResolveSpectatedPlayerState216(const FUniqueNetIdRepl& Id);
+	virtual AFortPlayerState* NativeGetSpectatingPlayerState163();
+	virtual uint8 NativeGetTeam163();
 };
 

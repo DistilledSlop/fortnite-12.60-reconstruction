@@ -198,7 +198,16 @@ public:
 	bool DoesBuildingFoundationContainActor(AActor* Actor) const;
 
 	UFUNCTION(BlueprintCallable)
+	void EditorOnlyAddAdditionalWorld(FString& LevelPackageName);
+
+	UFUNCTION(BlueprintCallable)
 	void EditorOnlyClearAdditionalWorlds();
+
+	UFUNCTION(BlueprintCallable)
+	TArray<FString> EditorOnlyGetAdditionalWorlds();
+
+	UFUNCTION(BlueprintCallable)
+	bool EditorOnlyRemoveAdditionalWorld(FString& LevelToRemove);
 
 	UFUNCTION()
 	void OnRep_DynamicFoundationRepData();

@@ -53,5 +53,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual int32 GetNativeTeamMemberCount();
+	virtual uint8 NativeGetTeam163();
 };
 

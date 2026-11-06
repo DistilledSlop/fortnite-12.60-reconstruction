@@ -8,3 +8,10 @@ void AFortPawn_InteractablePawn::BlueprintOnBeginInteract_Implementation()
 	return;
 }
 
+uint8 AFortPawn_InteractablePawn::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x1406801d0 at IFortTeamActorInterface byte slot 0x28.
+	return 1;
+}
+

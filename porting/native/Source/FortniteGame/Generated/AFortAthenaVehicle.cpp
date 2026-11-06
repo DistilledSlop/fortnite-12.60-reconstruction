@@ -389,6 +389,20 @@ UFortVehicleSeatComponent* AFortAthenaVehicle::NativeGetSeatComponent163()
 	return VehicleSeatComponent;
 }
 
+bool AFortAthenaVehicle::NativeCanPassengersTakeDamage163()
+{
+	// CONFIDENCE: high
+	// IFortVehicleInterface byte slot 0x100.
+	return bCanPassengerPawnsTakeDamage;
+}
+
+bool AFortAthenaVehicle::NativeIsSeatFilterApplicable163(uint8 Seat)
+{
+	// CONFIDENCE: high
+	// 0x1406801d0, IFortVehicleInterface byte slot 0x290.
+	return true;
+}
+
 void AFortAthenaVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -908,5 +908,6 @@ public:
 	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
 	virtual AFortInventory* NativeQuickBarInventory();
 	virtual AFortWeapon* NativeQuickBarHeldWeapon();
+	virtual uint8 NativeGetTeam163();
 };
 

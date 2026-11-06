@@ -879,6 +879,13 @@ bool AFortPlayerStateAthena::NativeAllowsReplaySpectating216() const
 	return !IsABot() || (bIsAnAthenaGameParticipant && TeamIndex != 2);
 }
 
+uint8 AFortPlayerStateAthena::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x141a48db0, IFortTeamActorInterface byte slot 0x28.
+	return static_cast<uint8>(TeamIndex);
+}
+
 void AFortPlayerStateAthena::OnRep_AIKills()
 {
 	// Behaviour snippet: AFortPlayerStateAthena::OnRep_AIKills (kind helper, protected: a non-reflected member; body only).

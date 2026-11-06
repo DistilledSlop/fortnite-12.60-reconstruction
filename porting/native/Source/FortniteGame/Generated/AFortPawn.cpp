@@ -927,6 +927,13 @@ bool AFortPawn::IsDead() const
 	return !(GetHealth() > 0.0f) || bIsDying || IsPendingKill();
 }
 
+uint8 AFortPawn::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x1406801e0, IFortTeamActorInterface byte slot 0x28.
+	return 0;
+}
+
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -27,6 +27,13 @@ void AFortSpectateAFriendController::OnRep_TeamToFollow()
 	// Body not recovered: reflection-derived stub.
 }
 
+AFortPlayerState* AFortSpectateAFriendController::NativeGetSpectatingPlayerState163()
+{
+	// CONFIDENCE: high
+	// 0x141ed4ff0 at primary-vtable byte offset 0x2058.
+	return NativeSpectatingPlayerState163;
+}
+
 void AFortSpectateAFriendController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

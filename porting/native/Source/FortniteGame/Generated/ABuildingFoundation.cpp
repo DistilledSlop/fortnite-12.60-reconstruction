@@ -12,12 +12,38 @@ bool ABuildingFoundation::DoesBuildingFoundationContainActor(AActor* Actor) cons
 	return ActorLevel && LevelStreamInfo && LevelStreamInfo->GetLoadedLevel() == ActorLevel;
 }
 
+void ABuildingFoundation::EditorOnlyAddAdditionalWorld(FString& LevelPackageName)
+{
+	// CONFIDENCE: HIGH (empty leaf 0x1406801c0 is ret 0 per bulk_empty_exec_runtime)
+	{
+		// Original exec 0x14273fcd0 calls empty leaf 0x1406801c0.
+	}
+}
+
 void ABuildingFoundation::EditorOnlyClearAdditionalWorlds()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+TArray<FString> ABuildingFoundation::EditorOnlyGetAdditionalWorlds()
+{
+	// CONFIDENCE: MEDIUM (callee not verified in repo; body is a constant return)
+	{
+		// Original exec 0x14273fd80 calls empty-array constructor 0x140693ec0.
+		return {};
+	}
+}
+
+bool ABuildingFoundation::EditorOnlyRemoveAdditionalWorld(FString& LevelToRemove)
+{
+	// CONFIDENCE: MEDIUM (callee not verified in repo; body is a constant return)
+	{
+		// Original exec 0x14273fe60 calls false-returning leaf 0x1406801e0.
+		return false;
+	}
 }
 
 void ABuildingFoundation::OnRep_DynamicFoundationRepData()

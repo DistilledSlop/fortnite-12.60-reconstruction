@@ -26,6 +26,34 @@ void AFortCharacterVehicle::OnRep_OverrideWrap()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortCharacterVehicle::NativeCanPassengersTakeDamage163()
+{
+	// CONFIDENCE: high
+	// IFortVehicleInterface byte slot 0x100.
+	return true;
+}
+
+bool AFortCharacterVehicle::NativeContainsPlayers163()
+{
+	// CONFIDENCE: high
+	// 0x141f84f20, IFortVehicleInterface byte slot 0x110.
+	return NativeGetSeatComponent163()->NativeContainsPlayers163();
+}
+
+UFortVehicleSeatComponent* AFortCharacterVehicle::NativeGetSeatComponent163()
+{
+	// CONFIDENCE: high
+	// 0x140f8f370, IFortVehicleInterface byte slot 0x408.
+	return VehicleSeatComponent;
+}
+
+bool AFortCharacterVehicle::NativeIsSeatFilterApplicable163(uint8 Seat)
+{
+	// CONFIDENCE: high
+	// 0x1406801d0, IFortVehicleInterface byte slot 0x290.
+	return true;
+}
+
 void AFortCharacterVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

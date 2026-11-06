@@ -24,6 +24,13 @@ int32 AFortTeamInfo::GetNativeTeamMemberCount()
 	return TeamMembers.Num();
 }
 
+uint8 AFortTeamInfo::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x1408fbb20, IFortTeamActorInterface byte slot 0x28.
+	return static_cast<uint8>(Team);
+}
+
 void AFortTeamInfo::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

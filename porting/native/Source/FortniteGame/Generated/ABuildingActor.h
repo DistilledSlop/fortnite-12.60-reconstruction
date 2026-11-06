@@ -748,5 +748,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual void NativeOnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation);
 	virtual bool NativeUsesDayPhaseChange() const;
+	virtual uint8 NativeGetTeam163();
 };
 

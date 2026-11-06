@@ -827,5 +827,7 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 	virtual bool NativeIsInSkyTube() const;
 	virtual UFortVehicleSeatComponent* NativeGetSeatComponent163();
+	virtual bool NativeCanPassengersTakeDamage163();
+	virtual bool NativeIsSeatFilterApplicable163(uint8 Seat);
 };
 

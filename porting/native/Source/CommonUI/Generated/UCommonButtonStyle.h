@@ -120,5 +120,47 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	void GetButtonPadding(FMargin& OutButtonPadding) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetCustomPadding(FMargin& OutCustomPadding) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetDisabledBrush(FSlateBrush& Brush) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonTextStyle* GetDisabledTextStyle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetMaterialBrush(FSlateBrush& Brush) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetNormalBaseBrush(FSlateBrush& Brush) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetNormalHoveredBrush(FSlateBrush& Brush) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonTextStyle* GetNormalHoveredTextStyle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetNormalPressedBrush(FSlateBrush& Brush) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonTextStyle* GetNormalTextStyle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetSelectedBaseBrush(FSlateBrush& Brush) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetSelectedHoveredBrush(FSlateBrush& Brush) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonTextStyle* GetSelectedHoveredTextStyle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetSelectedPressedBrush(FSlateBrush& Brush) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonTextStyle* GetSelectedTextStyle() const;
+
 };
 

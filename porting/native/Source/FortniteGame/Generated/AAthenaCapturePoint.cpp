@@ -54,6 +54,13 @@ void AAthenaCapturePoint::OnRep_ReplicatedCapturePercentage()
 	// Body not recovered: reflection-derived stub.
 }
 
+uint8 AAthenaCapturePoint::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x1418c7c30 at IFortTeamActorInterface byte slot 0x28.
+	return static_cast<uint8>(TeamOwningPoint);
+}
+
 void AAthenaCapturePoint::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

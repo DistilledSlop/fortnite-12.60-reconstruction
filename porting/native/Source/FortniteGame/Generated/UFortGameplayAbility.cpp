@@ -12,6 +12,12 @@ void UFortGameplayAbility::AddDynamicGameplayEffectContainer(FGameplayTag& Appli
 	DynamicGameplayEffectContainers.Add(ApplicationTag, Container);
 }
 
+void UFortGameplayAbility::EquipVehicleWeapon(UFortWeaponItemDefinition* WeaponDefinition, int32 SeatIndex, int32 ItemLevel)
+{
+	// CONFIDENCE: HIGH; captured wrapper calls the bare-return native target.
+	return;
+}
+
 UFortAbilitySystemComponent* UFortGameplayAbility::GetActivatingAbilityComponent() const
 {
 	// CONFIDENCE: high

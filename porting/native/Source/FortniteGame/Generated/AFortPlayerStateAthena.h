@@ -532,6 +532,7 @@ public:
 	void NativeExpireTeamMemberState();
 	virtual bool NativeMatchesSpectatedUniqueId216(const FUniqueNetIdRepl& Id) const;
 	bool NativeAllowsReplaySpectating216() const;
+	virtual uint8 NativeGetTeam163();
 protected:
 	void OnRep_AIKills();
 };

@@ -18,6 +18,13 @@ void AFortPickupCreative::OnRep_PickupInstigatorIndex()
 	// Body not recovered: reflection-derived stub.
 }
 
+uint8 AFortPickupCreative::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x1419d93b0, IFortTeamActorInterface byte slot 0x28.
+	return CachedPickupInstigatorHandle == -1 ? 0 : static_cast<uint8>(CachedInstigatorData.TeamIndex);
+}
+
 void AFortPickupCreative::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

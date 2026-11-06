@@ -327,6 +327,13 @@ bool ABuildingActor::NativeUsesDayPhaseChange() const
 	return bUsesDayPhaseChange;
 }
 
+uint8 ABuildingActor::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x141baa080, IFortTeamActorInterface byte slot 0x28.
+	return static_cast<uint8>(TeamIndex);
+}
+
 void ABuildingActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

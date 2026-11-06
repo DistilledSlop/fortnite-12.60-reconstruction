@@ -263,5 +263,12 @@ public:
 	void OnRep_OverrideWrap();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool NativeCanPassengersTakeDamage163();
+	virtual bool NativeContainsPlayers163();
+	virtual UFortVehicleSeatComponent* NativeGetSeatComponent163();
+	virtual bool NativeIsSeatFilterApplicable163(uint8 Seat);
 };
 

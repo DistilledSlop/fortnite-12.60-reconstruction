@@ -5,6 +5,7 @@
 #include "AFortGameStateZone.h"
 #include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerPawn.h"
+#include "AFortPlayerState.h"
 #include "AnalyticsEventAttribute.h"
 #include "EFortQuickBars.h"
 #include "ELockOnState.h"
@@ -1441,6 +1442,13 @@ void AFortPlayerController::NativeRecordQuickBarSlotItem(AFortPlayerController* 
 	    }
 	    Provider->NativeRecordEvent(EventName, Attributes);
 	}
+}
+
+uint8 AFortPlayerController::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x1423865d0, IFortTeamActorInterface byte slot 0x28.
+	return PlayerState ? static_cast<AFortPlayerState*>(PlayerState)->NativeGetTeam163() : 0;
 }
 
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

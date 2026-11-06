@@ -134,6 +134,25 @@ AFortPlayerState* AFortPlayerControllerSpectating::NativeResolveSpectatedPlayerS
 	return nullptr;
 }
 
+AFortPlayerState* AFortPlayerControllerSpectating::NativeGetSpectatingPlayerState163()
+{
+	// CONFIDENCE: high
+	// 0x140680300 at original primary-vtable byte offset 0x2058.
+	return nullptr;
+}
+
+uint8 AFortPlayerControllerSpectating::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x1423d6280. Resolve the virtual state even when role/camera rules reject it.
+	AFortPlayerState* State = NativeGetSpectatingPlayerState163();
+	if (GetLocalRole() == ROLE_Authority || static_cast<uint8>(CurrentCameraType) != 2 || !State)
+	{
+	    return 0;
+	}
+	return State->NativeGetTeam163();
+}
+
 void AFortPlayerControllerSpectating::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

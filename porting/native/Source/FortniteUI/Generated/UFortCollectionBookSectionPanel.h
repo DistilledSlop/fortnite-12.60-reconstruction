@@ -171,5 +171,10 @@ public:
 	UPROPERTY()
 	FOnItemInspectAction OnInspectItemEvent;
 
+protected:
+	UFUNCTION()
+	void OnLogAllowedItemsActionExecuted(bool& bPassThrough);
+public:
+
 };
 

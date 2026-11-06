@@ -48,6 +48,12 @@ public:
 	UPROPERTY()
 	bool bShouldBypassStack;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInActivationStack() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsIntroed() const;
+
 protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void OnBeginIntro();

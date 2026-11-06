@@ -41,5 +41,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual void NativeSetMutatorContext(UObject* Context);
 	virtual uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition);
+	virtual uint8 NativeQueryFriendlyFire163(bool& Value);
 };
 

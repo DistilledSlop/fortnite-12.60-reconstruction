@@ -15,3 +15,10 @@ uint8 AFortAthenaMutator::NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWe
 	return 0;
 }
 
+uint8 AFortAthenaMutator::NativeQueryFriendlyFire163(bool& Value)
+{
+	// CONFIDENCE: high
+	// 0x1406801e0 at primary-vtable byte offset 0x718. Output remains untouched.
+	return 0;
+}
+

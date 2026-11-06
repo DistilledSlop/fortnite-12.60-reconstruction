@@ -173,6 +173,13 @@ UAbilitySystemComponent* AFortPlayerState::GetAbilitySystemComponent() const
 	return Component;
 }
 
+uint8 AFortPlayerState::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// 0x142419200, IFortTeamActorInterface byte slot 0x28.
+	return PlayerTeam ? PlayerTeam->NativeGetTeam163() : 0;
+}
+
 void AFortPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
