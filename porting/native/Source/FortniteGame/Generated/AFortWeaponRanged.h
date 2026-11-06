@@ -392,6 +392,11 @@ protected:
 	void SetDecalColorStart(FLinearColor InputDecalColorStart);
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetShellReloadCounter(int32 InputShellReloadCounter);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldDisplayAmmoCounter() const;
 

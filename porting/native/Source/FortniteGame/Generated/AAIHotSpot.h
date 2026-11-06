@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 #include "EAIHotSpotSlot.h"
+#include "EAIHotSpotSlotFilter.h"
 #include "Math/Vector.h"
 
 class AAIController;
@@ -92,6 +93,9 @@ public:
 	UAIHotSpotSlot* GetSlotByIndex(int32 Index) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSlotCount(EAIHotSpotSlotFilter Filter) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AAIController* GetSlotOwnerByIndex(int32 Index) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -99,6 +103,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSlotUserIdByIndex(int32 Index) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasEnabledSlots() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEnabled() const;

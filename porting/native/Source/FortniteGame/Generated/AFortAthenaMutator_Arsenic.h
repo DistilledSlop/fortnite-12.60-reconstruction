@@ -13,6 +13,7 @@
 #include "FOnPlayerTeamRevealed.h"
 #include "FTagTeamInfoArray.h"
 
+class AFortPlayerStateAthena;
 class USoundBase;
 
 #include "AFortAthenaMutator_Arsenic.generated.h"
@@ -71,6 +72,12 @@ public:
 	UPROPERTY(Replicated, Transient)
 	FTagTeamInfoArray TagTeamInfo;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x550): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x550;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x558): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x558;
+
 	// table index 1, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
 	FArsenicPlayerDataArray PlayerDataArray;
@@ -79,10 +86,19 @@ public:
 	UPROPERTY(Replicated, Transient)
 	bool bCheatHeartbeatEnabled;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x668): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x668;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x670): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x670;
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void EndGame(uint8 WinningTeam);
 public:
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetTeamPlayerCount(uint8 Team);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool IsGrowlEnabled() const;
@@ -92,6 +108,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsHeartbeatEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayerTeamRevealed(AFortPlayerStateAthena* PlayerState) const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -206,6 +206,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void PlaceHeldObject();
 
+	UFUNCTION(BlueprintCallable)
+	void SetMeshComponent(UMeshComponent* InMeshComponent);
+
 protected:
 	UFUNCTION()
 	void ThrownObjectStopped(FHitResult& ImpactResult);

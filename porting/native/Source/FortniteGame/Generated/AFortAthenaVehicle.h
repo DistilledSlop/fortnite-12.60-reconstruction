@@ -297,6 +297,12 @@ public:
 	UPROPERTY()
 	TArray<FVehicleSpringInfo> Springs;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x798): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x798;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x7a0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x7a0;
+
 	// table index 95, flags 0x10000000000001
 	UPROPERTY()
 	FSpringGroundTriangle GroundTriangle;
@@ -716,6 +722,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetPreviousLinearVelocity() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSpringLengthRatio(int32 SpringIdx) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSteeringAngle() const;

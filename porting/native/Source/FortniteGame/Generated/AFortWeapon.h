@@ -909,6 +909,24 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable)
+	void SetTraceThroughBuildingsLimit(int32 NewTraceThroughBuildingsLimit);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetTraceThroughPawns(bool bNewTraceThroughPawns);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetTraceThroughPawnsLimit(int32 NewTraceThroughPawnsLimit);
+public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponData(UFortWeaponItemDefinition* InWeaponData);
+
+protected:
+	UFUNCTION(BlueprintCallable)
 	void SetWeaponPawnAnimsetOverride(UPARAM(meta=(OverrideNativeName="WeaponPawnAnimsetOverride")) UFortWeaponAnimSet* InWeaponPawnAnimsetOverride);
 public:
 

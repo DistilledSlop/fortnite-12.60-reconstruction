@@ -115,6 +115,18 @@ void UFortHeldObjectComponent::PlaceHeldObject()
 	return;
 }
 
+void UFortHeldObjectComponent::SetMeshComponent(UMeshComponent* InMeshComponent)
+{
+	// Behaviour snippet: UFortHeldObjectComponent::SetMeshComponent (body only; spliced into the generated member function).
+	// Original address: 0x142937f60 (exec; the FFrame read and the store are in the raw decompile)
+	// Decompile source: porting/generated/native225-fresh-bulk/0x142937f60.c
+	// Proxy score: none (exec body verified against the raw decompile; no portability record)
+	// Inferred: the exec reads one parameter from the FFrame stack, then the 8-byte object pointer at +0x270 is stored from the argument. Reflection names +0x270 as ReferenceMeshComponent (Object, UMeshComponent*).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	ReferenceMeshComponent = InMeshComponent;
+}
+
 void UFortHeldObjectComponent::ThrownObjectStopped(FHitResult& ImpactResult)
 {
 	// Original exec 0x1429380c0 calls Stub_Empty.

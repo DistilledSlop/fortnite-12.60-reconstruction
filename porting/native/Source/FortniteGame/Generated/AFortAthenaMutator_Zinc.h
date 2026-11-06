@@ -151,6 +151,12 @@ public:
 	UPROPERTY(Replicated)
 	TArray<FZincRoundResult> RoundResults;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x610): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x610;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x618): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x618;
+
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	FScalableFloat bRespawnAllowed;
@@ -159,6 +165,9 @@ private:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetMaxWinnersForThisRound() const;
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPlayerScore(AFortPlayerStateAthena* PlayerState) const;
 
 private:
 	UFUNCTION()

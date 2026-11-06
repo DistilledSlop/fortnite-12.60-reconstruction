@@ -408,6 +408,54 @@ void AFortWeapon::SetShouldDrawNativeReticle(bool bInShouldDrawReticle)
 	bShouldDrawNativeReticle = bInShouldDrawReticle;
 }
 
+void AFortWeapon::SetTraceThroughBuildingsLimit(int32 NewTraceThroughBuildingsLimit)
+{
+	// Behaviour snippet: AFortWeapon::SetTraceThroughBuildingsLimit (body only; spliced into the generated member function).
+	// Original address: 0x142b48880 (exec; the FFrame read and the store are in the raw decompile)
+	// Decompile source: porting/generated/native225-fresh-bulk/0x142b48880.c
+	// Proxy score: none (exec body verified against the raw decompile; no portability record)
+	// Inferred: the exec reads one parameter from the FFrame stack, then the 32-bit int at +0x8a4 is stored from the argument. Reflection names +0x8a4 as TraceThroughBuildingsLimit (Int).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	TraceThroughBuildingsLimit = NewTraceThroughBuildingsLimit;
+}
+
+void AFortWeapon::SetTraceThroughPawns(bool bNewTraceThroughPawns)
+{
+	// Behaviour snippet: AFortWeapon::SetTraceThroughPawns (body only; spliced into the generated member function).
+	// Original address: 0x142b48900 (exec; the FFrame read and the store are in the raw decompile)
+	// Decompile source: porting/generated/native225-fresh-bulk/0x142b48900.c
+	// Proxy score: none (exec body verified against the raw decompile; no portability record)
+	// Inferred: the exec reads one parameter from the FFrame stack, then the byte at +0x89c is written with (argument != 0) (mov8). bool_bits.py maps (0x89c, 0x1) to bTraceThroughPawns.
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	bTraceThroughPawns = bNewTraceThroughPawns;
+}
+
+void AFortWeapon::SetTraceThroughPawnsLimit(int32 NewTraceThroughPawnsLimit)
+{
+	// Behaviour snippet: AFortWeapon::SetTraceThroughPawnsLimit (body only; spliced into the generated member function).
+	// Original address: 0x142b48980 (exec; the FFrame read and the store are in the raw decompile)
+	// Decompile source: porting/generated/native225-fresh-bulk/0x142b48980.c
+	// Proxy score: none (exec body verified against the raw decompile; no portability record)
+	// Inferred: the exec reads one parameter from the FFrame stack, then the 32-bit int at +0x8a0 is stored from the argument. Reflection names +0x8a0 as TraceThroughPawnsLimit (Int).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	TraceThroughPawnsLimit = NewTraceThroughPawnsLimit;
+}
+
+void AFortWeapon::SetWeaponData(UFortWeaponItemDefinition* InWeaponData)
+{
+	// Behaviour snippet: AFortWeapon::SetWeaponData (body only; spliced into the generated member function).
+	// Original address: 0x142b48b60 (exec; the FFrame read and the store are in the raw decompile)
+	// Decompile source: porting/generated/native225-fresh-bulk/0x142b48b60.c
+	// Proxy score: none (exec body verified against the raw decompile; no portability record)
+	// Inferred: the exec reads one parameter from the FFrame stack, then the 8-byte object pointer at +0x350 is stored from the argument. Reflection names +0x350 as WeaponData (Object, UFortWeaponItemDefinition*).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	WeaponData = InWeaponData;
+}
+
 void AFortWeapon::SetWeaponPawnAnimsetOverride(UPARAM(meta=(OverrideNativeName="WeaponPawnAnimsetOverride")) UFortWeaponAnimSet* InWeaponPawnAnimsetOverride)
 {
 	// Original exec 0x142b48be0; pure writer 0x1426b3b10.

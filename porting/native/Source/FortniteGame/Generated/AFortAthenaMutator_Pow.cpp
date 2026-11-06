@@ -2,6 +2,25 @@
 #include "AFortAthenaMutator_Pow.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortAthenaMutator_Pow::GetPlayerCurrentShield(AFortPlayerStateAthena* Player) const
+{
+	// Original address: 0x14281be80 (exec thunk; body 0x141b040f0).
+	// Decompile source: porting/generated/native107-impl/0x141b040f0.c
+	// CONFIDENCE: HIGH
+	// Body: scans the array at this+0x600 (stride 0x28, count NativeRecoveredInt_0x608) for the entry whose pointer at +0x10
+	// equals Player and returns the float at +0x1c. Returns 0 when no entry matches.
+	const uint8* Begin = reinterpret_cast<const uint8*>(NativeRecoveredPointer_0x600);
+	const uint8* End = Begin + static_cast<int64>(NativeRecoveredInt_0x608) * 0x28;
+	for (const uint8* Entry = Begin; Entry != End; Entry += 0x28)
+	{
+	    if (reinterpret_cast<const void*>(*reinterpret_cast<const uint64*>(Entry + 0x10)) == static_cast<const void*>(Player))
+	    {
+	        return *reinterpret_cast<const float*>(Entry + 0x1c);
+	    }
+	}
+	return 0.0f;
+}
+
 void AFortAthenaMutator_Pow::OnRep_RespawningCurrentlyAllowed()
 {
 	// Body not recovered: reflection-derived stub.

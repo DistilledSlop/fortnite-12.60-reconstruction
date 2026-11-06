@@ -44,5 +44,8 @@ public:
 	UPROPERTY()
 	FLinearColor TintOverride;
 
+	UFUNCTION(BlueprintCallable)
+	void SetInstigatingActor(AActor* NewInstigator);
+
 };
 

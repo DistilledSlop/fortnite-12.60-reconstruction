@@ -8,6 +8,25 @@ void AFortAthenaMutator_Arsenic::EndGame(uint8 WinningTeam)
 	// CONFIDENCE: HIGH
 }
 
+int32 AFortAthenaMutator_Arsenic::GetTeamPlayerCount(uint8 Team)
+{
+	// Original address: 0x1427e1350 (exec thunk; body 0x141aaeca0).
+	// Decompile source: porting/generated/native107-impl/0x141aaeca0.c
+	// CONFIDENCE: HIGH
+	// Body: scans the array at this+0x550 (stride 0x18, count NativeRecoveredInt_0x558) for the entry whose byte at +0xc equals
+	// Team and returns the int32 at +0x10. Returns -1 when no entry matches.
+	const uint8* Begin = reinterpret_cast<const uint8*>(NativeRecoveredPointer_0x550);
+	const uint8* End = Begin + static_cast<int64>(NativeRecoveredInt_0x558) * 0x18;
+	for (const uint8* Entry = Begin; Entry != End; Entry += 0x18)
+	{
+	    if (Entry[0xc] == Team)
+	    {
+	        return *reinterpret_cast<const int32*>(Entry + 0x10);
+	    }
+	}
+	return -1;
+}
+
 bool AFortAthenaMutator_Arsenic::IsGrowlEnabled() const
 {
 	// Original address: 0x1412d9d60.
@@ -30,6 +49,25 @@ bool AFortAthenaMutator_Arsenic::IsHeartbeatEnabled() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
 	return true;
+}
+
+bool AFortAthenaMutator_Arsenic::IsPlayerTeamRevealed(AFortPlayerStateAthena* PlayerState) const
+{
+	// Original address: 0x1427e15d0 (exec thunk; body 0x141ab16d0).
+	// Decompile source: porting/generated/native107-impl/0x141ab16d0.c
+	// CONFIDENCE: HIGH
+	// Body: scans the array at this+0x668 (stride 0x20, count NativeRecoveredInt_0x670) for the entry whose pointer at +0x10
+	// equals PlayerState and returns the flag byte at +0x18 as a bool. Returns false when no entry matches.
+	const uint8* Begin = reinterpret_cast<const uint8*>(NativeRecoveredPointer_0x668);
+	const uint8* End = Begin + static_cast<int64>(NativeRecoveredInt_0x670) * 0x20;
+	for (const uint8* Entry = Begin; Entry != End; Entry += 0x20)
+	{
+	    if (reinterpret_cast<const void*>(*reinterpret_cast<const uint64*>(Entry + 0x10)) == static_cast<const void*>(PlayerState))
+	    {
+	        return *(Entry + 0x18) != 0;
+	    }
+	}
+	return false;
 }
 
 void AFortAthenaMutator_Arsenic::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

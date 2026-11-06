@@ -12,6 +12,8 @@
 #include "FOnRespawnTimeRemainingUpdate.h"
 #include "FPowPlayerDataArray.h"
 
+class AFortPlayerStateAthena;
+
 #include "AFortAthenaMutator_Pow.generated.h"
 
 UCLASS(config=Engine)
@@ -59,6 +61,15 @@ public:
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RespawningCurrentlyAllowed)
 	bool bRespawningCurrentlyAllowed;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x600): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x600;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x608): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x608;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetPlayerCurrentShield(AFortPlayerStateAthena* Player) const;
 
 	UFUNCTION()
 	void OnRep_RespawningCurrentlyAllowed();

@@ -62,5 +62,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetPerformLinkingCheckOnBeginPlay(bool bCheckOnBeginPlay);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetRegisterWithOwnerMovementComponent(bool bRegisterWithMovementComp);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetUseActorRotationForDirectionVectors(bool InbUseActorRotationForDirectionVectors);
+
 };
 

@@ -669,5 +669,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetNukeWavesAtEncounterEnd(bool bNuke);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetPawnNumberLimit(int32 InPawnNumberLimit);
+
 };
 
