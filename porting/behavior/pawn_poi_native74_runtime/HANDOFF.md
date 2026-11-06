@@ -1,9 +1,0 @@
-# Native pawn and POI batch74
-
-Two actual native target drafts,142301790 and1419aeb90, cover the complete decompiler control flow. They are uncounted, outside native build inputs and not verified ABI. Source fingerprints identify ignored generated C, not original-byte proof.
-
-AITargetDied uses self and the second raw argument as an object. The old exec eight-argument labels do not describe this native contract: notably the second stepped value labelled Momentum cannot be assumed a vector here. The lift preserves authority check before and after class lookup, cached array data/live count iteration, first-match removal with memmove and count decrement, and dynamic delegate name parsing/removal regardless of whether the array contained the target. UTF-16 separator lookup adds2 bytes on scan and4 bytes for final suffix; the absent-separator address4 path is explicit, without inventing a fallback name. Native pointer arithmetic, signed truncation, null assumptions, name resolution and event mutation need ABI reconciliation.
-
-SetLocationText obtains the manager before world, iterates live weak entries through the recovered iterator contract, class-checks non-null entries, and still performs manager lookup with null on invalid/wrong-class entries. It forwards both raw words and one byte without assuming reflected argument types. No iterator cleanup appears in the recovered body. Iterator storage/layout, class hierarchy access, helper effects, text ownership and virtual dispatch need resolution. Every extern is an unresolved required operation; none implements a default/no-op.
-
-Root source review only; no tests/compiler/generation. Root serialized the Ghidra probe for all6 native-broad74 targets before this lift. Probe command/outcome/log are recorded in top-level HANDOFF.md. Canonical body count unchanged.

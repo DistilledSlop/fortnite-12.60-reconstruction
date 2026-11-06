@@ -1,2 +1,0 @@
-// CONFIDENCE: high
-return true;

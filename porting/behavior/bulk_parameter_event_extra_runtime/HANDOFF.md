@@ -1,3 +1,0 @@
-# Handoff
-
-Source-only scan at canonical 1,729-body baseline: `python3 -I porting/behavior/bulk_parameter_event_extra_runtime/prepare.py` produced six proposed native-event implementations in `/tmp/gameplay-bulk-parameter-event-extra/manifest-entries.json` and 20 wrapper candidates with rejection counts and vtable evidence in `/tmp/gameplay-bulk-parameter-event-extra/report.json`. The script and shared `return.inc` are in this directory. No canonical promotion, builds, or tests were performed. Source proposal only; build pending. Root owns integration and validation at the next batch checkpoint.

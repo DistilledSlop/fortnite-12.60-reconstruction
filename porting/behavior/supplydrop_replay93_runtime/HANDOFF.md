@@ -1,3 +1,0 @@
-# Supply-drop replay query
-
-Complete exec142834300 -> native14191bde0 calls GetWorld once, returns false for null and otherwise invokes144693a30. That routine checks world+f0 and then14419d510. Its latter predicate is checkpoint-loading byte+ad4 OR (connection+88 nonnull AND connection state+134 !=1). This matches UWorld::IsPlayingReplay (World.cpp5446) and UDemoNetDriver::IsPlaying (DemoNetDriver.cpp1486; USOCK_Closed=1). The source uses existing engine implementations, preserving null and short-circuit behavior. Evidence pins are in evidence.json; original image identity inherited, not rehashed. No tests/build; next3040.

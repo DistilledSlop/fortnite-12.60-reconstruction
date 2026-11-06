@@ -1,7 +1,0 @@
-# Single-float native event stub recovery
-
-Run `python3 -I porting/behavior/bulk_parameter_event_runtime/prepare.py` from the repository. The scanner writes proposed entries and evidence to `/tmp/gameplay-bulk-parameter-event/{manifest-entries,report}.json`; it does not modify the canonical manifest. It needs Capstone at `/tmp/common-input-capstone`, objdump, and the original mapped image pinned by SHA-256 in the script.
-
-The only accepted signature is a void event with exactly one by-value float parameter. Its name and type come from reflection; exact property flags and array dimension exclude returns, references and other modifiers. The complete generated exec wrapper must match, including both parameter-decoding paths, fixed helper addresses, control flow, argument placement, frame advancement and virtual call slot. The scanner imports the constructor and vtable proof from `bulk_native_event_runtime/prepare.py`: a unique class mapping, constructor vptr store proven to target incoming `this`, and a slot within its contiguous code-pointer table are required. The slot must target the exact shared `c2 00 00` return stub, proving no native side effects and that the argument is ignored. Ambiguity fails closed.
-
-Entries name the `_Implementation` function, preserve dispatcher address and reflection flags, and require generator support for `native_event_impl`. This is source-only evidence; canonical promotion and builds are separate. Results vary with the canonical manifest. `--revalidate-own` includes entries already promoted from this directory.

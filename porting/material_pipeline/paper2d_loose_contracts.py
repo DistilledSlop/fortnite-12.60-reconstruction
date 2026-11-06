@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[2]
 IMAGE = Path('/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin')
 IMAGE_SHA = '338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680'
 MANIFEST = ROOT / 'porting/generated/paper2d-shader-semantics/shader-manifest.json'
-OUTPUT = ROOT / 'porting/behavior/paper2d_loose_contracts_runtime/evidence.json'
+OUTPUT = ROOT / 'porting/material_pipeline/evidence/paper2d_loose_contracts_runtime/evidence.json'
 BASE = 0x140000000
 WINDOWS = {
     0x1432f19f0: (0x185, '5c036e5917d2f7b7d449ba75f3d7acb986a798ca16d47741b5dfb022338567e5'),

@@ -1,7 +1,0 @@
-{
-  "status": "incomplete_uncounted",
-  "class": "AFortPlayerPawnAthena",
-  "functions": ["LandscapeCheck", "OnRep_MeshHeightAdjustAthena", "OnRep_AttributeProxy", "OnRep_ReplayRepAnimMontageInfo", "SetFallInstigator", "GamePhaseStepChanged"],
-  "source": "PROPOSAL.cpp",
-  "reason": "Typed control-flow drafts depend on unresolved engine adapters and are not source-complete snippets. Do not merge into the canonical behavior manifest."
-}

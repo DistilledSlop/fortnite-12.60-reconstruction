@@ -23,7 +23,7 @@ def require(condition, message):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--out', type=Path, default=ROOT/'behavior/paper2d_material_uniform_layout_runtime/evidence.json')
+    parser.add_argument('--out', type=Path, default=ROOT/'material_pipeline/evidence/paper2d_material_uniform_layout_runtime/evidence.json')
     args = parser.parse_args()
     require(receipt(IMAGE)['sha256'] == IMAGE_HASH, 'original image mismatch')
     addresses = {0x1459a4b30:'', 0x146ac22e0:'VectorExpressions', 0x146ac2308:'ScalarExpressions',

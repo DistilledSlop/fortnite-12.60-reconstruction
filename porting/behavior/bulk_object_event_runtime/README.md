@@ -1,7 +1,0 @@
-# Single-object native event stub recovery
-
-Run `python3 -I porting/behavior/bulk_object_event_runtime/prepare.py` from the repository. Proposals and evidence are written to `/tmp/gameplay-bulk-object-event/{manifest-entries,report}.json`, without changing the canonical manifest. The scanner requires Capstone at `/tmp/common-input-capstone`, objdump, and the original mapped image pinned by SHA-256 in the script. `--revalidate-own` includes entries already promoted from this directory.
-
-Only void events with one by-value Object parameter and exact property flags are considered. The class reference must resolve through `class_ref_map.json` to a selected, non-interface project class, preserving the generator's pointer type. The entire generated exec wrapper must match, including both extraction branches, branch destinations, helpers, argument placement, stack layout, frame advancement, and virtual call slot. Constructor and vtable proof is reused from `bulk_native_event_runtime`: unique class mapping, constructor vptr store proven to target incoming `this`, and slot within the contiguous code-pointer table. The slot must target the exact shared `c2 00 00` return stub. Ambiguities fail closed.
-
-Entries name the `_Implementation` function, preserve dispatcher address and reflection flags, and require `native_event_impl` generator support. This is source-only evidence; canonical promotion and builds are separate.

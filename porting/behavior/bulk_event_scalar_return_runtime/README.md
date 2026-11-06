@@ -1,9 +1,0 @@
-# Parameterless native event scalar returns
-
-Run `python3 -I porting/behavior/bulk_event_scalar_return_runtime/prepare.py`. Outputs are `/tmp/gameplay-bulk-event-scalar-return/{manifest-entries,report}.json`; the canonical manifest is untouched. Dependencies are the pinned image and Capstone described in `bulk_native_event_runtime/README.md`. The image SHA-256 is checked before scanning.
-
-This finite scan matches complete parameterless Int, UInt32 and Float exec wrappers, exact reflection return metadata and supported flags, selected unique non-interface class, and no existing port. It follows the unique GPSC to the constructor and uses the same hardened straight-line `proven_this_store` proof as `bulk_native_event_runtime`: one vptr store to an unmodified callee-saved copy of incoming this, with no thunk stores. A complete slot in the contiguous code-pointer table must target a complete exact constant leaf (`xor eax,eax; ret`, `mov eax,imm32; ret`, or `xorps xmm0,xmm0; ret` with the respective scalar ABI). Signatures retain return type, const, access and reflection flags. The evidence report records wrapper, chain, slot, target and bytes; unmatched targets are listed for further investigation.
-
-On the current manifest this yields one proposal: `UHUDLayoutToolProxy::BP_GetNumOfProperties_Implementation() const`, target `0x140680300` (`33c0c3`). Four other resolved targets are not exact supported constant leaves. `AKeepItemContainer::GetLootTierOverride` reads offset `0xce4`, but no accessible reflected same-type field has been established, so it is not proposed. The remaining class has ambiguous constructor/vtable evidence. This is source-only evidence, not a build or runtime result. Counts depend on the canonical manifest; `--revalidate-own` excludes this directory's already promoted entries.
-
-Integrated in native source batch 18: 1 bodies. Compilation and runtime checks remain pending at approximately 2,040 bodies.

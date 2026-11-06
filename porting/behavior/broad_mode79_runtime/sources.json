@@ -1,7 +1,0 @@
-{
-  "status": "rough_uncounted",
-  "sources": [
-    {"address": "0x14199e430", "path": "porting/generated/callee_probe/blocking/0x14199e430.c", "sha256": "46ac4d45b7506a670a63bc8979c20443f970d636a715f18aa931f209109d8e04"},
-    {"address": "0x14199e4e0", "path": "porting/generated/callee_probe/blocking/0x14199e4e0.c", "sha256": "88f2605d424b5a5b96b52b01c09417a9b02faf6b6da1b2d83a395703d579e43e"}
-  ]
-}

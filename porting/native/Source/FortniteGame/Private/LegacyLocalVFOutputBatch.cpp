@@ -50,7 +50,7 @@ bool BuildLegacyPaper2DLooseContracts(const FLegacyOriginalRecord& Record,
 {
     // Source identity is constructor -> FShaderParameter member -> original
     // serializer -> decoded allocation, not current names or matching widths.
-    // See behavior/paper2d_loose_contracts_runtime/evidence.json.
+    // See material_pipeline/evidence/paper2d_loose_contracts_runtime/evidence.json.
     TArray<FLegacyLocalLooseContract> Result;
     const auto Add = [&Result](const TCHAR* Name, uint16 Offset, uint16 Size)
     {

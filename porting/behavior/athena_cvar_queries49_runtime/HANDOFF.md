@@ -1,7 +1,0 @@
-# Athena cvar queries 49
-
-`AreSkyTubesEnabled` is ready: native checks `bSkyTubesDisabled`, then the shared integer cvar `Fort.SkyTubesEnabled`. Original registration at 0x14035f300 registers a reference to 0x1478df4c8 with ECVF_Default (0); the original PE `.data` initial value is 1. The supplied runtime header and source own the writable backing and registration; integration must put both in the native module and use this same backing for every original reference, with no second registration. The native exec is 0x14291e190.
-
-`GetEndGameReturnToMatchmakingOriginDelay` remains blocked. Its float is cvar `Playlist.ReturnToMatchmakingOriginDelay`, help `Time before returning players to their matchmaking origin`, ECVF_Default; reference registration at 0x14027c3b0 binds 0x1478c29b8, whose original PE `.data` initial value is 60.0f. It is unsafe to return this value solely based on the playlist flag: helper 0x1426fdde0 gets UFortRuntimeOptions default, and predicate 0x1426f5bb0 consults mutable runtime options plus playlist identity, platform, and account/environment-derived string filters; it is not yet reconstructed. Probe outputs and disassembly are in /tmp/athena-cvar49/probe. Do not introduce a private float copy. No implementation supplied for the delay.
-
-No canonical files, tests, builds, or runtime changed. Ghidra probe rolled back transaction; project metadata timestamps changed as documented in /tmp/athena-cvar49/probe.log.

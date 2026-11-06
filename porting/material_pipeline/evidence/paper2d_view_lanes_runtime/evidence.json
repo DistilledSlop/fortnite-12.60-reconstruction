@@ -1,0 +1,703 @@
+{
+  "schema": "paper2d-view-consumed-lanes-evidence-v1",
+  "command": "python3 porting/material_pipeline/paper2d_view_lanes.py --output porting/generated/paper2d-shader-semantics/view-lanes.json --evidence porting/material_pipeline/evidence/paper2d_view_lanes_runtime/evidence.json",
+  "report_sha256": "917068daf86cd2cbfb74092fceb8ba6794e725e8b2edb3fea7284560f82b370f",
+  "provenance": {
+    "physical_report_sha256": "f5d74f548c7f91a2650b407441084c97dade7754af72817f636c3d7712dc3e34",
+    "manifest_sha256": "3947aea9f3cd2e1d61441334d256e8aeeb9d1cf8cd83fce5eef35236165b0876",
+    "layout_sha256": "9479e6284567a78d13d28460d8f651dd956eac09802b02a2f566eae98babb167",
+    "grammar_sha256": "0ee6f4207abffdfb13cd0ef3f3166eb56c58282df970325f87371538b98c2b55",
+    "inspector_sha256": "c39b91b2c8c64e726fb96ae8918cf59ea33b2060cc586e63b2b23d5ac74a9b57",
+    "physical_analyzer_sha256": "0a9eb13f3ce5b214d1fc1a2d6773d2e5cc29575c5b761c54bcd102e4cbd75600",
+    "lane_analyzer_sha256": "6d98a4cc2fd5260f5e3fee42b7ead6492eda1248debe10f29121b4f5223a949b"
+  },
+  "runtime_verified": false,
+  "scope": "Conservatively bound consumed scalar/vector lanes of mapped physical View loads.\n\nOnly explicit component operations and an allowlist of lane-wise core operations\ncan discard a lane. Unknown uses, memory stores, calls and cycles retain it.\nThis is a static use bound, not a rendering, ABI-value or runtime parity proof.\n",
+  "status_counts": {
+    "consumed_words_same_offset_and_shape": 28,
+    "view_not_identified_in_wrapper": 3,
+    "consumed_layout_mismatch_or_unmapped": 2
+  },
+  "shaders": [
+    {
+      "shader_index": 668,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 5,
+      "physical": {
+        "word_count": 20,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 19,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 712,
+      "physical_status": "view_not_identified_in_wrapper",
+      "status": "view_not_identified_in_wrapper"
+    },
+    {
+      "shader_index": 713,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 2,
+      "physical": {
+        "word_count": 4,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 3,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 714,
+      "physical_status": "view_not_identified_in_wrapper",
+      "status": "view_not_identified_in_wrapper"
+    },
+    {
+      "shader_index": 812,
+      "physical_status": "view_not_identified_in_wrapper",
+      "status": "view_not_identified_in_wrapper"
+    },
+    {
+      "shader_index": 853,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 4,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 3,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 854,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 4,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 3,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 857,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_layout_mismatch_or_unmapped",
+      "physical_load_count": 23,
+      "physical": {
+        "word_count": 54,
+        "mismatch_words": [
+          2768,
+          2772,
+          2776,
+          2780,
+          2784,
+          2788,
+          2796,
+          2800,
+          3240
+        ],
+        "unknown_words": [
+          972,
+          1100,
+          1132
+        ],
+        "changed_or_missing_members": [
+          "SkyAtmosphereAerialPerspectiveStartDepth",
+          "SkyAtmosphereApplyCameraAerialPerspectiveVolume",
+          "SkyAtmosphereBottomRadius",
+          "SkyAtmosphereCameraAerialPerspectiveVolumeDepthResolution",
+          "SkyAtmosphereCameraAerialPerspectiveVolumeDepthResolutionInv",
+          "SkyAtmosphereCameraAerialPerspectiveVolumeDepthSliceLengthInv",
+          "SkyAtmosphereHeightFogContribution",
+          "SkyAtmosphereTopRadius",
+          "VolumetricFogMaxDistance"
+        ]
+      },
+      "consumed": {
+        "word_count": 46,
+        "mismatch_words": [
+          2768,
+          2780,
+          2784,
+          2788,
+          2796,
+          2800,
+          3240
+        ],
+        "unknown_words": [],
+        "changed_or_missing_members": [
+          "SkyAtmosphereAerialPerspectiveStartDepth",
+          "SkyAtmosphereApplyCameraAerialPerspectiveVolume",
+          "SkyAtmosphereCameraAerialPerspectiveVolumeDepthResolution",
+          "SkyAtmosphereCameraAerialPerspectiveVolumeDepthResolutionInv",
+          "SkyAtmosphereCameraAerialPerspectiveVolumeDepthSliceLengthInv",
+          "SkyAtmosphereHeightFogContribution",
+          "VolumetricFogMaxDistance"
+        ]
+      },
+      "discarded_word_count": 8
+    },
+    {
+      "shader_index": 859,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 5,
+      "physical": {
+        "word_count": 20,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 19,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 1510,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 4,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 3,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 1511,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 4,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 3,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 1512,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 4,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 3,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 1513,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 4,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 3,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 1520,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 5,
+      "physical": {
+        "word_count": 20,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 19,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 1521,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 5,
+      "physical": {
+        "word_count": 20,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 19,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 1522,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 10,
+      "physical": {
+        "word_count": 40,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132,
+          1820
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 38,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 2
+    },
+    {
+      "shader_index": 1528,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 11,
+      "physical": {
+        "word_count": 41,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132,
+          1820
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 39,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 2
+    },
+    {
+      "shader_index": 2467,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 2468,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 2469,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 2470,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 2471,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 7,
+      "physical": {
+        "word_count": 22,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 21,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 2472,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 10,
+      "physical": {
+        "word_count": 34,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 29,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 5
+    },
+    {
+      "shader_index": 2473,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 2,
+      "physical": {
+        "word_count": 5,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 5,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 2474,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 2475,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 2476,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 2477,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 5,
+      "physical": {
+        "word_count": 20,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 19,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 1
+    },
+    {
+      "shader_index": 2478,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 2,
+      "physical": {
+        "word_count": 5,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 5,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 2479,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 11,
+      "physical": {
+        "word_count": 41,
+        "mismatch_words": [],
+        "unknown_words": [
+          1132,
+          1820
+        ],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 39,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 2
+    },
+    {
+      "shader_index": 3376,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 3377,
+      "physical_status": "same_offset_and_shape",
+      "status": "consumed_words_same_offset_and_shape",
+      "physical_load_count": 1,
+      "physical": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "consumed": {
+        "word_count": 1,
+        "mismatch_words": [],
+        "unknown_words": [],
+        "changed_or_missing_members": []
+      },
+      "discarded_word_count": 0
+    },
+    {
+      "shader_index": 3378,
+      "physical_status": "layout_mismatch_or_unmapped",
+      "status": "consumed_layout_mismatch_or_unmapped",
+      "physical_load_count": 15,
+      "physical": {
+        "word_count": 42,
+        "mismatch_words": [
+          3208,
+          3216,
+          3220,
+          3224
+        ],
+        "unknown_words": [
+          1132
+        ],
+        "changed_or_missing_members": [
+          "VolumetricFogGridZParams",
+          "VolumetricFogInvGridSize"
+        ]
+      },
+      "consumed": {
+        "word_count": 37,
+        "mismatch_words": [
+          3208,
+          3216,
+          3220,
+          3224
+        ],
+        "unknown_words": [],
+        "changed_or_missing_members": [
+          "VolumetricFogGridZParams",
+          "VolumetricFogInvGridSize"
+        ]
+      },
+      "discarded_word_count": 5
+    }
+  ]
+}

@@ -1,7 +1,0 @@
-{
-  "proof": "Reflected out parameter types and names are in native_funcs.json; generated UCommonButtonStyle.h supplies matching reflected fields. Wrappers forward the out reference to the listed helpers. Brush helpers use FUN_14079cdf0 to assign the full brush, including shared ownership fields; native FSlateBrush assignment supplies that operation.",
-  "wrappers": "porting/generated/native-triage001/",
-  "helpers": "porting/generated/button-style-getter-probes/",
-  "brush_copy": "porting/generated/button-style-copy-probe/0x14079cdf0.c",
-  "limitations": "Existing panel runtime integration and generated declarations are outside this proposal. FSlateBrush compatibility and runtime rendering are not verified. Text-style accessors are excluded: their native bodies read an existing class default object and require a careful no-create class/CDO contract."
-}

@@ -233,7 +233,7 @@ words with matching original/current offsets and shapes. Nineteen include
 changed members or unmapped physical lanes; only shaders 857 and 3378 access
 named members known to differ. Full vector loads retain padding lanes in this
 conservative analysis. Three wrappers do not identify View. The compact evidence
-is in `behavior/paper2d_view_accesses_runtime/evidence.json`; the generated
+is in `material_pipeline/evidence/paper2d_view_accesses_runtime/evidence.json`; the generated
 report retains every load and member mapping. This narrows remapping work but
 does not prove buffer values, resource compatibility or rendering parity.
 

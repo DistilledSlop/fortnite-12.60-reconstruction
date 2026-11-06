@@ -52,8 +52,8 @@ batch requires a caller-pinned manifest digest, matching owner and resource byte
 and strict record and pipeline identity; outputs and pipelines remain unchanged
 on failure. This is source review, not a build or runtime result. Provider
 attachment, binding and value producers remain unfinished. See the
-[batch evidence receipt](../behavior/paper2d_output_batch_runtime/evidence.json)
-and [original loose identity evidence](../behavior/paper2d_loose_contracts_runtime/evidence.json).
+[batch evidence receipt](../material_pipeline/evidence/paper2d_output_batch_runtime/evidence.json)
+and [original loose identity evidence](../material_pipeline/evidence/paper2d_loose_contracts_runtime/evidence.json).
 
 `LoadLegacyOriginalUniformBindings` parses the caller-pinned contract bundle once,
 validates its full inventory and returns fixed contracts and Material binding
@@ -88,7 +88,7 @@ Original View producer recovery now locates the atmosphere copy and shared
 start-depth/slice helper. Its finite-input formulas match current kilometer-based
 source, but upstream radius units, exact input semantics and exceptional floating
 point behavior still need proof. See
-`porting/behavior/view_missing_producer_runtime/evidence.json`; no automatic
+`porting/material_pipeline/evidence/view_missing_producer_runtime/evidence.json`; no automatic
 member aliases or values are inferred from that comparison. The native
 `ComputeLegacySkyAtmosphereDepthParameters` now lifts the original six-output
 helper with scalar SSE, including conversion, MAXSS operand order and exact scale
@@ -105,14 +105,14 @@ live provider are inferred.
 The original labeled allocation identifies the +0x4e20 volume reference used
 by the helper flag; the +0xd30 near-depth formula matches current source,
 while its full original projection layout and source instance remain unproved.
-See `porting/behavior/atmosphere_input_fields_runtime/evidence.json`.
+See `porting/material_pipeline/evidence/atmosphere_input_fields_runtime/evidence.json`.
 Original component-to-proxy radius writes also show a
 direct bottom-radius copy and bottom-plus-height top radius with no scaling.
 The scene constructor installs the candidate vtable and publishes it through the
 field used by the component; the producer slot returns that scene unchanged.
 This closes the conditional static bridge, while actual instance identity,
 factory branch and physical units remain unproved. See
-`porting/behavior/scene_radius_vtable_runtime/evidence.json`.
+`porting/material_pipeline/evidence/scene_radius_vtable_runtime/evidence.json`.
 
 The original libraries and the rebuilt project's libraries both begin with version `2`, but their layouts differ:
 
@@ -380,7 +380,7 @@ The local null-RHI run exited 0 with 68 records in each map and all 136 record
 identities, boundaries and uniform layouts matching the decoded receipt. A zeroed
 shader end word was rejected with exit 1. This verifies decoding, not rendering;
 unrelated staged package errors remain. See
-`behavior/maps_terrain_material_runtime/native-reader-checkpoint.json`.
+`material_pipeline/evidence/maps_terrain_material_runtime/native-reader-checkpoint.json`.
 
 `export_landscape_shader_manifest.py` composes the digest-pinned translation
 reports into the adapter's existing shader-object shape. Its generated manifest
@@ -399,10 +399,10 @@ The Linux Development client builds with this adapter; execution and attachment
 are still pending, and VT feedback remains rejected. Original initializer and
 member-chain captures also recover `LandscapeParameters` (240 bytes, 18
 members) and `LandscapeContinuousLODParameters` (48 bytes, six members): see
-`behavior/maps_terrain_material_runtime/landscape-uniform-contract.json`. Their resource hashes agree with all 33 and 24 active original shader wrapper
+`material_pipeline/evidence/maps_terrain_material_runtime/landscape-uniform-contract.json`. Their resource hashes agree with all 33 and 24 active original shader wrapper
 associations, respectively. The original material shader constructor, lookup and serializer identify the
 decoded `VTFeedbackBuffer` resource field; its renderer binding path remains unverified, as documented
-in `behavior/maps_terrain_material_runtime/vt-feedback-contract.json`.
+in `material_pipeline/evidence/maps_terrain_material_runtime/vt-feedback-contract.json`.
 The same original metadata capture now includes `Primitive` (560 bytes, 25
 members) and `PrecomputedLightingBuffer` (240 bytes, eight members). Their
 terrain shader wrappers name the uniforms but have no active resource-table
@@ -418,14 +418,14 @@ current metadata, and its output is not yet suitable for buffer construction.
 The seven-layout Linux client probe checked all 143 associations and rejected a
 corrupted copy by its SHA-256 pin. This was a null-RHI loader probe, not a draw; staged Water
 package errors remain. See
-`behavior/maps_terrain_material_runtime/uniform-loader-checkpoint.json`.
+`material_pipeline/evidence/maps_terrain_material_runtime/uniform-loader-checkpoint.json`.
 
 `ue425-legacy-landscape-vf-bindings.patch` supplies the recovered per-element
 `LodValues` and fixed-grid zero `LodBias` from landscape batch data. Other
 original loose parameters, including `ForcedLod`, are not yet supplied; the
 factory must continue rejecting shaders that require them. The original
 continuous-LOD uniform producer's field assignments are captured in
-`behavior/landscape_lod_uniform_producer_runtime/evidence.json`; matching
+`material_pipeline/evidence/landscape_lod_uniform_producer_runtime/evidence.json`; matching
 resource contents, runtime uniform binding and rendering remain unverified.
 
 The native landscape decoder probe now prepares the Material layout from all
@@ -433,4 +433,4 @@ The native landscape decoder probe now prepares the Material layout from all
 loose contracts for each of 70 vertex occurrences. Both maps passed in the
 Linux client; altered Material and vertex allocations were rejected. This is
 layout and contract preparation only, with no shader attachment or draw. See
-`behavior/maps_terrain_material_runtime/material-vf-layout-checkpoint.json`.
+`material_pipeline/evidence/maps_terrain_material_runtime/material-vf-layout-checkpoint.json`.

@@ -1,3 +1,0 @@
-# Add to mutator_provider_bindings_runtime/source_policy.py BLOCKS:
-'ADeployableBasePlot': ('0x146292820', 'IFortInventoryOwnerInterface'),
-'AFortAIPawn': ('0x1462afb30', 'IFortInventoryOwnerInterface'),

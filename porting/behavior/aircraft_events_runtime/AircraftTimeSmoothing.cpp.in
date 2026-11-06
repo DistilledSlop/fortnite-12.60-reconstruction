@@ -1,7 +1,0 @@
-// Shared by the full aircraft Tick implementation. Include HAL/IConsoleManager.h.
-float AircraftClientTimeSmoothing = 0.33f;
-static FAutoConsoleVariableRef CVarAircraftClientTimeSmoothing(
-    TEXT("Athena.Aircraft.ClientTimeSmoothing"),
-    AircraftClientTimeSmoothing,
-    TEXT("Amount to smooth aircraft time discrepency to correct for variable latency. 0 disables."),
-    ECVF_Default);

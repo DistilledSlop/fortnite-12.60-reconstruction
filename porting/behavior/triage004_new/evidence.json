@@ -1,9 +1,0 @@
-[
-  {
-    "class": "AFortMinigame",
-    "function": "UseTeamScoring",
-    "wrapper_capture": "porting/generated/native-triage011/0x1429c68b0.c",
-    "reflection": "porting/generated/reflection/native_funcs.json: AFortMinigame::UseTeamScoring; porting/generated/reflection/bool_bits.json: AFortMinigame bTeamMinigame offset 2330 and bTeamsAreStable offset 2331, both mov8",
-    "behavior": "Returns true iff both reflected boolean bytes are nonzero. Const qualification is proposed from getter behavior."
-  }
-]

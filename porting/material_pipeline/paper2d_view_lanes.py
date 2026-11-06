@@ -168,7 +168,7 @@ def main():
         parser.error('--output is required unless running only --self-check')
     if ROOT.joinpath('generated').resolve() not in args.output.resolve().parents:
         parser.error('output must be under porting/generated')
-    evidence_path = ROOT / 'behavior/paper2d_view_lanes_runtime/evidence.json'
+    evidence_path = ROOT / 'material_pipeline/evidence/paper2d_view_lanes_runtime/evidence.json'
     if args.evidence and args.evidence.resolve() != evidence_path.resolve():
         parser.error('unexpected evidence destination')
     raw_report = PHYSICAL.read_bytes()
@@ -238,7 +238,7 @@ def main():
                     discarded_word_count=len(r['discarded_byte_offsets']))
             compact.append(item)
         evidence = dict(schema='paper2d-view-consumed-lanes-evidence-v1',
-            command='python3 porting/material_pipeline/paper2d_view_lanes.py --output porting/generated/paper2d-shader-semantics/view-lanes.json --evidence porting/behavior/paper2d_view_lanes_runtime/evidence.json',
+            command='python3 porting/material_pipeline/paper2d_view_lanes.py --output porting/generated/paper2d-shader-semantics/view-lanes.json --evidence porting/material_pipeline/evidence/paper2d_view_lanes_runtime/evidence.json',
             report_sha256=physical.sha(args.output.read_bytes()), provenance=provenance,
             runtime_verified=False, scope=__doc__, status_counts=result['status_counts'], shaders=compact)
         args.evidence.parent.mkdir(parents=True, exist_ok=True)

@@ -1,4 +1,0 @@
-// Add to UMcpProfile alongside the existing NativeFindBaseProfileGroup bridge.
-// Include ProfileOverlayState.h before these declarations.
-static int32 NativeRecomputeOverlayProfileGroup(const FMcpProfileGroupMap& BaseGroups, const FMcpProfileOverlayMap& Overrides, const FString& Key, FMcpProfileItemArray& OutItems);
-static const FMcpProfileItemArray* NativeFindOverlayProfileGroup(const FMcpProfileGroupMap& BaseGroups, FMcpProfileOverlayState& Overlay, const FString& Key);

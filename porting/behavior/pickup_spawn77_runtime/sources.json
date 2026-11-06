@@ -1,7 +1,0 @@
-{
-  "sources": [
-    {"path": "porting/generated/native-dependencies77/0x142029890.c", "address": "0x142029890", "sha256": "a40e6ea0067f758d294400c5779e90d0592637a4c76ded65d3faa89214b37047"},
-    {"path": "porting/generated/native-dependencies77/0x14214bd70.c", "address": "0x14214bd70", "sha256": "f490d33918ebbf08dee05e946309ebc3d7744da0cd1dbfe5d22f2afef6eb85c7"}
-  ],
-  "status": "uncounted rough drafts; not validated or promoted"
-}

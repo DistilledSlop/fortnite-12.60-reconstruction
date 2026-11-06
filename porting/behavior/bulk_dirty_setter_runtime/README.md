@@ -1,5 +1,0 @@
-# Float setters with dirty flag
-
-`prepare.py` scans the pinned original image and reflection inventory for exact one-float FFrame thunks containing an inline `ucomiss`, unconditional float store, and conditional full-byte `1` store. It checks both extraction branch targets, the dirty branch target, stack slots, function metadata, inherited access, reflected float offset, and the reflected bool's unique offset, `mov8` form, mask and generated declaration. The 17 matches all write `UFortClientSettingsRecord::bDirty` at 0x87e; no native storage is invented. The ordered `< || >` comparison preserves `ucomiss`/`je` behavior for NaNs as well as signed zero. Signatures remain proposed from reflection.
-
-Run `python3 porting/behavior/bulk_dirty_setter_runtime/prepare.py` to produce 17 `.inc` files here and `/tmp/gameplay-bulk-dirty-setter/{manifest-entries,report}.json`. The scanner accepts only this exact inline family; nonmatching direct callees, callbacks, virtual calls and other side effects remain unported. It does not modify canonical manifests or Native. Source generation only; builds and runtime checks remain pending at the shared cadence.

@@ -1,9 +1,0 @@
-[
-  {
-    "class": "AFortObjectiveBase",
-    "function": "GetObjectiveDisplayString",
-    "wrapper": "0x142a04a60",
-    "target": "0x14213abf0",
-    "reason": "Target delegates to 0x142a034c0; helper semantics and returned FText are not established."
-  }
-]

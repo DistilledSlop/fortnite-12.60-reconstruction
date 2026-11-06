@@ -75,7 +75,7 @@ def verify_wrappers(contract, report, active_required):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--out', type=Path, default=ROOT / 'behavior/maps_terrain_material_runtime/landscape-uniform-contract.json')
+    parser.add_argument('--out', type=Path, default=ROOT / 'material_pipeline/evidence/maps_terrain_material_runtime/landscape-uniform-contract.json')
     args = parser.parse_args()
     if receipt(IMAGE)['sha256'] != IMAGE_HASH:
         raise ValueError('original identity image mismatch')

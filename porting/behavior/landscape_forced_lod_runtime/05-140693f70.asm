@@ -1,2 +1,0 @@
-140693f70  MOV EAX,0xffffffff
-140693f75  RET

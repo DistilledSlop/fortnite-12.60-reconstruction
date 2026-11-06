@@ -1,9 +1,0 @@
-# Ignored parameter recovery
-
-`prepare.py` scans ordinary non-static native void functions with exactly one input parameter of type float, int32, bool or resolved object pointer. It reuses the exact direct-call FFrame wrapper patterns from the float, int, bool and object setter scanners. It checks the extraction local, argument registers, saved registers, both branch destinations and P_FINISH before accepting a direct leaf consisting entirely of `ret` or `ret 0` (zero-byte stack adjustment). The generated comment-only bodies are complete empty implementations: the argument is intentionally ignored.
-
-The scanner pins the original image by SHA-256, excludes reflected RPC/event/editor/static and other disallowed flags, ambiguous parameter/class metadata, already ported functions and maintained non-generated C++ definitions. It checks selected classes, unique generated headers, resolved object types and conflicting existing declarations. The proposed signatures come from reflection; generated headers generally have no declaration yet. It writes evidence and proposed entries to `/tmp/gameplay-bulk-ignored-parameter/{manifest-entries,report}.json` and bodies here. No canonical manifest or native sources are changed.
-
-The bounded pass found 175 candidates: 48 float, 56 int32, 35 bool and 36 object pointer. It examined 23,758 reflection records; 1,400 otherwise matched direct leaves were rejected because they were not a single empty return. The pass does not infer behavior from names or attempt other wrapper forms or parameter types. These are source-recovery proposals, not integrated or build-validated code.
-
-Integrated in native source batch 13 (2026-11-03): 175 bodies. Source generation is fail-closed; compilation and runtime validation remain pending at the shared approximately 2,040-body checkpoint. This is source coverage, with no feature or milestone parity claim.

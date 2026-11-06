@@ -1,9 +1,0 @@
-[
-  {
-    "function": "UFortHUDContext::SetPreparingMgmtMenu",
-    "wrapper": "porting/generated/native105-broad/0x1452587d0.c",
-    "body": "porting/generated/native105-impl/0x144ce8050.c",
-    "proof": "Wrapper normalizes the reflected bool argument and passes it to the native body, which writes a byte at +0x55c. Existing IsPreparingMgmtMenu reads NativeRecoveredBool_0x55c; canonical manifest already represents that storage.",
-    "reflection": "porting/generated/reflection/native_funcs.json"
-  }
-]

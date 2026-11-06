@@ -1,7 +1,0 @@
-# Additional single-parameter virtual stubs
-
-`python3 -I porting/behavior/bulk_parameter_virtual_extra_runtime/prepare.py` extends the existing `bulk_parameter_virtual_runtime` scanner with exact complete Bool, Int, UInt32, untyped Byte and Name FFrame extraction/virtual-call instruction forms from the SHA-256-pinned image. It retains its exact branch offsets, argument setup, `build_vtable_slots`, unique constructor and `proven_this_store` checks, contiguous slot bounds, exact `c2 00 00` leaf, ordinary-function flags, const/access and `virtual: true`. Referenced enums, other metadata and types fail closed. It excludes maintained definitions and checks mapped image bounds. It writes source proposals and evidence under `/tmp/gameplay-bulk-parameter-virtual-extra/{manifest-entries,report}.json`; no canonical manifest or native code is changed.
-
-Result: 27 complete wrapper candidates across 13 classes; 13 had ambiguous constructor/vtable identity, 13 had a slot target other than the exact empty stub, and one proposal remains: protected `UFortWeaponComponent::OnConsumeAmmo(int32 Quantity)`, vtable slot `0x418`, constructor `0x141d2d760`, vtable `0x145f94988`, target `0x1406801c0`. This is source recovery awaiting integration and build/runtime validation. No builds or runtime tests were run.
-
-Integrated in native source batch 15: 1 bodies; compilation and runtime checks remain pending at approximately 2,040 bodies.

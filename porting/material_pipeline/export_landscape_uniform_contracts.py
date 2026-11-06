@@ -9,7 +9,7 @@ import export_original_uniform_contracts as fixed
 import landscape_layout_contract as landscape
 
 ROOT = fixed.ROOT
-CONTRACT = ROOT / 'behavior/maps_terrain_material_runtime/landscape-uniform-contract.json'
+CONTRACT = ROOT / 'material_pipeline/evidence/maps_terrain_material_runtime/landscape-uniform-contract.json'
 OUTPUT = ROOT / 'generated/material_pipeline/apollo-d4-landscape-spirv/original-uniform-contracts.json'
 TERRAIN_NAMES = ('LandscapeParameters', 'LandscapeContinuousLODParameters',
                  'Primitive', 'PrecomputedLightingBuffer')

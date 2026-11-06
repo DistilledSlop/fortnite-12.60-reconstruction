@@ -1,6 +1,0 @@
-{
-  "status": "rough_uncounted",
-  "sources": [
-    {"address": "0x141a5f1c0", "path": "porting/generated/callee_probe/blocking/0x141a5f1c0.c", "sha256": "c112e982ec40e9d0dc696566cd4ec84f39e7a3b0f6390366e501b67f9820bb1c"}
-  ]
-}

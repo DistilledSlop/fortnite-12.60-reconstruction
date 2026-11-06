@@ -1,9 +1,0 @@
-[
-  {
-    "class": "UFortMovementComp_GroundSpline",
-    "function": "GetTargetSpeeds",
-    "wrapper_capture": "porting/generated/native-triage011/0x1429f7ba0.c",
-    "reflection": "porting/generated/reflection/fortnite_game_reflection.json",
-    "behavior": "Copies 20 bytes at offset 0x198, the reflected TargetSpeeds struct. Return type and const function flags are in native_funcs.json."
-  }
-]

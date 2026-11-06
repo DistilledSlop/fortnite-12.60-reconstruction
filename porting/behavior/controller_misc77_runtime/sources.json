@@ -1,9 +1,0 @@
-{
-  "sources": [
-    {"path": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientNotifyTeamLost_Implementation.c", "address": "0x1419c5860", "sha256": "7a89099ce22a9073886c4571db724ce9e6e364053af19195f58ca8e86c07594f"},
-    {"path": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientRequestLevelStreamingHandshake_Implementation.c", "address": "0x1419c74a0", "sha256": "2f82858cafa9909d53148cd33b4b5cb96315da55ab54011831196d08495cab13"},
-    {"path": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerClearSkydiveLeader_Implementation.c", "address": "0x1419f1170", "sha256": "abc483af40c52241e35252da380f9af857a9c64a5567c3cbee809d09147ebe1b"},
-    {"path": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerSetTeam_Implementation.c", "address": "0x1419f2540", "sha256": "44252a21d60e178a636753cefe166a21c670626e9d1423dea8668f78297b62e0"}
-  ],
-  "status": "uncounted rough drafts; not validated or promoted"
-}

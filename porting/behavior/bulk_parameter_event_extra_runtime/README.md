@@ -1,9 +1,0 @@
-# Additional single-parameter native event stubs
-
-Run `python3 -I porting/behavior/bulk_parameter_event_extra_runtime/prepare.py` from the repository. This produces source-only proposals and evidence in `/tmp/gameplay-bulk-parameter-event-extra/{manifest-entries,report}.json`, without changing the canonical manifest or native code. It requires Capstone at `/tmp/common-input-capstone`, objdump, and the SHA-256-pinned original mapped image. `--revalidate-own` includes entries previously promoted from this directory.
-
-The scanner combines the complete instruction forms for Int, UInt32, Bool, untyped Byte and Name wrappers from `bulk_parameter_virtual_extra_runtime` with the native-event and non-RPC flag restrictions of `bulk_parameter_event_runtime`. Reflection must identify one by-value parameter with exact property flags; referenced types, unrecognized flags and other signatures are excluded. Full instruction matching includes both extraction paths, helper addresses, local branch offsets, frame advancement and virtual dispatch slot. A unique original class mapping and constructor, proven vptr store through incoming `this`, contiguous table slot, and exact `c2 00 00` target are required. Existing maintained or generated implementations are excluded. Entries specify `_Implementation` and `native_event_impl` so the generator retains event dispatch and emits the implementation separately.
-
-At the 1,729-body canonical baseline, 20 wrapper candidates produced six proposals: two AAthenaCapturePoint Bool events, one UFortBluGloCounter Int event, one Bool event each in UFortTouchLookStick and UFortTouchMoveStick, and one UMinigameWidgetBase Bool event. Five candidates had ambiguous constructor/vtable identity and nine targeted a different stub. No build or runtime validation was run; promotion and integration are separate.
-
-Integrated in native source batch 15: 6 bodies; compilation and runtime checks remain pending at approximately 2,040 bodies.

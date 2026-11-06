@@ -1,7 +1,0 @@
-{
-  "body": "0x1410f2740",
-  "source": "porting/generated/callee_probe/profile_backend_mutation/0x1410f2740.c",
-  "source_sha256": "2039c30c28e64f3da58b1b252ba66c9f9c01dde328bc7ea7616cd169a0227ece",
-  "rough": "porting/behavior/profile_overlay81_runtime/rough.cpp",
-  "rough_sha256": "ebf38a201dc5e892ff2773697482427a5a9ac4e31f6ba817d2ea6fe845567161"
-}

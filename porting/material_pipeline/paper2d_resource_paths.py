@@ -37,7 +37,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--engine', type=Path, default=ROOT.parents[1]/'UnrealEngine')
     parser.add_argument('--out', type=Path, default=ROOT/'generated/paper2d-shader-semantics/resource-paths.json')
-    parser.add_argument('--evidence', type=Path, default=ROOT/'behavior/paper2d_resource_paths_runtime/evidence.json')
+    parser.add_argument('--evidence', type=Path, default=ROOT/'material_pipeline/evidence/paper2d_resource_paths_runtime/evidence.json')
     args = parser.parse_args()
     base = ROOT/'generated/paper2d-shader-semantics'
     manifest_path, contracts_path = base/'shader-manifest.json', base/'original-uniform-contracts.json'
@@ -64,7 +64,7 @@ def main():
             sources.extend(receipt(p) for p in paths)
         ordered = sorted(resources(layout), key=lambda m: m['offset'])
         candidates[name] = {m['name']: dict(m, resource_index=i) for i, m in enumerate(ordered)}
-    material_path = ROOT/'behavior/paper2d_material_uniform_layout_runtime/evidence.json'
+    material_path = ROOT/'material_pipeline/evidence/paper2d_material_uniform_layout_runtime/evidence.json'
     material = json.loads(material_path.read_text())
     old['Material'] = resources(material['original_metadata'])
     rows, counts, descriptors = [], Counter(), 0

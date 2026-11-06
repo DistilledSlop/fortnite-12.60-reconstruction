@@ -1,6 +1,0 @@
-{
-  "lookup": "0x141f88460 resolves a world from context, casts its game state to AFortGameState, and returns the WorldManager field at original offset 0x3d0. Capture: porting/generated/maps-wind-initialization/_adhoc/0x141f88460__141f88460.c.",
-  "explicit_query": "0x141f87230 returns the configured InitialGlobalWind intensity and heading rotated from the X axis around Z for a nonnegative intensity. NaN is copied but causes a false return. The full query remains unported until its negative-intensity discovery branch is recovered. Capture: porting/generated/maps-wind-initialization/_adhoc/0x141f87230__141f87230.c.",
-  "fallback": "For negative configured intensity, 0x141f87230 calls 0x141f87000 for a pair of discovered values; if discovery succeeds, it returns those values after rotating the heading. If discovery fails, it overwrites outputs with the configured negative intensity and configured heading and returns false. 0x141f87000 obtains values through several world/game-state dependent providers, not a simple constant default. Its source inputs and provider state remain unresolved. Capture: porting/generated/maps-wind-actor-ingress/_adhoc/0x141f87000__141f87000.c.",
-  "status": "No build or runtime validation performed; full global-wind query and fallback are not ported."
-}

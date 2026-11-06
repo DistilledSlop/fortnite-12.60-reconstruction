@@ -13,7 +13,7 @@ static_assert(sizeof(FLegacySkyAtmosphereDepthParameters) == 24 &&
     "original atmosphere helper has six consecutive float32 outputs");
 
 // Original 0x143579e10..0x143579eb2; the pinned instruction evidence is in
-// behavior/view_missing_producer_runtime/evidence.json. Intrinsics preserve the
+// material_pipeline/evidence/view_missing_producer_runtime/evidence.json. Intrinsics preserve the
 // original scalar operations instead of substituting current FMath formulas.
 FLegacySkyAtmosphereDepthParameters ComputeLegacySkyAtmosphereDepthParameters(
     const FLegacySkyAtmosphereDepthInputs& Inputs)

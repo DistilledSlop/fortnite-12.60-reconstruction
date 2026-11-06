@@ -74,7 +74,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--engine', type=Path, default=ROOT.parent.parent/'UnrealEngine')
     p.add_argument('--report', type=Path, default=ROOT/'generated/paper2d-shader-semantics/conversion/d3d.json')
-    p.add_argument('--out', type=Path, default=ROOT/'behavior/lightmap_density_uniform_layout_runtime/evidence.json')
+    p.add_argument('--out', type=Path, default=ROOT/'material_pipeline/evidence/lightmap_density_uniform_layout_runtime/evidence.json')
     args = p.parse_args()
     old, inputs = read_original(); new, files = source(args.engine)
     flat_old, flat_new = flatten(old), flatten(new)

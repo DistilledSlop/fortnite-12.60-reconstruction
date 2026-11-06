@@ -1,115 +1,28 @@
 # Behaviour snippets (porting/behavior)
 
-Gameplay source update (2026-11-02): six additional bodies and one native
-controller delegate restore stagger/respawn/parachute queries, squad preservation
-and team-kill notification. See `pawn_state_evidence.md` for original field/mask
-proofs and `../HANDOFF.md` for validation. Scratch generation accepts259 entries
-without rejects; the four affected gameplay classes verify224/224 entries and
-pass UE C++ syntax checks. Shared Native promotion, fresh UHT, linking and runtime
-validation remain pending. Historical counts/checkpoints below are unchanged.
+Hand-ported native function bodies recovered from the shipping 12.60 client's decompile
+(`porting/generated/decomp*/`, git-ignored). Each `.inc` is our own C++ re-expression of what the
+original does, not a copy of the decompile.
 
-Hand-ported native function bodies, taken from the decompiled output of the shipping client
-(`porting/generated/decomp/` and `porting/generated/decomp_improved/`, both git-ignored). Each `.inc`
-is our own C++ re-expression of what the decompile does, not a copy of it.
+`MANIFEST.json` is the single index: one entry per function (4,117 ported, 148 skipped with a reason;
+`COUNTS.txt` has the summary). Every ported entry points at its body through `inc_path`, and the
+layout is fixed:
 
-Status (see `MANIFEST.json`, 439 entries): **251 ported** (34 getters, 29 onrep, 61 impl, 25 exec, 73 validate, 4 helper, 1 static_helper, 19 member_field, 5 struct_net; confidence 211 high, 40 medium), **188 skipped** with a reason (of which 17 are callees from the queue). `python3 -I porting/behavior/check_behavior.py` reports 0 failures; `COUNTS.txt` has 244 signatures declared in the previously generated header and 6 pending declarations. The regenerated tree separately verified all 251 splices with no failures.
+- `<ClassName>/<FunctionName>.inc` holds the body of that function.
+- `_shared/*.inc` holds bodies that are byte-identical across many entries (empty `_Implementation`
+  stubs, `_Validate` returning true, trivial returns); many entries may share one path.
+- Anything not in `MANIFEST.json` is not part of the port. Do not add per-batch or per-session
+  directories here: add or edit the manifest entry and its `<Class>/<Function>.inc` file, then run
+  `python3 -I porting/behavior/check_behavior.py`.
+- Evidence for a body belongs in the `.inc` header comment (original address, decompile source,
+  confidence) and in the entry's `notes`. Long-form findings live in `porting/decompilation_notes.md`
+  and the `*_evidence.md` files next to this README. Per-pass history is in git.
 
-Eleventh pass, the native NetSerialize bodies (see `porting/decompilation_notes.md`, "Eleventh pass"): five structs get their
-recovered `NetSerialize` through the new kind `struct_net` (below): `FSharedRepMovement`, `FFortAISharedRepMovement`,
-`FReplicatedPhysicsPawnState`, `FFortAIAttributeReplicationProxy` and `FCreateBuildingActorData` (the last one MEDIUM on the
-saving yaw wrap). `FAthenaPawnReplayData` stays on its fallback (its wire depends on runtime state and key handling).
+Frontend (`UFortRuntimeOptions`) background: `GetRuntimeOptions` returns the class default object
+(`GetMutableDefault<UFortRuntimeOptions>()`); `GetGameVersion` derives its result from the runtime
+build/branch strings and `FEngineVersion` rather than a constant; `GetContext` still depends on
+unresolved context lookups. See `porting/frontend/` for the probes and their evidence.
 
-Twelfth pass (see `porting/decompilation_notes.md`, "Twelfth pass"): no new entries; at that point there were 437 entries, 249 ported and 188 skipped. One probe run over 18 callees of the five bodies that the tenth pass found blocked (`ServerClearSkydiveLeader_Implementation`, `OnClientVolumeManagerReplicated`, `Server_SetCanEditCreativeIsland_Implementation`, `ClientSendMatchStatsForPlayer_Implementation`, `ClientNotifyTeamLost_Implementation`). The identities are recorded in the notes and the queue, and none of the five bodies is ported: each still has an unnamed member, virtual slot or large callee (the notes give the exact blocker). The scratch promote splices 249 entries with 0 rejected, and `check_behavior.py --gen-root` on that tree reports FAIL 0.
-
-Tenth pass (see `porting/decompilation_notes.md`, "Tenth pass"): the four rank-2 callees of `CALLEE_PORT_QUEUE.md` are identified (one small probe run) and the stat-kill bodies that use them are ported: `OnRep_Kills` (onrep), `OnRep_TotalPlayerScore` (onrep, one tail call), `OnRep_TeamKillScore` (onrep, its callee `0x1419e4f10` identified from two instructions) and `OnRep_AIKills` (helper, protected: it is not a RepNotify, so the generator declares it). Three new `member_field` entries are the no-argument delegates of the controllers (`AFortPlayerControllerZone` at `+0x28f0` and `+0x2908`, `AFortPlayerControllerAthena` at `+0x3210`), with placeholder names. `OnRep_DeathInfo` stays skipped (75 unnamed callees). The rank-3 scope call `0x142cd3770` is a no-op. `GetOwner` was added to `ENGINE_NAMES` (checker only).
-
-Third pass (35 new bodies, see `porting/decompilation_notes.md`, "Third pass"): 15 empty bodies (exec thunks that
-tail-jump to the shared `ret` at `0x1406801c0`), 14 bodies that broadcast a multicast delegate through the dispatcher
-`0x1406a9dc0` (identified as `ProcessMulticastDelegate`), 4 FVector accessors, a float reset, and one RPC
-validate. Held back as uncertain: six validates on the folded body `0x140f6b550` (identity rests on vtable slot names),
-and the RPC validates that share folded bodies with mismatched argument registers.
-
-Ninth pass (see `porting/decompilation_notes.md`, "Ninth pass"): 28 new entries. 16 `member_field` (eleven int32 point caches, the four native score delegate lists and the `AFortTeamInfo` int32), 2 `helper` (`UpdateScoreForEvent`, `UpdateTotalPlayerScore`), 1 `static_helper` (`GetFortGameStateAthena`) and 9 `onrep` stat bodies (`OnRep_Num*`, two of them with the profiling-scope call `0x142cd3770` ported as a no-op). The Eighth pass helper `GetActivePlaylist` is renamed `GetCurrentPlaylistAthena` in place (no second entry). Each new snippet was spliced and verified in a scratch promote run (237 spliced, 0 rejected) and syntax-checked with the UE 4.25 clang (see the decompilation notes for the scope of that check).
-
-Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): nine bodies. Six `ClientBroadcastOn*Finished_Implementation` (the eight missing `InlineMulticastDelegate` members are emitted now; their signatures are in declaration order), the zipline implementation and validate, and `ClientReceiveSquadQuickChatMessage_Implementation`. Each was spliced and verified in a scratch promote run (208 spliced, 0 rejected).
-
-Frontend prerequisite: `UFortRuntimeOptions::GetRuntimeOptions` is a reflected static BlueprintPure
-function (`0x14022401`). Its exec thunk at `0x142ace3c0` calls `0x1426fdde0`, whose
-class-default-object lookup returns the `UFortRuntimeOptions` default object. The snippet uses
-`::GetMutableDefault<UFortRuntimeOptions>()` for the same mutable pointer. Recover the two bodies
-with `probe_callees.py` at those addresses; the original bytes contain no additional instance
-field access. This evidence establishes the getter's body, not frontend initialization or a load.
-`GetContext` still depends on unresolved context lookups; `GetGameVersion` derives its result
-from runtime branch and version information and is not replaced by a constant.
-
-Frontend candidate `UFortRuntimeOptions::GetGameVersion`: the exec at `0x142acdef0`
-calls `0x1426ff110`. The latter uses the build-version and branch strings (`0x142ba33f0`,
-`0x142ba33d0`), extracts after the last `+` and before `-CL-`, removes `Release-`
-case-insensitively, falls back to the branch if the result is empty, and appends the
-current engine changelist. The `UE4` branch instead starts with `Dev Build `. The
-`0x142c96130`/`0x142c88340` current-version construction and `0x142c96f60` changelist
-mask match `FEngineVersion::Current().GetChangelist()`; UE 4.25 `FApp` wraps the two
-build-settings getters. The snippet calls those runtime APIs rather than hardcoding the
-supplied build's values. `FortniteLinux` compiled (`generated/frontend-probes/build-getgameversion.log`),
-and an opt-in runtime probe returned `v4.25 (0)` for the local `++UE4+Release-4.25-CL-0`
-build (`generated/frontend-probes/probe-getgameversion.log`). This does not establish the
-original client's display string or an interactive frontend.
-Decompiles and disassembly are in ignored `generated/frontend-native-evidence/`:
-`fortnite-frontend-{thunks,bodies}/` and `version-dependencies/`. To repeat the new
-probes, run `porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input INPUT.json
---out porting/generated/frontend-native-evidence/version-dependencies --timeout 45 --mem 12G`
-with `INPUT.json` a list of addresses `0x142ba33d0`, `0x142ba33f0`, `0x142c88340`,
-`0x142c96130`, `0x142bace90`, and `0x142bb18c0`. The probe rolls back its transaction.
-
-The next frontend helper probe is in this worktree's ignored
-`generated/frontend-next-{thunks,bodies}/`. `UFortGlobalUIContext::QuitGame`
-exec `0x14524a9c0` jumps to `0x144ce3b10`; its 341-byte body checks object
-types and calls seven unidentified or low-level functions plus one virtual
-slot. `SetInputMode` exec `0x14524b770` calls `0x144ce7b00` (284 bytes,
-three direct calls and five indirect calls). `UFortFrontEndContext::SetFrontEndCamera`
-exec `0x14523cf30` calls `0x144ce6fd0` (1,986 bytes, 36 direct calls and four
-indirect calls). `UFortBuildWatermark::UpdateWatermark` exec `0x14520a5a0`
-jumps to `0x144e235f0` (593 bytes, 12 direct and five indirect calls, including
-widget text updates through unresolved fields). The native bodies cannot yet
-be translated faithfully into the generated classes; no snippets were added
-for these four functions. `BlueprintContextLibrary::GetContext` remains blocked
-on its context-manager lookup and unknown fields.
-
-Additional frontend helper probes (2026-11-01) are preserved under ignored
-`generated/frontend-native-evidence/{ui-helper-candidates,ui-helper-bodies,execute-client-event-deps,get-frontend-camera-deps,get-context-deps}/`.
-Each directory has raw `.c`, `.asm`, `.json`, and `index.json` output from
-`ghidra/probe_callees.py`; the corresponding input address lists are in the
-parent evidence directory. No new snippet was ported from these probes:
-
-- `UFortKismetLibrary::ExecuteClientEvent` exec `0x14296a4b0` calls body
-  `0x141eece20`. The body resolves a world context with `0x141e5b2c0` and
-  forwards four event arguments to `0x141e59c80`, or logs `No WorldContext!`.
-  The dispatcher is 1,216 bytes and builds `HandleClientEvent_%s` function
-  names, searches an event registry, and invokes a virtual slot. Its registry
-  and argument types have not been mapped to generated classes. A generic
-  Blueprint event call would not preserve the observed filtering and fallback.
-- `UFortFrontEndContext::GetFrontEndCamera` exec `0x14523a750` calls
-  `0x144ccc6f0`. That body obtains an object through `0x144cb7c20`, follows
-  another object through `0x141ca78b0`, and reads byte `+0xba`
-  through `0x1412b1090`; it returns zero when either lookup fails. The
-  concrete object and byte field have not been identified. This getter is a
-  dependency clue for `SetFrontEndCamera`, not a safely portable body yet.
-- `UBlueprintContextLibrary::GetContext` exec `0x140823580` calls
-  `0x140822310`. Its 751-byte lookup `0x140822490` handles local-player and
-  game-instance subsystems, then a separate context registry at manager `+0x20`;
-  `0x140822100` initializes a shared singleton. Seven original class literals now
-  prove the widget/controller/local-player routing and subsystem types; see
-  [context-lookup-evidence.md](../frontend/context-lookup-evidence.md). Registry
-  construction and lifecycle remain unfinished; no helper body was ported.
-
-Reproduce these bounded probes with `porting/.venv/bin/python -I
-porting/ghidra/probe_callees.py --input
-porting/generated/frontend-native-evidence/<input>.json --out
-porting/generated/frontend-native-evidence/<output> --timeout 35 --mem 12G`.
-The five input basenames match the five output directories above. The script rolled
-back its program transaction, though Ghidra project index/metadata files
-changed during the read-only run. These probes alone do not validate UI class
-loading or display.
 
 ## Files
 
@@ -125,7 +38,7 @@ loading or display.
   - `signature_status`: `declared` (copied verbatim from the generated header), `proposed` (not in the header;
     the generator must emit it), or `not_declared` (skipped entries).
 - `<ClassName>/<FunctionName>.inc`: one snippet per ported function with its own header comment.
-- `_shared/validate_return_true.inc` and `_shared/impl_empty.inc`: one body each for the folded stubs.
+- `_shared/validate_return_true.inc` and `_shared/impl_empty.inc` (plus the other `_shared/*.inc` files): one body each for the folded stubs.
   - `0x1406801d0` (`mov al,1; ret`, returns true) is the body of 71 ported `_Validate` functions.
   - `0x1406801c0` (`ret 0`, empty) is the body of 49 ported `_Implementation` functions. Four more with the same
     body are skipped because the generated tree does not declare them.

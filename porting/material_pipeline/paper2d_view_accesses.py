@@ -189,7 +189,7 @@ def main():
     args.output.write_text(json.dumps(result, indent=2)+'\n')
     from collections import Counter
     if args.evidence:
-        expected = ROOT / 'behavior/paper2d_view_accesses_runtime/evidence.json'
+        expected = ROOT / 'material_pipeline/evidence/paper2d_view_accesses_runtime/evidence.json'
         if args.evidence.resolve() != expected.resolve():
             raise ValueError('evidence destination must be ' + str(expected))
         compact = []
@@ -213,7 +213,7 @@ def main():
                     m['status'] == 'unmapped_or_ambiguous' for m in r['word_mapping'])
             compact.append(item)
         evidence = dict(schema='paper2d-view-access-evidence-v1',
-            command='python3 porting/material_pipeline/paper2d_view_accesses.py --output porting/generated/paper2d-shader-semantics/view-accesses.json --evidence porting/behavior/paper2d_view_accesses_runtime/evidence.json',
+            command='python3 porting/material_pipeline/paper2d_view_accesses.py --output porting/generated/paper2d-shader-semantics/view-accesses.json --evidence porting/material_pipeline/evidence/paper2d_view_accesses_runtime/evidence.json',
             report_sha256=sha(args.output.read_bytes()),
             provenance={k: result[k] for k in ('manifest_sha256', 'layout_sha256', 'grammar_sha256', 'inspector_sha256', 'analyzer_sha256')},
             status_counts=dict(Counter(r['status'] for r in records)), original_struct_bytes=3952,

@@ -1,7 +1,0 @@
-# Guarded and multi-write leaf inventory, batch 84
-
-Run `python3 porting/behavior/bulk_guarded_mutation84_runtime/scan.py` from the repository root. This inventories native source candidates; it is not a test or a build. The image is mmap-read at the pinned path and its previously established SHA-256 is recorded, not recomputed. The scanner requires the existing Capstone installation at `/tmp/common-input-capstone` and generated reflection/native headers.
-
-The scanner extends batch 83's no-argument exec tail-jump and reflected/canonical field checks. It accepts a linear sequence of two or more immediate writes ending in `ret`, or `cmp byte ptr [rcx + 0xf0], 3; jne <final ret>` followed by one or more writes, after proving reflection ancestry to `AActor`. It rejects any other control flow, calls, unrecognized instructions, overlapping writes, ambiguous or inaccessible fields, unsupported masks, and unmapped storage. The guard's jump must land on the decoded final return. Output is limited to 20 proposals; no storage is created. Canonical ported functions are excluded.
-
-Inventory run: one matching unguarded leaf, `UFortCreativeMessageKnobsDialog::DisableFilters` at exec `0x145224b90`, leaf `0x144d75db0`, with writes at offsets `0x590`, `0x578`, and `0x592`. Existing eligible mappings did not resolve all writes, so no body was proposed. `report.json` retains exact instruction bytes and per-write mapping diagnostics. `manifest-entries.json` is empty. No Ghidra, generation, build, or tests were run.
