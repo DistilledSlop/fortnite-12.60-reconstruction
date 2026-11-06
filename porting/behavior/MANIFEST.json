@@ -65141,5 +65141,193 @@
       "Native_14199e4e0"
     ],
     "notes": "Advances FFrame code, calls Native_14199e4e0, and writes its byte result to Result."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "CanSpawnSoundVisuals",
+    "kind": "exec",
+    "signature": "bool CanSpawnSoundVisuals() const",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPawn_CanSpawnSoundVisuals.inc",
+    "address": "0x142a1b3c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [
+      "FUN_14230c690"
+    ],
+    "notes": "Exec wrapper: Calls helper FUN_14230c690 (receiver passed as this)."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "EquipBestWeapon",
+    "kind": "exec",
+    "signature": "bool EquipBestWeapon()",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPawn_EquipBestWeapon.inc",
+    "address": "0x142a1b6a0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [],
+    "notes": "Exec wrapper: advance Stack->Code, then virtual dispatch as decompiled."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "GetCurrentMontageSectionTimeLeft",
+    "kind": "exec",
+    "signature": "float GetCurrentMontageSectionTimeLeft()",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPawn_GetCurrentMontageSectionTimeLeft.inc",
+    "address": "0x142a1bf30",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [
+      "FUN_14231a960"
+    ],
+    "notes": "Exec wrapper: Calls helper FUN_14231a960 (receiver passed as this)."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "GetEncounterInfo",
+    "kind": "exec",
+    "signature": "UFortAIEncounterInfo* GetEncounterInfo() const",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPawn_GetEncounterInfo.inc",
+    "address": "0x142a1c1a0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [],
+    "notes": "Exec wrapper: call through pointer read at this+0x4e8 (+0x10) with no receiver, as decompiled."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "GetLocalViewingPlayerController",
+    "kind": "exec",
+    "signature": "APlayerController* GetLocalViewingPlayerController() const",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPawn_GetLocalViewingPlayerController.inc",
+    "address": "0x142a1c320",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [
+      "FUN_142321a70"
+    ],
+    "notes": "Exec wrapper: Calls helper FUN_142321a70 (receiver passed as this)."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "GetMaxDistanceWithoutFallDamage",
+    "kind": "exec",
+    "signature": "float GetMaxDistanceWithoutFallDamage() const",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPawn_GetMaxDistanceWithoutFallDamage.inc",
+    "address": "0x142a1c380",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [
+      "FUN_142321b30"
+    ],
+    "notes": "Calls helper FUN_142321b30 (no args); helper return taken from tail vcall (medium)."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "GetMyMovementBaseActor",
+    "kind": "exec",
+    "signature": "AActor* GetMyMovementBaseActor()",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPawn_GetMyMovementBaseActor.inc",
+    "address": "0x142a1c5e0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [
+      "FUN_142322ef0"
+    ],
+    "notes": "Exec wrapper: Calls helper FUN_142322ef0 (receiver passed as this)."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "HasCurrentMontage",
+    "kind": "exec",
+    "signature": "bool HasCurrentMontage() const",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPawn_HasCurrentMontage.inc",
+    "address": "0x142a1cae0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [
+      "FUN_14231a940"
+    ],
+    "notes": "Exec wrapper: Calls helper FUN_14231a940 (receiver passed as this)."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "FollowSpecialActor",
+    "kind": "exec",
+    "signature": "void FollowSpecialActor()",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPlayerControllerAthena_FollowSpecialActor.inc",
+    "address": "0x142a58600",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [],
+    "notes": "Exec wrapper: advance Stack->Code, then virtual dispatch as decompiled."
+  },
+  {
+    "class": "AFortPlayerControllerGameplay",
+    "function": "HideQuicktimeEventWidget",
+    "kind": "exec",
+    "signature": "void HideQuicktimeEventWidget()",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPlayerControllerGameplay_HideQuicktimeEventWidget.inc",
+    "address": "0x142a65320",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [],
+    "notes": "Thunk: advance Stack code, then virtual call at vtable +0x1ff8 on this."
+  },
+  {
+    "class": "AFortPlayerControllerGameplay",
+    "function": "RefreshHUDElementVisibilitiesToSettings",
+    "kind": "exec",
+    "signature": "void RefreshHUDElementVisibilitiesToSettings()",
+    "access": "public",
+    "static": false,
+    "virtual": false,
+    "inc_path": "porting/behavior/body_batch002/AFortPlayerControllerGameplay_RefreshHUDElementVisibilitiesToSettings.inc",
+    "address": "0x142a66640",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "callees": [],
+    "notes": "Thunk: advance Stack code, then virtual call at vtable +0x1f60 on this."
   }
 ]

@@ -322,6 +322,9 @@ protected:
 	void GrantCreativePhoneItemDefLoadedCallback();
 public:
 
+	UFUNCTION(BlueprintCallable)
+	void HideQuicktimeEventWidget();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsCreativeModeEnabled() const;
 
@@ -371,6 +374,9 @@ public:
 
 	UFUNCTION()
 	void OnVerifyAllowedToFly();
+
+	UFUNCTION(BlueprintCallable)
+	void RefreshHUDElementVisibilitiesToSettings();
 
 	UFUNCTION(Server, Reliable)
 	void ServerAwardVehicleTrickPoints(int32 InPoints, int32 InAirTimeX1000);

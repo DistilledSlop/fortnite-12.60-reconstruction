@@ -49,6 +49,16 @@ void AFortPawn::AlignRotationToHitDirection(FVector& HitDirection)
 	}
 }
 
+bool AFortPawn::CanSpawnSoundVisuals() const
+{
+	// CONFIDENCE: medium
+	// Original address: 0x142a1b3c0
+	// FFrame Code advance as decompiled (Stack->Code, exec form)
+	*(ulonglong *)Stack->Code = (ulonglong)(*(longlong *)Stack->Code != 0) + *(longlong *)Stack->Code;
+	uint8 uVar1 = (uint8)Native_14230c690((longlong)this);
+	*(uint8*)Result = uVar1;
+}
+
 void AFortPawn::ClientInternalEquipWeapon_Implementation(AFortWeapon* Weap)
 {
 	// Body not recovered: reflection-derived stub.
@@ -82,6 +92,17 @@ void AFortPawn::EmoteStopped(UFortItemDefinition* MontageItemDef)
 	}
 }
 
+bool AFortPawn::EquipBestWeapon()
+{
+	// CONFIDENCE: medium
+	// Original address: 0x142a1b6a0
+	// FFrame Code advance as decompiled (Stack->Code, exec form)
+	*(ulonglong *)Stack->Code = (ulonglong)(*(longlong *)Stack->Code != 0) + *(longlong *)Stack->Code;
+	// Context->vftable: first qword of this, dereferenced as decompiled; slot +0xbc0
+	uint8 uVar1 = (*(uint8(**)(void*))((uint8*)(*(longlong*)(*(uint8**)this)) + 0xbc0))(this);
+	*(uint8*)Result = uVar1;
+}
+
 EFortControlRecoveryBehavior AFortPawn::GetControlRecoveryBehavior() const
 {
 	// Behaviour snippet: AFortPawn::GetControlRecoveryBehavior (body only; spliced into the generated member function).
@@ -100,6 +121,16 @@ float AFortPawn::GetControlResistance() const
 	// Native 0x14231a530; wrapper 0x142a1bf00.
 	UFortControlResistanceSet* ResistanceSet = ControlResistanceSet;
 	return ResistanceSet ? ResistanceSet->ControlResistance.GetCurrentValue() : 0.0f;
+}
+
+float AFortPawn::GetCurrentMontageSectionTimeLeft()
+{
+	// CONFIDENCE: medium
+	// Original address: 0x142a1bf30
+	// FFrame Code advance as decompiled (Stack->Code, exec form)
+	*(ulonglong *)Stack->Code = (ulonglong)(*(longlong *)Stack->Code != 0) + *(longlong *)Stack->Code;
+	uint32 uVar1 = (uint32)Native_14231a960((longlong)this);
+	*(uint32*)Result = uVar1;
 }
 
 FText AFortPawn::GetCurrentSentenceSpeechText() const
@@ -135,6 +166,17 @@ USkeletalMeshComponent* AFortPawn::GetEmotePropAttachMesh()
 {
 	// Native target 0x141945fe0; CONFIDENCE: high.
 	return GetMesh();
+}
+
+UFortAIEncounterInfo* AFortPawn::GetEncounterInfo() const
+{
+	// CONFIDENCE: medium
+	// Original address: 0x142a1c1a0
+	// FFrame Code advance as decompiled (Stack->Code, exec form)
+	*(ulonglong *)Stack->Code = (ulonglong)(*(longlong *)Stack->Code != 0) + *(longlong *)Stack->Code;
+	// Context->_gap_0x8 + 0x4e0 = this+0x4e8 (raw); call through the pointer stored there at slot +0x10, no receiver as decompiled
+	uint64 uVar1 = (*(uint64(**)(void))((uint8*)(*(longlong*)((uint8*)this + 0x4e8)) + 0x10))();
+	*(uint64*)Result = uVar1;
 }
 
 float AFortPawn::GetHealth() const
@@ -201,12 +243,32 @@ float AFortPawn::GetLocalSpin() const
 	return LocalSpin;
 }
 
+APlayerController* AFortPawn::GetLocalViewingPlayerController() const
+{
+	// CONFIDENCE: medium
+	// Original address: 0x142a1c320
+	// FFrame Code advance as decompiled (Stack->Code, exec form)
+	*(ulonglong *)Stack->Code = (ulonglong)(*(longlong *)Stack->Code != 0) + *(longlong *)Stack->Code;
+	uint64 uVar1 = (uint64)Native_142321a70((longlong*)this);
+	*(uint64*)Result = uVar1;
+}
+
 float AFortPawn::GetMaxControlResistance() const
 {
 	// CONFIDENCE: high
 	// Native 0x142321b10; wrapper 0x142a1c350.
 	UFortControlResistanceSet* ResistanceSet = ControlResistanceSet;
 	return ResistanceSet ? ResistanceSet->MaxControlResistance.GetCurrentValue() : 0.0f;
+}
+
+float AFortPawn::GetMaxDistanceWithoutFallDamage() const
+{
+	// CONFIDENCE: medium
+	// Original address: 0x142a1c380
+	// FFrame Code advance as decompiled (Stack->Code, exec form)
+	*(ulonglong *)Stack->Code = (ulonglong)(*(longlong *)Stack->Code != 0) + *(longlong *)Stack->Code;
+	uint32 uVar1 = Native_142321b30();
+	*(uint32*)Result = uVar1;
 }
 
 float AFortPawn::GetMaxHealth() const
@@ -258,6 +320,16 @@ int32 AFortPawn::GetMeleeComboCounter() const
 	    }
 	}
 	return 0;
+}
+
+AActor* AFortPawn::GetMyMovementBaseActor()
+{
+	// CONFIDENCE: medium
+	// Original address: 0x142a1c5e0
+	// FFrame Code advance as decompiled (Stack->Code, exec form)
+	*(ulonglong *)Stack->Code = (ulonglong)(*(longlong *)Stack->Code != 0) + *(longlong *)Stack->Code;
+	uint64 uVar1 = (uint64)Native_142322ef0((longlong*)this);
+	*(uint64*)Result = uVar1;
 }
 
 float AFortPawn::GetShield() const
@@ -324,6 +396,16 @@ void AFortPawn::HandleIsDying()
 void AFortPawn::HandleIsHiddenForDeath()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPawn::HasCurrentMontage() const
+{
+	// CONFIDENCE: medium
+	// Original address: 0x142a1cae0
+	// FFrame Code advance as decompiled (Stack->Code, exec form)
+	*(ulonglong *)Stack->Code = (ulonglong)(*(longlong *)Stack->Code != 0) + *(longlong *)Stack->Code;
+	longlong lVar1 = Native_14231a940((longlong)this);
+	*(uint8*)Result = (uint8)(lVar1 != 0);
 }
 
 bool AFortPawn::IsActionInputIgnored() const

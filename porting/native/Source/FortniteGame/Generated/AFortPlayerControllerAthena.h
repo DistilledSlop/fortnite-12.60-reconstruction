@@ -969,6 +969,9 @@ private:
 	void EnableCreativeContentManagerBasedOnPlaylist();
 public:
 
+	UFUNCTION(BlueprintCallable)
+	void FollowSpecialActor();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCachedHighlightCount();
 
