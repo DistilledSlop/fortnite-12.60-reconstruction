@@ -64102,5 +64102,41 @@
     "status": "ported",
     "includes": [],
     "notes": "Source proposal, build pending. Native uses virtual +0x3e8, validates UFortCardPackItemDefinition, and reads reflected full-byte bIsChoicePack at +0x389; invalid definition returns false."
+  },
+  {
+    "class": "ABuildingFoundation",
+    "function": "EditorOnlyAddAdditionalWorld",
+    "kind": "exec",
+    "signature": "void EditorOnlyAddAdditionalWorld(FString& LevelPackageName)",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x14273fcd0",
+    "inc_path": "porting/behavior/maps_foundation_streaming_runtime/ABuildingFoundation_EditorOnlyAddAdditionalWorld.inc",
+    "notes": "Exec parses its FString and calls shared empty leaf 0x1406801c0. Shipping-client behavior only; independent of runtime streaming."
+  },
+  {
+    "class": "ABuildingFoundation",
+    "function": "EditorOnlyGetAdditionalWorlds",
+    "kind": "exec",
+    "signature": "TArray<FString> EditorOnlyGetAdditionalWorlds()",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x14273fd80",
+    "inc_path": "porting/behavior/maps_foundation_streaming_runtime/ABuildingFoundation_EditorOnlyGetAdditionalWorlds.inc",
+    "notes": "Exec calls 0x140693ec0, which initializes a zero-length TArray and returns it. Shipping-client behavior only; independent of runtime streaming."
+  },
+  {
+    "class": "ABuildingFoundation",
+    "function": "EditorOnlyRemoveAdditionalWorld",
+    "kind": "exec",
+    "signature": "bool EditorOnlyRemoveAdditionalWorld(FString& LevelToRemove)",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x14273fe60",
+    "inc_path": "porting/behavior/maps_foundation_streaming_runtime/ABuildingFoundation_EditorOnlyRemoveAdditionalWorld.inc",
+    "notes": "Exec parses its FString and calls 0x1406801e0, which returns false. Shipping-client behavior only; independent of runtime streaming."
   }
 ]
