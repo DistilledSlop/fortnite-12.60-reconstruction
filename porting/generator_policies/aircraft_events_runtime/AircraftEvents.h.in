@@ -1,0 +1,5 @@
+// Place these non-UPROPERTY members in AFortAthenaAircraft in this order.
+// Original Win64 offsets: 0x260, 0x270, 0x280.
+FMulticastScriptDelegate NativeAircraftEnteredDropZone;
+FMulticastScriptDelegate NativeAircraftExitedDropZone;
+FMulticastScriptDelegate NativeAircraftFlightEnded;

@@ -1,0 +1,38 @@
+{
+  "address": "0x1444803e0",
+  "label": "",
+  "name": "FUN_1444803e0",
+  "status": "ok",
+  "body_bytes": 109,
+  "instructions": 26,
+  "called": [
+    {
+      "address": "0x144475cb0",
+      "name": "FUN_144475cb0"
+    }
+  ],
+  "indirect_calls": 0,
+  "strings": [],
+  "callers": [
+    {
+      "address": "0x1487ff298",
+      "name": null,
+      "ref": "data"
+    },
+    {
+      "address": "0x1476cc1d0",
+      "name": null,
+      "ref": "data"
+    },
+    {
+      "address": "0x1476cc1e0",
+      "name": null,
+      "ref": "data"
+    }
+  ],
+  "reference_counts": {
+    "data": 3
+  },
+  "thunk": false,
+  "error": null
+}

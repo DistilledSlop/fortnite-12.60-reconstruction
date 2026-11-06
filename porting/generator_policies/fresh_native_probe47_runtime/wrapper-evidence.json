@@ -1,0 +1,776 @@
+[
+  {
+    "target": {
+      "address": "0x1426985f0",
+      "label": "AFortWeapon::DoesHaveOverrideWrap"
+    },
+    "reflected": {
+      "exec_addr": "0x142b456d0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142b3e080",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b456d0  push rbx\n142b456d2  sub rsp, 0x20\n142b456d6  mov rax, qword ptr [rdx + 0x20]\n142b456da  xor r9d, r9d\n142b456dd  test rax, rax\n142b456e0  mov rbx, r8\n142b456e3  setne r9b\n142b456e7  add r9, rax\n142b456ea  mov qword ptr [rdx + 0x20], r9\n142b456ee  call 0x1426985f0\n142b456f3  mov byte ptr [rbx], al\n142b456f5  add rsp, 0x20\n142b456f9  pop rbx\n142b456fa  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x14269b000",
+      "label": "AFortWeapon::GetBulletsPerClip"
+    },
+    "reflected": {
+      "exec_addr": "0x142b45bd0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b3e170",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b45bd0  push rbx\n142b45bd2  sub rsp, 0x20\n142b45bd6  mov rax, qword ptr [rdx + 0x20]\n142b45bda  xor r9d, r9d\n142b45bdd  test rax, rax\n142b45be0  mov rbx, r8\n142b45be3  setne r9b\n142b45be7  add r9, rax\n142b45bea  mov qword ptr [rdx + 0x20], r9\n142b45bee  call 0x14269b000\n142b45bf3  mov dword ptr [rbx], eax\n142b45bf5  add rsp, 0x20\n142b45bf9  pop rbx\n142b45bfa  ret\n142b45bfb  nop\n142b45bfc  mov qword ptr [rsp - 0x7cb7acc0], rsi\n142b45c04  in al, dx\n142b45c05  and byte ptr [rax - 0x75], cl\n142b45c08  and byte ptr [rbp + 0x33], al\n142b45c0c  leave\n142b45c0d  test rax, rax\n142b45c10  mov rbx, r8\n142b45c13  setne r9b\n142b45c17  add r9, rax\n142b45c1a  mov qword ptr [rdx + 0x20], r9\n142b45c1e  call 0x14269b900\n142b45c23  movss dword ptr [rbx], xmm0\n142b45c27  add rsp, 0x20\n142b45c2b  pop rbx\n142b45c2c  ret\n142b45c2d  nop\n142b45c2e  add esp, ebp\n142b45c30  mov rax, qword ptr [rdx + 0x20]\n142b45c34  xor r9d, r9d\n142b45c37  test rax, rax\n142b45c3a  setne r9b\n142b45c3e  add r9, rax\n142b45c41  mov qword ptr [rdx + 0x20], r9\n142b45c45  mov eax, dword ptr [rcx + 0x8e4]\n142b45c4b  mov dword ptr [r8], eax\n142b45c4e  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x14269b900",
+      "label": "AFortWeapon::GetChargePercent"
+    },
+    "reflected": {
+      "exec_addr": "0x142b45c00",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b3e260",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b45c00  push rbx\n142b45c02  sub rsp, 0x20\n142b45c06  mov rax, qword ptr [rdx + 0x20]\n142b45c0a  xor r9d, r9d\n142b45c0d  test rax, rax\n142b45c10  mov rbx, r8\n142b45c13  setne r9b\n142b45c17  add r9, rax\n142b45c1a  mov qword ptr [rdx + 0x20], r9\n142b45c1e  call 0x14269b900\n142b45c23  movss dword ptr [rbx], xmm0\n142b45c27  add rsp, 0x20\n142b45c2b  pop rbx\n142b45c2c  ret\n142b45c2d  nop\n142b45c2e  add esp, ebp\n142b45c30  mov rax, qword ptr [rdx + 0x20]\n142b45c34  xor r9d, r9d\n142b45c37  test rax, rax\n142b45c3a  setne r9b\n142b45c3e  add r9, rax\n142b45c41  mov qword ptr [rdx + 0x20], r9\n142b45c45  mov eax, dword ptr [rcx + 0x8e4]\n142b45c4b  mov dword ptr [r8], eax\n142b45c4e  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x14269b9a0",
+      "label": "AFortWeapon::GetChargeToMinPercent"
+    },
+    "reflected": {
+      "exec_addr": "0x142b45c50",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b3e2c0",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b45c50  push rbx\n142b45c52  sub rsp, 0x20\n142b45c56  mov rax, qword ptr [rdx + 0x20]\n142b45c5a  xor r9d, r9d\n142b45c5d  test rax, rax\n142b45c60  mov rbx, r8\n142b45c63  setne r9b\n142b45c67  add r9, rax\n142b45c6a  mov qword ptr [rdx + 0x20], r9\n142b45c6e  call 0x14269b9a0\n142b45c73  movss dword ptr [rbx], xmm0\n142b45c77  add rsp, 0x20\n142b45c7b  pop rbx\n142b45c7c  ret\n142b45c7d  nop\n142b45c7e  mov word ptr [rsi + 0x40], fs\n142b45c81  push rbx\n142b45c82  sub rsp, 0x20\n142b45c86  mov rax, qword ptr [rdx + 0x20]\n142b45c8a  xor r9d, r9d\n142b45c8d  test rax, rax\n142b45c90  mov rbx, r8\n142b45c93  setne r9b\n142b45c97  add r9, rax\n142b45c9a  mov qword ptr [rdx + 0x20], r9\n142b45c9e  lea rdx, [rsp + 0x38]\n142b45ca3  call 0x14269ba60\n142b45ca8  movzx ecx, byte ptr [rax]\n142b45cab  mov byte ptr [rbx], cl\n142b45cad  add rsp, 0x20\n142b45cb1  pop rbx\n142b45cb2  ret\n142b45cb3  mov qword ptr [rsp + 0x10], rbx\n142b45cb8  pop rax\n142b45cb9  pop rbx\n142b45cba  ret\n142b45cbb  jmp 0x1413083a8\n142b45cc0  push rbx\n142b45cc2  sub rsp, 0x20\n142b45cc6  mov rax, qword ptr [rdx + 0x20]\n142b45cca  xor r9d, r9d\n142b45ccd  test rax, rax\n142b45cd0  mov rbx, r8\n142b45cd3  setne r9b\n142b45cd7  add r9, rax\n142b45cda  mov qword ptr [rdx + 0x20], r9\n142b45cde  call 0x14269ba70\n142b45ce3  movss dword ptr [rbx], xmm0\n142b45ce7  add rsp, 0x20\n142b45ceb  pop rbx\n142b45cec  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x14269ba60",
+      "label": "AFortWeapon::GetCoreAnimation"
+    },
+    "reflected": {
+      "exec_addr": "0x142b45c80",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x14288b4a0"
+          }
+        }
+      ],
+      "create_func": "0x142b3e2f0",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b45c80  push rbx\n142b45c82  sub rsp, 0x20\n142b45c86  mov rax, qword ptr [rdx + 0x20]\n142b45c8a  xor r9d, r9d\n142b45c8d  test rax, rax\n142b45c90  mov rbx, r8\n142b45c93  setne r9b\n142b45c97  add r9, rax\n142b45c9a  mov qword ptr [rdx + 0x20], r9\n142b45c9e  lea rdx, [rsp + 0x38]\n142b45ca3  call 0x14269ba60\n142b45ca8  movzx ecx, byte ptr [rax]\n142b45cab  mov byte ptr [rbx], cl\n142b45cad  add rsp, 0x20\n142b45cb1  pop rbx\n142b45cb2  ret\n142b45cb3  mov qword ptr [rsp + 0x10], rbx\n142b45cb8  pop rax\n142b45cb9  pop rbx\n142b45cba  ret\n142b45cbb  jmp 0x1413083a8\n142b45cc0  push rbx\n142b45cc2  sub rsp, 0x20\n142b45cc6  mov rax, qword ptr [rdx + 0x20]\n142b45cca  xor r9d, r9d\n142b45ccd  test rax, rax\n142b45cd0  mov rbx, r8\n142b45cd3  setne r9b\n142b45cd7  add r9, rax\n142b45cda  mov qword ptr [rdx + 0x20], r9\n142b45cde  call 0x14269ba70\n142b45ce3  movss dword ptr [rbx], xmm0\n142b45ce7  add rsp, 0x20\n142b45ceb  pop rbx\n142b45cec  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x14269ba70",
+      "label": "AFortWeapon::GetCurrentMaxChargePercent"
+    },
+    "reflected": {
+      "exec_addr": "0x142b45cc0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b3e350",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b45cc0  push rbx\n142b45cc2  sub rsp, 0x20\n142b45cc6  mov rax, qword ptr [rdx + 0x20]\n142b45cca  xor r9d, r9d\n142b45ccd  test rax, rax\n142b45cd0  mov rbx, r8\n142b45cd3  setne r9b\n142b45cd7  add r9, rax\n142b45cda  mov qword ptr [rdx + 0x20], r9\n142b45cde  call 0x14269ba70\n142b45ce3  movss dword ptr [rbx], xmm0\n142b45ce7  add rsp, 0x20\n142b45ceb  pop rbx\n142b45cec  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x14269d6c0",
+      "label": "AFortWeapon::GetMeleeAttackPlayRate"
+    },
+    "reflected": {
+      "exec_addr": "0x142b462d0",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b3e620",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b462d0  push rbx\n142b462d2  sub rsp, 0x20\n142b462d6  mov rax, qword ptr [rdx + 0x20]\n142b462da  xor r9d, r9d\n142b462dd  test rax, rax\n142b462e0  mov rbx, r8\n142b462e3  setne r9b\n142b462e7  add r9, rax\n142b462ea  mov qword ptr [rdx + 0x20], r9\n142b462ee  call 0x14269d6c0\n142b462f3  movss dword ptr [rbx], xmm0\n142b462f7  add rsp, 0x20\n142b462fb  pop rbx\n142b462fc  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426a0960",
+      "label": "AFortWeapon::GetWeaponData"
+    },
+    "reflected": {
+      "exec_addr": "0x142b46dd0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142b4a100"
+          }
+        }
+      ],
+      "create_func": "0x142b3eab0",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b46dd0  push rbx\n142b46dd2  sub rsp, 0x20\n142b46dd6  mov rax, qword ptr [rdx + 0x20]\n142b46dda  xor r9d, r9d\n142b46ddd  test rax, rax\n142b46de0  mov rbx, r8\n142b46de3  setne r9b\n142b46de7  add r9, rax\n142b46dea  mov qword ptr [rdx + 0x20], r9\n142b46dee  call 0x1426a0960\n142b46df3  mov qword ptr [rbx], rax\n142b46df6  add rsp, 0x20\n142b46dfa  pop rbx\n142b46dfb  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426a09e0",
+      "label": "AFortWeapon::GetWeaponDataAmmoWorldItemDefinition"
+    },
+    "reflected": {
+      "exec_addr": "0x142b46e00",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142b56ce0"
+          }
+        }
+      ],
+      "create_func": "0x142b3eae0",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b46e00  push rbx\n142b46e02  sub rsp, 0x20\n142b46e06  mov rax, qword ptr [rdx + 0x20]\n142b46e0a  xor r9d, r9d\n142b46e0d  test rax, rax\n142b46e10  mov rbx, r8\n142b46e13  setne r9b\n142b46e17  add r9, rax\n142b46e1a  mov qword ptr [rdx + 0x20], r9\n142b46e1e  call 0x1426a09e0\n142b46e23  mov qword ptr [rbx], rax\n142b46e26  add rsp, 0x20\n142b46e2a  pop rbx\n142b46e2b  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426a0b10",
+      "label": "AFortWeapon::GetWeaponDataItemType"
+    },
+    "reflected": {
+      "exec_addr": "0x142b46ef0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x142a246a0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "ReturnValue"
+        }
+      ],
+      "create_func": "0x142b3eb40",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b46ef0  push rbx\n142b46ef2  sub rsp, 0x20\n142b46ef6  mov rax, qword ptr [rdx + 0x20]\n142b46efa  xor r9d, r9d\n142b46efd  test rax, rax\n142b46f00  mov rbx, r8\n142b46f03  setne r9b\n142b46f07  add r9, rax\n142b46f0a  mov qword ptr [rdx + 0x20], r9\n142b46f0e  call 0x1426a0b10\n142b46f13  mov byte ptr [rbx], al\n142b46f15  add rsp, 0x20\n142b46f19  pop rbx\n142b46f1a  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426a0c40",
+      "label": "AFortWeapon::GetWeaponDataRarity"
+    },
+    "reflected": {
+      "exec_addr": "0x142b46fe0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x142b248c0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "ReturnValue"
+        }
+      ],
+      "create_func": "0x142b3eba0",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b46fe0  push rbx\n142b46fe2  sub rsp, 0x20\n142b46fe6  mov rax, qword ptr [rdx + 0x20]\n142b46fea  xor r9d, r9d\n142b46fed  test rax, rax\n142b46ff0  mov rbx, r8\n142b46ff3  setne r9b\n142b46ff7  add r9, rax\n142b46ffa  mov qword ptr [rdx + 0x20], r9\n142b46ffe  call 0x1426a0c40\n142b47003  mov byte ptr [rbx], al\n142b47005  add rsp, 0x20\n142b47009  pop rbx\n142b4700a  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426a0ec0",
+      "label": "AFortWeapon::GetWeaponDataTriggerType"
+    },
+    "reflected": {
+      "exec_addr": "0x142b47110",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x142b24ad0"
+          }
+        }
+      ],
+      "create_func": "0x142b3ec60",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b47110  push rbx\n142b47112  sub rsp, 0x20\n142b47116  mov rax, qword ptr [rdx + 0x20]\n142b4711a  xor r9d, r9d\n142b4711d  test rax, rax\n142b47120  mov rbx, r8\n142b47123  setne r9b\n142b47127  add r9, rax\n142b4712a  mov qword ptr [rdx + 0x20], r9\n142b4712e  lea rdx, [rsp + 0x38]\n142b47133  call 0x1426a0ec0\n142b47138  movzx ecx, byte ptr [rax]\n142b4713b  mov byte ptr [rbx], cl\n142b4713d  add rsp, 0x20\n142b47141  pop rbx\n142b47142  ret\n142b47143  lea rax, [rbp + 0x48]\n142b47147  mov rdx, qword ptr [rbp + 0x60]\n142b4714b  jmp 0x1406f5082\n142b47150  push rbx\n142b47152  sub rsp, 0x30\n142b47156  mov rax, qword ptr [rdx + 0x20]\n142b4715a  xor r9d, r9d\n142b4715d  test rax, rax\n142b47160  mov rbx, r8\n142b47163  setne r9b\n142b47167  add r9, rax\n142b4716a  mov qword ptr [rdx + 0x20], r9\n142b4716e  lea rdx, [rsp + 0x20]\n142b47173  call 0x1426a0f60\n142b47178  movups xmm0, xmmword ptr [rax]\n142b4717b  movups xmmword ptr [rbx], xmm0\n142b4717e  add rsp, 0x30\n142b47182  pop rbx\n142b47183  ret\n142b47184  nop\n142b47185  mov rcx, rax\n142b47188  mov rax, qword ptr [rax]\n142b4718b  mov qword ptr [rsp + 0x38], rax\n142b47190  mov rax, qword ptr [rdx + 0x20]\n142b47194  xor r9d, r9d\n142b47197  test rax, rax\n142b4719a  setne r9b\n142b4719e  add r9, rax\n142b471a1  mov qword ptr [rdx + 0x20], r9\n142b471a5  mov rax, qword ptr [rcx + 0x798]\n142b471ac  mov qword ptr [r8], rax\n142b471af  ret\n142b471b0  mov qword ptr [rsp + 8], rbx\n142b471b5  mov qword ptr [rsp + 0x10], rsi\n142b471ba  push rdi\n142b471bb  sub rsp, 0x30\n142b471bf  xor edi, edi\n142b471c1  mov rsi, rcx\n142b471c4  mov rbx, rdx\n142b471c7  mov qword ptr [rsp + 0x20], rdi\n142b471cc  mov rcx, rdx\n142b471cf  mov qword ptr [rsp + 0x28], rdi\n142b471d4  mov qword ptr [rdx + 0x38], rdi\n142b471d8  cmp qword ptr [rdx + 0x20], rdi\n142b471dc  je 0x142b471ee\n142b471de  mov rdx, qword ptr [rdx + 0x18]\n142b471e2  lea r8, [rsp + 0x20]\n142b471e7  call 0x142ed9cf0\n142b471ec  jmp 0x142b4720a\n142b471ee  mov r8, qword ptr [rdx + 0x80]\n142b471f5  mov rax, qword ptr [r8 + 0x20]\n142b471f9  mov qword ptr [rdx + 0x80], rax\n142b47200  lea rdx, [rsp + 0x20]\n142b47205  call 0x142ed9d20\n142b4720a  mov rax, qword ptr [rbx + 0x38]\n142b4720e  lea rdx, [rsp + 0x20]\n142b47213  test rax, rax\n142b47216  mov rcx, rsi\n142b47219  cmovne rdx, rax\n142b4721d  mov rax, qword ptr [rbx + 0x20]\n142b47221  test rax, rax\n142b47224  setne dil\n142b47228  add rdi, rax\n142b4722b  mov qword ptr [rbx + 0x20], rdi\n142b4722f  call 0x1426a1500\n142b47234  mov rcx, qword ptr [rsp + 0x20]\n142b47239  test rcx, rcx\n142b4723c  je 0x142b47243\n142b4723e  call 0x142bee710\n142b47243  mov rbx, qword ptr [rsp + 0x40]\n142b47248  mov rsi, qword ptr [rsp + 0x48]\n142b4724d  add rsp, 0x30\n142b47251  pop rdi\n142b47252  ret\n142b47253  push rbp\n142b47254  lea rbp, [rip + 0x6b5e75f]\n142b4725b  xchg qword ptr [rsp], rbp\n142b4725f  ret\n142b47260  push rbx\n142b47262  sub rsp, 0x20\n142b47266  mov rax, qword ptr [rdx + 0x20]\n142b4726a  xor r9d, r9d\n142b4726d  test rax, rax\n142b47270  mov rbx, r8\n142b47273  setne r9b\n142b47277  add r9, rax\n142b4727a  mov qword ptr [rdx + 0x20], r9\n142b4727e  call 0x1426a1690\n142b47283  mov qword ptr [rbx], rax\n142b47286  add rsp, 0x20\n142b4728a  pop rbx\n142b4728b  ret\n142b4728c  nop\n142b4728d  mov rcx, rax\n142b47290  push rbx\n142b47292  sub rsp, 0x20\n142b47296  mov rax, qword ptr [rdx + 0x20]\n142b4729a  xor r9d, r9d\n142b4729d  test rax, rax\n142b472a0  mov rbx, r8\n142b472a3  setne r9b\n142b472a7  add r9, rax\n142b472aa  mov qword ptr [rdx + 0x20], r9\n142b472ae  call 0x1426a16b0\n142b472b3  movss dword ptr [rbx], xmm0\n142b472b7  add rsp, 0x20\n142b472bb  pop rbx\n142b472bc  ret\n142b472bd  nop\n142b472be  mov ah, 0x68\n142b472c0  mov rax, qword ptr [rdx + 0x20]\n142b472c4  xor r8d, r8d\n142b472c7  test rax, rax\n142b472ca  setne r8b\n142b472ce  add r8, rax\n142b472d1  mov qword ptr [rdx + 0x20], r8\n142b472d5  jmp 0x1426a17b0\n142b472da  jmp 0x148ea36cd\n142b472df  nop\n142b472e0  push rbx\n142b472e2  sub rsp, 0x20\n142b472e6  mov rax, qword ptr [rdx + 0x20]\n142b472ea  xor r9d, r9d\n142b472ed  test rax, rax\n142b472f0  mov rbx, r8\n142b472f3  setne r9b\n142b472f7  add r9, rax\n142b472fa  mov qword ptr [rdx + 0x20], r9\n142b472fe  call 0x1426a24a0\n142b47303  mov byte ptr [rbx], al\n142b47305  add rsp, 0x20\n142b47309  pop rbx\n142b4730a  ret\n142b4730b  nop",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426a1690",
+      "label": "AFortWeapon::GetWeaponPawnAnimSet"
+    },
+    "reflected": {
+      "exec_addr": "0x142b47260",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142b49360"
+          }
+        }
+      ],
+      "create_func": "0x142b3ed20",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b47260  push rbx\n142b47262  sub rsp, 0x20\n142b47266  mov rax, qword ptr [rdx + 0x20]\n142b4726a  xor r9d, r9d\n142b4726d  test rax, rax\n142b47270  mov rbx, r8\n142b47273  setne r9b\n142b47277  add r9, rax\n142b4727a  mov qword ptr [rdx + 0x20], r9\n142b4727e  call 0x1426a1690\n142b47283  mov qword ptr [rbx], rax\n142b47286  add rsp, 0x20\n142b4728a  pop rbx\n142b4728b  ret\n142b4728c  nop\n142b4728d  mov rcx, rax\n142b47290  push rbx\n142b47292  sub rsp, 0x20\n142b47296  mov rax, qword ptr [rdx + 0x20]\n142b4729a  xor r9d, r9d\n142b4729d  test rax, rax\n142b472a0  mov rbx, r8\n142b472a3  setne r9b\n142b472a7  add r9, rax\n142b472aa  mov qword ptr [rdx + 0x20], r9\n142b472ae  call 0x1426a16b0\n142b472b3  movss dword ptr [rbx], xmm0\n142b472b7  add rsp, 0x20\n142b472bb  pop rbx\n142b472bc  ret\n142b472bd  nop\n142b472be  mov ah, 0x68\n142b472c0  mov rax, qword ptr [rdx + 0x20]\n142b472c4  xor r8d, r8d\n142b472c7  test rax, rax\n142b472ca  setne r8b\n142b472ce  add r8, rax\n142b472d1  mov qword ptr [rdx + 0x20], r8\n142b472d5  jmp 0x1426a17b0\n142b472da  jmp 0x148ea36cd\n142b472df  nop\n142b472e0  push rbx\n142b472e2  sub rsp, 0x20\n142b472e6  mov rax, qword ptr [rdx + 0x20]\n142b472ea  xor r9d, r9d\n142b472ed  test rax, rax\n142b472f0  mov rbx, r8\n142b472f3  setne r9b\n142b472f7  add r9, rax\n142b472fa  mov qword ptr [rdx + 0x20], r9\n142b472fe  call 0x1426a24a0\n142b47303  mov byte ptr [rbx], al\n142b47305  add rsp, 0x20\n142b47309  pop rbx\n142b4730a  ret\n142b4730b  nop",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426a16b0",
+      "label": "AFortWeapon::GetWeaponRateOfFireModifier"
+    },
+    "reflected": {
+      "exec_addr": "0x142b47290",
+      "flags": "0x14020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b3ed50",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b47290  push rbx\n142b47292  sub rsp, 0x20\n142b47296  mov rax, qword ptr [rdx + 0x20]\n142b4729a  xor r9d, r9d\n142b4729d  test rax, rax\n142b472a0  mov rbx, r8\n142b472a3  setne r9b\n142b472a7  add r9, rax\n142b472aa  mov qword ptr [rdx + 0x20], r9\n142b472ae  call 0x1426a16b0\n142b472b3  movss dword ptr [rbx], xmm0\n142b472b7  add rsp, 0x20\n142b472bb  pop rbx\n142b472bc  ret\n142b472bd  nop\n142b472be  mov ah, 0x68\n142b472c0  mov rax, qword ptr [rdx + 0x20]\n142b472c4  xor r8d, r8d\n142b472c7  test rax, rax\n142b472ca  setne r8b\n142b472ce  add r8, rax\n142b472d1  mov qword ptr [rdx + 0x20], r8\n142b472d5  jmp 0x1426a17b0\n142b472da  jmp 0x148ea36cd\n142b472df  nop\n142b472e0  push rbx\n142b472e2  sub rsp, 0x20\n142b472e6  mov rax, qword ptr [rdx + 0x20]\n142b472ea  xor r9d, r9d\n142b472ed  test rax, rax\n142b472f0  mov rbx, r8\n142b472f3  setne r9b\n142b472f7  add r9, rax\n142b472fa  mov qword ptr [rdx + 0x20], r9\n142b472fe  call 0x1426a24a0\n142b47303  mov byte ptr [rbx], al\n142b47305  add rsp, 0x20\n142b47309  pop rbx\n142b4730a  ret\n142b4730b  nop",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426a24a0",
+      "label": "AFortWeapon::HasInfiniteAmmo"
+    },
+    "reflected": {
+      "exec_addr": "0x142b472e0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142b3ee20",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b472e0  push rbx\n142b472e2  sub rsp, 0x20\n142b472e6  mov rax, qword ptr [rdx + 0x20]\n142b472ea  xor r9d, r9d\n142b472ed  test rax, rax\n142b472f0  mov rbx, r8\n142b472f3  setne r9b\n142b472f7  add r9, rax\n142b472fa  mov qword ptr [rdx + 0x20], r9\n142b472fe  call 0x1426a24a0\n142b47303  mov byte ptr [rbx], al\n142b47305  add rsp, 0x20\n142b47309  pop rbx\n142b4730a  ret\n142b4730b  nop",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426a58f0",
+      "label": "AFortWeapon::InventoryOwnerHasInfiniteAmmo"
+    },
+    "reflected": {
+      "exec_addr": "0x142b47310",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142b3ee80",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b47310  push rbx\n142b47312  sub rsp, 0x20\n142b47316  mov rax, qword ptr [rdx + 0x20]\n142b4731a  xor r9d, r9d\n142b4731d  test rax, rax\n142b47320  mov rbx, r8\n142b47323  setne r9b\n142b47327  add r9, rax\n142b4732a  mov qword ptr [rdx + 0x20], r9\n142b4732e  call 0x1426a58f0\n142b47333  mov byte ptr [rbx], al\n142b47335  add rsp, 0x20\n142b47339  pop rbx\n142b4733a  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426a5db0",
+      "label": "AFortWeapon::IsSuppressed"
+    },
+    "reflected": {
+      "exec_addr": "0x142b47550",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142b3efc0",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b47550  push rbx\n142b47552  sub rsp, 0x20\n142b47556  mov rax, qword ptr [rdx + 0x20]\n142b4755a  xor r9d, r9d\n142b4755d  test rax, rax\n142b47560  mov rbx, r8\n142b47563  setne r9b\n142b47567  add r9, rax\n142b4756a  mov qword ptr [rdx + 0x20], r9\n142b4756e  call 0x1426a5db0\n142b47573  mov byte ptr [rbx], al\n142b47575  add rsp, 0x20\n142b47579  pop rbx\n142b4757a  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426c8610",
+      "label": "AFortWeaponRanged::DoesWeaponOverheat"
+    },
+    "reflected": {
+      "exec_addr": "0x142b4f2a0",
+      "flags": "0x54020403",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142b4c950",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b4f2a0  push rbx\n142b4f2a2  sub rsp, 0x20\n142b4f2a6  mov rax, qword ptr [rdx + 0x20]\n142b4f2aa  xor r9d, r9d\n142b4f2ad  test rax, rax\n142b4f2b0  mov rbx, r8\n142b4f2b3  setne r9b\n142b4f2b7  add r9, rax\n142b4f2ba  mov qword ptr [rdx + 0x20], r9\n142b4f2be  call 0x1426c8610\n142b4f2c3  mov byte ptr [rbx], al\n142b4f2c5  add rsp, 0x20\n142b4f2c9  pop rbx\n142b4f2ca  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426c9f70",
+      "label": "AFortWeaponRanged::GetADSTransitionInTime"
+    },
+    "reflected": {
+      "exec_addr": "0x142b4f480",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b4ca70",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b4f480  push rbx\n142b4f482  sub rsp, 0x20\n142b4f486  mov rax, qword ptr [rdx + 0x20]\n142b4f48a  xor r9d, r9d\n142b4f48d  test rax, rax\n142b4f490  mov rbx, r8\n142b4f493  setne r9b\n142b4f497  add r9, rax\n142b4f49a  mov qword ptr [rdx + 0x20], r9\n142b4f49e  call 0x1426c9f70\n142b4f4a3  movss dword ptr [rbx], xmm0\n142b4f4a7  add rsp, 0x20\n142b4f4ab  pop rbx\n142b4f4ac  ret\n142b4f4ad  nop\n142b4f4ae  mov rax, qword ptr [rax + 0x53]\n142b4f4b2  sub rsp, 0x20\n142b4f4b6  mov rax, qword ptr [rdx + 0x20]\n142b4f4ba  xor r9d, r9d\n142b4f4bd  test rax, rax\n142b4f4c0  mov rbx, r8\n142b4f4c3  setne r9b\n142b4f4c7  add r9, rax\n142b4f4ca  mov qword ptr [rdx + 0x20], r9\n142b4f4ce  call 0x1426ca040\n142b4f4d3  movss dword ptr [rbx], xmm0\n142b4f4d7  add rsp, 0x20\n142b4f4db  pop rbx\n142b4f4dc  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426ca040",
+      "label": "AFortWeaponRanged::GetADSTransitionOutTime"
+    },
+    "reflected": {
+      "exec_addr": "0x142b4f4b0",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b4caa0",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b4f4b0  push rbx\n142b4f4b2  sub rsp, 0x20\n142b4f4b6  mov rax, qword ptr [rdx + 0x20]\n142b4f4ba  xor r9d, r9d\n142b4f4bd  test rax, rax\n142b4f4c0  mov rbx, r8\n142b4f4c3  setne r9b\n142b4f4c7  add r9, rax\n142b4f4ca  mov qword ptr [rdx + 0x20], r9\n142b4f4ce  call 0x1426ca040\n142b4f4d3  movss dword ptr [rbx], xmm0\n142b4f4d7  add rsp, 0x20\n142b4f4db  pop rbx\n142b4f4dc  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426ced60",
+      "label": "AFortWeaponRanged::GetOverheatingMaxValue"
+    },
+    "reflected": {
+      "exec_addr": "0x142b4f7d0",
+      "flags": "0x54020403",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b4cc60",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b4f7d0  push rbx\n142b4f7d2  sub rsp, 0x20\n142b4f7d6  mov rax, qword ptr [rdx + 0x20]\n142b4f7da  xor r9d, r9d\n142b4f7dd  test rax, rax\n142b4f7e0  mov rbx, r8\n142b4f7e3  setne r9b\n142b4f7e7  add r9, rax\n142b4f7ea  mov qword ptr [rdx + 0x20], r9\n142b4f7ee  call 0x1426ced60\n142b4f7f3  movss dword ptr [rbx], xmm0\n142b4f7f7  add rsp, 0x20\n142b4f7fb  pop rbx\n142b4f7fc  ret\n142b4f7fd  nop\n142b4f7fe  push rsi\n142b4f7ff  jb 0x142b4f841\n142b4f801  push rbx\n142b4f802  sub rsp, 0x20\n142b4f806  mov r9, qword ptr [rdx + 0x20]\n142b4f80a  xor eax, eax\n142b4f80c  test r9, r9\n142b4f80f  mov rbx, r8\n142b4f812  setne al\n142b4f815  add rcx, 0xd50\n142b4f81c  add rax, r9\n142b4f81f  mov qword ptr [rdx + 0x20], rax\n142b4f823  cmp r8, rcx\n142b4f826  je 0x142b4f883\n142b4f828  mov r8d, dword ptr [r8 + 0xc]\n142b4f82c  mov qword ptr [rsp + 0x30], rsi\n142b4f831  mov rsi, qword ptr [rcx]\n142b4f834  mov qword ptr [rsp + 0x38], rdi\n142b4f839  movsxd rdi, dword ptr [rcx + 8]\n142b4f83d  mov dword ptr [rbx + 8], edi\n142b4f840  test edi, edi\n142b4f842  jne 0x142b4f85d\n142b4f844  test r8d, r8d\n142b4f847  jne 0x142b4f85d\n142b4f849  mov rsi, qword ptr [rsp + 0x30]\n142b4f84e  mov rdi, qword ptr [rsp + 0x38]\n142b4f853  mov dword ptr [rbx + 0xc], r8d\n142b4f857  add rsp, 0x20\n142b4f85b  pop rbx\n142b4f85c  ret\n142b4f85d  mov edx, edi\n142b4f85f  mov rcx, rbx\n142b4f862  call 0x140690a50\n142b4f867  mov rcx, qword ptr [rbx]\n142b4f86a  mov r8, rdi\n142b4f86d  shl r8, 4\n142b4f871  mov rdx, rsi\n142b4f874  call 0x1458092ed\n142b4f879  mov rsi, qword ptr [rsp + 0x30]\n142b4f87e  mov rdi, qword ptr [rsp + 0x38]\n142b4f883  add rsp, 0x20\n142b4f887  pop rbx\n142b4f888  ret\n142b4f889  nop",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426d2560",
+      "label": "AFortWeaponRanged::IsOverheated"
+    },
+    "reflected": {
+      "exec_addr": "0x142b4fbb0",
+      "flags": "0x54020403",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142b4cf00",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b4fbb0  push rbx\n142b4fbb2  sub rsp, 0x20\n142b4fbb6  mov rax, qword ptr [rdx + 0x20]\n142b4fbba  xor r9d, r9d\n142b4fbbd  test rax, rax\n142b4fbc0  mov rbx, r8\n142b4fbc3  setne r9b\n142b4fbc7  add r9, rax\n142b4fbca  mov qword ptr [rdx + 0x20], r9\n142b4fbce  call 0x1426d2560\n142b4fbd3  mov byte ptr [rbx], al\n142b4fbd5  add rsp, 0x20\n142b4fbd9  pop rbx\n142b4fbda  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426d28d0",
+      "label": "AFortWeaponRanged::IsUsingFirstPersonCamera"
+    },
+    "reflected": {
+      "exec_addr": "0x142b4fbe0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142b4cf60",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b4fbe0  push rbx\n142b4fbe2  sub rsp, 0x20\n142b4fbe6  mov rax, qword ptr [rdx + 0x20]\n142b4fbea  xor r9d, r9d\n142b4fbed  test rax, rax\n142b4fbf0  mov rbx, r8\n142b4fbf3  setne r9b\n142b4fbf7  add r9, rax\n142b4fbfa  mov qword ptr [rdx + 0x20], r9\n142b4fbfe  call 0x1426d28d0\n142b4fc03  mov byte ptr [rbx], al\n142b4fc05  add rsp, 0x20\n142b4fc09  pop rbx\n142b4fc0a  ret\n142b4fc0b  nop\n142b4fc0c  and dword ptr [rdx + 0x5340ab2a], ecx\n142b4fc12  sub rsp, 0x20\n142b4fc16  mov rax, qword ptr [rdx + 0x20]\n142b4fc1a  xor r9d, r9d\n142b4fc1d  test rax, rax\n142b4fc20  mov rbx, r8\n142b4fc23  setne r9b\n142b4fc27  add r9, rax\n142b4fc2a  mov qword ptr [rdx + 0x20], r9\n142b4fc2e  call 0x1426d2930\n142b4fc33  mov byte ptr [rbx], al\n142b4fc35  add rsp, 0x20\n142b4fc39  pop rbx\n142b4fc3a  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426d2930",
+      "label": "AFortWeaponRanged::IsUsingScope"
+    },
+    "reflected": {
+      "exec_addr": "0x142b4fc10",
+      "flags": "0x54020403",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142b4cfc0",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b4fc10  push rbx\n142b4fc12  sub rsp, 0x20\n142b4fc16  mov rax, qword ptr [rdx + 0x20]\n142b4fc1a  xor r9d, r9d\n142b4fc1d  test rax, rax\n142b4fc20  mov rbx, r8\n142b4fc23  setne r9b\n142b4fc27  add r9, rax\n142b4fc2a  mov qword ptr [rdx + 0x20], r9\n142b4fc2e  call 0x1426d2930\n142b4fc33  mov byte ptr [rbx], al\n142b4fc35  add rsp, 0x20\n142b4fc39  pop rbx\n142b4fc3a  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  },
+  {
+    "target": {
+      "address": "0x1426d29b0",
+      "label": "AFortWeaponRanged::IsUsingScopeOrFirstPersonCamera"
+    },
+    "reflected": {
+      "exec_addr": "0x142b4fc40",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142b4d020",
+      "source": "lea"
+    },
+    "wrapper_assembly": "142b4fc40  push rbx\n142b4fc42  sub rsp, 0x20\n142b4fc46  mov rax, qword ptr [rdx + 0x20]\n142b4fc4a  xor r9d, r9d\n142b4fc4d  test rax, rax\n142b4fc50  mov rbx, r8\n142b4fc53  setne r9b\n142b4fc57  add r9, rax\n142b4fc5a  mov qword ptr [rdx + 0x20], r9\n142b4fc5e  call 0x1426d29b0\n142b4fc63  mov byte ptr [rbx], al\n142b4fc65  add rsp, 0x20\n142b4fc69  pop rbx\n142b4fc6a  ret",
+    "note": "Window ends at first int3 padding, capped at 512 bytes."
+  }
+]

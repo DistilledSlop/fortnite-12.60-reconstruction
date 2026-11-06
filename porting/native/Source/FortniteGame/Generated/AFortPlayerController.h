@@ -1515,6 +1515,9 @@ public:
 	bool IsBuildToolOverridden() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsClientBot() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsClientTimingOut() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

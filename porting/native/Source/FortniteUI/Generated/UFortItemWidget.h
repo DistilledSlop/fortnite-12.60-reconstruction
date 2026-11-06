@@ -40,5 +40,8 @@ public:
 	UPROPERTY()
 	int32 QuantityOverride;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsItemValid() const;
+
 };
 

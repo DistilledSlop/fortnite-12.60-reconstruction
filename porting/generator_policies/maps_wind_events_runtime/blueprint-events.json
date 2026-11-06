@@ -1,0 +1,190 @@
+{
+  "AFortWindManager": {
+    "OnWindAudioBecameActive": {
+      "owner_fn": "0x142b52310",
+      "create_func": "0x142b52720",
+      "flags": 134744064,
+      "params": [
+        {
+          "index": 0,
+          "name": "WindAudioComp",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446cc2e0"
+          }
+        }
+      ],
+      "args": [
+        "UAudioComponent* WindAudioComp"
+      ],
+      "specifiers": [
+        "BlueprintImplementableEvent"
+      ],
+      "access": "protected",
+      "checked_types": [
+        "UAudioComponent*"
+      ],
+      "allowed_type_packages": {
+        "0x1446cc2e0": "/Script/Engine"
+      }
+    },
+    "OnWindAudioBecameInactive": {
+      "owner_fn": "0x142b52310",
+      "create_func": "0x142b52780",
+      "flags": 134744064,
+      "params": [
+        {
+          "index": 0,
+          "name": "WindAudioComp",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446cc2e0"
+          }
+        }
+      ],
+      "args": [
+        "UAudioComponent* WindAudioComp"
+      ],
+      "specifiers": [
+        "BlueprintImplementableEvent"
+      ],
+      "access": "protected",
+      "checked_types": [
+        "UAudioComponent*"
+      ],
+      "allowed_type_packages": {
+        "0x1446cc2e0": "/Script/Engine"
+      }
+    },
+    "OnWindImpulseCylinderCreation": {
+      "owner_fn": "0x142b52310",
+      "create_func": "0x142b527b0",
+      "flags": 138545152,
+      "params": [
+        {
+          "index": 0,
+          "name": "WindImpulseCylinderDelta",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 72,
+          "type_refs": {
+            "struct": "0x142b54960"
+          }
+        },
+        {
+          "index": 1,
+          "name": "WindImpulseCylinder",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142b54930"
+          }
+        }
+      ],
+      "args": [
+        "const FFortWindImpulseCylinder& WindImpulseCylinder",
+        "const FFortWindImpulseCylinderDelta& WindImpulseCylinderDelta"
+      ],
+      "specifiers": [
+        "BlueprintImplementableEvent"
+      ],
+      "access": "public",
+      "checked_types": [
+        "FFortWindImpulseCylinderDelta",
+        "FFortWindImpulseCylinder"
+      ],
+      "allowed_type_packages": {}
+    },
+    "OnWindImpulseCylinderDeath": {
+      "owner_fn": "0x142b52310",
+      "create_func": "0x142b527f0",
+      "flags": 138545152,
+      "params": [
+        {
+          "index": 0,
+          "name": "WindImpulseCylinder",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142b54930"
+          }
+        }
+      ],
+      "args": [
+        "const FFortWindImpulseCylinder& WindImpulseCylinder"
+      ],
+      "specifiers": [
+        "BlueprintImplementableEvent"
+      ],
+      "access": "public",
+      "checked_types": [
+        "FFortWindImpulseCylinder"
+      ],
+      "allowed_type_packages": {}
+    },
+    "OnWindImpulseCylinderDeltaComplete": {
+      "owner_fn": "0x142b52310",
+      "create_func": "0x142b52820",
+      "flags": 138545152,
+      "params": [
+        {
+          "index": 0,
+          "name": "WindImpulseCylinder",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142b54930"
+          }
+        }
+      ],
+      "args": [
+        "const FFortWindImpulseCylinder& WindImpulseCylinder"
+      ],
+      "specifiers": [
+        "BlueprintImplementableEvent"
+      ],
+      "access": "public",
+      "checked_types": [
+        "FFortWindImpulseCylinder"
+      ],
+      "allowed_type_packages": {}
+    }
+  }
+}

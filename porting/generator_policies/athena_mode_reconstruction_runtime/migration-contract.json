@@ -1,0 +1,63 @@
+{
+  "name": "AFortGameModeAthena",
+  "block_va": "0x1463cf250",
+  "parent": "AFortGamePvPBase",
+  "owner_fn": "0x1428ee6f0",
+  "native_exec": "0x1428f0440",
+  "native_body": "0x1419520f0",
+  "interfaces": [
+    "IGameplayMutatorObserverInterface",
+    "IFortMutatorOwner"
+  ],
+  "windows": [
+    {
+      "va": "0x1463cf250",
+      "size": 80,
+      "sha256": "1c631f532a549be5176895d6649efc3c073bccde43c75f584472273a24f388c4",
+      "reason": "Original FClassParams"
+    },
+    {
+      "va": "0x1463cf228",
+      "size": 32,
+      "sha256": "560e2edf3cdbdb46faa539ceb088d462c49360946157821463fa6b0d95442adc",
+      "reason": "Both native interface entries: offsets 0xa10 and 0xa18, bImplementedByK2 false"
+    },
+    {
+      "va": "0x142b64290",
+      "size": 5,
+      "sha256": "b49c630cbb3c702c10bc0098f8b76e778a1b55177c62831f868b84eb59e98e23",
+      "reason": "GameplayMutatorObserverInterface ClassFunc thunk"
+    },
+    {
+      "va": "0x1429f89f0",
+      "size": 5,
+      "sha256": "6c50c51aa317e380bb78c439528fea9af9ee007e3bf5adf8fe5cc6c867cb9e2b",
+      "reason": "FortMutatorOwner ClassFunc thunk"
+    },
+    {
+      "va": "0x142b640e0",
+      "size": 178,
+      "sha256": "9aa170177ab59035bb891b5461ec332a318120f35a6a9c127e5cfc853b7af18b",
+      "reason": "GameplayMutatorObserverInterface singleton builder"
+    },
+    {
+      "va": "0x1429f85f0",
+      "size": 178,
+      "sha256": "e476c181c62da9824bf8c9180b6c7fb8e24cf2041ad63a4c879f4f7f1c6543f4",
+      "reason": "FortMutatorOwner singleton builder"
+    },
+    {
+      "va": "0x146587b62",
+      "size": 70,
+      "sha256": "93012454446aa72d0e2d3d04e8b09dc3b733633172b414b8e6b20c1da4f222b4",
+      "reason": "GameplayMutatorObserverInterface UTF16 name"
+    },
+    {
+      "va": "0x14646d1b2",
+      "size": 34,
+      "sha256": "c2f8dbde7d44366208a9faa6f7ee40644dddc71238c5e7491bc9ac3cd747eb4b",
+      "reason": "FortMutatorOwner UTF16 name"
+    }
+  ],
+  "fixture_cpp_sha256": "5d3c48bbadd552f26a17c6a6345653ec27be46e8c5cd440d014e3b404ccd5210"
+}

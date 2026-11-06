@@ -11,6 +11,7 @@
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
+#include "UObject/NoExportTypes.h"
 
 class AFortAthenaVehicle;
 class APlayerController;
@@ -195,6 +196,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetSeatOffset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FQuat GetSeatRotation() const;
 
 };
 

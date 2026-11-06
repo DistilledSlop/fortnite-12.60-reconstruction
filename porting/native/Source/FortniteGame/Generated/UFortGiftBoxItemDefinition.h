@@ -70,5 +70,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasPreMessageWidget() const;
 
+	UFUNCTION(BlueprintCallable)
+	bool TryLoadHeaderSubWidgetClass(TSubclassOf<UUserWidget>& OutWidgetClass);
+
+	UFUNCTION(BlueprintCallable)
+	bool TryLoadPreMessageWidgetClass(TSubclassOf<UUserWidget>& OutWidgetClass);
+
 };
 

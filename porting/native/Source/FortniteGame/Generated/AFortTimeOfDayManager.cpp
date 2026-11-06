@@ -73,6 +73,13 @@ void AFortTimeOfDayManager::SetUseSpecificTimeOfDayEditing(bool bShouldUseSpecif
 	// CONFIDENCE: HIGH
 }
 
+void AFortTimeOfDayManager::ToggleDebugForceStormEffects()
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142b10280
+	    NativeForceStormEffects_0xded = (NativeForceStormEffects_0xded == 0);
+}
+
 void AFortTimeOfDayManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

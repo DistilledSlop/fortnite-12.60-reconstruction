@@ -1,0 +1,47 @@
+[
+  {
+    "class": "AFortWeapon",
+    "function": "NativeGetWeaponStats",
+    "kind": "helper",
+    "signature": "FFortBaseWeaponStats* NativeGetWeaponStats() const",
+    "access": "public",
+    "virtual": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x140696570",
+    "inc_path": "porting/behavior/AFortWeapon/NativeGetWeaponStats.inc",
+    "includes": [],
+    "notes": "Constructor-installed AFortWeapon primary vtable slot +0x6a8. Typed row resolver calls 0x142b4a9a0, whose registered struct is FortBaseWeaponStats (size 0x148)."
+  },
+  {
+    "class": "UFortWeaponItemDefinition",
+    "function": "NativeSupportsCharge",
+    "kind": "helper",
+    "signature": "bool NativeSupportsCharge(const FFortBaseWeaponStats& Stats)",
+    "access": "public",
+    "static": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1426786a0",
+    "inc_path": "porting/behavior/UFortWeaponItemDefinition/NativeSupportsCharge.inc",
+    "includes": [],
+    "notes": "Explicit borrowed actual stat row binding; native function receives the struct as this."
+  },
+  {
+    "class": "UFortWeaponItemDefinition",
+    "function": "NativeAmmoCostForCharge",
+    "kind": "helper",
+    "signature": "int32 NativeAmmoCostForCharge(const FFortBaseWeaponStats& Stats, float ChargeFraction)",
+    "access": "public",
+    "static": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142668ff0",
+    "inc_path": "porting/behavior/UFortWeaponItemDefinition/NativeAmmoCostForCharge.inc",
+    "includes": [],
+    "notes": "Explicit borrowed actual stat row binding; native function receives the struct as this."
+  }
+]

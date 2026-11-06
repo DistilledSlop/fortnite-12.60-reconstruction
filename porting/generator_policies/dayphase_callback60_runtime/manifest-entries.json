@@ -1,0 +1,46 @@
+[
+  {
+    "class": "ABuildingActor",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "access": "public",
+    "function": "OnDayPhaseChanged_Implementation",
+    "kind": "native_event_impl",
+    "signature": "void OnDayPhaseChanged_Implementation(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation)",
+    "inc_path": "porting/behavior/ABuildingActor/OnDayPhaseChanged_Implementation.inc",
+    "address": "0x142737bf0",
+    "native_body_address": "0x141bb0d80",
+    "reflection_flags": "0x8020c00",
+    "static": false,
+    "notes": "Native Blueprint event virtual +0x650 forwards to virtual +0x808."
+  },
+  {
+    "class": "ABuildingActor",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "access": "public",
+    "function": "NativeOnDayPhaseChanged",
+    "kind": "helper",
+    "signature": "void NativeOnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation)",
+    "inc_path": "porting/behavior/ABuildingActor/NativeOnDayPhaseChanged.inc",
+    "address": "0x1406801c0",
+    "virtual": true,
+    "notes": "Proposed helper name; base virtual +0x808 is ret 0."
+  },
+  {
+    "class": "ABuildingActor",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "access": "public",
+    "function": "NativeUsesDayPhaseChange",
+    "kind": "helper",
+    "signature": "bool NativeUsesDayPhaseChange() const",
+    "inc_path": "porting/behavior/ABuildingActor/NativeUsesDayPhaseChange.inc",
+    "address": "0x141bc5c50",
+    "virtual": true,
+    "notes": "Proposed helper name and const qualifier; base virtual +0x938 returns bUsesDayPhaseChange."
+  }
+]

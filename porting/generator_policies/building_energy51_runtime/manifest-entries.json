@@ -1,0 +1,102 @@
+[
+  {
+    "function": "UpdateCurrentEnergyLevelAttr",
+    "kind": "method",
+    "signature": "void UpdateCurrentEnergyLevelAttr(float NewEnergyLevel)",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141c529c0",
+    "inc_path": "porting/generator_policies/building_energy51_runtime/UFortBuildingEnergyComponent_UpdateCurrentEnergyLevelAttr.inc",
+    "includes": [
+      "ABuildingActor.h",
+      "AbilitySystemInterface.h",
+      "UFortAbilitySystemComponent.h",
+      "UFortBuildingEnergyComponentAttrSet.h",
+      "GameplayEffect.h",
+      "UObject/UnrealType.h"
+    ],
+    "notes": "Reflected exec 0x142854f60; conditional on complete ABuildingActor interface restoration; see HANDOFF.",
+    "class": "UFortBuildingEnergyComponent"
+  },
+  {
+    "function": "UpdateEnergyCapacityAttr",
+    "kind": "method",
+    "signature": "void UpdateEnergyCapacityAttr(float NewEnergyCapacity)",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141c52c70",
+    "inc_path": "porting/generator_policies/building_energy51_runtime/UFortBuildingEnergyComponent_UpdateEnergyCapacityAttr.inc",
+    "includes": [
+      "ABuildingActor.h",
+      "AbilitySystemInterface.h",
+      "UFortAbilitySystemComponent.h",
+      "UFortBuildingEnergyComponentAttrSet.h",
+      "GameplayEffect.h",
+      "UObject/UnrealType.h"
+    ],
+    "notes": "Reflected exec 0x142854fe0; conditional on complete ABuildingActor interface restoration; see HANDOFF.",
+    "class": "UFortBuildingEnergyComponent"
+  },
+  {
+    "function": "UpdateEnergyCostAttr",
+    "kind": "method",
+    "signature": "void UpdateEnergyCostAttr(float NewEnergyCost)",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141c52de0",
+    "inc_path": "porting/generator_policies/building_energy51_runtime/UFortBuildingEnergyComponent_UpdateEnergyCostAttr.inc",
+    "includes": [
+      "ABuildingActor.h",
+      "AbilitySystemInterface.h",
+      "UFortAbilitySystemComponent.h",
+      "UFortBuildingEnergyComponentAttrSet.h",
+      "GameplayEffect.h",
+      "UObject/UnrealType.h"
+    ],
+    "notes": "Reflected exec 0x142855060; conditional on complete ABuildingActor interface restoration; see HANDOFF.",
+    "class": "UFortBuildingEnergyComponent"
+  },
+  {
+    "function": "UpdateEnergyRechargeDelayAttr",
+    "kind": "method",
+    "signature": "void UpdateEnergyRechargeDelayAttr(float NewEnergyRechargeDelay)",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141c52f50",
+    "inc_path": "porting/generator_policies/building_energy51_runtime/UFortBuildingEnergyComponent_UpdateEnergyRechargeDelayAttr.inc",
+    "includes": [
+      "ABuildingActor.h",
+      "AbilitySystemInterface.h",
+      "UFortAbilitySystemComponent.h",
+      "UFortBuildingEnergyComponentAttrSet.h",
+      "GameplayEffect.h",
+      "UObject/UnrealType.h"
+    ],
+    "notes": "Reflected exec 0x1428550e0; conditional on complete ABuildingActor interface restoration; see HANDOFF.",
+    "class": "UFortBuildingEnergyComponent"
+  },
+  {
+    "function": "UpdateRegenRateAttr",
+    "kind": "method",
+    "signature": "void UpdateRegenRateAttr(float NewRegenRate)",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141c53940",
+    "inc_path": "porting/generator_policies/building_energy51_runtime/UFortBuildingEnergyComponent_UpdateRegenRateAttr.inc",
+    "includes": [
+      "ABuildingActor.h",
+      "AbilitySystemInterface.h",
+      "UFortAbilitySystemComponent.h",
+      "UFortBuildingEnergyComponentAttrSet.h",
+      "GameplayEffect.h",
+      "UObject/UnrealType.h"
+    ],
+    "notes": "Reflected exec 0x142855160; conditional on complete ABuildingActor interface restoration; see HANDOFF.",
+    "class": "UFortBuildingEnergyComponent"
+  }
+]

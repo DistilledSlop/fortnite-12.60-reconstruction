@@ -429,6 +429,9 @@ public:
 	bool IsAnyActiveEncounterRelevantToPlayer(AFortPlayerPawn* Player) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAnyAIRelevantToPlayer(AFortPlayerPawn* Player) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsAnyEncounterGoalWithinDistanceOfPoint(FVector& Point, float Distance, bool bOnlyActiveEncounters) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

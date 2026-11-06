@@ -1,0 +1,350 @@
+{
+  "source_image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "layout_source": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectGlobals.h",
+  "layout": "FClassParams +0x30 points to FImplementedInterfaceParams array, count at +0x44; element stride 0x10: ClassFunc +0, int32 Offset +8, bool bImplementedByK2 +0xc.",
+  "interface_class": "UFortAbilitySystemInterface",
+  "interface_block": "0x146299230",
+  "record_class_func": "0x142782100",
+  "record_class_func_resolution": "E9 rel32 jump from 0x142782100 to UFortAbilitySystemInterface static-class function 0x142782360. There are 11 absolute-pointer occurrences of 0x142782100 in the flat image; ten are the interface rows listed, and 0x14629a3a8 is a function/name registration pair, not an interface row.",
+  "parent_interface": "UAbilitySystemInterface",
+  "parent_header": "/opt/fortnite/UnrealEngine/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemInterface.h",
+  "parent_method": "virtual UAbilitySystemComponent* GetAbilitySystemComponent() const = 0",
+  "shared_fort_slot_capture": "porting/generated/native298-callees/0x14084be30.c",
+  "shared_fort_slot_contract": "Calls parent interface slot +0x10 and casts its result to UFortAbilitySystemComponent, returning null on failed cast.",
+  "scope": "All directly registered matching rows; subclasses may have their own overrides and are not exhaustively enumerated. No direct class overrides slot +0x20. The +0x10 target functions listed are separate per-class inherited ability getter implementations; their typed bodies were not recovered in this pass.",
+  "classes": [
+    {
+      "class": "ABuildingActor",
+      "block": "0x146252530",
+      "interface_record": "0x146252500",
+      "interface_class_func": "0x142782100",
+      "offset": "0x270",
+      "implemented_by_k2": false,
+      "constructor_vptr_store": "0x141b87032",
+      "interface_vtable": "0x145efc048",
+      "parent_ability_getter_slot_0x10": "0x141b9af20",
+      "fort_getter_slot_0x20": "0x14084be30"
+    },
+    {
+      "class": "AFortAIProxyActor",
+      "block": "0x1462b63b0",
+      "interface_record": "0x1462b6390",
+      "interface_class_func": "0x142782100",
+      "offset": "0x218",
+      "implemented_by_k2": false,
+      "constructor_vptr_store": "0x1425ac068",
+      "interface_vtable": "0x1461da598",
+      "parent_ability_getter_slot_0x10": "0x140d91ec0",
+      "fort_getter_slot_0x20": "0x14084be30"
+    },
+    {
+      "class": "AFortAthenaVehicle",
+      "block": "0x146331890",
+      "interface_record": "0x146331830",
+      "interface_class_func": "0x142782100",
+      "offset": "0x388",
+      "implemented_by_k2": false,
+      "constructor_vptr_store": "0x1419086c9",
+      "interface_vtable": "0x145dece20",
+      "parent_ability_getter_slot_0x10": "0x141914f10",
+      "fort_getter_slot_0x20": "0x14084be30"
+    },
+    {
+      "class": "AFortGlobalEnvironmentAbilityActor",
+      "block": "0x1463f8e80",
+      "interface_record": "0x1463f8e68",
+      "interface_class_func": "0x142782100",
+      "offset": "0x218",
+      "implemented_by_k2": false,
+      "constructor_vptr_store": "0x141613d6d",
+      "interface_vtable": "0x145d2a860",
+      "parent_ability_getter_slot_0x10": "0x140680310",
+      "fort_getter_slot_0x20": "0x14084be30"
+    },
+    {
+      "class": "AFortMissionStormSafeZone",
+      "block": "0x146462890",
+      "interface_record": "0x146462880",
+      "interface_class_func": "0x142782100",
+      "offset": "0x218",
+      "implemented_by_k2": false,
+      "constructor_vptr_store": "0x1420d260c",
+      "interface_vtable": "0x14609faa0",
+      "parent_ability_getter_slot_0x10": "0x14139b4d0",
+      "fort_getter_slot_0x20": "0x14084be30"
+    },
+    {
+      "class": "AFortPawn",
+      "block": "0x146484820",
+      "interface_record": "0x146484780",
+      "interface_class_func": "0x142782100",
+      "offset": "0x4c8",
+      "implemented_by_k2": false,
+      "constructor_vptr_store": "0x1422fcef0",
+      "interface_vtable": "0x1461167a8",
+      "parent_ability_getter_slot_0x10": "0x141a128d0",
+      "fort_getter_slot_0x20": "0x14084be30"
+    },
+    {
+      "class": "AFortPlayerAttributesProxyActor",
+      "block": "0x146499fd0",
+      "interface_record": "0x146499f90",
+      "interface_class_func": "0x142782100",
+      "offset": "0x218",
+      "implemented_by_k2": false,
+      "constructor_vptr_store": "0x1425ac227",
+      "interface_vtable": "0x1461d8db8",
+      "parent_ability_getter_slot_0x10": "0x1425bba30",
+      "fort_getter_slot_0x20": "0x14084be30"
+    },
+    {
+      "class": "AFortPlayerState",
+      "block": "0x1464d05e0",
+      "interface_record": "0x1464d05b8",
+      "interface_class_func": "0x142782100",
+      "offset": "0x320",
+      "implemented_by_k2": false,
+      "constructor_vptr_store": "0x1423fa035",
+      "interface_vtable": "0x14614bbe0",
+      "parent_ability_getter_slot_0x10": "0x142413e90",
+      "fort_getter_slot_0x20": "0x14084be30"
+    },
+    {
+      "class": "AFortUIProxyActor",
+      "block": "0x14655a390",
+      "interface_record": "0x14655a358",
+      "interface_class_func": "0x142782100",
+      "offset": "0x218",
+      "implemented_by_k2": false,
+      "constructor_vptr_store": "0x1425ddbc0",
+      "interface_vtable": "0x1461e3230",
+      "parent_ability_getter_slot_0x10": "0x1409f0710",
+      "fort_getter_slot_0x20": "0x14084be30"
+    },
+    {
+      "class": "APhysicsObject",
+      "block": "0x14659e110",
+      "interface_record": "0x14659e0e0",
+      "interface_class_func": "0x142782100",
+      "offset": "0x380",
+      "implemented_by_k2": false,
+      "constructor_vptr_store": "0x141b34816",
+      "interface_vtable": "0x145ee6d70",
+      "parent_ability_getter_slot_0x10": "0x141b46330",
+      "fort_getter_slot_0x20": "0x14084be30"
+    }
+  ],
+  "windows": [
+    {
+      "begin": "0x14084be30",
+      "length": 72,
+      "sha256": "fa4b71a9a17fd38cdbed6fda2df20bdde9e7673011b70351b551af3cbcdcf9d0"
+    },
+    {
+      "begin": "0x142782100",
+      "length": 5,
+      "sha256": "9d90858b0e71d07720229913346fd7b590a703b06d690351fefecc0d41ccfcd8"
+    },
+    {
+      "begin": "0x146252530",
+      "length": 80,
+      "sha256": "3190519792be79b3b43cd0fbb8979a6f614073ccc3b5a205ca7af5cc2f273d01"
+    },
+    {
+      "begin": "0x146252500",
+      "length": 16,
+      "sha256": "e7ea1eee556734551d2f6caf947d41765a639381217bc46fa39280eb37be8170"
+    },
+    {
+      "begin": "0x145efc048",
+      "length": 40,
+      "sha256": "93e8173e0fe89f7ec9842d9489642ab575f9e6705edd6e63771108ca6e863b1d"
+    },
+    {
+      "begin": "0x141b87032",
+      "length": 12,
+      "sha256": "3dc7aa34c4ae8ba0e5b89d03bc58f2dda767a50c6732d0d21abfad2dc8941f65"
+    },
+    {
+      "begin": "0x1462b63b0",
+      "length": 80,
+      "sha256": "260d895ef8a6bfcd86864ea5fe9d351c2cfc77d03c6f2abe5210de80feee7417"
+    },
+    {
+      "begin": "0x1462b6390",
+      "length": 16,
+      "sha256": "5cba41551a90f9fb9209733e5107b1c0bbb089d324da2dce0eebc99ffab80967"
+    },
+    {
+      "begin": "0x1461da598",
+      "length": 40,
+      "sha256": "eb2a31f93097e608d2c39dc25b16a7a8138ddbd68a6744946b58826143357bde"
+    },
+    {
+      "begin": "0x1425ac068",
+      "length": 12,
+      "sha256": "4bc54655946c292a6053ffc271ab65f9bf6a101c4a70d7c4989de198d414a52a"
+    },
+    {
+      "begin": "0x146331890",
+      "length": 80,
+      "sha256": "424efe3177e63f852f50bdeecde1a92dc02d52e30f2cc744f89064e59b693842"
+    },
+    {
+      "begin": "0x146331830",
+      "length": 16,
+      "sha256": "7f4b24bf035ee76c0aa1fe6365f842b128769d7e64a7bca46349e1c2da432812"
+    },
+    {
+      "begin": "0x145dece20",
+      "length": 40,
+      "sha256": "24850aad2fef2e7bef43416a3da07cdbc8f54c404213bdaa633855fe1fa57f11"
+    },
+    {
+      "begin": "0x1419086c9",
+      "length": 12,
+      "sha256": "182875183a648d797a91ac78016f366a11016abab5baea5457d57f0fd2bc7e0d"
+    },
+    {
+      "begin": "0x1463f8e80",
+      "length": 80,
+      "sha256": "5ff11aa08f266cf52ab0a6265cf84db6cbe186cb3b3fa3c82df7ab5315542e34"
+    },
+    {
+      "begin": "0x1463f8e68",
+      "length": 16,
+      "sha256": "5cba41551a90f9fb9209733e5107b1c0bbb089d324da2dce0eebc99ffab80967"
+    },
+    {
+      "begin": "0x145d2a860",
+      "length": 40,
+      "sha256": "525c2d694d9326b73db48591029194903109a2b2d5bdeea29a049239b6b9fe03"
+    },
+    {
+      "begin": "0x141613d6d",
+      "length": 12,
+      "sha256": "79c607f31ece84a6643e167319ea922866917ddbf2b2336b9885d40cafeb4832"
+    },
+    {
+      "begin": "0x146462890",
+      "length": 80,
+      "sha256": "23f2e9a419de6ceaa6b342fc8735016a7ea7f08f99eb5e2dbb418e0477afc474"
+    },
+    {
+      "begin": "0x146462880",
+      "length": 16,
+      "sha256": "5cba41551a90f9fb9209733e5107b1c0bbb089d324da2dce0eebc99ffab80967"
+    },
+    {
+      "begin": "0x14609faa0",
+      "length": 40,
+      "sha256": "a11403ed3465b5685afb0e52a4b87b84baa1fe9fa8b53e73fbd443007d60eb00"
+    },
+    {
+      "begin": "0x1420d260c",
+      "length": 12,
+      "sha256": "823d0c2b95879ac74316549ecc63bf864643f519f2ccfb11d720c6b342aecbaa"
+    },
+    {
+      "begin": "0x146484820",
+      "length": 80,
+      "sha256": "2e7a95fe5d904d99be144b02b9ff1e458606faaabf128e37372591147d9f2b1b"
+    },
+    {
+      "begin": "0x146484780",
+      "length": 16,
+      "sha256": "46d4622b4af967507d01fd04a8b56cd1318075b1fe4b7c6e98410a3805a922e1"
+    },
+    {
+      "begin": "0x1461167a8",
+      "length": 40,
+      "sha256": "300dd3219533c8fb685e7a2dfadca071cce5184a32ad57c43da8e8fa17398cd2"
+    },
+    {
+      "begin": "0x1422fcef0",
+      "length": 12,
+      "sha256": "8c3f03d9f20cff7d7f04ae999d6bb7ef5e9b4bc66656c040141dc1cf3c0e8e11"
+    },
+    {
+      "begin": "0x146499fd0",
+      "length": 80,
+      "sha256": "f730a80fbcac22a7ba8647d6007cc12f81b3de1d36d5f27da2b87d93e5eefd51"
+    },
+    {
+      "begin": "0x146499f90",
+      "length": 16,
+      "sha256": "5cba41551a90f9fb9209733e5107b1c0bbb089d324da2dce0eebc99ffab80967"
+    },
+    {
+      "begin": "0x1461d8db8",
+      "length": 40,
+      "sha256": "27aa93eff917ad8ab66a95754412e658153765e5709485dc8c08f93357ab8dbe"
+    },
+    {
+      "begin": "0x1425ac227",
+      "length": 12,
+      "sha256": "855d10b0aa4691a931f06427cd52eec6bda0ffce0a4a5bc6c54fd2b0c0aa5061"
+    },
+    {
+      "begin": "0x1464d05e0",
+      "length": 80,
+      "sha256": "eb25ac50ccef18cb313816856fc61240daf51c37db44cad468bbb80682fb2c92"
+    },
+    {
+      "begin": "0x1464d05b8",
+      "length": 16,
+      "sha256": "c191a6b54013722e3f328bef337633000105d582969945a129606bf83b5a9e17"
+    },
+    {
+      "begin": "0x14614bbe0",
+      "length": 40,
+      "sha256": "37d24fba8d27db85c165ce2b3f2ecaf5d415cd3e38b294f84086385ec9a57710"
+    },
+    {
+      "begin": "0x1423fa035",
+      "length": 12,
+      "sha256": "42fac19f8b47d313035c526a462ba5cdf334205f3becd3ca7fabd67ef893260e"
+    },
+    {
+      "begin": "0x14655a390",
+      "length": 80,
+      "sha256": "df7940cc577dde248a450354b2cc7b717c4b516030bf761946faa91d08590653"
+    },
+    {
+      "begin": "0x14655a358",
+      "length": 16,
+      "sha256": "5cba41551a90f9fb9209733e5107b1c0bbb089d324da2dce0eebc99ffab80967"
+    },
+    {
+      "begin": "0x1461e3230",
+      "length": 40,
+      "sha256": "37ff672a1140b15e1b55f6b657ac30d1e61701a0ef3204342985f9dbfac7aa67"
+    },
+    {
+      "begin": "0x1425ddbc0",
+      "length": 12,
+      "sha256": "509a72b9ac8b9f81024f00be265df129f650fee6830cf14e62c5428826e5778b"
+    },
+    {
+      "begin": "0x14659e110",
+      "length": 80,
+      "sha256": "e6a11fa47f8ab156b0e30eccd5ad1561b30168ee63e02dc24b6f8d9eede94975"
+    },
+    {
+      "begin": "0x14659e0e0",
+      "length": 16,
+      "sha256": "9a3fa689e6e6ea315df8ca42e6e54f3f50d5d92b4b67cfc2782937e31bc26886"
+    },
+    {
+      "begin": "0x145ee6d70",
+      "length": 40,
+      "sha256": "3154137f36384f00423893f235d6cd997db2b46d461813e65c464c310c09d41b"
+    },
+    {
+      "begin": "0x141b34816",
+      "length": 12,
+      "sha256": "ca9fb1f6cb74fb4b831a4b8f572e704414a0a3ac2746250de51a94fc324898b4"
+    }
+  ]
+}

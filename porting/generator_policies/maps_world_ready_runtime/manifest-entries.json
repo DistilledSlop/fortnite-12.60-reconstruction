@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortWorldSettings",
+    "function": "NativeRegisterActorForWorldReady",
+    "signature": "void NativeRegisterActorForWorldReady(AActor* Actor)",
+    "inc_path": "porting/behavior/AFortWorldSettings/NativeRegisterActorForWorldReady.inc",
+    "address": "0x141fcd9c0",
+    "notes": "Unconditional array append, including duplicates/null. Reflection confirms ActorsNeedingWorldReady at0x398. Registration caller and dispatch not yet integrated.",
+    "includes": [
+      "GameFramework/Actor.h"
+    ]
+  },
+  {
+    "class": "AFortWorldSettings",
+    "function": "NativeDispatchWorldReady",
+    "kind": "helper",
+    "signature": "void NativeDispatchWorldReady()",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWorldSettings/NativeDispatchWorldReady.inc",
+    "address": "0x141fbc600",
+    "includes": [
+      "GameFramework/Actor.h"
+    ],
+    "notes": "Drain actor queue in detached batches, interface pending predicate before pending-kill check, callback, then process reentrant registrations. Original driver and interface providers not yet connected."
+  }
+]

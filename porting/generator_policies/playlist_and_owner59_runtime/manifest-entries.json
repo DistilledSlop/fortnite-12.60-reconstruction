@@ -1,0 +1,55 @@
+[
+  {
+    "function": "GetPlaylistType",
+    "kind": "exec",
+    "signature": "EFortPlaylistType GetPlaylistType(UFortPlaylistAthena* Playlist)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x142a9dff0",
+    "native_body_address": "0x141a46dc0",
+    "reflection_flags": "0x4022401",
+    "static": true,
+    "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/GetPlaylistType.inc",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Tag precedence is BattleLab, Creative LTM, creative (requires bEnableCreativeMode), Playground, then default.",
+    "class": "UFortPlaylistAthenaHelper"
+  },
+  {
+    "function": "IsGamePhaseNotificationSkipped",
+    "kind": "exec",
+    "signature": "bool IsGamePhaseNotificationSkipped(UFortPlaylistAthena* Playlist, EAthenaGamePhaseStep GamePhaseToSkip)",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x142a9e450",
+    "native_body_address": "0x141a4a8e0",
+    "reflection_flags": "0x4022401",
+    "static": true,
+    "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/IsGamePhaseNotificationSkipped.inc",
+    "includes": [],
+    "notes": "Null-safe linear membership query.",
+    "class": "UFortPlaylistAthenaHelper"
+  },
+  {
+    "function": "GetOwningQuest",
+    "kind": "exec",
+    "signature": "UFortQuestItem* GetOwningQuest() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x142abf120",
+    "native_body_address": "0x142441010",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "inc_path": "porting/behavior/UFortQuestObjectiveInfo/GetOwningQuest.inc",
+    "includes": [],
+    "notes": "Casts the direct UObject outer to UFortQuestItem.",
+    "class": "UFortQuestObjectiveInfo"
+  }
+]

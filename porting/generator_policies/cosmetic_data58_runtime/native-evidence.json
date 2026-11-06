@@ -1,0 +1,102 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "windows": [
+    {
+      "begin": "0x142a9e150",
+      "length": 127,
+      "sha256": "2e22838532c0dde0bd824312ced0aa9aad0d1ac548ebac5ade7537de8d2e703c",
+      "label": "HasCreativeTag exec"
+    },
+    {
+      "begin": "0x141a49590",
+      "length": 224,
+      "sha256": "9b5e1d7b82c90a0d3dd91e47ea8ededfd2513515afe9f5d76c3512b213babe5e",
+      "label": "HasCreativeTag native body"
+    },
+    {
+      "begin": "0x142a9e1d0",
+      "length": 127,
+      "sha256": "725b5f1f9e5fa13ed87574a21e2f5b1c3139f0ff9486e0dc28c90dc2ff2e2eee",
+      "label": "IsBattleLabModePlaylist exec"
+    },
+    {
+      "begin": "0x141a4a300",
+      "length": 220,
+      "sha256": "56df69f6481046b3ddd4ca7e9fc10357d29fd623aaa915a92f6e4ee8aebaf564",
+      "label": "IsBattleLabModePlaylist native body"
+    },
+    {
+      "begin": "0x142a9e250",
+      "length": 127,
+      "sha256": "e3259e339c683d916ac7249ba32d83daf52a7d768faf249d3dad6a7834542673",
+      "label": "IsCreativeLTMPlaylist exec"
+    },
+    {
+      "begin": "0x141a4a530",
+      "length": 220,
+      "sha256": "ff9ecf065ef86bee4a9d5d3b10191691cd2a7f0be7b61b75ecabbaea8375b671",
+      "label": "IsCreativeLTMPlaylist native body"
+    },
+    {
+      "begin": "0x142a9e2d0",
+      "length": 127,
+      "sha256": "3bd4684d91b5126f453099482c612d1eef1939407c4f0d03f2b2566eb12bab43",
+      "label": "IsCreativeMMPlaylist exec"
+    },
+    {
+      "begin": "0x141a4a610",
+      "length": 220,
+      "sha256": "3e062a81b2f81d8e03f0965785f860aa921901c70096584c8358ddedd32e2c2b",
+      "label": "IsCreativeMMPlaylist native body"
+    },
+    {
+      "begin": "0x142a9e350",
+      "length": 127,
+      "sha256": "a04398b17aff5fb7a0dffd9dcbd44e97f759f82db0d2356a96c1d95120f890ba",
+      "label": "IsCreativeModePlaylist exec"
+    },
+    {
+      "begin": "0x141a4a6f0",
+      "length": 229,
+      "sha256": "988966b5867873fe142912e8049f78e6f3ba5bbf45f81bd16a118c02ad0c8ee9",
+      "label": "IsCreativeModePlaylist native body"
+    },
+    {
+      "begin": "0x142a9e3d0",
+      "length": 127,
+      "sha256": "c4d9b5ee884096e2dac1676c7efc1f89f69d08e87adafcb369de7e9a3433d808",
+      "label": "IsCreativeUtilitySpawningAllowedPlaylist exec"
+    },
+    {
+      "begin": "0x141a4a7e0",
+      "length": 220,
+      "sha256": "2603ab11b69fe75ecf5a8891dca7599b65b54e7e3c53f5f796e2e9019cc5c164",
+      "label": "IsCreativeUtilitySpawningAllowedPlaylist native body"
+    },
+    {
+      "begin": "0x142a9e510",
+      "length": 127,
+      "sha256": "067bcaedcefbfea8f96f660889bbe6f8f167b3748441a20ef3d8220324318ca9",
+      "label": "IsLargePreviewDisabledOnMobile exec"
+    },
+    {
+      "begin": "0x141a4ad90",
+      "length": 220,
+      "sha256": "1ef679a9642ccaa3fd8316607041cb44df70ccf05328d0cfe924bde0c09905e4",
+      "label": "IsLargePreviewDisabledOnMobile native body"
+    },
+    {
+      "begin": "0x142a9e590",
+      "length": 127,
+      "sha256": "1ce3541441d27d91890b7e019c6a70ee0a3e3c2dfd503080a5d09333ba92d9ee",
+      "label": "IsPlaygroundModePlaylist exec"
+    },
+    {
+      "begin": "0x141a4b0d0",
+      "length": 220,
+      "sha256": "12c90b70ad6b30988979c726a46f692751d938638afe556b44717bf417946a1f",
+      "label": "IsPlaygroundModePlaylist native body"
+    }
+  ]
+}

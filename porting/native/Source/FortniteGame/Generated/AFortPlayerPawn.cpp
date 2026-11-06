@@ -4,6 +4,7 @@
 #include "AFortPlayerCharm.h"
 #include "AFortPlayerController.h"
 #include "AFortPlayerState.h"
+#include "AFortPlayerStateZone.h"
 #include "EFortCustomMovement.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
@@ -1530,6 +1531,38 @@ bool AFortPlayerPawn::NativeIsLocalPlayer() const
 {
 	// CONFIDENCE: HIGH
 	return bIsLocalPlayer;
+}
+
+uint8 AFortPlayerPawn::NativeGetTeam163()
+{
+	// CONFIDENCE: high
+	// Original address: 0x1423253f0
+	// 0x1423253f0, IFortTeamActorInterface byte slot 0x28.
+	AFortPlayerStateZone* State = Cast<AFortPlayerStateZone>(PlayerState);
+	uint8 Result = State ? State->NativeGetTeam163() : 1;
+	if (ControlledRCPawn.IsValid())
+	{
+	    Result = static_cast<uint8>(CachedTeamControllingRC);
+	}
+	IFortVehicleInterface* Vehicle = NativeGetVehicleInterface163();
+	if (!State && Vehicle)
+	{
+	    // The original explicitly zeroes EDX before this virtual call.
+	    AFortPlayerStateZone* VehicleState = Vehicle->NativeGetPlayerStateForPawn163(nullptr);
+	    if (VehicleState)
+	    {
+	        Result = VehicleState->NativeGetTeam163();
+	    }
+	}
+	return Result == 0 ? 1 : Result;
+}
+
+IFortVehicleInterface* AFortPlayerPawn::NativeGetVehicleInterface163()
+{
+	// CONFIDENCE: high
+	// Original address: 0x1423256c0
+	// 0x1423256c0, primary-vtable byte offset 0x1088.
+	return VehicleStateLocal.Vehicle ? Cast<IFortVehicleInterface>(VehicleStateLocal.Vehicle) : nullptr;
 }
 
 void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

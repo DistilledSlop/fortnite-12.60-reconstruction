@@ -1,0 +1,26 @@
+[
+  {
+    "function": "SendPhysicsBallHitToServer_Implementation",
+    "kind": "impl",
+    "signature": "void SendPhysicsBallHitToServer_Implementation(APhysicsObject* PhysicsObject, float ClientPing, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/AFortPlayerControllerAthena/SendPhysicsBallHitToServer_Implementation.inc",
+    "address": "0x1406801c0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original folded native stub; six-argument RPC signature restored from reflected parameter offsets.",
+    "class": "AFortPlayerControllerAthena"
+  },
+  {
+    "function": "SendPhysicsBallHitToServer_Validate",
+    "kind": "validate",
+    "signature": "bool SendPhysicsBallHitToServer_Validate(APhysicsObject* PhysicsObject, float ClientPing, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/AFortPlayerControllerAthena/SendPhysicsBallHitToServer_Validate.inc",
+    "address": "0x1406801d0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original folded native stub; six-argument RPC signature restored from reflected parameter offsets.",
+    "class": "AFortPlayerControllerAthena"
+  }
+]

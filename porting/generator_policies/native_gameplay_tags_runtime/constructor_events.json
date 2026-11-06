@@ -1,0 +1,8287 @@
+[
+  {
+    "kind": "tag",
+    "call": "0x141ebe687",
+    "offset": "0x0",
+    "literal_va": "0x146009b30",
+    "name": "Event.Control.FullBodyHit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe6a2",
+    "offset": "0x8",
+    "literal_va": "0x146009b50",
+    "name": "Event.Control.Knockback"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe6bd",
+    "offset": "0x10",
+    "literal_va": "0x146009b68",
+    "name": "Event.Control.Stun"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe6d8",
+    "offset": "0x18",
+    "literal_va": "0x146009b80",
+    "name": "Event.Damage.Dealt"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe6f3",
+    "offset": "0x20",
+    "literal_va": "0x146009b98",
+    "name": "Event.Damage.Dealt.Weakspot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe70e",
+    "offset": "0x28",
+    "literal_va": "0x146009bb8",
+    "name": "Event.Damage.Dealt.Shield"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe729",
+    "offset": "0x30",
+    "literal_va": "0x146009bd8",
+    "name": "Event.Damage.Dealt.Shield.Destroyed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe744",
+    "offset": "0x38",
+    "literal_va": "0x146009c00",
+    "name": "Event.Damage.Dealt.OwnedObject"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe75f",
+    "offset": "0x40",
+    "literal_va": "0x146009c20",
+    "name": "Event.Damage.Dealt.Weakspot.OwnedObject"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe77a",
+    "offset": "0x48",
+    "literal_va": "0x146009c48",
+    "name": "Event.Damage.Dealt.Shield.OwnedObject"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe795",
+    "offset": "0x50",
+    "literal_va": "0x146009c70",
+    "name": "Event.Damage.Dealt.Shield.Destroyed.OwnedObject"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe7b0",
+    "offset": "0x58",
+    "literal_va": "0x146009ca0",
+    "name": "Event.Damage.Received"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe7cb",
+    "offset": "0x60",
+    "literal_va": "0x146009cb8",
+    "name": "Event.Damage.Received.Falling"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe7e6",
+    "offset": "0x68",
+    "literal_va": "0x146009cd8",
+    "name": "Event.Damage.Received.Disable.Hit.Sfx"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe801",
+    "offset": "0x70",
+    "literal_va": "0x146009d00",
+    "name": "Event.Damage.Died"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe81c",
+    "offset": "0x78",
+    "literal_va": "0x146009d18",
+    "name": "Event.Damage.DiedAthena"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe83a",
+    "offset": "0x88",
+    "literal_va": "0x146009d30",
+    "name": "Event.Damage.DBNOTimeout"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe858",
+    "offset": "0x90",
+    "literal_va": "0x146009d50",
+    "name": "Event.Damage.Killed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe876",
+    "offset": "0x98",
+    "literal_va": "0x146009d68",
+    "name": "Event.Damage.Killed.OwnedObject"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe894",
+    "offset": "0xa0",
+    "literal_va": "0x146009d88",
+    "name": "Event.Damage.Received.StormSurge"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe8b2",
+    "offset": "0x80",
+    "literal_va": "0x146009db0",
+    "name": "Event.Athena.Player.Died"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe8d0",
+    "offset": "0xa8",
+    "literal_va": "0x146009dd0",
+    "name": "Event.ForcePawnGameplayCleanup"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe8ee",
+    "offset": "0xb0",
+    "literal_va": "0x146009df0",
+    "name": "Event.EarnedElimination"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe90c",
+    "offset": "0xb8",
+    "literal_va": "0x146009e08",
+    "name": "Event.EliminationAssist"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe92a",
+    "offset": "0xc0",
+    "literal_va": "0x146009e20",
+    "name": "Event.Resurrected"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe948",
+    "offset": "0xc8",
+    "literal_va": "0x146009e38",
+    "name": "Event.RevivedAthena"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe966",
+    "offset": "0xd0",
+    "literal_va": "0x146009e50",
+    "name": "Event.Jump.Pressed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe984",
+    "offset": "0xd8",
+    "literal_va": "0x146009e68",
+    "name": "Event.JumpPressed.InAir"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe9a2",
+    "offset": "0xe0",
+    "literal_va": "0x146009e80",
+    "name": "Event.JumpReleased"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe9c0",
+    "offset": "0xe8",
+    "literal_va": "0x146009e98",
+    "name": "Event.PlaceHeldObject"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe9de",
+    "offset": "0xf0",
+    "literal_va": "0x146009eb0",
+    "name": "Event.Primary.Pressed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebe9fc",
+    "offset": "0xf8",
+    "literal_va": "0x146009ec8",
+    "name": "Event.Primary.Released"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebea1a",
+    "offset": "0x100",
+    "literal_va": "0x146009ee0",
+    "name": "Event.Secondary.Pressed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebea38",
+    "offset": "0x108",
+    "literal_va": "0x146009ef8",
+    "name": "Event.Secondary.Released"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebea56",
+    "offset": "0x110",
+    "literal_va": "0x146009f18",
+    "name": "Event.Use.Pressed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebea74",
+    "offset": "0x120",
+    "literal_va": "0x146009f30",
+    "name": "Event.Started.Falling"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebea92",
+    "offset": "0x128",
+    "literal_va": "0x146009f48",
+    "name": "Event.IsUsingJetpack"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeab0",
+    "offset": "0x130",
+    "literal_va": "0x146009f60",
+    "name": "Event.Jetpack.Equipped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeace",
+    "offset": "0x138",
+    "literal_va": "0x146009f78",
+    "name": "Event.MedicPack.Equipped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeaec",
+    "offset": "0x140",
+    "literal_va": "0x146009f98",
+    "name": "Event.IsUsingRemoteControlPawn"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeb0a",
+    "offset": "0x148",
+    "literal_va": "0x146009fb8",
+    "name": "Event.Physics.Landed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeb28",
+    "offset": "0x150",
+    "literal_va": "0x146009fd0",
+    "name": "Event.Damage.Shielded"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeb46",
+    "offset": "0x158",
+    "literal_va": "0x146009fe8",
+    "name": "Event.Shield.Destroyed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeb64",
+    "offset": "0x160",
+    "literal_va": "0x14600a000",
+    "name": "Event.Weapons.WeaponSwitch"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeb82",
+    "offset": "0x168",
+    "literal_va": "0x14600a020",
+    "name": "Event.Weapons.Reload"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeba0",
+    "offset": "0x170",
+    "literal_va": "0x14600a038",
+    "name": "Event.Weapons.Fired"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebebbe",
+    "offset": "0x180",
+    "literal_va": "0x14600a050",
+    "name": "Event.Weapons.OnHit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebebdc",
+    "offset": "0x188",
+    "literal_va": "0x14600a068",
+    "name": "Athena.Event.Gameplay.EmptyHands"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebebfa",
+    "offset": "0x178",
+    "literal_va": "0x14600a090",
+    "name": "Event.Weapons.FiredProjectile"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebec18",
+    "offset": "0x190",
+    "literal_va": "0x14600a0b0",
+    "name": "Event.Aircraft.Exited"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebec36",
+    "offset": "0x198",
+    "literal_va": "0x14600a0c8",
+    "name": "Event.Parachute.Open"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebec54",
+    "offset": "0x1a0",
+    "literal_va": "0x14600a0e0",
+    "name": "Event.SkydiveEnded"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebec72",
+    "offset": "0x1a8",
+    "literal_va": "0x14600a0f8",
+    "name": "Event.SkydiveEnded.FromBus"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebec90",
+    "offset": "0x1b0",
+    "literal_va": "0x14600a118",
+    "name": "Event.DBNOAthena"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebecae",
+    "offset": "0x1b8",
+    "literal_va": "0x14600a130",
+    "name": "Event.Jetpack.Alternate.Execute.OnPress"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeccc",
+    "offset": "0x1c0",
+    "literal_va": "0x14600a158",
+    "name": "Event.Jetpack.Alternate.Execute.OnRelease"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebecea",
+    "offset": "0x1c8",
+    "literal_va": "0x14600a188",
+    "name": "Event.Used.LaunchPad"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebed08",
+    "offset": "0x1d0",
+    "literal_va": "0x14600a1a0",
+    "name": "Event.Item.Dropped.Manually"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebed26",
+    "offset": "0x1d8",
+    "literal_va": "0x14600a1c0",
+    "name": "Event.Item.Dropped.AthenaOverflow"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebed44",
+    "offset": "0x1e0",
+    "literal_va": "0x14600a1e8",
+    "name": "Event.Weapon.Fired.RCPawn"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebed62",
+    "offset": "0x1e8",
+    "literal_va": "0x14600a208",
+    "name": "Event.ProjectilePickup"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebed80",
+    "offset": "0x1f0",
+    "literal_va": "0x14600a220",
+    "name": "Event.SurfaceType.Changed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebed9e",
+    "offset": "0x1f8",
+    "literal_va": "0x14600a240",
+    "name": "Event.Vehicle.SurfaceType.Changed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebedbc",
+    "offset": "0x200",
+    "literal_va": "0x14600a268",
+    "name": "Event.Crouch.Pressed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebedda",
+    "offset": "0x208",
+    "literal_va": "0x14600a280",
+    "name": "Event.Crouch.Pressed.InAir"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebedf8",
+    "offset": "0x210",
+    "literal_va": "0x14600a2a0",
+    "name": "Event.Interact.Completed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebee16",
+    "offset": "0x218",
+    "literal_va": "0x14600a2c0",
+    "name": "Event.Door.Slammed.Open.Instigator"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebee34",
+    "offset": "0x220",
+    "literal_va": "0x14600a2e8",
+    "name": "Event.Door.Slammed.Open.Victim"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebee52",
+    "offset": "0x228",
+    "literal_va": "0x14600a308",
+    "name": "Event.Contextual.EvaluateAdditionalRelevantTags"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebee70",
+    "offset": "0x230",
+    "literal_va": "0x14600a338",
+    "name": "Event.LTM.OnNewRound"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebee8e",
+    "offset": "0x118",
+    "literal_va": "0x14600a350",
+    "name": "Event.TouchConsumableThrown"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeeac",
+    "offset": "0x238",
+    "literal_va": "0x14600a370",
+    "name": "GameplayCue.Abilities.Carmine.Jump.Charge"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeec3",
+    "offset": "0x1548",
+    "literal_va": "0x14600a3a0",
+    "name": "GameplayCue.StormShield.Edge"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeee1",
+    "offset": "0x240",
+    "literal_va": "0x14600a3c0",
+    "name": "GameplayCue.Damage"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebeeff",
+    "offset": "0x248",
+    "literal_va": "0x14600a3d8",
+    "name": "GameplayCue.Damage.Shielded"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebef1d",
+    "offset": "0x250",
+    "literal_va": "0x14600a3f8",
+    "name": "GameplayCue.Impact"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebef3b",
+    "offset": "0x258",
+    "literal_va": "0x14600a410",
+    "name": "GameplayCue.VehicleImpact"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebef59",
+    "offset": "0x260",
+    "literal_va": "0x14600a430",
+    "name": "GameplayCue.Abilities.Applied"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebef77",
+    "offset": "0x268",
+    "literal_va": "0x14600a450",
+    "name": "GameplayCue.InstantDeath"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebef95",
+    "offset": "0x270",
+    "literal_va": "0x14600a470",
+    "name": "GameplayCue.Weapons.ChargeUp"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebefb3",
+    "offset": "0x278",
+    "literal_va": "0x14600a490",
+    "name": "GameplayCue.Healing"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebefd1",
+    "offset": "0x280",
+    "literal_va": "0x14600a4a8",
+    "name": "GameplayCue.Shield.Destroyed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebefef",
+    "offset": "0x288",
+    "literal_va": "0x14600a4c8",
+    "name": "GameplayCue.Shield.FullyCharged"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf00d",
+    "offset": "0x290",
+    "literal_va": "0x14600a4e8",
+    "name": "GameplayCue.Shield.Reapplied"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf02b",
+    "offset": "0x298",
+    "literal_va": "0x14600a508",
+    "name": "GameplayCue.Shield.PotionConsumed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf049",
+    "offset": "0x2a0",
+    "literal_va": "0x14600a530",
+    "name": "GameplayCue.Athena.Applied.Item.Bush"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf065",
+    "offset": "0x2a8",
+    "literal_va": "0x14600a558",
+    "name": "GameplayCue.Athena.IceFeet"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf07e",
+    "offset": "0x2b0",
+    "literal_va": "0x14600a578",
+    "name": "Gameplay.Status.IcyFeet"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf09c",
+    "offset": "0x2b8",
+    "literal_va": "0x14600a590",
+    "name": "Gameplay.Status.IcyFeet.Grenade"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf0b5",
+    "offset": "0x2c0",
+    "literal_va": "0x14600a5b0",
+    "name": "GameplayCue.Athena.OilSlickFeet"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf0ce",
+    "offset": "0x2c8",
+    "literal_va": "0x14600a5d0",
+    "name": "Gameplay.Creative.Grind.GrindyFeet"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf0ec",
+    "offset": "0x2d0",
+    "literal_va": "0x14600a5f8",
+    "name": "Gameplay.Status.HotFeet"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf10a",
+    "offset": "0x2d8",
+    "literal_va": "0x14600a610",
+    "name": "Animation.CharacterParts.Swapping"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf128",
+    "offset": "0x2e0",
+    "literal_va": "0x14600a638",
+    "name": "Granted.Athena.Item.DogSweater.InDamageZone"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf146",
+    "offset": "0x2e8",
+    "literal_va": "0x14600a668",
+    "name": "Granted.HeldObject.Held"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf164",
+    "offset": "0x2f0",
+    "literal_va": "0x14600a680",
+    "name": "Granted.HCChallenge.Beacon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf182",
+    "offset": "0x2f8",
+    "literal_va": "0x14600a6a0",
+    "name": "DamageDone.Total"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf1a0",
+    "offset": "0x300",
+    "literal_va": "0x14600a6b8",
+    "name": "DamageDone.Player"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf1be",
+    "offset": "0x308",
+    "literal_va": "0x14600a6d0",
+    "name": "DamageDone.AI"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf1dc",
+    "offset": "0x310",
+    "literal_va": "0x14600a6e0",
+    "name": "DamageDone.PlayerWithDiamond"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf1fa",
+    "offset": "0x318",
+    "literal_va": "0x14600a700",
+    "name": "DamageDone.Building"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf218",
+    "offset": "0x320",
+    "literal_va": "0x14600a718",
+    "name": "DamageDone.Vehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf236",
+    "offset": "0x328",
+    "literal_va": "0x14600a730",
+    "name": "DamageDone.Above"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf254",
+    "offset": "0x330",
+    "literal_va": "0x14600a748",
+    "name": "DamageDone.Below"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf272",
+    "offset": "0x338",
+    "literal_va": "0x14600a760",
+    "name": "Gameplay.DamageSource.Ability"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf290",
+    "offset": "0x340",
+    "literal_va": "0x14600a780",
+    "name": "Gameplay.Damage"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf2ae",
+    "offset": "0x348",
+    "literal_va": "0x14600a790",
+    "name": "Gameplay.Damage.Critical"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf2cc",
+    "offset": "0x350",
+    "literal_va": "0x14600a7b0",
+    "name": "Gameplay.Damage.Environment"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf2ea",
+    "offset": "0x358",
+    "literal_va": "0x14600a7d0",
+    "name": "Gameplay.Damage.Environment.Falling"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf308",
+    "offset": "0x360",
+    "literal_va": "0x14600a7f8",
+    "name": "Gameplay.Damage.OutsideSafeZone"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf326",
+    "offset": "0x368",
+    "literal_va": "0x14600a818",
+    "name": "Gameplay.Damage.DBNOBleedOut"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf344",
+    "offset": "0x378",
+    "literal_va": "0x14600a838",
+    "name": "Gameplay.Damage.LootOnDestroy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf362",
+    "offset": "0x380",
+    "literal_va": "0x14600a858",
+    "name": "Gameplay.Damage.TeamSwitchSuicide"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf380",
+    "offset": "0x388",
+    "literal_va": "0x14600a880",
+    "name": "Gameplay.Damage.MinigameClassSlotSwitchSuicide"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf39e",
+    "offset": "0x390",
+    "literal_va": "0x14600a8b0",
+    "name": "Gameplay.Damage.Elemental"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf3bc",
+    "offset": "0x398",
+    "literal_va": "0x14600a8d0",
+    "name": "Gameplay.Damage.Elemental.Lightning"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf3da",
+    "offset": "0x3a0",
+    "literal_va": "0x14600a8f8",
+    "name": "Gameplay.Damage.Elemental.Fire"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf3f8",
+    "offset": "0x3a8",
+    "literal_va": "0x14600a918",
+    "name": "Gameplay.Damage.Elemental.Ice"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf416",
+    "offset": "0x3b0",
+    "literal_va": "0x14600a938",
+    "name": "Gameplay.Damage.Vehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf434",
+    "offset": "0x370",
+    "literal_va": "0x14600a950",
+    "name": "Gameplay.Damage.Physical.Explosive"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf452",
+    "offset": "0x3b8",
+    "literal_va": "0x14600a978",
+    "name": "Gameplay.Damage.Environment.Cube"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf470",
+    "offset": "0x3c0",
+    "literal_va": "0x14600a9a0",
+    "name": "Gameplay.Damage.Environment.StormSurge"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf48e",
+    "offset": "0x3c8",
+    "literal_va": "0x14600a9c8",
+    "name": "Gameplay.Damage.EliminationZone"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf4ac",
+    "offset": "0x3d0",
+    "literal_va": "0x14600a9e8",
+    "name": "Gameplay.Damage.IgnoreShields"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf4ca",
+    "offset": "0x3d8",
+    "literal_va": "0x14600aa08",
+    "name": "Gameplay.Damage.AttachedProjectile"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf4e8",
+    "offset": "0x408",
+    "literal_va": "0x14600aa30",
+    "name": "Gameplay.Damage.IgnoreEnvironmentDamageMutator"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf506",
+    "offset": "0x3e0",
+    "literal_va": "0x14600aa60",
+    "name": "Gameplay.Damage.NeverBlockDamage"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf524",
+    "offset": "0x3e8",
+    "literal_va": "0x14600aa88",
+    "name": "Gameplay.Damage.HeadshotRequiredToKill"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf542",
+    "offset": "0x3f0",
+    "literal_va": "0x14600aab0",
+    "name": "Gameplay.DamageDone.Headshot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf560",
+    "offset": "0x3f8",
+    "literal_va": "0x14600aad0",
+    "name": "Gameplay.DamageDone.Blindshot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf57e",
+    "offset": "0x400",
+    "literal_va": "0x14600aaf0",
+    "name": "Gameplay.DamageDone.Deadshot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf59c",
+    "offset": "0x410",
+    "literal_va": "0x14600ab10",
+    "name": "Gameplay.Effect.InstantDeath"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf5b8",
+    "offset": "0x418",
+    "literal_va": "0x14600ab30",
+    "name": "Gameplay.Effect.InstantDeath.Environment"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf5d6",
+    "offset": "0x420",
+    "literal_va": "0x14600ab60",
+    "name": "Gameplay.Effect.InstantDeath.Environment.FellOutOfWorld"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf5f4",
+    "offset": "0x428",
+    "literal_va": "0x14600ab98",
+    "name": "Gameplay.Effect.InstantDeath.Environment.UnderLandscape"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf612",
+    "offset": "0x430",
+    "literal_va": "0x14600abd0",
+    "name": "Gameplay.Effect.InstantDeath.PersistentUpdate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf630",
+    "offset": "0x438",
+    "literal_va": "0x14600ac00",
+    "name": "Gameplay.Effect.InstantDeath.StructuralSupport"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf64c",
+    "offset": "0x440",
+    "literal_va": "0x14600ac30",
+    "name": "Gameplay.Effect.InstantDeath.Silent"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf66a",
+    "offset": "0x448",
+    "literal_va": "0x14600ac58",
+    "name": "Gameplay.Effect.InstantDeath.Silent.SwitchingToSpectate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf686",
+    "offset": "0x450",
+    "literal_va": "0x14600ac90",
+    "name": "Gameplay.Effect.InstantDeath.OnWin"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf6a4",
+    "offset": "0x458",
+    "literal_va": "0x14600acb8",
+    "name": "Gameplay.Effect.InstantDeath.Culled"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf6c2",
+    "offset": "0x460",
+    "literal_va": "0x14600ace0",
+    "name": "Gameplay.Effect.InstantDeath.Detachment"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf6e0",
+    "offset": "0x468",
+    "literal_va": "0x14600ad08",
+    "name": "Gameplay.Effect.InstantDeath.SilentDetachment"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf6fe",
+    "offset": "0x470",
+    "literal_va": "0x14600ad38",
+    "name": "Gameplay.Effect.GenerateWeakSpots"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf71c",
+    "offset": "0x478",
+    "literal_va": "0x14600ad60",
+    "name": "Gameplay.Effect.HarvestResources"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf73a",
+    "offset": "0x480",
+    "literal_va": "0x14600ad88",
+    "name": "Gameplay.Effect.NoThreat"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf758",
+    "offset": "0x488",
+    "literal_va": "0x14600ada8",
+    "name": "Gameplay.Effect.PersistOnDeath"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf776",
+    "offset": "0x490",
+    "literal_va": "0x14600adc8",
+    "name": "Gameplay.Effect.Building.Create"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf794",
+    "offset": "0x498",
+    "literal_va": "0x14600ade8",
+    "name": "Gameplay.Effect.Building.Repair"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf7b2",
+    "offset": "0x4a0",
+    "literal_va": "0x14600ae08",
+    "name": "Gameplay.Effect.Building.TemporaryBuildBuff"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf7d0",
+    "offset": "0x4a8",
+    "literal_va": "0x14600ae38",
+    "name": "Gameplay.Effect.Building.TemporaryRepairBuff"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf7ee",
+    "offset": "0x4b0",
+    "literal_va": "0x14600ae68",
+    "name": "Gameplay.Effect.Trap.Create"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf80c",
+    "offset": "0x4b8",
+    "literal_va": "0x14600ae88",
+    "name": "Gameplay.Effect.Trap.Activate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf82a",
+    "offset": "0x4c0",
+    "literal_va": "0x14600aea8",
+    "name": "Gameplay.Effect.Trap.EndOverlapActivate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf848",
+    "offset": "0x4c8",
+    "literal_va": "0x14600aed0",
+    "name": "Abilities.Traps.Cooldown"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf866",
+    "offset": "0x4d0",
+    "literal_va": "0x14600aef0",
+    "name": "Gameplay.Application.Hit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf884",
+    "offset": "0x4d8",
+    "literal_va": "0x14600af10",
+    "name": "Gameplay.Application.Explode"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf8a2",
+    "offset": "0x4e0",
+    "literal_va": "0x14600af30",
+    "name": "Gameplay.Application.Explode.Additonal"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf8c0",
+    "offset": "0x4e8",
+    "literal_va": "0x14600af58",
+    "name": "Gameplay.ScoreActor.Coin.Bronze"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf8de",
+    "offset": "0x4f0",
+    "literal_va": "0x14600af78",
+    "name": "Gameplay.ScoreActor.Coin.Silver"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf8fc",
+    "offset": "0x4f8",
+    "literal_va": "0x14600af98",
+    "name": "Gameplay.ScoreActor.Coin.Gold"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf91a",
+    "offset": "0x500",
+    "literal_va": "0x14600afb8",
+    "name": "Gameplay.Status.FullBodyHit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf938",
+    "offset": "0x508",
+    "literal_va": "0x14600afd8",
+    "name": "Gameplay.Status.Stun"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf956",
+    "offset": "0x510",
+    "literal_va": "0x14600aff0",
+    "name": "Gameplay.Status.Hidden"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf974",
+    "offset": "0x518",
+    "literal_va": "0x14600b008",
+    "name": "Gameplay.Status.DBNOBeingRevived"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf992",
+    "offset": "0x520",
+    "literal_va": "0x14600b030",
+    "name": "Gameplay.Status.DBNOBeingCarried"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf9b0",
+    "offset": "0x528",
+    "literal_va": "0x14600b058",
+    "name": "Gameplay.Status.DBNOBeingDropped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf9ce",
+    "offset": "0x530",
+    "literal_va": "0x14600b080",
+    "name": "Gameplay.Status.BeingInterrogated"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebf9ec",
+    "offset": "0x538",
+    "literal_va": "0x14600b0a8",
+    "name": "Gameplay.Status.InterrogationCooldown"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfa0a",
+    "offset": "0x540",
+    "literal_va": "0x14600b0d0",
+    "name": "Gameplay.Status.HealthRegenBlocked"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfa28",
+    "offset": "0x548",
+    "literal_va": "0x14600b0f8",
+    "name": "Gameplay.Status.ShieldRegenBlocked"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfa46",
+    "offset": "0x550",
+    "literal_va": "0x14600b120",
+    "name": "Gameplay.Status.ImmuneFallingDamage"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfa64",
+    "offset": "0x558",
+    "literal_va": "0x14600b148",
+    "name": "Gameplay.Status.StatusHasPrimaryAbility"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfa82",
+    "offset": "0x560",
+    "literal_va": "0x14600b170",
+    "name": "Gameplay.Status.HasSecondaryAbility"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfaa0",
+    "offset": "0x568",
+    "literal_va": "0x14600b198",
+    "name": "Gameplay.Status.AutoPickupOnlyBuildingResources"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfabe",
+    "offset": "0x570",
+    "literal_va": "0x14600b1c8",
+    "name": "Gameplay.Status.AutoPickupDisabled"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfadc",
+    "offset": "0x578",
+    "literal_va": "0x14600b1f0",
+    "name": "Gameplay.Status.DisablePickup.Ammo"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfafa",
+    "offset": "0x580",
+    "literal_va": "0x14600b218",
+    "name": "Gameplay.Status.DisablePickup.Weapons"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfb18",
+    "offset": "0x588",
+    "literal_va": "0x14600b240",
+    "name": "Gameplay.Status.DisablePickup.Gadgets"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfb36",
+    "offset": "0x590",
+    "literal_va": "0x14600b268",
+    "name": "Gameplay.Status.DisablePickup.BuildingResources"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfb54",
+    "offset": "0x598",
+    "literal_va": "0x14600b298",
+    "name": "Gameplay.Status.DisablePickup.Traps"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfb72",
+    "offset": "0x5a0",
+    "literal_va": "0x14600b2c0",
+    "name": "Abilities.Generic.GenericProjectile.Explode"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfb90",
+    "offset": "0x5a8",
+    "literal_va": "0x14600b2ec",
+    "name": "Trap"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfbae",
+    "offset": "0x5b0",
+    "literal_va": "0x14600b2f8",
+    "name": "Trap.Floor"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfbcc",
+    "offset": "0x5b8",
+    "literal_va": "0x14600b308",
+    "name": "Trap.Wall"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfbea",
+    "offset": "0x5c0",
+    "literal_va": "0x14600b318",
+    "name": "Trap.Ceiling"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfc08",
+    "offset": "0x5c8",
+    "literal_va": "0x14600b328",
+    "name": "Gameplay.Status.TrapImmune.Floor"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfc26",
+    "offset": "0x5d0",
+    "literal_va": "0x14600b350",
+    "name": "Gameplay.Status.TrapImmune.Wall"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfc44",
+    "offset": "0x5d8",
+    "literal_va": "0x14600b370",
+    "name": "Gameplay.Status.TrapImmune.Ceiling"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfc62",
+    "offset": "0x5e8",
+    "literal_va": "0x14600b398",
+    "name": "Trap.Type.LimitedPeriod"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfc80",
+    "offset": "0x5e0",
+    "literal_va": "0x14600b3b0",
+    "name": "Trap.Type.Triggered"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfc9e",
+    "offset": "0x5f0",
+    "literal_va": "0x14600b3c8",
+    "name": "Trap.IgnoreInteractBuildCheck"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfcbc",
+    "offset": "0x5f8",
+    "literal_va": "0x14600b3e8",
+    "name": "Trap.ExtraPiece.Cost.Ignore"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfcda",
+    "offset": "0x600",
+    "literal_va": "0x14600b408",
+    "name": "Trap.Building.Validity.Ignore"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfcf8",
+    "offset": "0x608",
+    "literal_va": "0x14600b428",
+    "name": "Atena.Faction"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfd16",
+    "offset": "0x610",
+    "literal_va": "0x14600b438",
+    "name": "Athena.Faction.Alter"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfd34",
+    "offset": "0x618",
+    "literal_va": "0x14600b450",
+    "name": "Athena.Faction.Ego"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfd52",
+    "offset": "0x620",
+    "literal_va": "0x14600b468",
+    "name": "GameplayCue.Abilities.Activation.Traps.DelayBegin"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfd70",
+    "offset": "0x628",
+    "literal_va": "0x14600b4a0",
+    "name": "GameplayCue.Abilities.Activation.Traps.ActivateTrap"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfd8e",
+    "offset": "0x630",
+    "literal_va": "0x14600b4d8",
+    "name": "GameplayCue.Abilities.Activation.Traps.ReloadBegin"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfdac",
+    "offset": "0x638",
+    "literal_va": "0x14600b510",
+    "name": "Gameplay.Status.IsTargeting"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfdca",
+    "offset": "0x640",
+    "literal_va": "0x14600b530",
+    "name": "TargetFilter.ExcludeFromWorldObstruction"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfde8",
+    "offset": "0x648",
+    "literal_va": "0x14600b560",
+    "name": "Gameplay.Action"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfe06",
+    "offset": "0x650",
+    "literal_va": "0x14600b570",
+    "name": "Gameplay.Action.Meta.Initial"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfe24",
+    "offset": "0x658",
+    "literal_va": "0x14600b590",
+    "name": "Gameplay.Action.Death"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfe42",
+    "offset": "0x660",
+    "literal_va": "0x14600b5a8",
+    "name": "Gameplay.Action.Disco.BonusDancing"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfe60",
+    "offset": "0x668",
+    "literal_va": "0x14600b5d0",
+    "name": "Gameplay.Action.Player.Move"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfe7e",
+    "offset": "0x670",
+    "literal_va": "0x14600b5f0",
+    "name": "Gameplay.Action.Player.Look"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfe9c",
+    "offset": "0x678",
+    "literal_va": "0x14600b610",
+    "name": "Gameplay.Action.Player.Jump"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfeba",
+    "offset": "0x680",
+    "literal_va": "0x14600b630",
+    "name": "Gameplay.Action.Player.Ballooning"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfed8",
+    "offset": "0x688",
+    "literal_va": "0x14600b658",
+    "name": "Gameplay.Action.Player.Fall"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebfef6",
+    "offset": "0x690",
+    "literal_va": "0x14600b678",
+    "name": "Gameplay.Action.Player.Sprint"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebff14",
+    "offset": "0x698",
+    "literal_va": "0x14600b698",
+    "name": "Gameplay.Action.Player.Crouch"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebff32",
+    "offset": "0x6a0",
+    "literal_va": "0x14600b6b8",
+    "name": "Gameplay.Action.Player.GliderRedeploy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebff50",
+    "offset": "0x6a8",
+    "literal_va": "0x14600b6e0",
+    "name": "Gameplay.Action.Player.Jetpack"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebff6e",
+    "offset": "0x6b0",
+    "literal_va": "0x14600b700",
+    "name": "Gameplay.Action.Player.PersonalVehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebff8c",
+    "offset": "0x6b8",
+    "literal_va": "0x14600b728",
+    "name": "Gameplay.Action.Player.PreventPersonalVehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebffaa",
+    "offset": "0x6c0",
+    "literal_va": "0x14600b758",
+    "name": "Gameplay.Action.Player.ChangeEquipment"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebffc8",
+    "offset": "0x6c8",
+    "literal_va": "0x14600b780",
+    "name": "Gameplay.Action.Player.ChangeEquipment.Primary"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ebffe6",
+    "offset": "0x6d0",
+    "literal_va": "0x14600b7b0",
+    "name": "Gameplay.Action.Player.Reload"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0004",
+    "offset": "0x6d8",
+    "literal_va": "0x14600b7d0",
+    "name": "Gameplay.Action.Player.Inventory"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0022",
+    "offset": "0x6e0",
+    "literal_va": "0x14600b7f8",
+    "name": "Gameplay.Action.Player.DropItems"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0040",
+    "offset": "0x6e8",
+    "literal_va": "0x14600b820",
+    "name": "Gameplay.Action.Player.InteractBuild"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec005e",
+    "offset": "0x6f0",
+    "literal_va": "0x14600b848",
+    "name": "Gameplay.Action.Player.InteractBuildEdit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec007c",
+    "offset": "0x6f8",
+    "literal_va": "0x14600b878",
+    "name": "Gameplay.Action.Player.InteractUse"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec009a",
+    "offset": "0x700",
+    "literal_va": "0x14600b8a0",
+    "name": "Gameplay.Action.Player.InteractPet"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec00b8",
+    "offset": "0x740",
+    "literal_va": "0x14600b8c8",
+    "name": "Gameplay.Action.Player.InteractLockOnSearch"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec00d6",
+    "offset": "0x748",
+    "literal_va": "0x14600b8f8",
+    "name": "Gameplay.Action.Player.InteractSearch"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec00f4",
+    "offset": "0x708",
+    "literal_va": "0x14600b920",
+    "name": "Gameplay.Action.Player.Emote"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0112",
+    "offset": "0x710",
+    "literal_va": "0x14600b940",
+    "name": "Gameplay.Action.Player.Emote.Dance"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0130",
+    "offset": "0x718",
+    "literal_va": "0x14600b968",
+    "name": "Gameplay.Action.Player.Emote.Emoji"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec014e",
+    "offset": "0x720",
+    "literal_va": "0x14600b990",
+    "name": "Gameplay.Action.Player.Emote.Spray"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec016c",
+    "offset": "0x728",
+    "literal_va": "0x14600b9b8",
+    "name": "Gameplay.Action.Player.Emote.Toy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec018a",
+    "offset": "0x730",
+    "literal_va": "0x14600b9e0",
+    "name": "Gameplay.Action.Player.Emote.SquadChat"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec01a8",
+    "offset": "0x738",
+    "literal_va": "0x14600ba08",
+    "name": "Gameplay.Action.Player.BattleLab.Device"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec01c6",
+    "offset": "0x750",
+    "literal_va": "0x14600ba30",
+    "name": "Gameplay.Action.Player.InterruptibleHealingItem"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec01e4",
+    "offset": "0x758",
+    "literal_va": "0x14600ba60",
+    "name": "Gameplay.Action.Player.InteractiveConsumableUse"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0202",
+    "offset": "0x760",
+    "literal_va": "0x14600ba90",
+    "name": "Gameplay.Action.Player.Skydive"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0220",
+    "offset": "0x768",
+    "literal_va": "0x14600bab0",
+    "name": "Gameplay.Action.Player.AimDownsights"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec023e",
+    "offset": "0x770",
+    "literal_va": "0x14600bad8",
+    "name": "Gameplay.Action.Player.DBNO"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec025c",
+    "offset": "0x778",
+    "literal_va": "0x14600baf8",
+    "name": "Gameplay.Action.Player.DBNOAthena"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec027a",
+    "offset": "0x780",
+    "literal_va": "0x14600bb20",
+    "name": "NPC.Ability.NonAttack.DBNO"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0298",
+    "offset": "0x788",
+    "literal_va": "0x14600bb40",
+    "name": "Gameplay.Action.RestrictedAbility"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec02b6",
+    "offset": "0x790",
+    "literal_va": "0x14600bb68",
+    "name": "Gameplay.Action.Player.Massive"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec02d4",
+    "offset": "0x798",
+    "literal_va": "0x14600bb88",
+    "name": "Gameplay.Action.Player.OpenParachute"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec02f2",
+    "offset": "0x7a0",
+    "literal_va": "0x14600bbb0",
+    "name": "Gameplay.Action.Player.BlockPickup"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0310",
+    "offset": "0x7a8",
+    "literal_va": "0x14600bbd8",
+    "name": "Gameplay.Action.Player.Creative.Flying"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec032e",
+    "offset": "0x7b0",
+    "literal_va": "0x14600bc00",
+    "name": "Gameplay.Action.Player.PreventLaunch"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec034c",
+    "offset": "0x7b8",
+    "literal_va": "0x14600bc28",
+    "name": "Gameplay.Action.Player.Spin"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec036a",
+    "offset": "0x7c0",
+    "literal_va": "0x14600bc48",
+    "name": "Gameplay.Action.Player.Blocking"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0388",
+    "offset": "0x7c8",
+    "literal_va": "0x14600bc68",
+    "name": "Gameplay.Action.Player.Mantis.Attack"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec03a6",
+    "offset": "0x7d0",
+    "literal_va": "0x14600bc90",
+    "name": "Gameplay.Action.Player.SafeTeleport"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec03c4",
+    "offset": "0x7d8",
+    "literal_va": "0x14600bcb8",
+    "name": "Gameplay.Action.Player.BlockBuildMode"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec03e2",
+    "offset": "0x7e0",
+    "literal_va": "0x14600bce0",
+    "name": "Gameplay.Action.Player.AllowGliderRedeploy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0400",
+    "offset": "0x7e8",
+    "literal_va": "0x14600bd10",
+    "name": "Gameplay.Action.Player.PlaceMapMarkerInWorld"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec041e",
+    "offset": "0x7f0",
+    "literal_va": "0x14600bd40",
+    "name": "Gameplay.Action.Player.ThrowConsumable"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec043c",
+    "offset": "0x7f8",
+    "literal_va": "0x14600bd68",
+    "name": "Gameplay.Action.Player.HeldObject.Drop"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec045a",
+    "offset": "0x800",
+    "literal_va": "0x14600bd90",
+    "name": "Gameplay.Action.Player.Discover"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec047b",
+    "offset": "0x810",
+    "literal_va": "0x14600bdb0",
+    "name": "MovementMode.Falling",
+    "map_offset": "0x880",
+    "value": 3
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec049c",
+    "offset": "0x818",
+    "literal_va": "0x14600bdc8",
+    "name": "MovementMode.Flying",
+    "map_offset": "0x880",
+    "value": 5
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec04bd",
+    "offset": "0x820",
+    "literal_va": "0x14600bde0",
+    "name": "MovementMode.Driving",
+    "map_offset": "0x8d0",
+    "value": 1
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec04de",
+    "offset": "0x828",
+    "literal_va": "0x14600bdf8",
+    "name": "MovementMode.Passenger",
+    "map_offset": "0x8d0",
+    "value": 2
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec04ff",
+    "offset": "0x830",
+    "literal_va": "0x14600be10",
+    "name": "MovementMode.Parachuting",
+    "map_offset": "0x8d0",
+    "value": 3
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0520",
+    "offset": "0x838",
+    "literal_va": "0x14600be30",
+    "name": "MovementMode.Skydiving",
+    "map_offset": "0x8d0",
+    "value": 4
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0541",
+    "offset": "0x840",
+    "literal_va": "0x14600be48",
+    "name": "MovementMode.Skydiving.Following",
+    "map_offset": "0x8d0",
+    "value": 5
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0562",
+    "offset": "0x848",
+    "literal_va": "0x14600be70",
+    "name": "MovementMode.Hover",
+    "map_offset": "0x8d0",
+    "value": 6
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0583",
+    "offset": "0x850",
+    "literal_va": "0x14600be88",
+    "name": "MovementMode.RemoteControl.Flying",
+    "map_offset": "0x8d0",
+    "value": 7
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec05a4",
+    "offset": "0x858",
+    "literal_va": "0x14600beb0",
+    "name": "MovementMode.Ziplining",
+    "map_offset": "0x8d0",
+    "value": 8
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec05c5",
+    "offset": "0x860",
+    "literal_va": "0x14600bec8",
+    "name": "MovementMode.Ballooning",
+    "map_offset": "0x8d0",
+    "value": 9
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec05e6",
+    "offset": "0x868",
+    "literal_va": "0x14600bee0",
+    "name": "MovementMode.SurfaceSwimming",
+    "map_offset": "0x8d0",
+    "value": 10
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0607",
+    "offset": "0x870",
+    "literal_va": "0x14600bf00",
+    "name": "MovementMode.DBNOCarried",
+    "map_offset": "0x8d0",
+    "value": 11
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0628",
+    "offset": "0x878",
+    "literal_va": "0x14600bf20",
+    "name": "MovementMode.Floating",
+    "map_offset": "0x8d0",
+    "value": 12
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0646",
+    "offset": "0x920",
+    "literal_va": "0x14600bf38",
+    "name": "Gameplay.Melee.Hit1"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0664",
+    "offset": "0x928",
+    "literal_va": "0x14600bf50",
+    "name": "Gameplay.InsideSafeZone"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0682",
+    "offset": "0x930",
+    "literal_va": "0x14600bf68",
+    "name": "Gameplay.OutsideSafeZone"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec06a0",
+    "offset": "0x938",
+    "literal_va": "0x14600bf88",
+    "name": "Gameplay.InsideLava"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec06be",
+    "offset": "0x940",
+    "literal_va": "0x14600bfa0",
+    "name": "Activate.Failed.Cooldown"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec06dc",
+    "offset": "0x948",
+    "literal_va": "0x14600bfc0",
+    "name": "Activate.Failed.OutOfCharges"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec06fa",
+    "offset": "0x950",
+    "literal_va": "0x14600bfe0",
+    "name": "Activate.Failed.Cost"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0718",
+    "offset": "0x958",
+    "literal_va": "0x14600bff8",
+    "name": "Activate.Failed.Cost.Stamina"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0736",
+    "offset": "0x960",
+    "literal_va": "0x14600c018",
+    "name": "Activate.Failed.Cost.Ammo"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0754",
+    "offset": "0x968",
+    "literal_va": "0x14600c038",
+    "name": "Activate.Failed.Cost.Item"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0772",
+    "offset": "0x970",
+    "literal_va": "0x14600c058",
+    "name": "Activate.Failed.Placement"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0790",
+    "offset": "0x978",
+    "literal_va": "0x14600c078",
+    "name": "Activate.Failed.Tags.Blocked"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec07ae",
+    "offset": "0x980",
+    "literal_va": "0x14600c098",
+    "name": "Activate.Failed.Tags.Missing"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec07cc",
+    "offset": "0x988",
+    "literal_va": "0x14600c0b8",
+    "name": "Activate.Failed.MissingFragment"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec07ea",
+    "offset": "0x990",
+    "literal_va": "0x14600c0d8",
+    "name": "Activate.Failed.NoPlaceableItem"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0808",
+    "offset": "0x998",
+    "literal_va": "0x14600c0f8",
+    "name": "Activate.Failed.NetworkFail"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0826",
+    "offset": "0x9a0",
+    "literal_va": "0x14600c118",
+    "name": "Activate.Failed.Weapon.Overheating"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0844",
+    "offset": "0x9b0",
+    "literal_va": "0x14600c140",
+    "name": "Crafting.Failed.QueueFull"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0862",
+    "offset": "0x9a8",
+    "literal_va": "0x14600c160",
+    "name": "Crafting.Failed.Ammo.NotEnoughResources"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0880",
+    "offset": "0x9b8",
+    "literal_va": "0x14600c188",
+    "name": "Weapon.Reload.Failed.AlreadyReloading"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec089e",
+    "offset": "0x9c0",
+    "literal_va": "0x14600c1b0",
+    "name": "Weapon.Reload.Failed.CantPerformNativeAction"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec08bc",
+    "offset": "0x9c8",
+    "literal_va": "0x14600c1e0",
+    "name": "Weapon.Reload.Failed.NoSpareAmmo"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec08da",
+    "offset": "0x9d0",
+    "literal_va": "0x14600c208",
+    "name": "Weapon.Reload.Failed.AlreadyFull"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec08f8",
+    "offset": "0x9d8",
+    "literal_va": "0x14600c230",
+    "name": "Weapon.Reload.Failed.ReloadFailedAlreadyFiring"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0916",
+    "offset": "0x9e0",
+    "literal_va": "0x14600c260",
+    "name": "Weapon.Melee"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0934",
+    "offset": "0x9e8",
+    "literal_va": "0x14600c270",
+    "name": "Weapon.Melee.Impact"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0952",
+    "offset": "0x9f0",
+    "literal_va": "0x14600c288",
+    "name": "Weapon.Melee.Impact.Pickaxe"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0970",
+    "offset": "0xb20",
+    "literal_va": "0x14600c2a8",
+    "name": "Weapon.Melee.Massive.Charge"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec098e",
+    "offset": "0xb28",
+    "literal_va": "0x14600c2c8",
+    "name": "Weapon.Melee.InfinityBlade"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec09ac",
+    "offset": "0xb30",
+    "literal_va": "0x14600c2e8",
+    "name": "Weapon.Melee.Massive.Divebomb"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec09ca",
+    "offset": "0x9f8",
+    "literal_va": "0x14600c308",
+    "name": "Weapon.Ranged"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec09e8",
+    "offset": "0xa00",
+    "literal_va": "0x14600c318",
+    "name": "Weapon.Ranged.Pistol"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0a06",
+    "offset": "0xa08",
+    "literal_va": "0x14600c330",
+    "name": "Weapon.Ranged.Pistol.Standard"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0a24",
+    "offset": "0xa10",
+    "literal_va": "0x14600c350",
+    "name": "Weapon.Ranged.Pistol.Suppressed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0a42",
+    "offset": "0xa18",
+    "literal_va": "0x14600c370",
+    "name": "Weapon.Ranged.Pistol.HandCannon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0a60",
+    "offset": "0xa20",
+    "literal_va": "0x14600c390",
+    "name": "Weapon.Ranged.Pistol.SixShooter"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0a7e",
+    "offset": "0xa28",
+    "literal_va": "0x14600c3b0",
+    "name": "Weapon.Ranged.Pistol.Flintlock"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0a9c",
+    "offset": "0xa30",
+    "literal_va": "0x14600c3d0",
+    "name": "Weapon.Ranged.Shotgun"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0aba",
+    "offset": "0xa38",
+    "literal_va": "0x14600c3e8",
+    "name": "Weapon.Ranged.Shotgun.Tactical"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0ad8",
+    "offset": "0xa40",
+    "literal_va": "0x14600c408",
+    "name": "Weapon.Ranged.Shotgun.Pump"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0af6",
+    "offset": "0xa48",
+    "literal_va": "0x14600c428",
+    "name": "Weapon.Ranged.Shotgun.Heavy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0b14",
+    "offset": "0xa50",
+    "literal_va": "0x14600c448",
+    "name": "Weapon.Ranged.Assault"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0b32",
+    "offset": "0xa58",
+    "literal_va": "0x14600c460",
+    "name": "Weapon.Ranged.Assault.Standard"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0b50",
+    "offset": "0xa60",
+    "literal_va": "0x14600c480",
+    "name": "Weapon.Ranged.Assault.Burst"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0b6e",
+    "offset": "0xa68",
+    "literal_va": "0x14600c4a0",
+    "name": "Weapon.Ranged.Assault.Silenced"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0b8c",
+    "offset": "0xa70",
+    "literal_va": "0x14600c4c0",
+    "name": "Weapon.Ranged.Assault.Scoped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0baa",
+    "offset": "0xa78",
+    "literal_va": "0x14600c4e0",
+    "name": "Weapon.Ranged.Assault.Heavy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0bc8",
+    "offset": "0xa80",
+    "literal_va": "0x14600c500",
+    "name": "Weapon.Ranged.Sniper"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0be6",
+    "offset": "0xa88",
+    "literal_va": "0x14600c518",
+    "name": "Weapon.Ranged.Sniper.Hunting"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0c04",
+    "offset": "0xa90",
+    "literal_va": "0x14600c538",
+    "name": "Weapon.Ranged.Sniper.Bolt"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0c22",
+    "offset": "0xa98",
+    "literal_va": "0x14600c558",
+    "name": "Weapon.Ranged.Sniper.Heavy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0c40",
+    "offset": "0xaa0",
+    "literal_va": "0x14600c578",
+    "name": "Weapon.Ranged.SMG"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0c5e",
+    "offset": "0xaa8",
+    "literal_va": "0x14600c590",
+    "name": "Weapon.Ranged.Crossbow"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0c7c",
+    "offset": "0xab0",
+    "literal_va": "0x14600c5a8",
+    "name": "Weapon.Ranged.Crossbow.Explosive"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0c9a",
+    "offset": "0xab8",
+    "literal_va": "0x14600c5d0",
+    "name": "Weapon.Ranged.Minigun"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0cb8",
+    "offset": "0xac0",
+    "literal_va": "0x14600c5e8",
+    "name": "Weapon.Ranged.LMG"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0cd6",
+    "offset": "0xac8",
+    "literal_va": "0x14600c600",
+    "name": "Weapon.Ranged.Turret"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0cf4",
+    "offset": "0xad0",
+    "literal_va": "0x14600c618",
+    "name": "Weapon.Ranged.PirateCannon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0d12",
+    "offset": "0xad8",
+    "literal_va": "0x14600c638",
+    "name": "Weapon.Ranged.Heavy.Grenade"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0d30",
+    "offset": "0xae0",
+    "literal_va": "0x14600c658",
+    "name": "Weapon.Ranged.Heavy.C4"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0d4e",
+    "offset": "0xae8",
+    "literal_va": "0x14600c670",
+    "name": "Weapon.Ranged.Heavy.Grenade_Launcher"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0d6c",
+    "offset": "0xaf0",
+    "literal_va": "0x14600c698",
+    "name": "Weapon.Ranged.Heavy.Rocket_Launcher"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0d8a",
+    "offset": "0xaf8",
+    "literal_va": "0x14600c6c0",
+    "name": "Weapon.Ranged.Heavy.Mortar"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0da8",
+    "offset": "0xb00",
+    "literal_va": "0x14600c6e0",
+    "name": "Weapon.Ranged.Biplane"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0dc6",
+    "offset": "0xb48",
+    "literal_va": "0x14600c6f8",
+    "name": "Weapon.Ranged.Grenade"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0de4",
+    "offset": "0xb50",
+    "literal_va": "0x14600c710",
+    "name": "Weapon.RechargeAmmo"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0e02",
+    "offset": "0xb38",
+    "literal_va": "0x14600c728",
+    "name": "Weapon.Ranged.Massive"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0e20",
+    "offset": "0xb40",
+    "literal_va": "0x14600c740",
+    "name": "Weapon.Ranged.Grenade.Gas"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0e3e",
+    "offset": "0xb08",
+    "literal_va": "0x14600c760",
+    "name": "Weapon.Backpack.Jetpack"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0e5c",
+    "offset": "0xb10",
+    "literal_va": "0x14600c778",
+    "name": "Weapon.Thrown"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0e7a",
+    "offset": "0xb18",
+    "literal_va": "0x14600c788",
+    "name": "Weapon.Meta.Suppressed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0e98",
+    "offset": "0xb90",
+    "literal_va": "0x14600c7a0",
+    "name": "AbilityWeapon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0eb6",
+    "offset": "0xb98",
+    "literal_va": "0x14600c7b0",
+    "name": "VehicleWeapon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0ed4",
+    "offset": "0xba0",
+    "literal_va": "0x14600c7c0",
+    "name": "Weapon.AllowsFlying"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0ef2",
+    "offset": "0xba8",
+    "literal_va": "0x14600c7d8",
+    "name": "Weapon.KeepsMaterialsOnDropAll"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0f10",
+    "offset": "0xb58",
+    "literal_va": "0x14600c7f8",
+    "name": "Granted.ItemEquipped.Consumable"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0f2e",
+    "offset": "0xb60",
+    "literal_va": "0x14600c818",
+    "name": "Granted.ItemEquipped.Ranged"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0f4c",
+    "offset": "0xb68",
+    "literal_va": "0x14600c838",
+    "name": "Granted.ItemEquipped.Melee"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0f6a",
+    "offset": "0xb70",
+    "literal_va": "0x14600c858",
+    "name": "Granted.ItemEquipped.Melee.Harvest"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0f88",
+    "offset": "0xb78",
+    "literal_va": "0x14600c880",
+    "name": "Granted.Weapon.Holstered.Notify.TriggerPressed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0fa6",
+    "offset": "0xbb0",
+    "literal_va": "0x14600c8b0",
+    "name": "Weapon.Gadget.CooldownType.Attribute"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0fc4",
+    "offset": "0xb80",
+    "literal_va": "0x14600c8d8",
+    "name": "Gameplay.Effect.Override.AllowFriendlyFire"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec0fe2",
+    "offset": "0xb88",
+    "literal_va": "0x14600c908",
+    "name": "Item.PersistWhenEmptyForAnyInstance"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1000",
+    "offset": "0xbb8",
+    "literal_va": "0x14600c930",
+    "name": "Pawn.Athena.NPC"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec101e",
+    "offset": "0xbc0",
+    "literal_va": "0x14600c940",
+    "name": "Pawn.Athena.NPC.Mang"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec103c",
+    "offset": "0xbc8",
+    "literal_va": "0x14600c958",
+    "name": "Pawn.Athena.NPC.Mang.Boss"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec105a",
+    "offset": "0xbd0",
+    "literal_va": "0x14600c978",
+    "name": "Pawn.Athena.CannotReviveTeammates"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1078",
+    "offset": "0xbd8",
+    "literal_va": "0x14600c9a0",
+    "name": "Pawn.Athena.DoNotDisplayInKillFeed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1096",
+    "offset": "0xbe0",
+    "literal_va": "0x14600c9c8",
+    "name": "Pawn.Athena.DoNotLeaveEliminationIndicator"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec10b4",
+    "offset": "0xbe8",
+    "literal_va": "0x14600c9f8",
+    "name": "DeathCause.SelfInflicted"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec10d2",
+    "offset": "0xbf0",
+    "literal_va": "0x14600ca18",
+    "name": "DeathCause.SelfInflictedDBNO"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec10f0",
+    "offset": "0xbf8",
+    "literal_va": "0x14600ca38",
+    "name": "DeathCause.Eliminated"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec110e",
+    "offset": "0xc00",
+    "literal_va": "0x14600ca50",
+    "name": "DeathCause.EliminatedDBNO"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec112c",
+    "offset": "0xc08",
+    "literal_va": "0x14600ca70",
+    "name": "DeathCause.EliminatedByAI"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec114a",
+    "offset": "0xc10",
+    "literal_va": "0x14600ca90",
+    "name": "DeathCause.EliminatedDBNOByAI"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1168",
+    "offset": "0xc18",
+    "literal_va": "0x14600cab0",
+    "name": "DeathCause.EliminatedInTournament"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1186",
+    "offset": "0xc20",
+    "literal_va": "0x14600cad8",
+    "name": "DeathCause.BanHammer"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec11a4",
+    "offset": "0xc28",
+    "literal_va": "0x14600caf0",
+    "name": "DeathCause.RemovedFromGame"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec11c2",
+    "offset": "0xc30",
+    "literal_va": "0x14600cb10",
+    "name": "supplies.consumable"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec11e0",
+    "offset": "0xc38",
+    "literal_va": "0x14600cb28",
+    "name": "supplies.homebase"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec11fe",
+    "offset": "0xc40",
+    "literal_va": "0x14600cb40",
+    "name": "supplies.homebase.food"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec121c",
+    "offset": "0xc48",
+    "literal_va": "0x14600cb58",
+    "name": "supplies.homebase.manufacturing"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec123a",
+    "offset": "0xc50",
+    "literal_va": "0x14600cb78",
+    "name": "supplies.homebase.power"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1258",
+    "offset": "0xc58",
+    "literal_va": "0x14600cb90",
+    "name": "supplies.homebase.supplies"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1276",
+    "offset": "0xc60",
+    "literal_va": "0x14600cbb0",
+    "name": "supplies.ammo"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1294",
+    "offset": "0xc68",
+    "literal_va": "0x1459d6c6c",
+    "name": "Class"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec12b2",
+    "offset": "0xc70",
+    "literal_va": "0x14600cbc0",
+    "name": "Homebase.Class"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec12d0",
+    "offset": "0xc78",
+    "literal_va": "0x14600cbd0",
+    "name": "Homebase.Building.GameplayEffect"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec12ee",
+    "offset": "0xc80",
+    "literal_va": "0x14600cbf8",
+    "name": "Homebase.Building.GameplayEffect.RatingBased"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec130c",
+    "offset": "0xc88",
+    "literal_va": "0x14600cc28",
+    "name": "Homebase.Worker.GameplayEffect.SetBonus"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec132a",
+    "offset": "0xc90",
+    "literal_va": "0x14600cc50",
+    "name": "Homebase.Worker.RatingContribution"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1348",
+    "offset": "0xc98",
+    "literal_va": "0x14600cc78",
+    "name": "Homebase.GE.Squads"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1366",
+    "offset": "0xca0",
+    "literal_va": "0x14600cc90",
+    "name": "Source.FortAbilitySet"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1384",
+    "offset": "0xca8",
+    "literal_va": "0x14600cca8",
+    "name": "Evolution"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec13a2",
+    "offset": "0xcb0",
+    "literal_va": "0x14600ccb8",
+    "name": "Abilities.Generic.PlayerSpawn"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec13c0",
+    "offset": "0xcb8",
+    "literal_va": "0x14600ccd8",
+    "name": "Abilities.Generic.Rift.Trigger"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec13de",
+    "offset": "0xcc0",
+    "literal_va": "0x14600ccf8",
+    "name": "Abilities.Generic.Athena.Zipline.Exit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec13fc",
+    "offset": "0xcc8",
+    "literal_va": "0x14600cd20",
+    "name": "Activities.Placement"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec141a",
+    "offset": "0xcd0",
+    "literal_va": "0x14600cd38",
+    "name": "Activities.Placement.OnGround"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1438",
+    "offset": "0xcd8",
+    "literal_va": "0x14600cd58",
+    "name": "Activities.Placement.Outside"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1456",
+    "offset": "0xce0",
+    "literal_va": "0x14600cd78",
+    "name": "PlacementActor"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1474",
+    "offset": "0xce8",
+    "literal_va": "0x14600cd88",
+    "name": "PlacementActor.PlayerSpawn"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1492",
+    "offset": "0xcf0",
+    "literal_va": "0x14600cda8",
+    "name": "PlacementActor.EnemySpawner"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec14b0",
+    "offset": "0xcf8",
+    "literal_va": "0x14600cdc8",
+    "name": "PlacementActor.DeployableBasePlot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec14ce",
+    "offset": "0xd00",
+    "literal_va": "0x14600cdf0",
+    "name": "Building.Type.Prop"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec14ec",
+    "offset": "0xd10",
+    "literal_va": "0x14600ce08",
+    "name": "Building.Type.Container"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec150a",
+    "offset": "0xd18",
+    "literal_va": "0x14600ce20",
+    "name": "Building.Type.Container.SupplyDrop"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1528",
+    "offset": "0xd20",
+    "literal_va": "0x14600ce48",
+    "name": "Building.Type.Container.TreasureChest"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1546",
+    "offset": "0xd28",
+    "literal_va": "0x14600ce70",
+    "name": "Building.Type.Container.AmmoBox"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1564",
+    "offset": "0xd30",
+    "literal_va": "0x14600ce90",
+    "name": "Building.Type.Container.SupplyLlama"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1582",
+    "offset": "0xd38",
+    "literal_va": "0x14600ceb8",
+    "name": "Building.Type.Container.FloorLoot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec15a0",
+    "offset": "0xd40",
+    "literal_va": "0x14600cee0",
+    "name": "Building.Type.ItemContainer.VendingMachine"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec15be",
+    "offset": "0xd08",
+    "literal_va": "0x14600cf10",
+    "name": "Building.Type.Deco"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec15dc",
+    "offset": "0xd48",
+    "literal_va": "0x14600cf28",
+    "name": "Building.Type.Floor"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec15fa",
+    "offset": "0xd50",
+    "literal_va": "0x14600cf40",
+    "name": "Building.Type.Wall"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1618",
+    "offset": "0xd58",
+    "literal_va": "0x14600cf58",
+    "name": "Building.Type.Stair"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1636",
+    "offset": "0xd60",
+    "literal_va": "0x14600cf70",
+    "name": "Building.Type.Roof"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1654",
+    "offset": "0xd68",
+    "literal_va": "0x14600cf88",
+    "name": "Building.Edit.Failed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1672",
+    "offset": "0xd70",
+    "literal_va": "0x14600cfa0",
+    "name": "Building.Improvement.Failed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1690",
+    "offset": "0xda0",
+    "literal_va": "0x14600cfc0",
+    "name": "Building.ShapeRules.ActLikePlayerBuildable"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec16ae",
+    "offset": "0xda8",
+    "literal_va": "0x14600cff0",
+    "name": "Building.Type.Door"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec16cc",
+    "offset": "0xdb0",
+    "literal_va": "0x14600d008",
+    "name": "Building.Type.GameplayItem"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec16ea",
+    "offset": "0xdb8",
+    "literal_va": "0x14600d028",
+    "name": "Building.Type.Prop.Hiding"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1708",
+    "offset": "0xdc0",
+    "literal_va": "0x14600d048",
+    "name": "Building.Quests.TrackDamage"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1726",
+    "offset": "0xdc8",
+    "literal_va": "0x14600d068",
+    "name": "Building.Creative.PersistOnDetachment"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1744",
+    "offset": "0xdd0",
+    "literal_va": "0x14600d090",
+    "name": "Building.Creative.MoveToolCannotPlaceHere"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1762",
+    "offset": "0xd78",
+    "literal_va": "0x14600d0c0",
+    "name": "Building.Damage.NoPermission"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1780",
+    "offset": "0xd88",
+    "literal_va": "0x14600d0e0",
+    "name": "Building.Placement.NoPermission"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec179e",
+    "offset": "0xd80",
+    "literal_va": "0x14600d100",
+    "name": "Building.Edit.NoPermission"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec17bc",
+    "offset": "0xd90",
+    "literal_va": "0x14600d120",
+    "name": "Building.Improvement.NoPermission"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec17da",
+    "offset": "0xd98",
+    "literal_va": "0x14600d148",
+    "name": "Building.Resource"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec17f8",
+    "offset": "0xdd8",
+    "literal_va": "0x14600d160",
+    "name": "Gameplay.Status.DisableRepair"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1816",
+    "offset": "0xde0",
+    "literal_va": "0x14600d180",
+    "name": "Gameplay.Status.DisableCrouch"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1834",
+    "offset": "0xde8",
+    "literal_va": "0x14600d1a0",
+    "name": "Gameplay.Status.DisablePrimaryFire"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1852",
+    "offset": "0xdf0",
+    "literal_va": "0x14600d1c8",
+    "name": "Gameplay.Status.DisableSwitchQuickbar"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1870",
+    "offset": "0xdf8",
+    "literal_va": "0x14600d1f0",
+    "name": "Gameplay.Status.DisableToggleMainMenu"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec188e",
+    "offset": "0xe00",
+    "literal_va": "0x14600d218",
+    "name": "Gameplay.Status.DisableSocialPicker"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec18ac",
+    "offset": "0xe08",
+    "literal_va": "0x14600d240",
+    "name": "Gameplay.Status.DisableResourceSwitching"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec18ca",
+    "offset": "0xe10",
+    "literal_va": "0x14600d270",
+    "name": "Gameplay.Status.DisableHoldToSwapPickup"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec18e8",
+    "offset": "0xe18",
+    "literal_va": "0x14600d298",
+    "name": "Building.Type.Player.Stair"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1906",
+    "offset": "0xe20",
+    "literal_va": "0x14600d2b8",
+    "name": "Building.Type.Player.Wall"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1924",
+    "offset": "0xe28",
+    "literal_va": "0x14600d2d8",
+    "name": "Building.Type.Player.Floor"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1942",
+    "offset": "0xe30",
+    "literal_va": "0x14600d2f8",
+    "name": "Building.Type.Player.Roof"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1960",
+    "offset": "0xe38",
+    "literal_va": "0x14600d318",
+    "name": "Event.Damage.Killed.KickedDueToInactivity"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec197e",
+    "offset": "0xe40",
+    "literal_va": "0x14600d348",
+    "name": "Event.Damage.Killed.Disconnected"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec199c",
+    "offset": "0xe48",
+    "literal_va": "0x14600d370",
+    "name": "Stat.Source.IsInitiator"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec19ba",
+    "offset": "0xe50",
+    "literal_va": "0x14600d388",
+    "name": "Stat.Source.OnCriticalMission"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec19d8",
+    "offset": "0xe58",
+    "literal_va": "0x14600d3a8",
+    "name": "Stat.Source.IsWorldOwner"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec19f6",
+    "offset": "0xe60",
+    "literal_va": "0x14600d3c8",
+    "name": "Stat.Source.IsInCuratedVolume"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1a14",
+    "offset": "0xe68",
+    "literal_va": "0x145a89a60",
+    "name": "Weapon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1a32",
+    "offset": "0xe70",
+    "literal_va": "0x14600d3e8",
+    "name": "Gameplay"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1a50",
+    "offset": "0xe78",
+    "literal_va": "0x14600d3f8",
+    "name": "SpecialEvent"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1a6e",
+    "offset": "0xe80",
+    "literal_va": "0x1459db0f8",
+    "name": "Abilities"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1a8c",
+    "offset": "0xe88",
+    "literal_va": "0x14600d408",
+    "name": "Quest.Metadata.Mission.Primary.Outpost"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1aaa",
+    "offset": "0xe90",
+    "literal_va": "0x14600d430",
+    "name": "NPC.Status.LockedInPlace"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1ac8",
+    "offset": "0xe98",
+    "literal_va": "0x14600d450",
+    "name": "NPC.CharacterType"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1ae6",
+    "offset": "0xea0",
+    "literal_va": "0x14600d468",
+    "name": "NPC.CharacterType.Survivor"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1b04",
+    "offset": "0xea8",
+    "literal_va": "0x14600d488",
+    "name": "NPC.CharacterType.Survivor.Defender"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1b22",
+    "offset": "0xeb0",
+    "literal_va": "0x14600d4b0",
+    "name": "NPC.EnemyType"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1b40",
+    "offset": "0xeb8",
+    "literal_va": "0x14600d4c0",
+    "name": "NPC.CharacterType.Husk.Dwarf"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1b5e",
+    "offset": "0xec0",
+    "literal_va": "0x14600d4e0",
+    "name": "NPC.CharacterType.Blaster"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1b7c",
+    "offset": "0xec8",
+    "literal_va": "0x14600d500",
+    "name": "NPC.CharacterType.Husk.Beehive"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1b9a",
+    "offset": "0xed0",
+    "literal_va": "0x14600d520",
+    "name": "NPC.CharacterType.Husk.Husky"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1bb8",
+    "offset": "0xed8",
+    "literal_va": "0x14600d540",
+    "name": "NPC.CharacterType.Husk.Sploder"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1bd6",
+    "offset": "0xee0",
+    "literal_va": "0x14600d560",
+    "name": "NPC.CharacterType.Husk.Zapper"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1bf4",
+    "offset": "0xee8",
+    "literal_va": "0x14600d580",
+    "name": "NPC.CharacterType.Fiend"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1c12",
+    "offset": "0xef0",
+    "literal_va": "0x14600d598",
+    "name": "NPC.CharacterType.Fiend.Basic"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1c30",
+    "offset": "0xef8",
+    "literal_va": "0x14600d5b8",
+    "name": "NPC.CharacterType.Fiend.Major"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1c4e",
+    "offset": "0xf00",
+    "literal_va": "0x14600d5d8",
+    "name": "NPC.CharacterType.Fiend.Ranged"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1c6c",
+    "offset": "0xf08",
+    "literal_va": "0x14600d5f8",
+    "name": "NPC.CharacterType.Brute"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1c8a",
+    "offset": "0xf10",
+    "literal_va": "0x14600d610",
+    "name": "NPC.CharacterType.Brute.Basic"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1ca8",
+    "offset": "0xf18",
+    "literal_va": "0x14600d630",
+    "name": "NPC.CharacterType.Brute.Major"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1cc6",
+    "offset": "0xf20",
+    "literal_va": "0x14600d650",
+    "name": "NPC.CharacterType.Brute.Mega"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1ce4",
+    "offset": "0xf28",
+    "literal_va": "0x14600d670",
+    "name": "Deimos.Spawner"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1d02",
+    "offset": "0xf30",
+    "literal_va": "0x14600d680",
+    "name": "Pawn.Athena.NPC.Deimos"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1d20",
+    "offset": "0xf38",
+    "literal_va": "0x14600d698",
+    "name": "Pawn.Athena.Player"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1d3e",
+    "offset": "0xf40",
+    "literal_va": "0x14600d6b0",
+    "name": "Trait.Restoration.Health"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1d5c",
+    "offset": "0xf48",
+    "literal_va": "0x14600d6d0",
+    "name": "Trait.Restoration.Shields"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1d7a",
+    "offset": "0xf50",
+    "literal_va": "0x14600d6f0",
+    "name": "Gameplay.Status.HideOnMinimap"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1d98",
+    "offset": "0xf58",
+    "literal_va": "0x14600d710",
+    "name": "HUD.Athena.HideOnCreative"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1db6",
+    "offset": "0xf60",
+    "literal_va": "0x14600d730",
+    "name": "SetByCaller.Stats.Fortitude"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1dd4",
+    "offset": "0xf68",
+    "literal_va": "0x14600d750",
+    "name": "SetByCaller.Stats.Fortitude_Team"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1df2",
+    "offset": "0xf70",
+    "literal_va": "0x14600d778",
+    "name": "SetByCaller.Stats.Offense"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1e10",
+    "offset": "0xf78",
+    "literal_va": "0x14600d798",
+    "name": "SetByCaller.Stats.Offense_Team"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1e2e",
+    "offset": "0xf80",
+    "literal_va": "0x14600d7b8",
+    "name": "SetByCaller.Stats.Resistance"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1e4c",
+    "offset": "0xf88",
+    "literal_va": "0x14600d7d8",
+    "name": "SetByCaller.Stats.Resistance_Team"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1e6a",
+    "offset": "0xf90",
+    "literal_va": "0x14600d800",
+    "name": "SetByCaller.Stats.Tech"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1e88",
+    "offset": "0xf98",
+    "literal_va": "0x14600d818",
+    "name": "SetByCaller.Stats.Tech_Team"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1ea6",
+    "offset": "0xfa0",
+    "literal_va": "0x14600d838",
+    "name": "SetByCaller.SignalInStorm"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1ec4",
+    "offset": "0xfa8",
+    "literal_va": "0x14600d858",
+    "name": "SetByCaller.StormDamageBuffCNTag"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1ee2",
+    "offset": "0xfb0",
+    "literal_va": "0x14600d880",
+    "name": "SetByCaller.StormCNKillDamage"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1f00",
+    "offset": "0xfb8",
+    "literal_va": "0x14600d8a0",
+    "name": "SetByCaller.StormCampingDamage"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1f1e",
+    "offset": "0xfc0",
+    "literal_va": "0x14600d8c0",
+    "name": "Tooltip.Name.AsGESource.Stat.Fortitude"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1f3c",
+    "offset": "0xfc8",
+    "literal_va": "0x14600d8e8",
+    "name": "Tooltip.Name.AsGESource.Stat.Offense"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1f5a",
+    "offset": "0xfd0",
+    "literal_va": "0x14600d910",
+    "name": "Tooltip.Name.AsGESource.Stat.Resistance"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1f78",
+    "offset": "0xfd8",
+    "literal_va": "0x14600d938",
+    "name": "Tooltip.Name.AsGESource.Stat.Tech"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1f96",
+    "offset": "0xfe0",
+    "literal_va": "0x14600d960",
+    "name": "Tooltip"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1fb4",
+    "offset": "0xfe8",
+    "literal_va": "0x14600d968",
+    "name": "Tooltip.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1fd2",
+    "offset": "0xff0",
+    "literal_va": "0x14600d980",
+    "name": "Tooltip.Description.Multiline"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec1ff0",
+    "offset": "0xff8",
+    "literal_va": "0x14600d9a0",
+    "name": "Tooltip.Description.Short"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec200e",
+    "offset": "0x1000",
+    "literal_va": "0x14600d9c0",
+    "name": "Tooltip.Name.AsGESource"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec202c",
+    "offset": "0x1008",
+    "literal_va": "0x14600d9d8",
+    "name": "Tooltip.Name.AsGESource.Hero.ClassAndLevel"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec204a",
+    "offset": "0x1018",
+    "literal_va": "0x14600da08",
+    "name": "Tooltip.Node.Buff"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2068",
+    "offset": "0x1010",
+    "literal_va": "0x14600da20",
+    "name": "Tooltip.Cost"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2086",
+    "offset": "0x1020",
+    "literal_va": "0x14600da30",
+    "name": "Tooltip.IsClamped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec20a4",
+    "offset": "0x1028",
+    "literal_va": "0x14600da48",
+    "name": "Tooltip.IsBuffed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec20c2",
+    "offset": "0x1030",
+    "literal_va": "0x14600da60",
+    "name": "Tooltip.IsDebuffed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec20e0",
+    "offset": "0x1038",
+    "literal_va": "0x14600da78",
+    "name": "Tooltip.Token.ActiveGESource"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec20fe",
+    "offset": "0x1040",
+    "literal_va": "0x14600da98",
+    "name": "Tooltip.Token.ActiveGEDuration"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec211c",
+    "offset": "0x1048",
+    "literal_va": "0x14600dab8",
+    "name": "Tooltip.Token.ActiveGETimeRemaining"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec213a",
+    "offset": "0x1050",
+    "literal_va": "0x14600dae0",
+    "name": "Tooltip.Token.ActiveGEPeriod"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2158",
+    "offset": "0x1058",
+    "literal_va": "0x14600db00",
+    "name": "Tooltip.Token.ActiveGEContribution"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2176",
+    "offset": "0x1060",
+    "literal_va": "0x14600db28",
+    "name": "Tooltip.Token.AttributeValue"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2194",
+    "offset": "0x1068",
+    "literal_va": "0x14600db48",
+    "name": "Tooltip.Token.AttributeBaseValue"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec21b2",
+    "offset": "0x1070",
+    "literal_va": "0x14600db70",
+    "name": "Tooltip.Token.AttributeDisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec21d0",
+    "offset": "0x1078",
+    "literal_va": "0x14600db98",
+    "name": "Tooltip.Token.AttributeDescription"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec21ee",
+    "offset": "0x1080",
+    "literal_va": "0x14600dbc0",
+    "name": "Tooltip.Token.Name"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec220c",
+    "offset": "0x1088",
+    "literal_va": "0x14600dbd8",
+    "name": "Tooltip.Token.HeroClassAndLevel"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec222a",
+    "offset": "0x1090",
+    "literal_va": "0x14600dbf8",
+    "name": "Tooltip.Token.Damage.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2248",
+    "offset": "0x1098",
+    "literal_va": "0x14600dc20",
+    "name": "Tooltip.Token.Damage.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2266",
+    "offset": "0x10a0",
+    "literal_va": "0x14600dc40",
+    "name": "Tooltip.Token.AbilityWeaponDamage.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2284",
+    "offset": "0x10a8",
+    "literal_va": "0x14600dc70",
+    "name": "Tooltip.Token.AbilityWeaponDamage.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec22a2",
+    "offset": "0x10b0",
+    "literal_va": "0x14600dc98",
+    "name": "Tooltip.Token.CritHitChance.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec22c0",
+    "offset": "0x10b8",
+    "literal_va": "0x14600dcc0",
+    "name": "Tooltip.Token.CritHitChance.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec22de",
+    "offset": "0x10c0",
+    "literal_va": "0x14600dce8",
+    "name": "Tooltip.Token.CritHitDamage.Percent.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec22fc",
+    "offset": "0x10c8",
+    "literal_va": "0x14600dd18",
+    "name": "Tooltip.Token.CritHitDamage.Percent.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec231a",
+    "offset": "0x10d0",
+    "literal_va": "0x14600dd48",
+    "name": "Tooltip.Token.CritHitDamage.Absolute.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2338",
+    "offset": "0x10d8",
+    "literal_va": "0x14600dd80",
+    "name": "Tooltip.Token.CritHitDamage.Absolute.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2356",
+    "offset": "0x10e0",
+    "literal_va": "0x14600ddb0",
+    "name": "Tooltip.Token.AttackSpeed.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2374",
+    "offset": "0x10e8",
+    "literal_va": "0x14600ddd8",
+    "name": "Tooltip.Token.AttackSpeed.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2392",
+    "offset": "0x10f0",
+    "literal_va": "0x14600ddf8",
+    "name": "Tooltip.Token.Range.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec23b0",
+    "offset": "0x10f8",
+    "literal_va": "0x14600de18",
+    "name": "Tooltip.Token.Range.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec23ce",
+    "offset": "0x1100",
+    "literal_va": "0x14600de38",
+    "name": "Tooltip.Token.Durability.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec23ec",
+    "offset": "0x1108",
+    "literal_va": "0x14600de60",
+    "name": "Tooltip.Token.Durability.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec240a",
+    "offset": "0x1110",
+    "literal_va": "0x14600de80",
+    "name": "Tooltip.Token.FireRate.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2428",
+    "offset": "0x1118",
+    "literal_va": "0x14600dea8",
+    "name": "Tooltip.Token.FireRate.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2446",
+    "offset": "0x1120",
+    "literal_va": "0x14600dec8",
+    "name": "Tooltip.Token.MagazineSize.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2464",
+    "offset": "0x1128",
+    "literal_va": "0x14600def0",
+    "name": "Tooltip.Token.MagazineSize.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2482",
+    "offset": "0x1130",
+    "literal_va": "0x14600df18",
+    "name": "Tooltip.Token.ReloadTime.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec24a0",
+    "offset": "0x1138",
+    "literal_va": "0x14600df40",
+    "name": "Tooltip.Token.ReloadTime.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec24be",
+    "offset": "0x1140",
+    "literal_va": "0x14600df60",
+    "name": "Tooltip.Format.Upgrade"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec24dc",
+    "offset": "0x1148",
+    "literal_va": "0x14600df78",
+    "name": "Tooltip.Token.HeadshotDamage.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec24fa",
+    "offset": "0x1150",
+    "literal_va": "0x14600dfa0",
+    "name": "Tooltip.Token.HeadshotDamage.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2518",
+    "offset": "0x1158",
+    "literal_va": "0x14600dfd0",
+    "name": "Tooltip.Token.Attribute.HeadshotDamage"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2536",
+    "offset": "0x1160",
+    "literal_va": "0x14600dff8",
+    "name": "Tooltip.Token.Healing.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2554",
+    "offset": "0x1168",
+    "literal_va": "0x14600e020",
+    "name": "Tooltip.Token.Healing.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2572",
+    "offset": "0x1170",
+    "literal_va": "0x14600e040",
+    "name": "Tooltip.Token.ArmTime.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2590",
+    "offset": "0x1178",
+    "literal_va": "0x14600e068",
+    "name": "Tooltip.Token.ArmTime.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec25ae",
+    "offset": "0x1180",
+    "literal_va": "0x14600e088",
+    "name": "Tooltip.Token.Stun.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec25cc",
+    "offset": "0x1188",
+    "literal_va": "0x14600e0a8",
+    "name": "Tooltip.Token.Stun.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec25ea",
+    "offset": "0x1190",
+    "literal_va": "0x14600e0c8",
+    "name": "Tooltip.Token.Knockback.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2608",
+    "offset": "0x1198",
+    "literal_va": "0x14600e0f0",
+    "name": "Tooltip.Token.Knockback.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2626",
+    "offset": "0x11a0",
+    "literal_va": "0x14600e110",
+    "name": "Tooltip.Token.Attribute.Impact.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2644",
+    "offset": "0x11a8",
+    "literal_va": "0x14600e138",
+    "name": "Tooltip.Token.DPS.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2662",
+    "offset": "0x11b0",
+    "literal_va": "0x14600e158",
+    "name": "Tooltip.Token.DPS.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2680",
+    "offset": "0x11b8",
+    "literal_va": "0x14600e170",
+    "name": "Tooltip.Query.Upgrade"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec269e",
+    "offset": "0x11c0",
+    "literal_va": "0x14600e188",
+    "name": "Tooltip.Query.Compare"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec26bc",
+    "offset": "0x11c8",
+    "literal_va": "0x14600e1a0",
+    "name": "Tooltip.Token.MaxDurability.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec26da",
+    "offset": "0x11d0",
+    "literal_va": "0x14600e1c8",
+    "name": "Tooltip.Token.MaxDurability.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec26f8",
+    "offset": "0x11d8",
+    "literal_va": "0x14600e1f0",
+    "name": "Tooltip.Token.NormalizedDurability.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2716",
+    "offset": "0x11e0",
+    "literal_va": "0x14600e220",
+    "name": "Tooltip.Token.Level.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2734",
+    "offset": "0x11e8",
+    "literal_va": "0x14600e240",
+    "name": "Tooltip.Token.Level.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2752",
+    "offset": "0x11f0",
+    "literal_va": "0x14600e260",
+    "name": "Tooltip.Token.MaxLevel.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2770",
+    "offset": "0x11f8",
+    "literal_va": "0x14600e288",
+    "name": "Tooltip.Token.MaxLevel.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec278e",
+    "offset": "0x1200",
+    "literal_va": "0x14600e2a8",
+    "name": "Tooltip.PlayerInfo"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec27ac",
+    "offset": "0x1208",
+    "literal_va": "0x14600e2c0",
+    "name": "Tooltip.PlayerInfo.CoreStats"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec27ca",
+    "offset": "0x1210",
+    "literal_va": "0x14600e2e0",
+    "name": "Tooltip.PlayerInfo.Movement"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec27e8",
+    "offset": "0x1218",
+    "literal_va": "0x14600e300",
+    "name": "Tooltip.PlayerInfo.Building"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2806",
+    "offset": "0x1220",
+    "literal_va": "0x14600e320",
+    "name": "Tooltip.PlayerInfo.RangedCombat"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2824",
+    "offset": "0x1228",
+    "literal_va": "0x14600e340",
+    "name": "Tooltip.PlayerInfo.MeleeCombat"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2842",
+    "offset": "0x1230",
+    "literal_va": "0x14600e360",
+    "name": "Tooltip.PlayerInfo.Harvesting"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2860",
+    "offset": "0x1238",
+    "literal_va": "0x14600e380",
+    "name": "Tooltip.PlayerInfo.Crafting"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec287e",
+    "offset": "0x1240",
+    "literal_va": "0x14600e3a0",
+    "name": "Tooltip.PlayerInfo.Misc"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec289c",
+    "offset": "0x1248",
+    "literal_va": "0x14600e3b8",
+    "name": "Tooltip.Token.HomebaseNodePrereqs"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec28ba",
+    "offset": "0x1250",
+    "literal_va": "0x14600e3e0",
+    "name": "Tooltip.Token.Cost"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec28d8",
+    "offset": "0x1258",
+    "literal_va": "0x14600e3f8",
+    "name": "Tooltip.Token.Cooldown"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec28f6",
+    "offset": "0x1260",
+    "literal_va": "0x14600e410",
+    "name": "Tooltip.Token.GrantedPowerPoints"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2914",
+    "offset": "0x1268",
+    "literal_va": "0x14600e438",
+    "name": "Tooltip.Token.Attribute.MaxHealth.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2932",
+    "offset": "0x1270",
+    "literal_va": "0x14600e468",
+    "name": "Tooltip.Token.Attribute.MaxHealth.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2950",
+    "offset": "0x1278",
+    "literal_va": "0x14600e490",
+    "name": "Tooltip.Token.Attribute.HealthRegenRate.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec296e",
+    "offset": "0x1280",
+    "literal_va": "0x14600e4c8",
+    "name": "Tooltip.Token.Attribute.HealthRegenRate.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec298c",
+    "offset": "0x1288",
+    "literal_va": "0x14600e4f8",
+    "name": "Tooltip.Token.Attribute.Shield.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec29aa",
+    "offset": "0x1290",
+    "literal_va": "0x14600e528",
+    "name": "Tooltip.Token.Attribute.Shield.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec29c8",
+    "offset": "0x1298",
+    "literal_va": "0x14600e550",
+    "name": "Tooltip.Token.Attribute.ShieldRegenRate.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec29e6",
+    "offset": "0x12a0",
+    "literal_va": "0x14600e588",
+    "name": "Tooltip.Token.Attribute.ShieldRegenRate.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2a04",
+    "offset": "0x12a8",
+    "literal_va": "0x14600e5b8",
+    "name": "Tooltip.Token.Attribute.ShieldRegenDelay.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2a22",
+    "offset": "0x12b0",
+    "literal_va": "0x14600e5f0",
+    "name": "Tooltip.Token.Attribute.ShieldRegenDelay.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2a40",
+    "offset": "0x12b8",
+    "literal_va": "0x14600e620",
+    "name": "Tooltip.Token.Attribute.OutgoingBaseAbilityDamageMultiplier.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2a5e",
+    "offset": "0x12c0",
+    "literal_va": "0x14600e670",
+    "name": "Tooltip.Token.Attribute.OutgoingBaseAbilityDamageMultiplier.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2a7c",
+    "offset": "0x12c8",
+    "literal_va": "0x14600e6c0",
+    "name": "Tooltip.Token.Attribute.HealingSourceBaseMultiplier.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2a9a",
+    "offset": "0x12d0",
+    "literal_va": "0x14600e700",
+    "name": "Tooltip.Token.Attribute.HealingSourceBaseMultiplier.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2ab8",
+    "offset": "0x12d8",
+    "literal_va": "0x14600e740",
+    "name": "Tooltip.Token.Attribute.RunSpeed.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2ad6",
+    "offset": "0x12e0",
+    "literal_va": "0x14600e770",
+    "name": "Tooltip.Token.Attribute.RunSpeed.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2af4",
+    "offset": "0x12e8",
+    "literal_va": "0x14600e798",
+    "name": "Tooltip.Token.Attribute.SprintSpeed.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2b12",
+    "offset": "0x12f0",
+    "literal_va": "0x14600e7c8",
+    "name": "Tooltip.Token.Attribute.SprintSpeed.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2b30",
+    "offset": "0x12f8",
+    "literal_va": "0x14600e7f8",
+    "name": "Tooltip.Token.Attribute.CrouchedRunSpeed.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2b4e",
+    "offset": "0x1300",
+    "literal_va": "0x14600e830",
+    "name": "Tooltip.Token.Attribute.CrouchedRunSpeed.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2b6c",
+    "offset": "0x1308",
+    "literal_va": "0x14600e860",
+    "name": "Tooltip.Token.Attribute.CrouchedSprintSpeed.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2b8a",
+    "offset": "0x1310",
+    "literal_va": "0x14600e898",
+    "name": "Tooltip.Token.Attribute.CrouchedSprintSpeed.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2ba8",
+    "offset": "0x1318",
+    "literal_va": "0x14600e8d0",
+    "name": "Tooltip.Token.Worker.Personality"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2bc6",
+    "offset": "0x1320",
+    "literal_va": "0x14600e8f8",
+    "name": "Tooltip.Token.Worker.Rating"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2be4",
+    "offset": "0x1328",
+    "literal_va": "0x14600e918",
+    "name": "Tooltip.Token.Worker.Tier"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2c02",
+    "offset": "0x1330",
+    "literal_va": "0x14600e938",
+    "name": "Tooltip.Token.Worker.SetBonus.Name"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2c20",
+    "offset": "0x1338",
+    "literal_va": "0x14600e960",
+    "name": "Tooltip.Token.Worker.SetBonus.Buff"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2c3e",
+    "offset": "0x1340",
+    "literal_va": "0x14600e988",
+    "name": "Tooltip.Token.Worker.SetBonus.RequiredWorkerCount"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2c5c",
+    "offset": "0x1348",
+    "literal_va": "0x14600e9c0",
+    "name": "Tooltip.Token.Worker.Gender.HimHer"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2c7a",
+    "offset": "0x1350",
+    "literal_va": "0x14600e9e8",
+    "name": "Tooltip.Token.Worker.Gender.HeShe"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2c98",
+    "offset": "0x1358",
+    "literal_va": "0x14600ea10",
+    "name": "Tooltip.Token.AmmoCost.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2cb6",
+    "offset": "0x1360",
+    "literal_va": "0x14600ea38",
+    "name": "Tooltip.Token.AmmoCost.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2cd4",
+    "offset": "0x1368",
+    "literal_va": "0x14600ea58",
+    "name": "Tooltip.Token.Attribute.WeaponSkill.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2cf2",
+    "offset": "0x1370",
+    "literal_va": "0x14600ea88",
+    "name": "Tooltip.Token.Attribute.WeaponSkill.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2d10",
+    "offset": "0x1378",
+    "literal_va": "0x14600eab8",
+    "name": "Tooltip.Token.Hero.Class"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2d2e",
+    "offset": "0x1380",
+    "literal_va": "0x14600ead8",
+    "name": "Tooltip.Token.Hero.Subclass"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2d4c",
+    "offset": "0x1388",
+    "literal_va": "0x14600eaf8",
+    "name": "Tooltip.Token.UIRating"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2d6a",
+    "offset": "0x1390",
+    "literal_va": "0x14600eb10",
+    "name": "Tooltip.Token.Quest.CompletionPercent"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2d88",
+    "offset": "0x1398",
+    "literal_va": "0x14600eb38",
+    "name": "Tooltip.Token.Quest.Progress"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2da6",
+    "offset": "0x13a0",
+    "literal_va": "0x14600eb58",
+    "name": "Tooltip.Token.Attribute.Vitality"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2dc4",
+    "offset": "0x13a8",
+    "literal_va": "0x14600eb80",
+    "name": "Tooltip.Token.Attribute.Offense"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2de2",
+    "offset": "0x13b0",
+    "literal_va": "0x14600eba0",
+    "name": "Tooltip.Token.Attribute.Defense"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2e00",
+    "offset": "0x13b8",
+    "literal_va": "0x14600ebc0",
+    "name": "Tooltip.Token.Attribute.Prowess"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2e1e",
+    "offset": "0x13c0",
+    "literal_va": "0x14600ebe0",
+    "name": "Tooltip.Token.Attribute.Vitality_Team"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2e3c",
+    "offset": "0x13c8",
+    "literal_va": "0x14600ec08",
+    "name": "Tooltip.Token.Attribute.Offense_Team"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2e5a",
+    "offset": "0x13d0",
+    "literal_va": "0x14600ec30",
+    "name": "Tooltip.Token.Attribute.Defense_Team"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2e78",
+    "offset": "0x13d8",
+    "literal_va": "0x14600ec58",
+    "name": "Tooltip.Token.Attribute.Prowess_Team"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2e96",
+    "offset": "0x13e0",
+    "literal_va": "0x14600ec80",
+    "name": "Tooltip.Token.Attribute.ResearchPointMaxBonus"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2eb4",
+    "offset": "0x13e8",
+    "literal_va": "0x14600ecb0",
+    "name": "Tooltip.Token.Attribute.ResearchPointMaxBonus.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2ed2",
+    "offset": "0x13f0",
+    "literal_va": "0x14600ecf0",
+    "name": "Tooltip.Token.Attribute.ResearchPointMaxBonus.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2ef0",
+    "offset": "0x13f8",
+    "literal_va": "0x14600ed28",
+    "name": "Tooltip.Token.Attribute.MaxOverheatHeating.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2f0e",
+    "offset": "0x1400",
+    "literal_va": "0x14600ed60",
+    "name": "Tooltip.Token.Attribute.MaxOverheatHeating.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2f2c",
+    "offset": "0x1408",
+    "literal_va": "0x14600ed98",
+    "name": "Tooltip.Token.Attribute.MaxOverheatHeating.Description"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2f4a",
+    "offset": "0x1410",
+    "literal_va": "0x14600edd0",
+    "name": "Tooltip.Token.Attribute.OverheatHeating.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2f68",
+    "offset": "0x1418",
+    "literal_va": "0x14600ee00",
+    "name": "Tooltip.Token.Attribute.OverheatHeating.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2f86",
+    "offset": "0x1420",
+    "literal_va": "0x14600ee38",
+    "name": "Tooltip.Token.Attribute.OverheatHeating.Description"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2fa4",
+    "offset": "0x1428",
+    "literal_va": "0x14600ee70",
+    "name": "Tooltip.Token.Attribute.OverheatCoolingSpeed.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2fc2",
+    "offset": "0x1430",
+    "literal_va": "0x14600eeb0",
+    "name": "Tooltip.Token.Attribute.OverheatCoolingSpeed.Description"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2fe0",
+    "offset": "0x1438",
+    "literal_va": "0x14600eef0",
+    "name": "Tooltip.Token.Attribute.OverheatCoolingSpeed.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec2ffe",
+    "offset": "0x1440",
+    "literal_va": "0x14600ef28",
+    "name": "Tooltip.Token.Attribute.OverheatCooldown.DisplayName"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec301c",
+    "offset": "0x1448",
+    "literal_va": "0x14600ef60",
+    "name": "Tooltip.Token.Attribute.OverheatCooldown.Description"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec303a",
+    "offset": "0x1450",
+    "literal_va": "0x14600ef98",
+    "name": "Tooltip.Token.Attribute.OverheatCooldown.Value"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3058",
+    "offset": "0x1458",
+    "literal_va": "0x14600efc8",
+    "name": "HUD.InWorld.SlateHUDIndicator"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3076",
+    "offset": "0x1460",
+    "literal_va": "0x14600efe8",
+    "name": "HUD.InWorld.WeakPoints"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3094",
+    "offset": "0x1468",
+    "literal_va": "0x14600f000",
+    "name": "HUD.InWorld.DamageNumbers"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec30b2",
+    "offset": "0x1470",
+    "literal_va": "0x14600f020",
+    "name": "HUD.InWorld.ActorCanvas"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec30d0",
+    "offset": "0x1478",
+    "literal_va": "0x14600f038",
+    "name": "HUD.InWorld.TeamMemberActorCanvas"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec30ee",
+    "offset": "0x1480",
+    "literal_va": "0x14600f060",
+    "name": "HUD.TopLeft.PlayerHitPoints"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec310c",
+    "offset": "0x1488",
+    "literal_va": "0x14600f080",
+    "name": "NPC.Ability.PreferredRangeEQSDensity"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec312a",
+    "offset": "0x1490",
+    "literal_va": "0x14600f0a8",
+    "name": "NPC.Ability.MinApproachRange"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3148",
+    "offset": "0x1498",
+    "literal_va": "0x14600f0c8",
+    "name": "NPC.Ability.MaxApproachRange"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3166",
+    "offset": "0x14a0",
+    "literal_va": "0x14600f0e8",
+    "name": "NPC.Ability.MinActualRange"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3184",
+    "offset": "0x14a8",
+    "literal_va": "0x14600f108",
+    "name": "NPC.Ability.MaxActualRange"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec31a2",
+    "offset": "0x14b0",
+    "literal_va": "0x14600f128",
+    "name": "NPC.Ability.MinPreferredRange"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec31c0",
+    "offset": "0x14b8",
+    "literal_va": "0x14600f148",
+    "name": "NPC.Ability.MaxPreferredRange"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec31de",
+    "offset": "0x14c0",
+    "literal_va": "0x14600f168",
+    "name": "NPC.Ability.MinPreferredRangeEQS"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec31fc",
+    "offset": "0x14d0",
+    "literal_va": "0x14600f190",
+    "name": "NPC.Ability.Attack.Ranged"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec321a",
+    "offset": "0x14d8",
+    "literal_va": "0x14600f1b0",
+    "name": "NPC.Ability.Attack.Melee"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3238",
+    "offset": "0x14e0",
+    "literal_va": "0x14600f1d0",
+    "name": "Gameplay.Mutation.DisableRepair"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3256",
+    "offset": "0x14e8",
+    "literal_va": "0x14600f1f0",
+    "name": "Gameplay.Mutation.DisableContainerInteraction"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3274",
+    "offset": "0x14f0",
+    "literal_va": "0x14600f220",
+    "name": "GameplayCue.Impact.Physical"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3292",
+    "offset": "0x14f8",
+    "literal_va": "0x14600f240",
+    "name": "GameplayCue.Damage.Physical"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec32b0",
+    "offset": "0x1500",
+    "literal_va": "0x14600f260",
+    "name": "GameplayCue.Impact.Physical.Creature"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec32ce",
+    "offset": "0x1508",
+    "literal_va": "0x14600f288",
+    "name": "GameplayCue.Damage.Physical.Creature"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec32ec",
+    "offset": "0x1510",
+    "literal_va": "0x14600f2b0",
+    "name": "GameplayCue.Damage.Physical.Ballistic"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec330a",
+    "offset": "0x1518",
+    "literal_va": "0x14600f2d8",
+    "name": "GameplayCue.Weapons.Activation"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3328",
+    "offset": "0x1520",
+    "literal_va": "0x14600f2f8",
+    "name": "GameplayCue.Athena.Player.BeingRevivedFromDBNO"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3346",
+    "offset": "0x1528",
+    "literal_va": "0x14600f328",
+    "name": "GameplayCue.Abilities.Emotes.DisplayEmoji"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3364",
+    "offset": "0x1530",
+    "literal_va": "0x14600f358",
+    "name": "GameplayCue.Abilities.Emotes.PreviewEmoji"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3382",
+    "offset": "0x1538",
+    "literal_va": "0x14600f388",
+    "name": "GameplayCue.Abilities.DisplaySquadTeamChat"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec33a0",
+    "offset": "0x1540",
+    "literal_va": "0x14600f3b8",
+    "name": "GameplayCue.GameplayModifiers.OnDeath"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec33be",
+    "offset": "0x1550",
+    "literal_va": "0x14600f3e0",
+    "name": "Expedition.UI.Unlocked"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec33dc",
+    "offset": "0x1558",
+    "literal_va": "0x14600f3f8",
+    "name": "Expedition.Land"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec33fa",
+    "offset": "0x1560",
+    "literal_va": "0x14600f408",
+    "name": "Expedition.Air"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3418",
+    "offset": "0x1568",
+    "literal_va": "0x14600f418",
+    "name": "Expedition.Sea"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3436",
+    "offset": "0x1570",
+    "literal_va": "0x14600f428",
+    "name": "Ability.Failed.Jetpack.UsingPrimaryFire"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3454",
+    "offset": "0x1578",
+    "literal_va": "0x14600f450",
+    "name": "Ability.Failed.Jetpack.Gamepad.UsingPrimaryFire"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3472",
+    "offset": "0x16d0",
+    "literal_va": "0x14600f480",
+    "name": "Athena.Ability.Failed.Consumable"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3490",
+    "offset": "0x16d8",
+    "literal_va": "0x14600f4a8",
+    "name": "Athena.Ability.Failed.BandageLimit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec34ae",
+    "offset": "0x16e0",
+    "literal_va": "0x14600f4d0",
+    "name": "Athena.Ability.Failed.MedkitLimit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec34cc",
+    "offset": "0x16e8",
+    "literal_va": "0x14600f4f8",
+    "name": "Athena.Ability.Failed.ShieldLimit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec34ea",
+    "offset": "0x16f0",
+    "literal_va": "0x14600f520",
+    "name": "Athena.Ability.RedeployGlider"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3508",
+    "offset": "0x808",
+    "literal_va": "0x14600f540",
+    "name": "Item.Consumable.AppleSun.CanJumpToDeploy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3526",
+    "offset": "0x16f8",
+    "literal_va": "0x14600f570",
+    "name": "Athena.Gameplay.Status.ForceDBNO"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3544",
+    "offset": "0x1700",
+    "literal_va": "0x14600f598",
+    "name": "Athena.Gameplay.Status.ForceSkipDBNO"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3562",
+    "offset": "0x1580",
+    "literal_va": "0x14600f5c0",
+    "name": "Gameplay.Action.Player.AthenaEnterVehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3580",
+    "offset": "0x1588",
+    "literal_va": "0x14600f5f0",
+    "name": "Gameplay.Action.Player.AthenaExitVehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec359e",
+    "offset": "0x1590",
+    "literal_va": "0x14600f620",
+    "name": "Gameplay.Action.Player.AthenaInVehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec35bc",
+    "offset": "0x1598",
+    "literal_va": "0x14600f648",
+    "name": "Gameplay.Action.Player.AthenaInInteractBlockingVehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec35da",
+    "offset": "0x15a0",
+    "literal_va": "0x14600f680",
+    "name": "Gameplay.Action.Player.AthenaDrivingVehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec35f8",
+    "offset": "0x15a8",
+    "literal_va": "0x14600f6b0",
+    "name": "Gameplay.Action.Player.AthenaDrivingVehicleWithInventory"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3616",
+    "offset": "0x15b0",
+    "literal_va": "0x14600f6f0",
+    "name": "Gameplay.Action.Player.AthenaLeaningVehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3634",
+    "offset": "0x15b8",
+    "literal_va": "0x14600f720",
+    "name": "Gameplay.Action.Player.CarryingPlayer"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3652",
+    "offset": "0x15c0",
+    "literal_va": "0x14600f748",
+    "name": "Gameplay.Action.Player.InterrogatingPlayer"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3670",
+    "offset": "0x15c8",
+    "literal_va": "0x14600f778",
+    "name": "Gameplay.Action.Player.ThrowingPlayer"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec368e",
+    "offset": "0x15d0",
+    "literal_va": "0x14600f7a0",
+    "name": "Gameplay.Action.Player.DroppingPlayer"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec36ac",
+    "offset": "0x15d8",
+    "literal_va": "0x14600f7c8",
+    "name": "Gameplay.Action.Player.OperatingTurret"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec36ca",
+    "offset": "0x15e0",
+    "literal_va": "0x14600f7f0",
+    "name": "Gameplay.Action.Player.Ziplining"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec36e8",
+    "offset": "0x15e8",
+    "literal_va": "0x14600f818",
+    "name": "Gameplay.Action.Player.SurfaceSwimming"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3706",
+    "offset": "0x15f0",
+    "literal_va": "0x14600f840",
+    "name": "Gameplay.Action.Player.ThankBusDriver"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3724",
+    "offset": "0x15f8",
+    "literal_va": "0x14600f868",
+    "name": "Gameplay.Action.Player.DidNotThankBusDriver"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3742",
+    "offset": "0x1600",
+    "literal_va": "0x14600f898",
+    "name": "Gameplay.Action.Player.CannonBall"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3760",
+    "offset": "0x1608",
+    "literal_va": "0x14600f8c0",
+    "name": "Gameplay.Action.Player.CannonPusher"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec377e",
+    "offset": "0x1610",
+    "literal_va": "0x14600f8e8",
+    "name": "Athena.Container.WarmupIsland"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec379c",
+    "offset": "0x1618",
+    "literal_va": "0x14600f908",
+    "name": "Athena.Building"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec37ba",
+    "offset": "0x1620",
+    "literal_va": "0x14600f918",
+    "name": "Athena.Vehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec37d8",
+    "offset": "0x1628",
+    "literal_va": "0x14600f928",
+    "name": "Athena.Vehicle.ShoppingCart"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec37f6",
+    "offset": "0x1630",
+    "literal_va": "0x14600f948",
+    "name": "Athena.Vehicle.PushCannon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3814",
+    "offset": "0x1638",
+    "literal_va": "0x14600f968",
+    "name": "Athena.Vehicle.GolfCart"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3832",
+    "offset": "0x1640",
+    "literal_va": "0x14600f980",
+    "name": "Athena.Vehicle.Antelope"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3850",
+    "offset": "0x1648",
+    "literal_va": "0x14600f998",
+    "name": "Athena.Vehicle.Biplane"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec386e",
+    "offset": "0x1650",
+    "literal_va": "0x14600f9b0",
+    "name": "Athena.Vehicle.Octopus"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec388c",
+    "offset": "0x1658",
+    "literal_va": "0x14600f9c8",
+    "name": "Athena.Vehicle.Jackal"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec38aa",
+    "offset": "0x1660",
+    "literal_va": "0x14600f9e0",
+    "name": "Athena.Vehicle.Ostrich"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec38c8",
+    "offset": "0x1668",
+    "literal_va": "0x14600f9f8",
+    "name": "Athena.Vehicle.Meatball"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec38e6",
+    "offset": "0x1670",
+    "literal_va": "0x14600fa10",
+    "name": "Athena.Vehicle.Hoagie"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3904",
+    "offset": "0x1678",
+    "literal_va": "0x14600fa28",
+    "name": "Athena.Vehicle.SwapWeapon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3922",
+    "offset": "0x1680",
+    "literal_va": "0x14600fa48",
+    "name": "Athena.MeshNetowrkActor"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3940",
+    "offset": "0x1688",
+    "literal_va": "0x14600fa60",
+    "name": "Vehicle.ShoppingCart"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec395e",
+    "offset": "0x1690",
+    "literal_va": "0x14600fa78",
+    "name": "Vehicle.Cannon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec397c",
+    "offset": "0x1698",
+    "literal_va": "0x14600fa88",
+    "name": "Vehicle.GolfCart"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec399a",
+    "offset": "0x16a0",
+    "literal_va": "0x14600faa0",
+    "name": "Vehicle.Antelope"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec39b8",
+    "offset": "0x16a8",
+    "literal_va": "0x14600fab8",
+    "name": "Vehicle.Biplane"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec39d6",
+    "offset": "0x16b0",
+    "literal_va": "0x14600fac8",
+    "name": "Vehicle.Octopus"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec39f4",
+    "offset": "0x16b8",
+    "literal_va": "0x14600fad8",
+    "name": "Vehicle.Hoverboard"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3a12",
+    "offset": "0x16c0",
+    "literal_va": "0x14600faf0",
+    "name": "Vehicle.Ostrich"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3a30",
+    "offset": "0x16c8",
+    "literal_va": "0x14600fb00",
+    "name": "Vehicle.MountedTurret"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3a4e",
+    "offset": "0x1870",
+    "literal_va": "0x14600fb18",
+    "name": "Ability.Ostrich.Dash"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3a6c",
+    "offset": "0x1878",
+    "literal_va": "0x14600fb30",
+    "name": "Ability.Ostrich.SecondaryFire"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3a8a",
+    "offset": "0x1880",
+    "literal_va": "0x14600fb50",
+    "name": "Athena.ValetRaisin"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3aa8",
+    "offset": "0x1888",
+    "literal_va": "0x14600fb68",
+    "name": "Athena.ValetRaisin.Source"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3ac6",
+    "offset": "0x1890",
+    "literal_va": "0x14600fb88",
+    "name": "Athena.ValetRaisin.NotSource"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3ae4",
+    "offset": "0x1898",
+    "literal_va": "0x14600fba8",
+    "name": "Athena.ValetRaisin.Type.Looping"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3b02",
+    "offset": "0x18a0",
+    "literal_va": "0x14600fbc8",
+    "name": "Athena.ValetRaisin.Genre"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3b20",
+    "offset": "0x1708",
+    "literal_va": "0x14600fbe8",
+    "name": "Athena.Playlist"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3b3e",
+    "offset": "0x1710",
+    "literal_va": "0x14600fbf8",
+    "name": "Athena.Playlist.Core"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3b5c",
+    "offset": "0x1718",
+    "literal_va": "0x14600fc10",
+    "name": "Athena.Playlist.LTM"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3b7a",
+    "offset": "0x1720",
+    "literal_va": "0x14600fc28",
+    "name": "Athena.Playlist.Solo"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3b98",
+    "offset": "0x1728",
+    "literal_va": "0x14600fc40",
+    "name": "Athena.Playlist.Duo"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3bb6",
+    "offset": "0x1730",
+    "literal_va": "0x14600fc58",
+    "name": "Athena.Playlist.Trios"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3bd4",
+    "offset": "0x1738",
+    "literal_va": "0x14600fc70",
+    "name": "Athena.Playlist.Squad"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3bf2",
+    "offset": "0x1740",
+    "literal_va": "0x14600fc88",
+    "name": "Athena.Playlist.TeamRumble"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3c10",
+    "offset": "0x1748",
+    "literal_va": "0x14600fca8",
+    "name": "Athena.Creative"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3c2e",
+    "offset": "0x1750",
+    "literal_va": "0x14600fcb8",
+    "name": "Athena.Creative.MM"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3c4c",
+    "offset": "0x1768",
+    "literal_va": "0x14600fcd0",
+    "name": "Athena.Playground"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3c6a",
+    "offset": "0x1770",
+    "literal_va": "0x14600fce8",
+    "name": "Athena.BattleLab"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3c88",
+    "offset": "0x1758",
+    "literal_va": "0x14600fd00",
+    "name": "Athena.Creative.LTM"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3ca6",
+    "offset": "0x1760",
+    "literal_va": "0x14600fd18",
+    "name": "Athena.Creative.UtilitySpawning"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3cc4",
+    "offset": "0x1778",
+    "literal_va": "0x14600fd38",
+    "name": "Athena.Playlist.LargeTeam"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3ce2",
+    "offset": "0x1780",
+    "literal_va": "0x14600fd58",
+    "name": "Athena.Crucible"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3d00",
+    "offset": "0x1788",
+    "literal_va": "0x14600fd68",
+    "name": "Athena.GuidedTutorial"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3d1e",
+    "offset": "0x1790",
+    "literal_va": "0x14600fd80",
+    "name": "Athena.Playlist.Spygames"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3d3c",
+    "offset": "0x1798",
+    "literal_va": "0x14600fda0",
+    "name": "Athena.Playlist.Papaya"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3d5a",
+    "offset": "0x17a0",
+    "literal_va": "0x14600fdb8",
+    "name": "Granted.Spy.Tech.Passive.UpgradeWeapon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3d78",
+    "offset": "0x17a8",
+    "literal_va": "0x14600fde0",
+    "name": "Playlist.SpecialEventNoKilling"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3d96",
+    "offset": "0x17b0",
+    "literal_va": "0x14600fe00",
+    "name": "Athena.Creative.HideForLoading"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3db4",
+    "offset": "0x17b8",
+    "literal_va": "0x14600fe20",
+    "name": "Athena.Replay.Client"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3dd2",
+    "offset": "0x17c0",
+    "literal_va": "0x14600fe38",
+    "name": "Athena.Replay.Server"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3df0",
+    "offset": "0x17c8",
+    "literal_va": "0x14600fe50",
+    "name": "Athena.Replay.Live"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3e0e",
+    "offset": "0x17d0",
+    "literal_va": "0x14600fe68",
+    "name": "Athena.Replay.CameraMode.ThirdPerson"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3e2c",
+    "offset": "0x17d8",
+    "literal_va": "0x14600fe90",
+    "name": "Athena.Replay.CameraMode.DroneFree"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3e4a",
+    "offset": "0x17e0",
+    "literal_va": "0x14600feb8",
+    "name": "Athena.Replay.CameraMode.GamePlay"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3e68",
+    "offset": "0x17e8",
+    "literal_va": "0x14600fee0",
+    "name": "Athena.Replay.CameraMode.ReverseShot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3e86",
+    "offset": "0x17f0",
+    "literal_va": "0x14600ff08",
+    "name": "Athena.Replay.CameraMode.FollowShot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3ea4",
+    "offset": "0x17f8",
+    "literal_va": "0x14600ff30",
+    "name": "Athena.Replay.CameraMode.DroneFollow"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3ec2",
+    "offset": "0x1800",
+    "literal_va": "0x14600ff58",
+    "name": "Athena.Replay.CameraMode.DroneAttach"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3ee0",
+    "offset": "0x1808",
+    "literal_va": "0x14600ff80",
+    "name": "Athena.Replay.CameraMode.BattleMap"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3efe",
+    "offset": "0x1810",
+    "literal_va": "0x14600ffa8",
+    "name": "Athena.Replay.CameraMode.ARDrone"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3f1c",
+    "offset": "0x1818",
+    "literal_va": "0x14600ffd0",
+    "name": "Athena.BattleMap.NoSquadMember"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3f3a",
+    "offset": "0x1820",
+    "literal_va": "0x14600fff0",
+    "name": "Ability.NetMovementPrioritized"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3f58",
+    "offset": "0x1828",
+    "literal_va": "0x146010010",
+    "name": "Ability.Jetpack.Equipped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3f76",
+    "offset": "0x1830",
+    "literal_va": "0x146010030",
+    "name": "Ability.BlingPack.Equipped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3f94",
+    "offset": "0x1838",
+    "literal_va": "0x146010050",
+    "name": "Ability.AdvancedStormTracking.Equipped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3fb2",
+    "offset": "0x1840",
+    "literal_va": "0x146010078",
+    "name": "Ability.MedicPack.Equipped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3fd0",
+    "offset": "0x1848",
+    "literal_va": "0x146010098",
+    "name": "Ability.GliderPack.Equipped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec3fee",
+    "offset": "0x1850",
+    "literal_va": "0x1460100b8",
+    "name": "Ability.StormIndicatorOnCompass"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec400c",
+    "offset": "0x1858",
+    "literal_va": "0x1460100d8",
+    "name": "Ability.MassiveGadget.Equipped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec402a",
+    "offset": "0x1860",
+    "literal_va": "0x1460100f8",
+    "name": "Ability.InfinityBlade.Equipped"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4048",
+    "offset": "0x1868",
+    "literal_va": "0x146010118",
+    "name": "Ability.HeavyAttack.Melee"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4066",
+    "offset": "0x18a8",
+    "literal_va": "0x146010138",
+    "name": "Cosmetics"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4084",
+    "offset": "0x18b0",
+    "literal_va": "0x146010148",
+    "name": "Cosmetics.Set"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec40a2",
+    "offset": "0x18b8",
+    "literal_va": "0x146010158",
+    "name": "Cosmetics.Source"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec40c0",
+    "offset": "0x18c0",
+    "literal_va": "0x146010170",
+    "name": "Cosmetics.UserFacingFlags"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec40de",
+    "offset": "0x18c8",
+    "literal_va": "0x146010190",
+    "name": "Cosmetics.UserFacingFlags.Reactive"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec40fc",
+    "offset": "0x18d0",
+    "literal_va": "0x1460101b8",
+    "name": "Cosmetics.UserFacingFlags.Reactive.TimeOfDay"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec411a",
+    "offset": "0x18d8",
+    "literal_va": "0x1460101e8",
+    "name": "Cosmetics.UserFacingFlags.Reactive.WeaponFire"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4138",
+    "offset": "0x18e0",
+    "literal_va": "0x146010218",
+    "name": "Cosmetics.UserFacingFlags.LoadingScreen.Animated"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4156",
+    "offset": "0x18e8",
+    "literal_va": "0x146010250",
+    "name": "Cosmetics.UserFacingFlags.Spray.Animated"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4174",
+    "offset": "0x18f0",
+    "literal_va": "0x146010280",
+    "name": "Cosmetics.UserFacingFlags.Wrap.Animated"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4192",
+    "offset": "0x18f8",
+    "literal_va": "0x1460102a8",
+    "name": "Cosmetics.UserFacingFlags.BuiltInEmote"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec41b0",
+    "offset": "0x1900",
+    "literal_va": "0x1460102d0",
+    "name": "Cosmetics.UserFacingFlags.HasUpgradeQuests"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec41ce",
+    "offset": "0x1908",
+    "literal_va": "0x146010300",
+    "name": "Cosmetics.SkipOwnershipCheck"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec41ec",
+    "offset": "0x1910",
+    "literal_va": "0x146010320",
+    "name": "Cosmetics.QuestsMetaData"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec420a",
+    "offset": "0x1918",
+    "literal_va": "0x146010340",
+    "name": "Cosmetics.QuestsMetaData.Wrap"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4228",
+    "offset": "0x1920",
+    "literal_va": "0x146010360",
+    "name": "Cosmetics.Platform.PS4"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4246",
+    "offset": "0x1928",
+    "literal_va": "0x146010378",
+    "name": "Cosmetics.Platform.XB1"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4264",
+    "offset": "0x1930",
+    "literal_va": "0x146010390",
+    "name": "Cosmetics.Platform.Switch"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4282",
+    "offset": "0x1938",
+    "literal_va": "0x1460103b0",
+    "name": "Cosmetics.EmoteType"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec42a0",
+    "offset": "0x1940",
+    "literal_va": "0x1460103c8",
+    "name": "Cosmetics.EmoteType.Dance"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec42be",
+    "offset": "0x1948",
+    "literal_va": "0x1460103e8",
+    "name": "Cosmetics.EmoteType.Emoji"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec42dc",
+    "offset": "0x1950",
+    "literal_va": "0x146010408",
+    "name": "Cosmetics.EmoteType.Spray"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec42fa",
+    "offset": "0x1958",
+    "literal_va": "0x146010428",
+    "name": "Cosmetics.EmoteType.Toy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4318",
+    "offset": "0x1960",
+    "literal_va": "0x146010440",
+    "name": "Cosmetics.FrontEndPose.DontCrossArms"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4336",
+    "offset": "0x1968",
+    "literal_va": "0x146010468",
+    "name": "Cosmetics.FrontEndPose.DontHandsOnHips"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4354",
+    "offset": "0x1970",
+    "literal_va": "0x146010490",
+    "name": "Cosmetics.FrontEndPose.NoVariantEditingAllowed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4372",
+    "offset": "0x1978",
+    "literal_va": "0x1460104c0",
+    "name": "Cosmetics.Variant.ForceLoadAllParts"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4390",
+    "offset": "0x1980",
+    "literal_va": "0x1460104e8",
+    "name": "Cosmetics.Variant.Channel"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec43ae",
+    "offset": "0x1988",
+    "literal_va": "0x146010508",
+    "name": "Cosmetics.Variant.Channel.Numeric"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec43cc",
+    "offset": "0x1990",
+    "literal_va": "0x146010530",
+    "name": "Cosmetics.Variant.Channel.RichColor"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec43ea",
+    "offset": "0x1998",
+    "literal_va": "0x146010558",
+    "name": "Cosmetics.Variant.Channel.ProfileBanner"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4408",
+    "offset": "0x19a0",
+    "literal_va": "0x146010580",
+    "name": "Cosmetics.Variant.Channel.ProfileLoadout"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4426",
+    "offset": "0x19a8",
+    "literal_va": "0x1460105b0",
+    "name": "Cosmetics.Variant.Channel.Mesh"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4444",
+    "offset": "0x19b0",
+    "literal_va": "0x1460105d0",
+    "name": "Cosmetics.Variant.Property"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4462",
+    "offset": "0x19b8",
+    "literal_va": "0x1460105f0",
+    "name": "Cosmetics.Variant.Property.Numeric"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4480",
+    "offset": "0x19c0",
+    "literal_va": "0x146010618",
+    "name": "Cosmetics.Variant.Property.RichColor"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec449e",
+    "offset": "0x19c8",
+    "literal_va": "0x146010640",
+    "name": "Cosmetics.Variant.Property.ProfileBanner"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec44bc",
+    "offset": "0x19d0",
+    "literal_va": "0x146010670",
+    "name": "Cosmetics.Variant.Property.ProfileLoadout"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec44da",
+    "offset": "0x19d8",
+    "literal_va": "0x1460106a0",
+    "name": "Cosmetics.Pet.Response.Happy.BeingPetted"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec44f8",
+    "offset": "0x19e0",
+    "literal_va": "0x1460106d0",
+    "name": "Cosmetics.Pickaxe.DualWield"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4516",
+    "offset": "0x19e8",
+    "literal_va": "0x1460106f0",
+    "name": "Cosmetics.Pickaxe.OneHanded"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4534",
+    "offset": "0x19f0",
+    "literal_va": "0x146010710",
+    "name": "Cosmetics.OverrideWrapBehavior.DoNotOverride"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4552",
+    "offset": "0x19f8",
+    "literal_va": "0x146010740",
+    "name": "Cosmetics.OverrideWrapBehavior.NativeAndBP"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4570",
+    "offset": "0x1a00",
+    "literal_va": "0x146010770",
+    "name": "Cosmetics.HideBackPack"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec458e",
+    "offset": "0x1a08",
+    "literal_va": "0x146010788",
+    "name": "Cosmetics.Glider.HideBackPack"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec45ac",
+    "offset": "0x1a10",
+    "literal_va": "0x1460107a8",
+    "name": "Cosmetics.Empty"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec45ca",
+    "offset": "0x1a18",
+    "literal_va": "0x1460107b8",
+    "name": "Cosmetics.MetaTags.Theme"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec45e8",
+    "offset": "0x1a20",
+    "literal_va": "0x1460107d8",
+    "name": "Cosmetics.MetaTags.Theme.Assassin"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4606",
+    "offset": "0x1a28",
+    "literal_va": "0x146010800",
+    "name": "Cosmetics.MetaTags.Trait"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4624",
+    "offset": "0x1a30",
+    "literal_va": "0x146010820",
+    "name": "Cosmetics.MetaTags.Trait.DynamicallyOwnedVariants"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4642",
+    "offset": "0x1a38",
+    "literal_va": "0x146010858",
+    "name": "Cosmetics.MetaTags.Trait.Headless"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4660",
+    "offset": "0x1a40",
+    "literal_va": "0x146010880",
+    "name": "Cosmetics.MetaTags.Trait.UniqueFit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec467e",
+    "offset": "0x1a48",
+    "literal_va": "0x1460108a8",
+    "name": "Cosmetics.MetaTags.Trait.UniqueFit.Head"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec469c",
+    "offset": "0x1a50",
+    "literal_va": "0x1460108d0",
+    "name": "Cosmetics.MetaTags.Trait.UniqueFit.Body"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec46ba",
+    "offset": "0x1a58",
+    "literal_va": "0x1460108f8",
+    "name": "Cosmetics.MetaTags.Trait.UniqueFit.Face"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec46d8",
+    "offset": "0x1a60",
+    "literal_va": "0x146010920",
+    "name": "Cosmetics.MetaTags.Trait.VariantsSwapEachOther"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec46f6",
+    "offset": "0x1a68",
+    "literal_va": "0x146010950",
+    "name": "Cosmetics.MetaTags.Trait.VariantsSwapRequiresDefaults"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4714",
+    "offset": "0x1a70",
+    "literal_va": "0x146010988",
+    "name": "Cosmetics.MetaTags.Trait.ExtremelyUnique"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4732",
+    "offset": "0x1a78",
+    "literal_va": "0x1460109b8",
+    "name": "Cosmetics.Filter.Season"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4750",
+    "offset": "0x1a80",
+    "literal_va": "0x1460109d0",
+    "name": "Cosmetics.Filter"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec476e",
+    "offset": "0x1a88",
+    "literal_va": "0x1460109e8",
+    "name": "Encounter.Type.PvE.Primary.Group.4Player"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec478c",
+    "offset": "0x1a90",
+    "literal_va": "0x146010a18",
+    "name": "Encounter.Type.PvE.Primary.NonScaling.4Player"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec47aa",
+    "offset": "0x1a98",
+    "literal_va": "0x146010a48",
+    "name": "StatManager"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec47c8",
+    "offset": "0x1aa0",
+    "literal_va": "0x146010a58",
+    "name": "StatManager.Season.SeasonLevel"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec47e6",
+    "offset": "0x1aa8",
+    "literal_va": "0x146010a78",
+    "name": "StatManager.Season.SeasonLevel11"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4804",
+    "offset": "0x1ab0",
+    "literal_va": "0x146010aa0",
+    "name": "StatManager.Season.SeasonLevel12"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4822",
+    "offset": "0x1ab8",
+    "literal_va": "0x146010ac8",
+    "name": "StatManager.GainedHealthTimes"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4840",
+    "offset": "0x1ac0",
+    "literal_va": "0x146010ae8",
+    "name": "StatManager.GainedShieldTimes"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec485e",
+    "offset": "0x1ac8",
+    "literal_va": "0x146010b08",
+    "name": "GameplayVFX"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec487c",
+    "offset": "0x1ad0",
+    "literal_va": "0x146010b18",
+    "name": "GameplayVFX.Pickaxe"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec489a",
+    "offset": "0x1ad8",
+    "literal_va": "0x146010b30",
+    "name": "GameplayVFX.Pickaxe.Swing"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec48b8",
+    "offset": "0x1ae0",
+    "literal_va": "0x146010b50",
+    "name": "GameplayVFX.Pickaxe.Swing.MainHand"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec48d6",
+    "offset": "0x1ae8",
+    "literal_va": "0x146010b78",
+    "name": "GameplayVFX.Pickaxe.Swing.OffHand"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec48f4",
+    "offset": "0x1af0",
+    "literal_va": "0x146010ba0",
+    "name": "GameplayVFX.HideMovementFX"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4912",
+    "offset": "0x1af8",
+    "literal_va": "0x146010bc0",
+    "name": "GameplayVFX.Pickaxe.Idle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4930",
+    "offset": "0x1b00",
+    "literal_va": "0x146010be0",
+    "name": "GameplayVFX.Pickaxe.Idle.MainHand"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec494e",
+    "offset": "0x1b08",
+    "literal_va": "0x146010c08",
+    "name": "GameplayVFX.Pickaxe.Idle.OffHand"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec496c",
+    "offset": "0x1b50",
+    "literal_va": "0x146010c30",
+    "name": "Unlocks.CollectionBook.BaseGrant"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec498a",
+    "offset": "0x1d10",
+    "literal_va": "0x146010c58",
+    "name": "MobileHUD.HamburgerMenu"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec49a8",
+    "offset": "0x1d18",
+    "literal_va": "0x146010c70",
+    "name": "MobileHUD.MiniMap"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec49c6",
+    "offset": "0x1d20",
+    "literal_va": "0x146010c88",
+    "name": "MobileHUD.PlayerHealthBar"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec49e4",
+    "offset": "0x1d28",
+    "literal_va": "0x146010ca8",
+    "name": "MobileHUD.TeammateHealthBars"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4a02",
+    "offset": "0x1d30",
+    "literal_va": "0x146010cc8",
+    "name": "MobileHUD.Compass"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4a20",
+    "offset": "0x1d38",
+    "literal_va": "0x146010ce0",
+    "name": "MobileHUD.Quickbar"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4a3e",
+    "offset": "0x1d40",
+    "literal_va": "0x146010cf8",
+    "name": "MobileHUD.MaterialSelector"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4a5c",
+    "offset": "0x1d48",
+    "literal_va": "0x146010d18",
+    "name": "MobileHUD.ReloadWidget"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4a7a",
+    "offset": "0x1d58",
+    "literal_va": "0x146010d30",
+    "name": "MobileHUD.LookStick"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4a98",
+    "offset": "0x1d60",
+    "literal_va": "0x146010d48",
+    "name": "MobileHUD.MoveStick"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4ab6",
+    "offset": "0x1d88",
+    "literal_va": "0x146010d60",
+    "name": "MobileHUD.Button.PushToTalk"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4ad4",
+    "offset": "0x1d90",
+    "literal_va": "0x146010d80",
+    "name": "MobileHUD.Button.Emote"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4af2",
+    "offset": "0x1d98",
+    "literal_va": "0x146010d98",
+    "name": "MobileHUD.Button.Jump"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4b10",
+    "offset": "0x1da0",
+    "literal_va": "0x146010db0",
+    "name": "MobileHUD.Button.Crouch"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4b2e",
+    "offset": "0x1da8",
+    "literal_va": "0x146010dc8",
+    "name": "MobileHUD.Button.Rotate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4b4c",
+    "offset": "0x1db0",
+    "literal_va": "0x146010de0",
+    "name": "MobileHUD.Button.ADS"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4b6a",
+    "offset": "0x1db8",
+    "literal_va": "0x146010df8",
+    "name": "MobileHUD.Button.Edit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4b88",
+    "offset": "0x1dc0",
+    "literal_va": "0x146010e10",
+    "name": "MobileHUD.Button.SecondaryAbility"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4ba6",
+    "offset": "0x1dc8",
+    "literal_va": "0x146010e38",
+    "name": "MobileHUD.Button.BuildMode"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4bc4",
+    "offset": "0x1dd0",
+    "literal_va": "0x146010e58",
+    "name": "MobileHUD.Button.Shoot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4be2",
+    "offset": "0x1dd8",
+    "literal_va": "0x146010e70",
+    "name": "MobileHUD.Button.Inventory"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4c00",
+    "offset": "0x1de0",
+    "literal_va": "0x146010e90",
+    "name": "MobileHUD.Button.BuildingInteract"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4c1e",
+    "offset": "0x1de8",
+    "literal_va": "0x146010eb8",
+    "name": "MobileHUD.Button.CycleWeapon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4c3c",
+    "offset": "0x1d50",
+    "literal_va": "0x146010ed8",
+    "name": "MobileHUD.AutorunZone"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4c5a",
+    "offset": "0x1df0",
+    "literal_va": "0x146010ef0",
+    "name": "MobileHUD.Button.EditReset"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4c78",
+    "offset": "0x1d68",
+    "literal_va": "0x146010f10",
+    "name": "HUD.Bacchus.Quickbar"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4c96",
+    "offset": "0x1d78",
+    "literal_va": "0x146010f28",
+    "name": "HUD.Bacchus.Hamburger.InGame"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4cb4",
+    "offset": "0x1d80",
+    "literal_va": "0x146010f48",
+    "name": "HUD.Bacchus.TouchButton.EmoteMenu"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4cd2",
+    "offset": "0x1d70",
+    "literal_va": "0x146010f70",
+    "name": "HUD.Quickbar"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4cf0",
+    "offset": "0x1df8",
+    "literal_va": "0x146010f80",
+    "name": "HUD.LTM.HideForTryHard"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4d0e",
+    "offset": "0x1e00",
+    "literal_va": "0x146010f98",
+    "name": "HUD.LTM.HideForOneShot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4d2c",
+    "offset": "0x1e08",
+    "literal_va": "0x146010fb0",
+    "name": "HUD.Event.HideForSpecialEvent"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4d4a",
+    "offset": "0x1e10",
+    "literal_va": "0x146010fd0",
+    "name": "Athena.LTM.Goose.Weapon.C"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4d68",
+    "offset": "0x1e18",
+    "literal_va": "0x146010ff0",
+    "name": "Athena.LTM.Goose.Weapon.R"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4d86",
+    "offset": "0x1e20",
+    "literal_va": "0x146011010",
+    "name": "Athena.LTM.Goose.Weapon.SR"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4da4",
+    "offset": "0x1e28",
+    "literal_va": "0x146011030",
+    "name": "Athena.LTM.Goose.Weapon.UC"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4dc2",
+    "offset": "0x1e30",
+    "literal_va": "0x146011050",
+    "name": "Athena.LTM.Goose.Weapon.VR"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4de0",
+    "offset": "0x1e38",
+    "literal_va": "0x146011070",
+    "name": "Athena.LTM.Goose.TouchedGround"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4dfe",
+    "offset": "0x1e40",
+    "literal_va": "0x146011090",
+    "name": "Athena.LTM.FF2.Foundation.1x1"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4e1c",
+    "offset": "0x1e48",
+    "literal_va": "0x1460110b0",
+    "name": "Athena.LTM.FF2.Foundation.3x3"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4e3a",
+    "offset": "0x1e50",
+    "literal_va": "0x1460110d0",
+    "name": "Athena.LTM.FF2.Foundation.5x5"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4e58",
+    "offset": "0x1e58",
+    "literal_va": "0x1460110f0",
+    "name": "Athena.LTM.INF.HasIntel"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4e76",
+    "offset": "0x1e60",
+    "literal_va": "0x146011108",
+    "name": "Athena.LTM.INF.PerkUnlocked"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4e94",
+    "offset": "0x1e68",
+    "literal_va": "0x146011128",
+    "name": "Athena.LTM.Infiltration.Attackers"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4eb2",
+    "offset": "0x1e70",
+    "literal_va": "0x146011150",
+    "name": "Athena.LTM.Infiltration.Defenders"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4ed0",
+    "offset": "0x1e88",
+    "literal_va": "0x146011178",
+    "name": "Athena.LTM.Infiltration.IntelDefended"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4eee",
+    "offset": "0x1e80",
+    "literal_va": "0x1460111a0",
+    "name": "Athena.LTM.Infiltration.IntelCaptured"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4f0c",
+    "offset": "0x1e78",
+    "literal_va": "0x1460111c8",
+    "name": "Athena.LTM.Infiltration.BlockRespawn"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4f2a",
+    "offset": "0x1e90",
+    "literal_va": "0x1460111f0",
+    "name": "Accolade.Metadata.SecondaryXp.Faction"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4f48",
+    "offset": "0x1e98",
+    "literal_va": "0x146011218",
+    "name": "Wax.Hotel.Pacify.Added"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4f66",
+    "offset": "0x1ec0",
+    "literal_va": "0x146011230",
+    "name": "Minigame.TeamStart.Team1"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4f84",
+    "offset": "0x1ec8",
+    "literal_va": "0x146011250",
+    "name": "Minigame.TeamStart.Team2"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4fa2",
+    "offset": "0x1ed0",
+    "literal_va": "0x146011270",
+    "name": "Minigame.TeamStart.Team3"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4fc0",
+    "offset": "0x1ed8",
+    "literal_va": "0x146011290",
+    "name": "Minigame.TeamStart.Team4"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4fde",
+    "offset": "0x1ee0",
+    "literal_va": "0x1460112b0",
+    "name": "Minigame.Stat.Assists"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec4ffc",
+    "offset": "0x1ee8",
+    "literal_va": "0x1460112c8",
+    "name": "Minigame.Stat.Deaths"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec501a",
+    "offset": "0x1ef0",
+    "literal_va": "0x1460112e0",
+    "name": "Minigame.Stat.PlayerLivesExpended"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5038",
+    "offset": "0x1ef8",
+    "literal_va": "0x146011308",
+    "name": "Minigame.Stat.PlayerHealth"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5056",
+    "offset": "0x1f00",
+    "literal_va": "0x146011328",
+    "name": "Minigame.Stat.Score"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5074",
+    "offset": "0x1f10",
+    "literal_va": "0x146011340",
+    "name": "Stat.IgnoreKillScore"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5092",
+    "offset": "0x1f08",
+    "literal_va": "0x146011358",
+    "name": "Minigame.Stat.PlayerLivesLeft"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec50b0",
+    "offset": "0x1f18",
+    "literal_va": "0x146011378",
+    "name": "GameplayEffect.ForagedItem.SpookyMist"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec50ce",
+    "offset": "0x1f20",
+    "literal_va": "0x1460113a0",
+    "name": "PCB.Partner"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec50ec",
+    "offset": "0x1f28",
+    "literal_va": "0x1460113b0",
+    "name": "PCB.Partner.Other"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec510a",
+    "offset": "0x1f30",
+    "literal_va": "0x1460113c8",
+    "name": "Quest.Metadata.PartyAssist"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5128",
+    "offset": "0x1f38",
+    "literal_va": "0x1460113e8",
+    "name": "Quest.Metadata.MCPNotifyOnComplete"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5146",
+    "offset": "0x1f40",
+    "literal_va": "0x146011410",
+    "name": "Quest.Metadata.InitiatorIsSquadFriend"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5164",
+    "offset": "0x1f48",
+    "literal_va": "0x146011438",
+    "name": "Quest.Metadata.SquadAssistedKill"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5182",
+    "offset": "0x1f50",
+    "literal_va": "0x146011460",
+    "name": "Quest.Metadata.TeamAssistedKill"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec51a0",
+    "offset": "0x1f58",
+    "literal_va": "0x146011480",
+    "name": "Quest.Metadata.SingleDamager"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec51be",
+    "offset": "0x1f60",
+    "literal_va": "0x1460114a0",
+    "name": "Quest.Metadata.Glyph"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec51dc",
+    "offset": "0x1f68",
+    "literal_va": "0x1460114b8",
+    "name": "Quest.Metadata.BrandNewItem"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec51fa",
+    "offset": "0x1f70",
+    "literal_va": "0x1460114d8",
+    "name": "Quest.Metadata.IsGliding"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5218",
+    "offset": "0x1f78",
+    "literal_va": "0x1460114f8",
+    "name": "Quest.Metadata.HealedToFull"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5236",
+    "offset": "0x1f80",
+    "literal_va": "0x146011518",
+    "name": "Quest.Metadata.HealedFromTeammate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5254",
+    "offset": "0x1f88",
+    "literal_va": "0x146011540",
+    "name": "Quest.Metadata.HealedTeammate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5272",
+    "offset": "0x1f90",
+    "literal_va": "0x146011560",
+    "name": "Quest.Metadata.HitWeakSpot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5290",
+    "offset": "0x1f98",
+    "literal_va": "0x146011580",
+    "name": "Quest.Metadata.Player.Eliminated"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec52ae",
+    "offset": "0x1fa0",
+    "literal_va": "0x1460115a8",
+    "name": "Quest.Metadata.Player.Downed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec52cc",
+    "offset": "0x1fa8",
+    "literal_va": "0x1460115c8",
+    "name": "Quest.Metadata.Player.Finished"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec52ea",
+    "offset": "0x1fb0",
+    "literal_va": "0x1460115e8",
+    "name": "Quest.Metadata.HideInAllChallengesMap"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5308",
+    "offset": "0x1fb8",
+    "literal_va": "0x146011610",
+    "name": "Accolade.Metadata.Survival"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5326",
+    "offset": "0x1fc0",
+    "literal_va": "0x146011630",
+    "name": "Accolade.Metadata.Combat"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5344",
+    "offset": "0x1fc8",
+    "literal_va": "0x146011650",
+    "name": "Accolade.Metadata.Support"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5362",
+    "offset": "0x1fd0",
+    "literal_va": "0x146011670",
+    "name": "Accolade.Metadata.BonusMedals"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5380",
+    "offset": "0x1fd8",
+    "literal_va": "0x146011690",
+    "name": "Accolade.Metadata.ChallengeCredit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec539e",
+    "offset": "0x1fe0",
+    "literal_va": "0x1460116b8",
+    "name": "Accolade.Metadata.MatchXp"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec53bc",
+    "offset": "0x1fe8",
+    "literal_va": "0x1460116d8",
+    "name": "Accolade.Metadata.AddSeasonMatchBoostXP"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec53da",
+    "offset": "0x1ff0",
+    "literal_va": "0x146011700",
+    "name": "Accolade.Metadata.NoRestedXPContribution"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec53f8",
+    "offset": "0x1ff8",
+    "literal_va": "0x146011730",
+    "name": "Accolade.Metadata.AllowWhenEliminated"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5416",
+    "offset": "0x2000",
+    "literal_va": "0x146011758",
+    "name": "Accolade.Metadata.AdditionalStatEvent"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5434",
+    "offset": "0x2008",
+    "literal_va": "0x146011780",
+    "name": "Accolade.Metadata.RequireStatEventQuestProgress"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5452",
+    "offset": "0x2010",
+    "literal_va": "0x1460117b0",
+    "name": "Accolade.Metadata.RequireStatEventQuestCompletion"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5470",
+    "offset": "0x2018",
+    "literal_va": "0x1460117e8",
+    "name": "Content.Token.AllowGiftboxing"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec548e",
+    "offset": "0x1d08",
+    "literal_va": "0x146011808",
+    "name": "Bacchus.Throw.Grenade.Explosive"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec54ac",
+    "offset": "0x1ea0",
+    "literal_va": "0x146011828",
+    "name": "Athena.Location"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec54ca",
+    "offset": "0x1ea8",
+    "literal_va": "0x146011838",
+    "name": "Athena.Location.POI"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec54e8",
+    "offset": "0x1eb0",
+    "literal_va": "0x146011850",
+    "name": "Athena.Location.POI.Golden"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5506",
+    "offset": "0x1eb8",
+    "literal_va": "0x146011870",
+    "name": "Athena.Location.UnNamedPOI"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5524",
+    "offset": "0x2020",
+    "literal_va": "0x146011890",
+    "name": "Athena.DoNotClearWhenClearingArea"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5542",
+    "offset": "0x2028",
+    "literal_va": "0x1460118b8",
+    "name": "Athena.GameOn"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5560",
+    "offset": "0x2030",
+    "literal_va": "0x1460118c8",
+    "name": "Playground.LobbyIsland.Spawn"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec557e",
+    "offset": "0x2038",
+    "literal_va": "0x1460118e8",
+    "name": "Playground.IslandDock.Spawn"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec559c",
+    "offset": "0x2040",
+    "literal_va": "0x146011908",
+    "name": "Creative.Island.Camera.User.Screenshot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec55ba",
+    "offset": "0x2048",
+    "literal_va": "0x146011930",
+    "name": "Creative.Island.Spawn"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec55d8",
+    "offset": "0x2050",
+    "literal_va": "0x146011948",
+    "name": "Creative.Island.Volume"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec55f6",
+    "offset": "0x2148",
+    "literal_va": "0x146011960",
+    "name": "Athena.AI.IgnoreAll"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5614",
+    "offset": "0x2150",
+    "literal_va": "0x146011978",
+    "name": "Athena.AI.IgnoreMovementNoise"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5632",
+    "offset": "0x2158",
+    "literal_va": "0x146011998",
+    "name": "Athena.AI.NoiseMaker"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5650",
+    "offset": "0x2160",
+    "literal_va": "0x1460119b0",
+    "name": "Feat.Hidden"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec566e",
+    "offset": "0x2168",
+    "literal_va": "0x1460119c0",
+    "name": "Feat.HiddenObjectives"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec568c",
+    "offset": "0x2170",
+    "literal_va": "0x1460119d8",
+    "name": "ChallengeCategory.Daily"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec56aa",
+    "offset": "0x2178",
+    "literal_va": "0x1460119f0",
+    "name": "ChallengeCategory.Weekly"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec56c8",
+    "offset": "0x2180",
+    "literal_va": "0x146011a10",
+    "name": "ChallengeCategory.Event"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec56e6",
+    "offset": "0x2188",
+    "literal_va": "0x146011a28",
+    "name": "ChallengeCategory.Event.CanBeSuggested"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5704",
+    "offset": "0x2190",
+    "literal_va": "0x146011a50",
+    "name": "ChallengeCategory.Style"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5722",
+    "offset": "0x2198",
+    "literal_va": "0x146011a68",
+    "name": "ChallengeCategory.Mission"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5740",
+    "offset": "0x21a0",
+    "literal_va": "0x146011a88",
+    "name": "ChallengeCategory.Mission.Urgent"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec575e",
+    "offset": "0x21a8",
+    "literal_va": "0x146011ab0",
+    "name": "ChallengeCategory.Mission.Battlepass"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec577c",
+    "offset": "0x21b0",
+    "literal_va": "0x146011ad8",
+    "name": "ChallengeCategory.Charm"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec579a",
+    "offset": "0x21b8",
+    "literal_va": "0x146011af0",
+    "name": "ChallengeCategory.Feats"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec57b8",
+    "offset": "0x21c0",
+    "literal_va": "0x146011b08",
+    "name": "ChallengeCategory.NotSuggested"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec57d6",
+    "offset": "0x21c8",
+    "literal_va": "0x146011b28",
+    "name": "ChallengeDetails.Default"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec57f4",
+    "offset": "0x21d0",
+    "literal_va": "0x146011b48",
+    "name": "ChallengeDetails.Display.Compact"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5812",
+    "offset": "0x21d8",
+    "literal_va": "0x146011b70",
+    "name": "ChallengeDetails.Display.HideChaseItems"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5830",
+    "offset": "0x21e0",
+    "literal_va": "0x146011b98",
+    "name": "ChallengeDetails.Display.HideQuestRewards"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5847",
+    "offset": "0x2268",
+    "literal_va": "0x146011bc4",
+    "name": "Quest"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec585e",
+    "offset": "0x2248",
+    "literal_va": "0x146011bd0",
+    "name": "SpatialMap.Tabs.Suggested"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5875",
+    "offset": "0x2250",
+    "literal_va": "0x146011bf0",
+    "name": "SpatialMap.Tabs.Daily"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec588c",
+    "offset": "0x2258",
+    "literal_va": "0x146011c08",
+    "name": "SpatialMap.Tabs.Style"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec58a3",
+    "offset": "0x2260",
+    "literal_va": "0x146011c20",
+    "name": "SpatialMap.Tabs.All"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec58c1",
+    "offset": "0x21e8",
+    "literal_va": "0x146011c38",
+    "name": "Schedule.Source"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec58df",
+    "offset": "0x21f0",
+    "literal_va": "0x146011c48",
+    "name": "Schedule.Source.Season"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec58fd",
+    "offset": "0x21f8",
+    "literal_va": "0x146011c60",
+    "name": "Schedule.Source.Event"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec591b",
+    "offset": "0x2200",
+    "literal_va": "0x146011c78",
+    "name": "Schedule.Source.Mission"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5939",
+    "offset": "0x2208",
+    "literal_va": "0x146011c90",
+    "name": "Schedule.Source.Mission.Urgent"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5957",
+    "offset": "0x2210",
+    "literal_va": "0x146011cb0",
+    "name": "Schedule.Source.Mission.Level"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5975",
+    "offset": "0x2218",
+    "literal_va": "0x146011cd0",
+    "name": "Schedule.Source.Mission.BattlePass"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5993",
+    "offset": "0x2220",
+    "literal_va": "0x146011cf8",
+    "name": "Schedule.Source.Mission.Mystery"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec59b1",
+    "offset": "0x2228",
+    "literal_va": "0x146011d18",
+    "name": "Schedule.Source.Mission.Special"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec59cf",
+    "offset": "0x2230",
+    "literal_va": "0x146011d38",
+    "name": "ChallengeBundle.Token.Store.CompletionTimes"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec59ed",
+    "offset": "0x2238",
+    "literal_va": "0x146011d68",
+    "name": "ChallengeBundle.Operation.DeleteQuestsOnCompletion"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5a0b",
+    "offset": "0x2240",
+    "literal_va": "0x146011da0",
+    "name": "ChallengeBundle.Source"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5a29",
+    "offset": "0x2270",
+    "literal_va": "0x146011db8",
+    "name": "ArenaLeaderboard.View.Me"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5a47",
+    "offset": "0x2278",
+    "literal_va": "0x146011dd8",
+    "name": "ArenaLeaderboard.View.Global"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5a65",
+    "offset": "0x2280",
+    "literal_va": "0x146011df8",
+    "name": "ArenaLeaderboard.View.Friends"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5a83",
+    "offset": "0x2288",
+    "literal_va": "0x146011e18",
+    "name": "ERG.Interaction"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5aa1",
+    "offset": "0x2290",
+    "literal_va": "0x146011e28",
+    "name": "EventLevel.UI.IndicatorTextList.Default"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5abf",
+    "offset": "0x2298",
+    "literal_va": "0x146011e50",
+    "name": "Athena.NotifyPickupSpawned"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5add",
+    "offset": "0x22a0",
+    "literal_va": "0x146011e70",
+    "name": "Athena.QuickHealing"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5afb",
+    "offset": "0x22a8",
+    "literal_va": "0x146011e88",
+    "name": "ItemShopCategory.AquisitionFeatured"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5b19",
+    "offset": "0x22b0",
+    "literal_va": "0x146011eb0",
+    "name": "ItemShopCategory.AquisitionDaily"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5b37",
+    "offset": "0x22c0",
+    "literal_va": "0x146011ed8",
+    "name": "ItemShopCategory.CommunityVoting"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5b55",
+    "offset": "0x22c8",
+    "literal_va": "0x146011f00",
+    "name": "ItemShopCategory.CommunityWinner"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5b73",
+    "offset": "0x22d0",
+    "literal_va": "0x146011f28",
+    "name": "MobileHUD.Button"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5b91",
+    "offset": "0x22d8",
+    "literal_va": "0x146011f40",
+    "name": "HUDLayout.ContextLayout.Vehicle"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5baf",
+    "offset": "0x22e0",
+    "literal_va": "0x146011f60",
+    "name": "HudLayout.ContextLayout.Combat"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5bcd",
+    "offset": "0x22e8",
+    "literal_va": "0x146011f80",
+    "name": "HudLayout.ContextLayout.Building"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5beb",
+    "offset": "0x22f0",
+    "literal_va": "0x146011fa8",
+    "name": "HudLayout.ContextLayout.Edit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5c09",
+    "offset": "0x22f8",
+    "literal_va": "0x146011fc8",
+    "name": "HudLayout.ContextLayout.Creative"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5c27",
+    "offset": "0x2300",
+    "literal_va": "0x146011ff0",
+    "name": "HUDLayout.Context.Combat"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5c45",
+    "offset": "0x2308",
+    "literal_va": "0x146012010",
+    "name": "HUDLayout.Context.Building"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5c63",
+    "offset": "0x2310",
+    "literal_va": "0x146012030",
+    "name": "HUDLayout.Context.Edit"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5c81",
+    "offset": "0x2318",
+    "literal_va": "0x146012048",
+    "name": "HUDLayout.Context.Creative"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5c9f",
+    "offset": "0x2320",
+    "literal_va": "0x146012068",
+    "name": "HUDLayout.Context.Vehicle.ShoppingCart"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5cbd",
+    "offset": "0x2328",
+    "literal_va": "0x146012090",
+    "name": "HUDLayout.Context.Vehicle.PushCannon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5cdb",
+    "offset": "0x2330",
+    "literal_va": "0x1460120b8",
+    "name": "HUDLayout.Context.Vehicle.GolfCart"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5cf9",
+    "offset": "0x2338",
+    "literal_va": "0x1460120e0",
+    "name": "HUDLayout.Context.Vehicle.Spaghetti"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5d17",
+    "offset": "0x2340",
+    "literal_va": "0x146012108",
+    "name": "HUDLayout.Context.Vehicle.Meatball"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5d35",
+    "offset": "0x2348",
+    "literal_va": "0x146012130",
+    "name": "HUDLayout.Context.Vehicle.Hoagie"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5d53",
+    "offset": "0x2350",
+    "literal_va": "0x146012158",
+    "name": "HUDLayout.Context.Vehicle.Antelope"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5d71",
+    "offset": "0x2358",
+    "literal_va": "0x146012180",
+    "name": "HUDLayout.Context.Vehicle.Biplane"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5d8f",
+    "offset": "0x2360",
+    "literal_va": "0x1460121a8",
+    "name": "HUDLayout.Context.Vehicle.Octopus"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5dad",
+    "offset": "0x2368",
+    "literal_va": "0x1460121d0",
+    "name": "HUDLayout.Context.Vehicle.Jackal"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5dcb",
+    "offset": "0x2370",
+    "literal_va": "0x1460121f8",
+    "name": "HUDLayout.Context.Vehicle.Ostrich"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5de9",
+    "offset": "0x2378",
+    "literal_va": "0x146012220",
+    "name": "HUDLayout.Context.Vehicle.MountedTurret"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5e07",
+    "offset": "0x2380",
+    "literal_va": "0x146012248",
+    "name": "HUDLayout.Context.Vehicle.Driver"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5e25",
+    "offset": "0x2388",
+    "literal_va": "0x146012270",
+    "name": "HUDLayout.Context.Vehicle.Passenger"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5e43",
+    "offset": "0x2390",
+    "literal_va": "0x146012298",
+    "name": "HUD.Visibility.FreeFalling"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5e61",
+    "offset": "0x2398",
+    "literal_va": "0x1460122b8",
+    "name": "HUD.Visibility.IsGliding"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5e7f",
+    "offset": "0x23a0",
+    "literal_va": "0x1460122d8",
+    "name": "HUD.Visibility.CanOpenChute"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5e9d",
+    "offset": "0x23a8",
+    "literal_va": "0x1460122f8",
+    "name": "HUD.Visibility.InLockedBus"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5ebb",
+    "offset": "0x23b0",
+    "literal_va": "0x146012318",
+    "name": "HUD.Visibility.InUnlockedBus"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5ed9",
+    "offset": "0x23b8",
+    "literal_va": "0x146012338",
+    "name": "HUD.Visibility.Targeting"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5ef7",
+    "offset": "0x23c0",
+    "literal_va": "0x146012358",
+    "name": "HUD.Visibility.UsingScopeTargeting"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5f15",
+    "offset": "0x23c8",
+    "literal_va": "0x146012380",
+    "name": "HUD.Visibility.CanTarget"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5f33",
+    "offset": "0x23d0",
+    "literal_va": "0x1460123a0",
+    "name": "HUD.Visibility.CanUseScopeTargeting"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5f51",
+    "offset": "0x23d8",
+    "literal_va": "0x1460123c8",
+    "name": "HUD.Visibility.Crouching"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5f6f",
+    "offset": "0x23e0",
+    "literal_va": "0x1460123e8",
+    "name": "HUD.Visibility.CanUseSecondaryAbility"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5f8d",
+    "offset": "0x23e8",
+    "literal_va": "0x146012410",
+    "name": "HUD.Visibility.DBNO"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5fab",
+    "offset": "0x23f0",
+    "literal_va": "0x146012428",
+    "name": "HUD.Visibility.CarryingDBNO"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5fc9",
+    "offset": "0x23f8",
+    "literal_va": "0x146012448",
+    "name": "HUD.Visibility.CarryingHeldObject"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec5fe7",
+    "offset": "0x2400",
+    "literal_va": "0x146012470",
+    "name": "HUD.Visibility.ControllingRCPawn"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6005",
+    "offset": "0x2408",
+    "literal_va": "0x146012498",
+    "name": "HUD.Visibility.InEditMode"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6023",
+    "offset": "0x2410",
+    "literal_va": "0x1460124b8",
+    "name": "HUD.Visibility.CreativeFlying"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6041",
+    "offset": "0x2420",
+    "literal_va": "0x1460124d8",
+    "name": "HUDLayout.Preset"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec605f",
+    "offset": "0x2428",
+    "literal_va": "0x1460124f0",
+    "name": "HUDLayout.Preset.OldSchool"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec607d",
+    "offset": "0x2430",
+    "literal_va": "0x146012510",
+    "name": "HUDLayout.Custom"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec609b",
+    "offset": "0x2438",
+    "literal_va": "0x146012528",
+    "name": "HUDLayout.Property.LinkAcrossContexts"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec60b9",
+    "offset": "0x2440",
+    "literal_va": "0x146012550",
+    "name": "TimeOfDay.Morning"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec60d7",
+    "offset": "0x2448",
+    "literal_va": "0x146012568",
+    "name": "TimeOfDay.Day"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec60f5",
+    "offset": "0x2450",
+    "literal_va": "0x146012578",
+    "name": "TimeOfDay.Evening"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6113",
+    "offset": "0x2458",
+    "literal_va": "0x146012590",
+    "name": "TimeOfDay.Night"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6131",
+    "offset": "0x2460",
+    "literal_va": "0x14600ce48",
+    "name": "Building.Type.Container.TreasureChest"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec614f",
+    "offset": "0x2468",
+    "literal_va": "0x1460125a0",
+    "name": "Building.Type.Container.Ammobox"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec616d",
+    "offset": "0x2470",
+    "literal_va": "0x14600ce90",
+    "name": "Building.Type.Container.SupplyLlama"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec618b",
+    "offset": "0x2478",
+    "literal_va": "0x14600ce20",
+    "name": "Building.Type.Container.SupplyDrop"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec61a9",
+    "offset": "0x2480",
+    "literal_va": "0x1460125c0",
+    "name": "Building.Type.Player"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec61c7",
+    "offset": "0x2488",
+    "literal_va": "0x1460125d8",
+    "name": "HUD.Athena.HideForPostGame"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec61e5",
+    "offset": "0x2490",
+    "literal_va": "0x1460125f8",
+    "name": "HUD.Athena.HideForPostGameSpectate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6203",
+    "offset": "0x2498",
+    "literal_va": "0x146012620",
+    "name": "HUD.Athena.HideOnSpectate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6221",
+    "offset": "0x24a0",
+    "literal_va": "0x146012640",
+    "name": "HUD.Athena.XPWidget"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec623f",
+    "offset": "0x24a8",
+    "literal_va": "0x146012658",
+    "name": "GameplayCue.Athena.LevelUp"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec625d",
+    "offset": "0x24b0",
+    "literal_va": "0x146012674",
+    "name": "HUD"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec627b",
+    "offset": "0x24b8",
+    "literal_va": "0x146012678",
+    "name": "HUD.Athena"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6299",
+    "offset": "0x24c0",
+    "literal_va": "0x146012688",
+    "name": "Athena.HideForCapture"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec62b7",
+    "offset": "0x24c8",
+    "literal_va": "0x1460126a0",
+    "name": "Athena.Event.NewLevel"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec62d5",
+    "offset": "0x24d0",
+    "literal_va": "0x1460126b8",
+    "name": "HUD.Athena.HideForCreative"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec62f3",
+    "offset": "0x24d8",
+    "literal_va": "0x1460126d8",
+    "name": "HUD.Athena.HideForPlayground"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6311",
+    "offset": "0x24e0",
+    "literal_va": "0x1460126f8",
+    "name": "HUD.Athena.HideForCreativeLTM"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec632f",
+    "offset": "0x24e8",
+    "literal_va": "0x146012718",
+    "name": "HUD.Athena.HideForBattleLab"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec634d",
+    "offset": "0x24f0",
+    "literal_va": "0x146012738",
+    "name": "Creative.Property.Basic"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec636b",
+    "offset": "0x24f8",
+    "literal_va": "0x146012750",
+    "name": "Creative.Property.Advanced"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6389",
+    "offset": "0x2500",
+    "literal_va": "0x146012770",
+    "name": "Creative.Property.Channel"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec63a0",
+    "offset": "0x2530",
+    "literal_va": "0x146012790",
+    "name": "Athena.Ability.Failed.SpawnBot"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec63b7",
+    "offset": "0x2538",
+    "literal_va": "0x1460127b0",
+    "name": "Mobile.DisableLargePreviews"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec63d5",
+    "offset": "0x2540",
+    "literal_va": "0x1460127d0",
+    "name": "ERG.Screen"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec63f3",
+    "offset": "0x2548",
+    "literal_va": "0x1460127e0",
+    "name": "ERG.Camera"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec6411",
+    "offset": "0x2550",
+    "literal_va": "0x1460127f0",
+    "name": "Stat.Theater.Phoenix"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8c2d",
+    "offset": "0x1b58",
+    "literal_va": "0x146012808",
+    "name": "GameplayStat.Profile.Match"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8c46",
+    "offset": "0x1b60",
+    "literal_va": "0x146012828",
+    "name": "GameplayStat.Profile.Match.Score"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8c5f",
+    "offset": "0x1b68",
+    "literal_va": "0x146012850",
+    "name": "GameplayStat.Profile.Match.Placement"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8c78",
+    "offset": "0x1b70",
+    "literal_va": "0x146012878",
+    "name": "GameplayStat.Profile.Match.SecondsAlive"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8c91",
+    "offset": "0x1b78",
+    "literal_va": "0x1460128a0",
+    "name": "GameplayStat.Profile.Match.PersonalElimination"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8caa",
+    "offset": "0x1b80",
+    "literal_va": "0x1460128d0",
+    "name": "GameplayStat.Profile.Match.TeamEliminations"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8cc3",
+    "offset": "0x1b88",
+    "literal_va": "0x146012900",
+    "name": "GameplayStat.Profile.Match.Downs"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8cdd",
+    "offset": "0x1b90",
+    "literal_va": "0x146012928",
+    "name": "GameplayStat.Profile.Match.Assists"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8cf4",
+    "offset": "0x1b98",
+    "literal_va": "0x146012950",
+    "name": "GameplayStat.Profile.Match.Revives"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8d0e",
+    "offset": "0x1ba0",
+    "literal_va": "0x146012978",
+    "name": "GameplayStat.Profile.Match.AIEliminations"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8d25",
+    "offset": "0x1ba8",
+    "literal_va": "0x1460129a8",
+    "name": "GameplayStat.Profile.Match.DamageTaken"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8d3c",
+    "offset": "0x1bb0",
+    "literal_va": "0x1460129d0",
+    "name": "GameplayStat.Profile.Match.TravelDistanceGround"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8d53",
+    "offset": "0x1bb8",
+    "literal_va": "0x146012a00",
+    "name": "GameplayStat.Profile.Match.GatheredWood"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8d6a",
+    "offset": "0x1bc0",
+    "literal_va": "0x146012a28",
+    "name": "GameplayStat.Profile.Match.GatheredStone"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8d81",
+    "offset": "0x1bc8",
+    "literal_va": "0x146012a58",
+    "name": "GameplayStat.Profile.Match.GatheredMetal"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8d98",
+    "offset": "0x1bd0",
+    "literal_va": "0x146012a88",
+    "name": "GameplayStat.Profile.Match.UsedWood"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8daf",
+    "offset": "0x1bd8",
+    "literal_va": "0x146012ab0",
+    "name": "GameplayStat.Profile.Match.UsedStone"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8dc6",
+    "offset": "0x1be0",
+    "literal_va": "0x146012ad8",
+    "name": "GameplayStat.Profile.Match.UsedMetal"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8ddd",
+    "offset": "0x1be8",
+    "literal_va": "0x146012b00",
+    "name": "GameplayStat.Profile.Match.Wins"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8df4",
+    "offset": "0x1bf0",
+    "literal_va": "0x146012b20",
+    "name": "GameplayStat.Profile.Match.HighBracket"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8e0b",
+    "offset": "0x1bf8",
+    "literal_va": "0x146012b48",
+    "name": "GameplayStat.Profile.Match.LowBracket"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8e22",
+    "offset": "0x1c00",
+    "literal_va": "0x146012b70",
+    "name": "GameplayStat.Profile.Match.GamesPlayed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8e3c",
+    "offset": "0x1c08",
+    "literal_va": "0x146012b98",
+    "name": "GameplayStat.Profile.Match.Accuracy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8e56",
+    "offset": "0x1c10",
+    "literal_va": "0x146012bc0",
+    "name": "GameplayStat.Profile.Match.MaterialsGathered"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8e70",
+    "offset": "0x1c18",
+    "literal_va": "0x146012bf0",
+    "name": "GameplayStat.Profile.Match.MaterialsUsed"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8e8a",
+    "offset": "0x1c20",
+    "literal_va": "0x146012c20",
+    "name": "GameplayStat.Profile.Match.SoloHighBucket"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8ea4",
+    "offset": "0x1c28",
+    "literal_va": "0x146012c50",
+    "name": "GameplayStat.Profile.Match.SoloLowBucket"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8ebe",
+    "offset": "0x1c30",
+    "literal_va": "0x146012c80",
+    "name": "GameplayStat.Profile.Match.DuoHighBucket"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8ed8",
+    "offset": "0x1c38",
+    "literal_va": "0x146012cb0",
+    "name": "GameplayStat.Profile.Match.DuoLowBucket"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8ef2",
+    "offset": "0x1c40",
+    "literal_va": "0x146012cd8",
+    "name": "GameplayStat.Profile.Match.SquadHighBucket"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8f0c",
+    "offset": "0x1c48",
+    "literal_va": "0x146012d08",
+    "name": "GameplayStat.Profile.Match.SquadLowBucket"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8f26",
+    "offset": "0x1c50",
+    "literal_va": "0x146012d38",
+    "name": "GameplayStat.Profile.Weapon"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8f3d",
+    "offset": "0x1c58",
+    "literal_va": "0x146012d58",
+    "name": "GameplayStat.Profile.Weapon.Eliminations"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8f54",
+    "offset": "0x1c60",
+    "literal_va": "0x146012d88",
+    "name": "GameplayStat.Profile.Weapon.Downs"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8f6b",
+    "offset": "0x1c68",
+    "literal_va": "0x146012db0",
+    "name": "GameplayStat.Profile.Weapon.RangedShots"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8f82",
+    "offset": "0x1c70",
+    "literal_va": "0x146012dd8",
+    "name": "GameplayStat.Profile.Weapon.NormalDamageToHostiles"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8f99",
+    "offset": "0x1c78",
+    "literal_va": "0x146012e10",
+    "name": "GameplayStat.Profile.Weapon.NormalDamageToFriends"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8fb0",
+    "offset": "0x1c80",
+    "literal_va": "0x146012e48",
+    "name": "GameplayStat.Profile.Weapon.NormalDamageToStructures"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8fc7",
+    "offset": "0x1c88",
+    "literal_va": "0x146012e80",
+    "name": "GameplayStat.Profile.Weapon.CriticalDamageToHostiles"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8fde",
+    "offset": "0x1c90",
+    "literal_va": "0x146012eb8",
+    "name": "GameplayStat.Profile.Weapon.CriticalDamageToFriends"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec8ff5",
+    "offset": "0x1c98",
+    "literal_va": "0x146012ef0",
+    "name": "GameplayStat.Profile.Weapon.NormalHitsToHostiles"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec900c",
+    "offset": "0x1ca0",
+    "literal_va": "0x146012f28",
+    "name": "GameplayStat.Profile.Weapon.NormalHitsToFriends"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec9023",
+    "offset": "0x1ca8",
+    "literal_va": "0x146012f58",
+    "name": "GameplayStat.Profile.Weapon.NormalHitsToStructures"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec903a",
+    "offset": "0x1cb0",
+    "literal_va": "0x146012f90",
+    "name": "GameplayStat.Profile.Weapon.CriticalHitsToHostiles"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec9051",
+    "offset": "0x1cb8",
+    "literal_va": "0x146012fc8",
+    "name": "GameplayStat.Profile.Weapon.CriticalHitsToFriends"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec906b",
+    "offset": "0x1cc0",
+    "literal_va": "0x146013000",
+    "name": "GameplayStat.Profile.Weapon.Accuracy"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec9085",
+    "offset": "0x1cc8",
+    "literal_va": "0x146013028",
+    "name": "GameplayStat.Profile.Weapon.TotalHitsToHostiles"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec909f",
+    "offset": "0x1cd0",
+    "literal_va": "0x146013058",
+    "name": "GameplayStat.Profile.Weapon.TotalHitsToFriends"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec90b9",
+    "offset": "0x1cd8",
+    "literal_va": "0x146013088",
+    "name": "GameplayStat.Profile.Weapon.TotalDamageToHostiles"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec90d3",
+    "offset": "0x1ce0",
+    "literal_va": "0x1460130c0",
+    "name": "GameplayStat.Profile.Weapon.TotalDamageToFriends"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec90ea",
+    "offset": "0x1ce8",
+    "literal_va": "0x1460130f8",
+    "name": "GameplayStat.Profile.Weapon.TotalHealSelf"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec9101",
+    "offset": "0x1cf0",
+    "literal_va": "0x146013128",
+    "name": "GameplayStat.Profile.Weapon.TotalHealTeammate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec9118",
+    "offset": "0x1cf8",
+    "literal_va": "0x146013158",
+    "name": "GameplayStat.Profile.Weapon.TotalShieldSelf"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec912f",
+    "offset": "0x1d00",
+    "literal_va": "0x146013188",
+    "name": "GameplayStat.Profile.Weapon.TotalShieldTeammate"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec9149",
+    "offset": "0x2508",
+    "literal_va": "0x1460131b8",
+    "name": "Phoebe.Cosmetic.Minus.Zone1"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec9163",
+    "offset": "0x2510",
+    "literal_va": "0x1460131d8",
+    "name": "Phoebe.Cosmetic.Minus.Zone2"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec917d",
+    "offset": "0x2518",
+    "literal_va": "0x1460131f8",
+    "name": "Athena.AI.Hidden"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec9197",
+    "offset": "0x2520",
+    "literal_va": "0x146013210",
+    "name": "ERG.Camera.UsePreviouseSelectedCamera"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec91b1",
+    "offset": "0x2528",
+    "literal_va": "0x146013238",
+    "name": "ERG.Camera.MovementCamera"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec91cb",
+    "offset": "0x2558",
+    "literal_va": "0x146013258",
+    "name": "Gameplay.Damage.Environment.ExcludedFromStormSurge"
+  },
+  {
+    "kind": "tag",
+    "call": "0x141ec91e5",
+    "offset": "0x2560",
+    "literal_va": "0x146013290",
+    "name": "Gameplay.Markers.NoMarkerActors"
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9216",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1b60",
+    "value": 0
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec923c",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1b68",
+    "value": 1
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9262",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1b70",
+    "value": 2
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9288",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1b78",
+    "value": 3
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec92ae",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1b80",
+    "value": 4
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec92d4",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1b88",
+    "value": 5
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec92fa",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1b90",
+    "value": 6
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec932b",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1b98",
+    "value": 7
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9358",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1ba8",
+    "value": 8
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9385",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1bb0",
+    "value": 9
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec93b2",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1bb8",
+    "value": 10
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec93df",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1bc0",
+    "value": 11
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec940c",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1bc8",
+    "value": 12
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9439",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1bd0",
+    "value": 13
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9466",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1bd8",
+    "value": 14
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9493",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1be0",
+    "value": 15
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec94c0",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1be8",
+    "value": 16
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec94ed",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1bf0",
+    "value": 17
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec951a",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1bf8",
+    "value": 18
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9547",
+    "map_offset": "0x2058",
+    "tag_offset": "0x1c00",
+    "value": 19
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec957b",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1c58",
+    "value": 0
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec95a8",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1c60",
+    "value": 1
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec95d5",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1c68",
+    "value": 2
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9602",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1c70",
+    "value": 3
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec962f",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1c78",
+    "value": 4
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec965c",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1c80",
+    "value": 5
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9689",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1c88",
+    "value": 6
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec96b6",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1c90",
+    "value": 7
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec96e3",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1c98",
+    "value": 8
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9710",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1ca0",
+    "value": 9
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec973d",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1ca8",
+    "value": 10
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec976a",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1cb0",
+    "value": 11
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec9797",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1cb8",
+    "value": 12
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec97c4",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1ce8",
+    "value": 13
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec97f1",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1cf0",
+    "value": 14
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec981e",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1cf8",
+    "value": 15
+  },
+  {
+    "kind": "map",
+    "call": "0x141ec984b",
+    "map_offset": "0x20a8",
+    "tag_offset": "0x1d00",
+    "value": 16
+  },
+  {
+    "kind": "done",
+    "call": "0x141ec643b"
+  },
+  {
+    "kind": "container",
+    "call": "0x141ec6455",
+    "container_offset": "0x1b10",
+    "tag_offset": "0x440"
+  },
+  {
+    "kind": "container",
+    "call": "0x141ec6465",
+    "container_offset": "0x1b10",
+    "tag_offset": "0x418"
+  },
+  {
+    "kind": "container",
+    "call": "0x141ec6475",
+    "container_offset": "0x1b10",
+    "tag_offset": "0x450"
+  },
+  {
+    "kind": "container",
+    "call": "0x141ec6494",
+    "container_offset": "0x1b30",
+    "tag_offset": "0x2a8"
+  },
+  {
+    "kind": "container",
+    "call": "0x141ec64a1",
+    "container_offset": "0x1b30",
+    "tag_offset": "0x2c0"
+  },
+  {
+    "kind": "container",
+    "call": "0x141ec64ae",
+    "container_offset": "0x1b30",
+    "tag_offset": "0x2b0"
+  },
+  {
+    "kind": "container",
+    "call": "0x141ec64bb",
+    "container_offset": "0x1b30",
+    "tag_offset": "0x2c8"
+  }
+]

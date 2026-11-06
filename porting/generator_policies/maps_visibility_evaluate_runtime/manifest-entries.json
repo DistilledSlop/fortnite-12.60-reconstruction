@@ -1,0 +1,57 @@
+[
+  {
+    "class": "UFortVisibilityComponent",
+    "function": "NativeCachedTeamBits_0xcc",
+    "kind": "member_field",
+    "signature": "uint16 NativeCachedTeamBits_0xcc",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0xcc",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "draft",
+    "notes": "Native 16-bit cached team mask; reconstructed field, source only.",
+    "default": 0
+  },
+  {
+    "class": "UFortVisibilityComponent",
+    "function": "NativeEvaluateVisibility",
+    "kind": "helper",
+    "signature": "bool NativeEvaluateVisibility(AActor* Observer, bool bForce)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/generator_policies/maps_visibility_evaluate_runtime/UFortVisibilityComponent_NativeEvaluateVisibility.inc",
+    "includes": [
+      "AFortGameState.h",
+      "AFortPlayerPawn.h",
+      "UFortTeamActorInterface.h",
+      "Engine/Engine.h",
+      "Engine/World.h",
+      "CollisionQueryParams.h",
+      "GameFramework/Actor.h"
+    ],
+    "address": "0x14262adc0",
+    "confidence": "high",
+    "status": "draft",
+    "notes": "Recovered original virtual slot 0x3e8; source only, not built or runtime verified."
+  },
+  {
+    "function": "NativeAreFriendlyActors163",
+    "kind": "helper",
+    "signature": "bool NativeAreFriendlyActors163(AActor* Requester, AActor* Candidate)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/target_filter163_runtime/AFortGameStateZone_NativeAreFriendlyActors163.inc",
+    "confidence": "high",
+    "status": "draft",
+    "class": "AFortGameState",
+    "address": "0x141ea6f10",
+    "virtual": true,
+    "includes": [
+      "UFortTeamActorInterface.h"
+    ],
+    "notes": "Base AFortGameState constructor 0x141e8a600 installs vtable 0x145fffdf8, slot 0x770 points to this body; Zone inherits this API."
+  }
+]

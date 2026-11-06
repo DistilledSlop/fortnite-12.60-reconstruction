@@ -1,0 +1,53 @@
+[
+  {
+    "kind": "member_field",
+    "function": "NativeCurrentGameSubMode",
+    "signature": "uint8 NativeCurrentGameSubMode",
+    "offset": "0x6cc",
+    "notes": "Actual raw game-submode byte. Writers and full mode transition remain open.",
+    "class": "UFortAssetManager",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "kind": "helper",
+    "function": "NativeGetGameSubMode",
+    "signature": "uint8 NativeGetGameSubMode()",
+    "address": "0x141ed2b30",
+    "static": true,
+    "includes": [
+      "Engine/Engine.h"
+    ],
+    "class": "UFortAssetManager",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/UFortAssetManager/NativeGetGameSubMode.inc"
+  },
+  {
+    "kind": "helper",
+    "function": "NativeHandleLoadDiagnostic",
+    "signature": "void NativeHandleLoadDiagnostic(FFortAssetLoadDiagnosticState& State, const FString& Path, bool bSynchronous)",
+    "address": "0x141e09a30",
+    "static": true,
+    "includes": [
+      "FortAssetLoadDiagnosticState.h",
+      "Engine/Engine.h",
+      "Engine/World.h",
+      "HAL/PlatformTime.h",
+      "GenericPlatform/GenericPlatformStricmp.h",
+      "SharedFortCsv.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Assigned static source binding accepting actual FFortAssets diagnostic substate. Full owner/delegate installation remains open; not a parallel cache.",
+    "class": "UFortAssetManager",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/UFortAssetManager/NativeHandleLoadDiagnostic.inc"
+  }
+]

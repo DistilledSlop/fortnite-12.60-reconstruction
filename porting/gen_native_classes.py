@@ -2035,14 +2035,14 @@ for _owner, _name, _outer, _create, _flags, _access, _params, _types, _args, _al
 
 
 # Exact original reflection policies: declarations only; UHT owns their dispatchers.
-with open(os.path.join(os.path.dirname(__file__), "behavior", "delivery_events172_runtime",
+with open(os.path.join(os.path.dirname(__file__), "generator_policies", "delivery_events172_runtime",
                        "blueprint-events.json"), encoding="utf-8") as _event_policy_file:
     for _owner, _events in json.load(_event_policy_file).items():
         UI_PARAMETERIZED_BLUEPRINT_EVENTS.setdefault(_owner, {}).update(_events)
 
 
 # Recovered wind callbacks; UHT owns the original ProcessEvent parameter construction.
-with open(os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_events_runtime",
+with open(os.path.join(os.path.dirname(__file__), "generator_policies", "maps_wind_events_runtime",
                        "blueprint-events.json"), encoding="utf-8") as _wind_event_policy_file:
     for _owner, _events in json.load(_wind_event_policy_file).items():
         UI_PARAMETERIZED_BLUEPRINT_EVENTS.setdefault(_owner, {}).update(_events)
@@ -2396,139 +2396,139 @@ _local_signin_spec = _common_activation_import.spec_from_file_location(
 _local_signin_policy = _common_activation_import.module_from_spec(_local_signin_spec)
 _local_signin_spec.loader.exec_module(_local_signin_policy)
 _native_gameplay_tags_spec = _common_activation_import.spec_from_file_location(
-    "native_gameplay_tags_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_gameplay_tags_runtime", "source_policy.py"))
+    "native_gameplay_tags_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_gameplay_tags_runtime", "source_policy.py"))
 _native_gameplay_tags_policy = _common_activation_import.module_from_spec(_native_gameplay_tags_spec)
 _native_gameplay_tags_spec.loader.exec_module(_native_gameplay_tags_policy)
 _aircraft_events_spec = _common_activation_import.spec_from_file_location(
-    "aircraft_events_policy", os.path.join(os.path.dirname(__file__), "behavior", "aircraft_events_runtime", "source_policy.py"))
+    "aircraft_events_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "aircraft_events_runtime", "source_policy.py"))
 _aircraft_events_policy = _common_activation_import.module_from_spec(_aircraft_events_spec)
 _aircraft_events_spec.loader.exec_module(_aircraft_events_policy)
 _item_tag_interface_spec = _common_activation_import.spec_from_file_location(
-    "item_tag_interface_policy", os.path.join(os.path.dirname(__file__), "behavior", "item_tag_interface_runtime", "source_policy.py"))
+    "item_tag_interface_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "item_tag_interface_runtime", "source_policy.py"))
 _item_tag_interface_policy = _common_activation_import.module_from_spec(_item_tag_interface_spec)
 _item_tag_interface_spec.loader.exec_module(_item_tag_interface_policy)
 _pawn_ability_interface_spec = _common_activation_import.spec_from_file_location(
-    "pawn_ability_interface_policy", os.path.join(os.path.dirname(__file__), "behavior", "pawn_ability_native50_runtime", "source_policy.py"))
+    "pawn_ability_interface_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_ability_native50_runtime", "source_policy.py"))
 _pawn_ability_interface_policy = _common_activation_import.module_from_spec(_pawn_ability_interface_spec)
 _pawn_ability_interface_spec.loader.exec_module(_pawn_ability_interface_policy)
 _fort_ability_interface_spec = _common_activation_import.spec_from_file_location(
-    "fort_ability_interface_policy", os.path.join(os.path.dirname(__file__), "behavior", "ability_interface302_runtime", "source_policy.py"))
+    "fort_ability_interface_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "ability_interface302_runtime", "source_policy.py"))
 _fort_ability_interface_policy = _common_activation_import.module_from_spec(_fort_ability_interface_spec)
 _fort_ability_interface_spec.loader.exec_module(_fort_ability_interface_policy)
 _native_checkpoint2040_spec = _common_activation_import.spec_from_file_location(
-    "native_checkpoint2040_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_checkpoint2040_runtime", "source_policy.py"))
+    "native_checkpoint2040_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_checkpoint2040_runtime", "source_policy.py"))
 _native_checkpoint2040_policy = _common_activation_import.module_from_spec(_native_checkpoint2040_spec)
 _native_checkpoint2040_spec.loader.exec_module(_native_checkpoint2040_policy)
 _native_checkpoint3058_spec = _common_activation_import.spec_from_file_location(
-    "native_checkpoint3058_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_checkpoint3058_runtime", "source_policy.py"))
+    "native_checkpoint3058_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_checkpoint3058_runtime", "source_policy.py"))
 _native_checkpoint3058_policy = _common_activation_import.module_from_spec(_native_checkpoint3058_spec)
 _native_checkpoint3058_spec.loader.exec_module(_native_checkpoint3058_policy)
 _dayphase_callback_spec = _common_activation_import.spec_from_file_location(
-    "dayphase_callback60_policy", os.path.join(os.path.dirname(__file__), "behavior", "dayphase_callback60_runtime", "source_policy.py"))
+    "dayphase_callback60_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "dayphase_callback60_runtime", "source_policy.py"))
 _dayphase_callback_policy = _common_activation_import.module_from_spec(_dayphase_callback_spec)
 _dayphase_callback_spec.loader.exec_module(_dayphase_callback_policy)
 _volume_accessor_spec = _common_activation_import.spec_from_file_location(
-    "volume_accessor63_policy", os.path.join(os.path.dirname(__file__), "behavior", "volume_accessor63_runtime", "source_policy.py"))
+    "volume_accessor63_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "volume_accessor63_runtime", "source_policy.py"))
 _volume_accessor_policy = _common_activation_import.module_from_spec(_volume_accessor_spec)
 _volume_accessor_spec.loader.exec_module(_volume_accessor_policy)
 _volume_client_spec = _common_activation_import.spec_from_file_location(
-    "volume_client64_policy", os.path.join(os.path.dirname(__file__), "behavior", "volume_client_tracking64_runtime", "source_policy.py"))
+    "volume_client64_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "volume_client_tracking64_runtime", "source_policy.py"))
 _volume_client_policy = _common_activation_import.module_from_spec(_volume_client_spec)
 _volume_client_spec.loader.exec_module(_volume_client_policy)
 _kismet_geometry_spec = _common_activation_import.spec_from_file_location(
-    "kismet_geometry64_policy", os.path.join(os.path.dirname(__file__), "behavior", "kismet_geometry64_runtime", "source_policy.py"))
+    "kismet_geometry64_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "kismet_geometry64_runtime", "source_policy.py"))
 _kismet_geometry_policy = _common_activation_import.module_from_spec(_kismet_geometry_spec)
 _kismet_geometry_spec.loader.exec_module(_kismet_geometry_policy)
 _pawn_cues_spec = _common_activation_import.spec_from_file_location(
-    "pawn_cues66_policy", os.path.join(os.path.dirname(__file__), "behavior", "pawn_cues66_runtime", "source_policy.py"))
+    "pawn_cues66_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pawn_cues66_runtime", "source_policy.py"))
 _pawn_cues_policy = _common_activation_import.module_from_spec(_pawn_cues_spec)
 _pawn_cues_spec.loader.exec_module(_pawn_cues_policy)
 _playerstate68_spec = _common_activation_import.spec_from_file_location(
-    "playerstate68_policy", os.path.join(os.path.dirname(__file__), "behavior", "playerstate68_runtime", "source_policy.py"))
+    "playerstate68_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "playerstate68_runtime", "source_policy.py"))
 _playerstate68_policy = _common_activation_import.module_from_spec(_playerstate68_spec)
 _playerstate68_spec.loader.exec_module(_playerstate68_policy)
 _definition_queries_spec = _common_activation_import.spec_from_file_location(
-    "definition_queries_signature_policy", os.path.join(os.path.dirname(__file__), "behavior", "definition_broad53_runtime", "source_policy.py"))
+    "definition_queries_signature_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "definition_broad53_runtime", "source_policy.py"))
 _definition_queries_policy = _common_activation_import.module_from_spec(_definition_queries_spec)
 _definition_queries_spec.loader.exec_module(_definition_queries_policy)
 _inventory_entry_spec = _common_activation_import.spec_from_file_location(
-    "inventory_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "inventory_entry_copy_runtime", "source_policy.py"))
+    "inventory_entry_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "inventory_entry_copy_runtime", "source_policy.py"))
 _inventory_entry_policy = _common_activation_import.module_from_spec(_inventory_entry_spec)
 _inventory_entry_spec.loader.exec_module(_inventory_entry_policy)
 _maps_fog_spec = _common_activation_import.spec_from_file_location(
-    "maps_fog_raster_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_fog_raster_runtime", "source_policy.py"))
+    "maps_fog_raster_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_fog_raster_runtime", "source_policy.py"))
 _maps_fog_policy = _common_activation_import.module_from_spec(_maps_fog_spec)
 _maps_fog_spec.loader.exec_module(_maps_fog_policy)
 _maps_wind_handle_spec = _common_activation_import.spec_from_file_location(
-    "maps_wind_handle_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_handle_runtime", "source_policy.py"))
+    "maps_wind_handle_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_wind_handle_runtime", "source_policy.py"))
 _maps_wind_handle_policy = _common_activation_import.module_from_spec(_maps_wind_handle_spec)
 _maps_wind_handle_spec.loader.exec_module(_maps_wind_handle_policy)
 _maps_wind_building_spec = _common_activation_import.spec_from_file_location(
-    "maps_wind_building_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_building_runtime", "source_policy.py"))
+    "maps_wind_building_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_wind_building_runtime", "source_policy.py"))
 _maps_wind_building_policy = _common_activation_import.module_from_spec(_maps_wind_building_spec)
 _maps_wind_building_spec.loader.exec_module(_maps_wind_building_policy)
 _maps_wind_break_spec = _common_activation_import.spec_from_file_location(
-    "maps_wind_break_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_break_runtime", "source_policy.py"))
+    "maps_wind_break_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_wind_break_runtime", "source_policy.py"))
 _maps_wind_break_policy = _common_activation_import.module_from_spec(_maps_wind_break_spec)
 _maps_wind_break_spec.loader.exec_module(_maps_wind_break_policy)
 _maps_wind_make_spec = _common_activation_import.spec_from_file_location(
-    "maps_wind_make_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_make_runtime", "source_policy.py"))
+    "maps_wind_make_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_wind_make_runtime", "source_policy.py"))
 _maps_wind_make_policy = _common_activation_import.module_from_spec(_maps_wind_make_spec)
 _maps_wind_make_spec.loader.exec_module(_maps_wind_make_policy)
 _maps_wind_impulse_spec = _common_activation_import.spec_from_file_location(
-    "maps_wind_impulse_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_wind_impulse_runtime", "source_policy.py"))
+    "maps_wind_impulse_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_wind_impulse_runtime", "source_policy.py"))
 _maps_wind_impulse_policy = _common_activation_import.module_from_spec(_maps_wind_impulse_spec)
 _maps_wind_impulse_spec.loader.exec_module(_maps_wind_impulse_policy)
 _maps_visibility_spec = _common_activation_import.spec_from_file_location(
-    "maps_visibility_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_visibility_evaluate_runtime", "source_policy.py"))
+    "maps_visibility_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_visibility_evaluate_runtime", "source_policy.py"))
 _maps_visibility_policy = _common_activation_import.module_from_spec(_maps_visibility_spec)
 _maps_visibility_spec.loader.exec_module(_maps_visibility_policy)
 _quickbar_refresh_spec = _common_activation_import.spec_from_file_location(
-    "quickbar_refresh_policy", os.path.join(os.path.dirname(__file__), "behavior", "quickbar_refresh110_runtime", "source_policy.py"))
+    "quickbar_refresh_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "quickbar_refresh110_runtime", "source_policy.py"))
 _quickbar_refresh_policy = _common_activation_import.module_from_spec(_quickbar_refresh_spec)
 _quickbar_refresh_spec.loader.exec_module(_quickbar_refresh_policy)
 _quickbar_swap_spec = _common_activation_import.spec_from_file_location(
-    "quickbar_swap_policy", os.path.join(os.path.dirname(__file__), "behavior", "quickbar_swap129_runtime", "source_policy.py"))
+    "quickbar_swap_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "quickbar_swap129_runtime", "source_policy.py"))
 _quickbar_swap_policy = _common_activation_import.module_from_spec(_quickbar_swap_spec)
 _quickbar_swap_spec.loader.exec_module(_quickbar_swap_policy)
 _profile_entry_spec = _common_activation_import.spec_from_file_location(
-    "profile_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "profile_entry_lifecycle_runtime", "source_policy.py"))
+    "profile_entry_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "profile_entry_lifecycle_runtime", "source_policy.py"))
 _profile_entry_policy = _common_activation_import.module_from_spec(_profile_entry_spec)
 _profile_entry_spec.loader.exec_module(_profile_entry_policy)
 _pending_save_spec = _common_activation_import.spec_from_file_location(
-    "pending_save_policy", os.path.join(os.path.dirname(__file__), "behavior", "pending_save_membership_runtime", "source_policy.py"))
+    "pending_save_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "pending_save_membership_runtime", "source_policy.py"))
 _pending_save_policy = _common_activation_import.module_from_spec(_pending_save_spec)
 _pending_save_spec.loader.exec_module(_pending_save_policy)
 _world_record_action_spec = _common_activation_import.spec_from_file_location(
-    "world_record_action_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_world_record_action_types_runtime", "support.py"))
+    "world_record_action_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_world_record_action_types_runtime", "support.py"))
 _world_record_action_policy = _common_activation_import.module_from_spec(_world_record_action_spec)
 _world_record_action_spec.loader.exec_module(_world_record_action_policy)
 _replay_spectator216_spec = _common_activation_import.spec_from_file_location(
-    "replay_spectator216_policy", os.path.join(os.path.dirname(__file__), "behavior", "replay_spectator216_runtime", "source_policy.py"))
+    "replay_spectator216_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "replay_spectator216_runtime", "source_policy.py"))
 _replay_spectator216_policy = _common_activation_import.module_from_spec(_replay_spectator216_spec)
 _replay_spectator216_spec.loader.exec_module(_replay_spectator216_policy)
 _target_volume_cvar_spec = _common_activation_import.spec_from_file_location(
-    "target_volume_cvar_policy", os.path.join(os.path.dirname(__file__), "behavior", "target_volume_cvar175_runtime", "source_policy.py"))
+    "target_volume_cvar_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "target_volume_cvar175_runtime", "source_policy.py"))
 _target_volume_cvar_policy = _common_activation_import.module_from_spec(_target_volume_cvar_spec)
 _target_volume_cvar_spec.loader.exec_module(_target_volume_cvar_policy)
 _asset_diagnostic_spec = _common_activation_import.spec_from_file_location(
-    "asset_diagnostic_policy", os.path.join(os.path.dirname(__file__), "behavior", "asset_diagnostic_support_runtime", "source_policy.py"))
+    "asset_diagnostic_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "asset_diagnostic_support_runtime", "source_policy.py"))
 _asset_diagnostic_policy = _common_activation_import.module_from_spec(_asset_diagnostic_spec)
 _asset_diagnostic_spec.loader.exec_module(_asset_diagnostic_policy)
 _world_ready_spec = _common_activation_import.spec_from_file_location(
-    "world_ready_policy", os.path.join(os.path.dirname(__file__), "behavior", "maps_world_ready_runtime", "source_policy.py"))
+    "world_ready_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "maps_world_ready_runtime", "source_policy.py"))
 _world_ready_policy = _common_activation_import.module_from_spec(_world_ready_spec)
 _world_ready_spec.loader.exec_module(_world_ready_policy)
 _controller_analytics_spec = _common_activation_import.spec_from_file_location(
-    "controller_analytics_policy", os.path.join(os.path.dirname(__file__), "behavior", "controller_analytics_provider_binding_runtime", "source_policy.py"))
+    "controller_analytics_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "controller_analytics_provider_binding_runtime", "source_policy.py"))
 _controller_analytics_policy = _common_activation_import.module_from_spec(_controller_analytics_spec)
 _controller_analytics_spec.loader.exec_module(_controller_analytics_policy)
 _mutator_owner_spec = _common_activation_import.spec_from_file_location(
-    "mutator_owner_policy", os.path.join(os.path.dirname(__file__), "behavior", "mutator_provider_bindings_runtime", "source_policy.py"))
+    "mutator_owner_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "mutator_provider_bindings_runtime", "source_policy.py"))
 _mutator_owner_policy = _common_activation_import.module_from_spec(_mutator_owner_spec)
 _mutator_owner_spec.loader.exec_module(_mutator_owner_policy)
 _athena_mode_spec = _common_activation_import.spec_from_file_location(
-    "athena_mode_policy", os.path.join(os.path.dirname(__file__), "behavior", "athena_mode_reconstruction_runtime", "source_policy.py"))
+    "athena_mode_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "athena_mode_reconstruction_runtime", "source_policy.py"))
 _athena_mode_policy = _common_activation_import.module_from_spec(_athena_mode_spec)
 _athena_mode_spec.loader.exec_module(_athena_mode_policy)
 _route_spec = _common_activation_import.spec_from_file_location(
@@ -2986,16 +2986,20 @@ def helper_type_refs(names, texts, package, ctx, explicit):
     for tok in sorted(names):
         if tok in HELPER_TYPE_WORDS:
             continue
-        if tok in ctx["class_pkg"]:
+        # Interfaces are declared as IFoo but their generated header and class map
+        # use the UInterface name UFoo. Normalize only the lookup; keep IFoo in the
+        # signature and forward declaration.
+        lookup = "U" + tok[1:] if tok in ctx.get("interface_packages", {}) else tok
+        if lookup in ctx["class_pkg"]:
             # FortniteUI already depends on FortniteGame for reflected signatures.
             # Preserve that same edge for recovered fields and helper signatures.
             ui_game_edge = (package == "/Script/FortniteUI" and
-                            ctx["class_pkg"][tok] == "/Script/FortniteGame")
-            if ctx["class_pkg"][tok] != package and not ui_game_edge:
+                            ctx["class_pkg"][lookup] == "/Script/FortniteGame")
+            if ctx["class_pkg"][lookup] != package and not ui_game_edge:
                 problems.append("signature uses %s, a class of another module" % tok)
             else:
                 if ui_game_edge:
-                    includes.add(tok + ".h")
+                    includes.add(lookup + ".h")
                 # Class pointer wrappers do not store an instance of T.
                 # Check each occurrence so another pointer/wrapper occurrence
                 # cannot mask a separate invalid class-by-value parameter.

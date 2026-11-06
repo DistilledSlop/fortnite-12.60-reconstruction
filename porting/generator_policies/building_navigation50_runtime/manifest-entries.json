@@ -1,0 +1,34 @@
+[
+  {
+    "class": "ABuildingActor",
+    "function": "SetCanExportNavigationObstacle",
+    "kind": "exec",
+    "signature": "void SetCanExportNavigationObstacle(bool InCanExportNavigationObstacle)",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142738050",
+    "native_body_address": "0x141bc4900",
+    "inc_path": "porting/behavior/ABuildingActor/SetCanExportNavigationObstacle.inc",
+    "includes": [
+      "NavigationSystem.h"
+    ],
+    "notes": "Native tail-calls UNavigationSystemV1::UpdateActorInNavOctree after changing the bit."
+  },
+  {
+    "class": "ABuildingActor",
+    "function": "SetNavigationModifier",
+    "kind": "exec",
+    "signature": "void SetNavigationModifier(bool bEnableModifier)",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142738450",
+    "native_body_address": "0x141bc4d30",
+    "inc_path": "porting/behavior/ABuildingActor/SetNavigationModifier.inc",
+    "includes": [
+      "NavigationSystem.h"
+    ],
+    "notes": "Native tail-calls UNavigationSystemV1::UpdateActorInNavOctree after changing the bit."
+  }
+]

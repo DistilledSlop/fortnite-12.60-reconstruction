@@ -1,0 +1,5 @@
+14468fb70  LEA RAX,[RCX + 0x1c8]
+14468fb77  MOV dword ptr [RDX + 0x8],0x0
+14468fb7e  MOV qword ptr [RDX],RAX
+14468fb81  MOV RAX,RDX
+14468fb84  RET

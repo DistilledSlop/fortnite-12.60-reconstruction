@@ -1,0 +1,66 @@
+[
+  {
+    "function": "GetChargePercent",
+    "kind": "exec",
+    "signature": "float GetChargePercent() const",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": false,
+    "inc_path": "porting/behavior/AFortWeapon/GetChargePercent.inc",
+    "address": "0x142b45c00",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortWeapon",
+    "reflection_flags": "0x54020401",
+    "native_body_address": "0x14269b900"
+  },
+  {
+    "function": "GetChargeToMinPercent",
+    "kind": "exec",
+    "signature": "float GetChargeToMinPercent() const",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": false,
+    "inc_path": "porting/behavior/AFortWeapon/GetChargeToMinPercent.inc",
+    "address": "0x142b45c50",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortWeapon",
+    "reflection_flags": "0x54020401",
+    "native_body_address": "0x14269b9a0"
+  },
+  {
+    "function": "GetCurrentMaxChargePercent",
+    "kind": "exec",
+    "signature": "float GetCurrentMaxChargePercent() const",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": false,
+    "inc_path": "porting/behavior/AFortWeapon/GetCurrentMaxChargePercent.inc",
+    "address": "0x142b45cc0",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortWeapon",
+    "reflection_flags": "0x54020401",
+    "native_body_address": "0x14269ba70"
+  },
+  {
+    "function": "NativeGetChargeRange",
+    "kind": "helper",
+    "signature": "void NativeGetChargeRange(float& OutMin, float& OutMax) const",
+    "signature_status": "inferred",
+    "access": "public",
+    "virtual": false,
+    "inc_path": "porting/behavior/AFortWeapon/NativeGetChargeRange.inc",
+    "address": "0x142695260",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortWeapon",
+    "includes": [
+      "AbilitySystemComponent.h",
+      "GameplayEffect.h",
+      "GameplayEffectAggregator.h",
+      "UObject/UnrealType.h"
+    ]
+  }
+]

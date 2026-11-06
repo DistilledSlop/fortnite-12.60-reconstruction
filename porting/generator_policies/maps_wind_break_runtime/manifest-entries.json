@@ -1,0 +1,62 @@
+[
+  {
+    "function": "BreakWindImpulseRadius",
+    "kind": "exec",
+    "signature": "void BreakWindImpulseRadius(const FFortWindImpulseRadius& InWindImpulseRadius, FVector& ImpulseLocation, float& ImpulseRadius, float& ImpulseMagnitude, float& ImpulseBlendTime)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/AFortWindManager/BreakWindImpulseRadius.inc",
+    "address": "0x142b55af0",
+    "reflection_flags": "0x14c22401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Field copies in original order; input const-reference signature requires targeted reflection policy. Build and runtime verification pending.",
+    "class": "AFortWindManager"
+  },
+  {
+    "function": "BreakWindImpulseCylinder",
+    "kind": "exec",
+    "signature": "void BreakWindImpulseCylinder(const FFortWindImpulseCylinder& InWindImpulseCylinder, FVector& ImpulseLocation, float& ImpulseInnerRadius, float& ImpulseOuterRadius, float& ImpulseMagnitude, FVector& ImpulseDirection)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/AFortWindManager/BreakWindImpulseCylinder.inc",
+    "address": "0x142b54de0",
+    "reflection_flags": "0x14c22401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Field copies in original order; input const-reference signature requires targeted reflection policy. Build and runtime verification pending.",
+    "class": "AFortWindManager"
+  },
+  {
+    "function": "BreakWindImpulseCylinderAdvanced",
+    "kind": "exec",
+    "signature": "void BreakWindImpulseCylinderAdvanced(const FFortWindImpulseCylinder& WindImpulseCylinder, FVector& WindLocation, float& WindInnerRadius, float& WindOuterRadius, FVector& WindWorldDirection, float& WindMagnitude, FBox& WindWorldBounds, bool& bIsWindChanging, bool& bIsWindChangePending)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/AFortWindManager/BreakWindImpulseCylinderAdvanced.inc",
+    "address": "0x142b55070",
+    "reflection_flags": "0x4c22401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Field copies in original order; input const-reference signature requires targeted reflection policy. Build and runtime verification pending.",
+    "class": "AFortWindManager"
+  },
+  {
+    "function": "BreakWindImpulseCylinderDelta",
+    "kind": "exec",
+    "signature": "void BreakWindImpulseCylinderDelta(const FFortWindImpulseCylinderDelta& WindImpulseCylinderDelta, FVector& WindDeltaCenter, bool& bWindImpulseInitialized, bool& bWindRipplesOutward, float& WindDeltaSectionWidth, float& WindDeltaInnerSectionRadius, float& WindDeltaOuterSectionRadius, float& WindDeltaMaximumRadius, float& WindDeltaDesiredOverallBlendTime, float& WindDeltaSectionBlendTime, float& WindDeltaSectionCurrentBlendTime, float& WindDeltaPreviousMagnitude, float& WindDeltaSectionCurrentMagnitude, float& WindDeltaDesiredMagnitude, FBox& WindDeltaOuterWorldBounds, FBox& WindDeltaInnerWorldBounds, FBox& WindImpulseBounds, FFortWindImpulseHandle& WindImpulseHandleToModify)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/AFortWindManager/BreakWindImpulseCylinderDelta.inc",
+    "address": "0x142b553f0",
+    "reflection_flags": "0x4c22401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Field copies in original order; input const-reference signature requires targeted reflection policy. Build and runtime verification pending.",
+    "class": "AFortWindManager"
+  }
+]

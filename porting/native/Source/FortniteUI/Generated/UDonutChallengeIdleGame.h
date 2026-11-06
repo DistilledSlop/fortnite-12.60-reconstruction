@@ -202,5 +202,20 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_MobileJump;
 
+private:
+	UFUNCTION()
+	void EndBumpyRide();
+public:
+
+private:
+	UFUNCTION()
+	void EndJump();
+public:
+
+private:
+	UFUNCTION()
+	void EndSuperJump();
+public:
+
 };
 

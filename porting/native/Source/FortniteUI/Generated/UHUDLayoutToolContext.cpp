@@ -10,6 +10,13 @@ bool UHUDLayoutToolContext::CloudHUDLayoutEnabled() const
 	return GetDefault<UFortRuntimeOptions>()->bEnableHUDLayoutCloudSave;
 }
 
+bool UHUDLayoutToolContext::HasSelectedWidget() const
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x14532b3c0
+	    return NativeRecoveredWeak_0x204.IsValid();
+}
+
 bool UHUDLayoutToolContext::IsFireModeAvailable(EFireModeType NewFireMode) const
 {
 	// Native 0x144d4c1a0. CONFIDENCE: high

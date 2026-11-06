@@ -18,6 +18,7 @@
 #include "FUInt8Delegate.h"
 #include "FWeaponDelegate.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "Math/Color.h"
 
 #include "UAthenaRemotePlayerViewData.generated.h"
 
@@ -164,6 +165,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPlayerStateAthena* GetPlayerState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FLinearColor GetTeamColor() const;
 
 };
 

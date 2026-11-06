@@ -1,0 +1,11 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "windows": [
+    {
+      "begin": "0x1419642e0",
+      "length": 355,
+      "sha256": "c759a1fb3ecd1052daf9f209ef9fe9daa52917c8f8deb3754fcb66253a662f0e"
+    }
+  ],
+  "image_base": "0x140000000"
+}

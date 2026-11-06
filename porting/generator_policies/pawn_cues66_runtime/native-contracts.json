@@ -1,0 +1,1315 @@
+{
+  "functions": {
+    "AFortPawn": {
+      "NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams": {
+        "exec_addr": "0x142a1d4e0",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "GameplayCueParameters",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10008000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077df10"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTag",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a2a0"
+            }
+          }
+        ],
+        "create_func": "0x142a14d30",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueAdded_WithParams": {
+        "exec_addr": "0x142a1d710",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "Parameters",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10008000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077df10"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTag",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a2a0"
+            }
+          }
+        ],
+        "create_func": "0x142a14cd0",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueExecuted_FromSpec": {
+        "exec_addr": "0x142a1dac0",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 120,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 1,
+            "name": "Spec",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x140778d40"
+            }
+          }
+        ],
+        "create_func": "0x142a14dd0",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueExecuted_WithParams": {
+        "exec_addr": "0x142a1dc50",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "GameplayCueParameters",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10008000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077df10"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTag",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a2a0"
+            }
+          }
+        ],
+        "create_func": "0x142a14e00",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams": {
+        "exec_addr": "0x142a1de80",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "GameplayCueParameters",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10008000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 56,
+            "type_refs": {
+              "struct": "0x14077df10"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTags",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a300"
+            }
+          }
+        ],
+        "create_func": "0x142a14e30",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCuesExecuted_WithParams": {
+        "exec_addr": "0x142a1e2d0",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "GameplayCueParameters",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10008000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 56,
+            "type_refs": {
+              "struct": "0x14077df10"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTags",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a300"
+            }
+          }
+        ],
+        "create_func": "0x142a14e90",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec": {
+        "exec_addr": "0x142a1d360",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 120,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 1,
+            "name": "Spec",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000008000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x140778d40"
+            }
+          }
+        ],
+        "create_func": "0x142a14d00",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueAdded": {
+        "exec_addr": "0x142a1d1e0",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "EffectContext",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077dfa0"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTag",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a2a0"
+            }
+          }
+        ],
+        "create_func": "0x142a14c60",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueExecuted": {
+        "exec_addr": "0x142a1d940",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "EffectContext",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077dfa0"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTag",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a2a0"
+            }
+          }
+        ],
+        "create_func": "0x142a14d60",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCuesExecuted": {
+        "exec_addr": "0x142a1e100",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "EffectContext",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 56,
+            "type_refs": {
+              "struct": "0x14077dfa0"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTags",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a300"
+            }
+          }
+        ],
+        "create_func": "0x142a14e60",
+        "source": "lea"
+      },
+      "PlaySound": {
+        "exec_addr": "0x142a1f0d0",
+        "flags": "0x1020c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "PitchMultiplier",
+            "kind": "Float",
+            "kind_raw": "0xa",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 12
+          },
+          {
+            "index": 1,
+            "name": "VolumeMultiplier",
+            "kind": "Float",
+            "kind_raw": "0xa",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8
+          },
+          {
+            "index": 2,
+            "name": "Sound",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "class": "0x1447eafa0"
+            }
+          }
+        ],
+        "create_func": "0x142a157d0",
+        "source": "lea"
+      }
+    },
+    "UAbilitySystemComponent": {
+      "NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams": {
+        "exec_addr": "0x140753520",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "GameplayCueParameters",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10008000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077df10"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTag",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a2a0"
+            }
+          }
+        ],
+        "create_func": "0x14074f7b0",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueAdded_WithParams": {
+        "exec_addr": "0x140753750",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "Parameters",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10008000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077df10"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTag",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a2a0"
+            }
+          }
+        ],
+        "create_func": "0x14074f750",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueExecuted_FromSpec": {
+        "exec_addr": "0x140753b00",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 120,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 1,
+            "name": "Spec",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x140778d40"
+            }
+          }
+        ],
+        "create_func": "0x14074f810",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueExecuted_WithParams": {
+        "exec_addr": "0x140753c90",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "GameplayCueParameters",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10008000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077df10"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTag",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a2a0"
+            }
+          }
+        ],
+        "create_func": "0x14074f840",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams": {
+        "exec_addr": "0x140753ec0",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "GameplayCueParameters",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10008000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 56,
+            "type_refs": {
+              "struct": "0x14077df10"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTags",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a300"
+            }
+          }
+        ],
+        "create_func": "0x14074f870",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCuesExecuted_WithParams": {
+        "exec_addr": "0x140754310",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "GameplayCueParameters",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10008000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 56,
+            "type_refs": {
+              "struct": "0x14077df10"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTags",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a300"
+            }
+          }
+        ],
+        "create_func": "0x14074f8d0",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec": {
+        "exec_addr": "0x1407533a0",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 120,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 1,
+            "name": "Spec",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000008000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x140778d40"
+            }
+          }
+        ],
+        "create_func": "0x14074f780",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueAdded": {
+        "exec_addr": "0x140753220",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "EffectContext",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077dfa0"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTag",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a2a0"
+            }
+          }
+        ],
+        "create_func": "0x14074f720",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCueExecuted": {
+        "exec_addr": "0x140753980",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "EffectContext",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077dfa0"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTag",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a2a0"
+            }
+          }
+        ],
+        "create_func": "0x14074f7e0",
+        "source": "lea"
+      },
+      "NetMulticast_InvokeGameplayCuesExecuted": {
+        "exec_addr": "0x140754140",
+        "flags": "0x24c40",
+        "params": [
+          {
+            "index": 0,
+            "name": "EffectContext",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 56,
+            "type_refs": {
+              "struct": "0x14077dfa0"
+            }
+          },
+          {
+            "index": 1,
+            "name": "PredictionKey",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 32,
+            "type_refs": {
+              "struct": "0x14077e210"
+            }
+          },
+          {
+            "index": 2,
+            "name": "GameplayCueTags",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x143e9a300"
+            }
+          }
+        ],
+        "create_func": "0x14074f8a0",
+        "source": "lea"
+      }
+    },
+    "AFortPlayerControllerAthena": {
+      "SendPhysicsBallHitToServer": {
+        "exec_addr": "0x142a5a430",
+        "flags": "0x80a20cc0",
+        "params": [
+          {
+            "index": 0,
+            "name": "ClientBallState",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 48,
+            "type_refs": {
+              "struct": "0x142b83940"
+            }
+          },
+          {
+            "index": 1,
+            "name": "HitNormal",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 36,
+            "type_refs": {
+              "struct": "0x142eea590"
+            }
+          },
+          {
+            "index": 2,
+            "name": "VelocityOfHitter",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 24,
+            "type_refs": {
+              "struct": "0x142eea590"
+            }
+          },
+          {
+            "index": 3,
+            "name": "HittingPawn",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 16,
+            "type_refs": {
+              "class": "0x1447ada70"
+            }
+          },
+          {
+            "index": 4,
+            "name": "ClientPing",
+            "kind": "Float",
+            "kind_raw": "0xa",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8
+          },
+          {
+            "index": 5,
+            "name": "PhysicsObject",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "class": "0x142b80460"
+            }
+          }
+        ],
+        "create_func": "0x142a50f70",
+        "source": "lea"
+      }
+    },
+    "UGameplayStatics": {
+      "PlaySoundAtLocation": {
+        "exec_addr": "0x144711920",
+        "flags": "0x4822401",
+        "params": [
+          {
+            "index": 0,
+            "name": "OwningActor",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10040000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 72,
+            "type_refs": {
+              "class": "0x1446ab9e0"
+            }
+          },
+          {
+            "index": 1,
+            "name": "ConcurrencySettings",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10040000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 64,
+            "type_refs": {
+              "class": "0x1447eec20"
+            }
+          },
+          {
+            "index": 2,
+            "name": "AttenuationSettings",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10040000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 56,
+            "type_refs": {
+              "class": "0x1447eaf90"
+            }
+          },
+          {
+            "index": 3,
+            "name": "StartTime",
+            "kind": "Float",
+            "kind_raw": "0xa",
+            "property_flags": "0x10040000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 48
+          },
+          {
+            "index": 4,
+            "name": "PitchMultiplier",
+            "kind": "Float",
+            "kind_raw": "0xa",
+            "property_flags": "0x10040000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 44
+          },
+          {
+            "index": 5,
+            "name": "VolumeMultiplier",
+            "kind": "Float",
+            "kind_raw": "0xa",
+            "property_flags": "0x10040000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 40
+          },
+          {
+            "index": 6,
+            "name": "Rotation",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10040000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 28,
+            "type_refs": {
+              "struct": "0x142eeb730"
+            }
+          },
+          {
+            "index": 7,
+            "name": "Location",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 16,
+            "type_refs": {
+              "struct": "0x142eea590"
+            }
+          },
+          {
+            "index": 8,
+            "name": "Sound",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "class": "0x1447eafa0"
+            }
+          },
+          {
+            "index": 9,
+            "name": "WorldContextObject",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "class": "0x142eea520"
+            }
+          }
+        ],
+        "create_func": "0x144708fe0",
+        "source": "lea"
+      }
+    }
+  },
+  "asc_virtual_slots": {
+    "NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams": "0x538",
+    "NetMulticast_InvokeGameplayCueAdded_WithParams": "0x548",
+    "NetMulticast_InvokeGameplayCueExecuted_FromSpec": "0x578",
+    "NetMulticast_InvokeGameplayCueExecuted_WithParams": "0x560",
+    "NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams": "0x530",
+    "NetMulticast_InvokeGameplayCuesExecuted_WithParams": "0x558",
+    "NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec": "0x540",
+    "NetMulticast_InvokeGameplayCueAdded": "0x550",
+    "NetMulticast_InvokeGameplayCueExecuted": "0x570",
+    "NetMulticast_InvokeGameplayCuesExecuted": "0x568"
+  }
+}

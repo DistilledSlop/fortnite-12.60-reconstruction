@@ -1,0 +1,20 @@
+[
+  {
+    "function": "NativeSetTimeOfDayManagerGameplayOverride",
+    "kind": "helper",
+    "signature": "void NativeSetTimeOfDayManagerGameplayOverride(UClass* TimeOfDayManagerClass)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortGameModeAthena/NativeSetTimeOfDayManagerGameplayOverride.inc",
+    "address": "0x1419642e0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/World.h",
+      "UObject/Class.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Assigned helper for original reflected operation. Requires NativeRefreshTimeOfDayManager source closure before promotion. Compares checked classes then stores the raw new class; preserves guard and callback order.",
+    "class": "AFortGameModeAthena"
+  }
+]

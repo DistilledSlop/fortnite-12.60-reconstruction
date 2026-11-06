@@ -1,0 +1,38 @@
+{
+  "status": "registration and dispatcher source integrated; original driver and interface providers pending",
+  "captures": {
+    "porting/generated/maps-wind-ready-dispatch/_adhoc/0x141fcd9c0__141fcd9c0.c": "4507f340591c2314f456c063a01fb527b3e022ef7a5ef2c11c379fba15770a23",
+    "porting/generated/maps-wind-lifecycle-virtuals/_adhoc/0x141dd2400__141dd2400.c": "ed042f2f3789781be0e882e960ed42b083629d424981e7e773ebf9d7e914141f",
+    "porting/generated/maps-wind-lifecycle-virtuals/_adhoc/0x141dde360__141dde360.c": "5549b260709e6168c2ee0a24653dc5cbcc1cc567bf1a0e04bf6c107b74caaea0",
+    "porting/generated/maps-wind-ready-dispatch/_adhoc/0x143f874a0__143f874a0.c": "c998bf986625ef887e0b25c116279fe7b3355bcccb933eb30ba56cf69fe31f92",
+    "porting/generated/maps-world-ready-list-lifecycle/_adhoc/0x141fbc600__141fbc600.c": "f6a710e1a517b0a3ee1c6a7465b9b5fc92ec0431d1e30b07c78f76bbe5fd6539",
+    "porting/generated/maps-wind-base-values-and-ready-interface/_adhoc/0x14294cf90__14294cf90.c": "1bc7d7d453300da53f7e756d0b042db919f4a578bd4037c256bce2f1f03fe8c2",
+    "porting/generated/maps-world-ready-settings-virtuals/_adhoc/0x141fc9240__141fc9240.c": "bc0a2fa40c9a04585a132204f0f656b06bf8a14da20d1c75971842aed64a89d0",
+    "porting/generated/maps-world-ready-settings-ctor/_adhoc/0x141fa4800__141fa4800.c": "13dbb49af0a2ab6b3e713520dd2a4dd1ba4f34238191b3fd41969c570a4db163",
+    "porting/generated/maps-world-ready-driver/_adhoc/0x141f9da60__141f9da60.c": "409988aee6e32b78590eb0ab5d74b8f33538536b69d5413d620943d5aea9d37d"
+  },
+  "registration": "141fcd9c0 appends Actor to world settings0x398 array. Reflection property offset920 confirms name ActorsNeedingWorldReady. No uniqueness/null validation.",
+  "lifecycle_correction": "AFortWindManager primary vtable145fcdc80 slot0x3f8 ->141dde360. Wrapper calls sampling141ddfad0, audio141de18c0, base143f874a0. This is TickActor; prior rejection based only on inherited Tick slot0x450 was incorrect. Base143f874a0 checks pending kill/world then calls virtual0x450, matching Actor::TickActor.",
+  "runtime": "No runtime credit. No incomplete TickActor or PostInitializeComponents override installed.",
+  "post_initialize_components": "Primary vtable0x480 ->141dd2400 calls base143f7e3a0, gets world settings143f79440, checks FortWorldSettings class142b5dca0, invokes registration141fcd9c0; then discovers interpolation names from wind material. Base143f7e3a0 contains STAT_Actor_PostInitComponents and matches AActor::PostInitializeComponents; whole override pending.",
+  "generation": {
+    "spliced": 3984,
+    "rejected": 0,
+    "rep_notify_downgraded": 0
+  },
+  "interface": {
+    "identity": "14294cf90 explicitly registers /Script/FortniteGame.FortInitializationInterface; existing generated UFortInitializationInterface scaffolding restored with native-only virtual contract.",
+    "slots": {
+      "0": "UHT-generated protected virtual destructor",
+      "8": "UHT-generated UObject* _getUObject() const; native wind1406968f0 adjusts secondary-218",
+      "10": "NeedsWorldReady() const ->bool; native wind141dd14d0 compares flag==0",
+      "18": "WorldReady() ->void; native wind141de3460 sets flag, initializes wind, emits BP event",
+      "20": "MatchStarted() ->void called by141fc9240; native wind empty1406801c0"
+    },
+    "names": "Reflected native functions: NeedsWorldReady const bool (flags0x40020400), WorldReady void and MatchStarted void (flags0x20400); no args. Reflection block0x14640ebe0, native registration14294cf90.",
+    "binding": "No provider inheritance added until full native effects are implemented. No substitute callbacks.",
+    "uht_evidence": "Engine/Source/Programs/UnrealHeaderTool/Private/CodeGenerator.cpp3175-3186 emits destructor and const _getUObject; no duplicate declaration added."
+  },
+  "dispatcher": "141fbc600 moves array storage into a local detached batch, resets original, iterates actors; skips null; GetInterfaceAddress using FortInitializationInterface; calls pending virtual before pendingkill test; calls ready virtual. Frees detached storage; repeats while registrations remain. Duplicates remain; no AddUnique or premature pendingkill filtering.",
+  "driver": "Unintegrated original state-machine tick 0x141f9da60: direct call 0x141f9dcec reaches dispatcher 0x141fbc600 only in state 5, following 0x141f93820, nonnull world helper 0x141c77490 and 0x141f94050. Canonical entry established by chained exception unwind entries 141f9da91 ->141f9da6f ->141f9da60. State enum, owning class and readiness dependencies remain to recover; no unconditional BeginPlay substitute."
+}

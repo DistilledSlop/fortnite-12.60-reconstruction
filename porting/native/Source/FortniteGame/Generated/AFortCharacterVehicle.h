@@ -11,12 +11,15 @@
 #include "FOnMountedWeaponFired.h"
 #include "FVehicleCosmeticInfo.h"
 #include "FVehicleHealthChanged.h"
+#include "GameFramework/Pawn.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
+#include "UFortVehicleInterface.h"
 
 class AFortPlayerController;
+class AFortPlayerStateZone;
 class UAnimInstance;
 class UAthenaItemWrapDefinition;
 class UFortAbilitySet;
@@ -270,5 +273,8 @@ public:
 	virtual bool NativeContainsPlayers163();
 	virtual UFortVehicleSeatComponent* NativeGetSeatComponent163();
 	virtual bool NativeIsSeatFilterApplicable163(uint8 Seat);
+	virtual TArray<APawn*> NativeGetAllPassengers163();
+	virtual AFortPlayerStateZone* NativeGetPlayerStateForPawn163(APawn* Pawn);
+	virtual IFortVehicleInterface* NativeGetVehicleInterface163();
 };
 

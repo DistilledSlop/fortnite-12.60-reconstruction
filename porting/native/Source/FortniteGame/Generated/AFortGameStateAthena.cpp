@@ -4,10 +4,13 @@
 #include "AFortAthenaMutator.h"
 #include "AFortBroadcastSpectatorInfo.h"
 #include "AFortGameplayMutator.h"
+#include "AFortMinigame.h"
 #include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerStateAthena.h"
 #include "AFortTeamInfo.h"
+#include "AFortVolume.h"
 #include "EAthenaGamePhase.h"
+#include "EFriendlyFireType.h"
 #include "Engine/World.h"
 #include "FPlayersLeft.h"
 #include "FTotalPlayers.h"
@@ -18,6 +21,7 @@
 #include "HAL/Platform.h"
 #include "SharedFortGameLog.h"
 #include "Stats/Stats.h"
+#include "UFortMinigameVolumeComponent.h"
 #include "UFortMutatorListComponent.h"
 #include "UFortMutatorOwner.h"
 #include "UFortPlaylistAthena.h"
@@ -969,6 +973,32 @@ float AFortGameStateAthena::NativeMatchTime780() const
 	// CONFIDENCE: HIGH
 	return static_cast<uint8>(GamePhase) >= static_cast<uint8>(EAthenaGamePhase::Aircraft)
 	        ? GetServerWorldTimeSeconds() - AircraftStartTime : 0.0f;
+}
+
+bool AFortGameStateAthena::NativeAllowsFriendlyFire163(const FGameplayTagContainer& Tags, AFortPawn* Pawn)
+{
+	// CONFIDENCE: high
+	// Original address: 0x141989720
+	// 0x141989720. Tag override precedes volume/minigame and playlist rules.
+	const FGameplayTag& Override = FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(0xb80);
+	if (Tags.HasTag(Override))
+	{
+	    return true;
+	}
+	AFortVolume* Volume = VolumeManager ? VolumeManager->NativeFindActorVolume(Pawn) : nullptr;
+	if (VolumeManager && Volume)
+	{
+	    AFortMinigame* Minigame = UFortMinigameVolumeComponent::NativeResolveMinigameFromVolume(Volume);
+	    if (Minigame)
+	    {
+	        const uint8 State = static_cast<uint8>(Minigame->CurrentState);
+	        if (State >= 1 && State <= 5)
+	        {
+	            return Minigame->NativeAllowsFriendlyFire163(Pawn);
+	        }
+	    }
+	}
+	return FriendlyFireType == EFriendlyFireType::On;
 }
 
 void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

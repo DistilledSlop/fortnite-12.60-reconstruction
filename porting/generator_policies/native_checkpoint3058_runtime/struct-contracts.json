@@ -1,0 +1,128 @@
+{
+  "FContentPushState": {
+    "fn": "0x1453189d0",
+    "package": "/Script/FortniteUI",
+    "size": 3,
+    "align": 1,
+    "properties_sha256": "c0ee52ccfe0c7dc57f76e545dac64954ac74092d4c3ea43c92cd9aea5b10ff72"
+  },
+  "FCrucibleCourseData": {
+    "fn": "0x1427f9fa0",
+    "package": "/Script/FortniteGame",
+    "size": 16,
+    "align": 8,
+    "properties_sha256": "e129f966111150cbc7bd3b3081ff181733436d482757d946f725da48981fefad"
+  },
+  "FCrucibleSegmentData": {
+    "fn": "0x1427fa090",
+    "package": "/Script/FortniteGame",
+    "size": 20,
+    "align": 4,
+    "properties_sha256": "816a81a736e136c69c60777bcc7d01f8edcc21fd4839f8d4b331f1ad37e6d534"
+  },
+  "FCrucibleStatValue": {
+    "fn": "0x1427fa0f0",
+    "package": "/Script/FortniteGame",
+    "size": 40,
+    "align": 8,
+    "properties_sha256": "f415ace57417ec5fa8f7a30ae72dea1ba96b255a702cfc6776a597726543878b"
+  },
+  "FFireModeData": {
+    "fn": "0x142b671f0",
+    "package": "/Script/FortniteGame",
+    "size": 5,
+    "align": 1,
+    "properties_sha256": "25e0ba9f28d248e32b7734578a9530c677eeaf1ba67d1e899c9974634550146c"
+  },
+  "FFortAlterationSlotStatus": {
+    "fn": "0x142b251c0",
+    "package": "/Script/FortniteGame",
+    "size": 16,
+    "align": 8,
+    "properties_sha256": "790b3a51f4a5e83757c938a770473cd100b2870568b213f04cfb84a9456d73b7"
+  },
+  "FFortChallengeSetStyle": {
+    "fn": "0x142860e00",
+    "package": "/Script/FortniteGame",
+    "size": 160,
+    "align": 8,
+    "properties_sha256": "736a7b78cd6b4905ca3e62f7990649d0c5df54a7523afb9aadd304c7bf25390c"
+  },
+  "FFortConversionControlKeyCosts": {
+    "fn": "0x1428ac410",
+    "package": "/Script/FortniteGame",
+    "size": 144,
+    "align": 8,
+    "properties_sha256": "a9822eab4dca3430b9fb0e9eaa4e1507445a752d540b6de78161f713a79130d4"
+  },
+  "FFortDisplayAttribute": {
+    "fn": "0x14531e2f0",
+    "package": "/Script/FortniteUI",
+    "size": 136,
+    "align": 8,
+    "properties_sha256": "548f1014f808cbaffd8990e8e5d5c1683ca400114ed720037464b62f0c9d0baa"
+  },
+  "FFortGameplayEffectContainer": {
+    "fn": "0x1428f5de0",
+    "package": "/Script/FortniteGame",
+    "size": 184,
+    "align": 8,
+    "properties_sha256": "e7573e00b3137dc1cdc9050a39d49958a2922b28d0357c7418a5b45e655a6151"
+  },
+  "FFortItemEntry": {
+    "fn": "0x14295cb30",
+    "package": "/Script/FortniteGame",
+    "size": 336,
+    "align": 8,
+    "properties_sha256": "b5dbd0e5f3a1a3725f46af39a3f44579a9a4cbe03dc08be3309495923c08260c"
+  },
+  "FFortItemQuantityPair": {
+    "fn": "0x142b25670",
+    "package": "/Script/FortniteGame",
+    "size": 20,
+    "align": 4,
+    "properties_sha256": "04fdc33f984db06fc38b665e8cc4c87a0f39ead2dae4b33e61c727fa15fd52c3"
+  },
+  "FFortMinigameStatQuery": {
+    "fn": "0x1429d6fe0",
+    "package": "/Script/FortniteGame",
+    "size": 24,
+    "align": 8,
+    "properties_sha256": "68cf7b9bc329220c94e30beb07395b8f531d53340d519e2e2f2b796333a25d17"
+  },
+  "FFortScriptedActionParams": {
+    "fn": "0x142ad1b90",
+    "package": "/Script/FortniteGame",
+    "size": 48,
+    "align": 8,
+    "properties_sha256": "96559bb84e8df205d8c4507f4a0be74a7fd641115643501587472c0d264d01c6"
+  },
+  "FGroundSplineSpeedData": {
+    "fn": "0x1429f7a00",
+    "package": "/Script/FortniteGame",
+    "size": 20,
+    "align": 4,
+    "properties_sha256": "461a005b1030f82e28b938efe06b056e1873c4c5389f3b67c001e091433beb09"
+  },
+  "FReplicatedSpawnInfo": {
+    "fn": "0x1411b5c70",
+    "package": "/Script/PlayspaceFramework",
+    "size": 28,
+    "align": 4,
+    "properties_sha256": "7a04a6b1d3a1edd64f74bd6fd5ab6cc37999fb3cc294ecf125316d09e16bfcbc"
+  },
+  "FWeaponHudData": {
+    "fn": "0x142b45500",
+    "package": "/Script/FortniteGame",
+    "size": 48,
+    "align": 8,
+    "properties_sha256": "2f71c3094a6074247857221018709021bb0bc3321cedad5944795ea1aef7e023"
+  },
+  "FWeaponSeatDefinition": {
+    "fn": "0x142b31b70",
+    "package": "/Script/FortniteGame",
+    "size": 48,
+    "align": 8,
+    "properties_sha256": "b5b1adcc63ed50a3f89fd316c1b877b163985f20d7a3d89880286f0812c5dfae"
+  }
+}

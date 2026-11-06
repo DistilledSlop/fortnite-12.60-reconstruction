@@ -12,7 +12,7 @@ public class FortniteGame : ModuleRules
             "CinematicCamera", "ClientPilot", "LiveLinkInterface", "MediaAssets", "Water", "AssetRegistry", "Overlay", "LevelSequence", "HeadMountedDisplay",
             "AnimGraphRuntime", "Hotfix", "Lobby", "OnlineSubsystemUtils", "Party", "Rejoin",
             "GameplayTasks", "ClothingSystemRuntimeInterface", "OnlineSubsystem",
-            "Gauntlet", "ReplicationGraph", "NiagaraAnimNotifies", "AnimationSharing", "PhysXVehicles", "AnimationBudgetAllocator", "SignificanceManager", "Foliage", "Niagara", "RHI", "RenderCore",
+            "Gauntlet", "ReplicationGraph", "Landscape", "NiagaraAnimNotifies", "AnimationSharing", "PhysXVehicles", "AnimationBudgetAllocator", "SignificanceManager", "Foliage", "Niagara", "RHI", "RenderCore",
             // WebBrowser: the JS bridge net-service types (FWebJSFunction, FWebJSResponse) of UFortGameInstance.
             "WebBrowser",
             // Runtime modules generated from packages outside the engine tree (porting/native_classes_status.md).

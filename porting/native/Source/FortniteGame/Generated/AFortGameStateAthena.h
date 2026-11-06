@@ -71,6 +71,7 @@
 #include "FStormCapDamageThresholdInfo.h"
 #include "FTotalPlayers.h"
 #include "FUpdateNamedPoiColorDelegate.h"
+#include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Actor.h"
 #include "GameplayTagContainer.h"
 #include "HAL/Platform.h"
@@ -91,6 +92,7 @@ class AFortAthenaMutator_AI;
 class AFortBroadcastSpectatorInfo;
 class AFortGameplayMutator;
 class AFortLocalizationService;
+class AFortPawn;
 class AFortPlayerState;
 class AFortPlayerStateAthena;
 class AFortProjectileBase;
@@ -1152,5 +1154,6 @@ public:
 	static bool NativeQueryInfiniteAmmoRule(AFortGameStateAthena* GameState, AFortPlayerStateAthena* PlayerState, UFortWeaponItemDefinition* WeaponDefinition);
 	static const TCHAR* NativeGetAthenaPhaseName(uint8 Phase);
 	virtual float NativeMatchTime780() const;
+	bool NativeAllowsFriendlyFire163(const FGameplayTagContainer& Tags, AFortPawn* Pawn);
 };
 

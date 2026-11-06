@@ -97,5 +97,41 @@ public:
 	UFUNCTION()
 	ESelectableVoiceChatSetting GetVoiceChatSettings() const;
 
+	UFUNCTION()
+	void SetAllowedToAcquire(bool bInValue);
+
+	UFUNCTION()
+	void SetAllowedToMakePurchases(bool bInValue);
+
+	UFUNCTION()
+	void SetCanAcceptFriendRequest(bool bInValue);
+
+	UFUNCTION()
+	void SetCanDisplayMyUserName(bool bInValue);
+
+	UFUNCTION()
+	void SetCanReceiveInGameItems(bool bInValue);
+
+	UFUNCTION()
+	void SetCanSeeMatureLanguage(bool bInValue);
+
+	UFUNCTION()
+	void SetCanSeeOtherPlayersNames(bool bInValue);
+
+	UFUNCTION()
+	void SetCanSeeThirdPartyNames(bool bInValue);
+
+	UFUNCTION()
+	void SetCanUseTextChat(bool bInValue);
+
+	UFUNCTION()
+	void SetCanUseVoiceChat(bool bInValue);
+
+	UFUNCTION()
+	void SetCanVoiceChatWithUnknowns(bool bInValue);
+
+	UFUNCTION()
+	void SetPurchaseReportingEnabled(bool bInValue);
+
 };
 

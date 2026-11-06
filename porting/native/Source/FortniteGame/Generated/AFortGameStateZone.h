@@ -24,6 +24,7 @@
 #include "FPlayerBuildableClassContainer.h"
 #include "FReplicatedMontageMap.h"
 #include "FVoteData.h"
+#include "GameFramework/Actor.h"
 #include "GameFramework/PlayerState.h"
 #include "GameplayTagContainer.h"
 #include "UObject/NoExportTypes.h"
@@ -517,5 +518,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	void NativeGetLoadAnalyticsValues(int32& NumberPlayers, float& Difficulty, FString& ZoneName, FString& MissionName) const;
+	virtual bool NativeAreFriendlyActors163(AActor* Requester, AActor* Candidate);
 };
 

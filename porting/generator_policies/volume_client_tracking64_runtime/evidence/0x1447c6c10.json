@@ -1,0 +1,102 @@
+{
+  "address": "0x1447c6c10",
+  "label": "",
+  "name": "FUN_1447c6c10",
+  "status": "ok",
+  "body_bytes": 178,
+  "instructions": 32,
+  "called": [
+    {
+      "address": "0x142d698b0",
+      "name": "GetPrivateStaticClassBody"
+    }
+  ],
+  "indirect_calls": 0,
+  "strings": [
+    {
+      "text": "PostProcessComponent",
+      "address": "0x146c0cafa"
+    },
+    {
+      "text": "Engine",
+      "address": "0x1459a4c08"
+    },
+    {
+      "text": "/Script/Engine",
+      "address": "0x146624af0"
+    }
+  ],
+  "callers": [
+    {
+      "address": "0x148839a8c",
+      "name": null,
+      "ref": "data"
+    },
+    {
+      "address": "0x141668a10",
+      "name": "FUN_141668a10",
+      "ref": "call"
+    },
+    {
+      "address": "0x14230f290",
+      "name": "FUN_14230f290",
+      "ref": "call"
+    },
+    {
+      "address": "0x141a1fc00",
+      "name": "FUN_141a1fc00",
+      "ref": "call"
+    },
+    {
+      "address": "0x141c93b20",
+      "name": "FUN_141c93b20",
+      "ref": "call"
+    },
+    {
+      "address": "0x141c62d30",
+      "name": "FUN_141c62d30",
+      "ref": "call"
+    },
+    {
+      "address": "0x141d00da0",
+      "name": "FUN_141d00da0",
+      "ref": "call"
+    },
+    {
+      "address": "0x141f52230",
+      "name": "FUN_141f52230",
+      "ref": "call"
+    },
+    {
+      "address": "0x141f65c40",
+      "name": "FUN_141f65c40",
+      "ref": "call"
+    },
+    {
+      "address": "0x1422e34b0",
+      "name": "FUN_1422e34b0",
+      "ref": "call"
+    },
+    {
+      "address": "0x143c325a0",
+      "name": "FUN_143c325a0",
+      "ref": "call"
+    },
+    {
+      "address": "0x1447c8cf0",
+      "name": "FUN_1447c8cf0",
+      "ref": "call"
+    },
+    {
+      "address": "0x14058e0f0",
+      "name": "FUN_14058e0f0",
+      "ref": "data"
+    }
+  ],
+  "reference_counts": {
+    "data": 2,
+    "call": 16
+  },
+  "thunk": false,
+  "error": null
+}

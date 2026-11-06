@@ -1,0 +1,30 @@
+[
+  {
+    "function": "OnRep_MetricInformation",
+    "kind": "exec",
+    "signature": "void OnRep_MetricInformation()",
+    "signature_status": "reflected",
+    "inc_path": "porting/generator_policies/playerstate68_runtime/OnRep_MetricInformation.inc",
+    "confidence": "high",
+    "address": "0x142a8dab0",
+    "native_body_address": "0x141a51a00",
+    "status": "ported",
+    "access": "private",
+    "notes": "Copies detailed metric information then broadcasts (this, snapshot) on unreflected script multicast +0x11f8.",
+    "class": "AFortPlayerStateAthena"
+  },
+  {
+    "function": "OnRep_SimpleMetricInformation",
+    "kind": "exec",
+    "signature": "void OnRep_SimpleMetricInformation()",
+    "signature_status": "reflected",
+    "inc_path": "porting/generator_policies/playerstate68_runtime/OnRep_SimpleMetricInformation.inc",
+    "confidence": "high",
+    "address": "0x142a8dd40",
+    "native_body_address": "0x141a53020",
+    "status": "ported",
+    "access": "public",
+    "notes": "Copies simple metric information then broadcasts (this, snapshot) on unreflected script multicast +0x1208.",
+    "class": "AFortPlayerStateAthena"
+  }
+]

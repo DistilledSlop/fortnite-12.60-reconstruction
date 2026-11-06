@@ -1903,5 +1903,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual bool NativeIsLocalPlayer() const;
+	virtual uint8 NativeGetTeam163();
+	virtual IFortVehicleInterface* NativeGetVehicleInterface163();
 };
 

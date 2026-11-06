@@ -10,7 +10,7 @@ public class CommonInput : ModuleRules
     public CommonInput(ReadOnlyTargetRules Target) : base(Target)
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-        PublicDependencyModuleNames.AddRange(new[] { "Core", "CoreUObject", "Engine", "Slate", "AIModule", "Analytics", "AnimGraphRuntime", "AnimationBudgetAllocator", "AnimationSharing", "AssetRegistry", "CinematicCamera", "ClientPilot", "ClothingSystemRuntimeInterface", "Foliage", "GameplayAbilities", "GameplayTags", "GameplayTasks", "Gauntlet", "HeadMountedDisplay", "Hotfix", "InputCore", "Json", "JsonUtilities", "LevelSequence", "LiveLinkInterface", "Lobby", "MediaAssets", "NavigationSystem", "Niagara", "NiagaraAnimNotifies", "OnlineSubsystem", "OnlineSubsystemUtils", "Overlay", "Party", "PhysXVehicles", "RHI", "Rejoin", "RenderCore", "ReplicationGraph", "SignificanceManager", "SlateCore", "UMG", "Water", "WebBrowser" });
+        PublicDependencyModuleNames.AddRange(new[] { "Core", "CoreUObject", "Engine", "Slate", "AIModule", "Analytics", "AnimGraphRuntime", "AnimationBudgetAllocator", "AnimationSharing", "AssetRegistry", "CinematicCamera", "ClientPilot", "ClothingSystemRuntimeInterface", "Foliage", "GameplayAbilities", "GameplayTags", "GameplayTasks", "Gauntlet", "HeadMountedDisplay", "Hotfix", "InputCore", "Json", "JsonUtilities", "Landscape", "LevelSequence", "LiveLinkInterface", "Lobby", "MediaAssets", "NavigationSystem", "Niagara", "NiagaraAnimNotifies", "OnlineSubsystem", "OnlineSubsystemUtils", "Overlay", "Party", "PhysXVehicles", "RHI", "Rejoin", "RenderCore", "ReplicationGraph", "SignificanceManager", "SlateCore", "UMG", "Water", "WebBrowser" });
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Generated"));
     }
 }

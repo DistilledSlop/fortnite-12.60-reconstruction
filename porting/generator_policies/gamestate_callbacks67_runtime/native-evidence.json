@@ -1,0 +1,47 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "windows": [
+    {
+      "function": "OnRep_CurrentHighScore",
+      "begin": "0x1429203d0",
+      "length": 32,
+      "sha256": "dd8686e83d2b34eea6fa8bcc9d4bb3fdb26d8e95237056c882964008d7e3133c",
+      "bytes": "488b42204533c04885c0410f95c04c03c04c894220e9465c08ff68babbae90e7"
+    },
+    {
+      "function": "OnRep_GamePhase",
+      "begin": "0x142920470",
+      "length": 32,
+      "sha256": "cb070b9a1c753efa7bd4aeaa36ec08a03f9116e224b29f0ec1caf7b48cd6511d",
+      "bytes": "48895c2408574883ec2048837a2000488bf9488bcac644243800488bda741048"
+    },
+    {
+      "function": "OnRep_PlayerBotsLeft",
+      "begin": "0x1429205d0",
+      "length": 32,
+      "sha256": "5bdf12395621dce82e91a8ae2c921a549d45e2e14b178aefbaaec4d5762e3e36",
+      "bytes": "488b42204533c04885c0410f95c04c03c04c894220e9b66608ff50e9b222fdfd"
+    },
+    {
+      "function": "OnRep_ReticulatedSplineDefinitions",
+      "begin": "0x142920630",
+      "length": 32,
+      "sha256": "81c625a79649b9e4ba6e2b3f832ba81414444770a36a3f0a9c4cf8e079ac6ef1",
+      "bytes": "488b42204533c04885c0410f95c04c03c04c894220e9766a08ffe96afb770690"
+    },
+    {
+      "function": "OnRep_SkyTubesDisabled",
+      "begin": "0x1429206b0",
+      "length": 32,
+      "sha256": "60113f9826477c9c904678bf9d4a03e1a3f7b37e88e75061f80094a118857439",
+      "bytes": "488b42204533c04885c0410f95c04c03c04c894220e9166f08ff8c3c57dbcc99"
+    },
+    {
+      "function": "OnRep_WinningTeam",
+      "begin": "0x142920880",
+      "length": 32,
+      "sha256": "5b23085deb7bf20ec9d7ca264a6b55198a465dfafc70fcb35841d97d7d52659b",
+      "bytes": "488b42204533c04885c0410f95c04c03c04c894220e9667c08ff55e9d1cefdfe"
+    }
+  ]
+}

@@ -5,6 +5,7 @@
 #include "EFortVoteArbitratorType.h"
 #include "EFortVoteType.h"
 #include "FVoteData.h"
+#include "GameFramework/Actor.h"
 #include "GameFramework/PlayerState.h"
 #include "SharedFortGameLog.h"
 #include "UFortZoneTheme.h"
@@ -380,6 +381,41 @@ void AFortGameStateZone::NativeGetLoadAnalyticsValues(int32& NumberPlayers, floa
 	        if (const AFortMission* Mission = Manager->NativeFindPrimaryMission())
 	            MissionName = Mission->NativeMissionText690().ToString();
 	    }
+}
+
+bool AFortGameStateZone::NativeAreFriendlyActors163(AActor* Requester, AActor* Candidate)
+{
+	// CONFIDENCE: high
+	// Original address: 0x141ea6f10
+	// 0x141ea6f10, primary-vtable byte offset 0x770.
+	const auto ResolveTeamActor = [](AActor* Actor) -> IFortTeamActorInterface*
+	{
+	    if (!Actor)
+	    {
+	        return nullptr;
+	    }
+	    if (Actor->GetInstigator())
+	    {
+	        if (!Cast<IFortTeamActorInterface>(Actor))
+	        {
+	            Actor = Actor->GetInstigator();
+	            if (!Actor)
+	            {
+	                return nullptr;
+	            }
+	        }
+	    }
+	    return Cast<IFortTeamActorInterface>(Actor);
+	};
+	IFortTeamActorInterface* Source = ResolveTeamActor(Requester);
+	IFortTeamActorInterface* Target = ResolveTeamActor(Candidate);
+	if (Source && Target)
+	{
+	    const uint8 TargetTeam = Target->NativeGetTeam163();
+	    const uint8 SourceTeam = Source->NativeGetTeam163();
+	    return TargetTeam == SourceTeam;
+	}
+	return false;
 }
 
 void AFortGameStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

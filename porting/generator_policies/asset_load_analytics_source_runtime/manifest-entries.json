@@ -1,0 +1,133 @@
+[
+  {
+    "class": "AFortMissionManager",
+    "function": "NativeFindPrimaryMission",
+    "kind": "helper",
+    "signature": "AFortMission* NativeFindPrimaryMission() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortMissionManager/NativeFindPrimaryMission.inc",
+    "address": "0x1420bc640",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned name. First nonnull mission with nonnull MissionInfo and Primary mission type, else null. See HANDOFF."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeAppendAthenaLoadAttributes",
+    "kind": "helper",
+    "signature": "TArray<FAnalyticsEventAttribute> NativeAppendAthenaLoadAttributes(TArray<FAnalyticsEventAttribute> Attributes, const UWorld* World)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/AFortPlayerController/NativeAppendAthenaLoadAttributes.inc",
+    "address": "0x141769500",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AnalyticsEventAttribute.h",
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "AFortGameStateZone",
+    "function": "NativeGetLoadAnalyticsValues",
+    "kind": "helper",
+    "signature": "void NativeGetLoadAnalyticsValues(int32& NumberPlayers, float& Difficulty, FString& ZoneName, FString& MissionName) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/AFortGameStateZone/NativeGetLoadAnalyticsValues.inc",
+    "address": "0x141e9a800",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/PlayerState.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeAppendCoreLoadAttributes",
+    "kind": "helper",
+    "signature": "void NativeAppendCoreLoadAttributes(TArray<FAnalyticsEventAttribute>& Attributes, const UWorld* World)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/AFortPlayerController/NativeAppendCoreLoadAttributes.inc",
+    "address": "0x141763b40",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AnalyticsEventAttribute.h",
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeRecordAthenaSynchronousLoad",
+    "kind": "helper",
+    "signature": "void NativeRecordAthenaSynchronousLoad(AFortPlayerController* Controller, const FString& Path)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/AFortPlayerController/NativeRecordAthenaSynchronousLoad.inc",
+    "address": "0x14178a860",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortNativeAnalyticsProvider.h",
+      "AnalyticsEventAttribute.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeRecordCoreSynchronousLoad",
+    "kind": "helper",
+    "signature": "void NativeRecordCoreSynchronousLoad(AFortPlayerController* Controller, const FString& Path)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/AFortPlayerController/NativeRecordCoreSynchronousLoad.inc",
+    "address": "0x14178bba0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortNativeAnalyticsProvider.h",
+      "AnalyticsEventAttribute.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeRecordAthenaAsynchronousLoad",
+    "kind": "helper",
+    "signature": "void NativeRecordAthenaAsynchronousLoad(AFortPlayerController* Controller, const FString& Path)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/AFortPlayerController/NativeRecordAthenaAsynchronousLoad.inc",
+    "address": "0x14178a4d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortNativeAnalyticsProvider.h",
+      "AnalyticsEventAttribute.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeRecordCoreAsynchronousLoad",
+    "kind": "helper",
+    "signature": "void NativeRecordCoreAsynchronousLoad(AFortPlayerController* Controller, const FString& Path)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/AFortPlayerController/NativeRecordCoreAsynchronousLoad.inc",
+    "address": "0x14178b860",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortNativeAnalyticsProvider.h",
+      "AnalyticsEventAttribute.h"
+    ]
+  }
+]

@@ -45,6 +45,7 @@
 #include "FRefreshIndicatorPlayersCache.h"
 #include "FSimpleMinigameDelegate.h"
 #include "FSolarisPrototype.h"
+#include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 #include "Math/UnrealMathSSE.h"
@@ -54,6 +55,7 @@
 
 class AActor;
 class AFortGameplayMutator;
+class AFortPawn;
 class AFortPlayerController;
 class AFortPlayerControllerAthena;
 class AFortPlayerState;
@@ -846,5 +848,6 @@ public:
 	virtual AFortVolume* NativeGetVolume();
 	bool NativeIsMatchPointDecided293() const;
 	static void Native_142bad740();
+	bool NativeAllowsFriendlyFire163(AFortPawn* Pawn);
 };
 

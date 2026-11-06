@@ -11,6 +11,7 @@
 #include "FLinearColorDelegate.h"
 #include "FPlayerDelegate.h"
 #include "FUInt8Delegate.h"
+#include "Math/Color.h"
 
 class UAthenaRemotePlayerViewData;
 
@@ -70,6 +71,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetPlace() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FLinearColor GetSquadColor() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSquadId() const;

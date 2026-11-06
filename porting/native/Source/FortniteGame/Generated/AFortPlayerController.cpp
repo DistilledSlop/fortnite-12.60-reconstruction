@@ -491,6 +491,13 @@ bool AFortPlayerController::IsBuildToolOverridden() const
 	return NativeRecoveredBool_0x14b3;
 }
 
+bool AFortPlayerController::IsClientBot() const
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142a47ff0
+	    return NativeClientBotFlag_0x1838 != 0 || NativeClientBotFlag_0x1818 != 0;
+}
+
 bool AFortPlayerController::IsClientTimingOut() const
 {
 	// Original address: 0x142a48030.

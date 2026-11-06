@@ -406,6 +406,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetUseSpecificTimeOfDayEditing(bool bShouldUseSpecificTimeOfDay);
 
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	void ToggleDebugForceStormEffects();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

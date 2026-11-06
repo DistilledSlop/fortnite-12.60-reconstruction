@@ -1,0 +1,17 @@
+[
+  {
+    "class": "AFortPawn",
+    "function": "StartSpinning",
+    "kind": "exec",
+    "signature": "void StartSpinning(float Value, bool bFallingOnly, bool bAdjustForInputYawScale)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPawn/StartSpinning.inc",
+    "confidence": "high",
+    "address": "0x142a20d90",
+    "native_body_address": "0x1423532a0",
+    "status": "ported",
+    "access": "public",
+    "includes": [],
+    "notes": "Native body 147 bytes SHA-256 cfd70f4170d79b301e28a264165bde5c85aa778182b68ce579c8f5895116eed1; controller InputYawScale at +0x424. Non-reflected bool at +0x63c already has a canonical recovered field."
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "class": "AFortGameModeAthena",
+    "function": "GetPlaylistEnableBots",
+    "kind": "getter",
+    "signature": "bool GetPlaylistEnableBots() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1428f02f0",
+    "inc_path": "porting/behavior/AFortGameModeAthena/GetPlaylistEnableBots.inc",
+    "includes": [],
+    "notes": "Reflected original calls level-zero FScalableFloat predicate; strictly greater than zero."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "GetAthenaPlaylistContextTags",
+    "kind": "getter",
+    "signature": "FGameplayTagContainer GetAthenaPlaylistContextTags() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x14291e7c0",
+    "inc_path": "porting/behavior/AFortGameStateAthena/GetAthenaPlaylistContextTags.inc",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Copies current playlist tags, then either removes all five team-size tags or adds the tag for MaxTeamSize. Preserve singleton calls and RemoveTag parent updates in sequence."
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "class": "AFortWeapon",
+    "function": "GetWeaponData",
+    "kind": "exec",
+    "signature": "UFortWeaponItemDefinition* GetWeaponData() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortWeapon/GetWeaponData.inc",
+    "confidence": "high",
+    "address": "0x142b46dd0",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native callee 0x1426a0960; reflected WeaponData +0x350; native warning and virtual dispatch retained."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "GetWeaponDataAmmoWorldItemDefinition",
+    "kind": "exec",
+    "signature": "UFortWorldItemDefinition* GetWeaponDataAmmoWorldItemDefinition() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortWeapon/GetWeaponDataAmmoWorldItemDefinition.inc",
+    "confidence": "high",
+    "address": "0x142b46e00",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native callee 0x1426a09e0; reflected WeaponData +0x350; native warning and virtual dispatch retained."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "GetWeaponDataItemType",
+    "kind": "exec",
+    "signature": "EFortItemType GetWeaponDataItemType() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortWeapon/GetWeaponDataItemType.inc",
+    "confidence": "high",
+    "address": "0x142b46ef0",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native callee 0x1426a0b10; reflected WeaponData +0x350; native warning and virtual dispatch retained."
+  }
+]

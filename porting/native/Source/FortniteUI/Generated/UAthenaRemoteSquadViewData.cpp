@@ -19,6 +19,13 @@ int32 UAthenaRemoteSquadViewData::GetPlace() const
 	return NativeRecoveredInt_0xa0;
 }
 
+FLinearColor UAthenaRemoteSquadViewData::GetSquadColor() const
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x1451b9380
+		return NativeRecoveredColor_0xa4;
+}
+
 int32 UAthenaRemoteSquadViewData::GetSquadId() const
 {
 	// CONFIDENCE: high; complete getter, storage evidence in report.json.

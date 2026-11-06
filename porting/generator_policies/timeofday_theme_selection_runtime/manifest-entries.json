@@ -1,0 +1,47 @@
+[
+  {
+    "function": "NativeAppendTimeOfDayClasses",
+    "kind": "helper",
+    "signature": "void NativeAppendTimeOfDayClasses(TArray<TSoftClassPtr<AFortTimeOfDayManager>>& Destination, const TArray<TSoftClassPtr<AFortTimeOfDayManager>>& Source)",
+    "access": "public",
+    "static": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f4fed0",
+    "inc_path": "porting/behavior/UFortTimeOfDayData/NativeAppendTimeOfDayClasses.inc",
+    "includes": [],
+    "notes": "Copies owning soft class pointers and preserves append order and duplicates.",
+    "class": "UFortTimeOfDayData"
+  },
+  {
+    "function": "NativeRebuildValidTimeOfDayManagers",
+    "kind": "helper",
+    "signature": "void NativeRebuildValidTimeOfDayManagers(FFortTimeOfDayTheme& Theme)",
+    "access": "public",
+    "static": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f5ba50",
+    "inc_path": "porting/behavior/UFortTimeOfDayData/NativeRebuildValidTimeOfDayManagers.inc",
+    "includes": [],
+    "notes": "Rebuilds the cache with collection and additional classes, then removes prohibited paths using swap removal.",
+    "class": "UFortTimeOfDayData"
+  },
+  {
+    "function": "NativeSelectTimeOfDayManager",
+    "kind": "helper",
+    "signature": "TSoftClassPtr<AFortTimeOfDayManager> NativeSelectTimeOfDayManager(FFortTimeOfDayTheme& Theme)",
+    "access": "public",
+    "static": true,
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141f60280",
+    "inc_path": "porting/behavior/UFortTimeOfDayData/NativeSelectTimeOfDayManager.inc",
+    "includes": [],
+    "notes": "Lazily rebuilds an empty cache and returns a copied class selected with FMath::RandHelper.",
+    "class": "UFortTimeOfDayData"
+  }
+]

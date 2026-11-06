@@ -1,0 +1,44 @@
+[
+  {
+    "class": "AFortMinigame",
+    "function": "NativeGetVolume",
+    "kind": "helper",
+    "signature": "AFortVolume* NativeGetVolume()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/AFortMinigame/NativeGetVolume.inc",
+    "address": "0x1420974d0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source name and non-const interface contract; native slot +0x10. See HANDOFF."
+  },
+  {
+    "class": "AFortMinigameSettingsBuilding",
+    "function": "NativeGetVolume",
+    "kind": "helper",
+    "signature": "AFortVolume* NativeGetVolume()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/AFortMinigameSettingsBuilding/NativeGetVolume.inc",
+    "address": "0x142702350",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source name and non-const interface contract; native slot +0x10. See HANDOFF."
+  },
+  {
+    "class": "AFortVolume",
+    "function": "NativeGetVolume",
+    "kind": "helper",
+    "signature": "AFortVolume* NativeGetVolume()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/AFortVolume/NativeGetVolume.inc",
+    "address": "0x14165b340",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source name and non-const interface contract; native slot +0x10. See HANDOFF."
+  }
+]

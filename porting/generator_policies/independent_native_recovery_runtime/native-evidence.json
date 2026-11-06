@@ -1,0 +1,30 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "windows": [
+    {
+      "begin": "0x141ba8530",
+      "length": 211,
+      "sha256": "05fa2b6799f745dea0bb6d46365d6eb5d77b116b38b03fc0d485a5a0bf0b981e"
+    },
+    {
+      "begin": "0x141ba8b20",
+      "length": 412,
+      "sha256": "8806527fe313175ae2fdceed4e2904cd3ffa9c6a35a696d6aeba911bb3269b54"
+    },
+    {
+      "begin": "0x1427371c0",
+      "length": 44,
+      "sha256": "3247ba9d5fee5d6c9a67a7fa0f7cd7d740406888e9b52eff480695d2f464f7eb"
+    },
+    {
+      "begin": "0x1427371f0",
+      "length": 44,
+      "sha256": "ba9a1e0ee7d2b75dfc2745cc3a07249e293e3cff031976e7c8466bd7201c33f3"
+    },
+    {
+      "begin": "0x1423881c0",
+      "length": 80,
+      "sha256": "6b523464bece6823c52bf38f4d7415c07a8161b0cdff17ddfe122f17867e056d"
+    }
+  ]
+}

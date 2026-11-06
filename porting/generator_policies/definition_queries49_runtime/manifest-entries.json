@@ -1,0 +1,65 @@
+[
+  {
+    "function": "NativeGetRarity",
+    "kind": "helper",
+    "signature": "EFortRarity NativeGetRarity() const",
+    "address": "0x1409dd610",
+    "virtual": true,
+    "notes": "Assigned name; base vtable slot +0x2a8, reflected Rarity +0x50. Overrides remain dispatchable.",
+    "class": "UFortItemDefinition",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/UFortItemDefinition/NativeGetRarity.inc"
+  },
+  {
+    "function": "NativeGetTriggerType",
+    "kind": "helper",
+    "signature": "TEnumAsByte<EFortWeaponTriggerType::Type> NativeGetTriggerType() const",
+    "address": "0x142671d20",
+    "notes": "Assigned name; copies reflected TriggerType at +0x9a4.",
+    "class": "UFortWeaponItemDefinition",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/UFortWeaponItemDefinition/NativeGetTriggerType.inc"
+  },
+  {
+    "function": "GetWeaponDataRarity",
+    "kind": "exec",
+    "signature": "EFortRarity GetWeaponDataRarity() const",
+    "address": "0x142b46fe0",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native callee 0x1426a0c40; definition virtual dispatch retained.",
+    "class": "AFortWeapon",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWeapon/GetWeaponDataRarity.inc"
+  },
+  {
+    "function": "GetWeaponDataTriggerType",
+    "kind": "exec",
+    "signature": "TEnumAsByte<EFortWeaponTriggerType::Type> GetWeaponDataTriggerType() const",
+    "address": "0x142b47110",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native callee 0x1426a0ec0; calls definition helper 0x142671d20.",
+    "class": "AFortWeapon",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/AFortWeapon/GetWeaponDataTriggerType.inc"
+  }
+]

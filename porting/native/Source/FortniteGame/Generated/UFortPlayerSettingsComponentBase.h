@@ -281,8 +281,10 @@ public:
 	UFUNCTION()
 	void OnRep_CreativeBossHealthDisplayMode();
 
+private:
 	UFUNCTION()
 	void OnRep_EnabledSettings();
+public:
 
 	UFUNCTION()
 	void OnRep_NameplateDisplayMode();

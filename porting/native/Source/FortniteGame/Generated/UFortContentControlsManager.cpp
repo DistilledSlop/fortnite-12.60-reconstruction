@@ -84,3 +84,99 @@ ESelectableVoiceChatSetting UFortContentControlsManager::GetVoiceChatSettings() 
 	return NativeRecoveredBool_0xda ? ESelectableVoiceChatSetting::Everyone : ESelectableVoiceChatSetting::FriendsOnly;
 }
 
+void UFortContentControlsManager::SetAllowedToAcquire(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142890de0
+	// Original exec stores the normalized input byte at 0xd1.
+	NativeRecoveredBool_0xd1 = bInValue;
+}
+
+void UFortContentControlsManager::SetAllowedToMakePurchases(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142890e60
+	// Original exec stores the normalized input byte at 0xd2.
+	NativeRecoveredBool_0xd2 = bInValue;
+}
+
+void UFortContentControlsManager::SetCanAcceptFriendRequest(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142890ee0
+	// Original exec stores the normalized input byte at 0xd4.
+	NativeRecoveredBool_0xd4 = bInValue;
+}
+
+void UFortContentControlsManager::SetCanDisplayMyUserName(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142890f60
+	// Original exec stores the normalized input byte at 0xd7.
+	NativeRecoveredBool_0xd7 = bInValue;
+}
+
+void UFortContentControlsManager::SetCanReceiveInGameItems(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142890fe0
+	// Original exec stores the normalized input byte at 0xd5.
+	NativeRecoveredBool_0xd5 = bInValue;
+}
+
+void UFortContentControlsManager::SetCanSeeMatureLanguage(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142891060
+	// Original exec stores the normalized input byte at 0xd3.
+	NativeRecoveredBool_0xd3 = bInValue;
+}
+
+void UFortContentControlsManager::SetCanSeeOtherPlayersNames(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x1428910e0
+	// Original exec stores the normalized input byte at 0xd8.
+	NativeRecoveredBool_0xd8 = bInValue;
+}
+
+void UFortContentControlsManager::SetCanSeeThirdPartyNames(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142891160
+	// Original exec stores the normalized input byte at 0xd6.
+	NativeRecoveredBool_0xd6 = bInValue;
+}
+
+void UFortContentControlsManager::SetCanUseTextChat(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x1428911e0
+	// Original exec stores the normalized input byte at 0xf1.
+	NativeRecoveredBool_0xf1 = bInValue;
+}
+
+void UFortContentControlsManager::SetCanUseVoiceChat(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142891260
+	// Original exec stores the normalized input byte at 0xd9.
+	NativeRecoveredBool_0xd9 = bInValue;
+}
+
+void UFortContentControlsManager::SetCanVoiceChatWithUnknowns(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x1428912e0
+	// Original exec stores the normalized input byte at 0xda.
+	NativeRecoveredBool_0xda = bInValue;
+}
+
+void UFortContentControlsManager::SetPurchaseReportingEnabled(bool bInValue)
+{
+	// CONFIDENCE: HIGH
+	// Original address: 0x142891450
+	// Original exec stores the normalized input byte at 0xf0.
+	NativeRecoveredBool_0xf0 = bInValue;
+}
+

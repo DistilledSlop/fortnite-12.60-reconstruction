@@ -1,0 +1,73 @@
+{
+  "status": "native responder storage and construction integrated; manager registration and runtime validation pending",
+  "scope": "Building wind responder construction, registration, and discovery. No function is claimed ported.",
+  "captures": {
+    "construction": "porting/generated/maps-wind-actor-ingress/_adhoc/0x141de5910__141de5910.c",
+    "registration": "porting/generated/maps-wind-actor-ingress/_adhoc/0x141dd4d50__141dd4d50.c",
+    "discovery": "porting/generated/maps-wind-initialization/_adhoc/0x141dd5490__141dd5490.c"
+  },
+  "findings": [
+    "0x141de5910 constructs a 0x90-byte responder for an ABuildingSMActor. It resolves curve soft references at actor offsets 0x7d0 and 0x7f8 and audio at 0x830, first from the actor class default object when available, then from the actor when the corresponding result is null. All resolver calls pass true to the fallback loader.",
+    "If actor offset 0x768 is non-null and resolving the actor soft material array at 0x820 produces entries, the constructor obtains a mild material array through component virtual slot 0x860. It fills null intense entries with corresponding mild entries and appends mild entries beyond the intense array. The resolver appends only successfully typed non-null results, compacting failed or null soft references. The temporary array is released.",
+    "0x141dd4d50 validates both resolved curves and logs the respective missing-curve failure; on success it obtains actor bounds via virtual slot 0x548, copies the responder into the manager array, lazily constructs spatial storage, inserts its bounds and updates distance-dependent nearby index arrays. This is registration, not the material-application routine.",
+    "0x141dd5490 discovers eligible building actors, checks actor byte 0x6ad mask 0x08, constructs and registers each responder, clears that bit and destroys its temporary responder even when registration rejects missing curves. Its iterator and eligibility filtering must also be retained.",
+    "FFortWindResponder native offsets: actor 0x00, curves 0x08/0x10, audio 0x18, mild and intense pointer arrays 0x20/0x30, material data array 0x40, int32 MaterialParameterPairIndices 0x50, paired variables array 0x58 (36-byte elements), FBox-shaped actor bounds 0x68 (28 bytes), reflected WindSpeed float 0x84, unreflected effective distance float 0x88, setup byte 0x8c, stride 0x90. Proposed generated storage correction: insert a non-reflected FBox-compatible member immediately before WindSpeed and a non-reflected float immediately after WindSpeed, preserving native bool placement. FBox type semantics and names are inferred from actor bounds call and 28-byte copy; confirm ABI in target engine before integration. The 4-byte MaterialParameterPairIndices field is copied as such; there is no evidence for changing its reflected type.",
+    "0x141dbeb60 copies the four initial object pointers, independently allocates and copies mild and intense pointer arrays, deep-copies MaterialsData using 0x141dbc1c0, copies the int32, independently allocates and copies the 36-byte paired-variable array, then copies bounds, both floats and the setup byte. 0x141dbf1c0 destroys three nested arrays per 72-byte material-data element and frees its outer array. Discovery separately frees paired, intense, and mild arrays.",
+    "The curve and audio resolvers reject empty soft paths, inspect cached weak references and attempt path resolution; when missing or of the wrong class they call 0x141e12f10 with the caller flag. The result is class-checked. After a nonempty resolution attempt they call 0x141df61e0 and 0x141de9e00 with the resolved object only if it satisfies a second class check; their tracking/lifetime effects remain unknown. The material resolver applies the same general pattern per 40-byte soft pointer and compacts successful objects."
+  ],
+  "blocking_callees": {},
+  "additional_dependencies": "Actor virtual slots 0x390 and 0x548, component virtual slot 0x860, class and object lookup, manager spatial tree allocation/destruction and cvars, actor iterator/eligibility, logging and array allocation. This evidence does not establish the material-application routine.",
+  "storage_integration": "Source policy adds only neutral 28-byte bounds storage at0x68 and effective-distance float at0x88, without default values. Generated compile-time assertions pin the0x90 stride, alignment and known offsets. The metadata unknown setup offset is not rewritten; native copy establishes the actual0x8c placement.",
+  "dependent_captures": {
+    "0x141de4770": {
+      "path": "porting/generated/maps-wind-responder-deps/_adhoc/0x141de4770__141de4770.c",
+      "sha256": "4ec7e8457e7a4b853c77e0aa34c04b7876279d4951ead4ffbf4b87852ea045d0"
+    },
+    "0x1419b68c0": {
+      "path": "porting/generated/maps-wind-responder-deps/_adhoc/0x1419b68c0__1419b68c0.c",
+      "sha256": "347798ebdbc1469f93a760471b90e3e66abbc27abb6455d3da6705276a2b82f5"
+    },
+    "0x141a66630": {
+      "path": "porting/generated/maps-wind-responder-deps/_adhoc/0x141a66630__141a66630.c",
+      "sha256": "c812c39bd74a1913efd1bd94476b26fb2b83ba1f76cc7b48d9ce692377a329fb"
+    },
+    "0x141c07130": {
+      "path": "porting/generated/maps-wind-responder-deps/_adhoc/0x141c07130__141c07130.c",
+      "sha256": "9fc35401fd328d6b01f216b6568beda05f34304312085ad8cb22a79b69144ebb"
+    },
+    "0x141dbeb60": {
+      "path": "porting/generated/maps-wind-responder-deps/_adhoc/0x141dbeb60__141dbeb60.c",
+      "sha256": "b732193a2323163f57b4eff5fed932c114bbe7ffcc2365658b80b5afe127a3eb"
+    },
+    "0x141dbf1c0": {
+      "path": "porting/generated/maps-wind-responder-deps/_adhoc/0x141dbf1c0__141dbf1c0.c",
+      "sha256": "e15b71d128a02f071b0f091896c83cd0a58057d46731972fd09a061e295cab89"
+    },
+    "0x141dd0bb0": {
+      "path": "porting/generated/maps-wind-responder-deps/_adhoc/0x141dd0bb0__141dd0bb0.c",
+      "sha256": "e907592c205369dd2775a6b7e22f2bb6b2ab54ef281c5b71d9c8741158d213d0"
+    },
+    "0x141e12f10": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x141e12f10__141e12f10.c",
+      "sha256": "e767e7d81fda32641c28450b95766998a898f522b6f1ed6f9c9efb7a1ab4a9fe"
+    },
+    "0x141df61e0": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x141df61e0__141df61e0.c",
+      "sha256": "48dcff4f53c5b27ac35aa886ac4430917de45f3da13a8684c0d23a24ce44869f"
+    },
+    "0x141de9e00": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x141de9e00__141de9e00.c",
+      "sha256": "ccae8b25b6b63a93411100d9844454ecca6d3ad9a26cf9749195230472037848"
+    },
+    "0x141dbc1c0": {
+      "path": "porting/generated/maps-wind-break-and-resolve/_adhoc/0x141dbc1c0__141dbc1c0.c",
+      "sha256": "77e86e63a4a8d4e9fc0fe8eef9c7067459aa87923698b8f51f34baa54e1d6312"
+    }
+  },
+  "resolved_asset_dependencies": {
+    "fallback_load": "0x141e12f10 is existing FortLoadDelayedObject in FortDelayedObjectLoader.h: synchronous streamable-manager load when AssetManager is valid, otherwise soft-path TryLoad. ShowDelayLoadTimes controls timing only.",
+    "retention": "0x141df61e0 returns the shared FFortAssets singleton and0x141de9e00 tracks the resolved object under its lock; existing FortAssets.h owns startup/post-startup sets and GC. Reuse this owner rather than a second keepalive.",
+    "material_copy": "0x141dbc1c0 deep-copies72-byte FFortWindMaterialData entries, whose three nested arrays lie at0x18/0x28/0x38; existing reflected types retain those arrays. Direct raw memcpy of material-data entries would be unfaithful."
+  },
+  "remaining_construction_work": "Constructor resolver types and component GetMaterials call are now resolved; see constructor-evidence.json. Full manager registration still needs the original spatial tree and distance-dependent caches. World-ready lifecycle and material update consumers remain unported."
+}

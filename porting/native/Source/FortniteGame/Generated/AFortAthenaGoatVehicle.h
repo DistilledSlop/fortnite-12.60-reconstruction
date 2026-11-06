@@ -137,6 +137,9 @@ public:
 	UPROPERTY(Transient)
 	UFortGoatVehicleConfigs* FortGoatVehicleConfigs;
 
+	UFUNCTION(BlueprintCallable)
+	void ClearBoostAccumulated();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetBoostAccumulated() const;
 

@@ -30,6 +30,7 @@
 #include "FVehicleSpringInfo.h"
 #include "FVehicleTargetOrientation.h"
 #include "FVehicleToggleableCollisionShapeChanged.h"
+#include "GameFramework/Pawn.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
@@ -38,6 +39,7 @@
 class AActor;
 class ABuildingActor;
 class AFortPlayerPawn;
+class AFortPlayerStateZone;
 class AFortWaterBodyActor;
 class UAnimInstance;
 class UAthenaItemWrapDefinition;
@@ -850,5 +852,8 @@ public:
 	virtual bool NativeCanPassengersTakeDamage163();
 	virtual bool NativeIsSeatFilterApplicable163(uint8 Seat);
 	static void Native_1406d93e0(uint64* param_1, int32 param_2, int32 param_3);
+	virtual bool NativeContainsPlayers163();
+	virtual TArray<APawn*> NativeGetAllPassengers163();
+	virtual AFortPlayerStateZone* NativeGetPlayerStateForPawn163(APawn* Pawn);
 };
 

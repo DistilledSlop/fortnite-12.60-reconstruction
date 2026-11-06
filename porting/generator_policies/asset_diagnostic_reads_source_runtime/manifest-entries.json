@@ -1,0 +1,38 @@
+[
+  {
+    "class": "UFortAssetManager",
+    "function": "AppendBothDiagnosticAssetKeys",
+    "kind": "helper",
+    "signature": "void AppendBothDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortAssetManager/AppendBothDiagnosticAssetKeys.inc",
+    "address": "0x141df6860",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssetDiagnosticMap.h",
+      "FortAssets.h"
+    ],
+    "notes": "Original shared owner now wired internally. Preserve singleton call placement, reserve condition, sparse iteration order and output append semantics; map mutation/hash writers remain open.",
+    "static": true
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "AppendFirstDiagnosticAssetKeys",
+    "kind": "helper",
+    "signature": "void AppendFirstDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/UFortAssetManager/AppendFirstDiagnosticAssetKeys.inc",
+    "address": "0x141dfb390",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssetDiagnosticMap.h",
+      "FortAssets.h"
+    ],
+    "notes": "Original shared owner now wired internally. Preserve singleton call placement, reserve condition, sparse iteration order and output append semantics; map mutation/hash writers remain open.",
+    "static": true
+  }
+]

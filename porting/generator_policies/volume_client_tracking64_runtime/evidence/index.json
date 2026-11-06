@@ -1,0 +1,112 @@
+{
+  "_meta": {
+    "generated": "2026-11-03T06:43:42",
+    "elapsed_s": 11.1,
+    "count": 6,
+    "rolled_back": true,
+    "project_files_changed": [
+      "/opt/fortnite/ghidra-projects/fortnite-slim.rep/idata/~index.bak",
+      "/opt/fortnite/ghidra-projects/fortnite-slim.rep/idata/~index.dat",
+      "/opt/fortnite/ghidra-projects/fortnite-slim.rep/project.prp",
+      "/opt/fortnite/ghidra-projects/fortnite-slim.rep/versioned/~index.bak",
+      "/opt/fortnite/ghidra-projects/fortnite-slim.rep/versioned/~index.dat"
+    ]
+  },
+  "functions": [
+    {
+      "address": "0x142a174f0",
+      "label": "",
+      "created_in_memory": false,
+      "status": "ok",
+      "name": "FUN_142a174f0",
+      "body_bytes": 178,
+      "instructions": 32,
+      "direct_callees": 1,
+      "indirect_calls": 0,
+      "callers": 80,
+      "ref_counts": {
+        "data": 1,
+        "call": 520
+      }
+    },
+    {
+      "address": "0x142321a70",
+      "label": "",
+      "created_in_memory": false,
+      "status": "ok",
+      "name": "FUN_142321a70",
+      "body_bytes": 157,
+      "instructions": 49,
+      "direct_callees": 2,
+      "indirect_calls": 3,
+      "callers": 36,
+      "ref_counts": {
+        "data": 1,
+        "call": 35
+      }
+    },
+    {
+      "address": "0x14468f240",
+      "label": "",
+      "created_in_memory": false,
+      "status": "ok",
+      "name": "FUN_14468f240",
+      "body_bytes": 24,
+      "instructions": 6,
+      "direct_callees": 1,
+      "indirect_calls": 0,
+      "callers": 80,
+      "ref_counts": {
+        "call": 310
+      }
+    },
+    {
+      "address": "0x1447c6c10",
+      "label": "",
+      "created_in_memory": false,
+      "status": "ok",
+      "name": "FUN_1447c6c10",
+      "body_bytes": 178,
+      "instructions": 32,
+      "direct_callees": 1,
+      "indirect_calls": 0,
+      "callers": 13,
+      "ref_counts": {
+        "data": 2,
+        "call": 16
+      }
+    },
+    {
+      "address": "0x1440a6ab0",
+      "label": "",
+      "created_in_memory": false,
+      "status": "ok",
+      "name": "FUN_1440a6ab0",
+      "body_bytes": 131,
+      "instructions": 42,
+      "direct_callees": 1,
+      "indirect_calls": 0,
+      "callers": 14,
+      "ref_counts": {
+        "data": 1,
+        "call": 16
+      }
+    },
+    {
+      "address": "0x140687d00",
+      "label": "",
+      "created_in_memory": false,
+      "status": "ok",
+      "name": "FUN_140687d00",
+      "body_bytes": 161,
+      "instructions": 48,
+      "direct_callees": 0,
+      "indirect_calls": 0,
+      "callers": 80,
+      "ref_counts": {
+        "data": 1,
+        "call": 5525
+      }
+    }
+  ]
+}

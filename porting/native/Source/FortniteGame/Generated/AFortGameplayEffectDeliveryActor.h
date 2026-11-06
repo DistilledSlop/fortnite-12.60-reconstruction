@@ -6,15 +6,26 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "CollisionQueryParams.h"
 #include "Components/PrimitiveComponent.h"
 #include "Delegates/Delegate.h"
 #include "Engine/EngineTypes.h"
+#include "EngineUtils.h"
 #include "FFortGameplayEffectContainerSpec.h"
 #include "FFortSpawnContext.h"
+#include "FFortTargetFilter.h"
 #include "FOverlapRestrictions.h"
+#include "FortAssets.h"
+#include "FortDelayedObjectLoader.h"
+#include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
 #include "GameplayEffect.h"
+#include "GameplayTagAssetInterface.h"
 #include "GameplayTagContainer.h"
+#include "LandscapeProxy.h"
+#include "NavFilters/RecastFilter_UseDefaultArea.h"
+#include "NavigationSystem.h"
 #include "TargetSelectionVolumeNative.h"
 #include "TimerManager.h"
 
@@ -212,5 +223,8 @@ public:
 	virtual void NativePrepareTouchSpec(FGameplayEffectSpec& Spec);
 	virtual uint8 NativeGetTeam163();
 	bool NativeUseVolumeTargetFiltering163();
+	bool NativeExcludeVehicleTarget163(const FFortTargetFilter& Filter, AActor* Candidate, AActor* Requester);
+	void NativeFilterTouchActors(const FFortTargetFilter& Filter, UWorld* World, AActor* Requester, TArray<AActor*>& Actors);
+	bool NativeGetVehicleOccupants163(AActor* Actor, TArray<APawn*>& Occupants);
 };
 
