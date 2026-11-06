@@ -1,0 +1,32 @@
+[
+  {
+    "class": "UWidgetComponent",
+    "function": "SetPivot",
+    "kind": "exec",
+    "signature": "void SetPivot(const FVector2D& InPivot)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/gemini_review8_runtime/UWidgetComponent_SetPivot.inc",
+    "confidence": "high",
+    "address": "0x143dce720",
+    "status": "ported",
+    "reflection_flags": "0x4c20401",
+    "static": false,
+    "access": "public",
+    "notes": "Reviewed against Gemini decompiler output and reflection; sets Pivot. Build and runtime pending."
+  },
+  {
+    "class": "UFortCollectionBookSectionPanel",
+    "function": "OnLogAllowedItemsActionExecuted",
+    "kind": "exec",
+    "signature": "void OnLogAllowedItemsActionExecuted(bool& bPassThrough)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/gemini_review8_runtime/UFortCollectionBookSectionPanel_OnLogAllowedItemsActionExecuted.inc",
+    "confidence": "high",
+    "address": "0x14520ff30",
+    "status": "ported",
+    "reflection_flags": "0x480401",
+    "static": false,
+    "access": "protected",
+    "notes": "Reviewed against Gemini decompiler output and reflection; clears bPassThrough out parameter. Build and runtime pending."
+  }
+]
