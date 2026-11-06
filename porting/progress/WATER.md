@@ -74,14 +74,28 @@ US gallons = total liters / 3.785411784
 |---|---:|---:|---:|
 | Cloud PUE (facility energy / IT energy) | 1.2 | 1.2 | 1.2 |
 | On-site consumption (L / IT kWh) | 0 | 0.36 | 1.5 |
-| Electricity-generation consumption (L / facility kWh) | 0.1 | 4.52 | 10 |
+| Electricity-generation consumption (L / facility kWh) | 0.5 | 4.52 | 10 |
 
-PUE 1.2 and the low/high intensities are scenario choices. The central water
+PUE 1.2 and the low/high intensities are scenario choices. The low electricity factor (0.5) is about the
+lowest regional grid intensity reported for a solar-heavy US grid (roughly 0.13 gal/kWh), not a water-free grid;
+the central value includes hydroelectric reservoir evaporation, which is contested, and other national
+averages are lower (about 3.1 L/kWh). The central water
 factors use historical US data-center averages as proxies, not the location of
 any specific provider request. In particular, the electricity mix may differ
 substantially for Google's, OpenAI's, Anthropic's, or this machine's actual supply.
 No water-replenishment or carbon-credit offsets are subtracted. These are
 consumption factors, not withdrawal factors, and should not be mixed with them.
+
+## Where the uncertainty sits (central scenario, 2026-11-06 audit)
+
+- About 98% of tokens are cache reads, and they are about 74% of central energy (uncached input 10%, output and
+  reasoning 13%, cache writes 2%). The cache-read multiplier is the most sensitive input: 0.05 gives about 223 gal,
+  0.1 (central) about 354 gal, 0.2 about 617 gal.
+- Grid electricity is about 94% of central water; on-site cooling is about 6%. An electricity factor of 3.1 L/kWh
+  would give about 250 gal and 1.8 L/kWh about 154 gal.
+- GPT Terra and Sol share the "standard" proxy. Pricing-scaled Terra at half of Sol's energy would give about 300 gal.
+- Cross-checks: a Jegham et al. GPT-4o short query (0.42 Wh, 1.95 mL) is reproduced at 0.40 Wh and 1.9 mL, and
+  an independent pricing-scaled model (cache reads at 0.07 of input) gives about 290 gal against 354.
 
 Sources and their limits:
 
