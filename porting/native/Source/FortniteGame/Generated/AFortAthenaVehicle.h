@@ -750,6 +750,9 @@ public:
 	virtual bool IsInReverseGear() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsInSkyTube() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsInWater() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

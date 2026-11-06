@@ -616,6 +616,9 @@ public:
 	static bool GetForceBuildingActorRecordUpdatesEnabled();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static float GetGlobalSnowAltitude();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool GetIronCityEnabled();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -646,6 +649,12 @@ public:
 	static bool IsFirstShotAccuracyDisabled();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsFrontendCraftingEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsFrontendStorageEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsHeroLoadoutSystemEnabled();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -655,6 +664,9 @@ public:
 	static bool IsIronCityAutoAmplifierPlacementEnabled();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsNewRewardFlowEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsTouchInputPlatform();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -662,6 +674,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsWargameDebugEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsWIFEEnabled();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool ShouldDisableParticleEffectsDuringMissionResults();

@@ -28,6 +28,18 @@ bool UFortGlobals::GetForceBuildingActorRecordUpdatesEnabled()
 	return UFortGlobals::NativeGetGlobals()->bEnableForceBuildingActorRecordUpdates;
 }
 
+float UFortGlobals::GetGlobalSnowAltitude()
+{
+	// Behaviour snippet: UFortGlobals::GetGlobalSnowAltitude (body only; spliced into the generated member function).
+	// Original address: 0x142933e50
+	// Decompile source: porting/generated/native210-fresh-bulk/0x142933e50.c
+	// Inferred: calls the checked singleton accessor 0x141ed2350 (UFortGlobals::NativeGetGlobals) and returns the float
+	// GlobalSnowAltitude at +0x2cc (reflection offset 716, UFortGlobals).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return UFortGlobals::NativeGetGlobals()->GlobalSnowAltitude;
+}
+
 bool UFortGlobals::GetIronCityEnabled()
 {
 	// Native body 0x141ed5ab0. CONFIDENCE: high
@@ -88,6 +100,30 @@ bool UFortGlobals::IsFirstShotAccuracyDisabled()
 	return UFortGlobals::NativeGetGlobals()->bFirstShotAccuracyDisabled;
 }
 
+bool UFortGlobals::IsFrontendCraftingEnabled()
+{
+	// Behaviour snippet: UFortGlobals::IsFrontendCraftingEnabled (body only; spliced into the generated member function).
+	// Original address: 0x1429346e0
+	// Decompile source: porting/generated/native210-fresh-bulk/0x1429346e0.c
+	// Inferred: calls the checked singleton accessor 0x141ed2350 (UFortGlobals::NativeGetGlobals) and returns the byte at
+	// +0xc5 (reflection bool bEnableFrontendCrafting, offset 197, mask 1, mov8).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return UFortGlobals::NativeGetGlobals()->bEnableFrontendCrafting;
+}
+
+bool UFortGlobals::IsFrontendStorageEnabled()
+{
+	// Behaviour snippet: UFortGlobals::IsFrontendStorageEnabled (body only; spliced into the generated member function).
+	// Original address: 0x142934710
+	// Decompile source: porting/generated/native210-fresh-bulk/0x142934710.c
+	// Inferred: calls the checked singleton accessor 0x141ed2350 (UFortGlobals::NativeGetGlobals) and returns the byte at
+	// +0xc6 (reflection bool bEnableFrontendStorage, offset 198, mask 1, mov8).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return UFortGlobals::NativeGetGlobals()->bEnableFrontendStorage;
+}
+
 bool UFortGlobals::IsHeroLoadoutSystemEnabled()
 {
 	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
@@ -106,6 +142,18 @@ bool UFortGlobals::IsIronCityAutoAmplifierPlacementEnabled()
 	return false;
 }
 
+bool UFortGlobals::IsNewRewardFlowEnabled()
+{
+	// Behaviour snippet: UFortGlobals::IsNewRewardFlowEnabled (body only; spliced into the generated member function).
+	// Original address: 0x1429349e0
+	// Decompile source: porting/generated/native210-fresh-bulk/0x1429349e0.c
+	// Inferred: calls the checked singleton accessor 0x141ed2350 (UFortGlobals::NativeGetGlobals) and returns the byte at
+	// +0xc3 (reflection bool bEnableNewRewardFlow, offset 195, mask 1, mov8).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return UFortGlobals::NativeGetGlobals()->bEnableNewRewardFlow;
+}
+
 bool UFortGlobals::IsTouchInputPlatform()
 {
 	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
@@ -122,6 +170,18 @@ bool UFortGlobals::IsWargameDebugEnabled()
 {
 	// CONFIDENCE: high; complete native wrapper and reflected signature verified.
 	return false;
+}
+
+bool UFortGlobals::IsWIFEEnabled()
+{
+	// Behaviour snippet: UFortGlobals::IsWIFEEnabled (body only; spliced into the generated member function).
+	// Original address: 0x142934b20
+	// Decompile source: porting/generated/native210-fresh-bulk/0x142934b20.c
+	// Inferred: calls the checked singleton accessor 0x141ed2350 (UFortGlobals::NativeGetGlobals) and returns the byte at
+	// +0xc4 (reflection bool bEnableWIFE, offset 196, mask 1, mov8).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return UFortGlobals::NativeGetGlobals()->bEnableWIFE;
 }
 
 bool UFortGlobals::ShouldDisableParticleEffectsDuringMissionResults()

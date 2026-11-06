@@ -66140,5 +66140,24 @@
     "notes": "Reads bEnableWIFE (byte +0xc4, mask 1, mov8) from the NativeGetGlobals singleton.",
     "static": true,
     "includes": []
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "IsInSkyTube",
+    "kind": "exec",
+    "signature": "bool IsInSkyTube() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "virtual": true,
+    "inc_path": "porting/behavior/AFortAthenaVehicle/IsInSkyTube.inc",
+    "address": "0x14283c000",
+    "native_body_address": "0x14191bd00",
+    "reflection_flags": "0x54020402",
+    "vtable_slot": "0x900",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Virtual slot 0x900 forwards to NativeIsInSkyTube helper (0x14191bd00); body is the virtual call."
   }
 ]

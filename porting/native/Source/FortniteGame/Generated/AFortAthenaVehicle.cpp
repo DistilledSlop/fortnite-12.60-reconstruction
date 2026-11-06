@@ -240,6 +240,13 @@ bool AFortAthenaVehicle::IsInReverseGear() const
 	return (uint32(NativeRecoveredInt_0x578) - uint32(ReverseGears.Num())) >> 31;
 }
 
+bool AFortAthenaVehicle::IsInSkyTube() const
+{
+	// Original address: 0x14283c000; slot 0x900 forwards to NativeIsInSkyTube (target 0x14191bd00).
+	// CONFIDENCE: HIGH
+	return NativeIsInSkyTube();
+}
+
 bool AFortAthenaVehicle::IsInWater() const
 {
 	// Native target 0x14191bd20; CONFIDENCE: high.
