@@ -634,6 +634,9 @@ public:
 	void ForceIntoStructuralGridDuringRuntime();
 	void ForceIntoStructuralGridDuringRuntime_Implementation();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	TArray<ABuildingSMActor*> GetAttachedBuildingActors();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UStaticMeshComponent* GetBuildingMeshComponent() const;
 

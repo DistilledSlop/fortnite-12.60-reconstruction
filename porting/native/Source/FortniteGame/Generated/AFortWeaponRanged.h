@@ -357,6 +357,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortWeaponOverheatState GetOverheatState() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<FWeightedBlendable> GetScopePostProcessMaterial() const;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetShellReloadCounter() const;

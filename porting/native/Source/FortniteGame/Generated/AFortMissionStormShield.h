@@ -145,6 +145,11 @@ public:
 	UPROPERTY()
 	float AutoHideRadius;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetSafeZones(TArray<AFortMissionStormSafeZone*>& OutSafeZones);
+public:
+
 	UFUNCTION()
 	void OnRep_RadiusGrowthData();
 

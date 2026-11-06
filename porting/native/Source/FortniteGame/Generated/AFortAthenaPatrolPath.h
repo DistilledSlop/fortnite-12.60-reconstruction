@@ -38,5 +38,8 @@ public:
 	UPROPERTY()
 	TArray<AFortAthenaPatrolPoint*> PatrolPoints;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetPatrolPoints(TArray<AFortAthenaPatrolPoint*>& OutPatrolPoints) const;
+
 };
 

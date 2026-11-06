@@ -416,6 +416,9 @@ public:
 	uint8 GetGridSnapIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<FVector> GetGridSnapRatios() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetRotationAxisIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
