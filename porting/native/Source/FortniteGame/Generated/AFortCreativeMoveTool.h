@@ -391,6 +391,11 @@ public:
 	void ClientStopInteracting_Implementation();
 
 protected:
+	UFUNCTION(BlueprintCallable)
+	void DeactiveWeaponAndState();
+public:
+
+protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UObjectInteractionBehavior* GetActiveMovementMode() const;
 public:

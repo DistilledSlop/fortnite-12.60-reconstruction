@@ -67,6 +67,9 @@ public:
 	UFUNCTION()
 	void OnRep_ItemDefinition();
 
+	UFUNCTION(BlueprintCallable)
+	void OnUnEquip();
+
 	UFUNCTION(Server, Reliable)
 	void ServerCreateBuildingAndSpawnDeco(const FVector_NetQuantize10& BuildingLocation, const FRotator& BuildingRotation, const FVector_NetQuantize10& Location, const FRotator& Rotation, EBuildingAttachmentType InBuildingAttachmentType);
 	void ServerCreateBuildingAndSpawnDeco_Implementation(const FVector_NetQuantize10& BuildingLocation, const FRotator& BuildingRotation, const FVector_NetQuantize10& Location, const FRotator& Rotation, EBuildingAttachmentType InBuildingAttachmentType);

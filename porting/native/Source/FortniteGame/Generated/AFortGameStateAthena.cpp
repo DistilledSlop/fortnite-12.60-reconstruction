@@ -431,6 +431,17 @@ bool AFortGameStateAthena::IsPlaygroundModePlaylist() const
 	return UFortPlaylistAthenaHelper::IsPlaygroundModePlaylist(GetCurrentPlaylistAthena());
 }
 
+bool AFortGameStateAthena::IsStormCN() const
+{
+	// CONFIDENCE: medium
+	// Original address: 0x142920160
+	// FFrame::Code at Stack+0x20: skip the opcode byte (advance if non-null)
+	*(ulonglong*)((uint8*)Stack + 0x20) = (ulonglong)(*(longlong*)((uint8*)Stack + 0x20) != 0) + *(longlong*)((uint8*)Stack + 0x20);
+	uint8 uVar1 = Native_14199e4e0();
+	// Result is the out-parameter for the bool-like return value
+	*(uint8*)Result = uVar1;
+}
+
 bool AFortGameStateAthena::IsTeleportToCreativeHubAllowed(AFortPlayerState* PlayerState) const
 {
 	// CONFIDENCE: high; 0x14199e430 applies the same creative-tag then playground-tag query, re-reading the playlist on the second path. The player parameter is unused.

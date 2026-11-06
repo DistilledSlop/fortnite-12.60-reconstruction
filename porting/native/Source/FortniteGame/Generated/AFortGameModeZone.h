@@ -213,6 +213,12 @@ public:
 	bool IsSpectatingAllowedAfterDeath() const;
 	virtual bool IsSpectatingAllowedAfterDeath_Implementation() const;
 
+	UFUNCTION()
+	void OnEveningReached();
+
+	UFUNCTION()
+	void OnMorningReached();
+
 protected:
 	UFUNCTION()
 	void OnPlayerExit(AActor* Controller);
