@@ -1,0 +1,177 @@
+[
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsPassivelySkydiving",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x1420e4ab0 on [this+0x280] (CharacterMovement) is a shared body of UFortMovementComp_Character::IsActivelySkydiving and ::IsPassivelySkydiving; same class, cannot pick one."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "OnRep_DBNOHoistee",
+  "status": "proposed",
+  "case": "delegate_broadcast_isa_gate",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "SetPendingSkydiveLaunch",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_jump",
+  "reason": "After storing bit 0x10 of byte [this+0x10e7] (unreflected gap), JNZ 0x14230e1e0 tail-jumps to a function absent from callee_candidates; cannot express."
+ },
+ {
+  "class": "AFortPlayerPawnAthena",
+  "function": "IsPlayingMinigame",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Tail JMP 0x1419dd8b0 = AFortPlayerControllerAthena::IsPlayerInAMinigame; not declared anywhere under porting/native/Source."
+ },
+ {
+  "class": "AFortPlayerStartupController",
+  "function": "HandleAllInCountdownInitiated_Implementation",
+  "status": "proposed",
+  "case": "delegate_broadcast_log_elided",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerStartupController",
+  "function": "HandlePlayerStartupControllerCreated_Implementation",
+  "status": "proposed",
+  "case": "delegate_broadcast_log_elided",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerStartupController",
+  "function": "HandlePlayerStartupControllerDestroyed_Implementation",
+  "status": "proposed",
+  "case": "delegate_broadcast_log_elided",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerStartupController",
+  "function": "HandlePlayerStartupControllerRegistered_Implementation",
+  "status": "proposed",
+  "case": "delegate_broadcast_log_elided",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerStartupController",
+  "function": "HandlePlayerStartupControllerReset_Implementation",
+  "status": "proposed",
+  "case": "delegate_broadcast_log_elided",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerState",
+  "function": "GetCurrentPawn",
+  "status": "proposed",
+  "case": "pointer_getter_isa_gate",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerPushableCart",
+  "function": "OnSplinePointReached",
+  "status": "proposed",
+  "case": "spline_index_advance",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerPet",
+  "function": "GetFortPlayerPawn",
+  "status": "proposed",
+  "case": "pointer_getter_isa_gate",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerStateZone",
+  "function": "GetNumOfAccumulatedItem",
+  "status": "proposed",
+  "case": "array_scan_sum",
+  "reason": ""
+ },
+ {
+  "class": "UFortPlayerSurveyQuestionMultipleSelection",
+  "function": "TryGetMaxNumAnswers",
+  "status": "proposed",
+  "case": "out_param_bounds_check",
+  "reason": ""
+ },
+ {
+  "class": "UFortPlayerSurveyQuestionSelector",
+  "function": "HandleAnswerChanged",
+  "status": "blocked",
+  "case": "unreflected_delegate_member",
+  "reason": "Broadcast (CALL 0x1406a9dc0) on this+0x50, an unreflected gap in the class; no typed delegate member_field type available."
+ },
+ {
+  "class": "UFortPlayerSurveyQuestionSelector",
+  "function": "HandleQuestionChanged",
+  "status": "blocked",
+  "case": "unreflected_delegate_member",
+  "reason": "Broadcasts on this+0x40, +0x70, +0x80 are unreflected gaps; no typed delegate member_field type available."
+ },
+ {
+  "class": "AFortProjectileBase",
+  "function": "GetOwnerPlayerController",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ee5dd0 on [this+0x780] (unreflected) is shared by six unrelated class getters; receiver class unknown, no candidate provably matches."
+ },
+ {
+  "class": "UFortQuestItem",
+  "function": "HasCompletedObjective",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x142440da0 = UFortQuestItem::GetObjectiveInfo; not declared in generated headers under FortniteGame/Generated."
+ },
+ {
+  "class": "UFortQuestItem",
+  "function": "IsObjectiveInProgress",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x142440da0 = UFortQuestItem::GetObjectiveInfo; not declared in generated headers under FortniteGame/Generated."
+ },
+ {
+  "class": "UFortQueryTwoPointSolver",
+  "function": "AddNamedFloatParamA",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140690dd0 (TArray growth on this+0x38) is shared by AFortBroadcastRemoteClientInfo::OnRep_bActive and UFortTierIndicator::ClearPreviewState; receiver is a TArray, no class match."
+ },
+ {
+  "class": "UFortQueryTwoPointSolver",
+  "function": "AddNamedFloatParamB",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140690dd0 (TArray growth on this+0x48) is shared by AFortBroadcastRemoteClientInfo::OnRep_bActive and UFortTierIndicator::ClearPreviewState; receiver is a TArray, no class match."
+ },
+ {
+  "class": "UFortQuestManager",
+  "function": "GetMainQuest",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x142447c70 = UFortQuestItem::IsVisibleToUser; not declared in UFortQuestItem.h (only UFortQuestObjectiveInfo::IsVisibleToUser exists)."
+ },
+ {
+  "class": "UFortQuestManager",
+  "function": "IsMainQuest",
+  "status": "proposed",
+  "case": "raw_offset_read",
+  "reason": ""
+ },
+ {
+  "class": "UFortQuestManager",
+  "function": "SendCustomStatEventDirect",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x1406d93e0 on a local TArray (generic array allocation) is shared by six unrelated functions; no class receiver."
+ },
+ {
+  "class": "AFortRemoteControlledPawnAthena",
+  "function": "OnCapsuleTouch",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ee5dd0 on [this+0x30a4] (ControllingPlayerPawn, TWeakObjectPtr) is shared by six unrelated class getters; none matches the weak-pointer receiver."
+ }
+]

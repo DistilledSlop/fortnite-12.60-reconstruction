@@ -1,0 +1,10 @@
+// Behaviour snippet: AFortPlayerPet::GetFortPlayerPawn (body only).
+// Original address: 0x141a133d0 (thunk 0x142a88af0)
+// Offset evidence: this+0xe0 = AActor::Owner (reflected Object); returned only when it IsA AFortPlayerPawn (static getter 0x142a75f10), else null.
+// CONFIDENCE: HIGH
+AActor* OwnerActor = Owner;
+if (OwnerActor != nullptr && OwnerActor->IsA(AFortPlayerPawn::StaticClass()))
+{
+    return static_cast<AFortPlayerPawn*>(OwnerActor);
+}
+return nullptr;

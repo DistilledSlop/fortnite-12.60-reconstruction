@@ -21,6 +21,7 @@
 class AFortCarriedObject;
 class UFortGadgetItemDefinition;
 class UFortItemDefinition;
+class UFortWorldItemDefinition;
 
 #include "AFortPlayerStateZone.generated.h"
 
@@ -137,6 +138,9 @@ public:
 	// table index 0, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_QuickbarEquippedItems, Transient)
 	TArray<UFortItemDefinition*> QuickbarEquippedItems;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumOfAccumulatedItem(UFortWorldItemDefinition* ItemDefinition) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual FString GetPlayerNameForStreaming() const;

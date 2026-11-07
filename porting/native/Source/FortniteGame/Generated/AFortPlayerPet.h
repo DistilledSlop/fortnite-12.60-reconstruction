@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class AFortPlayerPawn;
 class UAthenaPetItemDefinition;
 class UAudioComponent;
 class UFortTaggedSoundBank;
@@ -48,6 +49,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortTaggedSoundBank* SoundBank;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerPawn* GetFortPlayerPawn() const;
 
 };
 

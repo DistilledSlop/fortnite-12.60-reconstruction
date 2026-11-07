@@ -260,6 +260,9 @@ protected:
 	void InitializeQuestAbilities(APawn* PlayerPawn);
 public:
 
+	UFUNCTION(BlueprintCallable)
+	bool IsMainQuest(UFortQuestItem* Quest);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsObjectiveWithNameInProgress(UFortQuestItemDefinition* Definition, FName BackendName) const;
 

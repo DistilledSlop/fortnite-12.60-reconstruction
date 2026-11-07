@@ -28,5 +28,8 @@ public:
 	UPROPERTY()
 	int32 MaxNumAnswers;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool TryGetMaxNumAnswers(int32& OutMaxNumAnswers) const;
+
 };
 

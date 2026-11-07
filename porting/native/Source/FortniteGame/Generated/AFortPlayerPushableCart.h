@@ -210,6 +210,9 @@ public:
 	UFUNCTION()
 	void OnRep_TotalActivePushers();
 
+	UFUNCTION()
+	void OnSplinePointReached(int32 SplinePointReached, bool bWasMovingForward);
+
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void RemovePlayerFromPushArea(AFortPlayerPawn* PlayerToRemove);
 

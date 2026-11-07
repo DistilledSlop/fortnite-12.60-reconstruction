@@ -42,6 +42,56 @@ int32 AFortPlayerStartupController::GetNumPlayersStillWaitingFor()
 	return 0;
 }
 
+void AFortPlayerStartupController::HandleAllInCountdownInitiated_Implementation()
+{
+	// Behaviour snippet: AFortPlayerStartupController::HandleAllInCountdownInitiated_Implementation (body only).
+	// Original address: 0x141f36e40 (thunk 0x142711840)
+	// Offset evidence: this+0x260 = AFortPlayerStartupController::OnAllInCountdownInitiated (reflected FAllInCountdownInitiated, no params; asm passes RDX=0 to the broadcast 0x1406a9dc0).
+	// Verbosity-gated diagnostic log at 0x142c54b70 elided (no state change)
+	// CONFIDENCE: MEDIUM
+	OnAllInCountdownInitiated.Broadcast();
+}
+
+void AFortPlayerStartupController::HandlePlayerStartupControllerCreated_Implementation()
+{
+	// Behaviour snippet: AFortPlayerStartupController::HandlePlayerStartupControllerCreated_Implementation (body only).
+	// Original address: 0x141f37400 (thunk 0x14076d4d0)
+	// Offset evidence: this+0x240 = AFortPlayerStartupController::OnPlayerStartupControllerCreated (reflected FPlayerStartupControllerCreated, no params; asm passes RDX=0 to the broadcast 0x1406a9dc0).
+	// Verbosity-gated diagnostic log at 0x142c54b70 elided (no state change)
+	// CONFIDENCE: MEDIUM
+	OnPlayerStartupControllerCreated.Broadcast();
+}
+
+void AFortPlayerStartupController::HandlePlayerStartupControllerDestroyed_Implementation()
+{
+	// Behaviour snippet: AFortPlayerStartupController::HandlePlayerStartupControllerDestroyed_Implementation (body only).
+	// Original address: 0x141f37450 (thunk 0x1410aabf0)
+	// Offset evidence: this+0x270 = AFortPlayerStartupController::OnPlayerStartupControllerDestroyed (reflected FPlayerStartupControllerDestroyed, no params; asm passes RDX=0 to the broadcast 0x1406a9dc0).
+	// Verbosity-gated diagnostic log at 0x142c54b70 elided (no state change)
+	// CONFIDENCE: MEDIUM
+	OnPlayerStartupControllerDestroyed.Broadcast();
+}
+
+void AFortPlayerStartupController::HandlePlayerStartupControllerRegistered_Implementation()
+{
+	// Behaviour snippet: AFortPlayerStartupController::HandlePlayerStartupControllerRegistered_Implementation (body only).
+	// Original address: 0x141f374a0 (thunk 0x14076d570)
+	// Offset evidence: this+0x250 = AFortPlayerStartupController::OnPlayerStartupControllerRegistered (reflected FPlayerStartupControllerRegistered, no params; asm passes RDX=0 to the broadcast 0x1406a9dc0).
+	// Verbosity-gated diagnostic log at 0x142c54b70 elided (no state change)
+	// CONFIDENCE: MEDIUM
+	OnPlayerStartupControllerRegistered.Broadcast();
+}
+
+void AFortPlayerStartupController::HandlePlayerStartupControllerReset_Implementation()
+{
+	// Behaviour snippet: AFortPlayerStartupController::HandlePlayerStartupControllerReset_Implementation (body only).
+	// Original address: 0x141f374f0 (thunk 0x142737e10)
+	// Offset evidence: this+0x280 = AFortPlayerStartupController::OnResetContainmentTimer (reflected FPlayerStartupControllerDestroyed, no params; asm passes RDX=0 to the broadcast 0x1406a9dc0).
+	// Verbosity-gated diagnostic log at 0x142c54b70 elided (no state change)
+	// CONFIDENCE: MEDIUM
+	OnResetContainmentTimer.Broadcast();
+}
+
 void AFortPlayerStartupController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -268,6 +268,9 @@ public:
 	void ClientNotifyAwardGranted_Implementation(UFortAwardItemDefinition* AwardDefinition);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerPawn* GetCurrentPawn() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasStartedPlaying() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

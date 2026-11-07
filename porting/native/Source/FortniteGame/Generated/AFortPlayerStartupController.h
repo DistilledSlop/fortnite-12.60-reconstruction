@@ -85,6 +85,26 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	int32 GetNumPlayersStillWaitingFor();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void HandleAllInCountdownInitiated();
+	virtual void HandleAllInCountdownInitiated_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void HandlePlayerStartupControllerCreated();
+	virtual void HandlePlayerStartupControllerCreated_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void HandlePlayerStartupControllerDestroyed();
+	virtual void HandlePlayerStartupControllerDestroyed_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void HandlePlayerStartupControllerRegistered();
+	virtual void HandlePlayerStartupControllerRegistered_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void HandlePlayerStartupControllerReset();
+	virtual void HandlePlayerStartupControllerReset_Implementation();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 
