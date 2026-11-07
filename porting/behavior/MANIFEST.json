@@ -76735,5 +76735,18 @@
     "status": "ported",
     "recovery_source": "small_leaf_batch",
     "notes": "Byte written 0/1 by HideWidget/ShowWidget; own region past NumToStartShowingAt (0x2a0); no reflected bit at this byte."
+  },
+  {
+    "class": "UFortControllerComponent_Inspector",
+    "function": "ClientBeginRequestScreenshot_Implementation",
+    "kind": "impl",
+    "signature": "void ClientBeginRequestScreenshot_Implementation(const FInspectorScreenshotContext& InScreenshotContext)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/_shared/return.inc",
+    "confidence": "high",
+    "address": "0x1406963a0",
+    "status": "ported",
+    "native_body_address": "0x1406963a0",
+    "notes": "Body 0x1406963a0 only frees the by-value struct buffer; empty body."
   }
 ]

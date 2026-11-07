@@ -3,7 +3,9 @@
 
 void UFortControllerComponent_Inspector::ClientBeginRequestScreenshot_Implementation(const FInspectorScreenshotContext& InScreenshotContext)
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void UFortControllerComponent_Inspector::ClientEndRequestScreenshot_Implementation()

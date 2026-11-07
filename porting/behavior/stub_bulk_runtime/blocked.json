@@ -1,1127 +1,1120 @@
 [
-  {
-    "entry": "UEpicCMSTileCarousel::HandleTilePageAdded_Implementation",
-    "kind": "native_event_impl",
-    "blocker": "no_module",
-    "reason": "package /Script/EpicCMSUIFramework has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
-    "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
-    "body": "0x1406801c0",
-    "thunk": "0x14102c4c0"
-  },
-  {
-    "entry": "UFXSystemComponent::SetIntParameter",
-    "kind": "exec",
-    "blocker": "engine_backport",
-    "reason": "Engine class; SetIntParameter is declared in UE 4.26, not 4.25 (progress/engine_provided_natives.json gap_declared_in_reference)",
-    "unblock": "Backport the 4.26 declaration into the engine checkout, then this body is the stub",
-    "body": "0x1406801c0",
-    "thunk": "0x1447b0f20"
-  },
-  {
-    "entry": "UUACNetworkComponent::SendPacketToServer_Implementation",
-    "kind": "impl",
-    "blocker": "no_module",
-    "reason": "package /Script/UACBase has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
-    "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
-    "body": "0x1406801c0",
-    "thunk": "0x141341740"
-  },
-  {
-    "entry": "UUACNetworkComponent::SendPacketToServer_Validate",
-    "kind": "validate",
-    "blocker": "no_module",
-    "reason": "package /Script/UACBase has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
-    "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
-    "body": "0x1406801d0",
-    "thunk": "0x141341740"
-  },
-  {
-    "entry": "UCommonPoolableWidgetInterface::OnAcquireFromPool_Implementation",
-    "kind": "interface",
-    "blocker": "interface_function",
-    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
-  },
-  {
-    "entry": "UFortClientAnnouncement_ConversationCodeInterface::StopConversation",
-    "kind": "interface",
-    "blocker": "interface_function",
-    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
-  },
-  {
-    "entry": "UFortInteractInterface::IconPlacementNeedsUpdate_Implementation",
-    "kind": "interface",
-    "blocker": "interface_function",
-    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
-  },
-  {
-    "entry": "UFortItemListViewInterface::RefreshSort",
-    "kind": "interface",
-    "blocker": "interface_function",
-    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
-  },
-  {
-    "entry": "UFortItemManagementMulchPanel::NotifyPanelDeactivated",
-    "kind": "interface",
-    "blocker": "interface_function",
-    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
-  },
-  {
-    "entry": "UFortProjectileMovementInterface::IsProjectileBeingKilled_Implementation",
-    "kind": "interface",
-    "blocker": "interface_function",
-    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
-  },
-  {
-    "entry": "UFortVehicleInterface::ChangeSeat",
-    "kind": "interface",
-    "blocker": "interface_function",
-    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
-  },
-  {
-    "entry": "UFortVehicleInterface::DestroyVehicle",
-    "kind": "interface",
-    "blocker": "interface_function",
-    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
-  },
-  {
-    "entry": "UFortVehicleInterface::WakeUp",
-    "kind": "interface",
-    "blocker": "interface_function",
-    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
-  },
-  {
-    "entry": "ULevelSaveSpawnable::PostLevelSaveSpawnCleanup_Implementation",
-    "kind": "interface",
-    "blocker": "interface_function",
-    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
-  },
-  {
-    "entry": "UFortMissionLibrary::SpawnMissionItemPickupInWorld",
-    "kind": "exec",
-    "blocker": "virtual_rejected",
-    "reason": "Generator: explicit virtual requires an ordinary reflected member function (UFortMissionLibrary is a function library; classification as a virtual target is wrong for it)",
-    "unblock": "Re-derive the body location as a static/library function and port without virtual",
-    "body": "0x140680300",
-    "thunk": "0x1429ec010"
-  },
-  {
-    "entry": "UFortKismetLibrary::ExtractSkeletalMesh",
-    "kind": "exec",
-    "blocker": "handwritten_class",
-    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-    "body": "0x140680300",
-    "thunk": "0x14296a600"
-  },
-  {
-    "entry": "UFortKismetLibrary::GetAIDirector",
-    "kind": "exec",
-    "blocker": "handwritten_class",
-    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-    "body": "0x140680300",
-    "thunk": "0x14296a600"
-  },
-  {
-    "entry": "UFortKismetLibrary::GetAIGoalManager",
-    "kind": "exec",
-    "blocker": "handwritten_class",
-    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-    "body": "0x140680300",
-    "thunk": "0x14296a600"
-  },
-  {
-    "entry": "UFortKismetLibrary::IncrementAnalyticMatchCount",
-    "kind": "exec",
-    "blocker": "handwritten_class",
-    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-    "body": "0x140680300",
-    "thunk": "0x142971e80"
-  },
-  {
-    "entry": "UFortKismetLibrary::K2_SpawnPickupInWorld",
-    "kind": "exec",
-    "blocker": "handwritten_class",
-    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-    "body": "0x140680300",
-    "thunk": "0x142973d70"
-  },
-  {
-    "entry": "UFortKismetLibrary::K2_SpawnPickupInWorldWithClass",
-    "kind": "exec",
-    "blocker": "handwritten_class",
-    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-    "body": "0x140680300",
-    "thunk": "0x142974140"
-  },
-  {
-    "entry": "UCommonInputSubsystem::GetCurrentInputType",
-    "kind": "exec",
-    "blocker": "already_provided_by_generator_policy",
-    "reason": "porting/frontend/common_input_current_type/policy.py already provides this function (\"GetCurrentInputType declaration collision\" when added to the manifest)",
-    "unblock": "None needed: the function is ported by the policy. The dashboard counts manifest entries only, so policy-provided bodies are not credited (undercount)"
-  },
-  {
-    "entry": "UFortChatContainer::HandleGetMenuContentForAnchor",
-    "kind": "exec",
-    "blocker": "no_module",
-    "reason": "/Script/SocialUMG (ancestor USocialChatContainer) has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
-    "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
-    "body": "0x1421d78d0",
-    "thunk": "0x145209f00"
-  },
-  {
-    "entry": "UFortMediaSubtitlesPlayer::SetSubtitles",
-    "kind": "exec",
-    "blocker": "no_module",
-    "reason": "/Script/SubtitlesWidgets (its own package) has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
-    "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
-    "body": "0x141226a70",
-    "thunk": "0x1412f0200"
-  },
-  {
-    "entry": "UCommonButton::GetSelected",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "UCommonButton declarations are owned by porting/frontend/common_panel_runtime (button_text_style_policy raises \"declaration collision\" when the class gains manifest members/bodies)",
-    "unblock": "Express the body inside the policy for UCommonButton, or extend the policy to accept manifest members"
-  },
-  {
-    "entry": "UCommonButton::NativeRecoveredBits_0x2a1",
-    "kind": "member_field",
-    "blocker": "policy_owned_class",
-    "reason": "UCommonButton declarations are owned by porting/frontend/common_panel_runtime (button_text_style_policy raises \"declaration collision\" when the class gains manifest members/bodies)",
-    "unblock": "Express the body inside the policy for UCommonButton, or extend the policy to accept manifest members"
-  },
-  {
-    "entry": "AFortHoagieAudioController::CacheAudioComponents",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "AFortHoagieAudioController is missing from porting/native_class_set.txt (module is in the uproject, so the earlier no_module label was wrong). Body (RDX->+0x230, R8->+0x238) is ready once generated.",
-    "unblock": "Add AFortHoagieAudioController to porting/native_class_set.txt (after AFortHoagieVehicle, line ~4671), regenerate, then port"
-  },
-  {
-    "entry": "UTimeSynthComponent::GetMaxActiveClipLimit",
-    "kind": "exec",
-    "blocker": "engine_backport",
-    "reason": "Stock UE 4.25 TimeSynth does not declare GetMaxActiveClipLimit (4.26 does) and the plugin is not enabled in FortniteLinux.uproject. Body is MOV EAX,[RCX+0x838].",
-    "unblock": "Enable/backport the TimeSynth plugin with the 4.26 member, then port"
-  },
-  {
-    "entry": "AFortGameStateAthena::SetLocationFont",
-    "kind": "exec",
-    "blocker": "not_a_leaf",
-    "reason": "Body 0x142f440c0 is only a local-struct constructor the thunk uses; the real call 0x1419aea90 is non-leaf (vtable call +0xaf0, calls 0x14468fb70 and 0x142ee5dd0, TArray iteration).",
-    "unblock": "Port 0x1419aea90 and its callees in the short-call tier"
-  },
-  {
-    "entry": "AFortGameStateAthena::SetLocationFontInAllStates",
-    "kind": "exec",
-    "blocker": "not_a_leaf",
-    "reason": "Same as SetLocationFont: real call 0x1419aea90 is non-leaf.",
-    "unblock": "Port 0x1419aea90 and its callees in the short-call tier"
-  },
-  {
-    "entry": "UFortWorker::GetWorkerTypeBP",
-    "kind": "exec",
-    "blocker": "thunk_has_inlined_logic",
-    "reason": "thunk 0x142b5d3d0 does a vtable call (+0x3e8) then an inlined class-hierarchy cast check on the result; it never calls 0x14070f440, so the body is a Cast<> of GetItemDefinition-style data, not a plain getter",
-    "unblock": "Port the thunk-level logic itself (group A style): decompile the thunk, implement vtable/interface/cast steps with typed members",
-    "body": "0x14070f440",
-    "thunk": "0x142b5d3d0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortAthenaMutator_Arsenic::IsPawnAnInfected",
-    "kind": "exec",
-    "blocker": "thunk_has_inlined_logic",
-    "reason": "thunk 0x1427e1490 inlines the logic: it queries the Pawn argument through an interface vtable (+0x28 after ADD 0x4a8) and compares with InfectedTeam (body 0x141aad120 is only the InfectedTeam getter)",
-    "unblock": "Port the thunk-level logic itself (group A style): decompile the thunk, implement vtable/interface/cast steps with typed members",
-    "body": "0x141aad120",
-    "thunk": "0x1427e1490",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortHero::GetHeroTypeBP",
-    "kind": "exec",
-    "blocker": "thunk_has_inlined_logic",
-    "reason": "same shape as GetWorkerTypeBP: thunk does a vtable call plus an inlined cast check; body 0x14070f440 is not the function",
-    "unblock": "Port the thunk-level logic itself (group A style): decompile the thunk, implement vtable/interface/cast steps with typed members",
-    "body": "0x14070f440",
-    "thunk": "0x14293bc30",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortAthenaVehicle::OnRep_OnFire",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x1427a52f0 tail-jumps to 0x14191d7f0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x14191d7f0 (non-stub; read porting/generated/work-packets/0x14191d7f0.md)",
-    "body": "0x14191d7f0",
-    "thunk": "0x1427a52f0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortGameStateBase::OnRep_TimeOfDayManager",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142924ad0 tail-jumps to 0x141eab4b0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x141eab4b0 (non-stub; read porting/generated/work-packets/0x141eab4b0.md)",
-    "body": "0x141eab4b0",
-    "thunk": "0x142924ad0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortMinigameItemListComponent::ClearItems",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x1429d1df0 tail-jumps to 0x141ca83d0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x141ca83d0 (non-stub; read porting/generated/work-packets/0x141ca83d0.md)",
-    "body": "0x141ca83d0",
-    "thunk": "0x1429d1df0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortPawn::OnRep_IsKnockedBack",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a1ebc0 tail-jumps to 0x14233c700; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x14233c700 (non-stub; read porting/generated/work-packets/0x14233c700.md)",
-    "body": "0x14233c700",
-    "thunk": "0x142a1ebc0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortPawn::OnRep_PawnUniqueID",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a1ec40 tail-jumps to 0x14233ce50; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x14233ce50 (non-stub; read porting/generated/work-packets/0x14233ce50.md)",
-    "body": "0x14233ce50",
-    "thunk": "0x142a1ec40",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortPhysicsPawn::OnRep_GravityMultiplier",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a270f0 tail-jumps to 0x14233a010; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x14233a010 (non-stub; read porting/generated/work-packets/0x14233a010.md)",
-    "body": "0x14233a010",
-    "thunk": "0x142a270f0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortPlayerHealthInfoComponent::OnRep_TeamHealthInfoArray",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a706f0 tail-jumps to 0x142420c50; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x142420c50 (non-stub; read porting/generated/work-packets/0x142420c50.md)",
-    "body": "0x142420c50",
-    "thunk": "0x142a706f0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortBaseButton::ForceClick",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x1452042d0 tail-jumps to 0x144d777b0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x144d777b0 (non-stub; read porting/generated/work-packets/0x144d777b0.md)",
-    "body": "0x144d777b0",
-    "thunk": "0x1452042d0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortBaseButton::OnButtonClicked",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x1452042d0 tail-jumps to 0x144d777b0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x144d777b0 (non-stub; read porting/generated/work-packets/0x144d777b0.md)",
-    "body": "0x144d777b0",
-    "thunk": "0x1452042d0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortEventLevelScreen::StreamedVideoOnMediaPlayerEndReached",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x14522f670 tail-jumps to 0x144d68860; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x144d68860 (non-stub; read porting/generated/work-packets/0x144d68860.md)",
-    "body": "0x144d68860",
-    "thunk": "0x14522f670",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortRealMoneyOfferDetails::DeclineMtxPurchase",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x1452bdc50 tail-jumps to 0x1450a9fc0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x1450a9fc0 (non-stub; read porting/generated/work-packets/0x1450a9fc0.md)",
-    "body": "0x1450a9fc0",
-    "thunk": "0x1452bdc50",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortStoreFrontOfferDetailsWidgetBase::SendRealMoneyPurchase",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x1452f3050 tail-jumps to 0x1450ca940; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x1450ca940 (non-stub; read porting/generated/work-packets/0x1450ca940.md)",
-    "body": "0x1450ca940",
-    "thunk": "0x1452f3050",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortPlayerControllerGameplay::OnRep_GhostModeRepData",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a65c00 tail-jumps to 0x1423e0070; the earlier port used 0x1419d6590 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x1423e0070 (non-stub; read porting/generated/work-packets/0x1423e0070.md)",
-    "body": "0x1423e0070",
-    "thunk": "0x142a65c00",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortPlayerControllerZone::ResurrectPlayer",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a707b0 tail-jumps to 0x1423e7040; the earlier port used 0x1419d5f00 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x1423e7040 (non-stub; read porting/generated/work-packets/0x1423e7040.md)",
-    "body": "0x1423e7040",
-    "thunk": "0x142a707b0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortPlayerPawn::CancelJumpAbility",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a7b160 tail-jumps to 0x14230c960; the earlier port used 0x141a128d0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x14230c960 (non-stub; read porting/generated/work-packets/0x14230c960.md)",
-    "body": "0x14230c960",
-    "thunk": "0x142a7b160",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortPlayerPawn::HandleInStasis",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a7cc50 tail-jumps to 0x14232b1f0; the earlier port used 0x141a418a0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x14232b1f0 (non-stub; read porting/generated/work-packets/0x14232b1f0.md)",
-    "body": "0x14232b1f0",
-    "thunk": "0x142a7cc50",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortPlayerPawn::LocalThrowCarriedPlayer",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a7d6d0 tail-jumps to 0x142333900; the earlier port used 0x141a128d0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x142333900 (non-stub; read porting/generated/work-packets/0x142333900.md)",
-    "body": "0x142333900",
-    "thunk": "0x142a7d6d0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortPlayerPawn::OnRep_IsInsideSafeZone",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a7de10 tail-jumps to 0x14233c610; the earlier port used 0x141a128d0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x14233c610 (non-stub; read porting/generated/work-packets/0x14233c610.md)",
-    "body": "0x14233c610",
-    "thunk": "0x142a7de10",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UPocketLevelInstance::HandlePocketLevelLoaded",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142aa2140 tail-jumps to 0x141bacf40; the earlier port used 0x140d91ec0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x141bacf40 (non-stub; read porting/generated/work-packets/0x141bacf40.md)",
-    "body": "0x141bacf40",
-    "thunk": "0x142aa2140",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortWeaponRanged_Ostrich::PlayReloadAnim",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142b51e20 tail-jumps to 0x1426d9a70; the earlier port used 0x141c07d60 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x1426d9a70 (non-stub; read porting/generated/work-packets/0x1426d9a70.md)",
-    "body": "0x1426d9a70",
-    "thunk": "0x142b51e20",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortGameEventNotifications::HandleNotificationUpdateFinished",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x145249cc0 tail-jumps to 0x144ec1860; the earlier port used 0x140743d00 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x144ec1860 (non-stub; read porting/generated/work-packets/0x144ec1860.md)",
-    "body": "0x144ec1860",
-    "thunk": "0x145249cc0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "ABuildingGameplayActorSpawnChip::OnRep_RebootCardReplicatedState",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x1427443d0 tail-jumps to 0x141bd3dd0; the earlier port used 0x141baa080 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x141bd3dd0 (non-stub; read porting/generated/work-packets/0x141bd3dd0.md)",
-    "body": "0x141bd3dd0",
-    "thunk": "0x1427443d0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "AFortPlayerPawn::OnRep_AccelerationZPack",
-    "kind": "exec",
-    "blocker": "real_body_is_tail_jump_target",
-    "reason": "Thunk 0x142a7dbb0 tail-jumps to 0x142339320; the earlier port used 0x1420ee770 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
-    "unblock": "Port the real body 0x142339320 (non-stub; read porting/generated/work-packets/0x142339320.md)",
-    "body": "0x142339320",
-    "thunk": "0x142a7dbb0",
-    "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortControllerComponent_Inspector::ClientBeginRequestScreenshot",
-    "kind": "native_event_impl",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Client RPC native event: the generator rejects it (native_event_mismatch: expected a native event without RPC). Body 0x1406963a0 only frees the by-value InScreenshotContext struct buffer, so the faithful body is empty.",
-    "unblock": "Teach the generator RPC _Implementation events, then add an empty body"
-  },
-  {
-    "entry": "UAbilitySystemGlobals::ServerActivatePlayerAbility",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "UAbilitySystemGlobals is not generated (not in the native class set). Body 0x14072e780 only frees the by-value FString: empty body.",
-    "unblock": "Add the class to the native set, then port as empty"
-  },
-  {
-    "entry": "UAbilitySystemGlobals::ServerCancelPlayerAbility",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Same as ServerActivatePlayerAbility.",
-    "unblock": "Add the class to the native set, then port as empty"
-  },
-  {
-    "entry": "UAbilitySystemGlobals::ServerEndPlayerAbility",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Same as ServerActivatePlayerAbility.",
-    "unblock": "Add the class to the native set, then port as empty"
-  },
-  {
-    "entry": "UFortKismetLibrary::ScriptError",
-    "kind": "exec",
-    "blocker": "handwritten_class",
-    "reason": "UFortKismetLibrary is hand-written (splice unsupported). Body 0x140692260 frees the by-value FString: empty body.",
-    "unblock": "Add to the verified hand-written Kismet set"
-  },
-  {
-    "entry": "ABuildingProp_CreaturePlacer::MinigameStateChanged",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x141c10360",
-    "thunk": "0x14274b420"
-  },
-  {
-    "entry": "AFortAthenaTutorialBase::OnClientStepCompleted_Server",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x141b753b0",
-    "thunk": "0x14283c400"
-  },
-  {
-    "entry": "AFortAthenaTutorialBase::SetEasyInteractIconActor",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x141b7bf30",
-    "thunk": "0x14283d2b0"
-  },
-  {
-    "entry": "AFortAthenaVehicle::BroadcastResetWaterIdleTimeEmpty",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x14190de50",
-    "thunk": "0x14283a750"
-  },
-  {
-    "entry": "AFortAthenaVehicle::ServerSetIgnoreAllFallingDamage",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x141920590",
-    "thunk": "0x14283ce70"
-  },
-  {
-    "entry": "AFortAthenaVehicle::ServerSetIgnoreNextFallingDamage",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x1419205b0",
-    "thunk": "0x14283cf00"
-  },
-  {
-    "entry": "AFortCharacterVehicle_Ostrich::MulticastDriverInput",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x141952080",
-    "thunk": "0x1428619a0"
-  },
-  {
-    "entry": "AFortCreativeMoveTool::HandlePlaysetPreviewPlace",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x1426753a0",
-    "thunk": "0x1428c2de0"
-  },
-  {
-    "entry": "AFortDecoTool::ClientDestroyDecoPreview",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x1426950e0",
-    "thunk": "0x1428d59b0"
-  },
-  {
-    "entry": "AFortHoagieVehicle::MulticastRotorImpulse",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x14084d1b0",
-    "thunk": "0x140859910"
-  },
-  {
-    "entry": "AFortHoagieVehicle::ServerUpdateControlState",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x14084f970",
-    "thunk": "0x140859a00"
-  },
-  {
-    "entry": "AFortPlayerController::ClientTriggerUIFeedbackEvent",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x142374280",
-    "thunk": "0x142a460b0"
-  },
-  {
-    "entry": "UBacchusButton::SetDefaultIcon",
-    "kind": "exec",
-    "blocker": "generator_gap",
-    "reason": "Rejected by the generator for another reason; see the probe notes.",
-    "unblock": "Inspect the rejection in a fresh probe",
-    "body": "0x144c43770",
-    "thunk": "0x1451cfef0"
-  },
-  {
-    "entry": "UBlueprintGameplayStatsLibrary::EqualEqual_GameplayStatTagGameplayStatTag",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x14150ed40",
-    "thunk": "0x14150f7f0"
-  },
-  {
-    "entry": "UBlueprintGameplayStatsLibrary::NotEqual_GameplayStatTagGameplayStatTag",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x14150edc0",
-    "thunk": "0x14150f8d0"
-  },
-  {
-    "entry": "UCommonActivatablePanel::OnBeginIntro",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1406a7c40",
-    "thunk": "0x14080bc70"
-  },
-  {
-    "entry": "UCommonActivatableWidgetContainerBase::RemoveWidget",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1407f0ff0",
-    "thunk": "0x14080be00"
-  },
-  {
-    "entry": "UCommonInputManager::GetGlobalInputHandlerPriorityFilter",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1407c2eb0",
-    "thunk": "0x14080ffe0"
-  },
-  {
-    "entry": "UCommonInputManager::SetGlobalInputHandlerPriorityFilter",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1407f66a0",
-    "thunk": "0x140811070"
-  },
-  {
-    "entry": "UCommonInputSubsystem::ShouldShowInputKeys",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x14081d130",
-    "thunk": "0x14081f160"
-  },
-  {
-    "entry": "UCommonLazyImage::IsLoading",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1407cfb50",
-    "thunk": "0x140810300"
-  },
-  {
-    "entry": "UCommonLazyWidget::IsLoading",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1407cfb70",
-    "thunk": "0x140810330"
-  },
-  {
-    "entry": "UCommonLoadGuard::IsLoading",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1407cfb90",
-    "thunk": "0x140810360"
-  },
-  {
-    "entry": "UCommonTextStyle::GetMargin",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1407c3e00",
-    "thunk": "0x140814ed0"
-  },
-  {
-    "entry": "UCommonWidgetCarousel::GetActiveWidgetIndex",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1407c1a00",
-    "thunk": "0x140818220"
-  },
-  {
-    "entry": "UControlRig::GetDeltaTime",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x140e513f0",
-    "thunk": "0x140e8a2c0"
-  },
-  {
-    "entry": "UEpicCMSTileCarousel::GetCurrentPageIndex",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x141026160",
-    "thunk": "0x14102c490"
-  },
-  {
-    "entry": "UEpicCMSTileCarousel::HandleTilePageAdded",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x1406801c0",
-    "thunk": "0x14102c4c0"
-  },
-  {
-    "entry": "UFortCollectionBookOverviewWidget::OnActivated",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x1450c2770",
-    "thunk": "0x1451ffe10"
-  },
-  {
-    "entry": "UFortCollectionBookWidget::OnCollectionBookPageSelected",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x1450c3870",
-    "thunk": "0x14520cf80"
-  },
-  {
-    "entry": "UFortFriendSubscriptionToastWidget::HandleGamePhaseChanged",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x144d7d330",
-    "thunk": "0x14523c670"
-  },
-  {
-    "entry": "UFortGlobalUIContext::GetInputPriority",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141bf2c40",
-    "thunk": "0x145247cf0"
-  },
-  {
-    "entry": "UFortGlobals::ShouldDelayStartupLoading",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141edc6c0",
-    "thunk": "0x142934d00"
-  },
-  {
-    "entry": "UFortKismetLibrary::ApplyEventOverrides",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1409a95b0",
-    "thunk": "0x142965e40"
-  },
-  {
-    "entry": "UFortKismetLibrary::DropInstancedLoot",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x140738030",
-    "thunk": "0x142969640"
-  },
-  {
-    "entry": "UFortKismetLibrary::DropInstancedLootAtLocation",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x140738030",
-    "thunk": "0x142969820"
-  },
-  {
-    "entry": "UFortKismetLibrary::ExtractSkeletalMeshScale",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141eed650",
-    "thunk": "0x14296a680"
-  },
-  {
-    "entry": "UFortKismetLibrary::GetAmmoItemDefinitionsFromInventoryWeapons",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x140738030",
-    "thunk": "0x14296bfe0"
-  },
-  {
-    "entry": "UFortKismetLibrary::IsValetEnabled",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141ef9a60",
-    "thunk": "0x142972ad0"
-  },
-  {
-    "entry": "UFortKismetLibrary::IsValid",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141d30160",
-    "thunk": "0x142972b00"
-  },
-  {
-    "entry": "UFortKismetLibrary::K2_GetCurrentResourceType",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141efa380",
-    "thunk": "0x142973070"
-  },
-  {
-    "entry": "UFortKismetLibrary::K2_GetItemQuantityOnPlayer",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141efa390",
-    "thunk": "0x1429730f0"
-  },
-  {
-    "entry": "UFortKismetLibrary::K2_RemoveFortItemFromPlayer",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141efa660",
-    "thunk": "0x1429736f0"
-  },
-  {
-    "entry": "UFortKismetLibrary::K2_RemoveItemFromPlayer",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141efa660",
-    "thunk": "0x1429736f0"
-  },
-  {
-    "entry": "UFortKismetLibrary::K2_SpawnPickupInWorldWithLootTier",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x140738030",
-    "thunk": "0x142974550"
-  },
-  {
-    "entry": "UFortKismetLibrary::MakeBuildingState",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141efb320",
-    "thunk": "0x142974b30"
-  },
-  {
-    "entry": "UFortKismetLibrary::MakeDayNightPhase",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141efb320",
-    "thunk": "0x142974b30"
-  },
-  {
-    "entry": "UFortKismetLibrary::MakeMovementStyle",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141efb320",
-    "thunk": "0x142974b30"
-  },
-  {
-    "entry": "UFortKismetLibrary::MakeResourceType",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141efb320",
-    "thunk": "0x142974b30"
-  },
-  {
-    "entry": "UFortKismetLibrary::MakeWeaponCoreAnimation",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141efb320",
-    "thunk": "0x142974b30"
-  },
-  {
-    "entry": "UFortKismetLibrary::RemoveEventOverrides",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x1409a95b0",
-    "thunk": "0x142965e40"
-  },
-  {
-    "entry": "UFortKismetLibrary::SelectMaterialInstance",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141f04180",
-    "thunk": "0x142977c80"
-  },
-  {
-    "entry": "UFortKismetLibrary::SetCanBeDamaged",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x141f05180",
-    "thunk": "0x142977d80"
-  },
-  {
-    "entry": "UFortLocalPlayer::GetContentControlsManager",
-    "kind": "exec",
-    "blocker": "policy_owned_class",
-    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
-    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
-    "body": "0x14237e640",
-    "thunk": "0x14298b030"
-  },
-  {
-    "entry": "UFortStoreFrontOfferInfo::GetOfferType",
-    "kind": "exec",
-    "blocker": "generator_gap",
-    "reason": "Rejected by the generator for another reason; see the probe notes.",
-    "unblock": "Inspect the rejection in a fresh probe",
-    "body": "0x1450b0d10",
-    "thunk": "0x1452f6b70"
-  },
-  {
-    "entry": "UFortStoreFrontOfferInfo::GetRequirementTypeAtIndex",
-    "kind": "exec",
-    "blocker": "generator_gap",
-    "reason": "Rejected by the generator for another reason; see the probe notes.",
-    "unblock": "Inspect the rejection in a fresh probe",
-    "body": "0x1450b1dc0",
-    "thunk": "0x1452f6f70"
-  },
-  {
-    "entry": "UHUDLayoutToolProxy::BP_GetPropertyValue",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x14084bee0",
-    "thunk": "0x14532ff30"
-  },
-  {
-    "entry": "UPlayspaceControllerComponent_PlayerSpawning::ServerMarkReadyForSpawning",
-    "kind": "exec",
-    "blocker": "rpc_native_event_unsupported",
-    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-    "unblock": "Teach the generator RPC _Implementation/_Validate events",
-    "body": "0x14076c610",
-    "thunk": "0x1411b5d60"
-  },
-  {
-    "entry": "URetainerBox::SetRetainRendering",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x143d8f150",
-    "thunk": "0x143db3ba0"
-  },
-  {
-    "entry": "USolarisArrayLibrary::num",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x1414a9180",
-    "thunk": "0x1414ab680"
-  },
-  {
-    "entry": "UWaterSubsystem::GetShallowWaterMaxDynamicForces",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x1414efd90",
-    "thunk": "0x1414fd110"
-  },
-  {
-    "entry": "UWaterSubsystem::GetShallowWaterMaxImpulseForces",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x1414efda0",
-    "thunk": "0x1414fd140"
-  },
-  {
-    "entry": "UWaterSubsystem::GetShallowWaterSimulationRenderTargetSize",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x1414efdb0",
-    "thunk": "0x1414fd170"
-  },
-  {
-    "entry": "UWaterSubsystem::GetSmoothedWorldTimeSeconds",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x1414eff30",
-    "thunk": "0x1414fd1a0"
-  },
-  {
-    "entry": "UWaterSubsystem::IsShallowWaterSimulationEnabled",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x1414f2fb0",
-    "thunk": "0x1414fd2f0"
-  },
-  {
-    "entry": "UWaterSubsystem::IsUnderwaterPostProcessEnabled",
-    "kind": "exec",
-    "blocker": "class_not_in_native_set",
-    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
-    "unblock": "Add the class to the native class set (or hand-port)",
-    "body": "0x1414f2fc0",
-    "thunk": "0x1414fd320"
-  }
+ {
+  "entry": "UEpicCMSTileCarousel::HandleTilePageAdded_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "no_module",
+  "reason": "package /Script/EpicCMSUIFramework has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+  "body": "0x1406801c0",
+  "thunk": "0x14102c4c0"
+ },
+ {
+  "entry": "UFXSystemComponent::SetIntParameter",
+  "kind": "exec",
+  "blocker": "engine_backport",
+  "reason": "Engine class; SetIntParameter is declared in UE 4.26, not 4.25 (progress/engine_provided_natives.json gap_declared_in_reference)",
+  "unblock": "Backport the 4.26 declaration into the engine checkout, then this body is the stub",
+  "body": "0x1406801c0",
+  "thunk": "0x1447b0f20"
+ },
+ {
+  "entry": "UUACNetworkComponent::SendPacketToServer_Implementation",
+  "kind": "impl",
+  "blocker": "no_module",
+  "reason": "package /Script/UACBase has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+  "body": "0x1406801c0",
+  "thunk": "0x141341740"
+ },
+ {
+  "entry": "UUACNetworkComponent::SendPacketToServer_Validate",
+  "kind": "validate",
+  "blocker": "no_module",
+  "reason": "package /Script/UACBase has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+  "body": "0x1406801d0",
+  "thunk": "0x141341740"
+ },
+ {
+  "entry": "UCommonPoolableWidgetInterface::OnAcquireFromPool_Implementation",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortClientAnnouncement_ConversationCodeInterface::StopConversation",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortInteractInterface::IconPlacementNeedsUpdate_Implementation",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortItemListViewInterface::RefreshSort",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortItemManagementMulchPanel::NotifyPanelDeactivated",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortProjectileMovementInterface::IsProjectileBeingKilled_Implementation",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortVehicleInterface::ChangeSeat",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortVehicleInterface::DestroyVehicle",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortVehicleInterface::WakeUp",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "ULevelSaveSpawnable::PostLevelSaveSpawnCleanup_Implementation",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortMissionLibrary::SpawnMissionItemPickupInWorld",
+  "kind": "exec",
+  "blocker": "virtual_rejected",
+  "reason": "Generator: explicit virtual requires an ordinary reflected member function (UFortMissionLibrary is a function library; classification as a virtual target is wrong for it)",
+  "unblock": "Re-derive the body location as a static/library function and port without virtual",
+  "body": "0x140680300",
+  "thunk": "0x1429ec010"
+ },
+ {
+  "entry": "UFortKismetLibrary::ExtractSkeletalMesh",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x14296a600"
+ },
+ {
+  "entry": "UFortKismetLibrary::GetAIDirector",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x14296a600"
+ },
+ {
+  "entry": "UFortKismetLibrary::GetAIGoalManager",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x14296a600"
+ },
+ {
+  "entry": "UFortKismetLibrary::IncrementAnalyticMatchCount",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x142971e80"
+ },
+ {
+  "entry": "UFortKismetLibrary::K2_SpawnPickupInWorld",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x142973d70"
+ },
+ {
+  "entry": "UFortKismetLibrary::K2_SpawnPickupInWorldWithClass",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x142974140"
+ },
+ {
+  "entry": "UCommonInputSubsystem::GetCurrentInputType",
+  "kind": "exec",
+  "blocker": "already_provided_by_generator_policy",
+  "reason": "porting/frontend/common_input_current_type/policy.py already provides this function (\"GetCurrentInputType declaration collision\" when added to the manifest)",
+  "unblock": "None needed: the function is ported by the policy. The dashboard counts manifest entries only, so policy-provided bodies are not credited (undercount)"
+ },
+ {
+  "entry": "UFortChatContainer::HandleGetMenuContentForAnchor",
+  "kind": "exec",
+  "blocker": "no_module",
+  "reason": "/Script/SocialUMG (ancestor USocialChatContainer) has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+  "body": "0x1421d78d0",
+  "thunk": "0x145209f00"
+ },
+ {
+  "entry": "UFortMediaSubtitlesPlayer::SetSubtitles",
+  "kind": "exec",
+  "blocker": "no_module",
+  "reason": "/Script/SubtitlesWidgets (its own package) has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+  "body": "0x141226a70",
+  "thunk": "0x1412f0200"
+ },
+ {
+  "entry": "UCommonButton::GetSelected",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "UCommonButton declarations are owned by porting/frontend/common_panel_runtime (button_text_style_policy raises \"declaration collision\" when the class gains manifest members/bodies)",
+  "unblock": "Express the body inside the policy for UCommonButton, or extend the policy to accept manifest members"
+ },
+ {
+  "entry": "UCommonButton::NativeRecoveredBits_0x2a1",
+  "kind": "member_field",
+  "blocker": "policy_owned_class",
+  "reason": "UCommonButton declarations are owned by porting/frontend/common_panel_runtime (button_text_style_policy raises \"declaration collision\" when the class gains manifest members/bodies)",
+  "unblock": "Express the body inside the policy for UCommonButton, or extend the policy to accept manifest members"
+ },
+ {
+  "entry": "AFortHoagieAudioController::CacheAudioComponents",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "AFortHoagieAudioController is missing from porting/native_class_set.txt (module is in the uproject, so the earlier no_module label was wrong). Body (RDX->+0x230, R8->+0x238) is ready once generated.",
+  "unblock": "Add AFortHoagieAudioController to porting/native_class_set.txt (after AFortHoagieVehicle, line ~4671), regenerate, then port"
+ },
+ {
+  "entry": "UTimeSynthComponent::GetMaxActiveClipLimit",
+  "kind": "exec",
+  "blocker": "engine_backport",
+  "reason": "Stock UE 4.25 TimeSynth does not declare GetMaxActiveClipLimit (4.26 does) and the plugin is not enabled in FortniteLinux.uproject. Body is MOV EAX,[RCX+0x838].",
+  "unblock": "Enable/backport the TimeSynth plugin with the 4.26 member, then port"
+ },
+ {
+  "entry": "AFortGameStateAthena::SetLocationFont",
+  "kind": "exec",
+  "blocker": "not_a_leaf",
+  "reason": "Body 0x142f440c0 is only a local-struct constructor the thunk uses; the real call 0x1419aea90 is non-leaf (vtable call +0xaf0, calls 0x14468fb70 and 0x142ee5dd0, TArray iteration).",
+  "unblock": "Port 0x1419aea90 and its callees in the short-call tier"
+ },
+ {
+  "entry": "AFortGameStateAthena::SetLocationFontInAllStates",
+  "kind": "exec",
+  "blocker": "not_a_leaf",
+  "reason": "Same as SetLocationFont: real call 0x1419aea90 is non-leaf.",
+  "unblock": "Port 0x1419aea90 and its callees in the short-call tier"
+ },
+ {
+  "entry": "UFortWorker::GetWorkerTypeBP",
+  "kind": "exec",
+  "blocker": "thunk_has_inlined_logic",
+  "reason": "thunk 0x142b5d3d0 does a vtable call (+0x3e8) then an inlined class-hierarchy cast check on the result; it never calls 0x14070f440, so the body is a Cast<> of GetItemDefinition-style data, not a plain getter",
+  "unblock": "Port the thunk-level logic itself (group A style): decompile the thunk, implement vtable/interface/cast steps with typed members",
+  "body": "0x14070f440",
+  "thunk": "0x142b5d3d0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortAthenaMutator_Arsenic::IsPawnAnInfected",
+  "kind": "exec",
+  "blocker": "thunk_has_inlined_logic",
+  "reason": "thunk 0x1427e1490 inlines the logic: it queries the Pawn argument through an interface vtable (+0x28 after ADD 0x4a8) and compares with InfectedTeam (body 0x141aad120 is only the InfectedTeam getter)",
+  "unblock": "Port the thunk-level logic itself (group A style): decompile the thunk, implement vtable/interface/cast steps with typed members",
+  "body": "0x141aad120",
+  "thunk": "0x1427e1490",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UFortHero::GetHeroTypeBP",
+  "kind": "exec",
+  "blocker": "thunk_has_inlined_logic",
+  "reason": "same shape as GetWorkerTypeBP: thunk does a vtable call plus an inlined cast check; body 0x14070f440 is not the function",
+  "unblock": "Port the thunk-level logic itself (group A style): decompile the thunk, implement vtable/interface/cast steps with typed members",
+  "body": "0x14070f440",
+  "thunk": "0x14293bc30",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortAthenaVehicle::OnRep_OnFire",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x1427a52f0 tail-jumps to 0x14191d7f0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x14191d7f0 (non-stub; read porting/generated/work-packets/0x14191d7f0.md)",
+  "body": "0x14191d7f0",
+  "thunk": "0x1427a52f0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortGameStateBase::OnRep_TimeOfDayManager",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142924ad0 tail-jumps to 0x141eab4b0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x141eab4b0 (non-stub; read porting/generated/work-packets/0x141eab4b0.md)",
+  "body": "0x141eab4b0",
+  "thunk": "0x142924ad0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UFortMinigameItemListComponent::ClearItems",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x1429d1df0 tail-jumps to 0x141ca83d0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x141ca83d0 (non-stub; read porting/generated/work-packets/0x141ca83d0.md)",
+  "body": "0x141ca83d0",
+  "thunk": "0x1429d1df0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortPawn::OnRep_IsKnockedBack",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a1ebc0 tail-jumps to 0x14233c700; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x14233c700 (non-stub; read porting/generated/work-packets/0x14233c700.md)",
+  "body": "0x14233c700",
+  "thunk": "0x142a1ebc0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortPawn::OnRep_PawnUniqueID",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a1ec40 tail-jumps to 0x14233ce50; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x14233ce50 (non-stub; read porting/generated/work-packets/0x14233ce50.md)",
+  "body": "0x14233ce50",
+  "thunk": "0x142a1ec40",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortPhysicsPawn::OnRep_GravityMultiplier",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a270f0 tail-jumps to 0x14233a010; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x14233a010 (non-stub; read porting/generated/work-packets/0x14233a010.md)",
+  "body": "0x14233a010",
+  "thunk": "0x142a270f0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UFortPlayerHealthInfoComponent::OnRep_TeamHealthInfoArray",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a706f0 tail-jumps to 0x142420c50; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x142420c50 (non-stub; read porting/generated/work-packets/0x142420c50.md)",
+  "body": "0x142420c50",
+  "thunk": "0x142a706f0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UFortBaseButton::ForceClick",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x1452042d0 tail-jumps to 0x144d777b0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x144d777b0 (non-stub; read porting/generated/work-packets/0x144d777b0.md)",
+  "body": "0x144d777b0",
+  "thunk": "0x1452042d0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UFortBaseButton::OnButtonClicked",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x1452042d0 tail-jumps to 0x144d777b0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x144d777b0 (non-stub; read porting/generated/work-packets/0x144d777b0.md)",
+  "body": "0x144d777b0",
+  "thunk": "0x1452042d0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UFortEventLevelScreen::StreamedVideoOnMediaPlayerEndReached",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x14522f670 tail-jumps to 0x144d68860; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x144d68860 (non-stub; read porting/generated/work-packets/0x144d68860.md)",
+  "body": "0x144d68860",
+  "thunk": "0x14522f670",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UFortRealMoneyOfferDetails::DeclineMtxPurchase",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x1452bdc50 tail-jumps to 0x1450a9fc0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x1450a9fc0 (non-stub; read porting/generated/work-packets/0x1450a9fc0.md)",
+  "body": "0x1450a9fc0",
+  "thunk": "0x1452bdc50",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UFortStoreFrontOfferDetailsWidgetBase::SendRealMoneyPurchase",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x1452f3050 tail-jumps to 0x1450ca940; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x1450ca940 (non-stub; read porting/generated/work-packets/0x1450ca940.md)",
+  "body": "0x1450ca940",
+  "thunk": "0x1452f3050",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortPlayerControllerGameplay::OnRep_GhostModeRepData",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a65c00 tail-jumps to 0x1423e0070; the earlier port used 0x1419d6590 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x1423e0070 (non-stub; read porting/generated/work-packets/0x1423e0070.md)",
+  "body": "0x1423e0070",
+  "thunk": "0x142a65c00",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortPlayerControllerZone::ResurrectPlayer",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a707b0 tail-jumps to 0x1423e7040; the earlier port used 0x1419d5f00 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x1423e7040 (non-stub; read porting/generated/work-packets/0x1423e7040.md)",
+  "body": "0x1423e7040",
+  "thunk": "0x142a707b0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortPlayerPawn::CancelJumpAbility",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a7b160 tail-jumps to 0x14230c960; the earlier port used 0x141a128d0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x14230c960 (non-stub; read porting/generated/work-packets/0x14230c960.md)",
+  "body": "0x14230c960",
+  "thunk": "0x142a7b160",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortPlayerPawn::HandleInStasis",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a7cc50 tail-jumps to 0x14232b1f0; the earlier port used 0x141a418a0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x14232b1f0 (non-stub; read porting/generated/work-packets/0x14232b1f0.md)",
+  "body": "0x14232b1f0",
+  "thunk": "0x142a7cc50",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortPlayerPawn::LocalThrowCarriedPlayer",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a7d6d0 tail-jumps to 0x142333900; the earlier port used 0x141a128d0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x142333900 (non-stub; read porting/generated/work-packets/0x142333900.md)",
+  "body": "0x142333900",
+  "thunk": "0x142a7d6d0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortPlayerPawn::OnRep_IsInsideSafeZone",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a7de10 tail-jumps to 0x14233c610; the earlier port used 0x141a128d0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x14233c610 (non-stub; read porting/generated/work-packets/0x14233c610.md)",
+  "body": "0x14233c610",
+  "thunk": "0x142a7de10",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UPocketLevelInstance::HandlePocketLevelLoaded",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142aa2140 tail-jumps to 0x141bacf40; the earlier port used 0x140d91ec0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x141bacf40 (non-stub; read porting/generated/work-packets/0x141bacf40.md)",
+  "body": "0x141bacf40",
+  "thunk": "0x142aa2140",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortWeaponRanged_Ostrich::PlayReloadAnim",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142b51e20 tail-jumps to 0x1426d9a70; the earlier port used 0x141c07d60 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x1426d9a70 (non-stub; read porting/generated/work-packets/0x1426d9a70.md)",
+  "body": "0x1426d9a70",
+  "thunk": "0x142b51e20",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UFortGameEventNotifications::HandleNotificationUpdateFinished",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x145249cc0 tail-jumps to 0x144ec1860; the earlier port used 0x140743d00 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x144ec1860 (non-stub; read porting/generated/work-packets/0x144ec1860.md)",
+  "body": "0x144ec1860",
+  "thunk": "0x145249cc0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "ABuildingGameplayActorSpawnChip::OnRep_RebootCardReplicatedState",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x1427443d0 tail-jumps to 0x141bd3dd0; the earlier port used 0x141baa080 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x141bd3dd0 (non-stub; read porting/generated/work-packets/0x141bd3dd0.md)",
+  "body": "0x141bd3dd0",
+  "thunk": "0x1427443d0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "AFortPlayerPawn::OnRep_AccelerationZPack",
+  "kind": "exec",
+  "blocker": "real_body_is_tail_jump_target",
+  "reason": "Thunk 0x142a7dbb0 tail-jumps to 0x142339320; the earlier port used 0x1420ee770 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+  "unblock": "Port the real body 0x142339320 (non-stub; read porting/generated/work-packets/0x142339320.md)",
+  "body": "0x142339320",
+  "thunk": "0x142a7dbb0",
+  "note": "previously ported in error; removed"
+ },
+ {
+  "entry": "UAbilitySystemGlobals::ServerActivatePlayerAbility",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "UAbilitySystemGlobals is not generated (not in the native class set). Body 0x14072e780 only frees the by-value FString: empty body.",
+  "unblock": "Add the class to the native set, then port as empty"
+ },
+ {
+  "entry": "UAbilitySystemGlobals::ServerCancelPlayerAbility",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Same as ServerActivatePlayerAbility.",
+  "unblock": "Add the class to the native set, then port as empty"
+ },
+ {
+  "entry": "UAbilitySystemGlobals::ServerEndPlayerAbility",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Same as ServerActivatePlayerAbility.",
+  "unblock": "Add the class to the native set, then port as empty"
+ },
+ {
+  "entry": "UFortKismetLibrary::ScriptError",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written (splice unsupported). Body 0x140692260 frees the by-value FString: empty body.",
+  "unblock": "Add to the verified hand-written Kismet set"
+ },
+ {
+  "entry": "ABuildingProp_CreaturePlacer::MinigameStateChanged",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x141c10360",
+  "thunk": "0x14274b420"
+ },
+ {
+  "entry": "AFortAthenaTutorialBase::OnClientStepCompleted_Server",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x141b753b0",
+  "thunk": "0x14283c400"
+ },
+ {
+  "entry": "AFortAthenaTutorialBase::SetEasyInteractIconActor",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x141b7bf30",
+  "thunk": "0x14283d2b0"
+ },
+ {
+  "entry": "AFortAthenaVehicle::BroadcastResetWaterIdleTimeEmpty",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x14190de50",
+  "thunk": "0x14283a750"
+ },
+ {
+  "entry": "AFortAthenaVehicle::ServerSetIgnoreAllFallingDamage",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x141920590",
+  "thunk": "0x14283ce70"
+ },
+ {
+  "entry": "AFortAthenaVehicle::ServerSetIgnoreNextFallingDamage",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x1419205b0",
+  "thunk": "0x14283cf00"
+ },
+ {
+  "entry": "AFortCharacterVehicle_Ostrich::MulticastDriverInput",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x141952080",
+  "thunk": "0x1428619a0"
+ },
+ {
+  "entry": "AFortCreativeMoveTool::HandlePlaysetPreviewPlace",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x1426753a0",
+  "thunk": "0x1428c2de0"
+ },
+ {
+  "entry": "AFortDecoTool::ClientDestroyDecoPreview",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x1426950e0",
+  "thunk": "0x1428d59b0"
+ },
+ {
+  "entry": "AFortHoagieVehicle::MulticastRotorImpulse",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x14084d1b0",
+  "thunk": "0x140859910"
+ },
+ {
+  "entry": "AFortHoagieVehicle::ServerUpdateControlState",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x14084f970",
+  "thunk": "0x140859a00"
+ },
+ {
+  "entry": "AFortPlayerController::ClientTriggerUIFeedbackEvent",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x142374280",
+  "thunk": "0x142a460b0"
+ },
+ {
+  "entry": "UBacchusButton::SetDefaultIcon",
+  "kind": "exec",
+  "blocker": "generator_gap",
+  "reason": "Rejected by the generator for another reason; see the probe notes.",
+  "unblock": "Inspect the rejection in a fresh probe",
+  "body": "0x144c43770",
+  "thunk": "0x1451cfef0"
+ },
+ {
+  "entry": "UBlueprintGameplayStatsLibrary::EqualEqual_GameplayStatTagGameplayStatTag",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x14150ed40",
+  "thunk": "0x14150f7f0"
+ },
+ {
+  "entry": "UBlueprintGameplayStatsLibrary::NotEqual_GameplayStatTagGameplayStatTag",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x14150edc0",
+  "thunk": "0x14150f8d0"
+ },
+ {
+  "entry": "UCommonActivatablePanel::OnBeginIntro",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1406a7c40",
+  "thunk": "0x14080bc70"
+ },
+ {
+  "entry": "UCommonActivatableWidgetContainerBase::RemoveWidget",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1407f0ff0",
+  "thunk": "0x14080be00"
+ },
+ {
+  "entry": "UCommonInputManager::GetGlobalInputHandlerPriorityFilter",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1407c2eb0",
+  "thunk": "0x14080ffe0"
+ },
+ {
+  "entry": "UCommonInputManager::SetGlobalInputHandlerPriorityFilter",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1407f66a0",
+  "thunk": "0x140811070"
+ },
+ {
+  "entry": "UCommonInputSubsystem::ShouldShowInputKeys",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x14081d130",
+  "thunk": "0x14081f160"
+ },
+ {
+  "entry": "UCommonLazyImage::IsLoading",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1407cfb50",
+  "thunk": "0x140810300"
+ },
+ {
+  "entry": "UCommonLazyWidget::IsLoading",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1407cfb70",
+  "thunk": "0x140810330"
+ },
+ {
+  "entry": "UCommonLoadGuard::IsLoading",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1407cfb90",
+  "thunk": "0x140810360"
+ },
+ {
+  "entry": "UCommonTextStyle::GetMargin",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1407c3e00",
+  "thunk": "0x140814ed0"
+ },
+ {
+  "entry": "UCommonWidgetCarousel::GetActiveWidgetIndex",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1407c1a00",
+  "thunk": "0x140818220"
+ },
+ {
+  "entry": "UControlRig::GetDeltaTime",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x140e513f0",
+  "thunk": "0x140e8a2c0"
+ },
+ {
+  "entry": "UEpicCMSTileCarousel::GetCurrentPageIndex",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x141026160",
+  "thunk": "0x14102c490"
+ },
+ {
+  "entry": "UEpicCMSTileCarousel::HandleTilePageAdded",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x1406801c0",
+  "thunk": "0x14102c4c0"
+ },
+ {
+  "entry": "UFortCollectionBookOverviewWidget::OnActivated",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x1450c2770",
+  "thunk": "0x1451ffe10"
+ },
+ {
+  "entry": "UFortCollectionBookWidget::OnCollectionBookPageSelected",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x1450c3870",
+  "thunk": "0x14520cf80"
+ },
+ {
+  "entry": "UFortFriendSubscriptionToastWidget::HandleGamePhaseChanged",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x144d7d330",
+  "thunk": "0x14523c670"
+ },
+ {
+  "entry": "UFortGlobalUIContext::GetInputPriority",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141bf2c40",
+  "thunk": "0x145247cf0"
+ },
+ {
+  "entry": "UFortGlobals::ShouldDelayStartupLoading",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141edc6c0",
+  "thunk": "0x142934d00"
+ },
+ {
+  "entry": "UFortKismetLibrary::ApplyEventOverrides",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1409a95b0",
+  "thunk": "0x142965e40"
+ },
+ {
+  "entry": "UFortKismetLibrary::DropInstancedLoot",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x140738030",
+  "thunk": "0x142969640"
+ },
+ {
+  "entry": "UFortKismetLibrary::DropInstancedLootAtLocation",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x140738030",
+  "thunk": "0x142969820"
+ },
+ {
+  "entry": "UFortKismetLibrary::ExtractSkeletalMeshScale",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141eed650",
+  "thunk": "0x14296a680"
+ },
+ {
+  "entry": "UFortKismetLibrary::GetAmmoItemDefinitionsFromInventoryWeapons",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x140738030",
+  "thunk": "0x14296bfe0"
+ },
+ {
+  "entry": "UFortKismetLibrary::IsValetEnabled",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141ef9a60",
+  "thunk": "0x142972ad0"
+ },
+ {
+  "entry": "UFortKismetLibrary::IsValid",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141d30160",
+  "thunk": "0x142972b00"
+ },
+ {
+  "entry": "UFortKismetLibrary::K2_GetCurrentResourceType",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141efa380",
+  "thunk": "0x142973070"
+ },
+ {
+  "entry": "UFortKismetLibrary::K2_GetItemQuantityOnPlayer",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141efa390",
+  "thunk": "0x1429730f0"
+ },
+ {
+  "entry": "UFortKismetLibrary::K2_RemoveFortItemFromPlayer",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141efa660",
+  "thunk": "0x1429736f0"
+ },
+ {
+  "entry": "UFortKismetLibrary::K2_RemoveItemFromPlayer",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141efa660",
+  "thunk": "0x1429736f0"
+ },
+ {
+  "entry": "UFortKismetLibrary::K2_SpawnPickupInWorldWithLootTier",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x140738030",
+  "thunk": "0x142974550"
+ },
+ {
+  "entry": "UFortKismetLibrary::MakeBuildingState",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141efb320",
+  "thunk": "0x142974b30"
+ },
+ {
+  "entry": "UFortKismetLibrary::MakeDayNightPhase",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141efb320",
+  "thunk": "0x142974b30"
+ },
+ {
+  "entry": "UFortKismetLibrary::MakeMovementStyle",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141efb320",
+  "thunk": "0x142974b30"
+ },
+ {
+  "entry": "UFortKismetLibrary::MakeResourceType",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141efb320",
+  "thunk": "0x142974b30"
+ },
+ {
+  "entry": "UFortKismetLibrary::MakeWeaponCoreAnimation",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141efb320",
+  "thunk": "0x142974b30"
+ },
+ {
+  "entry": "UFortKismetLibrary::RemoveEventOverrides",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x1409a95b0",
+  "thunk": "0x142965e40"
+ },
+ {
+  "entry": "UFortKismetLibrary::SelectMaterialInstance",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141f04180",
+  "thunk": "0x142977c80"
+ },
+ {
+  "entry": "UFortKismetLibrary::SetCanBeDamaged",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x141f05180",
+  "thunk": "0x142977d80"
+ },
+ {
+  "entry": "UFortLocalPlayer::GetContentControlsManager",
+  "kind": "exec",
+  "blocker": "policy_owned_class",
+  "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+  "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+  "body": "0x14237e640",
+  "thunk": "0x14298b030"
+ },
+ {
+  "entry": "UFortStoreFrontOfferInfo::GetOfferType",
+  "kind": "exec",
+  "blocker": "generator_gap",
+  "reason": "Rejected by the generator for another reason; see the probe notes.",
+  "unblock": "Inspect the rejection in a fresh probe",
+  "body": "0x1450b0d10",
+  "thunk": "0x1452f6b70"
+ },
+ {
+  "entry": "UFortStoreFrontOfferInfo::GetRequirementTypeAtIndex",
+  "kind": "exec",
+  "blocker": "generator_gap",
+  "reason": "Rejected by the generator for another reason; see the probe notes.",
+  "unblock": "Inspect the rejection in a fresh probe",
+  "body": "0x1450b1dc0",
+  "thunk": "0x1452f6f70"
+ },
+ {
+  "entry": "UHUDLayoutToolProxy::BP_GetPropertyValue",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x14084bee0",
+  "thunk": "0x14532ff30"
+ },
+ {
+  "entry": "UPlayspaceControllerComponent_PlayerSpawning::ServerMarkReadyForSpawning",
+  "kind": "exec",
+  "blocker": "rpc_native_event_unsupported",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "body": "0x14076c610",
+  "thunk": "0x1411b5d60"
+ },
+ {
+  "entry": "URetainerBox::SetRetainRendering",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x143d8f150",
+  "thunk": "0x143db3ba0"
+ },
+ {
+  "entry": "USolarisArrayLibrary::num",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x1414a9180",
+  "thunk": "0x1414ab680"
+ },
+ {
+  "entry": "UWaterSubsystem::GetShallowWaterMaxDynamicForces",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x1414efd90",
+  "thunk": "0x1414fd110"
+ },
+ {
+  "entry": "UWaterSubsystem::GetShallowWaterMaxImpulseForces",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x1414efda0",
+  "thunk": "0x1414fd140"
+ },
+ {
+  "entry": "UWaterSubsystem::GetShallowWaterSimulationRenderTargetSize",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x1414efdb0",
+  "thunk": "0x1414fd170"
+ },
+ {
+  "entry": "UWaterSubsystem::GetSmoothedWorldTimeSeconds",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x1414eff30",
+  "thunk": "0x1414fd1a0"
+ },
+ {
+  "entry": "UWaterSubsystem::IsShallowWaterSimulationEnabled",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x1414f2fb0",
+  "thunk": "0x1414fd2f0"
+ },
+ {
+  "entry": "UWaterSubsystem::IsUnderwaterPostProcessEnabled",
+  "kind": "exec",
+  "blocker": "class_not_in_native_set",
+  "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+  "unblock": "Add the class to the native class set (or hand-port)",
+  "body": "0x1414f2fc0",
+  "thunk": "0x1414fd320"
+ }
 ]
