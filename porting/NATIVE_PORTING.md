@@ -195,6 +195,11 @@ and were removed (blocker `real_body_is_tail_jump_target`, real body recorded). 
   `build_job_batches.py POOL PREFIX N` probes exact signatures (restoring only the files it changed) and writes worker batches. A wrapper can only be ported
   when every call target is a named native function (final2 real body or ported `native_body_address`); targets that are bare `FUN_` addresses stay deferred.
   Policy-owned classes (the POLICY set in `build_job_batches.py`) are excluded because their policy emits colliding methods.
+- **Older-port audit (entries with no recorded `native_body_address`, 2,136):** `audit_unrecorded_bodies.py` plus a thunk-asm check found one real defect class: 31 ports
+  whose snippet transcribed the exec thunk (`param_1`/`param_2`, `Stack->Code`) instead of the body. They did not compile and were counted; they are removed and listed in
+  `behavior/stub_bulk_runtime/decompile_thunk_ports_removed.json` (20 re-entered the table as group B/C rows in `final2.json`). All 420 tail-jump thunks of the rest were checked
+  (380 target return stubs; the other 40 match their bodies). The 5 "stub-exec with extra virtual calls" entries are false positives: the extra virtuals are the by-value `FText` shared-ref
+  destroy (`[RAX]`, `[RAX+8]` on a non-this receiver), so the stub body is correct. CommonUI engine calls used by wrapper ports are declared in the Fortnite 14 CommonUI source only; the project has no 12.60 CommonUI headers.
 - **Pool filter:** `build_small_pool.py` selects clean-thunk, call-free bodies of <=10 instructions, but a conditional jump out of the body (`JNZ far`) still escapes the
   filter and yields a body that is a prefix of a larger function; worker batches classify those as deferred (`behavior/stub_bulk_runtime/deferred_tiers.json`).
 - **Signature probe recipe:** add dummy entries with `@SIG@` and `_shared/return.inc`, run `run_native_batch.py`, read the learned signatures from the manifest, then restore the
