@@ -7,6 +7,7 @@
 #include "UBacchusQuickbarBase.h"
 
 #include "EComboSlotType.h"
+#include "EFortQuickBars.h"
 #include "GameplayTagContainer.h"
 
 class UBacchusQuickbarSlotBase;
@@ -66,6 +67,9 @@ public:
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	FGameplayTag SlotNumberPropertyTag;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortQuickBars GetQuickbarType() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void Refresh();

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortAlterationOptionType.h"
 #include "FAlterationOption.h"
 #include "UCommonButtonGroup.h"
 #include "UFortAlterableItem.h"
@@ -47,6 +48,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FAlterationOption> RespecOptions;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoAlterationOptionsExist(EFortAlterationOptionType OptionType) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsValidAlterationSlot() const;

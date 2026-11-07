@@ -10,3 +10,24 @@ bool UAthenaInventoryContext::IsSwapping() const
 	return NativeRecoveredBool_0x70;
 }
 
+void UAthenaInventoryContext::SetSelectedInventoryItem(UFortItem* Item)
+{
+	// Original body address: 0x144ce8080 (thunk 0x1451a4680, group B, 26 instructions).
+	// Offset evidence: this+0x68 byte guard is an unreflected gap in the class's own region (member NativeRecoveredBool_0x68, bool).
+	// this+0x60 is the reflected FWeakObjectPtr LastSelectedInventoryItem. CALL 0x142ee5dd0 (RCX=this+0x60) is TWeakObjectPtr::Get (asm verified: object array index/serial lookup).
+	// CALL 0x142ee3b30 (RCX=this+0x60, RDX=Item) is TWeakObjectPtr::operator=(UObject*) (asm verified: index from Item+0xc, serial from object array).
+	// this+0x30 is the reflected OnInventoryItemSelected (FOnAthenaInventoryItemSelected, one UFortItem* param); CALL 0x1406a9dc0 with packed {Item} is its Broadcast.
+	// The reflected candidate names on those helper addresses are shared-body matches and are not used as callees.
+	// CONFIDENCE: HIGH
+	if (!NativeRecoveredBool_0x68)
+	{
+		if (LastSelectedInventoryItem.Get() != Item)
+		{
+			LastSelectedInventoryItem = Item;
+			NativeRecoveredBool_0x68 = true;
+			OnInventoryItemSelected.Broadcast(Item);
+			NativeRecoveredBool_0x68 = false;
+		}
+	}
+}
+

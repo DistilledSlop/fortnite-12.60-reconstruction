@@ -145,8 +145,14 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x200): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x200;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x204): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x204;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x208): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x208;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x21c): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x21c;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x21d): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x21d;
@@ -211,6 +217,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetMaterialCount() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPlace() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPlayerStateAthena* GetPlayerState() const;

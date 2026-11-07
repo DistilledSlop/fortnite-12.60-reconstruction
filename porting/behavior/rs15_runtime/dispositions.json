@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UAthenaInventoryContext",
+  "function": "SetSelectedInventoryItem",
+  "status": "proposed",
+  "case": "weak_member_and_delegate",
+  "reason": "Body ported; see inc_path. Bodies verified: 0x142ee5dd0 = TWeakObjectPtr::Get, 0x142ee3b30 = TWeakObjectPtr::operator=. Flag guard NativeRecoveredB"
+ },
+ {
+  "class": "UAthenaItemShopScreen",
+  "function": "HandlePurchaseOfferComplete",
+  "status": "blocked",
+  "case": "unresolved_tail_branch",
+  "reason": "144bb69c2 JNZ 0x144bcc2d0 is a conditional tail branch to a target with no callee_candidates entry (TEST DL,DL; JNZ; RET)."
+ },
+ {
+  "class": "UAthenaMapNavigableIconStackOfChallenges",
+  "function": "ShouldCycleAutomatically",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "CMP byte [0x1483856e0],0 reads a hidden absolute global with no reflected member; this+0x258 is an unreflected FWeakObjectPtr below every reflected member of the chain, used by 0x142ee7880 (IsValid) and 0x142ee5dd0 (Get)."
+ },
+ {
+  "class": "UAthenaProfileStatBox",
+  "function": "SetStatView",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x144c40c60 candidates UAthenaProfileStatsBase::NextStatSet and PrevStatSet share one body; receiver UAthenaProfileStatBox is not a UAthenaProfileStatsBase descendant (chain USizeBox, UContentWidget, UPanelWidget, UWidget)."
+ },
+ {
+  "class": "UAthenaPlayerIndicatorBase",
+  "function": "HandleCurrentPawnChanged",
+  "status": "blocked",
+  "case": "unreflected_weak_receiver",
+  "reason": "Receiver this+0x304 for CALL 0x142ee5dd0 (TWeakObjectPtr::Get) is an unreflected 8-byte gap in the own region (own min 0x2d0); no typed member can express the weak pointer."
+ },
+ {
+  "class": "UAthenaMarkerPointer",
+  "function": "SetLineMeshMaterial",
+  "status": "blocked",
+  "case": "unresolved_tail_branch",
+  "reason": "144b4df47 path: JNZ 0x144b4de60 (after MOV [RCX+0x108],RDX and MOV RCX,[RCX+0x118]) is a conditional tail branch with no callee_candidates entry."
+ },
+ {
+  "class": "UAthenaMarkerPointer",
+  "function": "SetTargetScreenPosition",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "this+0x118 object pointer is an unreflected gap with unknown class; JMP 0x142fc6030 (DL=2) candidates are three unrelated classes (UDonutChallengeScreen, UFortChatWidget, UFortTierIndicator)."
+ },
+ {
+  "class": "UAthenaProfileStatWidgetBase",
+  "function": "SetStatView",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x144c40c60 on the reflected UAthenaProfileStatBox at this+0x260; NextStatSet and PrevStatSet of UAthenaProfileStatsBase share one body and UAthenaProfileStatBox is not a descendant."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnDisconnectedChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144c20090 (UAthenaRemotePlayerViewData::ForwardOnPlaceChanged) has no declaration in any porting/native/Source header (grep)."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetIsBeingRevived",
+  "status": "blocked",
+  "case": "unresolved_tail_branch",
+  "reason": "JNZ 0x141a4a3e0 on this+0x1d0 is a conditional tail call with no callee_candidates entry."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetIsDBNO",
+  "status": "blocked",
+  "case": "unresolved_tail_branch",
+  "reason": "JNZ 0x141a4a8c0 on this+0x1d0 is a conditional tail call with no callee_candidates entry."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetPlace",
+  "status": "proposed",
+  "case": "reflected_chain_and_gap_members",
+  "reason": "Body ported; see inc_path. Uses PlayerState->Place (AFortPlayerStateAthena +0xe6c). Gap members NativeRecoveredBool_0x21c and NativeRecoveredInt32_"
+ },
+ {
+  "class": "UAthenaRespawnTimer",
+  "function": "AddExtensionWidget",
+  "status": "blocked",
+  "case": "unresolved_tail_branch",
+  "reason": "TEST RDX,RDX; JNZ 0x1451bc0e0 is a conditional tail branch with no callee_candidates entry."
+ },
+ {
+  "class": "UAthenaTimeWidgetBase",
+  "function": "OnGamePhaseChanged",
+  "status": "blocked",
+  "case": "unresolved_tail_branch",
+  "reason": "CMP DL,0x5; JZ 0x144b50f70 is a conditional tail branch with no callee_candidates entry."
+ },
+ {
+  "class": "UBacchusQuickbarComboSlot",
+  "function": "GetQuickbarType",
+  "status": "proposed",
+  "case": "enum_byte_switch",
+  "reason": "Body ported; see inc_path. SlotType byte at 0x48c mapped by asm: 0->0, 1->1, 3->2, else 3."
+ },
+ {
+  "class": "UBattlePassScreen",
+  "function": "GetBattlePassPurchaseLevelOfferId",
+  "status": "blocked",
+  "case": "unknown_pointee_shared_callee",
+  "reason": "this+0x710 is an unreflected pointer gap (pointee class unknown); the FString copy CALL 0x140682ce0 has four unrelated shared-body candidates (shared_callee_ambiguous)."
+ },
+ {
+  "class": "UFortActivatableVideoPanel",
+  "function": "StartVideo",
+  "status": "blocked",
+  "case": "unresolved_tail_branch",
+  "reason": "JG 0x144f7c8a0 is a conditional tail call with no callee_candidates entry, comparing dword +0x260 of the unresolved class of this+0x4f0 (VideoPlayerWidget)."
+ },
+ {
+  "class": "UFortAccountStatsContext",
+  "function": "CanShowAccountStats",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "CMP dword [0x147e1ae88],0 reads a hidden absolute global with no reflected member."
+ },
+ {
+  "class": "UFortAlterationOptionsBase",
+  "function": "DoAlterationOptionsExist",
+  "status": "proposed",
+  "case": "bitfield_and_array_num",
+  "reason": "Body ported; see inc_path. this+0x2a4 bit bUpgradeOptionExists (whole-byte return in asm); RespecOptions Num at +0x2e8."
+ },
+ {
+  "class": "UFortAlterationOption",
+  "function": "GetNextPipCount",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL/JMP 0x144f23720 (UFortAlterationOption::GetCurrentPipCount) has no declaration in any porting/native/Source header (grep); the ADDSS rodata constant at 0x1459a86f8 is also unresolved."
+ },
+ {
+  "class": "UFortAlterationInfo",
+  "function": "IsAlterationHighlighted",
+  "status": "proposed",
+  "case": "bitfield_and_int_members",
+  "reason": "Body ported; see inc_path. bIsUpgrade (0x44) and bUnlockedByEvolution (0x4d) bits; CurrentItemLevel/RequiredMinLevel reflected Ints."
+ },
+ {
+  "class": "UFortAlterationsWidget",
+  "function": "HandleAlterationsSlotSelected",
+  "status": "blocked",
+  "case": "receiver_class_unknown",
+  "reason": "CALL 0x140f2c470 on this+0x278, an unreflected pointer gap with unknown pointee; UFortControllerComponent_MinigameActivity::ForwardMinigameActivityRankChanged cannot be bound to that receiver."
+ },
+ {
+  "class": "UFortAlterationsWidget",
+  "function": "SetupInteractionEvents",
+  "status": "blocked",
+  "case": "unresolved_tail_branch",
+  "reason": "JNZ 0x1407aa410 on this+0x2b0 is a conditional tail call with no callee_candidates entry."
+ },
+ {
+  "class": "UFortAthenaMOTDWidget",
+  "function": "SelectNewsByIndex",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1407f39f0 (UCommonButtonGroup::SelectButtonAtIndex) has no declaration in any porting/native/Source header (grep); GetSelectedButtonIndex is declared."
+ },
+ {
+  "class": "UFortBaseButton",
+  "function": "SetClickMethod",
+  "status": "blocked",
+  "case": "unknown_pointee_shared_callee",
+  "reason": "this+0x7d8 is an unreflected 8-byte weak-pointer gap (CALL 0x142ee5dd0 is TWeakObjectPtr::Get); the store to [RAX+0x3c0] targets a class that cannot be bound (four unrelated shared candidates)."
+ }
+]

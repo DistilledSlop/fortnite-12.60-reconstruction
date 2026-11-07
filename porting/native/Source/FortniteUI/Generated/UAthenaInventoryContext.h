@@ -35,11 +35,17 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UFortItem> LastSelectedInventoryItem;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x68): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x68;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x70): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x70;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSwapping() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetSelectedInventoryItem(UFortItem* Item);
 
 };
 

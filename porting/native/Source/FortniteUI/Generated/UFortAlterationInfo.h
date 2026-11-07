@@ -62,6 +62,9 @@ public:
 	int32 GetSlotIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAlterationHighlighted() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsAlterationUnlocked() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
