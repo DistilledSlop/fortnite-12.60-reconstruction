@@ -14,7 +14,7 @@ Single source of truth for the "Native function bodies ported" block. Supersedes
 | Dashboard "done" | 3,895 (26.6%) | counts all ported entries plus 5 handwritten Kismet bodies, so it slightly overstates reflected coverage |
 | **Strictly unported reflected functions** | **11,407** | in-scope minus matching ported keys |
 
-Use 11,407 as the working remaining count. The dashboard's implied 10,748 is lower because it counts helpers.
+11,407 is the strict reflected-name count. **228 of those are already covered** by a ported `<fn>_Implementation` entry and 71 more have only `<fn>_Validate` ported (ported RPC and native-event bodies are keyed under those names, so they never match the reflected name; `mark_covered.py` flags them in `final2.json`). Working remaining count: **11,179 truly unported (incl. 71 partial)**. The dashboard's implied 10,748 is lower because it also counts helpers. The same name mismatch means the dashboard does not credit those 228.
 
 Largest remaining classes: UFortKismetLibrary 298, AFortPlayerController 260, AFortPlayerControllerAthena 186, UFortGlobalUIContext 164, AFortPlayerPawn 163, UFortSettingsContext 161, AFortMinigame 126, AFortCreativeMoveTool 115, UFortMcpContext 97, UFortInventoryContext 95.
 
@@ -25,7 +25,7 @@ Manifest breakdown (ported): exec 3,055, member_field 383, helper 292, getter 14
 - Committed through `a037f865` (pushed). Last successful generation: `generated/gameplay-bulk-integration-455/reports/behavior_splice.json`, 3,684 accepted (3,341 bodies + 343 fields), zero rejected.
 - **Last build/test-green checkpoint: 3,058 bodies.** Everything since is source recovery only, with no build or runtime check. The standing user rule was no builds or tests until 4,058 bodies, then one broad check. Confirm that rule is still wanted before relying on it.
 - Proven bulk patterns: one-string callbacks sharing wrapper `0x14286b840` (34 bodies); empty-implementation natives (whole-RET body plus exact vtable proof); constant/zero field defaults from complete constructors; native virtual wrappers resolved by vtable slot (section 5); `native_event_impl` and RPC `impl` kinds.
-- Tooling added (all read-only analysis, outputs git-ignored under `generated/`): `group_direct_thunks.py` and `generated/direct-thunk-groups/`; `build_thunk_table.py`, `resolve_class_vtables.py`, `resolve_virtual_targets.py`, `finalize_thunk_table.py`, `extract_ground_truth.py` (section 3). Two earlier byte-scan scripts (`resolve_virtual_thunks.py`, `group_direct_thunks.py`) were removed as superseded.
+- Tooling added (all read-only analysis, outputs git-ignored under `generated/`): `group_direct_thunks.py` and `generated/direct-thunk-groups/`; `build_thunk_table.py`, `resolve_class_vtables.py`, `resolve_virtual_targets.py`, `finalize_thunk_table.py`, `resolve_wrappers.py`, `mark_covered.py`, `check_thunk_calls.py`, `extract_ground_truth.py` (section 3). Two earlier byte-scan scripts (`resolve_virtual_thunks.py`, `group_direct_thunks.py`) were removed as superseded.
 
 ## 3. Where every remaining body is (final table, 2026-11-07)
 
@@ -47,6 +47,13 @@ Earlier estimates from raw byte scans (5,369, 4,899 and 907 "virtual") and the c
 - Group C: 345 of 383 testable pairs (90%) hit the true body. Misses include thunks with several virtual call sites (the first is not always the body) and noisy ground truth.
 - Class vtables reproduce the two known cases (`AFortAthenaVehicle` primary `0x145debe20`, secondary `+0x3b0 = 0x145decf00`; `ABuildingTrap` `0x145f46db0`). 916 of 924 classes in group C resolved; 8 have no vptr store found and rely on the old candidate.
 - "Captured" means a Ghidra capture exists, not that a body is ported or that the chosen callee is right. Group B `multi` rows (935) list several callees: pick the one that receives the unpacked parameters.
+
+### Refinements after the first table (2026-11-07)
+
+- `resolve_wrappers.py` follows pure tail-jump wrappers (`[ADD|SUB RCX,N;] JMP target`) to the real body: 169 functions changed, 9,953 -> 9,886 distinct bodies. Output `final2.json` (`real_bodies`, `resolved[].chain/this_delta/forward_kind`; 52 are `MOV RAX,[RCX]; JMP [RAX+N]` virtual forwards). Other tiny forwarders that preset args or load members are real small bodies and are kept.
+- `check_thunk_calls.py` compares each call's argument count with the reflected signature. **It is weak: among 681 true ground-truth bodies only 54% match the expected count exactly (34% one lower, 9% one higher), because of hidden return pointers, dropped args and by-ref structs.** Do not treat a mismatch as an error. It is only a tie-break for multi-callee rows.
+- Distinct real bodies: about 9.9k for 11.4k functions, so sharing saves only about 13%. By body size (group A sizes inflated by frame code): about 2,900 bodies of 48 bytes or less (about 3,600 functions), 6,241 functions have bodies over 16 instructions. A template generator for leaf bodies could cover at most about 950 functions (237 straight-line bodies serving 619 functions, mostly a few shared stubs, plus 266 branching leaves serving 326), so it is a modest lever, not a bulk solution.
+- Stub family (`generated/thunk-table/stub_family.json`): 273 uncovered functions whose real bodies are all pure return stubs (`RET` at `0x1406801c0` serves about 250; `mov al,1; ret` at `0x1406801d0`; `xor eax,eax; ret` at `0x1406801e0`): 53 plain void empty, 51 native-event void empty, 43 net-rpc (`empty+rettrue` = `_Implementation` plus `_Validate`), 22 plain "returns a value but empty body" (suspicious: do not port blindly), the rest return true/false/0. This is the first safe batch. Entries follow the existing conventions: kind `impl` for RPC `_Implementation`, `validate` for `_Validate` (shared `_shared/validate_return_true.inc`), `native_event_impl` with pinned `reflection_flags` for BlueprintNativeEvents, `virtual:true` for ordinary virtuals.
 
 ## 4. Capture tooling
 
@@ -85,11 +92,12 @@ Untracked `behavior/` directories and `.inc` files currently exist in the workin
 
 ## 8. Recommended next steps
 
-1. Build per-function work packets from `final.json` (thunk + body capture + reflection signature + class layout) and port in bounded rotating batches. Start with trivial bodies and shared targets: group A inline getters, the return stubs `0x1406801c0/d0/e0` (about 660 thunks), and shared wrappers.
-2. Fix the const-reference generator bug before porting functions with const-reference params.
-3. For `multi` rows and group C rows with several virtual sites, verify the chosen body per function before transcription.
-4. Leave large bodies (Kismet library, player controller, minigame, creative tools) for individual transcription.
-5. Run the deferred broad build and runtime check at the agreed body-count checkpoint.
+1. Port the stub family (273 functions) first, as a proposal batch; verify each against its reflected kind and flags, then source-generate with zero rejections. Skip the 22 "value-returning but empty" ones until understood.
+2. `build_work_packets.py` (Haiku worker) writes one packet per distinct body into `generated/work-packets/` with names substituted and field offsets annotated; use it for all remaining bodies, ordered by shared body then class.
+3. Fix the const-reference generator bug before porting functions with const-reference params.
+4. For multi-callee and multi-site virtual rows, verify the chosen body per function before transcription (argument count is not a reliable check).
+5. Leave large bodies (Kismet library, player controller, minigame, creative tools) for individual transcription.
+6. Run the deferred broad build and runtime check at the agreed body-count checkpoint.
 
 Recount snippet:
 ```python
