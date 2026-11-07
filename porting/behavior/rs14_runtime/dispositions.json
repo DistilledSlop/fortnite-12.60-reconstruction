@@ -1,0 +1,177 @@
+[
+ {
+  "class": "APartyDisplayManager",
+  "function": "OnPawnTouchReleased",
+  "status": "blocked",
+  "case": "absolute_global_struct_copy",
+  "reason": "MOV RAX,[0x1482642c8]/[0x1482642d0]/[0x1482642d8] copies a 24-byte hidden global struct (type unknown, refcounted at +0x10) into the R8 argument; callee APartyDisplayManager::OnPawnClicked (0x141fc9b60) not declared (callee_not_declared)"
+ },
+ {
+  "class": "UPlaysetLevelStreamComponent",
+  "function": "ClearPlayset",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee AFortVolume::SetCurrentPlayset (0x141c8f380) is not declared in any generated header"
+ },
+ {
+  "class": "UPlaysetLevelStreamComponent",
+  "function": "SetPlayset",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee AFortVolume::SetCurrentPlayset (0x141c8f380) is not declared in any generated header"
+ },
+ {
+  "class": "ASOLFortGame",
+  "function": "DeclareWinningPlayer",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "tail-call callee AFortMinigame::DeclareWinnerImmediately (0x142089af0) is not declared in any generated header"
+ },
+ {
+  "class": "ASOLFortGame",
+  "function": "DeclareWinningTeam",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "tail-call callee AFortMinigame::DeclareWinnerImmediately (0x142089af0) is not declared in any generated header"
+ },
+ {
+  "class": "ASOLFortGame",
+  "function": "GetNumberOfPlayers",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee ASOLFortGame::GetPlayers (0x14246e110, TArray sret) is not declared in any generated header"
+ },
+ {
+  "class": "ASOLFortGame",
+  "function": "GetNumberOfTeams",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee ASOLFortGame::GetTeams (0x14246ed50, TArray sret) is not declared in any generated header"
+ },
+ {
+  "class": "ASOLFortGame",
+  "function": "GetTeam",
+  "status": "proposed",
+  "case": "proposed",
+  "reason": "Raw-typed gap members this+0x278 (ASOLFortGame) and Player+0x278 (ASOLFortPlayer); tail-calls declared GetBucketForPlayerState."
+ },
+ {
+  "class": "AUnicornDriver",
+  "function": "HandleDemoPlaybackFinish",
+  "status": "blocked",
+  "case": "conditional_tail_jump_unresolved",
+  "reason": "JNZ 0x142641ac0 leaves the body; target is not in callee_candidates (only direct CALL/JMP targets are mapped)"
+ },
+ {
+  "class": "UAthenaBattleMapTimelineWidget",
+  "function": "OnReplayLevelStreamingChanged",
+  "status": "blocked",
+  "case": "conditional_tail_jump_unresolved",
+  "reason": "JNZ 0x144c79c60 after the byte store leaves the body; target is not in callee_candidates"
+ },
+ {
+  "class": "UAthenaBattleMapNodeTooltip",
+  "function": "OnReplayLevelStreamingChanged",
+  "status": "blocked",
+  "case": "conditional_tail_jump_unresolved",
+  "reason": "JNZ 0x144c7be40 after the byte store leaves the body; target is not in callee_candidates"
+ },
+ {
+  "class": "UAthenaChallengeListEntry_DetailedChallenge",
+  "function": "HandleCloseChallengeOptionsInputAction",
+  "status": "blocked",
+  "case": "conditional_tail_jump_unresolved",
+  "reason": "JNZ 0x144b7d510 leaves the body; target is not in callee_candidates"
+ },
+ {
+  "class": "UAthenaContextualChallengesWidget",
+  "function": "GetOutroDelay",
+  "status": "blocked",
+  "case": "absolute_global_float",
+  "reason": "returns the float at hidden absolute global 0x147e1ac10; that constant is not in the job inputs and is not guessed"
+ },
+ {
+  "class": "UAthenaContextualChallengesWidget",
+  "function": "ShouldOutroAutomatically",
+  "status": "blocked",
+  "case": "absolute_global_float",
+  "reason": "compares hidden absolute globals 0x147e1ac10 and 0x1459c03a0 (COMISS/SETA); constants not in job inputs and not guessed"
+ },
+ {
+  "class": "UAthenaEventMatchTeamWidgetBase",
+  "function": "GetTeamKills",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ee7880 has 3 candidates (AFortAthenaMutator_Crucible, AFortTeamMemberPedestal, UHUDLayoutToolContext); receiver is a stack temp LEA RCX,[RSP+0x30] matching none"
+ },
+ {
+  "class": "UAthenaEventMatchTeamWidgetBase",
+  "function": "IsTeamDead",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ee7880 has 3 candidates; receiver is a stack temp LEA RCX,[RSP+0x30] matching none"
+ },
+ {
+  "class": "UAthenaEventMatchTeamWidgetBase",
+  "function": "OnPlayerDeadStateChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee UFortControllerComponent_MinigameActivity::ForwardMinigameActivityRankChanged (0x140f2c470) is not declared in any generated header; body 0x144c72160 shared with OnPlayerDisconnectedChanged"
+ },
+ {
+  "class": "UAthenaEventMatchTeamWidgetBase",
+  "function": "OnPlayerDisconnectedChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee UFortControllerComponent_MinigameActivity::ForwardMinigameActivityRankChanged (0x140f2c470) is not declared in any generated header; body 0x144c72160 shared with OnPlayerDeadStateChanged"
+ },
+ {
+  "class": "UAthenaHUDBase",
+  "function": "HandleVolumeLoaded",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee UMinigameWidgetBase::OnEnteredVolume (0x144bf6bf0) is not declared in any generated header"
+ },
+ {
+  "class": "UAthenaHUDBase",
+  "function": "HandleVolumeUnloaded",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee UMinigameWidgetBase::OnExitVolume (0x144bf6c10) is not declared in any generated header"
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "ForceFireFromHUDStop",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callees AFortAthenaMutator_DadBro::StartNextSafeZonePhase (0x14072d2e0) and UAthenaHUDContext::FireFromHUDStop (0x144c8c3d0, tail jump) are not declared in any generated header"
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "HandleGamePhaseChange",
+  "status": "proposed",
+  "case": "proposed",
+  "reason": "Broadcast of OnAthenaGamePhaseChanged (this+0xe8) with the packed (SafeZoneInterface, GamePhaseStep) struct; exact copy."
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "HasLockOnTarget",
+  "status": "proposed",
+  "case": "proposed",
+  "reason": "Raw this+0x20 object; two IsA checks; callee 0x1406801e0 is XOR AL,AL;RET so result is always false."
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "IsMovingSelectedWidget",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ee7880 has 3 candidates; receiver this+0x220 (MoveButtonWidgetPtr, WeakObject) matches no candidate class"
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "SetSelectWidgetToMoveMode",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ee3b30 has 6 unrelated candidates; receiver is an sret stack temp returning an 8-byte value that no candidate matches"
+ }
+]

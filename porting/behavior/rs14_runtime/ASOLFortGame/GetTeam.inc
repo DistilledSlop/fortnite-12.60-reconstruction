@@ -1,0 +1,15 @@
+// Behaviour snippet: ASOLFortGame::GetTeam (body only; spliced into the generated member function).
+// Original address: 0x14246eaf0 (thunk 0x142b900a0)
+// Offset evidence: this+0x278 is an unreflected gap in ASOLFortGame's own region (reflection min 0x218), recorded as NativeRecoveredPointer_0x278 and read as AFortMinigame*. Player+0x278 is the same gap on ASOLFortPlayer, read as APlayerState*. Null on either side returns -1; otherwise the tail jump 0x14208efa0 is AFortMinigame::GetBucketForPlayerState (declared in AFortMinigame.h).
+// CONFIDENCE: MEDIUM
+AFortMinigame* Minigame = reinterpret_cast<AFortMinigame*>(NativeRecoveredPointer_0x278);
+if (Minigame == nullptr || Player == nullptr)
+{
+	return -1;
+}
+APlayerState* PlayerState = reinterpret_cast<APlayerState*>(Player->NativeRecoveredPointer_0x278);
+if (PlayerState == nullptr)
+{
+	return -1;
+}
+return Minigame->GetBucketForPlayerState(PlayerState);

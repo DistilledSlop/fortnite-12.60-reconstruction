@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ASOLActor.h"
 
+class ASOLFortPlayer;
+
 #include "ASOLFortGame.generated.h"
 
 UCLASS(config=Engine)
@@ -64,6 +66,12 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
 	uint64 NativeRecoveredUint64_0x278;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x278;
+
+	UFUNCTION()
+	int32 GetTeam(ASOLFortPlayer* Player);
 
 };
 

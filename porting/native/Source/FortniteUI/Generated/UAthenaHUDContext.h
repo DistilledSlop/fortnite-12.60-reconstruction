@@ -8,6 +8,7 @@
 
 #include "AFortPawn.h"
 #include "AFortPlayerPawnAthena.h"
+#include "EAthenaGamePhaseStep.h"
 #include "EPTTState.h"
 #include "FAthenaWinnerInfo.h"
 #include "FOnAthenaAutoFireChanged.h"
@@ -39,6 +40,7 @@
 #include "FOnUIGameplayCueEvent.h"
 #include "FPTTStateChange.h"
 #include "FShowMobilePicker.h"
+#include "UFortSafeZoneInterface.h"
 
 class UAthenaPlayerViewModel;
 class UWidget;
@@ -227,11 +229,19 @@ public:
 
 private:
 	UFUNCTION()
+	void HandleGamePhaseChange(TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, EAthenaGamePhaseStep GamePhaseStep);
+public:
+
+private:
+	UFUNCTION()
 	void HandleLocalPlayerDBNOStateChanged(AFortPawn* FortPawn, bool bIsDBNO);
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasFiringTouch() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasLockOnTarget() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasWifi() const;
