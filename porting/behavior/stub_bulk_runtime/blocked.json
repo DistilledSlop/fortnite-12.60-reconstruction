@@ -208,13 +208,6 @@
   "unblock": "Express the body inside the policy for UCommonButton, or extend the policy to accept manifest members"
  },
  {
-  "entry": "AFortHoagieAudioController::CacheAudioComponents",
-  "kind": "exec",
-  "blocker": "class_not_in_native_set",
-  "reason": "AFortHoagieAudioController is missing from porting/native_class_set.txt (module is in the uproject, so the earlier no_module label was wrong). Body (RDX->+0x230, R8->+0x238) is ready once generated.",
-  "unblock": "Add AFortHoagieAudioController to porting/native_class_set.txt (after AFortHoagieVehicle, line ~4671), regenerate, then port"
- },
- {
   "entry": "UTimeSynthComponent::GetMaxActiveClipLimit",
   "kind": "exec",
   "blocker": "engine_backport",

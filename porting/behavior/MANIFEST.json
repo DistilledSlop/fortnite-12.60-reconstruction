@@ -78527,5 +78527,21 @@
     "status": "ported",
     "recovery_source": "small_leaf_batch",
     "notes": "OnInputMethodChanged loads qword at +0x318 and writes byte +0x2c of it; no reflected member; pointee type unknown."
+  },
+  {
+    "class": "AFortHoagieAudioController",
+    "function": "CacheAudioComponents",
+    "kind": "exec",
+    "signature": "void CacheAudioComponents(UFortLayeredAudioComponent* InEngine, UFortLayeredAudioComponent* InRotor)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/cleanup1_runtime/AFortHoagieAudioController/CacheAudioComponents.inc",
+    "confidence": "high",
+    "address": "0x1408592f0",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "native_body_address": "0x14084b600",
+    "notes": "Stores arg1 (InEngine, RDX) to EngineAudio (+0x230) and arg2 (InRotor, R8) to RotorAudio (+0x238)."
   }
 ]
