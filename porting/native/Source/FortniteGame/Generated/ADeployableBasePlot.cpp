@@ -15,6 +15,20 @@ void ADeployableBasePlot::HandleBuildingStateTransition_Implementation(const EDe
 	// Body not recovered: reflection-derived stub.
 }
 
+void ADeployableBasePlot::OnBuildingStateTransition_Implementation(EDeployableBaseBuildingState InPreviousState, EDeployableBaseBuildingState InCurrentState)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void ADeployableBasePlot::OnCurrentBuildingStateSet_Implementation(EDeployableBaseBuildingState InCurrentBuildingState)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void ADeployableBasePlot::OnRep_BuildableSpaceExpansionVector()
 {
 	// Body not recovered: reflection-derived stub.

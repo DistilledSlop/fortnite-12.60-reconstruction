@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "UFortAthenaInventoryLoadout.h"
+
 class UAthenaLoadoutEntryWidget;
 
 #include "UAthenaLoadoutWidget.generated.h"
@@ -23,6 +25,10 @@ public:
 	// table index 0, flags 0x24080000000001
 	UPROPERTY()
 	TSubclassOf<UAthenaLoadoutEntryWidget> EntryWidgetClass;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnLoadoutChosen(UFortAthenaInventoryLoadout* SelectedLoadout);
+	virtual void OnLoadoutChosen_Implementation(UFortAthenaInventoryLoadout* SelectedLoadout);
 
 };
 

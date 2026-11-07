@@ -6,8 +6,11 @@
 #include "CoreMinimal.h"
 #include "ABuildingGameplayActor.h"
 
+#include "EInteractionBeingAttempted.h"
+#include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 
+class AFortPawn;
 class UAnimMontage;
 class UFortGameplayAbility;
 class UGameplayEffect;
@@ -70,6 +73,16 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	UAnimMontage* DetermineOnConsumeMontage() const;
 	virtual UAnimMontage* DetermineOnConsumeMontage_Implementation() const;
+public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	bool OnInteractAllowedToConsume(AFortPawn* InteractingPawn, EInteractionBeingAttempted InteractionBeingAttempted);
+	virtual bool OnInteractAllowedToConsume_Implementation(AFortPawn* InteractingPawn, EInteractionBeingAttempted InteractionBeingAttempted);
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void PrepareOnConsumeGameplayEffectSpec(FGameplayEffectSpecHandle& SpecHandle);
+	virtual void PrepareOnConsumeGameplayEffectSpec_Implementation(FGameplayEffectSpecHandle& SpecHandle);
 public:
 
 };

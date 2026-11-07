@@ -83,13 +83,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsQuickbarActive() const;
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerAddItemToQuickBar(UFortItemDefinition* ItemDefinition, int32 DesiredSlotIndexconst, const FGuid& PreviousItemGuid, bool bUseVolumeToSpawn);
 	void ServerAddItemToQuickBar_Implementation(UFortItemDefinition* ItemDefinition, int32 DesiredSlotIndexconst, const FGuid& PreviousItemGuid, bool bUseVolumeToSpawn);
+	bool ServerAddItemToQuickBar_Validate(UFortItemDefinition* ItemDefinition, int32 DesiredSlotIndexconst, const FGuid& PreviousItemGuid, bool bUseVolumeToSpawn);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerAddToQuickBar(const TArray<AActor*>& Actors, int32 DesiredSlotIndex);
 	void ServerAddToQuickBar_Implementation(const TArray<AActor*>& Actors, int32 DesiredSlotIndex);
+	bool ServerAddToQuickBar_Validate(const TArray<AActor*>& Actors, int32 DesiredSlotIndex);
 
 };
 

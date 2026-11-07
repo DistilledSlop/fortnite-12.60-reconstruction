@@ -249,9 +249,10 @@ public:
 	void ServerSetTowhookAttachState(const FNetTowhookAttachState& InTowhookAttachState);
 	void ServerSetTowhookAttachState_Implementation(const FNetTowhookAttachState& InTowhookAttachState);
 
-	UFUNCTION(Server, Unreliable)
+	UFUNCTION(Server, Unreliable, WithValidation)
 	void ServerUpdateTowhook(const FVector_NetQuantizeNormal& InNetTowhookAimDir);
 	void ServerUpdateTowhook_Implementation(const FVector_NetQuantizeNormal& InNetTowhookAimDir);
+	bool ServerUpdateTowhook_Validate(const FVector_NetQuantizeNormal& InNetTowhookAimDir);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -5,6 +5,13 @@
 #include "UFortVehicleInterface.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortCharacterVehicle::BP_CanInteract_Implementation(AFortPlayerController* FortPC)
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 USkeletalMeshComponent* AFortCharacterVehicle::GetEmoteMesh() const
 {
 	// Original address: 0x1428616e0.
@@ -17,6 +24,13 @@ USkeletalMeshComponent* AFortCharacterVehicle::GetMechMesh() const
 {
 	// Native exec 0x142861850 returns ACharacter::Mesh at +0x278. CONFIDENCE: high
 	return GetMesh();
+}
+
+void AFortCharacterVehicle::OnPawnExitVehicle_Implementation(AFortPlayerPawn* PlayerPawn, FName ExitSocketName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortCharacterVehicle::OnRep_OverrideAbilitySystemComponent()

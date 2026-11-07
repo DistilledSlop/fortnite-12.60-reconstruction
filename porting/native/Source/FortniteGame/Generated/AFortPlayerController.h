@@ -1576,25 +1576,29 @@ public:
 	void ProcessMcpProfileUpdate(const FProfileUpdateSingle& Update);
 	void ProcessMcpProfileUpdate_Implementation(const FProfileUpdateSingle& Update);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerAcknowledgeDelayedQuickBarAction(const TArray<uint32>& ProcessedActionIds);
 	void ServerAcknowledgeDelayedQuickBarAction_Implementation(const TArray<uint32>& ProcessedActionIds);
+	bool ServerAcknowledgeDelayedQuickBarAction_Validate(const TArray<uint32>& ProcessedActionIds);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerAddPawnMovementInput(AFortPawn* InChar, const FVector& WorldDirection, float ScaleValue, bool bForce);
 	void ServerAddPawnMovementInput_Implementation(AFortPawn* InChar, const FVector& WorldDirection, float ScaleValue, bool bForce);
+	bool ServerAddPawnMovementInput_Validate(AFortPawn* InChar, const FVector& WorldDirection, float ScaleValue, bool bForce);
 
 	UFUNCTION(Server, Reliable)
 	void ServerAnnouncementStoppedOnClient(const FGuid& AnnouncementID);
 	void ServerAnnouncementStoppedOnClient_Implementation(const FGuid& AnnouncementID);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerAttemptInventoryDrop(const FGuid& ItemGuid, int32 Count, bool bTrash);
 	void ServerAttemptInventoryDrop_Implementation(const FGuid& ItemGuid, int32 Count, bool bTrash);
+	bool ServerAttemptInventoryDrop_Validate(const FGuid& ItemGuid, int32 Count, bool bTrash);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerBeginEditingBuildingActor(ABuildingSMActor* BuildingActorToEdit);
 	void ServerBeginEditingBuildingActor_Implementation(ABuildingSMActor* BuildingActorToEdit);
+	bool ServerBeginEditingBuildingActor_Validate(ABuildingSMActor* BuildingActorToEdit);
 
 	UFUNCTION(Server, Reliable)
 	void ServerBroadcastPlayerChangedBuildMode(bool bIsInBuildMode);
@@ -1604,9 +1608,10 @@ public:
 	void ServerBroadcastUIFeedbackEvent(const FName& EventName);
 	void ServerBroadcastUIFeedbackEvent_Implementation(const FName& EventName);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCheat(const FString& Msg);
 	void ServerCheat_Implementation(const FString& Msg);
+	bool ServerCheat_Validate(const FString& Msg);
 
 	UFUNCTION(Server, Reliable)
 	void ServerCheatAll(const FString& Msg);
@@ -1620,9 +1625,10 @@ public:
 	void ServerClientPawnLoaded(bool bIsPawnLoaded);
 	void ServerClientPawnLoaded_Implementation(bool bIsPawnLoaded);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCombineInventoryItems(const FGuid& TargetItemGuid, const FGuid& SourceItemGuid);
 	void ServerCombineInventoryItems_Implementation(const FGuid& TargetItemGuid, const FGuid& SourceItemGuid);
+	bool ServerCombineInventoryItems_Validate(const FGuid& TargetItemGuid, const FGuid& SourceItemGuid);
 
 	UFUNCTION(Server, Reliable)
 	void ServerCraftSchematic(const FString& ItemId, int32 PostCraftSlot, int32 CraftAmount, const EFortItemTier& RequestedTier, bool bIsQuickCrafted);
@@ -1653,21 +1659,24 @@ public:
 	void ServerDropCarriedObject_Implementation();
 	bool ServerDropCarriedObject_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerEditBuildingActor(ABuildingSMActor* BuildingActorToEdit, TSubclassOf<ABuildingSMActor> NewBuildingClass, uint8 RotationIterations, bool bMirrored);
 	void ServerEditBuildingActor_Implementation(ABuildingSMActor* BuildingActorToEdit, TSubclassOf<ABuildingSMActor> NewBuildingClass, uint8 RotationIterations, bool bMirrored);
+	bool ServerEditBuildingActor_Validate(ABuildingSMActor* BuildingActorToEdit, TSubclassOf<ABuildingSMActor> NewBuildingClass, uint8 RotationIterations, bool bMirrored);
 
 	UFUNCTION(Server, Unreliable)
 	void ServerEmote(const FName& AssetName);
 	void ServerEmote_Implementation(const FName& AssetName);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerEndEditingBuildingActor(ABuildingSMActor* BuildingActorToStopEditing);
 	void ServerEndEditingBuildingActor_Implementation(ABuildingSMActor* BuildingActorToStopEditing);
+	bool ServerEndEditingBuildingActor_Validate(ABuildingSMActor* BuildingActorToStopEditing);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerExecuteInventoryItem(const FGuid& ItemGuid);
 	void ServerExecuteInventoryItem_Implementation(const FGuid& ItemGuid);
+	bool ServerExecuteInventoryItem_Validate(const FGuid& ItemGuid);
 
 	UFUNCTION(Server, Reliable)
 	void ServerExecutePresetTeamChat(const FText& ChatText, const FUniqueNetIdRepl& SenderID);
@@ -1716,9 +1725,10 @@ public:
 	void ServerNotifyMeshNetPlayer(const FName& Tag);
 	void ServerNotifyMeshNetPlayer_Implementation(const FName& Tag);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerOnMaterialSelection(EFortResourceType::Type NewResourceType, EFortResourceLevel::Type NewResourceLevel);
 	void ServerOnMaterialSelection_Implementation(EFortResourceType::Type NewResourceType, EFortResourceLevel::Type NewResourceLevel);
+	bool ServerOnMaterialSelection_Validate(EFortResourceType::Type NewResourceType, EFortResourceLevel::Type NewResourceLevel);
 
 	UFUNCTION(Server, Reliable)
 	void ServerPingMinimap(const FVector& WorldLocation, const FLinearColor& PingColor, uint8 RequiredTeam);
@@ -1749,17 +1759,19 @@ public:
 	void ServerRemoveInventoryStateValue(const FGuid& ItemGuid, EFortItemEntryState::Type StateValueType);
 	void ServerRemoveInventoryStateValue_Implementation(const FGuid& ItemGuid, EFortItemEntryState::Type StateValueType);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerRepairBuildingActor(ABuildingSMActor* BuildingActorToRepair);
 	void ServerRepairBuildingActor_Implementation(ABuildingSMActor* BuildingActorToRepair);
+	bool ServerRepairBuildingActor_Validate(ABuildingSMActor* BuildingActorToRepair);
 
 	UFUNCTION(Server, Reliable)
 	void ServerReplyToReadyCheck(bool bReady);
 	void ServerReplyToReadyCheck_Implementation(bool bReady);
 
-	UFUNCTION(Server, Unreliable)
+	UFUNCTION(Server, Unreliable, WithValidation)
 	void ServerReportClientFPS(float ClientAvgFPS, uint8 ClientAvgFrameScore, uint8 ClientMaxFrameScore);
 	void ServerReportClientFPS_Implementation(float ClientAvgFPS, uint8 ClientAvgFrameScore, uint8 ClientMaxFrameScore);
+	bool ServerReportClientFPS_Validate(float ClientAvgFPS, uint8 ClientAvgFrameScore, uint8 ClientMaxFrameScore);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerRequestAIDebug();
@@ -1779,9 +1791,10 @@ public:
 	void ServerReturnToMainMenu_Implementation();
 	bool ServerReturnToMainMenu_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSendClientProgressUpdate(int32 ClientProgressState, const TArray<uint64>& ClientProgressUpdate);
 	void ServerSendClientProgressUpdate_Implementation(int32 ClientProgressState, const TArray<uint64>& ClientProgressUpdate);
+	bool ServerSendClientProgressUpdate_Validate(int32 ClientProgressState, const TArray<uint64>& ClientProgressUpdate);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetAntiAddictionPlayTimeMultiplier(float NewPlayTimeRewardRate);
@@ -1815,21 +1828,24 @@ public:
 	void ServerSetReadyToContinue(bool bReady, EFortGameplayState::Type RequestedState, bool bTryStartTimer);
 	void ServerSetReadyToContinue_Implementation(bool bReady, EFortGameplayState::Type RequestedState, bool bTryStartTimer);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetShouldUseBotManager(bool InValue);
 	void ServerSetShouldUseBotManager_Implementation(bool InValue);
+	bool ServerSetShouldUseBotManager_Validate(bool InValue);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetShouldUsePilotComponent(bool InValue);
 	void ServerSetShouldUsePilotComponent_Implementation(bool InValue);
+	bool ServerSetShouldUsePilotComponent_Validate(bool InValue);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSpawnMark(AActor* ActorToAttachTo, const FVector& AttachOffset, const FText& PreapprovedText);
 	void ServerSpawnMark_Implementation(AActor* ActorToAttachTo, const FVector& AttachOffset, const FText& PreapprovedText);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSpotActor(AActor* NewlySpottedActor);
 	void ServerSpotActor_Implementation(AActor* NewlySpottedActor);
+	bool ServerSpotActor_Validate(AActor* NewlySpottedActor);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerStartIntensityGraphing();
@@ -1855,9 +1871,10 @@ public:
 	void ServerTeamChatRoomReady(const FString& ChatRoomId);
 	void ServerTeamChatRoomReady_Implementation(const FString& ChatRoomId);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerTeleportToReticle(const FVector& TeleportLocation);
 	void ServerTeleportToReticle_Implementation(const FVector& TeleportLocation);
+	bool ServerTeleportToReticle_Validate(const FVector& TeleportLocation);
 
 	UFUNCTION(Server, Unreliable, WithValidation)
 	void ServerTouchActiveTime();
@@ -1892,13 +1909,15 @@ public:
 	void ServerUpdateMessageComponents(const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents, const TArray<FGameplayTagContainer>& NewChannelIds);
 	void ServerUpdateMessageComponents_Implementation(const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents, const TArray<FGameplayTagContainer>& NewChannelIds);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerUpdatePlayerData(const TArray<uint8>& PlayerData);
 	void ServerUpdatePlayerData_Implementation(const TArray<uint8>& PlayerData);
+	bool ServerUpdatePlayerData_Validate(const TArray<uint8>& PlayerData);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerUpgradeBuildingActor(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 	void ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
+	bool ServerUpgradeBuildingActor_Validate(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 
 	UFUNCTION(BlueprintCallable)
 	void SetAtNameHomeBaseScreen(bool AtScreen);
@@ -1933,9 +1952,10 @@ public:
 	UFUNCTION(Exec)
 	void ToggleClientBot();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void TogglePersonalVehicle(bool bOn);
 	void TogglePersonalVehicle_Implementation(bool bOn);
+	bool TogglePersonalVehicle_Validate(bool bOn);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

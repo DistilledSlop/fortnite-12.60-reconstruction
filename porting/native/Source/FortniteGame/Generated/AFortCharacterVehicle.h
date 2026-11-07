@@ -19,6 +19,7 @@
 #include "UFortVehicleInterface.h"
 
 class AFortPlayerController;
+class AFortPlayerPawn;
 class AFortPlayerStateZone;
 class UAnimInstance;
 class UAthenaItemWrapDefinition;
@@ -253,11 +254,19 @@ public:
 	UPROPERTY()
 	FScalableFloat ReregisterSpecialActorIconDelay;
 
+	UFUNCTION(BlueprintNativeEvent)
+	bool BP_CanInteract(AFortPlayerController* FortPC);
+	virtual bool BP_CanInteract_Implementation(AFortPlayerController* FortPC);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponent* GetEmoteMesh() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponent* GetMechMesh() const;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnPawnExitVehicle(AFortPlayerPawn* PlayerPawn, FName ExitSocketName);
+	virtual void OnPawnExitVehicle_Implementation(AFortPlayerPawn* PlayerPawn, FName ExitSocketName);
 
 	UFUNCTION()
 	void OnRep_OverrideAbilitySystemComponent();

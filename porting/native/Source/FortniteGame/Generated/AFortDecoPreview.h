@@ -11,8 +11,10 @@
 #include "EPlacementType.h"
 #include "Math/Vector.h"
 
+class ABuildingActor;
 class AFortDecoHelper;
 class UCurveFloat;
+class UFortDecoItemDefinition;
 class UMaterialInstanceDynamic;
 class UMaterialInterface;
 
@@ -99,6 +101,10 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	AFortDecoHelper* ParentDecoHelper;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnInitializeDecoPreview(ABuildingActor* NewBuildingActor, UFortDecoItemDefinition* NewDecoItemDefinition);
+	virtual void OnInitializeDecoPreview_Implementation(ABuildingActor* NewBuildingActor, UFortDecoItemDefinition* NewDecoItemDefinition);
 
 };
 

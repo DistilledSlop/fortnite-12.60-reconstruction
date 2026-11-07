@@ -43,6 +43,10 @@ public:
 	bool bIsActive;
 
 	UFUNCTION(BlueprintNativeEvent)
+	bool CanExecute(FFortScriptedActionParams& Params) const;
+	virtual bool CanExecute_Implementation(FFortScriptedActionParams& Params) const;
+
+	UFUNCTION(BlueprintNativeEvent)
 	void Execute(FFortScriptedActionParams& Params);
 	virtual void Execute_Implementation(FFortScriptedActionParams& Params);
 

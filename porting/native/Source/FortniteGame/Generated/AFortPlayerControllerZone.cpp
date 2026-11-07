@@ -190,7 +190,25 @@ void AFortPlayerControllerZone::ServerRequestSeatChange_Implementation(int32 Tar
 
 void AFortPlayerControllerZone::ServerSendLoadoutConfig_Implementation(int32 LoadoutSeed, const TArray<uint8>& Loadout)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerZone::ServerSendLoadoutConfig_Validate(int32 LoadoutSeed, const TArray<uint8>& Loadout)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerZone::ServerSendPartyJoinInfoToPlayer_Implementation(const FUniqueNetIdRepl& RecipientId, const FString& JoinInfoStr)
@@ -218,7 +236,25 @@ bool AFortPlayerControllerZone::ServerSetShouldDisablePlayerTeleportingDuringMis
 
 void AFortPlayerControllerZone::ServerSetVehicleHealth_Implementation(float NewHealth)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerZone::ServerSetVehicleHealth_Validate(float NewHealth)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerZone::ServerSpectatePlayer_Implementation(APawn* NewPlayerToSpectate, bool bAllowStateChange)

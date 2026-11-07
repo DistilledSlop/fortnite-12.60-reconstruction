@@ -8,6 +8,7 @@
 
 #include "FAthenaGameMessageData.h"
 #include "FFortMutatorAudioStinger.h"
+#include "GameplayTagContainer.h"
 
 class UAudioComponent;
 class UFortAudioEventForwarder;
@@ -47,6 +48,11 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UFortAudioEventForwarder* StingerEventForwarder;
+
+protected:
+	UFUNCTION()
+	virtual void OnPlaylistLoaded(FName PlaylistName, FGameplayTagContainer& PlaylistContainerTags);
+public:
 
 };
 

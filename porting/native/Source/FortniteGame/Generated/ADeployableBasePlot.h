@@ -177,6 +177,14 @@ public:
 	void HandleBuildingStateTransition(const EDeployableBaseBuildingState& InPreviousState, const EDeployableBaseBuildingState& InCurrentState);
 	void HandleBuildingStateTransition_Implementation(const EDeployableBaseBuildingState& InPreviousState, const EDeployableBaseBuildingState& InCurrentState);
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnBuildingStateTransition(EDeployableBaseBuildingState InPreviousState, EDeployableBaseBuildingState InCurrentState);
+	virtual void OnBuildingStateTransition_Implementation(EDeployableBaseBuildingState InPreviousState, EDeployableBaseBuildingState InCurrentState);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCurrentBuildingStateSet(EDeployableBaseBuildingState InCurrentBuildingState);
+	virtual void OnCurrentBuildingStateSet_Implementation(EDeployableBaseBuildingState InCurrentBuildingState);
+
 	UFUNCTION()
 	void OnRep_BuildableSpaceExpansionVector();
 

@@ -48,13 +48,15 @@ public:
 	void ServerMoveAllItemsToDeployableBase(ADeployableBasePlot* ExpectedPlot);
 	void ServerMoveAllItemsToDeployableBase_Implementation(ADeployableBasePlot* ExpectedPlot);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerMoveItemFromDeployableBase(const FGuid& ItemOnPlot, int32 Count, ADeployableBasePlot* ExpectedPlot);
 	void ServerMoveItemFromDeployableBase_Implementation(const FGuid& ItemOnPlot, int32 Count, ADeployableBasePlot* ExpectedPlot);
+	bool ServerMoveItemFromDeployableBase_Validate(const FGuid& ItemOnPlot, int32 Count, ADeployableBasePlot* ExpectedPlot);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerMoveItemToDeployableBase(const FGuid& ItemOnPlayer, int32 Count, ADeployableBasePlot* ExpectedPlot);
 	void ServerMoveItemToDeployableBase_Implementation(const FGuid& ItemOnPlayer, int32 Count, ADeployableBasePlot* ExpectedPlot);
+	bool ServerMoveItemToDeployableBase_Validate(const FGuid& ItemOnPlayer, int32 Count, ADeployableBasePlot* ExpectedPlot);
 
 };
 

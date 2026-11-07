@@ -34,6 +34,12 @@ public:
 
 protected:
 	UFUNCTION(BlueprintNativeEvent)
+	bool GetApplicationTag(UGameplayAbility* AbilityInstance, FGameplayTag& OutTag) const;
+	virtual bool GetApplicationTag_Implementation(UGameplayAbility* AbilityInstance, FGameplayTag& OutTag) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
 	bool GetTextForTokenFromAbilityInstanceInternal(UGameplayAbility* AbilityInstance, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, FText& OutText) const;
 	virtual bool GetTextForTokenFromAbilityInstanceInternal_Implementation(UGameplayAbility* AbilityInstance, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, FText& OutText) const;
 public:

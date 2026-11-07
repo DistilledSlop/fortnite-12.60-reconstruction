@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "EFortCollectionBookState.h"
 #include "Layout/Margin.h"
 #include "Types/SlateEnums.h"
 #include "UCommonTextBlock.h"
@@ -62,6 +63,12 @@ public:
 	// table index 0, flags 0x20088000002008
 	UPROPERTY(Transient)
 	TArray<UFortCollectionBookSlotWidget*> SlotWidgets;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnSectionSlotUpdate(int32 NumFilledSlots, int32 NumSlots, EFortCollectionBookState SectionState);
+	virtual void OnSectionSlotUpdate_Implementation(int32 NumFilledSlots, int32 NumSlots, EFortCollectionBookState SectionState);
+public:
 
 };
 

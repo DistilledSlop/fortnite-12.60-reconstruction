@@ -2,6 +2,13 @@
 #include "AFortPickup.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortPickup::AllowLongRangeAutoPickup_Implementation(AFortPlayerPawn* FortPawn)
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 int32 AFortPickup::GetItemEntryNum() const
 {
 	// CONFIDENCE: high; 0x142a2abd0 -> 0x14202ed80.

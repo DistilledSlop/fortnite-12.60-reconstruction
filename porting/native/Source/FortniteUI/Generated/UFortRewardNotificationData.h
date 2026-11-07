@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "EFortBrushSize.h"
 #include "EFrontEndRewardType.h"
+#include "Styling/SlateBrush.h"
 
 #include "UFortRewardNotificationData.generated.h"
 
@@ -19,6 +21,9 @@ public:
 	// table index 0, flags 0x10000000000014
 	UPROPERTY()
 	EFrontEndRewardType RewardType;
+
+	UFUNCTION(BlueprintCallable)
+	virtual bool GetIconBrush(FSlateBrush& IconBrush, EFortBrushSize::Type BrushSize);
 
 };
 

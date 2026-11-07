@@ -23,3 +23,10 @@ void UHUDLayoutToolPropertyPanel::OnOpen_Implementation()
 	return;
 }
 
+void UHUDLayoutToolPropertyPanel::OnWidgetMoved_Implementation(UHUDLayoutToolPlacementWidget* MovedWidget)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+

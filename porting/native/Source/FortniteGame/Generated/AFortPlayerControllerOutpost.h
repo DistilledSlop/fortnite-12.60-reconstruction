@@ -63,13 +63,15 @@ public:
 	void ServerLeaveOutpostAsParty();
 	void ServerLeaveOutpostAsParty_Implementation();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerMoveItemFromStorageVault(const FFortItemEntry& NewlyCollectedItem);
 	void ServerMoveItemFromStorageVault_Implementation(const FFortItemEntry& NewlyCollectedItem);
+	bool ServerMoveItemFromStorageVault_Validate(const FFortItemEntry& NewlyCollectedItem);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerMoveItemToStorageVault(const FFortItemEntry& NewlyStoredItem);
 	void ServerMoveItemToStorageVault_Implementation(const FFortItemEntry& NewlyStoredItem);
+	bool ServerMoveItemToStorageVault_Validate(const FFortItemEntry& NewlyStoredItem);
 
 	UFUNCTION(Server, Reliable)
 	void ServerUpgradeBuilding(UFortOutpostItemDefinition* BuildingToUpgrade);

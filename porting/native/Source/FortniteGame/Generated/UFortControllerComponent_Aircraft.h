@@ -41,9 +41,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInAircraft() const;
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerAttemptAircraftJump(const FRotator& ClientRotation);
 	void ServerAttemptAircraftJump_Implementation(const FRotator& ClientRotation);
+	bool ServerAttemptAircraftJump_Validate(const FRotator& ClientRotation);
 
 };
 

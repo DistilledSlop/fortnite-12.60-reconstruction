@@ -7,6 +7,7 @@
 #include "UFortActivatablePanel.h"
 
 #include "UCommonWidgetSwitcher.h"
+#include "UFortCollectionBookPage.h"
 
 class UFortCollectionBookPrimaryPanel;
 class UFortCollectionBookProgressWidget;
@@ -43,6 +44,10 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	int32 SectionPanelIdx;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCollectionBookPageClicked(UFortCollectionBookPage* ClickedPage);
+	virtual void OnCollectionBookPageClicked_Implementation(UFortCollectionBookPage* ClickedPage);
 
 };
 

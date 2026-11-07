@@ -252,9 +252,10 @@ public:
 	void ServerRequestSeatChange(int32 TargetSeatIndex);
 	void ServerRequestSeatChange_Implementation(int32 TargetSeatIndex);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSendLoadoutConfig(int32 LoadoutSeed, const TArray<uint8>& Loadout);
 	void ServerSendLoadoutConfig_Implementation(int32 LoadoutSeed, const TArray<uint8>& Loadout);
+	bool ServerSendLoadoutConfig_Validate(int32 LoadoutSeed, const TArray<uint8>& Loadout);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSendPartyJoinInfoToPlayer(const FUniqueNetIdRepl& RecipientId, const FString& JoinInfoStr);
@@ -265,9 +266,10 @@ public:
 	void ServerSetShouldDisablePlayerTeleportingDuringMissionResults_Implementation();
 	bool ServerSetShouldDisablePlayerTeleportingDuringMissionResults_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetVehicleHealth(float NewHealth);
 	void ServerSetVehicleHealth_Implementation(float NewHealth);
+	bool ServerSetVehicleHealth_Validate(float NewHealth);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSpectatePlayer(APawn* NewPlayerToSpectate, bool bAllowStateChange);

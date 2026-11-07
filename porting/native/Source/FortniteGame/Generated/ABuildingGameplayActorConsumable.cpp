@@ -7,3 +7,17 @@ UAnimMontage* ABuildingGameplayActorConsumable::DetermineOnConsumeMontage_Implem
 	return OnConsumeMontage;
 }
 
+bool ABuildingGameplayActorConsumable::OnInteractAllowedToConsume_Implementation(AFortPawn* InteractingPawn, EInteractionBeingAttempted InteractionBeingAttempted)
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
+void ABuildingGameplayActorConsumable::PrepareOnConsumeGameplayEffectSpec_Implementation(FGameplayEffectSpecHandle& SpecHandle)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+

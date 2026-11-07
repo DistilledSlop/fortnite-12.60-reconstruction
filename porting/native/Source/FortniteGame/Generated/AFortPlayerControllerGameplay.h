@@ -426,9 +426,10 @@ public:
 	void ServerCreativeToggleFly(bool bEnableOnly);
 	void ServerCreativeToggleFly_Implementation(bool bEnableOnly);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerRPCSetDisplayNPCNumbers(bool bEnable);
 	void ServerRPCSetDisplayNPCNumbers_Implementation(bool bEnable);
+	bool ServerRPCSetDisplayNPCNumbers_Validate(bool bEnable);
 
 	UFUNCTION(BlueprintCallable)
 	void SetLastUsedCreativePropetyFilter(int32 PropertyFilterIndex);

@@ -26,5 +26,17 @@ protected:
 	virtual int32 BP_GetNumOfProperties_Implementation() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void BP_GetPropertyRange(int32 PropertyIndex, float& OutMin, float& OutMax) const;
+	virtual void BP_GetPropertyRange_Implementation(int32 PropertyIndex, float& OutMin, float& OutMax) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void BP_SetPropertyValue(int32 PropertyIndex, float NewValue);
+	virtual void BP_SetPropertyValue_Implementation(int32 PropertyIndex, float NewValue);
+public:
+
 };
 

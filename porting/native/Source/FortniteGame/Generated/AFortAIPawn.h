@@ -840,7 +840,7 @@ public:
 	void OnRep_bIsSleeping();
 
 	UFUNCTION()
-	void OnRep_CanInteract(bool bOldCanInteract);
+	virtual void OnRep_CanInteract(bool bOldCanInteract);
 
 protected:
 	UFUNCTION()

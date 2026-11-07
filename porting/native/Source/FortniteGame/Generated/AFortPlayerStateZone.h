@@ -160,9 +160,10 @@ public:
 	UFUNCTION()
 	void OnRep_SpectatingTarget();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetInAircraft(bool bNewInAircraft);
 	void ServerSetInAircraft_Implementation(bool bNewInAircraft);
+	bool ServerSetInAircraft_Validate(bool bNewInAircraft);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -24,6 +24,13 @@ void AAthenaCapturePoint::OnCapturePointLockStateChange_Implementation(bool bInL
 	return;
 }
 
+void AAthenaCapturePoint::OnCapturePointStateChange_Implementation(ECapturePointState InState, uint8 InTeam)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AAthenaCapturePoint::OnRep_bActivated()
 {
 	// Body not recovered: reflection-derived stub.

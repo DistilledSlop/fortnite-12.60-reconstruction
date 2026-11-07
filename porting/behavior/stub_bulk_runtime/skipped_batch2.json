@@ -1,0 +1,213 @@
+[
+ {
+  "cls": "ABuildingSMActor",
+  "fn": "GetWindPannerSpeedCurveForPreview",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "ABuildingSMActor",
+  "fn": "GetWindSpeedCurveForPreview",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "ABuildingTrapDefender",
+  "fn": "TakeWeaponAwayFromDefender",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortCheatManager",
+  "fn": "SpawnEnemyPlayer",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortCheatManager",
+  "fn": "SpawnFriendlyPlayer",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortCheatManager",
+  "fn": "SpawnSimplePawn",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "ExtractSkeletalMesh",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "GetAIDirector",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "GetAIGoalManager",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "IncrementAnalyticMatchCount",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "K2_SpawnPickupInWorld",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "K2_SpawnPickupInWorldWithClass",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortMissionLibrary",
+  "fn": "SpawnMissionItemPickupInWorld",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortMissionStormShield",
+  "fn": "SpawnSafeAreaAtLocation",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "Cheat_ForceAthenaCosmeticItemInSlot",
+  "why": "net rpc stub shape not empty(+true validate)",
+  "stubs": [
+   "empty",
+   "retfalse"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "Cheat_ForceCosmeticVariantChannels",
+  "why": "net rpc stub shape not empty(+true validate)",
+  "stubs": [
+   "empty",
+   "retfalse"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "Cheat_ForcePlayEmoteItem",
+  "why": "net rpc stub shape not empty(+true validate)",
+  "stubs": [
+   "empty",
+   "retfalse"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "Cheat_StopObjectiveServer",
+  "why": "net rpc stub shape not empty(+true validate)",
+  "stubs": [
+   "empty",
+   "retfalse"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "SpawnToyInstance",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortFrontEndContext",
+  "fn": "GetUITestingClass",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortGridWidgetBase",
+  "fn": "GetTileForObject",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortPlayerSurveyAnswerWidgetBase",
+  "fn": "HandleAnswerChanged",
+  "why": "void but stub is not empty",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UHUDLayoutToolProxy",
+  "fn": "BP_GetPropertyType",
+  "why": "non-bool return",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ }
+]

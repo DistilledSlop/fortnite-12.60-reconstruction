@@ -24,9 +24,10 @@ public:
 	void ClientInitiateMatchmakingToPortalOrigin();
 	void ClientInitiateMatchmakingToPortalOrigin_Implementation();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetPortalLinkCode(UFortPortalComponent* PortalComponent, const FString& LinkCode);
 	void ServerSetPortalLinkCode_Implementation(UFortPortalComponent* PortalComponent, const FString& LinkCode);
+	bool ServerSetPortalLinkCode_Validate(UFortPortalComponent* PortalComponent, const FString& LinkCode);
 
 };
 

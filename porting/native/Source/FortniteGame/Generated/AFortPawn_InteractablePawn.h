@@ -8,6 +8,8 @@
 
 #include "Misc/Guid.h"
 
+class AFortPawn;
+
 #include "AFortPawn_InteractablePawn.generated.h"
 
 UCLASS(config=Game)
@@ -20,9 +22,17 @@ public:
 	UPROPERTY(SaveGame)
 	FGuid MyGuid;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	bool BlueprintCanInteract(AFortPawn* InteractingPawn) const;
+	virtual bool BlueprintCanInteract_Implementation(AFortPawn* InteractingPawn) const;
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCosmetic)
 	void BlueprintOnBeginInteract();
 	virtual void BlueprintOnBeginInteract_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void BlueprintOnInteract(AFortPawn* InteractingPawn);
+	virtual void BlueprintOnInteract_Implementation(AFortPawn* InteractingPawn);
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

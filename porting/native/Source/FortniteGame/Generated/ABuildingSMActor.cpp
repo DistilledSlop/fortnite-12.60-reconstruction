@@ -9,6 +9,13 @@
 #include "UBuildingTextureData.h"
 #include "Net/UnrealNetwork.h"
 
+bool ABuildingSMActor::BlueprintCanAttemptGenerateResources_Implementation(FGameplayTagContainer& InTags, AController* InstigatorController) const
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void ABuildingSMActor::BlueprintOnStructurallyStable_Implementation()
 {
 	// Exact original shared stub 0x1406801c0.

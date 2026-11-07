@@ -16,9 +16,10 @@ class FORTNITEGAME_API AFortWeaponRangedMountedCannon : public AFortWeaponRanged
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerFireActorInCannon(const FVector& LaunchDir);
 	void ServerFireActorInCannon_Implementation(const FVector& LaunchDir);
+	bool ServerFireActorInCannon_Validate(const FVector& LaunchDir);
 
 };
 

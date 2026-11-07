@@ -124,13 +124,15 @@ public:
 	void ServerAttemptInteract(AActor* ReceivingActor, UPrimitiveComponent* InteractComponent, TInteractionType InteractType, UObject* OptionalObjectData, EInteractionBeingAttempted InteractionBeingAttempted, int32 RequestId);
 	void ServerAttemptInteract_Implementation(AActor* ReceivingActor, UPrimitiveComponent* InteractComponent, TInteractionType InteractType, UObject* OptionalObjectData, EInteractionBeingAttempted InteractionBeingAttempted, int32 RequestId);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerNotifyEndLongUse(AActor* ReceivingActor);
 	void ServerNotifyEndLongUse_Implementation(AActor* ReceivingActor);
+	bool ServerNotifyEndLongUse_Validate(AActor* ReceivingActor);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerNotifyStartLongUse(AActor* ReceivingActor);
 	void ServerNotifyStartLongUse_Implementation(AActor* ReceivingActor);
+	bool ServerNotifyStartLongUse_Validate(AActor* ReceivingActor);
 
 };
 

@@ -14,10 +14,26 @@ for d in glob.glob(f'{R}/native*/'):
             have.add(m.group(1))
 rows = json.load(open(f'{R}/thunk-table/table.json'))
 vt = {(o['cls'], o['fn']): o for o in json.load(open(f'{R}/thunk-table/virtual_targets.json'))}
+# UINTERFACE classes (generated headers declare `UINTERFACE`): the exec thunk dispatches through the implementing
+# object's interface sub-vtable, so there is no body at the interface level (the bodies are the implementers'
+# overrides). Reading the interface class's own vtable is meaningless, so these get their own group I.
+IFACES = set()
+for h in glob.glob('porting/native/Source/*/Generated/*.h'):
+    with open(h, errors='ignore') as fh:
+        if any(l.startswith('UINTERFACE') for l in fh):
+            IFACES.add(os.path.basename(h)[:-2])
 out, st = [], collections.Counter()
 for r in rows:
     e = dict(cls=r['cls'], fn=r['fn'], thunk=r['thunk'])
     k = r['kind']
+    if r['cls'] in IFACES:
+        e.update(group='I', reason='interface function: dispatches via the implementing object\'s interface sub-vtable; '
+                 'no body at the interface level (bodies are implementers\' overrides)')
+        e['all_captured'] = True
+        e['group_key'] = 'I'
+        out.append(e)
+        st[('I', True)] += 1
+        continue
     if k == 'virtual':
         o = vt[(r['cls'], r['fn'])]
         res = [s for s in o['sites'] if s['status'] == 'resolved']

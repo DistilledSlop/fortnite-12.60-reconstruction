@@ -17,6 +17,20 @@ void AFortClientAnnouncement_Keybinding::ResetGamepadActionTextPairList()
 	(*(void (**)(void *))((*(uint8 **)param_1) + 0x670))(param_1);
 }
 
+void AFortClientAnnouncement_Keybinding::SetDetailText(FText DetailText)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AFortClientAnnouncement_Keybinding::SetDisplayTime(float DisplayTime)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortClientAnnouncement_Keybinding::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

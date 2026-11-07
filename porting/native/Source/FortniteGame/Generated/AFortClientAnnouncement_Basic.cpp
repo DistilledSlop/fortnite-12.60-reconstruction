@@ -7,6 +7,20 @@ void AFortClientAnnouncement_Basic::OnRep_BasicData(FFortClientAnnouncementData_
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortClientAnnouncement_Basic::SetDetailText(FText DetailText)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AFortClientAnnouncement_Basic::SetDisplayTime(float DisplayTime)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortClientAnnouncement_Basic::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

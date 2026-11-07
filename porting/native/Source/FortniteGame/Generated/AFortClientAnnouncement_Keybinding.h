@@ -26,6 +26,12 @@ public:
 	UFUNCTION(BlueprintAuthorityOnly)
 	void ResetGamepadActionTextPairList();
 
+	UFUNCTION(BlueprintAuthorityOnly)
+	virtual void SetDetailText(FText DetailText);
+
+	UFUNCTION(BlueprintAuthorityOnly)
+	virtual void SetDisplayTime(float DisplayTime);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

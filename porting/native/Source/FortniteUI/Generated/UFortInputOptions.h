@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortOptionsTab.h"
 
+#include "InputCoreTypes.h"
 #include "UCommonListView.h"
 #include "UCommonTextBlock.h"
 
@@ -35,6 +36,11 @@ public:
 	// table index 0, flags 0x24080000000001
 	UPROPERTY()
 	TSubclassOf<UUserWidget> InputCategoryWidgetClass;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void ChangeBinding(bool bIsPrimarySlot, int32 Input, FKey NewKey);
+public:
 
 };
 

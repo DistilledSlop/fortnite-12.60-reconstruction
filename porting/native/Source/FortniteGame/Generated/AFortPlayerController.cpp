@@ -621,12 +621,48 @@ void AFortPlayerController::ProcessMcpProfileUpdate_Implementation(const FProfil
 
 void AFortPlayerController::ServerAcknowledgeDelayedQuickBarAction_Implementation(const TArray<uint32>& ProcessedActionIds)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerAcknowledgeDelayedQuickBarAction_Validate(const TArray<uint32>& ProcessedActionIds)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerAddPawnMovementInput_Implementation(AFortPawn* InChar, const FVector& WorldDirection, float ScaleValue, bool bForce)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerAddPawnMovementInput_Validate(AFortPawn* InChar, const FVector& WorldDirection, float ScaleValue, bool bForce)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerAnnouncementStoppedOnClient_Implementation(const FGuid& AnnouncementID)
@@ -636,12 +672,48 @@ void AFortPlayerController::ServerAnnouncementStoppedOnClient_Implementation(con
 
 void AFortPlayerController::ServerAttemptInventoryDrop_Implementation(const FGuid& ItemGuid, int32 Count, bool bTrash)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerAttemptInventoryDrop_Validate(const FGuid& ItemGuid, int32 Count, bool bTrash)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerBeginEditingBuildingActor_Implementation(ABuildingSMActor* BuildingActorToEdit)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerBeginEditingBuildingActor_Validate(ABuildingSMActor* BuildingActorToEdit)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerBroadcastPlayerChangedBuildMode_Implementation(bool bIsInBuildMode)
@@ -656,7 +728,25 @@ void AFortPlayerController::ServerBroadcastUIFeedbackEvent_Implementation(const 
 
 void AFortPlayerController::ServerCheat_Implementation(const FString& Msg)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerCheat_Validate(const FString& Msg)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerCheatAll_Implementation(const FString& Msg)
@@ -676,7 +766,25 @@ void AFortPlayerController::ServerClientPawnLoaded_Implementation(bool bIsPawnLo
 
 void AFortPlayerController::ServerCombineInventoryItems_Implementation(const FGuid& TargetItemGuid, const FGuid& SourceItemGuid)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerCombineInventoryItems_Validate(const FGuid& TargetItemGuid, const FGuid& SourceItemGuid)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerCraftSchematic_Implementation(const FString& ItemId, int32 PostCraftSlot, int32 CraftAmount, const EFortItemTier& RequestedTier, bool bIsQuickCrafted)
@@ -724,7 +832,25 @@ bool AFortPlayerController::ServerDropCarriedObject_Validate()
 
 void AFortPlayerController::ServerEditBuildingActor_Implementation(ABuildingSMActor* BuildingActorToEdit, TSubclassOf<ABuildingSMActor> NewBuildingClass, uint8 RotationIterations, bool bMirrored)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerEditBuildingActor_Validate(ABuildingSMActor* BuildingActorToEdit, TSubclassOf<ABuildingSMActor> NewBuildingClass, uint8 RotationIterations, bool bMirrored)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerEmote_Implementation(const FName& AssetName)
@@ -734,12 +860,48 @@ void AFortPlayerController::ServerEmote_Implementation(const FName& AssetName)
 
 void AFortPlayerController::ServerEndEditingBuildingActor_Implementation(ABuildingSMActor* BuildingActorToStopEditing)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerEndEditingBuildingActor_Validate(ABuildingSMActor* BuildingActorToStopEditing)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerExecuteInventoryItem_Implementation(const FGuid& ItemGuid)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerExecuteInventoryItem_Validate(const FGuid& ItemGuid)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerExecutePresetTeamChat_Implementation(const FText& ChatText, const FUniqueNetIdRepl& SenderID)
@@ -826,7 +988,25 @@ void AFortPlayerController::ServerNotifyMeshNetPlayer_Implementation(const FName
 
 void AFortPlayerController::ServerOnMaterialSelection_Implementation(EFortResourceType::Type NewResourceType, EFortResourceLevel::Type NewResourceLevel)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerOnMaterialSelection_Validate(EFortResourceType::Type NewResourceType, EFortResourceLevel::Type NewResourceLevel)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerPingMinimap_Implementation(const FVector& WorldLocation, const FLinearColor& PingColor, uint8 RequiredTeam)
@@ -873,7 +1053,25 @@ void AFortPlayerController::ServerRemoveInventoryStateValue_Implementation(const
 
 void AFortPlayerController::ServerRepairBuildingActor_Implementation(ABuildingSMActor* BuildingActorToRepair)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerRepairBuildingActor_Validate(ABuildingSMActor* BuildingActorToRepair)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerReplyToReadyCheck_Implementation(bool bReady)
@@ -883,7 +1081,25 @@ void AFortPlayerController::ServerReplyToReadyCheck_Implementation(bool bReady)
 
 void AFortPlayerController::ServerReportClientFPS_Implementation(float ClientAvgFPS, uint8 ClientAvgFrameScore, uint8 ClientMaxFrameScore)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerReportClientFPS_Validate(float ClientAvgFPS, uint8 ClientAvgFrameScore, uint8 ClientMaxFrameScore)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerRequestAIDebug_Implementation()
@@ -928,7 +1144,25 @@ bool AFortPlayerController::ServerReturnToMainMenu_Validate()
 
 void AFortPlayerController::ServerSendClientProgressUpdate_Implementation(int32 ClientProgressState, const TArray<uint64>& ClientProgressUpdate)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerSendClientProgressUpdate_Validate(int32 ClientProgressState, const TArray<uint64>& ClientProgressUpdate)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerSetAntiAddictionPlayTimeMultiplier_Implementation(float NewPlayTimeRewardRate)
@@ -973,12 +1207,48 @@ void AFortPlayerController::ServerSetReadyToContinue_Implementation(bool bReady,
 
 void AFortPlayerController::ServerSetShouldUseBotManager_Implementation(bool InValue)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerSetShouldUseBotManager_Validate(bool InValue)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerSetShouldUsePilotComponent_Implementation(bool InValue)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerSetShouldUsePilotComponent_Validate(bool InValue)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerSpawnMark_Implementation(AActor* ActorToAttachTo, const FVector& AttachOffset, const FText& PreapprovedText)
@@ -988,7 +1258,25 @@ void AFortPlayerController::ServerSpawnMark_Implementation(AActor* ActorToAttach
 
 void AFortPlayerController::ServerSpotActor_Implementation(AActor* NewlySpottedActor)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerSpotActor_Validate(AActor* NewlySpottedActor)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerStartIntensityGraphing_Implementation()
@@ -1064,7 +1352,25 @@ void AFortPlayerController::ServerTeamChatRoomReady_Implementation(const FString
 
 void AFortPlayerController::ServerTeleportToReticle_Implementation(const FVector& TeleportLocation)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerTeleportToReticle_Validate(const FVector& TeleportLocation)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerTouchActiveTime_Implementation()
@@ -1116,12 +1422,48 @@ void AFortPlayerController::ServerUpdateMessageComponents_Implementation(const T
 
 void AFortPlayerController::ServerUpdatePlayerData_Implementation(const TArray<uint8>& PlayerData)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerUpdatePlayerData_Validate(const TArray<uint8>& PlayerData)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::ServerUpgradeBuildingActor_Validate(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerController::SetAtNameHomeBaseScreen(bool AtScreen)
@@ -1201,7 +1543,25 @@ void AFortPlayerController::ToggleClientBot()
 
 void AFortPlayerController::TogglePersonalVehicle_Implementation(bool bOn)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::TogglePersonalVehicle_Validate(bool bOn)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 bool AFortPlayerController::NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition)

@@ -25,9 +25,10 @@ public:
 	UPROPERTY(Transient)
 	UFortHeldObjectComponent* LastHeldObjectComponent;
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerUseBattleLabDevice(UFortBattleLabDeviceItemDefinition* DeviceItemDef);
 	void ServerUseBattleLabDevice_Implementation(UFortBattleLabDeviceItemDefinition* DeviceItemDef);
+	bool ServerUseBattleLabDevice_Validate(UFortBattleLabDeviceItemDefinition* DeviceItemDef);
 
 };
 

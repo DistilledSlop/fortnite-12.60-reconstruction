@@ -91,6 +91,11 @@ public:
 	UPROPERTY()
 	UImage* Image_DisplayImage;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void ApplyChanges(bool bApplySettingsFromCachedData);
+public:
+
 	UFUNCTION(BlueprintCallable)
 	virtual void InitializeData();
 

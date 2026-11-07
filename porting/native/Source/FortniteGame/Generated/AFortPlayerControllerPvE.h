@@ -72,9 +72,10 @@ public:
 	void ServerTriggerSetupTeleportCameraEvent_Implementation();
 	bool ServerTriggerSetupTeleportCameraEvent_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerUpdateQuickBarRecordsCache(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
 	void ServerUpdateQuickBarRecordsCache_Implementation(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
+	bool ServerUpdateQuickBarRecordsCache_Validate(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
 
 };
 

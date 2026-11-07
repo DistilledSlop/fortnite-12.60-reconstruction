@@ -9,6 +9,7 @@
 #include "UCommonTextBlock.h"
 
 class UDynamicEntryBox;
+class UHUDLayoutToolPlacementWidget;
 
 #include "UHUDLayoutToolPropertyPanel.generated.h"
 
@@ -48,6 +49,12 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void OnOpen();
 	virtual void OnOpen_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnWidgetMoved(UHUDLayoutToolPlacementWidget* MovedWidget);
+	virtual void OnWidgetMoved_Implementation(UHUDLayoutToolPlacementWidget* MovedWidget);
 public:
 
 };

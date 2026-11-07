@@ -269,6 +269,10 @@ public:
 	void OnCapturePointLockStateChange(bool bInLocked);
 	virtual void OnCapturePointLockStateChange_Implementation(bool bInLocked);
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCapturePointStateChange(ECapturePointState InState, uint8 InTeam);
+	virtual void OnCapturePointStateChange_Implementation(ECapturePointState InState, uint8 InTeam);
+
 	UFUNCTION()
 	void OnRep_bActivated();
 

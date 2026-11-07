@@ -114,7 +114,9 @@ void AFortAIPawn::OnRep_bIsSleeping()
 
 void AFortAIPawn::OnRep_CanInteract(bool bOldCanInteract)
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortAIPawn::OnRep_CurrentAIRotationRate()

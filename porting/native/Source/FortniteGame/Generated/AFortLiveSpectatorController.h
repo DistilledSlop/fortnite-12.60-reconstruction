@@ -22,9 +22,10 @@ public:
 	UPROPERTY()
 	AFortPlayerState* FollowedPlayerState;
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetFollowedPlayer(AFortPlayerState* NewPlayerToFollow, const FVector& SpectatorLocation, bool bValidPos);
 	void ServerSetFollowedPlayer_Implementation(AFortPlayerState* NewPlayerToFollow, const FVector& SpectatorLocation, bool bValidPos);
+	bool ServerSetFollowedPlayer_Validate(AFortPlayerState* NewPlayerToFollow, const FVector& SpectatorLocation, bool bValidPos);
 
 };
 

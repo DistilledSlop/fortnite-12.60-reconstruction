@@ -50,6 +50,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetShowAllTimeTime() const;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	bool IsFireButtonUnderTouch(FVector2D TouchPosition) const;
+	virtual bool IsFireButtonUnderTouch_Implementation(FVector2D TouchPosition) const;
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void SetFiringState(bool IsFiring);
 	virtual void SetFiringState_Implementation(bool IsFiring);

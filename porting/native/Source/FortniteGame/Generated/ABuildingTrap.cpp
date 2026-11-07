@@ -17,6 +17,13 @@ void ABuildingTrap::AddDamageComponent(UPrimitiveComponent* DamageComponent)
 	}
 }
 
+bool ABuildingTrap::BP_ShouldTrigger_Implementation(TArray<AActor*>& TouchingActors) const
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 TArray<UFortAlterationItemDefinition*> ABuildingTrap::GetAlterations() const
 {
 	// Native target 0x141c38690; CONFIDENCE: high.

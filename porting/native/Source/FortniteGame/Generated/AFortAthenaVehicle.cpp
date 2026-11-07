@@ -21,6 +21,13 @@ bool AFortAthenaVehicle::AnyWheelsOnGround() const
 	return (NativeRecoveredBits_0x410 & 0x08) != 0;
 }
 
+bool AFortAthenaVehicle::BP_CanInteract_Implementation(AFortPlayerController* FortPC)
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortAthenaVehicle::BroadcastResetWaterIdleTimeEmpty_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
@@ -58,7 +65,13 @@ bool AFortAthenaVehicle::ContainsPlayers() const
 
 void AFortAthenaVehicle::DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortAthenaVehicle::DemagnetizeFromSkyTube()
@@ -300,6 +313,13 @@ bool AFortAthenaVehicle::IsScrapingSidesOrTop() const
 	return (NativeRecoveredBits_0x40f & 0x04) != 0;
 }
 
+void AFortAthenaVehicle::OnPawnExitVehicle_Implementation(AFortPlayerPawn* PlayerPawn, FName ExitSocketName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortAthenaVehicle::OnRep_AbilitySystemComponent()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -388,6 +408,13 @@ void AFortAthenaVehicle::OnRep_VehicleAttributes()
 	}
 }
 
+void AFortAthenaVehicle::OverrideCurrentWrap(UAthenaItemWrapDefinition* LoadedWrap)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 bool AFortAthenaVehicle::RearLateralFrictionHasReachedMax() const
 {
 	// Original address: 0x14283ccc0.
@@ -439,7 +466,13 @@ void AFortAthenaVehicle::SetDyingPhysics()
 
 void AFortAthenaVehicle::UpdateClientWithVehicleTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 bool AFortAthenaVehicle::VehicleIsInSkyTube() const

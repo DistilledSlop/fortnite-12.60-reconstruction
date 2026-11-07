@@ -7,6 +7,9 @@
 #include "UObject/Object.h"
 
 #include "GameplayTagContainer.h"
+#include "Math/Vector.h"
+
+class AFortPlacementActor;
 
 #include "UFortPlacementActorTagTest.generated.h"
 
@@ -23,6 +26,10 @@ public:
 	// table index 0, flags 0x10000000000015
 	UPROPERTY()
 	FGameplayTagContainer TagsToApplyOnFailure;
+
+	UFUNCTION(BlueprintNativeEvent)
+	bool ShouldApplyTagsToPlacementActor(AFortPlacementActor* FocusPlacementActor, FVector& AveragePlacementActorLocation) const;
+	virtual bool ShouldApplyTagsToPlacementActor_Implementation(AFortPlacementActor* FocusPlacementActor, FVector& AveragePlacementActorLocation) const;
 
 };
 

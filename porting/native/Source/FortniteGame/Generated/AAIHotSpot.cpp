@@ -113,6 +113,13 @@ bool AAIHotSpot::HasEnabledSlots() const
 	return false;
 }
 
+bool AAIHotSpot::IsAIAllowed_Implementation(AAIController* AI) const
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 bool AAIHotSpot::IsEnabled() const
 {
 	// Original address: 0x142711420.
@@ -137,6 +144,48 @@ void AAIHotSpot::OnHotSpotDisabled_Implementation()
 }
 
 void AAIHotSpot::OnHotSpotEnabled_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AAIHotSpot::OnSlotBlocked_Implementation(AAIController* AI, int32 Index, int32 UserId)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AAIHotSpot::OnSlotClaimed_Implementation(AAIController* AI, int32 Index, int32 UserId)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AAIHotSpot::OnSlotDisabled_Implementation(int32 Index, int32 UserId)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AAIHotSpot::OnSlotEnabled_Implementation(int32 Index, int32 UserId)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AAIHotSpot::OnSlotFreed_Implementation(AAIController* AI, int32 Index, int32 UserId)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AAIHotSpot::OnSlotOccupied_Implementation(AAIController* AI, int32 Index, int32 UserId)
 {
 	// Exact original shared stub 0x1406801c0.
 	// CONFIDENCE: HIGH

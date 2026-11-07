@@ -1,0 +1,108 @@
+[
+ {
+  "entry": "UEpicCMSTileCarousel::HandleTilePageAdded_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "no_module",
+  "reason": "package /Script/EpicCMSUIFramework has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+  "body": "0x1406801c0",
+  "thunk": "0x14102c4c0"
+ },
+ {
+  "entry": "UFXSystemComponent::SetIntParameter",
+  "kind": "exec",
+  "blocker": "engine_backport",
+  "reason": "Engine class; SetIntParameter is declared in UE 4.26, not 4.25 (progress/engine_provided_natives.json gap_declared_in_reference)",
+  "unblock": "Backport the 4.26 declaration into the engine checkout, then this body is the stub",
+  "body": "0x1406801c0",
+  "thunk": "0x1447b0f20"
+ },
+ {
+  "entry": "UUACNetworkComponent::SendPacketToServer_Implementation",
+  "kind": "impl",
+  "blocker": "no_module",
+  "reason": "package /Script/UACBase has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+  "body": "0x1406801c0",
+  "thunk": "0x141341740"
+ },
+ {
+  "entry": "UUACNetworkComponent::SendPacketToServer_Validate",
+  "kind": "validate",
+  "blocker": "no_module",
+  "reason": "package /Script/UACBase has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+  "body": "0x1406801d0",
+  "thunk": "0x141341740"
+ },
+ {
+  "entry": "UCommonPoolableWidgetInterface::OnAcquireFromPool_Implementation",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortClientAnnouncement_ConversationCodeInterface::StopConversation",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortInteractInterface::IconPlacementNeedsUpdate_Implementation",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortItemListViewInterface::RefreshSort",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortItemManagementMulchPanel::NotifyPanelDeactivated",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortProjectileMovementInterface::IsProjectileBeingKilled_Implementation",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortVehicleInterface::ChangeSeat",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortVehicleInterface::DestroyVehicle",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortVehicleInterface::WakeUp",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "ULevelSaveSpawnable::PostLevelSaveSpawnCleanup_Implementation",
+  "kind": "interface",
+  "blocker": "interface_function",
+  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ }
+]

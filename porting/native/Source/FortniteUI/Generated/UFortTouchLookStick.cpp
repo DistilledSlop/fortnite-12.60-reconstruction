@@ -9,6 +9,13 @@ bool UFortTouchLookStick::GetShowAllTimeTime() const
 	return NativeRecoveredBool_0x4f8;
 }
 
+bool UFortTouchLookStick::IsFireButtonUnderTouch_Implementation(FVector2D TouchPosition) const
+{
+	// Exact original shared stub 0x1406801e0.
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 void UFortTouchLookStick::SetFiringState_Implementation(bool IsFiring)
 {
 	// Exact original shared stub 0x1406801c0.

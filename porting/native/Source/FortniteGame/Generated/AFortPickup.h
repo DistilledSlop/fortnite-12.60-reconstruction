@@ -17,6 +17,7 @@
 
 class AFortPawn;
 class AFortPickupEffect;
+class AFortPlayerPawn;
 class UAudioComponent;
 class UCapsuleComponent;
 class UFortItem;
@@ -226,6 +227,10 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	float StartSimulatingTime;
+
+	UFUNCTION(BlueprintNativeEvent)
+	bool AllowLongRangeAutoPickup(AFortPlayerPawn* FortPawn);
+	virtual bool AllowLongRangeAutoPickup_Implementation(AFortPlayerPawn* FortPawn);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetItemEntryNum() const;

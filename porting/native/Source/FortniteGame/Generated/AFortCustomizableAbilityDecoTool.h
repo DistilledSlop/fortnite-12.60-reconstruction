@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortAbilityDecoTool.h"
 
+class AFortDecoHelper;
+
 #include "AFortCustomizableAbilityDecoTool.generated.h"
 
 UCLASS(config=Engine)
@@ -17,6 +19,10 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	bool bExecuteToolAbilityOnPress;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void BPReleaseSecondaryFire(AFortDecoHelper* FortDecoHelper);
+	virtual void BPReleaseSecondaryFire_Implementation(AFortDecoHelper* FortDecoHelper);
 
 	UFUNCTION(Server, Reliable)
 	void ServerPressSecondaryFire();

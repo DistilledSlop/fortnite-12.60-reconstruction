@@ -44,6 +44,7 @@
 #include "Math/Vector2D.h"
 
 class ABuildingFoundation;
+class AController;
 class AFortConstructorBASE;
 class AFortPawn;
 class AFortPlayerStateZone;
@@ -612,6 +613,10 @@ public:
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ProxyGameplayCueDamagePhysical)
 	FProxyGameplayCueDamagePhysical ProxyGameplayCueDamagePhysical;
+
+	UFUNCTION(BlueprintNativeEvent)
+	bool BlueprintCanAttemptGenerateResources(FGameplayTagContainer& InTags, AController* InstigatorController) const;
+	virtual bool BlueprintCanAttemptGenerateResources_Implementation(FGameplayTagContainer& InTags, AController* InstigatorController) const;
 
 protected:
 	UFUNCTION(BlueprintNativeEvent)

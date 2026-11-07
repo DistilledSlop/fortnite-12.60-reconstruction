@@ -107,6 +107,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasEnabledSlots() const;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	bool IsAIAllowed(AAIController* AI) const;
+	virtual bool IsAIAllowed_Implementation(AAIController* AI) const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEnabled() const;
 
@@ -120,6 +124,30 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
 	void OnHotSpotEnabled();
 	virtual void OnHotSpotEnabled_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnSlotBlocked(AAIController* AI, int32 Index, int32 UserId);
+	virtual void OnSlotBlocked_Implementation(AAIController* AI, int32 Index, int32 UserId);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnSlotClaimed(AAIController* AI, int32 Index, int32 UserId);
+	virtual void OnSlotClaimed_Implementation(AAIController* AI, int32 Index, int32 UserId);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnSlotDisabled(int32 Index, int32 UserId);
+	virtual void OnSlotDisabled_Implementation(int32 Index, int32 UserId);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnSlotEnabled(int32 Index, int32 UserId);
+	virtual void OnSlotEnabled_Implementation(int32 Index, int32 UserId);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnSlotFreed(AAIController* AI, int32 Index, int32 UserId);
+	virtual void OnSlotFreed_Implementation(AAIController* AI, int32 Index, int32 UserId);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnSlotOccupied(AAIController* AI, int32 Index, int32 UserId);
+	virtual void OnSlotOccupied_Implementation(AAIController* AI, int32 Index, int32 UserId);
 
 };
 

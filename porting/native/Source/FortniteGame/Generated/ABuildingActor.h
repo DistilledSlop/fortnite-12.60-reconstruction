@@ -13,6 +13,7 @@
 #include "EFortBuildingType.h"
 #include "EFortDayPhase.h"
 #include "EFortTeam.h"
+#include "EInteractionBeingAttempted.h"
 #include "ENavigationObstacleOverride.h"
 #include "Engine/CurveTable.h"
 #include "Engine/EngineTypes.h"
@@ -24,12 +25,15 @@
 #include "FMarkedActorDisplayInfo.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
+#include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 
 class AController;
 class AFortAthenaVehicle;
+class AFortDecoTool;
 class AFortMission;
+class AFortPawn;
 class AFortPlacementActor;
 class AFortPlayerState;
 class UActorComponent;
@@ -638,6 +642,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddEditorOnlyInstanceGameplayTags(FGameplayTagContainer& NewTags);
 
+	UFUNCTION(BlueprintNativeEvent)
+	bool BlueprintGetInteractionTime(AFortPawn* InteractingPawn, float& OutInteractionTime, EInteractionBeingAttempted InteractionBeingAttempted) const;
+	virtual bool BlueprintGetInteractionTime_Implementation(AFortPawn* InteractingPawn, float& OutInteractionTime, EInteractionBeingAttempted InteractionBeingAttempted) const;
+
 	UFUNCTION(BlueprintCallable)
 	void ClearPlayedDying();
 
@@ -667,6 +675,10 @@ public:
 
 	UFUNCTION()
 	void HandleDestroyed();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	bool IsAcceptablePositionForPlacement(FVector& InLocation, FRotator& InRotation, AFortDecoTool* DecoTool, bool bIsCDO, FText& OutFailureReason) const;
+	virtual bool IsAcceptablePositionForPlacement_Implementation(FVector& InLocation, FRotator& InRotation, AFortDecoTool* DecoTool, bool bIsCDO, FText& OutFailureReason) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayerBuilt() const;

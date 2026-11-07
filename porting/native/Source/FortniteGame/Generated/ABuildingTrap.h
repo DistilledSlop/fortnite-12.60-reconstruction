@@ -12,6 +12,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
+class AActor;
 class UAthenaTrapAIPerceptionStimuliSourceComponent;
 class UFortAbilitySet;
 class UFortAlterationItemDefinition;
@@ -170,6 +171,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void AddDamageComponent(UPrimitiveComponent* DamageComponent);
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	bool BP_ShouldTrigger(TArray<AActor*>& TouchingActors) const;
+	virtual bool BP_ShouldTrigger_Implementation(TArray<AActor*>& TouchingActors) const;
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TArray<UFortAlterationItemDefinition*> GetAlterations() const;

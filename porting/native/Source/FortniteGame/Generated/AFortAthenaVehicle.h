@@ -38,6 +38,7 @@
 
 class AActor;
 class ABuildingActor;
+class AFortPlayerController;
 class AFortPlayerPawn;
 class AFortPlayerStateZone;
 class AFortWaterBodyActor;
@@ -664,6 +665,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool AnyWheelsOnGround() const;
 
+	UFUNCTION(BlueprintNativeEvent)
+	bool BP_CanInteract(AFortPlayerController* FortPC);
+	virtual bool BP_CanInteract_Implementation(AFortPlayerController* FortPC);
+
 	UFUNCTION(NetMulticast, Reliable)
 	void BroadcastResetWaterIdleTimeEmpty();
 	void BroadcastResetWaterIdleTimeEmpty_Implementation();
@@ -781,6 +786,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsScrapingSidesOrTop() const;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnPawnExitVehicle(AFortPlayerPawn* PlayerPawn, FName ExitSocketName);
+	virtual void OnPawnExitVehicle_Implementation(AFortPlayerPawn* PlayerPawn, FName ExitSocketName);
+
 private:
 	UFUNCTION()
 	void OnRep_AbilitySystemComponent();
@@ -818,6 +827,9 @@ protected:
 	UFUNCTION()
 	void OnRep_VehicleAttributes();
 public:
+
+	UFUNCTION(BlueprintCallable)
+	virtual void OverrideCurrentWrap(UAthenaItemWrapDefinition* LoadedWrap);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool RearLateralFrictionHasReachedMax() const;

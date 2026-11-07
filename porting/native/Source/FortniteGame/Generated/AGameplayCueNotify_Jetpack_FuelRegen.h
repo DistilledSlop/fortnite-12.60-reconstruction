@@ -65,5 +65,11 @@ public:
 	UPROPERTY()
 	UCurveFloat* FuelRegenRampVolumeCurve;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void ResetBlink(AFortPlayerPawn* PlayerPawn);
+	virtual void ResetBlink_Implementation(AFortPlayerPawn* PlayerPawn);
+public:
+
 };
 

@@ -60,5 +60,11 @@ public:
 	UPROPERTY(Transient)
 	UFortCollectionBookSection* LastClickedSection;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnSummonInfoPanelExecuted(bool& bPassThrough);
+	virtual void OnSummonInfoPanelExecuted_Implementation(bool& bPassThrough);
+public:
+
 };
 

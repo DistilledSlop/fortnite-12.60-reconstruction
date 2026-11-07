@@ -8,3 +8,17 @@ int32 UHUDLayoutToolProxy::BP_GetNumOfProperties_Implementation() const
 	return 0;
 }
 
+void UHUDLayoutToolProxy::BP_GetPropertyRange_Implementation(int32 PropertyIndex, float& OutMin, float& OutMax) const
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UHUDLayoutToolProxy::BP_SetPropertyValue_Implementation(int32 PropertyIndex, float NewValue)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
