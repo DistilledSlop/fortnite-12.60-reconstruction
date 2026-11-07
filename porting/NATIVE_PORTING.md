@@ -186,9 +186,15 @@ and were removed (blocker `real_body_is_tail_jump_target`, real body recorded). 
   releases the heap buffer of a by-value FString/TArray/struct parameter (C++ generates that destructor). The native body is EMPTY. Check the learned signature has the
   by-value parameter at the position the register implies (RDX = first, R8 = second after `this`; floats take XMM slots but do not shift GPR positions), then port with `_shared/return.inc`.
   52 functions were ported this way.
-- **Generator gaps found (functions blocked until fixed):** RPC `_Implementation`/`_Validate` events (Client/Server/Multicast: `native_event_mismatch`) - 504
-  unported in-scope functions are Net+event; classes outside the native class set (UAbilitySystemGlobals, others); policy-owned classes (collisions); delegate/enum
+- **Generator gaps found (functions blocked until fixed):** classes outside the native class set (UAbilitySystemGlobals, others); policy-owned classes (collisions); delegate/enum
   declarations the generator cannot emit; hand-written UFortKismetLibrary.
+- **RPC events need no generator change:** the earlier `native_event_mismatch` came from filing an RPC under kind `native_event_impl`. Use kind `impl`
+  with function `<Rpc>_Implementation` (and `validate` with `<Rpc>_Validate` for Server RPCs): the generator already emits both. The 504 Net+event functions
+  are ordinary jobs; `build_job_batches.py` derives the kind (net -> impl, plain event -> native_event_impl, else exec).
+- **Wrapper tier:** `build_small_pool.py 10 calls` writes `generated/small-pool/pool_calls.json` (<=10 instructions that CALL/JMP out);
+  `build_job_batches.py POOL PREFIX N` probes exact signatures (restoring only the files it changed) and writes worker batches. A wrapper can only be ported
+  when every call target is a named native function (final2 real body or ported `native_body_address`); targets that are bare `FUN_` addresses stay deferred.
+  Policy-owned classes (the POLICY set in `build_job_batches.py`) are excluded because their policy emits colliding methods.
 - **Pool filter:** `build_small_pool.py` selects clean-thunk, call-free bodies of <=10 instructions, but a conditional jump out of the body (`JNZ far`) still escapes the
   filter and yields a body that is a prefix of a larger function; worker batches classify those as deferred (`behavior/stub_bulk_runtime/deferred_tiers.json`).
 - **Signature probe recipe:** add dummy entries with `@SIG@` and `_shared/return.inc`, run `run_native_batch.py`, read the learned signatures from the manifest, then restore the

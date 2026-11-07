@@ -9,6 +9,7 @@ sys.path.insert(0, 'porting')
 import thunk_receiver as tr
 
 MAXI = int(sys.argv[1]) if len(sys.argv) > 1 else 10
+CALLS = len(sys.argv) > 2 and sys.argv[2] == 'calls'  # wrapper tier: keep bodies that CALL/JMP out (pool_calls.json)
 R = 'porting/generated'
 STUB = {'0x1406801c0': 'ret', '0x1406801d0': 'ret_true', '0x1406801e0': 'ret_zero', '0x140680300': 'ret_zero'}
 idx = {}
@@ -67,7 +68,8 @@ for e in f2:
         continue
     body = bodies[0]
     L = insns(idx[body])
-    if len(L) > MAXI or any(i.startswith(('CALL', 'JMP')) for i in L):
+    has_out = any(i.startswith(('CALL', 'JMP')) for i in L)
+    if len(L) > MAXI or has_out != CALLS:
         st['skip_not_small_leaf'] += 1
         continue
     ri = tr.receiver_info(e['thunk'], body)
@@ -82,7 +84,7 @@ for e in f2:
                      params=[(p['name'], p['kind']) for p in d.get('params') or []], header=hdr.get(e['cls'])))
     st['pool'] += 1
 os.makedirs(f'{R}/small-pool', exist_ok=True)
-json.dump(pool, open(f'{R}/small-pool/pool.json', 'w'))
+json.dump(pool, open(f'{R}/small-pool/' + ('pool_calls.json' if CALLS else 'pool.json'), 'w'))
 print(dict(st))
 print(collections.Counter(p['shape'] for p in pool))
 print('with nonzero total delta:', sum(1 for p in pool if p['this_delta_total']))
