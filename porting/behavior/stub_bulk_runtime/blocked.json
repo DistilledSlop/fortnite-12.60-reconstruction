@@ -526,108 +526,64 @@
  {
   "entry": "ABuildingProp_CreaturePlacer::MinigameStateChanged",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "branch_leaves_body",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x141c10360",
   "thunk": "0x14274b420"
  },
  {
   "entry": "AFortAthenaTutorialBase::OnClientStepCompleted_Server",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "branch_leaves_body",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x141b753b0",
   "thunk": "0x14283c400"
  },
  {
   "entry": "AFortAthenaTutorialBase::SetEasyInteractIconActor",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "branch_leaves_body",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x141b7bf30",
   "thunk": "0x14283d2b0"
  },
  {
-  "entry": "AFortAthenaVehicle::BroadcastResetWaterIdleTimeEmpty",
-  "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
-  "body": "0x14190de50",
-  "thunk": "0x14283a750"
- },
- {
-  "entry": "AFortAthenaVehicle::ServerSetIgnoreAllFallingDamage",
-  "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
-  "body": "0x141920590",
-  "thunk": "0x14283ce70"
- },
- {
-  "entry": "AFortAthenaVehicle::ServerSetIgnoreNextFallingDamage",
-  "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
-  "body": "0x1419205b0",
-  "thunk": "0x14283cf00"
- },
- {
   "entry": "AFortCharacterVehicle_Ostrich::MulticastDriverInput",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "branch_leaves_body",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x141952080",
   "thunk": "0x1428619a0"
  },
  {
   "entry": "AFortCreativeMoveTool::HandlePlaysetPreviewPlace",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "branch_leaves_body",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x1426753a0",
   "thunk": "0x1428c2de0"
  },
  {
   "entry": "AFortDecoTool::ClientDestroyDecoPreview",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "branch_leaves_body",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x1426950e0",
   "thunk": "0x1428d59b0"
  },
  {
   "entry": "AFortHoagieVehicle::MulticastRotorImpulse",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "branch_leaves_body",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x14084d1b0",
   "thunk": "0x140859910"
  },
  {
-  "entry": "AFortHoagieVehicle::ServerUpdateControlState",
-  "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
-  "body": "0x14084f970",
-  "thunk": "0x140859a00"
- },
- {
   "entry": "AFortPlayerController::ClientTriggerUIFeedbackEvent",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "branch_leaves_body",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x142374280",
   "thunk": "0x142a460b0"
  },
@@ -778,18 +734,16 @@
  {
   "entry": "UFortCollectionBookOverviewWidget::OnActivated",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "branch_leaves_body",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x1450c2770",
   "thunk": "0x1451ffe10"
  },
  {
   "entry": "UFortCollectionBookWidget::OnCollectionBookPageSelected",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "branch_leaves_body",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x1450c3870",
   "thunk": "0x14520cf80"
  },
@@ -1030,20 +984,10 @@
  {
   "entry": "UHUDLayoutToolProxy::BP_GetPropertyValue",
   "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
+  "blocker": "absolute_global",
+  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): impl kind is supported; the body branches out or reads a global.",
   "body": "0x14084bee0",
   "thunk": "0x14532ff30"
- },
- {
-  "entry": "UPlayspaceControllerComponent_PlayerSpawning::ServerMarkReadyForSpawning",
-  "kind": "exec",
-  "blocker": "rpc_native_event_unsupported",
-  "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
-  "unblock": "Teach the generator RPC _Implementation/_Validate events",
-  "body": "0x14076c610",
-  "thunk": "0x1411b5d60"
  },
  {
   "entry": "URetainerBox::SetRetainRendering",

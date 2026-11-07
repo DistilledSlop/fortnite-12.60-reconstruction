@@ -53,7 +53,11 @@ bool AFortAthenaVehicle::BP_CanInteract_Implementation(AFortPlayerController* Fo
 
 void AFortAthenaVehicle::BroadcastResetWaterIdleTimeEmpty_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortAthenaVehicle::BroadcastResetWaterIdleTimeEmpty_Implementation (body only; spliced into the generated function).
+	// Original body address: 0x14190de50. Offset evidence: MOV dword [RCX+0xa34],0 (int32 at object offset 0xa34, no reflected member covers it; raw access).
+	// CONFIDENCE: HIGH
+	uint8* Raw = reinterpret_cast<uint8*>(this);
+	*reinterpret_cast<int32*>(Raw + 0xa34) = 0;
 }
 
 bool AFortAthenaVehicle::CanAntigravityOnIncline() const
@@ -491,12 +495,18 @@ void AFortAthenaVehicle::ResetTrick()
 
 void AFortAthenaVehicle::ServerSetIgnoreAllFallingDamage_Implementation(bool InIgnoreAllFallingDamage)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortAthenaVehicle::ServerSetIgnoreAllFallingDamage_Implementation (body only; spliced into the generated function).
+	// Original body address: 0x141920590. Offset evidence: AND byte [RCX+0x40c],0x7f; SHL DL,7; OR byte [RCX+0x40c],DL = declared bitfield bIgnoreAllFallingDamage (mask 0x80 at 0x40c, bool_bits.json).
+	// CONFIDENCE: HIGH
+	bIgnoreAllFallingDamage = InIgnoreAllFallingDamage;
 }
 
 void AFortAthenaVehicle::ServerSetIgnoreNextFallingDamage_Implementation(bool InIgnoreNextFallingDamage)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortAthenaVehicle::ServerSetIgnoreNextFallingDamage_Implementation (body only; spliced into the generated function).
+	// Original body address: 0x1419205b0. Offset evidence: AND byte [RCX+0x40d],0xfe; OR byte [RCX+0x40d],DL = declared bitfield bIgnoreNextFallingDamage (mask 0x1 at 0x40d, bool_bits.json).
+	// CONFIDENCE: HIGH
+	bIgnoreNextFallingDamage = InIgnoreNextFallingDamage;
 }
 
 void AFortAthenaVehicle::ServerStartFire_Implementation(uint8 FireModeNum)
