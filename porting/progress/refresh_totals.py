@@ -159,15 +159,21 @@ def build():
     nf = load_json(nf_path)
     ep_path = os.path.join(REPO, "porting", "progress", "engine_provided_natives.json")
     engine = load_json(ep_path).get("verified", {}) if os.path.isfile(ep_path) else {}
+    iface_path = os.path.join(REPO, "porting", "progress", "native_interface_excluded.json")
+    iface = load_json(iface_path).get("functions", {}) if os.path.isfile(iface_path) else {}
     funcs = 0
     with_exec = 0
     engine_provided = 0
+    interface_excluded = 0
     for cls, fns in nf.items():
         skip = set(engine.get(cls, ()))
+        iskip = set(iface.get(cls, ()))
         for fn, meta in fns.items():
             funcs += 1
             if meta.get("exec_addr"):
-                if fn in skip:
+                if fn in iskip and fn not in skip:
+                    interface_excluded += 1
+                elif fn in skip:
                     engine_provided += 1
                 else:
                     with_exec += 1
@@ -176,8 +182,13 @@ def build():
     totals["native_functions_with_exec"] = entry(
         with_exec, nf_path,
         "functions in reflection/native_funcs.json with a non-null exec_addr, excluding those the stock UE "
-        "4.25 engine source declares with a matching signature (progress/engine_provided_natives.json); "
+        "4.25 engine source declares with a matching signature (progress/engine_provided_natives.json) and the "
+        "interface functions that have no body at the interface level (progress/native_interface_excluded.json); "
         "ported bodies are measured against this denominator")
+    totals["native_functions_interface_excluded"] = entry(
+        interface_excluded, iface_path,
+        "interface functions with an exec_addr and no body at the interface level (implementers carry the bodies); "
+        "removed from the native denominator")
     totals["native_functions_engine_provided"] = entry(
         engine_provided, ep_path,
         "functions with an exec_addr that the stock UE 4.25 headers declare with a matching parameter count "

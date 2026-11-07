@@ -90,6 +90,12 @@
   "source": "porting/progress/engine_provided_natives.json",
   "value": 5931
  },
+ "native_functions_interface_excluded": {
+  "generated_utc": "2026-11-07T18:07:26Z",
+  "method": "interface functions with an exec_addr and no body at the interface level (implementers carry the bodies); removed from the native denominator",
+  "source": "porting/progress/native_interface_excluded.json",
+  "value": 252
+ },
  "native_functions_total": {
   "generated_utc": "2026-10-31T02:25:56Z",
   "method": "functions in reflection/native_funcs.json, over all classes",
@@ -98,9 +104,9 @@
  },
  "native_functions_with_exec": {
   "generated_utc": "2026-10-31T02:25:56Z",
-  "method": "functions in reflection/native_funcs.json with a non-null exec_addr, excluding those the stock UE 4.25 engine source declares with a matching signature (progress/engine_provided_natives.json); ported bodies are measured against this denominator",
+  "method": "functions in reflection/native_funcs.json with a non-null exec_addr, excluding those the stock UE 4.25 engine source declares with a matching signature (progress/engine_provided_natives.json) and the interface functions that have no body at the interface level (progress/native_interface_excluded.json); ported bodies are measured against this denominator",
   "source": "porting/generated/reflection/native_funcs.json",
-  "value": 14643
+  "value": 14391
  },
  "pak_files_total": {
   "generated_utc": "2026-10-31T20:48:55Z",
