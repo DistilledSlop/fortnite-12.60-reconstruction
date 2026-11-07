@@ -47,6 +47,10 @@ def promote(n):
 m = json.loads(MAN.read_text())
 keys = {(e['class'], e['function']) for e in m}
 new = [e for e in json.loads(Path(entries_path).read_text()) if (e['class'], e['function']) not in keys]
+for _e in new:  # worker output sometimes carries absolute paths; the manifest must be repo-relative
+    _ip = _e.get('inc_path')
+    if _ip and _ip.startswith(str(R) + '/'):
+        _e['inc_path'] = _ip[len(str(R)) + 1:]
 m.extend(new)
 MAN.write_text(json.dumps(m, indent=2) + '\n')
 print('appended', len(new), 'entries')
