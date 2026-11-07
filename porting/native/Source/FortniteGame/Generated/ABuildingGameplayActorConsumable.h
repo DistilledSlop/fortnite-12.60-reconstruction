@@ -71,8 +71,20 @@ public:
 
 protected:
 	UFUNCTION(BlueprintNativeEvent)
+	TSubclassOf<UGameplayEffect> DetermineOnConsumeGameplayEffect() const;
+	virtual TSubclassOf<UGameplayEffect> DetermineOnConsumeGameplayEffect_Implementation() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
 	UAnimMontage* DetermineOnConsumeMontage() const;
 	virtual UAnimMontage* DetermineOnConsumeMontage_Implementation() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	TSubclassOf<UFortGameplayAbility> DetermineOnConsumeMontageAbility() const;
+	virtual TSubclassOf<UFortGameplayAbility> DetermineOnConsumeMontageAbility_Implementation() const;
 public:
 
 	UFUNCTION(BlueprintNativeEvent)

@@ -138,5 +138,9 @@ public:
 	UPROPERTY(Transient)
 	FHUDLayoutDataEntry DefaultEntry;
 
+	UFUNCTION(BlueprintNativeEvent)
+	FGameplayTag BP_GetMobileVisualType() const;
+	virtual FGameplayTag BP_GetMobileVisualType_Implementation() const;
+
 };
 

@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class AFortPlayerController;
+class UFortControllerComponent_InventoryNetworkManagement;
+
 #include "UInventoryManagementLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +17,8 @@ class FORTNITEGAME_API UInventoryManagementLibrary : public UBlueprintFunctionLi
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static UFortControllerComponent_InventoryNetworkManagement* GetInventoryNetworkComponent(AFortPlayerController* Owner);
+
 };
 

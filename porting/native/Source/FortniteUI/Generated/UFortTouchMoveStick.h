@@ -56,6 +56,14 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector2D GetStickPosition() const;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleTouchEnded();
+	virtual void HandleTouchEnded_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleTouchStarted();
+	virtual void HandleTouchStarted_Implementation();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocked() const;
 

@@ -1,10 +1,10 @@
 {
  "note": "Small-leaf jobs not portable as a self-contained leaf; the next tier needs the callee/continuation or global ownership. Not blocked on infrastructure.",
- "count": 135,
+ "count": 147,
  "by_tier": {
-  "branch_leaves_body": 104,
+  "branch_leaves_body": 112,
   "abi_or_signature": 8,
-  "absolute_global": 21,
+  "absolute_global": 25,
   "other": 2
  },
  "entries": [
@@ -1087,6 +1087,102 @@
    "thunk": "0x145341290",
    "reason": "Asm 0x144becc00 CMP dword ptr [0x147e1ad98]: reads an absolute module global with no reflected or named symbol, so it cannot be written as a member or object offset.",
    "source": "small8"
+  },
+  {
+   "entry": "ABuildingProp_CreaturePlacer::MinigameStateChanged_Implementation",
+   "tier": "branch_leaves_body",
+   "body": "0x141c10360",
+   "thunk": "0x14274b420",
+   "reason": "Non-null CreativeRift ([RCX+0xbb0], inherited from ABuildingProp_AISpawner) tail-jumps to 0x1416774e0 with the arguments: a callee, outside the no-calls scope. The gating reads (bEnabledOnGameState bit at 0xc41, GameStateEnable at 0xc43) are reflected.",
+   "source": "small9"
+  },
+  {
+   "entry": "AFortCreativeMoveTool::HandlePlaysetPreviewPlace_Implementation",
+   "tier": "branch_leaves_body",
+   "body": "0x1426753a0",
+   "thunk": "0x1428c2de0",
+   "reason": "Non-null ActiveMovementMode ([RCX+0xc60]) tail-jumps to 0x1428c0e90 with RCX = the member: a callee.",
+   "source": "small9"
+  },
+  {
+   "entry": "UFortCollectionBookOverviewWidget::OnActivated_Implementation",
+   "tier": "branch_leaves_body",
+   "body": "0x1450c2770",
+   "thunk": "0x1451ffe10",
+   "reason": "Null LastSelectedPage ([RCX+0x278]) branch is JZ 0x1450c8290, outside the 3-instruction body; that target is not in the packet asm, so the null-path effect is unknown.",
+   "source": "small9"
+  },
+  {
+   "entry": "UFortCollectionBookWidget::OnCollectionBookPageSelected_Implementation",
+   "tier": "branch_leaves_body",
+   "body": "0x1450c3870",
+   "thunk": "0x14520cf80",
+   "reason": "Non-null ProgressWidget ([RCX+0x448]) tail-jumps to 0x14520f430 with RCX = the member and RDX = SelectedPage: a callee.",
+   "source": "small9"
+  },
+  {
+   "entry": "UHUDLayoutToolProxy::BP_GetPropertyValue_Implementation",
+   "tier": "absolute_global",
+   "body": "0x14084bee0",
+   "thunk": "0x14532ff30",
+   "reason": "MOVSS XMM0,dword [0x1459a979c] reads a float from an absolute address with no named owner (grep of porting/generated/reflection finds none).",
+   "source": "small9"
+  },
+  {
+   "entry": "AFortAudioAnalysisController::GetPapayaSpeakersEnabled",
+   "tier": "absolute_global",
+   "body": "0x1424ad4c0",
+   "thunk": "0x142841fa0",
+   "reason": "CMP dword [0x1478ded40],0 reads an absolute global with no named owner (grep of porting/generated/reflection finds none).",
+   "source": "small9"
+  },
+  {
+   "entry": "UAutomationPerfMonitorManager::GetPerfMonitorInstance",
+   "tier": "absolute_global",
+   "body": "0x1425882e0",
+   "thunk": "0x142731130",
+   "reason": "MOV RAX,[0x148165ec0] returns an absolute global with no named owner (grep of porting/generated/reflection finds none).",
+   "source": "small9"
+  },
+  {
+   "entry": "UFortMinigameStatics::DeclareWinningTeam",
+   "tier": "branch_leaves_body",
+   "body": "0x142465f90",
+   "thunk": "0x1429d77e0",
+   "reason": "Non-null Game loads [Game+0x278] into RCX and tail-jumps to 0x142089af0 (callee) when that member is non-null.",
+   "source": "small9"
+  },
+  {
+   "entry": "UFortMinigameStatics::GetPlayerAttributeValue",
+   "tier": "branch_leaves_body",
+   "body": "0x14246e080",
+   "thunk": "0x1429d8030",
+   "reason": "Non-null Game branch is JNZ 0x14246df30, outside the 4-instruction body; the target is not in the packet asm, so the callee and the non-null result are unknown.",
+   "source": "small9"
+  },
+  {
+   "entry": "UFortMinigameStatics::ResetUserVariables",
+   "tier": "branch_leaves_body",
+   "body": "0x142485620",
+   "thunk": "0x1429d8d50",
+   "reason": "Non-null Player tail-jumps to 0x1424854f0 (callee).",
+   "source": "small9"
+  },
+  {
+   "entry": "UFortNiagaraGameplayLibrary::GetPlayerWaterType",
+   "tier": "absolute_global",
+   "body": "0x141dccd90",
+   "thunk": "0x142a00540",
+   "reason": "MOV EAX,dword [0x1478c4478] reads an absolute global with no named owner (grep of porting/generated/reflection finds none).",
+   "source": "small9"
+  },
+  {
+   "entry": "UFortOutpostFunctionLibrary::GetOutpostQuestMissionConfigDataFrontEnd",
+   "tier": "branch_leaves_body",
+   "body": "0x142546ba0",
+   "thunk": "0x142a0f790",
+   "reason": "Non-null FortPC branch is JNZ 0x142546670, outside the 4-instruction body; the target is not in the packet asm, so the non-null result is unknown.",
+   "source": "small9"
   }
  ]
 }

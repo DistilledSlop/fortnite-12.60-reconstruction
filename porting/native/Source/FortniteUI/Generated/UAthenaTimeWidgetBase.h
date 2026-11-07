@@ -32,5 +32,11 @@ public:
 	UPROPERTY(Transient)
 	bool bIsDisplaying;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnMinigameEnded();
+	virtual void OnMinigameEnded_Implementation();
+public:
+
 };
 

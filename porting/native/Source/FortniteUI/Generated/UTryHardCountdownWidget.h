@@ -21,10 +21,25 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x2a9): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredByte_0x2a9;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2a9): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x2a9;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HideWidget();
+	virtual void HideWidget_Implementation();
+public:
+
 protected:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
 	bool IsShowing() const;
 	virtual bool IsShowing_Implementation() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void ShowWidget(int32 NumRemaining);
+	virtual void ShowWidget_Implementation(int32 NumRemaining);
 public:
 
 };

@@ -20,5 +20,9 @@ public:
 	UPROPERTY()
 	UFortAthenaInventoryLoadout* SelectedLoadout;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void SetLoadout(UFortAthenaInventoryLoadout* NewLoadout);
+	virtual void SetLoadout_Implementation(UFortAthenaInventoryLoadout* NewLoadout);
+
 };
 

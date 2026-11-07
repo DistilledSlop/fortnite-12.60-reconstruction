@@ -1,0 +1,242 @@
+[
+ {
+  "class": "ABuildingGameplayActorConsumable",
+  "function": "DetermineOnConsumeGameplayEffect_Implementation",
+  "job_fn": "DetermineOnConsumeGameplayEffect",
+  "status": "proposed",
+  "case": "reflected_member_return",
+  "reason": "Original body address: 0x141bd9670. Offset evidence: MOV RAX,[RCX+0x790]; MOV [RDX],RAX (return slot) = OnConsumeGameplayEffect (Class, reflected at +0x790)."
+ },
+ {
+  "class": "ABuildingGameplayActorConsumable",
+  "function": "DetermineOnConsumeMontageAbility_Implementation",
+  "job_fn": "DetermineOnConsumeMontageAbility",
+  "status": "proposed",
+  "case": "reflected_member_return",
+  "reason": "Original body address: 0x141bd9680. Offset evidence: MOV RAX,[RCX+0x798]; MOV [RDX],RAX (return slot) = OnConsumeMontageAbility (Class, reflected at +0x798)."
+ },
+ {
+  "class": "ABuildingProp_CreaturePlacer",
+  "function": "MinigameStateChanged_Implementation",
+  "job_fn": "MinigameStateChanged",
+  "status": "blocked",
+  "case": "tail_call",
+  "reason": "Non-null CreativeRift ([RCX+0xbb0], inherited from ABuildingProp_AISpawner) tail-jumps to 0x1416774e0 with the arguments: a callee, outside the no-calls scope. The gating reads (bEnabledOnGameState bit at 0xc41, GameStateEnable at 0xc43) are reflected."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "HandlePlaysetPreviewPlace_Implementation",
+  "job_fn": "HandlePlaysetPreviewPlace",
+  "status": "blocked",
+  "case": "tail_call",
+  "reason": "Non-null ActiveMovementMode ([RCX+0xc60]) tail-jumps to 0x1428c0e90 with RCX = the member: a callee."
+ },
+ {
+  "class": "AFortPickup",
+  "function": "BlueprintCanInteract_Implementation",
+  "job_fn": "BlueprintCanInteract",
+  "status": "proposed",
+  "case": "arg_write",
+  "reason": "Original body address: 0x1420279b0. Offset evidence: no object member access. MOV byte [R8],0 writes bCanInteractOverride (third ABI argument, bool&); XOR AL,AL returns false."
+ },
+ {
+  "class": "AFortWeaponRanged",
+  "function": "IsCachedIsProjectileWeapon_Implementation",
+  "job_fn": "IsCachedIsProjectileWeapon",
+  "status": "proposed",
+  "case": "raw_bit",
+  "reason": "Original body address: 0x1426d24c0. Offset evidence: MOV EAX,dword [RCX+0xbd4]; SHR EAX,0xe; AND AL,1 = bit 14 of the dword at +0xbd4. bool_bits.json has no declared bit at byte +0xbd5 mask 0x40, so r"
+ },
+ {
+  "class": "UAthenaLoadoutEntryWidget",
+  "function": "SetLoadout_Implementation",
+  "job_fn": "SetLoadout",
+  "status": "proposed",
+  "case": "reflected_member_store",
+  "reason": "Original body address: 0x144b4de10. Offset evidence: MOV qword [RCX+0x258],RDX = store of NewLoadout into SelectedLoadout (Object, reflected at +0x258)."
+ },
+ {
+  "class": "UAthenaTimeWidgetBase",
+  "function": "OnMinigameEnded_Implementation",
+  "job_fn": "OnMinigameEnded",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "Original body address: 0x1406a7c40. Offset evidence: LEA RAX,[RCX-0x108]; RET only computes an address that a void function discards; no store, no call."
+ },
+ {
+  "class": "UBacchusHUDElement",
+  "function": "BP_GetMobileVisualType_Implementation",
+  "job_fn": "BP_GetMobileVisualType",
+  "status": "proposed",
+  "case": "reflected_struct_return",
+  "reason": "Original body address: 0x144c1abf0. Offset evidence: MOV RAX,[RCX+0x2c4]; MOV [RDX],RAX copies an 8-byte FGameplayTag return value = VisualType (Struct, reflected at +0x2c4)."
+ },
+ {
+  "class": "UFortAthenaTutorialTextPrompt",
+  "function": "DisplayTarget_Implementation",
+  "job_fn": "DisplayTarget",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "Original body address: 0x1406a7c40. Offset evidence: LEA RAX,[RCX-0x108]; RET only computes an address that a void function discards; no store, no call."
+ },
+ {
+  "class": "UFortCollectionBookOverviewWidget",
+  "function": "OnActivated_Implementation",
+  "job_fn": "OnActivated",
+  "status": "blocked",
+  "case": "outside_branch",
+  "reason": "Null LastSelectedPage ([RCX+0x278]) branch is JZ 0x1450c8290, outside the 3-instruction body; that target is not in the packet asm, so the null-path effect is unknown."
+ },
+ {
+  "class": "UFortCollectionBookWidget",
+  "function": "OnCollectionBookPageSelected_Implementation",
+  "job_fn": "OnCollectionBookPageSelected",
+  "status": "blocked",
+  "case": "tail_call",
+  "reason": "Non-null ProgressWidget ([RCX+0x448]) tail-jumps to 0x14520f430 with RCX = the member and RDX = SelectedPage: a callee."
+ },
+ {
+  "class": "UFortMinigameStatFilter",
+  "function": "Accumulate_Implementation",
+  "job_fn": "Accumulate",
+  "status": "proposed",
+  "case": "pure_arithmetic",
+  "reason": "Original body address: 0x142081410. Offset evidence: no object member access. LEA EAX,[RDX+R8*1]: RDX = A, R8 = B (ABI arguments 2 and 3)."
+ },
+ {
+  "class": "UFortMinigameStatFilter",
+  "function": "Compare_Implementation",
+  "job_fn": "Compare",
+  "status": "proposed",
+  "case": "pure_arithmetic",
+  "reason": "Original body address: 0x142088af0. Offset evidence: no object member access. SUB EDX,R8D; MOV EAX,EDX: RDX = FirstScore, R8D = SecondScore."
+ },
+ {
+  "class": "UFortTouchMoveStick",
+  "function": "HandleTouchEnded_Implementation",
+  "job_fn": "HandleTouchEnded",
+  "status": "proposed",
+  "case": "raw_byte_store",
+  "reason": "Original body address: 0x144dc5280. Offset evidence: MOV byte [RCX+0x488],0. +0x488 is below UFortTouchMoveStick lowest own offset 0x490, so it is inherited parent storage; raw byte store used (asm wr"
+ },
+ {
+  "class": "UFortTouchMoveStick",
+  "function": "HandleTouchStarted_Implementation",
+  "job_fn": "HandleTouchStarted",
+  "status": "proposed",
+  "case": "raw_byte_store",
+  "reason": "Original body address: 0x1427765a0. Offset evidence: MOV byte [RCX+0x488],1. +0x488 is below UFortTouchMoveStick lowest own offset 0x490, so it is inherited parent storage; raw byte store used (asm wr"
+ },
+ {
+  "class": "UHUDLayoutToolProxy",
+  "function": "BP_GetPropertyValue_Implementation",
+  "job_fn": "BP_GetPropertyValue",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "MOVSS XMM0,dword [0x1459a979c] reads a float from an absolute address with no named owner (grep of porting/generated/reflection finds none)."
+ },
+ {
+  "class": "UTryHardCountdownWidget",
+  "function": "HideWidget_Implementation",
+  "job_fn": "HideWidget",
+  "status": "proposed",
+  "case": "member_field_gap",
+  "reason": "Original body address: 0x144befcc0. Offset evidence: MOV byte [RCX+0x2a9],0. +0x2a9 is inside the UTryHardCountdownWidget own region (lowest own 0x2a0, NumToStartShowingAt Int) and no reflected member"
+ },
+ {
+  "class": "UTryHardCountdownWidget",
+  "function": "ShowWidget_Implementation",
+  "job_fn": "ShowWidget",
+  "status": "proposed",
+  "case": "member_field_gap",
+  "reason": "Original body address: 0x142acbf50. Offset evidence: MOV byte [RCX+0x2a9],1 = NativeRecoveredBool_0x2a9 (member_field gap, see HideWidget). NumRemaining (RDX) is not read by the body."
+ },
+ {
+  "class": "AFortAudioAnalysisController",
+  "function": "GetPapayaSpeakersEnabled",
+  "job_fn": "GetPapayaSpeakersEnabled",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "CMP dword [0x1478ded40],0 reads an absolute global with no named owner (grep of porting/generated/reflection finds none)."
+ },
+ {
+  "class": "AFortMission",
+  "function": "SpawnAtPlacementActorsAsArray",
+  "job_fn": "SpawnAtPlacementActorsAsArray",
+  "status": "proposed",
+  "case": "hidden_slot_empty_array",
+  "reason": "Original body address: 0x1420c9fa0. Offset evidence: XOR EAX,EAX; MOV [RCX],RAX; MOV [RCX+8],RAX writes an empty TArray to the hidden return slot (RCX); MOV [R8],AL stores bSucceeded = false (third AB"
+ },
+ {
+  "class": "UAutomationPerfMonitorManager",
+  "function": "GetPerfMonitorInstance",
+  "job_fn": "GetPerfMonitorInstance",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "MOV RAX,[0x148165ec0] returns an absolute global with no named owner (grep of porting/generated/reflection finds none)."
+ },
+ {
+  "class": "UFortBannerUtilities",
+  "function": "GetRowNameForBannerColorItem",
+  "job_fn": "GetRowNameForBannerColorItem",
+  "status": "proposed",
+  "case": "null_guarded_member_return",
+  "reason": "Original body address: 0x141ed7610. Offset evidence: BannerColor (RDX) null -> zero FName written to the hidden return slot; otherwise MOV RAX,[RDX+0xe8] = ColorRowName (Name, reflected at +0xe8 on UF"
+ },
+ {
+  "class": "UFortMinigameStatics",
+  "function": "DeclareWinningTeam",
+  "job_fn": "DeclareWinningTeam",
+  "status": "blocked",
+  "case": "tail_call",
+  "reason": "Non-null Game loads [Game+0x278] into RCX and tail-jumps to 0x142089af0 (callee) when that member is non-null."
+ },
+ {
+  "class": "UFortMinigameStatics",
+  "function": "GetPlayerAttributeValue",
+  "job_fn": "GetPlayerAttributeValue",
+  "status": "blocked",
+  "case": "outside_branch",
+  "reason": "Non-null Game branch is JNZ 0x14246df30, outside the 4-instruction body; the target is not in the packet asm, so the callee and the non-null result are unknown."
+ },
+ {
+  "class": "UFortMinigameStatics",
+  "function": "ResetUserVariables",
+  "job_fn": "ResetUserVariables",
+  "status": "blocked",
+  "case": "tail_call",
+  "reason": "Non-null Player tail-jumps to 0x1424854f0 (callee)."
+ },
+ {
+  "class": "UFortMissionLibrary",
+  "function": "FindActorsWithTags",
+  "job_fn": "FindActorsWithTags",
+  "status": "proposed",
+  "case": "hidden_slot_empty_array",
+  "reason": "Original body address: 0x140738030. Offset evidence: XOR EAX,EAX; MOV [RCX],RAX; MOV [RCX+8],RAX writes an empty TArray to the hidden return slot (RCX). RDX and R8 are not read."
+ },
+ {
+  "class": "UFortNiagaraGameplayLibrary",
+  "function": "GetPlayerWaterType",
+  "job_fn": "GetPlayerWaterType",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "MOV EAX,dword [0x1478c4478] reads an absolute global with no named owner (grep of porting/generated/reflection finds none)."
+ },
+ {
+  "class": "UFortOutpostFunctionLibrary",
+  "function": "GetOutpostQuestMissionConfigDataFrontEnd",
+  "job_fn": "GetOutpostQuestMissionConfigDataFrontEnd",
+  "status": "blocked",
+  "case": "outside_branch",
+  "reason": "Non-null FortPC branch is JNZ 0x142546670, outside the 4-instruction body; the target is not in the packet asm, so the non-null result is unknown."
+ },
+ {
+  "class": "UInventoryManagementLibrary",
+  "function": "GetInventoryNetworkComponent",
+  "job_fn": "GetInventoryNetworkComponent",
+  "status": "proposed",
+  "case": "null_guarded_member_return",
+  "reason": "Original body address: 0x14200cc10. Offset evidence: Owner (RCX) null -> XOR EAX,EAX; otherwise MOV RAX,[RCX+0x2008] = AFortPlayerController.InventoryNetworkManagementComponent (Object, reflected at +"
+ }
+]

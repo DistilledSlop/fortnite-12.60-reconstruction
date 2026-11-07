@@ -178,3 +178,18 @@ and were removed (blocker `real_body_is_tail_jump_target`, real body recorded). 
 - Before accepting any "stub"/"empty" classification, confirm the thunk does not tail-jump or call anything else.
 - **Body-location counts after re-pointing** (supersede the section 3 table): A inline 788, B single body 8,242, B multi-candidate 527,
   C virtual target 1,594, I interface 252, U 4 (of 11,407). The multi-candidate backlog shrank from 1,312 to 527.
+
+### 11.2 Shared "free the parameter" bodies and generator gaps (small-leaf pass)
+
+- **By-value parameter destructors are bodies too.** Bodies such as `0x14072e780` (`MOV RCX,[RDX]; TEST RCX,RCX; JNZ 0x142bee710; RET`, 52 functions),
+  `0x141ccaf30` (`[R8]`), `0x1406963a0` (`[RDX+0x18]`), `0x140692260` (`[RCX]`) are not logic: `0x142bee710` is the free routine and the body only
+  releases the heap buffer of a by-value FString/TArray/struct parameter (C++ generates that destructor). The native body is EMPTY. Check the learned signature has the
+  by-value parameter at the position the register implies (RDX = first, R8 = second after `this`; floats take XMM slots but do not shift GPR positions), then port with `_shared/return.inc`.
+  52 functions were ported this way.
+- **Generator gaps found (functions blocked until fixed):** RPC `_Implementation`/`_Validate` events (Client/Server/Multicast: `native_event_mismatch`) - 504
+  unported in-scope functions are Net+event; classes outside the native class set (UAbilitySystemGlobals, others); policy-owned classes (collisions); delegate/enum
+  declarations the generator cannot emit; hand-written UFortKismetLibrary.
+- **Pool filter:** `build_small_pool.py` selects clean-thunk, call-free bodies of <=10 instructions, but a conditional jump out of the body (`JNZ far`) still escapes the
+  filter and yields a body that is a prefix of a larger function; worker batches classify those as deferred (`behavior/stub_bulk_runtime/deferred_tiers.json`).
+- **Signature probe recipe:** add dummy entries with `@SIG@` and `_shared/return.inc`, run `run_native_batch.py`, read the learned signatures from the manifest, then restore the
+  manifest copy (never `git checkout` a directory: other sessions leave uncommitted edits in the tree). The real promotion regenerates the touched files.

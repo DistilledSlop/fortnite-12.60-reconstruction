@@ -23,6 +23,7 @@
 #include "GameplayTagContainer.h"
 #include "Misc/Guid.h"
 
+class AActor;
 class AFortClientAnnouncement_Basic;
 class AFortObjectiveBase;
 class UAudioComponent;
@@ -318,6 +319,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetRespawnTextOverride(FText& NewText);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static TArray<AActor*> SpawnAtPlacementActorsAsArray(AFortMission* Mission, bool& bSucceeded);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

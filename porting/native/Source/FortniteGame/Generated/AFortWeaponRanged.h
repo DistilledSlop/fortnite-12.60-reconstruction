@@ -384,6 +384,12 @@ protected:
 	bool GetUseBeamParticles() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	bool IsCachedIsProjectileWeapon() const;
+	virtual bool IsCachedIsProjectileWeapon_Implementation() const;
+public:
+
 	UFUNCTION()
 	void OnRep_OverheatState(EFortWeaponOverheatState PreviousOverheatState);
 

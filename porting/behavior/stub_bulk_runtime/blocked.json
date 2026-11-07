@@ -529,5 +529,599 @@
     "blocker": "handwritten_class",
     "reason": "UFortKismetLibrary is hand-written (splice unsupported). Body 0x140692260 frees the by-value FString: empty body.",
     "unblock": "Add to the verified hand-written Kismet set"
+  },
+  {
+    "entry": "ABuildingProp_CreaturePlacer::MinigameStateChanged",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x141c10360",
+    "thunk": "0x14274b420"
+  },
+  {
+    "entry": "AFortAthenaTutorialBase::OnClientStepCompleted_Server",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x141b753b0",
+    "thunk": "0x14283c400"
+  },
+  {
+    "entry": "AFortAthenaTutorialBase::SetEasyInteractIconActor",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x141b7bf30",
+    "thunk": "0x14283d2b0"
+  },
+  {
+    "entry": "AFortAthenaVehicle::BroadcastResetWaterIdleTimeEmpty",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x14190de50",
+    "thunk": "0x14283a750"
+  },
+  {
+    "entry": "AFortAthenaVehicle::ServerSetIgnoreAllFallingDamage",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x141920590",
+    "thunk": "0x14283ce70"
+  },
+  {
+    "entry": "AFortAthenaVehicle::ServerSetIgnoreNextFallingDamage",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x1419205b0",
+    "thunk": "0x14283cf00"
+  },
+  {
+    "entry": "AFortCharacterVehicle_Ostrich::MulticastDriverInput",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x141952080",
+    "thunk": "0x1428619a0"
+  },
+  {
+    "entry": "AFortCreativeMoveTool::HandlePlaysetPreviewPlace",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x1426753a0",
+    "thunk": "0x1428c2de0"
+  },
+  {
+    "entry": "AFortDecoTool::ClientDestroyDecoPreview",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x1426950e0",
+    "thunk": "0x1428d59b0"
+  },
+  {
+    "entry": "AFortHoagieVehicle::MulticastRotorImpulse",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x14084d1b0",
+    "thunk": "0x140859910"
+  },
+  {
+    "entry": "AFortHoagieVehicle::ServerUpdateControlState",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x14084f970",
+    "thunk": "0x140859a00"
+  },
+  {
+    "entry": "AFortPlayerController::ClientTriggerUIFeedbackEvent",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x142374280",
+    "thunk": "0x142a460b0"
+  },
+  {
+    "entry": "UBacchusButton::SetDefaultIcon",
+    "kind": "exec",
+    "blocker": "generator_gap",
+    "reason": "Rejected by the generator for another reason; see the probe notes.",
+    "unblock": "Inspect the rejection in a fresh probe",
+    "body": "0x144c43770",
+    "thunk": "0x1451cfef0"
+  },
+  {
+    "entry": "UBlueprintGameplayStatsLibrary::EqualEqual_GameplayStatTagGameplayStatTag",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x14150ed40",
+    "thunk": "0x14150f7f0"
+  },
+  {
+    "entry": "UBlueprintGameplayStatsLibrary::NotEqual_GameplayStatTagGameplayStatTag",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x14150edc0",
+    "thunk": "0x14150f8d0"
+  },
+  {
+    "entry": "UCommonActivatablePanel::OnBeginIntro",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1406a7c40",
+    "thunk": "0x14080bc70"
+  },
+  {
+    "entry": "UCommonActivatableWidgetContainerBase::RemoveWidget",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1407f0ff0",
+    "thunk": "0x14080be00"
+  },
+  {
+    "entry": "UCommonInputManager::GetGlobalInputHandlerPriorityFilter",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1407c2eb0",
+    "thunk": "0x14080ffe0"
+  },
+  {
+    "entry": "UCommonInputManager::SetGlobalInputHandlerPriorityFilter",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1407f66a0",
+    "thunk": "0x140811070"
+  },
+  {
+    "entry": "UCommonInputSubsystem::ShouldShowInputKeys",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x14081d130",
+    "thunk": "0x14081f160"
+  },
+  {
+    "entry": "UCommonLazyImage::IsLoading",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1407cfb50",
+    "thunk": "0x140810300"
+  },
+  {
+    "entry": "UCommonLazyWidget::IsLoading",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1407cfb70",
+    "thunk": "0x140810330"
+  },
+  {
+    "entry": "UCommonLoadGuard::IsLoading",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1407cfb90",
+    "thunk": "0x140810360"
+  },
+  {
+    "entry": "UCommonTextStyle::GetMargin",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1407c3e00",
+    "thunk": "0x140814ed0"
+  },
+  {
+    "entry": "UCommonWidgetCarousel::GetActiveWidgetIndex",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1407c1a00",
+    "thunk": "0x140818220"
+  },
+  {
+    "entry": "UControlRig::GetDeltaTime",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x140e513f0",
+    "thunk": "0x140e8a2c0"
+  },
+  {
+    "entry": "UEpicCMSTileCarousel::GetCurrentPageIndex",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x141026160",
+    "thunk": "0x14102c490"
+  },
+  {
+    "entry": "UEpicCMSTileCarousel::HandleTilePageAdded",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x1406801c0",
+    "thunk": "0x14102c4c0"
+  },
+  {
+    "entry": "UFortCollectionBookOverviewWidget::OnActivated",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x1450c2770",
+    "thunk": "0x1451ffe10"
+  },
+  {
+    "entry": "UFortCollectionBookWidget::OnCollectionBookPageSelected",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x1450c3870",
+    "thunk": "0x14520cf80"
+  },
+  {
+    "entry": "UFortFriendSubscriptionToastWidget::HandleGamePhaseChanged",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x144d7d330",
+    "thunk": "0x14523c670"
+  },
+  {
+    "entry": "UFortGlobalUIContext::GetInputPriority",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141bf2c40",
+    "thunk": "0x145247cf0"
+  },
+  {
+    "entry": "UFortGlobals::ShouldDelayStartupLoading",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141edc6c0",
+    "thunk": "0x142934d00"
+  },
+  {
+    "entry": "UFortKismetLibrary::ApplyEventOverrides",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1409a95b0",
+    "thunk": "0x142965e40"
+  },
+  {
+    "entry": "UFortKismetLibrary::DropInstancedLoot",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x140738030",
+    "thunk": "0x142969640"
+  },
+  {
+    "entry": "UFortKismetLibrary::DropInstancedLootAtLocation",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x140738030",
+    "thunk": "0x142969820"
+  },
+  {
+    "entry": "UFortKismetLibrary::ExtractSkeletalMeshScale",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141eed650",
+    "thunk": "0x14296a680"
+  },
+  {
+    "entry": "UFortKismetLibrary::GetAmmoItemDefinitionsFromInventoryWeapons",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x140738030",
+    "thunk": "0x14296bfe0"
+  },
+  {
+    "entry": "UFortKismetLibrary::IsValetEnabled",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141ef9a60",
+    "thunk": "0x142972ad0"
+  },
+  {
+    "entry": "UFortKismetLibrary::IsValid",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141d30160",
+    "thunk": "0x142972b00"
+  },
+  {
+    "entry": "UFortKismetLibrary::K2_GetCurrentResourceType",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141efa380",
+    "thunk": "0x142973070"
+  },
+  {
+    "entry": "UFortKismetLibrary::K2_GetItemQuantityOnPlayer",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141efa390",
+    "thunk": "0x1429730f0"
+  },
+  {
+    "entry": "UFortKismetLibrary::K2_RemoveFortItemFromPlayer",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141efa660",
+    "thunk": "0x1429736f0"
+  },
+  {
+    "entry": "UFortKismetLibrary::K2_RemoveItemFromPlayer",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141efa660",
+    "thunk": "0x1429736f0"
+  },
+  {
+    "entry": "UFortKismetLibrary::K2_SpawnPickupInWorldWithLootTier",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x140738030",
+    "thunk": "0x142974550"
+  },
+  {
+    "entry": "UFortKismetLibrary::MakeBuildingState",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141efb320",
+    "thunk": "0x142974b30"
+  },
+  {
+    "entry": "UFortKismetLibrary::MakeDayNightPhase",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141efb320",
+    "thunk": "0x142974b30"
+  },
+  {
+    "entry": "UFortKismetLibrary::MakeMovementStyle",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141efb320",
+    "thunk": "0x142974b30"
+  },
+  {
+    "entry": "UFortKismetLibrary::MakeResourceType",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141efb320",
+    "thunk": "0x142974b30"
+  },
+  {
+    "entry": "UFortKismetLibrary::MakeWeaponCoreAnimation",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141efb320",
+    "thunk": "0x142974b30"
+  },
+  {
+    "entry": "UFortKismetLibrary::RemoveEventOverrides",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x1409a95b0",
+    "thunk": "0x142965e40"
+  },
+  {
+    "entry": "UFortKismetLibrary::SelectMaterialInstance",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141f04180",
+    "thunk": "0x142977c80"
+  },
+  {
+    "entry": "UFortKismetLibrary::SetCanBeDamaged",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x141f05180",
+    "thunk": "0x142977d80"
+  },
+  {
+    "entry": "UFortLocalPlayer::GetContentControlsManager",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "Class has a generator policy that collides when the class gains manifest entries (probe dropped it).",
+    "unblock": "Extend the policy to accept manifest bodies or express the body in the policy",
+    "body": "0x14237e640",
+    "thunk": "0x14298b030"
+  },
+  {
+    "entry": "UFortStoreFrontOfferInfo::GetOfferType",
+    "kind": "exec",
+    "blocker": "generator_gap",
+    "reason": "Rejected by the generator for another reason; see the probe notes.",
+    "unblock": "Inspect the rejection in a fresh probe",
+    "body": "0x1450b0d10",
+    "thunk": "0x1452f6b70"
+  },
+  {
+    "entry": "UFortStoreFrontOfferInfo::GetRequirementTypeAtIndex",
+    "kind": "exec",
+    "blocker": "generator_gap",
+    "reason": "Rejected by the generator for another reason; see the probe notes.",
+    "unblock": "Inspect the rejection in a fresh probe",
+    "body": "0x1450b1dc0",
+    "thunk": "0x1452f6f70"
+  },
+  {
+    "entry": "UHUDLayoutToolProxy::BP_GetPropertyValue",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x14084bee0",
+    "thunk": "0x14532ff30"
+  },
+  {
+    "entry": "UPlayspaceControllerComponent_PlayerSpawning::ServerMarkReadyForSpawning",
+    "kind": "exec",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Net RPC native event (Client/Server/Multicast _Implementation): the generator rejects it (native_event_mismatch).",
+    "unblock": "Teach the generator RPC _Implementation/_Validate events",
+    "body": "0x14076c610",
+    "thunk": "0x1411b5d60"
+  },
+  {
+    "entry": "URetainerBox::SetRetainRendering",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x143d8f150",
+    "thunk": "0x143db3ba0"
+  },
+  {
+    "entry": "USolarisArrayLibrary::num",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x1414a9180",
+    "thunk": "0x1414ab680"
+  },
+  {
+    "entry": "UWaterSubsystem::GetShallowWaterMaxDynamicForces",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x1414efd90",
+    "thunk": "0x1414fd110"
+  },
+  {
+    "entry": "UWaterSubsystem::GetShallowWaterMaxImpulseForces",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x1414efda0",
+    "thunk": "0x1414fd140"
+  },
+  {
+    "entry": "UWaterSubsystem::GetShallowWaterSimulationRenderTargetSize",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x1414efdb0",
+    "thunk": "0x1414fd170"
+  },
+  {
+    "entry": "UWaterSubsystem::GetSmoothedWorldTimeSeconds",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x1414eff30",
+    "thunk": "0x1414fd1a0"
+  },
+  {
+    "entry": "UWaterSubsystem::IsShallowWaterSimulationEnabled",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x1414f2fb0",
+    "thunk": "0x1414fd2f0"
+  },
+  {
+    "entry": "UWaterSubsystem::IsUnderwaterPostProcessEnabled",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Class is not generated (not in the native class set, or an interface/hand-written).",
+    "unblock": "Add the class to the native class set (or hand-port)",
+    "body": "0x1414f2fc0",
+    "thunk": "0x1414fd320"
   }
 ]

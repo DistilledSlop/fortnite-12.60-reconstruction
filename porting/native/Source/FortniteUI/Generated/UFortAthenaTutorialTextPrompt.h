@@ -88,5 +88,11 @@ public:
 	UPROPERTY()
 	UOverlay* Overlay_ExtraText;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void DisplayTarget();
+	virtual void DisplayTarget_Implementation();
+public:
+
 };
 

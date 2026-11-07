@@ -233,6 +233,12 @@ public:
 	bool AllowLongRangeAutoPickup(AFortPlayerPawn* FortPawn);
 	virtual bool AllowLongRangeAutoPickup_Implementation(AFortPlayerPawn* FortPawn);
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	bool BlueprintCanInteract(AFortPlayerPawn* FortPawn, bool& bCanInteractOverride);
+	virtual bool BlueprintCanInteract_Implementation(AFortPlayerPawn* FortPawn, bool& bCanInteractOverride);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetItemEntryNum() const;
 

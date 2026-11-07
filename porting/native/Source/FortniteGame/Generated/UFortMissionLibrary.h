@@ -23,6 +23,9 @@ class FORTNITEGAME_API UFortMissionLibrary : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static TArray<ABuildingActor*> FindActorsWithTags(UObject* WorldContextObject, FGameplayTagContainer& Tags);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	static AFortPlacementActor* FindOriginatingPlacementActor(ABuildingActor* BuildingActor);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)

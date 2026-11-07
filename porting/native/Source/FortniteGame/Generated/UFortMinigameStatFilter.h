@@ -61,5 +61,13 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UTexture2D> HudIcon;
 
+	UFUNCTION(BlueprintNativeEvent)
+	int32 Accumulate(int32 A, int32 B) const;
+	virtual int32 Accumulate_Implementation(int32 A, int32 B) const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	int32 Compare(int32 FirstScore, int32 SecondScore) const;
+	virtual int32 Compare_Implementation(int32 FirstScore, int32 SecondScore) const;
+
 };
 
