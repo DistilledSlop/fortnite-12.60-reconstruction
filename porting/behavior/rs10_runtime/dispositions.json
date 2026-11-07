@@ -1,0 +1,177 @@
+[
+  {
+    "class": "AFortPawn",
+    "function": "OnRep_StormShieldComponent",
+    "status": "proposed",
+    "case": "ported_inline",
+    "reason": "StormShieldComponent null-guard, Role!=ROLE_Authority raw pointee writes (+0x3a/+0x3c), delegate broadcast; pointee raw in engine storage"
+  },
+  {
+    "class": "AFortPawn",
+    "function": "RemoveCallout",
+    "status": "blocked",
+    "case": "outside_branch_target",
+    "reason": "JNZ 0x142347e90 (matched-tag path) is outside the body; that path needs unresolved vtable slot +0x150 and FUN_144621fb0"
+  },
+  {
+    "class": "AFortPickup",
+    "function": "OnRep_ServerStoppedSimulation",
+    "status": "blocked",
+    "case": "outside_branch_target",
+    "reason": "JNZ 0x142028b80 (non-null continuation) is outside the body; continuation unresolved (no callee_candidates)"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "GetAccountLevel",
+    "status": "blocked",
+    "case": "outside_branch_target",
+    "reason": "JNZ 0x142547000 is outside the body; non-null path calls FUN_1410ff2d0 and FUN_142cf2280, unresolved"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "GetAwardManager",
+    "status": "blocked",
+    "case": "outside_branch_target",
+    "reason": "JNZ 0x141f5d970 is outside the body; non-null path runs a sub-game lookup loop calling UFortGlobals::NativeGetGlobals and GetCurrentSubGame, unresolved"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "GetFPSForHUD",
+    "status": "blocked",
+    "case": "absolute_global_read",
+    "reason": "MOVSS/MULSS/ADDSS read float constants at absolute addresses 0x148351ea0, 0x1459ffea0, 0x1459a86f0; no reflected symbol and values not verified"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "GetMinigameManager",
+    "status": "blocked",
+    "case": "outside_branch_target",
+    "reason": "JNZ 0x141f5f9a0 is outside the body; non-null path is the same unresolved sub-game lookup as GetAwardManager"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "GetQuestManager",
+    "status": "blocked",
+    "case": "outside_branch_target",
+    "reason": "JNZ 0x141f60200 is outside the body; non-null path calls unresolved helpers 0x1428ea7f0 and 0x141e5f160"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "GetStatValue",
+    "status": "blocked",
+    "case": "outside_branch_target",
+    "reason": "JNZ 0x1424aebb0 is outside the body; non-null path calls unresolved UAthenaProfileStatsBase::NextStatSet (0x140696410)"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "HandleWinnerAnnounced",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x1423b9120 (AFortPlayerController::StopBattleMapSpectator) is not declared in generated headers; 0x142bee710 is the by-value FString destructor"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "IsHiddenControllerOnly",
+    "status": "proposed",
+    "case": "ported_inline",
+    "reason": "HiddenActors raw TArray scan (Data +0x2e8, Num +0x2f0); pointer identity; found path returns true"
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "IsPersonalVehicleActive",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "JMP 0x142332130 (AFortPlayerPawn::IsUsingPersonalVehicle) is not declared in generated headers"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "HandleGamePhaseStepChanged",
+    "status": "blocked",
+    "case": "outside_branch_target",
+    "reason": "JZ 0x1419ff260 (GamePhaseStep==5 path) is outside the body"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "IsPlayerInAVolumeTheyCanCreateIn",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x1419c3880 (AFortPlayerControllerAthena::CanPlayerCreateInCurrentVolume) is not declared in generated headers"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "IsPlayerRebootingNow",
+    "status": "blocked",
+    "case": "outside_branch_target",
+    "reason": "JNZ 0x141b4d240 is outside the body; non-null path calls unresolved FUN_141a4b2d0"
+  },
+  {
+    "class": "AFortPlayerControllerGameplay",
+    "function": "IsCreativePreviewScreenshotAvailable",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x1419dd8b0 (AFortPlayerControllerAthena::IsPlayerInAMinigame) is not declared; fail path also reads absolute global dword 0x1478de924"
+  },
+  {
+    "class": "AFortPlayerControllerGameplay",
+    "function": "OnWantedToSwapPhoneAndHarvestHoldChanged",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x141d85c50 (UFortCreativeOption::GetValueAtIndex) is not declared in generated headers"
+  },
+  {
+    "class": "UFortPlayerControllerAthenaXPComponent",
+    "function": "OnXpUpdated",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "JMP 0x140684de0 is a shared body with five unrelated candidates; none has the six int32 parameters or the receiver this+0x268 class"
+  },
+  {
+    "class": "AFortPlayerControllerFrontEnd",
+    "function": "CloseEmotePicker",
+    "status": "blocked",
+    "case": "outside_branch_target",
+    "reason": "JZ 0x1423a1e80 (flag 0xc0 close path) is outside the body"
+  },
+  {
+    "class": "AFortPlayerControllerSpectating",
+    "function": "GetCurrentSpectatorCameraComponent",
+    "status": "proposed",
+    "case": "ported_inline",
+    "reason": "SpectatorPawn IsA(AFortReplaySpectatorPawnBase) then SpectatorCameraComponent at pawn +0x2a0"
+  },
+  {
+    "class": "AFortPlayerControllerSpectating",
+    "function": "SetNotificationsEnabled",
+    "status": "proposed",
+    "case": "ported_inline",
+    "reason": "Bit 1 of unreflected byte +0x2bf0 vs argument; writes bit and broadcasts delegate +0x27b0"
+  },
+  {
+    "class": "AFortPlayerControllerZone",
+    "function": "ServerDetachFromRemoteControlledPawn",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x14243a470 (AFortRemoteControlledPawnAthena::HandleControllingPlayerOutOfHealth) is not declared in generated headers"
+  },
+  {
+    "class": "AFortPlayerMannequin",
+    "function": "ToggleGenderBP",
+    "status": "proposed",
+    "case": "ported_inline",
+    "reason": "Only verbosity-gated diagnostic log (guard 0x1481349f0 >= 2, log 0x142c54b70); elided, empty body"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "ForceDetachFromRemoteControlledPawn",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x142ee7880 and 0x142ee5dd0 are shared bodies; receiver this+0x26a0 (WeakObject) matches no candidate class; JMP 0x14243a470 also undeclared"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "IsActivelySkydivingUpInVortex",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x1420e4e50 (UFortMovementComp_Character::IsActivelySkydivingUpInVortex) is not declared in generated headers"
+  }
+]

@@ -2,6 +2,14 @@
 #include "AFortAthenaMutator_Goose.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortAthenaMutator_Goose::OnPawnDied(AFortPlayerPawnAthena* PlayerPawn)
+{
+	// Original body address: 0x141adef60
+	// Evidence: no object-state or argument store; the only effect is the verbosity-gated diagnostic log at call 0x142c54b70 on the null PlayerPawn path (elided, no state change).
+	// CONFIDENCE: MEDIUM
+	return;
+}
+
 void AFortAthenaMutator_Goose::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

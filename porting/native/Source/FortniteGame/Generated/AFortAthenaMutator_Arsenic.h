@@ -100,6 +100,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetTeamPlayerCount(uint8 Team);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTimeRemaining() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool IsGrowlEnabled() const;
 

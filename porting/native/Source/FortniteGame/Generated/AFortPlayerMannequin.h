@@ -138,5 +138,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponent* GetPartSkeletalMeshComponent(EFortCustomPartType::Type Part) const;
 
+	UFUNCTION(BlueprintCallable)
+	void ToggleGenderBP();
+
 };
 

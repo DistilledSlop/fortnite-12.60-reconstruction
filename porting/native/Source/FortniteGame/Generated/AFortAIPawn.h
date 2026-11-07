@@ -887,6 +887,9 @@ public:
 	void SetAIRotationRate(FRotator& AIRotationRate);
 
 	UFUNCTION(BlueprintCallable)
+	void SetAIType(EFortressAIType InAIType);
+
+	UFUNCTION(BlueprintCallable)
 	void SetCanSleep(bool InCanSleep);
 
 	UFUNCTION(BlueprintCallable)

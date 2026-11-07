@@ -478,6 +478,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPlayerPushableCart* GetPushCart() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetWinningTeamForRound(int32 RoundNumber) const;
+
 protected:
 	UFUNCTION()
 	void HandleRoundPhase(EUraniumRoundPhase NewRoundPhase);

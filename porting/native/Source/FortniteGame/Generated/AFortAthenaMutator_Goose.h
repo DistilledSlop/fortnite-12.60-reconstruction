@@ -14,6 +14,7 @@
 class AActor;
 class AAthenaGoosePickup;
 class AFortAthenaVehicle;
+class AFortPlayerPawnAthena;
 class UGameplayEffect;
 
 #include "AFortAthenaMutator_Goose.generated.h"
@@ -123,6 +124,11 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	TArray<AAthenaGoosePickup*> SpawnedPickups;
+
+protected:
+	UFUNCTION()
+	void OnPawnDied(AFortPlayerPawnAthena* PlayerPawn);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

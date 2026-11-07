@@ -40,5 +40,14 @@ public:
 	UPROPERTY(Transient)
 	AFortAthenaPatrolPath* PatrolPath;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xe8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xe8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xec): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0xec;
+
+	UFUNCTION(BlueprintCallable)
+	void SetPatrolPath(AFortAthenaPatrolPath* NewPatrolPath);
+
 };
 

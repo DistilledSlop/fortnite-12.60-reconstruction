@@ -42,6 +42,7 @@ class UAthenaMarkerComponent;
 class UAthenaPlayerMatchReport;
 class UFortMiniMapTeamIndicators;
 class UFortReplayContext;
+class UFortSpectatorCameraComponent;
 class UInputComponent;
 class UMaterialInterface;
 
@@ -259,6 +260,9 @@ public:
 	EFortSpectatorBlendType GetBlendType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortSpectatorCameraComponent* GetCurrentSpectatorCameraComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual AFortPlayerState* GetFollowedPlayer() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -288,6 +292,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetMapWeaponTracersEnabled(bool bEnable);
+
+	UFUNCTION(BlueprintCallable)
+	void SetNotificationsEnabled(bool bNewState);
 
 	UFUNCTION(BlueprintCallable)
 	void SetShowBusPathsOnMap(bool bInShowBusPathsOnMap);

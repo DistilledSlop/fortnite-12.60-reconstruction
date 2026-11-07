@@ -1000,8 +1000,10 @@ public:
 	UFUNCTION()
 	void OnRep_Sentence();
 
+protected:
 	UFUNCTION()
 	void OnRep_StormShieldComponent();
+public:
 
 	UFUNCTION()
 	virtual void OnRep_TeleportCounter();

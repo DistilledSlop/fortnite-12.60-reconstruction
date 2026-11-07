@@ -12,6 +12,7 @@
 #include "EFortVoteArbitratorType.h"
 #include "EFortVoteType.h"
 #include "EServerStability.h"
+#include "EStatCategory.h"
 #include "Engine/DataTable.h"
 #include "FActiveGameplayModifierArray.h"
 #include "FFortAIDirectorEvent.h"
@@ -384,6 +385,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortThreatParticleActor* GetThreatParticleActor() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTotalScore(EStatCategory ScoreCategory) const;
 
 	UFUNCTION(BlueprintCallable)
 	virtual AFortInGameMapManager* GetUIMapManager();

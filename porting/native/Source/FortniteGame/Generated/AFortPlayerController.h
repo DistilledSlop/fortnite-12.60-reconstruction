@@ -1529,6 +1529,9 @@ public:
 	bool IsClientTimingOut() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsHiddenControllerOnly(AActor* TargetActor) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsInAircraft() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

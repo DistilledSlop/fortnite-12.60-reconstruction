@@ -1,0 +1,15 @@
+// Original body address: 0x1418d3810
+// Evidence: +0xe0 is PatrolPath (reflected Object) compared and stored. +0xe8 (int32 zeroed) and +0xec (bit 0 cleared) are unreflected gaps in the own region: member_field entries NativeRecoveredInt32_0xe8 and NativeRecoveredUint8_0xec.
+// Null argument path: verbosity-gated diagnostic log at call 0x142c54b70 elided, then return.
+// CONFIDENCE: MEDIUM
+if (NewPatrolPath == nullptr)
+{
+    return;
+}
+if (NewPatrolPath == PatrolPath)
+{
+    return;
+}
+NativeRecoveredUint8_0xec = static_cast<uint8>(NativeRecoveredUint8_0xec & 0xFEu);
+NativeRecoveredInt32_0xe8 = 0;
+PatrolPath = NewPatrolPath;

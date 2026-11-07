@@ -7,7 +7,10 @@
 #include "AFortAthenaMutator.h"
 
 #include "AttributeSet.h"
+#include "FFactionPartOverrideData.h"
 #include "GameplayTagContainer.h"
+
+class AFortPlayerControllerAthena;
 
 #include "AFortAthenaMutator_FactionCustomCharacterParts.generated.h"
 
@@ -24,6 +27,18 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	FGameplayTagContainer SkinMetaTagsToSkip;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	uint8 GetFactionForPlayer(AFortPlayerControllerAthena* PlayerController);
+	virtual uint8 GetFactionForPlayer_Implementation(AFortPlayerControllerAthena* PlayerController);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	bool GetPartOverridesForPlayer(TArray<FFactionPartOverrideData>& OutFactionOverrideParts, uint8 FactionNum) const;
+	virtual bool GetPartOverridesForPlayer_Implementation(TArray<FFactionPartOverrideData>& OutFactionOverrideParts, uint8 FactionNum) const;
+public:
 
 };
 

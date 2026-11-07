@@ -1,0 +1,107 @@
+[
+ {
+  "class": "AFortAIPawn",
+  "function": "SetAIType",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": "Stores AIType (+0x18e1); bCanSleep (declared bit, byte +0x18dd mask 0x08) cleared for 1,2,3,5 and set otherwise; log elided."
+ },
+ {
+  "class": "AFortAthenaMutator_Arsenic",
+  "function": "GetTimeRemaining",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": "CachedGameState null -> 0.0f; else int32 at pointee +0x11e4 converted to float (raw pointee read); log elided."
+ },
+ {
+  "class": "AFortAthenaMutator_FactionCustomCharacterParts",
+  "function": "GetFactionForPlayer_Implementation",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": "Returns byte at +0x270 (raw read; not covered by reflection); PlayerController unused; log elided."
+ },
+ {
+  "class": "AFortAthenaMutator_FactionCustomCharacterParts",
+  "function": "GetPartOverridesForPlayer_Implementation",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": "No state effect; returns false after elided verbosity-gated log."
+ },
+ {
+  "class": "AFortAthenaMutator_Goose",
+  "function": "OnPawnDied",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": "No state effect; only the elided verbosity-gated log on the null path."
+ },
+ {
+  "class": "AFortAthenaMutator_RoundHelper",
+  "function": "StartNextRound",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Body tail-jumps (JMP 0x141b0c140, RCX=this, EDX=[this+0x2e0]+1) to AFortAthenaMutator_RoundHelper::SetCurrentRound, which is not declared in AFortAthenaMutator_RoundHelper.h or any generated header (grep over porting/native/Source finds SetCurrentRound only in UFortCheatManager_SpecialEvent.h)."
+ },
+ {
+  "class": "AFortAthenaMutator_SpecialEvent",
+  "function": "OnRep_Aircraft",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Body tail-jumps (JMP 0x141b28440, RCX=this) to AFortAthenaMutator_SpecialEvent::PlacePlayersInAircraft, which is not declared in AFortAthenaMutator_SpecialEvent.h or any generated header (grep over porting/native/Source finds it only in UFortCheatManager_SpecialEvent.h)."
+ },
+ {
+  "class": "AFortAthenaMutator_SpecialEvent",
+  "function": "ResetSpecialEventAircraft",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ce9f90 has three candidates sharing the body (AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard, UMeshNetworkSubsystem::GetMetaDataWithKey, UMeshNetworkSubsystem::SetMetaDataWithKey); none is AFortAthenaMutator_SpecialEvent or an ancestor, so the receiver class match fails."
+ },
+ {
+  "class": "AFortAthenaMutator_Uranium",
+  "function": "GetWinningTeamForRound",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": "Indexes RoundData.SingleRoundInfos RoundTeamWinner; out-of-range returns 0xff; logs elided."
+ },
+ {
+  "class": "UFortAthenaNpcPatrollingComponent",
+  "function": "SetPatrolPath",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": "Null returns; same pointer returns; else clears bit0 of +0xec, zeroes +0xe8, stores PatrolPath; log elided."
+ },
+ {
+  "class": "AFortGameState",
+  "function": "DbgBoxSendToAllInternal_DoNotCall_Implementation",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Gate CMP byte ptr [0x14812f404],0x0 and set MOV byte ptr [0x14812f404],0x1 use an absolute-address once-per-session latch with no reflected owner; not expressible as object state."
+ },
+ {
+  "class": "AFortGameState",
+  "function": "DbgCapsuleSendToAllInternal_DoNotCall_Implementation",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Gate CMP byte ptr [0x14812f404],0x0 and set MOV byte ptr [0x14812f404],0x1 use an absolute-address once-per-session latch with no reflected owner; not expressible as object state."
+ },
+ {
+  "class": "AFortGameState",
+  "function": "DbgLineSendToAllInternal_DoNotCall_Implementation",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Gate CMP byte ptr [0x14812f404],0x0 and set MOV byte ptr [0x14812f404],0x1 use an absolute-address once-per-session latch with no reflected owner; not expressible as object state."
+ },
+ {
+  "class": "AFortGameState",
+  "function": "DbgSphereSendToAllInternal_DoNotCall_Implementation",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Gate CMP byte ptr [0x14812f404],0x0 and set MOV byte ptr [0x14812f404],0x1 use an absolute-address once-per-session latch with no reflected owner; not expressible as object state."
+ },
+ {
+  "class": "AFortGameStateZone",
+  "function": "GetTotalScore",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": "Switch on ScoreCategory to TotalCombat/Building/UtilityScore (+0xdc8/+0xdcc/+0xdd0); default returns 0; log elided."
+ }
+]
