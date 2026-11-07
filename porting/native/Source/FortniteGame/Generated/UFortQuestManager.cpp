@@ -213,6 +213,13 @@ bool UFortQuestManager::IsQuestObjectiveActive(FName ObjectiveName) const
 	return false;
 }
 
+void UFortQuestManager::ListChallenges(FString Filter) const
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortQuestManager::SetQuestMapMode(EQuestMapScreenMode NewQuestMapMode)
 {
 	// Native 0x14244fb30. CONFIDENCE: high

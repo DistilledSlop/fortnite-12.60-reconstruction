@@ -105,6 +105,9 @@ public:
 	void McpUpgradeItem(FString ItemToUpgrade);
 
 	UFUNCTION(Exec)
+	void SetHeroClass(FString NewHeroName, int32 Level);
+
+	UFUNCTION(Exec)
 	void SetHeroLevel(int32 Level);
 
 	UFUNCTION(Exec)
@@ -115,6 +118,9 @@ public:
 
 	UFUNCTION(Exec)
 	void TestSetOutpostDefenseActive(bool bActive);
+
+	UFUNCTION(Exec)
+	void TestUpgradeOutpostItem(FString ItemTemplateId);
 
 	UFUNCTION(Exec)
 	void ToggleCharacterBackpack();

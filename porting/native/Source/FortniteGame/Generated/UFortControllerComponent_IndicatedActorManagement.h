@@ -6,9 +6,12 @@
 #include "CoreMinimal.h"
 #include "UFortControllerComponent.h"
 
+#include "FIndicatedActorData.h"
 #include "FIndicatedActorInfoArray.h"
+#include "FStenciledActorData.h"
 #include "FStenciledActorInfoArray.h"
 
+class AActor;
 class APawn;
 
 #include "UFortControllerComponent_IndicatedActorManagement.generated.h"
@@ -26,6 +29,12 @@ public:
 	// table index 0, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	FStenciledActorInfoArray StenciledActorList;
+
+	UFUNCTION()
+	void AddActorsToIndicatedList(TArray<AActor*>& IndicatedActors, FIndicatedActorData Data, bool bAddAsUnique);
+
+	UFUNCTION()
+	void AddActorsToStenciledList(TArray<AActor*>& StenciledActors, FStenciledActorData Data, bool bAddAsUnique);
 
 private:
 	UFUNCTION()

@@ -22,6 +22,9 @@ public:
 	bool IsXboxPlatform();
 
 	UFUNCTION(BlueprintCallable, Exec)
+	void RunFacialAnimationTest(FString WaveFileName, int32 SampleRate);
+
+	UFUNCTION(BlueprintCallable, Exec)
 	void StartWriteToAudioFile();
 
 	UFUNCTION(BlueprintCallable, Exec)

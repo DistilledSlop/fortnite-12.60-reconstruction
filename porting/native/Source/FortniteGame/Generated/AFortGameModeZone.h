@@ -19,6 +19,7 @@ class AActor;
 class ABuildingSMActor;
 class AFortAIDirector;
 class AFortAIGoalManager;
+class AFortMission;
 class AFortVisibilityManager;
 class UFortBuildingOctreeManager;
 class UFortPetManager;
@@ -229,6 +230,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetEnemyAIItemCacheLootDrops(bool bValue);
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerStartLocationOverrides(TArray<FVector> InPlayerStarts, AFortMission* InMission);
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable)

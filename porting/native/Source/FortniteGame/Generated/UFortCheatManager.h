@@ -7,6 +7,7 @@
 #include "GameFramework/CheatManager.h"
 
 #include "EFortAILODLevel.h"
+#include "EFortEncounterDirection.h"
 #include "EFortReplicatedStat.h"
 #include "ERiftCosmeticState.h"
 #include "GameplayTagContainer.h"
@@ -166,6 +167,16 @@ public:
 
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ApplyGameplayModifier(FString ModifierName);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void AthenaEmote(FString EmoteName);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void AthenaEndlessGame();
 public:
 
@@ -209,6 +220,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void BotSpectate(FString BotCommand);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void BotStartDogpile();
 public:
@@ -231,6 +247,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void BuildFree();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void BuildWith(FString ResourceTypeAndOrLevel);
 public:
 
 protected:
@@ -455,6 +476,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void DumpGameStats(FString FilterName);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void DumpInventory();
 public:
 
@@ -610,6 +636,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void GetGameStat(FString StatName);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void GetPoiInfoForPlayer();
 public:
 
@@ -669,6 +700,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveAmmo(FString AmmoNameAndAmmount);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void GiveApolloLoadout();
 public:
@@ -694,6 +730,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveAthenaGadgets(FString GadgetName, int32 Quantity, int32 ItemLevel);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void GiveAthenaLoadout();
 public:
@@ -706,6 +747,16 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void GiveAthenaWeapons();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveConsumable(FString ConsumableName, int32 RequestedLevel, int32 Count);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveGadgets(FString GadgetName, int32 Quantity, int32 ItemLevel);
 public:
 
 protected:
@@ -735,7 +786,17 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void GivePerk(FString PerkName);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void GivePerkRerolls(int32 NumOfRolls);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GivePickaxe(FString PickName);
 public:
 
 protected:
@@ -746,9 +807,22 @@ public:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void GiveResources(int32 Amount);
 
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveSpecificItem(FString ItemPath, int32 ItemAmount, int32 ItemLevel);
+
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void GiveStone(int32 Amount);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveTrap(FString TrapName, int32 RequestedLevel, int32 NumTrapsToGive);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveWeapon(FString WeaponName, int32 RequestedLevel, int32 Count);
 public:
 
 protected:
@@ -773,6 +847,12 @@ protected:
 	UFUNCTION(Exec)
 	void GPadV2_ToggleDebugDraw();
 public:
+
+	UFUNCTION(Exec)
+	void HermesAddContentToBeaconHost(FString ContentID);
+
+	UFUNCTION(Exec)
+	void HermesAttemptDownload(FString AssetToDownload);
 
 protected:
 	UFUNCTION(Exec)
@@ -924,6 +1004,11 @@ public:
 
 private:
 	UFUNCTION(Exec)
+	void LogAssetClassCost(FString AssetPath);
+public:
+
+private:
+	UFUNCTION(Exec)
 	void LogSelectedActorCost();
 public:
 
@@ -1009,7 +1094,17 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void McpJoinFromPartyInviteToken(FString Token, bool bIsFromInvite);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void McpLogout();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpPrintFriendInviteToken(FString FriendName, bool OnlyPrintIfJoinable);
 public:
 
 protected:
@@ -1047,6 +1142,9 @@ protected:
 	void McpTestVerifyProfileToken();
 public:
 
+	UFUNCTION(Exec)
+	void MMS(FString Command);
+
 protected:
 	UFUNCTION(Exec)
 	void ModItemDurability(float InValue);
@@ -1065,6 +1163,16 @@ public:
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void PauseWarmup();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void PerfMemStatMonitor(FString ToggleState);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void PlayAthenaEmoteOnScriptedPawn(FString EmoteName);
 public:
 
 protected:
@@ -1165,6 +1273,16 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void RemoveFavoriteIsland(FString IslandCode);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void RemoveGameplayModifier(FString ModifierName);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ReplayLastPerfTest(FString Params);
 public:
 
 protected:
@@ -1293,6 +1411,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec)
+	void SetAthenaHero(FString NewHeroName);
+public:
+
+protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	virtual void SetAthenaHeroOnScriptedPawn(FString NewHeroName);
 public:
@@ -1359,6 +1482,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void SetEncounterDirections(TArray<TEnumAsByte<EFortEncounterDirection::Type>> Directions);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	virtual void SetEncounterGraphsHistoryLength(int32 Seconds);
 public:
 
@@ -1374,7 +1502,22 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void SetEncounterSpawnPointsCurve(FString CurveName);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetEncounterTopUtilityPercentages(FString UtilitiesAndPercentages);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void SetEventCalendarTime(FString TimeString);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetEventsStyleOverride(FString StyleId);
 public:
 
 protected:
@@ -1385,6 +1528,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void SetGameDifficultyOverride(float GameDifficultyOverrideValue);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetGameStat(FString StatName, int32 Amount);
 public:
 
 protected:
@@ -1580,6 +1728,26 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void SpawnAIGroup(FString SpawnGroupName);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SpawnAIGroupFromExternalSpawner(FString SpawnGroupName);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SpawnAndDriveVehicle(FString CarName);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SpawnBattleLabDevice(FString InName);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void SpawnContainer(FString ContainerClassName);
 public:
 
@@ -1614,6 +1782,11 @@ public:
 protected:
 	UFUNCTION()
 	AFortPlayerPawn* SpawnSimplePawn();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SpawnVehicle(FString CarName);
 public:
 
 protected:
@@ -1689,6 +1862,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void TestAllDevPartyMembers();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void TestCalendarEvents(FString EventsString);
 public:
 
 protected:

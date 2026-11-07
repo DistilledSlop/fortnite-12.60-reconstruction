@@ -215,6 +215,13 @@ void UFortCheatManagerSTW::McpUpgradeItem(FString ItemToUpgrade)
 	return;
 }
 
+void UFortCheatManagerSTW::SetHeroClass(FString NewHeroName, int32 Level)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManagerSTW::SetHeroLevel(int32 Level)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
@@ -239,6 +246,13 @@ void UFortCheatManagerSTW::TestSetOutpostDefenseActive(bool bActive)
 {
 	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManagerSTW::TestUpgradeOutpostItem(FString ItemTemplateId)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void UFortCheatManagerSTW::ToggleCharacterBackpack()

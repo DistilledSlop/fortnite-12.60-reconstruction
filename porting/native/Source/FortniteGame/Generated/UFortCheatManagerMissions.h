@@ -27,6 +27,9 @@ public:
 	void EndDeimosSpawning();
 
 	UFUNCTION(Exec)
+	void ExecuteNewMissionGeneration(float DifficultyLevel, FString GeneratorName);
+
+	UFUNCTION(Exec)
 	void ForceCompleteDisplayedObjective(int32 ObjectiveIndex);
 
 	UFUNCTION(Exec)
@@ -37,6 +40,12 @@ public:
 
 	UFUNCTION(Exec)
 	void ListMissions();
+
+	UFUNCTION(Exec)
+	void LoadMission(FString MissionName);
+
+	UFUNCTION(Exec)
+	void LoadMissionGenerator(FString GeneratorName);
 
 	UFUNCTION(Exec)
 	void MissionForceFailure(FString MissionName);
@@ -52,6 +61,9 @@ public:
 
 	UFUNCTION(Exec)
 	void RegenerateZoneMissionsWithDifficultyLevel(float DifficultyLevelOverride);
+
+	UFUNCTION(Exec)
+	void SendMissionEvent(FString MissionEventName);
 
 	UFUNCTION(Exec)
 	void TeleportToMissionActor();

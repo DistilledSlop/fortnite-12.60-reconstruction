@@ -269,6 +269,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsQuestObjectiveActive(FName ObjectiveName) const;
 
+private:
+	UFUNCTION(Exec)
+	void ListChallenges(FString Filter) const;
+public:
+
 	UFUNCTION()
 	void SetQuestMapMode(EQuestMapScreenMode NewQuestMapMode);
 

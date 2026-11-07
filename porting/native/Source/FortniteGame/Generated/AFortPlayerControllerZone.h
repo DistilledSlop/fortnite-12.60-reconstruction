@@ -201,11 +201,17 @@ public:
 	void ClientVoiceChatSendJoinToken(bool bSuccess, const FString& Error, const FString& Token);
 	void ClientVoiceChatSendJoinToken_Implementation(bool bSuccess, const FString& Error, const FString& Token);
 
+	UFUNCTION(Exec)
+	void DumpPhysicsVehicleBuffer(FString Command);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetVehicleSeatTransitionTargetIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsClientNotifiedOfPawnDied() const;
+
+	UFUNCTION(Exec)
+	void KillAllVehicles(FString Command);
 
 	UFUNCTION()
 	void OnRep_VoiceChatChannel();
@@ -215,6 +221,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ResetExecuteJetpackToggle();
+
+	UFUNCTION(Exec)
+	void RewindVehicle(FString Command);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerActivateMission();
@@ -289,6 +298,9 @@ public:
 
 	UFUNCTION(Exec)
 	void SetVehicleHealth(float NewHealth);
+
+	UFUNCTION(Exec)
+	void TestVehicleVelocity(FString Command);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

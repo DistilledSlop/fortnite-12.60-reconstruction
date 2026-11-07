@@ -83,6 +83,13 @@ void AFortPlayerControllerZone::ClientVoiceChatSendJoinToken_Implementation(bool
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerZone::DumpPhysicsVehicleBuffer(FString Command)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 int32 AFortPlayerControllerZone::GetVehicleSeatTransitionTargetIndex() const
 {
 	// Original address: 0x142a705d0.
@@ -97,6 +104,13 @@ bool AFortPlayerControllerZone::IsClientNotifiedOfPawnDied() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
 	return AFortPlayerControllerZone::bClientNotifiedOfPawnDied;
+}
+
+void AFortPlayerControllerZone::KillAllVehicles(FString Command)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerControllerZone::OnRep_VoiceChatChannel()
@@ -116,6 +130,13 @@ void AFortPlayerControllerZone::ResetExecuteJetpackToggle()
 {
 	// CONFIDENCE: high; complete native exec body at 0x142a70770.
 	bJetpackExecuteToggle = false;
+}
+
+void AFortPlayerControllerZone::RewindVehicle(FString Command)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerControllerZone::ServerActivateMission_Implementation()
@@ -281,6 +302,13 @@ void AFortPlayerControllerZone::SetVehicleHealth(float NewHealth)
 {
 	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+void AFortPlayerControllerZone::TestVehicleVelocity(FString Command)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerControllerZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

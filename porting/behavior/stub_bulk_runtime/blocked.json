@@ -494,5 +494,40 @@
     "body": "0x142339320",
     "thunk": "0x142a7dbb0",
     "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortControllerComponent_Inspector::ClientBeginRequestScreenshot",
+    "kind": "native_event_impl",
+    "blocker": "rpc_native_event_unsupported",
+    "reason": "Client RPC native event: the generator rejects it (native_event_mismatch: expected a native event without RPC). Body 0x1406963a0 only frees the by-value InScreenshotContext struct buffer, so the faithful body is empty.",
+    "unblock": "Teach the generator RPC _Implementation events, then add an empty body"
+  },
+  {
+    "entry": "UAbilitySystemGlobals::ServerActivatePlayerAbility",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "UAbilitySystemGlobals is not generated (not in the native class set). Body 0x14072e780 only frees the by-value FString: empty body.",
+    "unblock": "Add the class to the native set, then port as empty"
+  },
+  {
+    "entry": "UAbilitySystemGlobals::ServerCancelPlayerAbility",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Same as ServerActivatePlayerAbility.",
+    "unblock": "Add the class to the native set, then port as empty"
+  },
+  {
+    "entry": "UAbilitySystemGlobals::ServerEndPlayerAbility",
+    "kind": "exec",
+    "blocker": "class_not_in_native_set",
+    "reason": "Same as ServerActivatePlayerAbility.",
+    "unblock": "Add the class to the native set, then port as empty"
+  },
+  {
+    "entry": "UFortKismetLibrary::ScriptError",
+    "kind": "exec",
+    "blocker": "handwritten_class",
+    "reason": "UFortKismetLibrary is hand-written (splice unsupported). Body 0x140692260 frees the by-value FString: empty body.",
+    "unblock": "Add to the verified hand-written Kismet set"
   }
 ]

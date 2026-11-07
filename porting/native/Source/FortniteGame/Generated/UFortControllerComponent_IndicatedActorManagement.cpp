@@ -2,6 +2,20 @@
 #include "UFortControllerComponent_IndicatedActorManagement.h"
 #include "Net/UnrealNetwork.h"
 
+void UFortControllerComponent_IndicatedActorManagement::AddActorsToIndicatedList(TArray<AActor*>& IndicatedActors, FIndicatedActorData Data, bool bAddAsUnique)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortControllerComponent_IndicatedActorManagement::AddActorsToStenciledList(TArray<AActor*>& StenciledActors, FStenciledActorData Data, bool bAddAsUnique)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortControllerComponent_IndicatedActorManagement::OnHardCoreBeaconPlayerPawnPossessed(APawn* PossessedPawn)
 {
 	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.

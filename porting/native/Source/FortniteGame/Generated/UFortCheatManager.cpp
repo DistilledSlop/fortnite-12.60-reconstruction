@@ -67,6 +67,20 @@ void UFortCheatManager::AllowRespawn()
 	return;
 }
 
+void UFortCheatManager::ApplyGameplayModifier(FString ModifierName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::AthenaEmote(FString EmoteName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::AthenaEndlessGame()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -137,6 +151,13 @@ void UFortCheatManager::BotFillUp(int32 Amount)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::BotSpectate(FString BotCommand)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::BotStartDogpile()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -173,6 +194,13 @@ void UFortCheatManager::BuildFree()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::BuildWith(FString ResourceTypeAndOrLevel)
+{
+	// Exact original shared stub 0x1406801c0.
 	// CONFIDENCE: HIGH
 	return;
 }
@@ -519,6 +547,13 @@ void UFortCheatManager::DumpActiveGameplayEffects()
 	return;
 }
 
+void UFortCheatManager::DumpGameStats(FString FilterName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::DumpInventory()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -739,6 +774,13 @@ void UFortCheatManager::GetAllReplStats()
 	return;
 }
 
+void UFortCheatManager::GetGameStat(FString StatName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::GetPoiInfoForPlayer()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -827,6 +869,13 @@ void UFortCheatManager::GiveAllWeapons()
 	return;
 }
 
+void UFortCheatManager::GiveAmmo(FString AmmoNameAndAmmount)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::GiveApolloLoadout()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -867,6 +916,13 @@ void UFortCheatManager::GiveAthenaFullKit()
 	return;
 }
 
+void UFortCheatManager::GiveAthenaGadgets(FString GadgetName, int32 Quantity, int32 ItemLevel)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::GiveAthenaLoadout()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -887,6 +943,20 @@ void UFortCheatManager::GiveAthenaWeapons()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::GiveConsumable(FString ConsumableName, int32 RequestedLevel, int32 Count)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::GiveGadgets(FString GadgetName, int32 Quantity, int32 ItemLevel)
+{
+	// Exact original shared stub 0x1406801c0.
 	// CONFIDENCE: HIGH
 	return;
 }
@@ -923,10 +993,24 @@ void UFortCheatManager::GiveMetal(int32 Amount)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::GivePerk(FString PerkName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::GivePerkRerolls(int32 NumOfRolls)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GivePickaxe(FString PickName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void UFortCheatManager::GivePlaneEffect(int32 Index)
@@ -941,10 +1025,31 @@ void UFortCheatManager::GiveResources(int32 Amount)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::GiveSpecificItem(FString ItemPath, int32 ItemAmount, int32 ItemLevel)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::GiveStone(int32 Amount)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GiveTrap(FString TrapName, int32 RequestedLevel, int32 NumTrapsToGive)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::GiveWeapon(FString WeaponName, int32 RequestedLevel, int32 Count)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void UFortCheatManager::GiveWeapons(FName Tag)
@@ -975,6 +1080,20 @@ void UFortCheatManager::GPadV2_ToggleDebugDraw()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::HermesAddContentToBeaconHost(FString ContentID)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::HermesAttemptDownload(FString AssetToDownload)
+{
+	// Exact original shared stub 0x1406801c0.
 	// CONFIDENCE: HIGH
 	return;
 }
@@ -1199,6 +1318,13 @@ void UFortCheatManager::LogAllMinigameComponents()
 	return;
 }
 
+void UFortCheatManager::LogAssetClassCost(FString AssetPath)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::LogSelectedActorCost()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1325,10 +1451,24 @@ void UFortCheatManager::McpIssueCodeToken(FString TokenId)
 	return;
 }
 
+void UFortCheatManager::McpJoinFromPartyInviteToken(FString Token, bool bIsFromInvite)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::McpLogout()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::McpPrintFriendInviteToken(FString FriendName, bool OnlyPrintIfJoinable)
+{
+	// Exact original shared stub 0x1406801c0.
 	// CONFIDENCE: HIGH
 	return;
 }
@@ -1385,6 +1525,13 @@ void UFortCheatManager::McpTestVerifyProfileToken()
 	return;
 }
 
+void UFortCheatManager::MMS(FString Command)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::ModItemDurability(float InValue)
 {
 	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
@@ -1409,6 +1556,20 @@ void UFortCheatManager::PauseWarmup()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::PerfMemStatMonitor(FString ToggleState)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::PlayAthenaEmoteOnScriptedPawn(FString EmoteName)
+{
+	// Exact original shared stub 0x1406801c0.
 	// CONFIDENCE: HIGH
 	return;
 }
@@ -1560,6 +1721,20 @@ void UFortCheatManager::RemoveDebugSpawnAIGroupTag(FName Tag)
 void UFortCheatManager::RemoveFavoriteIsland(FString IslandCode)
 {
 	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
+void UFortCheatManager::RemoveGameplayModifier(FString ModifierName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::ReplayLastPerfTest(FString Params)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
 	return;
 }
 
@@ -1749,6 +1924,13 @@ void UFortCheatManager::SetAimMode(uint32 Mode)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::SetAthenaHero(FString NewHeroName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::SetAthenaHeroOnScriptedPawn(FString NewHeroName)
 {
 	// Native 0x14072e780; the shipping body only destroys its by-value FString parameters. CONFIDENCE: high
@@ -1827,6 +2009,13 @@ void UFortCheatManager::SetDifficultyIncreaseRewardTier(int32 RewardTier)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::SetEncounterDirections(TArray<TEnumAsByte<EFortEncounterDirection::Type>> Directions)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::SetEncounterGraphsHistoryLength(int32 Seconds)
 {
 	// CONFIDENCE: high
@@ -1845,9 +2034,30 @@ void UFortCheatManager::SetEncounterSpawnPointsCap(int32 SpawnPointsCap)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::SetEncounterSpawnPointsCurve(FString CurveName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::SetEncounterTopUtilityPercentages(FString UtilitiesAndPercentages)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::SetEventCalendarTime(FString TimeString)
 {
 	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
+	return;
+}
+
+void UFortCheatManager::SetEventsStyleOverride(FString StyleId)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
 	return;
 }
 
@@ -1861,6 +2071,13 @@ void UFortCheatManager::SetGameDifficultyOverride(float GameDifficultyOverrideVa
 {
 	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetGameStat(FString StatName, int32 Amount)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void UFortCheatManager::SetHeadHealthPercent(float HealthPercent)
@@ -2121,6 +2338,34 @@ void UFortCheatManager::SkipSafeZones()
 	return;
 }
 
+void UFortCheatManager::SpawnAIGroup(FString SpawnGroupName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::SpawnAIGroupFromExternalSpawner(FString SpawnGroupName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::SpawnAndDriveVehicle(FString CarName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::SpawnBattleLabDevice(FString InName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::SpawnContainer(FString ContainerClassName)
 {
 	// CONFIDENCE: HIGH; captured wrapper steps an FString and calls the bare-return native target.
@@ -2175,6 +2420,13 @@ AFortPlayerPawn* UFortCheatManager::SpawnSimplePawn()
 	// Shared body for stubs whose native body is `xor eax,eax; ret` on a pointer/object return.
 	// CONFIDENCE: HIGH
 	return nullptr;
+}
+
+void UFortCheatManager::SpawnVehicle(FString CarName)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void UFortCheatManager::StartFillFloorMovement()
@@ -2289,6 +2541,13 @@ void UFortCheatManager::TestAllDevPartyMembers()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::TestCalendarEvents(FString EventsString)
+{
+	// Exact original shared stub 0x1406801c0.
 	// CONFIDENCE: HIGH
 	return;
 }

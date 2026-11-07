@@ -72,6 +72,13 @@ void AFortGameModeZone::SetEnemyAIItemCacheLootDrops(bool bValue)
 	bAllowEnemyAIItemCacheLootDrops = bValue;
 }
 
+void AFortGameModeZone::SetPlayerStartLocationOverrides(TArray<FVector> InPlayerStarts, AFortMission* InMission)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortGameModeZone::SetSpawnWithinStormShield(bool bSpawnInStormShield)
 {
 	// Native 0x141eb0870. CONFIDENCE: high

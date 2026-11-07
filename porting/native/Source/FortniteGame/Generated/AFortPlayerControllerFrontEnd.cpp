@@ -9,6 +9,13 @@ bool AFortPlayerControllerFrontEnd::IsXboxPlatform()
 	return false;
 }
 
+void AFortPlayerControllerFrontEnd::RunFacialAnimationTest(FString WaveFileName, int32 SampleRate)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortPlayerControllerFrontEnd::StartWriteToAudioFile()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
