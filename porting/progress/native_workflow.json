@@ -1,7 +1,7 @@
 {
  "unported_by_reflected_name": 11407,
- "covered_by_implementation": 228,
- "validate_only": 71,
+ "covered_by_implementation": 279,
+ "validate_only": 61,
  "body_location": {
   "A_inline": 804,
   "B_direct_single_callee": 6806,

@@ -12,8 +12,10 @@ port = {(e['class'], e['function']) for e in json.load(open('porting/behavior/MA
 st = collections.Counter()
 for e in F:
     hit = [s for s in ('_Implementation', '_Validate') if (e['cls'], e['fn'] + s) in port]
+    if (e['cls'], e['fn']) in port:
+        hit = ['exact'] + hit
     e['covered_by'] = hit
-    e['coverage'] = 'full' if '_Implementation' in hit else 'partial' if hit else 'none'
+    e['coverage'] = 'full' if ('exact' in hit or '_Implementation' in hit) else 'partial' if hit else 'none'
     st[e['coverage']] += 1
 json.dump(F, open(f'{R}/final2.json', 'w'))
 json.dump(dict(st), open(f'{R}/covered_summary.json', 'w'))
