@@ -11,9 +11,27 @@ import collections, json, os
 
 nf = json.load(open('porting/generated/reflection/native_funcs.json'))
 ep = json.load(open('porting/progress/engine_provided_natives.json')).get('verified', {})
+# Interface functions have no body at the interface level (the thunk dispatches through the interface vtable; the
+# implementing classes' own functions carry the bodies), so they need no port and leave the denominator. The list is
+# written to native_interface_excluded.json so the exclusion is auditable from Git.
+excluded = {}
+fp = 'porting/generated/thunk-table/final2.json'
+if os.path.exists(fp):
+    man = json.load(open('porting/behavior/MANIFEST.json'))
+    ported = {(e['class'], e['function']) for e in man if e.get('status') == 'ported' and e.get('kind') != 'member_field'}
+    for e in json.load(open(fp)):
+        if e['group'] == 'I' and (e['cls'], e['fn']) not in ported:
+            excluded.setdefault(e['cls'], []).append(e['fn'])
+    for c in excluded:
+        excluded[c].sort()
+    json.dump(dict(reason='interface function: no body at the interface level; implementers carry the bodies',
+                   count=sum(len(v) for v in excluded.values()), functions=dict(sorted(excluded.items()))),
+              open('porting/progress/native_interface_excluded.json', 'w'), indent=1)
+else:
+    excluded = json.load(open('porting/progress/native_interface_excluded.json'))['functions']
 inscope = {}
 for c in sorted(nf):
-    skip = set(ep.get(c, ()))
+    skip = set(ep.get(c, ())) | set(excluded.get(c, ()))
     fns = sorted(f for f, m in nf[c].items() if m.get('exec_addr') and f not in skip)
     if fns:
         inscope[c] = fns

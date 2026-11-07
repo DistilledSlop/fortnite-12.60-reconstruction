@@ -1,0 +1,34 @@
+[
+ {
+  "class": "UFortPlayerSurveyAnswerWidgetBase",
+  "function": "HandleAnswerChanged_Implementation",
+  "kind": "native_event_impl",
+  "signature": "void HandleAnswerChanged_Implementation(FFortPlayerSurveyAnswerContainerChangeEventInfo& EventInfo)",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/_shared/return.inc",
+  "address": "0x1452a85d0",
+  "status": "ported",
+  "confidence": "high",
+  "reflection_flags": "0xc480c00",
+  "static": false,
+  "access": "protected",
+  "native_body_address": "0x1406801e0",
+  "notes": "Void native event whose body is the shared 'xor eax,eax; ret' stub 0x1406801e0; the zero in EAX is unused, so the faithful body is empty."
+ },
+ {
+  "class": "UHUDLayoutToolProxy",
+  "function": "BP_GetPropertyType_Implementation",
+  "kind": "native_event_impl",
+  "signature": "ELayoutPropertyType BP_GetPropertyType_Implementation(int32 PropertyIndex) const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/_shared/return_enum_zero.inc",
+  "address": "0x14532fe90",
+  "status": "ported",
+  "confidence": "high",
+  "reflection_flags": "0x48080c00",
+  "static": false,
+  "access": "protected",
+  "native_body_address": "0x1406801e0",
+  "notes": "Enum-returning native event; body is the shared 'xor eax,eax; ret' stub 0x1406801e0, so it returns the zero enumerator."
+ }
+]

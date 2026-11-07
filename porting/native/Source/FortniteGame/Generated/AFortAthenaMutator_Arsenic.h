@@ -13,7 +13,6 @@
 #include "FOnPlayerTeamRevealed.h"
 #include "FTagTeamInfoArray.h"
 
-class AFortPawn;
 class AFortPlayerStateAthena;
 class USoundBase;
 
@@ -109,9 +108,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsHeartbeatEnabled() const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool IsPawnAnInfected(AFortPawn* Pawn) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayerTeamRevealed(AFortPlayerStateAthena* PlayerState) const;

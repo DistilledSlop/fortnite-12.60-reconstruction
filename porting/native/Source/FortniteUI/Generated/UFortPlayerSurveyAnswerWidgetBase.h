@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "FFortPlayerSurveyAnswerContainerChangeEventInfo.h"
 #include "Misc/DateTime.h"
 #include "UFortPlayerSurveyQuestion.h"
 #include "UFortPlayerSurveyQuestionSelector.h"
@@ -35,6 +36,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortPlayerSurveyQuestion* GetQuestion() const;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleAnswerChanged(FFortPlayerSurveyAnswerContainerChangeEventInfo& EventInfo);
+	virtual void HandleAnswerChanged_Implementation(FFortPlayerSurveyAnswerContainerChangeEventInfo& EventInfo);
+public:
 
 protected:
 	UFUNCTION()

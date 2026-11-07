@@ -15,6 +15,13 @@ void UHUDLayoutToolProxy::BP_GetPropertyRange_Implementation(int32 PropertyIndex
 	return;
 }
 
+ELayoutPropertyType UHUDLayoutToolProxy::BP_GetPropertyType_Implementation(int32 PropertyIndex) const
+{
+	// Exact original shared stub 0x1406801e0 (xor eax,eax; ret): returns the zero enumerator.
+	// CONFIDENCE: HIGH
+	return {};
+}
+
 void UHUDLayoutToolProxy::BP_SetPropertyValue_Implementation(int32 PropertyIndex, float NewValue)
 {
 	// Exact original shared stub 0x1406801c0.

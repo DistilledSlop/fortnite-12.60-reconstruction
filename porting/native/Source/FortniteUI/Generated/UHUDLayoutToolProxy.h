@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBacchusResizableHUDElement.h"
 
+#include "ELayoutPropertyType.h"
 #include "FHudLayoutToolProxyPropertyData.h"
 
 #include "UHUDLayoutToolProxy.generated.h"
@@ -30,6 +31,12 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void BP_GetPropertyRange(int32 PropertyIndex, float& OutMin, float& OutMax) const;
 	virtual void BP_GetPropertyRange_Implementation(int32 PropertyIndex, float& OutMin, float& OutMax) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	ELayoutPropertyType BP_GetPropertyType(int32 PropertyIndex) const;
+	virtual ELayoutPropertyType BP_GetPropertyType_Implementation(int32 PropertyIndex) const;
 public:
 
 protected:

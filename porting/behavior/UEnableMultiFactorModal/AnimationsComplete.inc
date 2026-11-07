@@ -1,3 +1,5 @@
-// CONFIDENCE: high; complete constant-write leaf.
-// Original wrapper 0x1451e9b50; direct leaf 0x144e29980.
-NativeRecoveredByte_0x44b = 0x1u;
+// Original wrapper 0x1451e9b50; direct leaf 0x144e29980: MOV byte [RCX+0x44b],1; RET (verified against the captured asm).
+// +0x44b lies in inherited UFortActivatablePanel storage below this class's first own member (0x478), so it is a raw offset write.
+// CONFIDENCE: HIGH
+uint8* Raw = reinterpret_cast<uint8*>(this);
+Raw[0x44b] = 0x1u;

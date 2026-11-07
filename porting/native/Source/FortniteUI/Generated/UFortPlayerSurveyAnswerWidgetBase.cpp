@@ -17,6 +17,13 @@ UFortPlayerSurveyQuestion* UFortPlayerSurveyAnswerWidgetBase::GetQuestion() cons
 	return Question;
 }
 
+void UFortPlayerSurveyAnswerWidgetBase::HandleAnswerChanged_Implementation(FFortPlayerSurveyAnswerContainerChangeEventInfo& EventInfo)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortPlayerSurveyAnswerWidgetBase::NativeHandleAnswerContainerChanged()
 {
 	// Exact original shared stub 0x1406801c0.

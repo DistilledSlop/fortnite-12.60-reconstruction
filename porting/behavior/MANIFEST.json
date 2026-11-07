@@ -71179,23 +71179,6 @@
     "notes": "Same body as Octopus; +0x1610..+0x1638 = CoilIdle*/BoostFX/DustFX (reflection 5648..5688). ABI order used."
   },
   {
-    "class": "UFortWorker",
-    "function": "GetWorkerTypeBP",
-    "kind": "exec",
-    "signature": "UFortWorkerType* GetWorkerTypeBP() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/leaf2_runtime/UFortWorker/GetWorkerTypeBP.inc",
-    "confidence": "high",
-    "address": "0x142b5d3d0",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "virtual": true,
-    "access": "public",
-    "native_body_address": "0x14070f440",
-    "notes": "Returns pointer at +0x88 = ItemDefinition (reflection 136, inherited from UFortPersistableItem)."
-  },
-  {
     "class": "UAthenaChallengeSetDetails_Missions",
     "function": "IsCurrentlyViewPrestige",
     "kind": "exec",
@@ -71278,33 +71261,33 @@
   },
   {
     "class": "AFortOctopusVehicle",
-    "function": "NativeRecoveredBool_0xc8",
+    "function": "NativeRecoveredBool_0x10b8",
     "kind": "member_field",
-    "signature": "bool NativeRecoveredBool_0xc8",
+    "signature": "bool NativeRecoveredBool_0x10b8",
     "signature_status": "proposed",
     "access": "public",
-    "offset": "0xc8",
+    "offset": "0x10b8",
     "inc_path": null,
     "confidence": "medium",
     "address": null,
     "status": "ported",
     "recovery_source": "leaf_layout_batch2",
-    "notes": "asm MOVZX EAX,byte [+0xc8] in IsBoosting (returns Bool); no reflected or bool-bit cover."
+    "notes": "IsBoosting body reads byte [this'+0xc8]; the vtable slot is an adjustor (thunk ADD RCX,0x3b0 then wrapper 0x1419dd170 ADD RCX,0xc40), so the byte is at this+0xff0+0xc8=0x10b8; no reflected cover."
   },
   {
     "class": "AFortSpaghettiVehicle",
-    "function": "NativeRecoveredBool_0xc8",
+    "function": "NativeRecoveredBool_0x10b8",
     "kind": "member_field",
-    "signature": "bool NativeRecoveredBool_0xc8",
+    "signature": "bool NativeRecoveredBool_0x10b8",
     "signature_status": "proposed",
     "access": "public",
-    "offset": "0xc8",
+    "offset": "0x10b8",
     "inc_path": null,
     "confidence": "medium",
     "address": null,
     "status": "ported",
     "recovery_source": "leaf_layout_batch2",
-    "notes": "asm MOVZX EAX,byte [+0xc8] in shared IsBoosting body; no reflected or bool-bit cover."
+    "notes": "IsBoosting body reads byte [this'+0xc8]; the vtable slot is an adjustor (thunk ADD RCX,0x3b0 then wrapper 0x1419dd170 ADD RCX,0xc40), so the byte is at this+0xff0+0xc8=0x10b8; no reflected cover."
   },
   {
     "class": "UFortPatrolAnimLayer",
@@ -72400,23 +72383,6 @@
     "notes": "ABI-order pairing (asm truth); reflected CacheAudio* slots."
   },
   {
-    "class": "AFortAthenaMutator_Arsenic",
-    "function": "IsPawnAnInfected",
-    "kind": "exec",
-    "signature": "bool IsPawnAnInfected(AFortPawn* Pawn) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/leaf3_runtime/AFortAthenaMutator_Arsenic/IsPawnAnInfected.inc",
-    "confidence": "medium",
-    "address": "0x1427e1490",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x141aad120",
-    "notes": "Returns InfectedTeam (+0x441) as bool; Pawn unused in asm. Raw-byte return vs bool conversion noted."
-  },
-  {
     "class": "AFortAthenaMutator_Disco",
     "function": "IsRespawningAllowed",
     "kind": "exec",
@@ -72502,23 +72468,6 @@
     "notes": "Writes nested FFortGamepadAdvancedOptions.bUseLegacyControls (+0x138) and sets dirty byte +0x13c."
   },
   {
-    "class": "UFortCreativeOption",
-    "function": "DoesMatchCategory",
-    "kind": "exec",
-    "signature": "bool DoesMatchCategory(FCreativeOptionCategoryData& CreativeOptionCategory)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/leaf3_runtime/UFortCreativeOption/DoesMatchCategory.inc",
-    "confidence": "high",
-    "address": "0x1428c8b00",
-    "status": "ported",
-    "reflection_flags": "0x14420401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x141d74fe0",
-    "notes": "Returns CategoryTag == CreativeOptionCategory.CategoryTag (FName at struct +0x18), matching both dwords."
-  },
-  {
     "class": "AFortGameStateZone",
     "function": "ShouldDisablePlayerTeleportingDuringMissionResults",
     "kind": "exec",
@@ -72534,23 +72483,6 @@
     "access": "public",
     "native_body_address": "0x141eb29f0",
     "notes": "Returns byte +0x9e8 (NativeRecoveredBool_0x9e8, new member)."
-  },
-  {
-    "class": "UFortHero",
-    "function": "GetHeroTypeBP",
-    "kind": "exec",
-    "signature": "UFortHeroType* GetHeroTypeBP() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/leaf3_runtime/UFortHero/GetHeroTypeBP.inc",
-    "confidence": "medium",
-    "address": "0x14293bc30",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "virtual": true,
-    "access": "public",
-    "native_body_address": "0x14070f440",
-    "notes": "Returns inherited ItemDefinition (+0x88) as UFortHeroType*; name/type mismatch noted."
   },
   {
     "class": "UFortMatchmakingContext",
@@ -72585,5 +72517,54 @@
     "access": "public",
     "native_body_address": "0x1421e29f0",
     "notes": "Returns byte +0x458 (NativeRecoveredBool_0x458, new member)."
+  },
+  {
+    "class": "UFortPlayerSurveyAnswerWidgetBase",
+    "function": "HandleAnswerChanged_Implementation",
+    "kind": "native_event_impl",
+    "signature": "void HandleAnswerChanged_Implementation(FFortPlayerSurveyAnswerContainerChangeEventInfo& EventInfo)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/_shared/return.inc",
+    "address": "0x1452a85d0",
+    "status": "ported",
+    "confidence": "high",
+    "reflection_flags": "0xc480c00",
+    "static": false,
+    "access": "protected",
+    "native_body_address": "0x1406801e0",
+    "notes": "Void native event whose body is the shared 'xor eax,eax; ret' stub 0x1406801e0; the zero in EAX is unused, so the faithful body is empty."
+  },
+  {
+    "class": "UHUDLayoutToolProxy",
+    "function": "BP_GetPropertyType_Implementation",
+    "kind": "native_event_impl",
+    "signature": "ELayoutPropertyType BP_GetPropertyType_Implementation(int32 PropertyIndex) const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/_shared/return_enum_zero.inc",
+    "address": "0x14532fe90",
+    "status": "ported",
+    "confidence": "high",
+    "reflection_flags": "0x48080c00",
+    "static": false,
+    "access": "protected",
+    "native_body_address": "0x1406801e0",
+    "notes": "Enum-returning native event; body is the shared 'xor eax,eax; ret' stub 0x1406801e0, so it returns the zero enumerator."
+  },
+  {
+    "class": "UFortCreativeOption",
+    "function": "DoesMatchCategory",
+    "kind": "exec",
+    "signature": "bool DoesMatchCategory(FCreativeOptionCategoryData& CreativeOptionCategory)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/leaf3_runtime/UFortCreativeOption/DoesMatchCategory.inc",
+    "confidence": "high",
+    "address": "0x1428c8b00",
+    "status": "ported",
+    "reflection_flags": "0x14420401",
+    "static": false,
+    "virtual": false,
+    "access": "public",
+    "native_body_address": "0x141d74fe0",
+    "notes": "Returns CategoryTag == CreativeOptionCategory.CategoryTag (FName at struct +0x18), matching both dwords."
   }
 ]

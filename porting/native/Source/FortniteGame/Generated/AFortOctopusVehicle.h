@@ -30,9 +30,6 @@ class FORTNITEGAME_API AFortOctopusVehicle : public AFortAthenaSKVehicle
 	GENERATED_BODY()
 
 public:
-	// Non-reflected field (behaviour kind "member_field", offset 0xc8): not a UPROPERTY, not replicated.
-	bool NativeRecoveredBool_0xc8;
-
 	// table index 37, flags 0x10000000000004
 	UPROPERTY()
 	UCameraShake* CacheDriverCameraShake;
@@ -96,6 +93,9 @@ public:
 	// table index 22, flags 0x10000000000005
 	UPROPERTY()
 	FFortRechargingActionTimer BoostBounceAction;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x10b8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x10b8;
 
 	// table index 21, flags 0x14000000010001
 	UPROPERTY()

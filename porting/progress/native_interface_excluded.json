@@ -1,0 +1,358 @@
+{
+ "reason": "interface function: no body at the interface level; implementers carry the bodies",
+ "count": 252,
+ "functions": {
+  "UAthenaCoupledWidgetInterface": [
+   "BindTo"
+  ],
+  "UCommonPoolableWidgetInterface": [
+   "OnAcquireFromPool",
+   "OnReleaseToPool"
+  ],
+  "UCosmeticPreviewInterface": [
+   "CustomizePreviewInstance",
+   "GetSpecialPreviewActions",
+   "PerformSpecialAction"
+  ],
+  "UCustomCharacterPartOwnerInterface": [
+   "GetCustomizationRootSkeletalMeshComponent",
+   "PlayAnimationsMatchingQuery"
+  ],
+  "UFFTSoundDataProvider": [
+   "GetAverageMagnitude",
+   "GetMagnitudeForChannel"
+  ],
+  "UFortAIEncounterInfoOwnerInterface": [
+   "GetEncounterInfo"
+  ],
+  "UFortAIRootAssignmentProviderInterface": [
+   "GetRootAssignmentIdentifier"
+  ],
+  "UFortActorIndicatorInterface": [
+   "GetIndicatedActor"
+  ],
+  "UFortAttachToActorInterface": [
+   "GetActorAttachedTo"
+  ],
+  "UFortAutoFireTargetInterface": [
+   "IsValidAutoFireTarget"
+  ],
+  "UFortCarriedObjectHolderInterface": [
+   "CanHoldObject",
+   "GetAttachmentComponent",
+   "GetCarriedObjectAttachmentInfo",
+   "OnCarriedObjectAttach",
+   "OnCarriedObjectDetach"
+  ],
+  "UFortClientAnnouncement_ConversationCodeInterface": [
+   "IsPlayingConversation",
+   "IsPlayingSentence",
+   "IsPlayingSentenceIndex",
+   "PlayConversation",
+   "PlayConversationFromSentence",
+   "PlayConversationFromSentenceIndex",
+   "StopConversation"
+  ],
+  "UFortClientAnnouncement_ConversationInterface": [
+   "ShouldPlaySentence"
+  ],
+  "UFortClientAnnouncement_TutorialInterface": [
+   "HideTutorialWidget",
+   "SetButtonEnabled",
+   "SetDetailText",
+   "SetHAlign",
+   "SetLightboxDisableInputOnly",
+   "SetLightboxEnabled",
+   "SetNameText",
+   "SetPadding",
+   "SetSystemText",
+   "SetTitleText",
+   "SetVAlign",
+   "WaitForContinue"
+  ],
+  "UFortGameplayTagVolumeInterface": [
+   "ApplyTags"
+  ],
+  "UFortGlobalActionDetailsDataSource": [
+   "AddOnChangeDelegate",
+   "GetValue",
+   "RemoveOnChangeDelegate"
+  ],
+  "UFortHUDObjectiveSizeInterface": [
+   "GetHeightEstimate"
+  ],
+  "UFortHUDTargetUnderReticleInterface": [
+   "GetHUDTargetDifficultyRating",
+   "GetHUDTargetDisplayModifiers",
+   "GetHUDTargetDisplayName",
+   "GetHUDTargetHealthPercentage",
+   "GetHUDTargetUpgradeDisplayName"
+  ],
+  "UFortHealthRegenInterface": [
+   "GetHealthRegenDelayGameplayEffect",
+   "GetHealthRegenGameplayEffect",
+   "GetHealthRegenGameplayEffectClass",
+   "GetShieldRegenDelayGameplayEffect",
+   "GetShieldRegenGameplayEffect",
+   "GetShieldRegenGameplayEffectClass"
+  ],
+  "UFortInitializationInterface": [
+   "MatchStarted",
+   "NeedsWorldReady",
+   "WorldReady"
+  ],
+  "UFortInteractInterface": [
+   "GetBoundsComponents",
+   "GetCustomIcon",
+   "GetCustomTint",
+   "GetFocusedSocketLocation",
+   "GetIconPlacement",
+   "IconPlacementNeedsUpdate",
+   "LocalOnFailedInteract",
+   "ServerOnAttemptInteract"
+  ],
+  "UFortInterface_OverrideCanInteract": [
+   "ShouldOverrideCanInteract",
+   "ShouldSuppressInteractionWidget"
+  ],
+  "UFortItemListViewInterface": [
+   "CenterSelectedItemListEntryWidget",
+   "ClearCustomItemList",
+   "ContainsItem",
+   "GetConfig",
+   "GetFilter",
+   "GetSorter",
+   "HandleItemEvolutionBegun",
+   "HandleItemEvolutionCompleted",
+   "HandleItemRarityUpgradeBegun",
+   "HandleItemRarityUpgradeCompleted",
+   "HandleItemRefundBegun",
+   "HandleItemRefundCompleted",
+   "HideNullItemListEntry",
+   "RefreshFilterAndSort",
+   "RefreshSort",
+   "SetConfig",
+   "SetCustomItemList",
+   "SetFilter",
+   "SetFilterAndSorter",
+   "SetItemViewContext",
+   "SetSorter",
+   "ShowNullItemListEntry"
+  ],
+  "UFortItemManagementMulchPanel": [
+   "HideMulchConfirmationModal",
+   "NotifyPanelActivated",
+   "NotifyPanelDeactivated",
+   "ShowMulchConfirmationModal"
+  ],
+  "UFortMissionPowerPointsInterface": [
+   "GetAvailabilityWeight",
+   "GetInitialRangeLerpValue",
+   "GetMaxRangeLerpValue",
+   "GetPowerPointsCost"
+  ],
+  "UFortMountedWeaponInterface": [
+   "AddToIgnoreActors",
+   "GetHostVehicleCached",
+   "GetWeaponComponentCached"
+  ],
+  "UFortMusicSequencerInterface": [
+   "OnHitByMusicSequencer"
+  ],
+  "UFortMutatorContext": [
+   "GetMutatorContext"
+  ],
+  "UFortMutatorOwner": [
+   "AddMutatorToList",
+   "GetMutatorRelevantPlayers",
+   "GetMutatorsForContextActor",
+   "RemoveMutatorFromList"
+  ],
+  "UFortPickupEventHandler": [
+   "HandleItemAdded",
+   "HandleItemCaptured",
+   "HandleItemRemoved",
+   "HandlePickupCaptured",
+   "HandlePickupClaimed",
+   "HandlePickupDespawned",
+   "HandlePickupDestroyed",
+   "HandlePickupDropped",
+   "HandlePickupSpawned"
+  ],
+  "UFortPickupInstigator": [
+   "GetInstigatorData",
+   "GetPickupEventHandler",
+   "GetTrackedIndex",
+   "GetTrackedIndices",
+   "GetTrackedItemCount",
+   "SetTrackedIndex"
+  ],
+  "UFortPickupManagementInterface": [
+   "AddManagedActor"
+  ],
+  "UFortPlayerControllerContext": [
+   "GetControllerFromContext"
+  ],
+  "UFortPrioritizedWidget": [
+   "RequestActivation",
+   "SetHasActiveContent",
+   "WidgetIsFinished"
+  ],
+  "UFortProjectileMovementInterface": [
+   "GetCurrentLocation",
+   "GetFortProjectileMovementComponent",
+   "GetInstigatorPlayerController",
+   "IsProjectileBeingKilled",
+   "SetAccelerationMagnitude",
+   "SetDesiredDirection",
+   "SetHomingData",
+   "SetHomingLaserTargetDistance",
+   "SetHomingLockTargetDistanceThreshold",
+   "SetHomingStyle",
+   "SetHomingTarget",
+   "SetHomingTargetOffset",
+   "SetHomingTargetPosition",
+   "SetHomingTimeUntilMaxTurnSpeed",
+   "SetHomingTurnSpeedMax",
+   "SetHomingTurnSpeedMin"
+  ],
+  "UFortSafeZoneInterface": [
+   "GetSafeZoneNextCenter",
+   "GetSafeZoneNextNextCenter"
+  ],
+  "UFortSpawnableByPlacementSystemInterface": [
+   "GetMission",
+   "GetMissionGuid"
+  ],
+  "UFortTabButtonInterface": [
+   "SetTabLabelInfo"
+  ],
+  "UFortTargetSelectionInterface": [
+   "GetTargetingTransform"
+  ],
+  "UFortTimespanDataSource": [
+   "AddOnChangeDelegate",
+   "GetValue",
+   "RemoveOnChangeDelegate"
+  ],
+  "UFortTooltipInterface": [
+   "GetDisplayStats",
+   "GetTooltip"
+  ],
+  "UFortTrajectoryAbilityInterface": [
+   "ShouldOnlyShowTrajectoryOnUse"
+  ],
+  "UFortUICameraFrameTargetInterface": [
+   "GetZoomedInCameraFramingSettings",
+   "GetZoomedOutCameraFramingSettings",
+   "SetFrameTargetSettingsChangedDelegate"
+  ],
+  "UFortVehicleInterface": [
+   "AddVehicleActionNamesAndLabels",
+   "ApplyMaterialAndUseWrapIfPossible",
+   "BlocksBuilding",
+   "CallGunOverheat",
+   "CallWeaponFired",
+   "CanContainPlayers",
+   "CanShootFromSeat",
+   "CanTeleport",
+   "ChangeSeat",
+   "ChangeSeatFromIndex",
+   "ClientIsDriver",
+   "ContainsPlayers",
+   "DestroyVehicle",
+   "DisableTrickCredit",
+   "EjectAllPlayers",
+   "EjectPlayerPawn",
+   "EjectSeat",
+   "ExitActivatedFromSeat",
+   "ExitPressedFromSeat",
+   "ExitReleasedFromSeat",
+   "FindSeatIndex",
+   "GetAllPassengers",
+   "GetCrouchingFiringOffsetForSeat",
+   "GetDisplayName",
+   "GetDriver",
+   "GetExitSocketTransform",
+   "GetGameplayTags",
+   "GetHealth",
+   "GetIndicatorRelativeOffset",
+   "GetMaxHealth",
+   "GetOwnerLocation",
+   "GetPawnAtSeat",
+   "GetSeatSwitchCooldown",
+   "GetSeatWeaponComponent",
+   "GetShootingCone",
+   "GetSkeletalMeshComponent",
+   "GetStandingFiringOffsetForSeat",
+   "GetVehicleAbilitySystemComponent",
+   "GetVehicleActorPtr",
+   "GetVehicleActorPtrConst",
+   "GetVehicleChangeSeatActionName",
+   "GetVehicleExitActionName",
+   "GetVehicleForwardVector",
+   "GetVehicleRightVector",
+   "GetVehicleRotation",
+   "GetVehicleSeatChoiceDisplayText",
+   "GetVehicleSeatComponentPtr",
+   "GetVehicleTags",
+   "GetVehicleVelocity",
+   "HasDriver",
+   "HasEverContainedPlayers",
+   "IsAsleep",
+   "IsBoosting",
+   "IsInWater",
+   "IsTouchingGround",
+   "NotifyAudioComponentVehicleTriggered",
+   "OverrideCurrentWrap",
+   "ResetTrick",
+   "SeatIsTurret",
+   "SetActorBase",
+   "SetCurrentFocusedSocketLocation",
+   "SetDestroyOnLastExit",
+   "SetHealthPercent",
+   "SetIgnoreAllFallingDamage",
+   "SetIgnoreNextFallingDamage",
+   "SetShootingCone",
+   "ShowVehicleHealthBarOnPlayerHUD",
+   "VehicleGameplayCue_Damage",
+   "VehicleIsInAir",
+   "VehicleIsInSkyTube",
+   "WakeUp"
+  ],
+  "ULevelDuplicatable": [
+   "PostFinishDuplication"
+  ],
+  "ULevelSaveSpawnable": [
+   "CanBeSavedToCreativeVolume",
+   "PostFinishSpawning",
+   "PostLevelSaveSpawnCleanup",
+   "PreFinishSpawning",
+   "PreSaveBaseActorRecord"
+  ],
+  "ULockableInterface": [
+   "GetComponentToLock"
+  ],
+  "UOpenableInterface": [
+   "Close",
+   "IsOpen",
+   "Open"
+  ],
+  "USingleIndexSelectionModel": [
+   "AddOnNavigationChangedDelegate",
+   "AddOnNumItemsChangedDelegate",
+   "AddOnSelectedIndexChangedDelegate",
+   "CanMoveDelta",
+   "GetNumItems",
+   "GetSelectedIndex",
+   "RemoveOnNavigationChangedDelegate",
+   "RemoveOnNumItemsChangedDelegate",
+   "RemoveOnSelectedIndexChangedDelegate",
+   "SetSelectedIndex",
+   "TryMoveDelta"
+  ],
+  "UVehicleTeleportPortal": [
+   "NotifyTeleportedVehicle"
+  ]
+ }
+}

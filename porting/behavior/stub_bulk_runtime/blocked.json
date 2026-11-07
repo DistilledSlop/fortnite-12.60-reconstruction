@@ -518,5 +518,35 @@
     "reason": "Param InListenedTag is an 8-byte struct passed by value (MOV [+0x2c8],RDX), with no struct type name in packet or header (header only has FGameplayTagContainer). Undeclared +0x2c8 needs that type.",
     "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
     "source": "leaf4"
+  },
+  {
+    "entry": "UFortWorker::GetWorkerTypeBP",
+    "kind": "exec",
+    "blocker": "thunk_has_inlined_logic",
+    "reason": "thunk 0x142b5d3d0 does a vtable call (+0x3e8) then an inlined class-hierarchy cast check on the result; it never calls 0x14070f440, so the body is a Cast<> of GetItemDefinition-style data, not a plain getter",
+    "unblock": "Port the thunk-level logic itself (group A style): decompile the thunk, implement vtable/interface/cast steps with typed members",
+    "body": "0x14070f440",
+    "thunk": "0x142b5d3d0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortAthenaMutator_Arsenic::IsPawnAnInfected",
+    "kind": "exec",
+    "blocker": "thunk_has_inlined_logic",
+    "reason": "thunk 0x1427e1490 inlines the logic: it queries the Pawn argument through an interface vtable (+0x28 after ADD 0x4a8) and compares with InfectedTeam (body 0x141aad120 is only the InfectedTeam getter)",
+    "unblock": "Port the thunk-level logic itself (group A style): decompile the thunk, implement vtable/interface/cast steps with typed members",
+    "body": "0x141aad120",
+    "thunk": "0x1427e1490",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortHero::GetHeroTypeBP",
+    "kind": "exec",
+    "blocker": "thunk_has_inlined_logic",
+    "reason": "same shape as GetWorkerTypeBP: thunk does a vtable call plus an inlined cast check; body 0x14070f440 is not the function",
+    "unblock": "Port the thunk-level logic itself (group A style): decompile the thunk, implement vtable/interface/cast steps with typed members",
+    "body": "0x14070f440",
+    "thunk": "0x14293bc30",
+    "note": "previously ported in error; removed"
   }
 ]
