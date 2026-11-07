@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "ABattleMapPawnLive.h"
 #include "ABuildingActor.h"
 #include "ABuildingTrap.h"
 #include "AFortBluGloManager.h"
@@ -72,6 +73,7 @@
 #include "FOnWeaponHudKeyActionUpdated.h"
 #include "FPawnUpdatedDecisionWindowStackSignature.h"
 
+class AActor;
 class UFortTouchControlRegion;
 
 #include "UFortHUDContext.generated.h"
@@ -440,8 +442,39 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortMissionManager* GetMissionManager() const;
 
+private:
+	UFUNCTION(BlueprintCallable)
+	void HandleActorFocusedForCreative(AActor* NewActor);
+public:
+
+private:
+	UFUNCTION()
+	void HandleBuildingModeChanged(bool bEntering);
+public:
+
+private:
+	UFUNCTION()
+	void HandlePersonalVehicleModeChanged(bool bEnteredVehicle);
+public:
+
+private:
+	UFUNCTION()
+	void HandleToggledBattleMapLive(ABattleMapPawnLive* NewSpectatorPawn);
+public:
+
+private:
+	UFUNCTION()
+	void HandleVehicleStateChanged(AFortPlayerPawn* PlayerPawn, AActor* NewVehicle, AActor* OldVehicle);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPreparingMgmtMenu() const;
+
+	UFUNCTION(BlueprintCallable)
+	void RemovePointOfInterest(AActor* PointOfInterest);
+
+	UFUNCTION(BlueprintCallable)
+	void RequestMgmtMenuTab(FName TabName);
 
 	UFUNCTION(BlueprintCallable)
 	void SetPreparingMgmtMenu(bool bPreparing);

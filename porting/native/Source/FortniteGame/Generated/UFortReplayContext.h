@@ -162,5 +162,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void TogglePlayerListVisibility();
 
+	UFUNCTION(BlueprintCallable)
+	void ToggleViewSettingsVisibility();
+
 };
 

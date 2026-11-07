@@ -20,7 +20,13 @@ bool UFortLevelSaveComponent::IsLoaded() const
 
 void UFortLevelSaveComponent::OnRep_BackupSaveState(EBackupSaveState OldValue)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: UFortLevelSaveComponent::OnRep_BackupSaveState (wrapper body; spliced into the generated member function).
+	// Original body address: 0x141efd920 (thunk 0x14297f160, receiver delta 0, this delta total 0).
+	// Offset evidence: MOVZX EAX,byte [RCX+0x3b2] (reflected BackupSaveState, EBackupSaveState : uint8) stored as the 1-byte param at offset 0; RDX (OldValue) is never read.
+	// Offset evidence: ADD RCX,0x1a0 -> OnClientBackupSaveStateChanged (reflected at +0x1a0; FOnBackupSaveStateChanged(EBackupSaveState SaveState)).
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>; called as the shared multicast broadcast body (no callee_candidates for this job).
+	// CONFIDENCE: MEDIUM
+	OnClientBackupSaveStateChanged.Broadcast(BackupSaveState);
 }
 
 void UFortLevelSaveComponent::OnRep_IsAutoSaving(bool bOldValue)
@@ -30,7 +36,13 @@ void UFortLevelSaveComponent::OnRep_IsAutoSaving(bool bOldValue)
 
 void UFortLevelSaveComponent::OnRep_LastCheckpointDate(FDateTime OldValue)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: UFortLevelSaveComponent::OnRep_LastCheckpointDate (body only; spliced into the generated member function).
+	// Original body: 0x141efd9d0 (thunk 0x14297f270); native body is a broadcast through ProcessMulticastDelegate 0x1406a9dc0.
+	// Offset evidence:
+	//   Asm: MOV RAX,qword [RCX+0x3b8] (LastCheckpointDateUtc, reflected FDateTime) copied to the params block.
+	//   ADD RCX,0x1c0 -> OnClientCheckpointDateChanged (+0x1c0), FOnDateChanged(FDateTime DateValue).
+	// CONFIDENCE: HIGH
+	OnClientCheckpointDateChanged.Broadcast(LastCheckpointDateUtc);
 }
 
 void UFortLevelSaveComponent::OnRep_Loaded()
@@ -55,7 +67,10 @@ void UFortLevelSaveComponent::OnRep_PlotPermissionsChanged()
 
 void UFortLevelSaveComponent::OnRep_RestoringStateChanged(EBackupSaveState OldValue)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body 0x141eff490 (thunk 0x14297f370). Offset evidence: MOVZX EAX,[RCX+0x3b3]: RestoringState (reflected exact, EBackupSaveState). ADD RCX,0x1b0 -> OnClientBackupRestoreStateChanged (exact). Pack: [0]=AL.
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>: mapped to <Member>.Broadcast(...) per the broadcast addendum.
+	// CONFIDENCE: MEDIUM
+	OnClientBackupRestoreStateChanged.Broadcast(RestoringState);
 }
 
 void UFortLevelSaveComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

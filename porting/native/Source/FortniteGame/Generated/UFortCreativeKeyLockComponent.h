@@ -81,8 +81,10 @@ public:
 	UFUNCTION()
 	void OnRep_KeyItemDefinition();
 
+protected:
 	UFUNCTION()
 	void OnRep_RemainingKeysToUnlock();
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetShouldConsumeKey(bool ShouldConsume);

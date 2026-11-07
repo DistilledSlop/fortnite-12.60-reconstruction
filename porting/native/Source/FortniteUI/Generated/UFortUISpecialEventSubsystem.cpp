@@ -2,11 +2,35 @@
 #include "UFortUISpecialEventSubsystem.h"
 #include "EFortUISpecialEvents.h"
 
+void UFortUISpecialEventSubsystem::CallTemporarySpecialUIEvent(EFortUISpecialEvents InNewTemporaryEvent)
+{
+	// Original body 0x144cc68d0 (thunk 0x1451e1a50). Offset evidence: ADD RCX,0x40 -> OnTemporarySpecialUIEvent (reflected exact at +0x40). Pack: [0]=DL enum byte. Shared body with UCreativeHUDLContext::ForwardOnScaleAxisChanged.
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>: mapped to <Member>.Broadcast(...) per the broadcast addendum.
+	// CONFIDENCE: MEDIUM
+	OnTemporarySpecialUIEvent.Broadcast(InNewTemporaryEvent);
+}
+
 TEnumAsByte<EFortUISpecialEvents> UFortUISpecialEventSubsystem::GetCurrentUIEventState()
 {
 	// CONFIDENCE: high; native wrapper reads the constructor-zeroed byte at 0x50.
 	{
 		return static_cast<EFortUISpecialEvents>(NativeRecoveredByte_0x50);
+	}
+}
+
+void UFortUISpecialEventSubsystem::SetCurrentUISpecialEventState(EFortUISpecialEvents InNewEventState)
+{
+	// Behaviour snippet: UFortUISpecialEventSubsystem::SetCurrentUISpecialEventState (wrapper body; spliced into the generated member function).
+	// Original body address: 0x144e199d0 (thunk 0x14531a230, receiver delta 0, this delta total 0).
+	// Offset evidence: CMP EDX,dword [RCX+0x50]; JZ skips the store and the call when equal. MOV dword [RCX+0x50],EDX stores the 32-bit value into an unreflected gap at +0x50 (after OnTemporarySpecialUIEvent at +0x40), emitted as member_field NativeRecoveredInt32_0x50.
+	// Offset evidence: MOV byte [RSP+0x38],DL; ADD RCX,0x30 -> OnNewUISpecialEventState (reflected at +0x30; FSpecialUIEventDelegate(TEnumAsByte<EFortUISpecialEvents>)).
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>; called as the shared multicast broadcast body (no callee_candidates for this job).
+	// CONFIDENCE: MEDIUM
+	const int32 NewEventValue = static_cast<int32>(InNewEventState);
+	if (NewEventValue != NativeRecoveredInt32_0x50)
+	{
+	    NativeRecoveredInt32_0x50 = NewEventValue;
+	    OnNewUISpecialEventState.Broadcast(InNewEventState);
 	}
 }
 

@@ -28,8 +28,17 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x50): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredByte_0x50 = 0;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x50): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x50;
+
+	UFUNCTION(BlueprintCallable)
+	void CallTemporarySpecialUIEvent(EFortUISpecialEvents InNewTemporaryEvent);
+
 	UFUNCTION(BlueprintCallable)
 	TEnumAsByte<EFortUISpecialEvents> GetCurrentUIEventState();
+
+	UFUNCTION(BlueprintCallable)
+	void SetCurrentUISpecialEventState(EFortUISpecialEvents InNewEventState);
 
 };
 

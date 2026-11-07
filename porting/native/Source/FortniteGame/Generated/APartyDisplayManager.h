@@ -12,6 +12,7 @@
 #include "FOnPrefabForCurrentlyDisplayedItemChanged.h"
 #include "FOnPrefabForCurrentlyDisplayedItemReady.h"
 
+class UFortItem;
 class UMaterialInstance;
 
 #include "APartyDisplayManager.generated.h"
@@ -69,6 +70,11 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	FFortAthenaLoadout CurrentlyDisplayedCosmeticLoadout;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void NotifyPrefabChanged(AActor* PrefabActor, UFortItem* CurrentItem);
+public:
 
 };
 

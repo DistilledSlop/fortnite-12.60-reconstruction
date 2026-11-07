@@ -8,6 +8,7 @@
 
 #include "AFortPlayerPawn.h"
 #include "AFortPlayerStateAthena.h"
+#include "AFortWeapon.h"
 #include "FBoolDelegate.h"
 #include "FIntDelegate.h"
 #include "FLinearColorDelegate.h"
@@ -135,8 +136,14 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x1e8): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredUint8_0x1e8;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e8): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x1e8;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x200): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt32_0x200;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x200): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x200;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x208): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x208;
@@ -153,6 +160,36 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	AFortPlayerPawn* CachedPlayerPawn;
+
+private:
+	UFUNCTION()
+	void ForwardOnBeingRevivedStateChanged(AFortPlayerStateAthena* InPlayerState, bool bInIsBeingRevived);
+public:
+
+private:
+	UFUNCTION()
+	void ForwardOnDBNOStateChanged(AFortPlayerStateAthena* InPlayerState, bool bInIsDBNO);
+public:
+
+private:
+	UFUNCTION()
+	void ForwardOnDeadStateChanged(AFortPlayerStateAthena* InPlayerState, bool bInIsDead);
+public:
+
+private:
+	UFUNCTION()
+	void ForwardOnKillScoreChanged(AFortPlayerStateAthena* InPlayerState, int32 InKillScore);
+public:
+
+private:
+	UFUNCTION()
+	void ForwardOnSquadIdChanged(uint8 InSquadId);
+public:
+
+private:
+	UFUNCTION()
+	void ForwardOnWeaponChanged(AFortWeapon* InNewWeapon, AFortWeapon* InPrevWeapon);
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetInAircraft() const;

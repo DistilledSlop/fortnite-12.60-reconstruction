@@ -369,8 +369,10 @@ public:
 	UFUNCTION()
 	void OnRep_PoiTagContainerTableID(int16 PreviousPoiTagContainerTableID);
 
+private:
 	UFUNCTION()
 	void OnRep_UIMetricsDisplayIndex();
+public:
 
 	UFUNCTION()
 	void OnVerifyAllowedToFly();

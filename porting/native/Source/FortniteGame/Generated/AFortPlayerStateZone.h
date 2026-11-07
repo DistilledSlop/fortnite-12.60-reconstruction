@@ -158,7 +158,7 @@ public:
 	void OnRep_QuickbarEquippedItems();
 
 	UFUNCTION()
-	void OnRep_SpectatingTarget();
+	virtual void OnRep_SpectatingTarget();
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetInAircraft(bool bNewInAircraft);

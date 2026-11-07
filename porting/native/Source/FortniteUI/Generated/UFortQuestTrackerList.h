@@ -10,6 +10,8 @@
 #include "UCommonListView.h"
 #include "UFortQuestItem.h"
 
+class UObject;
+
 #include "UFortQuestTrackerList.generated.h"
 
 UCLASS(abstract)
@@ -33,6 +35,11 @@ public:
 	// table index 0, flags 0x20080000080000
 	UPROPERTY()
 	FOnSizeEstimateChanged OnSizeEstimateChangedDelegate;
+
+protected:
+	UFUNCTION()
+	void HandleSizeEstimateChanged(UObject* ChangedElement);
+public:
 
 };
 

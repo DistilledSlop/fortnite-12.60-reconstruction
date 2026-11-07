@@ -223,8 +223,10 @@ public:
 	UFUNCTION()
 	void OnRep_ObjectTrackingComponent();
 
+private:
 	UFUNCTION()
 	void OnRep_UserGeneratedContentRestrictions();
+public:
 
 	UFUNCTION()
 	void OnRep_VolumeState();

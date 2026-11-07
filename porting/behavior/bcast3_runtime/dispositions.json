@@ -1,0 +1,219 @@
+[
+ {
+  "class": "AFortTeamHealthInfo",
+  "function": "OnRep_RepDataReplicated",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "delegate_unreflected: AFortTeamHealthInfo +0x218 is below its own region (min 0x228) and no reflected AActor/AInfo member covers it (AActor last reflected member BlueprintCreatedComponents at +0x1f8)."
+ },
+ {
+  "class": "AFortVolumeManager",
+  "function": "HandleVolumeStateChanged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnVolumeStateChanged exact at +0x268; pack NewState byte [0x20] and Volume ptr [0x28] match FOnVolumeStateChanged(EVolumeState, AFortVolume*)."
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "HandleLocalPlayerDBNOStateChanged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnLocalPlayerDBNOStateChanged exact at +0x98. Body packs R8B (bIsDBNO) only; RDX FortPawn is not forwarded by the native body."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnDBNOStateChanged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnDBNOStateChanged exact at +0xc8 (FBoolDelegate). Native packs RCX (this) as PlayerData and R8B as bool; header InPlayerState is not forwarded."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnSquadIdChanged",
+  "status": "proposed",
+  "case": "gap_store_and_broadcast",
+  "reason": "checked: Stores InSquadId to unreflected +0x1e8 (new member NativeRecoveredByte_0x1e8), then OnSquadIdChanged exact at +0x48 (FUInt8Delegate(PlayerData, IntParam))."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnCreativeHeatmapTogged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnCreativeHeatmapToggled exact at +0x60; FOnCreativeHeatmapToggled(bool)."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnCreativeQuickbarEquippedChanged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnCreativeQuickbarEquippedChanged exact at +0x110; FOnCreativeQuickbarEquippedChanged(bool)."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnLOSChanged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnMoveToolLineOfSightBlockingChanged exact at +0x90; FOnMoveToolLineOfSightBlockingChanged(EHitTraceRule) stored as byte."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnPrecisionChanged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnPrecisionChanged exact at +0x80 (SUB RCX,-0x80); FOnMoveToolPrecisionChanged(bool, uint8) matches pack order."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnScaleAxisChanged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnScaleAxisChanged exact at +0x40; FOnMoveToolScaleAxisChanged(EScaleAxis). Same body 0x144cc68d0 as CallTemporarySpecialUIEvent."
+ },
+ {
+  "class": "UFortDropdownMenu",
+  "function": "InternalOnSelectionChanged",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "delegate_not_declared: UFortDropdownMenu OnOptionSelected (+0x428, reflected InlineMulticastDelegate) has no declaration in any generated header, so its parameter list cannot be checked against the stack pack."
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "HandleBuildingModeChanged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnBuildModeChanged exact at +0x4d0; FOnBuildModeChanged(bool bEntering)."
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "HandleVehicleStateChanged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnPlayerVehicleStateChanged exact at +0x4f0; FOnVehicleStateChanged(PlayerPawn, NewVehicle, OldVehicle) matches pack [0]/[8]/[0x10]."
+ },
+ {
+  "class": "UFortHUDTagPromptWidgetBase",
+  "function": "CloseWidget_Implementation",
+  "status": "proposed",
+  "case": "broadcast_const_arg",
+  "reason": "checked: OnOpenedOrClosed exact at +0x298; FOnOpenOrClosed(bool bNewlyOpened) receives literal false from the body."
+ },
+ {
+  "class": "UFortNotificationEntry",
+  "function": "FinishNotificationOutro",
+  "status": "proposed",
+  "case": "broadcast_no_params",
+  "reason": "checked: FinishedDisplayingNotification exact at +0x258; FFinishedNotification has no params (RDX=0 tail jump)."
+ },
+ {
+  "class": "UFortSquadSlotsView",
+  "function": "HandleRequestViewInAll",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnRequestViewInAllEvent exact at +0x288; FOnRequestSquadSlotAction(int32 SquadSlotIndex) matches dword pack."
+ },
+ {
+  "class": "UFortUISpecialEventSubsystem",
+  "function": "CallTemporarySpecialUIEvent",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnTemporarySpecialUIEvent exact at +0x40; FSpecialUIEventDelegate(TEnumAsByte<EFortUISpecialEvents>). Body 0x144cc68d0 and thunk 0x1451e1a50 are shared with UCreativeHUDLContext::F"
+ },
+ {
+  "class": "UHUDLayoutToolContext",
+  "function": "StartLerping",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnNewViewOffsetLerpDelegate exact at +0x98; FOnNewViewOffsetLerp(FVector2D NewOffset) receives 8-byte struct from RDX."
+ },
+ {
+  "class": "AFortAthenaMutator_Crucible",
+  "function": "OnInputMethodChanged",
+  "status": "proposed",
+  "case": "guarded_raw_write_then_broadcast",
+  "reason": "checked: OnCrucibleParticipantBestTimesUpdated exact at +0x280 (no params). Pointer at unreflected +0x318 is a new uint64 member; pointee type unknown so byte write at +0x2c is raw."
+ },
+ {
+  "class": "AFortAthenaMutator_Uranium",
+  "function": "OnPushCartTeamsRolesChanged",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnTeamsRolesChanged exact at +0x980; FUraniumOnTeamsRolesChanged(uint8 PusherTeam, uint8 DefenderTeam) matches DL/R8B pack order."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ClientAddItemToMoveToolComplete_Implementation",
+  "status": "proposed",
+  "case": "guarded_chain_broadcast",
+  "reason": "checked: RCX is overwritten by the FortPC chain; FortPC->CreativeQuickbarComponent (+0x22f0, exact) -> OnItemAddedToMoveTool (+0xe0, exact, no params)."
+ },
+ {
+  "class": "AFortCreativeTimerObjective",
+  "function": "BroadcastUpdateToHUD",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "delegate_unreflected: AFortCreativeTimerObjective.Volume (AFortVolume*, exact +0xba8) -> AFortVolume+0x500 is not reflected (StormShields Array +0x4f0 ends at +0x4ff, TimerObjectives at +0x510); delegate type unknown."
+ },
+ {
+  "class": "UFortDialogNotificationHandler",
+  "function": "Timeout_Implementation",
+  "status": "proposed",
+  "case": "broadcast_no_params",
+  "reason": "checked: OnTimedOut exact at +0x60; FOnActionComplete has no params (RDX=0 tail jump)."
+ },
+ {
+  "class": "AFortGameStateDeployableBase",
+  "function": "OnRep_DeployableBaseManager",
+  "status": "proposed",
+  "case": "guarded_broadcast_no_params",
+  "reason": "checked: DeployableBaseManager (exact, Object) null-guard; OnDeployableBaseManagerCreated exact at +0xfd0 (no params)."
+ },
+ {
+  "class": "UFortLinkToActorComponent",
+  "function": "HandleLinkedActorDestroyed",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "unnamed_target: body CALLs 0x141d14730 before the broadcast (outside the body, job has no callee_candidates)."
+ },
+ {
+  "class": "UFortLevelSaveComponent",
+  "function": "OnRep_RestoringStateChanged",
+  "status": "proposed",
+  "case": "broadcast_field_arg",
+  "reason": "checked: OnClientBackupRestoreStateChanged exact at +0x1b0; FOnBackupRestoreStateChanged(EBackupSaveState). Native passes the RestoringState byte (+0x3b3, exact), not the OldValue argument."
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "HandleMinigameEnded_Implementation",
+  "status": "proposed",
+  "case": "broadcast_no_params",
+  "reason": "checked: MinigameEndedDelegate exact at +0x388; FSimpleMinigameDelegate has no params."
+ },
+ {
+  "class": "UFortMinigameLogicComponent",
+  "function": "HandleMinigameEnded_Implementation",
+  "status": "proposed",
+  "case": "broadcast_no_params",
+  "reason": "checked: MinigameEndedDelegate exact at +0xd8; FSimpleDynamicMulticastDelegate has no params."
+ },
+ {
+  "class": "UFortMissionTimerComponent",
+  "function": "OnRep_TimerVisibilityOverride",
+  "status": "proposed",
+  "case": "guarded_broadcast_this",
+  "reason": "checked: OnMissionTimerComponentUpdated exact at +0xb8; CMP dword [+0xc0] is the invocation count (Num) of that delegate at +0xb8, so the guard is IsBound()."
+ },
+ {
+  "class": "AFortPlayerPushableCart",
+  "function": "OnRep_CurrentCheckpoint",
+  "status": "proposed",
+  "case": "broadcast_widened_arg",
+  "reason": "checked: OnCheckPointReached exact at +0x790; FOnCheckPointReached(int32). CurrentCheckPoint (uint8, exact at +0x828) is zero-extended (MOVZX) into the dword pack."
+ },
+ {
+  "class": "UFortPortalComponent",
+  "function": "OnRep_LinkCodeLockStatus",
+  "status": "proposed",
+  "case": "broadcast_forward",
+  "reason": "checked: OnPortalLinkCodeLockStatusChanged exact at +0xe0; FOnPortalLinkCodeLockStatusChanged(EPortalLinkCodeLockStatus) receives LinkCodeLockStatus byte (+0x221, exact)."
+ }
+]

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "AFortPawn.h"
 #include "AFortPlayerPawnAthena.h"
 #include "EPTTState.h"
 #include "FAthenaWinnerInfo.h"
@@ -206,6 +207,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x280): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x280;
 
+	UFUNCTION()
+	void ForceVictoryRoyaleUI();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetBatteryLevel() const;
 
@@ -221,6 +225,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EPTTState GetPTTState() const;
 
+private:
+	UFUNCTION()
+	void HandleLocalPlayerDBNOStateChanged(AFortPawn* FortPawn, bool bIsDBNO);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasFiringTouch() const;
 
@@ -232,6 +241,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetLocalPlayerWonMatch(bool bLocalPlayerWon);
+
+	UFUNCTION(BlueprintCallable)
+	void SetPostGameWidgetPlacement(FName WidgetPlacement);
 
 };
 

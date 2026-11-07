@@ -7,6 +7,7 @@
 #include "GameFramework/Info.h"
 
 #include "Components/StaticMeshComponent.h"
+#include "EVolumeState.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FFortVolumeActiveUsers.h"
@@ -130,6 +131,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortVolume* GetVolumeForPlayerState(APlayerState* PlayerState) const;
+
+private:
+	UFUNCTION()
+	void HandleVolumeStateChanged(EVolumeState NewState, AFortVolume* Volume);
+public:
 
 	UFUNCTION()
 	void IncrementUserIslandLoading();

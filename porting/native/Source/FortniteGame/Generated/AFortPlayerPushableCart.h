@@ -194,11 +194,15 @@ public:
 	UFUNCTION()
 	void OnRep_bIsNearCheckpoint();
 
+protected:
 	UFUNCTION()
 	void OnRep_CurrentCheckpoint();
+public:
 
+protected:
 	UFUNCTION()
 	void OnRep_TeamRoles();
+public:
 
 	UFUNCTION()
 	void OnRep_TotalActiveDefenders();

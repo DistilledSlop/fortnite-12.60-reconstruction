@@ -43,5 +43,8 @@ public:
 	UPROPERTY()
 	FGameplayTag FactionTag;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void StartPerkScreenIntro();
+
 };
 

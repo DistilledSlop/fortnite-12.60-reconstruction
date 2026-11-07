@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaMutator.h"
 
+#include "ECommonInputType.h"
 #include "EFortCrucibleControlType.h"
 #include "EFortCrucibleStatId.h"
 #include "EFortCrucibleStatType.h"
@@ -37,6 +38,9 @@ public:
 	// table index 7, flags 0x10000010080000
 	UPROPERTY()
 	FCrucibleLatestCourseResultsUpdated OnCrucibleLatestCourseResultsUpdated;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x318): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x318;
 
 	// table index 6, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -101,6 +105,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLeaderboardSwitchingDisabled() const;
+
+	UFUNCTION()
+	void OnInputMethodChanged(ECommonInputType CurrentInputType);
 
 protected:
 	UFUNCTION()

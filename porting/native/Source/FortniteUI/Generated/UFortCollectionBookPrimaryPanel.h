@@ -62,6 +62,12 @@ public:
 
 protected:
 	UFUNCTION(BlueprintNativeEvent)
+	void OnCollectionBookSectionClicked(UFortCollectionBookSection* ClickedSection);
+	virtual void OnCollectionBookSectionClicked_Implementation(UFortCollectionBookSection* ClickedSection);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
 	void OnSummonInfoPanelExecuted(bool& bPassThrough);
 	virtual void OnSummonInfoPanelExecuted_Implementation(bool& bPassThrough);
 public:

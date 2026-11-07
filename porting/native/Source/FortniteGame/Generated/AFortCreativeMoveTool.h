@@ -495,8 +495,10 @@ public:
 	UFUNCTION()
 	void OnRep_NewlyPlacedActors();
 
+protected:
 	UFUNCTION()
 	void OnRep_SelectionProperty();
+public:
 
 	UFUNCTION(NetMulticast, Reliable)
 	void RemoteClientsUpdateSelectedActors(const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, UObjectInteractionBehavior* CurrentObjectInteractionBehvaior);

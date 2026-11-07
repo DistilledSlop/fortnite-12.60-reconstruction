@@ -33,5 +33,17 @@ public:
 	UPROPERTY()
 	FFortDialogDescription DialogDescription;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCosmetic)
+	void Accept();
+	virtual void Accept_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCosmetic)
+	void Decline();
+	virtual void Decline_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCosmetic)
+	void Timeout();
+	virtual void Timeout_Implementation();
+
 };
 

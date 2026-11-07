@@ -49,12 +49,78 @@ AFortMissionManager* UFortHUDContext::GetMissionManager() const
 	return GameState ? GameState->MissionManager : nullptr;
 }
 
+void UFortHUDContext::HandleActorFocusedForCreative(AActor* NewActor)
+{
+	// Behaviour snippet: UFortHUDContext::HandleActorFocusedForCreative (body only; spliced into the generated member function).
+	// Original body: 0x144cd3840 (thunk 0x1452573d0); native body is a broadcast through ProcessMulticastDelegate 0x1406a9dc0.
+	// Offset evidence:
+	//   Asm: MOV qword [RSP+0x30],RDX; ADD RCX,0xc8 -> OnActorFocusedForCreative (+0xc8), FOnActorFocusedForCreative(AActor*).
+	// CONFIDENCE: HIGH
+	OnActorFocusedForCreative.Broadcast(NewActor);
+}
+
+void UFortHUDContext::HandleBuildingModeChanged(bool bEntering)
+{
+	// Original body 0x144cd3d70 (thunk 0x145257450). Offset evidence: ADD RCX,0x4d0 -> OnBuildModeChanged (reflected exact at +0x4d0). Pack: [0]=DL bool.
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>: mapped to <Member>.Broadcast(...) per the broadcast addendum.
+	// CONFIDENCE: HIGH
+	OnBuildModeChanged.Broadcast(bEntering);
+}
+
+void UFortHUDContext::HandlePersonalVehicleModeChanged(bool bEnteredVehicle)
+{
+	// Behaviour snippet: UFortHUDContext::HandlePersonalVehicleModeChanged (wrapper body; spliced into the generated member function).
+	// Original body address: 0x144cd4810 (thunk 0x1452576e0, receiver delta 0, this delta total 0).
+	// Offset evidence: MOV [RSP+0x38],DL stores bEnteredVehicle as a bool param; ADD RCX,0x4e0 -> OnPersonalVehicleModeChanged (reflected at +0x4e0; FOnPersonalVehicleModeChange(bool)).
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>; called as the shared multicast broadcast body (no callee_candidates for this job).
+	// CONFIDENCE: HIGH
+	OnPersonalVehicleModeChanged.Broadcast(bEnteredVehicle);
+}
+
+void UFortHUDContext::HandleToggledBattleMapLive(ABattleMapPawnLive* NewSpectatorPawn)
+{
+	// Behaviour snippet: UFortHUDContext::HandleToggledBattleMapLive (body only; spliced into the generated member function).
+	// Original body: 0x144cd5110 (thunk 0x145257790); native body is a broadcast through ProcessMulticastDelegate 0x1406a9dc0.
+	// Offset evidence:
+	//   Asm: MOV qword [RSP+0x30],RDX; ADD RCX,0x258 -> OnToggledBattleMapLive (+0x258), FOnToggledBattleMapLive(ABattleMapPawnLive*).
+	// CONFIDENCE: HIGH
+	OnToggledBattleMapLive.Broadcast(NewSpectatorPawn);
+}
+
+void UFortHUDContext::HandleVehicleStateChanged(AFortPlayerPawn* PlayerPawn, AActor* NewVehicle, AActor* OldVehicle)
+{
+	// Original body 0x144cd5130 (thunk 0x145257810). Offset evidence: ADD RCX,0x4f0 -> OnPlayerVehicleStateChanged (reflected exact at +0x4f0). Pack: [0]=RDX PlayerPawn, [8]=R8 NewVehicle, [0x10]=R9 OldVehicle.
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>: mapped to <Member>.Broadcast(...) per the broadcast addendum.
+	// CONFIDENCE: HIGH
+	OnPlayerVehicleStateChanged.Broadcast(PlayerPawn, NewVehicle, OldVehicle);
+}
+
 bool UFortHUDContext::IsPreparingMgmtMenu() const
 {
 	// Original address: 0x14287d560.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
 	return NativeRecoveredBool_0x55c;
+}
+
+void UFortHUDContext::RemovePointOfInterest(AActor* PointOfInterest)
+{
+	// Behaviour snippet: UFortHUDContext::RemovePointOfInterest (wrapper body; spliced into the generated member function).
+	// Original body address: 0x144ce5680 (thunk 0x145258080, receiver delta 0, this delta total 0).
+	// Offset evidence: RDX (PointOfInterest, AActor*) stored at param offset 0; ADD RCX,0x478 -> OnPointOfInterestRemoved (reflected at +0x478; FOnPointOfInterestRemoved(AActor*)).
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>; called as the shared multicast broadcast body (no callee_candidates for this job).
+	// CONFIDENCE: HIGH
+	OnPointOfInterestRemoved.Broadcast(PointOfInterest);
+}
+
+void UFortHUDContext::RequestMgmtMenuTab(FName TabName)
+{
+	// Behaviour snippet: UFortHUDContext::RequestMgmtMenuTab (body only; spliced into the generated member function).
+	// Original body: 0x144ce56a0 (thunk 0x145258100); native body is a broadcast through ProcessMulticastDelegate 0x1406a9dc0.
+	// Offset evidence:
+	//   Asm: MOV qword [RSP+0x30],RDX (FName by value); ADD RCX,0x78 -> OnMgmtMenuTabChangeRequested (+0x78), FOnMgmtMenuTabChangeRequestedDelegate(FName).
+	// CONFIDENCE: HIGH
+	OnMgmtMenuTabChangeRequested.Broadcast(TabName);
 }
 
 void UFortHUDContext::SetPreparingMgmtMenu(bool bPreparing)

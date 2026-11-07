@@ -20,5 +20,9 @@ public:
 	UPROPERTY()
 	FOnOpenOrClosed OnOpenedOrClosed;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void CloseWidget();
+	virtual void CloseWidget_Implementation();
+
 };
 

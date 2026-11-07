@@ -2,6 +2,20 @@
 #include "UHUDLayoutToolContext.h"
 #include "UFortRuntimeOptions.h"
 
+void UHUDLayoutToolContext::BroadcastMovedWidget(UHUDLayoutToolPlacementWidget* MovedWidget)
+{
+	// Behaviour snippet: UHUDLayoutToolContext::BroadcastMovedWidget (body only; spliced into the generated member function).
+	// Original body: 0x144d2d820 (thunk 0x14532ac10); native body is a broadcast through ProcessMulticastDelegate 0x1406a9dc0.
+	// Offset evidence:
+	//   Asm: TEST RDX,RDX; JZ 0x144d2d83f (epilogue inside body) skips the call when MovedWidget is null.
+	//   ADD RCX,0xc8 -> OnWidgetMovedDelegate (+0xc8), FOnWidgetMoved(UHUDLayoutToolPlacementWidget*).
+	// CONFIDENCE: HIGH
+	if (MovedWidget != nullptr)
+	{
+	    OnWidgetMovedDelegate.Broadcast(MovedWidget);
+	}
+}
+
 bool UHUDLayoutToolContext::CloudHUDLayoutEnabled() const
 {
 	// Original address: 0x14532aec0.
@@ -22,5 +36,13 @@ bool UHUDLayoutToolContext::IsFireModeAvailable(EFireModeType NewFireMode) const
 	// Native 0x144d4c1a0. CONFIDENCE: high
 	const uint8 Value = static_cast<uint8>(NewFireMode);
 	return Value == 1 || Value == 2 || Value == 3;
+}
+
+void UHUDLayoutToolContext::StartLerping(FVector2D NewViewOffset)
+{
+	// Original body 0x144d67b20 (thunk 0x14532c270). Offset evidence: ADD RCX,0x98 -> OnNewViewOffsetLerpDelegate (reflected exact at +0x98). Pack: [0]=RDX FVector2D (8 bytes).
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>: mapped to <Member>.Broadcast(...) per the broadcast addendum.
+	// CONFIDENCE: HIGH
+	OnNewViewOffsetLerpDelegate.Broadcast(NewViewOffset);
 }
 

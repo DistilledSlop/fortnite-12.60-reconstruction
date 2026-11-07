@@ -104,8 +104,10 @@ public:
 	UFUNCTION()
 	void OnRep_TimerData();
 
+protected:
 	UFUNCTION()
 	void OnRep_TimerVisibilityOverride();
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetTimerDisplayFormat(bool bNewDisplayInTimeFormat);

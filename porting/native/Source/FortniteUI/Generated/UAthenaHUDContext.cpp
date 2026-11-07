@@ -2,6 +2,19 @@
 #include "UAthenaHUDContext.h"
 #include "EPTTState.h"
 
+void UAthenaHUDContext::ForceVictoryRoyaleUI()
+{
+	// Behaviour snippet: UAthenaHUDContext::ForceVictoryRoyaleUI (body only; spliced into the generated member function).
+	// Original body: 0x144c8c6f0 (thunk 0x14519d7e0); native body is a broadcast through ProcessMulticastDelegate 0x1406a9dc0.
+	// Offset evidence:
+	//   Asm: MOV byte [RCX+0x24a],1 sets bLocalPlayerWonMatch (bitfield bool, byte 0x24a, mask 0x1).
+	//   The body stores the whole byte; no other declared bit lives in byte 0x24a.
+	//   Asm: ADD RCX,0x38; XOR EDX,EDX -> OnLocalPlayerWon (+0x38), FOnLocalPlayerWon has no params.
+	// CONFIDENCE: MEDIUM
+	bLocalPlayerWonMatch = true;
+	OnLocalPlayerWon.Broadcast();
+}
+
 float UAthenaHUDContext::GetBatteryLevel() const
 {
 	// Original address: 0x1411a84c0.
@@ -43,6 +56,14 @@ EPTTState UAthenaHUDContext::GetPTTState() const
 	return static_cast<EPTTState>(NativeRecoveredByte_0x260);
 }
 
+void UAthenaHUDContext::HandleLocalPlayerDBNOStateChanged(AFortPawn* FortPawn, bool bIsDBNO)
+{
+	// Original body 0x144c936e0 (thunk 0x14519e7e0). Offset evidence: ADD RCX,0x98 -> OnLocalPlayerDBNOStateChanged (reflected exact at +0x98). Pack: [0]=R8B bIsDBNO; RDX (FortPawn) never stored.
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>: mapped to <Member>.Broadcast(...) per the broadcast addendum.
+	// CONFIDENCE: MEDIUM
+	OnLocalPlayerDBNOStateChanged.Broadcast(bIsDBNO);
+}
+
 bool UAthenaHUDContext::HasFiringTouch() const
 {
 	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
@@ -69,5 +90,16 @@ void UAthenaHUDContext::SetLocalPlayerWonMatch(bool bLocalPlayerWon)
 {
 	// Native 0x144cacbc0. CONFIDENCE: high
 	bLocalPlayerWonMatch = bLocalPlayerWon;
+}
+
+void UAthenaHUDContext::SetPostGameWidgetPlacement(FName WidgetPlacement)
+{
+	// Behaviour snippet: UAthenaHUDContext::SetPostGameWidgetPlacement (wrapper body; spliced into the generated member function).
+	// Original body address: 0x144cace60 (thunk 0x14519fbe0, receiver delta 0, this delta total 0).
+	// Offset evidence: RDX (WidgetPlacement, FName) stored at param offset 0.
+	// Offset evidence: ADD RCX,0x1d0 -> OnPostGameWidgetPlacementChange (reflected at +0x1d0; FOnPostGameWidgetPlacement(FName)).
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>; called as the shared multicast broadcast body (no callee_candidates for this job).
+	// CONFIDENCE: HIGH
+	OnPostGameWidgetPlacementChange.Broadcast(WidgetPlacement);
 }
 

@@ -8,6 +8,7 @@
 
 #include "AttributeSet.h"
 #include "EAirCraftBehavior.h"
+#include "EAthenaGameMsgType.h"
 #include "EAthenaGamePhase.h"
 #include "EAthenaGamePhaseStep.h"
 #include "EAthenaStormCapState.h"
@@ -93,6 +94,7 @@ class AFortBroadcastSpectatorInfo;
 class AFortGameplayMutator;
 class AFortLocalizationService;
 class AFortPawn;
+class AFortPlayerController;
 class AFortPlayerState;
 class AFortPlayerStateAthena;
 class AFortProjectileBase;
@@ -970,7 +972,13 @@ public:
 	void HandleGameModeMessageReposition(FVector2D Position, EHorizontalAlignment HorizontalAlignment, EVerticalAlignment VerticalAlignment);
 
 	UFUNCTION(BlueprintCallable)
+	void HandleGameModeMessageSuccess(AFortPlayerController* OwnerController);
+
+	UFUNCTION(BlueprintCallable)
 	void HandleGameModeShowMarker(int32 PlayerID, int32 InstanceID);
+
+	UFUNCTION(BlueprintCallable)
+	void HandleHideGameModeMessageRequest(EAthenaGameMsgType MsgType, bool bInstantHide, bool bClearQueue);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasValidFocalPointActor() const;

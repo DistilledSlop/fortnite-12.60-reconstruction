@@ -182,11 +182,15 @@ private:
 	void OnPlayerPawnPossessed(APawn* Pawn);
 public:
 
+private:
 	UFUNCTION()
 	void OnRep_CurrentRound();
+public:
 
+private:
 	UFUNCTION()
 	void OnRep_ZincPhase();
+public:
 
 private:
 	UFUNCTION()

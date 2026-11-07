@@ -52,8 +52,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetStormShieldStartingRadiusOverride() const;
 
+protected:
 	UFUNCTION()
-	void OnRep_DeployableBaseManager();
+	virtual void OnRep_DeployableBaseManager();
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldRespawnAtLastPawnLocation() const;

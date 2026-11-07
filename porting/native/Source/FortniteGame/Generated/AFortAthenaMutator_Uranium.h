@@ -502,6 +502,11 @@ protected:
 	void OnPushCartPushersOrDefendersChanged();
 public:
 
+protected:
+	UFUNCTION()
+	void OnPushCartTeamsRolesChanged(uint8 NewPusherTeam, uint8 NewDefenerTeam);
+public:
+
 	UFUNCTION()
 	void OnRep_bInOvertime();
 

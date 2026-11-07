@@ -7,6 +7,8 @@
 #include "UBlueprintContextBase.h"
 
 #include "AFortCreativeMoveTool.h"
+#include "EHitTraceRule.h"
+#include "EScaleAxis.h"
 #include "FOnCreativeGhostChanged.h"
 #include "FOnCreativeHeatmapToggled.h"
 #include "FOnCreativeModeEnabledChanged.h"
@@ -24,6 +26,8 @@
 #include "FOnMoveToolRotationModified.h"
 #include "FOnMoveToolScaleAxisChanged.h"
 #include "FOnMoveToolScaleModified.h"
+#include "Math/Vector.h"
+#include "UObject/NoExportTypes.h"
 
 #include "UCreativeHUDLContext.generated.h"
 
@@ -108,6 +112,51 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	bool bPropLockedInPlace;
+
+	UFUNCTION()
+	void ForwardOnCreativeGhostChanged(bool bIsGhostEnabled);
+
+	UFUNCTION()
+	void ForwardOnCreativeHeatmapTogged(bool bIsHeatmapToggled);
+
+	UFUNCTION()
+	void ForwardOnCreativeQuickbarActiveChanged(bool bIsActive);
+
+	UFUNCTION()
+	void ForwardOnCreativeQuickbarEnabledChanged(bool bIsEnabled);
+
+	UFUNCTION()
+	void ForwardOnCreativeQuickbarEquippedChanged(bool bIsEquipped);
+
+	UFUNCTION(BlueprintCallable)
+	void ForwardOnCreativeQuickMenuDisplayedChanged(bool bIsDisplayed);
+
+	UFUNCTION()
+	void ForwardOnDropToFloorChanged(bool bDropToFloorOn);
+
+	UFUNCTION()
+	void ForwardOnLOSChanged(EHitTraceRule HitTraceRule);
+
+	UFUNCTION()
+	void ForwardOnMoveToolRotationModified(FQuat currentRotationOffset);
+
+	UFUNCTION()
+	void ForwardOnMoveToolScaleModified(FVector currentVector);
+
+	UFUNCTION()
+	void ForwardOnPrecisionChanged(bool bPrecisionOn, uint8 GridSnapIndex);
+
+	UFUNCTION(BlueprintCallable)
+	void ForwardOnPropLockedInPlacedChanged(bool bLockedInPlace);
+
+	UFUNCTION()
+	void ForwardOnRotationAxisChanged(uint8 AxisIndex);
+
+	UFUNCTION()
+	void ForwardOnScaleAxisChanged(EScaleAxis Axis);
+
+	UFUNCTION()
+	void HandleOnCreativeModeEnabledChanged(bool bIsEnabled);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPropLockedInPlace() const;

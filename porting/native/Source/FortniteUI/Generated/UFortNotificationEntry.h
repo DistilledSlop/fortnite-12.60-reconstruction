@@ -37,5 +37,8 @@ public:
 	UPROPERTY()
 	UFortNotificationEntry* LinkedNotification;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void FinishNotificationOutro();
+
 };
 

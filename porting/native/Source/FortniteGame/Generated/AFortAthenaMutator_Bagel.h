@@ -306,8 +306,10 @@ public:
 	UPROPERTY(Transient)
 	FBagelLeaderboardQuery LocalPlayerFriendsLeaderboardQuery;
 
+protected:
 	UFUNCTION()
 	void OnRep_CurrentPhase();
+public:
 
 	UFUNCTION()
 	void OnRep_PlayerData();

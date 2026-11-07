@@ -42,5 +42,8 @@ protected:
 	void SetTimerForOnAllPlayersLoadedIn(float Timer);
 public:
 
+	UFUNCTION(BlueprintCallable)
+	virtual void UpdateUI();
+
 };
 

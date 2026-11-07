@@ -222,12 +222,21 @@ void AFortPlayerPushableCart::OnRep_bIsNearCheckpoint()
 
 void AFortPlayerPushableCart::OnRep_CurrentCheckpoint()
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body 0x141a4e410 (thunk 0x142a89550). Offset evidence: MOVZX EAX,[RCX+0x828]: CurrentCheckPoint (reflected exact, uint8). ADD RCX,0x790 -> OnCheckPointReached (exact). Pack: MOV dword [0]=EAX.
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>: mapped to <Member>.Broadcast(...) per the broadcast addendum.
+	// CONFIDENCE: HIGH
+	OnCheckPointReached.Broadcast(static_cast<int32>(CurrentCheckPoint));
 }
 
 void AFortPlayerPushableCart::OnRep_TeamRoles()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerPushableCart::OnRep_TeamRoles (wrapper body; spliced into the generated member function).
+	// Original body address: 0x141a53240 (thunk 0x142a89760, receiver delta 0, this delta total 0).
+	// Offset evidence: MOVZX/MOV of byte [RCX+0x829] (TeamRoles FTeamRoles.PusherTeam at +0) and byte [RCX+0x82a] (DefenderTeam at +1) stored at param offsets 0 and 1.
+	// Offset evidence: ADD RCX,0x7f0 -> PlayerPushableCartOnTeamsRolesChanged (reflected at +0x7f0; FPlayerPushableCartOnTeamsRolesChanged(uint8 PusherTeam, uint8 DefenderTeam)).
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>; called as the shared multicast broadcast body (no callee_candidates for this job).
+	// CONFIDENCE: HIGH
+	PlayerPushableCartOnTeamsRolesChanged.Broadcast(TeamRoles.PusherTeam, TeamRoles.DefenderTeam);
 }
 
 void AFortPlayerPushableCart::OnRep_TotalActiveDefenders()

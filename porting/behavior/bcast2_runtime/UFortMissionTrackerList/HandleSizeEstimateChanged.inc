@@ -1,0 +1,11 @@
+// Behaviour snippet: UFortMissionTrackerList::HandleSizeEstimateChanged (body only; spliced into the generated member function).
+// Original body: 0x144f644c0 (thunk 0x14528e990); native body is a broadcast through ProcessMulticastDelegate 0x1406a9dc0.
+// Offset evidence:
+//   Asm: CMP dword [RCX+0x2a0],0; JLE 0x144f644e3 (epilogue inside body). 0x2a0 is Num of the invocation list at delegate +0x8 (delegate at 0x298).
+//   The guard is written as IsBound(); the delegate is OnSizeEstimateChangedDelegate (+0x298).
+//   Asm stores this (RCX) in the params slot; FOnSizeEstimateChanged(UObject* ChangedElement) accepts it.
+// CONFIDENCE: MEDIUM
+if (OnSizeEstimateChangedDelegate.IsBound())
+{
+    OnSizeEstimateChangedDelegate.Broadcast(this);
+}

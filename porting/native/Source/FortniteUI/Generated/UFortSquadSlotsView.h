@@ -85,6 +85,11 @@ private:
 	void HandleHoveredButtonChanged(UCommonButton* HoveredButton, int32 ButtonIndex);
 public:
 
+private:
+	UFUNCTION()
+	void HandleRequestViewInAll(int32 SquadSlotIndex);
+public:
+
 	UFUNCTION(BlueprintCallable)
 	void SetIsSelectionLocked(bool ShouldSelectionBeLocked);
 

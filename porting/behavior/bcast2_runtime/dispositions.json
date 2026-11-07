@@ -1,0 +1,219 @@
+[
+ {
+  "class": "UFortReplayContext",
+  "function": "ToggleViewSettingsVisibility",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x1418ce8e0: broadcast_direct."
+ },
+ {
+  "class": "AFortVolume",
+  "function": "OnRep_VolumeState",
+  "status": "blocked",
+  "case": "unreflected_delegate",
+  "reason": "Delegate member at object offset 0x418 is not reflected: no reflected member covers 0x418 (AFortVolume TaskQueue Object covers 0x410-0x417). Job AFortVolume::OnRep_VolumeState (body 0x141c840f0)."
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "ForceVictoryRoyaleUI",
+  "status": "proposed",
+  "case": "bit_store_and_broadcast",
+  "reason": "Proposed from 0x144c8c6f0: bit_store_and_broadcast."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnBeingRevivedStateChanged",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x144c1fe20: broadcast_direct."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnKillScoreChanged",
+  "status": "proposed",
+  "case": "field_store_and_broadcast",
+  "reason": "Proposed from 0x144c20040: field_store_and_broadcast."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnCreativeGhostChanged",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x144cc6090: broadcast_direct."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnCreativeQuickbarEnabledChanged",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x144cc6110: broadcast_direct."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnDropToFloorChanged",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x144cc61e0: broadcast_direct."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnMoveToolScaleModified",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x144cc66e0: broadcast_direct."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnRotationAxisChanged",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x1407c9550: broadcast_direct."
+ },
+ {
+  "class": "UFortCollectionBookPrimaryPanel",
+  "function": "OnCollectionBookSectionClicked_Implementation",
+  "status": "proposed",
+  "case": "store_and_broadcast",
+  "reason": "Proposed from 0x1450c3890: store_and_broadcast."
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "HandleActorFocusedForCreative",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x144cd3840: broadcast_direct."
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "HandleToggledBattleMapLive",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x144cd5110: broadcast_direct."
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "RequestMgmtMenuTab",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x144ce56a0: broadcast_direct."
+ },
+ {
+  "class": "UFortMissionTrackerList",
+  "function": "HandleSizeEstimateChanged",
+  "status": "proposed",
+  "case": "guarded_broadcast",
+  "reason": "Proposed from 0x144f644c0: guarded_broadcast."
+ },
+ {
+  "class": "UFortReplayHighlightItemBase",
+  "function": "HandlePlayItemClicked",
+  "status": "blocked",
+  "case": "unreflected_delegate",
+  "reason": "Delegate member at object offset 0xb70 is not reflected: no reflected member covers 0xb70 (nearest UCommonButton InputActionWidget at 0xb68). Job UFortReplayHighlightItemBase::HandlePlayItemClicked (body 0x144c5f950)."
+ },
+ {
+  "class": "UFortStoreSummaryItemButton",
+  "function": "HandleMenuOpenChanged",
+  "status": "blocked",
+  "case": "unreflected_delegate",
+  "reason": "Delegate member at object offset 0xb90 is not reflected: no reflected member covers 0xb90, below the class lowest own offset 0xba0. Job UFortStoreSummaryItemButton::HandleMenuOpenChanged (body 0x144ec1830)."
+ },
+ {
+  "class": "UHUDLayoutToolContext",
+  "function": "BroadcastMovedWidget",
+  "status": "proposed",
+  "case": "guarded_broadcast",
+  "reason": "Proposed from 0x144d2d820: guarded_broadcast."
+ },
+ {
+  "class": "AFortAthenaMutator_Bagel",
+  "function": "OnRep_CurrentPhase",
+  "status": "proposed",
+  "case": "broadcast_widen",
+  "reason": "Proposed from 0x141ab4b00: broadcast_widen."
+ },
+ {
+  "class": "AFortAthenaMutator_SpyRumble",
+  "function": "OnRep_NumKillsForNextPerkUnlock",
+  "status": "blocked",
+  "case": "unreflected_delegate",
+  "reason": "Delegate member at object offset 0x498 is not reflected: no reflected member covers 0x498, below the class lowest own offset 0x4a8 and no ancestor covers it. Job AFortAthenaMutator_SpyRumble::OnRep_NumKillsForNextPerkUnlock (body 0x141b27350)."
+ },
+ {
+  "class": "AFortAthenaMutator_Zinc",
+  "function": "OnRep_ZincPhase",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x141b4ff40: broadcast_direct."
+ },
+ {
+  "class": "UFortCreativeKeyLockComponent",
+  "function": "OnRep_RemainingKeysToUnlock",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x141d8bf20: broadcast_direct."
+ },
+ {
+  "class": "UFortDialogNotificationHandler",
+  "function": "Decline_Implementation",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x142523410: broadcast_direct."
+ },
+ {
+  "class": "AFortGameStateAthena",
+  "function": "HandleHideGameModeMessageRequest",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x14199cab0: broadcast_direct."
+ },
+ {
+  "class": "UFortLinkToActorComponent",
+  "function": "HandleBuildingActorDestroyed",
+  "status": "blocked",
+  "case": "unnamed_target",
+  "reason": "Body CALLs 0x141d14730 before the broadcast; that address has no reflected callee (no reflection or native header maps it), so the call cannot be ported. Job UFortLinkToActorComponent::HandleBuildingActorDestroyed (body 0x141d0b010)."
+ },
+ {
+  "class": "UFortLevelSaveComponent",
+  "function": "OnRep_LastCheckpointDate",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x141efd9d0: broadcast_direct."
+ },
+ {
+  "class": "UFortMatchmakingContext",
+  "function": "SetMatchmakingFlowActive",
+  "status": "proposed",
+  "case": "bit_store_and_broadcast",
+  "reason": "Proposed from 0x1421bb980: bit_store_and_broadcast."
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "OnRep_ServerTime",
+  "status": "blocked",
+  "case": "unnamed_target",
+  "reason": "Body CALLs 0x142097510 before the broadcast; that address has no reflected callee (no reflection or native header maps it), so the call cannot be ported. Job AFortMinigame::OnRep_ServerTime (body 0x14209e4e0)."
+ },
+ {
+  "class": "AFortMissionState",
+  "function": "UpdateUI",
+  "status": "proposed",
+  "case": "guarded_broadcast",
+  "reason": "Proposed from 0x1420f5fc0: guarded_broadcast."
+ },
+ {
+  "class": "AFortPlayerControllerGameplay",
+  "function": "OnRep_UIMetricsDisplayIndex",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x1423e0620: broadcast_direct."
+ },
+ {
+  "class": "AFortPlayerStateZone",
+  "function": "OnRep_SpectatingTarget",
+  "status": "proposed",
+  "case": "broadcast_direct",
+  "reason": "Proposed from 0x142420c20: broadcast_direct."
+ }
+]

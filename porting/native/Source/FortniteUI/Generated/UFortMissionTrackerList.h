@@ -10,6 +10,7 @@
 #include "FOnSizeEstimateChanged.h"
 
 class UFortMissionTrackerEntry;
+class UObject;
 class UVerticalBox;
 
 #include "UFortMissionTrackerList.generated.h"
@@ -47,6 +48,11 @@ public:
 	// table index 0, flags 0x20080000080000
 	UPROPERTY()
 	FOnSizeEstimateChanged OnSizeEstimateChangedDelegate;
+
+protected:
+	UFUNCTION()
+	void HandleSizeEstimateChanged(UObject* ChangedElement);
+public:
 
 };
 

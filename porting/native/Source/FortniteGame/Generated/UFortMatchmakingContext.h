@@ -148,5 +148,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ReadyUp();
 
+	UFUNCTION(BlueprintCallable)
+	void SetMatchmakingFlowActive(bool InFlow);
+
 };
 

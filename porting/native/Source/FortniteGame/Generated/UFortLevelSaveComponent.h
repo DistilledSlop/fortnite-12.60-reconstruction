@@ -178,14 +178,18 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLoaded() const;
 
+protected:
 	UFUNCTION()
 	void OnRep_BackupSaveState(EBackupSaveState OldValue);
+public:
 
 	UFUNCTION()
 	void OnRep_IsAutoSaving(bool bOldValue);
 
+protected:
 	UFUNCTION()
 	void OnRep_LastCheckpointDate(FDateTime OldValue);
+public:
 
 	UFUNCTION()
 	void OnRep_Loaded();
@@ -199,8 +203,10 @@ public:
 	UFUNCTION()
 	void OnRep_PlotPermissionsChanged();
 
+protected:
 	UFUNCTION()
 	void OnRep_RestoringStateChanged(EBackupSaveState OldValue);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

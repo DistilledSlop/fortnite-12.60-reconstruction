@@ -342,11 +342,32 @@ void AFortGameStateAthena::HandleGameModeMessageReposition(FVector2D Position, E
 	RepositionGameModeMessage.Broadcast(Position, HorizontalAlignment, VerticalAlignment);
 }
 
+void AFortGameStateAthena::HandleGameModeMessageSuccess(AFortPlayerController* OwnerController)
+{
+	// Behaviour snippet: AFortGameStateAthena::HandleGameModeMessageSuccess (wrapper body; spliced into the generated member function).
+	// Original body address: 0x14199abb0 (thunk 0x14291fb80, receiver delta 0, this delta total 0).
+	// Offset evidence: RDX (OwnerController) stored at param offset 0; ADD RCX,0x10e8 -> GameModeMessageSuccess (reflected at +0x10e8; FOnGameModeMessageSuccess(AFortPlayerController*)).
+	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>; called as the shared multicast broadcast body (no callee_candidates for this job).
+	// CONFIDENCE: HIGH
+	GameModeMessageSuccess.Broadcast(OwnerController);
+}
+
 void AFortGameStateAthena::HandleGameModeShowMarker(int32 PlayerID, int32 InstanceID)
 {
 	// CONFIDENCE: high
 	// Original address: 0x14199abd0
 	ShowMarkerGameMode.Broadcast(PlayerID, InstanceID);
+}
+
+void AFortGameStateAthena::HandleHideGameModeMessageRequest(EAthenaGameMsgType MsgType, bool bInstantHide, bool bClearQueue)
+{
+	// Behaviour snippet: AFortGameStateAthena::HandleHideGameModeMessageRequest (body only; spliced into the generated member function).
+	// Original body: 0x14199cab0 (thunk 0x14291fcc0); native body is a broadcast through ProcessMulticastDelegate 0x1406a9dc0.
+	// Offset evidence:
+	//   Asm: [RSP+0x38]=DL (MsgType), [RSP+0x39]=R8B (bInstantHide), [RSP+0x3a]=R9B (bClearQueue).
+	//   ADD RCX,0x10d8 -> HideGameModeMessageRequest (+0x10d8), FOnHideGameModeMessageRequest(EAthenaGameMsgType, bool, bool) in the same order.
+	// CONFIDENCE: HIGH
+	HideGameModeMessageRequest.Broadcast(MsgType, bInstantHide, bClearQueue);
 }
 
 bool AFortGameStateAthena::HasValidFocalPointActor() const

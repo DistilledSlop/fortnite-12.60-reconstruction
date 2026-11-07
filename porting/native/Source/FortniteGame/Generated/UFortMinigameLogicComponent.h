@@ -75,8 +75,16 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x160): not a UPROPERTY, not replicated.
 	EFortMinigameState NativeCachedMinigameState;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleMinigameEnded();
+	virtual void HandleMinigameEnded_Implementation();
+
 	UFUNCTION()
 	void HandleMinigameSet();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleMinigameStarted();
+	virtual void HandleMinigameStarted_Implementation();
 
 	UFUNCTION(BlueprintNativeEvent)
 	void HandleMinigameStateChanged(AFortMinigame* Minigame, EFortMinigameState NewMinigameState);

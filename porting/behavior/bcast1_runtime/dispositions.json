@@ -1,0 +1,219 @@
+[
+  {
+    "class": "UCommonWidgetSwitcher",
+    "function": "HandleActiveWidgetDeactivated",
+    "status": "proposed",
+    "case": "broadcast_guarded",
+    "reason": "guard and single UCommonActivatablePanel* param match the stack layout"
+  },
+  {
+    "class": "AFortVolume",
+    "function": "OnRep_UserGeneratedContentRestrictions",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "one bool param matches SETNZ byte at offset 0"
+  },
+  {
+    "class": "APartyDisplayManager",
+    "function": "NotifyPrefabChanged",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "two object params in ABI order (RDX=PrefabActor, R8=CurrentItem) match delegate order"
+  },
+  {
+    "class": "UAthenaHUDContext",
+    "function": "SetPostGameWidgetPlacement",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "single FName param matches delegate"
+  },
+  {
+    "class": "UAthenaRemotePlayerViewData",
+    "function": "ForwardOnDeadStateChanged",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "stack layout (this, bool) matches FBoolDelegate; InPlayerState is unread by the asm"
+  },
+  {
+    "class": "UAthenaRemotePlayerViewData",
+    "function": "ForwardOnWeaponChanged",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "stack layout (this, AFortWeapon*) matches FWeaponDelegate; InPrevWeapon is unread by the asm"
+  },
+  {
+    "class": "UCreativeHUDLContext",
+    "function": "ForwardOnCreativeQuickbarActiveChanged",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "single bool param matches delegate"
+  },
+  {
+    "class": "UCreativeHUDLContext",
+    "function": "ForwardOnCreativeQuickMenuDisplayedChanged",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "single bool param matches delegate"
+  },
+  {
+    "class": "UCreativeHUDLContext",
+    "function": "ForwardOnMoveToolRotationModified",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "FQuat by value matches 16-byte param copy"
+  },
+  {
+    "class": "UCreativeHUDLContext",
+    "function": "ForwardOnPropLockedInPlacedChanged",
+    "status": "proposed",
+    "case": "store_then_broadcast",
+    "reason": "bool store to declared member and single bool param match"
+  },
+  {
+    "class": "UCreativeHUDLContext",
+    "function": "HandleOnCreativeModeEnabledChanged",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "single bool param matches delegate"
+  },
+  {
+    "class": "UFortFrontEndContext",
+    "function": "BroadcastMainTabSelected",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "single FName param matches delegate"
+  },
+  {
+    "class": "UFortHUDContext",
+    "function": "HandlePersonalVehicleModeChanged",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "single bool param matches delegate"
+  },
+  {
+    "class": "UFortHUDContext",
+    "function": "RemovePointOfInterest",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "single AActor* param matches delegate"
+  },
+  {
+    "class": "UFortLeaveDialog",
+    "function": "CloseDialog",
+    "status": "blocked",
+    "case": "blocked",
+    "reason": "unnamed_target 0x144dd5c30: body performs CALL 0x144dd5c30 (RCX=this, RDX=this) before the tail JMP 0x1406a9dc0; the job has no callee_candidates entry for it"
+  },
+  {
+    "class": "UFortQuestTrackerList",
+    "function": "HandleSizeEstimateChanged",
+    "status": "proposed",
+    "case": "broadcast_raw_guard",
+    "reason": "raw count guard inside reflected delegate; this (UObject*) matches the single param"
+  },
+  {
+    "class": "UFortStoreFrontOfferDetailsWidgetBase",
+    "function": "HandleBattlePassPurchaseComplete",
+    "status": "blocked",
+    "case": "blocked",
+    "reason": "undeclared_delegate: the delegate at object offset 0x5a0 is not covered by any reflected member of the class chain and no delegate member is declared in porting/native/Source/FortniteUI/Generated/UFortStoreFrontOfferDetailsWidgetBase.h, so its type cannot be checked"
+  },
+  {
+    "class": "UFortUISpecialEventSubsystem",
+    "function": "SetCurrentUISpecialEventState",
+    "status": "proposed",
+    "case": "store_then_broadcast_guarded",
+    "reason": "one enum param (1-byte TEnumAsByte) matches DL store; guard and dword store kept"
+  },
+  {
+    "class": "UPerkIntroScreenWidget",
+    "function": "StartPerkScreenIntro",
+    "status": "proposed",
+    "case": "broadcast_no_params",
+    "reason": "zero-param delegate, RDX=0"
+  },
+  {
+    "class": "AFortAthenaMutator_Mash",
+    "function": "OnRep_CurrentPhase",
+    "status": "proposed",
+    "case": "broadcast_converted",
+    "reason": "int32 param matches the 4-byte store; zero-extension equals the int32 conversion"
+  },
+  {
+    "class": "AFortAthenaMutator_Zinc",
+    "function": "OnRep_CurrentRound",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "(this, int32) stack layout matches delegate"
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "OnRep_SelectionProperty",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "uint8 enum param matches 1-byte store"
+  },
+  {
+    "class": "UFortDialogNotificationHandler",
+    "function": "Accept_Implementation",
+    "status": "proposed",
+    "case": "broadcast_no_params",
+    "reason": "zero-param delegate, RDX=0"
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "HandleGameModeMessageSuccess",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "single AFortPlayerController* param matches delegate"
+  },
+  {
+    "class": "AFortGameStateBase",
+    "function": "OnRep_StormShield",
+    "status": "blocked",
+    "case": "blocked",
+    "reason": "undeclared_delegate: the delegate at object offset 0x2a8 is not covered by any reflected member (it lies in the unreflected gap after APlayspaceGameState +0x2a0, outside AFortGameStateBase own region), so its type cannot be checked; StormShield load at +0x2d8 is reflected"
+  },
+  {
+    "class": "UFortLevelSaveComponent",
+    "function": "OnRep_BackupSaveState",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "uint8 enum param matches 1-byte store; OldValue is unread by the asm"
+  },
+  {
+    "class": "AFortLiveBroadcastController",
+    "function": "ClientHideBusButton_Implementation",
+    "status": "proposed",
+    "case": "broadcast_no_params",
+    "reason": "zero-param delegate, RDX=0"
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "HandleMinigameStarted_Implementation",
+    "status": "proposed",
+    "case": "broadcast_no_params",
+    "reason": "zero-param delegate, RDX=0"
+  },
+  {
+    "class": "UFortMinigameLogicComponent",
+    "function": "HandleMinigameStarted_Implementation",
+    "status": "proposed",
+    "case": "broadcast_no_params",
+    "reason": "zero-param delegate, RDX=0"
+  },
+  {
+    "class": "UFortNotificationHandler",
+    "function": "ClearNotification_Implementation",
+    "status": "proposed",
+    "case": "broadcast_raw_guard_no_params",
+    "reason": "raw count guard inside reflected delegate; zero-param delegate"
+  },
+  {
+    "class": "AFortPlayerPushableCart",
+    "function": "OnRep_TeamRoles",
+    "status": "proposed",
+    "case": "broadcast_direct",
+    "reason": "two uint8 params match the two byte stores, read through reflected FTeamRoles fields"
+  }
+]

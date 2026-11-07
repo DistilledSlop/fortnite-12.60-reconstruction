@@ -19,6 +19,9 @@
 #include "FOnViewOffsetUpdated.h"
 #include "FOnWidgetMoved.h"
 #include "FOnWidgetSelected.h"
+#include "Math/Vector2D.h"
+
+class UHUDLayoutToolPlacementWidget;
 
 #include "UHUDLayoutToolContext.generated.h"
 
@@ -80,6 +83,9 @@ public:
 	UPROPERTY()
 	int32 HudLayoutSnappingDistance;
 
+	UFUNCTION(BlueprintCallable)
+	void BroadcastMovedWidget(UHUDLayoutToolPlacementWidget* MovedWidget);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CloudHUDLayoutEnabled() const;
 
@@ -88,6 +94,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsFireModeAvailable(EFireModeType NewFireMode) const;
+
+	UFUNCTION(BlueprintCallable)
+	void StartLerping(FVector2D NewViewOffset);
 
 };
 

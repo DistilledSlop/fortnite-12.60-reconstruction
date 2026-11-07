@@ -9,6 +9,8 @@
 #include "FOnActiveWidgetChanged.h"
 #include "FOnActiveWidgetDeactivated.h"
 
+class UCommonActivatablePanel;
+
 #include "UCommonWidgetSwitcher.generated.h"
 
 UCLASS()
@@ -32,6 +34,11 @@ public:
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	bool bOutroPanelBelow;
+
+private:
+	UFUNCTION()
+	void HandleActiveWidgetDeactivated(UCommonActivatablePanel* DeactivatedPanel);
+public:
 
 };
 

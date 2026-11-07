@@ -25,6 +25,10 @@ public:
 	bool bNotificationCleared;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintCosmetic)
+	void ClearNotification();
+	virtual void ClearNotification_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintCosmetic)
 	void NotificationShown();
 	virtual void NotificationShown_Implementation();
 

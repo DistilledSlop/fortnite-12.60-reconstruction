@@ -1,0 +1,4 @@
+// Original body 0x144bffd00 (thunk 0x14286bb50). Offset evidence: ADD RCX,0x258 -> FinishedDisplayingNotification (reflected exact at +0x258). XOR EDX,EDX: no params; tail JMP.
+// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>: mapped to <Member>.Broadcast(...) per the broadcast addendum.
+// CONFIDENCE: HIGH
+FinishedDisplayingNotification.Broadcast();

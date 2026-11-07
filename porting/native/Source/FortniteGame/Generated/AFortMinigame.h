@@ -675,6 +675,18 @@ public:
 
 protected:
 	UFUNCTION(BlueprintNativeEvent)
+	void HandleMinigameEnded();
+	virtual void HandleMinigameEnded_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleMinigameStarted();
+	virtual void HandleMinigameStarted_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
 	void HandleMinigameWarmup();
 	virtual void HandleMinigameWarmup_Implementation();
 public:

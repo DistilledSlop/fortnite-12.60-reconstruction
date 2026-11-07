@@ -171,6 +171,9 @@ public:
 	bool NativeRecoveredBool_0x408;
 
 	UFUNCTION(BlueprintCallable)
+	void BroadcastMainTabSelected(FName TabName);
+
+	UFUNCTION(BlueprintCallable)
 	void ForceSetFeatureState(EFortFrontEndFeature Feature, EFortFrontEndFeatureState State, EFortFrontEndFeatureStateReason Reason);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

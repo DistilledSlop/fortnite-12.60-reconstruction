@@ -85,8 +85,10 @@ private:
 	void OnMinigameStarted();
 public:
 
+private:
 	UFUNCTION()
 	void OnRep_LinkCodeLockStatus();
+public:
 
 	UFUNCTION()
 	void OnRep_LinkDataErrorStatus();
