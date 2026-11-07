@@ -1,0 +1,16 @@
+// Behaviour snippet: UBuildingStructuralSupportSystem::K2_GetWorldLocFromGridIndices (body only).
+// Original body address: 0x141c7dbd0 (thunk 0x14275e220), receiver delta 0.
+// Evidence: grid limits at this+0x368/+0x36c/+0x370 (int32) and base world location at this+0x378 (float X, float Y via one 8-byte load) and this+0x380 (float Z): NativeRecoveredInt32_0x368/0x36c/0x370 and NativeRecoveredFloat_0x378/0x37c/0x380 (unreflected, own region). Index scale: X and Y by 512 (SHL 9), Z by 384 (3*Z then SHL 7). Outputs are written only when every index is within its limit.
+// CONFIDENCE: HIGH
+const int32* Indices = reinterpret_cast<const int32*>(&GridIndices);
+if (Indices[0] > NativeRecoveredInt32_0x368 || Indices[1] > NativeRecoveredInt32_0x36c || Indices[2] > NativeRecoveredInt32_0x370)
+{
+    return false;
+}
+OutWorldLoc.X = NativeRecoveredFloat_0x378;
+OutWorldLoc.Y = NativeRecoveredFloat_0x37c;
+OutWorldLoc.Z = NativeRecoveredFloat_0x380;
+OutWorldLoc.X += static_cast<float>(static_cast<int32>(static_cast<uint32>(Indices[0]) * 512u));
+OutWorldLoc.Y += static_cast<float>(static_cast<int32>(static_cast<uint32>(Indices[1]) * 512u));
+OutWorldLoc.Z += static_cast<float>(static_cast<int32>(static_cast<uint32>(Indices[2]) * 384u));
+return true;

@@ -26,5 +26,10 @@ public:
 	UPROPERTY(Transient)
 	TMap<uint8, FMutatorPlayerSettingsData> TeamSettingsDataMap;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetTeamContext() const;
+public:
+
 };
 

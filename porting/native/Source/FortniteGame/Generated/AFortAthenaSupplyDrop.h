@@ -9,9 +9,13 @@
 #include "AttributeSet.h"
 #include "Engine/CollisionProfile.h"
 #include "Engine/EngineTypes.h"
+#include "Math/Vector.h"
 
+class AFortGameModePickup;
+class AFortPawn;
 class UAudioComponent;
 class UFortSpectateClickableMapIcon;
+class UFortWorldItemDefinition;
 class USoundCue;
 
 #include "AFortAthenaSupplyDrop.generated.h"
@@ -91,6 +95,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetLootTableNameOverride(FName TableNameToUse);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	AFortGameModePickup* SpawnGameModePickup(UFortWorldItemDefinition* ItemDefinition, TSubclassOf<AFortGameModePickup> PickupClass, int32 NumberToSpawn, AFortPawn* TriggeringPawn, FVector Position, FVector Direction);
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

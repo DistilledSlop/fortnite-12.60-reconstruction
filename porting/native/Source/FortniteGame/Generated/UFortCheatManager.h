@@ -170,6 +170,9 @@ protected:
 	void ApplyGameplayModifier(FString ModifierName);
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool AreContextMenusEnabled(APlayerController* PC);
+
 protected:
 	UFUNCTION(Exec)
 	void AthenaEmote(FString EmoteName);
@@ -1391,6 +1394,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec)
+	void SendTwitchToastNotification(FString Title, FString Description);
+public:
+
+protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void ServerStartProfiling();
 public:
@@ -1660,6 +1668,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void SetVehicleConfigVariable(FString VehicleName, FString ConfigName, float ConfigValue);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void SetWallTimer(float Seconds);
 public:
 
@@ -1684,6 +1697,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void ShowEventsDebugInfo(bool bShowDebugInfo);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ShowFakeError(FString DisplayString, FString ErrorCode);
 public:
 
 protected:
@@ -1734,6 +1752,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void SpawnAIGroupFromExternalSpawner(FString SpawnGroupName);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SpawnAIGroupWithUpgrade(FString SpawnGroupName, FString UpgradeName);
 public:
 
 protected:
@@ -1862,6 +1885,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void TestAllDevPartyMembers();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestBanhammer(FString InUserId, FString BanCode, FString BanReason, int32 DesiredAction, int32 BanhammerActivation, int32 BanhammerTiming, int32 BanhammerMessageType, FString BanhammerCustomMessage, FString BanhammerDetails);
 public:
 
 protected:

@@ -1,0 +1,177 @@
+[
+  {
+    "class": "UCustomCharacterPartAnimInstance",
+    "function": "GetPartSkeletalMeshComponent",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Outer (+0x20 OuterPrivate, raw) cast to USkeletalMeshComponent after IsA check; null otherwise. Asm fully accounted for."
+  },
+  {
+    "class": "UCustomCharacterPartAnimInstance",
+    "function": "MakeWaveVector",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x141d89570 targets UCustomCharacterPartAnimInstance::MakeWaveScalar, which is not declared in any generated header (grep finds no declaration)."
+  },
+  {
+    "class": "ACustomItemWrapModifier",
+    "function": "GetWrappedMeshComponent",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x142ee7880 (IsValid, RCX=this+0x318) and CALL 0x142ee5dd0 (Get, LEA RCX,[RBX+0x318]) share bodies with 3 and 6 UObject-class candidates; the receiver is a TWeakObjectPtr member (VehiclePtr/WeaponPtr/MeshPtr), not a class instance, so no candidate equals or is an ancestor of the receiver."
+  },
+  {
+    "class": "ACustomCosmeticModifierBase",
+    "function": "NativeWeaponFired",
+    "status": "blocked",
+    "case": "unresolved_conditional_tail_jump",
+    "reason": "JNZ 0x14277c190 (taken when FiringWeapon is non-null) is a conditional tail jump with no callee_candidates entry; its target body is unresolved, so the non-null behaviour cannot be ported."
+  },
+  {
+    "class": "ADeployableBasePlot",
+    "function": "OnRep_OccupantNetID",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Calls OnRep_BuildableSpaceExpansionVector, then broadcasts OnOccupantIdChanged with this as the single ADeployableBasePlot* argument."
+  },
+  {
+    "class": "UFortActorOptionsComponent",
+    "function": "GetPropertyEditorV2Enabled",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "CMP dword ptr [0x1478c45bc],0x0 then SETG AL reads an absolute-address global with no reflected owner or recovered member."
+  },
+  {
+    "class": "UFortActorOptionsComponent",
+    "function": "IsRenameDisplayButtonEnabled",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "CMP dword ptr [0x1478c45c0],0x0 then SETNZ AL reads an absolute-address global with no reflected owner or recovered member."
+  },
+  {
+    "class": "AFortAIController",
+    "function": "SetPawnAIType",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x1422ec0c0 targets AFortAIPawn::SetAIType, which is not declared in AFortAIPawn.h (grep finds no declaration)."
+  },
+  {
+    "class": "UFortAIEncounterInfo",
+    "function": "GetEncounterQueryActor",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x142ee3b30 and CALL 0x142ee5dd0 share bodies with 6 unrelated candidates each; their receivers are stack temporaries (LEA RCX,[RSP+0x30]), not class instances, so no candidate equals or is an ancestor of the receiver."
+  },
+  {
+    "class": "UFortAIEncounterInfo",
+    "function": "GetPawnNumberLimit",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Leaf getter: three byte gates return PawnNumberLimit; SpawnLimitType==1 returns SpawnLimit; else -1. Gap bytes at 0xb40/0xb44 recovered as members."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "GetCharacterGender",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "IsValidIndex bounds check matches asm (index>=0 and <Num). Element byte at stride 0x60 +8 selects 2 or 1, else 0."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "IsInCombat",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Controller (+0x250, raw) IsA AFortAIController, GoalActor non-null, then (GoalActor byte +0x5c & 0x60) == 0x40."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "OnRep_SharedAnim",
+    "status": "blocked",
+    "case": "sse_struct_copy_unverified",
+    "reason": "MOVUPS xmmword ptr [RBX+0x1168] -> [RDI+0x14d8] copies 16 bytes of FGameplayAbilityRepSharedAnim (AFortAIPawn to UFortAbilitySystemComponent RepSharedAnimInfo); the struct derives from FGameplayAbilityRepSharedAnim_Base and its sizeof is not verified to be 16, so the copy width is unproven."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "SetAIRotationRate",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Authority-only: copies AIRotationRate into CurrentAIRotationRate and into CharacterMovement RotationRate (raw +0x1e4, 12 bytes) when the movement object is non-null."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "SetAIType",
+    "status": "blocked",
+    "case": "hidden_global_and_callee_not_declared",
+    "reason": "CMP byte ptr [0x148134930],0x3 and LEA R8,[0x148134934] / LEA RAX,[0x146110920] feed CALL 0x142c54b70 on the DL>=6 path; that candidate (AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard) is not declared in AFortPlayerPawn.h."
+  },
+  {
+    "class": "UFortAmbientAudioController",
+    "function": "GetAmbientAudioControllerFromContext",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x141ef2890 targets UFortKismetLibrary::GetFirstLocalFortPlayerController, which has no declaration in any generated header; the packet parameter order (bIncludeSpectators, bIncludeNonSpectators, WorldContextObject) conflicts with the asm (RCX=WorldContextObject, RDX=R8=1)."
+  },
+  {
+    "class": "UFortAnimInstance",
+    "function": "GetPreviousFrameAimPitchAndYaw",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Decodes two float bit patterns at +0x330/+0x334 with an address-derived key; writes OutPitch and OutYaw as float bits. Output-parameter order follows header_decl."
+  },
+  {
+    "class": "UFortAthenaAIBotCustomizationData",
+    "function": "SetCharacterCustomizationFromPlayerPawn",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x142323510 and CALL 0x140a003b0 are both listed as AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard, which is not declared in AFortPlayerPawn.h; its listed params [] do not match the calls (RCX=pawn with DL=1 returning a pointer; RCX=this+0xa0 with RDX=pointer)."
+  },
+  {
+    "class": "AFortAthenaAntelopeVehicle",
+    "function": "IsLeaningOrBouncingBack",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Byte gap flag true returns true; else two lean-vector squared lengths (raw floats) compared to FortAntelopeVehicleConfigs+0x4a4."
+  },
+  {
+    "class": "AFortAthenaDoghouseVehicle",
+    "function": "GetFlightControlSurfaces",
+    "status": "blocked",
+    "case": "hidden_return_slot_abi",
+    "reason": "header_decl returns FFlightControlSurfaces by value (hidden sret pointer in RDX), but the body is LEA RAX,[RCX+0x1520]; RET: it returns an interior pointer and never writes RDX. Thunk 0x1427d7e30 is shared with GetFlightControlSurfaceTargets."
+  },
+  {
+    "class": "AFortAthenaDoghouseVehicle",
+    "function": "GetFlightControlSurfaceTargets",
+    "status": "blocked",
+    "case": "hidden_return_slot_abi",
+    "reason": "header_decl returns FFlightControlSurfaces by value (hidden sret pointer in RDX), but the body is LEA RAX,[RCX+0x1520]; RET: it returns an interior pointer and never writes RDX. Thunk 0x1427d7e30 is shared with GetFlightControlSurfaces."
+  },
+  {
+    "class": "AFortAthenaGoatVehicle",
+    "function": "IsLeaningOrBouncingBL",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Byte gap flag true returns true; else two BL lean-vector squared lengths (raw floats) compared to FortGoatVehicleConfigs+0x4a4."
+  },
+  {
+    "class": "AFortAthenaGoatVehicle",
+    "function": "IsLeaningOrBouncingBR",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Byte gap flag true returns true; else two BR lean-vector squared lengths (raw floats) compared to FortGoatVehicleConfigs+0x4a4."
+  },
+  {
+    "class": "AFortAthenaGoatVehicle",
+    "function": "IsLeaningOrBouncingFR",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Byte gap flag true returns true; else two FR lean-vector squared lengths (raw floats) compared to FortGoatVehicleConfigs+0x4a4."
+  },
+  {
+    "class": "AFortAthenaMutator_Arsenic",
+    "function": "GetTimeRemaining",
+    "status": "blocked",
+    "case": "hidden_global_and_callee_not_declared",
+    "reason": "Null path (JZ 0x141aaed60 when [RCX+0x260] is null) runs CMP byte ptr [0x148118780],0x2 and LEA R8,[0x148118784] / LEA RAX,[0x145e5abc0] before CALL 0x142c54b70, which is not declared in any generated header."
+  }
+]

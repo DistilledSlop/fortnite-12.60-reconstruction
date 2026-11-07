@@ -11,7 +11,8 @@ import thunk_receiver as tr
 
 MAXI = int(sys.argv[1]) if len(sys.argv) > 1 else 60
 R = 'porting/generated'
-HELPERS = {'0x142bee710': 'FMemory::Free', '0x1406a9dc0': 'ProcessMulticastDelegate'}
+HELPERS = {'0x142bee710': 'FMemory::Free', '0x1406a9dc0': 'ProcessMulticastDelegate',
+           '0x142c54b70': 'FMsg::Logf (verbosity-gated UE_LOG)'}
 STUBS = {'0x1406801c0', '0x1406801d0', '0x1406801e0', '0x140680300'}
 idx = {}
 for d in glob.glob(f'{R}/native*/'):
@@ -42,7 +43,7 @@ blocked = {x['entry'] for x in json.load(open('porting/behavior/stub_bulk_runtim
 inscope = json.load(open('porting/progress/native_functions_inscope.json'))
 inscope = {(c, f) for c, fs in inscope.items() for f in fs}
 attempted = set()
-for p in glob.glob(f'{R}/work-batches/wrap[0-9A]*.json') + glob.glob(f'{R}/work-batches/bcast*.json'):
+for p in glob.glob(f'{R}/work-batches/wrap[0-9A]*.json') + glob.glob(f'{R}/work-batches/bcast*.json') + glob.glob(f'{R}/work-batches/rs[0-9]*.json'):
     for j in json.load(open(p)):
         attempted.add((j['cls'], j['fn']))
 POLICY = {"UCommonBorder", "UCommonInputSettings", "UCommonUISettings", "UCommonInputControllerData", "UFortLoginInteractions",

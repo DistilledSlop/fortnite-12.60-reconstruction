@@ -13,6 +13,7 @@
 #include "FControlPointSpawnData.h"
 #include "FFortRespawnLogicData.h"
 
+class AAthenaCapturePoint;
 class AFortPlayerStateAthena;
 
 #include "AFortAthenaMutator_Disco.generated.h"
@@ -143,6 +144,9 @@ protected:
 	UFUNCTION()
 	bool IsRespawningAllowed();
 public:
+
+	UFUNCTION()
+	void OnCaptureLockBroken(AAthenaCapturePoint* CapturePoint, uint8 LockTeam, uint8 BreakTeam);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

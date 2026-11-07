@@ -87,6 +87,11 @@ protected:
 	void ToggleOpenState(AController* ControllerInstigator);
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	virtual void UnlockObject(AController* ControllerInstigator);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

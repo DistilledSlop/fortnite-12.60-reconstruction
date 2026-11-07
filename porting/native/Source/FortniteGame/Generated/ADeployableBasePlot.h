@@ -191,8 +191,10 @@ public:
 	UFUNCTION()
 	void OnRep_CurrentBuildingState();
 
+protected:
 	UFUNCTION()
 	void OnRep_OccupantNetID();
+public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetContextComponent(UPrimitiveComponent* ContextComponent);

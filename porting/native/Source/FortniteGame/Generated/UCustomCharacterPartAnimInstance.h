@@ -11,6 +11,7 @@
 #include "FGameplayTagAnimations.h"
 
 class AFortWeapon;
+class USkeletalMeshComponent;
 
 #include "UCustomCharacterPartAnimInstance.generated.h"
 
@@ -245,6 +246,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetOwnerZVelocity() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USkeletalMeshComponent* GetPartSkeletalMeshComponent() const;
 
 };
 

@@ -8,6 +8,7 @@
 
 #include "EAthenaGamePhaseStep.h"
 #include "FItemsToGive.h"
+#include "UFortSafeZoneInterface.h"
 
 #include "AFortAthenaMutator_GiveItemsAtGamePhaseStep.generated.h"
 
@@ -24,6 +25,11 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	TArray<FItemsToGive> ItemsToGive;
+
+protected:
+	UFUNCTION()
+	void OnGamePhaseStepChanged(TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, EAthenaGamePhaseStep GamePhaseStep);
+public:
 
 };
 

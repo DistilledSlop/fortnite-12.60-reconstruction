@@ -1,0 +1,177 @@
+[
+ {
+  "class": "AFortAthenaMutator_Ashton",
+  "function": "GetNumCapturedStones",
+  "status": "proposed",
+  "case": "direct_port",
+  "reason": "Leaf loop over TArray<FAshtonStoneState>; counts StoneState==2 (element+1), stride 0x18."
+ },
+ {
+  "class": "AFortAthenaMutator_Ashton",
+  "function": "OnGamePhaseStepChanged",
+  "status": "proposed",
+  "case": "direct_port",
+  "reason": "Role==3 gate, safe-zone object IsA AFortGameStateAthena getter, GamePhaseStep==4; writes GameState MutatorEventData.EventId=1."
+ },
+ {
+  "class": "AFortAthenaMutator_ArsenicInventoryOverride",
+  "function": "OnGamePhaseChanged",
+  "status": "blocked",
+  "case": "unresolved_callee",
+  "reason": "Conditional tail jump JZ 0x141aa0160 (taken when this+0x260->+0x1cb0 == 3) has no callee_candidates entry; target body not resolved."
+ },
+ {
+  "class": "AFortAthenaMutator_Bagel",
+  "function": "OnRep_TeamScoreMultiplier",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x14199a760 AFortGameStateAthena::HandleGameModeMessageRequest is not declared in any porting/native header. Also CALL 0x1406f7390 (UFortMangDataTrackerComponent::IsTrackingPerPlayer) is applied to this+0x848, which is reflected as FScalableFloat, not a component."
+ },
+ {
+  "class": "AFortAthenaMutator_Disco",
+  "function": "OnCaptureLockBroken",
+  "status": "proposed",
+  "case": "direct_port",
+  "reason": "CapturePoint->bActivated gate (0x9f8 bit 0); writes MutatorEventData fields on CachedGameState without null check."
+ },
+ {
+  "class": "AFortAthenaMutator_FactionCustomCharacterParts",
+  "function": "GetFactionForPlayer",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x142c54b70 is a verbosity-gated log (global 0x148119970, RCX=0, R9D=3). Sole candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard is not declared in any header and takes no receiver."
+ },
+ {
+  "class": "AFortAthenaMutator_FactionCustomCharacterParts",
+  "function": "GetPartOverridesForPlayer",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x142c54b70 is a verbosity-gated log (global 0x148119970, RCX=0). Candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard is not declared in any header."
+ },
+ {
+  "class": "AFortAthenaMutator_Fill",
+  "function": "OnGamePhaseChanged",
+  "status": "blocked",
+  "case": "unresolved_callee",
+  "reason": "Conditional tail jump JNZ 0x14273f1e0 (RCX = this+0x330 LavaFloor) has no callee_candidates entry."
+ },
+ {
+  "class": "AFortAthenaMutator_Fill",
+  "function": "OnMutatorGameplayEvent",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x14199a760 AFortGameStateAthena::HandleGameModeMessageRequest (copy of GameMsg_LavaMoving) is not declared in any porting/native header."
+ },
+ {
+  "class": "AFortAthenaMutator_GameModeBase",
+  "function": "OnMutatorGameplayEvent",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x14199a760 AFortGameStateAthena::HandleGameModeMessageRequest (copy of GameMsg_AircraftPhaseIntroMessage) is not declared in any porting/native header."
+ },
+ {
+  "class": "AFortAthenaMutator_GiveItemsAtGamePhaseStep",
+  "function": "OnGamePhaseStepChanged",
+  "status": "proposed",
+  "case": "direct_port",
+  "reason": "Tail jump to AFortGameStateAthena::StaticClass() on non-null interface; result discarded."
+ },
+ {
+  "class": "AFortAthenaMutator_Goose",
+  "function": "OnPawnDied",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x142c54b70 is a verbosity-gated log (global 0x1481199a0). Candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard is not declared in any header."
+ },
+ {
+  "class": "AFortAthenaMutator_Mash",
+  "function": "OnRep_TeamScoreMultiplier",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x14199a760 AFortGameStateAthena::HandleGameModeMessageRequest is not declared in any porting/native header. CALL 0x1406f7390 is applied to a FScalableFloat struct member (this+0x848), not a component."
+ },
+ {
+  "class": "AFortAthenaMutator_PlayerClassSettings",
+  "function": "GetClassContext",
+  "status": "proposed",
+  "case": "direct_port",
+  "reason": "Component IsA UFortPlayerClassSettingsComponent then ClassSlotIndex, else 0xff. Getter results inferred from IsA fast path."
+ },
+ {
+  "class": "AFortAthenaMutator_RoundHelper",
+  "function": "StartNextRound",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Verbosity-gated log CALL 0x142c54b70 (candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard undeclared). Tail JMP 0x141b0c140 candidate AFortAthenaMutator_RoundHelper::SetCurrentRound is not declared in any header."
+ },
+ {
+  "class": "AFortAthenaMutator_PlayerTeamSettings",
+  "function": "GetTeamContext",
+  "status": "proposed",
+  "case": "direct_port",
+  "reason": "Component IsA UFortPlayerTeamSettingsComponent then TeamIndex, else 0xff. Getter results inferred from IsA fast path."
+ },
+ {
+  "class": "AFortAthenaMutator_SpecialEvent",
+  "function": "JumpToSafeZonePhase",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Tail JMP 0x141950090 to AFortGameModeAthena::JumpToSafeZonePhase, which is not declared in any porting/native header."
+ },
+ {
+  "class": "AFortAthenaMutator_SpecialEvent",
+  "function": "OnRep_Aircraft",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Verbosity-gated log CALL 0x142c54b70 (candidate undeclared). Tail JMP 0x141b28440 candidate AFortAthenaMutator_SpecialEvent::PlacePlayersInAircraft is declared only in UFortCheatManager_SpecialEvent.h."
+ },
+ {
+  "class": "AFortAthenaMutator_SpecialEvent",
+  "function": "RequestSanitizedPlayers",
+  "status": "proposed",
+  "case": "direct_port",
+  "reason": "Role==3 and IsMutatorActive() gate; adds NumPlayersRequested to member_field NativeRecoveredInt32_0x338."
+ },
+ {
+  "class": "AFortAthenaMutator_SpecialEvent",
+  "function": "ResetSpecialEventAircraft",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ce9f90 has three candidates (ApplyWrapToSaveTheWorldHoverboard, UMeshNetworkSubsystem::GetMetaDataWithKey, SetMetaDataWithKey) that do not match the call shape; none is declared in a header. CALL 0x142c54b70 log is also present."
+ },
+ {
+  "class": "AFortAthenaMutator_Uranium",
+  "function": "GetWinningTeamForRound",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Verbosity-gated log CALL 0x142c54b70 (global 0x14811b500); candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard is not declared in any header."
+ },
+ {
+  "class": "AFortAthenaMutator_Wax",
+  "function": "GetPlayerPlacement",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406f73b0 candidate AFortAthenaMutator_DadBro::StartNextSafeZonePhase is not declared in any porting/native header."
+ },
+ {
+  "class": "AFortAthenaMutator_Wax",
+  "function": "IsPlayerInPodium",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406f73b0 candidate AFortAthenaMutator_DadBro::StartNextSafeZonePhase is not declared in any header. CALL 0x141b49240 candidate AFortAthenaMutator_Wax::GetPlayerPlacement is not declared in AFortAthenaMutator_Wax.h."
+ },
+ {
+  "class": "AFortAthenaMutator_Wax",
+  "function": "IsPlayerTeamLeader",
+  "status": "proposed",
+  "case": "direct_port",
+  "reason": "Linear TArray<AFortPlayerStateAthena*> scan for Player at this+0x270."
+ },
+ {
+  "class": "UFortAthenaNpcPatrollingComponent",
+  "function": "SetPatrolPath",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Null-path verbosity-gated log CALL 0x142c54b70 (global 0x148116af0); candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard is not declared in any header."
+ }
+]

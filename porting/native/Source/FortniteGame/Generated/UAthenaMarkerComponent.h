@@ -36,6 +36,12 @@ public:
 	UPROPERTY(Replicated)
 	FFortWorldMarkerContainer MarkerStream;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x240): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x240;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x248): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x248;
+
 	// table index 10, flags 0x40000000002000
 	UPROPERTY(Transient)
 	int32 LocalPlaceableMarkersPerRate;
@@ -67,6 +73,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	bool bIsAimingDownSights;
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	UFortWorldMarker* FindMarkerByID(FMarkerID MarkerID);
 
 	UFUNCTION(Server, Reliable)
 	void ServerAddMapMarker(const FFortClientMarkerRequest& MarkerRequest);

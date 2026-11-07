@@ -7,10 +7,12 @@
 #include "UObject/Object.h"
 
 #include "EAIHotSpotSlot.h"
+#include "Math/Box.h"
 #include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
 
 class AAIController;
+class AAIHotSpot;
 
 #include "UAIHotSpotSlot.generated.h"
 
@@ -20,6 +22,9 @@ class FORTNITEGAME_API UAIHotSpotSlot : public UObject
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x20): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x20;
+
 	// table index 14, flags 0x20080000000005
 	UPROPERTY()
 	FTransform LocalTransform;
@@ -84,6 +89,12 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0xa8): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0xa8;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AAIHotSpot* GetHotSpot() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FBox GetSlotBounds() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSlotHeight() const;

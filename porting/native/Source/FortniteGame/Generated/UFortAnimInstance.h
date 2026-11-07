@@ -169,6 +169,12 @@ public:
 	UPROPERTY(Transient)
 	float SavedWeaponLastFireTime;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x330): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x330;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x334): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x334;
+
 	// table index 4, flags 0x10000000002000
 	UPROPERTY(Transient)
 	EAnimRelaxedState RequestedRelaxedState;
@@ -191,6 +197,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortCardinalDirection GetCardinalDirectionFromAngle(float Angle, float DeadZoneAngle) const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetPreviousFrameAimPitchAndYaw(float& OutPitch, float& OutYaw) const;
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)

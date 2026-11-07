@@ -54,6 +54,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bPlayersAreInvincible, Transient)
 	bool bPlayersAreInvincible;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x338): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x338;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x364): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x364;
 
@@ -155,6 +158,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void PauseSupplyDrops(bool bPause);
+
+	UFUNCTION(BlueprintCallable)
+	void RequestSanitizedPlayers(int32 NumPlayersRequested);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetAdditionalViewpoint(FVector WorldLocation);

@@ -147,6 +147,11 @@ public:
 
 private:
 	UFUNCTION()
+	void OnServerPlayerWeakspotSpawned(FBuildingWeakSpotData& WeakspotData);
+public:
+
+private:
+	UFUNCTION()
 	void OnServerPoiTagIDChanged(int16 InPoiTagID);
 public:
 

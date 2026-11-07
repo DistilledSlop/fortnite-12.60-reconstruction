@@ -1,0 +1,177 @@
+[
+ {
+  "class": "AFortAthenaSupplyDrop",
+  "function": "SpawnGameModePickup",
+  "status": "proposed",
+  "case": "constant_null_return",
+  "reason": "body 0x141922220 ported as 1 statement lines; Offset evidence: no receiver or argument field is read"
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "GetCurrentBudget",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "CMP dword ptr [0x1478c24d8],0x0 gates the result on a hidden global at absolute address 0x1478c24d8 (no reflected member or declared global)."
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "GetSeatSwitchCooldown",
+  "status": "blocked",
+  "case": "out_of_body_branch",
+  "reason": "JBE 0x141f8a370 at 0x1419177ae leaves the body; the target is not a resolved callee (no callee_candidates entry, no ported body) so the value returned when the seat cooldown is <= 0 cannot be determined."
+ },
+ {
+  "class": "AFortAthenaTutorialManager",
+  "function": "Server_OnTutorialScreenCompleted",
+  "status": "blocked",
+  "case": "unresolved_tail_jump",
+  "reason": "JNZ 0x141b66050 at 0x141b7b81d tail-jumps with RCX = TArray element (this+0x3c0, Num at +0x3c8); the target has no callee_candidates entry, so the callee cannot be expressed."
+ },
+ {
+  "class": "AFortAudioAnalysisController",
+  "function": "GetPapayaSpeakersEnabled",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "CMP dword ptr [0x1478ded40],0x0 / SETNZ AL returns a hidden global at absolute address 0x1478ded40 (no reflected member or declared global)."
+ },
+ {
+  "class": "AFortAthenaZipline",
+  "function": "UseInteractToEnterZipline",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "CMP dword ptr [0x1478c25b8],0x1 / SETZ AL returns a hidden global at absolute address 0x1478c25b8 (no reflected member or declared global)."
+ },
+ {
+  "class": "UFortBadgeItemDefinition",
+  "function": "GetBadgeScoreCategory",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x141f12300 (candidate UFortBadgeItemDefinition::GetMissionPoints) is not declared in any generated header; the call also passes absolute address 0x1461a23c0 (LEA RDX) and the result is read as a byte at +0x10, which does not match the no-argument Int candidate."
+ },
+ {
+  "class": "UFortBadgeItemDefinition",
+  "function": "GetBadgeScoreThreshold",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x141f12300 (candidate UFortBadgeItemDefinition::GetMissionPoints) is not declared in any generated header; the call also passes absolute address 0x1461a2420 (LEA RDX) and the result is read as a dword at +0x14, which does not match the no-argument Int candidate."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnPlayerEventScoreChanged",
+  "status": "blocked",
+  "case": "unresolved_tail_jump",
+  "reason": "JNZ 0x14284d7b0 at 0x1424b44c0 (taken when Role != 3 and bActive != 0) tail-jumps to an unresolved target; there is no callee_candidates entry for it."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnPlayerFullScreenMapActiveChanged",
+  "status": "blocked",
+  "case": "unresolved_tail_jump",
+  "reason": "JNZ 0x14284d7f0 at 0x1424b47e0 (taken when Role != 3 and bActive != 0) tail-jumps to an unresolved target; there is no callee_candidates entry for it."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnPlayerInteractLongUseChanged",
+  "status": "blocked",
+  "case": "unresolved_tail_jump",
+  "reason": "JNZ 0x14284d8d0 at 0x1424b4970 (taken when Role != 3 and bActive != 0) tail-jumps to an unresolved target; there is no callee_candidates entry for it."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnPlayerInventoryActiveChanged",
+  "status": "blocked",
+  "case": "unresolved_tail_jump",
+  "reason": "JNZ 0x14284d910 at 0x1424b4990 (taken when Role != 3 and bActive != 0) tail-jumps to an unresolved target; there is no callee_candidates entry for it."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnServerPlayerWeakspotSpawned",
+  "status": "proposed",
+  "case": "exact_struct_copy",
+  "reason": "body 0x1424b5bc0 ported as 5 statement lines; Offset evidence: this+0xf0 = AActor::Role (reflected Byte, ROLE_Authority == 3); this+0x268 = bActive (reflected bool, byte compared with 0); this+0x2a8..0x2df = RemoteWeakspotData (FBuildingWeakSpotData, 56 bytes, copied from WeakspotData by 3 MOVUPS and 1 MOVSD)."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnServerRemoveMapMarker",
+  "status": "blocked",
+  "case": "unresolved_tail_jump",
+  "reason": "JNZ 0x14284cf20 at 0x1424b5c30 (taken when Role == 3 and bActive != 0) tail-jumps to an unresolved target; there is no callee_candidates entry for it."
+ },
+ {
+  "class": "UFortCampaignHeroLoadoutItem",
+  "function": "GetCommanderHero",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1425105c0 (candidate UFortCampaignHeroLoadoutItemDefinition::GetCommanderSlot) and the tail JMP 0x1425120c0 (candidate UFortCampaignHeroLoadoutItem::GetHeroBySlotName, SlotName passed as LEA RDX,[RAX+0x18]) are not declared in any generated header."
+ },
+ {
+  "class": "UFortUICameraFramingFunctionLibrary",
+  "function": "CalculateCharacterCapsuleForCameraFraming",
+  "status": "blocked",
+  "case": "absolute_global_simd",
+  "reason": "The null-Character branch loads hidden globals at absolute addresses 0x148218630 and 0x148218638; the non-null branch is SIMD float math (SHUFPS, UNPCKLPS, MINSS, MULSS) writing an sret struct, which cannot be expressed exactly."
+ },
+ {
+  "class": "AFortCharacterVehicle",
+  "function": "GetIsChargedJumpActive",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x141ed1800 (candidate AFortAIPawn::IsDefender) is not declared in any generated header, and its RAX is used as an object pointer (LEA RDX,[RAX+0x6a8]), contradicting the Bool candidate; CALL 0x143e8a690 also has four unrelated candidates."
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "AreContextMenusEnabled",
+  "status": "proposed",
+  "case": "isa_bitfield",
+  "reason": "body 0x14235d480 ported as 10 statement lines; Offset evidence: PC+0x330 = APlayerController::CheatManager (reflected Object)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GiveAthenaGadget",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140682ce0 has six unrelated candidates (GetCommanderPreviewPedestalActor, GetHeroLoadoutPreviewPedestalActor, GetPreviewIcon, ApplyWrapToSaveTheWorldHoverboard, GetChaseRewardForBundleLevel, GetSoftTextureForChaseReward); none is UFortCheatManager or an ancestor."
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GiveGadget",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140682ce0 has six unrelated candidates (GetCommanderPreviewPedestalActor, GetHeroLoadoutPreviewPedestalActor, GetPreviewIcon, ApplyWrapToSaveTheWorldHoverboard, GetChaseRewardForBundleLevel, GetSoftTextureForChaseReward); none is UFortCheatManager or an ancestor."
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SendTwitchToastNotification",
+  "status": "proposed",
+  "case": "fstring_destructor_only",
+  "reason": "body 0x141ec8790 ported as 1 statement lines; Offset evidence: no this or field access"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SetVehicleConfigVariable",
+  "status": "proposed",
+  "case": "fstring_destructor_only",
+  "reason": "body 0x141ec8790 ported as 1 statement lines; Offset evidence: no this or field access"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "ShowFakeError",
+  "status": "proposed",
+  "case": "fstring_destructor_only",
+  "reason": "body 0x141ec8790 ported as 1 statement lines; Offset evidence: no this or field access"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SpawnAIGroupWithUpgrade",
+  "status": "proposed",
+  "case": "fstring_destructor_only",
+  "reason": "body 0x141ec8790 ported as 1 statement lines; Offset evidence: no this or field access"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "TestBanhammer",
+  "status": "proposed",
+  "case": "fstring_destructor_only",
+  "reason": "body 0x142360ed0 ported as 1 statement lines; Offset evidence: no this or field access"
+ }
+]

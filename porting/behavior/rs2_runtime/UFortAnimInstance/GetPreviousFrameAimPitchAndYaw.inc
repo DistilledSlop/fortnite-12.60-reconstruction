@@ -1,0 +1,21 @@
+// Original body address: 0x14181c300 (thunk 0x1427b6540)
+// Offset evidence: +0x330 and +0x334 are unreflected float gaps in UFortAnimInstance (neighbours +0x32c and +0x338),
+// recovered as member_field NativeRecoveredFloat_0x330 and _0x334. The asm reads their raw bits and decodes them with a key
+// K = (P<<28) ^ (P>>4) from the object address P. Pitch uses S = (A^0x9791F487) - K - 0xA081FD; Yaw uses T = (B^0x9791F487) - (K^0x5867B95B);
+// each result is (((x>>1) ^ 2x) & 0x55555555) ^ 2x, written as float bits to OutPitch and OutYaw (ABI: RDX=OutPitch, R8=OutYaw).
+// MEDIUM: about 60 instructions of integer decoding; each step is mapped to the asm, but the full chain is long.
+// CONFIDENCE: MEDIUM
+uint32 Bits330 = 0;
+uint32 Bits334 = 0;
+FMemory::Memcpy(&Bits330, &NativeRecoveredFloat_0x330, sizeof(uint32));
+FMemory::Memcpy(&Bits334, &NativeRecoveredFloat_0x334, sizeof(uint32));
+const uint64 Address = reinterpret_cast<uint64>(this);
+const uint32 Key = static_cast<uint32>(Address << 28) ^ static_cast<uint32>(Address >> 4);
+const uint32 S = ((Bits330 ^ 0x9791F487u) - Key) - 0x00A081FDu;
+const uint32 S2 = S + S;
+const uint32 PitchBits = (((S >> 1) ^ S2) & 0x55555555u) ^ S2;
+const uint32 T = (Bits334 ^ 0x9791F487u) - (Key ^ 0x5867B95Bu);
+const uint32 T2 = T + T;
+const uint32 YawBits = (((T >> 1) ^ T2) & 0x55555555u) ^ T2;
+FMemory::Memcpy(&OutPitch, &PitchBits, sizeof(float));
+FMemory::Memcpy(&OutYaw, &YawBits, sizeof(float));

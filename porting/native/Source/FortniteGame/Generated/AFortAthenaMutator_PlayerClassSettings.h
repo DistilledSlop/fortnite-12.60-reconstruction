@@ -30,5 +30,10 @@ public:
 	UPROPERTY(Transient)
 	TMap<uint8, FMutatorPlayerSettingsData> ClassSettingsDataMap;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetClassContext() const;
+public:
+
 };
 

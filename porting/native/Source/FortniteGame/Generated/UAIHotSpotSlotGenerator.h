@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+class AAIHotSpot;
+
 #include "UAIHotSpotSlotGenerator.generated.h"
 
 UCLASS(abstract)
@@ -17,6 +19,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	void GenerateSlots();
 	virtual void GenerateSlots_Implementation();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AAIHotSpot* GetHotSpot() const;
 
 };
 

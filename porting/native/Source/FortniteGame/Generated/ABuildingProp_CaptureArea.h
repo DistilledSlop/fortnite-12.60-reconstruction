@@ -8,11 +8,15 @@
 
 #include "FCaptureAreaTeamInfo.h"
 #include "FCaptureHandle.h"
+#include "Math/Vector.h"
 
+class AActor;
+class AController;
 class AFortPickup;
 class AFortPlayerController;
 class UCaptureComponent;
 class UFortWorldItemDefinition;
+class UPrimitiveComponent;
 
 #include "ABuildingProp_CaptureArea.generated.h"
 
@@ -42,6 +46,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	int32 CaptureItemsFromPlayer(bool bRemoveOnFound, TArray<UFortWorldItemDefinition*>& ItemsToCapture, AFortPlayerController* PlayerController, int32 AmountToRemove, int32& AddedScore);
+
+protected:
+	UFUNCTION()
+	virtual void OnFortPawnRegisteredInsideAreaDied(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void RegisterPlayerInsideArea(AFortPlayerController* PlayerInside);

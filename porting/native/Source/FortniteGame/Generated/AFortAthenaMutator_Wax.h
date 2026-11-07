@@ -354,6 +354,9 @@ public:
 	UPROPERTY()
 	TArray<AFortGameModePickup_Wax*> WaxPickupsToDraw;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayerTeamLeader(AFortPlayerStateAthena* Player) const;
+
 	UFUNCTION()
 	void OnRep_Leaders();
 

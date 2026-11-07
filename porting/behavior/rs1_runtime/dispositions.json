@@ -1,0 +1,177 @@
+[
+  {
+    "class": "UCommonButtonGroup",
+    "function": "GetSelectedButton",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "Tail JMP 0x142ee5dd0 (RCX=&Buttons[index]) is shared by six unrelated const getters (AFortEventLevelNavigationActor::GetOwningGameStateComp, UArsenicWidgetBase::GetArsenicMutator, ...); none is UCommonButtonGroup or an ancestor."
+  },
+  {
+    "class": "AAmbientVolume",
+    "function": "SetAmbientAsset",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Conditional tail JNZ 0x1412eabd0 (RCX=this, RDX=asset, taken when byte +0x25c bit 0x1 is set) has callee_candidates {} (no reflected function at that address)."
+  },
+  {
+    "class": "AAmbientVolume",
+    "function": "SetPriority",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Conditional tail JNZ 0x1412eabd0 (RCX=this, EDX=priority, taken when byte +0x25c bit 0x1 is set) has callee_candidates {} (no reflected function at that address)."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "GetSlotByOwner",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x1416295f0 (AAIHotSpot::GetSlotIndexByOwner(AIOwner)) is not declared in any generated header under porting/native/Source (one grep)."
+  },
+  {
+    "class": "UAIHotSpotSlot",
+    "function": "GetHotSpot",
+    "status": "proposed",
+    "case": "proposed_wrapper",
+    "reason": "Body ported from asm and decompile; see porting/behavior/rs1_runtime/UAIHotSpotSlot/GetHotSpot.inc"
+  },
+  {
+    "class": "UAIHotSpotSlot",
+    "function": "GetSlotBounds",
+    "status": "proposed",
+    "case": "proposed_wrapper",
+    "reason": "Body ported from asm and decompile; see porting/behavior/rs1_runtime/UAIHotSpotSlot/GetSlotBounds.inc"
+  },
+  {
+    "class": "UAIHotSpotSlotGenerator",
+    "function": "GetHotSpot",
+    "status": "proposed",
+    "case": "proposed_wrapper",
+    "reason": "Body ported from asm and decompile; see porting/behavior/rs1_runtime/UAIHotSpotSlotGenerator/GetHotSpot.inc"
+  },
+  {
+    "class": "AAthenaCobaltStormShield",
+    "function": "ClientStormShieldShrinkTimerComplete",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Conditional tail JNZ 0x141aa1190 (RCX=loaded this+0x4c8) has callee_candidates {} (no reflected function at that address)."
+  },
+  {
+    "class": "UAthenaMarkerComponent",
+    "function": "FindMarkerByID",
+    "status": "proposed",
+    "case": "proposed_wrapper",
+    "reason": "Body ported from asm and decompile; see porting/behavior/rs1_runtime/UAthenaMarkerComponent/FindMarkerByID.inc"
+  },
+  {
+    "class": "UAutomationPerfMonitorManager",
+    "function": "GetPerfMonitorInstance",
+    "status": "blocked",
+    "case": "absolute_global",
+    "reason": "MOV RAX,qword ptr [0x148165ec0] reads an absolute-address global (_DAT_148165ec0) with no reflected name; hidden globals are not ported."
+  },
+  {
+    "class": "ABuildingActor",
+    "function": "SetCustomState",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x140683960 (RCX=this+0x518 CustomState, RDX=NewState) is shared by six unrelated Str-returning getters (UAthenaMatchStatView::GetMatchID, ...); none takes this receiver with a Str argument."
+  },
+  {
+    "class": "ABuildingContainer",
+    "function": "OnRep_ChosenRandomUpgrade",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x14079d060 (RCX=this+0x5a0 struct copy target, RDX=element at this+0xbb0) has candidates from unrelated classes (AFortPlayerControllerAthena::GetPlaylistGameTypeText, ...); also CALLs 0x140682ce0 and 0x142ebd9e0 are ambiguous."
+  },
+  {
+    "class": "ABuildingProp_CaptureArea",
+    "function": "OnFortPawnRegisteredInsideAreaDied",
+    "status": "proposed",
+    "case": "proposed_wrapper",
+    "reason": "Body ported from asm and decompile; see porting/behavior/rs1_runtime/ABuildingProp_CaptureArea/OnFortPawnRegisteredInsideAreaDied.inc"
+  },
+  {
+    "class": "ABuildingProp_DeimosSpawner",
+    "function": "OnKillAIReceived",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Conditional tail JNZ 0x141664b20 (RCX=loaded this+0xbb0, RDX=TriggerInstigator) has callee_candidates {}."
+  },
+  {
+    "class": "ABuildingProp_DeimosSpawner",
+    "function": "OnKillRiftReceived",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Conditional tail JNZ 0x141664d00 (RCX=loaded this+0xbb0, RDX=TriggerInstigator) has callee_candidates {}."
+  },
+  {
+    "class": "ABuildingProp_DeimosSpawner",
+    "function": "OnTurnOffReceived",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Conditional tail JNZ 0x1416772b0 (RCX=loaded this+0xbb0, RDX=TriggerInstigator) has callee_candidates {}."
+  },
+  {
+    "class": "ABuildingProp_DeimosSpawner",
+    "function": "OnTurnOnReceived",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Conditional tail JNZ 0x1416774e0 (RCX=loaded this+0xbb0, RDX=TriggerInstigator) has callee_candidates {}."
+  },
+  {
+    "class": "ABuildingProp_LockDevice",
+    "function": "UnlockObject",
+    "status": "proposed",
+    "case": "proposed_wrapper",
+    "reason": "Body ported from asm and decompile; see porting/behavior/rs1_runtime/ABuildingProp_LockDevice/UnlockObject.inc"
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "AreGridIndicesValid",
+    "status": "proposed",
+    "case": "proposed_wrapper",
+    "reason": "Body ported from asm and decompile; see porting/behavior/rs1_runtime/UBuildingStructuralSupportSystem/AreGridIndicesValid.inc"
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "GetCenterCellActor",
+    "status": "blocked",
+    "case": "truncated_body",
+    "reason": "JLE 0x141c76e40 leaves the 39-byte body (0x141c76e10-0x141c76e36); success-path code at 0x141c76e40 is absent from the asm and the decompile calls unresolved helper FUN_141c712b0 on this+0x178."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "K2_GetWorldLocFromGridIndices",
+    "status": "proposed",
+    "case": "proposed_wrapper",
+    "reason": "Body ported from asm and decompile; see porting/behavior/rs1_runtime/UBuildingStructuralSupportSystem/K2_GetWorldLocFromGridIndices.inc"
+  },
+  {
+    "class": "ABuildingTrapFloor_Turret",
+    "function": "MinigameEnded",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x1440c9760 (RCX=UBoxComponent, RDX=extent FVector, R8=0) has candidates only from AFortHotfixBlockingVolume/AFortHotfixUndergroundVolume::OnRep_ReplicatedExtent; receiver UBoxComponent is not among them. Also reads absolute globals 0x148218630/0x148218638."
+  },
+  {
+    "class": "UCreativeBlueprintLibrary",
+    "function": "SegmentCylinderIntersection",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x141d8f690 (static UCreativeBlueprintLibrary::SegmentSphereIntersection, sret TArray) is not declared in porting/native/Source/FortniteGame/Generated/UCreativeBlueprintLibrary.h."
+  },
+  {
+    "class": "UCreativeQuestComponent",
+    "function": "ResetQuestProgress",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x1406911b0 (RCX=this+0xf0 TArray, EDX=0) candidates are unrelated classes' OnMutatorObjectUpdated/PreviewItemPickUp; tail JMP 0x14072d2e0 (RCX=this+0x100) maps only to AFortAthenaMutator_DadBro::StartNextSafeZonePhase (receiver mismatch)."
+  },
+  {
+    "class": "UCustomCharacterPartAnimInstance",
+    "function": "GetOwnerSkeletalMeshComponent",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x142ee7880 (RCX=this+0x40c sub-object) candidates (AFortAthenaMutator_Crucible, AFortTeamMemberPedestal, UHUDLayoutToolContext) do not include the receiver class; tail JMP 0x142ee5dd0 is the shared getter set with no matching receiver."
+  }
+]

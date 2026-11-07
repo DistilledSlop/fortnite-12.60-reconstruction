@@ -1,0 +1,177 @@
+[
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "GetShadowPlayHighlightsEnabled",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "CMP dword ptr [0x14812bdf0],0x1 and CMP dword ptr [0x1478c4710],0x1 read absolute-address globals with no reflected member or named symbol; the MOVZX [RCX+0x567] byte read is an unreflected gap (reflected Int HiddenMatchmakingDelayMaxSeconds at 0x560 is 4 bytes wide)"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetArrowColorEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xc60) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetAutoExposureEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0x948) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetAutoFocusEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0x9a8) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetAutoHideBuildingMaterials",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "shared_callee_ambiguous: CALL 0x140684de0 (after ADD RCX,0x1a0) has 6 candidates (AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMeshBeginCursorOver, AFortEventLevelNavigationActor::HandleDisplayMeshEndCursorOver, AFortEventLevelNavigationActor::HandleDisplayMeshInputTouchEnd, AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived); none is equal or an ancestor of receiver UFortClientSettingsRecord and none takes the single Bool argument the body passes in RDX/XMM1 (candidates are undeclared in porting/native/Source)"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetBattleMapAutomaticCameraPlacement",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xb28) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetBattleMapShowAllSquadMembers",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xb10) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetBattleMapShowNearbyChests",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xaf8) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetBattleMapShowTimeIndicator",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xae0) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetDamageFxEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xa50) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetDroneIgnoreJump",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xac8) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetHighQualityFxEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xa38) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetNameplatesEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xb40) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetPlayerOutlinesEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0x9d8) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetRelevancyZoneVisible",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xa20) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetSafeZoneOpacity",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "shared_callee_ambiguous: CALL 0x1407ac590 (after ADD RCX,0xa08) has 2 candidates (UFortReplayContext::JumpToNextEvent, UFortReplayContext::JumpToPreviousEvent); none is equal or an ancestor of receiver UFortClientSettingsRecord and none takes the single Bool argument the body passes in RDX/XMM1 (candidates are undeclared in porting/native/Source)"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetScalingOptionsEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xbb8) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetShareLensSettings",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xab0) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetShouldShowBothQuickbars",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "shared_callee_ambiguous: CALL 0x140684de0 (after ADD RCX,0x248) has 6 candidates (AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMeshBeginCursorOver, AFortEventLevelNavigationActor::HandleDisplayMeshEndCursorOver, AFortEventLevelNavigationActor::HandleDisplayMeshInputTouchEnd, AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived); none is equal or an ancestor of receiver UFortClientSettingsRecord and none takes the single Bool argument the body passes in RDX/XMM1 (candidates are undeclared in porting/native/Source)"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetShowPickupDotsOnMapByRarity",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "shared_callee_ambiguous: CALL 0x140684de0 (after ADD RCX,0x188) has 6 candidates (AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMeshBeginCursorOver, AFortEventLevelNavigationActor::HandleDisplayMeshEndCursorOver, AFortEventLevelNavigationActor::HandleDisplayMeshInputTouchEnd, AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived); none is equal or an ancestor of receiver UFortClientSettingsRecord and none takes the single Bool argument the body passes in RDX/XMM1 (candidates are undeclared in porting/native/Source)"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetShowTeamColor",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xb58) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetStormEffectsEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0x9f0) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetThirdPersonCameraCollision",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xa98) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its class is not equal or an ancestor of receiver UFortClientSettingsRecord; it takes 2 params (Selection, UnderlyingType) while the body sets only RDX (the bool) and leaves R8 unset"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetThirdPersonDistanceToSubject",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "shared_callee_ambiguous: CALL 0x1407ac590 (after ADD RCX,0xa80) has 2 candidates (UFortReplayContext::JumpToNextEvent, UFortReplayContext::JumpToPreviousEvent); none is equal or an ancestor of receiver UFortClientSettingsRecord and none takes the single Bool argument the body passes in RDX/XMM1 (candidates are undeclared in porting/native/Source)"
+  },
+  {
+    "class": "UFortContextualTutorial_StormForming",
+    "function": "HandleGamePhaseStepChanged",
+    "status": "blocked",
+    "case": "callee_unresolved_tailjump",
+    "reason": "JBE 0x141b40ee0 is a conditional tail-jump (taken when original R8B is 7 or 8) with empty callee_candidates; porting/generated/thunk-table/tailjmp.json lists 0x141b40ee0 as the real body of UFortContextualTutorial_Landing::HandleStartSkydivingForActivation, a different class, so the target signature for this receiver is not proven"
+  }
+]

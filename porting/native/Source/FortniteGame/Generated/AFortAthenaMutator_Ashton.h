@@ -9,6 +9,7 @@
 #include "AttributeSet.h"
 #include "EAshtonStoneStateType.h"
 #include "EAshtonStoneType.h"
+#include "EAthenaGamePhaseStep.h"
 #include "FAshtonStoneData.h"
 #include "FAshtonStoneSpawnData.h"
 #include "FAshtonStoneState.h"
@@ -20,6 +21,7 @@
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
+#include "UFortSafeZoneInterface.h"
 
 class AFortGameModePickup;
 class AFortPlayerController;
@@ -249,7 +251,15 @@ public:
 	FAthenaGameMessageData GameMsg_NoMoreRespawns;
 
 	UFUNCTION(BlueprintCallable)
+	int32 GetNumCapturedStones(TArray<FAshtonStoneState>& TestList);
+
+	UFUNCTION(BlueprintCallable)
 	EAshtonStoneStateType GetStoneState(EAshtonStoneType StoneType);
+
+protected:
+	UFUNCTION()
+	void OnGamePhaseStepChanged(TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, EAthenaGamePhaseStep GamePhaseStep);
+public:
 
 protected:
 	UFUNCTION()

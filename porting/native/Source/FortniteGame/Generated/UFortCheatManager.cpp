@@ -74,6 +74,22 @@ void UFortCheatManager::ApplyGameplayModifier(FString ModifierName)
 	return;
 }
 
+bool UFortCheatManager::AreContextMenusEnabled(APlayerController* PC)
+{
+	// Original body 0x14235d480 (thunk 0x14286b9a0). Offset evidence: PC+0x330 = APlayerController::CheatManager (reflected Object). Class-tree test against UFortCheatManager::StaticClass() is IsA (Cast). CheatManager+0x88 dword bit 0x1000 = byte 0x89 mask 0x10 = UFortCheatManager::bEnableContextMenus (reflected uint8 bitfield, offset 137 mask 16).
+	// CONFIDENCE: MEDIUM
+	if (!PC)
+	{
+		return false;
+	}
+	UFortCheatManager* FortCheatManager = Cast<UFortCheatManager>(PC->CheatManager);
+	if (!FortCheatManager)
+	{
+		return false;
+	}
+	return FortCheatManager->bEnableContextMenus != 0;
+}
+
 void UFortCheatManager::AthenaEmote(FString EmoteName)
 {
 	// Exact original shared stub 0x1406801c0.
@@ -1896,6 +1912,13 @@ void UFortCheatManager::SendRemoteBotCommand(FString CommandToSend)
 	return;
 }
 
+void UFortCheatManager::SendTwitchToastNotification(FString Title, FString Description)
+{
+	// Original body 0x141ec8790 (thunk 0x14286d2e0). Offset evidence: no this or field access. The only calls are FMemory::Free (0x142bee710) on the Data pointers of by-value FString parameters, each when non-null; those are the destructors the C++ parameters already run, so nothing is ported.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::ServerStartProfiling()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -2235,6 +2258,13 @@ void UFortCheatManager::SetUnlimitedHealth(bool bInValue)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::SetVehicleConfigVariable(FString VehicleName, FString ConfigName, float ConfigValue)
+{
+	// Original body 0x141ec8790 (thunk 0x14286e090). Offset evidence: no this or field access. The only calls are FMemory::Free (0x142bee710) on the Data pointers of by-value FString parameters, each when non-null; those are the destructors the C++ parameters already run, so nothing is ported.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortCheatManager::SetWallTimer(float Seconds)
 {
 	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
@@ -2276,6 +2306,13 @@ void UFortCheatManager::ShowEventsDebugInfo(bool bShowDebugInfo)
 {
 	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::ShowFakeError(FString DisplayString, FString ErrorCode)
+{
+	// Original body 0x141ec8790 (thunk 0x14286d2e0). Offset evidence: no this or field access. The only calls are FMemory::Free (0x142bee710) on the Data pointers of by-value FString parameters, each when non-null; those are the destructors the C++ parameters already run, so nothing is ported.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void UFortCheatManager::ShowGameplayCaptureUI()
@@ -2348,6 +2385,13 @@ void UFortCheatManager::SpawnAIGroup(FString SpawnGroupName)
 void UFortCheatManager::SpawnAIGroupFromExternalSpawner(FString SpawnGroupName)
 {
 	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::SpawnAIGroupWithUpgrade(FString SpawnGroupName, FString UpgradeName)
+{
+	// Original body 0x141ec8790 (thunk 0x14286d2e0). Offset evidence: no this or field access. The only calls are FMemory::Free (0x142bee710) on the Data pointers of by-value FString parameters, each when non-null; those are the destructors the C++ parameters already run, so nothing is ported.
 	// CONFIDENCE: HIGH
 	return;
 }
@@ -2541,6 +2585,13 @@ void UFortCheatManager::TestAllDevPartyMembers()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortCheatManager::TestBanhammer(FString InUserId, FString BanCode, FString BanReason, int32 DesiredAction, int32 BanhammerActivation, int32 BanhammerTiming, int32 BanhammerMessageType, FString BanhammerCustomMessage, FString BanhammerDetails)
+{
+	// Original body 0x142360ed0 (thunk 0x14286eee0). Offset evidence: no this or field access. The only calls are FMemory::Free (0x142bee710) on the Data pointers of by-value FString parameters BanReason (R9), BanhammerCustomMessage ([RSP+0x70]) and BanhammerDetails ([RSP+0x78]), each when non-null; those are the destructors the C++ parameters already run.
 	// CONFIDENCE: HIGH
 	return;
 }

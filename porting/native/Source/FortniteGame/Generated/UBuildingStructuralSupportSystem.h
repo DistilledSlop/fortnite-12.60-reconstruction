@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FBuildingSupportCellIndex.h"
 #include "Math/Box.h"
+#include "Math/Vector.h"
 
 class ABuildingLayoutRequirement;
 class AController;
@@ -28,12 +30,36 @@ public:
 	UPROPERTY(Transient)
 	TArray<ABuildingLayoutRequirement*> LayoutRequirementActorsToRegister;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x368): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x368;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x36c): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x36c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x370): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x370;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x378): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x378;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x37c): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x37c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x380): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x380;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x384): not a UPROPERTY, not replicated.
 	FBox NativeWorldBounds_0x384 = FBox(ForceInit);
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortNavigationGraph* NavGraph;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AreGridIndicesValid(FBuildingSupportCellIndex& GridIndices) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool K2_GetWorldLocFromGridIndices(FBuildingSupportCellIndex& GridIndices, FVector& OutWorldLoc) const;
 
 };
 

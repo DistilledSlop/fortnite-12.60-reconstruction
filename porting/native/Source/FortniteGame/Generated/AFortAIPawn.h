@@ -11,6 +11,7 @@
 #include "EFortAILevelRatingDisplayType.h"
 #include "EFortAIPawnGender.h"
 #include "EFortCombatEvents.h"
+#include "EFortCustomGender.h"
 #include "EFortHotSpotSlot.h"
 #include "EFortMovementStyle.h"
 #include "EFortMovementUrgency.h"
@@ -800,6 +801,9 @@ public:
 	void FastSharedReplication_Implementation(const FFortAISharedRepMovement& SharedRepMovement);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EFortCustomGender::Type> GetCharacterGender() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AActor* GetCurrentAimTarget() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -825,6 +829,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void GiveAmmo(int32 AmmoQuantity);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInCombat() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItem* K2_GetDefenderItem() const;
@@ -875,6 +882,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void ResetAIRotationRateToDefault();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetAIRotationRate(FRotator& AIRotationRate);
 
 	UFUNCTION(BlueprintCallable)
 	void SetCanSleep(bool InCanSleep);

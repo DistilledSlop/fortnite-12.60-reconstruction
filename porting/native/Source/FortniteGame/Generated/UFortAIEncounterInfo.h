@@ -640,6 +640,12 @@ public:
 	UPROPERTY()
 	bool bTrackCombatParticipation;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xb40): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0xb40;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xb44): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0xb44;
+
 	// table index 6, flags 0x20080000002014
 	UPROPERTY(Transient)
 	FGameplayTagContainer ModifierTags;
@@ -665,6 +671,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float GetEncounterTimeSeconds();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPawnNumberLimit() const;
 
 	UFUNCTION(BlueprintCallable)
 	void SetNukeWavesAtEncounterEnd(bool bNuke);
