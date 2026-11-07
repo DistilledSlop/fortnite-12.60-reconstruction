@@ -14,9 +14,9 @@
 .leaf-label,.leaf-pct,.tm-head{fill:var(--tm-ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .leaf-pct{font-weight:700}
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.1% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit b40455c | Document blocked/non-portable natives; show interface group on the dashboard | 2026-11-07T12:17:29-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
+.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.1% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit 184a880 | Document short-body batch findings; refresh workflow snapshot | 2026-11-07T12:30:38-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Gameplay classes (/Script/FortniteGame)
-17.0% complete
+17.1% complete
 effort weight 673 | source: derived
 </title>
 <rect class="tile-frame tm-grp0" x="1.0" y="1.0" width="331.3" height="630.0" rx="4"/>
@@ -87,13 +87,13 @@ effort weight 75 | source: derived
 <text class="grp-head" x="755.7" y="555.6" font-size="12">Audio<tspan class="grp-pct"> · 27%</tspan></text>
 </g>
 <g><title>Native function bodies ported (behaviour)
-24.7% complete (3620/14643)
+25.0% complete (3655/14643)
 effort weight 150 | source: git
-3620 committed function bodies of 14643 (total 14643 from totals.json native_functions_with_exec); counted against the in-scope reflected function list (463 manifest entries are helpers, _Validate halves or otherwise not a reflected function and are not counted; ported `&lt;fn&gt;_Implementation` bodies count for `&lt;fn&gt;`). Body-location table for the 11407 functions unported by reflected name when built (snapshot): 788 inline, 6806 direct single-callee, 1312 direct multi-candidate (needs review), 2244 virtual, 5 no single body; 9857 distinct bodies; 375 already covered via _Implementation, 61 _Validate-only; source recovery only; build/runtime validation follows separate batch checkpoints</title>
+3655 committed function bodies of 14643 (total 14643 from totals.json native_functions_with_exec); counted against the in-scope reflected function list (467 manifest entries are helpers, _Validate halves or otherwise not a reflected function and are not counted; ported `&lt;fn&gt;_Implementation` bodies count for `&lt;fn&gt;`). Body-location table for the 11407 functions unported by reflected name when built (snapshot): 788 inline, 6806 direct single-callee, 1312 direct multi-candidate (needs review), 2244 virtual, 5 no single body; 9857 distinct bodies; 410 already covered via _Implementation, 61 _Validate-only; source recovery only; build/runtime validation follows separate batch checkpoints</title>
 <rect class="tile-body" x="5.0" y="25.0" width="244.5" height="175.7" rx="4"/>
 <clipPath id="stm-c0"><rect x="5.00" y="25.00" width="244.46" height="175.70" rx="4"/></clipPath>
-<g clip-path="url(#stm-c0)"><rect class="tile-fill" x="5.00" y="157.26" width="244.46" height="43.44"/>
-<rect class="tile-edge" x="5.00" y="156.26" width="244.46" height="2"/>
+<g clip-path="url(#stm-c0)"><rect class="tile-fill" x="5.00" y="156.84" width="244.46" height="43.86"/>
+<rect class="tile-edge" x="5.00" y="155.84" width="244.46" height="2"/>
 </g>
 <text class="leaf-label" x="10.0" y="40.0" font-size="11">Native function bodies ported</text>
 <text class="leaf-label" x="10.0" y="53.0" font-size="11">(behaviour)</text>
