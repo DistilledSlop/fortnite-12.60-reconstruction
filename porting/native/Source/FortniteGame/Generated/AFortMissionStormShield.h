@@ -157,6 +157,9 @@ public:
 	UFUNCTION()
 	void OnRep_ReplicatedRadius();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	virtual void PauseStormShield();
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	bool RemoveAndDestroySafeArea(AFortMissionStormSafeZone* AreaToRemove);

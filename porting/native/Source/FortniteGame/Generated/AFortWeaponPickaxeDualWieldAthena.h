@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortWeaponPickaxeAthena.h"
 
+#include "EFortDualWieldSwingState.h"
+
 class UFXSystemComponent;
 class UNiagaraSystem;
 class UParticleSystem;
@@ -73,6 +75,12 @@ public:
 	UPROPERTY()
 	USoundBase* OffhandGenericImpactSound;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xc88): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0xc88;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xc89): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xc89;
+
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<UNiagaraSystem*> OffhandImpactNiagaraPhysicalSurfaceEffectInstances;
@@ -124,6 +132,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponentBudgeted* GetWeaponMeshOffhand() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetCurrentSwingState(EFortDualWieldSwingState NewState);
 
 };
 

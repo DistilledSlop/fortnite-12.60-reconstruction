@@ -26,8 +26,14 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x54): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x54;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x58): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x58;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x5c): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x5c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x5c): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x5c;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x64): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x64;
@@ -38,8 +44,14 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x66): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x66;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x66): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0x66;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CanAffordUpgrade() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanPreview() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentLevel() const;

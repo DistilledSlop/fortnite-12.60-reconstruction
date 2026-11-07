@@ -2,6 +2,14 @@
 #include "UFortAIEncounterSequence.h"
 #include "EFortEncounterSequenceResult.h"
 
+bool UFortAIEncounterSequence::EncounterBelongsToSequence(UFortAIEncounterInfo* InEncounter) const
+{
+	// Original address: 0x141692a90
+	// Evidence: RDX = InEncounter compared with [this+0x60] (reflected CurrentEncounter, UFortAIEncounterInfo*). SETZ = pointer equality.
+	// CONFIDENCE: HIGH
+	return InEncounter == CurrentEncounter;
+}
+
 UFortAIEncounterInfo* UFortAIEncounterSequence::GetCurrentEncounter() const
 {
 	// Original address: 0x14279c350.

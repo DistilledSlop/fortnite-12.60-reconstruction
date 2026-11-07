@@ -40,6 +40,12 @@ public:
 	UPROPERTY(Transient)
 	UFortMulchConfirmationModalWidget* MulchConfirmationModal;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void IsPrimaryActionEnabled(bool& bEnabled);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void IsPrimaryActionHidden(bool& bHidden);
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	virtual void NotifyPanelActivated();

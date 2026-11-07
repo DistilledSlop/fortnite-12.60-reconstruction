@@ -8,6 +8,7 @@
 
 #include "EAIHotSpotSlot.h"
 #include "Math/TransformNonVectorized.h"
+#include "Math/Vector.h"
 
 class AAIController;
 
@@ -75,11 +76,23 @@ public:
 	UPROPERTY(Transient)
 	EAIHotSpotSlot SlotState;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xa0): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xa0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xa4): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xa4;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xa8): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xa8;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSlotHeight() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSlotIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetSlotLocation() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AAIController* GetSlotOwner() const;

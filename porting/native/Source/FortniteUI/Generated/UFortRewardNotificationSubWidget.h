@@ -29,8 +29,21 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
 	uint64 NativeRecoveredObject_0x278;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0x278;
+
 	UFUNCTION(BlueprintCallable)
 	void Init(UFortRewardNotificationWidget* MainWidget);
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void IsPrimaryActionEnabled(bool& bEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void IsPrimaryActionHidden(bool& bHidden);
+public:
 
 };
 

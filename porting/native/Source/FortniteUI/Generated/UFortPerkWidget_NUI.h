@@ -35,6 +35,9 @@ public:
 	EFortItemTier GetPerkTier() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRequiredLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortSupportBonusType GetSupportBonusType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

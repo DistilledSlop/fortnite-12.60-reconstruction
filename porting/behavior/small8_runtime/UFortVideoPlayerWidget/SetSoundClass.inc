@@ -1,0 +1,8 @@
+// Original body address: 0x144f7b620
+// Offset evidence: Object store to reflected SoundClass at +0x248. When the new value is non-null, the store goes to SoundComponent (reflected, +0x2e8) at pointee offset +0x5e8 (pointee class unresolved, raw). A null check on SoundComponent is added; the original has none.
+// CONFIDENCE: MEDIUM
+SoundClass = InSoundClass;
+if (InSoundClass != nullptr && SoundComponent != nullptr)
+{
+    *reinterpret_cast<USoundClass**>(reinterpret_cast<uint8*>(SoundComponent) + 0x5e8) = InSoundClass;
+}

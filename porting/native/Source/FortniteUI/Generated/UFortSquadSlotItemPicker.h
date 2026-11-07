@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	FFortSquadSlotSortChanged OnSortChanged;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetIdOfSquadSlotToManageBP(FName& OutSquadId, int32& OutSquadSlotIndex) const;
+
 };
 

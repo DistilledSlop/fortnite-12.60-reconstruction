@@ -1,0 +1,9 @@
+// Behaviour snippet: UFortFeatureUnlockWidget::GetVideo (body only; spliced into the generated member function).
+// Original address: 0x144e00720
+// Evidence: MOV RAX,[RCX+0x470]: undeclared pointer at object offset 0x470 (after reflected ImageWidget at 0x468, unreflected in own region); if non-null MOV RAX,[RAX+0x88] reads pointee qword (pointee type not reflected); null returns null.
+// CONFIDENCE: MEDIUM
+if (NativeRecoveredPointer_0x470 == 0)
+{
+	return nullptr;
+}
+return *reinterpret_cast<UMediaSource* const*>(NativeRecoveredPointer_0x470 + 0x88);

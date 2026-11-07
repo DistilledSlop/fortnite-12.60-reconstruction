@@ -63,8 +63,14 @@ public:
 	UPROPERTY()
 	FOnHeavySoundTriggered OnHeavySoundTriggered;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x124): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x124;
+
 	UFUNCTION(BlueprintCallable)
 	void SetSkeletalMesh(USkeletalMeshComponent* NewSkeletalMesh);
+
+	UFUNCTION(BlueprintCallable)
+	void SetVolumeMultiplier(float Multiplier);
 
 };
 

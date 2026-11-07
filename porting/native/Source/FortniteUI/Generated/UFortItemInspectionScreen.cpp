@@ -9,3 +9,16 @@ UFortItemInspectCycleWidget* UFortItemInspectionScreen::GetCycleWidget()
 	return CycleWidget;
 }
 
+void UFortItemInspectionScreen::SetAttemptingConversion(bool bIsAttemptingConversion)
+{
+	// Behaviour snippet: UFortItemInspectionScreen::SetAttemptingConversion (body only; spliced into the generated member function).
+	// Original address: 0x144f3bd10
+	// Evidence: CMP byte [RCX+0x610],DL; JZ exit; MOV byte [RCX+0x610],DL. Offset 0x610 not covered by any reflected member or bool bit (bool_bits lists 0x57c-0x581 only); own-region gap -> NativeRecoveredBool_0x610.
+	// CONFIDENCE: MEDIUM
+	if (NativeRecoveredBool_0x610 == bIsAttemptingConversion)
+	{
+		return;
+	}
+	NativeRecoveredBool_0x610 = bIsAttemptingConversion;
+}
+

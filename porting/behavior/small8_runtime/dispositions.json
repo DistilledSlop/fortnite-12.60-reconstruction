@@ -1,0 +1,247 @@
+[
+ {
+  "class": "UFortSpectatorCamComp_ThirdPerson",
+  "function": "OnNormalizedDistanceChanged",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Float at object offset 0x9b4 (body [RCX+0x9b4], receiver delta 0). The class has no reflected members and no reflected member covers 0x9b4 in its ancestor chain, so raw access is used. Clamp constant 1.0f read from runtime dump .rdata at 0x1459a86f8."
+ },
+ {
+  "class": "UFortSpectatorCameraComponent",
+  "function": "OnApertureSettingChanged",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Float store at object offset 0x82c, which is the reflected member UCineCameraComponent.CurrentAperture (Float, +0x82c)."
+ },
+ {
+  "class": "UFortSquadManagementScreenBase",
+  "function": "HandleSelectPickerSlotInputAction",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x145127e2a JNZ 0x144f7f900: when this->[0x478] is non-null the body tail-jumps to a separate function (callee with RCX=that pointer). Not expressible inside the body."
+ },
+ {
+  "class": "UFortSquadSlotDetailsPanel",
+  "function": "GetIdOfSquadSlotToManageBP",
+  "status": "proposed",
+  "case": "body",
+  "reason": "FName at object offset 0x260 and int32 at 0x268. Both lie below this class lowest own reflected offset 0x280 and no reflected member covers them, so raw access is used."
+ },
+ {
+  "class": "UFortSquadSlotDetailsPanel",
+  "function": "SetScrollWidget",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x145136e3a JNZ 0x144f3fb60: when this->[0x280] is non-null the body tail-jumps to a separate function (callee). Not expressible inside the body."
+ },
+ {
+  "class": "UFortSquadSlotItemDetailElementWidget",
+  "function": "GetIdOfSquadSlotToManageBP",
+  "status": "proposed",
+  "case": "body",
+  "reason": "FName at object offset 0x2b8 and int32 at 0x2c0. The class has no reflected members of its own and no ancestor member covers these offsets, so raw access is used."
+ },
+ {
+  "class": "UFortSquadSlotItemDetailsHostPanel",
+  "function": "GetIdOfSquadSlotToManageBP",
+  "status": "proposed",
+  "case": "body",
+  "reason": "FName at object offset 0x328 and int32 at 0x330. The class has no reflected members of its own and no ancestor member covers these offsets, so raw access is used."
+ },
+ {
+  "class": "UFortSquadSlotItemPicker",
+  "function": "GetIdOfSquadSlotToManageBP",
+  "status": "proposed",
+  "case": "body",
+  "reason": "FName at object offset 0x330 and int32 at 0x338. Both lie below this class lowest own reflected offset 0x368 and no reflected member covers them, so raw access is used."
+ },
+ {
+  "class": "UFortSquadSlotSelectorButton",
+  "function": "GetIdOfSquadSlotToManageBP",
+  "status": "proposed",
+  "case": "body",
+  "reason": "FName at object offset 0xb78 and int32 at 0xb80. Both lie below this class lowest own reflected offset 0xb98 and no reflected member covers them, so raw access is used."
+ },
+ {
+  "class": "UFortSquadSlotWidget",
+  "function": "GetIdOfSquadSlotToManageBP",
+  "status": "proposed",
+  "case": "body",
+  "reason": "FName at object offset 0x110 and int32 at 0x118. Both lie inside this class own region (lowest own offset 0x0) and no reflected member covers them, so recovered members NativeRecoveredFName_0x110 and NativeRecoveredInt32_0x118 are used."
+ },
+ {
+  "class": "UFortSquadSlotsView",
+  "function": "SetIsSelectionLocked",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Bool store at object offset 0x348 (body [RCX+0x348], DL = argument). Own region (lowest own offset 0x0); the reflected ItemViewContext interface at 0x338 ends at 0x348, so 0x348 is an unreflected gap. Recovered member NativeRecoveredBool_0x348."
+ },
+ {
+  "class": "UFortStoreFrontOfferDetailsWidgetBase",
+  "function": "GetPriceIndexToShow",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x1450b117a JNZ 0x1450b1190: the non-null path continues at 0x1450b1190, outside the extracted body (body ends at RET 0x1450b1182). Not proven to be in-body code."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetRequirementMinQuantityAtIndex",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Pointer at object offset 0x28 (below this class lowest own offset 0x40, not reflected, raw). Pointee (class unresolved) has data pointer at +0x248, Num int32 at +0x250, element stride 24 bytes, int32 at element +4. Returns -1 when Num <= index. Pointee is not null-checked in the original."
+ },
+ {
+  "class": "UFortSurvivorSquadStatMatchesBase",
+  "function": "GetIdOfSquadToManageBP",
+  "status": "proposed",
+  "case": "body",
+  "reason": "FName at object offset 0x260. Own region (lowest own offset 0x0), no reflected member covers it; recovered member NativeRecoveredFName_0x260 is returned by value."
+ },
+ {
+  "class": "UFortTimelineBase",
+  "function": "HandleReplayHudVisibilityChanged",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x144fd6835 JBE 0x1407b7ed0: tail-jump to a separate function when (state-1) <= 1 (callee)."
+ },
+ {
+  "class": "UFortTouchLookStick",
+  "function": "GetSize",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Pointer MainSizeBox (reflected, +0x488). Pointee float at +0x130 (pointee class unresolved, raw). Null path returns the float constant -1.0f read from runtime dump .rdata at 0x1459a979c."
+ },
+ {
+  "class": "UFortTutorialContext",
+  "function": "TryClearingPendingQuest",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Pointer at object offset 0x140. Own region (lowest own offset 0x30), no reflected member covers it; recovered member NativeRecoveredUint64_0x140 holds the pointer."
+ },
+ {
+  "class": "UFortUICameraManagerComponent",
+  "function": "SetZoomLevel",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Float at object offset 0x1ac. Own region (lowest own offset 0x0), not covered by any reflected member; recovered member NativeRecoveredFloat_0x1ac. Clamp constant 1.0f from runtime dump .rdata at 0x1459a86f8. Equal input returns early."
+ },
+ {
+  "class": "UFortUIManagerWidget_NUI",
+  "function": "CreateNotification",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x144df8ca0 JNZ: when this->[0x288] (object offset 0x258+0x30) is non-null the body tail-jumps to a separate function (callee)."
+ },
+ {
+  "class": "UFortUIManagerWidget_NUI",
+  "function": "HandleErrorWindowDeactivated",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x14515065e JZ 0x1451723d0: when ErrorWindow_Errors->[0x304] is zero the body tail-jumps to a separate function (callee)."
+ },
+ {
+  "class": "UFortUIScoreReport",
+  "function": "GetPlayerCount",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Pointer LocalPlayer is the reflected member at +0x28. Pointee int32 at +0x318 (pointee class unresolved, raw). Null path returns 0, which matches the original EAX value when the pointer is zero."
+ },
+ {
+  "class": "UFortUIStateWidget_JoinServer",
+  "function": "HandleLobbyDisconnected",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x145152847 JG 0x141812040: when this->[0x480] > 0 the body tail-jumps to a separate function (callee)."
+ },
+ {
+  "class": "UFortUpgradeInfo",
+  "function": "CanPreview",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Byte at 0x66, int32 at 0x58 and int32 at 0x5c. Own region (lowest own offset 0x48), none covered by reflected members; recovered members NativeRecoveredUint8_0x66, NativeRecoveredInt32_0x58, NativeRecoveredInt32_0x5c. Returns true only when byte 0x66 is zero and [0x58] < [0x5c] (signed)."
+ },
+ {
+  "class": "UFortUpgradeScreenBase",
+  "function": "IsPreviewing",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Details is the reflected object at +0x428. Its pointee (class unresolved) has an object pointer at +0x260, whose pointee has a byte at +0x66 (same byte as UFortUpgradeInfo 0x66). Null guards on Details are added; the original has none."
+ },
+ {
+  "class": "UFortVideoPlayerWidget",
+  "function": "SetSoundClass",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Object store to reflected SoundClass at +0x248. When the new value is non-null, the store goes to SoundComponent (reflected, +0x2e8) at pointee offset +0x5e8 (pointee class unresolved, raw). A null check on SoundComponent is added; the original has none."
+ },
+ {
+  "class": "UFortVoiceChannelHeaderButton",
+  "function": "CanJoinChannel",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x144e2b7ba JNZ 0x144e48ba0: when this->[0xb70] is non-null the body tail-jumps to a separate function (callee)."
+ },
+ {
+  "class": "UFortVoiceChannelHeaderButton",
+  "function": "IsActiveChannel",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Pointer at object offset 0xb70 (below this class lowest own offset 0xb80, raw). Pointee byte at +0x69 (pointee class unresolved). Null path returns false."
+ },
+ {
+  "class": "UFortWaterInteractionComponent",
+  "function": "IsEnabled",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x142703379 CMP dword ptr [0x1478df4b8]: reads an absolute module global with no reflected or named symbol, so it cannot be written as a member or object offset."
+ },
+ {
+  "class": "UFortWaypointVolumeComponent",
+  "function": "OnClientEnterVolume",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x14209cf5d JNZ 0x142b32e10: when this->[0xa0] is non-null the body tail-jumps to a separate function (callee). Shared body 0x14209cf50 with OnClientExitVolume."
+ },
+ {
+  "class": "UFortWaypointVolumeComponent",
+  "function": "OnClientExitVolume",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x14209cf5d JNZ 0x142b32e10: when this->[0xa0] is non-null the body tail-jumps to a separate function (callee). Shared body 0x14209cf50 with OnClientEnterVolume."
+ },
+ {
+  "class": "UFortWorldItemDefinition",
+  "function": "GetDPSAtLevel",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Body is XORPS XMM0,XMM0; RET, so the float result is 0.0f. ItemLevel is unused."
+ },
+ {
+  "class": "UHoverDroneMovementComponent",
+  "function": "OnFollowedPlayerChanged",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x14247c877 JZ 0x1424774e0: when this->[0x250] == 3 the body tail-jumps to a separate function (callee)."
+ },
+ {
+  "class": "UPerkSelectionEntryWidget",
+  "function": "GetTechSelectVerboseModeEnabled",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "Asm 0x144becc00 CMP dword ptr [0x147e1ad98]: reads an absolute module global with no reflected or named symbol, so it cannot be written as a member or object offset."
+ },
+ {
+  "class": "UQuestInteractableComponent",
+  "function": "Editor_GetValidObjectives",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Body zeroes both qwords of the hidden TArray return slot (Data at +0, Num and Max at +8) and returns that slot, which is an empty TArray."
+ },
+ {
+  "class": "URadialBacchusButtonBase",
+  "function": "GetListenedGameplayTag",
+  "status": "proposed",
+  "case": "body",
+  "reason": "Qword at object offset 0x2c8 copied to the hidden FGameplayTag return slot. Own region (lowest own offset 0x0), no reflected member covers it; recovered member NativeRecoveredStruct_0x2c8."
+ }
+]

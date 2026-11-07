@@ -58,5 +58,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UMediaPlayer* GetMediaPlayer() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetSoundClass(USoundClass* InSoundClass);
+
 };
 

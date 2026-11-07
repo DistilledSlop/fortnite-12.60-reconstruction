@@ -6,12 +6,14 @@
 #include "CoreMinimal.h"
 #include "ABuildingProp.h"
 
+#include "EFortMinigameState.h"
 #include "ELockState.h"
 #include "FLockStateChangeEvent.h"
 #include "FLockableObjectChangeEvent.h"
 
 class AActor;
 class AController;
+class AFortMinigame;
 class UBoxComponent;
 
 #include "ABuildingProp_LockDevice.generated.h"
@@ -22,6 +24,9 @@ class FORTNITEGAME_API ABuildingProp_LockDevice : public ABuildingProp
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0xb99): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xb99;
+
 	// table index 7, flags 0x20080010080000
 	UPROPERTY()
 	FLockableObjectChangeEvent OnLockableActorChange;
@@ -54,6 +59,11 @@ public:
 protected:
 	UFUNCTION()
 	void HandleLockableObjectDestruction(AActor* ActorDestroyed);
+public:
+
+protected:
+	UFUNCTION()
+	void HandleMinigameStateChanged(AFortMinigame* Minigame, EFortMinigameState NewMinigameState);
 public:
 
 	UFUNCTION()

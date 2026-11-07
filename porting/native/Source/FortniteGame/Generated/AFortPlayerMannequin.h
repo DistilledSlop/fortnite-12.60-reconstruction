@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Animation/SkeletalMeshActor.h"
 
+#include "EFortCustomGender.h"
+#include "EFortCustomPartType.h"
 #include "Engine/EngineTypes.h"
 #include "FMcpVariantChannelInfo.h"
 #include "FMorphValuePair.h"
@@ -18,6 +20,7 @@ class UCustomColorSwatch;
 class UFortCustomizationAssetLoader;
 class UFortHeroType;
 class USkeletalMesh;
+class USkeletalMeshComponent;
 
 #include "AFortPlayerMannequin.generated.h"
 
@@ -91,6 +94,24 @@ public:
 	UPROPERTY()
 	FName WeaponAttachSocket;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x408): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x408;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x410): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x410;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x418): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x418;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x420): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x420;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x428): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x428;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x430): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x430;
+
 	// table index 4, flags 0x20080000000005
 	UPROPERTY()
 	TArray<FMorphValuePair> MorphTargets;
@@ -110,6 +131,12 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortCustomizationAssetLoader* CustomizationAssetLoader;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EFortCustomGender::Type> GetGender() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USkeletalMeshComponent* GetPartSkeletalMeshComponent(EFortCustomPartType::Type Part) const;
 
 };
 

@@ -1,0 +1,268 @@
+[
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnServerPlayerEditActorChanged",
+  "status": "proposed",
+  "case": "reflected_member+gap_member",
+  "reason": "Role==3 gate, unreflected 0x268 byte gate; store RemoteEditActor."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnServerPoiTagIDChanged",
+  "status": "proposed",
+  "case": "reflected_member",
+  "reason": "Role==3 and 0x268 gate; store RemotePoiTagID (Int16)."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnServerRemoveMapMarker",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x14284cf20 (outside body 0x1424b5c20): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnServerRespawnTimeChanged",
+  "status": "proposed",
+  "case": "reflected_member",
+  "reason": "Role==3 and 0x268 gate; store RemoteRespawnTime (Float)."
+ },
+ {
+  "class": "AFortCameraBase",
+  "function": "Exhibit",
+  "status": "proposed",
+  "case": "reflected_member+bitfield",
+  "reason": "Early return when pointer equal; store ExhibitActor and set bExhibitActorChanged."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "GetMultiselectLimit",
+  "status": "blocked",
+  "case": "blocked_global",
+  "reason": "absolute module-data access [0x1478df148] (no object offset); reads absolute module data dword [0x1478df148]; not object storage and no reflected static binds it"
+ },
+ {
+  "class": "AFortCreativeRoundSettings",
+  "function": "GetResourceGivenPerRound",
+  "status": "proposed",
+  "case": "gap_member+raw_array",
+  "reason": "Bounds-checked raw int32 array read at 0xc14 with count 0xc28."
+ },
+ {
+  "class": "AFortCreativeRoundSettings",
+  "function": "GetResourceGivenToWinnersPerRound",
+  "status": "proposed",
+  "case": "gap_member+raw_array",
+  "reason": "Bounds-checked raw int32 array read at 0xc30 with count 0xc44."
+ },
+ {
+  "class": "AFortCreativeRoundSettings",
+  "function": "SetResourceGivenPerRound",
+  "status": "proposed",
+  "case": "gap_member+raw_array",
+  "reason": "Bounds-checked raw int32 array store at 0xc14 with count 0xc28; negative Amount stored as 0."
+ },
+ {
+  "class": "AFortCreativeRoundSettings",
+  "function": "SetResourceGivenToWinnersPerRound",
+  "status": "proposed",
+  "case": "gap_member+raw_array",
+  "reason": "Bounds-checked raw int32 array store at 0xc30 with count 0xc44; negative Amount stored as 0."
+ },
+ {
+  "class": "AFortGameModeZone",
+  "function": "SetEnemyAIItemCacheLootDrops",
+  "status": "proposed",
+  "case": "reflected_bitfield",
+  "reason": "Bit 1 of dword 0x820 set from bValue."
+ },
+ {
+  "class": "AFortGameStateAthena",
+  "function": "OnRep_Aircraft",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JZ to 0x1419a8ec0 (outside body 0x1419a56a0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortInGameMapManagerCreative",
+  "function": "SetCreativeMapMaterial",
+  "status": "proposed",
+  "case": "gap_member",
+  "reason": "Gap pointer at 0x718 and flag at 0x710 (both unreflected)."
+ },
+ {
+  "class": "AFortMatchmakingActor",
+  "function": "ShouldUseBlueprintMMSCode",
+  "status": "blocked",
+  "case": "blocked_global",
+  "reason": "absolute module-data access [0x148133e24] (no object offset); reads absolute module data dword [0x148133e24]; not object storage and no reflected static binds it"
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "OnFortPlayerDied",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x1420a9a30 (outside body 0x14209d7a0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "OnRep_CurrentState",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JZ to 0x142097510 (outside body 0x14209e350): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortMissionStormShield",
+  "function": "PauseStormShield",
+  "status": "proposed",
+  "case": "reflected_struct_member",
+  "reason": "Role==3 gate; copy CurrentLocalRadius to RadiusGrowthData.TargetRadius; State=0."
+ },
+ {
+  "class": "AFortMission_ActiveThreat",
+  "function": "HandleAthenaGamePhaseChanged",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JZ to 0x1420cb2e0 (outside body 0x1420bdbf0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortMission_RiftSpawners",
+  "function": "HandleAthenaGamePhaseChanged",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JZ to 0x1420cb500 (outside body 0x1420bdc00): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortMountedTurret",
+  "function": "OnRep_TeamIndex",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x14203df20 (outside body 0x1420367c0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "ClearObjectiveTimer",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x141f1d900 (outside body 0x142132df0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "GetObjectiveTimerTimeRemaining",
+  "status": "blocked",
+  "case": "blocked_callee+global",
+  "reason": "non-local JNZ to 0x141f306a0 (outside body 0x14213ac10): callee/tail-jump on a taken path; not expressible without a call; absolute module-data access [0x1459a979c] (no object offset)"
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "IsRelevantToTeam",
+  "status": "proposed",
+  "case": "reflected_bitfield+member",
+  "reason": "Returns false only when team-specific bit set and Team differs from RelevantTeam."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "PauseObjectiveTimer",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x141f3fcc0 (outside body 0x14213daa0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "UnpauseObjectiveTimer",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x141f4e230 (outside body 0x14213fef0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortPickup",
+  "function": "OnRep_ServerStoppedSimulation",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x142028b80 (outside body 0x1420367b0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortPickup",
+  "function": "OnServerStopCallback",
+  "status": "proposed",
+  "case": "reflected_member+bitfield",
+  "reason": "Role==3, not stopped, MovementComponent set; set stopped flag and StartSimulatingTime=0. Hit not read by body."
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "GetAccountLevel",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x142547000 (outside body 0x14237cc60): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "GetAwardManager",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x141f5d970 (outside body 0x14237d830): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "GetFPSForHUD",
+  "status": "blocked",
+  "case": "blocked_global",
+  "reason": "absolute module-data access [0x1459a86f0], [0x1459ffea0], [0x148351ea0] (no object offset); reads absolute module data floats at [0x148351ea0], [0x1459ffea0], [0x1459a86f0]; not object storage"
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "GetMinigameManager",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x141f5f9a0 (outside body 0x1423828c0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "GetQuestManager",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x141f60200 (outside body 0x1423850c0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "GetStatValue",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x1424aebb0 (outside body 0x1423865a0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortPlayerControllerAthena",
+  "function": "GetMatchReport",
+  "status": "proposed",
+  "case": "reflected_member",
+  "reason": "Returns MatchReport when Role==2, else null."
+ },
+ {
+  "class": "AFortPlayerControllerAthena",
+  "function": "HandleGamePhaseStepChanged",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JZ to 0x1419ff260 (outside body 0x1419da970): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortPlayerControllerAthena",
+  "function": "IsPlayerRebootingNow",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x141b4d240 (outside body 0x1419ddaa0): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortPlayerControllerFrontEnd",
+  "function": "CloseEmotePicker",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JZ to 0x1423a1e80 (outside body 0x1425e8800): callee/tail-jump on a taken path; not expressible without a call"
+ },
+ {
+  "class": "AFortPlayerControllerFrontEnd",
+  "function": "RunFacialAnimationTest",
+  "status": "blocked",
+  "case": "blocked_callee",
+  "reason": "non-local JNZ to 0x142bee710 (outside body 0x14072e780): callee/tail-jump on a taken path; not expressible without a call"
+ }
+]

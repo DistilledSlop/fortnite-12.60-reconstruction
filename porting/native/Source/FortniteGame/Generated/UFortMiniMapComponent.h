@@ -35,8 +35,17 @@ public:
 	UPROPERTY()
 	TSubclassOf<UFortMiniMapIndicator> MinimapIndicatorClass;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x194): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x194;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x195): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x195;
+
 	UFUNCTION()
 	void OnRep_MiniMapData();
+
+	UFUNCTION(BlueprintCallable)
+	void OverrideLocalMiniMapIndicatorIsVisible(bool bVisible);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

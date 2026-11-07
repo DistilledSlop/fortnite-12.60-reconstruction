@@ -30,6 +30,20 @@ bool AFortAthenaVehicle::AnyWheelsOnGround() const
 	return (NativeRecoveredBits_0x410 & 0x08) != 0;
 }
 
+bool AFortAthenaVehicle::BlocksBuilding() const
+{
+	// Original address: 0x14190de30 (AFortAthenaVehicle::BlocksBuilding, receiver delta 944)
+	// Offset evidence: object offset 0x738 is an unreflected qword (NativeRecoveredUInt64_0x738) loaded from [RCX+0x388]; byte +0xac on the pointee read raw.
+	// Null path returns 0 per asm (EAX zeroed with RAX) and decompile FUN_14190de30.
+	// CONFIDENCE: MEDIUM
+	const uint8* Pointee = reinterpret_cast<const uint8*>(NativeRecoveredUInt64_0x738);
+	if (Pointee == nullptr)
+	{
+	    return false;
+	}
+	return *(Pointee + 0xac) != 0;
+}
+
 bool AFortAthenaVehicle::BP_CanInteract_Implementation(AFortPlayerController* FortPC)
 {
 	// Exact original shared stub 0x1406801d0.
@@ -325,6 +339,18 @@ bool AFortAthenaVehicle::IsInWaterBody() const
 	return (NativeRecoveredBits_0x40e & 0x04) != 0;
 }
 
+bool AFortAthenaVehicle::IsMagnetizedForSkyTubes() const
+{
+	// Original address: 0x14191bdb0 (AFortAthenaVehicle::IsMagnetizedForSkyTubes)
+	// Offset evidence: [RCX+0xaf8] is SkyTubePhysicsComponent (reflected Object); byte +0x108 on the pointee read raw (far path taken from decompile FUN_14191bdb0; far asm not in insns).
+	// CONFIDENCE: MEDIUM
+	if (SkyTubePhysicsComponent == nullptr)
+	{
+	    return true;
+	}
+	return *(reinterpret_cast<const uint8*>(SkyTubePhysicsComponent) + 0x108) != 0;
+}
+
 bool AFortAthenaVehicle::IsOutOfFuel() const
 {
 	// CONFIDENCE: high; recovered native body and reflected field mapping.
@@ -481,6 +507,14 @@ void AFortAthenaVehicle::ServerStartFire_Implementation(uint8 FireModeNum)
 void AFortAthenaVehicle::ServerUsingRiftPortal_Implementation(AActor* RiftPortal)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortAthenaVehicle::SetAllowInteractionBetweenFortVolumes(bool bInteractBetweenVolumes)
+{
+	// Original address: 0x141920620 (AFortAthenaVehicle::SetAllowInteractionBetweenFortVolumes, receiver delta 888)
+	// Offset evidence: byte [RCX+0xd0] is object offset 0x448 bit 0x10, the declared bitfield bAllowInteractBetweenFortVolumes_Runtime (bool_bits.json).
+	// CONFIDENCE: HIGH
+	bAllowInteractBetweenFortVolumes_Runtime = bInteractBetweenVolumes;
 }
 
 void AFortAthenaVehicle::SetDyingPhysics()

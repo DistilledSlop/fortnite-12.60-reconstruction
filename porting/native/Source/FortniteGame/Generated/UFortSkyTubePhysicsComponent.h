@@ -68,6 +68,9 @@ public:
 	UFUNCTION()
 	void OnRep_SkyTube(AFortSkyTube* PreviousSkyTube);
 
+	UFUNCTION(BlueprintCallable)
+	void SetMagnetization(bool bInMagnetized);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

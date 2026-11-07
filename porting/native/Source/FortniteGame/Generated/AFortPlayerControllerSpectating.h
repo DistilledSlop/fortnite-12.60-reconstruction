@@ -185,6 +185,9 @@ public:
 	UPROPERTY()
 	UInputComponent* FullScreenMapInputComponent;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2ac8): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x2ac8;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x2ad0): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredByte_0x2ad0;
 
@@ -207,6 +210,9 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x2bf0): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredBits_0x2bf0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2bf0): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0x2bf0;
 
 	// table index 8, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -246,6 +252,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void FullScreenMapCursorStopDrag();
 
+	UFUNCTION(BlueprintCallable)
+	void FullscreenMapZoom(float Value);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortSpectatorBlendType GetBlendType() const;
 
@@ -264,6 +273,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetShowPlayersOnMap() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetShowVehiclesOnMap() const;
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	virtual bool IsAllowedChangeCamera();
@@ -273,6 +285,9 @@ protected:
 	UFUNCTION()
 	virtual void OnRep_FollowedPlayerRemoteClientInfo();
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetMapWeaponTracersEnabled(bool bEnable);
 
 	UFUNCTION(BlueprintCallable)
 	void SetShowBusPathsOnMap(bool bInShowBusPathsOnMap);

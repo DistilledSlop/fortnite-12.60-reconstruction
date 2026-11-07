@@ -26,9 +26,15 @@ public:
 	UPROPERTY()
 	ECooldownTrackingType TrackingType;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2c8): not a UPROPERTY, not replicated.
+	FGameplayTag NativeRecoveredStruct_0x2c8;
+
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	AFortPawn* TrackedPawn;
+
+	UFUNCTION(BlueprintCallable)
+	FGameplayTag GetListenedGameplayTag();
 
 	UFUNCTION(BlueprintCallable)
 	void SetListenedGameplayTag(FGameplayTag InListenedTag);

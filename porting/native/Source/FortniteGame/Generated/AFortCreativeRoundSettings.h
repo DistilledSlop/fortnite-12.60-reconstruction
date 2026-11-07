@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ABuildingProp.h"
 
+#include "EFortResourceType.h"
+
 class UFortWorldItemDefinition;
 
 #include "AFortCreativeRoundSettings.generated.h"
@@ -60,11 +62,33 @@ public:
 	UPROPERTY()
 	int32 DefaultRestockAmmoAmount;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xc28): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xc28;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xc44): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xc44;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetResourceGivenPerRound(EFortResourceType::Type InResourceType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetResourceGivenToWinnersPerRound(EFortResourceType::Type InResourceType) const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetRoundIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsActive() const;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetResourceGivenPerRound(EFortResourceType::Type InResourceType, int32 Amount);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetResourceGivenToWinnersPerRound(EFortResourceType::Type InResourceType, int32 Amount);
+public:
 
 };
 

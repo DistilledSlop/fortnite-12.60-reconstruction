@@ -274,6 +274,9 @@ public:
 	UPROPERTY()
 	FVehicleReachedChargeThreshold OnNotOutOfFuel;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x738): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUInt64_0x738;
+
 	// table index 102, flags 0x10000010080000
 	UPROPERTY()
 	FOnMountedWeaponFired OnMountedWeaponFiredEvent;
@@ -668,6 +671,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool AnyWheelsOnGround() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool BlocksBuilding() const;
+
 	UFUNCTION(BlueprintNativeEvent)
 	bool BP_CanInteract(AFortPlayerController* FortPC);
 	virtual bool BP_CanInteract_Implementation(AFortPlayerController* FortPC);
@@ -784,6 +790,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsInWaterBody() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsMagnetizedForSkyTubes() const;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsOutOfFuel() const;
@@ -859,6 +868,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerUsingRiftPortal(AActor* RiftPortal);
 	void ServerUsingRiftPortal_Implementation(AActor* RiftPortal);
+
+	UFUNCTION(BlueprintCallable)
+	virtual void SetAllowInteractionBetweenFortVolumes(bool bInteractBetweenVolumes);
 
 protected:
 	UFUNCTION(BlueprintCallable)

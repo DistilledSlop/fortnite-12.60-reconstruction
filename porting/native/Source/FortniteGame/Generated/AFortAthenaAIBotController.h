@@ -20,8 +20,10 @@
 #include "FOnAgentDiedEvent.h"
 #include "FOnAlertLevelChangedEvent.h"
 #include "FOnStealthMeterChangedEvent.h"
+#include "Math/Vector.h"
 
 class AActor;
+class AController;
 class AFortAthenaMutator_Bots;
 class AFortGameModeAthena;
 class AFortInventory;
@@ -52,6 +54,7 @@ class UFortControllerComponent_Telemetry;
 class UFortInteractContextInfo;
 class UFortServerBotManagerAthena;
 class UFortWorldItem;
+class UPrimitiveComponent;
 class UStatManager;
 
 #include "AFortAthenaAIBotController.generated.h"
@@ -274,6 +277,9 @@ public:
 	UPROPERTY(Transient)
 	TSubclassOf<AFortPawn> CacheBotPawnClass;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x818): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUInt8_0x818;
+
 	// table index 14, flags 0x40000000002000
 	UPROPERTY(Transient)
 	AActor* CurrentLootActor;
@@ -339,6 +345,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;
+
+private:
+	UFUNCTION()
+	void OnCurrentHarvestableDestroyed(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetBotOwner(AActor* InBotOwner);

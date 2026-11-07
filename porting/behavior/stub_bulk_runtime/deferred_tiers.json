@@ -1,0 +1,1492 @@
+{
+ "note": "Small-leaf jobs not portable as a self-contained leaf; the next tier needs the callee/continuation or global ownership. Not blocked on infrastructure.",
+ "count": 185,
+ "by_tier": {
+  "branch_leaves_body": 154,
+  "abi_or_signature": 8,
+  "absolute_global": 21,
+  "other": 2
+ },
+ "entries": [
+  {
+   "entry": "AAmbientVolume::SetAmbientAsset",
+   "tier": "branch_leaves_body",
+   "body": "0x1412ea0b0",
+   "thunk": "0x1412ec8c0",
+   "reason": "JNZ 0x1412eabd0 (flag 0x25c = bEnabled) leaves the body; that path makes vcall +0x150 and calls FUN_14468e6c0, FUN_14405fbf0, FUN_141384ca0, FUN_1413ce790 (decompile 0x1412ea0b0); callees not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "AAmbientVolume::SetPriority",
+   "tier": "branch_leaves_body",
+   "body": "0x1412ea110",
+   "thunk": "0x1412ec9d0",
+   "reason": "JNZ 0x1412eabd0 (flag 0x25c = bEnabled) leaves the body; that path makes vcall +0x150 and calls FUN_14468e6c0, FUN_14405fbf0, FUN_141384ca0 (decompile 0x1412ea110); callees not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "AAthenaCobaltStormShield::ClientStormShieldShrinkTimerComplete",
+   "tier": "branch_leaves_body",
+   "body": "0x1418bd3f0",
+   "thunk": "0x14271e410",
+   "reason": "JNZ 0x141aa1190 path (non-null CachedMutator) calls FUN_144224d90 and writes byte +0x92d of the mutator (decompile 0x1418bd3f0); callee not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "ABuildingProp_DeimosSpawner::OnKillAIReceived",
+   "tier": "branch_leaves_body",
+   "body": "0x141c13370",
+   "thunk": "0x14274b8d0",
+   "reason": "JNZ 0x141664b20 path calls FUN_1420b7a40, FUN_142e80820, FUN_141642e00 on CreativeRift (decompile 0x141c13370); callees not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "ABuildingProp_DeimosSpawner::OnKillRiftReceived",
+   "tier": "branch_leaves_body",
+   "body": "0x141c13390",
+   "thunk": "0x14274b950",
+   "reason": "JNZ 0x141664d00 path calls vtable slot +0x860 on CreativeRift (decompile 0x141c13390); virtual callee not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "ABuildingProp_DeimosSpawner::OnTurnOffReceived",
+   "tier": "branch_leaves_body",
+   "body": "0x141c15a00",
+   "thunk": "0x14274bba0",
+   "reason": "JNZ 0x1416772b0 path calls FUN_1420b7a40 and FUN_142ec0440 (decompile 0x141c15a00); callees not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "ABuildingProp_DeimosSpawner::OnTurnOnReceived",
+   "tier": "branch_leaves_body",
+   "body": "0x141c15a60",
+   "thunk": "0x14274bca0",
+   "reason": "JNZ 0x1416774e0 path calls FUN_1420b7a40 and FUN_142e80820 (decompile 0x141c15a60); callees not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "ABuildingProp_LockDevice::UnlockObject",
+   "tier": "abi_or_signature",
+   "body": "0x1406968f0",
+   "thunk": "0x142750f70",
+   "reason": "Body is LEA RAX,[RCX-0x218]; RET, a pointer-valued return (decompile 0x1406968f0 returns param_1-0x218). Header is void, so the value-return body does not match the signature; not translated.",
+   "source": "small1"
+  },
+  {
+   "entry": "ACustomCosmeticModifierBase::NativeWeaponFired",
+   "tier": "branch_leaves_body",
+   "body": "0x141db5c60",
+   "thunk": "0x14277d2c0",
+   "reason": "TEST RDX,RDX; JNZ 0x14277c190 path calls UObject_FindFunctionChecked and vtable slot +0x210 (ProcessEvent) (decompile 0x141db5c60); callees not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortAthenaDoghouseVehicle::GetFlightControlSurfaceTargets",
+   "tier": "abi_or_signature",
+   "body": "0x1418ec980",
+   "thunk": "0x1427d7e30",
+   "reason": "LEA RAX,[RCX+0x1520]; RET returns the address of an inline struct, but header_decl returns FFlightControlSurfaces by value and RCX is this (no hidden return slot in RDX); struct size and copy semantics unknown.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortAthenaDoghouseVehicle::GetFlightControlSurfaces",
+   "tier": "abi_or_signature",
+   "body": "0x1418ec980",
+   "thunk": "0x1427d7e30",
+   "reason": "LEA RAX,[RCX+0x1520]; RET returns the address of an inline struct, but header_decl returns FFlightControlSurfaces by value and RCX is this (no hidden return slot in RDX); struct size and copy semantics unknown.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortAthenaMutator_ArsenicInventoryOverride::OnGamePhaseChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x141ab19b0",
+   "thunk": "0x1427e1690",
+   "reason": "JZ 0x141aa0160 path calls vtable +0x150, FUN_14468fb70, UObject_FindFunctionChecked and ProcessEvent (decompile 0x141ab19b0); callees not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortAthenaMutator_Fill::OnGamePhaseChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x141add160",
+   "thunk": "0x142802120",
+   "reason": "JNZ 0x14273f1e0 path calls UObject_FindFunctionChecked and vtable slot +0x210 on LavaFloor (decompile 0x141add160); callee not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortAthenaMutator_GiveItemsAtGamePhaseStep::OnGamePhaseStepChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x141adddf0",
+   "thunk": "0x142809540",
+   "reason": "JNZ 0x14290f690 path calls GetPrivateStaticClassBody and returns a UClass pointer (decompile 0x141adddf0), which does not match the void header; not translated.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortAthenaVehicle::GetCurrentBudget",
+   "tier": "absolute_global",
+   "body": "0x1419153c0",
+   "thunk": "0x14283b3c0",
+   "reason": "Branches on dword global at absolute 0x1478c24d8, which has no reflected name or symbol in the repo; absolute image address is not portable to a snippet.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortAthenaVehicle::GetSeatSwitchCooldown",
+   "tier": "branch_leaves_body",
+   "body": "0x1419177a0",
+   "thunk": "0x14283b8b0",
+   "reason": "JBE 0x141f8a370 path calls vtable slot +0x408 and reads float +0xb0 from the result (decompile 0x1419177a0); virtual callee not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortAthenaZipline::UseInteractToEnterZipline",
+   "tier": "absolute_global",
+   "body": "0x14197b0a0",
+   "thunk": "0x142842500",
+   "reason": "Returns (dword global at absolute 0x1478c25b8) == 1; the global has no reflected name or symbol, and an absolute address is not portable.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortBroadcastRemoteClientInfo::OnPlayerEventScoreChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x1424b44b0",
+   "thunk": "0x14284ef90",
+   "reason": "JNZ 0x14284d7b0 path calls UObject_FindFunctionChecked and vtable slot +0x210 (ProcessEvent) (decompile 0x1424b44b0); callee not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortBroadcastRemoteClientInfo::OnPlayerFullScreenMapActiveChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x1424b47d0",
+   "thunk": "0x14284f010",
+   "reason": "JNZ 0x14284d7f0 path calls UObject_FindFunctionChecked and vtable slot +0x210 (ProcessEvent) (decompile 0x1424b47d0); callee not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortBroadcastRemoteClientInfo::OnPlayerInteractLongUseChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x1424b4960",
+   "thunk": "0x14284f150",
+   "reason": "JNZ 0x14284d8d0 path calls UObject_FindFunctionChecked and vtable slot +0x210 (ProcessEvent) (decompile 0x1424b4960); callee not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortBroadcastRemoteClientInfo::OnPlayerInventoryActiveChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x1424b4980",
+   "thunk": "0x14284f1e0",
+   "reason": "JNZ 0x14284d910 path calls UObject_FindFunctionChecked and vtable slot +0x210 (ProcessEvent) (decompile 0x1424b4980); callee not expressible.",
+   "source": "small1"
+  },
+  {
+   "entry": "AFortBroadcastRemoteClientInfo::OnServerRemoveMapMarker",
+   "tier": "branch_leaves_body",
+   "body": "0x1424b5c20",
+   "thunk": "0x14284f930",
+   "reason": "non-local JNZ to 0x14284cf20 (outside body 0x1424b5c20): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortCreativeMoveTool::GetMultiselectLimit",
+   "tier": "absolute_global",
+   "body": "0x14266e330",
+   "thunk": "0x1428c2800",
+   "reason": "absolute module-data access [0x1478df148] (no object offset); reads absolute module data dword [0x1478df148]; not object storage and no reflected static binds it",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortGameStateAthena::OnRep_Aircraft",
+   "tier": "branch_leaves_body",
+   "body": "0x1419a56a0",
+   "thunk": "0x142920370",
+   "reason": "non-local JZ to 0x1419a8ec0 (outside body 0x1419a56a0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortMatchmakingActor::ShouldUseBlueprintMMSCode",
+   "tier": "absolute_global",
+   "body": "0x141f498a0",
+   "thunk": "0x14298ef50",
+   "reason": "absolute module-data access [0x148133e24] (no object offset); reads absolute module data dword [0x148133e24]; not object storage and no reflected static binds it",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortMinigame::OnFortPlayerDied",
+   "tier": "branch_leaves_body",
+   "body": "0x14209d7a0",
+   "thunk": "0x1429c4530",
+   "reason": "non-local JNZ to 0x1420a9a30 (outside body 0x14209d7a0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortMinigame::OnRep_CurrentState",
+   "tier": "branch_leaves_body",
+   "body": "0x14209e350",
+   "thunk": "0x1429c4a10",
+   "reason": "non-local JZ to 0x142097510 (outside body 0x14209e350): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortMission_ActiveThreat::HandleAthenaGamePhaseChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x1420bdbf0",
+   "thunk": "0x1429e4870",
+   "reason": "non-local JZ to 0x1420cb2e0 (outside body 0x1420bdbf0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortMission_RiftSpawners::HandleAthenaGamePhaseChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x1420bdc00",
+   "thunk": "0x1429e48f0",
+   "reason": "non-local JZ to 0x1420cb500 (outside body 0x1420bdc00): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortMountedTurret::OnRep_TeamIndex",
+   "tier": "branch_leaves_body",
+   "body": "0x1420367c0",
+   "thunk": "0x1429f53b0",
+   "reason": "non-local JNZ to 0x14203df20 (outside body 0x1420367c0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortObjectiveBase::ClearObjectiveTimer",
+   "tier": "branch_leaves_body",
+   "body": "0x142132df0",
+   "thunk": "0x142a03f00",
+   "reason": "non-local JNZ to 0x141f1d900 (outside body 0x142132df0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortObjectiveBase::GetObjectiveTimerTimeRemaining",
+   "tier": "branch_leaves_body",
+   "body": "0x14213ac10",
+   "thunk": "0x142a04b00",
+   "reason": "non-local JNZ to 0x141f306a0 (outside body 0x14213ac10): callee/tail-jump on a taken path; not expressible without a call; absolute module-data access [0x1459a979c] (no object offset)",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortObjectiveBase::PauseObjectiveTimer",
+   "tier": "branch_leaves_body",
+   "body": "0x14213daa0",
+   "thunk": "0x142a05730",
+   "reason": "non-local JNZ to 0x141f3fcc0 (outside body 0x14213daa0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortObjectiveBase::UnpauseObjectiveTimer",
+   "tier": "branch_leaves_body",
+   "body": "0x14213fef0",
+   "thunk": "0x142a06980",
+   "reason": "non-local JNZ to 0x141f4e230 (outside body 0x14213fef0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPickup::OnRep_ServerStoppedSimulation",
+   "tier": "branch_leaves_body",
+   "body": "0x1420367b0",
+   "thunk": "0x142a2b690",
+   "reason": "non-local JNZ to 0x142028b80 (outside body 0x1420367b0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerController::GetAccountLevel",
+   "tier": "branch_leaves_body",
+   "body": "0x14237cc60",
+   "thunk": "0x142a46f70",
+   "reason": "non-local JNZ to 0x142547000 (outside body 0x14237cc60): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerController::GetAwardManager",
+   "tier": "branch_leaves_body",
+   "body": "0x14237d830",
+   "thunk": "0x142a47020",
+   "reason": "non-local JNZ to 0x141f5d970 (outside body 0x14237d830): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerController::GetFPSForHUD",
+   "tier": "absolute_global",
+   "body": "0x14237f290",
+   "thunk": "0x142a47310",
+   "reason": "absolute module-data access [0x1459a86f0], [0x1459ffea0], [0x148351ea0] (no object offset); reads absolute module data floats at [0x148351ea0], [0x1459ffea0], [0x1459a86f0]; not object storage",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerController::GetMinigameManager",
+   "tier": "branch_leaves_body",
+   "body": "0x1423828c0",
+   "thunk": "0x142a476e0",
+   "reason": "non-local JNZ to 0x141f5f9a0 (outside body 0x1423828c0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerController::GetQuestManager",
+   "tier": "branch_leaves_body",
+   "body": "0x1423850c0",
+   "thunk": "0x142a47860",
+   "reason": "non-local JNZ to 0x141f60200 (outside body 0x1423850c0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerController::GetStatValue",
+   "tier": "branch_leaves_body",
+   "body": "0x1423865a0",
+   "thunk": "0x142a47a00",
+   "reason": "non-local JNZ to 0x1424aebb0 (outside body 0x1423865a0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerControllerAthena::HandleGamePhaseStepChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x1419da970",
+   "thunk": "0x142a58c40",
+   "reason": "non-local JZ to 0x1419ff260 (outside body 0x1419da970): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerControllerAthena::IsPlayerRebootingNow",
+   "tier": "branch_leaves_body",
+   "body": "0x1419ddaa0",
+   "thunk": "0x142a59020",
+   "reason": "non-local JNZ to 0x141b4d240 (outside body 0x1419ddaa0): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerControllerFrontEnd::CloseEmotePicker",
+   "tier": "branch_leaves_body",
+   "body": "0x1425e8800",
+   "thunk": "0x142a64e10",
+   "reason": "non-local JZ to 0x1423a1e80 (outside body 0x1425e8800): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerControllerFrontEnd::RunFacialAnimationTest",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286da00",
+   "reason": "non-local JNZ to 0x142bee710 (outside body 0x14072e780): callee/tail-jump on a taken path; not expressible without a call",
+   "source": "small2"
+  },
+  {
+   "entry": "AFortPlayerControllerZone::DumpPhysicsVehicleBuffer",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "Body 0x14072e780: MOV RCX,[RDX]; TEST; JNZ 0x142bee710 tail-jumps to a callee outside the body when the FString data is non-null; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortPlayerControllerZone::KillAllVehicles",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "Body 0x14072e780: MOV RCX,[RDX]; TEST; JNZ 0x142bee710 tail-jumps to a callee outside the body when the FString data is non-null; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortPlayerControllerZone::RewindVehicle",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "Body 0x14072e780: MOV RCX,[RDX]; TEST; JNZ 0x142bee710 tail-jumps to a callee outside the body when the FString data is non-null; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortPlayerControllerZone::TestVehicleVelocity",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "Body 0x14072e780: MOV RCX,[RDX]; TEST; JNZ 0x142bee710 tail-jumps to a callee outside the body when the FString data is non-null; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortPlayerPawn::SetPendingSkydiveLaunch",
+   "tier": "branch_leaves_body",
+   "body": "0x14234e8b0",
+   "thunk": "0x142a80590",
+   "reason": "Body 0x14234e8b0 stores bit 0x10 (bPendingSkydiveLaunch, declared) then TEST AL,0x10; JNZ 0x14230e1e0 tail-jumps to an external callee when set; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortReplaySpectator::SkipToSequencerShot",
+   "tier": "branch_leaves_body",
+   "body": "0x142489f70",
+   "thunk": "0x142ac74e0",
+   "reason": "Body 0x142489f70: MOV RCX,[RCX+0x34c8]; JNZ 0x14245f2b0 tail-jumps to an external callee when the pointer is non-null; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortSkyTube::GetDelayUntilDisabled",
+   "tier": "absolute_global",
+   "body": "0x1426feff0",
+   "thunk": "0x142ada680",
+   "reason": "MOVSS XMM0,[0x1478df4d0] reads an absolute image global with no receiver offset; porting has no owner mapping for 0x1478df4d0.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortSkyTube::IsSkyTubeEnabled",
+   "tier": "absolute_global",
+   "body": "0x1427036c0",
+   "thunk": "0x142ada7a0",
+   "reason": "CMP dword [0x1478df4c8],0 reads an absolute image global with no owner mapping; the receiver part (bEnabled, 0x5c0) alone is not the full result.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortSkyTubeAnchor::IsEnabled",
+   "tier": "absolute_global",
+   "body": "0x142703350",
+   "thunk": "0x142ada6b0",
+   "reason": "CMP dword [0x1478df4c8],0 reads an absolute image global with no owner mapping; receiver part (bEnabled, 0xb98) alone is not the full result.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortSpectateAFriendController::OnRep_HasValidTarget",
+   "tier": "branch_leaves_body",
+   "body": "0x1424201c0",
+   "thunk": "0x142ae6f90",
+   "reason": "Body 0x1424201c0: CMP byte [RCX+0x2db0],0; JZ 0x1423d1280 leaves the body on the zero path to code outside it; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortWeapon::OnRep_ReplicatedCosmeticOverrideWeaponData",
+   "tier": "branch_leaves_body",
+   "body": "0x1426aad50",
+   "thunk": "0x142b47b00",
+   "reason": "Body 0x1426aad50: non-null pointer test then JNZ 0x1426a66b0 tail-jumps to an external callee; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "AFortWeapon::OnRep_ReplicatedWeaponData",
+   "tier": "branch_leaves_body",
+   "body": "0x1426aad60",
+   "thunk": "0x142b47b20",
+   "reason": "Body 0x1426aad60: non-null pointer test then JNZ 0x1426a6950 tail-jumps to an external callee; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "ASOLFortGame::DeclareWinningTeam",
+   "tier": "branch_leaves_body",
+   "body": "0x142465f70",
+   "thunk": "0x142b8fb00",
+   "reason": "Body 0x142465f70: MOV RCX,[RCX+0x278]; JNZ 0x142089af0 tail-jumps to an external callee when non-null; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "ASOLFortGame::GetTeam",
+   "tier": "branch_leaves_body",
+   "body": "0x14246eaf0",
+   "thunk": "0x142b900a0",
+   "reason": "Body 0x14246eaf0: when both team pointers are non-null, JNZ 0x14208efa0 tail-jumps to an external callee; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "AUnicornDriver::HandleDemoPlaybackFinish",
+   "tier": "branch_leaves_body",
+   "body": "0x1426417a0",
+   "thunk": "0x142b966d0",
+   "reason": "Body 0x1426417a0: CMP byte [RCX+0x21a],0; JNZ 0x142641ac0 tail-jumps to an external callee when set; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "UAthenaBattleMapNodeTooltip::OnReplayLevelStreamingChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x144c729b0",
+   "thunk": "0x145180370",
+   "reason": "Body 0x144c729b0: TEST byte [RCX+0xb4],4; JNZ 0x144c7be40 tail-jumps to an external callee when set; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "UAthenaBattleMapTimelineWidget::OnReplayLevelStreamingChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x144c729d0",
+   "thunk": "0x145180400",
+   "reason": "Body 0x144c729d0: CMP byte [RCX+0x4d0],0; JNZ 0x144c79c60 tail-jumps to an external callee when set; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "UAthenaChallengeListEntry_DetailedChallenge::HandleCloseChallengeOptionsInputAction",
+   "tier": "branch_leaves_body",
+   "body": "0x144b78f80",
+   "thunk": "0x145189230",
+   "reason": "Body 0x144b78f80: CMP byte [RCX+0x299],0; JNZ 0x144b7d510 tail-jumps to an external callee when set; callee unknown.",
+   "source": "small3"
+  },
+  {
+   "entry": "UAthenaContextualChallengesWidget::GetOutroDelay",
+   "tier": "absolute_global",
+   "body": "0x144afaff0",
+   "thunk": "0x1451906e0",
+   "reason": "MOVSS XMM0,dword ptr [0x147e1ac10] reads global image data, not object state; no reflected member; cannot express without hardcoded image address",
+   "source": "small4"
+  },
+  {
+   "entry": "UAthenaContextualChallengesWidget::ShouldOutroAutomatically",
+   "tier": "absolute_global",
+   "body": "0x144b19d70",
+   "thunk": "0x145191590",
+   "reason": "COMISS XMM0,[0x1459c03a0] after MOVSS from [0x147e1ac10]: both are absolute global image addresses; cannot express without hardcoded image addresses",
+   "source": "small4"
+  },
+  {
+   "entry": "UAthenaItemShopScreen::HandlePurchaseOfferComplete",
+   "tier": "branch_leaves_body",
+   "body": "0x144bb69c0",
+   "thunk": "0x1451a89a0",
+   "reason": "TEST DL,DL; JNZ 0x144bcc2d0 tail-jumps out of the body when bSuccess is set; callee not in body",
+   "source": "small4"
+  },
+  {
+   "entry": "UAthenaMarkerPointer::SetLineMeshMaterial",
+   "tier": "branch_leaves_body",
+   "body": "0x144b4df30",
+   "thunk": "0x1451b15a0",
+   "reason": "stores RDX at [RCX+0x108], loads [RCX+0x118], then JNZ 0x144b4de60 tail-jumps out of the body (callee not in body) when that pointer is non-null",
+   "source": "small4"
+  },
+  {
+   "entry": "UAthenaRemotePlayerViewData::GetIsBeingRevived",
+   "tier": "branch_leaves_body",
+   "body": "0x144c21720",
+   "thunk": "0x1451b8d30",
+   "reason": "JNZ 0x141a4a3e0 tail-jumps out of the body with RCX=PlayerState when [this+0x1d0] is non-null; callee not in body (null path returns false)",
+   "source": "small4"
+  },
+  {
+   "entry": "UAthenaRemotePlayerViewData::GetIsDBNO",
+   "tier": "branch_leaves_body",
+   "body": "0x144c21760",
+   "thunk": "0x1451b8d60",
+   "reason": "JNZ 0x141a4a8c0 tail-jumps out of the body with RCX=PlayerState when [this+0x1d0] is non-null; callee not in body (null path returns false)",
+   "source": "small4"
+  },
+  {
+   "entry": "UAthenaRespawnTimer::AddExtensionWidget",
+   "tier": "branch_leaves_body",
+   "body": "0x144ba6170",
+   "thunk": "0x1451bd1f0",
+   "reason": "TEST RDX,RDX; JNZ 0x1451bc0e0 tail-jumps out of the body when Widget is non-null; callee not in body",
+   "source": "small4"
+  },
+  {
+   "entry": "UAthenaSpatialHenchmenInspectionRoom::HandleInputMethodChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x144e76090",
+   "thunk": "0x145349620",
+   "reason": "CMP DL,0x1; JZ 0x144e8d0d0 tail-jumps out of the body when InputType==1; callee not in body",
+   "source": "small4"
+  },
+  {
+   "entry": "UAthenaTimeWidgetBase::OnGamePhaseChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x144b432b0",
+   "thunk": "0x1451cb8d0",
+   "reason": "CMP DL,0x5; JZ 0x144b50f70 tail-jumps out of the body when GamePhase==5; callee not in body",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortAccountStatsContext::CanShowAccountStats",
+   "tier": "absolute_global",
+   "body": "0x144cc1b50",
+   "thunk": "0x1451ece40",
+   "reason": "absolute image address load/compare (global data, not object state); cannot express without hardcoding an image address (CMP dword ptr [0x147e1ae88],0)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortActivatableVideoPanel::StartVideo",
+   "tier": "branch_leaves_body",
+   "body": "0x144f7d3d0",
+   "thunk": "0x1451ee910",
+   "reason": "MOV RCX,[this+0x4f0] (VideoPlayerWidget) then CMP dword [RCX+0x260],1; JG 0x144f7c8a0 tail-jumps out of the body with RCX=widget; callee not in body (also no null check on the pointer)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortActorOptionsComponent::GetPropertyEditorV2Enabled",
+   "tier": "absolute_global",
+   "body": "0x141dfab20",
+   "thunk": "0x14278e680",
+   "reason": "absolute image address load/compare (global data, not object state); cannot express without hardcoding an image address (CMP dword ptr [0x1478c45bc],0; SETG)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortActorOptionsComponent::IsRenameDisplayButtonEnabled",
+   "tier": "absolute_global",
+   "body": "0x141e040f0",
+   "thunk": "0x14278ea90",
+   "reason": "absolute image address load/compare (global data, not object state); cannot express without hardcoding an image address (CMP dword ptr [0x1478c45c0],0; SETNZ)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortAlterationsWidget::SetupInteractionEvents",
+   "tier": "branch_leaves_body",
+   "body": "0x1450ff4e0",
+   "thunk": "0x1451f6ad0",
+   "reason": "when Buttion!=null and [this+0x2b0] (ButtonGroup)!=null, JNZ 0x1407aa410 tail-jumps out of the body with RCX=ButtonGroup, RDX=Buttion; callee not in body",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::ApplyGameplayModifier",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::AthenaEmote",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::BotSpectate",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::BuildWith",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::DumpGameStats",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::GetGameStat",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::GiveAmmo",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::GiveAthenaGadgets",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286c3e0",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::GiveConsumable",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286c3e0",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::GiveGadgets",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286c3e0",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::GivePerk",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::GivePickaxe",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)",
+   "source": "small4"
+  },
+  {
+   "entry": "UFortCheatManager::GiveSpecificItem",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286c3e0",
+   "reason": "GiveSpecificItem: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::GiveTrap",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286c3e0",
+   "reason": "GiveTrap: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::GiveWeapon",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286c3e0",
+   "reason": "GiveWeapon: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::HermesAddContentToBeaconHost",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "HermesAddContentToBeaconHost: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::HermesAttemptDownload",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "HermesAttemptDownload: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::LogAssetClassCost",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "LogAssetClassCost: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::MMS",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "MMS: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::McpJoinFromPartyInviteToken",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286c8e0",
+   "reason": "McpJoinFromPartyInviteToken: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::McpPrintFriendInviteToken",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286c8e0",
+   "reason": "McpPrintFriendInviteToken: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::PerfMemStatMonitor",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "PerfMemStatMonitor: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::PlayAthenaEmoteOnScriptedPawn",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "PlayAthenaEmoteOnScriptedPawn: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::RemoveGameplayModifier",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "RemoveGameplayModifier: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::ReplayLastPerfTest",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "ReplayLastPerfTest: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::SetAthenaHero",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "SetAthenaHero: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::SetEncounterSpawnPointsCurve",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "SetEncounterSpawnPointsCurve: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::SetEncounterTopUtilityPercentages",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "SetEncounterTopUtilityPercentages: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::SetEventsStyleOverride",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "SetEventsStyleOverride: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::SetGameStat",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286da00",
+   "reason": "SetGameStat: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::SpawnAIGroup",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "SpawnAIGroup: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::SpawnAIGroupFromExternalSpawner",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "SpawnAIGroupFromExternalSpawner: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::SpawnAndDriveVehicle",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "SpawnAndDriveVehicle: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::SpawnBattleLabDevice",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "SpawnBattleLabDevice: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::SpawnVehicle",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "SpawnVehicle: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManager::TestCalendarEvents",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "TestCalendarEvents: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManagerMissions::ExecuteNewMissionGeneration",
+   "tier": "branch_leaves_body",
+   "body": "0x141ccaf30",
+   "thunk": "0x142872040",
+   "reason": "ExecuteNewMissionGeneration: MOV RCX,qword ptr [R8]; TEST; JNZ 0x142bee710 tail-jumps outside the 4-insn body on the non-null GeneratorName path; that path's work is unknown",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManagerMissions::LoadMission",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "LoadMission: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManagerMissions::LoadMissionGenerator",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "LoadMissionGenerator: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManagerMissions::SendMissionEvent",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "SendMissionEvent: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManagerSTW::SetHeroClass",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14286da00",
+   "reason": "SetHeroClass: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCheatManagerSTW::TestUpgradeOutpostItem",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "TestUpgradeOutpostItem: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortClientSettingsRecord::GetShadowPlayHighlightsEnabled",
+   "tier": "absolute_global",
+   "body": "0x141e2bfa0",
+   "thunk": "0x14287e180",
+   "reason": "GetShadowPlayHighlightsEnabled: branch reads absolute image globals dword [0x14812bdf0]==1 and dword [0x1478c4710]==1 with no reflected or named owner found in porting/generated/reflection or porting/native; result depends on them, cannot be expressed faithfully (else-branch is bShadowPlayHighlightsEnabled at 0x567)",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCollectionBookSlotWidget::HandleSlottedItemOperationComplete",
+   "tier": "branch_leaves_body",
+   "body": "0x1450b61f0",
+   "thunk": "0x1452144e0",
+   "reason": "HandleSlottedItemOperationComplete: when SlotRowName matches TemplateId (both FName halves) the asm JNZ 0x1450d0fe0 tail-jumps outside the 10-insn body; the matched-path work is unknown",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortCollectionBookWidget::OnPreviewXPChangeRequest",
+   "tier": "branch_leaves_body",
+   "body": "0x1450c4890",
+   "thunk": "0x145214870",
+   "reason": "OnPreviewXPChangeRequest: MOV RCX,[RCX+0x448]; TEST; JNZ 0x1450c6f20 tail-jumps outside the 4-insn body on the non-null path; that path's work is unknown",
+   "source": "small5"
+  },
+  {
+   "entry": "UFortContextualTutorial_BattleBus::HandleGamePhaseChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x141b6eb20",
+   "thunk": "0x142890580",
+   "reason": "JZ/JNZ 0x141b411a0 (DL==1) and 0x141b40ee0 (DL==3) tail-jump to callees outside body 0x141b6eb20; their effects are unported.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortContextualTutorial_StormForming::HandleGamePhaseStepChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x141b6eb40",
+   "thunk": "0x142890600",
+   "reason": "JBE 0x141b40ee0 tail-jumps to an unported callee outside body 0x141b6eb40 when GamePhaseStep-7 <= 1.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortControllerComponent_IndicatedActorManagement::AddActorsToIndicatedList",
+   "tier": "branch_leaves_body",
+   "body": "0x141ccaf30",
+   "thunk": "0x14289cc60",
+   "reason": "MOV RCX,[R8] then JNZ 0x142bee710 tail-jumps to an unported callee with the loaded by-reference argument value; shared body with AddActorsToStenciledList.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortControllerComponent_IndicatedActorManagement::AddActorsToStenciledList",
+   "tier": "branch_leaves_body",
+   "body": "0x141ccaf30",
+   "thunk": "0x14289cef0",
+   "reason": "MOV RCX,[R8] then JNZ 0x142bee710 tail-jumps to an unported callee with the loaded by-reference argument value; shared body with AddActorsToIndicatedList.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortCreativeGlobalOptions::SetListDataSource",
+   "tier": "branch_leaves_body",
+   "body": "0x144d96e50",
+   "thunk": "0x14521d6c0",
+   "reason": "Store to [RCX+0x480] is followed by JZ 0x144d954b0 (ListType==6) tail-jumping to an unported callee; the conditional call cannot be expressed without it.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortCreativeIslandGeneration::GetShowTemplateIslands",
+   "tier": "absolute_global",
+   "body": "0x144d7b880",
+   "thunk": "0x145220810",
+   "reason": "Reads absolute global dword [0x147e1af28]; no receiver, no reflected member; absolute address not expressible.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortCreativeMessageKnobsDialog::ContainsItem",
+   "tier": "other",
+   "body": "0x1406a7c40",
+   "thunk": "0x142b2da90",
+   "reason": "Body is LEA RAX,[RCX-0x108]; RET: returns a this-adjusted pointer (base-subobject adjust) in a bool-typed function; no boolean computation to translate.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortDropdownDelegateRegistrar::OnOpenStatusChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x144d8d0b0",
+   "thunk": "0x14522f030",
+   "reason": "Non-null [RCX+0x30] tail-jumps to unported 0x144e19a00 with it as receiver.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortDropdownMenu::DeselectAll",
+   "tier": "branch_leaves_body",
+   "body": "0x144d75c90",
+   "thunk": "0x14522e830",
+   "reason": "Non-null [RCX+0x438] tail-jumps to unported 0x1407b8690 with it as receiver.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortDropdownMenu::GetSelectedButtonIndex",
+   "tier": "branch_leaves_body",
+   "body": "0x144d7b6b0",
+   "thunk": "0x14522ea00",
+   "reason": "Non-null [RCX+0x438] tail-jumps to unported 0x1407c48f0 whose result is returned; null path returns -1.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortDropdownMenu::InternalOnButtonClicked",
+   "tier": "branch_leaves_body",
+   "body": "0x144d835f0",
+   "thunk": "0x14522ee90",
+   "reason": "Byte [RCX+0x440] != 0 tail-jumps to unported 0x1407f1730.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortEventDateTimeTextBlock::GetDateTime",
+   "tier": "abi_or_signature",
+   "body": "0x1407c25a0",
+   "thunk": "0x14080ffa0",
+   "reason": "FDateTime returned through hidden return slot (MOV [RDX],RAX; MOV RAX,RDX); hidden-slot struct return is not expressible under the rules.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortGameUserSettings::IsVideoPlaybackAllowed",
+   "tier": "absolute_global",
+   "body": "0x141ea2630",
+   "thunk": "0x14292f510",
+   "reason": "Branch reads absolute global dword [0x14812e6f0]; no receiver or reflected member; absolute address not expressible.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortGameUserSettings::SetDisplayGamma",
+   "tier": "absolute_global",
+   "body": "0x141eaed60",
+   "thunk": "0x14292f740",
+   "reason": "Second store goes through absolute global pointer [0x148351eb8] (unknown pointee, +0x934); absolute global access not expressible.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortGameUserSettings::SetUserInterfaceContrast",
+   "tier": "absolute_global",
+   "body": "0x141eb14e0",
+   "thunk": "0x14292fdc0",
+   "reason": "Second store writes absolute global float [0x147c52484]; not expressible.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortGameplayAbility::GetTooltip",
+   "tier": "abi_or_signature",
+   "body": "0x141600170",
+   "thunk": "0x1428f8900",
+   "reason": "TSubclassOf return written through hidden return slot (MOV [RDX],RAX; MOV RAX,RDX).",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortGliderAnimInstance::SetGliderFullyDeployed",
+   "tier": "branch_leaves_body",
+   "body": "0x14184bbe0",
+   "thunk": "0x142934c00",
+   "reason": "Non-null [RCX+0x2a0] tail-jumps to unported 0x141a24a30.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortHUDContext::GetCurrentHUDState",
+   "tier": "other",
+   "body": "0x14084c1d0",
+   "thunk": "0x145255c00",
+   "reason": "FFortHUDState returned by address (LEA RAX,[RCX+0x608]) under hidden-slot copy elision; not expressible under the rules.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortHUDTargetUnderReticleWidget::OnTargetActorDestroyed",
+   "tier": "branch_leaves_body",
+   "body": "0x144d8e7d0",
+   "thunk": "0x145262f70",
+   "reason": "Equal compare with [RCX+0x258] tail-jumps to unported 0x14525cc20.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortHeroLoadoutSlotButton::IsContextMenuOpen",
+   "tier": "branch_leaves_body",
+   "body": "0x1450eff60",
+   "thunk": "0x14524fa70",
+   "reason": "Non-null [RCX+0xba0] tail-jumps to unported 0x143d66800 whose result is returned.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortHomebaseUIContext::AutoSlotAllSurvivorSquads",
+   "tier": "branch_leaves_body",
+   "body": "0x1450a7c20",
+   "thunk": "0x145255670",
+   "reason": "Non-null [RCX+0xc8] tail-jumps to unported 0x14510e150.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortHomebaseUIContext::GetCurrentlyFocusedHeroLoadoutSlotName",
+   "tier": "abi_or_signature",
+   "body": "0x141132080",
+   "thunk": "0x1438aa6b0",
+   "reason": "FName returned through hidden return slot (MOV [RDX],RAX; MOV RAX,RDX).",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortItemBaseWidget::GetQuantity",
+   "tier": "branch_leaves_body",
+   "body": "0x144ebe3e0",
+   "thunk": "0x145267680",
+   "reason": "Non-null [RCX+0x270] tail-jumps to unported 0x144ebd440 whose result is returned; null path reads dword [RCX+0x268].",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortItemManagementInventoryPanel::HandleCraftItemStarted",
+   "tier": "branch_leaves_body",
+   "body": "0x144f27060",
+   "thunk": "0x14526f310",
+   "reason": "Bit 0x8 of byte [RCX+0x3b8] set tail-jumps to unported 0x144f436f0.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortItemManagementScreen::MarkAllItemsAsSeen",
+   "tier": "branch_leaves_body",
+   "body": "0x144f677f0",
+   "thunk": "0x145274ae0",
+   "reason": "Non-null [RCX+0x528] tail-jumps to unported 0x144f2d200.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortItemView::GetSettings",
+   "tier": "abi_or_signature",
+   "body": "0x144f26cf0",
+   "thunk": "0x14527c9a0",
+   "reason": "FFortItemViewSettings (0x34-byte struct) copied through hidden return slot with SSE moves.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortLlamaStoreOfferInfo::GetDisplayAssetIcon",
+   "tier": "branch_leaves_body",
+   "body": "0x1450ad530",
+   "thunk": "0x145285650",
+   "reason": "Non-null [RCX+0x60] tail-jumps to unported 0x142546d60.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortLlamaStoreOfferInfo::GetDisplayAssetPersonality",
+   "tier": "branch_leaves_body",
+   "body": "0x1450ad600",
+   "thunk": "0x1452856f0",
+   "reason": "Non-null [RCX+0x60] tail-jumps to unported 0x142546d70.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortLlamaStoreOfferWidgetBase::GetPriceIndexToShow",
+   "tier": "branch_leaves_body",
+   "body": "0x1450b1150",
+   "thunk": "0x145285850",
+   "reason": "Non-null [RCX+0xbd0] tail-jumps to unported 0x1450b1190.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortMatchmakingKnobsModal::OnHoveredItemChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x144dd3880",
+   "thunk": "0x14528abb0",
+   "reason": "bIsHovered true tail-jumps to unported 0x144dd33e0.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortMcpContext::CancelEpicPurchasingDisplay",
+   "tier": "branch_leaves_body",
+   "body": "0x1421cb230",
+   "thunk": "0x142993d30",
+   "reason": "Non-null [RCX+0x378] tail-jumps to unported 0x1411ce2d0.",
+   "source": "small6"
+  },
+  {
+   "entry": "UFortMissionActivationInfo::IsAnyVoteActive",
+   "tier": "branch_leaves_body",
+   "body": "0x144f65290",
+   "thunk": "0x14528a930",
+   "reason": "JNZ 0x141ea2160 leaves the 5-insn body for the non-null path of [this+0xa8]; that target block is not in the body asm, so the non-null path cannot be verified as call-free.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortMultiSizeItemCard::SetShouldCollapseItem",
+   "tier": "branch_leaves_body",
+   "body": "0x144f3fc30",
+   "thunk": "0x145298180",
+   "reason": "JNZ 0x144ee3e90 (RCX=[pointer+0x3d0], pointer from unreflected [this+0x150]) leaves the body; target is a dispatch on an unknown pointee whose asm is not available.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortMusicAsset::GetMusicSection",
+   "tier": "abi_or_signature",
+   "body": "0x1424ad120",
+   "thunk": "0x1429fbb10",
+   "reason": "Body is LEA RAX,[RCX+(EDX+2)*24]; RET, i.e. returns a pointer into this with RCX as object base. Header declares by-value FFortMusicSection, which on Win64 uses RCX as hidden return slot; the ABI does not match, so it cannot be expressed faithfully.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortPartySuggestionButton::HandleSuggestionAccepted",
+   "tier": "branch_leaves_body",
+   "body": "0x144e0bf40",
+   "thunk": "0x1452a07a0",
+   "reason": "JZ 0x144ded0e0 leaves the 3-insn body; the decompile of 0x144e0bf40 shows the matching PlayerId path calls FUN_14219f720, FUN_1427034f0 and FUN_1421a3090, so the body is not call-free.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortPlayerSurveyDispatcher::HandleDisplayOneSurvey",
+   "tier": "branch_leaves_body",
+   "body": "0x144fa30f0",
+   "thunk": "0x1452ac610",
+   "reason": "JZ 0x144f9c480 (taken when [this+0x58]==0) leaves the 4-insn body; the target block is not in body asm, so the null-path behaviour cannot be verified.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortPlayerSurveyStatsPrecacher::HandleGamePhaseChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x144fa37b0",
+   "thunk": "0x1452b1430",
+   "reason": "JZ 0x144fb3bf0 leaves the body; decompile of 0x144fa37b0 shows the matching-phase path calls UFortRuntimeOptions_GetDefault, FWeakObjectPtr_Get and FUN_14468f1a0.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortQuestManager::ListChallenges",
+   "tier": "branch_leaves_body",
+   "body": "0x14072e780",
+   "thunk": "0x14075b890",
+   "reason": "JNZ 0x142bee710 leaves the body after MOV RCX,[RDX] (FString Filter data pointer); the non-null target is not in body asm, so it cannot be verified as call-free.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortQuestMapScreen::SetIgnorePageNavigation",
+   "tier": "branch_leaves_body",
+   "body": "0x1450fd5a0",
+   "thunk": "0x1452b6890",
+   "reason": "JZ 0x140684de0 (after TEST DL,DL) leaves the body; the bIgnoreNavigation==false path target is not in body asm, and the earlier JZ 0x1450fd5bd path also dispatches on an unreflected pointer at [this+0x460].",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortQuestTrackerList::HandleQuestsUpdated",
+   "tier": "branch_leaves_body",
+   "body": "0x144fd5190",
+   "thunk": "0x1452b9f70",
+   "reason": "JZ 0x144ff66f0 leaves the body; target not in body asm.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortReticle::OnContextualReticleChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x144fe29c0",
+   "thunk": "0x1452c3190",
+   "reason": "JNZ 0x144ff6330 (after MOV RCX,[RCX+0x2b8]) leaves the body; non-null target is a dispatch on an unknown pointee, not in body asm.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortReticle::OnReticleColorChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x144fe5f80",
+   "thunk": "0x1452c31d0",
+   "reason": "JNZ 0x144ffbad0 (after MOV RCX,[RCX+0x2b8]) leaves the body; non-null target is a dispatch on an unknown pointee, not in body asm.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortSeasonPassLevelInfo::GetSeasonPassMaxLevel",
+   "tier": "branch_leaves_body",
+   "body": "0x145017f60",
+   "thunk": "0x1453459e0",
+   "reason": "JNZ 0x14200e8f0 (after MOV RCX,[RCX+0x38]) leaves the body; non-null path dispatches on the pointee, target not in body asm.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortShowdownDetailView::GetEventWindowRoundNumber",
+   "tier": "branch_leaves_body",
+   "body": "0x14506c9a0",
+   "thunk": "0x1452d8f70",
+   "reason": "JNZ 0x1422d7290 (after MOV RCX,[RCX+0x5c0]) leaves the body; non-null path dispatches on the pointee, target not in body asm.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortShowdownDetailView::GetEventWindowSessionNumber",
+   "tier": "branch_leaves_body",
+   "body": "0x14506c9c0",
+   "thunk": "0x1452d8fa0",
+   "reason": "JNZ 0x1422d73b0 (after MOV RCX,[RCX+0x5c0]) leaves the body; non-null path dispatches on the pointee, target not in body asm.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortShowdownDetailView::GetNumEventRounds",
+   "tier": "branch_leaves_body",
+   "body": "0x14506d7c0",
+   "thunk": "0x1452d9000",
+   "reason": "JNZ 0x1422d4b20 (after MOV RCX,[RCX+0x5b0]) leaves the body; non-null path dispatches on the pointee, target not in body asm.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortShowdownDivisionEventView::GetAmountEarnedWithinDivision",
+   "tier": "branch_leaves_body",
+   "body": "0x14506a540",
+   "thunk": "0x1452dcf00",
+   "reason": "JNZ 0x1422c6c70 (after MOV RCX,[RCX+0x5c0]) leaves the body; non-null path dispatches on the pointee, target not in body asm.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortShowdownDivisionEventView::GetDivisionRank",
+   "tier": "branch_leaves_body",
+   "body": "0x14506afe0",
+   "thunk": "0x1452dcf30",
+   "reason": "JNZ 0x1422c7430 (after MOV RCX,[RCX+0x5b0]) leaves the body; non-null path dispatches on the pointee, target not in body asm.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortShowdownDivisionEventView::GetTotalDivisionPoints",
+   "tier": "branch_leaves_body",
+   "body": "0x14506e850",
+   "thunk": "0x1452dd3d0",
+   "reason": "JNZ 0x1422d93d0 (after MOV RCX,[RCX+0x5c0]) leaves the body; non-null path dispatches on the pointee, target not in body asm.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortSkyTubePhysicsComponent::IsSkyTubeForceEnabled",
+   "tier": "absolute_global",
+   "body": "0x1427036e0",
+   "thunk": "0x142ada7d0",
+   "reason": "Reads dwords at absolute image addresses 0x1478df4c8 and 0x1478df4a0 (CMP dword ptr [addr],0), which are global data, not object-relative members; no global name mapping was checked in this batch, so they cannot be expressed.",
+   "source": "small7"
+  },
+  {
+   "entry": "UFortSquadManagementScreenBase::HandleSelectPickerSlotInputAction",
+   "tier": "branch_leaves_body",
+   "body": "0x145127e20",
+   "thunk": "0x1452e7540",
+   "reason": "Asm 0x145127e2a JNZ 0x144f7f900: when this->[0x478] is non-null the body tail-jumps to a separate function (callee with RCX=that pointer). Not expressible inside the body.",
+   "source": "small8"
+  },
+  {
+   "entry": "UFortSquadSlotDetailsPanel::SetScrollWidget",
+   "tier": "branch_leaves_body",
+   "body": "0x145136e30",
+   "thunk": "0x1452ed330",
+   "reason": "Asm 0x145136e3a JNZ 0x144f3fb60: when this->[0x280] is non-null the body tail-jumps to a separate function (callee). Not expressible inside the body.",
+   "source": "small8"
+  },
+  {
+   "entry": "UFortStoreFrontOfferDetailsWidgetBase::GetPriceIndexToShow",
+   "tier": "branch_leaves_body",
+   "body": "0x1450b1170",
+   "thunk": "0x1452f2090",
+   "reason": "Asm 0x1450b117a JNZ 0x1450b1190: the non-null path continues at 0x1450b1190, outside the extracted body (body ends at RET 0x1450b1182). Not proven to be in-body code.",
+   "source": "small8"
+  },
+  {
+   "entry": "UFortTimelineBase::HandleReplayHudVisibilityChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x144fd6830",
+   "thunk": "0x145304510",
+   "reason": "Asm 0x144fd6835 JBE 0x1407b7ed0: tail-jump to a separate function when (state-1) <= 1 (callee).",
+   "source": "small8"
+  },
+  {
+   "entry": "UFortUIManagerWidget_NUI::CreateNotification",
+   "tier": "branch_leaves_body",
+   "body": "0x14514ac10",
+   "thunk": "0x145314740",
+   "reason": "Asm 0x144df8ca0 JNZ: when this->[0x288] (object offset 0x258+0x30) is non-null the body tail-jumps to a separate function (callee).",
+   "source": "small8"
+  },
+  {
+   "entry": "UFortUIManagerWidget_NUI::HandleErrorWindowDeactivated",
+   "tier": "branch_leaves_body",
+   "body": "0x145150650",
+   "thunk": "0x145314d10",
+   "reason": "Asm 0x14515065e JZ 0x1451723d0: when ErrorWindow_Errors->[0x304] is zero the body tail-jumps to a separate function (callee).",
+   "source": "small8"
+  },
+  {
+   "entry": "UFortUIStateWidget_JoinServer::HandleLobbyDisconnected",
+   "tier": "branch_leaves_body",
+   "body": "0x145152840",
+   "thunk": "0x145319840",
+   "reason": "Asm 0x145152847 JG 0x141812040: when this->[0x480] > 0 the body tail-jumps to a separate function (callee).",
+   "source": "small8"
+  },
+  {
+   "entry": "UFortVoiceChannelHeaderButton::CanJoinChannel",
+   "tier": "branch_leaves_body",
+   "body": "0x144e2b7b0",
+   "thunk": "0x1452e1c70",
+   "reason": "Asm 0x144e2b7ba JNZ 0x144e48ba0: when this->[0xb70] is non-null the body tail-jumps to a separate function (callee).",
+   "source": "small8"
+  },
+  {
+   "entry": "UFortWaterInteractionComponent::IsEnabled",
+   "tier": "absolute_global",
+   "body": "0x142703370",
+   "thunk": "0x142b47340",
+   "reason": "Asm 0x142703379 CMP dword ptr [0x1478df4b8]: reads an absolute module global with no reflected or named symbol, so it cannot be written as a member or object offset.",
+   "source": "small8"
+  },
+  {
+   "entry": "UFortWaypointVolumeComponent::OnClientEnterVolume",
+   "tier": "branch_leaves_body",
+   "body": "0x14209cf50",
+   "thunk": "0x142b47710",
+   "reason": "Asm 0x14209cf5d JNZ 0x142b32e10: when this->[0xa0] is non-null the body tail-jumps to a separate function (callee). Shared body 0x14209cf50 with OnClientExitVolume.",
+   "source": "small8"
+  },
+  {
+   "entry": "UFortWaypointVolumeComponent::OnClientExitVolume",
+   "tier": "branch_leaves_body",
+   "body": "0x14209cf50",
+   "thunk": "0x142b47710",
+   "reason": "Asm 0x14209cf5d JNZ 0x142b32e10: when this->[0xa0] is non-null the body tail-jumps to a separate function (callee). Shared body 0x14209cf50 with OnClientEnterVolume.",
+   "source": "small8"
+  },
+  {
+   "entry": "UHoverDroneMovementComponent::OnFollowedPlayerChanged",
+   "tier": "branch_leaves_body",
+   "body": "0x14247c870",
+   "thunk": "0x142b678c0",
+   "reason": "Asm 0x14247c877 JZ 0x1424774e0: when this->[0x250] == 3 the body tail-jumps to a separate function (callee).",
+   "source": "small8"
+  },
+  {
+   "entry": "UPerkSelectionEntryWidget::GetTechSelectVerboseModeEnabled",
+   "tier": "absolute_global",
+   "body": "0x144becc00",
+   "thunk": "0x145341290",
+   "reason": "Asm 0x144becc00 CMP dword ptr [0x147e1ad98]: reads an absolute module global with no reflected or named symbol, so it cannot be written as a member or object offset.",
+   "source": "small8"
+  }
+ ]
+}

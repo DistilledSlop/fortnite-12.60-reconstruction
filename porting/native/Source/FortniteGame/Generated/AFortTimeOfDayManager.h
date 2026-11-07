@@ -364,6 +364,12 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xde8): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0xde8;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xe12): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xe12;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xe13): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xe13;
+
 	// table index 0, flags 0x2008000008201c
 	UPROPERTY(Transient)
 	UFortTimeOfDayWeatherComponent* WeatherComponent;
@@ -385,7 +391,7 @@ public:
 	void OnRep_TimeOfDay();
 
 	UFUNCTION()
-	void OnRep_TimeOfDayInit();
+	virtual void OnRep_TimeOfDayInit();
 
 	UFUNCTION(NetMulticast, Reliable)
 	void RemoveLightAndFogPhaseSettingOverrideMulticast(EFortDayPhase::Type DayPhase, float BlendOutLength);

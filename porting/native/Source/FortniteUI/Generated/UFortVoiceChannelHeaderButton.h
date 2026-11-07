@@ -24,5 +24,10 @@ public:
 	UPROPERTY()
 	UCommonRichTextBlock* Text_ChannelInfo;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsActiveChannel() const;
+public:
+
 };
 

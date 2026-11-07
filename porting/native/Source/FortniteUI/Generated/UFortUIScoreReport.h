@@ -20,5 +20,8 @@ public:
 	UPROPERTY(Transient)
 	UFortLocalPlayer* LocalPlayer;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPlayerCount() const;
+
 };
 

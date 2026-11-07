@@ -127,6 +127,9 @@ public:
 	UPROPERTY()
 	FOnOutpostDiscoveryFailure OnOutpostDiscoveryFailure;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1a8): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x1a8;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsConnectedToGame() const;
 
@@ -138,6 +141,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsOutpostPermitted() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool IsWaitingOnUpdateManager();
 
 	UFUNCTION(BlueprintCallable)
 	void ReadyUp();

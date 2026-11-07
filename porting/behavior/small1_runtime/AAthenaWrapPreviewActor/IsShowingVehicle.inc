@@ -1,0 +1,13 @@
+// Original address: 0x141fc7d50 (AAthenaWrapPreviewActor::IsShowingVehicle)
+// Offset evidence: [RCX+0x268] int32 is below the class own region (min 0x368), read raw from this.
+// [RCX+0x390] and [RCX+0x3a0] are int32 gaps in the own region (NativeRecoveredInt32_0x390 / _0x3a0).
+// CONFIDENCE: HIGH
+const uint8* Raw = reinterpret_cast<const uint8*>(this);
+if (*reinterpret_cast<const int32*>(Raw + 0x268) != 0)
+{
+    if (NativeRecoveredInt32_0x390 + 1 != NativeRecoveredInt32_0x3a0)
+    {
+        return false;
+    }
+}
+return true;

@@ -9,6 +9,14 @@ bool UAthenaHUDBase::GetZoneCompleted() const
 	return NativeRecoveredBool_0x3a8;
 }
 
+void UAthenaHUDBase::SetFullscreenMapVisibilityNative(bool bIsVisible)
+{
+	// Original address: 0x1406a7c40
+	// Evidence: body is LEA RAX,[RCX-0x108]; RET only. No store, call or branch; the computed pointer is discarded by a void return and bIsVisible (DL) is unused.
+	// CONFIDENCE: MEDIUM
+	return;
+}
+
 void UAthenaHUDBase::SetZoneCompleted(bool bValue)
 {
 	// CONFIDENCE: HIGH; captured native body matches the operation below.

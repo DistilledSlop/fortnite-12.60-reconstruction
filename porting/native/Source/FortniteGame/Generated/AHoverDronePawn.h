@@ -20,5 +20,11 @@ public:
 	UPROPERTY(Transient)
 	UHoverDroneMovementComponent* HoverMoveComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAltitude() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMaintainingConstantAltitude() const;
+
 };
 

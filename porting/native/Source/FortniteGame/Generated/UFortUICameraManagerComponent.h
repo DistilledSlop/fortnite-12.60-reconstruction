@@ -48,5 +48,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetCustomCameraRotationOffset(FRotator Offset);
 
+	UFUNCTION(BlueprintCallable)
+	void SetZoomLevel(float ZoomLevel);
+
 };
 

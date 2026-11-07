@@ -46,5 +46,10 @@ public:
 	UPROPERTY()
 	UFortItemDefinition* UpgradesRespecToken;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPreviewing() const;
+public:
+
 };
 

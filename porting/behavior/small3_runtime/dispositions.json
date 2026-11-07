@@ -1,0 +1,268 @@
+[
+ {
+  "class": "AFortPlayerControllerSpectating",
+  "function": "FullscreenMapZoom",
+  "status": "proposed",
+  "case": "proposed_gap_member",
+  "reason": "Float store to unreflected 0x2ac8 guarded by Value!=0 and not NaN (UCOMISS/JZ)."
+ },
+ {
+  "class": "AFortPlayerControllerSpectating",
+  "function": "GetShowVehiclesOnMap",
+  "status": "proposed",
+  "case": "proposed_gap_members",
+  "reason": "Both gap bools at 0x2ae6 and 0x2ae5 must be nonzero; no reflected cover in chain."
+ },
+ {
+  "class": "AFortPlayerControllerSpectating",
+  "function": "SetMapWeaponTracersEnabled",
+  "status": "proposed",
+  "case": "proposed_gap_member",
+  "reason": "Byte at 0x2bf0 (no declared bit in chain): bit0 = bEnable, other bits preserved."
+ },
+ {
+  "class": "AFortPlayerControllerZone",
+  "function": "DumpPhysicsVehicleBuffer",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x14072e780: MOV RCX,[RDX]; TEST; JNZ 0x142bee710 tail-jumps to a callee outside the body when the FString data is non-null; callee unknown."
+ },
+ {
+  "class": "AFortPlayerControllerZone",
+  "function": "KillAllVehicles",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x14072e780: MOV RCX,[RDX]; TEST; JNZ 0x142bee710 tail-jumps to a callee outside the body when the FString data is non-null; callee unknown."
+ },
+ {
+  "class": "AFortPlayerControllerZone",
+  "function": "RewindVehicle",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x14072e780: MOV RCX,[RDX]; TEST; JNZ 0x142bee710 tail-jumps to a callee outside the body when the FString data is non-null; callee unknown."
+ },
+ {
+  "class": "AFortPlayerControllerZone",
+  "function": "TestVehicleVelocity",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x14072e780: MOV RCX,[RDX]; TEST; JNZ 0x142bee710 tail-jumps to a callee outside the body when the FString data is non-null; callee unknown."
+ },
+ {
+  "class": "AFortPlayerMannequin",
+  "function": "GetGender",
+  "status": "proposed",
+  "case": "proposed_reflected_array_raw_pointee",
+  "reason": "CharacterPartList[0] (reflected) pointee byte at +0x30 read raw; null -> 3."
+ },
+ {
+  "class": "AFortPlayerMannequin",
+  "function": "GetPartSkeletalMeshComponent",
+  "status": "proposed",
+  "case": "proposed_gap_pointer_slots",
+  "reason": "Six unreflected pointer slots 0x408..0x430 indexed by Part; Part==6 returns null. Out-of-range Part returns null (asm reads past slots)."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "BP_ForceLockParachuteOpen",
+  "status": "proposed",
+  "case": "proposed_reflected_bools",
+  "reason": "Role==ROLE_Authority(3) gates bParachuteLockedOpen; bLocalParachuteLockedOpen always written."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "SetPendingSkydiveLaunch",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x14234e8b0 stores bit 0x10 (bPendingSkydiveLaunch, declared) then TEST AL,0x10; JNZ 0x14230e1e0 tail-jumps to an external callee when set; callee unknown."
+ },
+ {
+  "class": "AFortPlayerStateOutpost",
+  "function": "HasPermissionToEditOutpost",
+  "status": "proposed",
+  "case": "proposed_reflected_bits",
+  "reason": "TEST byte 0x330 bit0 is bIsWorldDataOwner (AFortPlayerState); byte 0xd20 is bHasPermissionToEditOutpost."
+ },
+ {
+  "class": "AFortProjectileBase",
+  "function": "ExitSkyTube",
+  "status": "proposed",
+  "case": "proposed_reflected_pointer_out_param",
+  "reason": "Writes bIsLastTube false, then true and clears CurrentSkyTube when it equals SkyTube."
+ },
+ {
+  "class": "AFortReplaySpectator",
+  "function": "SkipToSequencerShot",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x142489f70: MOV RCX,[RCX+0x34c8]; JNZ 0x14245f2b0 tail-jumps to an external callee when the pointer is non-null; callee unknown."
+ },
+ {
+  "class": "AFortSafeZoneIndicator",
+  "function": "GetSafeZoneCenter",
+  "status": "proposed",
+  "case": "proposed_raw_pointee_struct_return",
+  "reason": "SafeZoneMesh (reflected 0x3a0) pointee floats at +0x1d0..+0x1d8 read raw; pointee layout unreflected."
+ },
+ {
+  "class": "AFortSkyTube",
+  "function": "GetDelayUntilDisabled",
+  "status": "blocked",
+  "case": "blocked_absolute_global",
+  "reason": "MOVSS XMM0,[0x1478df4d0] reads an absolute image global with no receiver offset; porting has no owner mapping for 0x1478df4d0."
+ },
+ {
+  "class": "AFortSkyTube",
+  "function": "IsSkyTubeEnabled",
+  "status": "blocked",
+  "case": "blocked_absolute_global",
+  "reason": "CMP dword [0x1478df4c8],0 reads an absolute image global with no owner mapping; the receiver part (bEnabled, 0x5c0) alone is not the full result."
+ },
+ {
+  "class": "AFortSkyTubeAnchor",
+  "function": "IsEnabled",
+  "status": "blocked",
+  "case": "blocked_absolute_global",
+  "reason": "CMP dword [0x1478df4c8],0 reads an absolute image global with no owner mapping; receiver part (bEnabled, 0xb98) alone is not the full result."
+ },
+ {
+  "class": "AFortSpectateAFriendController",
+  "function": "OnRep_HasValidTarget",
+  "status": "blocked",
+  "case": "blocked_tail_jump",
+  "reason": "Body 0x1424201c0: CMP byte [RCX+0x2db0],0; JZ 0x1423d1280 leaves the body on the zero path to code outside it; callee unknown."
+ },
+ {
+  "class": "AFortTheaterMapTile",
+  "function": "IsMissionAlertTile",
+  "status": "proposed",
+  "case": "proposed_gap_int_vs_reflected",
+  "reason": "Gap int32 0x430 must be >=0 and equal TileIndex (reflected 0x250)."
+ },
+ {
+  "class": "AFortThreatVisualsManager",
+  "function": "StormsExist",
+  "status": "proposed",
+  "case": "proposed_gap_int",
+  "reason": "Signed greater-than-zero test on gap int32 0x380 (SETG)."
+ },
+ {
+  "class": "AFortTimeOfDayManager",
+  "function": "OnRep_TimeOfDayInit",
+  "status": "proposed",
+  "case": "proposed_gap_bools_reflected_floats",
+  "reason": "Copies TimeOfDay to TimeOfDayReplicated unless both gap flags are nonzero."
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "OnRep_ReplicatedCosmeticOverrideWeaponData",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x1426aad50: non-null pointer test then JNZ 0x1426a66b0 tail-jumps to an external callee; callee unknown."
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "OnRep_ReplicatedWeaponData",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x1426aad60: non-null pointer test then JNZ 0x1426a6950 tail-jumps to an external callee; callee unknown."
+ },
+ {
+  "class": "AFortWeaponCharmPreviewActor",
+  "function": "SetActiveCharmSlot",
+  "status": "proposed",
+  "case": "proposed_reflected_byte_store",
+  "reason": "Unsigned compare: slots 0..3 stored into reflected CharmSlot, others ignored."
+ },
+ {
+  "class": "AFortWeaponPickaxeDualWieldAthena",
+  "function": "SetCurrentSwingState",
+  "status": "proposed",
+  "case": "proposed_gap_byte_store",
+  "reason": "Byte store to gap 0xc88 only when gap flag 0xc89 is zero."
+ },
+ {
+  "class": "AFortWeaponRanged",
+  "function": "EnableAltCenterReticle",
+  "status": "proposed",
+  "case": "proposed_raw_dword_bit",
+  "reason": "Raw RMW of dword 0xdf8 bit 0x4 from bNewEnabled; other bits preserved."
+ },
+ {
+  "class": "AFortWeaponRanged",
+  "function": "EnableAltOuterReticle",
+  "status": "proposed",
+  "case": "proposed_raw_dword_bit",
+  "reason": "Raw RMW of dword 0xdf8 bit 0x8 from bNewEnabled; other bits preserved."
+ },
+ {
+  "class": "AFortWeaponRanged",
+  "function": "EnableCornersReticle",
+  "status": "proposed",
+  "case": "proposed_raw_dword_bit",
+  "reason": "Raw RMW of dword 0xdf8 bit 0x10 from bNewEnabled; other bits preserved."
+ },
+ {
+  "class": "AHoverDronePawn",
+  "function": "GetAltitude",
+  "status": "proposed",
+  "case": "proposed_raw_pointee_float",
+  "reason": "HoverMoveComponent (reflected 0x350) null -> 0.0; else float at +0x20c (raw pointee)."
+ },
+ {
+  "class": "AHoverDronePawn",
+  "function": "IsMaintainingConstantAltitude",
+  "status": "proposed",
+  "case": "proposed_raw_pointee_bit",
+  "reason": "HoverMoveComponent null -> false (RAX already zero); else bit0 of byte +0x21d."
+ },
+ {
+  "class": "ASOLFortGame",
+  "function": "DeclareWinningTeam",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x142465f70: MOV RCX,[RCX+0x278]; JNZ 0x142089af0 tail-jumps to an external callee when non-null; callee unknown."
+ },
+ {
+  "class": "ASOLFortGame",
+  "function": "GetTeam",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x14246eaf0: when both team pointers are non-null, JNZ 0x14208efa0 tail-jumps to an external callee; callee unknown."
+ },
+ {
+  "class": "AUnicornDriver",
+  "function": "HandleDemoPlaybackFinish",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x1426417a0: CMP byte [RCX+0x21a],0; JNZ 0x142641ac0 tail-jumps to an external callee when set; callee unknown."
+ },
+ {
+  "class": "UAIHotSpotSlot",
+  "function": "GetSlotLocation",
+  "status": "proposed",
+  "case": "proposed_gap_floats_struct_return",
+  "reason": "FVector assembled from gap floats 0xa0, 0xa4, 0xa8."
+ },
+ {
+  "class": "UAthenaBattleMapNodeTooltip",
+  "function": "OnReplayLevelStreamingChanged",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x144c729b0: TEST byte [RCX+0xb4],4; JNZ 0x144c7be40 tail-jumps to an external callee when set; callee unknown."
+ },
+ {
+  "class": "UAthenaBattleMapTimelineWidget",
+  "function": "OnReplayLevelStreamingChanged",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x144c729d0: CMP byte [RCX+0x4d0],0; JNZ 0x144c79c60 tail-jumps to an external callee when set; callee unknown."
+ },
+ {
+  "class": "UAthenaChallengeListEntry_DetailedChallenge",
+  "function": "HandleCloseChallengeOptionsInputAction",
+  "status": "blocked",
+  "case": "blocked_tail_call",
+  "reason": "Body 0x144b78f80: CMP byte [RCX+0x299],0; JNZ 0x144b7d510 tail-jumps to an external callee when set; callee unknown."
+ }
+]

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortRewardNotificationSubWidget.h"
 
+#include "UFortConversation.h"
+
 #include "UFortRewardNewQuestWidget.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEUI_API UFortRewardNewQuestWidget : public UFortRewardNotificationS
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	bool IsValidConversation(UFortConversation* Conversation);
+
 };
 

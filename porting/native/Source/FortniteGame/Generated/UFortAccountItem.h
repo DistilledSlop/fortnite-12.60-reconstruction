@@ -48,11 +48,17 @@ public:
 	UPROPERTY()
 	bool bNeedsResolveMarkedAsSeen;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xe2): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0xe2;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TArray<FFortItemQuantityPair> GetRefundResults() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasBeenSeenLocally() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsFavorite() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsRefundable() const;

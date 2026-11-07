@@ -16,6 +16,9 @@ class FORTNITEUI_API UFortSurvivorSquadStatMatchesBase : public UFortSquadStatDe
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x260): not a UPROPERTY, not replicated.
+	FName NativeRecoveredFName_0x260;
+
 	// table index 3, flags 0x14000000000015
 	UPROPERTY()
 	TSubclassOf<UFortSurvivorSquadStatMatchBase> StatMatchClass;
@@ -27,6 +30,9 @@ public:
 	// table index 0, flags 0x40008000000008
 	UPROPERTY()
 	TArray<UFortSurvivorSquadStatMatchBase*> StatMatches;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetIdOfSquadToManageBP() const;
 
 	UFUNCTION(BlueprintCallable)
 	void SetSummaryView(bool bInSummaryView);

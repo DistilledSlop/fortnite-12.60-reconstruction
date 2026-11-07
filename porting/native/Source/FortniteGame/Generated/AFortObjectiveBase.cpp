@@ -26,6 +26,20 @@ bool AFortObjectiveBase::IsRelevantToASpecificTeam() const
 	return AFortObjectiveBase::bRelevantToSpecificTeam;
 }
 
+bool AFortObjectiveBase::IsRelevantToTeam(uint8 Team) const
+{
+	// Behaviour snippet: AFortObjectiveBase::IsRelevantToTeam (body only; spliced into the generated member function).
+	// Original address: 0x14213d020
+	// Evidence: Byte [RCX+0x2a5] tested: reflected bitfield bRelevantToSpecificTeam (offset 677, mask 1).
+	// Evidence: Byte [RCX+0x2a6] compared with Team: reflected RelevantTeam (Byte).
+	// CONFIDENCE: HIGH
+	if (bRelevantToSpecificTeam && Team != static_cast<uint8>(RelevantTeam))
+	{
+	    return false;
+	}
+	return true;
+}
+
 void AFortObjectiveBase::OnRep_bIsObjectiveVisible()
 {
 	// Original address: 0x142a05710; native body 0x14213da10 (exec thunk tail-jumps there after Stack.Code bump).

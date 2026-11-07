@@ -8,6 +8,7 @@
 
 #include "FOnNewClientAnnouncementOnClientDelegate.h"
 #include "FUpdateTutorialAnnouncementDelegate.h"
+#include "UFortQuestItem.h"
 
 #include "UFortTutorialContext.generated.h"
 
@@ -24,6 +25,12 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FOnNewClientAnnouncementOnClientDelegate OnNewAnnouncementStartedOnClientDelegate;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x140): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0x140;
+
+	UFUNCTION(BlueprintCallable)
+	void TryClearingPendingQuest(UFortQuestItem* Quest);
 
 };
 

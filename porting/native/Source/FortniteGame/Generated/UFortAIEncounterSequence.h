@@ -71,6 +71,9 @@ public:
 	FFortEncounterSettings EncounterSettings;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool EncounterBelongsToSequence(UFortAIEncounterInfo* InEncounter) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	UFortAIEncounterInfo* GetCurrentEncounter() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)

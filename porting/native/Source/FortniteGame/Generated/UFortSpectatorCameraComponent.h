@@ -48,6 +48,11 @@ public:
 
 private:
 	UFUNCTION()
+	void OnApertureSettingChanged(float NewAperture);
+public:
+
+private:
+	UFUNCTION()
 	void OnFocalLengthSettingChanged(float NewFocalLength);
 public:
 

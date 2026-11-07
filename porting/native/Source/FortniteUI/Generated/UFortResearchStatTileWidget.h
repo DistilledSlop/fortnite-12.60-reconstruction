@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "EFortStatType.h"
 #include "UFortStatItemDefinition.h"
 
 #include "UFortResearchStatTileWidget.generated.h"
@@ -52,6 +53,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentResearchLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortStatType GetPersonalStatType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsAtMaxResearchLevel() const;

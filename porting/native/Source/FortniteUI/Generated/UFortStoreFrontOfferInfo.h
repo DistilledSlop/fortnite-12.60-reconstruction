@@ -36,6 +36,9 @@ public:
 	UFortMtxOfferData* GetOfferDisplayAsset() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRequirementMinQuantityAtIndex(int32 RequirementIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSortPriority() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

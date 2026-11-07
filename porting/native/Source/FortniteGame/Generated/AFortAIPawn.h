@@ -820,6 +820,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUsesDBNO() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetWaterImmersionDepth() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void GiveAmmo(int32 AmmoQuantity);
 
@@ -887,6 +890,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetForceBossSignificance(bool bEnabled);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	virtual void SetIsCharging(bool bNewIsCharging);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetMinimapViewableDistance(float NewMinimapViewableDistance);
 
 	UFUNCTION(BlueprintCallable)
 	void SetMinSignificanceForAnimationCurves(float MinSignificance);

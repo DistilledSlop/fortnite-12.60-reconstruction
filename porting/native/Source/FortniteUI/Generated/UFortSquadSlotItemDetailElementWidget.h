@@ -14,5 +14,8 @@ class FORTNITEUI_API UFortSquadSlotItemDetailElementWidget : public UFortItemDet
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetIdOfSquadSlotToManageBP(FName& OutSquadId, int32& OutSquadSlotIndex) const;
+
 };
 

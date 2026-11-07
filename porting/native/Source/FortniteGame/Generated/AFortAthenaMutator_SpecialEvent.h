@@ -54,6 +54,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bPlayersAreInvincible, Transient)
 	bool bPlayersAreInvincible;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x364): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x364;
+
 	// table index 22, flags 0x20080000000001
 	UPROPERTY()
 	int32 MinimumScoreBumpForAutomadeGoal;
@@ -149,6 +152,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_GameResumed();
+
+	UFUNCTION(BlueprintCallable)
+	void PauseSupplyDrops(bool bPause);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetAdditionalViewpoint(FVector WorldLocation);

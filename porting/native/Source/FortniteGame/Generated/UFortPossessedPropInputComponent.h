@@ -8,6 +8,7 @@
 
 #include "FOnCreativeInput.h"
 
+class APlayerController;
 class UInputComponent;
 
 #include "UFortPossessedPropInputComponent.generated.h"
@@ -33,6 +34,9 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UInputComponent* FortPossessedPropInputComponent;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void PopPossessedPropInputMode(APlayerController* PlayerController);
 
 };
 

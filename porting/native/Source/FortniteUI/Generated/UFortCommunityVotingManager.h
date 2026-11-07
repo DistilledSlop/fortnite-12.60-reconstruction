@@ -16,6 +16,9 @@ class FORTNITEUI_API UFortCommunityVotingManager : public UObject
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x38): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x38;
+
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	TArray<UFortMtxOfferData*> CachedDisplayAssets;

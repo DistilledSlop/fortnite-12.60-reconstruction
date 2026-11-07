@@ -136,6 +136,9 @@ public:
 	bool HasQuestExpired(FDateTime UtcNow) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsIncludedInCategories() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsObjectiveWithNameInProgress(FName BackendName) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

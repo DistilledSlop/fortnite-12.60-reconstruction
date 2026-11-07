@@ -141,6 +141,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetProgressDecaySpeed(float NewProgressDecaySpeed);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void UpdateProgressReverseSpeed(int32 NumOfPlayers, int32 NumOfEmotingPlayers);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

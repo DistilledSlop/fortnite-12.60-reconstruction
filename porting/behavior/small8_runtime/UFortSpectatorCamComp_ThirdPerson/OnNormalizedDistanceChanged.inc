@@ -1,0 +1,6 @@
+// Original body address: 0x14247cf80
+// Offset evidence: Float at object offset 0x9b4 (body [RCX+0x9b4], receiver delta 0). The class has no reflected members and no reflected member covers 0x9b4 in its ancestor chain, so raw access is used. Clamp constant 1.0f read from runtime dump .rdata at 0x1459a86f8.
+// CONFIDENCE: MEDIUM
+const float Clamped = (NewDistance < 1.0f) ? NewDistance : 1.0f;
+const float Value = (NewDistance >= 0.0f) ? Clamped : 0.0f;
+*reinterpret_cast<float*>(reinterpret_cast<uint8*>(this) + 0x9b4) = Value;

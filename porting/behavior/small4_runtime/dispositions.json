@@ -1,0 +1,268 @@
+[
+ {
+  "class": "UAthenaContextualChallengesWidget",
+  "function": "GetOutroDelay",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "MOVSS XMM0,dword ptr [0x147e1ac10] reads global image data, not object state; no reflected member; cannot express without hardcoded image address"
+ },
+ {
+  "class": "UAthenaContextualChallengesWidget",
+  "function": "ShouldOutroAutomatically",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "COMISS XMM0,[0x1459c03a0] after MOVSS from [0x147e1ac10]: both are absolute global image addresses; cannot express without hardcoded image addresses"
+ },
+ {
+  "class": "UAthenaHUDBase",
+  "function": "SetFullscreenMapVisibilityNative",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UAthenaItemShopScreen",
+  "function": "HandlePurchaseOfferComplete",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "TEST DL,DL; JNZ 0x144bcc2d0 tail-jumps out of the body when bSuccess is set; callee not in body"
+ },
+ {
+  "class": "UAthenaMarkerPointer",
+  "function": "SetLineMeshMaterial",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "stores RDX at [RCX+0x108], loads [RCX+0x118], then JNZ 0x144b4de60 tail-jumps out of the body (callee not in body) when that pointer is non-null"
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetInAircraft",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetIsBeingRevived",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "JNZ 0x141a4a3e0 tail-jumps out of the body with RCX=PlayerState when [this+0x1d0] is non-null; callee not in body (null path returns false)"
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetIsDBNO",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "JNZ 0x141a4a8c0 tail-jumps out of the body with RCX=PlayerState when [this+0x1d0] is non-null; callee not in body (null path returns false)"
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetKillScore",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetSquadId",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UAthenaRespawnTimer",
+  "function": "AddExtensionWidget",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "TEST RDX,RDX; JNZ 0x1451bc0e0 tail-jumps out of the body when Widget is non-null; callee not in body"
+ },
+ {
+  "class": "UAthenaSpatialHenchmenInspectionRoom",
+  "function": "HandleInputMethodChanged",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "CMP DL,0x1; JZ 0x144e8d0d0 tail-jumps out of the body when InputType==1; callee not in body"
+ },
+ {
+  "class": "UAthenaTimeWidgetBase",
+  "function": "OnGamePhaseChanged",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "CMP DL,0x5; JZ 0x144b50f70 tail-jumps out of the body when GamePhase==5; callee not in body"
+ },
+ {
+  "class": "UCaptureComponent",
+  "function": "UpdateProgressReverseSpeed",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UCombatManagerComponentSTW",
+  "function": "GetEventHeatPercent",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UConsolidatedQuestComponent",
+  "function": "Editor_GetValidObjectives",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UFortAIEncounterSequence",
+  "function": "EncounterBelongsToSequence",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UFortAccountItem",
+  "function": "IsFavorite",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UFortAccountStatsContext",
+  "function": "CanShowAccountStats",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "absolute image address load/compare (global data, not object state); cannot express without hardcoding an image address (CMP dword ptr [0x147e1ae88],0)"
+ },
+ {
+  "class": "UFortActivatableVideoPanel",
+  "function": "StartVideo",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[this+0x4f0] (VideoPlayerWidget) then CMP dword [RCX+0x260],1; JG 0x144f7c8a0 tail-jumps out of the body with RCX=widget; callee not in body (also no null check on the pointer)"
+ },
+ {
+  "class": "UFortActorCanvasSlot",
+  "function": "SetCanAutoRemove",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UFortActorCanvasSlot",
+  "function": "SetHorizontalAlignment",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UFortActorCanvasSlot",
+  "function": "SetVerticalAlignment",
+  "status": "proposed",
+  "case": "small_leaf_proposed",
+  "reason": ""
+ },
+ {
+  "class": "UFortActorOptionsComponent",
+  "function": "GetPropertyEditorV2Enabled",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "absolute image address load/compare (global data, not object state); cannot express without hardcoding an image address (CMP dword ptr [0x1478c45bc],0; SETG)"
+ },
+ {
+  "class": "UFortActorOptionsComponent",
+  "function": "IsRenameDisplayButtonEnabled",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "absolute image address load/compare (global data, not object state); cannot express without hardcoding an image address (CMP dword ptr [0x1478c45c0],0; SETNZ)"
+ },
+ {
+  "class": "UFortAlterationsWidget",
+  "function": "SetupInteractionEvents",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "when Buttion!=null and [this+0x2b0] (ButtonGroup)!=null, JNZ 0x1407aa410 tail-jumps out of the body with RCX=ButtonGroup, RDX=Buttion; callee not in body"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "ApplyGameplayModifier",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "AthenaEmote",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "BotSpectate",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "BuildWith",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "DumpGameStats",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GetGameStat",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GiveAmmo",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GiveAthenaGadgets",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GiveConsumable",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GiveGadgets",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GivePerk",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GivePickaxe",
+  "status": "blocked",
+  "case": "tail_jump_callee",
+  "reason": "MOV RCX,[RDX] (FString data pointer); TEST; JNZ 0x142bee710 tail-jumps out of the body when non-null; callee not in body (shared body 0x14072e780)"
+ }
+]

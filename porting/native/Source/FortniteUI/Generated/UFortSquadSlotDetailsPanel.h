@@ -26,5 +26,8 @@ public:
 	UPROPERTY()
 	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetIdOfSquadSlotToManageBP(FName& OutSquadId, int32& OutSquadSlotIndex) const;
+
 };
 

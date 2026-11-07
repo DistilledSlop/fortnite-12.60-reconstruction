@@ -22,6 +22,17 @@ void AFortPlayerControllerSpectating::FullScreenMapCursorStopDrag()
 	NativeRecoveredByte_0x2ad0 = 0;
 }
 
+void AFortPlayerControllerSpectating::FullscreenMapZoom(float Value)
+{
+	// Original body: 0x1423d2be0 (thunk 0x142a6b340)
+	// Offset evidence: MOVSS [RCX+0x2ac8],XMM1 after UCOMISS(Value,0); JZ skips store on equal or unordered
+	// CONFIDENCE: HIGH
+	if (Value != 0.0f && Value == Value)
+	{
+	    NativeRecoveredFloat_0x2ac8 = Value;
+	}
+}
+
 EFortSpectatorBlendType AFortPlayerControllerSpectating::GetBlendType() const
 {
 	// CONFIDENCE: HIGH
@@ -67,6 +78,14 @@ bool AFortPlayerControllerSpectating::GetShowPlayersOnMap() const
 	return NativeRecoveredBool_0x2ae5;
 }
 
+bool AFortPlayerControllerSpectating::GetShowVehiclesOnMap() const
+{
+	// Original body: 0x1423d5a50 (thunk 0x142a6bae0)
+	// Offset evidence: CMP byte [RCX+0x2ae6],0 and CMP byte [RCX+0x2ae5],0; both nonzero -> true, else false
+	// CONFIDENCE: HIGH
+	return NativeRecoveredBool_0x2ae6 && NativeRecoveredBool_0x2ae5;
+}
+
 bool AFortPlayerControllerSpectating::IsAllowedChangeCamera()
 {
 	// Exact original shared stub 0x1406801d0.
@@ -79,6 +98,14 @@ void AFortPlayerControllerSpectating::OnRep_FollowedPlayerRemoteClientInfo()
 	// Exact original shared stub 0x1406801c0.
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void AFortPlayerControllerSpectating::SetMapWeaponTracersEnabled(bool bEnable)
+{
+	// Original body: 0x1423eb040 (thunk 0x142a6cb80)
+	// Offset evidence: AND byte [RCX+0x2bf0],0xfe ; OR byte [RCX+0x2bf0],DL
+	// CONFIDENCE: HIGH
+	NativeRecoveredUint8_0x2bf0 = static_cast<uint8>((NativeRecoveredUint8_0x2bf0 & 0xfe) | (bEnable ? 1u : 0u));
 }
 
 void AFortPlayerControllerSpectating::SetShowBusPathsOnMap(bool bInShowBusPathsOnMap)

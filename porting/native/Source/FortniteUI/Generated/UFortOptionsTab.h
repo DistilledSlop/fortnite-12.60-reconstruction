@@ -36,6 +36,9 @@ public:
 	ESettingTab TabType;
 
 	UFUNCTION(BlueprintCallable)
+	virtual void DeactivateTab();
+
+	UFUNCTION(BlueprintCallable)
 	bool IsPS4Platform();
 
 	UFUNCTION(BlueprintCallable)

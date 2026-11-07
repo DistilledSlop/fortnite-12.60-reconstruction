@@ -227,6 +227,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetActiveSpawnPad(ABuildingSMActor* InActiveSpawnPad);
 
+	UFUNCTION(BlueprintCallable)
+	void SetEnemyAIItemCacheLootDrops(bool bValue);
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetSpawnWithinStormShield(bool bSpawnInStormShield);

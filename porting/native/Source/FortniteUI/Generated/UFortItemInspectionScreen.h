@@ -75,8 +75,14 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UDataTable> RefundDescriptionsDataTable;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x610): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x610;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItemInspectCycleWidget* GetCycleWidget();
+
+	UFUNCTION(BlueprintCallable)
+	void SetAttemptingConversion(bool bIsAttemptingConversion);
 
 };
 

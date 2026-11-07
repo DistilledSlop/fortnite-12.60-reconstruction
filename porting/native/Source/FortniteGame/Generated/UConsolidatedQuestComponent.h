@@ -78,5 +78,10 @@ public:
 	UPROPERTY()
 	FTimerHandle DelayUntilCurrentQuestsReady;
 
+private:
+	UFUNCTION()
+	TArray<FString> Editor_GetValidObjectives() const;
+public:
+
 };
 

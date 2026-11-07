@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortItemCardSize.h"
+#include "UFortAccountItem.h"
 #include "UFortItem.h"
 
 class UFortMultiSizeItemCard;
@@ -95,6 +96,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItem* GetSlottedItemRepresentation() const;
+
+protected:
+	UFUNCTION()
+	void HandleUnslotItemComplete(UFortAccountItem* UnslottedItem, UFortAccountItem* OldItem, FName SlotId);
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasItemsToSlot() const;

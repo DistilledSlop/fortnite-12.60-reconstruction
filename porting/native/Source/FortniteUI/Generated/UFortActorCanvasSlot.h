@@ -28,5 +28,17 @@ public:
 	UPROPERTY()
 	bool bCanAutoRemove;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x40): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0x40;
+
+	UFUNCTION(BlueprintCallable)
+	void SetCanAutoRemove(bool bAllowAutoRemove);
+
+	UFUNCTION(BlueprintCallable)
+	void SetHorizontalAlignment(EHorizontalAlignment InHorizontalAlignment);
+
+	UFUNCTION(BlueprintCallable)
+	void SetVerticalAlignment(EVerticalAlignment InVerticalAlignment);
+
 };
 

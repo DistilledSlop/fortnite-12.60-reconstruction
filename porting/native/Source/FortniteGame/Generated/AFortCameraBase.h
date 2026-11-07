@@ -52,5 +52,8 @@ public:
 	UPROPERTY(Transient)
 	FVector2D DownDelta;
 
+	UFUNCTION(BlueprintCallable)
+	void Exhibit(AFortExhibitActor* TargetActor);
+
 };
 

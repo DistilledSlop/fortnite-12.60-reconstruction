@@ -132,6 +132,12 @@ public:
 	UPROPERTY()
 	AFortPlayerStateAthena* PlayerState;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e8): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0x1e8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x200): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x200;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x208): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x208;
 
@@ -149,6 +155,9 @@ public:
 	AFortPlayerPawn* CachedPlayerPawn;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetInAircraft() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsFollowedPlayer() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -158,6 +167,9 @@ public:
 	bool GetIsReplayRelevancyPlayer() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetKillScore() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FString GetLocation() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -165,6 +177,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPlayerStateAthena* GetPlayerState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetSquadId() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FLinearColor GetTeamColor() const;

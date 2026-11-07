@@ -1,0 +1,17 @@
+// Behaviour snippet: AFortInGameMapManagerCreative::SetCreativeMapMaterial (body only; spliced into the generated member function).
+// Original address: 0x1419ae420
+// Evidence: Null argument returns (TEST RDX,RDX).
+// Evidence: Pointer at [RCX+0x718] compared with argument; equal returns.
+// Evidence: Pointer store at [RCX+0x718] is unreflected: NativeRecoveredObject_0x718 (uint64).
+// Evidence: Byte store 1 at [RCX+0x710] is unreflected: NativeRecoveredBool_0x710.
+// CONFIDENCE: MEDIUM
+if (CreativeMapMaterial == nullptr)
+{
+    return;
+}
+if (NativeRecoveredObject_0x718 == reinterpret_cast<uint64>(CreativeMapMaterial))
+{
+    return;
+}
+NativeRecoveredObject_0x718 = reinterpret_cast<uint64>(CreativeMapMaterial);
+NativeRecoveredBool_0x710 = true;

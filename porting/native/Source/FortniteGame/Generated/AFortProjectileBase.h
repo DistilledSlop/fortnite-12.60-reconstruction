@@ -212,6 +212,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void AddTagToDefaultTags(FGameplayTag TagToAddToProjectileDefaultTags);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ExitSkyTube(AFortSkyTube* SkyTube, bool& bIsLastTube);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetGravityScale() const;
 

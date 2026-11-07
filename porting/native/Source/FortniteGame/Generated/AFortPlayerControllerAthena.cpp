@@ -445,6 +445,20 @@ UAthenaMarkerComponent* AFortPlayerControllerAthena::GetMarkerComponent() const
 	return MarkerComponent;
 }
 
+UAthenaPlayerMatchReport* AFortPlayerControllerAthena::GetMatchReport()
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::GetMatchReport (body only; spliced into the generated member function).
+	// Original address: 0x1419d5220
+	// Evidence: Role (0xf0) compared to 2.
+	// Evidence: Qword [RCX+0x3318] is reflected MatchReport (Object).
+	// CONFIDENCE: HIGH
+	if (static_cast<uint8>(Role) != 2)
+	{
+	    return nullptr;
+	}
+	return MatchReport;
+}
+
 AFortMinigame* AFortPlayerControllerAthena::GetMinigame() const
 {
 	// CONFIDENCE: high; 0x141c794e0 resolves world, Athena game state, its volume manager and the player's volume, then finds its minigame component.

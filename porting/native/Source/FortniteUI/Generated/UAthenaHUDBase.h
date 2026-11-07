@@ -108,6 +108,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION()
+	virtual void SetFullscreenMapVisibilityNative(bool bIsVisible);
+public:
+
+protected:
 	UFUNCTION(BlueprintCallable)
 	void SetZoneCompleted(bool bValue);
 public:

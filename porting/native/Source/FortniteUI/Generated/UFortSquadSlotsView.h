@@ -70,11 +70,17 @@ public:
 	UPROPERTY()
 	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x348): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x348;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetIdOfSquadToManageBP() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetIndexOfSelectedSquadSlot() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetIsSelectionLocked(bool ShouldSelectionBeLocked);
 
 };
 

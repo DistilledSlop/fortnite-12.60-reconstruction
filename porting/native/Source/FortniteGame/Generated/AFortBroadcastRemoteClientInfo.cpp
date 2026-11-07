@@ -92,6 +92,48 @@ void AFortBroadcastRemoteClientInfo::OnRep_RemoteWeakspotData()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortBroadcastRemoteClientInfo::OnServerPlayerEditActorChanged(ABuildingSMActor* EditActor)
+{
+	// Behaviour snippet: AFortBroadcastRemoteClientInfo::OnServerPlayerEditActorChanged (body only; spliced into the generated member function).
+	// Original address: 0x1424b5b70
+	// Evidence: Role (AActor, 0xf0) compared to 3 (ROLE_Authority).
+	// Evidence: Gate byte [RCX+0x268] is unreflected in the class own region: NativeRecoveredByte_0x268.
+	// Evidence: Store qword [RCX+0x270] is reflected member RemoteEditActor (Object).
+	// CONFIDENCE: MEDIUM
+	if (static_cast<uint8>(Role) == 3 && NativeRecoveredByte_0x268 != 0)
+	{
+	    RemoteEditActor = EditActor;
+	}
+}
+
+void AFortBroadcastRemoteClientInfo::OnServerPoiTagIDChanged(int16 InPoiTagID)
+{
+	// Behaviour snippet: AFortBroadcastRemoteClientInfo::OnServerPoiTagIDChanged (body only; spliced into the generated member function).
+	// Original address: 0x1424b5c00
+	// Evidence: Role (0xf0) compared to 3.
+	// Evidence: Gate byte [RCX+0x268] is NativeRecoveredByte_0x268 (gap).
+	// Evidence: Store word [RCX+0x2e4] is reflected member RemotePoiTagID (Int16).
+	// CONFIDENCE: HIGH
+	if (static_cast<uint8>(Role) == 3 && NativeRecoveredByte_0x268 != 0)
+	{
+	    RemotePoiTagID = InPoiTagID;
+	}
+}
+
+void AFortBroadcastRemoteClientInfo::OnServerRespawnTimeChanged(float InRespawnTime)
+{
+	// Behaviour snippet: AFortBroadcastRemoteClientInfo::OnServerRespawnTimeChanged (body only; spliced into the generated member function).
+	// Original address: 0x1424b5c40
+	// Evidence: Role (0xf0) compared to 3.
+	// Evidence: Gate byte [RCX+0x268] is NativeRecoveredByte_0x268 (gap).
+	// Evidence: Store dword [RCX+0x2e0] (XMM1) is reflected member RemoteRespawnTime (Float).
+	// CONFIDENCE: HIGH
+	if (static_cast<uint8>(Role) == 3 && NativeRecoveredByte_0x268 != 0)
+	{
+	    RemoteRespawnTime = InRespawnTime;
+	}
+}
+
 void AFortBroadcastRemoteClientInfo::ServerSetPlayerBuildableClass_Implementation(TSubclassOf<ABuildingSMActor> BuildableClass)
 {
 	// Body not recovered: reflection-derived stub.

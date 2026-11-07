@@ -34,6 +34,9 @@ public:
 	FPickupInstigatorArray InstigatorRegistry;
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	int32 AddPickupInstigator(UObject* PickupInstigator, int32 ItemIndex);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void ClearPickupInstigators();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

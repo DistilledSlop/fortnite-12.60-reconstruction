@@ -49,6 +49,9 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer PreventBoostPlayerTags;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xfa4): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xfa4;
+
 	// table index 13, flags 0x14000000000001
 	UPROPERTY()
 	TSubclassOf<UFortCameraMode_AthenaVehicle> SprintCameraModeClass;
@@ -113,6 +116,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void CacheFX(UParticleSystemComponent* InBoostFX, UParticleSystemComponent* InLoopingFX);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsBoosting() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsDriveModeOnly() const;

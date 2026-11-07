@@ -14,5 +14,10 @@ class FORTNITEGAME_API UFortSpectatorCamComp_ThirdPerson : public UFortSpectator
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION()
+	void OnNormalizedDistanceChanged(float NewDistance);
+public:
+
 };
 

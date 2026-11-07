@@ -9,8 +9,10 @@
 #include "FCaptureAreaTeamInfo.h"
 #include "FCaptureHandle.h"
 
+class AFortPickup;
 class AFortPlayerController;
 class UCaptureComponent;
+class UFortWorldItemDefinition;
 
 #include "ABuildingProp_CaptureArea.generated.h"
 
@@ -34,6 +36,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void BindToControllerInventoryChangedEvent(AFortPlayerController* PlayerController);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	int32 CaptureItemsFromPickup(TArray<UFortWorldItemDefinition*>& ItemsToCapture, AFortPickup* Pickup, int32& AddedScore);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	int32 CaptureItemsFromPlayer(bool bRemoveOnFound, TArray<UFortWorldItemDefinition*>& ItemsToCapture, AFortPlayerController* PlayerController, int32 AmountToRemove, int32& AddedScore);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void RegisterPlayerInsideArea(AFortPlayerController* PlayerInside);

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaMutator.h"
 
+#include "EAthenaGamePhase.h"
 #include "FAthenaGameMessageData.h"
 #include "FFortMutatorAudioStinger.h"
 #include "GameplayTagContainer.h"
@@ -48,6 +49,11 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UFortAudioEventForwarder* StingerEventForwarder;
+
+protected:
+	UFUNCTION()
+	virtual void OnGamePhaseChanged(EAthenaGamePhase NewPhase);
+public:
 
 protected:
 	UFUNCTION()

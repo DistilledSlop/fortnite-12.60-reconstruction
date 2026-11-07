@@ -53,5 +53,8 @@ public:
 	UPROPERTY()
 	UOverlay* ComVoteFeedbackContainer;
 
+	UFUNCTION(BlueprintCallable)
+	bool HaveVotesRemaining();
+
 };
 

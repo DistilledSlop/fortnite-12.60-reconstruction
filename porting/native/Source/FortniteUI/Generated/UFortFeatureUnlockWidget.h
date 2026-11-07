@@ -10,6 +10,7 @@
 #include "UCommonWidgetSwitcher.h"
 
 class UFortVideoPlayerWidget;
+class UMediaSource;
 class UWidget;
 
 #include "UFortFeatureUnlockWidget.generated.h"
@@ -39,6 +40,14 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonLazyImage* ImageWidget;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x470): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x470;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UMediaSource* GetVideo() const;
+public:
 
 };
 

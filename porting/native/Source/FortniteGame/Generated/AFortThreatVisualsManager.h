@@ -100,6 +100,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ThreatLocations, Transient)
 	FThreatLocationArray ThreatLocations;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x380): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x380;
+
 	// table index 2, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_StormWinds, Transient)
 	FStormWindArray StormWindArray;
@@ -134,6 +137,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetMinimumCloudAltitude(float NewMinimumAltitude);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool StormsExist() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

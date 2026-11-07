@@ -31,6 +31,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteIsInteracting)
 	bool bRemoteIsInteracting;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x268): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x268;
+
 	// table index 12, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteEditActor)
 	ABuildingSMActor* RemoteEditActor;
@@ -136,6 +139,21 @@ public:
 
 	UFUNCTION()
 	void OnRep_RemoteWeakspotData();
+
+private:
+	UFUNCTION()
+	void OnServerPlayerEditActorChanged(ABuildingSMActor* EditActor);
+public:
+
+private:
+	UFUNCTION()
+	void OnServerPoiTagIDChanged(int16 InPoiTagID);
+public:
+
+private:
+	UFUNCTION()
+	void OnServerRespawnTimeChanged(float InRespawnTime);
+public:
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetPlayerBuildableClass(TSubclassOf<ABuildingSMActor> BuildableClass);

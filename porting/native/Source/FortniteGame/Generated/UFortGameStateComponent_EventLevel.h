@@ -105,9 +105,15 @@ public:
 	UPROPERTY(Transient)
 	FGameplayTag LastSelectedNavObj;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2a8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x2a8;
+
 	// table index 0, flags 0x40000000010001
 	UPROPERTY()
 	TArray<FAnalyticsNavActorClickedData> NavigationActorClickedData;
+
+	UFUNCTION(BlueprintCallable)
+	void NotifyRestedXpGenAmount(int32 RestedXp);
 
 };
 

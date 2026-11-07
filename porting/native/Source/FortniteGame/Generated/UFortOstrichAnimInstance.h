@@ -796,6 +796,18 @@ public:
 	float StartAnimPosition;
 
 	UFUNCTION()
+	void AnimNotify_AnimNotify_AmmoCheck(UAnimNotify* Notify);
+
+	UFUNCTION()
+	void AnimNotify_AnimNotify_AmmoHide(UAnimNotify* Notify);
+
+	UFUNCTION()
+	void AnimNotify_AnimNotify_Mech_OnCoolDown(UAnimNotify* Notify);
+
+	UFUNCTION()
+	void AnimNotify_EmptyPoseState(UAnimNotify* Notify);
+
+	UFUNCTION()
 	void AnimNotify_MechBeginFire(UAnimNotify* Notify);
 
 };

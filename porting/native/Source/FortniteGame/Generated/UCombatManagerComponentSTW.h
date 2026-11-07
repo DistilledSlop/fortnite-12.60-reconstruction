@@ -67,6 +67,9 @@ public:
 	FCombatThresholdData Thresholds[4];
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetEventHeatPercent(EFortCombatEvents::Type CombatEvent);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetEventHeatPercentTotal(EFortCombatEvents::Type CombatEvent);
 
 	UFUNCTION()

@@ -112,6 +112,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayerTeamRevealed(AFortPlayerStateAthena* PlayerState) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void RequestGameMessageOnServer(EArsenicGameMsgId MsgId) const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

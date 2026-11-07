@@ -7,6 +7,9 @@
 #include "UFortLocalPlayerSubsystem.h"
 
 #include "AFortTheaterMapTile.h"
+#include "EFortFrontEndFeature.h"
+#include "EFortFrontEndFeatureState.h"
+#include "EFortFrontEndFeatureStateReason.h"
 #include "Engine/LocalPlayer.h"
 #include "FFortFrontEndFeatureStruct.h"
 #include "FLobbyEmptyPlayerClickedDelegate.h"
@@ -166,6 +169,9 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x408): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x408;
+
+	UFUNCTION(BlueprintCallable)
+	void ForceSetFeatureState(EFortFrontEndFeature Feature, EFortFrontEndFeatureState State, EFortFrontEndFeatureStateReason Reason);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortTheaterMapTile* GetActiveTile() const;

@@ -1,0 +1,268 @@
+[
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "GetVoiceChatEnabled",
+  "status": "proposed",
+  "case": "small_leaf_ported",
+  "reason": null
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "GetVoiceChatSettings",
+  "status": "proposed",
+  "case": "small_leaf_ported",
+  "reason": null
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "SetNotifyUsersWhenPlaying",
+  "status": "proposed",
+  "case": "small_leaf_ported",
+  "reason": null
+ },
+ {
+  "class": "UFortCollectionBookSlotWidget",
+  "function": "HandleUnslotItemComplete",
+  "status": "proposed",
+  "case": "small_leaf_ported",
+  "reason": null
+ },
+ {
+  "class": "UFortCommunityVotingOption",
+  "function": "HaveVotesRemaining",
+  "status": "proposed",
+  "case": "small_leaf_ported",
+  "reason": null
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GiveSpecificItem",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "GiveSpecificItem: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GiveTrap",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "GiveTrap: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "GiveWeapon",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "GiveWeapon: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "HermesAddContentToBeaconHost",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "HermesAddContentToBeaconHost: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "HermesAttemptDownload",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "HermesAttemptDownload: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "LogAssetClassCost",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "LogAssetClassCost: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "MMS",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "MMS: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "McpJoinFromPartyInviteToken",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "McpJoinFromPartyInviteToken: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "McpPrintFriendInviteToken",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "McpPrintFriendInviteToken: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "PerfMemStatMonitor",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "PerfMemStatMonitor: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "PlayAthenaEmoteOnScriptedPawn",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "PlayAthenaEmoteOnScriptedPawn: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "RemoveGameplayModifier",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "RemoveGameplayModifier: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "ReplayLastPerfTest",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "ReplayLastPerfTest: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SetAthenaHero",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SetAthenaHero: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SetEncounterSpawnPointsCurve",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SetEncounterSpawnPointsCurve: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SetEncounterTopUtilityPercentages",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SetEncounterTopUtilityPercentages: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SetEventsStyleOverride",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SetEventsStyleOverride: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SetGameStat",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SetGameStat: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SpawnAIGroup",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SpawnAIGroup: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SpawnAIGroupFromExternalSpawner",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SpawnAIGroupFromExternalSpawner: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SpawnAndDriveVehicle",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SpawnAndDriveVehicle: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SpawnBattleLabDevice",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SpawnBattleLabDevice: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "SpawnVehicle",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SpawnVehicle: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManager",
+  "function": "TestCalendarEvents",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "TestCalendarEvents: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManagerMissions",
+  "function": "ExecuteNewMissionGeneration",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "ExecuteNewMissionGeneration: MOV RCX,qword ptr [R8]; TEST; JNZ 0x142bee710 tail-jumps outside the 4-insn body on the non-null GeneratorName path; that path's work is unknown"
+ },
+ {
+  "class": "UFortCheatManagerMissions",
+  "function": "LoadMission",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "LoadMission: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManagerMissions",
+  "function": "LoadMissionGenerator",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "LoadMissionGenerator: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManagerMissions",
+  "function": "SendMissionEvent",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SendMissionEvent: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManagerSTW",
+  "function": "SetHeroClass",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "SetHeroClass: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortCheatManagerSTW",
+  "function": "TestUpgradeOutpostItem",
+  "status": "blocked",
+  "case": "fstring_null_check_tailjmp",
+  "reason": "TestUpgradeOutpostItem: body 0x14072e780 is a 13-byte shared FString null-check stub (MOV RCX,[RDX]; TEST; JNZ 0x142bee710; RET); the non-empty path tail-jumps to 0x142bee710 outside the body, so the real work is unknown; body is AMBIGUOUS across 52 served functions (porting/generated/work-packets/0x14072e780.md)"
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "GetShadowPlayHighlightsEnabled",
+  "status": "blocked",
+  "case": "global_gate_unknown",
+  "reason": "GetShadowPlayHighlightsEnabled: branch reads absolute image globals dword [0x14812bdf0]==1 and dword [0x1478c4710]==1 with no reflected or named owner found in porting/generated/reflection or porting/native; result depends on them, cannot be expressed faithfully (else-branch is bShadowPlayHighlightsEnabled at 0x567)"
+ },
+ {
+  "class": "UFortCollectionBookSlotWidget",
+  "function": "HandleSlottedItemOperationComplete",
+  "status": "blocked",
+  "case": "tailjmp_matched_path",
+  "reason": "HandleSlottedItemOperationComplete: when SlotRowName matches TemplateId (both FName halves) the asm JNZ 0x1450d0fe0 tail-jumps outside the 10-insn body; the matched-path work is unknown"
+ },
+ {
+  "class": "UFortCollectionBookWidget",
+  "function": "OnPreviewXPChangeRequest",
+  "status": "blocked",
+  "case": "pointer_null_check_tailjmp",
+  "reason": "OnPreviewXPChangeRequest: MOV RCX,[RCX+0x448]; TEST; JNZ 0x1450c6f20 tail-jumps outside the 4-insn body on the non-null path; that path's work is unknown"
+ }
+]

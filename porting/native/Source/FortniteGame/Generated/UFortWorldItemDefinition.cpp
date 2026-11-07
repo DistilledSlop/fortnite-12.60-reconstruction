@@ -15,6 +15,14 @@ float UFortWorldItemDefinition::GetDamageAtLevel(int32 ItemLevel) const
 	return 0.0f;
 }
 
+float UFortWorldItemDefinition::GetDPSAtLevel(int32 ItemLevel) const
+{
+	// Original body address: 0x1406964e0
+	// Offset evidence: Body is XORPS XMM0,XMM0; RET, so the float result is 0.0f. ItemLevel is unused.
+	// CONFIDENCE: HIGH
+	return 0.0f;
+}
+
 float UFortWorldItemDefinition::GetMaxDurability(int32 ItemLevel) const
 {
 	// UFortWorldItemDefinition base virtual 0x1407c46d0; ItemLevel is unused.

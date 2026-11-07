@@ -336,6 +336,15 @@ public:
 	void ClientFixupOverheatValue(float InOverheatValue);
 	void ClientFixupOverheatValue_Implementation(float InOverheatValue);
 
+	UFUNCTION(BlueprintCallable)
+	void EnableAltCenterReticle(bool bNewEnabled);
+
+	UFUNCTION(BlueprintCallable)
+	void EnableAltOuterReticle(bool bNewEnabled);
+
+	UFUNCTION(BlueprintCallable)
+	void EnableCornersReticle(bool bNewEnabled);
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UNiagaraSystem* GetBeamNiagaraSystem() const;

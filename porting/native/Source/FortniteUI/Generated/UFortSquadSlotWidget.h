@@ -19,6 +19,12 @@ class FORTNITEUI_API UFortSquadSlotWidget : public UWidget
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x110): not a UPROPERTY, not replicated.
+	FName NativeRecoveredFName_0x110;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x118): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x118;
+
 	// table index 2, flags 0x11000000000015
 	UPROPERTY()
 	EFortItemCardSize ItemCardSize;
@@ -30,6 +36,9 @@ public:
 	// table index 0, flags 0x44000000000000
 	UPROPERTY()
 	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetIdOfSquadSlotToManageBP(FName& OutSquadId, int32& OutSquadSlotIndex) const;
 
 };
 

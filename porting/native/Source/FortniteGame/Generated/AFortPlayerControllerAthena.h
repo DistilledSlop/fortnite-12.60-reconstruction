@@ -990,6 +990,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;
 
+	UFUNCTION(BlueprintCallable)
+	UAthenaPlayerMatchReport* GetMatchReport();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortMinigame* GetMinigame() const;
 

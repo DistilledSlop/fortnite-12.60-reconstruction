@@ -41,5 +41,10 @@ public:
 	UPROPERTY()
 	TEnumAsByte<EFortCustomCharmType::Type> CharmSlot;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetActiveCharmSlot(int32 CharmSlotIn);
+public:
+
 };
 

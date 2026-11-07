@@ -19,6 +19,9 @@ public:
 	bool bHasPermissionToEditOutpost;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasPermissionToEditOutpost() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsOutpostOwner() const;
 
 	UFUNCTION()

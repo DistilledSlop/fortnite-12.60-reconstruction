@@ -199,6 +199,9 @@ public:
 	UPROPERTY()
 	EQuestMapScreenMode QuestMapMode;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xad8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xad8;
+
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TSet<UFortFeatItemDefinition*> FeatsCompletedThisSession;
@@ -256,6 +259,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsObjectiveWithNameInProgress(UFortQuestItemDefinition* Definition, FName BackendName) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPendingFeatureUnlockNotification() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsQuestInProgress(UFortQuestItemDefinition* Definition) const;

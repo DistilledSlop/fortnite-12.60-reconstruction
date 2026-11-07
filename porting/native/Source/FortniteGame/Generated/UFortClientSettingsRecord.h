@@ -19,6 +19,7 @@
 #include "EFortRarity.h"
 #include "ELicensedAudioTreatment.h"
 #include "EQuestMapScreenMode.h"
+#include "ESelectableVoiceChatSetting.h"
 #include "ESpectatorSquadIdMode.h"
 #include "ESubGame.h"
 #include "ESubtitleDisplayBackgroundOpacity.h"
@@ -782,6 +783,9 @@ public:
 	UPROPERTY()
 	bool bPlayerSurveysAllowed;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x745): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x745;
+
 	// table index 59, flags 0x20080000000000
 	UPROPERTY()
 	FDateTime FlagSelectionLastUpdated;
@@ -985,6 +989,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	double NextCloudSaveTime;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x8a8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x8a8;
 
 	UFUNCTION()
 	bool GetAimAssistEnabled() const;
@@ -1311,7 +1318,13 @@ public:
 	bool GetVoiceChat3DEnabled() const;
 
 	UFUNCTION()
+	bool GetVoiceChatEnabled() const;
+
+	UFUNCTION()
 	bool GetVoiceChatPTTEnabled() const;
+
+	UFUNCTION()
+	ESelectableVoiceChatSetting GetVoiceChatSettings() const;
 
 	UFUNCTION()
 	bool GetVoiceChatWithUnknownsEnabled() const;
@@ -1564,6 +1577,9 @@ public:
 
 	UFUNCTION()
 	void SetMusicVolume(float InVolume);
+
+	UFUNCTION()
+	void SetNotifyUsersWhenPlaying(bool Value);
 
 	UFUNCTION()
 	void SetPeripheralLightingEnabled(bool bEnable);

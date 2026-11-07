@@ -1,0 +1,8 @@
+// Original body address: 0x144bb9480 (thunk 0x1452147b0)
+// Offset evidence: qword [RCX+0xb78] = VotingManager (reflected Object, UFortCommunityVotingManager*); dword [pointee+0x38] = NativeRecoveredInt32_0x38 on UFortCommunityVotingManager (signed compare > 0, SETG).
+// CONFIDENCE: MEDIUM
+if (VotingManager == nullptr)
+{
+    return false;
+}
+return VotingManager->NativeRecoveredInt32_0x38 > 0;

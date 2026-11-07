@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortInGameMapManagerAthena.h"
 
+class UMaterialInterface;
+
 #include "AFortInGameMapManagerCreative.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -14,5 +16,16 @@ class FORTNITEGAME_API AFortInGameMapManagerCreative : public AFortInGameMapMana
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x710): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x710;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x718): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredObject_0x718;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetCreativeMapMaterial(UMaterialInterface* CreativeMapMaterial);
+public:
+
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
+#include "EFortResourceType.h"
+
 #include "UFortCreativeCostComponent.generated.h"
 
 UCLASS(config=Engine)
@@ -27,6 +29,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TArray<int32> GetItemCosts() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetItemResourceCost(EFortResourceType::Type ResourceType, int32 Cost);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

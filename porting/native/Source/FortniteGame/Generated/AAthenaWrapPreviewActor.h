@@ -37,9 +37,20 @@ public:
 	UPROPERTY()
 	UCameraComponent* ZoomedInLargeWeaponCameraComponent;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x390): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x390;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x3a0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x3a0;
+
 	// table index 0, flags 0x400000000a001d
 	UPROPERTY()
 	USceneComponent* PreviewSpawnPointComponent;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsShowingVehicle() const;
+public:
 
 };
 

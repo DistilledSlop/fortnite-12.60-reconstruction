@@ -230,6 +230,9 @@ public:
 	float HoldingStartTime;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetSafeZoneCenter() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSafeZoneRadius() const;
 
 	UFUNCTION()

@@ -1,0 +1,268 @@
+[
+ {
+  "cls": "UFortContextualTutorial_BattleBus",
+  "function": "HandleGamePhaseChanged",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "JZ/JNZ 0x141b411a0 (DL==1) and 0x141b40ee0 (DL==3) tail-jump to callees outside body 0x141b6eb20; their effects are unported."
+ },
+ {
+  "cls": "UFortContextualTutorial_StormForming",
+  "function": "HandleGamePhaseStepChanged",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "JBE 0x141b40ee0 tail-jumps to an unported callee outside body 0x141b6eb40 when GamePhaseStep-7 <= 1."
+ },
+ {
+  "cls": "UFortControllerComponent_IndicatedActorManagement",
+  "function": "AddActorsToIndicatedList",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "MOV RCX,[R8] then JNZ 0x142bee710 tail-jumps to an unported callee with the loaded by-reference argument value; shared body with AddActorsToStenciledList."
+ },
+ {
+  "cls": "UFortControllerComponent_IndicatedActorManagement",
+  "function": "AddActorsToStenciledList",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "MOV RCX,[R8] then JNZ 0x142bee710 tail-jumps to an unported callee with the loaded by-reference argument value; shared body with AddActorsToIndicatedList."
+ },
+ {
+  "cls": "UFortCreativeCostComponent",
+  "function": "SetItemResourceCost",
+  "status": "proposed",
+  "case": "direct_member_array",
+  "reason": "Body ported from asm; see porting/behavior/small6_runtime/UFortCreativeCostComponent/SetItemResourceCost.inc"
+ },
+ {
+  "cls": "UFortCreativeGlobalOptions",
+  "function": "SetListDataSource",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Store to [RCX+0x480] is followed by JZ 0x144d954b0 (ListType==6) tail-jumping to an unported callee; the conditional call cannot be expressed without it."
+ },
+ {
+  "cls": "UFortCreativeIslandGeneration",
+  "function": "GetShowTemplateIslands",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "Reads absolute global dword [0x147e1af28]; no receiver, no reflected member; absolute address not expressible."
+ },
+ {
+  "cls": "UFortCreativeMessageKnobsDialog",
+  "function": "ContainsItem",
+  "status": "blocked",
+  "case": "non_boolean_return",
+  "reason": "Body is LEA RAX,[RCX-0x108]; RET: returns a this-adjusted pointer (base-subobject adjust) in a bool-typed function; no boolean computation to translate."
+ },
+ {
+  "cls": "UFortDropdownDelegateRegistrar",
+  "function": "OnOpenStatusChanged",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0x30] tail-jumps to unported 0x144e19a00 with it as receiver."
+ },
+ {
+  "cls": "UFortDropdownMenu",
+  "function": "DeselectAll",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0x438] tail-jumps to unported 0x1407b8690 with it as receiver."
+ },
+ {
+  "cls": "UFortDropdownMenu",
+  "function": "GetSelectedButtonIndex",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0x438] tail-jumps to unported 0x1407c48f0 whose result is returned; null path returns -1."
+ },
+ {
+  "cls": "UFortDropdownMenu",
+  "function": "InternalOnButtonClicked",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Byte [RCX+0x440] != 0 tail-jumps to unported 0x1407f1730."
+ },
+ {
+  "cls": "UFortEventDateTimeTextBlock",
+  "function": "GetDateTime",
+  "status": "blocked",
+  "case": "hidden_return_slot",
+  "reason": "FDateTime returned through hidden return slot (MOV [RDX],RAX; MOV RAX,RDX); hidden-slot struct return is not expressible under the rules."
+ },
+ {
+  "cls": "UFortFeatureUnlockWidget",
+  "function": "GetVideo",
+  "status": "proposed",
+  "case": "undeclared_pointer_raw_pointee",
+  "reason": "Body ported from asm; see porting/behavior/small6_runtime/UFortFeatureUnlockWidget/GetVideo.inc"
+ },
+ {
+  "cls": "UFortFrontEndContext",
+  "function": "ForceSetFeatureState",
+  "status": "proposed",
+  "case": "reflected_array_struct_raw_index",
+  "reason": "Body ported from asm; see porting/behavior/small6_runtime/UFortFrontEndContext/ForceSetFeatureState.inc"
+ },
+ {
+  "cls": "UFortGameStateComponent_EventLevel",
+  "function": "NotifyRestedXpGenAmount",
+  "status": "proposed",
+  "case": "unreflected_gap_member",
+  "reason": "Body ported from asm; see porting/behavior/small6_runtime/UFortGameStateComponent_EventLevel/NotifyRestedXpGenAmount.inc"
+ },
+ {
+  "cls": "UFortGameUserSettings",
+  "function": "IsVideoPlaybackAllowed",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "Branch reads absolute global dword [0x14812e6f0]; no receiver or reflected member; absolute address not expressible."
+ },
+ {
+  "cls": "UFortGameUserSettings",
+  "function": "SetDisplayGamma",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "Second store goes through absolute global pointer [0x148351eb8] (unknown pointee, +0x934); absolute global access not expressible."
+ },
+ {
+  "cls": "UFortGameUserSettings",
+  "function": "SetUserInterfaceContrast",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "Second store writes absolute global float [0x147c52484]; not expressible."
+ },
+ {
+  "cls": "UFortGameplayAbility",
+  "function": "GetTooltip",
+  "status": "blocked",
+  "case": "hidden_return_slot",
+  "reason": "TSubclassOf return written through hidden return slot (MOV [RDX],RAX; MOV RAX,RDX)."
+ },
+ {
+  "cls": "UFortGliderAnimInstance",
+  "function": "SetGliderFullyDeployed",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0x2a0] tail-jumps to unported 0x141a24a30."
+ },
+ {
+  "cls": "UFortHUDContext",
+  "function": "GetCurrentHUDState",
+  "status": "blocked",
+  "case": "hidden_return_slot",
+  "reason": "FFortHUDState returned by address (LEA RAX,[RCX+0x608]) under hidden-slot copy elision; not expressible under the rules."
+ },
+ {
+  "cls": "UFortHUDTargetUnderReticleWidget",
+  "function": "OnTargetActorDestroyed",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Equal compare with [RCX+0x258] tail-jumps to unported 0x14525cc20."
+ },
+ {
+  "cls": "UFortHeroLoadoutSlotButton",
+  "function": "IsContextMenuOpen",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0xba0] tail-jumps to unported 0x143d66800 whose result is returned."
+ },
+ {
+  "cls": "UFortHomebaseUIContext",
+  "function": "AutoSlotAllSurvivorSquads",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0xc8] tail-jumps to unported 0x14510e150."
+ },
+ {
+  "cls": "UFortHomebaseUIContext",
+  "function": "GetCurrentlyFocusedHeroLoadoutSlotName",
+  "status": "blocked",
+  "case": "hidden_return_slot",
+  "reason": "FName returned through hidden return slot (MOV [RDX],RAX; MOV RAX,RDX)."
+ },
+ {
+  "cls": "UFortItemBaseWidget",
+  "function": "GetQuantity",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0x270] tail-jumps to unported 0x144ebd440 whose result is returned; null path reads dword [RCX+0x268]."
+ },
+ {
+  "cls": "UFortItemInspectionScreen",
+  "function": "SetAttemptingConversion",
+  "status": "proposed",
+  "case": "unreflected_gap_member",
+  "reason": "Body ported from asm; see porting/behavior/small6_runtime/UFortItemInspectionScreen/SetAttemptingConversion.inc"
+ },
+ {
+  "cls": "UFortItemManagementInventoryPanel",
+  "function": "HandleCraftItemStarted",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Bit 0x8 of byte [RCX+0x3b8] set tail-jumps to unported 0x144f436f0."
+ },
+ {
+  "cls": "UFortItemManagementScreen",
+  "function": "MarkAllItemsAsSeen",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0x528] tail-jumps to unported 0x144f2d200."
+ },
+ {
+  "cls": "UFortItemView",
+  "function": "GetSettings",
+  "status": "blocked",
+  "case": "hidden_return_slot",
+  "reason": "FFortItemViewSettings (0x34-byte struct) copied through hidden return slot with SSE moves."
+ },
+ {
+  "cls": "UFortLlamaStoreOfferInfo",
+  "function": "GetDisplayAssetIcon",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0x60] tail-jumps to unported 0x142546d60."
+ },
+ {
+  "cls": "UFortLlamaStoreOfferInfo",
+  "function": "GetDisplayAssetPersonality",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0x60] tail-jumps to unported 0x142546d70."
+ },
+ {
+  "cls": "UFortLlamaStoreOfferWidgetBase",
+  "function": "GetPriceIndexToShow",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0xbd0] tail-jumps to unported 0x1450b1190."
+ },
+ {
+  "cls": "UFortMatchmakingContext",
+  "function": "IsWaitingOnUpdateManager",
+  "status": "proposed",
+  "case": "unreflected_gap_member",
+  "reason": "Body ported from asm; see porting/behavior/small6_runtime/UFortMatchmakingContext/IsWaitingOnUpdateManager.inc"
+ },
+ {
+  "cls": "UFortMatchmakingKnobsModal",
+  "function": "OnHoveredItemChanged",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "bIsHovered true tail-jumps to unported 0x144dd33e0."
+ },
+ {
+  "cls": "UFortMcpContext",
+  "function": "CancelEpicPurchasingDisplay",
+  "status": "blocked",
+  "case": "tail_call_external",
+  "reason": "Non-null [RCX+0x378] tail-jumps to unported 0x1411ce2d0."
+ },
+ {
+  "cls": "UFortMiniMapComponent",
+  "function": "OverrideLocalMiniMapIndicatorIsVisible",
+  "status": "proposed",
+  "case": "declared_bitfield_plus_gap_members",
+  "reason": "Body ported from asm; see porting/behavior/small6_runtime/UFortMiniMapComponent/OverrideLocalMiniMapIndicatorIsVisible.inc"
+ }
+]

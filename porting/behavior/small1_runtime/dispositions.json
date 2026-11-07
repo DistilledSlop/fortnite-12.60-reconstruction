@@ -1,0 +1,268 @@
+[
+ {
+  "class": "AAmbientVolume",
+  "function": "SetAmbientAsset",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x1412eabd0 (flag 0x25c = bEnabled) leaves the body; that path makes vcall +0x150 and calls FUN_14468e6c0, FUN_14405fbf0, FUN_141384ca0, FUN_1413ce790 (decompile 0x1412ea0b0); callees not expressible."
+ },
+ {
+  "class": "AAmbientVolume",
+  "function": "SetPriority",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x1412eabd0 (flag 0x25c = bEnabled) leaves the body; that path makes vcall +0x150 and calls FUN_14468e6c0, FUN_14405fbf0, FUN_141384ca0 (decompile 0x1412ea110); callees not expressible."
+ },
+ {
+  "class": "AAthenaCobaltStormShield",
+  "function": "ClientStormShieldShrinkTimerComplete",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x141aa1190 path (non-null CachedMutator) calls FUN_144224d90 and writes byte +0x92d of the mutator (decompile 0x1418bd3f0); callee not expressible."
+ },
+ {
+  "class": "AAthenaWrapPreviewActor",
+  "function": "IsShowingVehicle",
+  "status": "proposed",
+  "case": "raw_plus_gap_members",
+  "reason": "Raw int32 check at 0x268 below own region; 0x390/0x3a0 gap members; mirrors asm and decompile FUN_141fc7d50."
+ },
+ {
+  "class": "ABuildingActor",
+  "function": "SetTeam",
+  "status": "proposed",
+  "case": "reflected_members",
+  "reason": "Role==3 gate then stores InTeam to TeamIndex and Team (reflected Byte members), as asm order 0x3ed then 0x3ec."
+ },
+ {
+  "class": "ABuildingProp_CaptureArea",
+  "function": "CaptureItemsFromPickup",
+  "status": "proposed",
+  "case": "abi_output_ref",
+  "reason": "Writes 0 to AddedScore via R9 (4th ABI slot) and returns 0; no receiver access."
+ },
+ {
+  "class": "ABuildingProp_CaptureArea",
+  "function": "CaptureItemsFromPlayer",
+  "status": "proposed",
+  "case": "abi_stack_ref",
+  "reason": "Writes 0 to AddedScore loaded from stack slot [RSP+0x30]; returns 0; no receiver access."
+ },
+ {
+  "class": "ABuildingProp_DeimosSpawner",
+  "function": "OnKillAIReceived",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x141664b20 path calls FUN_1420b7a40, FUN_142e80820, FUN_141642e00 on CreativeRift (decompile 0x141c13370); callees not expressible."
+ },
+ {
+  "class": "ABuildingProp_DeimosSpawner",
+  "function": "OnKillRiftReceived",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x141664d00 path calls vtable slot +0x860 on CreativeRift (decompile 0x141c13390); virtual callee not expressible."
+ },
+ {
+  "class": "ABuildingProp_DeimosSpawner",
+  "function": "OnTurnOffReceived",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x1416772b0 path calls FUN_1420b7a40 and FUN_142ec0440 (decompile 0x141c15a00); callees not expressible."
+ },
+ {
+  "class": "ABuildingProp_DeimosSpawner",
+  "function": "OnTurnOnReceived",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x1416774e0 path calls FUN_1420b7a40 and FUN_142e80820 (decompile 0x141c15a60); callees not expressible."
+ },
+ {
+  "class": "ABuildingProp_LockDevice",
+  "function": "HandleMinigameStateChanged",
+  "status": "proposed",
+  "case": "reflected_state_gap_bool",
+  "reason": "Clears gap bool 0xb99 when state is 0 or 5 and the flag is set; matches asm and decompile FUN_141c0c310."
+ },
+ {
+  "class": "ABuildingProp_LockDevice",
+  "function": "UnlockObject",
+  "status": "blocked",
+  "case": "abi_mismatch",
+  "reason": "Body is LEA RAX,[RCX-0x218]; RET, a pointer-valued return (decompile 0x1406968f0 returns param_1-0x218). Header is void, so the value-return body does not match the signature; not translated."
+ },
+ {
+  "class": "ACustomCosmeticModifierBase",
+  "function": "NativeWeaponFired",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "TEST RDX,RDX; JNZ 0x14277c190 path calls UObject_FindFunctionChecked and vtable slot +0x210 (ProcessEvent) (decompile 0x141db5c60); callees not expressible."
+ },
+ {
+  "class": "AFortAIPawn",
+  "function": "GetWaterImmersionDepth",
+  "status": "proposed",
+  "case": "reflected_plus_raw_pointee",
+  "reason": "Returns -1.0f when CurrentWaterBody is null, else float at CharacterMovement+0x1d08 (raw pointee read)."
+ },
+ {
+  "class": "AFortAIPawn",
+  "function": "SetIsCharging",
+  "status": "proposed",
+  "case": "declared_bitfield",
+  "reason": "Sets declared bitfield bIsCharging (0x1345 mask 0x2) to the bool argument; equals asm clear/set of dword bit 9."
+ },
+ {
+  "class": "AFortAIPawn",
+  "function": "SetMinimapViewableDistance",
+  "status": "proposed",
+  "case": "reflected_plus_raw_pointee",
+  "reason": "Stores MinimapViewableDistance, then writes the same float to MiniMapIndicator+0x22c when the indicator is set."
+ },
+ {
+  "class": "AFortAthenaAIBotController",
+  "function": "OnCurrentHarvestableDestroyed",
+  "status": "proposed",
+  "case": "reflected_plus_gap_uint8",
+  "reason": "Sets gap uint8 0x818 to 2 when the damaged actor is the current loot actor and the instigator is this, else 3."
+ },
+ {
+  "class": "AFortAthenaDoghouseVehicle",
+  "function": "GetFlightControlSurfaceTargets",
+  "status": "blocked",
+  "case": "abi_mismatch",
+  "reason": "LEA RAX,[RCX+0x1520]; RET returns the address of an inline struct, but header_decl returns FFlightControlSurfaces by value and RCX is this (no hidden return slot in RDX); struct size and copy semantics unknown."
+ },
+ {
+  "class": "AFortAthenaDoghouseVehicle",
+  "function": "GetFlightControlSurfaces",
+  "status": "blocked",
+  "case": "abi_mismatch",
+  "reason": "LEA RAX,[RCX+0x1520]; RET returns the address of an inline struct, but header_decl returns FFlightControlSurfaces by value and RCX is this (no hidden return slot in RDX); struct size and copy semantics unknown."
+ },
+ {
+  "class": "AFortAthenaGoatVehicle",
+  "function": "IsBoosting",
+  "status": "proposed",
+  "case": "gap_bool_and_float",
+  "reason": "Returns true when the 0x10b4 bool is clear and the 0x10a0 float exceeds 0.0001; both are gap members."
+ },
+ {
+  "class": "AFortAthenaJackalVehicle",
+  "function": "IsBoosting",
+  "status": "proposed",
+  "case": "gap_int32",
+  "reason": "Returns whether the 0xfa4 int32 is not -1, matching asm SETNZ and decompile FUN_142703330."
+ },
+ {
+  "class": "AFortAthenaMutator_Arsenic",
+  "function": "RequestGameMessageOnServer",
+  "status": "proposed",
+  "case": "reflected_plus_raw_pointee",
+  "reason": "Role==3, non-null CachedGameState and non-zero message id; stores the id to CachedGameState+0x1f00 (raw)."
+ },
+ {
+  "class": "AFortAthenaMutator_ArsenicInventoryOverride",
+  "function": "OnGamePhaseChanged",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JZ 0x141aa0160 path calls vtable +0x150, FUN_14468fb70, UObject_FindFunctionChecked and ProcessEvent (decompile 0x141ab19b0); callees not expressible."
+ },
+ {
+  "class": "AFortAthenaMutator_Fill",
+  "function": "OnGamePhaseChanged",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x14273f1e0 path calls UObject_FindFunctionChecked and vtable slot +0x210 on LavaFloor (decompile 0x141add160); callee not expressible."
+ },
+ {
+  "class": "AFortAthenaMutator_GameModeBase",
+  "function": "OnGamePhaseChanged",
+  "status": "proposed",
+  "case": "reflected_plus_raw_pointee",
+  "reason": "On Role==3 and NewPhase==3, writes 1000 to CachedGameState+0x1f00 (raw); no null check, as in asm."
+ },
+ {
+  "class": "AFortAthenaMutator_GiveItemsAtGamePhaseStep",
+  "function": "OnGamePhaseStepChanged",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x14290f690 path calls GetPrivateStaticClassBody and returns a UClass pointer (decompile 0x141adddf0), which does not match the void header; not translated."
+ },
+ {
+  "class": "AFortAthenaMutator_SpecialEvent",
+  "function": "PauseSupplyDrops",
+  "status": "proposed",
+  "case": "gap_bool",
+  "reason": "Role==3 gate, then stores the bPause argument into gap bool 0x364."
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "BlocksBuilding",
+  "status": "proposed",
+  "case": "gap_uint64_pointer_raw_pointee",
+  "reason": "Reads pointer from gap qword 0x738; returns byte +0xac of the pointee as bool, false when the pointer is null."
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "GetCurrentBudget",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "Branches on dword global at absolute 0x1478c24d8, which has no reflected name or symbol in the repo; absolute image address is not portable to a snippet."
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "GetSeatSwitchCooldown",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JBE 0x141f8a370 path calls vtable slot +0x408 and reads float +0xb0 from the result (decompile 0x1419177a0); virtual callee not expressible."
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "IsMagnetizedForSkyTubes",
+  "status": "proposed",
+  "case": "reflected_plus_raw_pointee",
+  "reason": "Returns true when SkyTubePhysicsComponent is null, else byte +0x108 of the component as bool (decompile-derived)."
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "SetAllowInteractionBetweenFortVolumes",
+  "status": "proposed",
+  "case": "declared_bitfield",
+  "reason": "Sets declared bitfield bAllowInteractBetweenFortVolumes_Runtime (0x448 mask 0x10) to the bool argument."
+ },
+ {
+  "class": "AFortAthenaZipline",
+  "function": "UseInteractToEnterZipline",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "Returns (dword global at absolute 0x1478c25b8) == 1; the global has no reflected name or symbol, and an absolute address is not portable."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnPlayerEventScoreChanged",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x14284d7b0 path calls UObject_FindFunctionChecked and vtable slot +0x210 (ProcessEvent) (decompile 0x1424b44b0); callee not expressible."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnPlayerFullScreenMapActiveChanged",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x14284d7f0 path calls UObject_FindFunctionChecked and vtable slot +0x210 (ProcessEvent) (decompile 0x1424b47d0); callee not expressible."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnPlayerInteractLongUseChanged",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x14284d8d0 path calls UObject_FindFunctionChecked and vtable slot +0x210 (ProcessEvent) (decompile 0x1424b4960); callee not expressible."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "OnPlayerInventoryActiveChanged",
+  "status": "blocked",
+  "case": "far_path_calls",
+  "reason": "JNZ 0x14284d910 path calls UObject_FindFunctionChecked and vtable slot +0x210 (ProcessEvent) (decompile 0x1424b4980); callee not expressible."
+ }
+]

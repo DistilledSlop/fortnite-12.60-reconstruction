@@ -8,6 +8,7 @@
 
 #include "EFortPickupSourceTypeFlag.h"
 #include "EFortPickupSpawnSource.h"
+#include "Engine/EngineTypes.h"
 #include "FFortItemEntry.h"
 #include "FFortPickupLocationData.h"
 #include "FPickupOnCombined.h"
@@ -267,6 +268,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_TossedFromContainer();
+
+	UFUNCTION()
+	virtual void OnServerStopCallback(FHitResult& Hit);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool PickedUp() const;

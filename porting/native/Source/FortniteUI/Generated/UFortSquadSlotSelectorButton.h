@@ -44,6 +44,9 @@ public:
 	bool NativeRecoveredBool_0xbe8;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetIdOfSquadSlotToManageBP(FName& OutSquadId, int32& OutSquadSlotIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetInPreviewMode() const;
 
 	UFUNCTION(BlueprintNativeEvent)

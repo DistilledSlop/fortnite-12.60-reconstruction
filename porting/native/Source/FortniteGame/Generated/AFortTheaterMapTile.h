@@ -125,6 +125,9 @@ public:
 	UPROPERTY()
 	FFortAvailableMissionAlertData MissionAlertData;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x430): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x430;
+
 	// table index 2, flags 0x400000000a001d
 	UPROPERTY()
 	UStaticMeshComponent* StaticMeshComponent;
@@ -135,6 +138,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasValidMissionData() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMissionAlertTile() const;
 
 };
 

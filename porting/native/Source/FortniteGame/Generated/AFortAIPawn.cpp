@@ -78,6 +78,20 @@ bool AFortAIPawn::GetUsesDBNO() const
 	return bUsesDBNO;
 }
 
+float AFortAIPawn::GetWaterImmersionDepth() const
+{
+	// Original address: 0x1422d9ad0 (AFortAIPawn::GetWaterImmersionDepth)
+	// Offset evidence: [RCX+0x1e88] is CurrentWaterBody (reflected Object); [RCX+0x280] is CharacterMovement (reflected Object);
+	// float at CharacterMovement+0x1d08 read raw (pointee type not reflected). Null path returns 0xbf800000 (-1.0f) per decompile.
+	// CONFIDENCE: HIGH
+	if (CurrentWaterBody == nullptr)
+	{
+	    return -1.0f;
+	}
+	const uint8* MovementRaw = reinterpret_cast<const uint8*>(CharacterMovement);
+	return *reinterpret_cast<const float*>(MovementRaw + 0x1d08);
+}
+
 void AFortAIPawn::GiveAmmo(int32 AmmoQuantity)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
@@ -217,6 +231,26 @@ void AFortAIPawn::SetForceBossSignificance(bool bEnabled)
 {
 	// CONFIDENCE: high; reflected wrapper and native helper verified.
 	NativeRecoveredBool_0x1e93 = bEnabled;
+}
+
+void AFortAIPawn::SetIsCharging(bool bNewIsCharging)
+{
+	// Original address: 0x1422ec620 (AFortAIPawn::SetIsCharging)
+	// Offset evidence: bit 9 (0x200) of dword [RCX+0x1344] is byte 0x1345 mask 0x2, the declared bool bitfield bIsCharging (bool_bits.json).
+	// CONFIDENCE: HIGH
+	bIsCharging = bNewIsCharging;
+}
+
+void AFortAIPawn::SetMinimapViewableDistance(float NewMinimapViewableDistance)
+{
+	// Original address: 0x1422ec870 (AFortAIPawn::SetMinimapViewableDistance)
+	// Offset evidence: [RCX+0x1b30] is MinimapViewableDistance (reflected Float); [RCX+0x1d00] is MiniMapIndicator (reflected Object); float at +0x22c written raw on the pointee.
+	// CONFIDENCE: HIGH
+	MinimapViewableDistance = NewMinimapViewableDistance;
+	if (MiniMapIndicator != nullptr)
+	{
+	    *reinterpret_cast<float*>(reinterpret_cast<uint8*>(MiniMapIndicator) + 0x22c) = NewMinimapViewableDistance;
+	}
 }
 
 void AFortAIPawn::SetMinSignificanceForAnimationCurves(float MinSignificance)

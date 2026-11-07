@@ -83,6 +83,11 @@ public:
 	UPROPERTY()
 	bool bDestroyActorWhenUnavailable;
 
+private:
+	UFUNCTION()
+	TArray<FString> Editor_GetValidObjectives() const;
+public:
+
 	UFUNCTION()
 	void OnRep_Ready();
 

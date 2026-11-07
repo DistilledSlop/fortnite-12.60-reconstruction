@@ -111,6 +111,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsRelevantToASpecificTeam() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsRelevantToTeam(uint8 Team) const;
+
 	UFUNCTION()
 	void OnRep_bIsObjectiveVisible();
 
