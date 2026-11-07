@@ -1,0 +1,86 @@
+[
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "MeleeCombatBlocked",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "virtual+0x6b0 = AFortPlayerPawnAthena::CancelMeleeCombatSlow() has no declaration in porting/native/Source/FortniteGame/Generated/AFortPlayerPawnAthena.h (0 hits)."
+  },
+  {
+    "class": "UFortProjectileMovementComponent",
+    "function": "OnRep_ReplicatedVelocity",
+    "status": "blocked",
+    "case": "virtual_slot_mismatch",
+    "reason": "Body sets RDX=[[this+0xa0]+0x130] before CALL [RAX+0x440]; candidate UFortProjectileMovementComponent::OnRep_ReplicatedVelocity() takes no args."
+  },
+  {
+    "class": "UAthenaHUDContext",
+    "function": "GetGamePhase",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "virtual+0x150 = UAthenaHUDContext::BeginUseFromHUD() has no declaration in porting/native/Source/FortniteUI/Generated/UAthenaHUDContext.h (0 hits)."
+  },
+  {
+    "class": "UAthenaHUDContext",
+    "function": "HideGameModeMessage",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "virtual+0x150 = UAthenaHUDContext::BeginUseFromHUD() has no declaration in porting/native/Source/FortniteUI/Generated/UAthenaHUDContext.h (0 hits)."
+  },
+  {
+    "class": "UAthenaHUDContext",
+    "function": "ShowGameModeMessage",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "virtual+0x150 = UAthenaHUDContext::BeginUseFromHUD() has no declaration in porting/native/Source/FortniteUI/Generated/UAthenaHUDContext.h (0 hits)."
+  },
+  {
+    "class": "UAthenaHUDContext",
+    "function": "ShowMarkerGameModeMessage",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "virtual+0x150 = UAthenaHUDContext::BeginUseFromHUD() has no declaration in porting/native/Source/FortniteUI/Generated/UAthenaHUDContext.h (0 hits)."
+  },
+  {
+    "class": "UAthenaPunchCard",
+    "function": "UpdatePunchCardFromItem",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "virtual+0x288 = UAthenaPunchCard::OnProfileUpdated() and direct CALL target UAthenaPunchCard::UpdatePunchCard(McpProfile) have no declaration in porting/native/Source/FortniteUI/Generated/UAthenaPunchCard.h (0 hits)."
+  },
+  {
+    "class": "UFortAthenaCreativeMatchmakingWidget",
+    "function": "DisableOwningPlayerForReadyCheckInput",
+    "status": "blocked",
+    "case": "virtual_slot_mismatch",
+    "reason": "Asm uses the returned RAX as an object pointer (TEST, class check, tail JMP PopCreativeReadyCheckInputMode); candidate void DisableOwningPlayerForReadyCheckInput() returns nothing. PopCreativeReadyCheckInputMode is also undeclared in AFortPlayerControllerGameplay.h."
+  },
+  {
+    "class": "UFortAthenaMOTDWidget",
+    "function": "HandleImageLoaded",
+    "status": "blocked",
+    "case": "virtual_slot_mismatch",
+    "reason": "Asm dereferences the returned RAX ([RAX+0x540] float); candidate void HandleImageLoaded() returns nothing."
+  },
+  {
+    "class": "UFortCreativeMiniGameInfo",
+    "function": "OnVisible",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x144d77840 = UFortCreativeMiniGameInfo::ForceRefresh() has no declaration in porting/native/Source/FortniteUI/Generated/UFortCreativeMiniGameInfo.h (0 hits). Also the tail JMP [RAX+0x270] passes DL=1 but candidate OnVisible() takes no args."
+  },
+  {
+    "class": "UFortHUDContext",
+    "function": "GetDifficultyIncreaseRewardsTier",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "virtual+0x150 = UFortHUDContext::ToggleFullscreenMap() has no declaration in porting/native/Source/FortniteUI/Generated/UFortHUDContext.h (0 hits)."
+  },
+  {
+    "class": "UFortHUDContext",
+    "function": "GetNumAllowedDifficultyIncreases",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "virtual+0x150 = UFortHUDContext::ToggleFullscreenMap() and tail JMP target AFortGameStateZone::GetNumAllowedDifficultyIncreases() have no declaration in their generated headers (0 hits)."
+  }
+]

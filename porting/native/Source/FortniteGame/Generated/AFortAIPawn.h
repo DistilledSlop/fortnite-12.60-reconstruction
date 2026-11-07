@@ -889,6 +889,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetAIType(EFortressAIType InAIType);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	virtual void SetCanInteract(bool CanInteract);
+
 	UFUNCTION(BlueprintCallable)
 	void SetCanSleep(bool InCanSleep);
 

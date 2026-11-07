@@ -81760,5 +81760,22 @@
     "status": "ported",
     "recovery_source": "small_leaf_batch",
     "notes": "Byte flag tested before NavigationRequests access; unreflected gap in own region."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "SetCanInteract",
+    "kind": "exec",
+    "signature": "void SetCanInteract(bool CanInteract)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/vs1_runtime/AFortAIPawn/SetCanInteract.inc",
+    "confidence": "high",
+    "address": "0x1427a5ad0",
+    "status": "ported",
+    "reflection_flags": "0x4020404",
+    "static": false,
+    "virtual": true,
+    "access": "public",
+    "native_body_address": "0x1422ec1f0",
+    "notes": "Setter: bCanInteract bitfield (0x18dc bit 28); Role raw at +0xf0 == 3; OnRep_CanInteract(bOldCanInteract) via vtable 0xe88 with pre-store bit as asm."
   }
 ]
