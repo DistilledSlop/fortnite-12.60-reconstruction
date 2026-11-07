@@ -35,6 +35,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x5c): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt32_0x5c;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x60): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x60;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x64): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x64;
 
@@ -58,6 +61,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetMaxLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNextLevel() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetUpgradeUnlockLevel() const;

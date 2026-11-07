@@ -1,0 +1,177 @@
+[
+  {
+    "class": "UFortTimelineBase",
+    "function": "HandleReplayHudVisibilityChanged",
+    "status": "blocked",
+    "case": "blocked_unresolved_callee",
+    "reason": "unresolved_tail_jump: JBE 0x1407b7ed0 target not in callee_candidates (callee_candidates is empty)"
+  },
+  {
+    "class": "UFortToastDisplayArea",
+    "function": "NotifyToastFinished",
+    "status": "blocked",
+    "case": "blocked_callee_not_declared",
+    "reason": "callee_not_declared: UFortUINotificationQueue::RemoveNotification (0x144fb44a0) and UFortToastDisplayArea::HandleNewToastAvailable (0x144f94de0) absent from generated headers"
+  },
+  {
+    "class": "UFortUINavigationManager",
+    "function": "AttemptPlayQuest",
+    "status": "blocked",
+    "case": "blocked_callee_not_declared",
+    "reason": "callee_not_declared: AttemptMatchmakeForQuest (0x144daf3b0), CanNavigateToQuestObjective (0x144db0f70), NavigateToQuestObjective (0x144dd1b00), NavigateToFeature (0x144dd1520) absent from generated headers"
+  },
+  {
+    "class": "UFortUINavigationManager",
+    "function": "HasPendingNavigationOp",
+    "status": "proposed",
+    "case": "proposed_array_guard_compare",
+    "reason": "ported from body 0x144dc58d0; inc written"
+  },
+  {
+    "class": "UFortUINavigationManager",
+    "function": "TryGetPendingNavigationOp",
+    "status": "proposed",
+    "case": "proposed_struct_copy",
+    "reason": "ported from body 0x144de4420; inc written"
+  },
+  {
+    "class": "UFortUIManagerWidget_NUI",
+    "function": "CreateNotification",
+    "status": "blocked",
+    "case": "blocked_unresolved_callee",
+    "reason": "unresolved_tail_jump: JNZ 0x144df8ca0 target not in callee_candidates (callee_candidates is empty)"
+  },
+  {
+    "class": "UFortUIManagerWidget_NUI",
+    "function": "HandleErrorWindowDeactivated",
+    "status": "blocked",
+    "case": "blocked_unresolved_callee",
+    "reason": "unresolved_tail_jump: JZ 0x1451723d0 target not in callee_candidates (callee_candidates is empty)"
+  },
+  {
+    "class": "UFortUIScoreReport",
+    "function": "GetCurrentPlayerPawn",
+    "status": "proposed",
+    "case": "proposed_weak_lookup_tail",
+    "reason": "ported from body 0x1450e5c20; inc written"
+  },
+  {
+    "class": "UFortUIScoreReport",
+    "function": "GetCurrentPlayerState",
+    "status": "proposed",
+    "case": "proposed_weak_lookup_tail",
+    "reason": "ported from body 0x1450e5c70; inc written"
+  },
+  {
+    "class": "UFortUIScoreReport",
+    "function": "GetPlayerPlatform",
+    "status": "blocked",
+    "case": "blocked_shared_callee_ambiguous",
+    "reason": "shared_callee_ambiguous: 0x140682ce0 (FString sret copy from &PlayerState+0x3a0) has only unrelated candidates (SoftObject getters); no ancestor match and not a known helper"
+  },
+  {
+    "class": "UFortUIScoreReport",
+    "function": "GetXpInfo",
+    "status": "blocked",
+    "case": "blocked_struct_layout_unknown",
+    "reason": "struct_layout_unknown: FFortUIXpInfo is not declared in generated headers; 16-byte MOVUPS copies into OutXpInfo at +0x8 and +0x18 cannot be expressed exactly"
+  },
+  {
+    "class": "UFortUIScoreReport",
+    "function": "IsLocalPlayer",
+    "status": "blocked",
+    "case": "blocked_unresolved_pointee",
+    "reason": "unresolved_pointee: PlayerController +0x220 unreflected; engine class registry check uses AFortPlayerState::StaticClass() +0x30/+0x38 and [obj+0x10] container with no declared layout"
+  },
+  {
+    "class": "UFortUIStateWidget_CampaignFrontend",
+    "function": "HandleGiftingComplete",
+    "status": "blocked",
+    "case": "blocked_callee_not_declared",
+    "reason": "callee_not_declared: UFortUIStateWidget_CampaignFrontend::CheckForGifts (0x145149bc0) absent from generated headers; verbosity log elided"
+  },
+  {
+    "class": "UFortUINotificationQueue",
+    "function": "CanNotificationBeQueued",
+    "status": "proposed",
+    "case": "proposed_compare_log_elided",
+    "reason": "ported from body 0x144f971f0; inc written"
+  },
+  {
+    "class": "UFortUIStateWidget_JoinServer",
+    "function": "HandleLobbyDisconnected",
+    "status": "blocked",
+    "case": "blocked_unresolved_callee",
+    "reason": "unresolved_tail_jump: JG 0x141812040 target not in callee_candidates (callee_candidates is empty)"
+  },
+  {
+    "class": "UFortUpgradeInfo",
+    "function": "GetNextLevel",
+    "status": "proposed",
+    "case": "proposed_gap_members_arith",
+    "reason": "ported from body 0x14511a300; inc written"
+  },
+  {
+    "class": "UFortUpgradeScreenBase",
+    "function": "CanPreview",
+    "status": "proposed",
+    "case": "proposed_guard_chain",
+    "reason": "ported from body 0x145110d10; inc written"
+  },
+  {
+    "class": "UHUDLayoutToolContext",
+    "function": "OnPanZoomWidgetClick",
+    "status": "blocked",
+    "case": "blocked_callee_not_declared",
+    "reason": "callee_not_declared: UHUDLayoutToolContext::SetSelectedWidget (0x144d66000) absent from generated headers; weak IsValid helper 0x142ee7880 is known"
+  },
+  {
+    "class": "UHUDLayoutToolContext",
+    "function": "SetLayoutVisibility",
+    "status": "proposed",
+    "case": "proposed_delegate_broadcast",
+    "reason": "ported from body 0x144d63f80; inc written"
+  },
+  {
+    "class": "ULiveStreamStandalonePlayer",
+    "function": "BlockPlayer",
+    "status": "blocked",
+    "case": "blocked_hidden_global",
+    "reason": "hidden_global: absolute globals [0x1483943e4] bitmask and [0x1483950f8] gate, tail call on absolute receiver 0x147e1b390 to PopupMenuClosedWithAction (0x1406934e0)"
+  },
+  {
+    "class": "ULiveStreamStandalonePlayer",
+    "function": "UnblockPlayer",
+    "status": "blocked",
+    "case": "blocked_hidden_global",
+    "reason": "hidden_global: absolute globals [0x1483943e4] bitmask and [0x1483950f8] gate, tail call on absolute receiver 0x147e1b390 to PopupMenuClosedWithAction (0x1406934e0)"
+  },
+  {
+    "class": "UPerkSelectionEntryWidget",
+    "function": "GetTechSelectVerboseModeEnabled",
+    "status": "blocked",
+    "case": "blocked_hidden_global",
+    "reason": "hidden_global: CMP dword [0x147e1ad98],0 reads an absolute-address global with no reflected or known owner"
+  },
+  {
+    "class": "UPerkSelectionEntryWidget",
+    "function": "OnSelectionMade",
+    "status": "proposed",
+    "case": "proposed_guarded_broadcast",
+    "reason": "ported from body 0x144bfeac0; inc written"
+  },
+  {
+    "class": "UFortSeasonPassLevelInfo",
+    "function": "GetSeasonPassMaxLevel",
+    "status": "blocked",
+    "case": "blocked_unresolved_callee",
+    "reason": "unresolved_tail_jump: JNZ 0x14200e8f0 on SeasonData +0x38 target not in callee_candidates (callee_candidates is empty)"
+  },
+  {
+    "class": "UFortSeasonPassLevelInfo",
+    "function": "IsFreeClaimed",
+    "status": "blocked",
+    "case": "blocked_callee_not_declared",
+    "reason": "callee_not_declared: UFortMcpProfileAthena::GetSeasonBookLevel (0x1419976b0) absent from generated headers"
+  }
+]

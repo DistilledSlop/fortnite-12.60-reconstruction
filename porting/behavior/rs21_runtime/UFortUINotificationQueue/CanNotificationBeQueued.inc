@@ -1,0 +1,9 @@
+// Original body 0x144f971f0 (thunk 0x145318af0). Offset evidence: MaxNotificationsInQueue int32 +0x28 (reflected); NotificationQueue TArray at +0x30 with Num at +0x38 (reflected). The signed JL compares Num against the maximum.
+// The failure path calls 0x142c54b70 under a verbosity gate (CMP byte [0x1481348e0],5); that call is elided (no state change). Priority is not read by the body.
+// CONFIDENCE: MEDIUM
+if (NotificationQueue.Num() < MaxNotificationsInQueue)
+{
+    return true;
+}
+// Verbosity-gated diagnostic log at 0x142c54b70 elided (no state change)
+return false;

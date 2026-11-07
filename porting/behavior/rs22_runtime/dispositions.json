@@ -1,0 +1,37 @@
+[
+ {
+  "class": "UFortSeasonPassLevelInfo",
+  "function": "IsFreeUnlocked",
+  "status": "blocked",
+  "case": "class_other_module",
+  "reason": "Body 0x1450425c0 calls UFortMcpProfileAthena::GetSeasonBookLevel (0x1419976b0). Its class UFortMcpProfileAthena is declared in porting/native/Source/FortniteGame/Generated/UFortMcpProfileAthena.h (FortniteGame module), not in the FortniteUI job header chain; the receiver path this+0x30 (FortPC, reflected Object) +0x1b00 (AthenaProfile, AFortPlayerController) also needs it. The callee is also absent from every generated header (callee_not_declared). this+0x28 is an unreflected int32 gap (lookup_offset prints no member)."
+ },
+ {
+  "class": "UFortSeasonPassLevelInfo",
+  "function": "IsPaidClaimed",
+  "status": "blocked",
+  "case": "class_other_module",
+  "reason": "Body 0x145042710 calls UFortMcpProfileAthena::HasPurchasedSeasonBook (0x14199d030) and UFortMcpProfileAthena::GetSeasonBookLevel (0x1419976b0). UFortMcpProfileAthena is in FortniteGame (other module, not in job header chain). Both callees are absent from all generated headers. Thunk 0x145345bd0 and body 0x145042710 are shared with IsPaidUnlocked; the two names alias one body, which the owner should verify."
+ },
+ {
+  "class": "UFortSeasonPassLevelInfo",
+  "function": "IsPaidUnlocked",
+  "status": "blocked",
+  "case": "class_other_module",
+  "reason": "Body 0x145042710 (shared with IsPaidClaimed, thunk 0x145345bd0) calls UFortMcpProfileAthena::HasPurchasedSeasonBook (0x14199d030) and UFortMcpProfileAthena::GetSeasonBookLevel (0x1419976b0). UFortMcpProfileAthena is in FortniteGame (other module, not in job header chain). Both callees are absent from all generated headers."
+ },
+ {
+  "class": "UAthenaSpatialHenchmenInspectionRoom",
+  "function": "HandleInputMethodChanged",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "Body 0x144e76090 (10 bytes, 3 insns) has 'JZ 0x144e8d0d0' which is a conditional jump to code outside the body that is not in callee_candidates. Packet porting/generated/work-packets/0x144e76090.md shows the real function continues there (quest checks, further branches). The 3-insn body alone is only the param_2 != 1 early return, so it cannot be ported faithfully as a wrapper."
+ },
+ {
+  "class": "UUraniumRespawnWidget",
+  "function": "SetUpPlayerPortrait",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Body 0x144c04670 tail-jumps (JMP 0x144cab050) to UFortLazyImage::SetBrushFromItemDefinition, which is not declared in any generated header under porting/native/Source (one grep, all headers). Also, the target function is itself not declared in porting/native/Source/FortniteUI/Generated/UUraniumRespawnWidget.h."
+ }
+]

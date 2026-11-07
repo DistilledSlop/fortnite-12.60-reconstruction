@@ -96,6 +96,9 @@ public:
 	bool IsFireModeAvailable(EFireModeType NewFireMode) const;
 
 	UFUNCTION(BlueprintCallable)
+	void SetLayoutVisibility(bool bShowCombat, bool bShowBuild, bool bShowEdit, bool bShowCreative);
+
+	UFUNCTION(BlueprintCallable)
 	void StartLerping(FVector2D NewViewOffset);
 
 };

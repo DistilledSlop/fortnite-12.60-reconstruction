@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "AFortPlayerPawn.h"
+#include "AFortPlayerState.h"
 #include "UFortLocalPlayer.h"
 
 #include "UFortUIScoreReport.generated.h"
@@ -19,6 +21,12 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortLocalPlayer* LocalPlayer;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerPawn* GetCurrentPlayerPawn(int32 ScoreReportIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerState* GetCurrentPlayerState(int32 ScoreReportIndex) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetPlayerCount() const;

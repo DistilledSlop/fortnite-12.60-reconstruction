@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "EFortNotificationPriority.h"
 #include "UFortUINotification.h"
 
 #include "UFortUINotificationQueue.generated.h"
@@ -23,6 +24,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<UFortUINotification*> NotificationQueue;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanNotificationBeQueued(EFortNotificationPriority Priority) const;
 
 };
 

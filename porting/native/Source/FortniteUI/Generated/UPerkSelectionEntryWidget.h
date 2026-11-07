@@ -41,5 +41,10 @@ public:
 	UPROPERTY()
 	TArray<UFortSpyTechItemDefinition*> AllSelectablePassives;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void OnSelectionMade();
+public:
+
 };
 

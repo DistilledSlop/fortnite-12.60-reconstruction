@@ -48,6 +48,11 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanPreview() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPreviewing() const;
 public:
 

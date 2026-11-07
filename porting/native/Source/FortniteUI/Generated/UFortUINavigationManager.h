@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UUINavigationManager.h"
 
+#include "EFortUINavigationOp.h"
 #include "FFortCollectionBookOp.h"
 #include "FFortExpeditionsOp.h"
 #include "FFortFeatureNavigateOp.h"
@@ -17,6 +18,7 @@
 #include "FFortSquadOp.h"
 #include "FFortSquadSlotNavigateRequest.h"
 #include "FFortTabNavigateRequest.h"
+#include "FFortUINavigationOperation.h"
 #include "FFortUINavigationRequest.h"
 #include "FFortVaultItemNavigateRequest.h"
 #include "FFortVaultTabNavigateRequest.h"
@@ -84,6 +86,9 @@ public:
 	UPROPERTY()
 	FFortQuestItemOp OnQuestItemOp;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x130): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x130;
+
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
 	TArray<FFortUINavigationRequest> NavigationRequests;
@@ -98,6 +103,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool CanAccessHeroLoadoutScreen(UFortCampaignHeroLoadoutItem* HeroLoadout);
+
+	UFUNCTION(BlueprintCallable)
+	bool HasPendingNavigationOp(EFortUINavigationOp NavigationOp);
+
+	UFUNCTION(BlueprintCallable)
+	bool TryGetPendingNavigationOp(FFortUINavigationOperation& NavigationOp);
 
 };
 
