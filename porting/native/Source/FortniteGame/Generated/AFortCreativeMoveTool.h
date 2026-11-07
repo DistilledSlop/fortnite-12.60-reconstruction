@@ -346,6 +346,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x114b): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredUint8_0x114b;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x114b): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x114b;
+
 	// table index 7, flags 0x20080000000001
 	UPROPERTY()
 	FCreativeOptionVariableBase WantedHitTraceRule;
@@ -510,6 +513,11 @@ public:
 protected:
 	UFUNCTION()
 	void OnWantedCameraSpacePositioning(UFortCreativeOption* CreativeOption, uint8 Index);
+public:
+
+protected:
+	UFUNCTION()
+	void OnWantedHitTraceRule(UFortCreativeOption* CreativeOption, uint8 Index);
 public:
 
 protected:

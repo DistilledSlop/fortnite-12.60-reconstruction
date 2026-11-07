@@ -32,9 +32,30 @@ public:
 	UPROPERTY()
 	TArray<FFortAIDirectorFactorData> FactorsToTrack;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x290): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0x290;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x298): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x298;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2c4): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x2c4;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2c8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x2c8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2d0): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0x2d0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2d8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x2d8;
+
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<EFortAIDirectorFactor> FactorsBeingTracked;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAIDirectorFactorValue(EFortAIDirectorFactor AIDirectorFactor) const;
 
 };
 

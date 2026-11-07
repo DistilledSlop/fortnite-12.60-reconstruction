@@ -43,6 +43,9 @@ public:
 	EFrontEndCamera GetCamera() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortCameraBase* GetCameraActor() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetZoomLevel() const;
 
 	UFUNCTION(BlueprintCallable)

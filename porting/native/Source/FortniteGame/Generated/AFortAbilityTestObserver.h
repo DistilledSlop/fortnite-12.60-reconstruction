@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class UGameplayAbility;
+
 #include "AFortAbilityTestObserver.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,8 @@ class FORTNITEGAME_API AFortAbilityTestObserver : public AActor
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool WasAbilityActivated(UGameplayAbility* Ability) const;
+
 };
 

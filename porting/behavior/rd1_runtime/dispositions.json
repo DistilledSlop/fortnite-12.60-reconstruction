@@ -1,0 +1,156 @@
+[
+ {
+  "class": "AAIHotSpot",
+  "function": "GetSlotLocationByIndex",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Fallback FVector loaded from absolute globals 0x1478c1890 (qword X/Y) and 0x1478c1898 (dword Z) on the no-slot path; no reflected member or symbol. Callee UAIHotSpotSlot::GetSlotLocation is declared."
+ },
+ {
+  "class": "AAIHotSpot",
+  "function": "GetSlotRotationByIndex",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Fallback FRotator loaded from absolute globals 0x1478c1880 (qword) and 0x1478c1888 (dword). Callee UAIHotSpotSlot::GetSlotRotation (0x14165f160) is not declared in any generated header."
+ },
+ {
+  "class": "ABuildingGameplayActor",
+  "function": "GetTargetingSourceTransform",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Default FTransform copied from absolute global 0x1482184f0 (three MOVAPS) when [RCX+0x130] is null; value not readable from the batch."
+ },
+ {
+  "class": "ABuildingGameplayActorConsumable",
+  "function": "GetDeathFXTransform",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Default FTransform copied from absolute global 0x1482184f0 (three MOVAPS) when [RCX+0x130] is null; same shared body 0x141bdd320 as the other FX getters."
+ },
+ {
+  "class": "ABuildingPropPlaygroundMusicPlayer",
+  "function": "ConditionallyLoadSongBasedOnMinigameState",
+  "status": "proposed",
+  "case": "reflected_members_raw_pointee",
+  "reason": "All instructions accounted: reflected MinigameLogicComponent and five PlayDuring* ints; pointee +0x150/+0x870 read raw; OnRep_PlayingSongData declared in ABuildingPropMusicPlayer.h."
+ },
+ {
+  "class": "UBuildingStructuralSupportSystem",
+  "function": "IsBuildingActorValid",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Inlined FUObjectArray lookup through absolute globals 0x148263a2c (NumElements) and 0x148263a18 (chunk table); reads actor InternalIndex and FUObjectItem flags. Static function, RCX is the actor."
+ },
+ {
+  "class": "UCreativeBlueprintLibrary",
+  "function": "LogHUDMessageWarning",
+  "status": "proposed",
+  "case": "log_elided_empty_body",
+  "reason": "Only effect is verbosity-gated UE_LOG at 0x142c54b70 (elided per log rule); body is an empty void with the InString argument unused."
+ },
+ {
+  "class": "ADeployableBaseCore",
+  "function": "GetSimpleDeathFXTransform",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Default FTransform copied from absolute global 0x1482184f0 (three MOVAPS) when [RCX+0x130] is null; same shared body 0x141bdd320."
+ },
+ {
+  "class": "AFortAbilityTestObserver",
+  "function": "WasAbilityActivated",
+  "status": "proposed",
+  "case": "raw_array_scan",
+  "reason": "Class has no reflected members; TArray at +0x238/+0x240 read raw, Ability name key at +0x18 read raw. Loop and both-halves compare match asm exactly."
+ },
+ {
+  "class": "AFortAIDirectorDataManager",
+  "function": "GetAIDirectorFactorValue",
+  "status": "proposed",
+  "case": "tset_probe_member_fields",
+  "reason": "TSet-style probe over unreflected gap in own region at +0x290..+0x2d8; scalar fields added as NativeRecovered members. Bucket/element layout inferred from asm, so MEDIUM."
+ },
+ {
+  "class": "UFortAIFunctionLibrary",
+  "function": "MakeNoiseEvent",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Default FVector from absolute globals 0x148218630/0x148218638. Callee UFortAIFunctionLibrary::MakeNoiseEventAtLocation (0x1416a1b60) is not declared in any generated header."
+ },
+ {
+  "class": "AFortAIPawn",
+  "function": "TriggerNoWeaponSpeech",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "OverriddenDelay float constant loaded from absolute address 0x1459a979c (MOVSS) for the TriggerFeedbackEvent argument. Callee AFortPawn::TriggerFeedbackEvent (0x142356fc0) is not declared in any generated header."
+ },
+ {
+  "class": "AFortAthenaDoghouseVehicle",
+  "function": "IsStallingFromAltitude",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Default FVector from absolute globals 0x148218630/0x148218638 when [RCX+0x130] is null; the non-null path reads an unreflected FVector at pointee +0x1d0."
+ },
+ {
+  "class": "AFortAthenaMutator_Bagel",
+  "function": "GetPlayerScore",
+  "status": "proposed",
+  "case": "raw_element_scan_isa",
+  "reason": "Null-player short-circuit, unreflected element array at +0x12b0/+0x12b8 read raw, and IsA(AFortPlayerStateAthena) via inlined class-chain check ported as UObject::IsA. Body is shared with Mash."
+ },
+ {
+  "class": "AFortAthenaMutator_Disco",
+  "function": "OnCaptureLock",
+  "status": "proposed",
+  "case": "raw_pointee_counting",
+  "reason": "Counting loop over reflected SpawnedControlPoints with raw element and pointee reads; pointee writes at 0x1f00..0x1f08 are raw (0x1f00 overlaps a reflected struct on AFortGameStateAthena). CapturePoint and bIsNewLock are not read by the body."
+ },
+ {
+  "class": "AFortAthenaMutator_Mash",
+  "function": "GetPlayerScore",
+  "status": "proposed",
+  "case": "raw_element_scan_isa",
+  "reason": "Same shared body as AFortAthenaMutator_Bagel::GetPlayerScore (0x141aae6e0); same offsets and IsA check."
+ },
+ {
+  "class": "AFortAthenaMutator_SpecialEvent",
+  "function": "OnAircraftEnteredDropZone",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140680160 has two candidates (UAthenaLobbyBase::HandlePlaylistDataChanged, UCreativeMiniMapComponent::OnRep_IconData), neither equal or ancestor of AFortAthenaMutator_SpecialEvent; HandlePlaylistDataChanged is not declared. 0x142ce9f90 has three candidates."
+ },
+ {
+  "class": "AFortAthenaMutator_SpecialEvent",
+  "function": "OnAircraftExitedDropZone",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140680160 has two unrelated candidates (UAthenaLobbyBase::HandlePlaylistDataChanged, UCreativeMiniMapComponent::OnRep_IconData); 0x142ce9f90 has three candidates including AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard, which is not declared."
+ },
+ {
+  "class": "AFortAthenaSupplyDrop",
+  "function": "SpawnPickup",
+  "status": "proposed",
+  "case": "static_class_call_null_return",
+  "reason": "Body is a StaticClass() call with discarded result followed by a null return; all five instructions accounted for. Needs AFortPickupAthena.h include."
+ },
+ {
+  "class": "UFortChallengeBundleItemDefinition",
+  "function": "GetRewardCompletionThreshold",
+  "status": "proposed",
+  "case": "raw_nested_array_scan",
+  "reason": "Nested scan over reflected BundleCompletionRewards with raw inner-array reads (element struct not typed); fallback is QuestInfos.Num() per Array layout (Num at O+8). All instructions mapped."
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "GetAutoMulchMode",
+  "status": "proposed",
+  "case": "tmap_find",
+  "reason": "Hash-probe body is the TMap::Find pattern on reflected AutoMulchModeMap (+0x7d0). Found -> value byte, missing -> 0, matching the asm return paths."
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "SetFromVoiceChatSettings",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140684de0 (on this+0x1e8 and on this) has five unrelated candidates (AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor x3, AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived); OnStopMovement is not declared."
+ }
+]

@@ -117,6 +117,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_Kills)
 	int32 KillScore;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xe74): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xe74;
+
 	// table index 52, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_SeasonLevelUIDisplay)
 	int32 SeasonLevelUIDisplay;

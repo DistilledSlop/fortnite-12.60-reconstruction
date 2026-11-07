@@ -29,6 +29,7 @@
 
 class AActor;
 class AFortAIPawn;
+class AFortPlayerControllerAthena;
 class AFortPlayerStart;
 class UFortAIEncounterInfo;
 class UFortDifficultyEncounterSettings;
@@ -305,6 +306,9 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FBagelLeaderboardQuery LocalPlayerFriendsLeaderboardQuery;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetPlayerScore(AFortPlayerControllerAthena* AthenaPC, int32& OutScore) const;
 
 protected:
 	UFUNCTION()

@@ -52,6 +52,11 @@ public:
 
 protected:
 	UFUNCTION()
+	void ConditionallyLoadSongBasedOnMinigameState();
+public:
+
+protected:
+	UFUNCTION()
 	void Play();
 public:
 

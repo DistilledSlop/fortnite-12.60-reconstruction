@@ -13,6 +13,7 @@
 
 class AFortGameModePickup;
 class AFortPawn;
+class AFortPickup;
 class UAudioComponent;
 class UFortSpectateClickableMapIcon;
 class UFortWorldItemDefinition;
@@ -100,6 +101,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	AFortGameModePickup* SpawnGameModePickup(UFortWorldItemDefinition* ItemDefinition, TSubclassOf<AFortGameModePickup> PickupClass, int32 NumberToSpawn, AFortPawn* TriggeringPawn, FVector Position, FVector Direction);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	AFortPickup* SpawnPickup(UFortWorldItemDefinition* ItemDefinition, int32 NumberToSpawn, AFortPawn* TriggeringPawn, FVector Position, FVector Direction);
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

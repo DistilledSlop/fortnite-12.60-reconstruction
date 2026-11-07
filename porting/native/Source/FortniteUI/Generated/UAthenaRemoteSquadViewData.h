@@ -78,5 +78,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSquadId() const;
 
+private:
+	UFUNCTION()
+	void HandlePlayerKillscoreChanged(UAthenaRemotePlayerViewData* InPlayerData, int32 InKillScore);
+public:
+
 };
 

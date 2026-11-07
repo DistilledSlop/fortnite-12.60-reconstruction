@@ -1,0 +1,156 @@
+[
+ {
+  "class": "AFortPlayerState",
+  "function": "OnRep_PartyOwner",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "Tail JMP 0x1406ba850 is shared by AFortGameState::Client_InitiateEndOfDayRecap, AFortGameStateZone::OnWaveBasedModifiersAppliedMulticast and UAthenaItemShopSection::HandleOfferSeenInDetails. None is AFortPlayerState or an ancestor, and RCX at the jump is this+0x3e0 (not an instance of any candidate)."
+ },
+ {
+  "class": "UFortQuestManager",
+  "function": "HasCompletedObjective",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee UFortQuestItem::GetObjectiveInfo (0x142440da0) is not declared in the generated headers, so its return layout (+0x98/+0x9c) cannot be typed."
+ },
+ {
+  "class": "UFortQuestManager",
+  "function": "IsObjectiveInProgress",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee UFortQuestItem::GetObjectiveInfo (0x142440da0) is not declared in the generated headers; the body also reads its +0xba/+0x98/+0x9c fields."
+ },
+ {
+  "class": "UFortTooltipContext",
+  "function": "SpawnTooltipContext",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee UFortTooltipContext::SpawnTooltipContext_Advanced (0x142612e60) is not declared; the call passes the StaticClass result via a stack slot in RCX, so its parameter ABI cannot be confirmed."
+ },
+ {
+  "class": "UFortUICameraManagerComponent",
+  "function": "GetCameraActor",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body ported; see .inc."
+ },
+ {
+  "class": "ULevelSaveBaseComponent",
+  "function": "HandleVolumeStateChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callees ULevelSaveBaseComponent::StartPeriodicSaveTimer (0x14206f410) and StopPeriodicSaveTimer (0x1420701a0) are not declared in the generated headers."
+ },
+ {
+  "class": "UAthenaChallengeInfoPanel",
+  "function": "HandleCycleQuestsInputAction",
+  "status": "blocked",
+  "case": "unresolved_branch_target",
+  "reason": "JNZ at 0x144b790dc jumps to 0x144b91020, which is not in callee_candidates; the jump is taken for every switch value 0..3 (DL never equals R8B), so the effect cannot be expressed."
+ },
+ {
+  "class": "UAthenaRemoteSquadViewData",
+  "function": "HandlePlayerKillscoreChanged",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body ported; see .inc."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnHitPointsStateChanged",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body ported; see .inc."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetCurrentWeapon",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body ported; see .inc."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetIsDrivingVehicle",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee AFortPlayerPawn::IsDrivingVehicle (0x142331180) is not declared in the generated headers (only the bIsDrivingVehicle bitfield name matches)."
+ },
+ {
+  "class": "UAthenaSpectateMatchModalBase",
+  "function": "IsGameSessionString",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body ported; see .inc."
+ },
+ {
+  "class": "UAthenaTopBar",
+  "function": "HandleFeatureNavigateRequest",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee UCommonButtonGroup::SelectButtonAtIndex (0x1407f39f0) is not declared in the generated headers."
+ },
+ {
+  "class": "UAthenaViewStreamingReplayModalBase",
+  "function": "IsValidGameSessionId",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body ported; see .inc."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "GetCurrentHitTraceRule",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Inlined object-array lookup reads absolute globals [0x148263a2c] and [0x148263a18] (chunked index split); no reflected member or known helper covers them."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "GetDropToFloorEnabled",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Inlined object-array lookup reads absolute globals [0x148263a2c] and [0x148263a18] (chunked index split); no reflected member or known helper covers them."
+ },
+ {
+  "class": "UFortCreativeItemListTabPanel",
+  "function": "GetSelectedItemIndex",
+  "status": "blocked",
+  "case": "callee_receiver_mismatch",
+  "reason": "Only candidate UFortAIGoalProvider::GetEncounterInfo (0x1407c1e20) is called on this+0x300 (CurrentItemEntry, FFortItemEntry struct) and on Items elements (stride 0x150); neither is a UFortAIGoalProvider or ancestor."
+ },
+ {
+  "class": "UFortItemDetailsHostPanel",
+  "function": "HandleItemEvolutionComplete",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callees UMeshNetworkSubsystem::GetMetaDataWithKey (0x142bcf780), SetItemToDetail (0x144f3e1c0) and SetItemToCompareWith (0x144f3dda0) are not declared; the body also loads absolute global 0x1459a4b30."
+ },
+ {
+  "class": "UFortItemDetailsHostPanel",
+  "function": "HandleItemRarityUpgradeComplete",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callees UMeshNetworkSubsystem::GetMetaDataWithKey (0x142bcf780), SetItemToDetail (0x144f3e1c0) and SetItemToCompareWith (0x144f3dda0) are not declared; the body also loads absolute global 0x1459a4b30."
+ },
+ {
+  "class": "UFortItemDetailsHostPanel",
+  "function": "HandleItemRefundComplete",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callees UMeshNetworkSubsystem::GetMetaDataWithKey (0x142bcf780), SetItemToDetail (0x144f3e1c0) and SetItemToCompareWith (0x144f3dda0) are not declared; the body also loads absolute global 0x1459a4b30."
+ },
+ {
+  "class": "UFortItemManagementMulchDetailsPanel",
+  "function": "GetItemsToMulch",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee UFortInventoryContext::GetItemsToMulchBP (0x144d06000) is not declared; the body also returns a TArray through a hidden return slot."
+ },
+ {
+  "class": "UFortMainTabsScreenBase",
+  "function": "HandleFeatureNavigateRequest",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee UCommonTabListWidget::SelectTabByID (0x1407f3bb0) is not declared; UFortUIManagerWidget_Campaign::GetUINavigationManager and UFortUINavigationManager::CompletePendingNavigationOp are also undeclared."
+ }
+]

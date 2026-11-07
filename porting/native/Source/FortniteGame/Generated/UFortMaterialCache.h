@@ -8,6 +8,8 @@
 
 #include "FMaterialReservation.h"
 
+class UMaterialInstanceDynamic;
+
 #include "UFortMaterialCache.generated.h"
 
 UCLASS()
@@ -19,6 +21,12 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FMaterialReservation> Reservations;
+
+	UFUNCTION(BlueprintCallable)
+	void ReleaseMaterial(UMaterialInstanceDynamic*& MaterialInstance);
+
+	UFUNCTION(BlueprintCallable)
+	bool ReserveMaterial(UMaterialInstanceDynamic*& OutMaterialInstance);
 
 };
 

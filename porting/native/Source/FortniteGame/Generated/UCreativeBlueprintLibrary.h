@@ -21,5 +21,10 @@ private:
 	static FName GetNameFromCollisionProfile(FCollisionProfileName InCollisionProfile);
 public:
 
+private:
+	UFUNCTION(BlueprintCallable)
+	static void LogHUDMessageWarning(FString InString);
+public:
+
 };
 

@@ -98,5 +98,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumQuests() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRewardCompletionThreshold() const;
+
 };
 

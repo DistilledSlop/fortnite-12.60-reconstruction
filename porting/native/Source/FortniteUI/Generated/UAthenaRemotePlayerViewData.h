@@ -151,6 +151,18 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x208): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x208;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x20c): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x20c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x210): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x210;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x214): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x214;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x218): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x218;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x21c): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x21c;
 
@@ -184,6 +196,11 @@ public:
 
 private:
 	UFUNCTION()
+	void ForwardOnHitPointsStateChanged(AFortPlayerStateAthena* InPlayerState, float InHealth, float InHealthMax, float InShield, float InShieldMax);
+public:
+
+private:
+	UFUNCTION()
 	void ForwardOnKillScoreChanged(AFortPlayerStateAthena* InPlayerState, int32 InKillScore);
 public:
 
@@ -196,6 +213,9 @@ private:
 	UFUNCTION()
 	void ForwardOnWeaponChanged(AFortWeapon* InNewWeapon, AFortWeapon* InPrevWeapon);
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortWeapon* GetCurrentWeapon() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetInAircraft() const;

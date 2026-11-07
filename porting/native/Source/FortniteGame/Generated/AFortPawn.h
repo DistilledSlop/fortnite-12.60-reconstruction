@@ -970,8 +970,10 @@ public:
 	UFUNCTION()
 	virtual void OnRep_EmoteWalkSpeed();
 
+protected:
 	UFUNCTION()
-	void OnRep_IsDBNO();
+	virtual void OnRep_IsDBNO();
+public:
 
 	UFUNCTION()
 	void OnRep_IsKnockedBack();

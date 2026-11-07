@@ -1021,6 +1021,9 @@ public:
 	bool GetAutoJoinGameVoiceChannel() const;
 
 	UFUNCTION()
+	EFortAutoMulchMode GetAutoMulchMode(EFortAutoMulchCategory Category) const;
+
+	UFUNCTION()
 	bool GetAutoOpenDoors() const;
 
 	UFUNCTION()

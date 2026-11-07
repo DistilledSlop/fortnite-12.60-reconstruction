@@ -183,8 +183,10 @@ protected:
 	void OnRep_BackupSaveState(EBackupSaveState OldValue);
 public:
 
+protected:
 	UFUNCTION()
 	void OnRep_IsAutoSaving(bool bOldValue);
+public:
 
 protected:
 	UFUNCTION()

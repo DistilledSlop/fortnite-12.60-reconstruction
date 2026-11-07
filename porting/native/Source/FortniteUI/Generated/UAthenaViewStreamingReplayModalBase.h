@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UEditableText* EditableText_SessionSearch;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsValidGameSessionId(FString GameSessionId) const;
+public:
+
 };
 

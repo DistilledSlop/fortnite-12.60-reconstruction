@@ -112,6 +112,9 @@ public:
 	UPROPERTY()
 	TArray<FAnalyticsNavActorClickedData> NavigationActorClickedData;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortEventLevelNavigationActor* GetLastNavObject() const;
+
 	UFUNCTION(BlueprintCallable)
 	void NotifyRestedXpGenAmount(int32 RestedXp);
 

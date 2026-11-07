@@ -32,6 +32,34 @@ void UAthenaRemotePlayerViewData::ForwardOnDeadStateChanged(AFortPlayerStateAthe
 	OnDeadStateChanged.Broadcast(this, bInIsDead);
 }
 
+void UAthenaRemotePlayerViewData::ForwardOnHitPointsStateChanged(AFortPlayerStateAthena* InPlayerState, float InHealth, float InHealthMax, float InShield, float InShieldMax)
+{
+	// Behaviour snippet: UAthenaRemotePlayerViewData::ForwardOnHitPointsStateChanged (body only; spliced into the generated member function).
+	// Original body: 0x144c1ff60 (thunk 0x1451b84a0). Offset evidence: cached health +0x20c, cached max health +0x210, cached shield +0x214, cached max shield +0x218 (float gaps, member_field). Delegates OnHealthHealed +0x88, OnHealthDamaged +0x98, OnShieldHealed +0xa8, OnShieldDamaged +0xb8 are FTwoFloatDelegate members, each broadcast with packed {this, float, float}. The compare flags follow COMISS semantics: a greater-than test selects the heal delegate, and a not-greater-or-equal test (less or unordered) selects the damage delegate. InPlayerState is not read by the asm.
+	// CONFIDENCE: MEDIUM
+	if (InHealth > NativeRecoveredFloat_0x20c)
+	{
+	    OnHealthHealed.Broadcast(this, InHealth, InHealthMax);
+	}
+	else if (!(InHealth >= NativeRecoveredFloat_0x20c))
+	{
+	    OnHealthDamaged.Broadcast(this, InHealth, InHealthMax);
+	}
+	NativeRecoveredFloat_0x210 = InHealthMax;
+	const float PreviousShield = NativeRecoveredFloat_0x214;
+	NativeRecoveredFloat_0x20c = InHealth;
+	if (InShield > PreviousShield)
+	{
+	    OnShieldHealed.Broadcast(this, InShield, InShieldMax);
+	}
+	else if (!(InShield >= PreviousShield))
+	{
+	    OnShieldDamaged.Broadcast(this, InShield, InShieldMax);
+	}
+	NativeRecoveredFloat_0x218 = InShieldMax;
+	NativeRecoveredFloat_0x214 = InShield;
+}
+
 void UAthenaRemotePlayerViewData::ForwardOnKillScoreChanged(AFortPlayerStateAthena* InPlayerState, int32 InKillScore)
 {
 	// Behaviour snippet: UAthenaRemotePlayerViewData::ForwardOnKillScoreChanged (body only; spliced into the generated member function).
@@ -63,6 +91,22 @@ void UAthenaRemotePlayerViewData::ForwardOnWeaponChanged(AFortWeapon* InNewWeapo
 	// Callee 0x1406a9dc0 = TMulticastScriptDelegate::ProcessMulticastDelegate<UObject>; called as the shared multicast broadcast body (no callee_candidates for this job).
 	// CONFIDENCE: MEDIUM
 	OnWeaponChanged.Broadcast(this, InNewWeapon);
+}
+
+AFortWeapon* UAthenaRemotePlayerViewData::GetCurrentWeapon() const
+{
+	// Behaviour snippet: UAthenaRemotePlayerViewData::GetCurrentWeapon (body only; spliced into the generated member function).
+	// Original body: 0x144c20f90 (thunk 0x1451b8b90). Offset evidence: PlayerState at +0x1d0 (reflected). When non-null the pawn is PlayerState->GetCurrentPawn() (AFortPlayerState::GetCurrentPawn callee) and the weapon is pawn+0x588 = AFortPawn::CurrentWeapon. Otherwise CachedPlayerPawn at +0x228 (reflected) is read, a null pawn returns null, and the weapon is pawn+0x588. The asm has no null check after GetCurrentPawn, and none is added here.
+	// CONFIDENCE: HIGH
+	if (PlayerState != nullptr)
+	{
+	    return PlayerState->GetCurrentPawn()->CurrentWeapon;
+	}
+	if (CachedPlayerPawn == nullptr)
+	{
+	    return nullptr;
+	}
+	return CachedPlayerPawn->CurrentWeapon;
 }
 
 bool UAthenaRemotePlayerViewData::GetInAircraft() const
