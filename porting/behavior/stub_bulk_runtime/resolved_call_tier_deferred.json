@@ -1,0 +1,2403 @@
+{
+ "summary": {
+  "callee_not_declared": 118,
+  "shared_callee_ambiguous": 69,
+  "hidden_global_absolute_address": 16,
+  "unresolved_conditional_jump": 14,
+  "unresolved_tail_jump": 14,
+  "unresolved_conditional_tail_target": 12,
+  "unresolved_callee": 11,
+  "outside_branch_target": 10,
+  "unresolved_tail_target": 10,
+  "absolute_global": 9,
+  "unresolved_tail_branch": 8,
+  "unresolved_jump_target": 7,
+  "blocked_unresolved_callee": 5,
+  "blocked_callee_not_declared": 5,
+  "hidden_global": 4,
+  "conditional_tail_jump_unresolved": 4,
+  "unresolved_conditional_tail_call": 4,
+  "unreflected_delegate_member": 3,
+  "cold_path_unresolved": 3,
+  "blocked_hidden_global": 3,
+  "class_other_module": 3,
+  "callee_signature_mismatch": 3,
+  "unresolved_conditional_tail_jump": 2,
+  "unresolved_tail_call": 2,
+  "absolute_constants_static_call": 2,
+  "absolute_global_float": 2,
+  "unknown_pointee_shared_callee": 2,
+  "return_abi_mismatch": 2,
+  "undefined_stack_read": 2,
+  "out_of_body_continuation": 2,
+  "conditional_tail_callee_unresolved": 2,
+  "hidden_global_and_callee_not_declared": 2,
+  "hidden_return_slot_abi": 2,
+  "callee_unresolved": 2,
+  "struct_undeclared": 2,
+  "absolute_global_read": 1,
+  "hidden_constant": 1,
+  "callee_mismatch": 1,
+  "unreflected_delegate": 1,
+  "param_struct_unreflected": 1,
+  "absolute_global_struct_copy": 1,
+  "unreflected_weak_receiver": 1,
+  "receiver_class_unknown": 1,
+  "return_type_mismatch": 1,
+  "receiver_mismatch": 1,
+  "simd_absolute_constant": 1,
+  "truncated_body": 1,
+  "delegate_member_unreflected": 1,
+  "blocked_shared_callee_ambiguous": 1,
+  "blocked_struct_layout_unknown": 1,
+  "blocked_unresolved_pointee": 1,
+  "sse_struct_copy_unverified": 1,
+  "out_of_body_branch": 1,
+  "absolute_global_simd": 1,
+  "callee_unresolved_tailjump": 1,
+  "enum_undeclared": 1,
+  "offset_overlaps_member": 1,
+  "absolute_constant": 1,
+  "absolute_global_and_unresolved_callee": 1,
+  "tail_target_unlisted": 1,
+  "array_storage_not_typed": 1,
+  "lock_cmpxchg_absolute_global": 1,
+  "absolute_data_reference": 1
+ },
+ "entries": [
+  {
+   "class": "AFortAthenaMutator_RoundHelper",
+   "function": "StartNextRound",
+   "case": "callee_not_declared",
+   "reason": "Body tail-jumps (JMP 0x141b0c140, RCX=this, EDX=[this+0x2e0]+1) to AFortAthenaMutator_RoundHelper::SetCurrentRound, which is not declared in AFortAthenaMutator_RoundHelper.h or any generated header (g"
+  },
+  {
+   "class": "AFortAthenaMutator_SpecialEvent",
+   "function": "OnRep_Aircraft",
+   "case": "callee_not_declared",
+   "reason": "Body tail-jumps (JMP 0x141b28440, RCX=this) to AFortAthenaMutator_SpecialEvent::PlacePlayersInAircraft, which is not declared in AFortAthenaMutator_SpecialEvent.h or any generated header (grep over po"
+  },
+  {
+   "class": "AFortAthenaMutator_SpecialEvent",
+   "function": "ResetSpecialEventAircraft",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ce9f90 has three candidates sharing the body (AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard, UMeshNetworkSubsystem::GetMetaDataWithKey, UMeshNetworkSubsystem::SetMetaDataWithKey); none "
+  },
+  {
+   "class": "AFortGameState",
+   "function": "DbgBoxSendToAllInternal_DoNotCall_Implementation",
+   "case": "hidden_global_absolute_address",
+   "reason": "Gate CMP byte ptr [0x14812f404],0x0 and set MOV byte ptr [0x14812f404],0x1 use an absolute-address once-per-session latch with no reflected owner; not expressible as object state."
+  },
+  {
+   "class": "AFortGameState",
+   "function": "DbgCapsuleSendToAllInternal_DoNotCall_Implementation",
+   "case": "hidden_global_absolute_address",
+   "reason": "Gate CMP byte ptr [0x14812f404],0x0 and set MOV byte ptr [0x14812f404],0x1 use an absolute-address once-per-session latch with no reflected owner; not expressible as object state."
+  },
+  {
+   "class": "AFortGameState",
+   "function": "DbgLineSendToAllInternal_DoNotCall_Implementation",
+   "case": "hidden_global_absolute_address",
+   "reason": "Gate CMP byte ptr [0x14812f404],0x0 and set MOV byte ptr [0x14812f404],0x1 use an absolute-address once-per-session latch with no reflected owner; not expressible as object state."
+  },
+  {
+   "class": "AFortGameState",
+   "function": "DbgSphereSendToAllInternal_DoNotCall_Implementation",
+   "case": "hidden_global_absolute_address",
+   "reason": "Gate CMP byte ptr [0x14812f404],0x0 and set MOV byte ptr [0x14812f404],0x1 use an absolute-address once-per-session latch with no reflected owner; not expressible as object state."
+  },
+  {
+   "class": "AFortPawn",
+   "function": "RemoveCallout",
+   "case": "outside_branch_target",
+   "reason": "JNZ 0x142347e90 (matched-tag path) is outside the body; that path needs unresolved vtable slot +0x150 and FUN_144621fb0"
+  },
+  {
+   "class": "AFortPickup",
+   "function": "OnRep_ServerStoppedSimulation",
+   "case": "outside_branch_target",
+   "reason": "JNZ 0x142028b80 (non-null continuation) is outside the body; continuation unresolved (no callee_candidates)"
+  },
+  {
+   "class": "AFortPlayerController",
+   "function": "GetAccountLevel",
+   "case": "outside_branch_target",
+   "reason": "JNZ 0x142547000 is outside the body; non-null path calls FUN_1410ff2d0 and FUN_142cf2280, unresolved"
+  },
+  {
+   "class": "AFortPlayerController",
+   "function": "GetAwardManager",
+   "case": "outside_branch_target",
+   "reason": "JNZ 0x141f5d970 is outside the body; non-null path runs a sub-game lookup loop calling UFortGlobals::NativeGetGlobals and GetCurrentSubGame, unresolved"
+  },
+  {
+   "class": "AFortPlayerController",
+   "function": "GetFPSForHUD",
+   "case": "absolute_global_read",
+   "reason": "MOVSS/MULSS/ADDSS read float constants at absolute addresses 0x148351ea0, 0x1459ffea0, 0x1459a86f0; no reflected symbol and values not verified"
+  },
+  {
+   "class": "AFortPlayerController",
+   "function": "GetMinigameManager",
+   "case": "outside_branch_target",
+   "reason": "JNZ 0x141f5f9a0 is outside the body; non-null path is the same unresolved sub-game lookup as GetAwardManager"
+  },
+  {
+   "class": "AFortPlayerController",
+   "function": "GetQuestManager",
+   "case": "outside_branch_target",
+   "reason": "JNZ 0x141f60200 is outside the body; non-null path calls unresolved helpers 0x1428ea7f0 and 0x141e5f160"
+  },
+  {
+   "class": "AFortPlayerController",
+   "function": "GetStatValue",
+   "case": "outside_branch_target",
+   "reason": "JNZ 0x1424aebb0 is outside the body; non-null path calls unresolved UAthenaProfileStatsBase::NextStatSet (0x140696410)"
+  },
+  {
+   "class": "AFortPlayerController",
+   "function": "HandleWinnerAnnounced",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1423b9120 (AFortPlayerController::StopBattleMapSpectator) is not declared in generated headers; 0x142bee710 is the by-value FString destructor"
+  },
+  {
+   "class": "AFortPlayerController",
+   "function": "IsPersonalVehicleActive",
+   "case": "callee_not_declared",
+   "reason": "JMP 0x142332130 (AFortPlayerPawn::IsUsingPersonalVehicle) is not declared in generated headers"
+  },
+  {
+   "class": "AFortPlayerControllerAthena",
+   "function": "HandleGamePhaseStepChanged",
+   "case": "outside_branch_target",
+   "reason": "JZ 0x1419ff260 (GamePhaseStep==5 path) is outside the body"
+  },
+  {
+   "class": "AFortPlayerControllerAthena",
+   "function": "IsPlayerInAVolumeTheyCanCreateIn",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1419c3880 (AFortPlayerControllerAthena::CanPlayerCreateInCurrentVolume) is not declared in generated headers"
+  },
+  {
+   "class": "AFortPlayerControllerAthena",
+   "function": "IsPlayerRebootingNow",
+   "case": "outside_branch_target",
+   "reason": "JNZ 0x141b4d240 is outside the body; non-null path calls unresolved FUN_141a4b2d0"
+  },
+  {
+   "class": "AFortPlayerControllerGameplay",
+   "function": "IsCreativePreviewScreenshotAvailable",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1419dd8b0 (AFortPlayerControllerAthena::IsPlayerInAMinigame) is not declared; fail path also reads absolute global dword 0x1478de924"
+  },
+  {
+   "class": "AFortPlayerControllerGameplay",
+   "function": "OnWantedToSwapPhoneAndHarvestHoldChanged",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x141d85c50 (UFortCreativeOption::GetValueAtIndex) is not declared in generated headers"
+  },
+  {
+   "class": "UFortPlayerControllerAthenaXPComponent",
+   "function": "OnXpUpdated",
+   "case": "shared_callee_ambiguous",
+   "reason": "JMP 0x140684de0 is a shared body with five unrelated candidates; none has the six int32 parameters or the receiver this+0x268 class"
+  },
+  {
+   "class": "AFortPlayerControllerFrontEnd",
+   "function": "CloseEmotePicker",
+   "case": "outside_branch_target",
+   "reason": "JZ 0x1423a1e80 (flag 0xc0 close path) is outside the body"
+  },
+  {
+   "class": "AFortPlayerControllerZone",
+   "function": "ServerDetachFromRemoteControlledPawn",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x14243a470 (AFortRemoteControlledPawnAthena::HandleControllingPlayerOutOfHealth) is not declared in generated headers"
+  },
+  {
+   "class": "AFortPlayerPawn",
+   "function": "ForceDetachFromRemoteControlledPawn",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee7880 and 0x142ee5dd0 are shared bodies; receiver this+0x26a0 (WeakObject) matches no candidate class; JMP 0x14243a470 also undeclared"
+  },
+  {
+   "class": "AFortPlayerPawn",
+   "function": "IsActivelySkydivingUpInVortex",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1420e4e50 (UFortMovementComp_Character::IsActivelySkydivingUpInVortex) is not declared in generated headers"
+  },
+  {
+   "class": "AFortPlayerPawn",
+   "function": "IsPassivelySkydiving",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x1420e4ab0 on [this+0x280] (CharacterMovement) is a shared body of UFortMovementComp_Character::IsActivelySkydiving and ::IsPassivelySkydiving; same class, cannot pick one."
+  },
+  {
+   "class": "AFortPlayerPawn",
+   "function": "SetPendingSkydiveLaunch",
+   "case": "unresolved_conditional_tail_jump",
+   "reason": "After storing bit 0x10 of byte [this+0x10e7] (unreflected gap), JNZ 0x14230e1e0 tail-jumps to a function absent from callee_candidates; cannot express."
+  },
+  {
+   "class": "AFortPlayerPawnAthena",
+   "function": "IsPlayingMinigame",
+   "case": "callee_not_declared",
+   "reason": "Tail JMP 0x1419dd8b0 = AFortPlayerControllerAthena::IsPlayerInAMinigame; not declared anywhere under porting/native/Source."
+  },
+  {
+   "class": "UFortPlayerSurveyQuestionSelector",
+   "function": "HandleAnswerChanged",
+   "case": "unreflected_delegate_member",
+   "reason": "Broadcast (CALL 0x1406a9dc0) on this+0x50, an unreflected gap in the class; no typed delegate member_field type available."
+  },
+  {
+   "class": "UFortPlayerSurveyQuestionSelector",
+   "function": "HandleQuestionChanged",
+   "case": "unreflected_delegate_member",
+   "reason": "Broadcasts on this+0x40, +0x70, +0x80 are unreflected gaps; no typed delegate member_field type available."
+  },
+  {
+   "class": "AFortProjectileBase",
+   "function": "GetOwnerPlayerController",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee5dd0 on [this+0x780] (unreflected) is shared by six unrelated class getters; receiver class unknown, no candidate provably matches."
+  },
+  {
+   "class": "UFortQuestItem",
+   "function": "HasCompletedObjective",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x142440da0 = UFortQuestItem::GetObjectiveInfo; not declared in generated headers under FortniteGame/Generated."
+  },
+  {
+   "class": "UFortQuestItem",
+   "function": "IsObjectiveInProgress",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x142440da0 = UFortQuestItem::GetObjectiveInfo; not declared in generated headers under FortniteGame/Generated."
+  },
+  {
+   "class": "UFortQueryTwoPointSolver",
+   "function": "AddNamedFloatParamA",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140690dd0 (TArray growth on this+0x38) is shared by AFortBroadcastRemoteClientInfo::OnRep_bActive and UFortTierIndicator::ClearPreviewState; receiver is a TArray, no class match."
+  },
+  {
+   "class": "UFortQueryTwoPointSolver",
+   "function": "AddNamedFloatParamB",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140690dd0 (TArray growth on this+0x48) is shared by AFortBroadcastRemoteClientInfo::OnRep_bActive and UFortTierIndicator::ClearPreviewState; receiver is a TArray, no class match."
+  },
+  {
+   "class": "UFortQuestManager",
+   "function": "GetMainQuest",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x142447c70 = UFortQuestItem::IsVisibleToUser; not declared in UFortQuestItem.h (only UFortQuestObjectiveInfo::IsVisibleToUser exists)."
+  },
+  {
+   "class": "UFortQuestManager",
+   "function": "SendCustomStatEventDirect",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x1406d93e0 on a local TArray (generic array allocation) is shared by six unrelated functions; no class receiver."
+  },
+  {
+   "class": "AFortRemoteControlledPawnAthena",
+   "function": "OnCapsuleTouch",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee5dd0 on [this+0x30a4] (ControllingPlayerPawn, TWeakObjectPtr) is shared by six unrelated class getters; none matches the weak-pointer receiver."
+  },
+  {
+   "class": "AFortReplaySpectator",
+   "function": "SkipToSequencerShot",
+   "case": "unresolved_tail_call",
+   "reason": "unresolved tail call: JNZ 0x14245f2b0 (non-null [this+0x34c8] tail-jumps with RCX=component, EDX=ShotIndex); target absent from callee_candidates and not declared"
+  },
+  {
+   "class": "UFortReplaySequenceComponent",
+   "function": "NoRecorderVideoFinishedCallback",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: CALL 0x140680160 (and 0x1406800e0) candidates UAthenaLobbyBase::HandlePlaylistDataChanged and UCreativeMiniMapComponent::OnRep_IconData match neither receiver nor the int32 he"
+  },
+  {
+   "class": "AFortSkyTube",
+   "function": "GetDelayUntilDisabled",
+   "case": "hidden_constant",
+   "reason": "hidden absolute-address constant: MOVSS XMM0,[0x1478df4d0]; value is not in the asm or reflection"
+  },
+  {
+   "class": "AFortSkyTube",
+   "function": "IsSkyTubeEnabled",
+   "case": "hidden_global",
+   "reason": "hidden absolute-address flag: CMP dword [0x1478df4c8],0 (value not in the asm or reflection); the byte at +0x5c0 is a gap but cannot be decided without it"
+  },
+  {
+   "class": "AFortSkyTubeAnchor",
+   "function": "IsEnabled",
+   "case": "hidden_global",
+   "reason": "hidden absolute-address flag: CMP dword [0x1478df4c8],0 (value not in the asm or reflection); class has no reflected properties so +0xb98 is raw"
+  },
+  {
+   "class": "UFortSkyTubePhysicsComponent",
+   "function": "IsSkyTubeForceEnabled",
+   "case": "hidden_global",
+   "reason": "hidden absolute-address flags: CMP dword [0x1478df4c8],0 and CMP dword [0x1478df4a0],0 (values not in the asm or reflection)"
+  },
+  {
+   "class": "AFortSpaghettiVehicle",
+   "function": "GetTowhookCableAttachLocation",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: CALL 0x142ee5dd0 (on sub-object this+0x15ac of unknown class) has six candidate bodies in unrelated classes (e.g. AFortEventLevelNavigationActor::GetOwningGameStateComp, UArse"
+  },
+  {
+   "class": "AFortSpaghettiVehicle",
+   "function": "IsTowhookInAirExtending",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: CALL 0x141b720d0 (on sub-object this+0x1380, no reflected or declared class) is shared by AFortOctopusVehicle::IsTowhookAttached and AFortSpaghettiVehicle::IsTowhookAttached"
+  },
+  {
+   "class": "AFortSpectateAFriendController",
+   "function": "OnRep_HasValidTarget",
+   "case": "unresolved_tail_call",
+   "reason": "unresolved tail call: JZ 0x1423d1280 when byte [this+0x2db0]==0 (target absent from callee_candidates and not declared)"
+  },
+  {
+   "class": "UTeleportationFxLibrary",
+   "function": "CleanupDissolveFX",
+   "case": "callee_mismatch",
+   "reason": "callee_not_declared: AFortFXManager::ReturnGenericPooledMID (CALL 0x141dd7150) absent from generated headers; CALL 0x1406d9a30 candidate AFortAthenaExitCraftSpawner::DestroyBlockingActors takes no arg"
+  },
+  {
+   "class": "AFortTheaterMapTile",
+   "function": "IsTilePlayable",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: AFortTheaterMapTile::IsTileSelectable (CALL 0x142571190) and IsTileLocked (CALL 0x142570b60) are absent from the generated headers"
+  },
+  {
+   "class": "AFortTimeOfDayManager",
+   "function": "FastForwardToTime_ByDuration",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: AFortTimeOfDayManager::FastForwardToTime (JMP 0x141f5d050) is absent from the generated header; also hidden float constants at [0x145bc102c] and [0x14603bb04] are not in the asm o"
+  },
+  {
+   "class": "AFortVolumeManager",
+   "function": "ActorsAreInSameVolume",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: AFortVolumeManager::GetVolumeForActor (CALL 0x141c7c5c0) is absent from the generated headers"
+  },
+  {
+   "class": "AFortVolumeManager",
+   "function": "EnterReadOnlyForVolume",
+   "case": "unreflected_delegate",
+   "reason": "unreflected delegate: the Broadcast target at Volume+0x418 (CALL 0x1406a9dc0) is a gap in AFortVolume (TaskQueue ends at +0x418); no delegate type or parameter list to Broadcast against"
+  },
+  {
+   "class": "AFortVolumeManager",
+   "function": "ResaveActor",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: AFortVolumeManager::GetVolumeForActor (0x141c7c5c0) and ResaveActorWithVolume (0x141c8cfd0) are absent from porting/native/Source/FortniteGame/Generated/AFortVolumeManager.h"
+  },
+  {
+   "class": "AFortWeapon",
+   "function": "OnRep_ReplicatedCosmeticOverrideWeaponData",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x1426a66b0 leaves the 3-instruction body; target not in insns and no callee candidate"
+  },
+  {
+   "class": "AFortWeapon",
+   "function": "OnRep_ReplicatedWeaponData",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x1426a6950 leaves the 3-instruction body; target not in insns and no callee candidate"
+  },
+  {
+   "class": "AFortWeapon",
+   "function": "ServerResetShotReport_Implementation",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: candidate AFortAthenaMutator_DadBro::StartNextSafeZonePhase is absent from its generated header; 0x14072d2e0 is called with this+0x8f0 (ShotLogFlags TArray<uint32>, Max at +0xc) a"
+  },
+  {
+   "class": "AFortWeapon",
+   "function": "SetHudKeyActionsVisibility",
+   "case": "param_struct_unreflected",
+   "reason": "param_struct_unreflected: element type FWeaponHudKeyActionVisibility is absent from the reflection JSON and generated headers; asm gives an 8-byte element (int32 at +0, bool at +4) but member names ar"
+  },
+  {
+   "class": "AFortWeapon",
+   "function": "SetTrajectoryVisibilityControllerOnly",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: 0x142ee7880 and 0x142ee5dd0 are shared bodies called on this+0x914 (AttachedTrajectoryIndicator, TWeakObjectPtr<AFortProjectileTrajectory>); no candidate class equals or is an"
+  },
+  {
+   "class": "UFortWaterInteractionComponent",
+   "function": "IsEnabled",
+   "case": "hidden_global",
+   "reason": "hidden_global: body reads absolute global 0x1478df4b8 (CMP dword ...,0; JLE) that is not reflected; byte bit at +0xb0 is in engine storage, outside the proposal"
+  },
+  {
+   "class": "UFortWaypointVolumeComponent",
+   "function": "OnClientEnterVolume",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x142b32e10 is a tail jump outside the body; no callee candidate (body 0x14209cf50 shared with OnClientExitVolume)"
+  },
+  {
+   "class": "UFortWaypointVolumeComponent",
+   "function": "OnClientExitVolume",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x142b32e10 is a tail jump outside the body; no callee candidate (body 0x14209cf50 shared with OnClientEnterVolume)"
+  },
+  {
+   "class": "AFortWeaponPickaxeAthena",
+   "function": "CreateAnimTrailFX",
+   "case": "absolute_constants_static_call",
+   "reason": "absolute_constants_static_call: loads constants from absolute addresses 0x147c31ca8, 0x147c31ca0, 0x148218648, 0x148218638, 0x148218640, 0x148218630 and calls static UFortNiagaraGameplayLibrary::SetAs"
+  },
+  {
+   "class": "AFortWeaponPickaxeDualWieldAthena",
+   "function": "CreateAnimTrailOffhandFX",
+   "case": "absolute_constants_static_call",
+   "reason": "absolute_constants_static_call: loads constants from absolute addresses 0x147c31ca8, 0x147c31ca0, 0x148218648, 0x148218638, 0x148218640, 0x148218630 and calls static UFortNiagaraGameplayLibrary::SetAs"
+  },
+  {
+   "class": "AFortWeaponRanged",
+   "function": "SetHomingTarget",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: 0x142ee3b30 is a six-way shared body called on this+0xd60, which is an unreflected gap in AFortWeaponRanged with no determinable receiver class (AFortPawn::IsDead 0x142331080 "
+  },
+  {
+   "class": "AFortWeaponRanged",
+   "function": "UseReducedAimAssist",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: AFortWeaponRanged::IsUsingScope (0x1426d2930) is absent from porting/native/Source/FortniteGame/Generated/AFortWeaponRanged.h"
+  },
+  {
+   "class": "UHoverDroneMovementComponent",
+   "function": "OnFollowedPlayerChanged",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JZ 0x1424774e0 leaves the 3-instruction body; target not in insns and no callee candidate"
+  },
+  {
+   "class": "UInfiltrationStatusComponent",
+   "function": "TryExecuteMutatorReady",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: 0x142ee7880 is called on this+0x100 (CachedMutator, TWeakObjectPtr<AFortAthenaMutator_Infiltration>); no candidate (AFortAthenaMutator_Crucible, AFortTeamMemberPedestal, UHUDL"
+  },
+  {
+   "class": "ULevelSaveBaseComponent",
+   "function": "RegisterDeletionToRollback",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x142063b50 is a tail jump outside the 13-instruction body; no callee candidate"
+  },
+  {
+   "class": "ULevelSaveBaseComponent",
+   "function": "RegisteredDeletedLevelStreamedActor",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x142063ef0 is a tail jump outside the body; no callee candidate"
+  },
+  {
+   "class": "ULevelSaveBaseComponent",
+   "function": "ResaveLevelStreamedActor",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x142069590 is a tail jump outside the body; no callee candidate"
+  },
+  {
+   "class": "APartyDisplayManager",
+   "function": "OnPawnBeginCursorOver",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: APartyDisplayManager::GetPartyMemberIndexByPlayerPawn (0x141fc1d10) is absent from porting/native/Source/FortniteGame/Generated/APartyDisplayManager.h"
+  },
+  {
+   "class": "APartyDisplayManager",
+   "function": "OnPawnEndCursorOver",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: APartyDisplayManager::GetPartyMemberIndexByPlayerPawn (0x141fc1d10) is absent from porting/native/Source/FortniteGame/Generated/APartyDisplayManager.h"
+  },
+  {
+   "class": "APartyDisplayManager",
+   "function": "OnPawnTouchReleased",
+   "case": "absolute_global_struct_copy",
+   "reason": "MOV RAX,[0x1482642c8]/[0x1482642d0]/[0x1482642d8] copies a 24-byte hidden global struct (type unknown, refcounted at +0x10) into the R8 argument; callee APartyDisplayManager::OnPawnClicked (0x141fc9b6"
+  },
+  {
+   "class": "UPlaysetLevelStreamComponent",
+   "function": "ClearPlayset",
+   "case": "callee_not_declared",
+   "reason": "callee AFortVolume::SetCurrentPlayset (0x141c8f380) is not declared in any generated header"
+  },
+  {
+   "class": "UPlaysetLevelStreamComponent",
+   "function": "SetPlayset",
+   "case": "callee_not_declared",
+   "reason": "callee AFortVolume::SetCurrentPlayset (0x141c8f380) is not declared in any generated header"
+  },
+  {
+   "class": "ASOLFortGame",
+   "function": "DeclareWinningPlayer",
+   "case": "callee_not_declared",
+   "reason": "tail-call callee AFortMinigame::DeclareWinnerImmediately (0x142089af0) is not declared in any generated header"
+  },
+  {
+   "class": "ASOLFortGame",
+   "function": "DeclareWinningTeam",
+   "case": "callee_not_declared",
+   "reason": "tail-call callee AFortMinigame::DeclareWinnerImmediately (0x142089af0) is not declared in any generated header"
+  },
+  {
+   "class": "ASOLFortGame",
+   "function": "GetNumberOfPlayers",
+   "case": "callee_not_declared",
+   "reason": "callee ASOLFortGame::GetPlayers (0x14246e110, TArray sret) is not declared in any generated header"
+  },
+  {
+   "class": "ASOLFortGame",
+   "function": "GetNumberOfTeams",
+   "case": "callee_not_declared",
+   "reason": "callee ASOLFortGame::GetTeams (0x14246ed50, TArray sret) is not declared in any generated header"
+  },
+  {
+   "class": "AUnicornDriver",
+   "function": "HandleDemoPlaybackFinish",
+   "case": "conditional_tail_jump_unresolved",
+   "reason": "JNZ 0x142641ac0 leaves the body; target is not in callee_candidates (only direct CALL/JMP targets are mapped)"
+  },
+  {
+   "class": "UAthenaBattleMapTimelineWidget",
+   "function": "OnReplayLevelStreamingChanged",
+   "case": "conditional_tail_jump_unresolved",
+   "reason": "JNZ 0x144c79c60 after the byte store leaves the body; target is not in callee_candidates"
+  },
+  {
+   "class": "UAthenaBattleMapNodeTooltip",
+   "function": "OnReplayLevelStreamingChanged",
+   "case": "conditional_tail_jump_unresolved",
+   "reason": "JNZ 0x144c7be40 after the byte store leaves the body; target is not in callee_candidates"
+  },
+  {
+   "class": "UAthenaChallengeListEntry_DetailedChallenge",
+   "function": "HandleCloseChallengeOptionsInputAction",
+   "case": "conditional_tail_jump_unresolved",
+   "reason": "JNZ 0x144b7d510 leaves the body; target is not in callee_candidates"
+  },
+  {
+   "class": "UAthenaContextualChallengesWidget",
+   "function": "GetOutroDelay",
+   "case": "absolute_global_float",
+   "reason": "returns the float at hidden absolute global 0x147e1ac10; that constant is not in the job inputs and is not guessed"
+  },
+  {
+   "class": "UAthenaContextualChallengesWidget",
+   "function": "ShouldOutroAutomatically",
+   "case": "absolute_global_float",
+   "reason": "compares hidden absolute globals 0x147e1ac10 and 0x1459c03a0 (COMISS/SETA); constants not in job inputs and not guessed"
+  },
+  {
+   "class": "UAthenaEventMatchTeamWidgetBase",
+   "function": "GetTeamKills",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee7880 has 3 candidates (AFortAthenaMutator_Crucible, AFortTeamMemberPedestal, UHUDLayoutToolContext); receiver is a stack temp LEA RCX,[RSP+0x30] matching none"
+  },
+  {
+   "class": "UAthenaEventMatchTeamWidgetBase",
+   "function": "IsTeamDead",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee7880 has 3 candidates; receiver is a stack temp LEA RCX,[RSP+0x30] matching none"
+  },
+  {
+   "class": "UAthenaEventMatchTeamWidgetBase",
+   "function": "OnPlayerDeadStateChanged",
+   "case": "callee_not_declared",
+   "reason": "callee UFortControllerComponent_MinigameActivity::ForwardMinigameActivityRankChanged (0x140f2c470) is not declared in any generated header; body 0x144c72160 shared with OnPlayerDisconnectedChanged"
+  },
+  {
+   "class": "UAthenaEventMatchTeamWidgetBase",
+   "function": "OnPlayerDisconnectedChanged",
+   "case": "callee_not_declared",
+   "reason": "callee UFortControllerComponent_MinigameActivity::ForwardMinigameActivityRankChanged (0x140f2c470) is not declared in any generated header; body 0x144c72160 shared with OnPlayerDeadStateChanged"
+  },
+  {
+   "class": "UAthenaHUDBase",
+   "function": "HandleVolumeLoaded",
+   "case": "callee_not_declared",
+   "reason": "callee UMinigameWidgetBase::OnEnteredVolume (0x144bf6bf0) is not declared in any generated header"
+  },
+  {
+   "class": "UAthenaHUDBase",
+   "function": "HandleVolumeUnloaded",
+   "case": "callee_not_declared",
+   "reason": "callee UMinigameWidgetBase::OnExitVolume (0x144bf6c10) is not declared in any generated header"
+  },
+  {
+   "class": "UAthenaHUDContext",
+   "function": "ForceFireFromHUDStop",
+   "case": "callee_not_declared",
+   "reason": "callees AFortAthenaMutator_DadBro::StartNextSafeZonePhase (0x14072d2e0) and UAthenaHUDContext::FireFromHUDStop (0x144c8c3d0, tail jump) are not declared in any generated header"
+  },
+  {
+   "class": "UAthenaHUDContext",
+   "function": "IsMovingSelectedWidget",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee7880 has 3 candidates; receiver this+0x220 (MoveButtonWidgetPtr, WeakObject) matches no candidate class"
+  },
+  {
+   "class": "UAthenaHUDContext",
+   "function": "SetSelectWidgetToMoveMode",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee3b30 has 6 unrelated candidates; receiver is an sret stack temp returning an 8-byte value that no candidate matches"
+  },
+  {
+   "class": "UAthenaItemShopScreen",
+   "function": "HandlePurchaseOfferComplete",
+   "case": "unresolved_tail_branch",
+   "reason": "144bb69c2 JNZ 0x144bcc2d0 is a conditional tail branch to a target with no callee_candidates entry (TEST DL,DL; JNZ; RET)."
+  },
+  {
+   "class": "UAthenaMapNavigableIconStackOfChallenges",
+   "function": "ShouldCycleAutomatically",
+   "case": "absolute_global",
+   "reason": "CMP byte [0x1483856e0],0 reads a hidden absolute global with no reflected member; this+0x258 is an unreflected FWeakObjectPtr below every reflected member of the chain, used by 0x142ee7880 (IsValid) a"
+  },
+  {
+   "class": "UAthenaProfileStatBox",
+   "function": "SetStatView",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x144c40c60 candidates UAthenaProfileStatsBase::NextStatSet and PrevStatSet share one body; receiver UAthenaProfileStatBox is not a UAthenaProfileStatsBase descendant (chain USizeBox, UContentWid"
+  },
+  {
+   "class": "UAthenaPlayerIndicatorBase",
+   "function": "HandleCurrentPawnChanged",
+   "case": "unreflected_weak_receiver",
+   "reason": "Receiver this+0x304 for CALL 0x142ee5dd0 (TWeakObjectPtr::Get) is an unreflected 8-byte gap in the own region (own min 0x2d0); no typed member can express the weak pointer."
+  },
+  {
+   "class": "UAthenaMarkerPointer",
+   "function": "SetLineMeshMaterial",
+   "case": "unresolved_tail_branch",
+   "reason": "144b4df47 path: JNZ 0x144b4de60 (after MOV [RCX+0x108],RDX and MOV RCX,[RCX+0x118]) is a conditional tail branch with no callee_candidates entry."
+  },
+  {
+   "class": "UAthenaMarkerPointer",
+   "function": "SetTargetScreenPosition",
+   "case": "shared_callee_ambiguous",
+   "reason": "this+0x118 object pointer is an unreflected gap with unknown class; JMP 0x142fc6030 (DL=2) candidates are three unrelated classes (UDonutChallengeScreen, UFortChatWidget, UFortTierIndicator)."
+  },
+  {
+   "class": "UAthenaProfileStatWidgetBase",
+   "function": "SetStatView",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x144c40c60 on the reflected UAthenaProfileStatBox at this+0x260; NextStatSet and PrevStatSet of UAthenaProfileStatsBase share one body and UAthenaProfileStatBox is not a descendant."
+  },
+  {
+   "class": "UAthenaRemotePlayerViewData",
+   "function": "ForwardOnDisconnectedChanged",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x144c20090 (UAthenaRemotePlayerViewData::ForwardOnPlaceChanged) has no declaration in any porting/native/Source header (grep)."
+  },
+  {
+   "class": "UAthenaRemotePlayerViewData",
+   "function": "GetIsBeingRevived",
+   "case": "unresolved_tail_branch",
+   "reason": "JNZ 0x141a4a3e0 on this+0x1d0 is a conditional tail call with no callee_candidates entry."
+  },
+  {
+   "class": "UAthenaRemotePlayerViewData",
+   "function": "GetIsDBNO",
+   "case": "unresolved_tail_branch",
+   "reason": "JNZ 0x141a4a8c0 on this+0x1d0 is a conditional tail call with no callee_candidates entry."
+  },
+  {
+   "class": "UAthenaRespawnTimer",
+   "function": "AddExtensionWidget",
+   "case": "unresolved_tail_branch",
+   "reason": "TEST RDX,RDX; JNZ 0x1451bc0e0 is a conditional tail branch with no callee_candidates entry."
+  },
+  {
+   "class": "UAthenaTimeWidgetBase",
+   "function": "OnGamePhaseChanged",
+   "case": "unresolved_tail_branch",
+   "reason": "CMP DL,0x5; JZ 0x144b50f70 is a conditional tail branch with no callee_candidates entry."
+  },
+  {
+   "class": "UBattlePassScreen",
+   "function": "GetBattlePassPurchaseLevelOfferId",
+   "case": "unknown_pointee_shared_callee",
+   "reason": "this+0x710 is an unreflected pointer gap (pointee class unknown); the FString copy CALL 0x140682ce0 has four unrelated shared-body candidates (shared_callee_ambiguous)."
+  },
+  {
+   "class": "UFortActivatableVideoPanel",
+   "function": "StartVideo",
+   "case": "unresolved_tail_branch",
+   "reason": "JG 0x144f7c8a0 is a conditional tail call with no callee_candidates entry, comparing dword +0x260 of the unresolved class of this+0x4f0 (VideoPlayerWidget)."
+  },
+  {
+   "class": "UFortAccountStatsContext",
+   "function": "CanShowAccountStats",
+   "case": "absolute_global",
+   "reason": "CMP dword [0x147e1ae88],0 reads a hidden absolute global with no reflected member."
+  },
+  {
+   "class": "UFortAlterationOption",
+   "function": "GetNextPipCount",
+   "case": "callee_not_declared",
+   "reason": "CALL/JMP 0x144f23720 (UFortAlterationOption::GetCurrentPipCount) has no declaration in any porting/native/Source header (grep); the ADDSS rodata constant at 0x1459a86f8 is also unresolved."
+  },
+  {
+   "class": "UFortAlterationsWidget",
+   "function": "HandleAlterationsSlotSelected",
+   "case": "receiver_class_unknown",
+   "reason": "CALL 0x140f2c470 on this+0x278, an unreflected pointer gap with unknown pointee; UFortControllerComponent_MinigameActivity::ForwardMinigameActivityRankChanged cannot be bound to that receiver."
+  },
+  {
+   "class": "UFortAlterationsWidget",
+   "function": "SetupInteractionEvents",
+   "case": "unresolved_tail_branch",
+   "reason": "JNZ 0x1407aa410 on this+0x2b0 is a conditional tail call with no callee_candidates entry."
+  },
+  {
+   "class": "UFortAthenaMOTDWidget",
+   "function": "SelectNewsByIndex",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1407f39f0 (UCommonButtonGroup::SelectButtonAtIndex) has no declaration in any porting/native/Source header (grep); GetSelectedButtonIndex is declared."
+  },
+  {
+   "class": "UFortBaseButton",
+   "function": "SetClickMethod",
+   "case": "unknown_pointee_shared_callee",
+   "reason": "this+0x7d8 is an unreflected 8-byte weak-pointer gap (CALL 0x142ee5dd0 is TWeakObjectPtr::Get); the store to [RAX+0x3c0] targets a class that cannot be bound (four unrelated shared candidates)."
+  },
+  {
+   "class": "UFortCampaignTeamMemberResult",
+   "function": "Focus",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x14514f130 (UFortUIManagerWidget_Campaign::GetUINavigationManager) and JMP 0x144db14e0 (UFortUINavigationManager::CenterWidget) are not declared in any generated header."
+  },
+  {
+   "class": "UFortCampaignHUDTeamMemberInfo",
+   "function": "HandleAccumulatedItemsChanged",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee5dd0 on this+0xb74 (unreflected embedded receiver) shares its body with 6 candidates; none is this class or an ancestor."
+  },
+  {
+   "class": "UFortCollectionBookItemPopupMenu",
+   "function": "GetHostButton",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee5dd0 on this+0x41c (unreflected embedded receiver) shares its body with 6 candidates; none is this class or an ancestor."
+  },
+  {
+   "class": "UFortCollectionBookSectionPanel",
+   "function": "OnSlotItemActionExecuted",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x144f5e8e0 (UFortItemPickerBase::GetSelectedItem) is not declared in any generated header."
+  },
+  {
+   "class": "UFortCollectionBookSlotButton",
+   "function": "OnSlottedItemUpdated",
+   "case": "unreflected_delegate_member",
+   "reason": "Broadcast on this+0xb98 (CALL 0x1406a9dc0 via JMP): no reflected member at +0xb98 and no delegate type known for it."
+  },
+  {
+   "class": "UFortCollectionBookSlotWidget",
+   "function": "HandleSlottedItemOperationComplete",
+   "case": "cold_path_unresolved",
+   "reason": "Body is a head of a large function: JNZ 0x1450d0fe0 continues into calls not in callee_candidates (e.g. 0x1450b79c0, 0x142a3d9f0, vtable+0x288)."
+  },
+  {
+   "class": "UFortCollectionBookWidget",
+   "function": "OnPreviewXPChangeRequest",
+   "case": "cold_path_unresolved",
+   "reason": "JNZ 0x1450c6f20 continues into unresolved calls (vtable+0x288, FUN_1450cd690, FUN_1424a18f0, FUN_142a3d9f0, FUN_142bedc40); none in callee_candidates."
+  },
+  {
+   "class": "UFortEventLeaderboardEntryData",
+   "function": "GetLiveSessionId",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140682ce0 on [this+0x28]+0x80 shares its body with 6 candidates that return SoftObject or void; none matches the receiver or the FString sret."
+  },
+  {
+   "class": "UFortCreativeMessageKnobsDialog",
+   "function": "ContainsItem",
+   "case": "return_type_mismatch",
+   "reason": "Body is LEA RAX,[RCX-0x108]; RET, returning a pointer-adjusted this, but header_decl says bool; bool semantics cannot be determined exactly."
+  },
+  {
+   "class": "UFortCreativeMessageKnobsDialog",
+   "function": "FilterEntriesByString",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140683960 on this+0x580 (FString copy from RDX) shares its body with 6 candidates; none is this class or an ancestor."
+  },
+  {
+   "class": "UFortCreativeGlobalOptions",
+   "function": "SetListDataSource",
+   "case": "cold_path_unresolved",
+   "reason": "JZ 0x144d954b0 (ListType==6 path) continues into vtable+0x288 call and unresolved helpers (FUN_142a62c80, FUN_1423d3b90); also stores dword for a Byte param."
+  },
+  {
+   "class": "UFortCreativeIslandGeneration",
+   "function": "GetShowTemplateIslands",
+   "case": "absolute_global",
+   "reason": "CMP dword ptr [0x147e1af28],0x0 reads an absolute global address with no reflected or static owner."
+  },
+  {
+   "class": "UFortDivisionDetailsScreen",
+   "function": "SetTournamentAndEventId",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x14509d090 (UFortShowdownDetailView::SetTournament) is not declared in any generated header; receiver DetailsInfo is UFortDivisionDetailsInfo."
+  },
+  {
+   "class": "UFortDropdownMenu",
+   "function": "DeselectAll",
+   "case": "unresolved_conditional_tail_call",
+   "reason": "JNZ 0x1407b8690 is a conditional tail call to a target not in callee_candidates."
+  },
+  {
+   "class": "UFortDropdownMenu",
+   "function": "GetSelectedButtonIndex",
+   "case": "unresolved_conditional_tail_call",
+   "reason": "JNZ 0x1407c48f0 is a conditional tail call to a target not in callee_candidates."
+  },
+  {
+   "class": "UFortDropdownMenu",
+   "function": "InternalOnButtonClicked",
+   "case": "unresolved_conditional_tail_call",
+   "reason": "JNZ 0x1407f1730 is a conditional tail call to a target not in callee_candidates."
+  },
+  {
+   "class": "UFortDropdownDelegateRegistrar",
+   "function": "OnOpenStatusChanged",
+   "case": "unresolved_conditional_tail_call",
+   "reason": "JNZ 0x144e19a00 is a conditional tail call to a target not in callee_candidates; JNZ 0x144d8d0c1 branch unresolved too."
+  },
+  {
+   "class": "UFortExpeditionOverviewWidget",
+   "function": "UpdateExpeditionTabs",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1407f04d0 (UCommonTabListWidget::RemoveAllTabs) and CALL 0x144ddb890 (UFortTabListWidgetBase::RegisterFortTab) are not declared in any generated header."
+  },
+  {
+   "class": "UFortHeroLoadoutHeroPicker",
+   "function": "GetCurrentlySelectedTab",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1407c4ba0 (UCommonTabListWidget::GetSelectedTabId) is not declared in any generated header."
+  },
+  {
+   "class": "AFortHeroLoadoutPedestal",
+   "function": "HandleDifferentHeroLoadoutSlotFocused",
+   "case": "unresolved_tail_jump",
+   "reason": "unresolved_conditional_tail_jump 0x14524ec70: JNZ after storing the bool at +0x3f0 (gap); target absent from callee_candidates, callee not identifiable"
+  },
+  {
+   "class": "UFortHeroLoadoutSlotButton",
+   "function": "IsContextMenuOpen",
+   "case": "unresolved_tail_jump",
+   "reason": "unresolved_conditional_tail_jump 0x143d66800: JNZ tail with RCX=ContextMenuAnchor (+0xba0); target absent from callee_candidates"
+  },
+  {
+   "class": "UFortHomebaseUIContext",
+   "function": "AutoSlotAllSurvivorSquads",
+   "case": "unresolved_tail_jump",
+   "reason": "unresolved_conditional_tail_jump 0x14510e150: JNZ tail with RCX=[+0xc8] (unreflected gap); target absent from callee_candidates"
+  },
+  {
+   "class": "UFortHomebaseNodeItemUtilities",
+   "function": "IsHomebaseNodeItemUnseenForTagContainer",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: UFortHomebaseNodeItemUtilities::GetHomebaseNodeItemForTagContainer (CALL 0x1450e8290) is absent from the generated headers"
+  },
+  {
+   "class": "UFortHUDContext",
+   "function": "GetCurrentHUDState",
+   "case": "return_abi_mismatch",
+   "reason": "return_abi_mismatch: body returns RAX=RCX+0x608 (address into this, no sret store, RDX unused) but header_decl declares by-value FFortHUDState"
+  },
+  {
+   "class": "UFortHUDTargetUnderReticleWidget",
+   "function": "OnTargetActorDestroyed",
+   "case": "unresolved_tail_jump",
+   "reason": "unresolved_conditional_tail_jump 0x14525cc20: JZ tail when Target (+0x258) equals DestroyedActor; target absent from callee_candidates"
+  },
+  {
+   "class": "UFortItemAutoMulchActivatablePanel",
+   "function": "EnterMulchModeForAutoMulch",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: UFortItemManagementScreen::EnterMulchModeForAutoMulch (JMP 0x144f58f80) is absent from the generated headers; the receiver weak pointer at +0x448 is otherwise resolvable"
+  },
+  {
+   "class": "UFortItemBaseWidget",
+   "function": "GetQuantity",
+   "case": "unresolved_tail_jump",
+   "reason": "unresolved_conditional_tail_jump 0x144ebd440: JNZ tail when ItemDefinition (+0x270) is non-null; target absent from callee_candidates"
+  },
+  {
+   "class": "UFortItemManagementInventoryPanel",
+   "function": "HandleCraftItemStarted",
+   "case": "unresolved_tail_jump",
+   "reason": "unresolved_conditional_tail_jump 0x144f436f0: JNZ tail on TEST byte [+0x3b8],0x8; target absent from callee_candidates"
+  },
+  {
+   "class": "UFortItemManagementScreen",
+   "function": "MarkAllItemsAsSeen",
+   "case": "unresolved_tail_jump",
+   "reason": "unresolved_conditional_tail_jump 0x144f2d200: JNZ tail with RCX=InventoryPanel (+0x528); target absent from callee_candidates"
+  },
+  {
+   "class": "AFortItemPreviewSceneChanger",
+   "function": "OnZoomLevelTicked",
+   "case": "unresolved_tail_jump",
+   "reason": "unresolved_conditional_tail_jump 0x141fcf350: JNZ tail on the scene component at ActiveScene+0x220->+0x230; target absent; ActiveScene class at +0x238 unreflected"
+  },
+  {
+   "class": "UFortJournalQuestDetails",
+   "function": "CanGotoQuest",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: UFortUIManagerWidget_Campaign::GetUINavigationManager (CALL 0x14514f130) and UFortUINavigationManager::CanNavigateToQuestObjective (CALL 0x144db0f70) are absent from the generated"
+  },
+  {
+   "class": "UFortLazyImage",
+   "function": "SetShadowColorAndOpacity",
+   "case": "callee_not_declared",
+   "reason": "Call 0x142fcffb0 (candidate UFortTierIndicator::ClearPreviewState, params []) has no declaration in any porting/native/Source header, and the call site passes RDX=&copy of the color (contradicts param"
+  },
+  {
+   "class": "UFortLlamaStoreOfferInfo",
+   "function": "GetDisplayAssetIcon",
+   "case": "unresolved_tail_target",
+   "reason": "Conditional tail JNZ 0x142546d60 (asm 1450ad537) has no callee_candidates entry, no name in reflection or batch data, and is not a known engine helper; non-null result unresolved."
+  },
+  {
+   "class": "UFortLlamaStoreOfferInfo",
+   "function": "GetDisplayAssetPersonality",
+   "case": "unresolved_tail_target",
+   "reason": "Conditional tail JNZ 0x142546d70 has no callee_candidates entry, no name in reflection or batch data, and is not a known engine helper; non-null result unresolved."
+  },
+  {
+   "class": "UFortLlamaStoreOfferWidgetBase",
+   "function": "GetPriceIndexToShow",
+   "case": "unresolved_tail_target",
+   "reason": "Conditional JNZ 0x1450b1190 (asm 1450b115a) targets an address outside the body with no callee_candidates entry or known helper; non-null return path unresolved."
+  },
+  {
+   "class": "UFortMatchXPTotalEntry",
+   "function": "InitializeXPCounter",
+   "case": "callee_not_declared",
+   "reason": "Call 0x1407ced00 (UCommonNumericTextBlock::InterpolateToValue) is not declared in any porting/native/Source header."
+  },
+  {
+   "class": "UFortMatchmakingKnobsModal",
+   "function": "HandleRestoreClicked",
+   "case": "receiver_mismatch",
+   "reason": "Body never reads RCX (receiver); all stores go through RDX (second argument) and RAX=RDX is returned (sret-style), contradicting header_decl void HandleRestoreClicked()."
+  },
+  {
+   "class": "UFortMatchmakingKnobsModal",
+   "function": "OnHoveredItemChanged",
+   "case": "unresolved_tail_target",
+   "reason": "Conditional JNZ 0x144dd33e0 (on R8B=bIsHovered) has no callee_candidates entry or known helper; the true-path result is unresolved."
+  },
+  {
+   "class": "UFortMissionActivationInfo",
+   "function": "GetVoteTimeRemaining",
+   "case": "callee_not_declared",
+   "reason": "Call 0x141e9f020 (AFortGameStateZone::GetTimeRemainingToEndVote) is not declared in any porting/native/Source header; the sibling IsGameplayVoteActive (0x141ea2430) is declared."
+  },
+  {
+   "class": "UFortMissionActivationInfo",
+   "function": "IsAnyVoteActive",
+   "case": "unresolved_tail_target",
+   "reason": "Conditional tail JNZ 0x141ea2160 with RCX=GameStateZone has no callee_candidates entry or known helper."
+  },
+  {
+   "class": "UFortMissionTrackerList",
+   "function": "UpdateVisibleMissionCategories",
+   "case": "callee_not_declared",
+   "reason": "Call 0x144f82200 (UFortMissionTrackerList::HandleMissionsUpdated) is not declared in any porting/native/Source header."
+  },
+  {
+   "class": "UFortMultiSizeImage",
+   "function": "SetColorAndOpacity",
+   "case": "callee_not_declared",
+   "reason": "Call 0x142fcffb0 (candidate UFortTierIndicator::ClearPreviewState, params []) has no declaration; call site passes RDX=&color copy (contradicts params [])."
+  },
+  {
+   "class": "UFortMultiSizeItemCard",
+   "function": "SetShouldCollapseBorderPadding",
+   "case": "unresolved_tail_target",
+   "reason": "Conditional tail JNZ 0x144ee3f00 with RCX=[RAX+0x3d0] has no callee_candidates entry or known helper; the flag-changed path is unresolved."
+  },
+  {
+   "class": "UFortMultiSizeItemCard",
+   "function": "SetShouldCollapseItem",
+   "case": "unresolved_tail_target",
+   "reason": "Conditional tail JNZ 0x144ee3e90 with RCX=[RAX+0x3d0] has no callee_candidates entry or known helper."
+  },
+  {
+   "class": "UFortMultiSizeItemCard",
+   "function": "SetShouldSuppressItemTypeIcon",
+   "case": "unresolved_tail_target",
+   "reason": "Conditional tail JNZ 0x144ee4020 with RCX=[RAX+0x3d0] has no callee_candidates entry or known helper."
+  },
+  {
+   "class": "UFortMTXButton",
+   "function": "HandleLocalAcountInfoChanged",
+   "case": "callee_not_declared",
+   "reason": "Call 0x1407ced00 (UCommonNumericTextBlock::InterpolateToValue) is not declared in any porting/native/Source header."
+  },
+  {
+   "class": "UFortOptionsMenu",
+   "function": "ResetActionHandlerStates",
+   "case": "callee_not_declared",
+   "reason": "Five calls to 0x1407f3f90 (UCommonActivatablePanel::SetActionHandlerStateFromHandle) are not declared in any porting/native/Source header."
+  },
+  {
+   "class": "UFortPerkWidget_NUI",
+   "function": "HasAbility",
+   "case": "callee_not_declared",
+   "reason": "Call 0x141d98eb0 (UFortTeamPerkItemDefinition::GetAbilityKitBP) is not declared in UFortTeamPerkItemDefinition.h or any generated header; the call also sets DL=1, which the candidate params do not lis"
+  },
+  {
+   "class": "UFortPerkWidget_NUI",
+   "function": "IsPerkEmpty",
+   "case": "callee_not_declared",
+   "reason": "Call 0x141d98eb0 (UFortTeamPerkItemDefinition::GetAbilityKitBP) is not declared in any generated header; the call also sets DL=1, which the candidate params do not list."
+  },
+  {
+   "class": "UFortPartySuggestionButton",
+   "function": "HandleSuggestionAccepted",
+   "case": "unresolved_tail_target",
+   "reason": "Conditional tail JZ 0x144ded0e0 (on PlayerId == this+0xb70) has no callee_candidates entry or known helper."
+  },
+  {
+   "class": "UFortPickerContext",
+   "function": "UseLeftThumbstick",
+   "case": "callee_not_declared",
+   "reason": "Call 0x144cfdbe0 (UFortPickerContext::DoesRadialCloseOnRelease) is not declared in any porting/native/Source header."
+  },
+  {
+   "class": "UFortPlayerSurveyAnswerWidgetBase",
+   "function": "NativeHandleAnswerChanged",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140680160 and 0x1406800e0 map to UAthenaLobbyBase::HandlePlaylistDataChanged and UCreativeMiniMapComponent::OnRep_IconData; receiver is the EventInfo struct (RCX=RBX), matching neither. CALL 0x"
+  },
+  {
+   "class": "UFortPlayerSurveyDispatcher",
+   "function": "HandleDisplayOneSurvey",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JZ 0x144f9c480 (taken when CurrentWidget [this+0x58] is null) is a conditional tail branch outside the body; Jcc targets are not in callee_candidates and 0x144f9c480 has no reflected body."
+  },
+  {
+   "class": "UFortPlayerSurveyStatsPrecacher",
+   "function": "HandleGamePhaseChanged",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JZ 0x144fb3bf0 (taken when GamePhase==3) is a conditional tail branch outside the body; not in callee_candidates and no reflected body for 0x144fb3bf0."
+  },
+  {
+   "class": "UFortQuestMapScreen",
+   "function": "SetIgnorePageNavigation",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JZ 0x140684de0 (taken when bIgnoreNavigation is false) is a conditional tail branch outside the body; not in callee_candidates, not a known stub, no reflected body."
+  },
+  {
+   "class": "UFortQuestMapEventCallout",
+   "function": "IsCurrentEventUnlocked",
+   "case": "callee_not_declared",
+   "reason": "JMP 0x1450efeb0 maps to UFortQuestMapScreen::IsBeyondQuest, which is not declared anywhere in porting/native/Source; its class is not an ancestor of the UFortQuestMapEventCallout receiver."
+  },
+  {
+   "class": "UFortQuestMapEventCallout",
+   "function": "SetIsExpanded",
+   "case": "callee_not_declared",
+   "reason": "JMP 0x1406934e0 maps to UFortCollectionBookSlotButton::PopupMenuClosedWithAction, not declared in porting/native/Source; receiver RCX=this+0x460 is an unreflected inline sub-object. The verbosity-gate"
+  },
+  {
+   "class": "UFortQuestTrackerList",
+   "function": "HandleQuestsUpdated",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JZ 0x144ff66f0 (taken when byte [this+0x260] is zero) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+  },
+  {
+   "class": "UFortQuickBarSlotBase",
+   "function": "RefreshItemIfSlotChanged",
+   "case": "callee_not_declared",
+   "reason": "JMP 0x144feb950 maps to UFortQuickBarSlotBase::RefreshItem, which is not declared anywhere in porting/native/Source."
+  },
+  {
+   "class": "UFortResultsWidget",
+   "function": "GetRewardsByType",
+   "case": "shared_callee_ambiguous",
+   "reason": "JMP 0x1406af1d0 (RCX=OutRewards TArray&, RDX=this+0x490..0x4c0 TArray) maps to SetCommunicationGroup, ApplyGameplayEffectContainer, ApplyGameplayEffectContainerWithCSVStats and GetIronCityWargameTagLi"
+  },
+  {
+   "class": "UFortReticle",
+   "function": "OnContextualReticleChanged",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JNZ 0x144ff6330 (taken when [this+0x2b8] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+  },
+  {
+   "class": "UFortReticle",
+   "function": "OnReticleColorChanged",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JNZ 0x144ffbad0 (taken when [this+0x2b8] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+  },
+  {
+   "class": "UFortShowdownDetailView",
+   "function": "GetEventBeginTime",
+   "case": "undefined_stack_read",
+   "reason": "When [this+0x5c0] is null the body stores MOV RAX,qword ptr [RSP+0x8] into the sret FDateTime; that caller shadow slot is not defined by this body."
+  },
+  {
+   "class": "UFortShowdownDetailView",
+   "function": "GetEventEndTime",
+   "case": "undefined_stack_read",
+   "reason": "When [this+0x5c0] is null the body stores MOV RAX,qword ptr [RSP+0x8] into the sret FDateTime; that caller shadow slot is not defined by this body."
+  },
+  {
+   "class": "UFortShowdownDetailView",
+   "function": "GetEventWindowRoundNumber",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JNZ 0x1422d7290 (taken when [this+0x5c0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+  },
+  {
+   "class": "UFortShowdownDetailView",
+   "function": "GetEventWindowSessionNumber",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JNZ 0x1422d73b0 (taken when [this+0x5c0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+  },
+  {
+   "class": "UFortShowdownDetailView",
+   "function": "GetNumEventRounds",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JNZ 0x1422d4b20 (taken when [this+0x5b0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+  },
+  {
+   "class": "UFortShowdownDetailView",
+   "function": "GetTournamentBestPinState",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x14506e9b0 maps to UFortShowdownDetailView::GetTournamentBestScore, which is not declared anywhere in porting/native/Source."
+  },
+  {
+   "class": "UFortSettingsDeadzoneExtension",
+   "function": "GetLiveAnalogValue",
+   "case": "simd_absolute_constant",
+   "reason": "ANDPS against the absolute constant 0x1459a3d00 (sign mask, value not verified) and MAXSS on the two masked floats cannot be expressed exactly from this asm."
+  },
+  {
+   "class": "UFortShowdownDivisionEventView",
+   "function": "GetAmountEarnedWithinDivision",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JNZ 0x1422c6c70 (taken when [this+0x5c0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+  },
+  {
+   "class": "UFortShowdownDivisionEventView",
+   "function": "GetDivisionRank",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JNZ 0x1422c7430 (taken when [this+0x5b0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+  },
+  {
+   "class": "UFortShowdownDivisionEventView",
+   "function": "GetTotalDivisionPoints",
+   "case": "unresolved_conditional_tail_target",
+   "reason": "JNZ 0x1422d93d0 (taken when [this+0x5c0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+  },
+  {
+   "class": "UCommonButtonGroup",
+   "function": "GetSelectedButton",
+   "case": "shared_callee_ambiguous",
+   "reason": "Tail JMP 0x142ee5dd0 (RCX=&Buttons[index]) is shared by six unrelated const getters (AFortEventLevelNavigationActor::GetOwningGameStateComp, UArsenicWidgetBase::GetArsenicMutator, ...); none is UCommo"
+  },
+  {
+   "class": "AAmbientVolume",
+   "function": "SetAmbientAsset",
+   "case": "unresolved_callee",
+   "reason": "Conditional tail JNZ 0x1412eabd0 (RCX=this, RDX=asset, taken when byte +0x25c bit 0x1 is set) has callee_candidates {} (no reflected function at that address)."
+  },
+  {
+   "class": "AAmbientVolume",
+   "function": "SetPriority",
+   "case": "unresolved_callee",
+   "reason": "Conditional tail JNZ 0x1412eabd0 (RCX=this, EDX=priority, taken when byte +0x25c bit 0x1 is set) has callee_candidates {} (no reflected function at that address)."
+  },
+  {
+   "class": "AAIHotSpot",
+   "function": "GetSlotByOwner",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1416295f0 (AAIHotSpot::GetSlotIndexByOwner(AIOwner)) is not declared in any generated header under porting/native/Source (one grep)."
+  },
+  {
+   "class": "AAthenaCobaltStormShield",
+   "function": "ClientStormShieldShrinkTimerComplete",
+   "case": "unresolved_callee",
+   "reason": "Conditional tail JNZ 0x141aa1190 (RCX=loaded this+0x4c8) has callee_candidates {} (no reflected function at that address)."
+  },
+  {
+   "class": "UAutomationPerfMonitorManager",
+   "function": "GetPerfMonitorInstance",
+   "case": "absolute_global",
+   "reason": "MOV RAX,qword ptr [0x148165ec0] reads an absolute-address global (_DAT_148165ec0) with no reflected name; hidden globals are not ported."
+  },
+  {
+   "class": "ABuildingActor",
+   "function": "SetCustomState",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140683960 (RCX=this+0x518 CustomState, RDX=NewState) is shared by six unrelated Str-returning getters (UAthenaMatchStatView::GetMatchID, ...); none takes this receiver with a Str argument."
+  },
+  {
+   "class": "ABuildingContainer",
+   "function": "OnRep_ChosenRandomUpgrade",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x14079d060 (RCX=this+0x5a0 struct copy target, RDX=element at this+0xbb0) has candidates from unrelated classes (AFortPlayerControllerAthena::GetPlaylistGameTypeText, ...); also CALLs 0x140682ce"
+  },
+  {
+   "class": "ABuildingProp_DeimosSpawner",
+   "function": "OnKillAIReceived",
+   "case": "unresolved_callee",
+   "reason": "Conditional tail JNZ 0x141664b20 (RCX=loaded this+0xbb0, RDX=TriggerInstigator) has callee_candidates {}."
+  },
+  {
+   "class": "ABuildingProp_DeimosSpawner",
+   "function": "OnKillRiftReceived",
+   "case": "unresolved_callee",
+   "reason": "Conditional tail JNZ 0x141664d00 (RCX=loaded this+0xbb0, RDX=TriggerInstigator) has callee_candidates {}."
+  },
+  {
+   "class": "ABuildingProp_DeimosSpawner",
+   "function": "OnTurnOffReceived",
+   "case": "unresolved_callee",
+   "reason": "Conditional tail JNZ 0x1416772b0 (RCX=loaded this+0xbb0, RDX=TriggerInstigator) has callee_candidates {}."
+  },
+  {
+   "class": "ABuildingProp_DeimosSpawner",
+   "function": "OnTurnOnReceived",
+   "case": "unresolved_callee",
+   "reason": "Conditional tail JNZ 0x1416774e0 (RCX=loaded this+0xbb0, RDX=TriggerInstigator) has callee_candidates {}."
+  },
+  {
+   "class": "UBuildingStructuralSupportSystem",
+   "function": "GetCenterCellActor",
+   "case": "truncated_body",
+   "reason": "JLE 0x141c76e40 leaves the 39-byte body (0x141c76e10-0x141c76e36); success-path code at 0x141c76e40 is absent from the asm and the decompile calls unresolved helper FUN_141c712b0 on this+0x178."
+  },
+  {
+   "class": "ABuildingTrapFloor_Turret",
+   "function": "MinigameEnded",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x1440c9760 (RCX=UBoxComponent, RDX=extent FVector, R8=0) has candidates only from AFortHotfixBlockingVolume/AFortHotfixUndergroundVolume::OnRep_ReplicatedExtent; receiver UBoxComponent is not am"
+  },
+  {
+   "class": "UCreativeBlueprintLibrary",
+   "function": "SegmentCylinderIntersection",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x141d8f690 (static UCreativeBlueprintLibrary::SegmentSphereIntersection, sret TArray) is not declared in porting/native/Source/FortniteGame/Generated/UCreativeBlueprintLibrary.h."
+  },
+  {
+   "class": "UCreativeQuestComponent",
+   "function": "ResetQuestProgress",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x1406911b0 (RCX=this+0xf0 TArray, EDX=0) candidates are unrelated classes' OnMutatorObjectUpdated/PreviewItemPickUp; tail JMP 0x14072d2e0 (RCX=this+0x100) maps only to AFortAthenaMutator_DadBro:"
+  },
+  {
+   "class": "UCustomCharacterPartAnimInstance",
+   "function": "GetOwnerSkeletalMeshComponent",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee7880 (RCX=this+0x40c sub-object) candidates (AFortAthenaMutator_Crucible, AFortTeamMemberPedestal, UHUDLayoutToolContext) do not include the receiver class; tail JMP 0x142ee5dd0 is the sha"
+  },
+  {
+   "class": "UFortShowdownPin",
+   "function": "GetScoreToDisplay",
+   "case": "callee_not_declared",
+   "reason": "Callees UFortShowdownDetailView::GetEventPlayerParticipationState (0x14506b6f0), GetTournamentBestScore (0x14506e9b0) and GetCurrentEventScore (0x14506abf0) are absent from the generated headers (grep"
+  },
+  {
+   "class": "UFortSimpleWidgetAnimationsPanel",
+   "function": "ResetAllAnimations",
+   "case": "unresolved_callee",
+   "reason": "CALL 0x1450c9ec0 (per-element call with RCX=element, EDX=0) has no callee_candidates entry; the candidate map is empty."
+  },
+  {
+   "class": "UFortSimpleWidgetAnimationsPanel",
+   "function": "ResetAnimationByName",
+   "case": "unresolved_callee",
+   "reason": "CALL 0x1450c9ec0 (per-element call with RCX=element, EDX=0) has no callee_candidates entry; the candidate map is empty."
+  },
+  {
+   "class": "UFortVoiceChannelHeaderButton",
+   "function": "CanJoinChannel",
+   "case": "out_of_body_continuation",
+   "reason": "JNZ 0x144e48ba0 continues outside the 5-instruction job asm (not in porting/generated/native108-impl/0x144e2b7b0.asm); the continuation is not a wrapper."
+  },
+  {
+   "class": "UFortSquadManagementScreenBase",
+   "function": "HandleSelectPickerSlotInputAction",
+   "case": "conditional_tail_callee_unresolved",
+   "reason": "JNZ 0x144f7f900 is a conditional tail call with no callee_candidates entry (only CALL/JMP targets are mapped)."
+  },
+  {
+   "class": "UFortSquadTypeLandingPageBase",
+   "function": "HandlePendingNavigationOp",
+   "case": "callee_not_declared",
+   "reason": "UFortUIManagerWidget_Campaign::GetUINavigationManager (0x14514f130) and UFortUINavigationManager::TryGetPendingNavigationOp (0x144de4420) are absent from the generated headers."
+  },
+  {
+   "class": "UFortSquadSlotDetailsPanel",
+   "function": "SetScrollWidget",
+   "case": "conditional_tail_callee_unresolved",
+   "reason": "JNZ 0x144f3fb60 is a conditional tail call with no callee_candidates entry (only CALL/JMP targets are mapped)."
+  },
+  {
+   "class": "UFortStandardGlobalActionDetailsDataSource",
+   "function": "SetActionDetailsContext",
+   "case": "delegate_member_unreflected",
+   "reason": "Broadcast via 0x1406a9dc0 targets the delegate at object +0x60; no reflected or declared member exists at +0x60 in this class, and the member_field types cannot express a delegate."
+  },
+  {
+   "class": "UFortStoreFrontOfferDetailsWidgetBase",
+   "function": "GetPriceIndexToShow",
+   "case": "out_of_body_continuation",
+   "reason": "JNZ 0x1450b1190 continues outside the 5-instruction job asm (not in porting/generated/native197-fresh-callees/0x1450b1170.asm); the continuation is not a wrapper."
+  },
+  {
+   "class": "UFortStoreFrontOfferInfo",
+   "function": "CreatePreviewItem",
+   "case": "callee_not_declared",
+   "reason": "Callee UFortStoreFrontOfferInfo::GetGrantedItems (0x1450aede0) is absent from the generated header (grep over porting/native/Source)."
+  },
+  {
+   "class": "UFortStoreFrontOfferInfo",
+   "function": "GetFirstGrantQuantity",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x14138d650 has 6 candidates from unrelated classes (AccountWidgetBase, FrontEndContext, ItemBaseWidget, ItemQuantityListEntryBase, KismetLibrary); none is the receiver class or an ancestor."
+  },
+  {
+   "class": "UFortStoreFrontOfferInfo",
+   "function": "GetForcedGiftBoxTemplateId",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140682ce0 has 6 candidates from unrelated classes, all returning SoftObject (job returns FString); none is the receiver class or an ancestor."
+  },
+  {
+   "class": "UFortStoreFrontOfferInfo",
+   "function": "GetFortStoreOfferCategory",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140682ce0 has 6 candidates from unrelated classes, all returning SoftObject (job returns FString); none is the receiver class or an ancestor."
+  },
+  {
+   "class": "UFortStoreFrontOfferInfo",
+   "function": "GetGrantedItemQuantity",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x14138d650 has 6 candidates from unrelated classes; none is the receiver class or an ancestor."
+  },
+  {
+   "class": "UFortStoreFrontOfferInfo",
+   "function": "GetOfferId",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140682ce0 has 6 candidates from unrelated classes, all returning SoftObject (job returns FString); none is the receiver class or an ancestor."
+  },
+  {
+   "class": "UFortStoreFrontOfferInfo",
+   "function": "GetRequirementIdAtIndex",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140682ce0 has 6 candidates from unrelated classes, all returning SoftObject (job returns FString); none is the receiver class or an ancestor."
+  },
+  {
+   "class": "UFortStoreFrontOfferInfo",
+   "function": "OfferHasDenyRequirements",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140682ce0 (per-element, sret SoftObject) has 6 candidates from unrelated classes; none is the receiver class or an ancestor."
+  },
+  {
+   "class": "UFortTimelineBase",
+   "function": "HandleReplayHudVisibilityChanged",
+   "case": "blocked_unresolved_callee",
+   "reason": "unresolved_tail_jump: JBE 0x1407b7ed0 target not in callee_candidates (callee_candidates is empty)"
+  },
+  {
+   "class": "UFortToastDisplayArea",
+   "function": "NotifyToastFinished",
+   "case": "blocked_callee_not_declared",
+   "reason": "callee_not_declared: UFortUINotificationQueue::RemoveNotification (0x144fb44a0) and UFortToastDisplayArea::HandleNewToastAvailable (0x144f94de0) absent from generated headers"
+  },
+  {
+   "class": "UFortUINavigationManager",
+   "function": "AttemptPlayQuest",
+   "case": "blocked_callee_not_declared",
+   "reason": "callee_not_declared: AttemptMatchmakeForQuest (0x144daf3b0), CanNavigateToQuestObjective (0x144db0f70), NavigateToQuestObjective (0x144dd1b00), NavigateToFeature (0x144dd1520) absent from generated he"
+  },
+  {
+   "class": "UFortUIManagerWidget_NUI",
+   "function": "CreateNotification",
+   "case": "blocked_unresolved_callee",
+   "reason": "unresolved_tail_jump: JNZ 0x144df8ca0 target not in callee_candidates (callee_candidates is empty)"
+  },
+  {
+   "class": "UFortUIManagerWidget_NUI",
+   "function": "HandleErrorWindowDeactivated",
+   "case": "blocked_unresolved_callee",
+   "reason": "unresolved_tail_jump: JZ 0x1451723d0 target not in callee_candidates (callee_candidates is empty)"
+  },
+  {
+   "class": "UFortUIScoreReport",
+   "function": "GetPlayerPlatform",
+   "case": "blocked_shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: 0x140682ce0 (FString sret copy from &PlayerState+0x3a0) has only unrelated candidates (SoftObject getters); no ancestor match and not a known helper"
+  },
+  {
+   "class": "UFortUIScoreReport",
+   "function": "GetXpInfo",
+   "case": "blocked_struct_layout_unknown",
+   "reason": "struct_layout_unknown: FFortUIXpInfo is not declared in generated headers; 16-byte MOVUPS copies into OutXpInfo at +0x8 and +0x18 cannot be expressed exactly"
+  },
+  {
+   "class": "UFortUIScoreReport",
+   "function": "IsLocalPlayer",
+   "case": "blocked_unresolved_pointee",
+   "reason": "unresolved_pointee: PlayerController +0x220 unreflected; engine class registry check uses AFortPlayerState::StaticClass() +0x30/+0x38 and [obj+0x10] container with no declared layout"
+  },
+  {
+   "class": "UFortUIStateWidget_CampaignFrontend",
+   "function": "HandleGiftingComplete",
+   "case": "blocked_callee_not_declared",
+   "reason": "callee_not_declared: UFortUIStateWidget_CampaignFrontend::CheckForGifts (0x145149bc0) absent from generated headers; verbosity log elided"
+  },
+  {
+   "class": "UFortUIStateWidget_JoinServer",
+   "function": "HandleLobbyDisconnected",
+   "case": "blocked_unresolved_callee",
+   "reason": "unresolved_tail_jump: JG 0x141812040 target not in callee_candidates (callee_candidates is empty)"
+  },
+  {
+   "class": "UHUDLayoutToolContext",
+   "function": "OnPanZoomWidgetClick",
+   "case": "blocked_callee_not_declared",
+   "reason": "callee_not_declared: UHUDLayoutToolContext::SetSelectedWidget (0x144d66000) absent from generated headers; weak IsValid helper 0x142ee7880 is known"
+  },
+  {
+   "class": "ULiveStreamStandalonePlayer",
+   "function": "BlockPlayer",
+   "case": "blocked_hidden_global",
+   "reason": "hidden_global: absolute globals [0x1483943e4] bitmask and [0x1483950f8] gate, tail call on absolute receiver 0x147e1b390 to PopupMenuClosedWithAction (0x1406934e0)"
+  },
+  {
+   "class": "ULiveStreamStandalonePlayer",
+   "function": "UnblockPlayer",
+   "case": "blocked_hidden_global",
+   "reason": "hidden_global: absolute globals [0x1483943e4] bitmask and [0x1483950f8] gate, tail call on absolute receiver 0x147e1b390 to PopupMenuClosedWithAction (0x1406934e0)"
+  },
+  {
+   "class": "UPerkSelectionEntryWidget",
+   "function": "GetTechSelectVerboseModeEnabled",
+   "case": "blocked_hidden_global",
+   "reason": "hidden_global: CMP dword [0x147e1ad98],0 reads an absolute-address global with no reflected or known owner"
+  },
+  {
+   "class": "UFortSeasonPassLevelInfo",
+   "function": "GetSeasonPassMaxLevel",
+   "case": "blocked_unresolved_callee",
+   "reason": "unresolved_tail_jump: JNZ 0x14200e8f0 on SeasonData +0x38 target not in callee_candidates (callee_candidates is empty)"
+  },
+  {
+   "class": "UFortSeasonPassLevelInfo",
+   "function": "IsFreeClaimed",
+   "case": "blocked_callee_not_declared",
+   "reason": "callee_not_declared: UFortMcpProfileAthena::GetSeasonBookLevel (0x1419976b0) absent from generated headers"
+  },
+  {
+   "class": "UFortSeasonPassLevelInfo",
+   "function": "IsFreeUnlocked",
+   "case": "class_other_module",
+   "reason": "Body 0x1450425c0 calls UFortMcpProfileAthena::GetSeasonBookLevel (0x1419976b0). Its class UFortMcpProfileAthena is declared in porting/native/Source/FortniteGame/Generated/UFortMcpProfileAthena.h (For"
+  },
+  {
+   "class": "UFortSeasonPassLevelInfo",
+   "function": "IsPaidClaimed",
+   "case": "class_other_module",
+   "reason": "Body 0x145042710 calls UFortMcpProfileAthena::HasPurchasedSeasonBook (0x14199d030) and UFortMcpProfileAthena::GetSeasonBookLevel (0x1419976b0). UFortMcpProfileAthena is in FortniteGame (other module, "
+  },
+  {
+   "class": "UFortSeasonPassLevelInfo",
+   "function": "IsPaidUnlocked",
+   "case": "class_other_module",
+   "reason": "Body 0x145042710 (shared with IsPaidClaimed, thunk 0x145345bd0) calls UFortMcpProfileAthena::HasPurchasedSeasonBook (0x14199d030) and UFortMcpProfileAthena::GetSeasonBookLevel (0x1419976b0). UFortMcpP"
+  },
+  {
+   "class": "UAthenaSpatialHenchmenInspectionRoom",
+   "function": "HandleInputMethodChanged",
+   "case": "unresolved_tail_target",
+   "reason": "Body 0x144e76090 (10 bytes, 3 insns) has 'JZ 0x144e8d0d0' which is a conditional jump to code outside the body that is not in callee_candidates. Packet porting/generated/work-packets/0x144e76090.md sh"
+  },
+  {
+   "class": "UUraniumRespawnWidget",
+   "function": "SetUpPlayerPortrait",
+   "case": "callee_not_declared",
+   "reason": "Body 0x144c04670 tail-jumps (JMP 0x144cab050) to UFortLazyImage::SetBrushFromItemDefinition, which is not declared in any generated header under porting/native/Source (one grep, all headers). Also, th"
+  },
+  {
+   "class": "UCustomCharacterPartAnimInstance",
+   "function": "MakeWaveVector",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x141d89570 targets UCustomCharacterPartAnimInstance::MakeWaveScalar, which is not declared in any generated header (grep finds no declaration)."
+  },
+  {
+   "class": "ACustomItemWrapModifier",
+   "function": "GetWrappedMeshComponent",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee7880 (IsValid, RCX=this+0x318) and CALL 0x142ee5dd0 (Get, LEA RCX,[RBX+0x318]) share bodies with 3 and 6 UObject-class candidates; the receiver is a TWeakObjectPtr member (VehiclePtr/Weapo"
+  },
+  {
+   "class": "ACustomCosmeticModifierBase",
+   "function": "NativeWeaponFired",
+   "case": "unresolved_conditional_tail_jump",
+   "reason": "JNZ 0x14277c190 (taken when FiringWeapon is non-null) is a conditional tail jump with no callee_candidates entry; its target body is unresolved, so the non-null behaviour cannot be ported."
+  },
+  {
+   "class": "UFortActorOptionsComponent",
+   "function": "GetPropertyEditorV2Enabled",
+   "case": "hidden_global_absolute_address",
+   "reason": "CMP dword ptr [0x1478c45bc],0x0 then SETG AL reads an absolute-address global with no reflected owner or recovered member."
+  },
+  {
+   "class": "UFortActorOptionsComponent",
+   "function": "IsRenameDisplayButtonEnabled",
+   "case": "hidden_global_absolute_address",
+   "reason": "CMP dword ptr [0x1478c45c0],0x0 then SETNZ AL reads an absolute-address global with no reflected owner or recovered member."
+  },
+  {
+   "class": "AFortAIController",
+   "function": "SetPawnAIType",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1422ec0c0 targets AFortAIPawn::SetAIType, which is not declared in AFortAIPawn.h (grep finds no declaration)."
+  },
+  {
+   "class": "UFortAIEncounterInfo",
+   "function": "GetEncounterQueryActor",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee3b30 and CALL 0x142ee5dd0 share bodies with 6 unrelated candidates each; their receivers are stack temporaries (LEA RCX,[RSP+0x30]), not class instances, so no candidate equals or is an an"
+  },
+  {
+   "class": "AFortAIPawn",
+   "function": "OnRep_SharedAnim",
+   "case": "sse_struct_copy_unverified",
+   "reason": "MOVUPS xmmword ptr [RBX+0x1168] -> [RDI+0x14d8] copies 16 bytes of FGameplayAbilityRepSharedAnim (AFortAIPawn to UFortAbilitySystemComponent RepSharedAnimInfo); the struct derives from FGameplayAbilit"
+  },
+  {
+   "class": "AFortAIPawn",
+   "function": "SetAIType",
+   "case": "hidden_global_and_callee_not_declared",
+   "reason": "CMP byte ptr [0x148134930],0x3 and LEA R8,[0x148134934] / LEA RAX,[0x146110920] feed CALL 0x142c54b70 on the DL>=6 path; that candidate (AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard) is not decl"
+  },
+  {
+   "class": "UFortAmbientAudioController",
+   "function": "GetAmbientAudioControllerFromContext",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x141ef2890 targets UFortKismetLibrary::GetFirstLocalFortPlayerController, which has no declaration in any generated header; the packet parameter order (bIncludeSpectators, bIncludeNonSpectators,"
+  },
+  {
+   "class": "UFortAthenaAIBotCustomizationData",
+   "function": "SetCharacterCustomizationFromPlayerPawn",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x142323510 and CALL 0x140a003b0 are both listed as AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard, which is not declared in AFortPlayerPawn.h; its listed params [] do not match the calls (RC"
+  },
+  {
+   "class": "AFortAthenaDoghouseVehicle",
+   "function": "GetFlightControlSurfaces",
+   "case": "hidden_return_slot_abi",
+   "reason": "header_decl returns FFlightControlSurfaces by value (hidden sret pointer in RDX), but the body is LEA RAX,[RCX+0x1520]; RET: it returns an interior pointer and never writes RDX. Thunk 0x1427d7e30 is s"
+  },
+  {
+   "class": "AFortAthenaDoghouseVehicle",
+   "function": "GetFlightControlSurfaceTargets",
+   "case": "hidden_return_slot_abi",
+   "reason": "header_decl returns FFlightControlSurfaces by value (hidden sret pointer in RDX), but the body is LEA RAX,[RCX+0x1520]; RET: it returns an interior pointer and never writes RDX. Thunk 0x1427d7e30 is s"
+  },
+  {
+   "class": "AFortAthenaMutator_Arsenic",
+   "function": "GetTimeRemaining",
+   "case": "hidden_global_and_callee_not_declared",
+   "reason": "Null path (JZ 0x141aaed60 when [RCX+0x260] is null) runs CMP byte ptr [0x148118780],0x2 and LEA R8,[0x148118784] / LEA RAX,[0x145e5abc0] before CALL 0x142c54b70, which is not declared in any generated"
+  },
+  {
+   "class": "AFortAthenaMutator_ArsenicInventoryOverride",
+   "function": "OnGamePhaseChanged",
+   "case": "unresolved_callee",
+   "reason": "Conditional tail jump JZ 0x141aa0160 (taken when this+0x260->+0x1cb0 == 3) has no callee_candidates entry; target body not resolved."
+  },
+  {
+   "class": "AFortAthenaMutator_Bagel",
+   "function": "OnRep_TeamScoreMultiplier",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x14199a760 AFortGameStateAthena::HandleGameModeMessageRequest is not declared in any porting/native header. Also CALL 0x1406f7390 (UFortMangDataTrackerComponent::IsTrackingPerPlayer) is applied "
+  },
+  {
+   "class": "AFortAthenaMutator_FactionCustomCharacterParts",
+   "function": "GetFactionForPlayer",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x142c54b70 is a verbosity-gated log (global 0x148119970, RCX=0, R9D=3). Sole candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard is not declared in any header and takes no receiver."
+  },
+  {
+   "class": "AFortAthenaMutator_FactionCustomCharacterParts",
+   "function": "GetPartOverridesForPlayer",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x142c54b70 is a verbosity-gated log (global 0x148119970, RCX=0). Candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard is not declared in any header."
+  },
+  {
+   "class": "AFortAthenaMutator_Fill",
+   "function": "OnGamePhaseChanged",
+   "case": "unresolved_callee",
+   "reason": "Conditional tail jump JNZ 0x14273f1e0 (RCX = this+0x330 LavaFloor) has no callee_candidates entry."
+  },
+  {
+   "class": "AFortAthenaMutator_Fill",
+   "function": "OnMutatorGameplayEvent",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x14199a760 AFortGameStateAthena::HandleGameModeMessageRequest (copy of GameMsg_LavaMoving) is not declared in any porting/native header."
+  },
+  {
+   "class": "AFortAthenaMutator_GameModeBase",
+   "function": "OnMutatorGameplayEvent",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x14199a760 AFortGameStateAthena::HandleGameModeMessageRequest (copy of GameMsg_AircraftPhaseIntroMessage) is not declared in any porting/native header."
+  },
+  {
+   "class": "AFortAthenaMutator_Goose",
+   "function": "OnPawnDied",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x142c54b70 is a verbosity-gated log (global 0x1481199a0). Candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard is not declared in any header."
+  },
+  {
+   "class": "AFortAthenaMutator_Mash",
+   "function": "OnRep_TeamScoreMultiplier",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x14199a760 AFortGameStateAthena::HandleGameModeMessageRequest is not declared in any porting/native header. CALL 0x1406f7390 is applied to a FScalableFloat struct member (this+0x848), not a comp"
+  },
+  {
+   "class": "AFortAthenaMutator_RoundHelper",
+   "function": "StartNextRound",
+   "case": "callee_not_declared",
+   "reason": "Verbosity-gated log CALL 0x142c54b70 (candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard undeclared). Tail JMP 0x141b0c140 candidate AFortAthenaMutator_RoundHelper::SetCurrentRound is not de"
+  },
+  {
+   "class": "AFortAthenaMutator_SpecialEvent",
+   "function": "JumpToSafeZonePhase",
+   "case": "callee_not_declared",
+   "reason": "Tail JMP 0x141950090 to AFortGameModeAthena::JumpToSafeZonePhase, which is not declared in any porting/native header."
+  },
+  {
+   "class": "AFortAthenaMutator_SpecialEvent",
+   "function": "OnRep_Aircraft",
+   "case": "callee_not_declared",
+   "reason": "Verbosity-gated log CALL 0x142c54b70 (candidate undeclared). Tail JMP 0x141b28440 candidate AFortAthenaMutator_SpecialEvent::PlacePlayersInAircraft is declared only in UFortCheatManager_SpecialEvent.h"
+  },
+  {
+   "class": "AFortAthenaMutator_SpecialEvent",
+   "function": "ResetSpecialEventAircraft",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ce9f90 has three candidates (ApplyWrapToSaveTheWorldHoverboard, UMeshNetworkSubsystem::GetMetaDataWithKey, SetMetaDataWithKey) that do not match the call shape; none is declared in a header."
+  },
+  {
+   "class": "AFortAthenaMutator_Uranium",
+   "function": "GetWinningTeamForRound",
+   "case": "callee_not_declared",
+   "reason": "Verbosity-gated log CALL 0x142c54b70 (global 0x14811b500); candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard is not declared in any header."
+  },
+  {
+   "class": "AFortAthenaMutator_Wax",
+   "function": "GetPlayerPlacement",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1406f73b0 candidate AFortAthenaMutator_DadBro::StartNextSafeZonePhase is not declared in any porting/native header."
+  },
+  {
+   "class": "AFortAthenaMutator_Wax",
+   "function": "IsPlayerInPodium",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1406f73b0 candidate AFortAthenaMutator_DadBro::StartNextSafeZonePhase is not declared in any header. CALL 0x141b49240 candidate AFortAthenaMutator_Wax::GetPlayerPlacement is not declared in AFo"
+  },
+  {
+   "class": "UFortAthenaNpcPatrollingComponent",
+   "function": "SetPatrolPath",
+   "case": "callee_not_declared",
+   "reason": "Null-path verbosity-gated log CALL 0x142c54b70 (global 0x148116af0); candidate AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard is not declared in any header."
+  },
+  {
+   "class": "AFortAthenaVehicle",
+   "function": "GetCurrentBudget",
+   "case": "absolute_global",
+   "reason": "CMP dword ptr [0x1478c24d8],0x0 gates the result on a hidden global at absolute address 0x1478c24d8 (no reflected member or declared global)."
+  },
+  {
+   "class": "AFortAthenaVehicle",
+   "function": "GetSeatSwitchCooldown",
+   "case": "out_of_body_branch",
+   "reason": "JBE 0x141f8a370 at 0x1419177ae leaves the body; the target is not a resolved callee (no callee_candidates entry, no ported body) so the value returned when the seat cooldown is <= 0 cannot be determin"
+  },
+  {
+   "class": "AFortAthenaTutorialManager",
+   "function": "Server_OnTutorialScreenCompleted",
+   "case": "unresolved_tail_jump",
+   "reason": "JNZ 0x141b66050 at 0x141b7b81d tail-jumps with RCX = TArray element (this+0x3c0, Num at +0x3c8); the target has no callee_candidates entry, so the callee cannot be expressed."
+  },
+  {
+   "class": "AFortAudioAnalysisController",
+   "function": "GetPapayaSpeakersEnabled",
+   "case": "absolute_global",
+   "reason": "CMP dword ptr [0x1478ded40],0x0 / SETNZ AL returns a hidden global at absolute address 0x1478ded40 (no reflected member or declared global)."
+  },
+  {
+   "class": "AFortAthenaZipline",
+   "function": "UseInteractToEnterZipline",
+   "case": "absolute_global",
+   "reason": "CMP dword ptr [0x1478c25b8],0x1 / SETZ AL returns a hidden global at absolute address 0x1478c25b8 (no reflected member or declared global)."
+  },
+  {
+   "class": "UFortBadgeItemDefinition",
+   "function": "GetBadgeScoreCategory",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x141f12300 (candidate UFortBadgeItemDefinition::GetMissionPoints) is not declared in any generated header; the call also passes absolute address 0x1461a23c0 (LEA RDX) and the result is read as a"
+  },
+  {
+   "class": "UFortBadgeItemDefinition",
+   "function": "GetBadgeScoreThreshold",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x141f12300 (candidate UFortBadgeItemDefinition::GetMissionPoints) is not declared in any generated header; the call also passes absolute address 0x1461a2420 (LEA RDX) and the result is read as a"
+  },
+  {
+   "class": "AFortBroadcastRemoteClientInfo",
+   "function": "OnPlayerEventScoreChanged",
+   "case": "unresolved_tail_jump",
+   "reason": "JNZ 0x14284d7b0 at 0x1424b44c0 (taken when Role != 3 and bActive != 0) tail-jumps to an unresolved target; there is no callee_candidates entry for it."
+  },
+  {
+   "class": "AFortBroadcastRemoteClientInfo",
+   "function": "OnPlayerFullScreenMapActiveChanged",
+   "case": "unresolved_tail_jump",
+   "reason": "JNZ 0x14284d7f0 at 0x1424b47e0 (taken when Role != 3 and bActive != 0) tail-jumps to an unresolved target; there is no callee_candidates entry for it."
+  },
+  {
+   "class": "AFortBroadcastRemoteClientInfo",
+   "function": "OnPlayerInteractLongUseChanged",
+   "case": "unresolved_tail_jump",
+   "reason": "JNZ 0x14284d8d0 at 0x1424b4970 (taken when Role != 3 and bActive != 0) tail-jumps to an unresolved target; there is no callee_candidates entry for it."
+  },
+  {
+   "class": "AFortBroadcastRemoteClientInfo",
+   "function": "OnPlayerInventoryActiveChanged",
+   "case": "unresolved_tail_jump",
+   "reason": "JNZ 0x14284d910 at 0x1424b4990 (taken when Role != 3 and bActive != 0) tail-jumps to an unresolved target; there is no callee_candidates entry for it."
+  },
+  {
+   "class": "AFortBroadcastRemoteClientInfo",
+   "function": "OnServerRemoveMapMarker",
+   "case": "unresolved_tail_jump",
+   "reason": "JNZ 0x14284cf20 at 0x1424b5c30 (taken when Role == 3 and bActive != 0) tail-jumps to an unresolved target; there is no callee_candidates entry for it."
+  },
+  {
+   "class": "UFortCampaignHeroLoadoutItem",
+   "function": "GetCommanderHero",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x1425105c0 (candidate UFortCampaignHeroLoadoutItemDefinition::GetCommanderSlot) and the tail JMP 0x1425120c0 (candidate UFortCampaignHeroLoadoutItem::GetHeroBySlotName, SlotName passed as LEA RD"
+  },
+  {
+   "class": "UFortUICameraFramingFunctionLibrary",
+   "function": "CalculateCharacterCapsuleForCameraFraming",
+   "case": "absolute_global_simd",
+   "reason": "The null-Character branch loads hidden globals at absolute addresses 0x148218630 and 0x148218638; the non-null branch is SIMD float math (SHUFPS, UNPCKLPS, MINSS, MULSS) writing an sret struct, which "
+  },
+  {
+   "class": "AFortCharacterVehicle",
+   "function": "GetIsChargedJumpActive",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x141ed1800 (candidate AFortAIPawn::IsDefender) is not declared in any generated header, and its RAX is used as an object pointer (LEA RDX,[RAX+0x6a8]), contradicting the Bool candidate; CALL 0x1"
+  },
+  {
+   "class": "UFortCheatManager",
+   "function": "GiveAthenaGadget",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140682ce0 has six unrelated candidates (GetCommanderPreviewPedestalActor, GetHeroLoadoutPreviewPedestalActor, GetPreviewIcon, ApplyWrapToSaveTheWorldHoverboard, GetChaseRewardForBundleLevel, Ge"
+  },
+  {
+   "class": "UFortCheatManager",
+   "function": "GiveGadget",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140682ce0 has six unrelated candidates (GetCommanderPreviewPedestalActor, GetHeroLoadoutPreviewPedestalActor, GetPreviewIcon, ApplyWrapToSaveTheWorldHoverboard, GetChaseRewardForBundleLevel, Ge"
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "GetShadowPlayHighlightsEnabled",
+   "case": "hidden_global_absolute_address",
+   "reason": "CMP dword ptr [0x14812bdf0],0x1 and CMP dword ptr [0x1478c4710],0x1 read absolute-address globals with no reflected member or named symbol; the MOVZX [RCX+0x567] byte read is an unreflected gap (refle"
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetArrowColorEnabled",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xc60) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetAutoExposureEnabled",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0x948) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetAutoFocusEnabled",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0x9a8) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetAutoHideBuildingMaterials",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: CALL 0x140684de0 (after ADD RCX,0x1a0) has 6 candidates (AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMeshBeginCursorOver, AFortEventLevelNaviga"
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetBattleMapAutomaticCameraPlacement",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xb28) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetBattleMapShowAllSquadMembers",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xb10) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetBattleMapShowNearbyChests",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xaf8) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetBattleMapShowTimeIndicator",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xae0) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetDamageFxEnabled",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xa50) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetDroneIgnoreJump",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xac8) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetHighQualityFxEnabled",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xa38) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetNameplatesEnabled",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xb40) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetPlayerOutlinesEnabled",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0x9d8) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetRelevancyZoneVisible",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xa20) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetSafeZoneOpacity",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: CALL 0x1407ac590 (after ADD RCX,0xa08) has 2 candidates (UFortReplayContext::JumpToNextEvent, UFortReplayContext::JumpToPreviousEvent); none is equal or an ancestor of receive"
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetScalingOptionsEnabled",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xbb8) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetShareLensSettings",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xab0) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetShouldShowBothQuickbars",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: CALL 0x140684de0 (after ADD RCX,0x248) has 6 candidates (AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMeshBeginCursorOver, AFortEventLevelNaviga"
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetShowPickupDotsOnMapByRarity",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: CALL 0x140684de0 (after ADD RCX,0x188) has 6 candidates (AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMeshBeginCursorOver, AFortEventLevelNaviga"
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetShowTeamColor",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xb58) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetStormEffectsEnabled",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0x9f0) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetThirdPersonCameraCollision",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: CALL 0x1406934e0 (after ADD RCX,0xa98) has one candidate UFortCollectionBookSlotButton::PopupMenuClosedWithAction, which has no declaration in any porting/native/Source file; its "
+  },
+  {
+   "class": "UFortClientSettingsRecord",
+   "function": "SetThirdPersonDistanceToSubject",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: CALL 0x1407ac590 (after ADD RCX,0xa80) has 2 candidates (UFortReplayContext::JumpToNextEvent, UFortReplayContext::JumpToPreviousEvent); none is equal or an ancestor of receive"
+  },
+  {
+   "class": "UFortContextualTutorial_StormForming",
+   "function": "HandleGamePhaseStepChanged",
+   "case": "callee_unresolved_tailjump",
+   "reason": "JBE 0x141b40ee0 is a conditional tail-jump (taken when original R8B is 7 or 8) with empty callee_candidates; porting/generated/thunk-table/tailjmp.json lists 0x141b40ee0 as the real body of UFortConte"
+  },
+  {
+   "class": "UFortContextualTutorial_BattleBus",
+   "function": "HandleGamePhaseChanged",
+   "case": "callee_unresolved",
+   "reason": "Conditional tail jumps JNZ 0x141b411a0 and JZ 0x141b40ee0 target callees with no callee_candidates entry; the callee cannot be named."
+  },
+  {
+   "class": "UFortControllerComponent_ContextualChallenges",
+   "function": "ClientSetContext_Implementation",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140680160 and 0x1406800e0 are shared bodies (UAthenaLobbyBase::HandlePlaylistDataChanged, UCreativeMiniMapComponent::OnRep_IconData); none matches UFortControllerComponent_ContextualChallenges "
+  },
+  {
+   "class": "UFortControllerComponent_HasCoupledWidgets",
+   "function": "MakeComponentWidgetsOnAutonomous",
+   "case": "shared_callee_ambiguous",
+   "reason": "Same body 0x140693ed0 as ClientSetContext_Implementation: CALL 0x140680160, 0x1406800e0 and 0x142bc7780 are shared with unrelated classes; no candidate matches UFortControllerComponent_HasCoupledWidge"
+  },
+  {
+   "class": "UFortControllerComponent_MinigameActivity",
+   "function": "GetMinigameActivityComponent",
+   "case": "enum_undeclared",
+   "reason": "Out-param type EMinigameActivityComponentValidityResult is not declared in any generated header, so the signature cannot be typed. Body is otherwise exact (OutIsValid byte = component null ? 1 : 0)."
+  },
+  {
+   "class": "UFortCreativeCreatureManagerInfoComponent",
+   "function": "SetCreatureBlueprintClass",
+   "case": "offset_overlaps_member",
+   "reason": "Body writes a 24-byte FSoftObjectPath (FName at object+0x178, FString Data/Num/Max at +0x180/+0x188/+0x18c) starting at object+0x178, which lies inside reflected CreatureBlueprintClass (TSoftClassPtr "
+  },
+  {
+   "class": "AFortCreativeMoveTool",
+   "function": "GetMultiselectLimit",
+   "case": "absolute_global",
+   "reason": "MOV EAX,dword ptr [0x1478df148] reads a module-global at an absolute address; no reflected object member covers it and the global name is not in the job data."
+  },
+  {
+   "class": "UObjectInteractionBehavior",
+   "function": "TriggerInteractionBehavior_Implementation",
+   "case": "callee_not_declared",
+   "reason": "Tail-jump target 0x14267e910 (UObjectInteractionBehavior::PlayGameplayAbility) is not declared in any generated header and is not part of this batch."
+  },
+  {
+   "class": "UDeleteObjects",
+   "function": "PlayDeleteAnimation",
+   "case": "callee_not_declared",
+   "reason": "Tail-jump target 0x14267e910 (UObjectInteractionBehavior::PlayGameplayAbility) is not declared in any generated header and is not part of this batch."
+  },
+  {
+   "class": "UFortCreativeOption",
+   "function": "GetValueAtCurrentIndex",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x141d7d350 (UFortCreativeOption::GetCurrentIndex) is not declared in any generated header and is not part of this batch."
+  },
+  {
+   "class": "AFortCreativeTimerObjective",
+   "function": "SetHUDData",
+   "case": "absolute_constant",
+   "reason": "COMISS compares |TimeLeft delta| against a float tolerance at absolute address 0x1459c03a0; the constant value is not in the job data and is not guessed."
+  },
+  {
+   "class": "UFortCrossplayPromptContext",
+   "function": "IsCrossplayEnabled",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x14237e5e0 (UFortLocalPlayer::GetClientSettings) and CALL 0x141e26700 (UFortClientSettingsRecord::GetCrossplayPreference) are not declared in any generated header and are not part of this batch."
+  },
+  {
+   "class": "UFortEmojiPreviewComponent",
+   "function": "PushPreviewEmoji",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee3b30 and 0x141384ca0 have only unrelated-class candidates (none UFortEmojiPreviewComponent); body is a lock-free SFENCE publish of a new node."
+  },
+  {
+   "class": "AFortEventLevelNavigationActor",
+   "function": "HasPurchasedSeasonBook",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee7880 and 0x142ee5dd0 are shared TWeakObjectPtr<AFortPlayerController> IsValid/Get template bodies (LevelController); candidate lists name unrelated classes and no TWeakObjectPtr candidate "
+  },
+  {
+   "class": "UFortFootstepSurfaceData",
+   "function": "GetSurfaceInfo",
+   "case": "struct_undeclared",
+   "reason": "Out-param type FFortFootstepSurfaceInfo is not declared in any generated header; the pointer-plus-three-float layout cannot be named."
+  },
+  {
+   "class": "UFortFootstepAudioBank",
+   "function": "GetSurfaceInfo",
+   "case": "struct_undeclared",
+   "reason": "Out-param type FFortFootstepSurfaceInfo is not declared in any generated header; the pointer-plus-three-float layout cannot be named."
+  },
+  {
+   "class": "AFortGameModePvE",
+   "function": "HandleOnAircraftRegistered",
+   "case": "callee_not_declared",
+   "reason": "CALL 0x141695900 (AFortPlayerController::GetAircraftComponent) is not declared in any generated header and is not part of this batch; the 0x140690620 and 0x1406d9a30 candidates also do not match recei"
+  },
+  {
+   "class": "UFortGameplayAbility",
+   "function": "ClearAIFocalPoint",
+   "case": "shared_callee_ambiguous",
+   "reason": "Call 0x142ee5dd0 (FWeakObjectPtr::Get shape, receiver is a weak-pointer sub-object of this+0x380 pointee) has 6 unrelated candidates; none is an ancestor of UFortGameplayAbility."
+  },
+  {
+   "class": "UFortGameplayAbility",
+   "function": "GetOwningPlayerTeamPerkProgressiveActivationLevel",
+   "case": "shared_callee_ambiguous",
+   "reason": "First call 0x142ee5dd0 has 6 unrelated candidates (no ancestor of receiver); the tail JMP 0x1423865f0 cannot be reached without it."
+  },
+  {
+   "class": "UFortGameplayAbility",
+   "function": "SetAIFocalPoint",
+   "case": "shared_callee_ambiguous",
+   "reason": "First call 0x142ee5dd0 has 6 unrelated candidates; receiver is a weak-pointer sub-object, not an ancestor-class object."
+  },
+  {
+   "class": "UFortGameplayAbility_AIPortal",
+   "function": "GetPortalBuilding",
+   "case": "shared_callee_ambiguous",
+   "reason": "First call 0x142ee5dd0 (6 unrelated candidates) gates the return; receiver this+0x908 pointee is a weak-pointer sub-object."
+  },
+  {
+   "class": "AFortGameState",
+   "function": "DbgBoxSendToAllInternal_DoNotCall",
+   "case": "hidden_global_absolute_address",
+   "reason": "Once-guard byte 0x14812f404, verbosity 0x1481348e0, category 0x1481348e4 and string 0x146004730 are absolute globals; FMsg_Logf 0x142c54b70 side effect not exactly expressible."
+  },
+  {
+   "class": "AFortGameState",
+   "function": "DbgCapsuleSendToAllInternal_DoNotCall",
+   "case": "hidden_global_absolute_address",
+   "reason": "Once-guard byte 0x14812f404, verbosity 0x1481348e0, category 0x1481348e4 and string 0x1460046b0 are absolute globals; FMsg_Logf side effect not expressible."
+  },
+  {
+   "class": "AFortGameState",
+   "function": "DbgLineSendToAllInternal_DoNotCall",
+   "case": "hidden_global_absolute_address",
+   "reason": "Once-guard byte 0x14812f404, verbosity 0x1481348e0, category 0x1481348e4 and string 0x146004630 are absolute globals; FMsg_Logf side effect not expressible."
+  },
+  {
+   "class": "AFortGameState",
+   "function": "DbgSphereSendToAllInternal_DoNotCall",
+   "case": "hidden_global_absolute_address",
+   "reason": "Once-guard byte 0x14812f404, verbosity 0x1481348e0, category 0x1481348e4 and string 0x1460045b0 are absolute globals; FMsg_Logf side effect not expressible."
+  },
+  {
+   "class": "AFortGameStateAthena",
+   "function": "GetTimedWinConditionTime",
+   "case": "absolute_global_and_unresolved_callee",
+   "reason": "Non-null branch returns constant float from absolute 0x1459a979c behind log guard 0x1481348e0; tail JMP 0x14070fdf0 candidate AFortAthenaMutator_DadBro::StartNextSafeZonePhase has no float return."
+  },
+  {
+   "class": "AFortGameStateAthena",
+   "function": "OnRep_Aircraft",
+   "case": "tail_target_unlisted",
+   "reason": "JZ 0x1419a8ec0 target body is not in the job insns or any native listing, so the conditional behaviour cannot be ported."
+  },
+  {
+   "class": "AFortGameStateAthena",
+   "function": "OnRep_TeamsLeft",
+   "case": "callee_not_declared",
+   "reason": "Call 0x14199e4e0 = AFortGameStateAthena::IsLastManStandingCN(const) is not declared in any generated header (grep of porting/native/Source)."
+  },
+  {
+   "class": "AFortGameStateZone",
+   "function": "GetTotalScore",
+   "case": "hidden_global_absolute_address",
+   "reason": "Default case (DL>2) logs via FMsg_Logf guarded by absolute verbosity 0x1481348e0, category 0x1481348e4 and string 0x146006440; that side effect is not exactly expressible. Case mapping verified: 0->0x"
+  },
+  {
+   "class": "UFortGameUserSettings",
+   "function": "IsVideoPlaybackAllowed",
+   "case": "hidden_global_absolute_address",
+   "reason": "Reads dword at absolute global 0x14812e6f0 to decide the result."
+  },
+  {
+   "class": "UFortGameUserSettings",
+   "function": "SetDisplayGamma",
+   "case": "hidden_global_absolute_address",
+   "reason": "Also stores float to +0x934 of pointer global 0x148351eb8 (absolute address, not reflected)."
+  },
+  {
+   "class": "UFortGameUserSettings",
+   "function": "SetUserInterfaceContrast",
+   "case": "hidden_global_absolute_address",
+   "reason": "Also stores float to absolute global 0x147c52484."
+  },
+  {
+   "class": "UFortGiftBoxItem",
+   "function": "TryGetParamString",
+   "case": "callee_signature_mismatch",
+   "reason": "Tail-forwards RDX/R8 (FString by pointer) to 0x142cf3b60 whose only candidate UMeshNetworkSubsystem::GetMetaDataWithKey takes (Struct, Name); receiver pointee at this+0x120 has no known class."
+  },
+  {
+   "class": "UFortGliderAnimInstance",
+   "function": "SetGliderFullyDeployed",
+   "case": "callee_unresolved",
+   "reason": "JNZ 0x141a24a30 tail-jumps on OwnerGlider (+0x2a0) to a target with no callee candidate and no listing in the job insns."
+  },
+  {
+   "class": "UFortHeldObjectComponent",
+   "function": "GetInstigator",
+   "case": "shared_callee_ambiguous",
+   "reason": "First call 0x142ee7880 has 3 unrelated candidates; both paths tail to shared 0x142ee5dd0 (6 unrelated candidates)."
+  },
+  {
+   "class": "UFortItemDefinition",
+   "function": "GetPreviewMeshOffset",
+   "case": "callee_signature_mismatch",
+   "reason": "callee_signature_mismatch: CALL 0x142c5c060 with RCX=this+0x2b4 and RDX=sret only; candidate AKairosHeroBase::BeginCapture(bool, CaptureParams, FramingInfo) does not match."
+  },
+  {
+   "class": "AFortLobbyBeaconPlayerState",
+   "function": "OnRep_LobbyTimeRemaining",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: tail JMP 0x140684de0 with RCX=this+0x3a8 (no reflected member there); six candidate classes, only zero-arg AFortGameState::OnRep_Teams matches and the receiver class is unveri"
+  },
+  {
+   "class": "AFortLobbyBeaconStateRM",
+   "function": "OnRep_LobbyTimeRemaining",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: CALL 0x140684de0 on element+0x3a8 (same six candidates, receiver type unverified); element type of TArray at +0x340 (stride 0x18) is not reflected."
+  },
+  {
+   "class": "AFortMatchmakingActor",
+   "function": "ShouldUseBlueprintMMSCode",
+   "case": "absolute_global",
+   "reason": "absolute_global: CMP dword ptr [0x148133e24],0 reads a fixed global address, not expressible from object state."
+  },
+  {
+   "class": "UFortMcpContext",
+   "function": "CancelEpicPurchasingDisplay",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x1411ce2d0 leaves the body with RCX=[this+0x378]; no callee candidate for that target."
+  },
+  {
+   "class": "AFortMinigame",
+   "function": "IsPlayerUsingClassSlot",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: AFortMinigame::GetClassSlotForPlayer (0x14208f010) is not declared in any generated header."
+  },
+  {
+   "class": "AFortMinigame",
+   "function": "OnFortPlayerDied",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x1420a9a30 leaves the body; no callee candidate."
+  },
+  {
+   "class": "AFortMinigame",
+   "function": "OnRep_CurrentState",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JZ 0x142097510 leaves the body; no callee candidate."
+  },
+  {
+   "class": "UFortMinigameObjectiveTrackerComponent",
+   "function": "GetTrackedObjective",
+   "case": "array_storage_not_typed",
+   "reason": "array_storage_not_typed: TArray at +0x218/+0x220 is an unreflected gap in the own region with no typed-member form; the copy also writes FFastArraySerializerItem base fields at +0 and +8 as constant -"
+  },
+  {
+   "class": "UFortMinigameItemListComponent",
+   "function": "AddItem",
+   "case": "lock_cmpxchg_absolute_global",
+   "reason": "lock_cmpxchg_absolute_global: CMPXCHG.LOCK on absolute address 0x147c4e988 (static guard) and shared unresolved callees; not expressible."
+  },
+  {
+   "class": "UFortMinigameStatics",
+   "function": "BoolToString",
+   "case": "absolute_data_reference",
+   "reason": "absolute_data_reference: LEA of string literals at 0x1459acaa0/0x1459acab0; append calls 0x140680160/0x1406800e0 share unrelated candidate sets."
+  },
+  {
+   "class": "UFortMinigameStatics",
+   "function": "DeclareWinningPlayer",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: AFortMinigame::DeclareWinnerImmediately (0x142089af0) is not declared in any generated header."
+  },
+  {
+   "class": "UFortMinigameStatics",
+   "function": "DeclareWinningTeam",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: AFortMinigame::DeclareWinnerImmediately (0x142089af0) is not declared in any generated header."
+  },
+  {
+   "class": "UFortMinigameStatics",
+   "function": "GetPlayerAttributeValue",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x14246df30 leaves the body; no callee candidate."
+  },
+  {
+   "class": "UFortMinigameStatics",
+   "function": "GetPlayers",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: ASOLFortGame::GetPlayers (0x14246e110) is not declared in ASOLFortGame.h or any generated header."
+  },
+  {
+   "class": "UFortMinigameStatics",
+   "function": "GetTeams",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: ASOLFortGame::GetTeams (0x14246ed50) is not declared in any generated header."
+  },
+  {
+   "class": "UFortMinigameStatics",
+   "function": "ObjectToString",
+   "case": "shared_callee_ambiguous",
+   "reason": "shared_callee_ambiguous: CALL 0x142ce9f90 shares candidates with unrelated classes and receives a FName temporary in RCX."
+  },
+  {
+   "class": "UFortMinigameStatics",
+   "function": "ResetUserVariables",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JNZ 0x1424854f0 leaves the body; no callee candidate."
+  },
+  {
+   "class": "AFortMission",
+   "function": "InitializeActorsForMission",
+   "case": "callee_signature_mismatch",
+   "reason": "callee_signature_mismatch: CALL 0x143e89fa0 receives RCX=temp TArray and RDX=Mission; candidate GetActorsSpawnedMatchingQuery(bool, array, TagQuery) does not match the call ABI."
+  },
+  {
+   "class": "UFortMinigameVolumeComponent",
+   "function": "OnClientEnterVolume",
+   "case": "callee_not_declared",
+   "reason": "callee_not_declared: AFortMinigame::NativeEnteredVolumeEvent (0x14209ba30) is not declared in any generated header."
+  },
+  {
+   "class": "AFortMission_RiftSpawners",
+   "function": "HandleAthenaGamePhaseChanged",
+   "case": "unresolved_conditional_jump",
+   "reason": "unresolved_conditional_jump: JZ 0x1420cb500 leaves the body; no callee candidate."
+  },
+  {
+   "class": "AFortMission_ActiveThreat",
+   "function": "HandleAthenaGamePhaseChanged",
+   "case": "unresolved_jump_target",
+   "reason": "JZ 0x1420cb2e0 is a tail-jump target not present in job callee_candidates (empty map); cannot be expressed exactly."
+  },
+  {
+   "class": "UFortMissionLibrary",
+   "function": "GetMissionActorsInEncounterDirection",
+   "case": "callee_not_declared",
+   "reason": "Callee 0x1420b92b0 (UFortMissionLibrary::GetMissionActorsInVectorDirection) is absent from the generated header (grep)."
+  },
+  {
+   "class": "AFortMissionState",
+   "function": "SendMissionUIEvent",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x143e8a690 maps to 6 unrelated candidates; none is AFortMissionState or an ancestor."
+  },
+  {
+   "class": "AFortMountedTurret",
+   "function": "OnRep_TeamIndex",
+   "case": "unresolved_jump_target",
+   "reason": "JNZ 0x14203df20 is a tail-jump target not present in job callee_candidates."
+  },
+  {
+   "class": "UFortMusicAsset",
+   "function": "GetMusicSection",
+   "case": "return_abi_mismatch",
+   "reason": "asm returns RAX = this+0x30+24*Section (element address, no copy into a return buffer) while header_decl returns FFortMusicSection by value."
+  },
+  {
+   "class": "UFortMutatorListComponent",
+   "function": "SetMutatorsActive",
+   "case": "callee_not_declared",
+   "reason": "Callee 0x1420ee180 (AFortGameplayMutator::SetMutatorActive) is absent from the generated header (grep)."
+  },
+  {
+   "class": "UFortNiagaraGameplayLibrary",
+   "function": "GetPlayerWaterType",
+   "case": "hidden_global_absolute_address",
+   "reason": "Reads absolute global [0x1478c4478] with no reflected member covering it."
+  },
+  {
+   "class": "AFortObjectiveBase",
+   "function": "AttemptMissionSave",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140682ce0 (FString copy of argument) maps to 6 unrelated candidates; none is AFortObjectiveBase or an ancestor."
+  },
+  {
+   "class": "AFortObjectiveBase",
+   "function": "ClearObjectiveTimer",
+   "case": "unresolved_jump_target",
+   "reason": "JNZ 0x141f1d900 is a tail-jump target not present in job callee_candidates."
+  },
+  {
+   "class": "AFortObjectiveBase",
+   "function": "GetObjectiveTimerTimeRemaining",
+   "case": "unresolved_jump_target",
+   "reason": "JNZ 0x141f306a0 is a tail-jump target not present in job callee_candidates."
+  },
+  {
+   "class": "AFortObjectiveBase",
+   "function": "GetRewardItemsByTag",
+   "case": "callee_not_declared",
+   "reason": "Callee 0x1420bc990 (AFortMission::GetRewardItemsByTag) is absent from the generated header (grep)."
+  },
+  {
+   "class": "AFortObjectiveBase",
+   "function": "PauseObjectiveTimer",
+   "case": "unresolved_jump_target",
+   "reason": "JNZ 0x141f3fcc0 is a tail-jump target not present in this job callee_candidates (empty map)."
+  },
+  {
+   "class": "AFortObjectiveBase",
+   "function": "SetObjectiveTimer",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x140682ce0 (FString copy of argument) maps to 6 unrelated candidates; none is AFortObjectiveBase or an ancestor."
+  },
+  {
+   "class": "AFortObjectiveBase",
+   "function": "UnpauseObjectiveTimer",
+   "case": "unresolved_jump_target",
+   "reason": "JNZ 0x141f4e230 is a tail-jump target not present in job callee_candidates."
+  },
+  {
+   "class": "AFortOctopusVehicle",
+   "function": "GetTowhookCableAttachLocation",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee5dd0 receiver is this+0x15ac; 6 shared candidates, none is AFortOctopusVehicle or an ancestor."
+  },
+  {
+   "class": "AFortOctopusVehicle",
+   "function": "IsTowhookInAirExtending",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x141b720d0 receiver is sub-object this+0x1380; two shared vehicle candidates, neither matches the sub-object receiver."
+  },
+  {
+   "class": "UFortOutpostFunctionLibrary",
+   "function": "GetOutpostQuestMissionConfigDataFrontEnd",
+   "case": "unresolved_jump_target",
+   "reason": "JNZ 0x142546670 is a tail-jump target outside the body and not present in job callee_candidates."
+  },
+  {
+   "class": "UFortPartyContext",
+   "function": "GetLocalPartyProgression",
+   "case": "shared_callee_ambiguous",
+   "reason": "CALL 0x142ee7880 and 0x142ee5dd0 map to shared candidates; none is UFortPartyContext or an ancestor."
+  }
+ ]
+}
