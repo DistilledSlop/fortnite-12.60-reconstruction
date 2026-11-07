@@ -81083,7 +81083,7 @@
     "class": "UFortInventoryContext",
     "function": "AreAnyItemsAnimate",
     "kind": "exec",
-    "signature": "@SIG@",
+    "signature": "bool AreAnyItemsAnimate(TArray<UFortItem*>& Items)",
     "signature_status": "proposed",
     "inc_path": "porting/behavior/rs17_runtime/UFortInventoryContext/AreAnyItemsAnimate.inc",
     "confidence": "medium",
@@ -81091,7 +81091,6 @@
     "status": "ported",
     "reflection_flags": "0x14422401",
     "static": true,
-    "virtual": false,
     "access": "public",
     "native_body_address": "0x144cf6ce0",
     "notes": "Static. Any non-null item IsA UFortCharacter. Inline class-tree test emulated by IsA; MEDIUM."
@@ -81100,7 +81099,7 @@
     "class": "UFortInventoryContext",
     "function": "AreAnyItemsInanimate",
     "kind": "exec",
-    "signature": "@SIG@",
+    "signature": "bool AreAnyItemsInanimate(TArray<UFortItem*>& Items)",
     "signature_status": "proposed",
     "inc_path": "porting/behavior/rs17_runtime/UFortInventoryContext/AreAnyItemsInanimate.inc",
     "confidence": "medium",
@@ -81108,7 +81107,6 @@
     "status": "ported",
     "reflection_flags": "0x14422401",
     "static": true,
-    "virtual": false,
     "access": "public",
     "native_body_address": "0x144cf6d60",
     "notes": "Static. Any non-null item not IsA UFortCharacter. Inline class-tree test emulated by IsA; MEDIUM."
@@ -81131,23 +81129,6 @@
     "notes": "Mode (+0x520) must be 0; FrontendInventoryFilter (+0x521) in 6..8 or 0 returns true; byte arithmetic kept."
   },
   {
-    "class": "UFortItemView",
-    "function": "GetSettings",
-    "kind": "exec",
-    "signature": "FFortItemViewSettings GetSettings() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs17_runtime/UFortItemView/GetSettings.inc",
-    "confidence": "medium",
-    "address": "0x14527c9a0",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x144f26cf0",
-    "notes": "Struct copy of 52-byte FFortItemViewSettings at gap +0x1c4 via member NativeRecoveredStruct_0x1c4 (layout inferred from header)."
-  },
-  {
     "class": "UFortHomebaseUIContext",
     "function": "NativeRecoveredUint64_0xe0",
     "kind": "member_field",
@@ -81161,21 +81142,6 @@
     "status": "ported",
     "recovery_source": "small_leaf_batch",
     "notes": "Unreflected gap at +0xe0 (FName, 8 bytes) between SoftObject +0xa0 and map +0x100; typed uint64 for FName storage."
-  },
-  {
-    "class": "UFortItemView",
-    "function": "NativeRecoveredStruct_0x1c4",
-    "kind": "member_field",
-    "signature": "FFortItemViewSettings NativeRecoveredStruct_0x1c4",
-    "signature_status": "proposed",
-    "access": "public",
-    "offset": "0x1c4",
-    "inc_path": null,
-    "confidence": "medium",
-    "address": null,
-    "status": "ported",
-    "recovery_source": "small_leaf_batch",
-    "notes": "Unreflected gap +0x1c4 holding 52-byte FFortItemViewSettings (ends at +0x1f8). Layout inferred from generated struct header."
   },
   {
     "class": "UFortHomebaseUIContext",

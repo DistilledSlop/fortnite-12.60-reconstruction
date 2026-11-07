@@ -130,6 +130,12 @@ public:
 	int32 CachedHeroItemCount;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool AreAnyItemsAnimate(TArray<UFortItem*>& Items);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool AreAnyItemsInanimate(TArray<UFortItem*>& Items);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CanEvolve(UFortItem* Item, TArray<EItemEvolutionRestrictionReason>& OutRestrictionReasons) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

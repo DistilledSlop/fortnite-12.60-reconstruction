@@ -7,7 +7,6 @@
 #include "UObject/Object.h"
 
 #include "Engine/DataTable.h"
-#include "FFortItemViewSettings.h"
 #include "FOnUserInputChangedView.h"
 
 #include "UFortItemView.generated.h"
@@ -49,9 +48,6 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	TArray<FDataTableRowHandle> RegisteredInputActions;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	FFortItemViewSettings GetSettings() const;
 
 };
 

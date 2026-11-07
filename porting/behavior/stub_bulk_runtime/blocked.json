@@ -1053,5 +1053,12 @@
   "unblock": "Add the class to the native class set (or hand-port)",
   "body": "0x1414f2fc0",
   "thunk": "0x1414fd320"
+ },
+ {
+  "entry": "UFortItemView::GetSettings",
+  "kind": "exec",
+  "blocker": "struct_other_module",
+  "reason": "Returns FFortItemViewSettings (0x34 bytes at +0x1c4), a type of another module; the generator rejects the recovered member.",
+  "unblock": "Make the struct type available to FortniteUI"
  }
 ]
