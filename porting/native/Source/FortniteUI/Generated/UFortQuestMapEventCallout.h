@@ -92,11 +92,17 @@ public:
 	UPROPERTY()
 	UFortQuestMapData* QuestMapData;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x514): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x514;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x568): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x568;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x569): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x569;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x570): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x570;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x578): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x578;
@@ -109,6 +115,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsFaded() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortQuestItemDefinition* GetRequiredQuestForCurrentEvent() const;
 
 	UFUNCTION(BlueprintCallable)
 	void SetIsFaded(bool Faded);

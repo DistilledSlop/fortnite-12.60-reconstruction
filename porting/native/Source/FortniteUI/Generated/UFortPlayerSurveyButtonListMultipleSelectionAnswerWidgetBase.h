@@ -27,6 +27,11 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 FindButtonIndex(UCommonButton* Button) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UCommonButton* GetButtonAtIndex(int32 Index) const;
 public:
 

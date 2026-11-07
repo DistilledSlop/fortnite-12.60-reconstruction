@@ -34,5 +34,10 @@ public:
 	UPROPERTY()
 	bool bConfigureAsHUD;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void NotifyCompletionAnimationFinished();
+public:
+
 };
 

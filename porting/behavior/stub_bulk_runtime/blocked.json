@@ -1067,5 +1067,12 @@
   "blocker": "class_other_module",
   "reason": "Body uses UCommonActivatablePanel, a class of another module; the generator rejects the splice.",
   "unblock": "Expose the CommonUI class to FortniteUI"
+ },
+ {
+  "entry": "UFortRewardNotificationSubWidget::RemoveInputActionHandler",
+  "kind": "exec",
+  "blocker": "class_other_module",
+  "reason": "Body uses UCommonActivatablePanel, a class of another module.",
+  "unblock": "Expose the CommonUI class to FortniteUI"
  }
 ]

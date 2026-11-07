@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UFortPlayerSurveyAnswerWidgetBase",
+  "function": "NativeHandleAnswerChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140680160 and 0x1406800e0 map to UAthenaLobbyBase::HandlePlaylistDataChanged and UCreativeMiniMapComponent::OnRep_IconData; receiver is the EventInfo struct (RCX=RBX), matching neither. CALL 0x142bc7780 maps only to OnRep_IconData with receiver [RBX] (TArray data pointer)."
+ },
+ {
+  "class": "UFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBase",
+  "function": "FindButtonIndex",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body ported from the asm; evidence in the .inc header."
+ },
+ {
+  "class": "UFortPlayerSurveyDispatcher",
+  "function": "HandleDisplayOneSurvey",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JZ 0x144f9c480 (taken when CurrentWidget [this+0x58] is null) is a conditional tail branch outside the body; Jcc targets are not in callee_candidates and 0x144f9c480 has no reflected body."
+ },
+ {
+  "class": "UFortPlayerSurveyStatsPrecacher",
+  "function": "HandleGamePhaseChanged",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JZ 0x144fb3bf0 (taken when GamePhase==3) is a conditional tail branch outside the body; not in callee_candidates and no reflected body for 0x144fb3bf0."
+ },
+ {
+  "class": "UFortQuestMapScreen",
+  "function": "SetIgnorePageNavigation",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JZ 0x140684de0 (taken when bIgnoreNavigation is false) is a conditional tail branch outside the body; not in callee_candidates, not a known stub, no reflected body."
+ },
+ {
+  "class": "UFortQuestMapEventCallout",
+  "function": "GetRequiredQuestForCurrentEvent",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body ported from the asm; evidence in the .inc header."
+ },
+ {
+  "class": "UFortQuestMapEventCallout",
+  "function": "IsCurrentEventUnlocked",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "JMP 0x1450efeb0 maps to UFortQuestMapScreen::IsBeyondQuest, which is not declared anywhere in porting/native/Source; its class is not an ancestor of the UFortQuestMapEventCallout receiver."
+ },
+ {
+  "class": "UFortQuestMapEventCallout",
+  "function": "SetIsExpanded",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "JMP 0x1406934e0 maps to UFortCollectionBookSlotButton::PopupMenuClosedWithAction, not declared in porting/native/Source; receiver RCX=this+0x460 is an unreflected inline sub-object. The verbosity-gated CALL 0x142c54b70 is elided per LOG ELISION."
+ },
+ {
+  "class": "UFortQuestTrackerList",
+  "function": "HandleQuestsUpdated",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JZ 0x144ff66f0 (taken when byte [this+0x260] is zero) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+ },
+ {
+  "class": "UFortQuestTrackerSubEntry",
+  "function": "NotifyCompletionAnimationFinished",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body ported from the asm; evidence in the .inc header."
+ },
+ {
+  "class": "UFortQuickBarSlotBase",
+  "function": "RefreshItemIfSlotChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "JMP 0x144feb950 maps to UFortQuickBarSlotBase::RefreshItem, which is not declared anywhere in porting/native/Source."
+ },
+ {
+  "class": "UFortResultsWidget",
+  "function": "GetRewardsByType",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "JMP 0x1406af1d0 (RCX=OutRewards TArray&, RDX=this+0x490..0x4c0 TArray) maps to SetCommunicationGroup, ApplyGameplayEffectContainer, ApplyGameplayEffectContainerWithCSVStats and GetIronCityWargameTagList; none matches this receiver and parameter pair."
+ },
+ {
+  "class": "UFortRewardNotificationSubWidget",
+  "function": "RemoveInputActionHandler",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body ported from the asm; evidence in the .inc header."
+ },
+ {
+  "class": "UFortReticle",
+  "function": "OnContextualReticleChanged",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JNZ 0x144ff6330 (taken when [this+0x2b8] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+ },
+ {
+  "class": "UFortReticle",
+  "function": "OnReticleColorChanged",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JNZ 0x144ffbad0 (taken when [this+0x2b8] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+ },
+ {
+  "class": "UFortShowdownDetailView",
+  "function": "GetEventBeginTime",
+  "status": "blocked",
+  "case": "undefined_stack_read",
+  "reason": "When [this+0x5c0] is null the body stores MOV RAX,qword ptr [RSP+0x8] into the sret FDateTime; that caller shadow slot is not defined by this body."
+ },
+ {
+  "class": "UFortShowdownDetailView",
+  "function": "GetEventEndTime",
+  "status": "blocked",
+  "case": "undefined_stack_read",
+  "reason": "When [this+0x5c0] is null the body stores MOV RAX,qword ptr [RSP+0x8] into the sret FDateTime; that caller shadow slot is not defined by this body."
+ },
+ {
+  "class": "UFortShowdownDetailView",
+  "function": "GetEventWindowRoundNumber",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JNZ 0x1422d7290 (taken when [this+0x5c0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+ },
+ {
+  "class": "UFortShowdownDetailView",
+  "function": "GetEventWindowSessionNumber",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JNZ 0x1422d73b0 (taken when [this+0x5c0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+ },
+ {
+  "class": "UFortShowdownDetailView",
+  "function": "GetNumEventRounds",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JNZ 0x1422d4b20 (taken when [this+0x5b0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+ },
+ {
+  "class": "UFortShowdownDetailView",
+  "function": "GetTournamentBestPinState",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x14506e9b0 maps to UFortShowdownDetailView::GetTournamentBestScore, which is not declared anywhere in porting/native/Source."
+ },
+ {
+  "class": "UFortSettingsDeadzoneExtension",
+  "function": "GetLiveAnalogValue",
+  "status": "blocked",
+  "case": "simd_absolute_constant",
+  "reason": "ANDPS against the absolute constant 0x1459a3d00 (sign mask, value not verified) and MAXSS on the two masked floats cannot be expressed exactly from this asm."
+ },
+ {
+  "class": "UFortShowdownDivisionEventView",
+  "function": "GetAmountEarnedWithinDivision",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JNZ 0x1422c6c70 (taken when [this+0x5c0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+ },
+ {
+  "class": "UFortShowdownDivisionEventView",
+  "function": "GetDivisionRank",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JNZ 0x1422c7430 (taken when [this+0x5b0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+ },
+ {
+  "class": "UFortShowdownDivisionEventView",
+  "function": "GetTotalDivisionPoints",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_target",
+  "reason": "JNZ 0x1422d93d0 (taken when [this+0x5c0] is non-null) is a conditional tail branch outside the body; not in callee_candidates and no reflected body."
+ }
+]
