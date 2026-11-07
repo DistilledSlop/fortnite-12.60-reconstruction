@@ -1,0 +1,177 @@
+[
+ {
+  "class": "AFortVolumeManager",
+  "function": "ResaveActor",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: AFortVolumeManager::GetVolumeForActor (0x141c7c5c0) and ResaveActorWithVolume (0x141c8cfd0) are absent from porting/native/Source/FortniteGame/Generated/AFortVolumeManager.h"
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "GetWeaponDataWeaponStatHandle",
+  "status": "proposed",
+  "case": "ported_wrapper",
+  "reason": "all body instructions mapped; Verbosity-gated log elided"
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "OnRep_ReplicatedCosmeticOverrideWeaponData",
+  "status": "blocked",
+  "case": "unresolved_conditional_jump",
+  "reason": "unresolved_conditional_jump: JNZ 0x1426a66b0 leaves the 3-instruction body; target not in insns and no callee candidate"
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "OnRep_ReplicatedWeaponData",
+  "status": "blocked",
+  "case": "unresolved_conditional_jump",
+  "reason": "unresolved_conditional_jump: JNZ 0x1426a6950 leaves the 3-instruction body; target not in insns and no callee candidate"
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "ServerResetShotReport_Implementation",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: candidate AFortAthenaMutator_DadBro::StartNextSafeZonePhase is absent from its generated header; 0x14072d2e0 is called with this+0x8f0 (ShotLogFlags TArray<uint32>, Max at +0xc) and RDX=0, which does not fit that zero-argument mutator method"
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "SetHudKeyActionsVisibility",
+  "status": "blocked",
+  "case": "param_struct_unreflected",
+  "reason": "param_struct_unreflected: element type FWeaponHudKeyActionVisibility is absent from the reflection JSON and generated headers; asm gives an 8-byte element (int32 at +0, bool at +4) but member names are not known"
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "SetHudKeyActionVisibility",
+  "status": "proposed",
+  "case": "ported_wrapper",
+  "reason": "all body instructions mapped; no log elision"
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "SetTrajectoryVisibilityControllerOnly",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: 0x142ee7880 and 0x142ee5dd0 are shared bodies called on this+0x914 (AttachedTrajectoryIndicator, TWeakObjectPtr<AFortProjectileTrajectory>); no candidate class equals or is an ancestor of AFortProjectileTrajectory"
+ },
+ {
+  "class": "AFortWaterBodyActor",
+  "function": "SetSwampLocationAndRadius",
+  "status": "proposed",
+  "case": "ported_wrapper",
+  "reason": "all body instructions mapped; no log elision"
+ },
+ {
+  "class": "UFortWaterInteractionComponent",
+  "function": "IsEnabled",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "hidden_global: body reads absolute global 0x1478df4b8 (CMP dword ...,0; JLE) that is not reflected; byte bit at +0xb0 is in engine storage, outside the proposal"
+ },
+ {
+  "class": "AFortWaypointInfo",
+  "function": "IsStartingWaypoint",
+  "status": "proposed",
+  "case": "ported_wrapper",
+  "reason": "all body instructions mapped; no log elision"
+ },
+ {
+  "class": "UFortWaypointVolumeComponent",
+  "function": "OnClientEnterVolume",
+  "status": "blocked",
+  "case": "unresolved_conditional_jump",
+  "reason": "unresolved_conditional_jump: JNZ 0x142b32e10 is a tail jump outside the body; no callee candidate (body 0x14209cf50 shared with OnClientExitVolume)"
+ },
+ {
+  "class": "UFortWaypointVolumeComponent",
+  "function": "OnClientExitVolume",
+  "status": "blocked",
+  "case": "unresolved_conditional_jump",
+  "reason": "unresolved_conditional_jump: JNZ 0x142b32e10 is a tail jump outside the body; no callee candidate (body 0x14209cf50 shared with OnClientEnterVolume)"
+ },
+ {
+  "class": "AFortWeaponPickaxeAthena",
+  "function": "CreateAnimTrailFX",
+  "status": "blocked",
+  "case": "absolute_constants_static_call",
+  "reason": "absolute_constants_static_call: loads constants from absolute addresses 0x147c31ca8, 0x147c31ca0, 0x148218648, 0x148218638, 0x148218640, 0x148218630 and calls static UFortNiagaraGameplayLibrary::SetAssetOrSpawnAltFXAttached (0x141dd7e70) with 15 stack/register args including struct-by-value Scale/Rotation/Location"
+ },
+ {
+  "class": "AFortWeaponPickaxeDualWieldAthena",
+  "function": "CreateAnimTrailOffhandFX",
+  "status": "blocked",
+  "case": "absolute_constants_static_call",
+  "reason": "absolute_constants_static_call: loads constants from absolute addresses 0x147c31ca8, 0x147c31ca0, 0x148218648, 0x148218638, 0x148218640, 0x148218630 and calls static UFortNiagaraGameplayLibrary::SetAssetOrSpawnAltFXAttached (0x141dd7e70) with 15 stack/register args including struct-by-value Scale/Rotation/Location"
+ },
+ {
+  "class": "AFortWeaponRanged",
+  "function": "SetHomingTarget",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: 0x142ee3b30 is a six-way shared body called on this+0xd60, which is an unreflected gap in AFortWeaponRanged with no determinable receiver class (AFortPawn::IsDead 0x142331080 is declared)"
+ },
+ {
+  "class": "AFortWeaponRanged",
+  "function": "UseReducedAimAssist",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: AFortWeaponRanged::IsUsingScope (0x1426d2930) is absent from porting/native/Source/FortniteGame/Generated/AFortWeaponRanged.h"
+ },
+ {
+  "class": "UHoverDroneMovementComponent",
+  "function": "OnFollowedPlayerChanged",
+  "status": "blocked",
+  "case": "unresolved_conditional_jump",
+  "reason": "unresolved_conditional_jump: JZ 0x1424774e0 leaves the 3-instruction body; target not in insns and no callee candidate"
+ },
+ {
+  "class": "UInfiltrationStatusComponent",
+  "function": "TryExecuteMutatorReady",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: 0x142ee7880 is called on this+0x100 (CachedMutator, TWeakObjectPtr<AFortAthenaMutator_Infiltration>); no candidate (AFortAthenaMutator_Crucible, AFortTeamMemberPedestal, UHUDLayoutToolContext) equals or is an ancestor of that class"
+ },
+ {
+  "class": "ULevelSaveBaseComponent",
+  "function": "RegisterDeletionToRollback",
+  "status": "blocked",
+  "case": "unresolved_conditional_jump",
+  "reason": "unresolved_conditional_jump: JNZ 0x142063b50 is a tail jump outside the 13-instruction body; no callee candidate"
+ },
+ {
+  "class": "ULevelSaveBaseComponent",
+  "function": "RegisteredDeletedLevelStreamedActor",
+  "status": "blocked",
+  "case": "unresolved_conditional_jump",
+  "reason": "unresolved_conditional_jump: JNZ 0x142063ef0 is a tail jump outside the body; no callee candidate"
+ },
+ {
+  "class": "ULevelSaveBaseComponent",
+  "function": "ResaveLevelStreamedActor",
+  "status": "blocked",
+  "case": "unresolved_conditional_jump",
+  "reason": "unresolved_conditional_jump: JNZ 0x142069590 is a tail jump outside the body; no callee candidate"
+ },
+ {
+  "class": "AKeepItemContainer",
+  "function": "OnRep_HostUpgradeLevel",
+  "status": "proposed",
+  "case": "ported_wrapper",
+  "reason": "all body instructions mapped; Verbosity-gated log elided"
+ },
+ {
+  "class": "APartyDisplayManager",
+  "function": "OnPawnBeginCursorOver",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: APartyDisplayManager::GetPartyMemberIndexByPlayerPawn (0x141fc1d10) is absent from porting/native/Source/FortniteGame/Generated/APartyDisplayManager.h"
+ },
+ {
+  "class": "APartyDisplayManager",
+  "function": "OnPawnEndCursorOver",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: APartyDisplayManager::GetPartyMemberIndexByPlayerPawn (0x141fc1d10) is absent from porting/native/Source/FortniteGame/Generated/APartyDisplayManager.h"
+ }
+]

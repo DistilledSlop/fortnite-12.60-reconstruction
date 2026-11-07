@@ -39,6 +39,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsEndingWaypoint(ABuildingTrapFloor_Waypoint* Waypoint);
 
+	UFUNCTION(BlueprintCallable)
+	bool IsStartingWaypoint(ABuildingTrapFloor_Waypoint* Waypoint);
+
 	UFUNCTION()
 	void OnRep_SplineLocations();
 

@@ -12,6 +12,7 @@
 #include "EFortWeaponCoreAnimation.h"
 #include "EFortWeaponReduceMeshWorkSetting.h"
 #include "EFortWeaponTriggerType.h"
+#include "Engine/DataTable.h"
 #include "FCosmeticVariantCache.h"
 #include "FFortAbilitySetHandle.h"
 #include "FFortBaseWeaponStats.h"
@@ -848,6 +849,9 @@ public:
 	TEnumAsByte<EFortWeaponTriggerType::Type> GetWeaponDataTriggerType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FDataTableRowHandle GetWeaponDataWeaponStatHandle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponentBudgeted* GetWeaponMesh() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -901,6 +905,11 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSetChargeState(uint8 NewState);
 	void ServerSetChargeState_Implementation(uint8 NewState);
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetHudKeyActionVisibility(int32 Index, bool bVisible);
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable)

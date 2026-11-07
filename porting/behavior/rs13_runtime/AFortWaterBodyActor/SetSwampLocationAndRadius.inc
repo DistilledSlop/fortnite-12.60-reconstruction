@@ -1,0 +1,9 @@
+// Original address: 0x142706e80 (thunk 0x142b487a0). Offset evidence: InPosition copied to +0x8b4 (X), +0x8b8 (Y), +0x8bc (Z); InRadius stored at +0x8c0; WaterBodyType byte at +0x255 (reflected AWaterBody.WaterBodyType); byte gate at +0x8b0 and bool result at +0x8c8 are unreflected gaps in the AFortWaterBodyActor region (member_field entries). Predicate: state 2, or state 1 with gate set, and InRadius > 0 (COMISS/JBE).
+// CONFIDENCE: HIGH
+NativeRecoveredFloat_0x8b4 = InPosition.X;
+NativeRecoveredFloat_0x8b8 = InPosition.Y;
+NativeRecoveredFloat_0x8bc = InPosition.Z;
+NativeRecoveredFloat_0x8c0 = InRadius;
+const uint8 BodyType = static_cast<uint8>(WaterBodyType);
+const bool bSwampActive = (BodyType == 2) || (BodyType == 1 && NativeRecoveredByte_0x8b0 != 0);
+NativeRecoveredBool_0x8c8 = bSwampActive && (InRadius > 0.0f);

@@ -6,7 +6,9 @@
 #include "EFortItemType.h"
 #include "EFortRarity.h"
 #include "EFortWeaponTriggerType.h"
+#include "Engine/DataTable.h"
 #include "FFortBaseWeaponStats.h"
+#include "FWeaponHudData.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
 #include "GameplayEffectTypes.h"
@@ -298,6 +300,18 @@ TEnumAsByte<EFortWeaponTriggerType::Type> AFortWeapon::GetWeaponDataTriggerType(
 	return EFortWeaponTriggerType::OnPress;
 }
 
+FDataTableRowHandle AFortWeapon::GetWeaponDataWeaponStatHandle() const
+{
+	// Original address: 0x1426a0f60 (thunk 0x142b47150). Offset evidence: WeaponData is UFortWeaponItemDefinition* at +0x350 (reflected AFortWeapon.WeaponData); the non-null path calls 0x142672cc0 = UFortWeaponItemDefinition::GetWeaponStatHandle() const, which fills the returned struct; the null path zeroes both qwords of the return buffer.
+	// Verbosity-gated diagnostic log at 0x142c54b70 elided (no state change)
+	// CONFIDENCE: MEDIUM
+	if (WeaponData != nullptr)
+	{
+	    return WeaponData->GetWeaponStatHandle();
+	}
+	return FDataTableRowHandle();
+}
+
 USkeletalMeshComponentBudgeted* AFortWeapon::GetWeaponMesh() const
 {
 	// Original address: 0x142b47190.
@@ -400,6 +414,23 @@ bool AFortWeapon::ServerResetShotReport_Validate()
 void AFortWeapon::ServerSetChargeState_Implementation(uint8 NewState)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortWeapon::SetHudKeyActionVisibility(int32 Index, bool bVisible)
+{
+	// Original address: 0x1426b3020 (thunk 0x142b485a0). Offset evidence: HudKeyActionData TArray at +0xb60 (Num at +0xb68, reflected); element bVisible is at element +0x28 with 0x30 stride (asm, element layout of FWeaponHudData not offset-verified: header reports bVisible offset None); OnWeaponHudKeyActionUpdated delegate at +0xb50 (reflected) broadcast with this as its single packed param.
+	// CONFIDENCE: MEDIUM
+	if (Index < 0 || Index >= HudKeyActionData.Num())
+	{
+	    return;
+	}
+	FWeaponHudData& Action = HudKeyActionData[Index];
+	if (Action.bVisible == bVisible)
+	{
+	    return;
+	}
+	Action.bVisible = bVisible;
+	OnWeaponHudKeyActionUpdated.Broadcast(this);
 }
 
 void AFortWeapon::SetShouldDrawNativeReticle(bool bInShouldDrawReticle)

@@ -7,6 +7,7 @@
 #include "WaterBodyActor.h"
 
 #include "AttributeSet.h"
+#include "Math/Vector.h"
 
 #include "AFortWaterBodyActor.generated.h"
 
@@ -27,6 +28,27 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	bool bIsSwamp;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x8b0): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x8b0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x8b4): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x8b4;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x8b8): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x8b8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x8bc): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x8bc;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x8c0): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x8c0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x8c8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x8c8;
+
+	UFUNCTION(BlueprintCallable)
+	void SetSwampLocationAndRadius(FVector& InPosition, float InRadius);
 
 };
 
