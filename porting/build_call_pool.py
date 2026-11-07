@@ -12,7 +12,8 @@ import thunk_receiver as tr
 MAXI = int(sys.argv[1]) if len(sys.argv) > 1 else 60
 R = 'porting/generated'
 HELPERS = {'0x142bee710': 'FMemory::Free', '0x1406a9dc0': 'ProcessMulticastDelegate',
-           '0x142c54b70': 'FMsg::Logf (verbosity-gated UE_LOG)'}
+           '0x142c54b70': 'FMsg::Logf (verbosity-gated UE_LOG)',
+           '0x142ee5dd0': 'TWeakObjectPtr::Get', '0x142ee7880': 'TWeakObjectPtr::IsValid', '0x142ee3b30': 'TWeakObjectPtr assign'}
 STUBS = {'0x1406801c0', '0x1406801d0', '0x1406801e0', '0x140680300'}
 idx = {}
 for d in glob.glob(f'{R}/native*/'):
@@ -44,6 +45,8 @@ inscope = json.load(open('porting/progress/native_functions_inscope.json'))
 inscope = {(c, f) for c, fs in inscope.items() for f in fs}
 attempted = set()
 for p in glob.glob(f'{R}/work-batches/wrap[0-9A]*.json') + glob.glob(f'{R}/work-batches/bcast*.json') + glob.glob(f'{R}/work-batches/rs[0-9]*.json'):
+    if not os.path.isdir('porting/behavior/%s_runtime' % os.path.basename(p)[:-5]):
+        continue  # generated but never run by a worker: those functions are still open
     for j in json.load(open(p)):
         attempted.add((j['cls'], j['fn']))
 POLICY = {"UCommonBorder", "UCommonInputSettings", "UCommonUISettings", "UCommonInputControllerData", "UFortLoginInteractions",
@@ -52,6 +55,11 @@ POLICY = {"UCommonBorder", "UCommonInputSettings", "UCommonUISettings", "UCommon
           "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification",
           "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary"}
 hdr = {os.path.basename(p)[:-2]: p for p in glob.glob('porting/native/Source/*/Generated/*.h')}
+
+
+def span(p):
+    a = [int(l.split(None, 1)[0], 16) for l in open(p) if re.match(r'^[0-9a-f]+\s', l)]
+    return min(a), max(a)
 
 
 def insns(p):
@@ -90,12 +98,8 @@ for e in f2:
                 fl = d.get('flags')
                 fl = fl if isinstance(fl, int) else int(fl, 16) if fl else 0
                 cal[t].append(dict(fn=f'{c}::{f}', static=bool(fl & 0x2000), const=bool(fl & 0x40000000), params=[(p['name'], p['kind']) for p in d.get('params') or []]))
-        elif t in idx and 0 < t.count('x'):  # local branch target inside the body is not an external call
-            lo = int(b[0], 16)
-            if lo <= int(t, 16) < lo + 0x400:
-                continue
-            ok = False
-            break
+        elif span(idx[b[0]])[0] <= int(t, 16) <= span(idx[b[0]])[1]:  # branch target inside the body is not an external call
+            continue
         else:
             ok = False
             break
