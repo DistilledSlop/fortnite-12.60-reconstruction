@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "UFortExpeditionItem.h"
+
 #include "UFortExpeditionUtilities.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEUI_API UFortExpeditionUtilities : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static float CalculateExpeditionPercentageChanceForSuccess(UFortExpeditionItem* Expedition, float TotalPower);
+
 };
 

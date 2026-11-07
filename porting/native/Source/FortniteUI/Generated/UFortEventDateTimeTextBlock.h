@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonTextBlock.h"
 
+#include "Misc/DateTime.h"
+
 #include "UFortEventDateTimeTextBlock.generated.h"
 
 UCLASS(defaultconfig)
@@ -14,5 +16,8 @@ class FORTNITEUI_API UFortEventDateTimeTextBlock : public UCommonTextBlock
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FDateTime GetDateTime() const;
+
 };
 

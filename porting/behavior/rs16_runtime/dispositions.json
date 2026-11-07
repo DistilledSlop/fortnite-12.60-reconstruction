@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UFortCreativeIslandLinkScreen",
+  "function": "SetTargetPortal",
+  "status": "proposed",
+  "case": "proposed",
+  "reason": "TargetPortal (+0x510, reflected) = Portal when non-null; verbosity logs elided. Asm fully accounted for."
+ },
+ {
+  "class": "UFortCreativeGlobalOptions",
+  "function": "GetOptionListFromMemoryPointer",
+  "status": "proposed",
+  "case": "proposed",
+  "reason": "Index raw (+0x458); Data (+0x468) and Num (+0x470) as member_field; null if index out of range. Asm accounted for."
+ },
+ {
+  "class": "UFortCreativeIslandTemplateButton",
+  "function": "GetPlotTemplateDefinition",
+  "status": "proposed",
+  "case": "proposed",
+  "reason": "ItemDefinition (+0xb80, inherited reflected) returned after IsA UFortCreativeRealEstatePlotItemDefinition; else null."
+ },
+ {
+  "class": "UFortCreativeMessageKnobsDialog",
+  "function": "IsAnyFilterActive",
+  "status": "proposed",
+  "case": "proposed",
+  "reason": "OR of byte flags at +0x590, +0x578, +0x592 (member_field uint8). Asm computes count of nonzero flags != 0."
+ },
+ {
+  "class": "UFortEventDateTimeTextBlock",
+  "function": "GetDateTime",
+  "status": "proposed",
+  "case": "proposed",
+  "reason": "Raw 8-byte FDateTime copy from +0x2d8 (no reflected own members). Asm fully accounted for."
+ },
+ {
+  "class": "UFortExpeditionUtilities",
+  "function": "CalculateExpeditionPercentageChanceForSuccess",
+  "status": "proposed",
+  "case": "proposed",
+  "reason": "Static: Min/Target via GetMin/GetTarget on Expedition; ratio clamp then (1-c)*0.05+c. Constants per decompile."
+ },
+ {
+  "class": "UFortCampaignTeamMemberResult",
+  "function": "Focus",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x14514f130 (UFortUIManagerWidget_Campaign::GetUINavigationManager) and JMP 0x144db14e0 (UFortUINavigationManager::CenterWidget) are not declared in any generated header."
+ },
+ {
+  "class": "UFortCampaignHUDTeamMemberInfo",
+  "function": "HandleAccumulatedItemsChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ee5dd0 on this+0xb74 (unreflected embedded receiver) shares its body with 6 candidates; none is this class or an ancestor."
+ },
+ {
+  "class": "UFortCollectionBookItemPopupMenu",
+  "function": "GetHostButton",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ee5dd0 on this+0x41c (unreflected embedded receiver) shares its body with 6 candidates; none is this class or an ancestor."
+ },
+ {
+  "class": "UFortCollectionBookSectionPanel",
+  "function": "OnSlotItemActionExecuted",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144f5e8e0 (UFortItemPickerBase::GetSelectedItem) is not declared in any generated header."
+ },
+ {
+  "class": "UFortCollectionBookSlotButton",
+  "function": "OnSlottedItemUpdated",
+  "status": "blocked",
+  "case": "unreflected_delegate_member",
+  "reason": "Broadcast on this+0xb98 (CALL 0x1406a9dc0 via JMP): no reflected member at +0xb98 and no delegate type known for it."
+ },
+ {
+  "class": "UFortCollectionBookSlotWidget",
+  "function": "HandleSlottedItemOperationComplete",
+  "status": "blocked",
+  "case": "cold_path_unresolved",
+  "reason": "Body is a head of a large function: JNZ 0x1450d0fe0 continues into calls not in callee_candidates (e.g. 0x1450b79c0, 0x142a3d9f0, vtable+0x288)."
+ },
+ {
+  "class": "UFortCollectionBookWidget",
+  "function": "OnPreviewXPChangeRequest",
+  "status": "blocked",
+  "case": "cold_path_unresolved",
+  "reason": "JNZ 0x1450c6f20 continues into unresolved calls (vtable+0x288, FUN_1450cd690, FUN_1424a18f0, FUN_142a3d9f0, FUN_142bedc40); none in callee_candidates."
+ },
+ {
+  "class": "UFortEventLeaderboardEntryData",
+  "function": "GetLiveSessionId",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140682ce0 on [this+0x28]+0x80 shares its body with 6 candidates that return SoftObject or void; none matches the receiver or the FString sret."
+ },
+ {
+  "class": "UFortCreativeMessageKnobsDialog",
+  "function": "ContainsItem",
+  "status": "blocked",
+  "case": "return_type_mismatch",
+  "reason": "Body is LEA RAX,[RCX-0x108]; RET, returning a pointer-adjusted this, but header_decl says bool; bool semantics cannot be determined exactly."
+ },
+ {
+  "class": "UFortCreativeMessageKnobsDialog",
+  "function": "FilterEntriesByString",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140683960 on this+0x580 (FString copy from RDX) shares its body with 6 candidates; none is this class or an ancestor."
+ },
+ {
+  "class": "UFortCreativeGlobalOptions",
+  "function": "SetListDataSource",
+  "status": "blocked",
+  "case": "cold_path_unresolved",
+  "reason": "JZ 0x144d954b0 (ListType==6 path) continues into vtable+0x288 call and unresolved helpers (FUN_142a62c80, FUN_1423d3b90); also stores dword for a Byte param."
+ },
+ {
+  "class": "UFortCreativeIslandGeneration",
+  "function": "GetShowTemplateIslands",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "CMP dword ptr [0x147e1af28],0x0 reads an absolute global address with no reflected or static owner."
+ },
+ {
+  "class": "UFortDivisionDetailsScreen",
+  "function": "SetTournamentAndEventId",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x14509d090 (UFortShowdownDetailView::SetTournament) is not declared in any generated header; receiver DetailsInfo is UFortDivisionDetailsInfo."
+ },
+ {
+  "class": "UFortDropdownMenu",
+  "function": "DeselectAll",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_call",
+  "reason": "JNZ 0x1407b8690 is a conditional tail call to a target not in callee_candidates."
+ },
+ {
+  "class": "UFortDropdownMenu",
+  "function": "GetSelectedButtonIndex",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_call",
+  "reason": "JNZ 0x1407c48f0 is a conditional tail call to a target not in callee_candidates."
+ },
+ {
+  "class": "UFortDropdownMenu",
+  "function": "InternalOnButtonClicked",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_call",
+  "reason": "JNZ 0x1407f1730 is a conditional tail call to a target not in callee_candidates."
+ },
+ {
+  "class": "UFortDropdownDelegateRegistrar",
+  "function": "OnOpenStatusChanged",
+  "status": "blocked",
+  "case": "unresolved_conditional_tail_call",
+  "reason": "JNZ 0x144e19a00 is a conditional tail call to a target not in callee_candidates; JNZ 0x144d8d0c1 branch unresolved too."
+ },
+ {
+  "class": "UFortExpeditionOverviewWidget",
+  "function": "UpdateExpeditionTabs",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1407f04d0 (UCommonTabListWidget::RemoveAllTabs) and CALL 0x144ddb890 (UFortTabListWidgetBase::RegisterFortTab) are not declared in any generated header."
+ },
+ {
+  "class": "UFortHeroLoadoutHeroPicker",
+  "function": "GetCurrentlySelectedTab",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1407c4ba0 (UCommonTabListWidget::GetSelectedTabId) is not declared in any generated header."
+ }
+]

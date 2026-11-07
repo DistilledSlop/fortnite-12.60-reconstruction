@@ -8,6 +8,7 @@
 
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
+#include "UFortCreativeRealEstatePlotItemDefinition.h"
 
 class UFortLazyImage;
 
@@ -30,6 +31,9 @@ public:
 	// table index 0, flags 0x40000000010001
 	UPROPERTY()
 	FSlateBrush DefaultFeaturedTemplateImage;
+
+	UFUNCTION(BlueprintCallable)
+	UFortCreativeRealEstatePlotItemDefinition* GetPlotTemplateDefinition();
 
 };
 

@@ -47,5 +47,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DisableFilters();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAnyFilterActive();
+
 };
 

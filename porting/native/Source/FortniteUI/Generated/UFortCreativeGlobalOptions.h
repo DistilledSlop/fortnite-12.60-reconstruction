@@ -25,6 +25,12 @@ public:
 	UPROPERTY()
 	int32 CachedLastUsedIndexInCategory;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x468): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0x468;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x470): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x470;
+
 	// table index 6, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortCreativeOptionsBundle* OptionsAsset;
@@ -52,6 +58,11 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UImage* Image_DisplayImage;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortCreativeOptionsCategory* GetOptionListFromMemoryPointer() const;
+public:
 
 };
 

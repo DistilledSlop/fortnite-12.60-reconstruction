@@ -1,0 +1,11 @@
+// Original body address: 0x144d7ad80 (thunk 0x14521c960)
+// Offset evidence: +0x458 int32 index lies below the class own region (lowest own offset 0x460), read raw.
+// +0x468 is the TArray data pointer and +0x470 its Num (member_field NativeRecovered entries, own region). Asm: index < 0 or index >= Num returns null, else Data[index].
+// CONFIDENCE: MEDIUM
+const uint8* Raw = reinterpret_cast<const uint8*>(this);
+const int32 Index = *reinterpret_cast<const int32*>(Raw + 0x458);
+if (Index < 0 || Index >= NativeRecoveredInt32_0x470)
+{
+	return nullptr;
+}
+return reinterpret_cast<UFortCreativeOptionsCategory* const*>(NativeRecoveredUint64_0x468)[Index];

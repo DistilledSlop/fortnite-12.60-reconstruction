@@ -110,5 +110,8 @@ public:
 	UPROPERTY()
 	bool bFavoritesOnlyMode;
 
+	UFUNCTION(BlueprintCallable)
+	void SetTargetPortal(AFortAthenaCreativePortal* Portal);
+
 };
 
