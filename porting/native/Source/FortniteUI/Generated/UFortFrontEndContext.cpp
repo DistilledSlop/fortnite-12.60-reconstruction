@@ -56,6 +56,13 @@ FString UFortFrontEndContext::GetOfferIdToFocusInItemShop() const
 	return OfferIdToFocusInItemShop;
 }
 
+TSubclassOf<UObject> UFortFrontEndContext::GetUITestingClass() const
+{
+	// Shared body for stubs whose native body is `xor eax,eax; ret` on a pointer/object return.
+	// CONFIDENCE: HIGH
+	return nullptr;
+}
+
 bool UFortFrontEndContext::IsViewingPhoenixTheater() const
 {
 	// Original address: 0x14523c8b0.

@@ -1584,8 +1584,18 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	AFortPlayerPawn* SpawnEnemyPlayer(float MaxHealth, float MaxShield);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void SpawnFoodFightObjective();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	AFortPlayerPawn* SpawnFriendlyPlayer(float MaxHealth, float MaxShield);
 public:
 
 protected:
@@ -1600,6 +1610,11 @@ public:
 
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	virtual AFortPlayerPawn* SpawnScriptedPawnAtLocation(FString ProfileName, float X, float Y, float Z, float Pitch, float Yaw, float Roll);
+
+protected:
+	UFUNCTION()
+	AFortPlayerPawn* SpawnSimplePawn();
+public:
 
 protected:
 	UFUNCTION(Exec)

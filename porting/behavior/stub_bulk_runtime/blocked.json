@@ -104,5 +104,68 @@
   "blocker": "interface_function",
   "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
   "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+ },
+ {
+  "entry": "UFortMissionLibrary::SpawnMissionItemPickupInWorld",
+  "kind": "exec",
+  "blocker": "virtual_rejected",
+  "reason": "Generator: explicit virtual requires an ordinary reflected member function (UFortMissionLibrary is a function library; classification as a virtual target is wrong for it)",
+  "unblock": "Re-derive the body location as a static/library function and port without virtual",
+  "body": "0x140680300",
+  "thunk": "0x1429ec010"
+ },
+ {
+  "entry": "UFortKismetLibrary::ExtractSkeletalMesh",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x14296a600"
+ },
+ {
+  "entry": "UFortKismetLibrary::GetAIDirector",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x14296a600"
+ },
+ {
+  "entry": "UFortKismetLibrary::GetAIGoalManager",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x14296a600"
+ },
+ {
+  "entry": "UFortKismetLibrary::IncrementAnalyticMatchCount",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x142971e80"
+ },
+ {
+  "entry": "UFortKismetLibrary::K2_SpawnPickupInWorld",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x142973d70"
+ },
+ {
+  "entry": "UFortKismetLibrary::K2_SpawnPickupInWorldWithClass",
+  "kind": "exec",
+  "blocker": "handwritten_class",
+  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+  "body": "0x140680300",
+  "thunk": "0x142974140"
  }
 ]

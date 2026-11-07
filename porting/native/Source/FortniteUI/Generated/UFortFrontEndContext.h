@@ -35,6 +35,7 @@
 #include "UFortItemDefinition.h"
 
 class UFortServerBrowserHelper;
+class UObject;
 
 #include "UFortFrontEndContext.generated.h"
 
@@ -180,6 +181,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FString GetOfferIdToFocusInItemShop() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<UObject> GetUITestingClass() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsViewingPhoenixTheater() const;

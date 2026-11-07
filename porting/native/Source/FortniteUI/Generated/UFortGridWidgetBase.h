@@ -95,6 +95,9 @@ public:
 	bool bReversed;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UFortGridPickerTile* GetTileForObject(UObject* Object);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TArray<UFortGridPickerTile*> GetTiles();
 
 };

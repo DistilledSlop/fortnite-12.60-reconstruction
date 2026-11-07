@@ -10,6 +10,7 @@
 #include "FOnStormShieldReachedTargetRadius.h"
 #include "FStormShieldMoveData.h"
 #include "FStormShieldRadiusGrowthData.h"
+#include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 
 class AFortMissionStormSafeZone;
@@ -159,6 +160,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	bool RemoveAndDestroySafeArea(AFortMissionStormSafeZone* AreaToRemove);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	AFortMissionStormSafeZone* SpawnSafeAreaAtLocation(FVector& InLocation, float InRadius);
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

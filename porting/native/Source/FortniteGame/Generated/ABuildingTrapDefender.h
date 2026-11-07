@@ -11,6 +11,7 @@
 
 class AFortAIPawn;
 class UFortDefenderItemDefinition;
+class UFortWorldItem;
 
 #include "ABuildingTrapDefender.generated.h"
 
@@ -45,6 +46,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_DefenderPawn();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	UFortWorldItem* TakeWeaponAwayFromDefender(UFortWorldItem* WeaponToTakeAway);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

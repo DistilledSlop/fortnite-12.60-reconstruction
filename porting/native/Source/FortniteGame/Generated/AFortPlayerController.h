@@ -71,6 +71,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
+#include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 #include "UFortAnalyticsControllerInterface.h"
@@ -1229,21 +1230,25 @@ public:
 	void Cheat_ClearForcedCosmeticVariantChannels_Implementation();
 	bool Cheat_ClearForcedCosmeticVariantChannels_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void Cheat_ForceAthenaCosmeticItemInSlot(UAthenaCosmeticItemDefinition* CosmeticItem, const EAthenaCustomizationCategory& Slot, int32 Index);
 	void Cheat_ForceAthenaCosmeticItemInSlot_Implementation(UAthenaCosmeticItemDefinition* CosmeticItem, const EAthenaCustomizationCategory& Slot, int32 Index);
+	bool Cheat_ForceAthenaCosmeticItemInSlot_Validate(UAthenaCosmeticItemDefinition* CosmeticItem, const EAthenaCustomizationCategory& Slot, int32 Index);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void Cheat_ForceCosmeticVariantChannels(const TArray<FMcpVariantChannelInfo>& CosmeticVariantChannels);
 	void Cheat_ForceCosmeticVariantChannels_Implementation(const TArray<FMcpVariantChannelInfo>& CosmeticVariantChannels);
+	bool Cheat_ForceCosmeticVariantChannels_Validate(const TArray<FMcpVariantChannelInfo>& CosmeticVariantChannels);
 
-	UFUNCTION(Server, Unreliable)
+	UFUNCTION(Server, Unreliable, WithValidation)
 	void Cheat_ForcePlayEmoteItem(UFortMontageItemDefinitionBase* EmoteAsset);
 	void Cheat_ForcePlayEmoteItem_Implementation(UFortMontageItemDefinitionBase* EmoteAsset);
+	bool Cheat_ForcePlayEmoteItem_Validate(UFortMontageItemDefinitionBase* EmoteAsset);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void Cheat_StopObjectiveServer(AFortObjectiveBase* Objective, const EFortObjectiveStatus& Status);
 	void Cheat_StopObjectiveServer_Implementation(AFortObjectiveBase* Objective, const EFortObjectiveStatus& Status);
+	bool Cheat_StopObjectiveServer_Validate(AFortObjectiveBase* Objective, const EFortObjectiveStatus& Status);
 
 	UFUNCTION(Client, Reliable)
 	void ClientActivateSlot(const EFortQuickBars& InQuickBar, int32 Slot, float ActivateDelay, bool bUpdatePreviousFocusedSlot, bool bForceExecution);
@@ -1942,6 +1947,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool ShouldShowInfoIndicator(AActor* TestActor) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	AActor* SpawnToyInstance(TSubclassOf<AActor> ToyClass, FTransform SpawnPosition);
 
 	UFUNCTION()
 	void StartZeroingCameraRoll();

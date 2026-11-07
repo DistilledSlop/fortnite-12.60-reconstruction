@@ -673,6 +673,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual TEnumAsByte<EBuildingReplacementType> GetReplacementDestructionReason();
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCurveLinearColor* GetWindPannerSpeedCurveForPreview() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCurveLinearColor* GetWindSpeedCurveForPreview() const;
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasDestructionLoot() const;
 

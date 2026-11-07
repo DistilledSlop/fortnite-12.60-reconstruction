@@ -64,22 +64,74 @@ bool AFortPlayerController::Cheat_ClearForcedCosmeticVariantChannels_Validate()
 
 void AFortPlayerController::Cheat_ForceAthenaCosmeticItemInSlot_Implementation(UAthenaCosmeticItemDefinition* CosmeticItem, const EAthenaCustomizationCategory& Slot, int32 Index)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::Cheat_ForceAthenaCosmeticItemInSlot_Validate(UAthenaCosmeticItemDefinition* CosmeticItem, const EAthenaCustomizationCategory& Slot, int32 Index)
+{
+	// Shared body for validate stubs whose native body returns false (`xor al,al; ret` or `xor eax,eax; ret`).
+	// CONFIDENCE: HIGH
+	return false;
 }
 
 void AFortPlayerController::Cheat_ForceCosmeticVariantChannels_Implementation(const TArray<FMcpVariantChannelInfo>& CosmeticVariantChannels)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::Cheat_ForceCosmeticVariantChannels_Validate(const TArray<FMcpVariantChannelInfo>& CosmeticVariantChannels)
+{
+	// Shared body for validate stubs whose native body returns false (`xor al,al; ret` or `xor eax,eax; ret`).
+	// CONFIDENCE: HIGH
+	return false;
 }
 
 void AFortPlayerController::Cheat_ForcePlayEmoteItem_Implementation(UFortMontageItemDefinitionBase* EmoteAsset)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::Cheat_ForcePlayEmoteItem_Validate(UFortMontageItemDefinitionBase* EmoteAsset)
+{
+	// Shared body for validate stubs whose native body returns false (`xor al,al; ret` or `xor eax,eax; ret`).
+	// CONFIDENCE: HIGH
+	return false;
 }
 
 void AFortPlayerController::Cheat_StopObjectiveServer_Implementation(AFortObjectiveBase* Objective, const EFortObjectiveStatus& Status)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerController::Cheat_StopObjectiveServer_Validate(AFortObjectiveBase* Objective, const EFortObjectiveStatus& Status)
+{
+	// Shared body for validate stubs whose native body returns false (`xor al,al; ret` or `xor eax,eax; ret`).
+	// CONFIDENCE: HIGH
+	return false;
 }
 
 void AFortPlayerController::ClientActivateSlot_Implementation(const EFortQuickBars& InQuickBar, int32 Slot, float ActivateDelay, bool bUpdatePreviousFocusedSlot, bool bForceExecution)
@@ -1519,6 +1571,13 @@ bool AFortPlayerController::ShouldShowInfoIndicator(AActor* TestActor) const
 	// CONFIDENCE: high
 	// Native target 0x14097cd20.
 	return TestActor != nullptr;
+}
+
+AActor* AFortPlayerController::SpawnToyInstance(TSubclassOf<AActor> ToyClass, FTransform SpawnPosition)
+{
+	// Shared body for stubs whose native body is `xor eax,eax; ret` on a pointer/object return.
+	// CONFIDENCE: HIGH
+	return nullptr;
 }
 
 void AFortPlayerController::StartZeroingCameraRoll()

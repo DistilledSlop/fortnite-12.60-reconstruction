@@ -2127,12 +2127,26 @@ void UFortCheatManager::SpawnContainer(FString ContainerClassName)
 	return;
 }
 
+AFortPlayerPawn* UFortCheatManager::SpawnEnemyPlayer(float MaxHealth, float MaxShield)
+{
+	// Shared body for stubs whose native body is `xor eax,eax; ret` on a pointer/object return.
+	// CONFIDENCE: HIGH
+	return nullptr;
+}
+
 void UFortCheatManager::SpawnFoodFightObjective()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+AFortPlayerPawn* UFortCheatManager::SpawnFriendlyPlayer(float MaxHealth, float MaxShield)
+{
+	// Shared body for stubs whose native body is `xor eax,eax; ret` on a pointer/object return.
+	// CONFIDENCE: HIGH
+	return nullptr;
 }
 
 AFortPawn* UFortCheatManager::SpawnPawn(FString PawnType)
@@ -2153,6 +2167,13 @@ AFortPlayerPawn* UFortCheatManager::SpawnScriptedPawnAtLocation(FString ProfileN
 {
 	// CONFIDENCE: high
 	// Native target 0x140680300.
+	return nullptr;
+}
+
+AFortPlayerPawn* UFortCheatManager::SpawnSimplePawn()
+{
+	// Shared body for stubs whose native body is `xor eax,eax; ret` on a pointer/object return.
+	// CONFIDENCE: HIGH
 	return nullptr;
 }
 

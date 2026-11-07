@@ -30,6 +30,13 @@ bool AFortMissionStormShield::RemoveAndDestroySafeArea(AFortMissionStormSafeZone
 	return false;
 }
 
+AFortMissionStormSafeZone* AFortMissionStormShield::SpawnSafeAreaAtLocation(FVector& InLocation, float InRadius)
+{
+	// Shared body for stubs whose native body is `xor eax,eax; ret` on a pointer/object return.
+	// CONFIDENCE: HIGH
+	return nullptr;
+}
+
 void AFortMissionStormShield::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

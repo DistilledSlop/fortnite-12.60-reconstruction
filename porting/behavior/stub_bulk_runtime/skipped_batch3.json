@@ -1,0 +1,20 @@
+[
+ {
+  "cls": "UFortPlayerSurveyAnswerWidgetBase",
+  "fn": "HandleAnswerChanged",
+  "why": "void but stub is not empty",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UHUDLayoutToolProxy",
+  "fn": "BP_GetPropertyType",
+  "why": "non-bool return",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ }
+]

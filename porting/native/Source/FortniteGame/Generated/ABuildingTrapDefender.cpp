@@ -12,6 +12,13 @@ void ABuildingTrapDefender::OnRep_DefenderPawn()
 	// Body not recovered: reflection-derived stub.
 }
 
+UFortWorldItem* ABuildingTrapDefender::TakeWeaponAwayFromDefender(UFortWorldItem* WeaponToTakeAway)
+{
+	// Shared body for stubs whose native body is `xor eax,eax; ret` on a pointer/object return.
+	// CONFIDENCE: HIGH
+	return nullptr;
+}
+
 void ABuildingTrapDefender::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

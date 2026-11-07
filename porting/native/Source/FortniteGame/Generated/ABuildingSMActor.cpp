@@ -135,6 +135,20 @@ TEnumAsByte<EBuildingReplacementType> ABuildingSMActor::GetReplacementDestructio
 	return ReplacementDestructionReason;
 }
 
+UCurveLinearColor* ABuildingSMActor::GetWindPannerSpeedCurveForPreview() const
+{
+	// Shared body for stubs whose native body is `xor eax,eax; ret` on a pointer/object return.
+	// CONFIDENCE: HIGH
+	return nullptr;
+}
+
+UCurveLinearColor* ABuildingSMActor::GetWindSpeedCurveForPreview() const
+{
+	// Shared body for stubs whose native body is `xor eax,eax; ret` on a pointer/object return.
+	// CONFIDENCE: HIGH
+	return nullptr;
+}
+
 bool ABuildingSMActor::HasDestructionLoot() const
 {
 	// CONFIDENCE: HIGH
