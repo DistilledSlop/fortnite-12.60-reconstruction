@@ -14,7 +14,7 @@
 .leaf-label,.leaf-pct,.tm-head{fill:var(--tm-ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .leaf-pct{font-weight:700}
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.2% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit efdbcff | Resolve tail-jump thunks to their real bodies; remove 23 wrongly ported entries | 2026-11-07T13:38:45-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
+.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.2% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit 80dd977 | Refresh dashboard after tail-jump correction | 2026-11-07T13:38:59-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Gameplay classes (/Script/FortniteGame)
 17.3% complete
 effort weight 673 | source: derived
