@@ -5,6 +5,16 @@
 #include "UFortVehicleInterface.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortCharacterVehicle::AllowInteractionBetweenFortVolume() const
+{
+	// Thunk 0x142860f70: asm file not in porting/generated/native*; checked the Ghidra decompile
+	//   porting/generated/decomp/AFortCharacterVehicle/AllowInteractionBetweenFortVolume__142860f70.c: receiver this+0x1048, vtable slot 0xc0 (thunk_delta 0x1048).
+	// Body 0x141934370: MOVZX EAX,byte [RCX+0x20d8]; RET. Object offset = 0x1048 + 0x20d8 = 0x3120.
+	// 0x3120 is the declared bool bAllowInteractBetweenFortVolumes (AFortCharacterVehicle.h line 72; bool_bits.json offset 12576 mask 1).
+	// CONFIDENCE: MEDIUM
+	return bAllowInteractBetweenFortVolumes;
+}
+
 bool AFortCharacterVehicle::BP_CanInteract_Implementation(AFortPlayerController* FortPC)
 {
 	// Exact original shared stub 0x1406801d0.
@@ -65,6 +75,15 @@ void AFortCharacterVehicle::OnRep_OverrideAbilitySystemComponent()
 void AFortCharacterVehicle::OnRep_OverrideWrap()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCharacterVehicle::SetAllowInteractionBetweenFortVolumes(bool bInteractBetweenVolumes)
+{
+	// Thunk 0x142862090: asm read. Stack argument read via the exec helpers, normalises the bool with SETNZ DL, then
+	//   ADD RCX,0x1048 (thunk_delta 0x1048) and virtual call [RAX+0xc8] (wrapper_delta 0).
+	// Body 0x141963c60: MOV byte [RCX+0x20d8],DL; RET. Object offset = 0x1048 + 0x20d8 = 0x3120 (same bool as the getter).
+	// CONFIDENCE: HIGH
+	bAllowInteractBetweenFortVolumes = bInteractBetweenVolumes;
 }
 
 bool AFortCharacterVehicle::NativeCanPassengersTakeDamage163()

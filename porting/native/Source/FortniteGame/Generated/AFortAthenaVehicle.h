@@ -663,6 +663,9 @@ public:
 	bool NativeVehicleNotInAir = false;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool AllowInteractionBetweenFortVolume() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool AnyWheelsOnGround() const;
 
 	UFUNCTION(BlueprintNativeEvent)
@@ -747,10 +750,16 @@ public:
 	virtual bool HasEverContainedPlayers() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsAirControlling() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsAsleep() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsBraking() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCameraControlledRotation() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsCorrectingOrientation() const;

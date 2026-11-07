@@ -295,6 +295,9 @@ public:
 	bool IsAccumulatingBoost() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsBoosting() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInBoostSmashForgivenessPeriod() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

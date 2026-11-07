@@ -1,0 +1,86 @@
+[
+  {
+    "class": "ABuildingFloor",
+    "function": "IsBalcony",
+    "status": "proposed",
+    "reason": "Raw-offset bit 1 of byte 0xb30 (asm 0x141be2510); byte owned by bShouldIgnoreForHorizontalHotspotSearch bit 0."
+  },
+  {
+    "class": "UFortAIGoalProvider",
+    "function": "GetEncounterInfo",
+    "status": "proposed",
+    "reason": "Returns reflected EncounterInfo at object +0x40 (delta 0x28 + body 0x18)."
+  },
+  {
+    "class": "AFortAthenaAntelopeVehicle",
+    "function": "IsBoosting",
+    "status": "proposed",
+    "reason": "Object 0x112c = existing NativeRecoveredByte_0x112c; asm body 0x1418c9a40."
+  },
+  {
+    "class": "AFortAthenaFerretVehicle",
+    "function": "IsBoosting",
+    "status": "proposed",
+    "reason": "Raw byte at object 0x1108 (inherited Doghouse storage; delta 0x3b0+0xc90)."
+  },
+  {
+    "class": "AFortAthenaDoghouseVehicle",
+    "function": "IsAileronRolling",
+    "status": "proposed",
+    "reason": "Raw byte at object 0x11e0 inside reflected struct AileronRoll (0x1118)."
+  },
+  {
+    "class": "AFortAthenaMutator_Infiltration",
+    "function": "GetAttackingTeam",
+    "status": "proposed",
+    "reason": "Returns InfiltrationTeamInfos[0].TeamNum (object 0x390)."
+  },
+  {
+    "class": "AFortAthenaMutator_Infiltration",
+    "function": "GetDefendingTeam",
+    "status": "proposed",
+    "reason": "Returns InfiltrationTeamInfos[1].TeamNum (object 0x39c = 0x390 + sizeof 12)."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "AllowInteractionBetweenFortVolume",
+    "status": "proposed",
+    "reason": "Declared bitfield bAllowInteractBetweenFortVolumes_Runtime (0x448 mask 0x10)."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "IsAirControlling",
+    "status": "proposed",
+    "reason": "Raw bit 0 (mask 0x1) of byte 0x448; no declared member for that bit."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "IsCameraControlledRotation",
+    "status": "proposed",
+    "reason": "Raw pointer chase: slot 0x738 (unreflected) then pointee byte +0x335; pointee unrecovered."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "AllowInteractionBetweenFortVolume",
+    "status": "proposed",
+    "reason": "Returns declared bool bAllowInteractBetweenFortVolumes (object 0x3120). Thunk decompile-verified only."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "SetAllowInteractionBetweenFortVolumes",
+    "status": "proposed",
+    "reason": "Assigns declared bool bAllowInteractBetweenFortVolumes (object 0x3120)."
+  },
+  {
+    "class": "UAthenaEventMatchScoreboardScreenBase",
+    "function": "HandleSquadEliminated",
+    "status": "proposed",
+    "reason": "Sets NativeRecoveredBool_0x491 (new member_field, own gap). Thunk decompile-verified only."
+  },
+  {
+    "class": "UAthenaEventMatchScoreboardScreenBase",
+    "function": "HandleSquadKillScoreChanged",
+    "status": "proposed",
+    "reason": "Same body and member as HandleSquadEliminated. Thunk decompile-verified only."
+  }
+]

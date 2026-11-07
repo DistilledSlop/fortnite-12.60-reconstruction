@@ -18,5 +18,8 @@ public:
 	UPROPERTY()
 	uint8 bShouldIgnoreForHorizontalHotspotSearch : 1;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsBalcony() const;
+
 };
 

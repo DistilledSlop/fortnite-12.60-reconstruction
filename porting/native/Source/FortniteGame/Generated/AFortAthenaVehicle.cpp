@@ -14,6 +14,15 @@
 #include "UObject/UnrealType.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortAthenaVehicle::AllowInteractionBetweenFortVolume() const
+{
+	// Thunk 0x14283a4f0: ADD RCX,0x378 (thunk_delta 0x378), virtual call [RAX+0xc0] on the sub-object (wrapper_delta 0).
+	// Body 0x14084b3d0: MOVZX EAX,byte [RCX+0xd0]; SHR AL,4; AND AL,1; RET. Object offset = 0x378 + 0xd0 = 0x448, bit 4 (mask 0x10).
+	// Header bitfield bAllowInteractBetweenFortVolumes_Runtime:1 is at 0x448 mask 0x10 (bool_bits.json, AFortAthenaVehicle.h line 188).
+	// CONFIDENCE: HIGH
+	return bAllowInteractBetweenFortVolumes_Runtime;
+}
+
 bool AFortAthenaVehicle::AnyWheelsOnGround() const
 {
 	// CONFIDENCE: high; primary vtable slot 0x948 targets 0x14190ae20.
@@ -236,6 +245,16 @@ bool AFortAthenaVehicle::HasEverContainedPlayers() const
 	return NativeEverContainedPlayers;
 }
 
+bool AFortAthenaVehicle::IsAirControlling() const
+{
+	// Thunk 0x14283be20: no ADD RCX (thunk_delta 0x0), virtual call [RAX+0x8e0] on this (wrapper_delta 0).
+	// Body 0x14084cc60: MOVZX EAX,byte [RCX+0x448]; AND AL,1; RET. Object offset = 0x448, bit 0 (mask 0x1).
+	// Byte 0x448 is owned by bAllowInteractBetweenFortVolumes_Runtime (mask 0x10); no declared bool has mask 0x1 there, so raw bit access.
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(this);
+	return (Raw[0x448] & 0x1) != 0;
+}
+
 bool AFortAthenaVehicle::IsAsleep() const
 {
 	// Native target 0x14084cc70; CONFIDENCE: high.
@@ -247,6 +266,18 @@ bool AFortAthenaVehicle::IsBraking() const
 	// Exact original shared stub 0x1406801e0.
 	// CONFIDENCE: HIGH
 	return false;
+}
+
+bool AFortAthenaVehicle::IsCameraControlledRotation() const
+{
+	// Thunk 0x14283bec0: no ADD RCX (thunk_delta 0x0), CALL 0x14191bbc0 directly (wrapper_delta 0).
+	// Body 0x14191bbc0: MOV RAX,qword [RCX+0x738]; MOVZX EAX,byte [RAX+0x335]; RET. Object offset of the pointer slot = 0x738.
+	// 0x738 is in the Vehicle own region, between OnNotOutOfFuel (0x728, 16 bytes) and OnMountedWeaponFiredEvent (0x748): unreflected.
+	// The pointee class is unresolved, so the pointer slot and the pointee byte (+0x335) are both raw-offset accesses.
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(this);
+	const uint8* P = *reinterpret_cast<const uint8* const*>(Raw + 0x738);
+	return *reinterpret_cast<const bool*>(P + 0x335);
 }
 
 bool AFortAthenaVehicle::IsCorrectingOrientation() const

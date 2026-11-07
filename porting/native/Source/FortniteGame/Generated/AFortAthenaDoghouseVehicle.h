@@ -194,6 +194,9 @@ public:
 	float GetStandingInPlaceSteeringAngle() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAileronRolling() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEngineAutoStartingInAir() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

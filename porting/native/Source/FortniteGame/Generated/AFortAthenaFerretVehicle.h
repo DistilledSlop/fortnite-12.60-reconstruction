@@ -179,6 +179,9 @@ private:
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsBoosting() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocalPlayerRiding() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

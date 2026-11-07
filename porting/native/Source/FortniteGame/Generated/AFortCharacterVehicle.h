@@ -255,6 +255,9 @@ public:
 	UPROPERTY()
 	FScalableFloat ReregisterSpecialActorIconDelay;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool AllowInteractionBetweenFortVolume() const;
+
 	UFUNCTION(BlueprintNativeEvent)
 	bool BP_CanInteract(AFortPlayerController* FortPC);
 	virtual bool BP_CanInteract_Implementation(AFortPlayerController* FortPC);
@@ -280,6 +283,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_OverrideWrap();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void SetAllowInteractionBetweenFortVolumes(bool bInteractBetweenVolumes);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

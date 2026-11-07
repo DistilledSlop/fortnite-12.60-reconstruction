@@ -17,6 +17,7 @@
 #include "Styling/SlateBrush.h"
 
 class AFortAthenaMutator_RoundHelper;
+class AFortPlayerControllerAthena;
 class AInfiltrationCarryObjectCapturePoint;
 class AInfiltrationCarryObjectSpawnPoint;
 class UCurveFloat;
@@ -145,6 +146,12 @@ public:
 	// table index 0, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	FVector IntelLocation;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual uint8 GetAttackingTeam(AFortPlayerControllerAthena* PlayerController) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual uint8 GetDefendingTeam(AFortPlayerControllerAthena* PlayerController) const;
 
 	UFUNCTION()
 	void OnRep_ModeState(FInfiltrationModeState OldState);

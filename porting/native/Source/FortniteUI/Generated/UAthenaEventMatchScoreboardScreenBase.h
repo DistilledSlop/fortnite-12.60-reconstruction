@@ -31,9 +31,22 @@ public:
 	UPROPERTY()
 	TArray<UAthenaRemoteSquadViewData*> SquadDataArray;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x491): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x491;
+
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonListView* ScoreboardListView;
+
+private:
+	UFUNCTION()
+	void HandleSquadEliminated(UAthenaRemoteSquadViewData* InSquadData);
+public:
+
+private:
+	UFUNCTION()
+	void HandleSquadKillScoreChanged(UAthenaRemoteSquadViewData* InSquadData, int32 InKillScore);
+public:
 
 };
 

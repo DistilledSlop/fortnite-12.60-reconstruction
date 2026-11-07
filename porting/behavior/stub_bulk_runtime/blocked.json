@@ -210,314 +210,30 @@
   {
     "entry": "AFortHoagieAudioController::CacheAudioComponents",
     "kind": "exec",
-    "blocker": "layout_recovery_escalation_B",
-    "reason": "engine_class_no_header: header is null for AFortHoagieAudioController. asm stores RDX->+0x230 and R8->+0x238 (ABI order).",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
+    "blocker": "class_not_in_native_set",
+    "reason": "AFortHoagieAudioController is missing from porting/native_class_set.txt (module is in the uproject, so the earlier no_module label was wrong). Body (RDX->+0x230, R8->+0x238) is ready once generated.",
+    "unblock": "Add AFortHoagieAudioController to porting/native_class_set.txt (after AFortHoagieVehicle, line ~4671), regenerate, then port"
   },
   {
     "entry": "UTimeSynthComponent::GetMaxActiveClipLimit",
     "kind": "exec",
-    "blocker": "layout_recovery_escalation_A",
-    "reason": "engine_class_no_header: header is null for UTimeSynthComponent. asm reads dword +0x838.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "ABuildingFloor::IsBalcony",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Reads bit 1 (mask 0x2) of dword +0xb30; the byte is the header uint8 bitfield bShouldIgnoreForHorizontalHotspotSearch:1 (bit 0). Bit 1 has no declared owner and no free byte to declare.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "UFortAIGoalProvider::GetEncounterInfo",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Returns qword +0x18, which lies inside UObject base storage (UObject is 0x28 bytes; own members start 0x30). Cannot declare a member on UFortAIGoalProvider there.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortAthenaAntelopeVehicle::IsBoosting",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Reads byte +0xd7c, inside AFortAthenaVehicle base storage (its own reflected members span 0x290..0xe50; no member covers 0xd7c). Owner is AFortAthenaVehicle, not this class.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortAthenaFerretVehicle::IsBoosting",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Reads byte +0xc8, inside inherited APawn/AActor base storage (AFortAthenaVehicle own members start 0x290). Not declarable on this class.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortAthenaDoghouseVehicle::IsAileronRolling",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Reads byte +0xc8, inside inherited APawn/AActor base storage (AFortAthenaVehicle own members start 0x290). Not declarable on this class.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortAthenaMutator_Infiltration::GetAttackingTeam",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Reads byte +0x80, inside inherited AFortGameplayMutator/AInfo/AActor storage (AFortAthenaMutator members start 0x250; AActor::PrimaryActorTick at 0x28).",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortAthenaMutator_Infiltration::GetDefendingTeam",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Reads byte +0x8c, inside inherited AFortGameplayMutator/AInfo/AActor storage (AFortAthenaMutator members start 0x250; AActor::PrimaryActorTick at 0x28).",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortAthenaSKVehicle::GetSkeletalMeshComponent",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Returns inherited AFortAthenaVehicle::SkyTubePhysicsComponent (+0xaf8, UFortSkyTubePhysicsComponent*). Name/type mismatch; no ReturnValue type in reflection or header to validate.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortAthenaVehicle::AllowInteractionBetweenFortVolume",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Reads bit 4 of byte +0xd0, inside inherited AActor/APawn storage (AFortAthenaVehicle own members start 0x290). Not declarable on this class.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortAthenaVehicle::IsAirControlling",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Reads bit 0 (mask 0x1) of byte +0x448; header bitfield bAllowInteractBetweenFortVolumes_Runtime:1 (mask 0x10) owns that byte. No free byte member can be declared without colliding.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortAthenaVehicle::IsCameraControlledRotation",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Loads pointer at own gap +0x738 (no declared member), then byte +0x335 of the pointee. Pointee class not recovered.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortCarriedObject::GetHoldingActor",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Returns qword +0x28, which is inherited AActor::PrimaryActorTick (struct) per reflection. No pointer field of this class at +0x28.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortCharacterVehicle::AllowInteractionBetweenFortVolume",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Reads byte +0x20d8, inside inherited AFortPawn/AFortPlayerPawn storage (AFortPlayerPawnAthena reflects to 0x3078; own members start 0x30a0).",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortCharacterVehicle::GetAbilitySystemComponent",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Returns qword +0x2ca8, which is inherited AFortPlayerPawnAthena::OnFortPlayerDied (InlineMulticastDelegate). Not a pointer field.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortCharacterVehicle::GetSkeletalMeshComponent",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Body loads qword [this-0x2e20] (negative offset): a this-adjusting thunk to a base subobject, not a field read of AFortCharacterVehicle.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortCharacterVehicle::SetAllowInteractionBetweenFortVolumes",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Stores DL to byte +0x20d8, inside inherited AFortPawn/AFortPlayerPawn storage (same as the getter). Not declarable on this class.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "UFortGameplayAbility::GetDisplayStats",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Returns pointer +0x5d0 with unknown class: reflection has no ReturnValue for either candidate, header declares no GetDisplayStats, and the return pointer type cannot be set.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
+    "blocker": "engine_backport",
+    "reason": "Stock UE 4.25 TimeSynth does not declare GetMaxActiveClipLimit (4.26 does) and the plugin is not enabled in FortniteLinux.uproject. Body is MOV EAX,[RCX+0x838].",
+    "unblock": "Enable/backport the TimeSynth plugin with the 4.26 member, then port"
   },
   {
     "entry": "AFortGameStateAthena::SetLocationFont",
     "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Body zero-initialises ~0x4d bytes at RCX and returns RCX (sret-style). Neither Font (RDX) nor LocationTag (R8) is read. Not a leaf setter; needs struct layout recovery.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
+    "blocker": "not_a_leaf",
+    "reason": "Body 0x142f440c0 is only a local-struct constructor the thunk uses; the real call 0x1419aea90 is non-leaf (vtable call +0xaf0, calls 0x14468fb70 and 0x142ee5dd0, TArray iteration).",
+    "unblock": "Port 0x1419aea90 and its callees in the short-call tier"
   },
   {
     "entry": "AFortGameStateAthena::SetLocationFontInAllStates",
     "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Same body as SetLocationFont (0x142f440c0): zero-init of ~0x4d bytes at RCX, returns RCX, params not read. Needs struct layout recovery.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf3"
-  },
-  {
-    "entry": "AFortPlayerPawn::OnRep_AccelerationZPack",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_C",
-    "reason": "Body copies a 12-byte struct from [RDX] (+0x0 8 bytes, +0x8 4 bytes) but the declared signature has no params (packet/header: OnRep_AccelerationZPack() -> void). Destinations +0x22c..+0x237 overlap APawn::AIControllerClass (+0x230); +0x1e2c/+0x1e34/+0x1e38 bit ops unresolved; body is shared (AMBIGUOUS) with OnRep_AccelerationPack.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortQueryTwoPointSolver::SetCustomRotationA",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_C",
-    "reason": "Param Rotation is \"out ... Struct\" with no struct type name in packet or header (header_decl null). 12-byte copy to undeclared +0xd0..+0xdb cannot be typed; needs the param struct type name.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortSeasonalEventManager::GetBRXPBonusPoints",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Pointer at +0xc0 is undeclared (reflection ends OnActiveEventFlagsChanged at +0xb0); pointee class unknown, so the Int at pointee +0x38 cannot be typed.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortUICameraManagerComponent::SetCustomCameraRotationOffset",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_C",
-    "reason": "Param Offset is \"Struct\" with no struct type name in packet or header. 12-byte copy to undeclared +0x1a0 (8 bytes) and +0x1a8 (4 bytes); struct type needed for the member.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UAthenaEventMatchScoreboardScreenBase::HandleSquadEliminated",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_A",
-    "reason": "Bool at +0x491 falls in an unreflected 8-byte gap (+0x490..+0x497). skipped_properties.json has SortByPlaceAction and SortByElimsAction Struct props (unresolved type, no offset data); overlap with +0x491 cannot be excluded.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UAthenaEventMatchScoreboardScreenBase::HandleSquadKillScoreChanged",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_A",
-    "reason": "Same body and gap as HandleSquadEliminated (+0x491 in unreflected +0x490..+0x497); skipped SortByPlaceAction/SortByElimsAction Struct props have no offset data, overlap cannot be excluded.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortEventLeaderboardEntryData::GetAverageMatchScore",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortEventLeaderboardEntryData::GetNumTeammates",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortEventLeaderboardEntryData::GetPageIndex",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortEventLeaderboardEntryData::GetTotalMatchesPlayed",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortItemWidget::SetOnGetItemToCompareDelegate",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_C",
-    "reason": "Reflected OnGetItemToCompareDelegate (+0x800, Delegate) is in skipped_properties.json as TODO_DelegateNotEmittable_145279f00, so the delegate type cannot be named for the 16-byte copy from RDX; param type InDelegate not declared.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortPortalHUDDetails::SetCachedWorldPos",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_C",
-    "reason": "Param InWorldPos is \"Struct\" with no type name in packet or header. 12-byte copy to undeclared +0x2e4 (8 bytes) and +0x2ec (4 bytes); needs the struct type. (+0x2e0 flag is existing NativeRecoveredByte_0x2e0.)",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortStoreFrontOfferInfo::GetNumRequirements",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortStoreFrontOfferInfo::GetOfferType",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortStoreFrontOfferInfo::GetSortPriority",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortStoreFrontOfferInfo::IsGiftable",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "UFortStoreFrontOfferInfo::IsRefundable",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_E",
-    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
-  },
-  {
-    "entry": "URadialBacchusButtonBase::SetListenedGameplayTag",
-    "kind": "exec",
-    "blocker": "layout_recovery_escalation_C",
-    "reason": "Param InListenedTag is an 8-byte struct passed by value (MOV [+0x2c8],RDX), with no struct type name in packet or header (header only has FGameplayTagContainer). Undeclared +0x2c8 needs that type.",
-    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
-    "source": "leaf4"
+    "blocker": "not_a_leaf",
+    "reason": "Same as SetLocationFont: real call 0x1419aea90 is non-leaf.",
+    "unblock": "Port 0x1419aea90 and its callees in the short-call tier"
   },
   {
     "entry": "UFortWorker::GetWorkerTypeBP",
@@ -548,19 +264,5 @@
     "body": "0x14070f440",
     "thunk": "0x14293bc30",
     "note": "previously ported in error; removed"
-  },
-  {
-    "entry": "UFortItemWidget::SetOnGetItemToCompareDelegate",
-    "kind": "exec",
-    "blocker": "delegate_member_unresolved",
-    "reason": "Parameter/member type is delegate TODO_DelegateNotEmittable_145279f00; the generator cannot emit this delegate type (skipped_properties.json), so the function is not emitted.",
-    "unblock": "Teach the generator to emit this delegate signature, then re-add; body is ready in leaf7_runtime (16-byte copy at +0x800 from the parameter)"
-  },
-  {
-    "entry": "UFortStoreFrontOfferInfo::GetOfferType",
-    "kind": "exec",
-    "blocker": "enum_not_available",
-    "reason": "Return enum ECatalogOfferType (TODO_EnumUnavailable_1411411e0) is not declared in any generated header, so the function is not emitted.",
-    "unblock": "Emit the enum (UHT enum block 0x1411411e0), then re-add; body is ready in leaf6_runtime (byte load through the +0x28 pointer)"
   }
 ]
