@@ -133,5 +133,8 @@ public:
 	UFUNCTION()
 	void SetPurchaseReportingEnabled(bool bInValue);
 
+	UFUNCTION()
+	void SetVoiceChatSettings(ESelectableVoiceChatSetting InSetting);
+
 };
 

@@ -58,6 +58,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void EndGhostMode();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInGhostMode() const;
+
 protected:
 	UFUNCTION()
 	void ReviveAndBecomeGhosted();

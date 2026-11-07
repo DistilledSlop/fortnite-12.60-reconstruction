@@ -9,6 +9,7 @@
 #include "Engine/DataTable.h"
 #include "Math/Color.h"
 
+class AFortCreativeMoveTool;
 class UFortGameplayAbility;
 class UObject;
 
@@ -20,6 +21,9 @@ class FORTNITEGAME_API UObjectInteractionBehavior : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0xa0): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0xa0;
+
 	// table index 17, flags 0x10000000010001
 	UPROPERTY()
 	FColor HoverReticleColor;
@@ -83,6 +87,11 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	int32 Priority;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortCreativeMoveTool* GetFortCreativeMoveTool() const;
+public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void HandleDuplicateActor();

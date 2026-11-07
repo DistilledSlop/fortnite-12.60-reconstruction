@@ -1,0 +1,177 @@
+[
+  {
+    "class": "UFortContextualTutorial_BattleBus",
+    "function": "HandleGamePhaseChanged",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Conditional tail jumps JNZ 0x141b411a0 and JZ 0x141b40ee0 target callees with no callee_candidates entry; the callee cannot be named."
+  },
+  {
+    "class": "UFortContentControlsManager",
+    "function": "SetVoiceChatSettings",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Raw uint16 stores at object+0xd9 (below own min 0x120): 0->0, 1->1, 2->0x101; other values leave the field unchanged."
+  },
+  {
+    "class": "UFortControllerComponent_ContextualChallenges",
+    "function": "ClientSetContext_Implementation",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x140680160 and 0x1406800e0 are shared bodies (UAthenaLobbyBase::HandlePlaylistDataChanged, UCreativeMiniMapComponent::OnRep_IconData); none matches UFortControllerComponent_ContextualChallenges or an ancestor. CALL 0x142bc7780 candidate (UCreativeMiniMapComponent::OnRep_IconData) is also not the receiver class."
+  },
+  {
+    "class": "UFortControllerComponent_Ghost",
+    "function": "IsInGhostMode",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Raw UObject* at object+0xa0 (below own min 0xb8), IsA AFortPlayerControllerGameplay, raw byte at +0x2448 != 0; log elided."
+  },
+  {
+    "class": "UFortControllerComponent_HasCoupledWidgets",
+    "function": "MakeComponentWidgetsOnAutonomous",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "Same body 0x140693ed0 as ClientSetContext_Implementation: CALL 0x140680160, 0x1406800e0 and 0x142bc7780 are shared with unrelated classes; no candidate matches UFortControllerComponent_HasCoupledWidgets or an ancestor."
+  },
+  {
+    "class": "UFortControllerComponent_MinigameActivity",
+    "function": "GetMinigameActivityComponent",
+    "status": "blocked",
+    "case": "enum_undeclared",
+    "reason": "Out-param type EMinigameActivityComponentValidityResult is not declared in any generated header, so the signature cannot be typed. Body is otherwise exact (OutIsValid byte = component null ? 1 : 0)."
+  },
+  {
+    "class": "UFortCreativeCreatureManagerInfoComponent",
+    "function": "SetCreatureBlueprintClass",
+    "status": "blocked",
+    "case": "offset_overlaps_member",
+    "reason": "Body writes a 24-byte FSoftObjectPath (FName at object+0x178, FString Data/Num/Max at +0x180/+0x188/+0x18c) starting at object+0x178, which lies inside reflected CreatureBlueprintClass (TSoftClassPtr at object+0x168); no exact member, and a raw FString move would bypass FMemory ownership."
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "GetMultiselectLimit",
+    "status": "blocked",
+    "case": "absolute_global",
+    "reason": "MOV EAX,dword ptr [0x1478df148] reads a module-global at an absolute address; no reflected object member covers it and the global name is not in the job data."
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "IncrementOrWrapHitTraceRuleOnClient",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Counter NativeRecoveredUint8_0x114b incremented, reset to 0 when above 2; broadcasts OnMoveToolLineOfSightBlockingChanged with new value."
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "OnWantedCameraSpacePositioning",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Null option returns; else WantedCameraSpacePositioning.Value (+0x11a4) = CreativeOption->GetValueAtIndex(Index)."
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "OnWantedIgnoreRecentlyPlacedTime",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Null option returns; else WantedIgnoreRecentlyPlacedTime.Value (+0x1188) = CreativeOption->GetValueAtIndex(Index)."
+  },
+  {
+    "class": "UObjectInteractionBehavior",
+    "function": "GetFortCreativeMoveTool",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Returns NativeRecoveredUint64_0xa0 object when it IsA AFortCreativeMoveTool, else null."
+  },
+  {
+    "class": "UObjectInteractionBehavior",
+    "function": "TriggerInteractionBehavior_Implementation",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Tail-jump target 0x14267e910 (UObjectInteractionBehavior::PlayGameplayAbility) is not declared in any generated header and is not part of this batch."
+  },
+  {
+    "class": "UDeleteObjects",
+    "function": "PlayDeleteAnimation",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Tail-jump target 0x14267e910 (UObjectInteractionBehavior::PlayGameplayAbility) is not declared in any generated header and is not part of this batch."
+  },
+  {
+    "class": "UFortCreativeKeyLockComponent",
+    "function": "OnRep_CurrentState",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Broadcasts OnLockStateChanged(CurrentState); state 0 broadcasts OnLocked, state 1 broadcasts OnUnlocked."
+  },
+  {
+    "class": "UFortCreativeOption",
+    "function": "GetValueAtCurrentIndex",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x141d7d350 (UFortCreativeOption::GetCurrentIndex) is not declared in any generated header and is not part of this batch."
+  },
+  {
+    "class": "UFortCreativeOption",
+    "function": "GetValueAtIndex",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Returns -1 for index outside Options, else Options[Index].Value (element +0x18)."
+  },
+  {
+    "class": "AFortCreativeTimerObjective",
+    "function": "SetHUDData",
+    "status": "blocked",
+    "case": "absolute_constant",
+    "reason": "COMISS compares |TimeLeft delta| against a float tolerance at absolute address 0x1459c03a0; the constant value is not in the job data and is not guessed."
+  },
+  {
+    "class": "UFortCrossplayPromptContext",
+    "function": "IsCrossplayEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x14237e5e0 (UFortLocalPlayer::GetClientSettings) and CALL 0x141e26700 (UFortClientSettingsRecord::GetCrossplayPreference) are not declared in any generated header and are not part of this batch."
+  },
+  {
+    "class": "UFortEmojiPreviewComponent",
+    "function": "PushPreviewEmoji",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x142ee3b30 and 0x141384ca0 have only unrelated-class candidates (none UFortEmojiPreviewComponent); body is a lock-free SFENCE publish of a new node."
+  },
+  {
+    "class": "AFortEventLevelNavigationActor",
+    "function": "HasPurchasedSeasonBook",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x142ee7880 and 0x142ee5dd0 are shared TWeakObjectPtr<AFortPlayerController> IsValid/Get template bodies (LevelController); candidate lists name unrelated classes and no TWeakObjectPtr candidate matches the receiver."
+  },
+  {
+    "class": "UFortFootstepSurfaceData",
+    "function": "GetSurfaceInfo",
+    "status": "blocked",
+    "case": "struct_undeclared",
+    "reason": "Out-param type FFortFootstepSurfaceInfo is not declared in any generated header; the pointer-plus-three-float layout cannot be named."
+  },
+  {
+    "class": "UFortFootstepAudioBank",
+    "function": "GetAttenuationAsset",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Local: AttenuationData1P[type].SoundAttenuation; non-local: AttenuationData3P[type] field by position 1/2/3, else SoundAttenuation."
+  },
+  {
+    "class": "UFortFootstepAudioBank",
+    "function": "GetSurfaceInfo",
+    "status": "blocked",
+    "case": "struct_undeclared",
+    "reason": "Out-param type FFortFootstepSurfaceInfo is not declared in any generated header; the pointer-plus-three-float layout cannot be named."
+  },
+  {
+    "class": "AFortGameModePvE",
+    "function": "HandleOnAircraftRegistered",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "CALL 0x141695900 (AFortPlayerController::GetAircraftComponent) is not declared in any generated header and is not part of this batch; the 0x140690620 and 0x1406d9a30 candidates also do not match receiver or parameters."
+  }
+]

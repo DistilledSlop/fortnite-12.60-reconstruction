@@ -46,6 +46,7 @@
 class AActor;
 class AFortPlayerControllerAthena;
 class UDeleteObjects;
+class UFortCreativeOption;
 class UFortItemDefinition;
 class UFortObjectMoverInputComponent;
 class UFortPlaysetItemDefinition;
@@ -342,6 +343,9 @@ public:
 	UPROPERTY(Replicated)
 	bool bClientNeedsToProcessNewlyPlacedActors;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x114b): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0x114b;
+
 	// table index 7, flags 0x20080000000001
 	UPROPERTY()
 	FCreativeOptionVariableBase WantedHitTraceRule;
@@ -445,6 +449,9 @@ protected:
 	virtual void HandleCyclePreviousPlaysetProp_Implementation();
 public:
 
+	UFUNCTION()
+	void IncrementOrWrapHitTraceRuleOnClient();
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMultiSelecting();
@@ -498,6 +505,16 @@ public:
 protected:
 	UFUNCTION()
 	void OnRep_SelectionProperty();
+public:
+
+protected:
+	UFUNCTION()
+	void OnWantedCameraSpacePositioning(UFortCreativeOption* CreativeOption, uint8 Index);
+public:
+
+protected:
+	UFUNCTION()
+	void OnWantedIgnoreRecentlyPlacedTime(UFortCreativeOption* CreativeOption, uint8 Index);
 public:
 
 	UFUNCTION(NetMulticast, Reliable)

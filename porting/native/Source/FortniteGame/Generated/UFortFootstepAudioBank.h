@@ -12,6 +12,7 @@
 #include "FFortFootstepAttenuationData.h"
 #include "FFortFootstepSurfaceAudioData.h"
 
+class USoundAttenuation;
 class USoundBase;
 
 #include "UFortFootstepAudioBank.generated.h"
@@ -65,6 +66,9 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	int32 VersionNumber;
+
+	UFUNCTION()
+	USoundAttenuation* GetAttenuationAsset(bool bIsLocal, EFortFootstepAudioType::Type StepType, EFortFootstepPosition::Type StepPosition);
 
 	UFUNCTION()
 	float GetFootstepVolumeMultiplier(bool bIsLocal, bool bApplyTeammateVolume, EFortFootstepAudioType::Type StepType);

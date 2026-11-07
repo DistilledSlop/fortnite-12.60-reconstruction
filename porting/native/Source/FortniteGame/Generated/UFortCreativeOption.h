@@ -60,5 +60,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool DoesMatchCategory(FCreativeOptionCategoryData& CreativeOptionCategory);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetValueAtIndex(int32 Index);
+
 };
 

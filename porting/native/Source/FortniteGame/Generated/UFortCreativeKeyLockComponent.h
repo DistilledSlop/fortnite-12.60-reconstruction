@@ -75,8 +75,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocked() const;
 
+protected:
 	UFUNCTION()
 	void OnRep_CurrentState();
+public:
 
 	UFUNCTION()
 	void OnRep_KeyItemDefinition();
