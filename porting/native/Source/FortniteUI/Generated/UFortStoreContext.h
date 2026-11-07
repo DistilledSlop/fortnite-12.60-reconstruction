@@ -83,6 +83,9 @@ public:
 	bool NativeRecoveredBool_0x103;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetCard(int32 CardIdx, FCard& ResultOut) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortStoreState GetPreviousState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

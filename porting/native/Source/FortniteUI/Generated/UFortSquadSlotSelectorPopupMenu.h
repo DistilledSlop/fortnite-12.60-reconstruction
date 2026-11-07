@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortPopupMenu.h"
 
+class UFortSquadSlotSelectorButton;
+
 #include "UFortSquadSlotSelectorPopupMenu.generated.h"
 
 UCLASS()
@@ -17,6 +19,11 @@ public:
 	// table index 0, flags 0x10000000000004
 	UPROPERTY()
 	bool bReadOnlyModeWIFE;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortSquadSlotSelectorButton* GetHostButton() const;
+public:
 
 };
 

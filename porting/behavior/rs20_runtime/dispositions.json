@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UFortShowdownPin",
+  "function": "GetScoreToDisplay",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callees UFortShowdownDetailView::GetEventPlayerParticipationState (0x14506b6f0), GetTournamentBestScore (0x14506e9b0) and GetCurrentEventScore (0x14506abf0) are absent from the generated headers (grep over porting/native/Source)."
+ },
+ {
+  "class": "UFortSimpleWidgetAnimationsPanel",
+  "function": "ResetAllAnimations",
+  "status": "blocked",
+  "case": "unresolved_callee",
+  "reason": "CALL 0x1450c9ec0 (per-element call with RCX=element, EDX=0) has no callee_candidates entry; the candidate map is empty."
+ },
+ {
+  "class": "UFortSimpleWidgetAnimationsPanel",
+  "function": "ResetAnimationByName",
+  "status": "blocked",
+  "case": "unresolved_callee",
+  "reason": "CALL 0x1450c9ec0 (per-element call with RCX=element, EDX=0) has no callee_candidates entry; the candidate map is empty."
+ },
+ {
+  "class": "UFortSimpleWidgetAnimationsPanel",
+  "function": "StopAnimationByName",
+  "status": "proposed",
+  "case": "leaf_array_scan_raw_element",
+  "reason": "Animations scan (reflected, stride 0x38); clears unreflected element byte +0x30 on FName match."
+ },
+ {
+  "class": "UFortVoiceChannelHeaderButton",
+  "function": "CanJoinChannel",
+  "status": "blocked",
+  "case": "out_of_body_continuation",
+  "reason": "JNZ 0x144e48ba0 continues outside the 5-instruction job asm (not in porting/generated/native108-impl/0x144e2b7b0.asm); the continuation is not a wrapper."
+ },
+ {
+  "class": "UFortSquadManagementScreenBase",
+  "function": "HandleSelectPickerSlotInputAction",
+  "status": "blocked",
+  "case": "conditional_tail_callee_unresolved",
+  "reason": "JNZ 0x144f7f900 is a conditional tail call with no callee_candidates entry (only CALL/JMP targets are mapped)."
+ },
+ {
+  "class": "UFortSquadSlotSelectorPopupMenu",
+  "function": "GetHostButton",
+  "status": "proposed",
+  "case": "call_weak_isa_cast",
+  "reason": "ContextProvidingObject.Get() then IsA(UFortSquadSlotSelectorButton) via Cast; asm fully traced, IsA fast path inferred."
+ },
+ {
+  "class": "UFortSquadTypeLandingPageBase",
+  "function": "HandlePendingNavigationOp",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "UFortUIManagerWidget_Campaign::GetUINavigationManager (0x14514f130) and UFortUINavigationManager::TryGetPendingNavigationOp (0x144de4420) are absent from the generated headers."
+ },
+ {
+  "class": "UFortSquadSlotDetailsPanel",
+  "function": "SetScrollWidget",
+  "status": "blocked",
+  "case": "conditional_tail_callee_unresolved",
+  "reason": "JNZ 0x144f3fb60 is a conditional tail call with no callee_candidates entry (only CALL/JMP targets are mapped)."
+ },
+ {
+  "class": "UFortStoreContext",
+  "function": "GetCard",
+  "status": "proposed",
+  "case": "leaf_array_copy_bounds",
+  "reason": "CardList (reflected TArray<FCard>, +0x80/+0x88) bounds check and element copy; FCard stride 0x18 matches."
+ },
+ {
+  "class": "UFortStandardGlobalActionDetailsDataSource",
+  "function": "SetActionDetailsContext",
+  "status": "blocked",
+  "case": "delegate_member_unreflected",
+  "reason": "Broadcast via 0x1406a9dc0 targets the delegate at object +0x60; no reflected or declared member exists at +0x60 in this class, and the member_field types cannot express a delegate."
+ },
+ {
+  "class": "UFortStoreFrontOfferDetailsWidgetBase",
+  "function": "GetPriceIndexToShow",
+  "status": "blocked",
+  "case": "out_of_body_continuation",
+  "reason": "JNZ 0x1450b1190 continues outside the 5-instruction job asm (not in porting/generated/native197-fresh-callees/0x1450b1170.asm); the continuation is not a wrapper."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "CreatePreviewItem",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee UFortStoreFrontOfferInfo::GetGrantedItems (0x1450aede0) is absent from the generated header (grep over porting/native/Source)."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetFirstGrantQuantity",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x14138d650 has 6 candidates from unrelated classes (AccountWidgetBase, FrontEndContext, ItemBaseWidget, ItemQuantityListEntryBase, KismetLibrary); none is the receiver class or an ancestor."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetForcedGiftBoxTemplateId",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140682ce0 has 6 candidates from unrelated classes, all returning SoftObject (job returns FString); none is the receiver class or an ancestor."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetFortStoreOfferCategory",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140682ce0 has 6 candidates from unrelated classes, all returning SoftObject (job returns FString); none is the receiver class or an ancestor."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetGrantedItemQuantity",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x14138d650 has 6 candidates from unrelated classes; none is the receiver class or an ancestor."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetOfferId",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140682ce0 has 6 candidates from unrelated classes, all returning SoftObject (job returns FString); none is the receiver class or an ancestor."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetRequirementIdAtIndex",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140682ce0 has 6 candidates from unrelated classes, all returning SoftObject (job returns FString); none is the receiver class or an ancestor."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "IsPriceInGameItems",
+  "status": "proposed",
+  "case": "leaf_raw_subobject_price",
+  "reason": "Raw sub-object at +0x28 (below own region); pointee fields raw: +0x60 mode, +0x84, +0x70 count, +0x68 entries (0x48 stride)."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "IsPriceInMTX",
+  "status": "proposed",
+  "case": "leaf_raw_subobject_price",
+  "reason": "Raw sub-object at +0x28; same layout as IsPriceInGameItems with == 1 compare constants."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "IsPriceInRealMoney",
+  "status": "proposed",
+  "case": "leaf_raw_subobject_price",
+  "reason": "Raw sub-object at +0x28; +0x60==1 returns false; entry byte == 0 test."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "OfferHasDenyRequirements",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140682ce0 (per-element, sret SoftObject) has 6 candidates from unrelated classes; none is the receiver class or an ancestor."
+ },
+ {
+  "class": "UFortStoreSummaryItemPopupMenu",
+  "function": "GetHostButton",
+  "status": "proposed",
+  "case": "call_weak_isa_cast",
+  "reason": "ContextProvidingObject.Get() then IsA(UFortStoreSummaryItemButton) via Cast; same pattern as the squad slot selector."
+ },
+ {
+  "class": "UFortTabListWidgetBase",
+  "function": "SetTabHiddenState",
+  "status": "proposed",
+  "case": "leaf_array_store_element",
+  "reason": "PreregisteredTabInfoArray (reflected, +0x350/+0x358) scan on TabNameId; bHidden store at element +0x8 (stride 0xc8)."
+ }
+]

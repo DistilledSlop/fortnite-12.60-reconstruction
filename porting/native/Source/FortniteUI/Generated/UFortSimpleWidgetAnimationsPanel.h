@@ -30,5 +30,8 @@ private:
 	void ForwardOnAnimationsFinished(FName Name);
 public:
 
+	UFUNCTION(BlueprintCallable)
+	bool StopAnimationByName(FName& Name);
+
 };
 

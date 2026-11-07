@@ -54,6 +54,15 @@ public:
 	bool IsGiftable() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPriceInGameItems(int32 PriceIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPriceInMTX(int32 PriceIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPriceInRealMoney(int32 PriceIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsRefundable() const;
 
 };

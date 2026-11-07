@@ -36,5 +36,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLastTabActive() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetTabHiddenState(FName TabNameId, bool bHidden);
+
 };
 
