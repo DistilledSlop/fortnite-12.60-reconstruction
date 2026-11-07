@@ -81,6 +81,18 @@ public:
 	UPROPERTY(Replicated)
 	float DeployHeight;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void DeployTimerUp_Client();
+	virtual void DeployTimerUp_Client_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnImpactedByPlane_Client();
+	virtual void OnImpactedByPlane_Client_Implementation();
+public:
+
 	UFUNCTION()
 	void OnRep_bIsDespawning();
 
@@ -89,6 +101,12 @@ public:
 
 	UFUNCTION()
 	void OnRep_PickupState();
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnStartDespawnWarning_Client();
+	virtual void OnStartDespawnWarning_Client_Implementation();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

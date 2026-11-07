@@ -38,5 +38,17 @@ protected:
 	bool GetIsOpen() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnClose();
+	virtual void OnClose_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnOpen();
+	virtual void OnOpen_Implementation();
+public:
+
 };
 

@@ -9,6 +9,20 @@ bool UFortStoreSummary::GetIsInChoiceSelectionMode() const
 	return NativeRecoveredBool_0x439;
 }
 
+void UFortStoreSummary::NotifyPanelActivated()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortStoreSummary::NotifyPanelDeactivated()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortStoreSummary::SetIsInChoiceSelectionMode(bool InIsInChoiceSelectionMode)
 {
 	// Behaviour snippet: UFortStoreSummary::SetIsInChoiceSelectionMode (body only; spliced into the generated member function).

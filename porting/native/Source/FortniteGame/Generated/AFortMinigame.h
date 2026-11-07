@@ -673,6 +673,12 @@ protected:
 	virtual void HandleMinigameComponentInPlayChanged_Implementation(UFortMinigameLogicComponent* MinigameComponent);
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleMinigameWarmup();
+	virtual void HandleMinigameWarmup_Implementation();
+public:
+
 	UFUNCTION(BlueprintNativeEvent)
 	void HandleVolumeEditModeChange(bool bInEditMode);
 	virtual void HandleVolumeEditModeChange_Implementation(bool bInEditMode);

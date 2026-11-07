@@ -2,6 +2,13 @@
 #include "UFortMinigameItemListComponent.h"
 #include "Net/UnrealNetwork.h"
 
+void UFortMinigameItemListComponent::ClearItems()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 int32 UFortMinigameItemListComponent::GetNumItems() const
 {
 	// Original address: 0x1429d2050.

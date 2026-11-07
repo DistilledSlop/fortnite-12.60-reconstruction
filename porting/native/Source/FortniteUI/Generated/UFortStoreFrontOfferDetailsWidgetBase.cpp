@@ -31,6 +31,13 @@ UFortStoreFrontOfferInfo* UFortStoreFrontOfferDetailsWidgetBase::GetOfferInfoByI
 	return nullptr;
 }
 
+void UFortStoreFrontOfferDetailsWidgetBase::SendRealMoneyPurchase()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortStoreFrontOfferDetailsWidgetBase::SetSecondaryItem(UFortItem* Item)
 {
 	// Original exec 0x1452f3940; pure writer 0x1450cd310.

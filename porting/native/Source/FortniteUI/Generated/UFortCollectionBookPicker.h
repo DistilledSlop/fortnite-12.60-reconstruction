@@ -40,5 +40,15 @@ protected:
 	UFortAccountItem* GetCurrentSlottedItem() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void NotifyPanelActivated();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void NotifyPanelDeactivated();
+public:
+
 };
 

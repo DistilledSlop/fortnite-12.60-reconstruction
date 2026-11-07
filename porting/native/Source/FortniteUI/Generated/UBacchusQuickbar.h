@@ -42,5 +42,9 @@ public:
 	UPROPERTY()
 	FGameplayTag SlotLocksPropertyTag;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Refresh();
+	virtual void Refresh_Implementation();
+
 };
 

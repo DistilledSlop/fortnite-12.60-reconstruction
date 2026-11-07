@@ -89,5 +89,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual AFortPlayerPawn* GetAssociatedPlayerPawn() const;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCosmetic)
+	void OnPostResIn();
+	virtual void OnPostResIn_Implementation();
+
 };
 

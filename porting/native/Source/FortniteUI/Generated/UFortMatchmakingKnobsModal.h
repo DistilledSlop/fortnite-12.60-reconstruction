@@ -91,5 +91,8 @@ public:
 	UPROPERTY()
 	UImage* Image_DisplayImage;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void InitializeData();
+
 };
 

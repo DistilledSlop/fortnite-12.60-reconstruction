@@ -28,7 +28,13 @@ bool AFortPlayerController::CanAlterHostileWalls() const
 
 void AFortPlayerController::Cheat_ClearForcedCosmeticItems_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 bool AFortPlayerController::Cheat_ClearForcedCosmeticItems_Validate()
@@ -40,7 +46,13 @@ bool AFortPlayerController::Cheat_ClearForcedCosmeticItems_Validate()
 
 void AFortPlayerController::Cheat_ClearForcedCosmeticVariantChannels_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 bool AFortPlayerController::Cheat_ClearForcedCosmeticVariantChannels_Validate()
@@ -774,7 +786,13 @@ void AFortPlayerController::ServerKickPlayer_Implementation(const FUniqueNetIdRe
 
 void AFortPlayerController::ServerKillAllAIPawnsAroundPlayer_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 bool AFortPlayerController::ServerKillAllAIPawnsAroundPlayer_Validate()
@@ -870,7 +888,13 @@ void AFortPlayerController::ServerReportClientFPS_Implementation(float ClientAvg
 
 void AFortPlayerController::ServerRequestAIDebug_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 bool AFortPlayerController::ServerRequestAIDebug_Validate()
@@ -969,7 +993,13 @@ void AFortPlayerController::ServerSpotActor_Implementation(AActor* NewlySpottedA
 
 void AFortPlayerController::ServerStartIntensityGraphing_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 bool AFortPlayerController::ServerStartIntensityGraphing_Validate()
@@ -981,7 +1011,13 @@ bool AFortPlayerController::ServerStartIntensityGraphing_Validate()
 
 void AFortPlayerController::ServerStartPIDContributionsGraphing_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 bool AFortPlayerController::ServerStartPIDContributionsGraphing_Validate()
@@ -993,7 +1029,13 @@ bool AFortPlayerController::ServerStartPIDContributionsGraphing_Validate()
 
 void AFortPlayerController::ServerStartPIDValueGraphing_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 bool AFortPlayerController::ServerStartPIDValueGraphing_Validate()

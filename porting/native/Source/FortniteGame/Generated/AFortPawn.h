@@ -991,13 +991,15 @@ public:
 	void OnRep_DamageZoneActiveBitMask();
 
 	UFUNCTION()
-	void OnRep_EmoteWalkSpeed();
+	virtual void OnRep_EmoteWalkSpeed();
 
 	UFUNCTION()
 	void OnRep_IsDBNO();
 
+protected:
 	UFUNCTION()
-	void OnRep_IsKnockedBack();
+	virtual void OnRep_IsKnockedBack();
+public:
 
 	UFUNCTION()
 	void OnRep_JumpFlashCount();
@@ -1009,13 +1011,13 @@ public:
 	void OnRep_LastReplicatedEmoteExecuted();
 
 	UFUNCTION()
-	void OnRep_MovingEmote();
+	virtual void OnRep_MovingEmote();
 
 	UFUNCTION()
-	void OnRep_MovingEmoteFollowingOnly();
+	virtual void OnRep_MovingEmoteFollowingOnly();
 
 	UFUNCTION()
-	void OnRep_PawnUniqueID();
+	virtual void OnRep_PawnUniqueID();
 
 	UFUNCTION()
 	void OnRep_PushMomentum();

@@ -9,3 +9,17 @@ bool UHUDLayoutToolPropertyPanel::GetIsOpen() const
 	return NativeRecoveredBool_0x280;
 }
 
+void UHUDLayoutToolPropertyPanel::OnClose_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UHUDLayoutToolPropertyPanel::OnOpen_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+

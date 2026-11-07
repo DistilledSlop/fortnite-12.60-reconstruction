@@ -614,6 +614,12 @@ public:
 	FProxyGameplayCueDamagePhysical ProxyGameplayCueDamagePhysical;
 
 protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void BlueprintOnStructurallyStable();
+	virtual void BlueprintOnStructurallyStable_Implementation();
+public:
+
+protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void CancelAutoBuild();
 public:

@@ -9,6 +9,13 @@
 #include "UBuildingTextureData.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingSMActor::BlueprintOnStructurallyStable_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void ABuildingSMActor::CancelAutoBuild()
 {
 	// CONFIDENCE: medium

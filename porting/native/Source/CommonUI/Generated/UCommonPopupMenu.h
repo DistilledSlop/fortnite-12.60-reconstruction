@@ -29,5 +29,17 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UObject> ContextProvidingObject;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void HandlePostDifferentContextProviderSet();
+	virtual void HandlePostDifferentContextProviderSet_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void HandlePreDifferentContextProviderSet();
+	virtual void HandlePreDifferentContextProviderSet_Implementation();
+public:
+
 };
 

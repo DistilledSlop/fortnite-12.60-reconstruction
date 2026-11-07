@@ -42,6 +42,13 @@ bool AFortAthenaVehicle::CanDriveOnIncline() const
 	return (NativeRecoveredBits_0x40e & 0x10) != 0;
 }
 
+bool AFortAthenaVehicle::CanTeleport() const
+{
+	// Exact original shared stub 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 bool AFortAthenaVehicle::ContainsPlayers() const
 {
 	// CONFIDENCE: high; secondary interface target 0x141910d30.
@@ -326,7 +333,9 @@ void AFortAthenaVehicle::OnRep_IgnoredBuildingActors()
 
 void AFortAthenaVehicle::OnRep_OnFire()
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortAthenaVehicle::OnRep_OverrideWrap()

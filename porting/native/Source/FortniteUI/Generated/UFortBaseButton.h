@@ -101,8 +101,16 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x7f8): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x7f8;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void ForceClick();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetSelected() const;
+
+protected:
+	UFUNCTION()
+	virtual void OnButtonClicked();
+public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetBangVisibility(bool bVisible);

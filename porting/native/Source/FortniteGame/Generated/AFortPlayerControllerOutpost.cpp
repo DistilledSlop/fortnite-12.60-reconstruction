@@ -19,7 +19,13 @@ void AFortPlayerControllerOutpost::OnRep_PostDepositedResources()
 
 void AFortPlayerControllerOutpost::ServerCleanUpOnExit_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerOutpost::ServerDepositPOSTResource_Implementation(const FGuid& ItemGuid, int32 Count)
@@ -29,7 +35,13 @@ void AFortPlayerControllerOutpost::ServerDepositPOSTResource_Implementation(cons
 
 void AFortPlayerControllerOutpost::ServerLeaveOutpostAsParty_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerOutpost::ServerMoveItemFromStorageVault_Implementation(const FFortItemEntry& NewlyCollectedItem)
@@ -49,7 +61,13 @@ void AFortPlayerControllerOutpost::ServerUpgradeBuilding_Implementation(UFortOut
 
 void AFortPlayerControllerOutpost::ServerUpgradePOST_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerOutpost::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

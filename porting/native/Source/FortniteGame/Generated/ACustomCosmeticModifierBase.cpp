@@ -7,3 +7,10 @@ AFortPlayerPawn* ACustomCosmeticModifierBase::GetAssociatedPlayerPawn() const
 	return FortPlayerPawnPtr.Get();
 }
 
+void ACustomCosmeticModifierBase::OnPostResIn_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+

@@ -34,8 +34,10 @@ public:
 	void ClientBroadcastHitDetection(APawn* ImpulseInstigator, float Radius, float Relevancy, const FVector& HalfPoints, const FVector& DoublePoints);
 	void ClientBroadcastHitDetection_Implementation(APawn* ImpulseInstigator, float Radius, float Relevancy, const FVector& HalfPoints, const FVector& DoublePoints);
 
+private:
 	UFUNCTION()
-	void OnRep_GravityMultiplier();
+	virtual void OnRep_GravityMultiplier();
+public:
 
 	UFUNCTION()
 	void OnRep_SafeTeleportInfo();

@@ -559,6 +559,13 @@ void AFortMinigame::HandleMinigameComponentInPlayChanged_Implementation(UFortMin
 	// Original native body is empty.
 }
 
+void AFortMinigame::HandleMinigameWarmup_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortMinigame::HandleVolumeEditModeChange_Implementation(bool bInEditMode)
 {
 	// CONFIDENCE: high

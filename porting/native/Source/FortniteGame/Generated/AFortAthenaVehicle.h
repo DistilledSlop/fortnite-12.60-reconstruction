@@ -675,6 +675,9 @@ public:
 	bool CanDriveOnIncline() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool CanTeleport() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool ContainsPlayers() const;
 
 	UFUNCTION(Client, Reliable)
@@ -797,8 +800,10 @@ public:
 	UFUNCTION()
 	void OnRep_IgnoredBuildingActors();
 
+protected:
 	UFUNCTION()
-	void OnRep_OnFire();
+	virtual void OnRep_OnFire();
+public:
 
 	UFUNCTION()
 	void OnRep_OverrideWrap();

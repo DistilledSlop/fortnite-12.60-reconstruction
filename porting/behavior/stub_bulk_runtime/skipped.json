@@ -1,0 +1,1957 @@
+[
+ {
+  "cls": "UEpicCMSTileCarousel",
+  "fn": "HandleTilePageAdded",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UUACNetworkComponent",
+  "fn": "SendPacketToServer",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AAIHotSpot",
+  "fn": "IsAIAllowed",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AAIHotSpot",
+  "fn": "OnSlotBlocked",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AAIHotSpot",
+  "fn": "OnSlotClaimed",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AAIHotSpot",
+  "fn": "OnSlotDisabled",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AAIHotSpot",
+  "fn": "OnSlotEnabled",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AAIHotSpot",
+  "fn": "OnSlotFreed",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AAIHotSpot",
+  "fn": "OnSlotOccupied",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AAthenaCapturePoint",
+  "fn": "OnCapturePointStateChange",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ABuildingActor",
+  "fn": "BlueprintGetInteractionTime",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ABuildingActor",
+  "fn": "IsAcceptablePositionForPlacement",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ABuildingGameplayActorConsumable",
+  "fn": "OnInteractAllowedToConsume",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ABuildingGameplayActorConsumable",
+  "fn": "PrepareOnConsumeGameplayEffectSpec",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ABuildingSMActor",
+  "fn": "BlueprintCanAttemptGenerateResources",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ABuildingSMActor",
+  "fn": "GetWindPannerSpeedCurveForPreview",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "ABuildingSMActor",
+  "fn": "GetWindSpeedCurveForPreview",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "ABuildingTrap",
+  "fn": "BP_ShouldTrigger",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ABuildingTimeOfDayLights",
+  "fn": "GetTimeOfDayBlueprintDefaultVariables",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ABuildingTrapDefender",
+  "fn": "TakeWeaponAwayFromDefender",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UCosmeticPreviewInterface",
+  "fn": "GetSpecialPreviewActions",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UCreativeQuickbarComponent",
+  "fn": "ServerAddItemToQuickBar",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "UCreativeQuickbarComponent",
+  "fn": "ServerAddToQuickBar",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "ADeployableBasePlot",
+  "fn": "OnBuildingStateTransition",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ADeployableBasePlot",
+  "fn": "OnCurrentBuildingStateSet",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AFortAIPawn",
+  "fn": "OnRep_CanInteract",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortAthenaMutator_GameModeBase",
+  "fn": "OnPlaylistLoaded",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortAthenaVehicle",
+  "fn": "BP_CanInteract",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AFortAthenaVehicle",
+  "fn": "DebugDrawImpactBucket",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortAthenaVehicle",
+  "fn": "OnPawnExitVehicle",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AFortAthenaVehicle",
+  "fn": "OverrideCurrentWrap",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortAthenaVehicle",
+  "fn": "UpdateClientWithVehicleTestInput",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortAthenaTutorialBase",
+  "fn": "ExecuteTutorialStep_Client",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "UFortUICameraFrameTargetInterface",
+  "fn": "GetZoomedOutCameraFramingSettings",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortCarriedObjectHolderInterface",
+  "fn": "CanHoldObject",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortCarriedObjectHolderInterface",
+  "fn": "OnCarriedObjectAttach",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortCharacterVehicle",
+  "fn": "BP_CanInteract",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AFortCharacterVehicle",
+  "fn": "OnPawnExitVehicle",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortCheatManager",
+  "fn": "SpawnEnemyPlayer",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortCheatManager",
+  "fn": "SpawnFriendlyPlayer",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortCheatManager",
+  "fn": "SpawnSimplePawn",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortClientAnnouncement_Basic",
+  "fn": "SetDetailText",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortClientAnnouncement_Basic",
+  "fn": "SetDisplayTime",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortClientAnnouncement_Keybinding",
+  "fn": "SetDetailText",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortClientAnnouncement_Keybinding",
+  "fn": "SetDisplayTime",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortClientAnnouncement_TutorialInterface",
+  "fn": "HideTutorialWidget",
+  "why": "void but stub is not empty",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortClientAnnouncement_TutorialInterface",
+  "fn": "SetHAlign",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortClientAnnouncement_TutorialInterface",
+  "fn": "SetLightboxDisableInputOnly",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortClientAnnouncement_TutorialInterface",
+  "fn": "SetPadding",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortClientAnnouncement_TutorialInterface",
+  "fn": "SetSystemText",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortClientAnnouncement_TutorialInterface",
+  "fn": "SetTitleText",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortClientAnnouncement_TutorialInterface",
+  "fn": "SetVAlign",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortClientAnnouncement_ConversationCodeInterface",
+  "fn": "IsPlayingSentenceIndex",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortControllerComponent_HeldDeviceUsage",
+  "fn": "ServerUseBattleLabDevice",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "UFortControllerComponent_Aircraft",
+  "fn": "ServerAttemptAircraftJump",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "UFortControllerComponent_Interaction",
+  "fn": "ServerNotifyEndLongUse",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "UFortControllerComponent_Interaction",
+  "fn": "ServerNotifyStartLongUse",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "UFortControllerComponent_Portal",
+  "fn": "ServerSetPortalLinkCode",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortCreativeMoveTool",
+  "fn": "ServerCyclePlaysetProp",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortCustomizableAbilityDecoTool",
+  "fn": "BPReleaseSecondaryFire",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AFortDecoPreview",
+  "fn": "OnInitializeDecoPreview",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortGameplayAbilityTooltip",
+  "fn": "GetApplicationTag",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortHUDTargetUnderReticleInterface",
+  "fn": "GetHUDTargetDisplayModifiers",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortHUDTargetUnderReticleInterface",
+  "fn": "GetHUDTargetHealthPercentage",
+  "why": "non-bool return",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortInitializationInterface",
+  "fn": "WorldReady",
+  "why": "void but stub is not empty",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortInteractInterface",
+  "fn": "GetBoundsComponents",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortInteractInterface",
+  "fn": "GetCustomIcon",
+  "why": "non-bool return",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortInteractInterface",
+  "fn": "GetCustomTint",
+  "why": "non-bool return",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortInteractInterface",
+  "fn": "GetFocusedSocketLocation",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortInteractInterface",
+  "fn": "GetIconPlacement",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortInteractInterface",
+  "fn": "ServerOnAttemptInteract",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortInterface_OverrideCanInteract",
+  "fn": "ShouldSuppressInteractionWidget",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "ExtractSkeletalMesh",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "GetAIDirector",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "GetAIGoalManager",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "IncrementAnalyticMatchCount",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "K2_SpawnPickupInWorld",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortKismetLibrary",
+  "fn": "K2_SpawnPickupInWorldWithClass",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortLiveSpectatorController",
+  "fn": "ServerSetFollowedPlayer",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "UFortMissionLibrary",
+  "fn": "SpawnMissionItemPickupInWorld",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortMissionStormShield",
+  "fn": "SpawnSafeAreaAtLocation",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortMissionPowerPointsInterface",
+  "fn": "GetAvailabilityWeight",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortMountedWeaponInterface",
+  "fn": "AddToIgnoreActors",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortMountedWeaponInterface",
+  "fn": "GetHostVehicleCached",
+  "why": "non-bool return",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortMountedWeaponInterface",
+  "fn": "GetWeaponComponentCached",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortMutatorOwner",
+  "fn": "RemoveMutatorFromList",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortOctopusVehicle",
+  "fn": "ServerUpdateTowhook",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPawn_InteractablePawn",
+  "fn": "BlueprintCanInteract",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AFortPawn_InteractablePawn",
+  "fn": "BlueprintOnInteract",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AFortPickup",
+  "fn": "AllowLongRangeAutoPickup",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortPickupEventHandler",
+  "fn": "HandleItemRemoved",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortPickupEventHandler",
+  "fn": "HandlePickupClaimed",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortPickupEventHandler",
+  "fn": "HandlePickupDestroyed",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortPickupInstigator",
+  "fn": "GetPickupEventHandler",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortPickupInstigator",
+  "fn": "GetTrackedIndex",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortPlacementActorTagTest",
+  "fn": "ShouldApplyTagsToPlacementActor",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "Cheat_ForceAthenaCosmeticItemInSlot",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "retfalse"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "Cheat_ForceCosmeticVariantChannels",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "retfalse"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "Cheat_ForcePlayEmoteItem",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "retfalse"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "Cheat_StopObjectiveServer",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "retfalse"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerAcknowledgeDelayedQuickBarAction",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerAddPawnMovementInput",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerAttemptInventoryDrop",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerBeginEditingBuildingActor",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerCheat",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerCombineInventoryItems",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerEditBuildingActor",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerEndEditingBuildingActor",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerExecuteInventoryItem",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerOnMaterialSelection",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerRepairBuildingActor",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerReportClientFPS",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerSendClientProgressUpdate",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerSetShouldUseBotManager",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerSetShouldUsePilotComponent",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerSpotActor",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerTeleportToReticle",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerUpdatePlayerData",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "ServerUpgradeBuildingActor",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "SpawnToyInstance",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortPlayerController",
+  "fn": "TogglePersonalVehicle",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerControllerAthena",
+  "fn": "SendClientPhysicsBallStateToServer",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerControllerGameplay",
+  "fn": "ServerRPCSetDisplayNPCNumbers",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerControllerDeployableBase",
+  "fn": "ServerMoveItemFromDeployableBase",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerControllerDeployableBase",
+  "fn": "ServerMoveItemToDeployableBase",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerControllerOutpost",
+  "fn": "ServerMoveItemFromStorageVault",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerControllerOutpost",
+  "fn": "ServerMoveItemToStorageVault",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerControllerPvE",
+  "fn": "ServerUpdateQuickBarRecordsCache",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerControllerZone",
+  "fn": "ServerSendLoadoutConfig",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerControllerZone",
+  "fn": "ServerSetVehicleHealth",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortPlayerStateZone",
+  "fn": "ServerSetInAircraft",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AFortProjectileAthena",
+  "fn": "ServerNotifyEndOverlap",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "UFortProjectileMovementInterface",
+  "fn": "SetAccelerationMagnitude",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortProjectileMovementInterface",
+  "fn": "SetHomingLaserTargetDistance",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortProjectileMovementInterface",
+  "fn": "SetHomingLockTargetDistanceThreshold",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortProjectileMovementInterface",
+  "fn": "SetHomingTarget",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortProjectileMovementInterface",
+  "fn": "SetHomingTimeUntilMaxTurnSpeed",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortProjectileMovementInterface",
+  "fn": "SetHomingTurnSpeedMax",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortProjectileMovementInterface",
+  "fn": "SetHomingTurnSpeedMin",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortHealthRegenInterface",
+  "fn": "GetHealthRegenGameplayEffectClass",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortHealthRegenInterface",
+  "fn": "GetShieldRegenDelayGameplayEffect",
+  "why": "non-bool return",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortSafeZoneInterface",
+  "fn": "GetSafeZoneNextCenter",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortSafeZoneInterface",
+  "fn": "GetSafeZoneNextNextCenter",
+  "why": "non-bool return",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortScriptedAction",
+  "fn": "CanExecute",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "AFortSpaghettiVehicle",
+  "fn": "ServerUpdateTowhook",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "BlocksBuilding",
+  "why": "returns value but stub shape does not fit",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "CanContainPlayers",
+  "why": "returns value but stub shape does not fit",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "CanShootFromSeat",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "ChangeSeatFromIndex",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "ContainsPlayers",
+  "why": "returns value but stub shape does not fit",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "FindSeatIndex",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetExitSocketTransform",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetGameplayTags",
+  "why": "non-bool return",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetMaxHealth",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetOwnerLocation",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetPawnAtSeat",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetSeatSwitchCooldown",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetStandingFiringOffsetForSeat",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetVehicleAbilitySystemComponent",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetVehicleActorPtrConst",
+  "why": "non-bool return",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetVehicleChangeSeatActionName",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetVehicleForwardVector",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "GetVehicleSeatComponentPtr",
+  "why": "non-bool return",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "HasEverContainedPlayers",
+  "why": "returns value but stub shape does not fit",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "IsAsleep",
+  "why": "returns value but stub shape does not fit",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "SetIgnoreAllFallingDamage",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortVehicleInterface",
+  "fn": "VehicleIsInSkyTube",
+  "why": "returns value but stub shape does not fit",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "AFortWeaponRangedMountedCannon",
+  "fn": "ServerFireActorInCannon",
+  "why": "has parameters",
+  "stubs": [
+   "empty",
+   "rettrue"
+  ],
+  "kind": "net-rpc"
+ },
+ {
+  "cls": "AGameplayCueNotify_Jetpack_FuelRegen",
+  "fn": "ResetBlink",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ULevelSaveSpawnable",
+  "fn": "CanBeSavedToCreativeVolume",
+  "why": "returns value but stub shape does not fit",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ULevelSaveSpawnable",
+  "fn": "PreFinishSpawning",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UOpenableInterface",
+  "fn": "Close",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "USingleIndexSelectionModel",
+  "fn": "AddOnNavigationChangedDelegate",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "USingleIndexSelectionModel",
+  "fn": "AddOnNumItemsChangedDelegate",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "USingleIndexSelectionModel",
+  "fn": "CanMoveDelta",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "USingleIndexSelectionModel",
+  "fn": "GetSelectedIndex",
+  "why": "non-bool return",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "USingleIndexSelectionModel",
+  "fn": "RemoveOnNavigationChangedDelegate",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "USingleIndexSelectionModel",
+  "fn": "RemoveOnNumItemsChangedDelegate",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFFTSoundDataProvider",
+  "fn": "GetMagnitudeForChannel",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFXSystemComponent",
+  "fn": "SetIntParameter",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UAthenaLoadoutWidget",
+  "fn": "OnLoadoutChosen",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UAthenaWinnersList",
+  "fn": "OnWinnersAnnounced",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortCollectionBookPrimaryPanel",
+  "fn": "OnSummonInfoPanelExecuted",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortCollectionBookSectionTileWidget",
+  "fn": "OnSectionSlotUpdate",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortCollectionBookWidget",
+  "fn": "OnCollectionBookPageClicked",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortExpeditionRewardsWidget",
+  "fn": "RefreshRewardsUI",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortFrontEndContext",
+  "fn": "GetUITestingClass",
+  "why": "non-bool return",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortGlobalActionDetailsDataSource",
+  "fn": "RemoveOnChangeDelegate",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortGridWidgetBase",
+  "fn": "GetTileForObject",
+  "why": "has parameters",
+  "stubs": [
+   "ret0"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortInputOptions",
+  "fn": "ChangeBinding",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemListViewInterface",
+  "fn": "ContainsItem",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemListViewInterface",
+  "fn": "GetFilter",
+  "why": "non-bool return",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemListViewInterface",
+  "fn": "GetSorter",
+  "why": "non-bool return",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemListViewInterface",
+  "fn": "HandleItemEvolutionCompleted",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemListViewInterface",
+  "fn": "HandleItemRefundBegun",
+  "why": "has parameters",
+  "stubs": [
+   "rettrue"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemListViewInterface",
+  "fn": "HandleItemRefundCompleted",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemListViewInterface",
+  "fn": "RefreshFilterAndSort",
+  "why": "void but stub is not empty",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemListViewInterface",
+  "fn": "SetFilter",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemListViewInterface",
+  "fn": "SetFilterAndSorter",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemListViewInterface",
+  "fn": "SetSorter",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortItemManagementMulchPanel",
+  "fn": "HideMulchConfirmationModal",
+  "why": "void but stub is not empty",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortMatchmakingKnobsModal",
+  "fn": "ApplyChanges",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortPlayerSurveyAnswerWidgetBase",
+  "fn": "HandleAnswerChanged",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortPrioritizedWidget",
+  "fn": "SetHasActiveContent",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortRewardNotificationData",
+  "fn": "GetIconBrush",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "plain"
+ },
+ {
+  "cls": "UFortTimespanDataSource",
+  "fn": "RemoveOnChangeDelegate",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UFortTouchLookStick",
+  "fn": "IsFireButtonUnderTouch",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UHUDLayoutToolPropertyPanel",
+  "fn": "OnWidgetMoved",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UHUDLayoutToolProxy",
+  "fn": "BP_GetPropertyRange",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UHUDLayoutToolProxy",
+  "fn": "BP_GetPropertyType",
+  "why": "has parameters",
+  "stubs": [
+   "retfalse"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "UHUDLayoutToolProxy",
+  "fn": "BP_SetPropertyValue",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "native-event"
+ },
+ {
+  "cls": "ULTMWidgetBase",
+  "fn": "OnGamePhaseChanged",
+  "why": "has parameters",
+  "stubs": [
+   "empty"
+  ],
+  "kind": "plain"
+ }
+]

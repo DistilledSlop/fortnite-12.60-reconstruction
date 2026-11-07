@@ -36,5 +36,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortPlayerSurveyQuestion* GetQuestion() const;
 
+protected:
+	UFUNCTION()
+	virtual void NativeHandleAnswerContainerChanged();
+public:
+
 };
 

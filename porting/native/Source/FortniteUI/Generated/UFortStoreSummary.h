@@ -41,6 +41,16 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsInChoiceSelectionMode() const;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void NotifyPanelActivated();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void NotifyPanelDeactivated();
+public:
+
 	UFUNCTION(BlueprintCallable)
 	void SetIsInChoiceSelectionMode(bool InIsInChoiceSelectionMode);
 

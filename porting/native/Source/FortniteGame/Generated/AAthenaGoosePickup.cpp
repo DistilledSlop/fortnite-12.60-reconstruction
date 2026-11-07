@@ -2,6 +2,20 @@
 #include "AAthenaGoosePickup.h"
 #include "Net/UnrealNetwork.h"
 
+void AAthenaGoosePickup::DeployTimerUp_Client_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AAthenaGoosePickup::OnImpactedByPlane_Client_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AAthenaGoosePickup::OnRep_bIsDespawning()
 {
 	// Body not recovered: reflection-derived stub.
@@ -15,6 +29,13 @@ void AAthenaGoosePickup::OnRep_DisplayIndex()
 void AAthenaGoosePickup::OnRep_PickupState()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AAthenaGoosePickup::OnStartDespawnWarning_Client_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AAthenaGoosePickup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

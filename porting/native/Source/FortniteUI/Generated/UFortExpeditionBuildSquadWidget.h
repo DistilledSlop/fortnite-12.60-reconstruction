@@ -50,5 +50,11 @@ public:
 	UPROPERTY()
 	UFortItemViewContext_ExpeditionSquadSlotItemPicker* ItemViewContext_ExpeditionSlotItemPicker;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnRefreshBuildSquadWidget();
+	virtual void OnRefreshBuildSquadWidget_Implementation();
+public:
+
 };
 

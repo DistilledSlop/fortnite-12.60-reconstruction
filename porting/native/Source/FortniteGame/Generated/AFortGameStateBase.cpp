@@ -25,7 +25,9 @@ void AFortGameStateBase::OnRep_StormShield()
 
 void AFortGameStateBase::OnRep_TimeOfDayManager()
 {
-	// Body not recovered: reflection-derived stub.
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortGameStateBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -42,6 +42,16 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable)
+	virtual void NotifyPanelActivated();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void NotifyPanelDeactivated();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
 	void ResetAllRewardData();
 public:
 
