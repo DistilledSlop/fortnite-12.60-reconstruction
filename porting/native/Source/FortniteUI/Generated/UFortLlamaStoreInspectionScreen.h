@@ -8,6 +8,8 @@
 
 #include "UCommonTileView.h"
 
+class UObject;
+
 #include "UFortLlamaStoreInspectionScreen.generated.h"
 
 UCLASS(config=Game, abstract)
@@ -23,6 +25,11 @@ public:
 	// table index 0, flags 0x20080000000004
 	UPROPERTY()
 	bool bIsInChoiceViewMode;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsItemChoicePack(UObject* ItemToCheck) const;
+public:
 
 };
 

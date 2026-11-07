@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UFortLazyImage",
+  "function": "SetShadowColorAndOpacity",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Call 0x142fcffb0 (candidate UFortTierIndicator::ClearPreviewState, params []) has no declaration in any porting/native/Source header, and the call site passes RDX=&copy of the color (contradicts params [])."
+ },
+ {
+  "class": "UFortLlamaStoreInspectionScreen",
+  "function": "IsItemChoicePack",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Inlined IsA(UFortCardPackItem::StaticClass()) then tail call to UFortCardPackItem::IsChoicePack; all 23 instructions accounted for."
+ },
+ {
+  "class": "UFortLlamaStoreOfferInfo",
+  "function": "GetDisplayAssetIcon",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "Conditional tail JNZ 0x142546d60 (asm 1450ad537) has no callee_candidates entry, no name in reflection or batch data, and is not a known engine helper; non-null result unresolved."
+ },
+ {
+  "class": "UFortLlamaStoreOfferInfo",
+  "function": "GetDisplayAssetPersonality",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "Conditional tail JNZ 0x142546d70 has no callee_candidates entry, no name in reflection or batch data, and is not a known engine helper; non-null result unresolved."
+ },
+ {
+  "class": "UFortLlamaStoreOfferWidgetBase",
+  "function": "GetPriceIndexToShow",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "Conditional JNZ 0x1450b1190 (asm 1450b115a) targets an address outside the body with no callee_candidates entry or known helper; non-null return path unresolved."
+ },
+ {
+  "class": "UFortLlamaStoreOfferWidgetBase",
+  "function": "IsParentActivatablePanelActive",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Raw outer-chain loop (+0x20 twice per step) with IsA(UUserWidget) and IsA(UCommonActivatablePanel) tests; raw byte at node+0x288."
+ },
+ {
+  "class": "UFortMatchXPTotalEntry",
+  "function": "InitializeXPCounter",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Call 0x1407ced00 (UCommonNumericTextBlock::InterpolateToValue) is not declared in any porting/native/Source header."
+ },
+ {
+  "class": "UFortMatchmakingKnobsModal",
+  "function": "HandleRestoreClicked",
+  "status": "blocked",
+  "case": "receiver_mismatch",
+  "reason": "Body never reads RCX (receiver); all stores go through RDX (second argument) and RAX=RDX is returned (sret-style), contradicting header_decl void HandleRestoreClicked()."
+ },
+ {
+  "class": "UFortMatchmakingKnobsModal",
+  "function": "OnHoveredItemChanged",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "Conditional JNZ 0x144dd33e0 (on R8B=bIsHovered) has no callee_candidates entry or known helper; the true-path result is unresolved."
+ },
+ {
+  "class": "UFortMissionActivationInfo",
+  "function": "CanRequestVote",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Reflected GameStateZone at 0xa8; null returns false, else !IsGameplayVoteInProgress(VoteType)."
+ },
+ {
+  "class": "UFortMissionActivationInfo",
+  "function": "GetArbitratorType",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Reflected GameStateZone at 0xa8; byte local filled by GetVoteArbitratorType out-param (declared), returned; null returns 0."
+ },
+ {
+  "class": "UFortMissionActivationInfo",
+  "function": "GetVoteTimeRemaining",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Call 0x141e9f020 (AFortGameStateZone::GetTimeRemainingToEndVote) is not declared in any porting/native/Source header; the sibling IsGameplayVoteActive (0x141ea2430) is declared."
+ },
+ {
+  "class": "UFortMissionActivationInfo",
+  "function": "IsAnyVoteActive",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "Conditional tail JNZ 0x141ea2160 with RCX=GameStateZone has no callee_candidates entry or known helper."
+ },
+ {
+  "class": "UFortMissionTrackerList",
+  "function": "UpdateVisibleMissionCategories",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Call 0x144f82200 (UFortMissionTrackerList::HandleMissionsUpdated) is not declared in any porting/native/Source header."
+ },
+ {
+  "class": "UFortMultiSizeImage",
+  "function": "SetColorAndOpacity",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Call 0x142fcffb0 (candidate UFortTierIndicator::ClearPreviewState, params []) has no declaration; call site passes RDX=&color copy (contradicts params [])."
+ },
+ {
+  "class": "UFortMultiSizeItemCard",
+  "function": "SetShouldCollapseBorderPadding",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "Conditional tail JNZ 0x144ee3f00 with RCX=[RAX+0x3d0] has no callee_candidates entry or known helper; the flag-changed path is unresolved."
+ },
+ {
+  "class": "UFortMultiSizeItemCard",
+  "function": "SetShouldCollapseItem",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "Conditional tail JNZ 0x144ee3e90 with RCX=[RAX+0x3d0] has no callee_candidates entry or known helper."
+ },
+ {
+  "class": "UFortMultiSizeItemCard",
+  "function": "SetShouldSuppressItemTypeIcon",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "Conditional tail JNZ 0x144ee4020 with RCX=[RAX+0x3d0] has no callee_candidates entry or known helper."
+ },
+ {
+  "class": "UFortMTXButton",
+  "function": "HandleLocalAcountInfoChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Call 0x1407ced00 (UCommonNumericTextBlock::InterpolateToValue) is not declared in any porting/native/Source header."
+ },
+ {
+  "class": "UFortOptionsMenu",
+  "function": "ResetActionHandlerStates",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Five calls to 0x1407f3f90 (UCommonActivatablePanel::SetActionHandlerStateFromHandle) are not declared in any porting/native/Source header."
+ },
+ {
+  "class": "UFortPerkWidget_NUI",
+  "function": "HasAbility",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Call 0x141d98eb0 (UFortTeamPerkItemDefinition::GetAbilityKitBP) is not declared in UFortTeamPerkItemDefinition.h or any generated header; the call also sets DL=1, which the candidate params do not list."
+ },
+ {
+  "class": "UFortPerkWidget_NUI",
+  "function": "IsPerkEmpty",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Call 0x141d98eb0 (UFortTeamPerkItemDefinition::GetAbilityKitBP) is not declared in any generated header; the call also sets DL=1, which the candidate params do not list."
+ },
+ {
+  "class": "UFortPartySuggestionButton",
+  "function": "HandleSuggestionAccepted",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "Conditional tail JZ 0x144ded0e0 (on PlayerId == this+0xb70) has no callee_candidates entry or known helper."
+ },
+ {
+  "class": "UFortPickerContext",
+  "function": "GetListPickerOption",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Byte type 5/7 gate, int32 slot and pointer to 16-byte entries (recovered members); Index<Num check; known TWeakObjectPtr::Get helper."
+ },
+ {
+  "class": "UFortPickerContext",
+  "function": "UseLeftThumbstick",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Call 0x144cfdbe0 (UFortPickerContext::DoesRadialCloseOnRelease) is not declared in any porting/native/Source header."
+ }
+]

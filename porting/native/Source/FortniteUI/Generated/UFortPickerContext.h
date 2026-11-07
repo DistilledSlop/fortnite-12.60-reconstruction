@@ -14,6 +14,7 @@
 #include "FOnShowPickerDelegate.h"
 #include "FSquadQuickChatOptionData.h"
 #include "FTrackedTrapTimeAndCount.h"
+#include "UFortItem.h"
 #include "UFortItemDefinition.h"
 #include "UFortSchematicItem.h"
 
@@ -52,6 +53,15 @@ public:
 	UPROPERTY()
 	FOnPickerCommandDelegate OnPickerRefreshItems;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x90): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x90;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x94): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x94;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x98): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x98;
+
 	// table index 14, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FItemDefOptionData> CustomPickerMenuItems;
@@ -86,6 +96,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentWheelIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* GetListPickerOption(int32 Index) const;
 
 	UFUNCTION(BlueprintCallable)
 	void SetFortPickerData(UFortPickerData* Data);
