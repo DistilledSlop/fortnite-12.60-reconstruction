@@ -238,5 +238,13 @@
   "address": "0x142a58600",
   "inc_path": "porting/behavior/AFortPlayerControllerAthena/FollowSpecialActor.inc",
   "status": "ported"
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "Native_142bad740",
+  "kind": "helper",
+  "address": "0x142bad740",
+  "inc_path": "porting/behavior/AFortMinigame/Native_142bad740.inc",
+  "status": "ported"
  }
 ]

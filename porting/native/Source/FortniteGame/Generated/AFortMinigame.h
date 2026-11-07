@@ -880,7 +880,6 @@ public:
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 	virtual AFortVolume* NativeGetVolume();
 	bool NativeIsMatchPointDecided293() const;
-	static void Native_142bad740();
 	bool NativeAllowsFriendlyFire163(AFortPawn* Pawn);
 };
 

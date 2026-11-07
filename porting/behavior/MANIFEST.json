@@ -64627,21 +64627,6 @@
     "class": "UFortGameplayAbility"
   },
   {
-    "class": "AFortMinigame",
-    "function": "Native_142bad740",
-    "kind": "helper",
-    "signature": "void Native_142bad740()",
-    "access": "public",
-    "static": true,
-    "virtual": false,
-    "address": "0x142bad740",
-    "includes": [],
-    "inc_path": "porting/behavior/AFortMinigame/Native_142bad740.inc",
-    "confidence": "medium",
-    "status": "ported",
-    "notes": "Unnamed global _DAT_147c306f0 used; LOCK/UNLOCK atomicity is not modeled, plain statements kept."
-  },
-  {
     "function": "IsSettingEnabled",
     "kind": "exec",
     "signature": "bool IsSettingEnabled(FName& PropertyName) const",
