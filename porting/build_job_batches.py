@@ -16,12 +16,11 @@ pool_path, prefix, size = sys.argv[1], sys.argv[2], int(sys.argv[3])
 scratch = sys.argv[4] if len(sys.argv) > 4 else 'porting/generated/work-batches'
 os.makedirs(scratch, exist_ok=True)
 pool = json.load(open(pool_path))
-# classes whose activation/text/input methods are emitted by a generator policy: an extra entry crashes the promotion
-POLICY = {"UCommonBorder", "UCommonInputSettings", "UCommonUISettings", "UCommonInputControllerData", "UFortLoginInteractions", "UFortProgressModal", "UFortRootViewportLayout", "UFortSignInWidget", "UCommonUIActionRouter", "UCommonButtonInternal", "UCommonActivatableWidget", "UCommonActivatablePanel", "UCommonInputManager", "UFortRestartClientModal", "UCommonInputSubsystem",
-          "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext",
-          "UFortUINotification", "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary"}
-policy_rows = [{'cls': j['cls'], 'fn': j['fn'], 'reason': 'policy_owned_class'} for j in pool if j['cls'] in POLICY]
-pool = [j for j in pool if j['cls'] not in POLICY]
+# functions a generator policy already emits (real body in the generated source) must not get a second entry: it collides
+sys.path.insert(0, 'porting')
+from generated_defs import defined_in_generated
+policy_rows = [{'cls': j['cls'], 'fn': j['fn'], 'reason': 'policy_owned_function'} for j in pool if defined_in_generated(j['cls'], j['fn'])]
+pool = [j for j in pool if not defined_in_generated(j['cls'], j['fn'])]
 MAN = 'porting/behavior/MANIFEST.json'
 
 

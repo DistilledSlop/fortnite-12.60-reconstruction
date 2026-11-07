@@ -63,11 +63,7 @@ for p in glob.glob(f'{R}/work-batches/*.json'):
         pass
 
 
-POLICY = {"UCommonBorder", "UCommonInputSettings", "UCommonUISettings", "UCommonInputControllerData", "UFortLoginInteractions",
-          "UFortProgressModal", "UFortRootViewportLayout", "UFortSignInWidget", "UCommonUIActionRouter", "UCommonButtonInternal",
-          "UCommonActivatableWidget", "UCommonActivatablePanel", "UCommonInputManager", "UFortRestartClientModal", "UCommonInputSubsystem",
-          "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification",
-          "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary"}  # same set as build_call_pool.py
+from generated_defs import defined_in_generated
 
 
 def span(p):
@@ -90,8 +86,10 @@ for e in f2:
         g = '01 interface dispatch (no body at interface level)'
     elif e['group'] == 'U':
         g = '02 no single body (pure virtual/embedded subobject)'
-    elif e['cls'] in POLICY:
-        g = '12 class is hand-written policy code (generator does not own it)'
+    elif e['cls'] == 'UFortKismetLibrary':
+        g = '12 hand-written class with no generated header (UFortKismetLibrary)'
+    elif defined_in_generated(e['cls'], e['fn']):
+        g = '00 already emitted by a generator policy (done; no manifest entry, so not credited yet)'
     elif k in reg:
         g = '10 recorded blocker/deferral: ' + reg[k]
     else:

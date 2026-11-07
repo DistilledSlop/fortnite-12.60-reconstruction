@@ -8,6 +8,7 @@ Run from repo root: python3 -I porting/build_call_pool.py [MAXI]"""
 import collections, glob, json, os, re, sys
 sys.path.insert(0, 'porting')
 import thunk_receiver as tr
+from generated_defs import defined_in_generated
 
 MAXI = int(sys.argv[1]) if len(sys.argv) > 1 else 60
 R = 'porting/generated'
@@ -49,11 +50,7 @@ for p in glob.glob(f'{R}/work-batches/wrap[0-9A]*.json') + glob.glob(f'{R}/work-
         continue  # generated but never run by a worker: those functions are still open
     for j in json.load(open(p)):
         attempted.add((j['cls'], j['fn']))
-POLICY = {"UCommonBorder", "UCommonInputSettings", "UCommonUISettings", "UCommonInputControllerData", "UFortLoginInteractions",
-          "UFortProgressModal", "UFortRootViewportLayout", "UFortSignInWidget", "UCommonUIActionRouter", "UCommonButtonInternal",
-          "UCommonActivatableWidget", "UCommonActivatablePanel", "UCommonInputManager", "UFortRestartClientModal", "UCommonInputSubsystem",
-          "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification",
-          "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary"}
+NO_GENERATED_HEADER = {'UFortKismetLibrary'}  # hand-written class: the generator cannot learn signatures for it
 hdr = {os.path.basename(p)[:-2]: p for p in glob.glob('porting/native/Source/*/Generated/*.h')}
 
 
@@ -69,7 +66,7 @@ def insns(p):
 pool, st = [], collections.Counter()
 for e in f2:
     k = (e['cls'], e['fn'])
-    if k in done or f"{e['cls']}::{e['fn']}" in blocked or k not in inscope or e['group'] in ('A', 'I', 'U') or e['cls'] in POLICY or k in attempted:
+    if k in done or f"{e['cls']}::{e['fn']}" in blocked or k not in inscope or e['group'] in ('A', 'I', 'U') or e['cls'] in NO_GENERATED_HEADER or defined_in_generated(e['cls'], e['fn']) or k in attempted:
         st['skip_done_blocked_policy_attempted'] += 1
         continue
     b = e.get('real_bodies') or []
