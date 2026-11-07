@@ -84,8 +84,14 @@ public:
 	UPROPERTY()
 	UMediaSource* LocalFilePlaybackAsset;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x200): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x200;
+
 	UFUNCTION(BlueprintCallable)
 	bool IsScreenRecordingInProgress();
+
+	UFUNCTION(BlueprintCallable)
+	void SetPlaybackStartTime(float StartTime);
 
 };
 

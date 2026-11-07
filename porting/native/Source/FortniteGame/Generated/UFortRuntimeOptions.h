@@ -1381,6 +1381,9 @@ public:
 	UPROPERTY(Config)
 	bool bEnableSubregionNetworkAccelerators;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x5a9): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x5a9;
+
 	// table index 532, flags 0x10000000004000
 	UPROPERTY(Config)
 	TArray<FString> DisabledNetworkAcceleratedSubregions;
@@ -3419,6 +3422,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TArray<FString> GetValidAffiliateNames() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsGameplayMessageEnabled(FName& MessageOwnerClassName, FName& MessageName) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsGiftingDisabled() const;

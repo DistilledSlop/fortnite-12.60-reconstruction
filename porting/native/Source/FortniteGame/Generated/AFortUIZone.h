@@ -65,11 +65,26 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x61a): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x61a;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x61d): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x61d;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x61e): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x61e;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x61f): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x61f;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x623): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x623;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x624): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x624;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x628): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x628;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x62c): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x62c;
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -80,6 +95,9 @@ public:
 
 	UFUNCTION(Exec)
 	void ToggleTargetInfo();
+
+	UFUNCTION(Exec)
+	void ToggleTargetInfoLock(bool bTraceComplex);
 
 	UFUNCTION(Exec)
 	void ToggleTargetInfoPaths();

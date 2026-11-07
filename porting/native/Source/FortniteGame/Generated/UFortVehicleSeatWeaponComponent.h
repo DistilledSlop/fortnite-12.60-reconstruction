@@ -24,6 +24,9 @@ class FORTNITEGAME_API UFortVehicleSeatWeaponComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0xa0): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0xa0;
+
 	// table index 19, flags 0x10000000000001
 	UPROPERTY()
 	TArray<FName> MuzzleSocketNames;
@@ -115,6 +118,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	float GetOverheatScaler();
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetVehicle() const;
 
 	UFUNCTION()
 	void OnRep_OverheatValueRepped();

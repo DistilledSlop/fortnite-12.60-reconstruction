@@ -1,0 +1,177 @@
+[
+ {
+  "class": "AFortReplaySpectator",
+  "function": "SkipToSequencerShot",
+  "status": "blocked",
+  "case": "unresolved_tail_call",
+  "reason": "unresolved tail call: JNZ 0x14245f2b0 (non-null [this+0x34c8] tail-jumps with RCX=component, EDX=ShotIndex); target absent from callee_candidates and not declared"
+ },
+ {
+  "class": "UFortReplaySequenceComponent",
+  "function": "NoRecorderVideoFinishedCallback",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x140680160 (and 0x1406800e0) candidates UAthenaLobbyBase::HandlePlaylistDataChanged and UCreativeMiniMapComponent::OnRep_IconData match neither receiver nor the int32 helper call (RCX=&local, EDX=12); also CALL 0x14247e870 UFortReplaySequenceComponent::OnVideoExportFinished is absent from the generated header"
+ },
+ {
+  "class": "UFortRuntimeOptions",
+  "function": "IsGameplayMessageEnabled",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x142703390"
+ },
+ {
+  "class": "AFortSkyTube",
+  "function": "GetDelayUntilDisabled",
+  "status": "blocked",
+  "case": "hidden_constant",
+  "reason": "hidden absolute-address constant: MOVSS XMM0,[0x1478df4d0]; value is not in the asm or reflection"
+ },
+ {
+  "class": "AFortSkyTube",
+  "function": "IsSkyTubeEnabled",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "hidden absolute-address flag: CMP dword [0x1478df4c8],0 (value not in the asm or reflection); the byte at +0x5c0 is a gap but cannot be decided without it"
+ },
+ {
+  "class": "UFortSkeletalAudioComponent",
+  "function": "SetCustomTrackedTransform",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x1424bbde0"
+ },
+ {
+  "class": "AFortSkyTubeAnchor",
+  "function": "IsEnabled",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "hidden absolute-address flag: CMP dword [0x1478df4c8],0 (value not in the asm or reflection); class has no reflected properties so +0xb98 is raw"
+ },
+ {
+  "class": "UFortSkyTubePhysicsComponent",
+  "function": "IsSkyTubeForceEnabled",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "hidden absolute-address flags: CMP dword [0x1478df4c8],0 and CMP dword [0x1478df4a0],0 (values not in the asm or reflection)"
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "GetPrimaryContact",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x1419d60b0"
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "GetSeatSteerDeltas",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x1419d7ab0"
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "GetSeatSteerStrength",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x1419d7be0"
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "GetTowhookCableAttachLocation",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x142ee5dd0 (on sub-object this+0x15ac of unknown class) has six candidate bodies in unrelated classes (e.g. AFortEventLevelNavigationActor::GetOwningGameStateComp, UArsenicWidgetBase::GetArsenicMutator); CALL 0x1426cf940 has the same ambiguity"
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "IsTowhookInAirExtending",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x141b720d0 (on sub-object this+0x1380, no reflected or declared class) is shared by AFortOctopusVehicle::IsTowhookAttached and AFortSpaghettiVehicle::IsTowhookAttached"
+ },
+ {
+  "class": "AFortSpectateAFriendController",
+  "function": "OnRep_HasValidTarget",
+  "status": "blocked",
+  "case": "unresolved_tail_call",
+  "reason": "unresolved tail call: JZ 0x1423d1280 when byte [this+0x2db0]==0 (target absent from callee_candidates and not declared)"
+ },
+ {
+  "class": "UFortStreamMediaSource",
+  "function": "SetPlaybackStartTime",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x141f6e320"
+ },
+ {
+  "class": "UTeleportationFxLibrary",
+  "function": "CleanupDissolveFX",
+  "status": "blocked",
+  "case": "callee_mismatch",
+  "reason": "callee_not_declared: AFortFXManager::ReturnGenericPooledMID (CALL 0x141dd7150) absent from generated headers; CALL 0x1406d9a30 candidate AFortAthenaExitCraftSpawner::DestroyBlockingActors takes no arguments and is unrelated to the TArray reset call (RCX=DissolveMIDs, EDX=0)"
+ },
+ {
+  "class": "AFortTheaterMapTile",
+  "function": "IsTilePlayable",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: AFortTheaterMapTile::IsTileSelectable (CALL 0x142571190) and IsTileLocked (CALL 0x142570b60) are absent from the generated headers"
+ },
+ {
+  "class": "AFortTimeOfDayManager",
+  "function": "FastForwardToTime_ByDuration",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: AFortTimeOfDayManager::FastForwardToTime (JMP 0x141f5d050) is absent from the generated header; also hidden float constants at [0x145bc102c] and [0x14603bb04] are not in the asm or reflection"
+ },
+ {
+  "class": "UFortTrackMovementComponent",
+  "function": "GetTrack",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x1420fa850"
+ },
+ {
+  "class": "AFortUIZone",
+  "function": "ToggleTargetInfoLock",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x142614870"
+ },
+ {
+  "class": "UFortVehicleAudioVoice",
+  "function": "SetParamRange",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x1424bcb10"
+ },
+ {
+  "class": "UFortVehicleSeatWeaponComponent",
+  "function": "GetVehicle",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x141a7c960"
+ },
+ {
+  "class": "AFortVolume",
+  "function": "OnRep_bShowPublishWatermark",
+  "status": "proposed",
+  "case": "small_leaf_body",
+  "reason": "ported from body 0x141c84120"
+ },
+ {
+  "class": "AFortVolumeManager",
+  "function": "ActorsAreInSameVolume",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: AFortVolumeManager::GetVolumeForActor (CALL 0x141c7c5c0) is absent from the generated headers"
+ },
+ {
+  "class": "AFortVolumeManager",
+  "function": "EnterReadOnlyForVolume",
+  "status": "blocked",
+  "case": "unreflected_delegate",
+  "reason": "unreflected delegate: the Broadcast target at Volume+0x418 (CALL 0x1406a9dc0) is a gap in AFortVolume (TaskQueue ends at +0x418); no delegate type or parameter list to Broadcast against"
+ }
+]

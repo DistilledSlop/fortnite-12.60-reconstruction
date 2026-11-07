@@ -45,6 +45,19 @@ float AFortSpaghettiVehicle::GetAccelerationPercent() const
 	return NativeRecoveredFloat_0x1330;
 }
 
+void AFortSpaghettiVehicle::GetPrimaryContact(bool& bIstouching, FVector& ContactPoint, FVector& ContactNormal) const
+{
+	// Original body 0x1419d60b0 (thunk 0x142a08980). Offset evidence: bool byte at +0x1290 (member NativeRecoveredBool_0x1290); FVector at +0x1244 (ContactPoint source) and FVector at +0x1250 (ContactNormal source), both unreflected gaps in the class's own region.
+	// Vectors are copied only when bIstouching is set.
+	// CONFIDENCE: HIGH
+	bIstouching = NativeRecoveredBool_0x1290;
+	if (bIstouching)
+	{
+	    ContactPoint = NativeRecoveredFVector_0x1244;
+	    ContactNormal = NativeRecoveredFVector_0x1250;
+	}
+}
+
 FVector AFortSpaghettiVehicle::GetSeatForwardDir() const
 {
 	// Original address: 0x142a08af0.
@@ -67,6 +80,49 @@ FVector AFortSpaghettiVehicle::GetSeatRotationVelocity() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
 	return NativeRecoveredFVector_0x1308;
+}
+
+void AFortSpaghettiVehicle::GetSeatSteerDeltas(float& SeatSteerYawDelta, float& SeatSteerPitchDelta, float& SeatSteerRollDelta)
+{
+	// Original body 0x1419d7ab0 (thunk 0x142a08bf0). ABI: RDX=&SeatSteerYawDelta, R8=&SeatSteerPitchDelta, R9=&SeatSteerRollDelta.
+	// Offset evidence: FVector at +0x12d8 (a,b,c) and +0x12e4 (d,e,f) are existing reflected-gap members NativeRecoveredFVector_0x12d8/0x12e4; FVector at +0x12fc (g,h,i), +0x126c (q=X, r=Y, p=Z) are new members.
+	// Yaw = (a*f - d*c)*h + (c*e - b*f)*g + (d*b - a*e)*i; Pitch = (g*a + h*b) + i*c; Roll = ((a*f - d*c)*r + (c*e - b*f)*q) + (d*b - a*e)*p. Every instruction of the 57-instruction body is accounted for.
+	// CONFIDENCE: MEDIUM
+	const float SA = NativeRecoveredFVector_0x12d8.X;
+	const float SB = NativeRecoveredFVector_0x12d8.Y;
+	const float SC = NativeRecoveredFVector_0x12d8.Z;
+	const float SD = NativeRecoveredFVector_0x12e4.X;
+	const float SE = NativeRecoveredFVector_0x12e4.Y;
+	const float SF = NativeRecoveredFVector_0x12e4.Z;
+	const float SG = NativeRecoveredFVector_0x12fc.X;
+	const float SH = NativeRecoveredFVector_0x12fc.Y;
+	const float SI = NativeRecoveredFVector_0x12fc.Z;
+	const float SQ = NativeRecoveredFVector_0x126c.X;
+	const float SR = NativeRecoveredFVector_0x126c.Y;
+	const float SP = NativeRecoveredFVector_0x126c.Z;
+	SeatSteerYawDelta = (SA * SF - SD * SC) * SH + (SC * SE - SB * SF) * SG + (SD * SB - SA * SE) * SI;
+	SeatSteerPitchDelta = (SG * SA + SH * SB) + SI * SC;
+	SeatSteerRollDelta = ((SA * SF - SD * SC) * SR + (SC * SE - SB * SF) * SQ) + (SD * SB - SA * SE) * SP;
+}
+
+float AFortSpaghettiVehicle::GetSeatSteerStrength() const
+{
+	// Original body 0x1419d7be0 (thunk 0x142a08d30). Offset evidence: same FVector members as GetSeatSteerDeltas (+0x12d8, +0x12e4, +0x12fc).
+	// Returns (a*f - d*c)*h + (c*e - b*f)*g + (d*b - a*e)*i.
+	// CONFIDENCE: HIGH
+	const float SA = NativeRecoveredFVector_0x12d8.X;
+	const float SB = NativeRecoveredFVector_0x12d8.Y;
+	const float SC = NativeRecoveredFVector_0x12d8.Z;
+	const float SD = NativeRecoveredFVector_0x12e4.X;
+	const float SE = NativeRecoveredFVector_0x12e4.Y;
+	const float SF = NativeRecoveredFVector_0x12e4.Z;
+	const float SG = NativeRecoveredFVector_0x12fc.X;
+	const float SH = NativeRecoveredFVector_0x12fc.Y;
+	const float SI = NativeRecoveredFVector_0x12fc.Z;
+	const float SQ = NativeRecoveredFVector_0x126c.X;
+	const float SR = NativeRecoveredFVector_0x126c.Y;
+	const float SP = NativeRecoveredFVector_0x126c.Z;
+	return (SA * SF - SD * SC) * SH + (SC * SE - SB * SF) * SG + (SD * SB - SA * SE) * SI;
 }
 
 FVector AFortSpaghettiVehicle::GetSeatUpDir() const

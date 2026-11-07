@@ -145,6 +145,18 @@ public:
 	UPROPERTY(Transient)
 	UFortSpaghettiVehicleConfigs* FortSpaghettiVehicleConfigs;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1244): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x1244;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1250): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x1250;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x126c): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x126c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1290): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x1290;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x12cc): not a UPROPERTY, not replicated.
 	FVector NativeRecoveredFVector_0x12cc;
 
@@ -153,6 +165,9 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x12e4): not a UPROPERTY, not replicated.
 	FVector NativeRecoveredFVector_0x12e4;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x12fc): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x12fc;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x1308): not a UPROPERTY, not replicated.
 	FVector NativeRecoveredFVector_0x1308;
@@ -229,6 +244,9 @@ public:
 	float GetAccelerationPercent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetPrimaryContact(bool& bIstouching, FVector& ContactPoint, FVector& ContactNormal) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetSeatForwardDir() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -236,6 +254,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetSeatRotationVelocity() const;
+
+	UFUNCTION(BlueprintCallable)
+	void GetSeatSteerDeltas(float& SeatSteerYawDelta, float& SeatSteerPitchDelta, float& SeatSteerRollDelta);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSeatSteerStrength() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetSeatUpDir() const;

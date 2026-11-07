@@ -214,8 +214,10 @@ public:
 	UFUNCTION()
 	void OnRep_BoundsCollisionSetting();
 
+private:
 	UFUNCTION()
 	void OnRep_bShowPublishWatermark();
+public:
 
 	UFUNCTION()
 	void OnRep_CurrentPlayset();

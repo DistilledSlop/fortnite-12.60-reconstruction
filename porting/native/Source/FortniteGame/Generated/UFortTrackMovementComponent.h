@@ -81,6 +81,9 @@ public:
 	USplineComponent* GetSpline() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortTrack* GetTrack() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsReverseDirection() const;
 
 	UFUNCTION()

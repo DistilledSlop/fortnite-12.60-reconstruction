@@ -30,6 +30,9 @@ public:
 	UPROPERTY()
 	bool bFadeWhenOwnerDestroyed;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x7c9): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x7c9;
+
 	// table index 11, flags 0x10000000010001
 	UPROPERTY()
 	float FadeTimeWhenOwnerDestroyed;
@@ -65,6 +68,9 @@ public:
 	// table index 0, flags 0x10000000010001
 	UPROPERTY()
 	FVector2D ParamRange;
+
+	UFUNCTION(BlueprintCallable)
+	void SetParamRange(float Min, float Max);
 
 };
 

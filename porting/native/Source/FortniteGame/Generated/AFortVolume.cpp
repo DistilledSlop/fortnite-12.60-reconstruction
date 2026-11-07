@@ -78,7 +78,9 @@ void AFortVolume::OnRep_BoundsCollisionSetting()
 
 void AFortVolume::OnRep_bShowPublishWatermark()
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body 0x141c84120 (thunk 0x142b37d60). Offset evidence: bShowPublishWatermark is bit 0x2 of the byte at +0x2d8 (declared bitfield member); delegate OnShowPublishWatermarkChanged at +0x550 (FOnShowPublishWatermarkChanged(AFortVolume* Volume, bool bShowPublishWatermark)); packed parameters are {this, bool}.
+	// CONFIDENCE: HIGH
+	OnShowPublishWatermarkChanged.Broadcast(this, bShowPublishWatermark);
 }
 
 void AFortVolume::OnRep_CurrentPlayset()
