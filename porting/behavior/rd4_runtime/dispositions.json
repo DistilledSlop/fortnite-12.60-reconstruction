@@ -1,0 +1,79 @@
+[
+ {
+  "class": "UFortMatchmakingKnobsModal",
+  "function": "InitForOptionsComponent",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "0x1425c3360 (UFortChatWidget::FocusChatEntry) is not declared in UFortChatWidget.h; receiver is inline this+0x390 (LEA) of unknown type. 0x142fc6030 is a shared body (3 candidates, params []) tail-called with DL=1 on an untyped receiver at this+0x440 (shared_callee_ambiguous). Hidden float constant at 0x1459a86f8."
+ },
+ {
+  "class": "UFortMissionActivationInfo",
+  "function": "IsVoteActive",
+  "status": "blocked",
+  "case": "undefined_bool_on_miss",
+  "reason": "TSet lookup (elements at +0xb8, hash at +0xf0/+0x100, NumFreeIndices +0xec). Miss exit 0x144f6643c returns with EAX unchanged (Elements.Num, bucket index or -1), so AL is not a defined bool; cannot express exactly."
+ },
+ {
+  "class": "UFortMissionActivationInfo",
+  "function": "IsVoteLocked",
+  "status": "blocked",
+  "case": "undefined_bool_on_miss",
+  "reason": "Same TSet pattern (elements at +0x108, hash at +0x140/+0x150, NumFreeIndices +0x13c). Miss exit 0x144f664dc returns with EAX unchanged, so AL is not a defined bool; cannot express exactly."
+ },
+ {
+  "class": "UFortPickerContext",
+  "function": "GetPickerWheelAdjacency",
+  "status": "proposed",
+  "case": "ported_high",
+  "reason": "Reflected AvailableWheels (+0x138, Num +0x140) and CurrentWheelIndex (+0x148); IsValidIndex matches the SUB/ADD + JS/JGE pattern."
+ },
+ {
+  "class": "UFortPlayerSurveyDispatcher",
+  "function": "DisplaySurveys",
+  "status": "blocked",
+  "case": "external_branch_target",
+  "reason": "JZ at 0x144f9cc96 (CurrentWidget at +0x58 == null) branches to 0x144f9c480, outside this body and absent from callee_candidates; no asm recovered for that target."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "IsGiftingStorefrontOffer",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "0x144db86e0 (UFortTierIndicator::ClearPreviewState) and 0x142bcf780 (UMeshNetworkSubsystem::GetMetaDataWithKey) are not declared in their generated headers; only RCX/RDX are set before the second call; hidden global 0x1459a4b30 passed as an argument."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "isItemGrantUnique",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "Empty-string fallback at absolute address 0x1459a4b30 (LEA when Num==0) is a hidden global whose contents are not verified as an empty TCHAR string."
+ },
+ {
+  "class": "UFortSwipePanel",
+  "function": "GetSwipeInfo",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "Default float constants loaded from absolute addresses 0x148218628 and 0x14821862c set the OutSwipePercentage default; their values are unverified. Pointee of [this+0x240] (untyped gap) is also unknown."
+ },
+ {
+  "class": "UFortTutorialContext",
+  "function": "IsObjectiveNextTutorialObjective",
+  "status": "proposed",
+  "case": "ported_high",
+  "reason": "Reflected Objectives (+0xe8 on Quest), BackendName (+0x28), IsInProgress const bool; None returns false; first in-progress objective decides."
+ },
+ {
+  "class": "UFortUIBlueprintFunctionLibrary",
+  "function": "GetStandardBrushSize",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "0x144db86e0 (ClearPreviewState candidate) is not declared in UFortTierIndicator.h and the asm uses its pointer return. The not-found path (0x144dbcb5e) loads dword [null+4] at 0x144dbcb60, so the result is undefined."
+ },
+ {
+  "class": "UHUDLayoutToolContext",
+  "function": "CloseLayoutTool",
+  "status": "proposed",
+  "case": "ported_medium",
+  "reason": "Verbosity-gated log at 0x142c54b70 elided (no state change); reflected OnCloseLayoutTool (+0x48) broadcast with no args; FString free is compiler-emitted."
+ }
+]

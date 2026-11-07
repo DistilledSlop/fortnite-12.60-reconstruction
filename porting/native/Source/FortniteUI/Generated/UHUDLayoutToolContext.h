@@ -86,6 +86,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void BroadcastMovedWidget(UHUDLayoutToolPlacementWidget* MovedWidget);
 
+	UFUNCTION(BlueprintCallable)
+	void CloseLayoutTool(FString Reason);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CloudHUDLayoutEnabled() const;
 

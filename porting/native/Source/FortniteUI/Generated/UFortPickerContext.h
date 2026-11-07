@@ -101,6 +101,9 @@ public:
 	UFortItem* GetListPickerOption(int32 Index) const;
 
 	UFUNCTION(BlueprintCallable)
+	void GetPickerWheelAdjacency(bool& bCanPageLeft, bool& bCanPageRight);
+
+	UFUNCTION(BlueprintCallable)
 	void SetFortPickerData(UFortPickerData* Data);
 
 };

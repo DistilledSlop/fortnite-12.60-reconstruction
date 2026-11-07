@@ -30,6 +30,9 @@ public:
 	uint64 NativeRecoveredUint64_0x140;
 
 	UFUNCTION(BlueprintCallable)
+	bool IsObjectiveNextTutorialObjective(UFortQuestItem* Quest, FName TutorialObjectiveName);
+
+	UFUNCTION(BlueprintCallable)
 	void TryClearingPendingQuest(UFortQuestItem* Quest);
 
 };

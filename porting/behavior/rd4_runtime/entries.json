@@ -1,0 +1,53 @@
+[
+ {
+  "class": "UFortPickerContext",
+  "function": "GetPickerWheelAdjacency",
+  "kind": "exec",
+  "signature": "void GetPickerWheelAdjacency(bool& bCanPageLeft, bool& bCanPageRight)",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/rd4_runtime/UFortPickerContext/GetPickerWheelAdjacency.inc",
+  "confidence": "high",
+  "address": "0x1452a4a60",
+  "status": "ported",
+  "reflection_flags": "0x4420401",
+  "static": false,
+  "virtual": false,
+  "access": "public",
+  "native_body_address": "0x144d06f50",
+  "notes": "Reflected AvailableWheels (+0x138, Num +0x140) and CurrentWheelIndex (+0x148); IsValidIndex matches the SUB/ADD + JS/JGE pattern."
+ },
+ {
+  "class": "UFortTutorialContext",
+  "function": "IsObjectiveNextTutorialObjective",
+  "kind": "exec",
+  "signature": "bool IsObjectiveNextTutorialObjective(UFortQuestItem* Quest, FName TutorialObjectiveName)",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/rd4_runtime/UFortTutorialContext/IsObjectiveNextTutorialObjective.inc",
+  "confidence": "high",
+  "address": "0x14530af00",
+  "status": "ported",
+  "reflection_flags": "0x4020401",
+  "static": false,
+  "virtual": false,
+  "access": "public",
+  "native_body_address": "0x144d133d0",
+  "notes": "Reflected Objectives (+0xe8 on Quest), BackendName (+0x28), IsInProgress const bool; None returns false; first in-progress objective decides."
+ },
+ {
+  "class": "UHUDLayoutToolContext",
+  "function": "CloseLayoutTool",
+  "kind": "exec",
+  "signature": "void CloseLayoutTool(FString Reason)",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/rd4_runtime/UHUDLayoutToolContext/CloseLayoutTool.inc",
+  "confidence": "medium",
+  "address": "0x14532adb0",
+  "status": "ported",
+  "reflection_flags": "0x4020401",
+  "static": false,
+  "virtual": false,
+  "access": "public",
+  "native_body_address": "0x144d2f7d0",
+  "notes": "Verbosity-gated log at 0x142c54b70 elided (no state change); reflected OnCloseLayoutTool (+0x48) broadcast with no args; FString free is compiler-emitted."
+ }
+]
