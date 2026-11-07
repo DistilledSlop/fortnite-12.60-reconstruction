@@ -101,38 +101,6 @@ void AFortAthenaVehicle::DebugDrawImpactBucket_Implementation(const FVector& Loc
 	// CONFIDENCE: HIGH
 }
 
-void AFortAthenaVehicle::DemagnetizeFromSkyTube()
-{
-	// CONFIDENCE: medium
-	// Original address: 0x14283ab30
-	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
-	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
-	// virtual call on param_1 (vtable slot 0x908)
-	(*(void (**)(void *))((*(uint8 **)param_1) + 0x908))(param_1);
-}
-
-void AFortAthenaVehicle::DestroyVehicle()
-{
-	// CONFIDENCE: medium
-	// Original address: 0x14283ab50
-	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
-	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
-	// component at param_1+0x3b0, virtual call slot 0x30
-	uint8 *component = *(uint8 **)((uint8 *)param_1 + 0x3b0);
-	(*(void (**)(void *))((*(uint8 **)component) + 0x30))(component);
-}
-
-void AFortAthenaVehicle::EjectAllPlayers()
-{
-	// CONFIDENCE: medium
-	// Original address: 0x14283ac10
-	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
-	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
-	// component at param_1+0x3b0, virtual call slot 0x338
-	uint8 *component = *(uint8 **)((uint8 *)param_1 + 0x3b0);
-	(*(void (**)(void *))((*(uint8 **)component) + 0x338))(component);
-}
-
 TArray<AFortPlayerPawn*> AFortAthenaVehicle::GetAllPassengers() const
 {
 	// CONFIDENCE: high; secondary target 0x14084ba80 -> 0x1419452d0.
@@ -482,17 +450,6 @@ bool AFortAthenaVehicle::RearLateralFrictionHasReachedMax() const
 	return NativeRecoveredBool_0x449;
 }
 
-void AFortAthenaVehicle::ResetTrick()
-{
-	// CONFIDENCE: medium
-	// Original address: 0x14283ccf0
-	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
-	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
-	// component at param_1+0x3b0, virtual call slot 0x3e8
-	uint8 *component = *(uint8 **)((uint8 *)param_1 + 0x3b0);
-	(*(void (**)(void *))((*(uint8 **)component) + 0x3e8))(component);
-}
-
 void AFortAthenaVehicle::ServerSetIgnoreAllFallingDamage_Implementation(bool InIgnoreAllFallingDamage)
 {
 	// Behaviour snippet: AFortAthenaVehicle::ServerSetIgnoreAllFallingDamage_Implementation (body only; spliced into the generated function).
@@ -527,16 +484,6 @@ void AFortAthenaVehicle::SetAllowInteractionBetweenFortVolumes(bool bInteractBet
 	bAllowInteractBetweenFortVolumes_Runtime = bInteractBetweenVolumes;
 }
 
-void AFortAthenaVehicle::SetDyingPhysics()
-{
-	// CONFIDENCE: medium
-	// Original address: 0x14283d290
-	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
-	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
-	// virtual call on param_1 (vtable slot 0xca0)
-	(*(void (**)(void *))((*(uint8 **)param_1) + 0xca0))(param_1);
-}
-
 void AFortAthenaVehicle::UpdateClientWithVehicleTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
@@ -552,16 +499,6 @@ bool AFortAthenaVehicle::VehicleIsInSkyTube() const
 {
 	// Native target 0x140857200; CONFIDENCE: high.
 	return NativeIsInSkyTube();
-}
-
-void AFortAthenaVehicle::WakeUp()
-{
-	// CONFIDENCE: medium
-	// Original address: 0x14283dc50
-	// raw slot at param_2+0x20: x += (x != 0) (decomp artifact, kept)
-	*(uint64 *)((uint8 *)param_2 + 0x20) = (uint64)(*(int64 *)((uint8 *)param_2 + 0x20) != 0) + *(int64 *)((uint8 *)param_2 + 0x20);
-	// virtual call on param_1 (vtable slot 0x778)
-	(*(void (**)(void *))((*(uint8 **)param_1) + 0x778))(param_1);
 }
 
 bool AFortAthenaVehicle::WheelsOnGround() const
@@ -603,30 +540,6 @@ bool AFortAthenaVehicle::NativeIsSeatFilterApplicable163(uint8 Seat)
 	// CONFIDENCE: high
 	// 0x1406801d0, IFortVehicleInterface byte slot 0x290.
 	return true;
-}
-
-void AFortAthenaVehicle::Native_1406d93e0(uint64* param_1, int32 param_2, int32 param_3)
-{
-	// CONFIDENCE: medium
-	// Original address: 0x1406d93e0
-	// Reason: TArray-like layout (data at +0, ArrayMax at +0xc) and element size inferred from size scaling; element type unnamed.
-	// TArray-style resize, element size 8 bytes (from decompile size scaling)
-	int32 iVar1 = 0;
-	if (param_2 != 0)
-	{
-	    uint64 uVar2 = FMemory_QuantizeSize((int64)param_2 * 8, 0);
-	    iVar1 = (int32)(uVar2 >> 3);
-	    if (iVar1 < param_2)
-	    {
-	        iVar1 = 0x7fffffff;
-	    }
-	}
-	if ((iVar1 != param_3) && (((void*)*param_1 != nullptr) || (iVar1 != 0)))
-	{
-	    void* puVar3 = FMemory_Realloc((void*)*param_1, (int64)iVar1 * 8, 0);
-	    *param_1 = (uint64)puVar3;
-	}
-	*(int32*)((uint8*)param_1 + 0xc) = iVar1;
 }
 
 bool AFortAthenaVehicle::NativeContainsPlayers163()

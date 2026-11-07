@@ -24,9 +24,6 @@ public:
 	void OnRep_KeybindingData(FFortClientAnnouncementData_Keybinding& PreviousKeybindingData);
 
 	UFUNCTION(BlueprintAuthorityOnly)
-	void ResetGamepadActionTextPairList();
-
-	UFUNCTION(BlueprintAuthorityOnly)
 	virtual void SetDetailText(FText DetailText);
 
 	UFUNCTION(BlueprintAuthorityOnly)

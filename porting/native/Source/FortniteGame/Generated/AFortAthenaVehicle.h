@@ -698,15 +698,6 @@ public:
 	void DebugDrawImpactBucket(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 
-	UFUNCTION(BlueprintCallable)
-	void DemagnetizeFromSkyTube();
-
-	UFUNCTION(BlueprintCallable)
-	void DestroyVehicle();
-
-	UFUNCTION(BlueprintCallable)
-	void EjectAllPlayers();
-
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TArray<AFortPlayerPawn*> GetAllPassengers() const;
 
@@ -850,9 +841,6 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool RearLateralFrictionHasReachedMax() const;
 
-	UFUNCTION(BlueprintCallable)
-	void ResetTrick();
-
 	UFUNCTION(Server, Reliable)
 	void ServerSetIgnoreAllFallingDamage(bool InIgnoreAllFallingDamage);
 	void ServerSetIgnoreAllFallingDamage_Implementation(bool InIgnoreAllFallingDamage);
@@ -872,20 +860,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void SetAllowInteractionBetweenFortVolumes(bool bInteractBetweenVolumes);
 
-protected:
-	UFUNCTION(BlueprintCallable)
-	void SetDyingPhysics();
-public:
-
 	UFUNCTION(NetMulticast, Reliable)
 	void UpdateClientWithVehicleTestInput(const FVector& LinearVelocity, const FVector& AngularVelocity);
 	void UpdateClientWithVehicleTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool VehicleIsInSkyTube() const;
-
-	UFUNCTION(BlueprintCallable)
-	void WakeUp();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool WheelsOnGround() const;
@@ -899,7 +879,6 @@ public:
 	virtual UFortVehicleSeatComponent* NativeGetSeatComponent163();
 	virtual bool NativeCanPassengersTakeDamage163();
 	virtual bool NativeIsSeatFilterApplicable163(uint8 Seat);
-	static void Native_1406d93e0(uint64* param_1, int32 param_2, int32 param_3);
 	virtual bool NativeContainsPlayers163();
 	virtual TArray<APawn*> NativeGetAllPassengers163();
 	virtual AFortPlayerStateZone* NativeGetPlayerStateForPawn163(APawn* Pawn);

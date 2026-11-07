@@ -60,11 +60,9 @@ class AActor;
 class AFortEmitterCameraLensEffectDirectional;
 class AFortPickup;
 class AFortWeapon;
-class APlayerController;
 class UAnimInstance;
 class UAnimMontage;
 class UAudioComponent;
-class UFortAIEncounterInfo;
 class UFortAbilitySystemComponent;
 class UFortAdvancedMovementSet;
 class UFortControlResistanceSet;
@@ -800,9 +798,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AlignRotationToHitDirection(FVector& HitDirection);
 
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool CanSpawnSoundVisuals() const;
-
 	UFUNCTION(Client, Reliable)
 	void ClientInternalEquipWeapon(AFortWeapon* Weap);
 	void ClientInternalEquipWeapon_Implementation(AFortWeapon* Weap);
@@ -813,17 +808,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void EmoteStopped(UFortItemDefinition* MontageItemDef);
 
-	UFUNCTION(BlueprintCallable)
-	bool EquipBestWeapon();
-
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortControlRecoveryBehavior GetControlRecoveryBehavior() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetControlResistance() const;
-
-	UFUNCTION(BlueprintCallable)
-	float GetCurrentMontageSectionTimeLeft();
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -838,9 +827,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual USkeletalMeshComponent* GetEmotePropAttachMesh();
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	UFortAIEncounterInfo* GetEncounterInfo() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetHealth() const;
@@ -861,13 +847,7 @@ public:
 	float GetLocalSpin() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	APlayerController* GetLocalViewingPlayerController() const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMaxControlResistance() const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	float GetMaxDistanceWithoutFallDamage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetMaxHealth() const;
@@ -880,9 +860,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetMeleeComboCounter() const;
-
-	UFUNCTION(BlueprintCallable)
-	AActor* GetMyMovementBaseActor();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetShield() const;
@@ -901,9 +878,6 @@ public:
 
 	UFUNCTION()
 	void HandleIsHiddenForDeath();
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool HasCurrentMontage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsActionInputIgnored() const;

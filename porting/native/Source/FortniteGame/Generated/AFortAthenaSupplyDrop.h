@@ -85,11 +85,6 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayingAReplay() const;
 
-protected:
-	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
-	void OnLootSpawned();
-public:
-
 	UFUNCTION()
 	void OnRep_NumPlayersInteracting();
 

@@ -1,0 +1,242 @@
+[
+ {
+  "class": "UFortCheatManager",
+  "function": "Native_140690ac0",
+  "kind": "helper",
+  "address": "0x140690ac0",
+  "inc_path": "porting/behavior/UFortCheatManager/Native_140690ac0.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "Native_1406d93e0",
+  "kind": "helper",
+  "address": "0x1406d93e0",
+  "inc_path": "porting/behavior/AFortAthenaVehicle/Native_1406d93e0.inc",
+  "status": "ported"
+ },
+ {
+  "class": "UAutomationPerfMonitorManager",
+  "function": "Native_140690a50",
+  "kind": "helper",
+  "address": "0x140690a50",
+  "inc_path": "porting/behavior/UAutomationPerfMonitorManager/Native_140690a50.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaMutator_SpecialEvent",
+  "function": "Native_14468fb70",
+  "kind": "helper",
+  "address": "0x14468fb70",
+  "inc_path": "porting/behavior/AFortAthenaMutator_SpecialEvent/Native_14468fb70.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaMutator_Cobalt",
+  "function": "Native_1406d9270",
+  "kind": "helper",
+  "address": "0x1406d9270",
+  "inc_path": "porting/behavior/AFortAthenaMutator_Cobalt/Native_1406d9270.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaMutator_IsWorldResourceWidgetVisible",
+  "function": "Native_14468f240",
+  "kind": "helper",
+  "address": "0x14468f240",
+  "inc_path": "porting/behavior/AFortAthenaMutator_IsWorldResourceWidgetVisible/Native_14468f240.inc",
+  "status": "ported"
+ },
+ {
+  "class": "UFortAccountWidgetBase",
+  "function": "Native_14138d650",
+  "kind": "helper",
+  "address": "0x14138d650",
+  "inc_path": "porting/behavior/UFortAccountWidgetBase/Native_14138d650.inc",
+  "status": "ported"
+ },
+ {
+  "class": "UAthenaResurrectionComponent",
+  "function": "Native_1440b2120",
+  "kind": "helper",
+  "address": "0x1440b2120",
+  "inc_path": "porting/behavior/UAthenaResurrectionComponent/Native_1440b2120.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortMission",
+  "function": "Native_143e89fa0",
+  "kind": "helper",
+  "address": "0x143e89fa0",
+  "inc_path": "porting/behavior/AFortMission/Native_143e89fa0.inc",
+  "status": "ported"
+ },
+ {
+  "class": "ABuildingProp_AISpawner",
+  "function": "DestroyRift",
+  "kind": "exec",
+  "address": "0x14273c2f0",
+  "inc_path": "porting/behavior/ABuildingProp_AISpawner/DestroyRift.inc",
+  "status": "ported"
+ },
+ {
+  "class": "ABuildingSMActor",
+  "function": "CancelAutoBuild",
+  "kind": "exec",
+  "address": "0x142755b20",
+  "inc_path": "porting/behavior/ABuildingSMActor/CancelAutoBuild.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaMutator_StormAlteration",
+  "function": "ApplyStormAlterations",
+  "kind": "exec",
+  "address": "0x142827840",
+  "inc_path": "porting/behavior/AFortAthenaMutator_StormAlteration/ApplyStormAlterations.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaSupplyDrop",
+  "function": "OnLootSpawned",
+  "kind": "exec",
+  "address": "0x1428347d0",
+  "inc_path": "porting/behavior/AFortAthenaSupplyDrop/OnLootSpawned.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "DemagnetizeFromSkyTube",
+  "kind": "exec",
+  "address": "0x14283ab30",
+  "inc_path": "porting/behavior/AFortAthenaVehicle/DemagnetizeFromSkyTube.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "DestroyVehicle",
+  "kind": "exec",
+  "address": "0x14283ab50",
+  "inc_path": "porting/behavior/AFortAthenaVehicle/DestroyVehicle.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "EjectAllPlayers",
+  "kind": "exec",
+  "address": "0x14283ac10",
+  "inc_path": "porting/behavior/AFortAthenaVehicle/EjectAllPlayers.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "ResetTrick",
+  "kind": "exec",
+  "address": "0x14283ccf0",
+  "inc_path": "porting/behavior/AFortAthenaVehicle/ResetTrick.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "SetDyingPhysics",
+  "kind": "exec",
+  "address": "0x14283d290",
+  "inc_path": "porting/behavior/AFortAthenaVehicle/SetDyingPhysics.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortAthenaVehicle",
+  "function": "WakeUp",
+  "kind": "exec",
+  "address": "0x14283dc50",
+  "inc_path": "porting/behavior/AFortAthenaVehicle/WakeUp.inc",
+  "status": "ported"
+ },
+ {
+  "class": "UFortAudioShapeComponent",
+  "function": "Enable",
+  "kind": "exec",
+  "address": "0x140e8a2f0",
+  "inc_path": "porting/behavior/UFortAudioShapeComponent/Enable.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortClientAnnouncement_Keybinding",
+  "function": "ResetGamepadActionTextPairList",
+  "kind": "exec",
+  "address": "0x140dbabe0",
+  "inc_path": "porting/behavior/AFortClientAnnouncement_Keybinding/ResetGamepadActionTextPairList.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortPawn",
+  "function": "CanSpawnSoundVisuals",
+  "kind": "exec",
+  "address": "0x142a1b3c0",
+  "inc_path": "porting/behavior/AFortPawn/CanSpawnSoundVisuals.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortPawn",
+  "function": "EquipBestWeapon",
+  "kind": "exec",
+  "address": "0x142a1b6a0",
+  "inc_path": "porting/behavior/AFortPawn/EquipBestWeapon.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortPawn",
+  "function": "GetCurrentMontageSectionTimeLeft",
+  "kind": "exec",
+  "address": "0x142a1bf30",
+  "inc_path": "porting/behavior/AFortPawn/GetCurrentMontageSectionTimeLeft.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortPawn",
+  "function": "GetEncounterInfo",
+  "kind": "exec",
+  "address": "0x142a1c1a0",
+  "inc_path": "porting/behavior/AFortPawn/GetEncounterInfo.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortPawn",
+  "function": "GetLocalViewingPlayerController",
+  "kind": "exec",
+  "address": "0x142a1c320",
+  "inc_path": "porting/behavior/AFortPawn/GetLocalViewingPlayerController.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortPawn",
+  "function": "GetMaxDistanceWithoutFallDamage",
+  "kind": "exec",
+  "address": "0x142a1c380",
+  "inc_path": "porting/behavior/AFortPawn/GetMaxDistanceWithoutFallDamage.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortPawn",
+  "function": "GetMyMovementBaseActor",
+  "kind": "exec",
+  "address": "0x142a1c5e0",
+  "inc_path": "porting/behavior/AFortPawn/GetMyMovementBaseActor.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortPawn",
+  "function": "HasCurrentMontage",
+  "kind": "exec",
+  "address": "0x142a1cae0",
+  "inc_path": "porting/behavior/AFortPawn/HasCurrentMontage.inc",
+  "status": "ported"
+ },
+ {
+  "class": "AFortPlayerControllerAthena",
+  "function": "FollowSpecialActor",
+  "kind": "exec",
+  "address": "0x142a58600",
+  "inc_path": "porting/behavior/AFortPlayerControllerAthena/FollowSpecialActor.inc",
+  "status": "ported"
+ }
+]

@@ -47,8 +47,5 @@ public:
 	UPROPERTY(Transient)
 	FTimerHandle AudioShapeInitTimer;
 
-	UFUNCTION(BlueprintCallable)
-	void Enable();
-
 };
 

@@ -624,11 +624,6 @@ protected:
 	virtual void BlueprintOnStructurallyStable_Implementation();
 public:
 
-protected:
-	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
-	void CancelAutoBuild();
-public:
-
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool CanDoBuildingAnimations() const;
 
