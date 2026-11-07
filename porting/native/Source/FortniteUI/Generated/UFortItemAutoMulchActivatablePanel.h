@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFortFrontendInventoryFilter.h"
+
 #include "UFortItemAutoMulchActivatablePanel.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFortItemAutoMulchActivatablePanel : public UFortActivatabl
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortFrontendInventoryFilter GetFrontendInventoryFilter() const;
+public:
+
 };
 

@@ -78,8 +78,14 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x610): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x610;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x648): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x648;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItemInspectCycleWidget* GetCycleWidget();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetItemQuantityOverride() const;
 
 	UFUNCTION(BlueprintCallable)
 	void SetAttemptingConversion(bool bIsAttemptingConversion);

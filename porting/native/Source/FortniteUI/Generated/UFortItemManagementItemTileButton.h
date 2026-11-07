@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortItemTileButton.h"
 
+#include "EFortItemManagementMode.h"
+
 class UFortInventoryContext;
 class UFortItemManagementScreen;
 class UMenuAnchor;
@@ -58,6 +60,11 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortInventoryContext* InventoryContext;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortItemManagementMode GetItemManagementMode() const;
+public:
 
 };
 

@@ -1,0 +1,9 @@
+// Original body address: 0x144f5d5b0 (thunk 0x1452742e0)
+// Offset evidence: Get (0x142ee5dd0) on ContextProvidingObject weak at +0x41c (reflected in UCommonPopupMenu). Non-null result whose class passes the IsA test against UFortItemManagementItemTileButton::StaticClass() (class +0x10, depth +0x38, ancestors +0x30) is returned; else null.
+// CONFIDENCE: MEDIUM
+UObject* ContextObject = ContextProvidingObject.Get();
+if (ContextObject != nullptr && ContextObject->IsA(UFortItemManagementItemTileButton::StaticClass()))
+{
+    return static_cast<UFortItemManagementItemTileButton*>(ContextObject);
+}
+return nullptr;

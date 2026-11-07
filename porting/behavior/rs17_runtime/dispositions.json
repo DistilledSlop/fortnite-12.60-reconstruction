@@ -1,0 +1,177 @@
+[
+  {
+    "class": "AFortHeroLoadoutPedestal",
+    "function": "HandleDifferentHeroLoadoutSlotFocused",
+    "status": "blocked",
+    "case": "unresolved_tail_jump",
+    "reason": "unresolved_conditional_tail_jump 0x14524ec70: JNZ after storing the bool at +0x3f0 (gap); target absent from callee_candidates, callee not identifiable"
+  },
+  {
+    "class": "UFortHeroLoadoutSlotButton",
+    "function": "IsContextMenuOpen",
+    "status": "blocked",
+    "case": "unresolved_tail_jump",
+    "reason": "unresolved_conditional_tail_jump 0x143d66800: JNZ tail with RCX=ContextMenuAnchor (+0xba0); target absent from callee_candidates"
+  },
+  {
+    "class": "UFortHomebaseUIContext",
+    "function": "AutoSlotAllSurvivorSquads",
+    "status": "blocked",
+    "case": "unresolved_tail_jump",
+    "reason": "unresolved_conditional_tail_jump 0x14510e150: JNZ tail with RCX=[+0xc8] (unreflected gap); target absent from callee_candidates"
+  },
+  {
+    "class": "UFortHomebaseUIContext",
+    "function": "GetCurrentlyFocusedHeroLoadoutSlotName",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortHomebaseUIContext/GetCurrentlyFocusedHeroLoadoutSlotName.inc; confidence HIGH"
+  },
+  {
+    "class": "UFortHomebaseUIContext",
+    "function": "SetCurrentlyFocusedHeroLoadoutSlotName",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortHomebaseUIContext/SetCurrentlyFocusedHeroLoadoutSlotName.inc; confidence HIGH"
+  },
+  {
+    "class": "UFortHomebaseUIContext",
+    "function": "SetCurrentlyViewedHeroLoadout",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortHomebaseUIContext/SetCurrentlyViewedHeroLoadout.inc; confidence MEDIUM"
+  },
+  {
+    "class": "UFortHomebaseNodeItemUtilities",
+    "function": "IsHomebaseNodeItemUnseenForTagContainer",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: UFortHomebaseNodeItemUtilities::GetHomebaseNodeItemForTagContainer (CALL 0x1450e8290) is absent from the generated headers"
+  },
+  {
+    "class": "UFortHUDContext",
+    "function": "GetCurrentHUDState",
+    "status": "blocked",
+    "case": "return_abi_mismatch",
+    "reason": "return_abi_mismatch: body returns RAX=RCX+0x608 (address into this, no sret store, RDX unused) but header_decl declares by-value FFortHUDState"
+  },
+  {
+    "class": "UFortInputOptions",
+    "function": "GetInputDataIndexForActionName",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortInputOptions/GetInputDataIndexForActionName.inc; confidence MEDIUM"
+  },
+  {
+    "class": "UFortInventoryContext",
+    "function": "AreAnyItemsAnimate",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortInventoryContext/AreAnyItemsAnimate.inc; confidence MEDIUM"
+  },
+  {
+    "class": "UFortInventoryContext",
+    "function": "AreAnyItemsInanimate",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortInventoryContext/AreAnyItemsInanimate.inc; confidence MEDIUM"
+  },
+  {
+    "class": "UFortHUDTargetUnderReticleWidget",
+    "function": "OnTargetActorDestroyed",
+    "status": "blocked",
+    "case": "unresolved_tail_jump",
+    "reason": "unresolved_conditional_tail_jump 0x14525cc20: JZ tail when Target (+0x258) equals DestroyedActor; target absent from callee_candidates"
+  },
+  {
+    "class": "UFortItemAutoMulchActivatablePanel",
+    "function": "EnterMulchModeForAutoMulch",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: UFortItemManagementScreen::EnterMulchModeForAutoMulch (JMP 0x144f58f80) is absent from the generated headers; the receiver weak pointer at +0x448 is otherwise resolvable"
+  },
+  {
+    "class": "UFortItemAutoMulchActivatablePanel",
+    "function": "GetFrontendInventoryFilter",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortItemAutoMulchActivatablePanel/GetFrontendInventoryFilter.inc; confidence HIGH"
+  },
+  {
+    "class": "UFortItemBaseWidget",
+    "function": "GetQuantity",
+    "status": "blocked",
+    "case": "unresolved_tail_jump",
+    "reason": "unresolved_conditional_tail_jump 0x144ebd440: JNZ tail when ItemDefinition (+0x270) is non-null; target absent from callee_candidates"
+  },
+  {
+    "class": "UFortItemManagementInventoryPanel",
+    "function": "HandleCraftItemStarted",
+    "status": "blocked",
+    "case": "unresolved_tail_jump",
+    "reason": "unresolved_conditional_tail_jump 0x144f436f0: JNZ tail on TEST byte [+0x3b8],0x8; target absent from callee_candidates"
+  },
+  {
+    "class": "UFortItemInspectionScreen",
+    "function": "GetItemQuantityOverride",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortItemInspectionScreen/GetItemQuantityOverride.inc; confidence HIGH"
+  },
+  {
+    "class": "UFortItemManagementItemPopupMenu",
+    "function": "GetHostButton",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortItemManagementItemPopupMenu/GetHostButton.inc; confidence MEDIUM"
+  },
+  {
+    "class": "UFortItemManagementItemTileButton",
+    "function": "GetItemManagementMode",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortItemManagementItemTileButton/GetItemManagementMode.inc; confidence HIGH"
+  },
+  {
+    "class": "UFortItemManagementScreen",
+    "function": "CanRequestPopupMenuForSelectedItem",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortItemManagementScreen/CanRequestPopupMenuForSelectedItem.inc; confidence HIGH"
+  },
+  {
+    "class": "UFortItemManagementScreen",
+    "function": "MarkAllItemsAsSeen",
+    "status": "blocked",
+    "case": "unresolved_tail_jump",
+    "reason": "unresolved_conditional_tail_jump 0x144f2d200: JNZ tail with RCX=InventoryPanel (+0x528); target absent from callee_candidates"
+  },
+  {
+    "class": "AFortItemPreviewSceneChanger",
+    "function": "OnZoomLevelTicked",
+    "status": "blocked",
+    "case": "unresolved_tail_jump",
+    "reason": "unresolved_conditional_tail_jump 0x141fcf350: JNZ tail on the scene component at ActiveScene+0x220->+0x230; target absent; ActiveScene class at +0x238 unreflected"
+  },
+  {
+    "class": "UFortItemView",
+    "function": "GetSettings",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortItemView/GetSettings.inc; confidence MEDIUM"
+  },
+  {
+    "class": "UFortItemWidget",
+    "function": "GetItem",
+    "status": "proposed",
+    "case": "exact_asm_translation",
+    "reason": "ported to porting/behavior/rs17_runtime/UFortItemWidget/GetItem.inc; confidence HIGH"
+  },
+  {
+    "class": "UFortJournalQuestDetails",
+    "function": "CanGotoQuest",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: UFortUIManagerWidget_Campaign::GetUINavigationManager (CALL 0x14514f130) and UFortUINavigationManager::CanNavigateToQuestObjective (CALL 0x144db0f70) are absent from the generated headers"
+  }
+]

@@ -84,6 +84,9 @@ public:
 	UPROPERTY(Transient)
 	UFortInventoryContext* InventoryContext;
 
+	UFUNCTION(BlueprintCallable)
+	bool CanRequestPopupMenuForSelectedItem();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItem* GetItemToDetail() const;
 

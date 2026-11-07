@@ -13,6 +13,7 @@
 #include "FOnSlottedPrimaryHeroChanged.h"
 #include "FOnSquadSlotChanged.h"
 #include "FOnSurvivorSquadsAutoSlotted.h"
+#include "UFortCampaignHeroLoadoutItem.h"
 #include "UFortGadgetItemDefinition.h"
 #include "UFortWorldItem.h"
 
@@ -58,9 +59,21 @@ public:
 	UPROPERTY(Transient)
 	TSoftObjectPtr<UDataTable> SquadIconDataTableAsset;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xe0): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0xe0;
+
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	TMap<UFortGadgetItemDefinition*, UFortWorldItem*> GadgetDefinitionToInstanceMap;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetCurrentlyFocusedHeroLoadoutSlotName() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetCurrentlyFocusedHeroLoadoutSlotName(FName& SlotName);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCurrentlyViewedHeroLoadout(UFortCampaignHeroLoadoutItem* Loadout);
 
 };
 

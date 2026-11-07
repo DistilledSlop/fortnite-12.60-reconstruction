@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortBaseButton.h"
 
+#include "UFortItem.h"
+
 class UMaterialInstanceDynamic;
 
 #include "UFortItemWidget.generated.h"
@@ -39,6 +41,9 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	int32 QuantityOverride;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* GetItem() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsItemValid() const;

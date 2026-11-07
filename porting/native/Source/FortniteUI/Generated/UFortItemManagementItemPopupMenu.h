@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortPopupMenu.h"
 
+class UFortItemManagementItemTileButton;
+
 #include "UFortItemManagementItemPopupMenu.generated.h"
 
 UCLASS()
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFortItemManagementItemPopupMenu : public UFortPopupMenu
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItemManagementItemTileButton* GetHostButton() const;
+public:
+
 };
 
