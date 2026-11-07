@@ -521,6 +521,30 @@ def _verified_handwritten_kismet_extra(files):
     return done
 
 
+NATIVE_INSCOPE_REL = "porting/progress/native_functions_inscope.json"
+NATIVE_WORKFLOW_REL = "porting/progress/native_workflow.json"
+
+
+def _inscope_natives(text):
+    """{(class, fn)} of the native-body denominator from the tracked list, or None when absent (old commits)."""
+    data = parse_json_or_none(text)
+    if not isinstance(data, dict):
+        return None
+    return {(c, f) for c, fs in data.items() for f in fs}
+
+
+def _credit_native_units(units, inscope):
+    """Ported manifest entries credited to in-scope reflected functions. `<fn>_Implementation` credits `<fn>`;
+    helpers and `_Validate` halves do not count."""
+    out = set()
+    for c, f in units:
+        if (c, f) in inscope:
+            out.add((c, f))
+        elif f.endswith("_Implementation") and (c, f[:-len("_Implementation")]) in inscope:
+            out.add((c, f[:-len("_Implementation")]))
+    return out
+
+
 def m_native_manifest(spec, ctx):
     """Count committed function bodies independently of the last test checkpoint."""
     entries = parse_json_or_none(ctx.files.get(spec["file"])) or []
@@ -528,11 +552,27 @@ def m_native_manifest(spec, ctx):
                 if e.get("status") == "ported" and e.get("kind") != "member_field"
                 and e.get("inc_path") in ctx.files and e.get("class") and e.get("function")}
     units = _without_handwritten_kismet(units) | _verified_handwritten_kismet(ctx.files) | _verified_handwritten_kismet_extra(ctx.files)
+    inscope = _inscope_natives(ctx.files.get(NATIVE_INSCOPE_REL))
+    note = ""
+    if inscope is not None:
+        raw = len(units)
+        units = _credit_native_units(units, inscope)
+        note = (f"; counted against the in-scope reflected function list ({raw - len(units)} manifest entries are helpers, "
+                f"_Validate halves or otherwise not a reflected function and are not counted; ported "
+                f"`<fn>_Implementation` bodies count for `<fn>`)")
     done = len(units)
     total, tnote = ctx.total_value(spec)
+    wf = parse_json_or_none(ctx.files.get(NATIVE_WORKFLOW_REL)) or {}
+    if wf.get("body_location"):
+        bl = wf["body_location"]
+        note += (f". Body-location table for the {wf.get('unported_by_reflected_name', '?')} unported-by-name functions "
+                 f"(snapshot): {bl.get('A_inline')} inline, {bl.get('B_direct_single_callee')} direct single-callee, "
+                 f"{bl.get('B_direct_multi_candidate')} direct multi-candidate (needs review), {bl.get('C_virtual_target')} "
+                 f"virtual, {bl.get('U_no_single_body')} no single body; {wf.get('distinct_real_bodies')} distinct bodies; "
+                 f"{wf.get('covered_by_implementation')} already covered via _Implementation, {wf.get('validate_only')} _Validate-only")
     return {"pct": 100.0 * min(done, total) / total if total else 0.0,
             "done": done, "total": total,
-            "evidence": f"{done} committed function bodies of {total} ({tnote}); source recovery only; build/runtime validation follows separate batch checkpoints"}
+            "evidence": f"{done} committed function bodies of {total} ({tnote}){note}; source recovery only; build/runtime validation follows separate batch checkpoints"}
 
 
 def read_ledger(ctx):
@@ -960,6 +1000,9 @@ def _grid_native_behavior(spec, ctx):
     units = _unit_data("funcs", _load_funcs)
     done = (_without_handwritten_kismet(_unit_data("manifest", _load_manifest_ported))
             | _verified_handwritten_kismet(ctx.files) | _verified_handwritten_kismet_extra(ctx.files))
+    inscope = _inscope_natives(ctx.files.get(NATIVE_INSCOPE_REL))
+    if inscope is not None:
+        done = _credit_native_units(done, inscope)
     return [(f"{c}::{fn}", c) for c, fn in units], {f"{c}::{fn}" for c, fn in done}
 
 
