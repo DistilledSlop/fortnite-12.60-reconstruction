@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FCreativeOptionCategoryData.h"
 #include "FCreativeOptionData.h"
 #include "FOnCreativeOptionChanged.h"
 #include "GameplayTagContainer.h"
@@ -55,6 +56,9 @@ public:
 	// table index 0, flags 0x20080000000005
 	UPROPERTY()
 	int32 CurrentIndex;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoesMatchCategory(FCreativeOptionCategoryData& CreativeOptionCategory);
 
 };
 

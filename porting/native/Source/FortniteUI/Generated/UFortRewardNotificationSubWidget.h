@@ -8,6 +8,8 @@
 
 #include "FOnRewardWidgetTransitionDelegate.h"
 
+class UFortRewardNotificationWidget;
+
 #include "UFortRewardNotificationSubWidget.generated.h"
 
 UCLASS()
@@ -23,6 +25,12 @@ public:
 	// table index 0, flags 0x10100010080000
 	UPROPERTY()
 	FOnRewardWidgetTransitionDelegate OnTransitionOutComplete;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredObject_0x278;
+
+	UFUNCTION(BlueprintCallable)
+	void Init(UFortRewardNotificationWidget* MainWidget);
 
 };
 

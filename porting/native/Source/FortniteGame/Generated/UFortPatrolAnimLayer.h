@@ -8,6 +8,8 @@
 
 #include "FFortAnimInput_PatrolAnimSet.h"
 
+class UFortPatrolAnimAsset;
+
 #include "UFortPatrolAnimLayer.generated.h"
 
 UCLASS(transient)
@@ -19,6 +21,9 @@ public:
 	// table index 15, flags 0x10000000000015
 	UPROPERTY()
 	FFortAnimInput_PatrolAnimSet CurrentAnimSet;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2e8): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredObject_0x2e8;
 
 	// table index 14, flags 0x10000000000005
 	UPROPERTY()
@@ -79,6 +84,9 @@ public:
 	// table index 0, flags 0x10000000022015
 	UPROPERTY(Transient)
 	bool bEnableFullbodyOverride;
+
+	UFUNCTION(BlueprintCallable)
+	void SetPatrolAnimAsset(UFortPatrolAnimAsset* NewAnimAsset);
 
 };
 

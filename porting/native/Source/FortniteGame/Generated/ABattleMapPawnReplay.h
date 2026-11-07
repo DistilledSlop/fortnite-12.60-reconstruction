@@ -57,8 +57,16 @@ public:
 	UPROPERTY()
 	USoundBase* ScrubbingToSound;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x588): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x588;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool BP_IsOnTimelineMode() const;
+
+protected:
+	UFUNCTION()
+	void HandlePlaybackTimeChanged(float NowTime);
+public:
 
 };
 

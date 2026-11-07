@@ -278,6 +278,14 @@ public:
 	UFortAntelopeVehicleConfigs* FortAntelopeVehicleConfigs;
 
 	UFUNCTION(BlueprintCallable)
+	void CacheAudioPointers(UFortVehicleAudioVoice* InAudioEngineRevUp, UFortVehicleAudioVoice* InAudioSkid, UFortVehicleAudioVoice* InAudioScrape, UFortVehicleAudioVoice* InAudioWind, UFortVehicleAudioVoice* InAudioBoost, UFortVehicleAudioVoice* InAudioHandbrakeSkid, UFortVehicleAudioVoice* InAudioBoostCharge, UFortVehicleAudioVoice* InAudioEngineIdle);
+
+private:
+	UFUNCTION(BlueprintCallable)
+	void CacheParticleComponentPointers(UParticleSystemComponent* WheelDust, UParticleSystemComponent* WheelSlide, UParticleSystemComponent* TrailLeft, UParticleSystemComponent* TrailRight, UParticleSystemComponent* InEngineReady);
+public:
+
+	UFUNCTION(BlueprintCallable)
 	void ClearBoostAccumulated();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

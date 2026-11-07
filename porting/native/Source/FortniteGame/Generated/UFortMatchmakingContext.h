@@ -96,6 +96,9 @@ public:
 	UPROPERTY()
 	FOnWorldRecordLoadedChangedDelegate OnWorldRecordLoadedChanged;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x140): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x140;
+
 	// table index 6, flags 0x40000000004000
 	UPROPERTY(Config)
 	FFortMatchmakingConfig NormalConfig;
@@ -123,6 +126,9 @@ public:
 	// table index 0, flags 0x40000010080000
 	UPROPERTY()
 	FOnOutpostDiscoveryFailure OnOutpostDiscoveryFailure;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsConnectedToGame() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInputBasedMatchmakingEnabled() const;

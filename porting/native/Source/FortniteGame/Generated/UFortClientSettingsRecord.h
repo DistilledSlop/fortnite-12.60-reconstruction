@@ -1458,6 +1458,9 @@ public:
 	void SetIgnoreGamepadInput(bool bIgnore);
 
 	UFUNCTION()
+	void SetInstantBoostWhenBuilding(bool NewValue);
+
+	UFUNCTION()
 	void SetInvertedPitch(bool bInvert);
 
 	UFUNCTION()
@@ -1659,6 +1662,9 @@ public:
 	void SetTurboBuild(bool bNewValue);
 
 	UFUNCTION()
+	void SetUseAdvancedOptions(bool NewUseAdvancedOptions);
+
+	UFUNCTION()
 	void SetUseFirstPersonCamera(bool bUseFirstPerson);
 
 	UFUNCTION()
@@ -1669,6 +1675,9 @@ public:
 
 	UFUNCTION()
 	void SetUseHoldToSwapPickup(bool InUseHoldToSwapPickup);
+
+	UFUNCTION()
+	void SetUseLegacyControls(bool NewUseLegacyControls);
 
 	UFUNCTION()
 	void SetUsePowerSavingMode(bool bNewUsePowerSavingMode);

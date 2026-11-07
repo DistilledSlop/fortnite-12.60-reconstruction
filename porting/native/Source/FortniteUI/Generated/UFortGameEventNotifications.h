@@ -56,5 +56,10 @@ public:
 	UPROPERTY()
 	FFortPrioritizedWidgetData PrioritizationData;
 
+protected:
+	UFUNCTION()
+	virtual void HandleNotificationUpdateFinished();
+public:
+
 };
 

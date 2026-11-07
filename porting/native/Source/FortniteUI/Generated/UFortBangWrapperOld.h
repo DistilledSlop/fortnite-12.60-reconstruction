@@ -39,5 +39,11 @@ public:
 	UPROPERTY()
 	EFortTutorialGlowType TutorialGlowType;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x141): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x141;
+
+	UFUNCTION(BlueprintCallable)
+	void SetBangVisibility(bool InVisible);
+
 };
 

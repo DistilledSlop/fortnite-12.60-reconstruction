@@ -1368,6 +1368,17 @@ void UFortClientSettingsRecord::SetIgnoreGamepadInput(bool bIgnore)
 	}
 }
 
+void UFortClientSettingsRecord::SetInstantBoostWhenBuilding(bool NewValue)
+{
+	// Behaviour snippet: UFortClientSettingsRecord::SetInstantBoostWhenBuilding (body only; spliced into the generated member function).
+	// Original body address: 0x141e3bb60 (thunk 0x142880d10)
+	// Offset evidence: MOV byte [this+0x128],DL; MOV byte [this+0x13c],1. +0x128 = LocalGamepadUserOptions (+0xf0) + 0x38 = Advanced (+0x10) + 0x28 = bInstantBoostWhenBuilding.
+	// Dirty flag +0x13c = bNativeGamepadOptionsDirty (declared in header).
+	// CONFIDENCE: HIGH
+	LocalGamepadUserOptions.Advanced.bInstantBoostWhenBuilding = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
 void UFortClientSettingsRecord::SetInvertedPitch(bool bInvert)
 {
 	// Native0x141e3bb70 CONFIDENCE: high
@@ -2033,6 +2044,17 @@ void UFortClientSettingsRecord::SetTurboBuild(bool bNewValue)
 	}
 }
 
+void UFortClientSettingsRecord::SetUseAdvancedOptions(bool NewUseAdvancedOptions)
+{
+	// Behaviour snippet: UFortClientSettingsRecord::SetUseAdvancedOptions (body only; spliced into the generated member function).
+	// Original body address: 0x141e3cca0 (thunk 0x142883fa0)
+	// Offset evidence: MOV byte [this+0xfc],DL; MOV byte [this+0x13c],1. +0xfc = LocalGamepadUserOptions (+0xf0) + 0xc = Basic.bUseAdvancedOptions.
+	// Dirty flag +0x13c = bNativeGamepadOptionsDirty (declared in header).
+	// CONFIDENCE: HIGH
+	LocalGamepadUserOptions.Basic.bUseAdvancedOptions = NewUseAdvancedOptions;
+	bNativeGamepadOptionsDirty = true;
+}
+
 void UFortClientSettingsRecord::SetUseFirstPersonCamera(bool bUseFirstPerson)
 {
 	// Native 0x142884030. CONFIDENCE: high
@@ -2071,6 +2093,17 @@ void UFortClientSettingsRecord::SetUseHoldToSwapPickup(bool InUseHoldToSwapPicku
 	    bUseHoldToSwapPickup = InUseHoldToSwapPickup;
 	    bDirty = true;
 	}
+}
+
+void UFortClientSettingsRecord::SetUseLegacyControls(bool NewUseLegacyControls)
+{
+	// Behaviour snippet: UFortClientSettingsRecord::SetUseLegacyControls (body only; spliced into the generated member function).
+	// Original body address: 0x141e3ccb0 (thunk 0x142884270)
+	// Offset evidence: MOV byte [this+0x138],DL; MOV byte [this+0x13c],1. +0x138 = LocalGamepadUserOptions (+0xf0) + 0x10 + 0x38 = Advanced.bUseLegacyControls.
+	// Dirty flag +0x13c = bNativeGamepadOptionsDirty (declared in header).
+	// CONFIDENCE: HIGH
+	LocalGamepadUserOptions.Advanced.bUseLegacyControls = NewUseLegacyControls;
+	bNativeGamepadOptionsDirty = true;
 }
 
 void UFortClientSettingsRecord::SetUsePowerSavingMode(bool bNewUsePowerSavingMode)

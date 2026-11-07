@@ -223,11 +223,17 @@ public:
 	UPROPERTY()
 	FOnLoginFlowWidgetDismissed DismissAccountCreationWidget;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x458): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x458;
+
 	UFUNCTION(BlueprintCallable)
 	bool DoesPlatformSupportFriendCodes();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentPhoenixXp() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsRealMoneyPurchasePending() const;
 
 };
 

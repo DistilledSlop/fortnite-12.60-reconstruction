@@ -1,196 +1,522 @@
 [
- {
-  "entry": "UEpicCMSTileCarousel::HandleTilePageAdded_Implementation",
-  "kind": "native_event_impl",
-  "blocker": "no_module",
-  "reason": "package /Script/EpicCMSUIFramework has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
-  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
-  "body": "0x1406801c0",
-  "thunk": "0x14102c4c0"
- },
- {
-  "entry": "UFXSystemComponent::SetIntParameter",
-  "kind": "exec",
-  "blocker": "engine_backport",
-  "reason": "Engine class; SetIntParameter is declared in UE 4.26, not 4.25 (progress/engine_provided_natives.json gap_declared_in_reference)",
-  "unblock": "Backport the 4.26 declaration into the engine checkout, then this body is the stub",
-  "body": "0x1406801c0",
-  "thunk": "0x1447b0f20"
- },
- {
-  "entry": "UUACNetworkComponent::SendPacketToServer_Implementation",
-  "kind": "impl",
-  "blocker": "no_module",
-  "reason": "package /Script/UACBase has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
-  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
-  "body": "0x1406801c0",
-  "thunk": "0x141341740"
- },
- {
-  "entry": "UUACNetworkComponent::SendPacketToServer_Validate",
-  "kind": "validate",
-  "blocker": "no_module",
-  "reason": "package /Script/UACBase has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
-  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
-  "body": "0x1406801d0",
-  "thunk": "0x141341740"
- },
- {
-  "entry": "UCommonPoolableWidgetInterface::OnAcquireFromPool_Implementation",
-  "kind": "interface",
-  "blocker": "interface_function",
-  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
- },
- {
-  "entry": "UFortClientAnnouncement_ConversationCodeInterface::StopConversation",
-  "kind": "interface",
-  "blocker": "interface_function",
-  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
- },
- {
-  "entry": "UFortInteractInterface::IconPlacementNeedsUpdate_Implementation",
-  "kind": "interface",
-  "blocker": "interface_function",
-  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
- },
- {
-  "entry": "UFortItemListViewInterface::RefreshSort",
-  "kind": "interface",
-  "blocker": "interface_function",
-  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
- },
- {
-  "entry": "UFortItemManagementMulchPanel::NotifyPanelDeactivated",
-  "kind": "interface",
-  "blocker": "interface_function",
-  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
- },
- {
-  "entry": "UFortProjectileMovementInterface::IsProjectileBeingKilled_Implementation",
-  "kind": "interface",
-  "blocker": "interface_function",
-  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
- },
- {
-  "entry": "UFortVehicleInterface::ChangeSeat",
-  "kind": "interface",
-  "blocker": "interface_function",
-  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
- },
- {
-  "entry": "UFortVehicleInterface::DestroyVehicle",
-  "kind": "interface",
-  "blocker": "interface_function",
-  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
- },
- {
-  "entry": "UFortVehicleInterface::WakeUp",
-  "kind": "interface",
-  "blocker": "interface_function",
-  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
- },
- {
-  "entry": "ULevelSaveSpawnable::PostLevelSaveSpawnCleanup_Implementation",
-  "kind": "interface",
-  "blocker": "interface_function",
-  "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
-  "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
- },
- {
-  "entry": "UFortMissionLibrary::SpawnMissionItemPickupInWorld",
-  "kind": "exec",
-  "blocker": "virtual_rejected",
-  "reason": "Generator: explicit virtual requires an ordinary reflected member function (UFortMissionLibrary is a function library; classification as a virtual target is wrong for it)",
-  "unblock": "Re-derive the body location as a static/library function and port without virtual",
-  "body": "0x140680300",
-  "thunk": "0x1429ec010"
- },
- {
-  "entry": "UFortKismetLibrary::ExtractSkeletalMesh",
-  "kind": "exec",
-  "blocker": "handwritten_class",
-  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-  "body": "0x140680300",
-  "thunk": "0x14296a600"
- },
- {
-  "entry": "UFortKismetLibrary::GetAIDirector",
-  "kind": "exec",
-  "blocker": "handwritten_class",
-  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-  "body": "0x140680300",
-  "thunk": "0x14296a600"
- },
- {
-  "entry": "UFortKismetLibrary::GetAIGoalManager",
-  "kind": "exec",
-  "blocker": "handwritten_class",
-  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-  "body": "0x140680300",
-  "thunk": "0x14296a600"
- },
- {
-  "entry": "UFortKismetLibrary::IncrementAnalyticMatchCount",
-  "kind": "exec",
-  "blocker": "handwritten_class",
-  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-  "body": "0x140680300",
-  "thunk": "0x142971e80"
- },
- {
-  "entry": "UFortKismetLibrary::K2_SpawnPickupInWorld",
-  "kind": "exec",
-  "blocker": "handwritten_class",
-  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-  "body": "0x140680300",
-  "thunk": "0x142973d70"
- },
- {
-  "entry": "UFortKismetLibrary::K2_SpawnPickupInWorldWithClass",
-  "kind": "exec",
-  "blocker": "handwritten_class",
-  "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
-  "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
-  "body": "0x140680300",
-  "thunk": "0x142974140"
- },
- {
-  "entry": "UCommonInputSubsystem::GetCurrentInputType",
-  "kind": "exec",
-  "blocker": "already_provided_by_generator_policy",
-  "reason": "porting/frontend/common_input_current_type/policy.py already provides this function (\"GetCurrentInputType declaration collision\" when added to the manifest)",
-  "unblock": "None needed: the function is ported by the policy. The dashboard counts manifest entries only, so policy-provided bodies are not credited (undercount)"
- },
- {
-  "entry": "UFortChatContainer::HandleGetMenuContentForAnchor",
-  "kind": "exec",
-  "blocker": "no_module",
-  "reason": "/Script/SocialUMG (ancestor USocialChatContainer) has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
-  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
-  "body": "0x1421d78d0",
-  "thunk": "0x145209f00"
- },
- {
-  "entry": "UFortMediaSubtitlesPlayer::SetSubtitles",
-  "kind": "exec",
-  "blocker": "no_module",
-  "reason": "/Script/SubtitlesWidgets (its own package) has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
-  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
-  "body": "0x141226a70",
-  "thunk": "0x1412f0200"
- }
+  {
+    "entry": "UEpicCMSTileCarousel::HandleTilePageAdded_Implementation",
+    "kind": "native_event_impl",
+    "blocker": "no_module",
+    "reason": "package /Script/EpicCMSUIFramework has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+    "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+    "body": "0x1406801c0",
+    "thunk": "0x14102c4c0"
+  },
+  {
+    "entry": "UFXSystemComponent::SetIntParameter",
+    "kind": "exec",
+    "blocker": "engine_backport",
+    "reason": "Engine class; SetIntParameter is declared in UE 4.26, not 4.25 (progress/engine_provided_natives.json gap_declared_in_reference)",
+    "unblock": "Backport the 4.26 declaration into the engine checkout, then this body is the stub",
+    "body": "0x1406801c0",
+    "thunk": "0x1447b0f20"
+  },
+  {
+    "entry": "UUACNetworkComponent::SendPacketToServer_Implementation",
+    "kind": "impl",
+    "blocker": "no_module",
+    "reason": "package /Script/UACBase has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+    "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+    "body": "0x1406801c0",
+    "thunk": "0x141341740"
+  },
+  {
+    "entry": "UUACNetworkComponent::SendPacketToServer_Validate",
+    "kind": "validate",
+    "blocker": "no_module",
+    "reason": "package /Script/UACBase has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+    "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+    "body": "0x1406801d0",
+    "thunk": "0x141341740"
+  },
+  {
+    "entry": "UCommonPoolableWidgetInterface::OnAcquireFromPool_Implementation",
+    "kind": "interface",
+    "blocker": "interface_function",
+    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+  },
+  {
+    "entry": "UFortClientAnnouncement_ConversationCodeInterface::StopConversation",
+    "kind": "interface",
+    "blocker": "interface_function",
+    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+  },
+  {
+    "entry": "UFortInteractInterface::IconPlacementNeedsUpdate_Implementation",
+    "kind": "interface",
+    "blocker": "interface_function",
+    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+  },
+  {
+    "entry": "UFortItemListViewInterface::RefreshSort",
+    "kind": "interface",
+    "blocker": "interface_function",
+    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+  },
+  {
+    "entry": "UFortItemManagementMulchPanel::NotifyPanelDeactivated",
+    "kind": "interface",
+    "blocker": "interface_function",
+    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+  },
+  {
+    "entry": "UFortProjectileMovementInterface::IsProjectileBeingKilled_Implementation",
+    "kind": "interface",
+    "blocker": "interface_function",
+    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+  },
+  {
+    "entry": "UFortVehicleInterface::ChangeSeat",
+    "kind": "interface",
+    "blocker": "interface_function",
+    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+  },
+  {
+    "entry": "UFortVehicleInterface::DestroyVehicle",
+    "kind": "interface",
+    "blocker": "interface_function",
+    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+  },
+  {
+    "entry": "UFortVehicleInterface::WakeUp",
+    "kind": "interface",
+    "blocker": "interface_function",
+    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+  },
+  {
+    "entry": "ULevelSaveSpawnable::PostLevelSaveSpawnCleanup_Implementation",
+    "kind": "interface",
+    "blocker": "interface_function",
+    "reason": "UINTERFACE: exec thunk dispatches through the implementing object's interface sub-vtable; no body exists at the interface level (a vtable stub read from the interface class was meaningless)",
+    "unblock": "Not a body to port here. Implementers' overrides are separate virtuals; decide the dashboard denominator treatment (see NATIVE_PORTING.md section 9)"
+  },
+  {
+    "entry": "UFortMissionLibrary::SpawnMissionItemPickupInWorld",
+    "kind": "exec",
+    "blocker": "virtual_rejected",
+    "reason": "Generator: explicit virtual requires an ordinary reflected member function (UFortMissionLibrary is a function library; classification as a virtual target is wrong for it)",
+    "unblock": "Re-derive the body location as a static/library function and port without virtual",
+    "body": "0x140680300",
+    "thunk": "0x1429ec010"
+  },
+  {
+    "entry": "UFortKismetLibrary::ExtractSkeletalMesh",
+    "kind": "exec",
+    "blocker": "handwritten_class",
+    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+    "body": "0x140680300",
+    "thunk": "0x14296a600"
+  },
+  {
+    "entry": "UFortKismetLibrary::GetAIDirector",
+    "kind": "exec",
+    "blocker": "handwritten_class",
+    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+    "body": "0x140680300",
+    "thunk": "0x14296a600"
+  },
+  {
+    "entry": "UFortKismetLibrary::GetAIGoalManager",
+    "kind": "exec",
+    "blocker": "handwritten_class",
+    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+    "body": "0x140680300",
+    "thunk": "0x14296a600"
+  },
+  {
+    "entry": "UFortKismetLibrary::IncrementAnalyticMatchCount",
+    "kind": "exec",
+    "blocker": "handwritten_class",
+    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+    "body": "0x140680300",
+    "thunk": "0x142971e80"
+  },
+  {
+    "entry": "UFortKismetLibrary::K2_SpawnPickupInWorld",
+    "kind": "exec",
+    "blocker": "handwritten_class",
+    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+    "body": "0x140680300",
+    "thunk": "0x142973d70"
+  },
+  {
+    "entry": "UFortKismetLibrary::K2_SpawnPickupInWorldWithClass",
+    "kind": "exec",
+    "blocker": "handwritten_class",
+    "reason": "UFortKismetLibrary is hand-written in porting/native/Source (native_class_blocklist.txt), so the generator does not emit or splice it",
+    "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
+    "body": "0x140680300",
+    "thunk": "0x142974140"
+  },
+  {
+    "entry": "UCommonInputSubsystem::GetCurrentInputType",
+    "kind": "exec",
+    "blocker": "already_provided_by_generator_policy",
+    "reason": "porting/frontend/common_input_current_type/policy.py already provides this function (\"GetCurrentInputType declaration collision\" when added to the manifest)",
+    "unblock": "None needed: the function is ported by the policy. The dashboard counts manifest entries only, so policy-provided bodies are not credited (undercount)"
+  },
+  {
+    "entry": "UFortChatContainer::HandleGetMenuContentForAnchor",
+    "kind": "exec",
+    "blocker": "no_module",
+    "reason": "/Script/SocialUMG (ancestor USocialChatContainer) has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+    "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+    "body": "0x1421d78d0",
+    "thunk": "0x145209f00"
+  },
+  {
+    "entry": "UFortMediaSubtitlesPlayer::SetSubtitles",
+    "kind": "exec",
+    "blocker": "no_module",
+    "reason": "/Script/SubtitlesWidgets (its own package) has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+    "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+    "body": "0x141226a70",
+    "thunk": "0x1412f0200"
+  },
+  {
+    "entry": "UCommonButton::GetSelected",
+    "kind": "exec",
+    "blocker": "policy_owned_class",
+    "reason": "UCommonButton declarations are owned by porting/frontend/common_panel_runtime (button_text_style_policy raises \"declaration collision\" when the class gains manifest members/bodies)",
+    "unblock": "Express the body inside the policy for UCommonButton, or extend the policy to accept manifest members"
+  },
+  {
+    "entry": "UCommonButton::NativeRecoveredBits_0x2a1",
+    "kind": "member_field",
+    "blocker": "policy_owned_class",
+    "reason": "UCommonButton declarations are owned by porting/frontend/common_panel_runtime (button_text_style_policy raises \"declaration collision\" when the class gains manifest members/bodies)",
+    "unblock": "Express the body inside the policy for UCommonButton, or extend the policy to accept manifest members"
+  },
+  {
+    "entry": "AFortHoagieAudioController::CacheAudioComponents",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_B",
+    "reason": "engine_class_no_header: header is null for AFortHoagieAudioController. asm stores RDX->+0x230 and R8->+0x238 (ABI order).",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "UTimeSynthComponent::GetMaxActiveClipLimit",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_A",
+    "reason": "engine_class_no_header: header is null for UTimeSynthComponent. asm reads dword +0x838.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "ABuildingFloor::IsBalcony",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Reads bit 1 (mask 0x2) of dword +0xb30; the byte is the header uint8 bitfield bShouldIgnoreForHorizontalHotspotSearch:1 (bit 0). Bit 1 has no declared owner and no free byte to declare.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "UFortAIGoalProvider::GetEncounterInfo",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Returns qword +0x18, which lies inside UObject base storage (UObject is 0x28 bytes; own members start 0x30). Cannot declare a member on UFortAIGoalProvider there.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortAthenaAntelopeVehicle::IsBoosting",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Reads byte +0xd7c, inside AFortAthenaVehicle base storage (its own reflected members span 0x290..0xe50; no member covers 0xd7c). Owner is AFortAthenaVehicle, not this class.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortAthenaFerretVehicle::IsBoosting",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Reads byte +0xc8, inside inherited APawn/AActor base storage (AFortAthenaVehicle own members start 0x290). Not declarable on this class.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortAthenaDoghouseVehicle::IsAileronRolling",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Reads byte +0xc8, inside inherited APawn/AActor base storage (AFortAthenaVehicle own members start 0x290). Not declarable on this class.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortAthenaMutator_Infiltration::GetAttackingTeam",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Reads byte +0x80, inside inherited AFortGameplayMutator/AInfo/AActor storage (AFortAthenaMutator members start 0x250; AActor::PrimaryActorTick at 0x28).",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortAthenaMutator_Infiltration::GetDefendingTeam",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Reads byte +0x8c, inside inherited AFortGameplayMutator/AInfo/AActor storage (AFortAthenaMutator members start 0x250; AActor::PrimaryActorTick at 0x28).",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortAthenaSKVehicle::GetSkeletalMeshComponent",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Returns inherited AFortAthenaVehicle::SkyTubePhysicsComponent (+0xaf8, UFortSkyTubePhysicsComponent*). Name/type mismatch; no ReturnValue type in reflection or header to validate.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortAthenaVehicle::AllowInteractionBetweenFortVolume",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Reads bit 4 of byte +0xd0, inside inherited AActor/APawn storage (AFortAthenaVehicle own members start 0x290). Not declarable on this class.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortAthenaVehicle::IsAirControlling",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Reads bit 0 (mask 0x1) of byte +0x448; header bitfield bAllowInteractBetweenFortVolumes_Runtime:1 (mask 0x10) owns that byte. No free byte member can be declared without colliding.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortAthenaVehicle::IsCameraControlledRotation",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Loads pointer at own gap +0x738 (no declared member), then byte +0x335 of the pointee. Pointee class not recovered.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortCarriedObject::GetHoldingActor",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Returns qword +0x28, which is inherited AActor::PrimaryActorTick (struct) per reflection. No pointer field of this class at +0x28.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortCharacterVehicle::AllowInteractionBetweenFortVolume",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Reads byte +0x20d8, inside inherited AFortPawn/AFortPlayerPawn storage (AFortPlayerPawnAthena reflects to 0x3078; own members start 0x30a0).",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortCharacterVehicle::GetAbilitySystemComponent",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Returns qword +0x2ca8, which is inherited AFortPlayerPawnAthena::OnFortPlayerDied (InlineMulticastDelegate). Not a pointer field.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortCharacterVehicle::GetSkeletalMeshComponent",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Body loads qword [this-0x2e20] (negative offset): a this-adjusting thunk to a base subobject, not a field read of AFortCharacterVehicle.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortCharacterVehicle::SetAllowInteractionBetweenFortVolumes",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Stores DL to byte +0x20d8, inside inherited AFortPawn/AFortPlayerPawn storage (same as the getter). Not declarable on this class.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "UFortGameplayAbility::GetDisplayStats",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Returns pointer +0x5d0 with unknown class: reflection has no ReturnValue for either candidate, header declares no GetDisplayStats, and the return pointer type cannot be set.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortGameStateAthena::SetLocationFont",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Body zero-initialises ~0x4d bytes at RCX and returns RCX (sret-style). Neither Font (RDX) nor LocationTag (R8) is read. Not a leaf setter; needs struct layout recovery.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortGameStateAthena::SetLocationFontInAllStates",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Same body as SetLocationFont (0x142f440c0): zero-init of ~0x4d bytes at RCX, returns RCX, params not read. Needs struct layout recovery.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf3"
+  },
+  {
+    "entry": "AFortPlayerPawn::OnRep_AccelerationZPack",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_C",
+    "reason": "Body copies a 12-byte struct from [RDX] (+0x0 8 bytes, +0x8 4 bytes) but the declared signature has no params (packet/header: OnRep_AccelerationZPack() -> void). Destinations +0x22c..+0x237 overlap APawn::AIControllerClass (+0x230); +0x1e2c/+0x1e34/+0x1e38 bit ops unresolved; body is shared (AMBIGUOUS) with OnRep_AccelerationPack.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortQueryTwoPointSolver::SetCustomRotationA",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_C",
+    "reason": "Param Rotation is \"out ... Struct\" with no struct type name in packet or header (header_decl null). 12-byte copy to undeclared +0xd0..+0xdb cannot be typed; needs the param struct type name.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortSeasonalEventManager::GetBRXPBonusPoints",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Pointer at +0xc0 is undeclared (reflection ends OnActiveEventFlagsChanged at +0xb0); pointee class unknown, so the Int at pointee +0x38 cannot be typed.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortUICameraManagerComponent::SetCustomCameraRotationOffset",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_C",
+    "reason": "Param Offset is \"Struct\" with no struct type name in packet or header. 12-byte copy to undeclared +0x1a0 (8 bytes) and +0x1a8 (4 bytes); struct type needed for the member.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UAthenaEventMatchScoreboardScreenBase::HandleSquadEliminated",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_A",
+    "reason": "Bool at +0x491 falls in an unreflected 8-byte gap (+0x490..+0x497). skipped_properties.json has SortByPlaceAction and SortByElimsAction Struct props (unresolved type, no offset data); overlap with +0x491 cannot be excluded.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UAthenaEventMatchScoreboardScreenBase::HandleSquadKillScoreChanged",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_A",
+    "reason": "Same body and gap as HandleSquadEliminated (+0x491 in unreflected +0x490..+0x497); skipped SortByPlaceAction/SortByElimsAction Struct props have no offset data, overlap cannot be excluded.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortEventLeaderboardEntryData::GetAverageMatchScore",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortEventLeaderboardEntryData::GetNumTeammates",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortEventLeaderboardEntryData::GetPageIndex",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortEventLeaderboardEntryData::GetTotalMatchesPlayed",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortItemWidget::SetOnGetItemToCompareDelegate",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_C",
+    "reason": "Reflected OnGetItemToCompareDelegate (+0x800, Delegate) is in skipped_properties.json as TODO_DelegateNotEmittable_145279f00, so the delegate type cannot be named for the 16-byte copy from RDX; param type InDelegate not declared.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortPortalHUDDetails::SetCachedWorldPos",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_C",
+    "reason": "Param InWorldPos is \"Struct\" with no type name in packet or header. 12-byte copy to undeclared +0x2e4 (8 bytes) and +0x2ec (4 bytes); needs the struct type. (+0x2e0 flag is existing NativeRecoveredByte_0x2e0.)",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortStoreFrontOfferInfo::GetNumRequirements",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortStoreFrontOfferInfo::GetOfferType",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortStoreFrontOfferInfo::GetSortPriority",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortStoreFrontOfferInfo::IsGiftable",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "UFortStoreFrontOfferInfo::IsRefundable",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  },
+  {
+    "entry": "URadialBacchusButtonBase::SetListenedGameplayTag",
+    "kind": "exec",
+    "blocker": "layout_recovery_escalation_C",
+    "reason": "Param InListenedTag is an 8-byte struct passed by value (MOV [+0x2c8],RDX), with no struct type name in packet or header (header only has FGameplayTagContainer). Undeclared +0x2c8 needs that type.",
+    "unblock": "Recover the missing base-class layout / pointee type / struct type, or hand-write; see reason",
+    "source": "leaf4"
+  }
 ]

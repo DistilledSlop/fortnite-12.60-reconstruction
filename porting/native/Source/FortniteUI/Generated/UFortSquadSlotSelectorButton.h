@@ -40,6 +40,12 @@ public:
 	UPROPERTY()
 	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xbe8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xbe8;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetInPreviewMode() const;
+
 	UFUNCTION(BlueprintNativeEvent)
 	void SquadSlotWidgetUpdated();
 	virtual void SquadSlotWidgetUpdated_Implementation();

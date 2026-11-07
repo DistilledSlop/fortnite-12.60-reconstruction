@@ -216,6 +216,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ResetExecuteJetpackToggle();
 
+	UFUNCTION(BlueprintCallable)
+	virtual void ResurrectPlayer();
+
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerActivateMission();
 	void ServerActivateMission_Implementation();

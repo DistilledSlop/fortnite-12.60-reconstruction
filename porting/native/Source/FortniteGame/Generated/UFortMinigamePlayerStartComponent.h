@@ -24,5 +24,14 @@ public:
 	UPROPERTY(Transient)
 	TArray<AFortPlayerStartCreative*> PlayerStarts;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x188): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x188;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1b4): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x1b4;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasAnyCheckpointValue() const;
+
 };
 

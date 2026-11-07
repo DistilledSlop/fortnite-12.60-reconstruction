@@ -2,6 +2,16 @@
 #include "ABuildingProp_LockDevice.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingProp_LockDevice::Close(AController* ControllerInstigator)
+{
+	// Behaviour snippet: ABuildingProp_LockDevice::Close (body only; spliced into the generated member function).
+	// Original body address: 0x141663cb0 (thunk 0x14274fd70)
+	// Offset evidence: MOVZX EAX,byte [this+0x1d0]; SHR AL,6; AND AL,1; RET. Void function; value discarded.
+	// Discarded load: bit 6 (mask 0x40) of byte this+0x1d0. Reading has no side effects.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void ABuildingProp_LockDevice::HandleLockableObjectDestruction(AActor* ActorDestroyed)
 {
 	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
@@ -16,6 +26,16 @@ void ABuildingProp_LockDevice::OnRep_CurrentLockState()
 void ABuildingProp_LockDevice::OnRep_LockableObject()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void ABuildingProp_LockDevice::Open(AController* ControllerInstigator)
+{
+	// Behaviour snippet: ABuildingProp_LockDevice::Open (body only; spliced into the generated member function).
+	// Original body address: 0x1416637d0 (thunk 0x142750510)
+	// Offset evidence: MOVZX EAX,byte [this+0x1d0]; SHR AL,5; AND AL,1; RET. Void function; value discarded.
+	// Discarded load: bit 5 (mask 0x20) of byte this+0x1d0. Reading has no side effects.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void ABuildingProp_LockDevice::ToggleLockedState(AController* ControllerInstigator)

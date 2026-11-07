@@ -1,0 +1,331 @@
+[
+  {
+    "class": "AFortMeatballVehicle",
+    "function": "CacheAudioPointers",
+    "status": "proposed",
+    "case": "B",
+    "reason": "Pairing resolved by ABI position; names mismatch is kept as the asm dictates. Raw pointer cast Object->UFortVehicleAudioVoice*."
+  },
+  {
+    "class": "AFortMeatballVehicle",
+    "function": "CachePSCPointers",
+    "status": "proposed",
+    "case": "B",
+    "reason": "Pairing resolved by ABI position (asm truth); all four members are reflected."
+  },
+  {
+    "class": "UFortMinigamePlayerStartComponent",
+    "function": "HasAnyCheckpointValue",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Two undeclared int32 members added (member_field entries)."
+  },
+  {
+    "class": "UFortMusicCombatBank",
+    "function": "GetAssetFromCombatIntensity",
+    "status": "proposed",
+    "case": "E",
+    "reason": "Indexed read of the reflected Assets[4] array; no bounds check in the original asm, so none is added."
+  },
+  {
+    "class": "AFortOctopusVehicle",
+    "function": "IsBoosting",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared bool member at +0xc8 added for this class (shared body with AFortSpaghettiVehicle::IsBoosting)."
+  },
+  {
+    "class": "UFortPatrolAnimLayer",
+    "function": "SetPatrolAnimAsset",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared UObject* slot; header has no exact pointee type for this slot (packet gives Object)."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "OnRep_TeleportCounter",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared bool at +0x57c set to true; type is inferred (medium)."
+  },
+  {
+    "class": "AFortPlayerControllerGameplay",
+    "function": "OnRep_GhostModeRepData",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void function whose only instruction is a field load into RAX; empty body (case D)."
+  },
+  {
+    "class": "AFortPlayerControllerZone",
+    "function": "ResurrectPlayer",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void function whose only instruction is a field load into RAX; empty body (case D)."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "CancelJumpAbility",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void function whose only instruction is a field load into RAX; empty body (case D)."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "HandleInStasis",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void function whose only instruction is a field load into RAX; empty body (case D)."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "LocalThrowCarriedPlayer",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void function whose only instruction is a field load into RAX; empty body (case D)."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_AccelerationZPack",
+    "status": "escalate",
+    "case": "C",
+    "reason": "Body copies a 12-byte struct from [RDX] (+0x0 8 bytes, +0x8 4 bytes) but the declared signature has no params (packet/header: OnRep_AccelerationZPack() -> void). Destinations +0x22c..+0x237 overlap APawn::AIControllerClass (+0x230); +0x1e2c/+0x1e34/+0x1e38 bit ops unresolved; body is shared (AMBIGUOUS) with OnRep_AccelerationPack."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_IsInsideSafeZone",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void function whose only instruction is a field load into RAX; empty body (case D)."
+  },
+  {
+    "class": "UPocketLevelInstance",
+    "function": "HandlePocketLevelLoaded",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void function whose only instruction is a field load into RAX; empty body (case D)."
+  },
+  {
+    "class": "UFortQueryTwoPointSolver",
+    "function": "SetCustomRotationA",
+    "status": "escalate",
+    "case": "C",
+    "reason": "Param Rotation is \"out ... Struct\" with no struct type name in packet or header (header_decl null). 12-byte copy to undeclared +0xd0..+0xdb cannot be typed; needs the param struct type name."
+  },
+  {
+    "class": "UFortSeasonalEventManager",
+    "function": "GetBRXPBonusPoints",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Pointer at +0xc0 is undeclared (reflection ends OnActiveEventFlagsChanged at +0xb0); pointee class unknown, so the Int at pointee +0x38 cannot be typed."
+  },
+  {
+    "class": "AFortSpaghettiVehicle",
+    "function": "IsBoosting",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared bool member at +0xc8 added for this class (shared body)."
+  },
+  {
+    "class": "UFortUICameraManagerComponent",
+    "function": "SetCustomCameraRotationOffset",
+    "status": "escalate",
+    "case": "C",
+    "reason": "Param Offset is \"Struct\" with no struct type name in packet or header. 12-byte copy to undeclared +0x1a0 (8 bytes) and +0x1a8 (4 bytes); struct type needed for the member."
+  },
+  {
+    "class": "UFortUINotification",
+    "function": "ShouldShowNotification",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared bool at +0xc9 added; +0xc8 member left as is."
+  },
+  {
+    "class": "AFortWeaponRanged_Ostrich",
+    "function": "PlayReloadAnim",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void function whose only instruction is a field load into RAX; empty body (case D)."
+  },
+  {
+    "class": "UAthenaEventMatchScoreboardScreenBase",
+    "function": "HandleSquadEliminated",
+    "status": "escalate",
+    "case": "A",
+    "reason": "Bool at +0x491 falls in an unreflected 8-byte gap (+0x490..+0x497). skipped_properties.json has SortByPlaceAction and SortByElimsAction Struct props (unresolved type, no offset data); overlap with +0x491 cannot be excluded."
+  },
+  {
+    "class": "UAthenaEventMatchScoreboardScreenBase",
+    "function": "HandleSquadKillScoreChanged",
+    "status": "escalate",
+    "case": "A",
+    "reason": "Same body and gap as HandleSquadEliminated (+0x491 in unreflected +0x490..+0x497); skipped SortByPlaceAction/SortByElimsAction Struct props have no offset data, overlap cannot be excluded."
+  },
+  {
+    "class": "UAthenaHUDContext",
+    "function": "GetPTTState",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared uint8 enum-storage byte at +0x260; enum name not recovered, decltype used."
+  },
+  {
+    "class": "UAthenaInventoryContext",
+    "function": "IsSwapping",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared bool at +0x70 added."
+  },
+  {
+    "class": "UAthenaSpectatorNameplateBase",
+    "function": "OnPlayerPawnChanged",
+    "status": "proposed",
+    "case": "B",
+    "reason": "ABI position resolves InPlayerData; the Object->AActor* cast is a raw pointer store as in the asm, so medium."
+  },
+  {
+    "class": "UFortAlterationOption",
+    "function": "GetAlterationOptionType",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared uint8 enum-storage byte at +0xbb0; enum name not recovered, decltype used."
+  },
+  {
+    "class": "UFortBangWrapperOld",
+    "function": "SetBangVisibility",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared byte at +0x141 (the previous skip reason) stored as bool."
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetAverageMatchScore",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed."
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetNumTeammates",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed."
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetPageIndex",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed."
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetTotalMatchesPlayed",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed."
+  },
+  {
+    "class": "UFortGameEventNotifications",
+    "function": "HandleNotificationUpdateFinished",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void function whose only instruction is a field load into RAX; empty body (case D)."
+  },
+  {
+    "class": "UFortHUDCenterPopupMessageWidget",
+    "function": "GetCenterPopupMessageState",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared uint8 enum-storage byte at +0x2c0; enum return type name not in packet/header, so decltype is used."
+  },
+  {
+    "class": "UFortItemQuantityListBase",
+    "function": "IsEmptyList",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Two undeclared int32 members added."
+  },
+  {
+    "class": "UFortItemWidget",
+    "function": "SetOnGetItemToCompareDelegate",
+    "status": "escalate",
+    "case": "C",
+    "reason": "Reflected OnGetItemToCompareDelegate (+0x800, Delegate) is in skipped_properties.json as TODO_DelegateNotEmittable_145279f00, so the delegate type cannot be named for the 16-byte copy from RDX; param type InDelegate not declared."
+  },
+  {
+    "class": "UFortPortalHUDDetails",
+    "function": "SetCachedWorldPos",
+    "status": "escalate",
+    "case": "C",
+    "reason": "Param InWorldPos is \"Struct\" with no type name in packet or header. 12-byte copy to undeclared +0x2e4 (8 bytes) and +0x2ec (4 bytes); needs the struct type. (+0x2e0 flag is existing NativeRecoveredByte_0x2e0.)"
+  },
+  {
+    "class": "UFortRewardNotificationSubWidget",
+    "function": "Init",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared UObject* slot at +0x278; delegate size assumed 16 bytes (medium)."
+  },
+  {
+    "class": "UFortSquadSlotSelectorButton",
+    "function": "GetInPreviewMode",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared bool at +0xbe8 added."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "GetNumRequirements",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "GetOfferType",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "GetSortPriority",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "IsGiftable",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "IsRefundable",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Pointer at +0x28 is undeclared (packet: this+0x28 = unresolved); pointee class unknown, so the pointee field this function reads cannot be typed."
+  },
+  {
+    "class": "UFortUpgradeInfo",
+    "function": "GetCurrentLevel",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared int32 at +0x54 added; INC preserved as +1."
+  },
+  {
+    "class": "UFortUpgradeInfo",
+    "function": "GetMaxLevel",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Undeclared int32 at +0x5c added; INC preserved as +1."
+  },
+  {
+    "class": "URadialBacchusButtonBase",
+    "function": "SetListenedGameplayTag",
+    "status": "escalate",
+    "case": "C",
+    "reason": "Param InListenedTag is an 8-byte struct passed by value (MOV [+0x2c8],RDX), with no struct type name in packet or header (header only has FGameplayTagContainer). Undeclared +0x2c8 needs that type."
+  }
+]

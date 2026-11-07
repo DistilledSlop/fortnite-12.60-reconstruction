@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "ECenterPopupMessageStateEnum.h"
 #include "UCommonActivatablePanel.h"
 
 class UUserWidget;
@@ -22,9 +23,15 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<UUserWidget> CenterPopupModalWidgetClass;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2c0): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x2c0;
+
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonActivatablePanel* CenterPopupModalWidget;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	ECenterPopupMessageStateEnum GetCenterPopupMessageState() const;
 
 };
 

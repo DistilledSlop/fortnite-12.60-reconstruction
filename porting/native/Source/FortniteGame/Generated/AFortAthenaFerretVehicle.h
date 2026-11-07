@@ -165,6 +165,16 @@ public:
 
 private:
 	UFUNCTION(BlueprintCallable)
+	void CacheAudioVoicePointers(UFortVehicleAudioVoice* InAudioMovementClose, UFortVehicleAudioVoice* InAudioMovementDistant, UFortVehicleAudioVoice* InAudioWindFirstPerson, UFortVehicleAudioVoice* InAudioDive, UFortVehicleAudioVoice* InAudioTaxi, UFortVehicleAudioVoice* InAudioSpark);
+public:
+
+private:
+	UFUNCTION(BlueprintCallable)
+	void CacheParticleComponentPointers(UParticleSystemComponent* InTrailTopLeft, UParticleSystemComponent* InTrailTopRight, UParticleSystemComponent* InTrailBottomLeft, UParticleSystemComponent* InTrailBottomRight);
+public:
+
+private:
+	UFUNCTION(BlueprintCallable)
 	void CachePlaneFX(UParticleSystemComponent* InPlaneSpeedFX);
 public:
 

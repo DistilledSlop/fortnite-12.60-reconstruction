@@ -191,6 +191,12 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x11e0): not a UPROPERTY, not replicated.
 	FVector NativeRecoveredFVector_0x11e0;
 
+	UFUNCTION(BlueprintCallable)
+	void CacheAudioPointers(UFortVehicleAudioVoice* InAudioEngineUp, UFortVehicleAudioVoice* InAudioEngineDown, UFortVehicleAudioVoice* InAudioWakeTurn, UFortVehicleAudioVoice* InAudioWakeSpeed, UFortVehicleAudioVoice* InAudioScrape);
+
+	UFUNCTION(BlueprintCallable)
+	void CachePSCPointers(UParticleSystemComponent* InCacheBoostReadyLFx, UParticleSystemComponent* InCacheBoostReadyRFx, UParticleSystemComponent* InCacheDirtCascade, UNiagaraComponent* InCacheSnowLandscapeComponent);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetBoostCharge() const;
 

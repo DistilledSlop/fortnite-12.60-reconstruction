@@ -32,6 +32,12 @@ public:
 	UPROPERTY()
 	TSubclassOf<UFortItemQuantityListEntryBase> ListEntryWidgetType;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x270): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x270;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x29c): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x29c;
+
 	// table index 2, flags 0x20080000000000
 	UPROPERTY()
 	TArray<UObject*> ItemObjectsToKeepAlive;
@@ -42,6 +48,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	TArray<UFortItemDefinition*> GetItemDefinitions();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsEmptyList() const;
 
 };
 

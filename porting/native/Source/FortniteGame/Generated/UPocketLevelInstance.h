@@ -41,5 +41,10 @@ public:
 	UPROPERTY()
 	ULevelStreamingDynamic* StreamingPocketLevel;
 
+private:
+	UFUNCTION()
+	virtual void HandlePocketLevelLoaded();
+public:
+
 };
 

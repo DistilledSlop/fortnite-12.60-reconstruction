@@ -50,6 +50,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xb0): not a UPROPERTY, not replicated.
 	TArray<TWeakObjectPtr<UCommonButton>> NativeButtonGroupWidgets;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xc0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0xc0;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0xc4): not a UPROPERTY, not replicated.
 	int32 NativeHoveredButtonIndex;
 
@@ -64,6 +67,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetHoveredButtonIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSelectedButtonIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasAnyButtons() const;

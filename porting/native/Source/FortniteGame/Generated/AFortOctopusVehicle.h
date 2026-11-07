@@ -30,6 +30,9 @@ class FORTNITEGAME_API AFortOctopusVehicle : public AFortAthenaSKVehicle
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0xc8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xc8;
+
 	// table index 37, flags 0x10000000000004
 	UPROPERTY()
 	UCameraShake* CacheDriverCameraShake;
@@ -239,6 +242,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetTargetHeading() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsBoosting() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTowhookContracting() const;

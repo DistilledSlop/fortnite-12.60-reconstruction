@@ -51,6 +51,15 @@ bool AFortAthenaMutator_Arsenic::IsHeartbeatEnabled() const
 	return true;
 }
 
+bool AFortAthenaMutator_Arsenic::IsPawnAnInfected(AFortPawn* Pawn) const
+{
+	// Behaviour snippet: AFortAthenaMutator_Arsenic::IsPawnAnInfected (body only; spliced into the generated member function).
+	// Original body address: 0x141aad120 (thunk 0x1427e1490)
+	// Offset evidence: MOVZX EAX,byte [this+0x441]; RET. Pawn (RDX) is not read. Returns raw InfectedTeam (uint8) as bool.
+	// CONFIDENCE: MEDIUM
+	return InfectedTeam != 0;
+}
+
 bool AFortAthenaMutator_Arsenic::IsPlayerTeamRevealed(AFortPlayerStateAthena* PlayerState) const
 {
 	// Original address: 0x1427e15d0 (exec thunk; body 0x141ab16d0).

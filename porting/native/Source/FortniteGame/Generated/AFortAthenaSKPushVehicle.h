@@ -142,6 +142,11 @@ public:
 
 private:
 	UFUNCTION(BlueprintCallable)
+	void CacheAudioPointers(UFortVehicleAudioVoice* InAudioMovement, UFortVehicleAudioVoice* InAudioCoast, UFortVehicleAudioVoice* InAudioSkid, UFortVehicleAudioVoice* InAudioInAir, UFortVehicleAudioVoice* InAudioScrape, UFortVehicleAudioVoice* InAudioWind);
+public:
+
+private:
+	UFUNCTION(BlueprintCallable)
 	void CacheFX(UParticleSystemComponent* InWheelDustFX);
 public:
 

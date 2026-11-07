@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActorIndicatorWidget.h"
 
+#include "AFortPlayerPawn.h"
 #include "EAthenaSpectatorNameplateDetailState.h"
 #include "EAthenaSpectatorNameplateDistanceState.h"
 
@@ -46,6 +47,11 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	EAthenaSpectatorNameplateDetailState CurrentDetailState;
+
+private:
+	UFUNCTION()
+	void OnPlayerPawnChanged(UAthenaRemotePlayerViewData* InPlayerData, AFortPlayerPawn* InPlayerPawn);
+public:
 
 };
 

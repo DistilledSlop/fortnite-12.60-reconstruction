@@ -13,6 +13,7 @@
 class UCustomCharacterPart;
 class UFortAbilityKit;
 class UFortHeroSpecialization;
+class UFortHeroType;
 
 #include "UFortHero.generated.h"
 
@@ -61,6 +62,9 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<FMcpVariantChannelInfo> BackblingVariantChannels;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UFortHeroType* GetHeroTypeBP() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetUnclampedLevel() const;

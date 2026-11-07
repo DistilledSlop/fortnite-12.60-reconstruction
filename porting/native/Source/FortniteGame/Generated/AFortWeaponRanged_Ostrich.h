@@ -185,6 +185,9 @@ public:
 	UFUNCTION()
 	void OnRep_RocketsCooldown();
 
+	UFUNCTION(BlueprintCallable)
+	virtual void PlayReloadAnim();
+
 	UFUNCTION(Server, Reliable)
 	void ServerSetCharging(bool bNewCharging);
 	void ServerSetCharging_Implementation(bool bNewCharging);

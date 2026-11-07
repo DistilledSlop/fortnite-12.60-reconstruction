@@ -109,6 +109,9 @@ public:
 	TSubclassOf<UAnimInstance> BoostingAnimClass;
 
 	UFUNCTION(BlueprintCallable)
+	void CacheAudioPointers(UFortVehicleAudioVoice* InAudioMovement, UFortVehicleAudioVoice* InAudioBoost, UFortVehicleAudioVoice* InAudioWind);
+
+	UFUNCTION(BlueprintCallable)
 	void CacheFX(UParticleSystemComponent* InBoostFX, UParticleSystemComponent* InLoopingFX);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

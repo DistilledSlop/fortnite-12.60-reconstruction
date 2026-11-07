@@ -50,12 +50,18 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xc8): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredByte_0xc8 = 0;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xc9): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xc9;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortNotificationPriority GetPriority() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintCosmetic)
 	void NotificationShown();
 	virtual void NotificationShown_Implementation();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	bool ShouldShowNotification() const;
 
 	UFUNCTION(BlueprintCallable)
 	virtual void TakeAction();

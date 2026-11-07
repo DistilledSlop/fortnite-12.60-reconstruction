@@ -137,6 +137,11 @@ public:
 	UPROPERTY(Transient)
 	UFortGoatVehicleConfigs* FortGoatVehicleConfigs;
 
+private:
+	UFUNCTION(BlueprintCallable)
+	void CacheParticleComponentPointers(UParticleSystemComponent* WheelDust, UParticleSystemComponent* WheelSlide, UParticleSystemComponent* TrailLeft, UParticleSystemComponent* TrailRight);
+public:
+
 	UFUNCTION(BlueprintCallable)
 	void ClearBoostAccumulated();
 

@@ -29,8 +29,14 @@ public:
 	UPROPERTY()
 	float TransitionDuration;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x188): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x188;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasWidgets() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetDisableTransitionAnimation(bool bDisableAnimation);
 
 };
 

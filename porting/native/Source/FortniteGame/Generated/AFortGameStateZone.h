@@ -145,6 +145,9 @@ public:
 	UPROPERTY()
 	FOnCompletionResult OnCompletionResultEvent;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x9e8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x9e8;
+
 	// table index 62, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerStructuresChanged)
 	int32 TotalPlayerStructures;
@@ -512,6 +515,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetZoneCompletionResult(EFortCompletionResult NewCompletionResult);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool ShouldDisablePlayerTeleportingDuringMissionResults() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

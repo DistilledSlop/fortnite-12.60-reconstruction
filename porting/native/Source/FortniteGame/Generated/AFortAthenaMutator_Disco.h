@@ -139,6 +139,11 @@ public:
 	UPROPERTY()
 	FAthenaGameMessageData GameMsg_NoMoreRespawns;
 
+protected:
+	UFUNCTION()
+	bool IsRespawningAllowed();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

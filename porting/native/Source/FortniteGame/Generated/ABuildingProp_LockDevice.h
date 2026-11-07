@@ -47,6 +47,11 @@ public:
 	ELockState CurrentLockState;
 
 protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	virtual void Close(AController* ControllerInstigator);
+public:
+
+protected:
 	UFUNCTION()
 	void HandleLockableObjectDestruction(AActor* ActorDestroyed);
 public:
@@ -56,6 +61,11 @@ public:
 
 	UFUNCTION()
 	void OnRep_LockableObject();
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	virtual void Open(AController* ControllerInstigator);
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)

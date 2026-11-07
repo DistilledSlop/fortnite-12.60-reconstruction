@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Abilities/Tasks/AbilityTask_ApplyRootMotion_Base.h"
 
+#include "Engine/EngineTypes.h"
 #include "FApplyRootMotionFallingBoostForceDelegate.h"
 
 #include "UFortAbilityTask_ApplyRootMotionFallingBoostForce.generated.h"
@@ -43,6 +44,12 @@ public:
 	// table index 0, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	float MaxLateralSpeed;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xe0): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xe0;
+
+	UFUNCTION()
+	void OnLandedCallback(FHitResult& Hit);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

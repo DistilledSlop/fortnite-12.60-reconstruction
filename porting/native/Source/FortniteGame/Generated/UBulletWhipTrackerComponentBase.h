@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 
 #include "FBulletWhipTrackerData.h"
+#include "Math/Vector.h"
 
 class USceneComponent;
 
@@ -22,9 +23,15 @@ public:
 	UPROPERTY()
 	TArray<FBulletWhipTrackerData> WhipTrackerData;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xc0): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0xc0;
+
 	// table index 0, flags 0x20080000082008
 	UPROPERTY(Transient)
 	USceneComponent* CachedPassByPawn;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void UpdateVelocity(FVector CurrentVelocity);
 
 };
 

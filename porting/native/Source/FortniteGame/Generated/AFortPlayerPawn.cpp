@@ -27,6 +27,15 @@ void AFortPlayerPawn::AttemptInstantInteractSearch()
 	OnAttemptedInstantInteractSearch.Broadcast();
 }
 
+void AFortPlayerPawn::CancelJumpAbility()
+{
+	// Behaviour snippet: AFortPlayerPawn::CancelJumpAbility (body only; spliced into the generated member function).
+	// Original address: 0x141a128d0 (thunk 0x142a7b160).
+	// asm: MOV RAX,[+0x6f0]; RET (+0x6f0 = DBNOLandingSound, reflected on AFortPawn). Void function; the load into RAX has no store and no observable effect.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortPlayerPawn::ClientAcknowledgeVehicleInputState_Implementation(float Timestamp)
 {
 	// CONFIDENCE: high; original14230e450 MOVSS stores XMM1 at pawn+0x121c.
@@ -457,7 +466,11 @@ float AFortPlayerPawn::GetWaterImmersionDepth() const
 
 void AFortPlayerPawn::HandleInStasis()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerPawn::HandleInStasis (body only; spliced into the generated member function).
+	// Original address: 0x141a418a0 (thunk 0x142a7cc50).
+	// asm: MOV RAX,[+0x280]; RET (+0x280 = CharacterMovement, reflected on ACharacter). Void function; the load into RAX has no store and no observable effect.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 bool AFortPlayerPawn::HasControlledRCPawn() const
@@ -647,6 +660,15 @@ bool AFortPlayerPawn::LocalIsTryingToGetPickup()
 	return NativeRecoveredPointer_0x2680 != 0;
 }
 
+void AFortPlayerPawn::LocalThrowCarriedPlayer()
+{
+	// Behaviour snippet: AFortPlayerPawn::LocalThrowCarriedPlayer (body only; spliced into the generated member function).
+	// Original address: 0x141a128d0 (thunk 0x142a7d6d0).
+	// asm: MOV RAX,[+0x6f0]; RET (+0x6f0 = DBNOLandingSound, shared body). Void function; the load into RAX has no store and no observable effect.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortPlayerPawn::ManualReviveFromDBNO(TSubclassOf<UGameplayEffect> ReviveGameplayEffectsOverride)
 {
 	// CONFIDENCE: HIGH; shared exec wrapper calls the bare-return native body.
@@ -767,7 +789,11 @@ void AFortPlayerPawn::OnRep_IsInAnyStorm()
 
 void AFortPlayerPawn::OnRep_IsInsideSafeZone()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerPawn::OnRep_IsInsideSafeZone (body only; spliced into the generated member function).
+	// Original address: 0x141a128d0 (thunk 0x142a7de10).
+	// asm: MOV RAX,[+0x6f0]; RET (+0x6f0 = DBNOLandingSound, shared body). Void function; the load into RAX has no store and no observable effect.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerPawn::OnRep_IsInWaterVolume()

@@ -282,6 +282,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x574): not a UPROPERTY, not replicated.
 	TWeakObjectPtr<USceneComponent> NativeAimAssistTargetOverride;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x57c): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x57c;
+
 	// table index 151, flags 0x10000100002025
 	UPROPERTY(ReplicatedUsing=OnRep_PawnUniqueID, Transient)
 	int32 PawnUniqueID;
@@ -1029,7 +1032,7 @@ public:
 	void OnRep_StormShieldComponent();
 
 	UFUNCTION()
-	void OnRep_TeleportCounter();
+	virtual void OnRep_TeleportCounter();
 
 	UFUNCTION()
 	void OnRep_VocalChords();

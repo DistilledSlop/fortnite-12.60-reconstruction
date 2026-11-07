@@ -1,0 +1,338 @@
+[
+  {
+    "class": "UCommonAnimatedSwitcher",
+    "function": "SetDisableTransitionAnimation",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Stores bDisableAnimation to +0x188 (NativeRecoveredBool_0x188, new member). Type inferred from bool param."
+  },
+  {
+    "class": "UCommonButton",
+    "function": "GetSelected",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Reads bit 0 (mask 0x01) of byte +0x2a1 (NativeRecoveredBits_0x2a1). Header bitfield byte 0x2a0 and ClickMethod 0x2a2 are neighbours."
+  },
+  {
+    "class": "UCommonButtonGroup",
+    "function": "GetSelectedButtonIndex",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Returns dword +0xc0 (NativeRecoveredInt_0xc0). MANIFEST NativeHoveredButtonIndex is at 0xc4, no overlap."
+  },
+  {
+    "class": "ABattleMapPawnReplay",
+    "function": "HandlePlaybackTimeChanged",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Writes constant 1 to +0x588 (NativeRecoveredBool_0x588). NowTime param is unused in asm."
+  },
+  {
+    "class": "ABuildingFillFloor",
+    "function": "InterpToStopCallback",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Writes constant 1 to +0x8b9 (NativeRecoveredBool_0x8b9). Time/ImpactResult unused in asm."
+  },
+  {
+    "class": "ABuildingGameplayActorSpawnChip",
+    "function": "OnRep_RebootCardReplicatedState",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void; only loads byte +0x1c5 into RAX and discards it. Empty body per rule D."
+  },
+  {
+    "class": "ABuildingProp_LockDevice",
+    "function": "Close",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void; computes bit 6 (mask 0x40) of byte +0x1d0 into AL and discards it. Empty body per rule D."
+  },
+  {
+    "class": "ABuildingProp_LockDevice",
+    "function": "Open",
+    "status": "proposed",
+    "case": "D",
+    "reason": "Void; computes bit 5 (mask 0x20) of byte +0x1d0 into AL and discards it. Empty body per rule D."
+  },
+  {
+    "class": "UBulletWhipTrackerComponentBase",
+    "function": "UpdateVelocity",
+    "status": "proposed",
+    "case": "C",
+    "reason": "Copies 12-byte CurrentVelocity (Vector/FVector) to +0xc0 (NativeRecoveredFVector_0xc0, new). Same struct type: plain assignment."
+  },
+  {
+    "class": "UFortAbilityTask_ApplyRootMotionFallingBoostForce",
+    "function": "OnLandedCallback",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Writes constant 1 to +0xe0 (NativeRecoveredBool_0xe0). Hit param unused in asm."
+  },
+  {
+    "class": "AFortAthenaAntelopeVehicle",
+    "function": "CacheAudioPointers",
+    "status": "proposed",
+    "case": "B",
+    "reason": "ABI-order pairing: stores land in reversed-named CachedAudio* slots (asm truth). All slots reflected."
+  },
+  {
+    "class": "AFortAthenaAntelopeVehicle",
+    "function": "CacheParticleComponentPointers",
+    "status": "proposed",
+    "case": "B",
+    "reason": "ABI-order pairing (asm truth); all five PSC slots are reflected/declared members."
+  },
+  {
+    "class": "AFortAthenaFerretVehicle",
+    "function": "CacheAudioVoicePointers",
+    "status": "proposed",
+    "case": "B",
+    "reason": "ABI-order pairing (asm truth): six reflected FortAudio* slots at 0x1640..0x1668."
+  },
+  {
+    "class": "AFortAthenaFerretVehicle",
+    "function": "CacheParticleComponentPointers",
+    "status": "proposed",
+    "case": "B",
+    "reason": "ABI-order pairing (asm truth); four reflected PSC_Trail* slots."
+  },
+  {
+    "class": "AFortAthenaGoatVehicle",
+    "function": "CacheParticleComponentPointers",
+    "status": "proposed",
+    "case": "B",
+    "reason": "ABI-order pairing (asm truth); four reflected PSC slots."
+  },
+  {
+    "class": "AFortAthenaJackalVehicle",
+    "function": "CacheAudioPointers",
+    "status": "proposed",
+    "case": "B",
+    "reason": "ABI-order pairing (asm truth); reflected CacheAudio* slots."
+  },
+  {
+    "class": "AFortAthenaMutator_Arsenic",
+    "function": "IsPawnAnInfected",
+    "status": "proposed",
+    "case": "E",
+    "reason": "Returns InfectedTeam (+0x441) as bool; Pawn unused in asm. Raw-byte return vs bool conversion noted."
+  },
+  {
+    "class": "AFortAthenaMutator_Disco",
+    "function": "IsRespawningAllowed",
+    "status": "proposed",
+    "case": "E",
+    "reason": "Compares GameState SafeZonePhase (uint8 at +0x1eb9) <= LastRespawnableSafeZoneIndex (+0x3f0), signed."
+  },
+  {
+    "class": "AFortAthenaSKPushVehicle",
+    "function": "CacheAudioPointers",
+    "status": "proposed",
+    "case": "B",
+    "reason": "ABI-order pairing (asm truth); six reflected CacheAudio* slots."
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetInstantBoostWhenBuilding",
+    "status": "proposed",
+    "case": "E",
+    "reason": "Writes nested FFortGamepadAdvancedOptions.bInstantBoostWhenBuilding (+0x128) and sets dirty byte +0x13c."
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetUseAdvancedOptions",
+    "status": "proposed",
+    "case": "E",
+    "reason": "Writes nested FFortGamepadBasicOptions.bUseAdvancedOptions (+0xfc) and sets dirty byte +0x13c."
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetUseLegacyControls",
+    "status": "proposed",
+    "case": "E",
+    "reason": "Writes nested FFortGamepadAdvancedOptions.bUseLegacyControls (+0x138) and sets dirty byte +0x13c."
+  },
+  {
+    "class": "UFortCreativeOption",
+    "function": "DoesMatchCategory",
+    "status": "proposed",
+    "case": "E",
+    "reason": "Returns CategoryTag == CreativeOptionCategory.CategoryTag (FName at struct +0x18), matching both dwords."
+  },
+  {
+    "class": "AFortGameStateZone",
+    "function": "ShouldDisablePlayerTeleportingDuringMissionResults",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Returns byte +0x9e8 (NativeRecoveredBool_0x9e8, new member)."
+  },
+  {
+    "class": "UFortHero",
+    "function": "GetHeroTypeBP",
+    "status": "proposed",
+    "case": "E",
+    "reason": "Returns inherited ItemDefinition (+0x88) as UFortHeroType*; name/type mismatch noted."
+  },
+  {
+    "class": "UFortMatchmakingContext",
+    "function": "IsConnectedToGame",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Returns byte +0x140 (NativeRecoveredBool_0x140, new member)."
+  },
+  {
+    "class": "UFortMcpContext",
+    "function": "IsRealMoneyPurchasePending",
+    "status": "proposed",
+    "case": "A",
+    "reason": "Returns byte +0x458 (NativeRecoveredBool_0x458, new member)."
+  },
+  {
+    "class": "AFortHoagieAudioController",
+    "function": "CacheAudioComponents",
+    "status": "escalate",
+    "case": "B",
+    "reason": "engine_class_no_header: header is null for AFortHoagieAudioController. asm stores RDX->+0x230 and R8->+0x238 (ABI order)."
+  },
+  {
+    "class": "UTimeSynthComponent",
+    "function": "GetMaxActiveClipLimit",
+    "status": "escalate",
+    "case": "A",
+    "reason": "engine_class_no_header: header is null for UTimeSynthComponent. asm reads dword +0x838."
+  },
+  {
+    "class": "ABuildingFloor",
+    "function": "IsBalcony",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Reads bit 1 (mask 0x2) of dword +0xb30; the byte is the header uint8 bitfield bShouldIgnoreForHorizontalHotspotSearch:1 (bit 0). Bit 1 has no declared owner and no free byte to declare."
+  },
+  {
+    "class": "UFortAIGoalProvider",
+    "function": "GetEncounterInfo",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Returns qword +0x18, which lies inside UObject base storage (UObject is 0x28 bytes; own members start 0x30). Cannot declare a member on UFortAIGoalProvider there."
+  },
+  {
+    "class": "AFortAthenaAntelopeVehicle",
+    "function": "IsBoosting",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Reads byte +0xd7c, inside AFortAthenaVehicle base storage (its own reflected members span 0x290..0xe50; no member covers 0xd7c). Owner is AFortAthenaVehicle, not this class."
+  },
+  {
+    "class": "AFortAthenaFerretVehicle",
+    "function": "IsBoosting",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Reads byte +0xc8, inside inherited APawn/AActor base storage (AFortAthenaVehicle own members start 0x290). Not declarable on this class."
+  },
+  {
+    "class": "AFortAthenaDoghouseVehicle",
+    "function": "IsAileronRolling",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Reads byte +0xc8, inside inherited APawn/AActor base storage (AFortAthenaVehicle own members start 0x290). Not declarable on this class."
+  },
+  {
+    "class": "AFortAthenaMutator_Infiltration",
+    "function": "GetAttackingTeam",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Reads byte +0x80, inside inherited AFortGameplayMutator/AInfo/AActor storage (AFortAthenaMutator members start 0x250; AActor::PrimaryActorTick at 0x28)."
+  },
+  {
+    "class": "AFortAthenaMutator_Infiltration",
+    "function": "GetDefendingTeam",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Reads byte +0x8c, inside inherited AFortGameplayMutator/AInfo/AActor storage (AFortAthenaMutator members start 0x250; AActor::PrimaryActorTick at 0x28)."
+  },
+  {
+    "class": "AFortAthenaSKVehicle",
+    "function": "GetSkeletalMeshComponent",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Returns inherited AFortAthenaVehicle::SkyTubePhysicsComponent (+0xaf8, UFortSkyTubePhysicsComponent*). Name/type mismatch; no ReturnValue type in reflection or header to validate."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "AllowInteractionBetweenFortVolume",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Reads bit 4 of byte +0xd0, inside inherited AActor/APawn storage (AFortAthenaVehicle own members start 0x290). Not declarable on this class."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "IsAirControlling",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Reads bit 0 (mask 0x1) of byte +0x448; header bitfield bAllowInteractBetweenFortVolumes_Runtime:1 (mask 0x10) owns that byte. No free byte member can be declared without colliding."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "IsCameraControlledRotation",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Loads pointer at own gap +0x738 (no declared member), then byte +0x335 of the pointee. Pointee class not recovered."
+  },
+  {
+    "class": "AFortCarriedObject",
+    "function": "GetHoldingActor",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Returns qword +0x28, which is inherited AActor::PrimaryActorTick (struct) per reflection. No pointer field of this class at +0x28."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "AllowInteractionBetweenFortVolume",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Reads byte +0x20d8, inside inherited AFortPawn/AFortPlayerPawn storage (AFortPlayerPawnAthena reflects to 0x3078; own members start 0x30a0)."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "GetAbilitySystemComponent",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Returns qword +0x2ca8, which is inherited AFortPlayerPawnAthena::OnFortPlayerDied (InlineMulticastDelegate). Not a pointer field."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "GetSkeletalMeshComponent",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Body loads qword [this-0x2e20] (negative offset): a this-adjusting thunk to a base subobject, not a field read of AFortCharacterVehicle."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "SetAllowInteractionBetweenFortVolumes",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Stores DL to byte +0x20d8, inside inherited AFortPawn/AFortPlayerPawn storage (same as the getter). Not declarable on this class."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "GetDisplayStats",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Returns pointer +0x5d0 with unknown class: reflection has no ReturnValue for either candidate, header declares no GetDisplayStats, and the return pointer type cannot be set."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "SetLocationFont",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Body zero-initialises ~0x4d bytes at RCX and returns RCX (sret-style). Neither Font (RDX) nor LocationTag (R8) is read. Not a leaf setter; needs struct layout recovery."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "SetLocationFontInAllStates",
+    "status": "escalate",
+    "case": "E",
+    "reason": "Same body as SetLocationFont (0x142f440c0): zero-init of ~0x4d bytes at RCX, returns RCX, params not read. Needs struct layout recovery."
+  }
+]

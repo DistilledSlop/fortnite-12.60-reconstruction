@@ -7,6 +7,7 @@
 #include "UBlueprintContextBase.h"
 
 #include "AFortPlayerPawnAthena.h"
+#include "EPTTState.h"
 #include "FAthenaWinnerInfo.h"
 #include "FOnAthenaAutoFireChanged.h"
 #include "FOnAthenaGamePhaseChanged.h"
@@ -193,6 +194,9 @@ public:
 	UPROPERTY()
 	UAthenaPlayerViewModel* PlayerViewModel;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x260): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x260;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x264): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x264;
 
@@ -213,6 +217,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetLocalPlayerWonMatch() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EPTTState GetPTTState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasFiringTouch() const;

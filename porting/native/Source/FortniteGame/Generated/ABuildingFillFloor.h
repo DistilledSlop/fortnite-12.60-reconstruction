@@ -7,6 +7,7 @@
 #include "ABuildingGameplayActor.h"
 
 #include "AttributeSet.h"
+#include "Engine/EngineTypes.h"
 #include "FFillFloorPositionData.h"
 
 class AFortPlayerPawn;
@@ -62,6 +63,14 @@ public:
 	// table index 0, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_IsMoving)
 	bool bIsMoving;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x8b9): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x8b9;
+
+protected:
+	UFUNCTION()
+	void InterpToStopCallback(FHitResult& ImpactResult, float Time);
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable)

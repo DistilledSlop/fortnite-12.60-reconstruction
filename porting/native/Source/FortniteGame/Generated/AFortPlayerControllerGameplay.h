@@ -354,8 +354,10 @@ public:
 	UFUNCTION()
 	void OnRep_FlyingModifierIndex();
 
+private:
 	UFUNCTION()
-	void OnRep_GhostModeRepData();
+	virtual void OnRep_GhostModeRepData();
+public:
 
 	UFUNCTION()
 	void OnRep_IsCreativeModeEnabled();

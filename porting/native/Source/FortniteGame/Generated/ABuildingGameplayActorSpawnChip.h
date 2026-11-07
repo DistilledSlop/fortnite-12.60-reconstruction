@@ -78,8 +78,10 @@ protected:
 	virtual void OnDestroyPickup_Implementation();
 public:
 
+private:
 	UFUNCTION()
-	void OnRep_RebootCardReplicatedState();
+	virtual void OnRep_RebootCardReplicatedState();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
