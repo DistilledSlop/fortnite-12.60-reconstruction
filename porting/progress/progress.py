@@ -565,7 +565,7 @@ def m_native_manifest(spec, ctx):
     wf = parse_json_or_none(ctx.files.get(NATIVE_WORKFLOW_REL)) or {}
     if wf.get("body_location"):
         bl = wf["body_location"]
-        note += (f". Body-location table for the {wf.get('unported_by_reflected_name', '?')} unported-by-name functions "
+        note += (f". Body-location table for the {wf.get('table_size', wf.get('unported_by_reflected_name', '?'))} functions unported by reflected name when built "
                  f"(snapshot): {bl.get('A_inline')} inline, {bl.get('B_direct_single_callee')} direct single-callee, "
                  f"{bl.get('B_direct_multi_candidate')} direct multi-candidate (needs review), {bl.get('C_virtual_target')} "
                  f"virtual, {bl.get('U_no_single_body')} no single body; {wf.get('distinct_real_bodies')} distinct bodies; "

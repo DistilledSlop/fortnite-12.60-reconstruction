@@ -30,10 +30,11 @@ if os.path.exists(p):
     b1 = sum(1 for e in F if e['group'] == 'B' and len(e['callees']) == 1)
     bm = sum(1 for e in F if e['group'] == 'B' and len(e['callees']) > 1)
     wf = dict(
-        unported_by_reflected_name=len(F),
+        table_size=len(F),
         covered_by_implementation=cov['full'], validate_only=cov['partial'],
         body_location={'A_inline': g['A'], 'B_direct_single_callee': b1, 'B_direct_multi_candidate': bm,
-                       'C_virtual_target': g['C'], 'U_no_single_body': g['U']},
+                       'C_virtual_target': g['C'], 'U_no_single_body': g['U'],
+                       'I_interface_dispatch': g['I']},
         distinct_real_bodies=len({a for e in F for a in e['real_bodies']}),
         note='Body locations come from Ghidra thunk decompiles, ctor-derived vtables and wrapper resolution; '
              'see porting/NATIVE_PORTING.md. Group B single-callee is about 93% precise and group C 90% on a '

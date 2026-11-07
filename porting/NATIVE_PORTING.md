@@ -14,7 +14,7 @@ Single source of truth for the "Native function bodies ported" block. Supersedes
 | Dashboard "done" | 3,895 (26.6%) | counts all ported entries plus 5 handwritten Kismet bodies, so it slightly overstates reflected coverage |
 | **Strictly unported reflected functions** | **11,407** | in-scope minus matching ported keys |
 
-11,407 is the strict reflected-name count. **228 of those are already covered** by a ported `<fn>_Implementation` entry and 71 more have only `<fn>_Validate` ported (ported RPC and native-event bodies are keyed under those names, so they never match the reflected name; `mark_covered.py` flags them in `final2.json`). Working remaining count: **11,179 truly unported (incl. 71 partial)**. The dashboard's implied 10,748 is lower because it also counts helpers. The same name mismatch means the dashboard does not credit those 228.
+11,407 is the strict reflected-name count. **228 of those are already covered** by a ported `<fn>_Implementation` entry and 71 more have only `<fn>_Validate` ported (ported RPC and native-event bodies are keyed under those names, so they never match the reflected name; `mark_covered.py` flags them in `final2.json`). Working remaining count (after the two stub batches, 2026-11-07): **11,032 unported by reflected name (incl. 61 `_Validate`-only), of which 252 are interface functions that have no body at the interface level (section 9)**. The dashboard's implied figure is lower because it also counts helpers. The same name mismatch means the dashboard does not credit those 228.
 
 Largest remaining classes: UFortKismetLibrary 298, AFortPlayerController 260, AFortPlayerControllerAthena 186, UFortGlobalUIContext 164, AFortPlayerPawn 163, UFortSettingsContext 161, AFortMinigame 126, AFortCreativeMoveTool 115, UFortMcpContext 97, UFortInventoryContext 95.
 
@@ -98,9 +98,19 @@ Untracked `behavior/` directories and `.inc` files currently exist in the workin
 - Seven functions share wrapper `0x142766b10` (steps two 32-bit values, calls bare return): `UCaptureComponent::UpdateCaptureSpeed`, `AFortAthenaMutator_Heist::OnMutatorGenericIntegerUpdated`, and `UFortCheatManager::{AthenaGiveScoreTo,SetViewportResolution,TestPartyMemberRange,TestSafeZoneLocations,TriggerDelayReturnToLobby}`. Confirm class emission, parameters and manifest first.
 - `triage067_new`: `UFortGameplayAbility::EquipVehicleWeapon` and `AFortPlayerController::SetClientPawnNewRotation`; confirm `FRotator` mapping and signatures first.
 
+## 9. Blocked and non-portable functions (nothing is silently dropped)
+
+Everything the generator or analysis cannot take is recorded, with a reason and the condition that unblocks it:
+
+- **Interface functions: 252 in-scope functions on 129 `UINTERFACE` classes, none ported.** The exec thunk dispatches through the implementing object's interface sub-vtable (the secondary vptrs seen on `AFortAthenaVehicle` etc.), so there is no body at the interface level; the bodies are the implementers' own virtuals. Reading the interface class's own vtable gave a meaningless stub, so these are group I in the table, never proposed as stubs, and the generator's splice does not support interface classes. **Open decision:** whether to remove these 252 from the dashboard denominator (14,643 -> 14,391) or keep them as a separate "interface dispatch" line. They are unported and cannot be ported as bodies.
+- **Classes in packages with no module** (native_class_coverage.md cause C1): `UEpicCMSTileCarousel` (`/Script/EpicCMSUIFramework`), `UUACNetworkComponent` (`/Script/UACBase`). Unblock: add a module declaring the package and add the class to `native_class_set.txt`.
+- **UE 4.26 engine functions** (`engine_provided_natives.json` `gap_declared_in_reference`, 31 of them): e.g. `UFXSystemComponent::SetIntParameter`. Unblock: backport the declaration into the engine checkout.
+
+The stub-batch record is `behavior/stub_bulk_runtime/`: `entries.json` (batch 1, 51 parameterless), `entries_batch2.json` (137 with parameters), `skipped_batch2.json` (23 left for review: 18 non-bool returns, 4 net-RPC stub shapes that are not empty plus true-validate, 1 void with a non-empty stub) and `blocked.json` (14 entries with reasons and unblock conditions). Regenerate proposals with `make_stub_proposals.py`; fill parameter signatures from the generator's own reflection-derived signature with `fill_signatures_from_generator.py REPORT_DIR` (propose with the `@PARAMS@` placeholder, run the promotion, read the signatures from the rejection text, patch, rerun until zero rejections). Run the promotion with a copy of the earlier runner (`/tmp/promote-native-batch455.py` pattern: back up source mtimes, run `gen_native_classes.py --promote` with the saved command JSON, assert zero rejections and no removals).
+
 ## 8. Recommended next steps
 
-1. Port the stub family (273 functions) first, as a proposal batch; verify each against its reflected kind and flags, then source-generate with zero rejections. Skip the 22 "value-returning but empty" ones until understood.
+1. Review the 23 skipped stub-family functions (`skipped_batch2.json`), especially the value-returning ones with an empty body, which look suspicious. The rest of the stub family (188 functions) is ported.
 2. `build_work_packets.py` (Haiku worker) writes one packet per distinct body into `generated/work-packets/` with names substituted and field offsets annotated; use it for all remaining bodies, ordered by shared body then class.
 3. Fix the const-reference generator bug before porting functions with const-reference params.
 4. For multi-callee and multi-site virtual rows, verify the chosen body per function before transcription (argument count is not a reliable check).
