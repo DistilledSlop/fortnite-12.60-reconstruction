@@ -10,6 +10,7 @@
 #include "FOnDifferentSquadSlotSelected.h"
 #include "FOnRequestSquadSlotAction.h"
 #include "FSquadSlotSortTypes.h"
+#include "UCommonButton.h"
 #include "UFortItemViewContextInterface.h"
 
 class UFortCommittableButtonGroup;
@@ -78,6 +79,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetIndexOfSelectedSquadSlot() const;
+
+private:
+	UFUNCTION()
+	void HandleHoveredButtonChanged(UCommonButton* HoveredButton, int32 ButtonIndex);
+public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetIsSelectionLocked(bool ShouldSelectionBeLocked);

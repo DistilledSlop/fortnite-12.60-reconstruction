@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
 
+#include "EFortSharedAnimationState.h"
 #include "FGameplayAbilityRepSharedAnim.h"
 #include "FPersonalVehicleBlockingChanged.h"
 #include "FReplicatedMontagePair.h"
@@ -60,6 +61,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetLandingMontageReplication(UAnimMontage* Montage1, FName Section1, UAnimMontage* Montage2, FName Section2);
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetSharedAnimState(EFortSharedAnimationState State);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetSharedAnimStateWithMontage(EFortSharedAnimationState State, UAnimMontage* Montage);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

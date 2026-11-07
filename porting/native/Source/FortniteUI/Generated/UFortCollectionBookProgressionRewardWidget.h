@@ -25,5 +25,8 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* DisplayNameWidget;
 
+	UFUNCTION(BlueprintCallable)
+	void SetAssociatedLevel(int32 Level);
+
 };
 

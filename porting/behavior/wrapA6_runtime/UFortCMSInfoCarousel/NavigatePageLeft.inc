@@ -1,0 +1,8 @@
+// Behaviour snippet: UFortCMSInfoCarousel::NavigatePageLeft (wrapper, body only).
+// Original body address: 0x144d8c630 (thunk 0x14520ce50), this_delta_total 0.
+// Offset evidence: MOV RCX,[RCX+0x498] loads Carousel (reflected Object, exact offset 0x498; declared UCommonWidgetCarousel* in FortniteUI/Generated/UFortCMSInfoCarousel.h). The body reloads [this+0x498] after the first call.
+// Callee 1: 0x1407d4450 -> UCommonWidgetCarousel::NextPage() (CommonUI engine declaration, CommonWidgetCarousel.h); CALL, then the second call follows.
+// Callee 2: 0x1407bb5b0 -> UCommonWidgetCarousel::EndAutoScrolling() (CommonUI engine declaration, CommonWidgetCarousel.h); JMP is a tail call.
+// CONFIDENCE: MEDIUM
+Carousel->NextPage();
+Carousel->EndAutoScrolling();

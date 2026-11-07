@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UFortCreativeMessageKnobsDialog",
+  "function": "RemoveTagFilter",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "JMP 0x144d77f40 -> UFortCreativeMessageKnobsDialog::GenerateFilteredEntries(bool) not declared in any native header"
+ },
+ {
+  "class": "UFortDropdownMenu",
+  "function": "InternalOnSelectionChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ },
+ {
+  "class": "UFortFrontEndContext",
+  "function": "BroadcastMainTabSelected",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "GetDifficultyIncreaseRewards",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "JMP 0x144cca7d0 -> UFortHUDContext::GetDifficultyIncreaseRewardsDifference not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "GetLocalPlayerHasLosingPlacement",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144cce090 -> UFortHUDContext::GetLocalPlayerPlacement() const not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "GetLocalPlayerHasPlacement",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144cce090 -> UFortHUDContext::GetLocalPlayerPlacement() const not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "GetLocalPlayerHasWinningPlacement",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144cce090 -> UFortHUDContext::GetLocalPlayerPlacement() const not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "HandleActorFocusedForCreative",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "HandleBuildingModeChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "HandlePersonalVehicleModeChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "HandleToggledBattleMapLive",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "HandleVehicleStateChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "RemovePointOfInterest",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ },
+ {
+  "class": "UFortHUDContext",
+  "function": "RequestMgmtMenuTab",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ },
+ {
+  "class": "UFortHUDTagPromptWidgetBase",
+  "function": "CloseWidget",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ },
+ {
+  "class": "UFortInventoryContext",
+  "function": "CraftSchematic",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144cfd060 -> UFortInventoryContext::CraftAndSlotSchematic not declared in any native header"
+ },
+ {
+  "class": "UFortItemCountTextBlock",
+  "function": "InterpolateOverrideToValue",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "JMP 0x1407ced00 -> UCommonNumericTextBlock::InterpolateToValue not declared in any native header"
+ },
+ {
+  "class": "UFortItemManagementInventoryPanel",
+  "function": "HandleFilterTabButtonCreated",
+  "status": "proposed",
+  "case": "wrapper_member_call",
+  "reason": "ported: FilterTabButtonStyle (+0x2c0) passed to TabButton->UCommonButton::SetStyle at 0x1407f9c70 (declared UCommonButton.h)"
+ },
+ {
+  "class": "UFortItemManagementScreen",
+  "function": "HasItemBeenSeen",
+  "status": "proposed",
+  "case": "wrapper_null_guard_tail_call",
+  "reason": "ported: JMP 0x142014be0 -> AccountItem->UFortAccountItem::HasBeenSeenLocally() const (declared UFortAccountItem.h); null path returns false"
+ },
+ {
+  "class": "UFortItemManagementScreen",
+  "function": "SetConsumeItemRequestInProgress",
+  "status": "blocked",
+  "case": "shared_callee_no_match",
+  "reason": "JMP 0x140684de0 passes a bool (InProgress) with receiver this+0x4c0; declared candidates AFortGameState::OnRep_Teams() and AFortPlayerControllerZone::ClientOnPawnRevived(AController*) take no bool, and AAthenaSkyCap::OnStopMovement / AFortEventLevelNavigationActor::HandleDisplayMesh* are not declared; no candidate matches"
+ },
+ {
+  "class": "UFortItemManagementModeDetailsPanel",
+  "function": "GetItemManagementMode",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x142ee5dd0 candidates (AFortEventLevelNavigationActor::GetOwningGameStateComp, UArsenicWidgetBase::GetArsenicMutator, UAthenaInventoryContext::GetSelectedInventoryItem, UFortHomebaseUIContext::GetCurrentlyViewedHeroLoadout, UFortItemManagementScreen::GetItemToCompareDetailsWith, UFortItemQuantityListEntryBase::GetItemInstance) not declared in their class headers"
+ },
+ {
+  "class": "UFortKeybindWidget",
+  "function": "SetBrushSize",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "JMP 0x144de5590 -> UFortKeybindWidget::UpdateKeybindWidget() not declared in any native header"
+ },
+ {
+  "class": "UFortKeybindWidget",
+  "function": "SetForcedHoldKeybind",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "JMP 0x144de5590 -> UFortKeybindWidget::UpdateKeybindWidget() not declared in any native header"
+ },
+ {
+  "class": "UFortKeybindWidget",
+  "function": "SetForcedHoldKeybindStatus",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "JMP 0x144de5590 -> UFortKeybindWidget::UpdateKeybindWidget() not declared in any native header"
+ },
+ {
+  "class": "UFortLeaveDialog",
+  "function": "CloseDialog",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144dd5c30 -> UFortUIBlueprintFunctionLibrary::PopActivatablePanelInModalLayer not declared in any native header; tail JMP 0x1406a9dc0 shared body 0x1406a9dc0 (6 candidates: AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver) not declared in any native header"
+ }
+]

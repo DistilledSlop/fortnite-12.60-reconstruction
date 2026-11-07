@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "SetVoiceChatEnabled",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP 0x140684de0 is shared by AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMesh{BeginCursorOver,EndCursorOver,InputTouchEnd}, AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived; receiver RCX+0x1e8 is an unreflected gap sub-object (no reflected member in 0x1d8-0x1e8) whose class matches no candidate."
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "SetVoiceChatPTTEnabled",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP 0x140684de0 is shared by AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMesh{BeginCursorOver,EndCursorOver,InputTouchEnd}, AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived; receiver RCX+0x1e8 is an unreflected gap sub-object (no reflected member in 0x1d8-0x1e8) whose class matches no candidate."
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "SetVoiceChatWithUnknownsEnabled",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP 0x140684de0 is shared by AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMesh{BeginCursorOver,EndCursorOver,InputTouchEnd}, AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived; receiver RCX+0x1e8 is an unreflected gap sub-object (no reflected member in 0x1d8-0x1e8) whose class matches no candidate."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ClientAddItemToMoveToolComplete",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver is FortPC->[+0x22f0]+0xe0, an unreflected pointer chain whose class is unknown and matches no candidate."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "OnRep_SelectionProperty",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0xd68 is reflected InlineMulticastDelegate OnSelectionPropertyChanged, which is not a candidate class (no candidate receiver match)."
+ },
+ {
+  "class": "UFortCreativeKeyLockComponent",
+  "function": "OnRep_RemainingKeysToUnlock",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0x128 is reflected InlineMulticastDelegate OnRemainingKeysUpdated, which is not a candidate class (no candidate receiver match)."
+ },
+ {
+  "class": "AFortCreativeStormShield",
+  "function": "SetGamePhaseStep",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: tail JMP 0x141d8aa20 maps to AFortCreativeStormShield::OnGamePhaseStepChanged; no declaration in porting/native/Source/FortniteGame/Generated/AFortCreativeStormShield.h (only OnRep_GamePhaseStep is declared)."
+ },
+ {
+  "class": "AFortCreativeTimerObjective",
+  "function": "BroadcastUpdateToHUD",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver is Volume(+0xba8, Object of unreflected class)+0x500 and the argument is a pointer to this; no candidate has a matching receiver class or an Object parameter."
+ },
+ {
+  "class": "UFortDialogNotificationHandler",
+  "function": "Accept",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0x40 is reflected InlineMulticastDelegate OnAccepted, which is not a candidate class (no candidate receiver match)."
+ },
+ {
+  "class": "UFortDialogNotificationHandler",
+  "function": "Decline",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0x50 is reflected InlineMulticastDelegate OnDeclined, which is not a candidate class (no candidate receiver match)."
+ },
+ {
+  "class": "UFortDialogNotificationHandler",
+  "function": "Timeout",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0x60 is reflected InlineMulticastDelegate OnTimedOut, which is not a candidate class (no candidate receiver match)."
+ },
+ {
+  "class": "AFortGameStateAthena",
+  "function": "GetEndGameReturnToMatchmakingOriginDelay",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: tail JMP 0x141a42830 maps to static UFortPlaylistAthenaHelper::GetEndGameReturnToMatchmakingOriginDelay; no declaration in porting/native/Source/FortniteGame/Generated/UFortPlaylistAthenaHelper.h."
+ },
+ {
+  "class": "AFortGameStateAthena",
+  "function": "HandleGameModeMessageSuccess",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0x10e8 is reflected InlineMulticastDelegate GameModeMessageSuccess, which is not a candidate class (no candidate receiver match)."
+ },
+ {
+  "class": "AFortGameStateAthena",
+  "function": "HandleHideGameModeMessageRequest",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0x10d8 is reflected InlineMulticastDelegate HideGameModeMessageRequest, which is not a candidate class (no candidate receiver match) and the argument is a 3-byte struct (MsgType, bInstantHide, bClearQueue) by pointer."
+ },
+ {
+  "class": "AFortGameStateAthena",
+  "function": "ShouldEnterSpawningStartup",
+  "status": "proposed",
+  "case": "static_callee_tail_jump",
+  "reason": "proposed: receiver pointers [this+0x1df8]/[this+0x1df0] recovered as NativeRecoveredPtr members; callee declared static in UFortPlaylistAthenaHelper.h."
+ },
+ {
+  "class": "AFortGameStateAthena",
+  "function": "ShouldReturnToMatchmakingOriginOnMatchEnd",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: tail JMP 0x141a5ba80 maps to static UFortPlaylistAthenaHelper::ShouldReturnToMatchmakingOriginOnMatchEnd; no declaration in porting/native/Source/FortniteGame/Generated/UFortPlaylistAthenaHelper.h."
+ },
+ {
+  "class": "AFortGameStateDeployableBase",
+  "function": "OnRep_DeployableBaseManager",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0xfd0 is reflected InlineMulticastDelegate OnDeployableBaseManagerCreated, which is not a candidate class (no candidate receiver match)."
+ },
+ {
+  "class": "AFortGameStateBase",
+  "function": "OnRep_StormShield",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0x2a8 is an unreflected gap in the APlayspaceGameState region (no member at 0x2a8) and the argument is a pointer to StormShield ([+0x2d8] Object)."
+ },
+ {
+  "class": "UFortHeldObjectComponent",
+  "function": "GetGravityScale",
+  "status": "blocked",
+  "case": "callee_class_mismatch",
+  "reason": "callee_class_mismatch: tail JMP 0x14070fdf0 has one candidate AFortAthenaMutator_DadBro::StartNextSafeZonePhase (void, no params), which is neither UFortHeldObjectComponent nor an ancestor and does not return float; receiver RCX+0xf8 is unreflected."
+ },
+ {
+  "class": "UFortHeldObjectComponent",
+  "function": "GetMaxSpeed",
+  "status": "blocked",
+  "case": "callee_class_mismatch",
+  "reason": "callee_class_mismatch: tail JMP 0x14070fdf0 has one candidate AFortAthenaMutator_DadBro::StartNextSafeZonePhase (void, no params), which is neither UFortHeldObjectComponent nor an ancestor and does not return float; receiver RCX+0xd8 (HeldObjectThrownData) is a struct sub-object."
+ },
+ {
+  "class": "UFortHeroGameplayDefinition",
+  "function": "GetAbilityKitForCommanderPerk",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: tail JMP 0x141d98eb0 (passes DL=1, which the reflected candidate does not declare) maps to UFortTeamPerkItemDefinition::GetAbilityKitBP; no declaration in porting/native/Source/FortniteGame/Generated/UFortTeamPerkItemDefinition.h."
+ },
+ {
+  "class": "UFortHeroGameplayDefinition",
+  "function": "GetAbilityKitForHeroPerk",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: tail JMP 0x141d98eb0 (passes DL=1, which the reflected candidate does not declare) maps to UFortTeamPerkItemDefinition::GetAbilityKitBP; no declaration in porting/native/Source/FortniteGame/Generated/UFortTeamPerkItemDefinition.h."
+ },
+ {
+  "class": "UFortLinkToActorComponent",
+  "function": "HandleMovementStopped",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: CALL 0x141d0f960 maps to UFortLinkToActorComponent::PerformLinkingCheck; no declaration in porting/native/Source/FortniteGame/Generated/UFortLinkToActorComponent.h (only SetPerformLinkingCheckOnBeginPlay matches)."
+ },
+ {
+  "class": "UFortLevelSaveComponent",
+  "function": "OnRep_BackupSaveState",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0x1a0 is reflected InlineMulticastDelegate OnClientBackupSaveStateChanged, which is not a candidate class (no candidate receiver match)."
+ },
+ {
+  "class": "UFortLevelSaveComponent",
+  "function": "OnRep_LastCheckpointDate",
+  "status": "blocked",
+  "case": "shared_callee_no_receiver_class",
+  "reason": "shared_callee_no_receiver_class: tail JMP/CALL 0x1406a9dc0 is shared by AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver; receiver RCX+0x1c0 is reflected InlineMulticastDelegate OnClientCheckpointDateChanged, which is not a candidate class (no candidate receiver match)."
+ }
+]

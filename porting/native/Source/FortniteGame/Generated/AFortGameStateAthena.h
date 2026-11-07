@@ -668,6 +668,12 @@ public:
 	UPROPERTY(Replicated)
 	bool bGameModeWillSkipAircraft;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1df0): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x1df0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1df8): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x1df8;
+
 	// table index 67, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_SafeZonePhase)
 	uint8 SafeZonePhase;
@@ -1137,6 +1143,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetFocalPointActor(AActor* InFocalPointActor, FVector InFocalPointOffset, float InFocalPointFOV, float InDuration);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldEnterSpawningStartup() const;
 
 protected:
 	UFUNCTION()

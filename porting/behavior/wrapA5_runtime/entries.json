@@ -1,0 +1,18 @@
+[
+ {
+  "class": "UAthenaCustomizationPicker",
+  "function": "HandleFilterTabButtonCreated",
+  "kind": "exec",
+  "signature": "@SIG@",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/wrapA5_runtime/UAthenaCustomizationPicker/HandleFilterTabButtonCreated.inc",
+  "confidence": "high",
+  "address": "0x145190a50",
+  "status": "ported",
+  "reflection_flags": "0x40401",
+  "static": false,
+  "access": "private",
+  "native_body_address": "0x144afd010",
+  "notes": "Wrapper: FilterTabButtonStyle (this+0x370) passed to TabButton->UCommonButton::SetStyle; null TabButton returns."
+ }
+]

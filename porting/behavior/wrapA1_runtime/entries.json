@@ -1,0 +1,34 @@
+[
+ {
+  "class": "UFortAbilitySystemComponent",
+  "function": "SetSharedAnimState",
+  "kind": "exec",
+  "signature": "void SetSharedAnimState(EFortSharedAnimationState State)",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/wrapA1_runtime/UFortAbilitySystemComponent/SetSharedAnimState.inc",
+  "confidence": "high",
+  "address": "0x1427819a0",
+  "status": "ported",
+  "reflection_flags": "0x4080401",
+  "static": false,
+  "access": "protected",
+  "native_body_address": "0x14160d3b0",
+  "notes": "Clears RepSharedAnimInfo.AnimMontage, sets AnimState=State and clears MontageSectionToPlay, then tail-calls OnRep_SharedAnim (0x141609170)."
+ },
+ {
+  "class": "UFortAbilitySystemComponent",
+  "function": "SetSharedAnimStateWithMontage",
+  "kind": "exec",
+  "signature": "void SetSharedAnimStateWithMontage(EFortSharedAnimationState State, UAnimMontage* Montage)",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/wrapA1_runtime/UFortAbilitySystemComponent/SetSharedAnimStateWithMontage.inc",
+  "confidence": "high",
+  "address": "0x142781a20",
+  "status": "ported",
+  "reflection_flags": "0x4080401",
+  "static": false,
+  "access": "protected",
+  "native_body_address": "0x14160d3d0",
+  "notes": "Sets RepSharedAnimInfo.AnimMontage=Montage, AnimState=State, clears MontageSectionToPlay, then tail-calls OnRep_SharedAnim (0x141609170)."
+ }
+]

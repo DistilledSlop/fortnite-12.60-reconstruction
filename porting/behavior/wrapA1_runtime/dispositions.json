@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UCommonLoadGuard",
+  "function": "SetIsLoading",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x1408033f0 = UFortItemDetailsActivatablePanel::HandleItemToDetailTooltipAssetsLoaded (no params, private flags 0x40401) is not declared in any porting/native/Source generated header; the body tail-jumps to it."
+ },
+ {
+  "class": "UCommonWidgetCarouselNavBar",
+  "function": "HandlePageChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x1407f39f0 = UCommonButtonGroup::SelectButtonAtIndex(int32) is not declared in porting/native/Source/CommonUI/Generated/UCommonButtonGroup.h or any other generated header."
+ },
+ {
+  "class": "UCommonWidgetSwitcher",
+  "function": "HandleActiveWidgetDeactivated",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x1406a9dc0 has 6 candidates (AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver); none is declared, and receiver this+0x190 is the OnActiveWidgetDeactivated multicast delegate, not a candidate class."
+ },
+ {
+  "class": "ABuildingActor",
+  "function": "GetCustomState",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x140682ce0 candidates (AFortFrontendLevelScriptActor::GetCommanderPreviewPedestalActor and 5 others) are not declared in generated headers; the call passes the FString return slot in RCX and this+0x518 in RDX, and the candidates return SoftObject, so the FString result cannot be matched to a declared callee."
+ },
+ {
+  "class": "ABuildingGameplayActorSpawnMachine",
+  "function": "GetCooldownLength",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x14070fdf0 = AFortAthenaMutator_DadBro::StartNextSafeZonePhase is not declared; receiver this+0x800 is the CooldownLengthRow struct (not that class), the wrapper passes EDX=0 which the candidate does not take, and its float return cannot be checked against an undeclared callee."
+ },
+ {
+  "class": "ABuildingSMActor",
+  "function": "ForceIntoStructuralGridDuringRuntime_Implementation",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x141bfb860 = ABuildingSMActor::AddToGrid() is not declared in porting/native/Source/FortniteGame/Generated/ABuildingSMActor.h or any generated header (the tested bit 0x10 of +0x6ac is bRegisterWithStructuralGrid)."
+ },
+ {
+  "class": "ABuildingTrap",
+  "function": "GetActivateTrapGameplayCueTag",
+  "status": "blocked",
+  "case": "callee_mismatch",
+  "reason": "callee_mismatch: 0x141ed1800 candidate AFortAIPawn::IsDefender is undeclared and returns bool, but the wrapper dereferences the returned RAX as an object pointer (+0x628) and the receiver ABuildingTrap is not an AFortAIPawn."
+ },
+ {
+  "class": "ABuildingTrap",
+  "function": "GetDelayBeginGameplayCueTag",
+  "status": "blocked",
+  "case": "callee_mismatch",
+  "reason": "callee_mismatch: 0x141ed1800 candidate AFortAIPawn::IsDefender is undeclared and returns bool, but the wrapper dereferences the returned RAX as an object pointer (+0x620) and the receiver ABuildingTrap is not an AFortAIPawn."
+ },
+ {
+  "class": "ABuildingTrap",
+  "function": "GetReloadBeginGameplayCueTag",
+  "status": "blocked",
+  "case": "callee_mismatch",
+  "reason": "callee_mismatch: 0x141ed1800 candidate AFortAIPawn::IsDefender is undeclared and returns bool, but the wrapper dereferences the returned RAX as an object pointer (+0x630) and the receiver ABuildingTrap is not an AFortAIPawn."
+ },
+ {
+  "class": "UFortAbilitySystemComponent",
+  "function": "SetSharedAnimState",
+  "status": "proposed",
+  "case": "reflected_struct_fields_tailcall",
+  "reason": "Clears RepSharedAnimInfo.AnimMontage, sets AnimState=State and clears MontageSectionToPlay, then tail-calls OnRep_SharedAnim (0x141609170)."
+ },
+ {
+  "class": "UFortAbilitySystemComponent",
+  "function": "SetSharedAnimStateWithMontage",
+  "status": "proposed",
+  "case": "reflected_struct_fields_tailcall",
+  "reason": "Sets RepSharedAnimInfo.AnimMontage=Montage, AnimState=State, clears MontageSectionToPlay, then tail-calls OnRep_SharedAnim (0x141609170)."
+ },
+ {
+  "class": "AFortAthenaCreativePortal",
+  "function": "OnUserGeneratedContentRestrictionsChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x143f6c200 = AFortVolume::DestroyVolume() is not declared in any generated header; the receiver is AFortAthenaCreativePortal (not an AFortVolume) and the wrapper passes EDX=1, which DestroyVolume (no params) does not take."
+ },
+ {
+  "class": "AFortAthenaMutator_Arsenic",
+  "function": "GetWinner",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x140682ce0 candidates (AFortFrontendLevelScriptActor::GetCommanderPreviewPedestalActor and 5 others) are not declared in generated headers; the call passes the FString return slot in RCX and this+0x380 in RDX, and the candidates return SoftObject, so the FString result cannot be matched to a declared callee."
+ },
+ {
+  "class": "AFortAthenaMutator_Bagel",
+  "function": "OnRep_CurrentPhase",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x1406a9dc0 candidates are undeclared (StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver); receiver this+0x290 is the OnPhaseChanged multicast delegate, not a candidate class."
+ },
+ {
+  "class": "AFortAthenaMutator_Crucible",
+  "function": "OnInputMethodChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x1406a9dc0 candidates are undeclared; receiver this+0x280 is the OnCrucibleParticipantBestTimesUpdated multicast delegate, not a candidate class, and the byte store at +0x2c goes through the unreflected pointer at this+0x318 with no declared pointee type."
+ },
+ {
+  "class": "AFortAthenaMutator_Mash",
+  "function": "OnRep_CurrentPhase",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x1406a9dc0 candidates are undeclared; receiver this+0x290 is the OnPhaseChanged multicast delegate (AFortAthenaMutator_Mash), not a candidate class."
+ },
+ {
+  "class": "AFortAthenaMutator_SpyRumble",
+  "function": "OnRep_NumKillsForNextPerkUnlock",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x1406a9dc0 candidates are undeclared; receiver this+0x498 has no reflected member (AFortAthenaMutator_SpyRumble own region starts at 0x4a8), so no candidate class can be matched."
+ },
+ {
+  "class": "AFortAthenaMutator_Uranium",
+  "function": "OnPushCartTeamsRolesChanged",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x1406a9dc0 candidates are undeclared; receiver this+0x980 is the OnTeamsRolesChanged multicast delegate, not a candidate class."
+ },
+ {
+  "class": "AFortAthenaMutator_Zinc",
+  "function": "OnRep_CurrentRound",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x1406a9dc0 candidates are undeclared; receiver this+0x518 is the OnRoundAdvanced multicast delegate, not a candidate class."
+ },
+ {
+  "class": "AFortAthenaMutator_Zinc",
+  "function": "OnRep_ZincPhase",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x1406a9dc0 candidates are undeclared; receiver this+0x310 is the OnZincPhaseChanged multicast delegate, not a candidate class."
+ },
+ {
+  "class": "UFortBlueprintAnalytics",
+  "function": "FireQuestAnalyticsEvent_Blueprint",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x141819fc0 = UFortBlueprintAnalytics::FireQuestAnalyticsEvent_BlueprintArray (static) is not declared in UFortBlueprintAnalytics.h or any generated header."
+ },
+ {
+  "class": "UFortCampaignHeroLoadoutItem",
+  "function": "IsTeamPerkProgressive",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x14251b500 = UFortCampaignHeroLoadoutItem::GetTeamPerkItemDefinition() const is not declared in UFortCampaignHeroLoadoutItem.h or any generated header, so the class read at +0x350 cannot be typed."
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "SetHUDScaleMultiplier",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x140684de0 has 6 candidates; 4 are undeclared (AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMesh{BeginCursorOver,EndCursorOver,InputTouchEnd}); the 2 declared ones (AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived) have receiver classes outside UFortClientSettingsRecord and params the wrapper does not pass."
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "SetShowViewerCountEnabled",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x140684de0 has 6 candidates; 4 are undeclared (AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMesh{BeginCursorOver,EndCursorOver,InputTouchEnd}); the 2 declared ones (AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived) have receiver classes outside UFortClientSettingsRecord, and no candidate takes a bool in RDX (wrapper passes bEnable in DL)."
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "SetVoiceChat3DEnabled",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: 0x140684de0 has 6 candidates; 4 are undeclared (AAthenaSkyCap::OnStopMovement, AFortEventLevelNavigationActor::HandleDisplayMesh{BeginCursorOver,EndCursorOver,InputTouchEnd}); the 2 declared ones (AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived) have receiver classes outside UFortClientSettingsRecord, and no candidate takes a bool in RDX (wrapper passes bEnable in DL)."
+ }
+]

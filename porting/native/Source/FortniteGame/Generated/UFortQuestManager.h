@@ -250,6 +250,9 @@ public:
 	bool HasCompletedQuest(UFortQuestItemDefinition* Definition) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasQuestBeenSeenLocally(UFortQuestItem* Quest) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasUnsavedPrimaryMissionProgress() const;
 
 protected:

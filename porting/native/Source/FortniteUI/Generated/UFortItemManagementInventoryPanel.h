@@ -122,5 +122,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool GetShouldPrioritizeFavorites();
 
+private:
+	UFUNCTION()
+	void HandleFilterTabButtonCreated(FName TabNameId, UCommonButton* TabButton);
+public:
+
 };
 

@@ -9,6 +9,7 @@
 #include "EFortFrontendInventoryFilter.h"
 #include "EFortItemManagementMode.h"
 #include "FOnItemViewRefreshed.h"
+#include "UFortAccountItem.h"
 #include "UFortItem.h"
 
 class UFortInventoryContext;
@@ -91,6 +92,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetShouldShowRefundIndicator() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasItemBeenSeen(UFortAccountItem* AccountItem) const;
 
 };
 

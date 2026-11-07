@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UFortWeaponMeleeDualWieldItemDefinition",
+  "function": "GetWeaponMeshOffhandOverride",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Tail-JMP 0x141d26fd0 maps to UCustomCharacterPart::GetSkeletalMesh, which is not declared in any porting/native/Source header; also the receiver at +0xd88 is the SoftObject WeaponMeshOffhandOverride (not a UCustomCharacterPart) and the wrapper passes DL=1 to a callee with no bool parameter."
+ },
+ {
+  "class": "UFortWeaponRangedItemDefinition",
+  "function": "GetBulletShellFXTemplate",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Tail-JMP 0x141a664c0 maps to static UFortAlterationFunctionLibrary::GetAlterationImpactPhysicalSurfaceEffects, which is not declared in any porting/native/Source header; RCX=this+0xaf0 is the SoftObject BulletShellFXTemplate, not the CosmeticMod struct the callee takes first."
+ },
+ {
+  "class": "APartyDisplayManager",
+  "function": "NotifyPrefabChanged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL 0x1406a9dc0 is a shared body (6 reflected candidates in unrelated classes, none a candidate class or ancestor of the receiver); receiver this+0x278 is InlineMulticastDelegate OnPrefabForCurrentlyDisplayedItemChanged, and the call passes a pointer to a 2-field struct."
+ },
+ {
+  "class": "USimplePawnOverlapComponent",
+  "function": "BroadcastActorEnter",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "JMP 0x1406ba850 is a shared body with 3 unrelated candidates (AFortGameState, AFortGameStateZone, UAthenaItemShopSection) whose params do not match a single Object argument; receiver this+0x478 is unreflected (no reflected member, class unknown), so no candidate class is provably the receiver class."
+ },
+ {
+  "class": "UAthenaCustomizationPicker",
+  "function": "HandleFilterTabButtonCreated",
+  "status": "proposed",
+  "case": "wrapper_tailcall_resolved",
+  "reason": "Tail-JMP 0x1407f9c70 mapped to UCommonButton::SetStyle (declared CommonUI/Generated/UCommonButton.h:244); receiver TabButton is UCommonButton*; arg this+0x370 is reflected FilterTabButtonStyle."
+ },
+ {
+  "class": "UAthenaGameOverDisplay",
+  "function": "InGameMatchmakingComplete",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Tail-JMP 0x144bbab60 maps to UAthenaGameOverDisplay::OnSpecialActorListChanged, which is not declared in porting/native/Source/FortniteUI/Generated/UAthenaGameOverDisplay.h (the name occurs only in UAthenaHUDContext.h)."
+ },
+ {
+  "class": "UAthenaGameOverDisplay",
+  "function": "OnToggleFullscreenMap",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1407f3f90 maps to UCommonActivatablePanel::SetActionHandlerStateFromHandle, which is not declared in any porting/native/Source header (CommonUI/Generated/UCommonActivatablePanel.h lacks it)."
+ },
+ {
+  "class": "UAthenaGenericKeyBindsFeedback",
+  "function": "HandleDBNOCarryPlayerChanged",
+  "status": "blocked",
+  "case": "ambiguous_shared_body",
+  "reason": "JMP 0x144bcc7f0 maps to two candidates in the receiver class with no params (UAthenaGenericKeyBindsFeedback::HandleEnterExitVehicle and ::HandleKeybindsChanged); the wrapper cannot be attributed to one, and neither name is declared in any porting/native/Source header."
+ },
+ {
+  "class": "UAthenaGenericKeyBindsFeedback",
+  "function": "HandleGhostModeChanged",
+  "status": "blocked",
+  "case": "ambiguous_shared_body",
+  "reason": "JMP 0x144bcc7f0 maps to two candidates in the receiver class with no params (UAthenaGenericKeyBindsFeedback::HandleEnterExitVehicle and ::HandleKeybindsChanged); the wrapper cannot be attributed to one, and neither name is declared in any porting/native/Source header."
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "ForceVictoryRoyaleUI",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "JMP 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none a candidate class or ancestor of the receiver); receiver this+0x38 is InlineMulticastDelegate OnLocalPlayerWon, and the wrapper passes EDX=0 which no candidate with empty params takes."
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "HandleLocalPlayerDBNOStateChanged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none matching the receiver); receiver this+0x98 is InlineMulticastDelegate OnLocalPlayerDBNOStateChanged."
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "SetPostGameWidgetPlacement",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none matching the receiver); receiver this+0x1d0 is InlineMulticastDelegate OnPostGameWidgetPlacementChange."
+ },
+ {
+  "class": "UAthenaItemSelectorScreenBase",
+  "function": "OnItemSelectionCommited",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Tail-JMP 0x144b4c8d0 maps to UAthenaItemSelectorScreenBase::SaveAndExit(bool), receiver class matches, but SaveAndExit is not declared in any porting/native/Source header."
+ },
+ {
+  "class": "UAthenaItemShopScreen",
+  "function": "HandleNextCategoryAction",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Tail-JMP 0x1407f3a80 maps to UCommonButtonGroup::SelectNextButton(bool), receiver this->TabButtonGroup (UCommonButtonGroup*) matches, but SelectNextButton is not declared in any porting/native/Source header (CommonUI/Generated/UCommonButtonGroup.h lacks it)."
+ },
+ {
+  "class": "UAthenaItemShopScreen",
+  "function": "HandlePrevCategoryAction",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Tail-JMP 0x1407f3ba0 maps to UCommonButtonGroup::SelectPreviousButton(bool), receiver this->TabButtonGroup matches, but SelectPreviousButton is not declared in any porting/native/Source header (CommonUI/Generated/UCommonButtonGroup.h lacks it)."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnBeingRevivedStateChanged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL/JMP 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none a candidate class or ancestor of the receiver); receiver this+0xe8 OnBeingRevivedStateChanged is an InlineMulticastDelegate, so no candidate class matches the receiver."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnDBNOStateChanged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL/JMP 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none a candidate class or ancestor of the receiver); receiver this+0xc8 OnDBNOStateChanged is an InlineMulticastDelegate, so no candidate class matches the receiver."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnDeadStateChanged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL/JMP 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none a candidate class or ancestor of the receiver); receiver this+0xd8 OnDeadStateChanged is an InlineMulticastDelegate, so no candidate class matches the receiver."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnKillScoreChanged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none matching the receiver); receiver this+0x68 is InlineMulticastDelegate OnKillScoreChanged, and this+0x200 is unreflected."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnSquadIdChanged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none matching the receiver); receiver this+0x48 is InlineMulticastDelegate OnSquadIdChanged, and this+0x1e8 is unreflected."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnWeaponChanged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL/JMP 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none a candidate class or ancestor of the receiver); receiver this+0x118 OnWeaponChanged is an InlineMulticastDelegate, so no candidate class matches the receiver."
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetPlayerPawn",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Tail-JMP 0x1419b6d20 maps to AFortPlayerState::GetCurrentPawn() const, which is not declared in any porting/native/Source header (AFortPlayerState.h lacks it); the receiver PlayerState (AFortPlayerStateAthena*) is otherwise compatible."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnCreativeGhostChanged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none matching the receiver); receiver this+0x50 is InlineMulticastDelegate OnCreativeGhostChanged."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnCreativeHeatmapTogged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none matching the receiver); receiver this+0x60 is InlineMulticastDelegate OnCreativeHeatmapToggled."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnCreativeQuickbarActiveChanged",
+  "status": "blocked",
+  "case": "shared_body_no_class_match",
+  "reason": "CALL 0x1406a9dc0 is a shared body (6 unrelated reflected candidates, none matching the receiver); receiver this+0x100 is InlineMulticastDelegate OnCreativeQuickbarActiveChanged."
+ }
+]

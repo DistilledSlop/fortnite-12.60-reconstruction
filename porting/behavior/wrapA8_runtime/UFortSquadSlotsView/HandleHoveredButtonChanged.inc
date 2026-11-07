@@ -1,0 +1,12 @@
+// Behaviour snippet: UFortSquadSlotsView::HandleHoveredButtonChanged (wrapper body; spliced into the generated member function).
+// Original body address: 0x14511f160 (thunk 0x1452ec660). Wrapper shape: null/flag guards, then tail JMP.
+// Callee: 0x1407f7e90 -> UCommonButton::SetIsSelected(bool InSelected, bool bGiveClickFeedback) (declared in porting/native/Source/CommonUI/Generated/UCommonButton.h line 318).
+// Argument positions from the wrapper asm: RDX = HoveredButton (MOVZX EDX,R8B = 1 -> InSelected true); R8B = 1 -> bGiveClickFeedback true. Both true, so the reflected parameter order (bGiveClickFeedback, InSelected) does not change the call.
+// Offset evidence: [RCX+0x348] is a byte flag at object offset 0x348 (this_delta 0). The ItemViewContext interface (TScriptInterface at +0x338, 16 bytes) does not cover it and no declared bool bit sits at 0x348 (bool_bits.json). Use the existing member NativeRecoveredBool_0x348 (member_field, offset 0x348).
+// Header parameter order (authoritative): HandleHoveredButtonChanged(UCommonButton* HoveredButton, int32 ButtonIndex). ButtonIndex (R8) is unused by the wrapper.
+// CONFIDENCE: HIGH
+if (HoveredButton == nullptr || NativeRecoveredBool_0x348)
+{
+    return;
+}
+HoveredButton->SetIsSelected(true, true);

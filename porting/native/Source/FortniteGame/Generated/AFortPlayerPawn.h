@@ -1886,6 +1886,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetPreviousVelocity(FVector OldVelocity);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetStasisMode(EFortPawnStasisMode InStasisMode);
+
 	UFUNCTION(BlueprintCallable)
 	void SetVehicleOverrideExit(bool bIgnoreLaunch);
 

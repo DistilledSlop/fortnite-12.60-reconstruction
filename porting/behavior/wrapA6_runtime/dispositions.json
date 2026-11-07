@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnCreativeQuickbarEnabledChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnCreativeQuickbarEnabledChanged at +0xe0"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnCreativeQuickbarEquippedChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnCreativeQuickbarEquippedChanged at +0x110"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnCreativeQuickMenuDisplayedChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnCreativeQuickMenuDisplayedChanged at +0xc0"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnDropToFloorChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnDropToFloorChanged at +0x70"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnLOSChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnMoveToolLineOfSightBlockingChanged at +0x90"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnMoveToolRotationModified",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnMoveToolRotationModified at +0xd0"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnMoveToolScaleModified",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnMoveToolScaleModified at +0xb0"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnPrecisionChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnPrecisionChanged at +0x80"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnPropLockedInPlacedChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnPropLockInPlaceChanged at +0x130; body also stores a byte to +0x148, which no reflected member covers"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnRotationAxisChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnRotationAxisChanged at +0x30"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "ForwardOnScaleAxisChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnScaleAxisChanged at +0x40"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "HandleOnCreativeModeEnabledChanged",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnCreativeModeEnabledChanged at +0xf0"
+ },
+ {
+  "class": "UFortActivityDetailsView",
+  "function": "HandleNextPanelInput",
+  "status": "proposed",
+  "case": "member_call_tail_jmp",
+  "reason": "Body ported from asm; callee declared in CommonUI engine plugin source (Fortnite14Research CommonUI Public headers), not in the 12.60 generated headers; confidence medium for that reason."
+ },
+ {
+  "class": "UFortActivityDetailsView",
+  "function": "HandlePrevPanelInput",
+  "status": "proposed",
+  "case": "member_call_tail_jmp",
+  "reason": "Body ported from asm; callee declared in CommonUI engine plugin source (Fortnite14Research CommonUI Public headers), not in the 12.60 generated headers; confidence medium for that reason."
+ },
+ {
+  "class": "UFortBladeMenu_MainMenu",
+  "function": "TryPushWidgetAsActivatablePanel",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: UFortUIBlueprintFunctionLibrary::TryPushWidgetAsActivatablePanel (CALL 0x144de4590) is absent from porting/native/Source headers (FortniteUI/Generated/UFortUIBlueprintFunctionLibrary.h); tail JMP 0x140684de0 also has no matching candidate (6 functions in 4 unrelated classes) and its receiver this+0x2d8 is inherited storage; RDX/R8/R9 are clobbered by the CALL"
+ },
+ {
+  "class": "UFortBladeMenu_MainMenu",
+  "function": "TryPushWidgetAsModalPanel",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: UFortUIBlueprintFunctionLibrary::TryPushWidgetAsModalPanel (CALL 0x144de4930) is absent from porting/native/Source headers (FortniteUI/Generated/UFortUIBlueprintFunctionLibrary.h); tail JMP 0x140684de0 also has no matching candidate (6 functions in 4 unrelated classes) and its receiver this+0x2d8 is inherited storage"
+ },
+ {
+  "class": "UFortCollectionBookPrimaryPanel",
+  "function": "OnCollectionBookSectionClicked_Implementation",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x1406a9dc0 walks a TArray at [RCX+8] (multicast-delegate invocation body, 677 bytes) whose 6 candidate functions in 4 unrelated classes match no receiver class; receiver is InlineMulticastDelegate OnCollectionBookSectionClickedDelegate at +0x430; body also stores RDX to LastClickedSection (+0x478)"
+ },
+ {
+  "class": "UFortCollectionBookProgressionRewardDetailInspectWidget",
+  "function": "SetAssociatedLevel",
+  "status": "proposed",
+  "case": "member_null_guard_float_tail_call",
+  "reason": "Body ported from asm; callee declared in CommonUI engine plugin source (Fortnite14Research CommonUI Public headers), not in the 12.60 generated headers; confidence medium for that reason."
+ },
+ {
+  "class": "UFortCMSInfoCarousel",
+  "function": "NavigatePageLeft",
+  "status": "proposed",
+  "case": "member_pair_call_then_tail_call",
+  "reason": "Body ported from asm; callee declared in CommonUI engine plugin source (Fortnite14Research CommonUI Public headers), not in the 12.60 generated headers; confidence medium for that reason."
+ },
+ {
+  "class": "UFortCMSInfoCarousel",
+  "function": "NavigatePageRight",
+  "status": "proposed",
+  "case": "member_pair_call_then_tail_call",
+  "reason": "Body ported from asm; callee declared in CommonUI engine plugin source (Fortnite14Research CommonUI Public headers), not in the 12.60 generated headers; confidence medium for that reason."
+ },
+ {
+  "class": "UFortCollectionBookSectionPanel",
+  "function": "OnSlotButtonHovered",
+  "status": "proposed",
+  "case": "raw_flag_then_member_chain_tail_call",
+  "reason": "Body ported from asm; callee declared in CommonUI engine plugin source (Fortnite14Research CommonUI Public headers), not in the 12.60 generated headers; confidence medium for that reason."
+ },
+ {
+  "class": "UFortCollectionBookProgressionRewardWidget",
+  "function": "SetAssociatedLevel",
+  "status": "proposed",
+  "case": "member_null_guard_float_tail_call",
+  "reason": "Body ported from asm; callee declared in CommonUI engine plugin source (Fortnite14Research CommonUI Public headers), not in the 12.60 generated headers; confidence medium for that reason."
+ },
+ {
+  "class": "UFortCreativeMessageKnobsDialog",
+  "function": "FilterEntriesByIsModified",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: UFortCreativeMessageKnobsDialog::GenerateFilteredEntries (JMP 0x144d77f40) is absent from FortniteUI/Generated/UFortCreativeMessageKnobsDialog.h and from every porting/native/Source header; body also stores bytes to +0x591 and +0x590 (no reflected offset covers them)"
+ },
+ {
+  "class": "UFortCreativeMessageKnobsDialog",
+  "function": "RemoveIsModifiedFilter",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: UFortCreativeMessageKnobsDialog::GenerateFilteredEntries (JMP 0x144d77f40) is absent from FortniteUI/Generated/UFortCreativeMessageKnobsDialog.h and from every porting/native/Source header"
+ },
+ {
+  "class": "UFortCreativeMessageKnobsDialog",
+  "function": "RemoveStringFilter",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: UFortCreativeMessageKnobsDialog::GenerateFilteredEntries (JMP 0x144d77f40) is absent from FortniteUI/Generated/UFortCreativeMessageKnobsDialog.h and from every porting/native/Source header"
+ }
+]

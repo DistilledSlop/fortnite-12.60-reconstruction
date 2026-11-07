@@ -37,5 +37,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetXPRequired() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetAssociatedLevel(int32 Level);
+
 };
 

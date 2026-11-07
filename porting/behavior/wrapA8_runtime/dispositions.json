@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UFortLocalUserEntry",
+  "function": "HandleMenuOpenChanged",
+  "status": "blocked",
+  "case": "tail_callee_receiver_unknown",
+  "reason": "Tail JMP 0x140684de0 with RCX=this+0xb80: +0xb80 is not covered by any reflected member (LocalUserSettingsMenu Object spans +0xb78..+0xb80). Candidates (OnStopMovement, HandleDisplayMesh*, OnRep_Teams, ClientOnPawnRevived) do not match the receiver class and none takes the Bool passed in DL."
+ },
+ {
+  "class": "UFortMissionTrackerList",
+  "function": "HandleSizeEstimateChanged",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "CALL 0x1406a9dc0 with RCX=this+0x298 = OnSizeEstimateChangedDelegate (InlineMulticastDelegate). Shared-body candidates (AFortAthenaMutator_DadBro, UAthenaProfileStatsBase, UFortFrontEndContext, UFortGlobalUIContext) exclude the receiver class."
+ },
+ {
+  "class": "UFortNotificationEntry",
+  "function": "FinishNotificationOutro",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "JMP 0x1406a9dc0 with RCX=this+0x258 = FinishedDisplayingNotification (InlineMulticastDelegate). Shared-body candidates are unrelated classes; none matches the receiver."
+ },
+ {
+  "class": "UFortQuestTrackerList",
+  "function": "HandleSizeEstimateChanged",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "CALL 0x1406a9dc0 with RCX=this+0x280 = OnSizeEstimateChangedDelegate (InlineMulticastDelegate). Shared-body candidates are unrelated classes; none matches the receiver."
+ },
+ {
+  "class": "UFortRelativeAnchorCanvas",
+  "function": "SetZLayerOffset",
+  "status": "blocked",
+  "case": "receiver_class_unknown",
+  "reason": "Tail JMP 0x142fc6030 with RCX = pointer loaded from unreflected +0x128 (no declared pointee type). Candidates UDonutChallengeScreen::ScrollToEndOfChallenges, UFortChatWidget::FocusChatEntry, UFortTierIndicator::ClearPreviewState are declared in no header and cannot be matched to the pointee; the wrapper passes DL=1 but no candidate has a parameter."
+ },
+ {
+  "class": "UFortRealMoneyOfferDetails",
+  "function": "ClearActionOnPurchaseButton",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1407fa9e0 = UCommonButton::SetTriggeringInputAction(InputActionRow Struct); name not declared in any porting/native header, so the 16-byte struct type is unknown."
+ },
+ {
+  "class": "UFortReplayHighlightItemBase",
+  "function": "HandlePlayItemClicked",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "CALL 0x1406a9dc0 with RCX=this+0xb70, which is unreflected (UCommonButton InputActionWidget ends at +0xb70). Receiver class unknown; shared-body candidates are unrelated classes."
+ },
+ {
+  "class": "UFortRadialPicker",
+  "function": "BroadcastPanelClosed",
+  "status": "blocked",
+  "case": "tail_callee_receiver_unknown",
+  "reason": "First CALL 0x1407b7ed0 maps to UCommonActivatableWidget::DeactivateWidget (ancestor, valid). The tail JMP 0x140684de0 uses RCX=this+0x2d8, unreflected, and RDX is clobbered by the CALL; no candidate class matches the receiver."
+ },
+ {
+  "class": "UFortSocialPanelView_UserLists",
+  "function": "HandleNextTabAction_STW",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Receiver ButtonGroup_SocialTabs (UCommonButtonGroup) matches, but UCommonButtonGroup::SelectNextButton (0x1407f3a80) is not declared in porting/native/Source/CommonUI/Generated/UCommonButtonGroup.h."
+ },
+ {
+  "class": "UFortSocialPanelView_UserLists",
+  "function": "HandlePrevTabAction_STW",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Receiver ButtonGroup_SocialTabs (UCommonButtonGroup) matches, but UCommonButtonGroup::SelectPreviousButton (0x1407f3ba0) is not declared in porting/native/Source/CommonUI/Generated/UCommonButtonGroup.h."
+ },
+ {
+  "class": "UFortSocialImportPanel",
+  "function": "ShowPanel",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Static tail JMP 0x144de4930 = UFortUIBlueprintFunctionLibrary::TryPushWidgetAsModalPanel; not declared in porting/native/Source/FortniteUI/Generated/UFortUIBlueprintFunctionLibrary.h or any other header."
+ },
+ {
+  "class": "UFortSquadSlotsView",
+  "function": "HandleHoveredButtonChanged",
+  "status": "proposed",
+  "case": "param_receiver_call_guarded",
+  "reason": "Callee 0x1407f7e90 maps to UCommonButton::SetIsSelected (receiver class match, 2 bool params, declared at UCommonButton.h:318). Null and flag guards translated exactly."
+ },
+ {
+  "class": "UFortSquadSlotsView",
+  "function": "HandleRequestViewInAll",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "CALL 0x1406a9dc0 with RCX=this+0x288 = OnRequestViewInAllEvent (InlineMulticastDelegate). Shared-body candidates are unrelated classes; none matches the receiver."
+ },
+ {
+  "class": "UFortStoreFrontOfferDetailsWidgetBase",
+  "function": "HandleBattlePassPurchaseComplete",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "CALL 0x1406a9dc0 with RCX=this+0x5a0, unreflected (no member covers it). Receiver class unknown; shared-body candidates are unrelated classes."
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetFirstGrantItemDefinition",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Tail JMP 0x1450ae370 = UFortStoreFrontOfferInfo::GetGrantedItemDefinition(ReturnValue, GrantedItemIndex) const; not declared in porting/native/Source/FortniteUI/Generated/UFortStoreFrontOfferInfo.h. Receiver is this (class matches)."
+ },
+ {
+  "class": "UFortStoreSummaryItemButton",
+  "function": "HandleMenuOpenChanged",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "CALL 0x1406a9dc0 with RCX=this+0xb90, unreflected and below the class lowest own offset 0xba0. Receiver class unknown; shared-body candidates are unrelated classes."
+ },
+ {
+  "class": "UFortUIDataConfigurationContext",
+  "function": "AreSocialFeaturesEnabled",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144db86e0 maps only to UFortTierIndicator::ClearPreviewState: not in the receiver class chain (UBlueprintContextBase, USubsystem, UObject) and not declared in any header; the wrapper reads a byte from the returned pointer in RAX."
+ },
+ {
+  "class": "UFortUIDataConfigurationContext",
+  "function": "IsLimitedToES2Features",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144db86e0 maps only to UFortTierIndicator::ClearPreviewState: not in the receiver class chain and not declared in any header; the wrapper reads a byte from the returned pointer in RAX."
+ },
+ {
+  "class": "UFortUIDataConfigurationContext",
+  "function": "IsQuestVOEnabled",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144db86e0 maps only to UFortTierIndicator::ClearPreviewState: not in the receiver class chain and not declared in any header; the wrapper reads a byte from the returned pointer in RAX."
+ },
+ {
+  "class": "UFortUIDataConfigurationContext",
+  "function": "UseSpecificPinataWeapon",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144db86e0 maps only to UFortTierIndicator::ClearPreviewState: not in the receiver class chain and not declared in any header; the wrapper reads a byte from the returned pointer in RAX."
+ },
+ {
+  "class": "UFortUISpecialEventSubsystem",
+  "function": "CallTemporarySpecialUIEvent",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "CALL 0x1406a9dc0 with RCX=this+0x40 = OnTemporarySpecialUIEvent (InlineMulticastDelegate). Shared-body candidates are unrelated classes; none matches the receiver."
+ },
+ {
+  "class": "UFortUISpecialEventSubsystem",
+  "function": "SetCurrentUISpecialEventState",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "Stores dword this+0x50 then CALL 0x1406a9dc0 with RCX=this+0x30 = OnNewUISpecialEventState (InlineMulticastDelegate). Shared-body candidates are unrelated classes; none matches the receiver."
+ },
+ {
+  "class": "UFortUIStateWidget_NUI",
+  "function": "PushContentWidget",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x145169900 = PushContentWidgetAdvanced(Widget, bHideChatWidget, bHideFooter, bHideHeader); not declared in porting/native/Source/FortniteUI/Generated/UFortUIStateWidget_NUI.h (only PushContentWidgetInternal is declared)."
+ },
+ {
+  "class": "UHUDLayoutToolContext",
+  "function": "BroadcastMovedWidget",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "CALL 0x1406a9dc0 with RCX=this+0xc8 = OnWidgetMovedDelegate (InlineMulticastDelegate). Shared-body candidates are unrelated classes; none matches the receiver."
+ },
+ {
+  "class": "UHUDLayoutToolContext",
+  "function": "StartLerping",
+  "status": "blocked",
+  "case": "shared_body_receiver_mismatch",
+  "reason": "CALL 0x1406a9dc0 with RCX=this+0x98 = OnNewViewOffsetLerpDelegate (InlineMulticastDelegate). Shared-body candidates are unrelated classes; none matches the receiver."
+ }
+]

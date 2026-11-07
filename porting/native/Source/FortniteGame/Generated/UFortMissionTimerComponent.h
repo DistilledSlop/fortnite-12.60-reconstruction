@@ -96,6 +96,9 @@ public:
 	bool IsMissionTimerPaused() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMissionTimerSet() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTimerVisible() const;
 
 	UFUNCTION()

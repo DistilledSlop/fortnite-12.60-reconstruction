@@ -1,0 +1,177 @@
+[
+ {
+  "class": "UFortLevelSaveComponent",
+  "function": "OnRep_RestoringStateChanged",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member OnClientBackupRestoreStateChanged (+0x1b0), not a class receiver; RDX is a pointer to the RestoringState byte"
+ },
+ {
+  "class": "AFortLiveBroadcastController",
+  "function": "ClientHideBusButton_Implementation",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member OnHideBusButtonFromServer (+0x2da8), not a class receiver"
+ },
+ {
+  "class": "UFortMatchmakingContext",
+  "function": "SetMatchmakingFlowActive",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member OnMatchmakingFlowChanged (+0x60), not a class receiver; RDX is a pointer to the InFlow byte"
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "DeclareWinnerImmediately",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: AFortMinigame::EndGame (0x14208b4f0) not declared in AFortMinigame.h (only AFortAthenaMutator_Arsenic::EndGame(uint8) exists)"
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "HandleMinigameEnded_Implementation",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member MinigameEndedDelegate (+0x388), not a class receiver"
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "HandleMinigameStarted_Implementation",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member MinigameStartedDelegate (+0x378), not a class receiver"
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "OverridePlayerSpawnLocation_Implementation",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: AFortMinigame::DetermineSpawnLocation (0x142089f90) not declared in AFortMinigame.h; wrapper permutes args R8/R9/stack"
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "SetPvPTeamForPlayer",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: AFortMinigame::SetTeamForPlayer (0x1420a5820) not declared in AFortMinigame.h"
+ },
+ {
+  "class": "UFortMinigameLogicComponent",
+  "function": "HandleMinigameEnded_Implementation",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member MinigameEndedDelegate (+0xd8), not a class receiver"
+ },
+ {
+  "class": "UFortMinigameLogicComponent",
+  "function": "HandleMinigameStarted_Implementation",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member MinigameStartedDelegate (+0xc8), not a class receiver"
+ },
+ {
+  "class": "AFortMissionState",
+  "function": "UpdateUI",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member OnUpdateUI (+0x220), not a class receiver; passes this as the delegate argument"
+ },
+ {
+  "class": "UFortMissionTimerComponent",
+  "function": "IsMissionTimerSet",
+  "status": "proposed",
+  "case": "proposed_wrapper_body",
+  "reason": "Body is a single callee + SETNC compare; callee declared, receiver is this."
+ },
+ {
+  "class": "UFortMissionTimerComponent",
+  "function": "OnRep_TimerVisibilityOverride",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member OnMissionTimerComponentUpdated (+0xb8), not a class receiver; RDX is a pointer to this"
+ },
+ {
+  "class": "UFortMissionTimerComponent",
+  "function": "SetMissionTimeElapsedTimer",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: UFortMissionTimerComponent::SetMissionTimer (0x141f485b0) not declared in UFortMissionTimerComponent.h (only the Get* accessors are)"
+ },
+ {
+  "class": "UFortMobileInteractionComponent",
+  "function": "StopRadialTimer",
+  "status": "proposed",
+  "case": "proposed_wrapper_body",
+  "reason": "Single tail-jump to declared SetRadialOpacity with receiver this."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "EnableTick",
+  "status": "blocked",
+  "case": "blocked_receiver_mismatch",
+  "reason": "receiver_class_mismatch: 0x144630410 reflects only as AFortProjectileBase::OnRep_CurrentSkyTube, but the receiver this+0x28 is AActor::PrimaryActorTick (engine FTickFunction struct), not AFortProjectileBase or an ancestor"
+ },
+ {
+  "class": "UFortNotificationHandler",
+  "function": "ClearNotification_Implementation",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member OnNotificationCleared (+0x28), not a class receiver; the dword read at +0x30 is inside that delegate"
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "SetTowhookAttachState",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x142ee3b30 (SetShieldActor, CacheHoagieVehicle, SelectWidgetToMove, SetData, SetItemManagementScreen x2) is declared in no generated header; RCX is LEA [RSP+0x20] (stack slot, not a class receiver)"
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "SetTowhookProjectile",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x142ee3b30 (same six candidates as SetTowhookAttachState) not declared; RCX is LEA [RSP+0x30] and the returned qword is stored to this+0x15ac (uncovered)"
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "ClientForceWorldInventoryUpdate_Implementation",
+  "status": "proposed",
+  "case": "proposed_wrapper_body",
+  "reason": "Gap member recovered; callee declared; receiver class matches (AFortInventory)."
+ },
+ {
+  "class": "AFortPlayerControllerGameplay",
+  "function": "OnRep_UIMetricsDisplayIndex",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: shared callee 0x1406a9dc0 (candidates StartNextSafeZonePhase, NextStatSet, PrevStatSet, SetSeasonTabVariantPreviewInfo, BroadcastItemReceivedNotificationShown, EnterVehicleDriver) is declared in no generated header; receiver is delegate member OnCreativeUIMetricsDisplayChanged (+0x2160), not a class receiver; the dword at +0x25bc is passed by pointer"
+ },
+ {
+  "class": "AFortPlayerControllerGameplay",
+  "function": "ShowQuicktimeEventWidget",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: UFortCollectionBookSlotButton::PopupMenuClosedWithAction (0x1406934e0) not declared in any generated header; receiver this+0x2248 is not that class"
+ },
+ {
+  "class": "AFortPlayerControllerOutpost",
+  "function": "UpgradeBuilding",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: UFortOutpostFunctionLibrary::GetOutpostBuildingItemDefinition (0x142546320) not in UFortOutpostFunctionLibrary.h; tail callee 0x14255b3e0 has only ServerUpgradeBuilding declared"
+ },
+ {
+  "class": "AFortPlayerMannequin",
+  "function": "RemovePart",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: AFortPlayerMannequin::SetPart (0x141dd9a50) not declared in AFortPlayerMannequin.h"
+ },
+ {
+  "class": "AFortPlayerMannequin",
+  "function": "ResetAthenaCharacterDefAndVariants",
+  "status": "blocked",
+  "case": "blocked_callee_not_declared",
+  "reason": "callee_not_declared: AFortPlayerMannequin::SetAthenaCharacterDefAndVariants (0x141dd8130) not declared in AFortPlayerMannequin.h"
+ }
+]

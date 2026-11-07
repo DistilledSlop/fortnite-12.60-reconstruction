@@ -89,5 +89,10 @@ public:
 	UPROPERTY()
 	UAthenaCosmeticAccountItem* LocalCampaignHeroItem;
 
+private:
+	UFUNCTION()
+	void HandleFilterTabButtonCreated(FName TabNameId, UCommonButton* TabButton);
+public:
+
 };
 

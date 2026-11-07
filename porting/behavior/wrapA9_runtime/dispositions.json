@@ -1,0 +1,23 @@
+[
+ {
+  "class": "UHUDLayoutToolPropertyWidget",
+  "function": "GetCurrentValueAsBool",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Body (0x144c20f40) tail-calls/calls 0x144c20ea0, mapped to UHUDLayoutToolPropertyWidget::GetCurrentValue (float, const); grep of porting/native/Source/FortniteUI/Generated/UHUDLayoutToolPropertyWidget.h for GetCurrentValue finds no declaration (43-line header declares only CurrentWidget)."
+ },
+ {
+  "class": "UHUDLayoutToolPropertyWidget",
+  "function": "GetCurrentValueAsInt",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Body (0x144c20f60) calls 0x144c20ea0, mapped to UHUDLayoutToolPropertyWidget::GetCurrentValue (float, const); not declared in porting/native/Source/FortniteUI/Generated/UHUDLayoutToolPropertyWidget.h. Constants already checked from PE .rdata: 0x1459ffea0=2.0f, 0x1459a86f0=0.5f, so the post-call math is x*2.0f+0.5f, CVTSS2SI (round-to-nearest-even), SAR 1."
+ },
+ {
+  "class": "UPerkIntroScreenWidget",
+  "function": "StartPerkScreenIntro",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "Wrapper does ADD RCX,0x258; XOR EDX,EDX; JMP 0x1406a9dc0. Receiver this+0x258 is OnPerkIntroFinishedEvent (InlineMulticastDelegate), not an object of a candidate class. Six shared candidates (AFortAthenaMutator_DadBro::StartNextSafeZonePhase, UAthenaProfileStatsBase::NextStatSet/PrevStatSet, UFortFrontEndContext::SetSeasonTabVariantPreviewInfo, UFortGlobalUIContext::BroadcastItemReceivedNotificationShown/EnterVehicleDriver); none is the receiver class or an ancestor, so no unique callee."
+ }
+]

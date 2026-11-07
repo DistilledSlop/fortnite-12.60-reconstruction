@@ -59,5 +59,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetVisibleStartTime();
 
+	UFUNCTION(BlueprintCallable)
+	void StopRadialTimer();
+
 };
 

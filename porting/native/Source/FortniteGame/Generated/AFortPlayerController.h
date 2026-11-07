@@ -809,6 +809,9 @@ public:
 	UPROPERTY()
 	bool bIsSavingGadgetLoadout;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x179f): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x179f;
+
 	// table index 112, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UFortClientPilot_Base* BotPilot;
