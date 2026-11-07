@@ -91,7 +91,7 @@
   "value": 5931
  },
  "native_functions_interface_excluded": {
-  "generated_utc": "2026-11-07T18:07:26Z",
+  "generated_utc": "2026-11-07T18:38:20Z",
   "method": "interface functions with an exec_addr and no body at the interface level (implementers carry the bodies); removed from the native denominator",
   "source": "porting/progress/native_interface_excluded.json",
   "value": 252
