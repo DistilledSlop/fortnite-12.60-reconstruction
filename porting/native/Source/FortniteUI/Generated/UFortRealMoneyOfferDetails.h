@@ -88,11 +88,6 @@ public:
 
 private:
 	UFUNCTION(BlueprintCallable)
-	virtual void DeclineMtxPurchase();
-public:
-
-private:
-	UFUNCTION(BlueprintCallable)
 	void SetCanPurchase(bool bInCanPurchase);
 public:
 

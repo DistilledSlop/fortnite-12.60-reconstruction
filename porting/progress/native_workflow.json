@@ -1,15 +1,15 @@
 {
  "table_size": 11407,
- "covered_by_implementation": 410,
+ "covered_by_implementation": 474,
  "validate_only": 61,
  "body_location": {
   "A_inline": 788,
-  "B_direct_single_callee": 6806,
-  "B_direct_multi_candidate": 1312,
-  "C_virtual_target": 2244,
-  "U_no_single_body": 5,
+  "B_direct_single_callee": 8242,
+  "B_direct_multi_candidate": 527,
+  "C_virtual_target": 1594,
+  "U_no_single_body": 4,
   "I_interface_dispatch": 252
  },
- "distinct_real_bodies": 9857,
+ "distinct_real_bodies": 9794,
  "note": "Body locations come from Ghidra thunk decompiles, ctor-derived vtables and wrapper resolution; see porting/NATIVE_PORTING.md. Group B single-callee is about 93% precise and group C 90% on a ported-function ground-truth sample; multi-candidate rows need per-function review."
 }

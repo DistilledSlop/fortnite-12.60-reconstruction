@@ -4,9 +4,7 @@
 
 void UFortPlayerHealthInfoComponent::OnRep_TeamHealthInfoArray()
 {
-	// Exact original shared stub 0x1406801c0.
-	// CONFIDENCE: HIGH
-	return;
+	// Body not recovered: reflection-derived stub.
 }
 
 void UFortPlayerHealthInfoComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

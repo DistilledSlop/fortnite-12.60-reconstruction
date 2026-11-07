@@ -384,9 +384,7 @@ void AFortAthenaVehicle::OnRep_IgnoredBuildingActors()
 
 void AFortAthenaVehicle::OnRep_OnFire()
 {
-	// Exact original shared stub 0x1406801c0.
-	// CONFIDENCE: HIGH
-	return;
+	// Body not recovered: reflection-derived stub.
 }
 
 void AFortAthenaVehicle::OnRep_OverrideWrap()

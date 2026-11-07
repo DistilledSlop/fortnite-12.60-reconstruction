@@ -112,11 +112,6 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable)
-	virtual void SendRealMoneyPurchase();
-public:
-
-protected:
-	UFUNCTION(BlueprintCallable)
 	void SetSecondaryItem(UFortItem* Item);
 public:
 

@@ -163,3 +163,18 @@ Related docs kept: `master_plan.md`, `native_classes_status.md` and `native_clas
   (`porting/progress/native_interface_excluded.json`, applied by `native_status.py` and `refresh_totals.py`; 14,643 -> 14,391).
   The dashboard reads inputs from the committed tree, so commit `totals.json` and the in-scope files before regenerating.
 - **Blocked register:** `behavior/stub_bulk_runtime/blocked.json` lists only genuinely blocked functions, each with `blocker`, `reason`, `unblock`.
+
+### 11.1 Tail-jump thunks: the body is the jump target (found after the first leaf batches)
+
+About 1,700 exec thunks (B ~1,050, C ~650) are `frame advance; JMP target` (the asm ends in a far direct `JMP`). The decompile
+of such a thunk shows the *target's* code, so `build_thunk_table.py` picked "callees" and virtual-call targets from inside the
+real function instead of the target itself; only 40 of the 1,703 previously matched. `porting/resolve_tailjumps.py` finds them
+from the captured thunk asm, captures the targets, follows pure adjustor wrappers and writes `generated/thunk-table/tailjmp.json`;
+`final2.json` was re-pointed (original kept as `final2_pre_tailjmp.json`; rows carry `body_source: thunk_tail_jump`). Group B/C counts
+and the "stub body" detections for these rows changed accordingly: 23 already-ported entries (12 stub, 11 leaf) used the wrong body
+and were removed (blocker `real_body_is_tail_jump_target`, real body recorded). Rerun the script after any new thunk capture.
+- `porting/thunk_receiver.py` gives per-thunk receiver delta, extra direct calls and indirect calls on non-`this` receivers; the
+  work packets print `receiver:` and `CHECK THUNK LOGIC:` lines from it (rebuild packets with `build_work_packets.py`).
+- Before accepting any "stub"/"empty" classification, confirm the thunk does not tail-jump or call anything else.
+- **Body-location counts after re-pointing** (supersede the section 3 table): A inline 788, B single body 8,242, B multi-candidate 527,
+  C virtual target 1,594, I interface 252, U 4 (of 11,407). The multi-candidate backlog shrank from 1,312 to 527.

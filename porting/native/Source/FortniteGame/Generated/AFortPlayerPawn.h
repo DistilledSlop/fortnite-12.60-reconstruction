@@ -1379,9 +1379,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AttemptInstantInteractSearch();
 
-	UFUNCTION(BlueprintCallable)
-	virtual void CancelJumpAbility();
-
 	UFUNCTION(Client, Unreliable)
 	void ClientAcknowledgeVehicleInputState(float Timestamp);
 	void ClientAcknowledgeVehicleInputState_Implementation(float Timestamp);
@@ -1517,7 +1514,7 @@ public:
 	float GetWaterImmersionDepth() const;
 
 	UFUNCTION()
-	virtual void HandleInStasis();
+	void HandleInStasis();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasControlledRCPawn() const;
@@ -1581,9 +1578,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual bool LocalIsTryingToGetPickup();
 
-	UFUNCTION(BlueprintCallable)
-	virtual void LocalThrowCarriedPlayer();
-
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void ManualReviveFromDBNO(TSubclassOf<UGameplayEffect> ReviveGameplayEffectsOverride);
 
@@ -1640,7 +1634,7 @@ public:
 	void OnRep_IsInAnyStorm();
 
 	UFUNCTION()
-	virtual void OnRep_IsInsideSafeZone();
+	void OnRep_IsInsideSafeZone();
 
 	UFUNCTION()
 	void OnRep_IsInWaterVolume();

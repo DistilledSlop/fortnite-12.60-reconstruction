@@ -999,10 +999,8 @@ public:
 	UFUNCTION()
 	void OnRep_IsDBNO();
 
-protected:
 	UFUNCTION()
-	virtual void OnRep_IsKnockedBack();
-public:
+	void OnRep_IsKnockedBack();
 
 	UFUNCTION()
 	void OnRep_JumpFlashCount();
@@ -1020,7 +1018,7 @@ public:
 	virtual void OnRep_MovingEmoteFollowingOnly();
 
 	UFUNCTION()
-	virtual void OnRep_PawnUniqueID();
+	void OnRep_PawnUniqueID();
 
 	UFUNCTION()
 	void OnRep_PushMomentum();

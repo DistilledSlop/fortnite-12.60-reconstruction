@@ -644,9 +644,7 @@ void AFortPawn::OnRep_IsDBNO()
 
 void AFortPawn::OnRep_IsKnockedBack()
 {
-	// Exact original shared stub 0x1406801c0.
-	// CONFIDENCE: HIGH
-	return;
+	// Body not recovered: reflection-derived stub.
 }
 
 void AFortPawn::OnRep_JumpFlashCount()
@@ -680,9 +678,7 @@ void AFortPawn::OnRep_MovingEmoteFollowingOnly()
 
 void AFortPawn::OnRep_PawnUniqueID()
 {
-	// Exact original shared stub 0x1406801c0.
-	// CONFIDENCE: HIGH
-	return;
+	// Body not recovered: reflection-derived stub.
 }
 
 void AFortPawn::OnRep_PushMomentum()

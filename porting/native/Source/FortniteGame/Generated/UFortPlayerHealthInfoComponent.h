@@ -24,10 +24,8 @@ public:
 	UPROPERTY(Transient)
 	TMap<uint8, AFortTeamHealthInfo*> TeamInfoToTeamHealthMap;
 
-private:
 	UFUNCTION()
-	virtual void OnRep_TeamHealthInfoArray();
-public:
+	void OnRep_TeamHealthInfoArray();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

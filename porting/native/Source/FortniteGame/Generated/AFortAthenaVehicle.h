@@ -818,10 +818,8 @@ public:
 	UFUNCTION()
 	void OnRep_IgnoredBuildingActors();
 
-protected:
 	UFUNCTION()
-	virtual void OnRep_OnFire();
-public:
+	void OnRep_OnFire();
 
 	UFUNCTION()
 	void OnRep_OverrideWrap();

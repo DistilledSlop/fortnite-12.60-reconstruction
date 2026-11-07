@@ -27,15 +27,6 @@ void AFortPlayerPawn::AttemptInstantInteractSearch()
 	OnAttemptedInstantInteractSearch.Broadcast();
 }
 
-void AFortPlayerPawn::CancelJumpAbility()
-{
-	// Behaviour snippet: AFortPlayerPawn::CancelJumpAbility (body only; spliced into the generated member function).
-	// Original address: 0x141a128d0 (thunk 0x142a7b160).
-	// asm: MOV RAX,[+0x6f0]; RET (+0x6f0 = DBNOLandingSound, reflected on AFortPawn). Void function; the load into RAX has no store and no observable effect.
-	// CONFIDENCE: HIGH
-	return;
-}
-
 void AFortPlayerPawn::ClientAcknowledgeVehicleInputState_Implementation(float Timestamp)
 {
 	// CONFIDENCE: high; original14230e450 MOVSS stores XMM1 at pawn+0x121c.
@@ -466,11 +457,7 @@ float AFortPlayerPawn::GetWaterImmersionDepth() const
 
 void AFortPlayerPawn::HandleInStasis()
 {
-	// Behaviour snippet: AFortPlayerPawn::HandleInStasis (body only; spliced into the generated member function).
-	// Original address: 0x141a418a0 (thunk 0x142a7cc50).
-	// asm: MOV RAX,[+0x280]; RET (+0x280 = CharacterMovement, reflected on ACharacter). Void function; the load into RAX has no store and no observable effect.
-	// CONFIDENCE: HIGH
-	return;
+	// Body not recovered: reflection-derived stub.
 }
 
 bool AFortPlayerPawn::HasControlledRCPawn() const
@@ -660,15 +647,6 @@ bool AFortPlayerPawn::LocalIsTryingToGetPickup()
 	return NativeRecoveredPointer_0x2680 != 0;
 }
 
-void AFortPlayerPawn::LocalThrowCarriedPlayer()
-{
-	// Behaviour snippet: AFortPlayerPawn::LocalThrowCarriedPlayer (body only; spliced into the generated member function).
-	// Original address: 0x141a128d0 (thunk 0x142a7d6d0).
-	// asm: MOV RAX,[+0x6f0]; RET (+0x6f0 = DBNOLandingSound, shared body). Void function; the load into RAX has no store and no observable effect.
-	// CONFIDENCE: HIGH
-	return;
-}
-
 void AFortPlayerPawn::ManualReviveFromDBNO(TSubclassOf<UGameplayEffect> ReviveGameplayEffectsOverride)
 {
 	// CONFIDENCE: HIGH; shared exec wrapper calls the bare-return native body.
@@ -687,35 +665,7 @@ void AFortPlayerPawn::OnRep_AccelerationPack()
 
 void AFortPlayerPawn::OnRep_AccelerationZPack()
 {
-	// Behaviour snippet: AFortPlayerPawn::OnRep_AccelerationZPack (body only; spliced into the generated member function).
-	// Thunk address: 0x142a7dbb0 (exec wrapper, no declared params).
-	// Original body address: 0x1420ee770 (real 57-byte writer, shared with OnRep_AccelerationPack; not a stub).
-	// Evidence: thunk passes RCX = *(this+0x280) and RDX = local 12-byte struct {qword from Sub+0x1e2c, float Z}, where
-	// Z = clamp((int8)this[0x1068] + 127) / 254, then Z * 8192 - 4096. Body writes Sub+0x22c/+0x234/+0x1e2c/+0x1e34,
-	// sets bit 0x8 at Sub+0x1e38 and bit 0x40 at Sub+0x38b. Sub is the sub-object at +0x280 (class unresolved), so raw offsets.
-	// CONFIDENCE: MEDIUM
-	uint8* Raw = reinterpret_cast<uint8*>(this);
-	uint8* Sub = *reinterpret_cast<uint8**>(Raw + 0x280);
-	uint8 Pack[12];
-	FMemory::Memcpy(Pack, Sub + 0x1e2c, 8);
-	float Norm = ((float)(int)*reinterpret_cast<int8*>(Raw + 0x1068) + 127.0f) * 0.003937008f;
-	float Clamped = 0.0f;
-	if (Norm >= 0.0f)
-	{
-		Clamped = Norm;
-		if (Norm >= 1.0f)
-		{
-			Clamped = 1.0f;
-		}
-	}
-	float Z = Clamped * 8192.0f - 4096.0f;
-	FMemory::Memcpy(Pack + 8, &Z, 4);
-	FMemory::Memcpy(Sub + 0x22c, Pack, 8);
-	FMemory::Memcpy(Sub + 0x234, Pack + 8, 4);
-	FMemory::Memcpy(Sub + 0x1e2c, Pack, 8);
-	FMemory::Memcpy(Sub + 0x1e34, Pack + 8, 4);
-	Sub[0x1e38] |= 0x8;
-	Sub[0x38b] |= 0x40;
+	// Body not recovered: reflection-derived stub.
 }
 
 void AFortPlayerPawn::OnRep_AnimBPOverride()
@@ -817,11 +767,7 @@ void AFortPlayerPawn::OnRep_IsInAnyStorm()
 
 void AFortPlayerPawn::OnRep_IsInsideSafeZone()
 {
-	// Behaviour snippet: AFortPlayerPawn::OnRep_IsInsideSafeZone (body only; spliced into the generated member function).
-	// Original address: 0x141a128d0 (thunk 0x142a7de10).
-	// asm: MOV RAX,[+0x6f0]; RET (+0x6f0 = DBNOLandingSound, shared body). Void function; the load into RAX has no store and no observable effect.
-	// CONFIDENCE: HIGH
-	return;
+	// Body not recovered: reflection-derived stub.
 }
 
 void AFortPlayerPawn::OnRep_IsInWaterVolume()

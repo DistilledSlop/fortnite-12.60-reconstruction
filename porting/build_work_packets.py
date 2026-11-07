@@ -22,6 +22,8 @@ import os
 import re
 import sys
 import time
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import thunk_receiver
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 
@@ -381,6 +383,23 @@ def build_packet(addr, served, cap, names, nf, layout, trow):
         else:
             L.append(f"   - signature: `{s['fn']}{sig}`")
             L.append(f"   - flags: {flags}")
+        ri = thunk_receiver.receiver_info(s["thunk"], addr)
+        if ri is None:
+            L.append("   - receiver: thunk asm not captured (capture it with probe_callees.py before trusting offsets)")
+        else:
+            wd = sum(r.get("this_delta") or 0 for r in s["resolved"] if norm(r.get("real")) == addr)
+            tot = ri["delta"] + wd
+            L.append(f"   - receiver: body `this` = object + {hex(tot)} (thunk {hex(ri['delta'])} + adjustor {hex(wd)});"
+                     " field offsets in the body asm are RELATIVE to that, add it to get the object offset"
+                     " (porting/lookup_offset.py CLASS 0xOBJOFF)")
+            flags = []
+            if ri["extra_calls"]:
+                flags.append("non-helper calls in thunk " + ", ".join(ri["extra_calls"][:4]))
+            if ri.get("foreign_virtuals"):
+                flags.append(f"{ri['foreign_virtuals']} indirect call(s) on a receiver that is not `this` (an argument or loaded object): "
+                             "the thunk likely inlines logic (interface query, compare, cast)")
+            if flags:
+                L.append("   - CHECK THUNK LOGIC: " + "; ".join(flags) + " -> read the thunk asm before porting the body alone")
         for r in s["resolved"]:
             if (r.get("entry") != addr) or r.get("chain") or r.get("this_delta") or r.get("forward_kind"):
                 bits = [f"entry `{r.get('entry')}`"]

@@ -44,10 +44,5 @@ protected:
 	virtual void OnEventCinematicVideoFinished();
 public:
 
-private:
-	UFUNCTION()
-	virtual void StreamedVideoOnMediaPlayerEndReached();
-public:
-
 };
 

@@ -33,9 +33,6 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ItemListData, SaveGame)
 	TArray<FMinigameItemData> ItemListData;
 
-	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
-	virtual void ClearItems();
-
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumItems() const;
 

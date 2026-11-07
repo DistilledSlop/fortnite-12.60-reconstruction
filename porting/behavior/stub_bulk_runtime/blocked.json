@@ -264,5 +264,235 @@
     "body": "0x14070f440",
     "thunk": "0x14293bc30",
     "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortAthenaVehicle::OnRep_OnFire",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x1427a52f0 tail-jumps to 0x14191d7f0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x14191d7f0 (non-stub; read porting/generated/work-packets/0x14191d7f0.md)",
+    "body": "0x14191d7f0",
+    "thunk": "0x1427a52f0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortGameStateBase::OnRep_TimeOfDayManager",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142924ad0 tail-jumps to 0x141eab4b0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x141eab4b0 (non-stub; read porting/generated/work-packets/0x141eab4b0.md)",
+    "body": "0x141eab4b0",
+    "thunk": "0x142924ad0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortMinigameItemListComponent::ClearItems",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x1429d1df0 tail-jumps to 0x141ca83d0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x141ca83d0 (non-stub; read porting/generated/work-packets/0x141ca83d0.md)",
+    "body": "0x141ca83d0",
+    "thunk": "0x1429d1df0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortPawn::OnRep_IsKnockedBack",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a1ebc0 tail-jumps to 0x14233c700; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x14233c700 (non-stub; read porting/generated/work-packets/0x14233c700.md)",
+    "body": "0x14233c700",
+    "thunk": "0x142a1ebc0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortPawn::OnRep_PawnUniqueID",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a1ec40 tail-jumps to 0x14233ce50; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x14233ce50 (non-stub; read porting/generated/work-packets/0x14233ce50.md)",
+    "body": "0x14233ce50",
+    "thunk": "0x142a1ec40",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortPhysicsPawn::OnRep_GravityMultiplier",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a270f0 tail-jumps to 0x14233a010; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x14233a010 (non-stub; read porting/generated/work-packets/0x14233a010.md)",
+    "body": "0x14233a010",
+    "thunk": "0x142a270f0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortPlayerHealthInfoComponent::OnRep_TeamHealthInfoArray",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a706f0 tail-jumps to 0x142420c50; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x142420c50 (non-stub; read porting/generated/work-packets/0x142420c50.md)",
+    "body": "0x142420c50",
+    "thunk": "0x142a706f0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortBaseButton::ForceClick",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x1452042d0 tail-jumps to 0x144d777b0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x144d777b0 (non-stub; read porting/generated/work-packets/0x144d777b0.md)",
+    "body": "0x144d777b0",
+    "thunk": "0x1452042d0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortBaseButton::OnButtonClicked",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x1452042d0 tail-jumps to 0x144d777b0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x144d777b0 (non-stub; read porting/generated/work-packets/0x144d777b0.md)",
+    "body": "0x144d777b0",
+    "thunk": "0x1452042d0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortEventLevelScreen::StreamedVideoOnMediaPlayerEndReached",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x14522f670 tail-jumps to 0x144d68860; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x144d68860 (non-stub; read porting/generated/work-packets/0x144d68860.md)",
+    "body": "0x144d68860",
+    "thunk": "0x14522f670",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortRealMoneyOfferDetails::DeclineMtxPurchase",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x1452bdc50 tail-jumps to 0x1450a9fc0; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x1450a9fc0 (non-stub; read porting/generated/work-packets/0x1450a9fc0.md)",
+    "body": "0x1450a9fc0",
+    "thunk": "0x1452bdc50",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortStoreFrontOfferDetailsWidgetBase::SendRealMoneyPurchase",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x1452f3050 tail-jumps to 0x1450ca940; the earlier port used 0x1406801c0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x1450ca940 (non-stub; read porting/generated/work-packets/0x1450ca940.md)",
+    "body": "0x1450ca940",
+    "thunk": "0x1452f3050",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortPlayerControllerGameplay::OnRep_GhostModeRepData",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a65c00 tail-jumps to 0x1423e0070; the earlier port used 0x1419d6590 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x1423e0070 (non-stub; read porting/generated/work-packets/0x1423e0070.md)",
+    "body": "0x1423e0070",
+    "thunk": "0x142a65c00",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortPlayerControllerZone::ResurrectPlayer",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a707b0 tail-jumps to 0x1423e7040; the earlier port used 0x1419d5f00 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x1423e7040 (non-stub; read porting/generated/work-packets/0x1423e7040.md)",
+    "body": "0x1423e7040",
+    "thunk": "0x142a707b0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortPlayerPawn::CancelJumpAbility",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a7b160 tail-jumps to 0x14230c960; the earlier port used 0x141a128d0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x14230c960 (non-stub; read porting/generated/work-packets/0x14230c960.md)",
+    "body": "0x14230c960",
+    "thunk": "0x142a7b160",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortPlayerPawn::HandleInStasis",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a7cc50 tail-jumps to 0x14232b1f0; the earlier port used 0x141a418a0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x14232b1f0 (non-stub; read porting/generated/work-packets/0x14232b1f0.md)",
+    "body": "0x14232b1f0",
+    "thunk": "0x142a7cc50",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortPlayerPawn::LocalThrowCarriedPlayer",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a7d6d0 tail-jumps to 0x142333900; the earlier port used 0x141a128d0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x142333900 (non-stub; read porting/generated/work-packets/0x142333900.md)",
+    "body": "0x142333900",
+    "thunk": "0x142a7d6d0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortPlayerPawn::OnRep_IsInsideSafeZone",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a7de10 tail-jumps to 0x14233c610; the earlier port used 0x141a128d0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x14233c610 (non-stub; read porting/generated/work-packets/0x14233c610.md)",
+    "body": "0x14233c610",
+    "thunk": "0x142a7de10",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UPocketLevelInstance::HandlePocketLevelLoaded",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142aa2140 tail-jumps to 0x141bacf40; the earlier port used 0x140d91ec0 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x141bacf40 (non-stub; read porting/generated/work-packets/0x141bacf40.md)",
+    "body": "0x141bacf40",
+    "thunk": "0x142aa2140",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortWeaponRanged_Ostrich::PlayReloadAnim",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142b51e20 tail-jumps to 0x1426d9a70; the earlier port used 0x141c07d60 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x1426d9a70 (non-stub; read porting/generated/work-packets/0x1426d9a70.md)",
+    "body": "0x1426d9a70",
+    "thunk": "0x142b51e20",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortGameEventNotifications::HandleNotificationUpdateFinished",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x145249cc0 tail-jumps to 0x144ec1860; the earlier port used 0x140743d00 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x144ec1860 (non-stub; read porting/generated/work-packets/0x144ec1860.md)",
+    "body": "0x144ec1860",
+    "thunk": "0x145249cc0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "ABuildingGameplayActorSpawnChip::OnRep_RebootCardReplicatedState",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x1427443d0 tail-jumps to 0x141bd3dd0; the earlier port used 0x141baa080 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x141bd3dd0 (non-stub; read porting/generated/work-packets/0x141bd3dd0.md)",
+    "body": "0x141bd3dd0",
+    "thunk": "0x1427443d0",
+    "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "AFortPlayerPawn::OnRep_AccelerationZPack",
+    "kind": "exec",
+    "blocker": "real_body_is_tail_jump_target",
+    "reason": "Thunk 0x142a7dbb0 tail-jumps to 0x142339320; the earlier port used 0x1420ee770 (a callee/virtual target found inside the jump target's decompile), so the empty/stub body was wrong.",
+    "unblock": "Port the real body 0x142339320 (non-stub; read porting/generated/work-packets/0x142339320.md)",
+    "body": "0x142339320",
+    "thunk": "0x142a7dbb0",
+    "note": "previously ported in error; removed"
   }
 ]

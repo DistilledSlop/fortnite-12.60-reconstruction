@@ -34,10 +34,8 @@ public:
 	UFUNCTION()
 	void OnRep_StormShield();
 
-protected:
 	UFUNCTION()
-	virtual void OnRep_TimeOfDayManager();
-public:
+	void OnRep_TimeOfDayManager();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
