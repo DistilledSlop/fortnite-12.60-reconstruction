@@ -141,3 +141,25 @@ print(len(ex), len(ex-epset), len(ex-epset-done))   # 20574 14643 11407
 ```
 
 Related docs kept: `master_plan.md`, `native_classes_status.md` and `native_class_coverage.md` (class and type promotion, not function bodies), `decompilation_notes.md` (decompile quality; long, historical), `gen_native_classes.md`, `binary_analysis.md`.
+
+## 11. Receiver adjustment and thunk-logic checks (learned from the layout-recovery pass)
+
+- **Body offsets are relative to the body's `this`, not the object.** An exec thunk may `ADD RCX,N` before the call (secondary-vptr or
+  interface dispatch: `MOV RAX,[RCX]; CALL [RAX+slot]` after `ADD RCX,N`), and the vtable target may itself be an adjustor
+  (`ADD RCX,M; JMP body`, which `resolve_wrappers.py` records as `resolved[].this_delta`). Object offset = thunk delta + wrapper
+  `this_delta` + the asm offset. Example: Octopus `IsBoosting` reads `[RCX+0xc8]` in body `0x141b720c0`; the real byte is at
+  `0x3b0 + 0xc40 + 0xc8 = 0x10b8`. `porting/audit_receiver_adjust.py` lists adjusted thunks; `porting/lookup_offset.py CLASS 0xOFF`
+  shows the reflected member (own or generated ancestor) covering an object offset. `work-packets` do not yet carry the delta: compute it.
+- **Thunks can contain the function.** Before trusting a body, read the thunk asm: extra compares, casts, or interface calls on
+  arguments mean the logic is inlined in the thunk and the called body is only a helper (`AFortAthenaMutator_Arsenic::IsPawnAnInfected`,
+  `UFortWorker::GetWorkerTypeBP`). Struct parameter decoding adds benign virtual calls; judge by whether the result depends on them.
+- **Undeclarable layout.** A field in inherited engine/generated parent storage, a bit owned by a declared bitfield, or a pointee class
+  that is not recovered is accessed with explicit raw offsets from `this` (byte-exact to the asm, commented). Unreflected gaps inside a
+  class's own region become typed `member_field` entries named `NativeRecovered<Kind>_0x<objectoffset>`. Never invent a member inside
+  inherited storage.
+- **Generator limits found:** classes owned by a policy (`UCommonButton`) reject manifest members/bodies; delegate types and enums with no
+  emitted declaration make a function "not emitted"; snippet comments must not contain `not recovered`, `stub body`, `TODO`, `placeholder`.
+- **Denominator:** interface functions (group I, 252) have no body and are excluded from the native denominator
+  (`porting/progress/native_interface_excluded.json`, applied by `native_status.py` and `refresh_totals.py`; 14,643 -> 14,391).
+  The dashboard reads inputs from the committed tree, so commit `totals.json` and the in-scope files before regenerating.
+- **Blocked register:** `behavior/stub_bulk_runtime/blocked.json` lists only genuinely blocked functions, each with `blocker`, `reason`, `unblock`.
