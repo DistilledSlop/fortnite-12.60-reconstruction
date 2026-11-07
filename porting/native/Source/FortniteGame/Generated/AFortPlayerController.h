@@ -1954,6 +1954,9 @@ public:
 	UFUNCTION()
 	void StartZeroingCameraRoll();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SuppressEventNotifications(bool bSuppress);
+
 	UFUNCTION(Exec)
 	void TestStreamedVideo(FString URLInQuotes);
 

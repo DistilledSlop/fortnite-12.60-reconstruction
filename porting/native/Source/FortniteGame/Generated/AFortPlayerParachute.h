@@ -14,6 +14,7 @@ class UAthenaGliderItemDefinition;
 class UAudioComponent;
 class UFortPlayerGliderAnimSet;
 class UParticleSystemComponent;
+class USkeletalMeshComponent;
 class USkeletalMeshComponentBudgeted;
 class USoundBase;
 
@@ -119,6 +120,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPlayerPawn* GetFortPlayerPawn() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USkeletalMeshComponent* GetParachuteRootMesh() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsGliderFullyDeployedAccordingToAnim() const;

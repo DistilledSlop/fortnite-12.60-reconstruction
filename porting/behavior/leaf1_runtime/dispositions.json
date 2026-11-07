@@ -1,0 +1,347 @@
+[
+  {
+    "class": "UCommonAnimatedSwitcher",
+    "function": "SetDisableTransitionAnimation",
+    "status": "skipped",
+    "reason": "Stores DL to this+0x188; no declared member at that offset in class chain (no header or reflection field)."
+  },
+  {
+    "class": "UCommonButton",
+    "function": "GetSelected",
+    "status": "skipped",
+    "reason": "Reads bit 0 of byte this+0x2a1; no declared member or bool bit at that offset in chain."
+  },
+  {
+    "class": "UCommonButton",
+    "function": "GetSingleMaterialStyleMID",
+    "status": "proposed"
+  },
+  {
+    "class": "UCommonButtonGroup",
+    "function": "GetSelectedButtonIndex",
+    "status": "skipped",
+    "reason": "Reads dword this+0xc0; no declared member at that offset in chain."
+  },
+  {
+    "class": "UCommonInputSubsystem",
+    "function": "GetCurrentInputType",
+    "status": "proposed"
+  },
+  {
+    "class": "AFortHoagieAudioController",
+    "function": "CacheAudioComponents",
+    "status": "skipped",
+    "reason": "Stores InRotor to +0x230 (reflected EngineAudio) and InEngine to +0x238 (RotorAudio): param/member names disagree; no header."
+  },
+  {
+    "class": "UMeshNetworkSubsystem",
+    "function": "GetConnectedToRoot",
+    "status": "proposed"
+  },
+  {
+    "class": "UMeshNetworkSubsystem",
+    "function": "GetGameServerNodeType",
+    "status": "proposed"
+  },
+  {
+    "class": "UMeshNetworkSubsystem",
+    "function": "GetMeshNetworkNodeType",
+    "status": "proposed"
+  },
+  {
+    "class": "UFortMediaSubtitlesPlayer",
+    "function": "SetSubtitles",
+    "status": "proposed"
+  },
+  {
+    "class": "UTimeSynthComponent",
+    "function": "GetMaxActiveClipLimit",
+    "status": "skipped",
+    "reason": "Reads dword this+0x838; no declared member at that offset; no generated header."
+  },
+  {
+    "class": "ABattleMapPawnReplay",
+    "function": "HandlePlaybackTimeChanged",
+    "status": "skipped",
+    "reason": "Writes constant 1 to this+0x588 (NowTime unused); no declared member at that offset."
+  },
+  {
+    "class": "ABuildingFloor",
+    "function": "IsBalcony",
+    "status": "skipped",
+    "reason": "Tests bit 1 (SHR 1) of dword this+0xb30; only declared bool at that offset is bShouldIgnoreForHorizontalHotspotSearch (mask 1)."
+  },
+  {
+    "class": "ABuildingFillFloor",
+    "function": "InterpToStopCallback",
+    "status": "skipped",
+    "reason": "Writes constant 1 to this+0x8b9; no declared member at that offset."
+  },
+  {
+    "class": "ABuildingGameplayActorSpawnChip",
+    "function": "OnRep_RebootCardReplicatedState",
+    "status": "skipped",
+    "reason": "Void function whose body only loads byte this+0x1c5 and discards it; no declared member at that offset."
+  },
+  {
+    "class": "ABuildingProp_LockDevice",
+    "function": "Close",
+    "status": "skipped",
+    "reason": "Reflected signature is void but body returns bit 6 of byte this+0x1d0; no declared member at that offset."
+  },
+  {
+    "class": "ABuildingProp_LockDevice",
+    "function": "Open",
+    "status": "skipped",
+    "reason": "Reflected signature is void but body returns bit 5 of byte this+0x1d0; no declared member at that offset."
+  },
+  {
+    "class": "UBulletWhipTrackerComponentBase",
+    "function": "UpdateVelocity",
+    "status": "skipped",
+    "reason": "Struct copy of 12-byte vector parameter into this+0xc0/+0xc8; no declared member at those offsets."
+  },
+  {
+    "class": "UFortAbilityTask_ApplyRootMotionFallingBoostForce",
+    "function": "OnLandedCallback",
+    "status": "skipped",
+    "reason": "Writes constant 1 to this+0xe0; no declared member at that offset in chain."
+  },
+  {
+    "class": "UFortAIGoalProvider",
+    "function": "GetEncounterInfo",
+    "status": "skipped",
+    "reason": "Returns pointer at this+0x18; no declared member at that offset (no reflected fields, header has none)."
+  },
+  {
+    "class": "AFortAthenaAntelopeVehicle",
+    "function": "CacheAudioPointers",
+    "status": "skipped",
+    "reason": "Parameter-to-member pairing inconsistent: stores land in reversed-named CachedAudio* slots (e.g. InAudioBoost into CachedAudioWind); cannot verify."
+  },
+  {
+    "class": "AFortAthenaAntelopeVehicle",
+    "function": "CacheParticleComponentPointers",
+    "status": "skipped",
+    "reason": "Parameter-to-member pairing inconsistent (e.g. WheelSlide stored into PSC_TrailRight slot); cannot verify."
+  },
+  {
+    "class": "AFortAthenaAntelopeVehicle",
+    "function": "IsBoosting",
+    "status": "skipped",
+    "reason": "Reads byte this+0xd7c; no declared member at that offset."
+  },
+  {
+    "class": "AFortAthenaFerretVehicle",
+    "function": "CacheAudioVoicePointers",
+    "status": "skipped",
+    "reason": "Parameter-to-member pairing inconsistent (e.g. WindFirstPerson stored into FortAudioDive slot); cannot verify."
+  },
+  {
+    "class": "AFortAthenaFerretVehicle",
+    "function": "CacheParticleComponentPointers",
+    "status": "skipped",
+    "reason": "Parameter-to-member pairing inconsistent (e.g. TopLeft stored into PSC_TrailBottomRight slot); cannot verify."
+  },
+  {
+    "class": "AFortAthenaFerretVehicle",
+    "function": "IsBoosting",
+    "status": "skipped",
+    "reason": "Reads byte this+0xc8; no declared member at that offset."
+  },
+  {
+    "class": "AFortAthenaDoghouseVehicle",
+    "function": "IsAileronRolling",
+    "status": "skipped",
+    "reason": "Reads byte this+0xc8; no declared member at that offset in chain."
+  },
+  {
+    "class": "AFortAthenaGoatVehicle",
+    "function": "CacheParticleComponentPointers",
+    "status": "skipped",
+    "reason": "Parameter-to-member pairing inconsistent (TrailRight stored into PSC_WheelDust slot); cannot verify."
+  },
+  {
+    "class": "AFortAthenaJackalVehicle",
+    "function": "CacheAudioPointers",
+    "status": "skipped",
+    "reason": "Parameter-to-member pairing inconsistent (InAudioWind stored into CacheAudioMovement slot); cannot verify."
+  },
+  {
+    "class": "AFortAthenaMutator_Arsenic",
+    "function": "IsPawnAnInfected",
+    "status": "skipped",
+    "reason": "Ignores Pawn param and returns raw Byte InfectedTeam (+0x441) as bool; mapping not verifiable."
+  },
+  {
+    "class": "AFortAthenaMutator_Disco",
+    "function": "IsRespawningAllowed",
+    "status": "skipped",
+    "reason": "Nested pointer dereference (this+0x260 -> +0x1eb9) and compare with this+0x3f0; not a leaf field read."
+  },
+  {
+    "class": "AFortAthenaMutator_Infiltration",
+    "function": "GetAttackingTeam",
+    "status": "skipped",
+    "reason": "Reads byte this+0x80; no declared member at that offset."
+  },
+  {
+    "class": "AFortAthenaMutator_Infiltration",
+    "function": "GetDefendingTeam",
+    "status": "skipped",
+    "reason": "Reads byte this+0x8c; no declared member at that offset."
+  },
+  {
+    "class": "AFortAthenaSKPushVehicle",
+    "function": "CacheAudioPointers",
+    "status": "skipped",
+    "reason": "Parameter-to-member pairing inconsistent (InAudioWind stored into CacheAudioMovement slot); cannot verify."
+  },
+  {
+    "class": "AFortAthenaSKVehicle",
+    "function": "GetSkeletalMeshComponent",
+    "status": "skipped",
+    "reason": "Returns object at this+0xaf8, which is reflected as SkyTubePhysicsComponent; name/type mismatch."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "AllowInteractionBetweenFortVolume",
+    "status": "skipped",
+    "reason": "Tests bit 4 of byte this+0xd0; no declared member at that offset."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "IsAirControlling",
+    "status": "skipped",
+    "reason": "Reads bit 0 of byte this+0x448; the only bool at that offset is bAllowInteractBetweenFortVolumes_Runtime with mask 16."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "IsCameraControlledRotation",
+    "status": "skipped",
+    "reason": "Nested pointer dereference (this+0x738 -> +0x335); not a leaf field read."
+  },
+  {
+    "class": "AFortCarriedObject",
+    "function": "GetHoldingActor",
+    "status": "skipped",
+    "reason": "Returns pointer at this+0x28; reflection places AActor::PrimaryActorTick struct there, no matching member."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "AllowInteractionBetweenFortVolume",
+    "status": "skipped",
+    "reason": "Reads byte this+0x20d8; no declared member at that offset (bool bit AllowInteract is at 0x3120)."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "GetAbilitySystemComponent",
+    "status": "skipped",
+    "reason": "Returns object at this+0x2ca8, which reflection places as delegate OnFortPlayerDied; mismatch."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "GetSkeletalMeshComponent",
+    "status": "skipped",
+    "reason": "Negative-offset this-adjustment thunk (this-0x2e20); not a direct field read."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "SetAllowInteractionBetweenFortVolumes",
+    "status": "skipped",
+    "reason": "Stores bool to this+0x20d8; no declared member at that offset."
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetInstantBoostWhenBuilding",
+    "status": "skipped",
+    "reason": "No declared member at this+0x128; also sets dirty flag at +0x13c (extra side effect)."
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetUseAdvancedOptions",
+    "status": "skipped",
+    "reason": "No declared member at this+0xfc; also sets dirty flag at +0x13c (extra side effect)."
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetUseLegacyControls",
+    "status": "skipped",
+    "reason": "No declared member at this+0x138; also sets dirty flag at +0x13c (extra side effect)."
+  },
+  {
+    "class": "UFortObjectMoverInputComponent",
+    "function": "PopEmptyInputMode",
+    "status": "proposed"
+  },
+  {
+    "class": "UFortObjectMoverInputComponent",
+    "function": "PushEmptyInputMode",
+    "status": "proposed"
+  },
+  {
+    "class": "UFortCreativeOption",
+    "function": "DoesMatchCategory",
+    "status": "skipped",
+    "reason": "Compares fields of a struct parameter (+0x18/+0x1c) against CategoryTag; struct member names unknown."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "GetDisplayStats",
+    "status": "skipped",
+    "reason": "Returns object at this+0x5d0; no declared member at that offset."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "SetLocationFont",
+    "status": "skipped",
+    "reason": "Zero-initialises and copies a multi-field struct (FFont-like) into this; not a leaf field write."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "SetLocationFontInAllStates",
+    "status": "skipped",
+    "reason": "Same body as SetLocationFont (zero-init and struct copy); not a leaf field write."
+  },
+  {
+    "class": "AFortGameStateZone",
+    "function": "ShouldDisablePlayerTeleportingDuringMissionResults",
+    "status": "skipped",
+    "reason": "Reads byte this+0x9e8; no declared member at that offset."
+  },
+  {
+    "class": "UFortHero",
+    "function": "GetHeroTypeBP",
+    "status": "skipped",
+    "reason": "Returns object at this+0x88, which is inherited UFortPersistableItem::ItemDefinition; function name suggests a different field."
+  },
+  {
+    "class": "UFortMatchmakingContext",
+    "function": "IsConnectedToGame",
+    "status": "skipped",
+    "reason": "Reads byte this+0x140; no declared member at that offset."
+  },
+  {
+    "class": "UFortMcpContext",
+    "function": "IsRealMoneyPurchasePending",
+    "status": "skipped",
+    "reason": "Reads byte this+0x458; no declared member at that offset."
+  },
+  {
+    "class": "AFortMeatballVehicle",
+    "function": "CacheAudioPointers",
+    "status": "skipped",
+    "reason": "Parameter-to-member pairing inconsistent (InAudioScrape stored into CacheAudioEngineUp-side slot); cannot verify."
+  },
+  {
+    "class": "AFortMeatballVehicle",
+    "function": "CachePSCPointers",
+    "status": "skipped",
+    "reason": "Parameter-to-member pairing inconsistent (InCacheSnowLandscapeComponent stored into CacheBoostReadyLFx slot); cannot verify."
+  },
+  {
+    "class": "AFortMeshNetworkEventsLoader",
+    "function": "OnMeshNetworkReady",
+    "status": "proposed"
+  }
+]

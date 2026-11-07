@@ -57,5 +57,14 @@ public:
 	UPROPERTY(Transient)
 	bool bMetadataReceived;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetConnectedToRoot() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EMeshNetworkNodeType GetGameServerNodeType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EMeshNetworkNodeType GetMeshNetworkNodeType() const;
+
 };
 

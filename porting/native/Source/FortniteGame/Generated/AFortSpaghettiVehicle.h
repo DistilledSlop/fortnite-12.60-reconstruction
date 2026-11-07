@@ -212,6 +212,16 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool AimTraceHitsTarget() const;
 
+private:
+	UFUNCTION(BlueprintCallable)
+	void CacheAudioPointers(UFortVehicleAudioVoice* InAudioMovement, UFortVehicleAudioVoice* InAudioWind, UFortVehicleAudioVoice* InAudioTowCable);
+public:
+
+private:
+	UFUNCTION(BlueprintCallable)
+	void CacheParticleFX(UParticleSystemComponent* InCoilTopR, UParticleSystemComponent* InCoilTopL, UParticleSystemComponent* InCoilBottomR, UParticleSystemComponent* InCoilBottomL, UParticleSystemComponent* InBoost, UParticleSystemComponent* InDust);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetAccelerationPercent() const;
 

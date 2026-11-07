@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "EMeshNetworkNodeType.h"
 #include "FMeshNetworkEventStateDataArray.h"
 
 #include "AFortMeshNetworkEventsLoader.generated.h"
@@ -27,6 +28,11 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastMeshNetEventBurst(const FName& EventName);
 	void MulticastMeshNetEventBurst_Implementation(const FName& EventName);
+
+protected:
+	UFUNCTION()
+	void OnMeshNetworkReady(EMeshNetworkNodeType NodeType);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

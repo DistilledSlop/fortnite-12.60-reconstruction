@@ -200,6 +200,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetShouldSelectUponReceivingFocus() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UMaterialInstanceDynamic* GetSingleMaterialStyleMID() const;
+
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnActionComplete();

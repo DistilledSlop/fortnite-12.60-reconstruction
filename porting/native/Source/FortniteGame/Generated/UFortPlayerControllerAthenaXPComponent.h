@@ -121,6 +121,16 @@ public:
 	void HighPrioXPEvent(const FXPEventEntry& HighPrioXPEvent);
 	void HighPrioXPEvent_Implementation(const FXPEventEntry& HighPrioXPEvent);
 
+protected:
+	UFUNCTION()
+	void OnInMatchProfileUpdate(int64 ProfileRevision);
+public:
+
+protected:
+	UFUNCTION()
+	void OnMatchResultsReported(int64 ProfileRevision);
+public:
+
 	UFUNCTION()
 	void OnRep_bRegisteredWithQuestManager();
 

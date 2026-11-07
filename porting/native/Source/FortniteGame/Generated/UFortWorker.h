@@ -9,6 +9,7 @@
 #include "GameplayTagContainer.h"
 
 class UFortItemIconDefinition;
+class UFortWorkerType;
 
 #include "UFortWorker.generated.h"
 
@@ -53,6 +54,9 @@ public:
 	// table index 0, flags 0x44000000022001
 	UPROPERTY(Transient)
 	TSoftObjectPtr<UFortItemIconDefinition> IconDefinition;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UFortWorkerType* GetWorkerTypeBP() const;
 
 };
 

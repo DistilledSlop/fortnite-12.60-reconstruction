@@ -167,5 +167,30 @@
   "unblock": "Port as a hand-written body in that class (see the five reviewed UFortKismetLibrary bodies); not a manifest splice",
   "body": "0x140680300",
   "thunk": "0x142974140"
+ },
+ {
+  "entry": "UCommonInputSubsystem::GetCurrentInputType",
+  "kind": "exec",
+  "blocker": "already_provided_by_generator_policy",
+  "reason": "porting/frontend/common_input_current_type/policy.py already provides this function (\"GetCurrentInputType declaration collision\" when added to the manifest)",
+  "unblock": "None needed: the function is ported by the policy. The dashboard counts manifest entries only, so policy-provided bodies are not credited (undercount)"
+ },
+ {
+  "entry": "UFortChatContainer::HandleGetMenuContentForAnchor",
+  "kind": "exec",
+  "blocker": "no_module",
+  "reason": "/Script/SocialUMG (ancestor USocialChatContainer) has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+  "body": "0x1421d78d0",
+  "thunk": "0x145209f00"
+ },
+ {
+  "entry": "UFortMediaSubtitlesPlayer::SetSubtitles",
+  "kind": "exec",
+  "blocker": "no_module",
+  "reason": "/Script/SubtitlesWidgets (its own package) has no module in the UE 4.25 tree or porting plugins (native_class_coverage.md cause C1)",
+  "unblock": "Add a module/plugin declaring the package, add the class to native_class_set.txt, then re-propose",
+  "body": "0x141226a70",
+  "thunk": "0x1412f0200"
  }
 ]

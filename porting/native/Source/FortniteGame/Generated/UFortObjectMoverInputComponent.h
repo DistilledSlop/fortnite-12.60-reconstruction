@@ -9,6 +9,7 @@
 #include "FOnCreativeInput.h"
 
 class AFortPlayerController;
+class APlayerController;
 class UInputComponent;
 
 #include "UFortObjectMoverInputComponent.generated.h"
@@ -272,6 +273,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool IsEmptyInputComponentActive();
+
+	UFUNCTION(BlueprintCallable)
+	void PopEmptyInputMode(APlayerController* PlayerController);
+
+	UFUNCTION(BlueprintCallable)
+	void PushEmptyInputMode(APlayerController* PlayerController);
 
 };
 

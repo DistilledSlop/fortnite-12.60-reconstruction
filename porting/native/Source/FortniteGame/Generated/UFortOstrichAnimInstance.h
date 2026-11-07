@@ -21,6 +21,7 @@
 
 class AFortCharacterVehicle_Ostrich;
 class UAnimMontage;
+class UAnimNotify;
 class UAnimSequence;
 class UAnimSequenceBase;
 class UBlendSpace1D;
@@ -793,6 +794,9 @@ public:
 	// table index 0, flags 0x20080000002014
 	UPROPERTY(Transient)
 	float StartAnimPosition;
+
+	UFUNCTION()
+	void AnimNotify_MechBeginFire(UAnimNotify* Notify);
 
 };
 

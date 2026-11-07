@@ -70,5 +70,8 @@ public:
 	UPROPERTY()
 	UWidgetSwitcher* Switcher_BundleState;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCurrentlyViewPrestige() const;
+
 };
 

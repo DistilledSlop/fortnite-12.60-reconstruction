@@ -1,0 +1,347 @@
+[
+ {
+  "class": "UFortMinigamePlayerStartComponent",
+  "function": "HasAnyCheckpointValue",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x188 / +0x1b4)"
+ },
+ {
+  "class": "UFortMusicCombatBank",
+  "function": "GetAssetFromCombatIntensity",
+  "status": "skipped",
+  "reason": "Assets[4] indexed by unbounded Intensity byte (no bounds check in asm)"
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "CacheAudioPointers",
+  "status": "proposed"
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "CacheParticleFX",
+  "status": "proposed"
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "IsBoosting",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0xc8)"
+ },
+ {
+  "class": "UFortOstrichAnimInstance",
+  "function": "AnimNotify_MechBeginFire",
+  "status": "proposed"
+ },
+ {
+  "class": "UFortPatrolAnimLayer",
+  "function": "SetPatrolAnimAsset",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x2e8)"
+ },
+ {
+  "class": "AFortPawn",
+  "function": "OnRep_TeleportCounter",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x57c)"
+ },
+ {
+  "class": "UFortPlayerAnimInstance",
+  "function": "AnimNotify_PlayWeaponInspect",
+  "status": "proposed"
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "SuppressEventNotifications",
+  "status": "proposed"
+ },
+ {
+  "class": "AFortPlayerControllerGameplay",
+  "function": "OnRep_GhostModeRepData",
+  "status": "skipped",
+  "reason": "void function; body only loads a field into RAX (no store, no observable effect)"
+ },
+ {
+  "class": "UFortPlayerControllerAthenaXPComponent",
+  "function": "OnInMatchProfileUpdate",
+  "status": "proposed"
+ },
+ {
+  "class": "UFortPlayerControllerAthenaXPComponent",
+  "function": "OnMatchResultsReported",
+  "status": "proposed"
+ },
+ {
+  "class": "AFortPlayerControllerZone",
+  "function": "ResurrectPlayer",
+  "status": "skipped",
+  "reason": "void function; body only loads a field into RAX (no store, no observable effect)"
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "CancelJumpAbility",
+  "status": "skipped",
+  "reason": "void function; body only loads a field into RAX (no store, no observable effect)"
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "HandleInStasis",
+  "status": "skipped",
+  "reason": "void function; body only loads a field into RAX (no store, no observable effect)"
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "LocalThrowCarriedPlayer",
+  "status": "skipped",
+  "reason": "void function; body only loads a field into RAX (no store, no observable effect)"
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "OnRep_AccelerationZPack",
+  "status": "skipped",
+  "reason": "struct/delegate copy from RDX pointer; not a scalar transcription (FVector_NetQuantize read from RDX)"
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "OnRep_IsInsideSafeZone",
+  "status": "skipped",
+  "reason": "void function; body only loads a field into RAX (no store, no observable effect)"
+ },
+ {
+  "class": "AFortPlayerParachute",
+  "function": "GetParachuteRootMesh",
+  "status": "proposed"
+ },
+ {
+  "class": "UPocketLevelInstance",
+  "function": "HandlePocketLevelLoaded",
+  "status": "skipped",
+  "reason": "void function; body only loads a field into RAX (no store, no observable effect)"
+ },
+ {
+  "class": "UFortQueryTwoPointSolver",
+  "function": "SetCustomRotationA",
+  "status": "skipped",
+  "reason": "struct/delegate copy from RDX pointer; not a scalar transcription"
+ },
+ {
+  "class": "UFortSeasonalEventManager",
+  "function": "GetBRXPBonusPoints",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0xc0)"
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "CacheAudioPointers",
+  "status": "proposed"
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "CacheParticleFX",
+  "status": "proposed"
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "IsBoosting",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0xc8)"
+ },
+ {
+  "class": "UFortUICameraManagerComponent",
+  "function": "SetCustomCameraRotationOffset",
+  "status": "skipped",
+  "reason": "struct/delegate copy from RDX pointer; not a scalar transcription"
+ },
+ {
+  "class": "UFortUINotification",
+  "function": "ShouldShowNotification",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0xc9; only +0xc8 non-reflected)"
+ },
+ {
+  "class": "AFortWeaponRanged_Ostrich",
+  "function": "PlayReloadAnim",
+  "status": "skipped",
+  "reason": "void function; body only loads a field into RAX (no store, no observable effect)"
+ },
+ {
+  "class": "UFortWorker",
+  "function": "GetWorkerTypeBP",
+  "status": "proposed"
+ },
+ {
+  "class": "UAthenaChallengeSetDetails_Missions",
+  "function": "IsCurrentlyViewPrestige",
+  "status": "proposed"
+ },
+ {
+  "class": "UAthenaEventMatchScoreboardScreenBase",
+  "function": "HandleSquadEliminated",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x491)"
+ },
+ {
+  "class": "UAthenaEventMatchScoreboardScreenBase",
+  "function": "HandleSquadKillScoreChanged",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x491; same body as HandleSquadEliminated)"
+ },
+ {
+  "class": "UAthenaHUDContext",
+  "function": "GetPTTState",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x260)"
+ },
+ {
+  "class": "UAthenaInventoryContext",
+  "function": "IsSwapping",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x70)"
+ },
+ {
+  "class": "UAthenaSpectatorNameplateBase",
+  "function": "OnPlayerPawnChanged",
+  "status": "skipped",
+  "reason": "second param InPlayerData stored into IndicatedActor (AActor*); param/member type relation not verifiable"
+ },
+ {
+  "class": "UBacchusKillFeed",
+  "function": "SetActiveNumberOfLines",
+  "status": "proposed"
+ },
+ {
+  "class": "UFortAlterationOption",
+  "function": "GetAlterationOptionType",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0xbb0)"
+ },
+ {
+  "class": "UFortBangWrapperOld",
+  "function": "SetBangVisibility",
+  "status": "skipped",
+  "reason": "byte +0x141 is not a member start (TutorialGlowType is at +0x140)"
+ },
+ {
+  "class": "UFortChatContainer",
+  "function": "HandleGetMenuContentForAnchor",
+  "status": "proposed"
+ },
+ {
+  "class": "UFortEventLeaderboardEntryData",
+  "function": "GetAverageMatchScore",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x28 pointer)"
+ },
+ {
+  "class": "UFortEventLeaderboardEntryData",
+  "function": "GetNumTeammates",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x28 pointer)"
+ },
+ {
+  "class": "UFortEventLeaderboardEntryData",
+  "function": "GetPageIndex",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x28 pointer)"
+ },
+ {
+  "class": "UFortEventLeaderboardEntryData",
+  "function": "GetTotalMatchesPlayed",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x28 pointer)"
+ },
+ {
+  "class": "UFortGameEventNotifications",
+  "function": "HandleNotificationUpdateFinished",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x38)"
+ },
+ {
+  "class": "UFortHUDCenterPopupMessageWidget",
+  "function": "GetCenterPopupMessageState",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x2c0)"
+ },
+ {
+  "class": "UFortItemQuantityListBase",
+  "function": "IsEmptyList",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x29c / +0x270)"
+ },
+ {
+  "class": "UFortItemWidget",
+  "function": "SetOnGetItemToCompareDelegate",
+  "status": "skipped",
+  "reason": "struct/delegate copy from RDX pointer; not a scalar transcription (delegate copied from RDX, 16 bytes)"
+ },
+ {
+  "class": "UFortLocalUserEntry",
+  "function": "HandleGetMenuContent",
+  "status": "proposed"
+ },
+ {
+  "class": "UFortPortalHUDDetails",
+  "function": "SetCachedWorldPos",
+  "status": "skipped",
+  "reason": "struct/delegate copy from RDX pointer; not a scalar transcription (float pair + dword + bool flag at +0x2e0; +0x2e4/+0x2ec undeclared)"
+ },
+ {
+  "class": "UFortRewardNotificationSubWidget",
+  "function": "Init",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x278)"
+ },
+ {
+  "class": "UFortSquadSlotSelectorButton",
+  "function": "GetInPreviewMode",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0xbe8)"
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetNumRequirements",
+  "status": "skipped",
+  "reason": "pointer chase whose pointee member at the offset is not declared (+0x28 not declared)"
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetOfferType",
+  "status": "skipped",
+  "reason": "pointer chase whose pointee member at the offset is not declared (+0x28 not declared)"
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "GetSortPriority",
+  "status": "skipped",
+  "reason": "pointer chase whose pointee member at the offset is not declared (+0x28 not declared)"
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "IsGiftable",
+  "status": "skipped",
+  "reason": "pointer chase whose pointee member at the offset is not declared (+0x28 not declared)"
+ },
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "IsRefundable",
+  "status": "skipped",
+  "reason": "pointer chase whose pointee member at the offset is not declared (+0x28 not declared)"
+ },
+ {
+  "class": "UFortUpgradeInfo",
+  "function": "GetCurrentLevel",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x54)"
+ },
+ {
+  "class": "UFortUpgradeInfo",
+  "function": "GetMaxLevel",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x5c)"
+ },
+ {
+  "class": "URadialBacchusButtonBase",
+  "function": "SetListenedGameplayTag",
+  "status": "skipped",
+  "reason": "no member declared at the body offset (reflection or header) (+0x2c8)"
+ }
+]

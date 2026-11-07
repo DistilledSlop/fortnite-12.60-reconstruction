@@ -10,13 +10,13 @@ want = {}
 for r in rep['rejections']:
     m = re.search(r"reflection-derived '(.*)'$", r['reason'])
     ms = re.search(r"manifest signature '(.*?)' differs", r['reason'])
-    if m and ms and ('@PARAMS@' in ms.group(1) or ms.group(1).startswith('T* ')):
+    if m and ms and ('@PARAMS@' in ms.group(1) or '@SIG@' in ms.group(1) or ms.group(1).startswith('T* ')):
         want[r['entry']] = m.group(1)
 def patch(path):
     data = json.load(open(path)); n = 0
     for e in data:
         k = f"{e['class']}::{e['function']}"
-        if k in want and ('@PARAMS@' in e.get('signature', '') or e.get('signature', '').startswith('T* ')):
+        if k in want and ('@PARAMS@' in e.get('signature', '') or '@SIG@' in e.get('signature', '') or e.get('signature', '').startswith('T* ')):
             e['signature'] = want[k]; n += 1
     open(path, 'w').write(json.dumps(data, indent=1 if 'entries_batch2' in path else 2) + '\n')
     return n

@@ -53,5 +53,8 @@ public:
 	UPROPERTY()
 	FGameplayTag NumberOfKillfeedLinesTag;
 
+	UFUNCTION(BlueprintCallable)
+	void SetActiveNumberOfLines(float numberOfLines);
+
 };
 

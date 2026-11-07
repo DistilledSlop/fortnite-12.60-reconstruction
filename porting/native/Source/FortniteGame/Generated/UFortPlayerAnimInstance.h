@@ -45,6 +45,7 @@ class AFortPlayerController;
 class AFortPlayerPawn;
 class AFortPlayerPawnAthena;
 class UAnimMontage;
+class UAnimNotify;
 class UAnimSequence;
 class UFortWeaponAnimSet;
 
@@ -1514,6 +1515,9 @@ public:
 	// table index 0, flags 0x10000000002004
 	UPROPERTY(Transient)
 	uint8 bSupressJogStartAdditiveForLiveEvent : 1;
+
+	UFUNCTION()
+	void AnimNotify_PlayWeaponInspect(UAnimNotify* Notify);
 
 	UFUNCTION(BlueprintCallable)
 	UAnimMontage* FindEmoteToPlay(AFortPlayerController* FortPlayerController, EFortCustomBodyType::Type InBodyType, EFortCustomGender::Type InGender);

@@ -11,6 +11,7 @@ class UFortSocialAvatarIcon;
 class UImage;
 class UMenuAnchor;
 class UTextBlock;
+class UWidget;
 
 #include "UFortLocalUserEntry.generated.h"
 
@@ -47,6 +48,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UMenuAnchor* MenuAnchor_LocalUserSettingMenu;
+
+protected:
+	UFUNCTION()
+	UWidget* HandleGetMenuContent();
+public:
 
 };
 
