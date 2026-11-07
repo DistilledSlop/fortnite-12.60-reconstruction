@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	FOnActiveEventFlagsChanged OnActiveEventFlagsChanged;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetBRXPBonusPoints() const;
+
 };
 

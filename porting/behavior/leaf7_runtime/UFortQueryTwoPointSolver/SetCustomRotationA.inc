@@ -1,0 +1,8 @@
+// Behaviour snippet: UFortQueryTwoPointSolver::SetCustomRotationA (body only; spliced into the generated member function).
+// Original body address: 0x141713870. Thunk: 0x142ab4520.
+// Evidence (asm): MOVSD [RCX+0xd0] <- [RDX] (8 bytes); MOV dword [RCX+0xd8] <- [RDX+8] (4 bytes). Contiguous 12 bytes at +0xd0..+0xdb.
+// Param type FRotator (12 bytes, reflection struct VA 0x142eeb730; header MinRotationOffset is FRotator). Declared const& per reflection ConstParm+ReferenceParm.
+// Destination is undeclared storage in this class, so raw offsets.
+// CONFIDENCE: HIGH
+uint8* Raw = reinterpret_cast<uint8*>(this);
+FMemory::Memcpy(Raw + 0xd0, &Rotation, 12);

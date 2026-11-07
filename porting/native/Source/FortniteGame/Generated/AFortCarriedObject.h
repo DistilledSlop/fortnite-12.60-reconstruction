@@ -63,6 +63,9 @@ public:
 	UPROPERTY(Replicated)
 	ABuildingFlagSpawn* SpawnPointActor;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual AActor* GetHoldingActor() const;
+
 	UFUNCTION()
 	void OnRep_HolderInfo(FCarriedObjectAttachmentInfo& PreviousInfo);
 

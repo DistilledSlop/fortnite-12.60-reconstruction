@@ -21,6 +21,7 @@
 class AFortPlayerController;
 class AFortPlayerPawn;
 class AFortPlayerStateZone;
+class UAbilitySystemComponent;
 class UAnimInstance;
 class UAthenaItemWrapDefinition;
 class UFortAbilitySet;
@@ -259,10 +260,16 @@ public:
 	virtual bool BP_CanInteract_Implementation(AFortPlayerController* FortPC);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponent* GetEmoteMesh() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponent* GetMechMesh() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual USkeletalMeshComponent* GetSkeletalMeshComponent() const;
 
 	UFUNCTION(BlueprintNativeEvent)
 	void OnPawnExitVehicle(AFortPlayerPawn* PlayerPawn, FName ExitSocketName);

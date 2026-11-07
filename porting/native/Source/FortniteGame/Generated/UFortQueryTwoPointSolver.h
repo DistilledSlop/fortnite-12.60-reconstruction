@@ -75,5 +75,8 @@ public:
 	UPROPERTY(Transient)
 	UObject* CachedQuerier;
 
+	UFUNCTION(BlueprintCallable)
+	void SetCustomRotationA(FRotator& Rotation);
+
 };
 

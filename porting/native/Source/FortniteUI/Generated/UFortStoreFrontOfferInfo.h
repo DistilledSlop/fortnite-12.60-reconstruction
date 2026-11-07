@@ -30,7 +30,13 @@ public:
 	FString GetDisplayAssetPath() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumRequirements() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortMtxOfferData* GetOfferDisplayAsset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSortPriority() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetStorefrontName() const;
@@ -40,6 +46,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsCardpack() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsGiftable() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsRefundable() const;
 
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaVehicle.h"
 
+class USkeletalMeshComponent;
 class USkeletalMeshComponentBudgeted;
 
 #include "AFortAthenaSKVehicle.generated.h"
@@ -143,6 +144,9 @@ public:
 	// table index 0, flags 0x10000000000004
 	UPROPERTY()
 	bool bShouldDealDamage;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual USkeletalMeshComponent* GetSkeletalMeshComponent() const;
 
 };
 

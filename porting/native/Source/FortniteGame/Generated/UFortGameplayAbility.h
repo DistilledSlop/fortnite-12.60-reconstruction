@@ -283,6 +283,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortWeapon* GetCurrentSourceWeapon() const;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UFortTooltipDisplayStatsList* GetDisplayStats() const;
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	int32 GetMaxNumTrackedActors() const;
 

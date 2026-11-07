@@ -27,7 +27,19 @@ public:
 	bool DoesLeaderboardHaveQualifiedIcons() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAverageMatchScore() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumTeammates() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPageIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetRank() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTotalMatchesPlayed() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldShowQualifiedIcon() const;

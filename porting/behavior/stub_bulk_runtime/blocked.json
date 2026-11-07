@@ -548,5 +548,19 @@
     "body": "0x14070f440",
     "thunk": "0x14293bc30",
     "note": "previously ported in error; removed"
+  },
+  {
+    "entry": "UFortItemWidget::SetOnGetItemToCompareDelegate",
+    "kind": "exec",
+    "blocker": "delegate_member_unresolved",
+    "reason": "Parameter/member type is delegate TODO_DelegateNotEmittable_145279f00; the generator cannot emit this delegate type (skipped_properties.json), so the function is not emitted.",
+    "unblock": "Teach the generator to emit this delegate signature, then re-add; body is ready in leaf7_runtime (16-byte copy at +0x800 from the parameter)"
+  },
+  {
+    "entry": "UFortStoreFrontOfferInfo::GetOfferType",
+    "kind": "exec",
+    "blocker": "enum_not_available",
+    "reason": "Return enum ECatalogOfferType (TODO_EnumUnavailable_1411411e0) is not declared in any generated header, so the function is not emitted.",
+    "unblock": "Emit the enum (UHT enum block 0x1411411e0), then re-add; body is ready in leaf6_runtime (byte load through the +0x28 pointer)"
   }
 ]

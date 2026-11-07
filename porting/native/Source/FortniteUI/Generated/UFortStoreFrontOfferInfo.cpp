@@ -7,12 +7,34 @@ FString UFortStoreFrontOfferInfo::GetDisplayAssetPath() const
 	return NativeDisplayAssetPath;
 }
 
+int32 UFortStoreFrontOfferInfo::GetNumRequirements() const
+{
+	// Behaviour snippet: UFortStoreFrontOfferInfo::GetNumRequirements (body only; spliced into the generated member function).
+	// Original address: 0x1450b08e0 (asm: MOV RAX,[RCX+0x28]; MOV EAX,[RAX+0x250]; RET). Thunk 0x1452f6a20 calls it directly.
+	// +0x28 pointer undeclared in UFortStoreFrontOfferInfo.h (only OfferDisplayAsset at 0x40 reflected); pointee unresolved.
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(this);
+	const uint8* P = *reinterpret_cast<const uint8* const*>(Raw + 0x28);
+	return *reinterpret_cast<const int32*>(P + 0x250);
+}
+
 UFortMtxOfferData* UFortStoreFrontOfferInfo::GetOfferDisplayAsset() const
 {
 	// Original address: 0x1452ac5b0.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
 	return OfferDisplayAsset;
+}
+
+int32 UFortStoreFrontOfferInfo::GetSortPriority() const
+{
+	// Behaviour snippet: UFortStoreFrontOfferInfo::GetSortPriority (body only; spliced into the generated member function).
+	// Original address: 0x1450b2b80 (asm: MOV RAX,[RCX+0x28]; MOV EAX,[RAX+0xe4]; RET). Thunk 0x1452f73b0 calls it directly.
+	// +0x28 pointer undeclared (pointee unresolved). Dword load, int32 return.
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(this);
+	const uint8* P = *reinterpret_cast<const uint8* const*>(Raw + 0x28);
+	return *reinterpret_cast<const int32*>(P + 0xe4);
 }
 
 FName UFortStoreFrontOfferInfo::GetStorefrontName() const
@@ -32,5 +54,27 @@ bool UFortStoreFrontOfferInfo::IsCardpack() const
 	// Exact original shared stub 0x1406801e0.
 	// CONFIDENCE: HIGH
 	return false;
+}
+
+bool UFortStoreFrontOfferInfo::IsGiftable() const
+{
+	// Behaviour snippet: UFortStoreFrontOfferInfo::IsGiftable (body only; spliced into the generated member function).
+	// Original address: 0x1450b8b00 (asm: MOV RAX,[RCX+0x28]; MOVZX EAX,byte [RAX+0x230]; RET). Thunk 0x1452f78e0 calls it directly.
+	// +0x28 pointer undeclared (pointee unresolved). Byte load (bool), no null check in asm.
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(this);
+	const uint8* P = *reinterpret_cast<const uint8* const*>(Raw + 0x28);
+	return *reinterpret_cast<const bool*>(P + 0x230);
+}
+
+bool UFortStoreFrontOfferInfo::IsRefundable() const
+{
+	// Behaviour snippet: UFortStoreFrontOfferInfo::IsRefundable (body only; spliced into the generated member function).
+	// Original address: 0x1450b9920 (asm: MOV RAX,[RCX+0x28]; MOVZX EAX,byte [RAX+0x258]; RET). Thunk 0x1452f7dc0 calls it directly.
+	// +0x28 pointer undeclared (pointee unresolved). Byte load (bool), no null check in asm.
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(this);
+	const uint8* P = *reinterpret_cast<const uint8* const*>(Raw + 0x28);
+	return *reinterpret_cast<const bool*>(P + 0x258);
 }
 

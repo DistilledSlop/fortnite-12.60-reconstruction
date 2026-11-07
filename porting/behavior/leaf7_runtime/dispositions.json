@@ -1,0 +1,62 @@
+[
+  {
+    "class": "AFortHoagieAudioController",
+    "function": "CacheAudioComponents",
+    "status": "blocked",
+    "reason": "Class not in porting/native_class_set.txt, so no generated header and no declaration (header null). Fix: add line 'AFortHoagieAudioController' after line 4671 'AFortHoagieVehicle' in porting/native_class_set.txt (sibling AFortHoagieVehicle and UFortHoagieVehicleConfigs are listed; parent AActor is engine, no closure gap). Module /Script/HoagieRuntime is in porting/native/FortniteLinux.uproject and porting/native/Source/HoagieRuntime; the coverage doc's C1 label (no module) is wrong. Body asm (2 stores: RDX->+0x230, R8->+0x238) is ready once generated."
+  },
+  {
+    "class": "UTimeSynthComponent",
+    "function": "GetMaxActiveClipLimit",
+    "status": "blocked",
+    "reason": "Stock engine plugin TimeSynth (/Script/TimeSynth), not in porting/native_class_set.txt and not enabled in porting/native/FortniteLinux.uproject (native_class_coverage.md b-not-enabled). UE 4.25 source /opt/fortnite/UnrealEngine/Engine/Plugins/Runtime/TimeSynth/Source/TimeSynth/Classes/TimeSynthComponent.h has no GetMaxActiveClipLimit (grep of plugin for MaxActiveClip finds nothing; only HasActiveClips). UE 4.26 declares it (/opt/fortnite/UnrealEngine4260/.../TimeSynthComponent.h:501 'int32 GetMaxActiveClipLimit() const;'), so it is not in stock 4.25. Body asm 'MOV EAX,[RCX+0x838]' is ready."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "SetLocationFont",
+    "status": "blocked",
+    "reason": "Body 0x142f440c0 is wrong: thunk 0x142921080 (decomp porting/generated/decomp/AFortGameStateAthena/SetLocationFont.c) calls it only as a constructor of a local 0x38-byte struct temp (auStack_58). The real native call is thunk_FUN_1419aea90 (-> 0x1419aea90), a non-leaf (vtable call [rax+0xaf0], calls 0x14468fb70 and 0x142ee5dd0, iterates a TArray). Not a leaf; callees unresolved."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "SetLocationFontInAllStates",
+    "status": "blocked",
+    "reason": "Same as SetLocationFont: shared thunk 0x142921080 and body 0x142f440c0 (local-struct constructor, not the native body). Real call 0x1419aea90 is non-leaf; callees 0x14468fb70, 0x142ee5dd0 unresolved."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_AccelerationZPack",
+    "status": "proposed",
+    "reason": "Body snippet written; raw-offset layout per asm."
+  },
+  {
+    "class": "UFortQueryTwoPointSolver",
+    "function": "SetCustomRotationA",
+    "status": "proposed",
+    "reason": "Body snippet written; raw-offset layout per asm."
+  },
+  {
+    "class": "UFortUICameraManagerComponent",
+    "function": "SetCustomCameraRotationOffset",
+    "status": "proposed",
+    "reason": "Body snippet written; raw-offset layout per asm."
+  },
+  {
+    "class": "UFortItemWidget",
+    "function": "SetOnGetItemToCompareDelegate",
+    "status": "proposed",
+    "reason": "Body snippet written; raw-offset layout per asm."
+  },
+  {
+    "class": "UFortPortalHUDDetails",
+    "function": "SetCachedWorldPos",
+    "status": "proposed",
+    "reason": "Body snippet written; raw-offset layout per asm."
+  },
+  {
+    "class": "URadialBacchusButtonBase",
+    "function": "SetListenedGameplayTag",
+    "status": "proposed",
+    "reason": "Body snippet written; raw-offset layout per asm."
+  }
+]

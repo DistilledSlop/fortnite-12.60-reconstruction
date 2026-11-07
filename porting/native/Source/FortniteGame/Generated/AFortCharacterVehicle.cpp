@@ -12,6 +12,18 @@ bool AFortCharacterVehicle::BP_CanInteract_Implementation(AFortPlayerController*
 	return true;
 }
 
+UAbilitySystemComponent* AFortCharacterVehicle::GetAbilitySystemComponent() const
+{
+	// Behaviour snippet: AFortCharacterVehicle::GetAbilitySystemComponent (body only; spliced into the generated member function).
+	// Original address: 0x141945270 (asm: MOV RAX,[RCX+0x2ca8]; RET). Exec thunk 0x142861520.
+	// Exec thunk: ADD RCX,0x4c8; CALL [RAX+0x10]. Secondary vptr at +0x4c8 = 0x145df7f98 (vtables.json), slot +0x10 = 0x141945270 (runtime image).
+	// Adjusted read: obj+0x4c8+0x2ca8 = obj+0x3170 = AFortCharacterVehicle::OverrideAbilitySystemComponent (reflection offset 0x3170).
+	// Return type UAbilitySystemComponent* per AFortAthenaVehicle.h (virtual GetAbilitySystemComponent() const).
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(this) + 0x4c8;   // adjusted this (secondary base at +0x4c8)
+	return *reinterpret_cast<UAbilitySystemComponent* const*>(Raw + 0x2ca8);
+}
+
 USkeletalMeshComponent* AFortCharacterVehicle::GetEmoteMesh() const
 {
 	// Original address: 0x1428616e0.
@@ -24,6 +36,18 @@ USkeletalMeshComponent* AFortCharacterVehicle::GetMechMesh() const
 {
 	// Native exec 0x142861850 returns ACharacter::Mesh at +0x278. CONFIDENCE: high
 	return GetMesh();
+}
+
+USkeletalMeshComponent* AFortCharacterVehicle::GetSkeletalMeshComponent() const
+{
+	// Behaviour snippet: AFortCharacterVehicle::GetSkeletalMeshComponent (body only; spliced into the generated member function).
+	// Original address: 0x141949740 (asm: MOV RAX,[RCX+(-0x2e20)]; RET). Exec thunk 0x1428618d0.
+	// Exec thunk: ADD RCX,0x3098; CALL [RAX+0x598]. Secondary vptr at +0x3098 = 0x145df83b0 (vtables.json), slot +0x598 = 0x141949740 (runtime image).
+	// Adjusted read: obj+0x3098-0x2e20 = obj+0x278 = ACharacter::Mesh (reflection offset 0x278, USkeletalMeshComponent).
+	// Declared in generated header: no; reflection declares it (implements UFortVehicleInterface::GetSkeletalMeshComponent).
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(this) + 0x3098;   // adjusted this (secondary base at +0x3098)
+	return *reinterpret_cast<USkeletalMeshComponent* const*>(Raw - 0x2e20);
 }
 
 void AFortCharacterVehicle::OnPawnExitVehicle_Implementation(AFortPlayerPawn* PlayerPawn, FName ExitSocketName)

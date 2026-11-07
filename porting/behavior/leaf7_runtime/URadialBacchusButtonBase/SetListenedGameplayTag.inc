@@ -1,0 +1,7 @@
+// Behaviour snippet: URadialBacchusButtonBase::SetListenedGameplayTag (body only; spliced into the generated member function).
+// Original body address: 0x1406dc310. Thunk: 0x145341a00.
+// Evidence (asm): MOV qword [RCX+0x2c8],RDX. The 8-byte FGameplayTag arrives by value in RDX (reflection struct VA 0x143e9a2a0 = FGameplayTag, size 8).
+// Undeclared member at +0x2c8, so raw offsets.
+// CONFIDENCE: HIGH
+uint8* Raw = reinterpret_cast<uint8*>(this);
+FMemory::Memcpy(Raw + 0x2c8, &InListenedTag, 8);

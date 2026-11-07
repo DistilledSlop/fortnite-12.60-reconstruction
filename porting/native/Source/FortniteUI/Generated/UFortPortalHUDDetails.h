@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActorIndicatorWidget.h"
 
+#include "Math/Vector.h"
 #include "UCommonActivatableWidgetSwitcher.h"
 #include "UFortInteractContextInfo.h"
 
@@ -46,6 +47,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetActiveContextInfo(UFortInteractContextInfo* ActiveContextInfo);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetCachedWorldPos(FVector InWorldPos);
 public:
 
 };

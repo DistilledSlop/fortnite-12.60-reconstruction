@@ -30,5 +30,8 @@ public:
 	UPROPERTY()
 	AFortPawn* TrackedPawn;
 
+	UFUNCTION(BlueprintCallable)
+	void SetListenedGameplayTag(FGameplayTag InListenedTag);
+
 };
 

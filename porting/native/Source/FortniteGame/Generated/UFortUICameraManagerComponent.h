@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 
 #include "EFrontEndCamera.h"
+#include "Math/Rotator.h"
 
 class AActor;
 class AFortCameraBase;
@@ -43,6 +44,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetZoomLevel() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetCustomCameraRotationOffset(FRotator Offset);
 
 };
 

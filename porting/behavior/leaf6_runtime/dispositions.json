@@ -1,0 +1,92 @@
+[
+  {
+    "class": "AFortAthenaSKVehicle",
+    "function": "GetSkeletalMeshComponent",
+    "status": "proposed",
+    "reason": "Body verified against asm; secondary-base adjusted this."
+  },
+  {
+    "class": "AFortCarriedObject",
+    "function": "GetHoldingActor",
+    "status": "proposed",
+    "reason": "Body verified against asm; secondary-base adjusted this."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "GetAbilitySystemComponent",
+    "status": "proposed",
+    "reason": "Body verified against asm; secondary-base adjusted this."
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "GetSkeletalMeshComponent",
+    "status": "proposed",
+    "reason": "Body verified against asm; secondary-base adjusted this."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "GetDisplayStats",
+    "status": "proposed",
+    "reason": "Body verified against asm; secondary-base adjusted this."
+  },
+  {
+    "class": "UFortSeasonalEventManager",
+    "function": "GetBRXPBonusPoints",
+    "status": "proposed",
+    "reason": "Body verified against asm; direct non-virtual body."
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetAverageMatchScore",
+    "status": "proposed",
+    "reason": "Body verified against asm; direct non-virtual body."
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetNumTeammates",
+    "status": "proposed",
+    "reason": "Body verified against asm; direct non-virtual body."
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetPageIndex",
+    "status": "proposed",
+    "reason": "Body verified against asm; direct non-virtual body."
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetTotalMatchesPlayed",
+    "status": "proposed",
+    "reason": "Body verified against asm; direct non-virtual body."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "GetNumRequirements",
+    "status": "proposed",
+    "reason": "Body verified against asm; direct non-virtual body."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "GetOfferType",
+    "status": "proposed",
+    "reason": "Body verified against asm; direct non-virtual body."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "GetSortPriority",
+    "status": "proposed",
+    "reason": "Body verified against asm; direct non-virtual body."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "IsGiftable",
+    "status": "proposed",
+    "reason": "Body verified against asm; direct non-virtual body."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "IsRefundable",
+    "status": "proposed",
+    "reason": "Body verified against asm; direct non-virtual body."
+  }
+]
