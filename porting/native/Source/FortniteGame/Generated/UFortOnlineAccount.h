@@ -48,6 +48,9 @@ public:
 	UPROPERTY(Config)
 	bool bDisablePurchasingOnRedemptionFailure;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x7e8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x7e8;
+
 	// table index 4, flags 0x20080000004000
 	UPROPERTY(Config)
 	double MinimumSecondsBetweenPurchaseRedemptionAttempts;

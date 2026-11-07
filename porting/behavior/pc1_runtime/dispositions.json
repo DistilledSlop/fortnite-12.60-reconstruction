@@ -1,0 +1,72 @@
+[
+  {
+    "class": "UCommonActivatablePanel",
+    "function": "SetActionHandlerState",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Callee UCommonActivatablePanel::SetActionHandlerStateFromHandle (0x1407f3f90) is declared in no porting/native header (one grep); body builds FInputActionRow on the stack and calls it."
+  },
+  {
+    "class": "UCommonButton",
+    "function": "SetIsInteractableWhenSelected",
+    "status": "blocked",
+    "case": "branch_target_outside_body",
+    "reason": "JZ 0x1407f7a20 at 0x1407f7a16 targets past the 61-byte body (RET at 0x1407f7a1c); the bit-0x10-clear path is out-of-body code (decompile shows further calls)."
+  },
+  {
+    "class": "UCommonButton",
+    "function": "SetIsSelectable",
+    "status": "proposed",
+    "case": "reflected_bitfield_and_tail_call",
+    "reason": "bSelectable (0x2a0 bit 0x02) assignment; gap byte NativeRecoveredBits_0x2a1 gate; tail-call SetSelectedInternal(false,true,true)."
+  },
+  {
+    "class": "UFortUINotification",
+    "function": "ClearNotification_Implementation",
+    "status": "proposed",
+    "case": "delegate_broadcast_raw_count",
+    "reason": "Raw int32 at +0x98 (invocation Num of OnNotificationCleared), gap bool NativeRecoveredBool_0xc9 store, Broadcast(this)."
+  },
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "ClearForceSetFeatureState",
+    "status": "proposed",
+    "case": "tmap_find",
+    "reason": "Features.Find(Feature) (TMap at +0x1c0); hit writes ForcedState=3 and ForcedStateReason=8 (FFortUIFeatureStruct +1/+2). Confidence medium: probe loop not traced."
+  },
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "ForceSetFeatureState",
+    "status": "proposed",
+    "case": "tmap_find",
+    "reason": "Features.Find(Feature); hit writes ForcedState (R8) and Reason (R9). Confidence medium: probe loop not traced."
+  },
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "InputActionHoldStarted",
+    "status": "proposed",
+    "case": "delegate_broadcast_raw_count",
+    "reason": "Raw int32 at +0x90 (invocation Num of OnInputActionHoldStarted), Broadcast(InputActionName, HoldDuration)."
+  },
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "InputActionHoldStopped",
+    "status": "proposed",
+    "case": "delegate_broadcast_raw_count",
+    "reason": "Raw int32 at +0xa0 (invocation Num of OnInputActionHoldStopped), Broadcast(InputActionName, bCompletedSuccessfully)."
+  },
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "IsAllContentInstalled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Callee UFortGlobals::IsAllContentInstalled (static, 0x141ed89e0) is declared in no porting/native header (one grep; UFortGlobals.h lacks it)."
+  },
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "IsPendingLogout",
+    "status": "proposed",
+    "case": "inherited_raw_outer_and_pointee_member",
+    "reason": "Raw qword +0x20 (UObject::OuterPrivate) with IsA gates; reflected FortOnlineAccount (+0x288); pointee byte via member_field NativeRecoveredBool_0x7e8."
+  }
+]

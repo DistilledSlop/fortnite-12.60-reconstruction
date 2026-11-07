@@ -5,7 +5,10 @@
 #include "AFortPlayerControllerZone.h"
 #include "ECommonInputType.h"
 #include "EFortPickerMode.h"
+#include "EFortUIFeatureState.h"
+#include "EFortUIFeatureStateReason.h"
 #include "Engine/LocalPlayer.h"
+#include "FFortUIFeatureStruct.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
 #include "GameFramework/PlayerController.h"
@@ -15,11 +18,35 @@
 #include "UFortGameInstance.h"
 #include "UFortGlobals.h"
 #include "UFortInputData.h"
+#include "UFortLocalPlayer.h"
+#include "UFortOnlineAccount.h"
+
+void UFortGlobalUIContext::ClearForceSetFeatureState(EFortUIFeature Feature)
+{
+	// Original body 0x144cc28c0 (thunk 0x145244840). Offset evidence: inlined hash probe over TMap Features (+0x1c0, TMap<EFortUIFeature, FFortUIFeatureStruct>) keyed by Feature; on a hit the word store MOV word [value+1],0x0803 writes ForcedState=3 (+1) and ForcedStateReason=8 (+2) of FFortUIFeatureStruct; on a miss nothing is written.
+	// CONFIDENCE: MEDIUM
+	if (FFortUIFeatureStruct* FeatureState = Features.Find(Feature))
+	{
+	    FeatureState->ForcedState = static_cast<EFortUIFeatureState>(3);
+	    FeatureState->ForcedStateReason = static_cast<EFortUIFeatureStateReason>(8);
+	}
+}
 
 void UFortGlobalUIContext::ClearRatingWidgetInfo()
 {
 	// CONFIDENCE: high; complete native exec at 0x145244900.
 	bShowRateWidget = false;
+}
+
+void UFortGlobalUIContext::ForceSetFeatureState(EFortUIFeature Feature, EFortUIFeatureState ForcedState, EFortUIFeatureStateReason Reason)
+{
+	// Original body 0x144cc5f40 (thunk 0x145244d90). Offset evidence: inlined hash probe over TMap Features (+0x1c0) keyed by Feature (DL); on a hit MOV byte [value+1],SIL stores ForcedState (R8 arg) and MOV byte [value+2],R9B stores Reason (R9 arg) into FFortUIFeatureStruct; on a miss nothing is written.
+	// CONFIDENCE: MEDIUM
+	if (FFortUIFeatureStruct* FeatureState = Features.Find(Feature))
+	{
+	    FeatureState->ForcedState = ForcedState;
+	    FeatureState->ForcedStateReason = Reason;
+	}
 }
 
 FName UFortGlobalUIContext::GetAbility1ActionName(ECommonInputType OverrideInputType) const
@@ -337,6 +364,28 @@ void UFortGlobalUIContext::GetTopLevelHelpItems(TArray<UFortHelpItem*>& ActiveHe
 	}
 }
 
+void UFortGlobalUIContext::InputActionHoldStarted(FName InputActionName, float HoldDuration)
+{
+	// Original body 0x144cd66d0 (thunk 0x145249f60). Offset evidence: dword [+0x90] is the invocation-list Num inside OnInputActionHoldStarted (+0x88, reflected InlineMulticastDelegate); Broadcast packs {InputActionName (+0), HoldDuration (+8)} as FOnInputActionHoldStarted arguments (XMM2 = HoldDuration).
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(this);
+	if (*reinterpret_cast<const int32*>(Raw + 0x90) > 0)
+	{
+	    OnInputActionHoldStarted.Broadcast(InputActionName, HoldDuration);
+	}
+}
+
+void UFortGlobalUIContext::InputActionHoldStopped(FName InputActionName, bool bCompletedSuccessfully)
+{
+	// Original body 0x144cd6700 (thunk 0x14524a030). Offset evidence: dword [+0xa0] is the invocation-list Num inside OnInputActionHoldStopped (+0x98, reflected InlineMulticastDelegate); Broadcast packs {InputActionName (+0), bCompletedSuccessfully (+8)} as FOnInputActionHoldStopped arguments (R8B = bool).
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(this);
+	if (*reinterpret_cast<const int32*>(Raw + 0xa0) > 0)
+	{
+	    OnInputActionHoldStopped.Broadcast(InputActionName, bCompletedSuccessfully);
+	}
+}
+
 bool UFortGlobalUIContext::IsBluGloEnabled()
 {
 	// Original address: 0x1412d9d60.
@@ -367,6 +416,33 @@ bool UFortGlobalUIContext::IsMobileApp() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
 	return false;
+}
+
+bool UFortGlobalUIContext::IsPendingLogout() const
+{
+	// Original body 0x144cd7c80 (thunk 0x14524a390). Offset evidence: qword [+0x20] is UObject::OuterPrivate (inherited; the owning ULocalPlayer); IsA(ULocalPlayer) and IsA(UFortLocalPlayer) gates on it; FortOnlineAccount (+0x288, reflected on UFortLocalPlayer) must be non-null; returns byte +0x7e8 of that UFortOnlineAccount (NativeRecoveredBool_0x7e8).
+	// CONFIDENCE: MEDIUM
+	const uint8* Raw = reinterpret_cast<const uint8*>(this);
+	UObject* const Outer = *reinterpret_cast<UObject* const*>(Raw + 0x20);
+	if (!Outer)
+	{
+	    return false;
+	}
+	if (!Outer->IsA(ULocalPlayer::StaticClass()))
+	{
+	    return false;
+	}
+	if (!Outer->IsA(UFortLocalPlayer::StaticClass()))
+	{
+	    return false;
+	}
+	const UFortLocalPlayer* const FortLocalPlayer = static_cast<const UFortLocalPlayer*>(Outer);
+	UFortOnlineAccount* const Account = FortLocalPlayer->FortOnlineAccount;
+	if (!Account)
+	{
+	    return false;
+	}
+	return Account->NativeRecoveredBool_0x7e8;
 }
 
 bool UFortGlobalUIContext::IsUIVisible() const

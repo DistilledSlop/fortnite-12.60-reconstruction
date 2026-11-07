@@ -10,6 +10,8 @@
 #include "ECommonInputType.h"
 #include "EFortPickerMode.h"
 #include "EFortUIFeature.h"
+#include "EFortUIFeatureState.h"
+#include "EFortUIFeatureStateReason.h"
 #include "EInputPriority.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/LocalPlayer.h"
@@ -163,7 +165,13 @@ public:
 	bool NativeRecoveredBool_0x3d4;
 
 	UFUNCTION(BlueprintCallable)
+	void ClearForceSetFeatureState(EFortUIFeature Feature);
+
+	UFUNCTION(BlueprintCallable)
 	void ClearRatingWidgetInfo();
+
+	UFUNCTION(BlueprintCallable)
+	void ForceSetFeatureState(EFortUIFeature Feature, EFortUIFeatureState ForcedState, EFortUIFeatureStateReason Reason);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetAbility1ActionName(ECommonInputType OverrideInputType) const;
@@ -255,6 +263,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void GetTopLevelHelpItems(TArray<UFortHelpItem*>& ActiveHelpEntries);
 
+	UFUNCTION()
+	void InputActionHoldStarted(FName InputActionName, float HoldDuration);
+
+	UFUNCTION()
+	void InputActionHoldStopped(FName InputActionName, bool bCompletedSuccessfully);
+
 	UFUNCTION(BlueprintCallable)
 	bool IsBluGloEnabled();
 
@@ -266,6 +280,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMobileApp() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPendingLogout() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsUIVisible() const;

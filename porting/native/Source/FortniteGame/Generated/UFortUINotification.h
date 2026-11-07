@@ -53,6 +53,10 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xc9): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0xc9;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintCosmetic)
+	void ClearNotification();
+	virtual void ClearNotification_Implementation();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortNotificationPriority GetPriority() const;
 

@@ -85,6 +85,9 @@ public:
 	UPROPERTY()
 	uint8 bShouldUseFallbackDefaultInputAction : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2a1): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredBits_0x2a1;
+
 	// table index 18, flags 0x11000000000015
 	UPROPERTY()
 	TEnumAsByte<EButtonClickMethod::Type> ClickMethod;
@@ -222,6 +225,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnTriggeredInputActionChanged(const FDataTableRowHandle& NewTriggeredAction);
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetIsSelectable(bool bInIsSelectable);
 
 	UFUNCTION(BlueprintCallable)
 	void SetShouldSelectUponReceivingFocus(bool bInShouldSelectUponReceivingFocus);
