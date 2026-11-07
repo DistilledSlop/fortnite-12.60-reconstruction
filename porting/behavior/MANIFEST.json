@@ -81278,23 +81278,6 @@
     "notes": "Inlined IsA(UFortCardPackItem::StaticClass()) then tail call to UFortCardPackItem::IsChoicePack; all 23 instructions accounted for."
   },
   {
-    "class": "UFortLlamaStoreOfferWidgetBase",
-    "function": "IsParentActivatablePanelActive",
-    "kind": "exec",
-    "signature": "bool IsParentActivatablePanelActive()",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs18_runtime/UFortLlamaStoreOfferWidgetBase/IsParentActivatablePanelActive.inc",
-    "confidence": "medium",
-    "address": "0x145285dc0",
-    "status": "ported",
-    "reflection_flags": "0x4080401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x1450b9760",
-    "notes": "Raw outer-chain loop (+0x20 twice per step) with IsA(UUserWidget) and IsA(UCommonActivatablePanel) tests; raw byte at node+0x288."
-  },
-  {
     "class": "UFortMissionActivationInfo",
     "function": "CanRequestVote",
     "kind": "exec",

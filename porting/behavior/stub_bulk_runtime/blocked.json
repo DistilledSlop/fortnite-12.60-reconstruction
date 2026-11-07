@@ -1060,5 +1060,12 @@
   "blocker": "struct_other_module",
   "reason": "Returns FFortItemViewSettings (0x34 bytes at +0x1c4), a type of another module; the generator rejects the recovered member.",
   "unblock": "Make the struct type available to FortniteUI"
+ },
+ {
+  "entry": "UFortLlamaStoreOfferWidgetBase::IsParentActivatablePanelActive",
+  "kind": "exec",
+  "blocker": "class_other_module",
+  "reason": "Body uses UCommonActivatablePanel, a class of another module; the generator rejects the splice.",
+  "unblock": "Expose the CommonUI class to FortniteUI"
  }
 ]
