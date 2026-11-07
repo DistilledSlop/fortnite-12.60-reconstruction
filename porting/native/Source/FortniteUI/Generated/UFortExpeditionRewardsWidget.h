@@ -6,10 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-#include "FFortItemInstanceQuantityPair.h"
 #include "FOnAllExpeditionsCollected.h"
 #include "UCommonTileView.h"
-#include "UFortExpeditionItem.h"
 
 #include "UFortExpeditionRewardsWidget.generated.h"
 
@@ -30,10 +28,6 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	bool bPendingCollection;
-
-	UFUNCTION(BlueprintNativeEvent)
-	void RefreshRewardsUI(UFortExpeditionItem* Expedition, bool bExpeditionSucceeded, TArray<FFortItemInstanceQuantityPair>& Rewards);
-	virtual void RefreshRewardsUI_Implementation(UFortExpeditionItem* Expedition, bool bExpeditionSucceeded, TArray<FFortItemInstanceQuantityPair>& Rewards);
 
 };
 

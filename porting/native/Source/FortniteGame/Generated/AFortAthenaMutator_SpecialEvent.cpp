@@ -51,7 +51,7 @@ void AFortAthenaMutator_SpecialEvent::PauseSupplyDrops(bool bPause)
 	// Original address: 0x141b283a0 (AFortAthenaMutator_SpecialEvent::PauseSupplyDrops)
 	// Offset evidence: [RCX+0xf0] is Role (reflected); [RCX+0x364] is an unreflected bool gap (NativeRecoveredBool_0x364).
 	// CONFIDENCE: HIGH
-	if (static_cast<uint8>(Role) != 3)
+	if (static_cast<uint8>(GetLocalRole()) != 3)
 	{
 	    return;
 	}
@@ -64,7 +64,7 @@ void AFortAthenaMutator_SpecialEvent::RequestSanitizedPlayers(int32 NumPlayersRe
 	// Offset evidence: this+0xf0 = AActor::Role (Byte) compared with 3 (ROLE_Authority). CALL 0x1420e5530 = AFortGameplayMutator::IsMutatorActive() const
 	// on this. NumPlayersRequested (EDX) is added to dword this+0x338, which no reflected member covers (member_field NativeRecoveredInt32_0x338).
 	// CONFIDENCE: HIGH
-	if (static_cast<uint8>(Role) != 3)
+	if (static_cast<uint8>(GetLocalRole()) != 3)
 	{
 	    return;
 	}

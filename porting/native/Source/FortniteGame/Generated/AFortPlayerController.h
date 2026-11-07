@@ -1523,9 +1523,6 @@ public:
 	bool IsBuildToolOverridden() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool IsClientBot() const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsClientTimingOut() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -1986,11 +1983,11 @@ public:
 	static void NativeRecordCoreSynchronousLoad(AFortPlayerController* Controller, const FString& Path);
 	static void NativeRecordAthenaAsynchronousLoad(AFortPlayerController* Controller, const FString& Path);
 	static void NativeRecordCoreAsynchronousLoad(AFortPlayerController* Controller, const FString& Path);
-	virtual UFortItem* NativeFindItemByGuid(const FGuid& ItemGuid);
 	virtual AFortInventory* NativeQuickBarInventory();
 	virtual AFortWeapon* NativeQuickBarHeldWeapon();
 	static void NativeRecordQuickBarSlotItem(AFortPlayerController* Controller, UFortItem* Item, EFortQuickBars Bar, int32 PreviousSlot, int32 NewSlot, UFortItem* ReplacedItem);
 	virtual uint8 NativeGetTeam163();
+	virtual UFortItem* NativeFindItemByGuid(const FGuid& ItemGuid);
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 };

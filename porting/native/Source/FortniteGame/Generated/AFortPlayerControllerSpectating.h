@@ -42,7 +42,6 @@ class UAthenaMarkerComponent;
 class UAthenaPlayerMatchReport;
 class UFortMiniMapTeamIndicators;
 class UFortReplayContext;
-class UFortSpectatorCameraComponent;
 class UInputComponent;
 class UMaterialInterface;
 
@@ -258,9 +257,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortSpectatorBlendType GetBlendType() const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	UFortSpectatorCameraComponent* GetCurrentSpectatorCameraComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual AFortPlayerState* GetFollowedPlayer() const;

@@ -154,9 +154,6 @@ private:
 	void CacheParticleComponentPointers(UParticleSystemComponent* WheelDust, UParticleSystemComponent* WheelSlide, UParticleSystemComponent* TrailLeft, UParticleSystemComponent* TrailRight);
 public:
 
-	UFUNCTION(BlueprintCallable)
-	void ClearBoostAccumulated();
-
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetBoostAccumulated() const;
 

@@ -100,7 +100,7 @@ void AFortBroadcastRemoteClientInfo::OnServerPlayerEditActorChanged(ABuildingSMA
 	// Evidence: Gate byte [RCX+0x268] is unreflected in the class own region: NativeRecoveredByte_0x268.
 	// Evidence: Store qword [RCX+0x270] is reflected member RemoteEditActor (Object).
 	// CONFIDENCE: MEDIUM
-	if (static_cast<uint8>(Role) == 3 && NativeRecoveredByte_0x268 != 0)
+	if (static_cast<uint8>(GetLocalRole()) == 3 && NativeRecoveredByte_0x268 != 0)
 	{
 	    RemoteEditActor = EditActor;
 	}
@@ -110,7 +110,7 @@ void AFortBroadcastRemoteClientInfo::OnServerPlayerWeakspotSpawned(FBuildingWeak
 {
 	// Original body 0x1424b5bc0 (thunk 0x14284f7f0). Offset evidence: this+0xf0 = AActor::Role (reflected Byte, ROLE_Authority == 3); this+0x268 = bActive (reflected bool, byte compared with 0); this+0x2a8..0x2df = RemoteWeakspotData (FBuildingWeakSpotData, 56 bytes, copied from WeakspotData by 3 MOVUPS and 1 MOVSD).
 	// CONFIDENCE: HIGH
-	if (static_cast<uint8>(Role) != 3 || !bActive)
+	if (static_cast<uint8>(GetLocalRole()) != 3 || !bActive)
 	{
 		return;
 	}
@@ -125,7 +125,7 @@ void AFortBroadcastRemoteClientInfo::OnServerPoiTagIDChanged(int16 InPoiTagID)
 	// Evidence: Gate byte [RCX+0x268] is NativeRecoveredByte_0x268 (gap).
 	// Evidence: Store word [RCX+0x2e4] is reflected member RemotePoiTagID (Int16).
 	// CONFIDENCE: HIGH
-	if (static_cast<uint8>(Role) == 3 && NativeRecoveredByte_0x268 != 0)
+	if (static_cast<uint8>(GetLocalRole()) == 3 && NativeRecoveredByte_0x268 != 0)
 	{
 	    RemotePoiTagID = InPoiTagID;
 	}
@@ -139,7 +139,7 @@ void AFortBroadcastRemoteClientInfo::OnServerRespawnTimeChanged(float InRespawnT
 	// Evidence: Gate byte [RCX+0x268] is NativeRecoveredByte_0x268 (gap).
 	// Evidence: Store dword [RCX+0x2e0] (XMM1) is reflected member RemoteRespawnTime (Float).
 	// CONFIDENCE: HIGH
-	if (static_cast<uint8>(Role) == 3 && NativeRecoveredByte_0x268 != 0)
+	if (static_cast<uint8>(GetLocalRole()) == 3 && NativeRecoveredByte_0x268 != 0)
 	{
 	    RemoteRespawnTime = InRespawnTime;
 	}

@@ -74,9 +74,6 @@ public:
 	UPROPERTY(Transient)
 	bool bIsAimingDownSights;
 
-	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
-	UFortWorldMarker* FindMarkerByID(FMarkerID MarkerID);
-
 	UFUNCTION(Server, Reliable)
 	void ServerAddMapMarker(const FFortClientMarkerRequest& MarkerRequest);
 	void ServerAddMapMarker_Implementation(const FFortClientMarkerRequest& MarkerRequest);

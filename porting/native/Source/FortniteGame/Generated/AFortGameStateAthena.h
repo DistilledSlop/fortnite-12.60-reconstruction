@@ -1014,9 +1014,6 @@ public:
 	bool IsPlaygroundModePlaylist() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool IsStormCN() const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTeleportToCreativeHubAllowed(AFortPlayerState* PlayerState) const;
 
 	UFUNCTION()

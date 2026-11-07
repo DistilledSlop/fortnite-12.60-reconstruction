@@ -45,8 +45,5 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItem* GetItem() const;
 
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool IsItemValid() const;
-
 };
 

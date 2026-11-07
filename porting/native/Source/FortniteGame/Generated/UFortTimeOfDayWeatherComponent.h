@@ -10,7 +10,6 @@
 #include "EAthenaGamePhase.h"
 #include "EGlobalWeatherState.h"
 #include "FGlobalWeatherData.h"
-#include "Math/Vector.h"
 
 class UPostProcessComponent;
 
@@ -109,9 +108,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentWeatherIntensity() const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	FVector GetCurrentWindDirection() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentWindStrength() const;

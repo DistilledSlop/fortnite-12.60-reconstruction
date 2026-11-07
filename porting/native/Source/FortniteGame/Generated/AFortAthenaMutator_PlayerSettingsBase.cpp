@@ -2,6 +2,20 @@
 #include "AFortAthenaMutator_PlayerSettingsBase.h"
 #include "UFortPlayerSettingsComponentBase.h"
 
+uint8 AFortAthenaMutator_PlayerSettingsBase::NativeQueryFriendlyFire163(bool& Value)
+{
+	// CONFIDENCE: high
+	// 0x141aff8f0. A present override returns query-result byte 2.
+	const FName SettingName(TEXT("bAllowFriendlyFire"));
+	UFortPlayerSettingsComponentBase* Settings = NativeFindEnabledPlayerSettings163(SettingName, true);
+	if (!Settings)
+	{
+	    return 0;
+	}
+	Value = Settings->bAllowFriendlyFire;
+	return 2;
+}
+
 UFortPlayerSettingsComponentBase* AFortAthenaMutator_PlayerSettingsBase::NativeFindEnabledPlayerSettings163(FName Name, bool bIncludeDefault)
 {
 	// CONFIDENCE: high
@@ -16,19 +30,5 @@ UFortPlayerSettingsComponentBase* AFortAthenaMutator_PlayerSettingsBase::NativeF
 	    Settings = DefaultScopeSettings;
 	}
 	return Cast<UFortPlayerSettingsComponentBase>(Settings);
-}
-
-uint8 AFortAthenaMutator_PlayerSettingsBase::NativeQueryFriendlyFire163(bool& Value)
-{
-	// CONFIDENCE: high
-	// 0x141aff8f0. A present override returns query-result byte 2.
-	const FName SettingName(TEXT("bAllowFriendlyFire"));
-	UFortPlayerSettingsComponentBase* Settings = NativeFindEnabledPlayerSettings163(SettingName, true);
-	if (!Settings)
-	{
-	    return 0;
-	}
-	Value = Settings->bAllowFriendlyFire;
-	return 2;
 }
 

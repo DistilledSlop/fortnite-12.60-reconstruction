@@ -1,0 +1,418 @@
+[
+ {
+  "entry": "UFortPlayerSettingsComponentBase::IsSettingEnabled",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "use of undeclared identifier 'NativeEnabledSettingNames163'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/UFortPlayerSettingsComponentBase/IsSettingEnabled.inc"
+ },
+ {
+  "entry": "AFortCreativeMoveTool::DeactiveWeaponAndState",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "expected expression",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/AFortCreativeMoveTool/DeactiveWeaponAndState.inc"
+ },
+ {
+  "entry": "AFortPlayerControllerGameplay::HideQuicktimeEventWidget",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "expected expression",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/AFortPlayerControllerGameplay/HideQuicktimeEventWidget.inc"
+ },
+ {
+  "entry": "AFortPlayerController::IsClientBot",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "use of undeclared identifier 'NativeClientBotFlag_0x1838'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/AFortPlayerController/IsClientBot.inc"
+ },
+ {
+  "entry": "AFortTimeOfDayManager::ToggleDebugForceStormEffects",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "use of undeclared identifier 'NativeForceStormEffects_0xded'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/AFortTimeOfDayManager/ToggleDebugForceStormEffects.inc"
+ },
+ {
+  "entry": "UDonutChallengeIdleGame::EndBumpyRide",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "use of undeclared identifier 'NativeRecoveredBits_0x2ec'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/UDonutChallengeIdleGame/EndBumpyRide.inc"
+ },
+ {
+  "entry": "UDonutChallengeIdleGame::EndJump",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "use of undeclared identifier 'NativeRecoveredByte_0x2c0'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/UDonutChallengeIdleGame/EndJump.inc"
+ },
+ {
+  "entry": "UDonutChallengeIdleGame::EndSuperJump",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "use of undeclared identifier 'NativeRecoveredByte_0x2c0'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/UDonutChallengeIdleGame/EndSuperJump.inc"
+ },
+ {
+  "entry": "UFortPlayerSettingsComponentBase::OnRep_EnabledSettings",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "use of undeclared identifier 'NativeEnabledSettingNames163'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/UFortPlayerSettingsComponentBase/OnRep_EnabledSettings.inc"
+ },
+ {
+  "entry": "UFortTimeOfDayWeatherComponent::GetCurrentWindDirection",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no viable conversion from returned value of type 'const float' to function return type 'FVector'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/UFortTimeOfDayWeatherComponent/GetCurrentWindDirection.inc"
+ },
+ {
+  "entry": "AFortAthenaGoatVehicle::ClearBoostAccumulated",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "use of undeclared identifier 'NativeRecoveredWord_0x10a4'; did you mean 'NativeRecoveredBool_0x10b4'?",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/AFortAthenaGoatVehicle/ClearBoostAccumulated.inc"
+ },
+ {
+  "entry": "UAthenaRemoteSquadViewData::GetSquadColor",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no viable conversion from returned value of type 'const bool' to function return type 'FLinearColor'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/UAthenaRemoteSquadViewData/GetSquadColor.inc"
+ },
+ {
+  "entry": "UAthenaRemotePlayerViewData::GetTeamColor",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no viable conversion from returned value of type 'const bool' to function return type 'FLinearColor'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/UAthenaRemotePlayerViewData/GetTeamColor.inc"
+ },
+ {
+  "entry": "AAIHotSpot::GetSlotCount",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "invalid operands to binary expression ('EAIHotSpotSlotFilter' and 'int')",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/AAIHotSpot/GetSlotCount.inc"
+ },
+ {
+  "entry": "AFortAthenaVehicle::GetSpringLengthRatio",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "declaration shadows a field of 'AFortAthenaVehicle' [-Werror,-Wshadow]",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/AFortAthenaVehicle/GetSpringLengthRatio.inc"
+ },
+ {
+  "entry": "UFortAlterationOption::GetAlterationOptionType",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "too many arguments to function call, expected 0, have 1",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/leaf4_runtime/UFortAlterationOption/GetAlterationOptionType.inc"
+ },
+ {
+  "entry": "ABuildingActor::SetTeam",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no viable overloaded '='",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/small1_runtime/ABuildingActor/SetTeam.inc"
+ },
+ {
+  "entry": "UFortActivityDetailsView::HandleNextPanelInput",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'SelectNextButton' in 'UCommonButtonGroup'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/wrapA6_runtime/UFortActivityDetailsView/HandleNextPanelInput.inc"
+ },
+ {
+  "entry": "UFortActivityDetailsView::HandlePrevPanelInput",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'SelectPreviousButton' in 'UCommonButtonGroup'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/wrapA6_runtime/UFortActivityDetailsView/HandlePrevPanelInput.inc"
+ },
+ {
+  "entry": "UFortCMSInfoCarousel::NavigatePageLeft",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'NextPage' in 'UCommonWidgetCarousel'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/wrapA6_runtime/UFortCMSInfoCarousel/NavigatePageLeft.inc"
+ },
+ {
+  "entry": "UFortCMSInfoCarousel::NavigatePageRight",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'PreviousPage' in 'UCommonWidgetCarousel'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/wrapA6_runtime/UFortCMSInfoCarousel/NavigatePageRight.inc"
+ },
+ {
+  "entry": "UAIHotSpotSlot::GetHotSpot",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "declaration shadows a field of 'UAIHotSpotSlot' [-Werror,-Wshadow]",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/rs1_runtime/UAIHotSpotSlot/GetHotSpot.inc"
+ },
+ {
+  "entry": "UFortMinigameStatics::GetTeam",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "member access into incomplete type 'ASOLFortGame'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/rs8_runtime/UFortMinigameStatics/GetTeam.inc"
+ },
+ {
+  "entry": "UFortSkeletalAudioComponent::SetCustomTrackedTransform",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no viable overloaded '='",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/rs12_runtime/UFortSkeletalAudioComponent/SetCustomTrackedTransform.inc"
+ },
+ {
+  "entry": "ASOLFortGame::GetTeam",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "member access into incomplete type 'ASOLFortPlayer'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/rs14_runtime/ASOLFortGame/GetTeam.inc"
+ },
+ {
+  "entry": "UAthenaSpectateMatchModalBase::IsGameSessionString",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'Num' in 'FString'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/rd3_runtime/UAthenaSpectateMatchModalBase/IsGameSessionString.inc"
+ },
+ {
+  "entry": "UAthenaViewStreamingReplayModalBase::IsValidGameSessionId",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'Num' in 'FString'",
+  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
+  "inc_path": "porting/behavior/rd3_runtime/UAthenaViewStreamingReplayModalBase/IsValidGameSessionId.inc"
+ },
+ {
+  "entry": "AFortAthenaMutator_Disco::OnCaptureLockBroken",
+  "kind": "exec",
+  "blocker": "incomplete_type_include_unsupported",
+  "reason": "member access into an incomplete project class; snippet includes only accept engine headers, so the generator would need to emit the project include",
+  "unblock": "Teach the generator to include the used project class header in the cpp, then re-add the port",
+  "inc_path": "porting/behavior/rs3_runtime/AFortAthenaMutator_Disco/OnCaptureLockBroken.inc"
+ },
+ {
+  "entry": "UFortBannerUtilities::GetRowNameForBannerColorItem",
+  "kind": "exec",
+  "blocker": "incomplete_type_include_unsupported",
+  "reason": "member access into an incomplete project class; snippet includes only accept engine headers, so the generator would need to emit the project include",
+  "unblock": "Teach the generator to include the used project class header in the cpp, then re-add the port",
+  "inc_path": "porting/behavior/small9_runtime/UFortBannerUtilities/GetRowNameForBannerColorItem.inc"
+ },
+ {
+  "entry": "AFortAthenaMutator_Bagel::GetPlayerScore",
+  "kind": "exec",
+  "blocker": "incomplete_type_include_unsupported",
+  "reason": "member access into an incomplete project class; snippet includes only accept engine headers, so the generator would need to emit the project include",
+  "unblock": "Teach the generator to include the used project class header in the cpp, then re-add the port",
+  "inc_path": "porting/behavior/rd1_runtime/AFortAthenaMutator_Bagel/GetPlayerScore.inc"
+ },
+ {
+  "entry": "AFortCreativeMoveTool::ClientAddItemToMoveToolComplete_Implementation",
+  "kind": "impl",
+  "blocker": "incomplete_type_include_unsupported",
+  "reason": "member access into an incomplete project class; snippet includes only accept engine headers, so the generator would need to emit the project include",
+  "unblock": "Teach the generator to include the used project class header in the cpp, then re-add the port",
+  "inc_path": "porting/behavior/bcast3_runtime/AFortCreativeMoveTool/ClientAddItemToMoveToolComplete_Implementation.inc"
+ },
+ {
+  "entry": "AFortCreativeMoveTool::OnWantedCameraSpacePositioning",
+  "kind": "exec",
+  "blocker": "incomplete_type_include_unsupported",
+  "reason": "member access into an incomplete project class; snippet includes only accept engine headers, so the generator would need to emit the project include",
+  "unblock": "Teach the generator to include the used project class header in the cpp, then re-add the port",
+  "inc_path": "porting/behavior/rs6_runtime/AFortCreativeMoveTool/OnWantedCameraSpacePositioning.inc"
+ },
+ {
+  "entry": "AFortCreativeMoveTool::OnWantedHitTraceRule",
+  "kind": "exec",
+  "blocker": "incomplete_type_include_unsupported",
+  "reason": "member access into an incomplete project class; snippet includes only accept engine headers, so the generator would need to emit the project include",
+  "unblock": "Teach the generator to include the used project class header in the cpp, then re-add the port",
+  "inc_path": "porting/behavior/rd2_runtime/AFortCreativeMoveTool/OnWantedHitTraceRule.inc"
+ },
+ {
+  "entry": "AFortCreativeMoveTool::OnWantedIgnoreRecentlyPlacedTime",
+  "kind": "exec",
+  "blocker": "incomplete_type_include_unsupported",
+  "reason": "member access into an incomplete project class; snippet includes only accept engine headers, so the generator would need to emit the project include",
+  "unblock": "Teach the generator to include the used project class header in the cpp, then re-add the port",
+  "inc_path": "porting/behavior/rs6_runtime/AFortCreativeMoveTool/OnWantedIgnoreRecentlyPlacedTime.inc"
+ },
+ {
+  "entry": "AFortPlayerController::ClientForceWorldInventoryUpdate_Implementation",
+  "kind": "impl",
+  "blocker": "incomplete_type_include_unsupported",
+  "reason": "member access into an incomplete project class; snippet includes only accept engine headers, so the generator would need to emit the project include",
+  "unblock": "Teach the generator to include the used project class header in the cpp, then re-add the port",
+  "inc_path": "porting/behavior/wrapA3_runtime/AFortPlayerController/ClientForceWorldInventoryUpdate_Implementation.inc"
+ },
+ {
+  "entry": "UFortStoreFrontOfferDetailsWidgetBase::GetOfferInfoById",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'GetOfferId' in 'UFortStoreFrontOfferInfo'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/UFortStoreFrontOfferDetailsWidgetBase/GetOfferInfoById.inc"
+ },
+ {
+  "entry": "AFortDecoTool::OnUnEquip",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "expected expression",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/AFortDecoTool/OnUnEquip.inc"
+ },
+ {
+  "entry": "AFortGameModeZone::OnEveningReached",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "expected expression",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/AFortGameModeZone/OnEveningReached.inc"
+ },
+ {
+  "entry": "AFortPlayerControllerGameplay::RefreshHUDElementVisibilitiesToSettings",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "expected expression",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/AFortPlayerControllerGameplay/RefreshHUDElementVisibilitiesToSettings.inc"
+ },
+ {
+  "entry": "UFortItemWidget::IsItemValid",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "use of undeclared identifier 'NativeRecoveredWeak_0x82c'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/UFortItemWidget/IsItemValid.inc"
+ },
+ {
+  "entry": "UHUDLayoutToolContext::HasSelectedWidget",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "use of undeclared identifier 'NativeRecoveredWeak_0x204'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/UHUDLayoutToolContext/HasSelectedWidget.inc"
+ },
+ {
+  "entry": "UFortLocalUserEntry::HandleGetMenuContent",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "cannot initialize return object of type 'UWidget *' with an lvalue of type 'UFortLocalUserSettingsMenu *'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/leaf2_runtime/UFortLocalUserEntry/HandleGetMenuContent.inc"
+ },
+ {
+  "entry": "UFortHUDCenterPopupMessageWidget::GetCenterPopupMessageState",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "too many arguments to function call, expected 0, have 1",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/leaf4_runtime/UFortHUDCenterPopupMessageWidget/GetCenterPopupMessageState.inc"
+ },
+ {
+  "entry": "UFortCollectionBookProgressionRewardDetailInspectWidget::SetAssociatedLevel",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'SetCurrentValue' in 'UCommonNumericTextBlock'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/wrapA6_runtime/UFortCollectionBookProgressionRewardDetailInspectWidget/SetAssociatedLevel.inc"
+ },
+ {
+  "entry": "UFortCollectionBookSectionPanel::OnSlotButtonHovered",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "member access into incomplete type 'UFortCollectionBookSlotView'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/wrapA6_runtime/UFortCollectionBookSectionPanel/OnSlotButtonHovered.inc"
+ },
+ {
+  "entry": "UFortCollectionBookProgressionRewardWidget::SetAssociatedLevel",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'SetCurrentValue' in 'UCommonNumericTextBlock'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/wrapA6_runtime/UFortCollectionBookProgressionRewardWidget/SetAssociatedLevel.inc"
+ },
+ {
+  "entry": "AFortPlayerControllerSpectating::GetCurrentSpectatorCameraComponent",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "'SpectatorPawn' is a private member of 'APlayerController'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/rs10_runtime/AFortPlayerControllerSpectating/GetCurrentSpectatorCameraComponent.inc"
+ },
+ {
+  "entry": "UFortInputOptions::GetInputDataIndexForActionName",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "member access into incomplete type 'UFortOptionsMenuInputData'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/rs17_runtime/UFortInputOptions/GetInputDataIndexForActionName.inc"
+ },
+ {
+  "entry": "AFortGameModeZone::OnMorningReached",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "expected expression",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/AFortGameModeZone/OnMorningReached.inc"
+ },
+ {
+  "entry": "AFortGameStateAthena::IsStormCN",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "expected expression",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/AFortGameStateAthena/IsStormCN.inc"
+ },
+ {
+  "entry": "AFortPlayerParachute::GetParachuteRootMesh",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "cannot initialize return object of type 'USkeletalMeshComponent *' with an lvalue of type 'USkeletalMeshComponentBudgeted *const'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/leaf2_runtime/AFortPlayerParachute/GetParachuteRootMesh.inc"
+ },
+ {
+  "entry": "AFortPlayerPawn::BP_ForceLockParachuteOpen",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "'Role' is a private member of 'AActor'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/small3_runtime/AFortPlayerPawn/BP_ForceLockParachuteOpen.inc"
+ }
+]

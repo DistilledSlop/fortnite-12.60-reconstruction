@@ -634,7 +634,7 @@ void AFortPawn::OnRep_StormShieldComponent()
 	{
 	    return;
 	}
-	if (Role != ROLE_Authority)
+	if (GetLocalRole() != ROLE_Authority)
 	{
 	    uint8* ShieldRaw = reinterpret_cast<uint8*>(StormShieldComponent);
 	    ShieldRaw[0x3a] |= 0x2;

@@ -260,9 +260,6 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_EnabledSettings, Transient)
 	TArray<FString> EnabledSettings;
 
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool IsSettingEnabled(FName& PropertyName) const;
-
 	UFUNCTION()
 	void OnRep_AbilitySetOptionData();
 
@@ -281,10 +278,8 @@ public:
 	UFUNCTION()
 	void OnRep_CreativeBossHealthDisplayMode();
 
-private:
 	UFUNCTION()
 	void OnRep_EnabledSettings();
-public:
 
 	UFUNCTION()
 	void OnRep_NameplateDisplayMode();

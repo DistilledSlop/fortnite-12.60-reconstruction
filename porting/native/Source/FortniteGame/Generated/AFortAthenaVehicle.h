@@ -732,9 +732,6 @@ public:
 	FVector GetPreviousLinearVelocity() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	float GetSpringLengthRatio(int32 SpringIdx) const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSteeringAngle() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

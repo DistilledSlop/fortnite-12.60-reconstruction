@@ -19,7 +19,6 @@
 #include "FUInt8Delegate.h"
 #include "FWeaponDelegate.h"
 #include "GameFramework/OnlineReplStructs.h"
-#include "Math/Color.h"
 
 #include "UAthenaRemotePlayerViewData.generated.h"
 
@@ -246,9 +245,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetSquadId() const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	FLinearColor GetTeamColor() const;
 
 };
 

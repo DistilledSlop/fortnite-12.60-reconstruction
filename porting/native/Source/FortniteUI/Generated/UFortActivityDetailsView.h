@@ -82,15 +82,5 @@ public:
 	UPROPERTY()
 	UFortActivityDetailsKnobsPanel* DetailsPanel_Knobs;
 
-private:
-	UFUNCTION()
-	void HandleNextPanelInput(bool& bPassthrough);
-public:
-
-private:
-	UFUNCTION()
-	void HandlePrevPanelInput(bool& bPassthrough);
-public:
-
 };
 

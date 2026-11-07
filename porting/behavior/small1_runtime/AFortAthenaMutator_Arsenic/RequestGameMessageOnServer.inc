@@ -2,7 +2,7 @@
 // Offset evidence: [RCX+0xf0] is Role (reflected); [RCX+0x260] is CachedGameState (reflected Object); dword +0x1f00 on the pointee written raw.
 // CONFIDENCE: MEDIUM
 const uint8 MsgIdValue = static_cast<uint8>(MsgId);
-if (static_cast<uint8>(Role) != 3 || CachedGameState == nullptr || MsgIdValue == 0)
+if (static_cast<uint8>(GetLocalRole()) != 3 || CachedGameState == nullptr || MsgIdValue == 0)
 {
     return;
 }

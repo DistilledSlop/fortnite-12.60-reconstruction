@@ -68,16 +68,6 @@ void AFortPlayerControllerGameplay::GrantCreativePhoneItemDefLoadedCallback()
 	return;
 }
 
-void AFortPlayerControllerGameplay::HideQuicktimeEventWidget()
-{
-	// CONFIDENCE: medium
-	// Original address: 0x142a65320
-	// FFrame::Code at Stack+0x20: skip the opcode byte (advance if non-null)
-	*(ulonglong*)((uint8*)Stack + 0x20) = (ulonglong)(*(longlong*)((uint8*)Stack + 0x20) != 0) + *(longlong*)((uint8*)Stack + 0x20);
-	// virtual dispatch on this: vptr + byte offset 0x1ff8
-	(*(void(**)(void*))((*(uint8**)this) + 0x1ff8))(this);
-}
-
 bool AFortPlayerControllerGameplay::IsCreativeModeEnabled() const
 {
 	// Original address: 0x142a655c0.
@@ -191,16 +181,6 @@ void AFortPlayerControllerGameplay::OnVerifyAllowedToFly()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
-}
-
-void AFortPlayerControllerGameplay::RefreshHUDElementVisibilitiesToSettings()
-{
-	// CONFIDENCE: medium
-	// Original address: 0x142a66640
-	// FFrame::Code at Stack+0x20: skip the opcode byte (advance if non-null)
-	*(ulonglong*)((uint8*)Stack + 0x20) = (ulonglong)(*(longlong*)((uint8*)Stack + 0x20) != 0) + *(longlong*)((uint8*)Stack + 0x20);
-	// virtual dispatch on this: vptr + byte offset 0x1f60
-	(*(void(**)(void*))((*(uint8**)this) + 0x1f60))(this);
 }
 
 void AFortPlayerControllerGameplay::ServerAwardVehicleTrickPoints_Implementation(int32 InPoints, int32 InAirTimeX1000)

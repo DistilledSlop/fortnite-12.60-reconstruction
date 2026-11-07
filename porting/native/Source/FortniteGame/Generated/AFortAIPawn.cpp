@@ -107,7 +107,7 @@ float AFortAIPawn::GetWaterImmersionDepth() const
 	{
 	    return -1.0f;
 	}
-	const uint8* MovementRaw = reinterpret_cast<const uint8*>(CharacterMovement);
+	const uint8* MovementRaw = reinterpret_cast<const uint8*>(GetCharacterMovement());
 	return *reinterpret_cast<const float*>(MovementRaw + 0x1d08);
 }
 

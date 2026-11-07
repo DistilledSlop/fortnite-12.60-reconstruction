@@ -6,9 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
-#include "FPickupInstigator.h"
 #include "FPickupInstigatorArray.h"
-#include "FPickupInstigatorData.h"
 #include "FPickupInstigatorDataUpdated.h"
 
 class UObject;
@@ -38,12 +36,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void ClearPickupInstigators();
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool GetInstigator(int32 TrackedIndex, FPickupInstigator& PickupInstigator) const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool GetInstigatorData(int32 TrackedIndex, FPickupInstigatorData& InstigatorData) const;
 
 	UFUNCTION()
 	void OnRep_InstigatorRegistry();

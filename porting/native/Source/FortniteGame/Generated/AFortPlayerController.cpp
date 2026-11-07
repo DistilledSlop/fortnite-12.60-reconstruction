@@ -217,16 +217,7 @@ void AFortPlayerController::ClientForceUpdateQuickbar_Implementation(const EFort
 
 void AFortPlayerController::ClientForceWorldInventoryUpdate_Implementation()
 {
-	// Original body address: 0x142371d10 (thunk 0x142a44a00)
-	// Offset evidence: [RCX+0x1738] = WorldInventory (AFortInventory*, reflected Object at 0x1738); byte [RCX+0x179f] is an unreflected gap in the own region -> NativeRecoveredBool_0x179f (object offset 0x179f).
-	// Callee 0x1420147f0 -> AFortInventory::HandleInventoryLocalUpdate() (declared in AFortInventory.h), receiver = WorldInventory.
-	// Body: JZ on WorldInventory returns with no writes; otherwise flag byte set to 1 then tail-jump to the callee.
-	// CONFIDENCE: MEDIUM
-	if (WorldInventory != nullptr)
-	{
-		NativeRecoveredBool_0x179f = true;
-		WorldInventory->HandleInventoryLocalUpdate();
-	}
+	// Body not recovered: reflection-derived stub.
 }
 
 void AFortPlayerController::ClientGivePlayerLocalAccountItem_Implementation(UFortAccountItemDefinition* ItemDefinition, int32 Count)
@@ -562,13 +553,6 @@ bool AFortPlayerController::IsBuildToolOverridden() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
 	return NativeRecoveredBool_0x14b3;
-}
-
-bool AFortPlayerController::IsClientBot() const
-{
-	// CONFIDENCE: HIGH
-	// Original address: 0x142a47ff0
-	    return NativeClientBotFlag_0x1838 != 0 || NativeClientBotFlag_0x1818 != 0;
 }
 
 bool AFortPlayerController::IsClientTimingOut() const
@@ -1812,24 +1796,6 @@ void AFortPlayerController::NativeRecordCoreAsynchronousLoad(AFortPlayerControll
 	Provider->NativeRecordEvent(EventName, Attributes);
 }
 
-UFortItem* AFortPlayerController::NativeFindItemByGuid(const FGuid& ItemGuid)
-{
-	// CONFIDENCE: high
-	// 0x142380fd0 receives the interface at +0x598. Its +0x11a0/8/10
-	// match reflected WorldInventory/OutpostInventory/ViewTargetInventory.
-	if (WorldInventory)
-	{
-	    if (UFortWorldItem* Item = WorldInventory->NativeFindItemByGuid(ItemGuid))
-	        return Item;
-	}
-	if (OutpostInventory)
-	{
-	    if (UFortWorldItem* Item = OutpostInventory->NativeFindItemByGuid(ItemGuid))
-	        return Item;
-	}
-	return ViewTargetInventory ? ViewTargetInventory->NativeFindItemByGuid(ItemGuid) : nullptr;
-}
-
 AFortInventory* AFortPlayerController::NativeQuickBarInventory()
 {
 	// CONFIDENCE: high
@@ -1965,6 +1931,24 @@ uint8 AFortPlayerController::NativeGetTeam163()
 	// CONFIDENCE: high
 	// 0x1423865d0, IFortTeamActorInterface byte slot 0x28.
 	return PlayerState ? static_cast<AFortPlayerState*>(PlayerState)->NativeGetTeam163() : 0;
+}
+
+UFortItem* AFortPlayerController::NativeFindItemByGuid(const FGuid& ItemGuid)
+{
+	// CONFIDENCE: high
+	// 0x142380fd0 receives the interface at +0x598. Its +0x11a0/8/10
+	// match reflected WorldInventory/OutpostInventory/ViewTargetInventory.
+	if (WorldInventory)
+	{
+	    if (UFortWorldItem* Item = WorldInventory->NativeFindItemByGuid(ItemGuid))
+	        return Item;
+	}
+	if (OutpostInventory)
+	{
+	    if (UFortWorldItem* Item = OutpostInventory->NativeFindItemByGuid(ItemGuid))
+	        return Item;
+	}
+	return ViewTargetInventory ? ViewTargetInventory->NativeFindItemByGuid(ItemGuid) : nullptr;
 }
 
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

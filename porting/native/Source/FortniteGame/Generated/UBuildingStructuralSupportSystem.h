@@ -6,9 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-#include "FBuildingSupportCellIndex.h"
 #include "Math/Box.h"
-#include "Math/Vector.h"
 
 class ABuildingLayoutRequirement;
 class AController;
@@ -54,12 +52,6 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortNavigationGraph* NavGraph;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool AreGridIndicesValid(FBuildingSupportCellIndex& GridIndices) const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool K2_GetWorldLocFromGridIndices(FBuildingSupportCellIndex& GridIndices, FVector& OutWorldLoc) const;
 
 };
 

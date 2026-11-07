@@ -6,7 +6,7 @@
 // Evidence: Dword store 0 at [RCX+0x5c8] = StartSimulatingTime (Float).
 // CONFIDENCE: MEDIUM
 (void)Hit;
-if (static_cast<uint8>(Role) != 3)
+if (static_cast<uint8>(GetLocalRole()) != 3)
 {
     return;
 }

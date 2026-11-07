@@ -4,7 +4,7 @@
 // SafeZoneInterface (RDX): ObjectPointer null test, then getter 0x14290f690 = AFortGameStateAthena::StaticClass(); the object's class
 // depth/superstruct check is IsA(X). GamePhaseStep (R8B) compared with 4.
 // CONFIDENCE: MEDIUM
-if (static_cast<uint8>(Role) != 3)
+if (static_cast<uint8>(GetLocalRole()) != 3)
 {
     return;
 }

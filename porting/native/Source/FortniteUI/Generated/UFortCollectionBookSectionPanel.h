@@ -176,10 +176,5 @@ protected:
 	void OnLogAllowedItemsActionExecuted(bool& bPassThrough);
 public:
 
-protected:
-	UFUNCTION()
-	void OnSlotButtonHovered(int32 ButtonIx);
-public:
-
 };
 

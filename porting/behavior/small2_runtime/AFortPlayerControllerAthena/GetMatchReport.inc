@@ -3,7 +3,7 @@
 // Evidence: Role (0xf0) compared to 2.
 // Evidence: Qword [RCX+0x3318] is reflected MatchReport (Object).
 // CONFIDENCE: HIGH
-if (static_cast<uint8>(Role) != 2)
+if (static_cast<uint8>(GetLocalRole()) != 2)
 {
     return nullptr;
 }

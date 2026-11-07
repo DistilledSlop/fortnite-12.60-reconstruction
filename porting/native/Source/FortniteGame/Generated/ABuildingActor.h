@@ -737,9 +737,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetNavigationModifier(bool bEnableModifier);
 
-	UFUNCTION(BlueprintCallable)
-	virtual void SetTeam(uint8 InTeam);
-
 	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
 	bool ShouldDie(float Damage, AController* EventInstigator, AActor* DamageCauser);
 	virtual bool ShouldDie_Implementation(float Damage, AController* EventInstigator, AActor* DamageCauser);

@@ -32,7 +32,7 @@ void AFortMissionStormShield::PauseStormShield()
 	// Evidence: Dword load [RCX+0x2f0] (CurrentLocalRadius, Float) stored to [RCX+0x278] = RadiusGrowthData.TargetRadius (first float of FStormShieldRadiusGrowthData).
 	// Evidence: Byte store 0 at [RCX+0x28c] = RadiusGrowthData.State (enum at struct offset 0x14).
 	// CONFIDENCE: MEDIUM
-	if (static_cast<uint8>(Role) == 3)
+	if (static_cast<uint8>(GetLocalRole()) == 3)
 	{
 	    RadiusGrowthData.TargetRadius = CurrentLocalRadius;
 	    RadiusGrowthData.State = static_cast<EMissionStormShieldState>(0);

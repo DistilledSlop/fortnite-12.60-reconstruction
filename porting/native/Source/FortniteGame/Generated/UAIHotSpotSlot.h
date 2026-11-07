@@ -12,7 +12,6 @@
 #include "Math/Vector.h"
 
 class AAIController;
-class AAIHotSpot;
 
 #include "UAIHotSpotSlot.generated.h"
 
@@ -89,9 +88,6 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0xa8): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0xa8;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	AAIHotSpot* GetHotSpot() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FBox GetSlotBounds() const;

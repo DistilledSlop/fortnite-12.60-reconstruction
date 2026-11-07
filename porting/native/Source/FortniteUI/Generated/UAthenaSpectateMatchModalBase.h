@@ -14,10 +14,5 @@ class FORTNITEUI_API UAthenaSpectateMatchModalBase : public UFortActivatablePane
 	GENERATED_BODY()
 
 public:
-protected:
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool IsGameSessionString(FString String) const;
-public:
-
 };
 

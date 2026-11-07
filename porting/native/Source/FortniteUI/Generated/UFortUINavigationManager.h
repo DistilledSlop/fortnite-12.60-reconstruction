@@ -18,7 +18,6 @@
 #include "FFortSquadOp.h"
 #include "FFortSquadSlotNavigateRequest.h"
 #include "FFortTabNavigateRequest.h"
-#include "FFortUINavigationOperation.h"
 #include "FFortUINavigationRequest.h"
 #include "FFortVaultItemNavigateRequest.h"
 #include "FFortVaultTabNavigateRequest.h"
@@ -106,9 +105,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool HasPendingNavigationOp(EFortUINavigationOp NavigationOp);
-
-	UFUNCTION(BlueprintCallable)
-	bool TryGetPendingNavigationOp(FFortUINavigationOperation& NavigationOp);
 
 };
 

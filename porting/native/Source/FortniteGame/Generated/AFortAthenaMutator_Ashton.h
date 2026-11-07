@@ -251,9 +251,6 @@ public:
 	FAthenaGameMessageData GameMsg_NoMoreRespawns;
 
 	UFUNCTION(BlueprintCallable)
-	int32 GetNumCapturedStones(TArray<FAshtonStoneState>& TestList);
-
-	UFUNCTION(BlueprintCallable)
 	EAshtonStoneStateType GetStoneState(EAshtonStoneType StoneType);
 
 protected:

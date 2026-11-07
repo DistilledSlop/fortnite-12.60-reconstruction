@@ -6,8 +6,6 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
-class UFortHomebaseBannerColorItem;
-
 #include "UFortBannerUtilities.generated.h"
 
 UCLASS()
@@ -16,8 +14,5 @@ class FORTNITEGAME_API UFortBannerUtilities : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable)
-	static FName GetRowNameForBannerColorItem(UFortHomebaseBannerColorItem* BannerColor);
-
 };
 

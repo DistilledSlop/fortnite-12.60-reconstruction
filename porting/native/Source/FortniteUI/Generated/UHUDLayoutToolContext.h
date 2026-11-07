@@ -93,9 +93,6 @@ public:
 	bool CloudHUDLayoutEnabled() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool HasSelectedWidget() const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsFireModeAvailable(EFireModeType NewFireMode) const;
 
 	UFUNCTION(BlueprintCallable)

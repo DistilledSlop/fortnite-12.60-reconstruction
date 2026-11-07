@@ -46,7 +46,6 @@
 class AActor;
 class AFortPlayerControllerAthena;
 class UDeleteObjects;
-class UFortCreativeOption;
 class UFortItemDefinition;
 class UFortObjectMoverInputComponent;
 class UFortPlaysetItemDefinition;
@@ -398,11 +397,6 @@ public:
 	void ClientStopInteracting_Implementation();
 
 protected:
-	UFUNCTION(BlueprintCallable)
-	void DeactiveWeaponAndState();
-public:
-
-protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UObjectInteractionBehavior* GetActiveMovementMode() const;
 public:
@@ -508,21 +502,6 @@ public:
 protected:
 	UFUNCTION()
 	void OnRep_SelectionProperty();
-public:
-
-protected:
-	UFUNCTION()
-	void OnWantedCameraSpacePositioning(UFortCreativeOption* CreativeOption, uint8 Index);
-public:
-
-protected:
-	UFUNCTION()
-	void OnWantedHitTraceRule(UFortCreativeOption* CreativeOption, uint8 Index);
-public:
-
-protected:
-	UFUNCTION()
-	void OnWantedIgnoreRecentlyPlacedTime(UFortCreativeOption* CreativeOption, uint8 Index);
 public:
 
 	UFUNCTION(NetMulticast, Reliable)

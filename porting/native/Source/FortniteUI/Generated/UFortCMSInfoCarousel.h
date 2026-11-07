@@ -33,15 +33,5 @@ public:
 	UPROPERTY()
 	float AutoScrollInterval;
 
-protected:
-	UFUNCTION(BlueprintCallable)
-	void NavigatePageLeft();
-public:
-
-protected:
-	UFUNCTION(BlueprintCallable)
-	void NavigatePageRight();
-public:
-
 };
 

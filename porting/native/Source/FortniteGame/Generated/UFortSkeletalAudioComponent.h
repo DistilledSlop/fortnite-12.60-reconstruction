@@ -11,7 +11,6 @@
 #include "FOnLoopSoundTriggered.h"
 #include "FOnMediumSoundTriggered.h"
 #include "FSkeletalAudioBoneInstance.h"
-#include "Math/TransformNonVectorized.h"
 
 class UFortSkeletalAudioAssetBank;
 class USkeletalMeshComponent;
@@ -66,9 +65,6 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x124): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x124;
-
-	UFUNCTION(BlueprintCallable)
-	void SetCustomTrackedTransform(int32 Index, FTransform& Transform);
 
 	UFUNCTION(BlueprintCallable)
 	void SetSkeletalMesh(USkeletalMeshComponent* NewSkeletalMesh);

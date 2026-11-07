@@ -24,14 +24,6 @@ float UFortTimeOfDayWeatherComponent::GetCurrentWeatherIntensity() const
 	return CurrentWeatherEventIntensity;
 }
 
-FVector UFortTimeOfDayWeatherComponent::GetCurrentWindDirection() const
-{
-	// CONFIDENCE: HIGH
-	// Original address: 0x142b146d0.
-	// Complete reflected return storage copy; source and initialization of the native field remain unrecovered.
-	return NativeRecoveredFVector_0xb0;
-}
-
 float UFortTimeOfDayWeatherComponent::GetCurrentWindStrength() const
 {
 	// Original address: 0x142b14700.

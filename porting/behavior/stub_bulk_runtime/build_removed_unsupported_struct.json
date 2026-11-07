@@ -1,0 +1,130 @@
+[
+ {
+  "entry": "UFortPickupInstigatorRegistryComponent::GetInstigatorData",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FPickupInstigatorData is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/UFortPickupInstigatorRegistryComponent/GetInstigatorData.inc"
+ },
+ {
+  "entry": "UFortPickupInstigatorRegistryComponent::GetInstigator",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FPickupInstigator is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/UFortPickupInstigatorRegistryComponent/GetInstigator.inc"
+ },
+ {
+  "entry": "ABuildingTimeOfDayLights::GetTimeOfDayBlueprintDefaultVariables_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FTimeOfDayBlueprintDefaultVariables is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/_shared/return.inc"
+ },
+ {
+  "entry": "UAthenaWinnersList::OnWinnersAnnounced_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FAthenaWinnerInfo is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/_shared/return.inc"
+ },
+ {
+  "entry": "UFortExpeditionRewardsWidget::RefreshRewardsUI_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type TArray<FFortItemInstanceQuantityPair> is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/_shared/return.inc"
+ },
+ {
+  "entry": "UFortPlayerSurveyAnswerWidgetBase::HandleAnswerChanged_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FFortPlayerSurveyAnswerContainerChangeEventInfo is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/_shared/return.inc"
+ },
+ {
+  "entry": "UFortCreativeOption::DoesMatchCategory",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FCreativeOptionCategoryData is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/leaf3_runtime/UFortCreativeOption/DoesMatchCategory.inc"
+ },
+ {
+  "entry": "UAthenaMarkerComponent::FindMarkerByID",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FMarkerID is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/rs1_runtime/UAthenaMarkerComponent/FindMarkerByID.inc"
+ },
+ {
+  "entry": "UBuildingStructuralSupportSystem::AreGridIndicesValid",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FBuildingSupportCellIndex is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/rs1_runtime/UBuildingStructuralSupportSystem/AreGridIndicesValid.inc"
+ },
+ {
+  "entry": "UBuildingStructuralSupportSystem::K2_GetWorldLocFromGridIndices",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FBuildingSupportCellIndex is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/rs1_runtime/UBuildingStructuralSupportSystem/K2_GetWorldLocFromGridIndices.inc"
+ },
+ {
+  "entry": "AFortAthenaMutator_Ashton::GetNumCapturedStones",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type TArray<FAshtonStoneState> is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/rs3_runtime/AFortAthenaMutator_Ashton/GetNumCapturedStones.inc"
+ },
+ {
+  "entry": "AFortGameStatePvE::GetPickupManagementSettings",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FPickupManagementSettings is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/rs7_runtime/AFortGameStatePvE/GetPickupManagementSettings.inc"
+ },
+ {
+  "entry": "AFortGameStatePvE::SetPickupManagementSettings",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FPickupManagementSettings is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/rs7_runtime/AFortGameStatePvE/SetPickupManagementSettings.inc"
+ },
+ {
+  "entry": "AFortAthenaMutator_FactionCustomCharacterParts::GetPartOverridesForPlayer_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type TArray<FFactionPartOverrideData> is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/lg1_runtime/AFortAthenaMutator_FactionCustomCharacterParts/GetPartOverridesForPlayer_Implementation.inc"
+ },
+ {
+  "entry": "UFortStoreContext::GetCard",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FCard is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/rs20_runtime/UFortStoreContext/GetCard.inc"
+ },
+ {
+  "entry": "UFortUINavigationManager::TryGetPendingNavigationOp",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FFortUINavigationOperation is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/rs21_runtime/UFortUINavigationManager/TryGetPendingNavigationOp.inc"
+ }
+]

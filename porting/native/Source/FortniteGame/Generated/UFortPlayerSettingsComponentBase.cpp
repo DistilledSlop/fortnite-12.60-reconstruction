@@ -2,13 +2,6 @@
 #include "UFortPlayerSettingsComponentBase.h"
 #include "Net/UnrealNetwork.h"
 
-bool UFortPlayerSettingsComponentBase::IsSettingEnabled(FName& PropertyName) const
-{
-	// CONFIDENCE: high
-	// 0x142814f60 -> 0x141b051c0; native TSet<FName> lookup at 0x210.
-	return NativeEnabledSettingNames163.Contains(PropertyName);
-}
-
 void UFortPlayerSettingsComponentBase::OnRep_AbilitySetOptionData()
 {
 	// Body not recovered: reflection-derived stub.
@@ -41,14 +34,7 @@ void UFortPlayerSettingsComponentBase::OnRep_CreativeBossHealthDisplayMode()
 
 void UFortPlayerSettingsComponentBase::OnRep_EnabledSettings()
 {
-	// CONFIDENCE: high
-	// Original address: 0x142815100
-	// 0x142815100. Preserve the native FName lookup cache rebuilt by replication.
-	NativeEnabledSettingNames163.Reset();
-	for (const FString& Setting : EnabledSettings)
-	{
-	    NativeEnabledSettingNames163.Add(FName(*Setting));
-	}
+	// Body not recovered: reflection-derived stub.
 }
 
 void UFortPlayerSettingsComponentBase::OnRep_NameplateDisplayMode()

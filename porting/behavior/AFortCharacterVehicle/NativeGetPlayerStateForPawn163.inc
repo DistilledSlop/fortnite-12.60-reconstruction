@@ -4,6 +4,6 @@
 APlayerState* State = Pawn ? Pawn->GetPlayerState() : nullptr;
 if (!State)
 {
-    State = PlayerState;
+    State = GetPlayerState();
 }
 return Cast<AFortPlayerStateZone>(State);

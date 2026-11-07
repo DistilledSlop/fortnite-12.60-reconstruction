@@ -6261,11 +6261,11 @@
     "address": "0x141a4a300",
     "status": "ported",
     "proxy_score": null,
+    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
+    "notes": "Null-safe original native playlist predicate, emitted as a free helper to preserve its null argument contract. Reuses full original shared native tag singleton initialization/finalization and FGameplayTagContainer.HasTag. See playlist_mode_evidence.md.",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
-    "notes": "Null-safe original native playlist predicate, emitted as a free helper to preserve its null argument contract. Reuses full original shared native tag singleton initialization/finalization and FGameplayTagContainer.HasTag. See playlist_mode_evidence.md."
+    ]
   },
   {
     "class": "AFortGameStateAthena",
@@ -6278,11 +6278,11 @@
     "address": "0x141a4a530",
     "status": "ported",
     "proxy_score": null,
+    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
+    "notes": "Null-safe original native playlist predicate, emitted as a free helper to preserve its null argument contract. Reuses full original shared native tag singleton initialization/finalization and FGameplayTagContainer.HasTag. See playlist_mode_evidence.md.",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
-    "notes": "Null-safe original native playlist predicate, emitted as a free helper to preserve its null argument contract. Reuses full original shared native tag singleton initialization/finalization and FGameplayTagContainer.HasTag. See playlist_mode_evidence.md."
+    ]
   },
   {
     "class": "AFortGameStateAthena",
@@ -6295,11 +6295,11 @@
     "address": "0x141a4a610",
     "status": "ported",
     "proxy_score": null,
+    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
+    "notes": "Null-safe original native playlist predicate, emitted as a free helper to preserve its null argument contract. Reuses full original shared native tag singleton initialization/finalization and FGameplayTagContainer.HasTag. See playlist_mode_evidence.md.",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
-    "notes": "Null-safe original native playlist predicate, emitted as a free helper to preserve its null argument contract. Reuses full original shared native tag singleton initialization/finalization and FGameplayTagContainer.HasTag. See playlist_mode_evidence.md."
+    ]
   },
   {
     "class": "AFortGameStateAthena",
@@ -6312,11 +6312,11 @@
     "address": "0x141a4a6f0",
     "status": "ported",
     "proxy_score": null,
+    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
+    "notes": "Null-safe original native playlist predicate, emitted as a free helper to preserve its null argument contract. Reuses full original shared native tag singleton initialization/finalization and FGameplayTagContainer.HasTag. See playlist_mode_evidence.md.",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
-    "notes": "Null-safe original native playlist predicate, emitted as a free helper to preserve its null argument contract. Reuses full original shared native tag singleton initialization/finalization and FGameplayTagContainer.HasTag. See playlist_mode_evidence.md."
+    ]
   },
   {
     "class": "AFortGameStateAthena",
@@ -6329,11 +6329,11 @@
     "address": "0x141a4a7e0",
     "status": "ported",
     "proxy_score": null,
+    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
+    "notes": "Null-safe original native playlist predicate, emitted as a free helper to preserve its null argument contract. Reuses full original shared native tag singleton initialization/finalization and FGameplayTagContainer.HasTag. See playlist_mode_evidence.md.",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
-    "notes": "Null-safe original native playlist predicate, emitted as a free helper to preserve its null argument contract. Reuses full original shared native tag singleton initialization/finalization and FGameplayTagContainer.HasTag. See playlist_mode_evidence.md."
+    ]
   },
   {
     "class": "AFortGameStateAthena",
@@ -6430,11 +6430,11 @@
     "address": "0x141a49590",
     "status": "ported",
     "proxy_score": null,
+    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
+    "notes": "Original null-safe tag-membership helper. Creative tag-only helper deliberately does not inspect bEnableCreativeMode; both explicit and parent tags are considered by HasTag.",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
-    "notes": "Original null-safe tag-membership helper. Creative tag-only helper deliberately does not inspect bEnableCreativeMode; both explicit and parent tags are considered by HasTag."
+    ]
   },
   {
     "class": "AFortGameStateAthena",
@@ -6447,11 +6447,11 @@
     "address": "0x141a4b0d0",
     "status": "ported",
     "proxy_score": null,
+    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
+    "notes": "Original null-safe tag-membership helper. Creative tag-only helper deliberately does not inspect bEnableCreativeMode; both explicit and parent tags are considered by HasTag.",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
-    "notes": "Original null-safe tag-membership helper. Creative tag-only helper deliberately does not inspect bEnableCreativeMode; both explicit and parent tags are considered by HasTag."
+    ]
   },
   {
     "class": "AFortGameStateAthena",
@@ -32836,10 +32836,10 @@
     "address": "0x141104120",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned static source binding of original native operation; original evidence and integration limits in profile_entry_json_runtime/HANDOFF.md.",
     "includes": [
       "McpProfileItem.h"
-    ],
-    "notes": "Assigned static source binding of original native operation; original evidence and integration limits in profile_entry_json_runtime/HANDOFF.md."
+    ]
   },
   {
     "class": "UMcpProfile",
@@ -33092,11 +33092,11 @@
     "address": "0x1410fe1c0",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence.",
+    "class": "UMcpProfile",
     "includes": [
       "McpProfileBaseTypes.h"
-    ],
-    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence.",
-    "class": "UMcpProfile"
+    ]
   },
   {
     "function": "NativeFindBaseProfileGroup",
@@ -33109,11 +33109,11 @@
     "address": "0x1410fe160",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence.",
+    "class": "UMcpProfile",
     "includes": [
       "McpProfileBaseTypes.h"
-    ],
-    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence.",
-    "class": "UMcpProfile"
+    ]
   },
   {
     "function": "NativeInsertProfileGroup",
@@ -33126,11 +33126,11 @@
     "address": "0x1410f0690",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence. Original callee consumes a by-value shared temporary; retain ownership across group mutation.",
+    "class": "UMcpProfile",
     "includes": [
       "McpProfileBaseTypes.h"
-    ],
-    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence. Original callee consumes a by-value shared temporary; retain ownership across group mutation.",
-    "class": "UMcpProfile"
+    ]
   },
   {
     "function": "NativeInsertProfileItem",
@@ -33143,11 +33143,11 @@
     "address": "0x1410f0580",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence.",
+    "class": "UMcpProfile",
     "includes": [
       "McpProfileBaseTypes.h"
-    ],
-    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence.",
-    "class": "UMcpProfile"
+    ]
   },
   {
     "class": "UFortWorldItem",
@@ -33274,10 +33274,10 @@
     "address": "0x1406801e0",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned item-aware interface contract; original concrete UFortItem slot returns false. Real WorldItem override remains unported; see README.",
     "includes": [
       "McpProfileItem.h"
-    ],
-    "notes": "Assigned item-aware interface contract; original concrete UFortItem slot returns false. Real WorldItem override remains unported; see README."
+    ]
   },
   {
     "class": "UFortWorldItem",
@@ -33338,12 +33338,12 @@
     "address": "0x141104980",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned static bridge taking the actual registry explicitly; owner and registry lifetime/collection remain the caller's responsibility. Requires file-scope DEFINE_LOG_CATEGORY_STATIC(LogProfileSys, Log, All). See README.",
     "includes": [
       "McpProfileBaseTypes.h",
       "McpProfileItem.h",
       "SharedProfileSysLog.h"
-    ],
-    "notes": "Assigned static bridge taking the actual registry explicitly; owner and registry lifetime/collection remain the caller's responsibility. Requires file-scope DEFINE_LOG_CATEGORY_STATIC(LogProfileSys, Log, All). See README."
+    ]
   },
   {
     "class": "UFortMcpProfile",
@@ -33440,10 +33440,10 @@
     "offset": "0x150",
     "confidence": "high",
     "status": "ported",
+    "notes": "Actual request array with partial logical element type; native stride is 0xe8. The callback, payload and remaining lifecycle are open and must extend this same type. Assigned source name.",
     "includes": [
       "FortPendingSaveRequest.h"
-    ],
-    "notes": "Actual request array with partial logical element type; native stride is 0xe8. The callback, payload and remaining lifecycle are open and must extend this same type. Assigned source name."
+    ]
   },
   {
     "class": "UFortMcpProfileWorld",
@@ -33456,10 +33456,10 @@
     "address": "0x14254c270",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned source name and constness. Checks the first request's original +0x48 set, then +0x98 on a miss; FString is passed by value. Writers and complete request lifecycle remain open.",
     "includes": [
       "FortPendingSaveRequest.h"
-    ],
-    "notes": "Assigned source name and constness. Checks the first request's original +0x48 set, then +0x98 on a miss; FString is passed by value. Writers and complete request lifecycle remain open."
+    ]
   },
   {
     "class": "UFortGameInstance",
@@ -33471,10 +33471,10 @@
     "offset": "0x650",
     "confidence": "high",
     "status": "ported",
+    "notes": "Actual shared controller, partially represented by the support type. GI initialization and full controller lifecycle remain open; extend this same object.",
     "includes": [
       "FortPlayerLoadingScreenState.h"
-    ],
-    "notes": "Actual shared controller, partially represented by the support type. GI initialization and full controller lifecycle remain open; extend this same object."
+    ]
   },
   {
     "class": "UFortAssetManager",
@@ -33547,12 +33547,12 @@
     "address": "0x141df6860",
     "confidence": "high",
     "status": "ported",
+    "notes": "Original shared owner now wired internally. Preserve singleton call placement, reserve condition, sparse iteration order and output append semantics; map mutation/hash writers remain open.",
+    "static": true,
     "includes": [
       "FortAssetDiagnosticMap.h",
       "FortAssets.h"
-    ],
-    "notes": "Original shared owner now wired internally. Preserve singleton call placement, reserve condition, sparse iteration order and output append semantics; map mutation/hash writers remain open.",
-    "static": true
+    ]
   },
   {
     "class": "UFortAssetManager",
@@ -33565,12 +33565,12 @@
     "address": "0x141dfb390",
     "confidence": "high",
     "status": "ported",
+    "notes": "Original shared owner now wired internally. Preserve singleton call placement, reserve condition, sparse iteration order and output append semantics; map mutation/hash writers remain open.",
+    "static": true,
     "includes": [
       "FortAssetDiagnosticMap.h",
       "FortAssets.h"
-    ],
-    "notes": "Original shared owner now wired internally. Preserve singleton call placement, reserve condition, sparse iteration order and output append semantics; map mutation/hash writers remain open.",
-    "static": true
+    ]
   },
   {
     "class": "AFortMissionManager",
@@ -33614,10 +33614,10 @@
     "address": "0x14237cff0",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned interface method and member names. Returns the owned shared-pointer slot by reference, selecting FortLocalPlayer when Player casts successfully. Exact const qualification is not observable in machine code. Requires source_policy class and interface hooks.",
     "includes": [
       "FortNativeAnalyticsProvider.h"
-    ],
-    "notes": "Assigned interface method and member names. Returns the owned shared-pointer slot by reference, selecting FortLocalPlayer when Player casts successfully. Exact const qualification is not observable in machine code. Requires source_policy class and interface hooks."
+    ]
   },
   {
     "class": "AFortMission",
@@ -33888,15 +33888,15 @@
     "virtual": true,
     "inc_path": "porting/behavior/UFortWeaponItemDefinition/GetAmmoWorldItemDefinitionNative.inc",
     "address": "0x142669040",
-    "includes": [
-      "FortAssets.h",
-      "FortDelayedObjectLoader.h"
-    ],
     "notes": "Requires shared FFortAssets and delayed loader support; native helper 0x1424ce740.",
     "class": "UFortWeaponItemDefinition",
     "signature_status": "proposed",
     "confidence": "high",
-    "status": "ported"
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ]
   },
   {
     "kind": "member_field",
@@ -33952,12 +33952,12 @@
     "virtual": true,
     "inc_path": "porting/behavior/UFortGadgetItemDefinition/GetAmmoWorldItemDefinitionNative.inc",
     "address": "0x142008520",
-    "includes": [
-      "FortGadgetAmmo.h"
-    ],
     "confidence": "high",
     "status": "ported",
-    "notes": "Gadget native ammo virtual, see HANDOFF.md for helper and tracker semantics. Actual body is shared explicit-pointer source entry, preserving original null guard without member-call UB. FMath::TruncToInt matches native CVTTSS2SI on target Linux x86, including unordered/out-of-range indefinite result."
+    "notes": "Gadget native ammo virtual, see HANDOFF.md for helper and tracker semantics. Actual body is shared explicit-pointer source entry, preserving original null guard without member-call UB. FMath::TruncToInt matches native CVTTSS2SI on target Linux x86, including unordered/out-of-range indefinite result.",
+    "includes": [
+      "FortGadgetAmmo.h"
+    ]
   },
   {
     "class": "AFortGameMode",
@@ -33986,10 +33986,10 @@
     "confidence": "high",
     "address": "0x141949030",
     "inc_path": "porting/behavior/AFortGameModeAthena/GetTimeOfDayManagerClassNative.inc",
+    "notes": "Assigned nonconst native virtual name; AFortGameMode primary table +0x930 override. Preserve raw TSubclassOf return storage.",
     "includes": [
       "FortTrackedTimeOfDayClass.h"
-    ],
-    "notes": "Assigned nonconst native virtual name; AFortGameMode primary table +0x930 override. Preserve raw TSubclassOf return storage."
+    ]
   },
   {
     "kind": "helper",
@@ -34079,11 +34079,11 @@
     "confidence": "high",
     "address": "0x1424e4940",
     "inc_path": "porting/behavior/UGameDataSTW/ResolveTimeOfDayDataNative.inc",
+    "notes": "Assigned native name; 0x1424e4940 reads the reflected UGameDataSTW::FortTimeOfDayData at +0x10d8 and tail-calls typed resolver 0x1424ce5d0 with logging enabled. Nonempty references track the typed result including null.",
     "includes": [
       "FortAssets.h",
       "FortDelayedObjectLoader.h"
-    ],
-    "notes": "Assigned native name; 0x1424e4940 reads the reflected UGameDataSTW::FortTimeOfDayData at +0x10d8 and tail-calls typed resolver 0x1424ce5d0 with logging enabled. Nonempty references track the typed result including null."
+    ]
   },
   {
     "class": "UFortAssetManager",
@@ -34435,11 +34435,11 @@
     "address": "0x1410fbda0",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned static source binding over borrowed state of the actual derived backend; owner, population, overlay writers, dirty marking and GC traversal remain unclosed. Results are borrowed; see HANDOFF.",
+    "class": "UMcpProfile",
     "includes": [
       "ProfileOverlayState.h"
-    ],
-    "notes": "Assigned static source binding over borrowed state of the actual derived backend; owner, population, overlay writers, dirty marking and GC traversal remain unclosed. Results are borrowed; see HANDOFF.",
-    "class": "UMcpProfile"
+    ]
   },
   {
     "function": "NativeFindOverlayProfileGroup",
@@ -34452,11 +34452,11 @@
     "address": "0x1410fe220",
     "confidence": "high",
     "status": "ported",
+    "notes": "Assigned static source binding over borrowed state of the actual derived backend; owner, population, overlay writers, dirty marking and GC traversal remain unclosed. Results are borrowed; see HANDOFF.",
+    "class": "UMcpProfile",
     "includes": [
       "ProfileOverlayState.h"
-    ],
-    "notes": "Assigned static source binding over borrowed state of the actual derived backend; owner, population, overlay writers, dirty marking and GC traversal remain unclosed. Results are borrowed; see HANDOFF.",
-    "class": "UMcpProfile"
+    ]
   },
   {
     "class": "AFortPawn",
@@ -34544,10 +34544,10 @@
     "reflection_flags": "0x54020401",
     "static": false,
     "access": "public",
+    "notes": "Native callee 0x1426a0960; reflected WeaponData +0x350; native warning and virtual dispatch retained.",
     "includes": [
       "SharedFortGameLog.h"
-    ],
-    "notes": "Native callee 0x1426a0960; reflected WeaponData +0x350; native warning and virtual dispatch retained."
+    ]
   },
   {
     "class": "AFortWeapon",
@@ -34562,10 +34562,10 @@
     "reflection_flags": "0x54020401",
     "static": false,
     "access": "public",
+    "notes": "Native callee 0x1426a09e0; reflected WeaponData +0x350; native warning and virtual dispatch retained.",
     "includes": [
       "SharedFortGameLog.h"
-    ],
-    "notes": "Native callee 0x1426a09e0; reflected WeaponData +0x350; native warning and virtual dispatch retained."
+    ]
   },
   {
     "class": "AFortWeapon",
@@ -34580,10 +34580,10 @@
     "reflection_flags": "0x54020401",
     "static": false,
     "access": "public",
+    "notes": "Native callee 0x1426a0b10; reflected WeaponData +0x350; native warning and virtual dispatch retained.",
     "includes": [
       "SharedFortGameLog.h"
-    ],
-    "notes": "Native callee 0x1426a0b10; reflected WeaponData +0x350; native warning and virtual dispatch retained."
+    ]
   },
   {
     "class": "AFortGameModeAthena",
@@ -34610,10 +34610,10 @@
     "confidence": "high",
     "address": "0x14291e7c0",
     "inc_path": "porting/behavior/AFortGameStateAthena/GetAthenaPlaylistContextTags.inc",
+    "notes": "Copies current playlist tags, then either removes all five team-size tags or adds the tag for MaxTeamSize. Preserve singleton calls and RemoveTag parent updates in sequence.",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "notes": "Copies current playlist tags, then either removes all five team-size tags or adds the tag for MaxTeamSize. Preserve singleton calls and RemoveTag parent updates in sequence."
+    ]
   },
   {
     "function": "NativeGetRarity",
@@ -34649,16 +34649,16 @@
     "address": "0x142b46fe0",
     "reflection_flags": "0x54020401",
     "static": false,
-    "includes": [
-      "SharedFortGameLog.h"
-    ],
     "notes": "Native callee 0x1426a0c40; definition virtual dispatch retained.",
     "class": "AFortWeapon",
     "signature_status": "proposed",
     "access": "public",
     "confidence": "high",
     "status": "ported",
-    "inc_path": "porting/behavior/AFortWeapon/GetWeaponDataRarity.inc"
+    "inc_path": "porting/behavior/AFortWeapon/GetWeaponDataRarity.inc",
+    "includes": [
+      "SharedFortGameLog.h"
+    ]
   },
   {
     "function": "GetWeaponDataTriggerType",
@@ -34667,16 +34667,16 @@
     "address": "0x142b47110",
     "reflection_flags": "0x54020401",
     "static": false,
-    "includes": [
-      "SharedFortGameLog.h"
-    ],
     "notes": "Native callee 0x1426a0ec0; calls definition helper 0x142671d20.",
     "class": "AFortWeapon",
     "signature_status": "proposed",
     "access": "public",
     "confidence": "high",
     "status": "ported",
-    "inc_path": "porting/behavior/AFortWeapon/GetWeaponDataTriggerType.inc"
+    "inc_path": "porting/behavior/AFortWeapon/GetWeaponDataTriggerType.inc",
+    "includes": [
+      "SharedFortGameLog.h"
+    ]
   },
   {
     "class": "AFortGameStateAthena",
@@ -34689,10 +34689,10 @@
     "confidence": "high",
     "address": "0x14291e190",
     "inc_path": "porting/behavior/AFortGameStateAthena/AreSkyTubesEnabled.inc",
+    "notes": "Requires the supplied shared cvar owner .h/.cpp in the native module. All code using the original 0x1478df4c8 must share this backing, including console changes.",
     "includes": [
       "FortAthenaCVarQueriesRuntime.h"
-    ],
-    "notes": "Requires the supplied shared cvar owner .h/.cpp in the native module. All code using the original 0x1478df4c8 must share this backing, including console changes."
+    ]
   },
   {
     "function": "GetBuildingTextureData",
@@ -35492,11 +35492,11 @@
     "address": "0x142a9e150",
     "native_body_address": "0x141a49590",
     "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/HasCreativeTag.inc",
+    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
+    "class": "UFortPlaylistAthenaHelper",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
-    "class": "UFortPlaylistAthenaHelper"
+    ]
   },
   {
     "function": "IsBattleLabModePlaylist",
@@ -35509,11 +35509,11 @@
     "address": "0x142a9e1d0",
     "native_body_address": "0x141a4a300",
     "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/IsBattleLabModePlaylist.inc",
+    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
+    "class": "UFortPlaylistAthenaHelper",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
-    "class": "UFortPlaylistAthenaHelper"
+    ]
   },
   {
     "function": "IsCreativeLTMPlaylist",
@@ -35526,11 +35526,11 @@
     "address": "0x142a9e250",
     "native_body_address": "0x141a4a530",
     "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/IsCreativeLTMPlaylist.inc",
+    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
+    "class": "UFortPlaylistAthenaHelper",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
-    "class": "UFortPlaylistAthenaHelper"
+    ]
   },
   {
     "function": "IsCreativeMMPlaylist",
@@ -35543,11 +35543,11 @@
     "address": "0x142a9e2d0",
     "native_body_address": "0x141a4a610",
     "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/IsCreativeMMPlaylist.inc",
+    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
+    "class": "UFortPlaylistAthenaHelper",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
-    "class": "UFortPlaylistAthenaHelper"
+    ]
   },
   {
     "function": "IsCreativeModePlaylist",
@@ -35560,11 +35560,11 @@
     "address": "0x142a9e350",
     "native_body_address": "0x141a4a6f0",
     "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/IsCreativeModePlaylist.inc",
+    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags. Native requires bEnableCreativeMode after tag membership.",
+    "class": "UFortPlaylistAthenaHelper",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags. Native requires bEnableCreativeMode after tag membership.",
-    "class": "UFortPlaylistAthenaHelper"
+    ]
   },
   {
     "function": "IsCreativeUtilitySpawningAllowedPlaylist",
@@ -35577,11 +35577,11 @@
     "address": "0x142a9e3d0",
     "native_body_address": "0x141a4a7e0",
     "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/IsCreativeUtilitySpawningAllowedPlaylist.inc",
+    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
+    "class": "UFortPlaylistAthenaHelper",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
-    "class": "UFortPlaylistAthenaHelper"
+    ]
   },
   {
     "function": "IsLargePreviewDisabledOnMobile",
@@ -35594,11 +35594,11 @@
     "address": "0x142a9e510",
     "native_body_address": "0x141a4ad90",
     "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/IsLargePreviewDisabledOnMobile.inc",
+    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
+    "class": "UFortPlaylistAthenaHelper",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
-    "class": "UFortPlaylistAthenaHelper"
+    ]
   },
   {
     "function": "IsPlaygroundModePlaylist",
@@ -35611,11 +35611,11 @@
     "address": "0x142a9e590",
     "native_body_address": "0x141a4b0d0",
     "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/IsPlaygroundModePlaylist.inc",
+    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
+    "class": "UFortPlaylistAthenaHelper",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "notes": "Null-safe native tag membership; HasTag searches explicit and parent tags.",
-    "class": "UFortPlaylistAthenaHelper"
+    ]
   },
   {
     "class": "UFortGameplayAbility_PossessProp",
@@ -35644,11 +35644,11 @@
     "reflection_flags": "0x4022401",
     "static": true,
     "inc_path": "porting/behavior/UFortPlaylistAthenaHelper/GetPlaylistType.inc",
+    "notes": "Tag precedence is BattleLab, Creative LTM, creative (requires bEnableCreativeMode), Playground, then default.",
+    "class": "UFortPlaylistAthenaHelper",
     "includes": [
       "FortNativeGameplayTagsRuntime.h"
-    ],
-    "notes": "Tag precedence is BattleLab, Creative LTM, creative (requires bEnableCreativeMode), Playground, then default.",
-    "class": "UFortPlaylistAthenaHelper"
+    ]
   },
   {
     "function": "IsGamePhaseNotificationSkipped",
@@ -39326,14 +39326,14 @@
     "address": "0x142a8e240",
     "native_body_address": "0x141a5f1c0",
     "inc_path": "porting/behavior/AFortPlayerStateAthena/ToDeathCause.inc",
+    "notes": "Complete 44-row priority ladder plus gate, DBNO/sniper cases and ordered override mapping, using common GameData shared loader and asset tracker. Matching Unspecified stops override-table scan then enters ladder. Shared tag singleton fetched per attempted native row.",
+    "class": "AFortPlayerStateAthena",
+    "static": true,
     "includes": [
       "FortNativeGameplayTagsRuntime.h",
       "FortAssets.h",
       "FortDelayedObjectLoader.h"
-    ],
-    "notes": "Complete 44-row priority ladder plus gate, DBNO/sniper cases and ordered override mapping, using common GameData shared loader and asset tracker. Matching Unspecified stops override-table scan then enters ladder. Shared tag singleton fetched per attempted native row.",
-    "class": "AFortPlayerStateAthena",
-    "static": true
+    ]
   },
   {
     "class": "UFortAbilitySystemComponent",
@@ -41339,20 +41339,6 @@
     "status": "ported",
     "notes": "GPSC142952aa0->helper142955100->ctor141ff9970 stores interface table14605bcf0 at218; slot18 targets14200d0e0. ItemInstances native390 equals reflected Inventory228 + struct ItemInstances168.",
     "class": "AFortInventory"
-  },
-  {
-    "function": "NativeFindItemByGuid",
-    "kind": "helper",
-    "signature": "UFortItem* NativeFindItemByGuid(const FGuid& ItemGuid)",
-    "signature_status": "proposed",
-    "access": "public",
-    "virtual": true,
-    "inc_path": "porting/behavior/AFortPlayerController/NativeFindItemByGuid.inc",
-    "address": "0x142380fd0",
-    "confidence": "high",
-    "status": "ported",
-    "notes": "GPSC142a3d9f0->helper142a3b0b0->ctor142364800 stores interface table14612a110 at598; slotb0 targets142380fd0. Inventory fields are reflected1738/1740/1748.",
-    "class": "AFortPlayerController"
   },
   {
     "class": "UFortCreativeCreatureManagerInfoComponent",
@@ -44023,13 +44009,13 @@
     "address": "0x142070440",
     "confidence": "high",
     "status": "ported",
+    "decompile_source": "porting/generated/native96-impl/0x142070440.c",
+    "notes": "Complete native swap including stable GUID removal, deep-copy push planning, reserved spans, CRC-keyed sparse pending order, analytics, focus callback and deferred updates. Requires source_policy.sources emitted/authorized by generator. bool proven with original-image disassembly: successful commit BL=1 142070e25, fit failures BL=0, return EAX=BL 142070ea3, other failures AL=0 142070ef0. Free support helpers remain correctly associated as neutral native functions and are not separate manifest body counts. Source proposal; root integration/build pending.",
+    "class": "AFortQuickBars",
     "includes": [
       "QuickBarSwapNative.h",
       "SharedFortGameLog.h"
-    ],
-    "decompile_source": "porting/generated/native96-impl/0x142070440.c",
-    "notes": "Complete native swap including stable GUID removal, deep-copy push planning, reserved spans, CRC-keyed sparse pending order, analytics, focus callback and deferred updates. Requires source_policy.sources emitted/authorized by generator. bool proven with original-image disassembly: successful commit BL=1 142070e25, fit failures BL=0, return EAX=BL 142070ea3, other failures AL=0 142070ef0. Free support helpers remain correctly associated as neutral native functions and are not separate manifest body counts. Source proposal; root integration/build pending.",
-    "class": "AFortQuickBars"
+    ]
   },
   {
     "class": "UCommonTextStyle",
@@ -53596,11 +53582,11 @@
     "reflection_flags": "0x54020403",
     "confidence": "high",
     "status": "ported",
+    "notes": "Native 0x142546d70 calls 0x14252e040; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field PackPersonality; build pending.",
     "includes": [
       "FortAssets.h",
       "FortDelayedObjectLoader.h"
-    ],
-    "notes": "Native 0x142546d70 calls 0x14252e040; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field PackPersonality; build pending."
+    ]
   },
   {
     "class": "UAthenaCharmItemDefinition",
@@ -53616,11 +53602,11 @@
     "reflection_flags": "0x54020401",
     "confidence": "high",
     "status": "ported",
+    "notes": "Native 0x141d47c50 calls 0x141d27940; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field CharmPrefabClass; build pending.",
     "includes": [
       "FortAssets.h",
       "FortDelayedObjectLoader.h"
-    ],
-    "notes": "Native 0x141d47c50 calls 0x141d27940; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field CharmPrefabClass; build pending."
+    ]
   },
   {
     "class": "UAthenaPetItemDefinition",
@@ -53636,11 +53622,11 @@
     "reflection_flags": "0x54020401",
     "confidence": "high",
     "status": "ported",
+    "notes": "Native 0x141d81490 calls 0x141d67f40; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field PetPrefabClass; build pending.",
     "includes": [
       "FortAssets.h",
       "FortDelayedObjectLoader.h"
-    ],
-    "notes": "Native 0x141d81490 calls 0x141d67f40; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field PetPrefabClass; build pending."
+    ]
   },
   {
     "class": "UFortDecoItemDefinition",
@@ -53656,11 +53642,11 @@
     "reflection_flags": "0x54020401",
     "confidence": "high",
     "status": "ported",
+    "notes": "Native 0x142009ac0 calls 0x141ff85e0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field BlueprintClass; build pending.",
     "includes": [
       "FortAssets.h",
       "FortDelayedObjectLoader.h"
-    ],
-    "notes": "Native 0x142009ac0 calls 0x141ff85e0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field BlueprintClass; build pending."
+    ]
   },
   {
     "class": "UFortDecoItemDefinition",
@@ -53676,11 +53662,11 @@
     "reflection_flags": "0x54020401",
     "confidence": "high",
     "status": "ported",
+    "notes": "Native 0x14200fe40 calls 0x141ff87f0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field PlacementPreviewClass; build pending.",
     "includes": [
       "FortAssets.h",
       "FortDelayedObjectLoader.h"
-    ],
-    "notes": "Native 0x14200fe40 calls 0x141ff87f0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field PlacementPreviewClass; build pending."
+    ]
   },
   {
     "function": "IsAllowedToSleep",
@@ -54182,12 +54168,12 @@
     "address": "0x141fc0b30",
     "confidence": "high",
     "status": "ported",
+    "notes": "0x141e605e0 delegates to 0x141e41c40; null soft paths bypass the tracker; otherwise resolve or load synchronously and track.",
+    "class": "UFortGlobalUIContext",
     "includes": [
       "FortAssets.h",
       "FortDelayedObjectLoader.h"
-    ],
-    "notes": "0x141e605e0 delegates to 0x141e41c40; null soft paths bypass the tracker; otherwise resolve or load synchronously and track.",
-    "class": "UFortGlobalUIContext"
+    ]
   },
   {
     "function": "NativeUsesGamepad142390950",
@@ -59683,12 +59669,12 @@
     "address": "0x142ab7e70",
     "native_body_address": "0x142437000",
     "inc_path": "porting/behavior/UFortQuestItemDefinition/CanPartyAssist.inc",
-    "includes": [
-      "FortNativeGameplayTagsRuntime.h"
-    ],
     "confidence": "high",
     "status": "ported",
-    "notes": "Calls checked globals accessor 0x141ed2350, then searches only explicit GameplayTags for valid Quest.Metadata.PartyAssist native tag at 0x1f30; no parent-tag match."
+    "notes": "Calls checked globals accessor 0x141ed2350, then searches only explicit GameplayTags for valid Quest.Metadata.PartyAssist native tag at 0x1f30; no parent-tag match.",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ]
   },
   {
     "class": "AFortGameStateAthena",
@@ -63328,10 +63314,10 @@
     "inc_path": "porting/behavior/AFortWindManager/RemoveWindImpulse.inc",
     "address": "0x142b565f0",
     "reflection_flags": "0x4420401",
+    "notes": "Native 0x141dd6cc0 gates sampling then starts magnitude fade on first matching UID. Native warning uses LogFortWind. Lifecycle and runtime validation pending.",
     "includes": [
       "SharedFortGameLog.h"
-    ],
-    "notes": "Native 0x141dd6cc0 gates sampling then starts magnitude fade on first matching UID. Native warning uses LogFortWind. Lifecycle and runtime validation pending."
+    ]
   },
   {
     "class": "AFortWindManager",
@@ -63346,10 +63332,10 @@
     "inc_path": "porting/behavior/AFortWindManager/SetWindImpulse.inc",
     "address": "0x142b567a0",
     "reflection_flags": "0x4420401",
+    "notes": "Native 0x141dda420 updates first matching UID, preserves current radius as previous and bounds extent only on exact location/radius change. Lifecycle and runtime validation pending.",
     "includes": [
       "SharedFortGameLog.h"
-    ],
-    "notes": "Native 0x141dda420 updates first matching UID, preserves current radius as previous and bounds extent only on exact location/radius change. Lifecycle and runtime validation pending."
+    ]
   },
   {
     "class": "AFortWindManager",
@@ -63362,10 +63348,10 @@
     "signature": "bool NativeGetWindImpulseCylinder(const FFortWindImpulseHandle& ImpulseHandle, FFortWindImpulseCylinder& OutImpulse)",
     "inc_path": "porting/behavior/AFortWindManager/NativeGetWindImpulseCylinder.inc",
     "address": "0x141dcf3f0",
+    "notes": "Original dedicated-server and Fort.Wind gates; first UID match copies all cylinder fields, leaves output unchanged on failure. No sampling-initialized gate. Sampling caller remains unintegrated.",
     "includes": [
       "SharedFortGameLog.h"
-    ],
-    "notes": "Original dedicated-server and Fort.Wind gates; first UID match copies all cylinder fields, leaves output unchanged on failure. No sampling-initialized gate. Sampling caller remains unintegrated."
+    ]
   },
   {
     "class": "AFortWindManager",
@@ -63689,15 +63675,15 @@
     "kind": "member_field",
     "signature": "TArray<FFortWorldRecordAction> NativeWorldRecordActions_0x6c0",
     "offset": "0x6c0",
-    "includes": [
-      "FortWorldRecordAction.h"
-    ],
     "notes": "Owned logical pending action array; every original owned field is preserved with UE lifetime semantics. Original element stride 0x1f8 is evidence only; host layout is not a Windows ABI overlay.",
     "class": "AFortWorldManager",
     "access": "public",
     "signature_status": "proposed",
     "status": "ported",
-    "confidence": "high"
+    "confidence": "high",
+    "includes": [
+      "FortWorldRecordAction.h"
+    ]
   },
   {
     "function": "NativeFindGlobalWind",
@@ -63723,15 +63709,15 @@
     "signature": "bool NativeFindGlobalWindValues(float& OutIntensity, FVector& OutDirection)",
     "address": "0x141f87230",
     "inc_path": "porting/behavior/AFortWorldManager/NativeFindGlobalWindValues.inc",
-    "includes": [
-      "SharedFortGameLog.h"
-    ],
     "notes": "Original negative-intensity discovery attempt, failure log, fallback to initial wind, and ordered float comparisons (NaN returns false).",
     "class": "AFortWorldManager",
     "access": "public",
     "signature_status": "proposed",
     "status": "ported",
-    "confidence": "high"
+    "confidence": "high",
+    "includes": [
+      "SharedFortGameLog.h"
+    ]
   },
   {
     "class": "ABuildingFoundation",
@@ -64155,21 +64141,6 @@
     "notes": "Reviewed against Gemini decompiler output and reflection; clears bPassThrough out parameter. Build and runtime pending."
   },
   {
-    "class": "UFortStoreFrontOfferDetailsWidgetBase",
-    "function": "GetOfferInfoById",
-    "kind": "exec",
-    "signature": "UFortStoreFrontOfferInfo* GetOfferInfoById(FString OfferId)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/UFortStoreFrontOfferDetailsWidgetBase/GetOfferInfoById.inc",
-    "confidence": "high",
-    "address": "0x1452f1f30",
-    "status": "ported",
-    "reflection_flags": "0x4020401",
-    "static": false,
-    "access": "public",
-    "notes": "Reviewed against Gemini decompiler output and reflection; searches PagedItems and OfferData by OfferId. Build and runtime pending."
-  },
-  {
     "function": "NativeGetTeam163",
     "kind": "helper",
     "signature": "uint8 NativeGetTeam163()",
@@ -64396,19 +64367,6 @@
     "signature": "uint8 NativeGetTeam163()",
     "signature_status": "proposed",
     "access": "public",
-    "inc_path": "porting/behavior/AFortPlayerState/NativeGetTeam163.inc",
-    "confidence": "high",
-    "status": "ported",
-    "class": "AFortPlayerState",
-    "address": "0x142419200",
-    "virtual": true
-  },
-  {
-    "function": "NativeGetTeam163",
-    "kind": "helper",
-    "signature": "uint8 NativeGetTeam163()",
-    "signature_status": "proposed",
-    "access": "public",
     "inc_path": "porting/behavior/AFortPvPPlayerStart/NativeGetTeam163.inc",
     "confidence": "high",
     "status": "ported",
@@ -64430,19 +64388,6 @@
     "virtual": true
   },
   {
-    "function": "NativeGetSpectatingPlayerState163",
-    "kind": "helper",
-    "signature": "AFortPlayerState* NativeGetSpectatingPlayerState163()",
-    "signature_status": "proposed",
-    "access": "public",
-    "inc_path": "porting/behavior/AFortSpectateAFriendController/NativeGetSpectatingPlayerState163.inc",
-    "confidence": "high",
-    "status": "ported",
-    "class": "AFortSpectateAFriendController",
-    "address": "0x141ed4ff0",
-    "virtual": true
-  },
-  {
     "function": "NativeGetTeam163",
     "kind": "helper",
     "signature": "uint8 NativeGetTeam163()",
@@ -64456,32 +64401,6 @@
     "virtual": true
   },
   {
-    "class": "UFortPickupInstigatorRegistryComponent",
-    "function": "GetInstigatorData",
-    "kind": "exec",
-    "inc_path": "porting/behavior/UFortPickupInstigatorRegistryComponent/GetInstigatorData.inc",
-    "address": "0x142a31f90",
-    "confidence": "high",
-    "status": "ported",
-    "notes": "Linear first-match lookup and complete data assignment; leaves output unchanged on failure. Copy helper 0x141f18c80 includes native-only 8-byte member of FPropertyOverrideData at 0x30.",
-    "signature": "bool GetInstigatorData(int32 TrackedIndex, FPickupInstigatorData& InstigatorData) const",
-    "signature_status": "proposed",
-    "native_body_address": "0x141f2e540"
-  },
-  {
-    "class": "UFortPickupInstigatorRegistryComponent",
-    "function": "GetInstigator",
-    "kind": "exec",
-    "signature": "bool GetInstigator(int32 TrackedIndex, FPickupInstigator& PickupInstigator) const",
-    "signature_status": "proposed",
-    "address": "0x142a31db0",
-    "native_body_address": "0x141f2e480",
-    "inc_path": "porting/behavior/UFortPickupInstigatorRegistryComponent/GetInstigator.inc",
-    "confidence": "high",
-    "status": "ported",
-    "notes": "First match. Output fast-array bookkeeping reset only when source differs. Copies all native fields; see field proposals."
-  },
-  {
     "function": "NativeQueryFriendlyFire163",
     "kind": "helper",
     "signature": "uint8 NativeQueryFriendlyFire163(bool& Value)",
@@ -64493,18 +64412,6 @@
     "class": "AFortAthenaMutator",
     "address": "0x1406801e0",
     "virtual": true
-  },
-  {
-    "function": "NativeFindEnabledPlayerSettings163",
-    "kind": "helper",
-    "signature": "UFortPlayerSettingsComponentBase* NativeFindEnabledPlayerSettings163(FName Name, bool bIncludeDefault)",
-    "signature_status": "proposed",
-    "access": "public",
-    "inc_path": "porting/behavior/AFortAthenaMutator_PlayerSettingsBase/NativeFindEnabledPlayerSettings163.inc",
-    "confidence": "high",
-    "status": "ported",
-    "class": "AFortAthenaMutator_PlayerSettingsBase",
-    "address": "0x141aee020"
   },
   {
     "function": "NativeQueryFriendlyFire163",
@@ -64627,18 +64534,6 @@
     "class": "UFortGameplayAbility"
   },
   {
-    "function": "IsSettingEnabled",
-    "kind": "exec",
-    "signature": "bool IsSettingEnabled(FName& PropertyName) const",
-    "signature_status": "proposed",
-    "access": "public",
-    "inc_path": "porting/behavior/UFortPlayerSettingsComponentBase/IsSettingEnabled.inc",
-    "confidence": "high",
-    "status": "ported",
-    "class": "UFortPlayerSettingsComponentBase",
-    "address": "0x142814f60"
-  },
-  {
     "function": "RemoveEditorOnlyInstanceGameplayTags",
     "kind": "exec",
     "signature": "void RemoveEditorOnlyInstanceGameplayTags(FGameplayTagContainer& TagsToRemove)",
@@ -64717,156 +64612,6 @@
     "status": "ported",
     "notes": "Wrapper steps input parameters and calls the shared bare-return native target; build and runtime pending.",
     "class": "ABuildingFoundation"
-  },
-  {
-    "class": "AFortCreativeMoveTool",
-    "function": "DeactiveWeaponAndState",
-    "kind": "exec",
-    "signature": "void DeactiveWeaponAndState()",
-    "access": "public",
-    "static": false,
-    "virtual": false,
-    "inc_path": "porting/behavior/AFortCreativeMoveTool/DeactiveWeaponAndState.inc",
-    "address": "0x1428c2420",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [],
-    "callees": [],
-    "notes": "Thunk: advances FFrame code by one byte, then virtual dispatch at vtable +0xc60."
-  },
-  {
-    "class": "AFortDecoTool",
-    "function": "OnUnEquip",
-    "kind": "exec",
-    "signature": "void OnUnEquip()",
-    "access": "public",
-    "static": false,
-    "virtual": false,
-    "inc_path": "porting/behavior/AFortDecoTool/OnUnEquip.inc",
-    "address": "0x14283dc50",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [],
-    "callees": [],
-    "notes": "Thunk: advances FFrame code by one byte, then virtual dispatch at vtable +0x778."
-  },
-  {
-    "class": "AFortGameModeZone",
-    "function": "OnEveningReached",
-    "kind": "exec",
-    "signature": "void OnEveningReached()",
-    "access": "public",
-    "static": false,
-    "virtual": false,
-    "inc_path": "porting/behavior/AFortGameModeZone/OnEveningReached.inc",
-    "address": "0x1428f3540",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [],
-    "callees": [],
-    "notes": "Thunk: advances FFrame code by one byte, then virtual dispatch at vtable +0xc00."
-  },
-  {
-    "class": "AFortGameModeZone",
-    "function": "OnMorningReached",
-    "kind": "exec",
-    "signature": "void OnMorningReached()",
-    "access": "public",
-    "static": false,
-    "virtual": false,
-    "inc_path": "porting/behavior/AFortGameModeZone/OnMorningReached.inc",
-    "address": "0x1428f3560",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [],
-    "callees": [],
-    "notes": "Thunk: advances FFrame code by one byte, then virtual dispatch at vtable +0xc08."
-  },
-  {
-    "class": "AFortGameStateAthena",
-    "function": "IsStormCN",
-    "kind": "exec",
-    "signature": "bool IsStormCN() const",
-    "access": "public",
-    "static": false,
-    "virtual": false,
-    "inc_path": "porting/behavior/AFortGameStateAthena/IsStormCN.inc",
-    "address": "0x142920160",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [],
-    "callees": [
-      "Native_14199e4e0"
-    ],
-    "notes": "Advances FFrame code, calls Native_14199e4e0, and writes its byte result to Result."
-  },
-  {
-    "class": "AFortPlayerControllerGameplay",
-    "function": "HideQuicktimeEventWidget",
-    "kind": "exec",
-    "signature": "void HideQuicktimeEventWidget()",
-    "access": "public",
-    "static": false,
-    "virtual": false,
-    "inc_path": "porting/behavior/AFortPlayerControllerGameplay/HideQuicktimeEventWidget.inc",
-    "address": "0x142a65320",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [],
-    "callees": [],
-    "notes": "Thunk: advance Stack code, then virtual call at vtable +0x1ff8 on this."
-  },
-  {
-    "class": "AFortPlayerControllerGameplay",
-    "function": "RefreshHUDElementVisibilitiesToSettings",
-    "kind": "exec",
-    "signature": "void RefreshHUDElementVisibilitiesToSettings()",
-    "access": "public",
-    "static": false,
-    "virtual": false,
-    "inc_path": "porting/behavior/AFortPlayerControllerGameplay/RefreshHUDElementVisibilitiesToSettings.inc",
-    "address": "0x142a66640",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [],
-    "callees": [],
-    "notes": "Thunk: advance Stack code, then virtual call at vtable +0x1f60 on this."
-  },
-  {
-    "access": "public",
-    "address": "0x142a47ff0",
-    "class": "AFortPlayerController",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "IsClientBot",
-    "inc_path": "porting/behavior/AFortPlayerController/IsClientBot.inc",
-    "includes": [],
-    "kind": "exec",
-    "notes": "Returns true when either byte at 0x1838 or 0x1818 is nonzero.",
-    "proxy_score": null,
-    "reflection_flags": "0x54020401",
-    "signature": "bool IsClientBot() const",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
-    "access": "public",
-    "address": "0x142b10280",
-    "class": "AFortTimeOfDayManager",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "ToggleDebugForceStormEffects",
-    "inc_path": "porting/behavior/AFortTimeOfDayManager/ToggleDebugForceStormEffects.inc",
-    "includes": [],
-    "kind": "exec",
-    "notes": "Sets byte at 0xded to the logical inverse of its old value.",
-    "proxy_score": null,
-    "reflection_flags": "0x4020409",
-    "signature": "void ToggleDebugForceStormEffects()",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
   },
   {
     "access": "public",
@@ -65095,57 +64840,6 @@
   },
   {
     "access": "public",
-    "address": "0x1451e5780",
-    "class": "UDonutChallengeIdleGame",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "EndBumpyRide",
-    "inc_path": "porting/behavior/UDonutChallengeIdleGame/EndBumpyRide.inc",
-    "kind": "exec",
-    "notes": "Copies 4 raw bytes from reflected PlayerTopSpeed at 0x3d4 to unreflected 0x2ec; clears byte 0x2c2.",
-    "proxy_score": null,
-    "reflection_flags": "0x40401",
-    "signature": "void EndBumpyRide()",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
-    "access": "public",
-    "address": "0x1451e57a0",
-    "class": "UDonutChallengeIdleGame",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "EndJump",
-    "inc_path": "porting/behavior/UDonutChallengeIdleGame/EndJump.inc",
-    "kind": "exec",
-    "notes": "Clears byte 0x2c0.",
-    "proxy_score": null,
-    "reflection_flags": "0x40401",
-    "signature": "void EndJump()",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
-    "access": "public",
-    "address": "0x1451e57c0",
-    "class": "UDonutChallengeIdleGame",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "EndSuperJump",
-    "inc_path": "porting/behavior/UDonutChallengeIdleGame/EndSuperJump.inc",
-    "kind": "exec",
-    "notes": "Clears the two adjacent bytes at 0x2c0 and 0x2c1.",
-    "proxy_score": null,
-    "reflection_flags": "0x40401",
-    "signature": "void EndSuperJump()",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
-    "access": "public",
     "address": "0x141f84f20",
     "class": "AFortAthenaVehicle",
     "confidence": "high",
@@ -65254,14 +64948,14 @@
     "decompile_source": null,
     "function": "NativeAllowsFriendlyFire163",
     "inc_path": "porting/behavior/AFortGameStateAthena/NativeAllowsFriendlyFire163.inc",
-    "includes": [
-      "FortNativeGameplayTagsRuntime.h"
-    ],
     "kind": "helper",
     "proxy_score": null,
     "signature": "bool NativeAllowsFriendlyFire163(const FGameplayTagContainer& Tags, AFortPawn* Pawn)",
     "signature_status": "proposed",
-    "status": "ported"
+    "status": "ported",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ]
   },
   {
     "access": "public",
@@ -65350,14 +65044,14 @@
     "decompile_source": null,
     "function": "NativeAllowsFriendlyFire163",
     "inc_path": "porting/behavior/AFortMinigame/NativeAllowsFriendlyFire163.inc",
-    "includes": [
-      "FortNativeGameplayTagsRuntime.h"
-    ],
     "kind": "helper",
     "proxy_score": null,
     "signature": "bool NativeAllowsFriendlyFire163(AFortPawn* Pawn)",
     "signature_status": "proposed",
-    "status": "ported"
+    "status": "ported",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ]
   },
   {
     "access": "public",
@@ -65388,20 +65082,6 @@
     "signature_status": "proposed",
     "status": "ported",
     "virtual": true
-  },
-  {
-    "access": "public",
-    "address": "0x142815100",
-    "class": "UFortPlayerSettingsComponentBase",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "OnRep_EnabledSettings",
-    "inc_path": "porting/behavior/UFortPlayerSettingsComponentBase/OnRep_EnabledSettings.inc",
-    "kind": "exec",
-    "proxy_score": null,
-    "signature": "void OnRep_EnabledSettings()",
-    "signature_status": "proposed",
-    "status": "ported"
   },
   {
     "access": "public",
@@ -65445,44 +65125,6 @@
   },
   {
     "access": "public",
-    "address": "0x14527cc60",
-    "class": "UFortItemWidget",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "IsItemValid",
-    "inc_path": "porting/behavior/UFortItemWidget/IsItemValid.inc",
-    "includes": [],
-    "kind": "exec",
-    "native_body_address": "0x144d83700",
-    "notes": "Native body passes weak pointer at 0x82c directly to FWeakObjectPtr::IsValid; full behavior recovered.",
-    "proxy_score": null,
-    "reflection_flags": "0x54020401",
-    "signature": "bool IsItemValid() const",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
-    "access": "public",
-    "address": "0x14532b3c0",
-    "class": "UHUDLayoutToolContext",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "HasSelectedWidget",
-    "inc_path": "porting/behavior/UHUDLayoutToolContext/HasSelectedWidget.inc",
-    "includes": [],
-    "kind": "exec",
-    "native_body_address": "0x144d4b1b0",
-    "notes": "Native body passes weak pointer at 0x204 directly to FWeakObjectPtr::IsValid; full behavior recovered.",
-    "proxy_score": null,
-    "reflection_flags": "0x54020401",
-    "signature": "bool HasSelectedWidget() const",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
-    "access": "public",
     "address": "0x1429b2360",
     "class": "AFortMeatballVehicle",
     "confidence": "high",
@@ -65494,76 +65136,6 @@
     "proxy_score": null,
     "reflection_flags": "0x54820401",
     "signature": "FQuat GetSeatRotation() const",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
-    "access": "public",
-    "address": "0x142b146d0",
-    "class": "UFortTimeOfDayWeatherComponent",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "GetCurrentWindDirection",
-    "inc_path": "porting/behavior/UFortTimeOfDayWeatherComponent/GetCurrentWindDirection.inc",
-    "kind": "exec",
-    "notes": "Complete native struct getter. Original field writers and initialization remain unrecovered; build and runtime pending.",
-    "proxy_score": null,
-    "reflection_flags": "0x54820401",
-    "signature": "FVector GetCurrentWindDirection() const",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
-    "access": "public",
-    "address": "0x1427daef0",
-    "class": "AFortAthenaGoatVehicle",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "ClearBoostAccumulated",
-    "inc_path": "porting/behavior/AFortAthenaGoatVehicle/ClearBoostAccumulated.inc",
-    "kind": "exec",
-    "notes": "Original tail call clears eight bytes at 0x10a0. Uses existing NativeRecoveredFloat_0x10a0 plus recovered 0x10a4 word. Build and runtime pending; other access to second word must share this storage.",
-    "proxy_score": null,
-    "reflection_flags": "0x4020401",
-    "signature": "void ClearBoostAccumulated()",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
-    "access": "public",
-    "address": "0x1451b9380",
-    "class": "UAthenaRemoteSquadViewData",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "GetSquadColor",
-    "inc_path": "porting/behavior/UAthenaRemoteSquadViewData/GetSquadColor.inc",
-    "includes": [],
-    "kind": "exec",
-    "notes": "Returns the 16-byte color at 0xa4.",
-    "proxy_score": null,
-    "reflection_flags": "0x54820401",
-    "signature": "FLinearColor GetSquadColor() const",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
-    "access": "public",
-    "address": "0x1451b9400",
-    "class": "UAthenaRemotePlayerViewData",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "GetTeamColor",
-    "inc_path": "porting/behavior/UAthenaRemotePlayerViewData/GetTeamColor.inc",
-    "includes": [],
-    "kind": "exec",
-    "notes": "Returns the 16-byte color at 0x1d8.",
-    "proxy_score": null,
-    "reflection_flags": "0x54820401",
-    "signature": "FLinearColor GetTeamColor() const",
     "signature_status": "proposed",
     "static": false,
     "status": "ported"
@@ -67118,24 +66690,6 @@
   },
   {
     "class": "AAIHotSpot",
-    "function": "GetSlotCount",
-    "kind": "exec",
-    "signature": "int32 GetSlotCount(EAIHotSpotSlotFilter Filter) const",
-    "signature_status": "proposed",
-    "access": "public",
-    "static": false,
-    "inc_path": "porting/behavior/AAIHotSpot/GetSlotCount.inc",
-    "confidence": "high",
-    "address": "0x141629520",
-    "native_body_address": "0x141629520",
-    "exec_address": "0x142710b80",
-    "reflection_flags": "0x54020401",
-    "status": "ported",
-    "notes": "Body of the exec thunk 0x142710b80 is the helper 0x141629520 (Filter All returns Slots.Num(); AvailableOnly and UnavailableOnly count Free slots while bIsEnabled). Predicate 0x141291580 verified by disassembly as SlotState (+0x84); gate 0x264 mask 0x40 is bIsEnabled. No null guard on slots, as in the shipping helper.",
-    "includes": []
-  },
-  {
-    "class": "AAIHotSpot",
     "function": "HasEnabledSlots",
     "kind": "exec",
     "signature": "bool HasEnabledSlots() const",
@@ -67331,21 +66885,6 @@
     "status": "ported",
     "recovery_source": "round3_real_logic",
     "notes": "Storage read by a ported body (array base or count at 0x670); writers and construction remain unported."
-  },
-  {
-    "class": "AFortAthenaVehicle",
-    "function": "GetSpringLengthRatio",
-    "kind": "exec",
-    "signature": "float GetSpringLengthRatio(int32 SpringIdx) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/AFortAthenaVehicle/GetSpringLengthRatio.inc",
-    "confidence": "high",
-    "address": "0x14283bb70",
-    "status": "ported",
-    "static": false,
-    "access": "public",
-    "includes": null,
-    "notes": "Exec thunk 0x14283bb70 calls body 0x141918950 with (this, SpringIdx). Reads a float at +0xb8 of a 0x160-byte record in the array at this+0x798 (count +0x7a0); out-of-range index returns 1.0. Storage: NativeRecoveredPointer_0x798, NativeRecoveredInt_0x7a0. CONFIDENCE high."
   },
   {
     "class": "AFortAthenaVehicle",
@@ -68191,22 +67730,6 @@
     "access": "protected",
     "native_body_address": "0x1406801d0",
     "notes": "Stub-bodied native event; thunk 0x14275bb30 reaches exact pure stub ['0x1406801d0']; see behavior/stub_bulk_runtime. Source recovery only."
-  },
-  {
-    "class": "ABuildingTimeOfDayLights",
-    "function": "GetTimeOfDayBlueprintDefaultVariables_Implementation",
-    "kind": "native_event_impl",
-    "signature": "void GetTimeOfDayBlueprintDefaultVariables_Implementation(FTimeOfDayBlueprintDefaultVariables& OutVariables)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/_shared/return.inc",
-    "address": "0x14275c6e0",
-    "status": "ported",
-    "confidence": "high",
-    "reflection_flags": "0x8480c02",
-    "static": false,
-    "access": "protected",
-    "native_body_address": "0x1406801c0",
-    "notes": "Stub-bodied native event; thunk 0x14275c6e0 reaches exact pure stub ['0x1406801c0']; see behavior/stub_bulk_runtime. Source recovery only."
   },
   {
     "class": "UCreativeQuickbarComponent",
@@ -69702,22 +69225,6 @@
     "notes": "Stub-bodied native event; thunk 0x1451ad880 reaches exact pure stub ['0x1406801c0']; see behavior/stub_bulk_runtime. Source recovery only."
   },
   {
-    "class": "UAthenaWinnersList",
-    "function": "OnWinnersAnnounced_Implementation",
-    "kind": "native_event_impl",
-    "signature": "void OnWinnersAnnounced_Implementation(FAthenaWinnerInfo& WinnerInfo)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/_shared/return.inc",
-    "address": "0x1451cf950",
-    "status": "ported",
-    "confidence": "high",
-    "reflection_flags": "0x8420c00",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x1406801c0",
-    "notes": "Stub-bodied native event; thunk 0x1451cf950 reaches exact pure stub ['0x1406801c0']; see behavior/stub_bulk_runtime. Source recovery only."
-  },
-  {
     "class": "UFortCollectionBookPrimaryPanel",
     "function": "OnSummonInfoPanelExecuted_Implementation",
     "kind": "native_event_impl",
@@ -69764,22 +69271,6 @@
     "access": "public",
     "native_body_address": "0x1406801c0",
     "notes": "Stub-bodied native event; thunk 0x14286c850 reaches exact pure stub ['0x1406801c0']; see behavior/stub_bulk_runtime. Source recovery only."
-  },
-  {
-    "class": "UFortExpeditionRewardsWidget",
-    "function": "RefreshRewardsUI_Implementation",
-    "kind": "native_event_impl",
-    "signature": "void RefreshRewardsUI_Implementation(UFortExpeditionItem* Expedition, bool bExpeditionSucceeded, TArray<FFortItemInstanceQuantityPair>& Rewards)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/_shared/return.inc",
-    "address": "0x145233fa0",
-    "status": "ported",
-    "confidence": "high",
-    "reflection_flags": "0x8420c00",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x1406801c0",
-    "notes": "Stub-bodied native event; thunk 0x145233fa0 reaches exact pure stub ['0x1406801c0']; see behavior/stub_bulk_runtime. Source recovery only."
   },
   {
     "class": "UFortInputOptions",
@@ -70426,23 +69917,6 @@
     "notes": "Int64 arg stored to +0x350 = HasBRMatchReportCompletedProfileVer (reflection 848, Int64)."
   },
   {
-    "class": "AFortPlayerParachute",
-    "function": "GetParachuteRootMesh",
-    "kind": "exec",
-    "signature": "USkeletalMeshComponent* GetParachuteRootMesh() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/leaf2_runtime/AFortPlayerParachute/GetParachuteRootMesh.inc",
-    "confidence": "high",
-    "address": "0x142a7c4f0",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x141a15100",
-    "notes": "Returns pointer at +0x348 = ParachuteMesh (reflection 840, Object)."
-  },
-  {
     "class": "AFortSpaghettiVehicle",
     "function": "CacheAudioPointers",
     "kind": "exec",
@@ -70509,23 +69983,6 @@
     "access": "public",
     "native_body_address": "0x144c42ef0",
     "notes": "CVTTSS2SI float arg stored to +0x568 = NumberOfActiveLines (reflection 1384, Int). Cast matches only in int range."
-  },
-  {
-    "class": "UFortLocalUserEntry",
-    "function": "HandleGetMenuContent",
-    "kind": "exec",
-    "signature": "UWidget* HandleGetMenuContent()",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/leaf2_runtime/UFortLocalUserEntry/HandleGetMenuContent.inc",
-    "confidence": "high",
-    "address": "0x140814f70",
-    "status": "ported",
-    "reflection_flags": "0x80401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x1407c3e20",
-    "notes": "Returns pointer at +0xb78 = LocalUserSettingsMenu (reflection 2936, Object)."
   },
   {
     "class": "UFortMinigamePlayerStartComponent",
@@ -71002,23 +70459,6 @@
     "notes": "ABI position resolves InPlayerData; the Object->AActor* cast is a raw pointer store as in the asm, so medium."
   },
   {
-    "class": "UFortAlterationOption",
-    "function": "GetAlterationOptionType",
-    "kind": "exec",
-    "signature": "EFortAlterationOptionType GetAlterationOptionType() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/leaf4_runtime/UFortAlterationOption/GetAlterationOptionType.inc",
-    "confidence": "medium",
-    "address": "0x1451f26a0",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x144f22900",
-    "notes": "Undeclared uint8 enum-storage byte at +0xbb0; enum name not recovered, decltype used."
-  },
-  {
     "class": "UFortBangWrapperOld",
     "function": "SetBangVisibility",
     "kind": "exec",
@@ -71034,23 +70474,6 @@
     "access": "public",
     "native_body_address": "0x144d94680",
     "notes": "Undeclared byte at +0x141 (the previous skip reason) stored as bool."
-  },
-  {
-    "class": "UFortHUDCenterPopupMessageWidget",
-    "function": "GetCenterPopupMessageState",
-    "kind": "exec",
-    "signature": "ECenterPopupMessageStateEnum GetCenterPopupMessageState() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/leaf4_runtime/UFortHUDCenterPopupMessageWidget/GetCenterPopupMessageState.inc",
-    "confidence": "medium",
-    "address": "0x145255aa0",
-    "status": "ported",
-    "reflection_flags": "0x54020409",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x144d79260",
-    "notes": "Undeclared uint8 enum-storage byte at +0x2c0; enum return type name not in packet/header, so decltype is used."
   },
   {
     "class": "UFortItemQuantityListBase",
@@ -71647,22 +71070,6 @@
     "notes": "Returns byte +0x458 (NativeRecoveredBool_0x458, new member)."
   },
   {
-    "class": "UFortPlayerSurveyAnswerWidgetBase",
-    "function": "HandleAnswerChanged_Implementation",
-    "kind": "native_event_impl",
-    "signature": "void HandleAnswerChanged_Implementation(FFortPlayerSurveyAnswerContainerChangeEventInfo& EventInfo)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/_shared/return.inc",
-    "address": "0x1452a85d0",
-    "status": "ported",
-    "confidence": "high",
-    "reflection_flags": "0xc480c00",
-    "static": false,
-    "access": "protected",
-    "native_body_address": "0x1406801e0",
-    "notes": "Void native event whose body is the shared 'xor eax,eax; ret' stub 0x1406801e0; the zero in EAX is unused, so the faithful body is empty."
-  },
-  {
     "class": "UHUDLayoutToolProxy",
     "function": "BP_GetPropertyType_Implementation",
     "kind": "native_event_impl",
@@ -71677,23 +71084,6 @@
     "access": "protected",
     "native_body_address": "0x1406801e0",
     "notes": "Enum-returning native event; body is the shared 'xor eax,eax; ret' stub 0x1406801e0, so it returns the zero enumerator."
-  },
-  {
-    "class": "UFortCreativeOption",
-    "function": "DoesMatchCategory",
-    "kind": "exec",
-    "signature": "bool DoesMatchCategory(FCreativeOptionCategoryData& CreativeOptionCategory)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/leaf3_runtime/UFortCreativeOption/DoesMatchCategory.inc",
-    "confidence": "high",
-    "address": "0x1428c8b00",
-    "status": "ported",
-    "reflection_flags": "0x14420401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x141d74fe0",
-    "notes": "Returns CategoryTag == CreativeOptionCategory.CategoryTag (FName at struct +0x18), matching both dwords."
   },
   {
     "class": "AFortAthenaSKVehicle",
@@ -72270,23 +71660,6 @@
     "access": "protected",
     "native_body_address": "0x141fc7d50",
     "notes": "Raw int32 check at 0x268 below own region; 0x390/0x3a0 gap members; mirrors asm and decompile FUN_141fc7d50."
-  },
-  {
-    "class": "ABuildingActor",
-    "function": "SetTeam",
-    "kind": "exec",
-    "signature": "void SetTeam(uint8 InTeam)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/small1_runtime/ABuildingActor/SetTeam.inc",
-    "confidence": "high",
-    "address": "0x142738600",
-    "status": "ported",
-    "reflection_flags": "0x4020400",
-    "static": false,
-    "virtual": true,
-    "access": "public",
-    "native_body_address": "0x141bc50c0",
-    "notes": "Role==3 gate then stores InTeam to TeamIndex and Team (reflected Byte members), as asm order 0x3ed then 0x3ec."
   },
   {
     "class": "ABuildingProp_CaptureArea",
@@ -73060,23 +72433,6 @@
     "access": "public",
     "native_body_address": "0x141dcc7e0",
     "notes": "Six unreflected pointer slots 0x408..0x430 indexed by Part; Part==6 returns null. Out-of-range Part returns null (asm reads past slots)."
-  },
-  {
-    "class": "AFortPlayerPawn",
-    "function": "BP_ForceLockParachuteOpen",
-    "kind": "exec",
-    "signature": "void BP_ForceLockParachuteOpen(bool bLocked)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/small3_runtime/AFortPlayerPawn/BP_ForceLockParachuteOpen.inc",
-    "confidence": "high",
-    "address": "0x142a7ae10",
-    "status": "ported",
-    "reflection_flags": "0x4080401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x1423061d0",
-    "notes": "Role==ROLE_Authority(3) gates bParachuteLockedOpen; bLocalParachuteLockedOpen always written."
   },
   {
     "class": "AFortPlayerStateOutpost",
@@ -76176,22 +75532,6 @@
     "notes": "Body 0x1420c9fa0 hidden_slot_empty_array; Original body address: 0x1420c9fa0. Offset evidence: XOR EAX,EAX; MOV [RCX],RAX; MOV [RCX+8],RAX writes an empty TArray to the hidden return slot (RCX); MOV ["
   },
   {
-    "class": "UFortBannerUtilities",
-    "function": "GetRowNameForBannerColorItem",
-    "kind": "exec",
-    "signature": "FName GetRowNameForBannerColorItem(UFortHomebaseBannerColorItem* BannerColor)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/small9_runtime/UFortBannerUtilities/GetRowNameForBannerColorItem.inc",
-    "confidence": "high",
-    "address": "0x14284adf0",
-    "status": "ported",
-    "reflection_flags": "0x4022401",
-    "static": true,
-    "access": "public",
-    "native_body_address": "0x141ed7610",
-    "notes": "Body 0x141ed7610 null_guarded_member_return; Original body address: 0x141ed7610. Offset evidence: BannerColor (RDX) null -> zero FName written to the hidden return slot; otherwise MOV RAX,[RDX+0xe8] ="
-  },
-  {
     "class": "UFortMissionLibrary",
     "function": "FindActorsWithTags",
     "kind": "exec",
@@ -76439,22 +75779,6 @@
   },
   {
     "class": "AFortPlayerController",
-    "function": "ClientForceWorldInventoryUpdate_Implementation",
-    "kind": "impl",
-    "signature": "void ClientForceWorldInventoryUpdate_Implementation()",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/wrapA3_runtime/AFortPlayerController/ClientForceWorldInventoryUpdate_Implementation.inc",
-    "confidence": "medium",
-    "address": "0x142a44a00",
-    "status": "ported",
-    "reflection_flags": "0x1020cc0",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x142371d10",
-    "notes": "Writes NativeRecoveredBool_0x179f then tail-calls AFortInventory::HandleInventoryLocalUpdate on WorldInventory."
-  },
-  {
-    "class": "AFortPlayerController",
     "function": "NativeRecoveredBool_0x179f",
     "kind": "member_field",
     "signature": "bool NativeRecoveredBool_0x179f",
@@ -76515,125 +75839,6 @@
     "access": "private",
     "native_body_address": "0x144afd010",
     "notes": "Wrapper: FilterTabButtonStyle (this+0x370) passed to TabButton->UCommonButton::SetStyle; null TabButton returns."
-  },
-  {
-    "class": "UFortActivityDetailsView",
-    "function": "HandleNextPanelInput",
-    "kind": "exec",
-    "signature": "void HandleNextPanelInput(bool& bPassthrough)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/wrapA6_runtime/UFortActivityDetailsView/HandleNextPanelInput.inc",
-    "confidence": "medium",
-    "address": "0x1451f2f10",
-    "status": "ported",
-    "reflection_flags": "0x440401",
-    "static": false,
-    "virtual": false,
-    "access": "private",
-    "native_body_address": "0x144b008b0",
-    "notes": "Wrapper: ButtonGroup_PanelTabButtons->SelectNextButton(false) (reflected Object +0x4e0; callee CommonUI UCommonButtonGroup::SelectNextButton via engine declaration; bPassthrough unused)."
-  },
-  {
-    "class": "UFortActivityDetailsView",
-    "function": "HandlePrevPanelInput",
-    "kind": "exec",
-    "signature": "void HandlePrevPanelInput(bool& bPassthrough)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/wrapA6_runtime/UFortActivityDetailsView/HandlePrevPanelInput.inc",
-    "confidence": "medium",
-    "address": "0x1451f3060",
-    "status": "ported",
-    "reflection_flags": "0x440401",
-    "static": false,
-    "virtual": false,
-    "access": "private",
-    "native_body_address": "0x144b01570",
-    "notes": "Wrapper: ButtonGroup_PanelTabButtons->SelectPreviousButton(false) (reflected Object +0x4e0; callee CommonUI UCommonButtonGroup::SelectPreviousButton via engine declaration; bPassthrough unused)."
-  },
-  {
-    "class": "UFortCollectionBookProgressionRewardDetailInspectWidget",
-    "function": "SetAssociatedLevel",
-    "kind": "exec",
-    "signature": "void SetAssociatedLevel(int32 Level)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/wrapA6_runtime/UFortCollectionBookProgressionRewardDetailInspectWidget/SetAssociatedLevel.inc",
-    "confidence": "medium",
-    "address": "0x14520d810",
-    "status": "ported",
-    "reflection_flags": "0x4020401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x1450cb690",
-    "notes": "Wrapper: if LevelTextWidget (+0x258) non-null, SetCurrentValue(float(Level+1)) on UCommonNumericTextBlock via engine declaration."
-  },
-  {
-    "class": "UFortCMSInfoCarousel",
-    "function": "NavigatePageLeft",
-    "kind": "exec",
-    "signature": "void NavigatePageLeft()",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/wrapA6_runtime/UFortCMSInfoCarousel/NavigatePageLeft.inc",
-    "confidence": "medium",
-    "address": "0x14520ce50",
-    "status": "ported",
-    "reflection_flags": "0x4080401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x144d8c630",
-    "notes": "Wrapper: Carousel->NextPage() then Carousel->EndAutoScrolling() (reflected Object +0x498; CommonUI engine declarations)."
-  },
-  {
-    "class": "UFortCMSInfoCarousel",
-    "function": "NavigatePageRight",
-    "kind": "exec",
-    "signature": "void NavigatePageRight()",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/wrapA6_runtime/UFortCMSInfoCarousel/NavigatePageRight.inc",
-    "confidence": "medium",
-    "address": "0x14520ce70",
-    "status": "ported",
-    "reflection_flags": "0x4080401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x144d8c660",
-    "notes": "Wrapper: Carousel->PreviousPage() then Carousel->EndAutoScrolling() (reflected Object +0x498; asm calls PreviousPage; CommonUI engine declarations)."
-  },
-  {
-    "class": "UFortCollectionBookSectionPanel",
-    "function": "OnSlotButtonHovered",
-    "kind": "exec",
-    "signature": "void OnSlotButtonHovered(int32 ButtonIx)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/wrapA6_runtime/UFortCollectionBookSectionPanel/OnSlotButtonHovered.inc",
-    "confidence": "medium",
-    "address": "0x145210520",
-    "status": "ported",
-    "reflection_flags": "0x80401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x1450c4fc0",
-    "notes": "Wrapper: raw byte +0x288 gate (inherited storage), SlotViewWidget (+0x438) -> CollectionBookSlotButtonGroup (+0x288) -> SelectButtonAtIndex(ButtonIx)."
-  },
-  {
-    "class": "UFortCollectionBookProgressionRewardWidget",
-    "function": "SetAssociatedLevel",
-    "kind": "exec",
-    "signature": "void SetAssociatedLevel(int32 Level)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/wrapA6_runtime/UFortCollectionBookProgressionRewardWidget/SetAssociatedLevel.inc",
-    "confidence": "medium",
-    "address": "0x145210e00",
-    "status": "ported",
-    "reflection_flags": "0x4020401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x1450cb6b0",
-    "notes": "Wrapper: if LevelTextWidget (+0x270) non-null, SetCurrentValue(float(Level+1)) on UCommonNumericTextBlock via engine declaration."
   },
   {
     "class": "UFortItemManagementInventoryPanel",
@@ -77871,22 +77076,6 @@
     "notes": "OnTeamsRolesChanged exact at +0x980; FUraniumOnTeamsRolesChanged(uint8 PusherTeam, uint8 DefenderTeam) matches DL/R8B pack order."
   },
   {
-    "class": "AFortCreativeMoveTool",
-    "function": "ClientAddItemToMoveToolComplete_Implementation",
-    "kind": "impl",
-    "signature": "void ClientAddItemToMoveToolComplete_Implementation(AFortPlayerControllerAthena* FortPC)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/bcast3_runtime/AFortCreativeMoveTool/ClientAddItemToMoveToolComplete_Implementation.inc",
-    "confidence": "high",
-    "address": "0x1428c21a0",
-    "status": "ported",
-    "reflection_flags": "0x1020cc0",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x142665450",
-    "notes": "RCX is overwritten by the FortPC chain; FortPC->CreativeQuickbarComponent (+0x22f0, exact) -> OnItemAddedToMoveTool (+0xe0, exact, no params)."
-  },
-  {
     "class": "UFortDialogNotificationHandler",
     "function": "Timeout_Implementation",
     "kind": "native_event_impl",
@@ -78048,22 +77237,6 @@
   },
   {
     "class": "UAIHotSpotSlot",
-    "function": "GetHotSpot",
-    "kind": "exec",
-    "signature": "AAIHotSpot* GetHotSpot() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs1_runtime/UAIHotSpotSlot/GetHotSpot.inc",
-    "confidence": "medium",
-    "address": "0x1427109e0",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x14165bce0",
-    "notes": "Owner ptr at +0x20 (member NativeRecoveredPtr_0x20); IsA AAIHotSpot::StaticClass() fast path; returns Owner or null."
-  },
-  {
-    "class": "UAIHotSpotSlot",
     "function": "GetSlotBounds",
     "kind": "exec",
     "signature": "FBox GetSlotBounds() const",
@@ -78093,22 +77266,6 @@
     "access": "public",
     "native_body_address": "0x14165bce0",
     "notes": "Same body as UAIHotSpotSlot::GetHotSpot; class has no reflected props so +0x20 read raw from this."
-  },
-  {
-    "class": "UAthenaMarkerComponent",
-    "function": "FindMarkerByID",
-    "kind": "exec",
-    "signature": "UFortWorldMarker* FindMarkerByID(FMarkerID MarkerID)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs1_runtime/UAthenaMarkerComponent/FindMarkerByID.inc",
-    "confidence": "medium",
-    "address": "0x142725850",
-    "status": "ported",
-    "reflection_flags": "0x4020409",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x141a770f0",
-    "notes": "Loop over 0x100-byte records at NativeRecoveredPtr_0x240 (count NativeRecoveredInt32_0x248); raw marker+0x3c/+0x40 match."
   },
   {
     "class": "ABuildingProp_CaptureArea",
@@ -78143,38 +77300,6 @@
     "native_body_address": "0x1406968f0",
     "notes": "Body is LEA RAX,[RCX-0x218]; RET; result discarded by void return. Empty body.",
     "virtual": true
-  },
-  {
-    "class": "UBuildingStructuralSupportSystem",
-    "function": "AreGridIndicesValid",
-    "kind": "exec",
-    "signature": "bool AreGridIndicesValid(FBuildingSupportCellIndex& GridIndices) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs1_runtime/UBuildingStructuralSupportSystem/AreGridIndicesValid.inc",
-    "confidence": "high",
-    "address": "0x14275b6b0",
-    "status": "ported",
-    "reflection_flags": "0x54420401",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x141c5fae0",
-    "notes": "Three int32 grid index compares against this+0x368/0x36c/0x370 (member fields); returns bool."
-  },
-  {
-    "class": "UBuildingStructuralSupportSystem",
-    "function": "K2_GetWorldLocFromGridIndices",
-    "kind": "exec",
-    "signature": "bool K2_GetWorldLocFromGridIndices(FBuildingSupportCellIndex& GridIndices, FVector& OutWorldLoc) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs1_runtime/UBuildingStructuralSupportSystem/K2_GetWorldLocFromGridIndices.inc",
-    "confidence": "high",
-    "address": "0x14275e220",
-    "status": "ported",
-    "reflection_flags": "0x54c20403",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x141c7dbd0",
-    "notes": "Grid limit check, then base world loc floats +0x378/+0x37c/+0x380 plus grid*512 (X,Y) and grid*384 (Z)."
   },
   {
     "class": "UAIHotSpotSlot",
@@ -78609,23 +77734,6 @@
   },
   {
     "class": "AFortAthenaMutator_Ashton",
-    "function": "GetNumCapturedStones",
-    "kind": "exec",
-    "signature": "int32 GetNumCapturedStones(TArray<FAshtonStoneState>& TestList)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs3_runtime/AFortAthenaMutator_Ashton/GetNumCapturedStones.inc",
-    "confidence": "high",
-    "address": "0x1427e1200",
-    "status": "ported",
-    "reflection_flags": "0x4420401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x141aae350",
-    "notes": "Leaf loop over TArray<FAshtonStoneState>; counts StoneState==2 (element+1), stride 0x18."
-  },
-  {
-    "class": "AFortAthenaMutator_Ashton",
     "function": "OnGamePhaseStepChanged",
     "kind": "exec",
     "signature": "void OnGamePhaseStepChanged(TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, EAthenaGamePhaseStep GamePhaseStep)",
@@ -78640,23 +77748,6 @@
     "access": "protected",
     "native_body_address": "0x141ab1dc0",
     "notes": "Role==3 gate, safe-zone object IsA AFortGameStateAthena getter, GamePhaseStep==4; writes GameState MutatorEventData.EventId=1."
-  },
-  {
-    "class": "AFortAthenaMutator_Disco",
-    "function": "OnCaptureLockBroken",
-    "kind": "exec",
-    "signature": "void OnCaptureLockBroken(AAthenaCapturePoint* CapturePoint, uint8 LockTeam, uint8 BreakTeam)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs3_runtime/AFortAthenaMutator_Disco/OnCaptureLockBroken.inc",
-    "confidence": "high",
-    "address": "0x1427fe7d0",
-    "status": "ported",
-    "reflection_flags": "0x20401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x141adc6d0",
-    "notes": "CapturePoint->bActivated gate (0x9f8 bit 0); writes MutatorEventData fields on CachedGameState without null check."
   },
   {
     "class": "AFortAthenaMutator_GiveItemsAtGamePhaseStep",
@@ -78904,38 +77995,6 @@
     "virtual": true
   },
   {
-    "class": "AFortGameStatePvE",
-    "function": "GetPickupManagementSettings",
-    "kind": "exec",
-    "signature": "void GetPickupManagementSettings(FPickupManagementSettings& PickupSettings)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs7_runtime/AFortGameStatePvE/GetPickupManagementSettings.inc",
-    "confidence": "medium",
-    "address": "0x14292af80",
-    "status": "ported",
-    "reflection_flags": "0x4420405",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x1424e7ac0",
-    "notes": "Role/bEnablePickupManagement gate, then copies FPickupManagementSettings from unknown pointee at NativeRecoveredPtr_0xfb8+0xd0 (inlined tail leaf)."
-  },
-  {
-    "class": "AFortGameStatePvE",
-    "function": "SetPickupManagementSettings",
-    "kind": "exec",
-    "signature": "void SetPickupManagementSettings(FPickupManagementSettings& PickupSettings)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs7_runtime/AFortGameStatePvE/SetPickupManagementSettings.inc",
-    "confidence": "medium",
-    "address": "0x14292d410",
-    "status": "ported",
-    "reflection_flags": "0x4420405",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x1424f3850",
-    "notes": "Same gate; stores struct to pointee+0xd0 and byte 1 to pointee+0xcc (inlined tail leaf); pointee class unknown, raw."
-  },
-  {
     "class": "AFortGameStateZone",
     "function": "IsGameplayVoteActive",
     "kind": "exec",
@@ -79046,22 +78105,6 @@
     "access": "public",
     "native_body_address": "0x142083780",
     "notes": "Min/max over element fields 0x1c/0x20 and bHasBucketAvailable at 0x24, all instructions accounted."
-  },
-  {
-    "class": "UFortMinigameStatics",
-    "function": "GetTeam",
-    "kind": "exec",
-    "signature": "int32 GetTeam(ASOLFortGame* Game, ASOLFortPlayer* Player)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs8_runtime/UFortMinigameStatics/GetTeam.inc",
-    "confidence": "high",
-    "address": "0x1429d82d0",
-    "status": "ported",
-    "reflection_flags": "0x22401",
-    "static": true,
-    "access": "public",
-    "native_body_address": "0x14246eb20",
-    "notes": "Two gap pointers at 0x278 on ASOLFortGame and ASOLFortPlayer; tail call to GetBucketForPlayerState."
   },
   {
     "class": "AFortMinigameSettingsBuilding",
@@ -79585,22 +78628,6 @@
     "notes": "Returns byte at +0x270 (raw read; not covered by reflection); PlayerController unused; log elided."
   },
   {
-    "class": "AFortAthenaMutator_FactionCustomCharacterParts",
-    "function": "GetPartOverridesForPlayer_Implementation",
-    "kind": "native_event_impl",
-    "signature": "bool GetPartOverridesForPlayer_Implementation(TArray<FFactionPartOverrideData>& OutFactionOverrideParts, uint8 FactionNum) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/lg1_runtime/AFortAthenaMutator_FactionCustomCharacterParts/GetPartOverridesForPlayer_Implementation.inc",
-    "confidence": "medium",
-    "address": "0x142801ca0",
-    "status": "ported",
-    "reflection_flags": "0x48480c00",
-    "static": false,
-    "access": "protected",
-    "native_body_address": "0x141ad8f10",
-    "notes": "No state effect; returns false after elided verbosity-gated log."
-  },
-  {
     "class": "AFortAthenaMutator_Goose",
     "function": "OnPawnDied",
     "kind": "exec",
@@ -79728,22 +78755,6 @@
   },
   {
     "class": "AFortPlayerControllerSpectating",
-    "function": "GetCurrentSpectatorCameraComponent",
-    "kind": "exec",
-    "signature": "UFortSpectatorCameraComponent* GetCurrentSpectatorCameraComponent() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs10_runtime/AFortPlayerControllerSpectating/GetCurrentSpectatorCameraComponent.inc",
-    "confidence": "high",
-    "address": "0x142a6b960",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x1423d3c20",
-    "notes": "SpectatorPawn IsA(AFortReplaySpectatorPawnBase) then SpectatorCameraComponent at pawn +0x2a0"
-  },
-  {
-    "class": "AFortPlayerControllerSpectating",
     "function": "SetNotificationsEnabled",
     "kind": "exec",
     "signature": "void SetNotificationsEnabled(bool bNewState)",
@@ -79821,38 +78832,6 @@
     "access": "public",
     "native_body_address": "0x1426772c0",
     "notes": "Counter NativeRecoveredUint8_0x114b incremented, reset to 0 when above 2; broadcasts OnMoveToolLineOfSightBlockingChanged with new value."
-  },
-  {
-    "class": "AFortCreativeMoveTool",
-    "function": "OnWantedCameraSpacePositioning",
-    "kind": "exec",
-    "signature": "void OnWantedCameraSpacePositioning(UFortCreativeOption* CreativeOption, uint8 Index)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs6_runtime/AFortCreativeMoveTool/OnWantedCameraSpacePositioning.inc",
-    "confidence": "high",
-    "address": "0x1428c3a00",
-    "status": "ported",
-    "reflection_flags": "0x80401",
-    "static": false,
-    "access": "protected",
-    "native_body_address": "0x14267d650",
-    "notes": "Null option returns; else WantedCameraSpacePositioning.Value (+0x11a4) = CreativeOption->GetValueAtIndex(Index)."
-  },
-  {
-    "class": "AFortCreativeMoveTool",
-    "function": "OnWantedIgnoreRecentlyPlacedTime",
-    "kind": "exec",
-    "signature": "void OnWantedIgnoreRecentlyPlacedTime(UFortCreativeOption* CreativeOption, uint8 Index)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs6_runtime/AFortCreativeMoveTool/OnWantedIgnoreRecentlyPlacedTime.inc",
-    "confidence": "high",
-    "address": "0x1428c3b80",
-    "status": "ported",
-    "reflection_flags": "0x80401",
-    "static": false,
-    "access": "protected",
-    "native_body_address": "0x14267d6f0",
-    "notes": "Null option returns; else WantedIgnoreRecentlyPlacedTime.Value (+0x1188) = CreativeOption->GetValueAtIndex(Index)."
   },
   {
     "class": "UObjectInteractionBehavior",
@@ -80155,22 +79134,6 @@
     "access": "public",
     "native_body_address": "0x142703390",
     "notes": "Flag +0x5a9 (new bool member) gates; DisabledGameplayMessages (+0x630) pair scan; FName pairs at element +0 and +8."
-  },
-  {
-    "class": "UFortSkeletalAudioComponent",
-    "function": "SetCustomTrackedTransform",
-    "kind": "exec",
-    "signature": "void SetCustomTrackedTransform(int32 Index, FTransform& Transform)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs12_runtime/UFortSkeletalAudioComponent/SetCustomTrackedTransform.inc",
-    "confidence": "medium",
-    "address": "0x142ada910",
-    "status": "ported",
-    "reflection_flags": "0x4c20401",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x1424bbde0",
-    "notes": "Raw 192-byte element writes into BoneInstances (+0xc8/+0xd0); prev-rotation/translation shift then new Transform copy."
   },
   {
     "class": "AFortSpaghettiVehicle",
@@ -80525,23 +79488,6 @@
     "status": "ported",
     "recovery_source": "small_leaf_batch",
     "notes": "Undeclared object pointer read by GetVehicle; gap between UCSModifiedProperties and MuzzleSocketNames."
-  },
-  {
-    "class": "ASOLFortGame",
-    "function": "GetTeam",
-    "kind": "exec",
-    "signature": "int32 GetTeam(ASOLFortPlayer* Player)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs14_runtime/ASOLFortGame/GetTeam.inc",
-    "confidence": "medium",
-    "address": "0x142b900a0",
-    "status": "ported",
-    "reflection_flags": "0x20401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x14246eaf0",
-    "notes": "Raw-typed gap members this+0x278 (ASOLFortGame) and Player+0x278 (ASOLFortPlayer); tail-calls declared GetBucketForPlayerState."
   },
   {
     "class": "UAthenaHUDContext",
@@ -81063,23 +80009,6 @@
     "notes": "Dword compare of FName at +0xe0 with SlotName, qword store, then OnDifferentHeroLoadoutSlotFocused.Broadcast (delegate at +0x90)."
   },
   {
-    "class": "UFortInputOptions",
-    "function": "GetInputDataIndexForActionName",
-    "kind": "exec",
-    "signature": "int32 GetInputDataIndexForActionName(FName ActionName) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs17_runtime/UFortInputOptions/GetInputDataIndexForActionName.inc",
-    "confidence": "medium",
-    "address": "0x1452605b0",
-    "status": "ported",
-    "reflection_flags": "0x54080401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x144e722e0",
-    "notes": "Loops InputData (+0x310/+0x318) comparing element ActionKeyMapping.ActionName (+0x90); returns index or -1. Relies on FName == matching both halves."
-  },
-  {
     "class": "UFortInventoryContext",
     "function": "AreAnyItemsAnimate",
     "kind": "exec",
@@ -81408,23 +80337,6 @@
     "notes": "ContextProvidingObject.Get() then IsA(UFortSquadSlotSelectorButton) via Cast; asm fully traced, IsA fast path inferred."
   },
   {
-    "class": "UFortStoreContext",
-    "function": "GetCard",
-    "kind": "exec",
-    "signature": "bool GetCard(int32 CardIdx, FCard& ResultOut) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs20_runtime/UFortStoreContext/GetCard.inc",
-    "confidence": "high",
-    "address": "0x1452f1c80",
-    "status": "ported",
-    "reflection_flags": "0x54420401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x144d01620",
-    "notes": "CardList (reflected TArray<FCard>, +0x80/+0x88) bounds check and element copy; FCard stride 0x18 matches."
-  },
-  {
     "class": "UFortStoreFrontOfferInfo",
     "function": "IsPriceInGameItems",
     "kind": "exec",
@@ -81604,22 +80516,6 @@
     "notes": "Gap bool 0x130, NavigationRequests[0].Operations[0].Operation compare, Num guards."
   },
   {
-    "class": "UFortUINavigationManager",
-    "function": "TryGetPendingNavigationOp",
-    "kind": "exec",
-    "signature": "bool TryGetPendingNavigationOp(FFortUINavigationOperation& NavigationOp)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rs21_runtime/UFortUINavigationManager/TryGetPendingNavigationOp.inc",
-    "confidence": "medium",
-    "address": "0x145315d30",
-    "status": "ported",
-    "reflection_flags": "0x4420401",
-    "static": false,
-    "access": "public",
-    "native_body_address": "0x144de4420",
-    "notes": "Same guards as HasPendingNavigationOp; copies Operations[0] (0x30 bytes) to out ref."
-  },
-  {
     "class": "UFortUIScoreReport",
     "function": "GetCurrentPlayerPawn",
     "kind": "exec",
@@ -81777,23 +80673,6 @@
     "access": "public",
     "native_body_address": "0x1422ec1f0",
     "notes": "Setter: bCanInteract bitfield (0x18dc bit 28); Role raw at +0xf0 == 3; OnRep_CanInteract(bOldCanInteract) via vtable 0xe88 with pre-store bit as asm."
-  },
-  {
-    "class": "AFortCreativeMoveTool",
-    "function": "OnWantedHitTraceRule",
-    "kind": "exec",
-    "signature": "void OnWantedHitTraceRule(UFortCreativeOption* CreativeOption, uint8 Index)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rd2_runtime/AFortCreativeMoveTool/OnWantedHitTraceRule.inc",
-    "confidence": "high",
-    "address": "0x1428c3ac0",
-    "status": "ported",
-    "reflection_flags": "0x80401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x14267d680",
-    "notes": "GetValueAtIndex result to WantedHitTraceRule.Value (+0x1154), byte to NativeRecoveredByte_0x114b, delegate +0xcd8 broadcast. All 29 insns accounted."
   },
   {
     "class": "UFortGameStateComponent_EventLevel",
@@ -81964,40 +80843,6 @@
     "notes": "Body 0x144c20f90: PlayerState->GetCurrentPawn() or CachedPlayerPawn, returns pawn CurrentWeapon (+0x588). No null check after GetCurrentPawn, as in asm."
   },
   {
-    "class": "UAthenaSpectateMatchModalBase",
-    "function": "IsGameSessionString",
-    "kind": "exec",
-    "signature": "bool IsGameSessionString(FString String) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rd3_runtime/UAthenaSpectateMatchModalBase/IsGameSessionString.inc",
-    "confidence": "high",
-    "address": "0x1451bd7d0",
-    "status": "ported",
-    "reflection_flags": "0x54080401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x144b38df0",
-    "notes": "Body 0x144b38df0: FString Num==0x21 and first 32 UTF-16 units all hex digits. Identical body to IsValidGameSessionId."
-  },
-  {
-    "class": "UAthenaViewStreamingReplayModalBase",
-    "function": "IsValidGameSessionId",
-    "kind": "exec",
-    "signature": "bool IsValidGameSessionId(FString GameSessionId) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rd3_runtime/UAthenaViewStreamingReplayModalBase/IsValidGameSessionId.inc",
-    "confidence": "high",
-    "address": "0x1451bd7d0",
-    "status": "ported",
-    "reflection_flags": "0x54080401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x144b38df0",
-    "notes": "Body 0x144b38df0: FString Num==0x21 and first 32 UTF-16 units all hex digits. Identical body to IsGameSessionString."
-  },
-  {
     "class": "UAthenaRemotePlayerViewData",
     "function": "NativeRecoveredFloat_0x20c",
     "kind": "member_field",
@@ -82138,23 +80983,6 @@
     "access": "public",
     "native_body_address": "0x141657e50",
     "notes": "Hash probe of factor-keyed set; float value at element+4."
-  },
-  {
-    "class": "AFortAthenaMutator_Bagel",
-    "function": "GetPlayerScore",
-    "kind": "exec",
-    "signature": "bool GetPlayerScore(AFortPlayerControllerAthena* AthenaPC, int32& OutScore) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/rd1_runtime/AFortAthenaMutator_Bagel/GetPlayerScore.inc",
-    "confidence": "medium",
-    "address": "0x1427e8db0",
-    "status": "ported",
-    "reflection_flags": "0x54420401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x141aae6e0",
-    "notes": "Scan of 0x80-stride elements matching PlayerState key; score at +0x50."
   },
   {
     "class": "AFortAthenaMutator_Disco",
@@ -82529,5 +81357,57 @@
     "status": "ported",
     "recovery_source": "small_leaf_batch",
     "notes": "Byte +0x7e8 returned by UFortGlobalUIContext::IsPendingLogout (MOVZX byte); no reflected member covers it."
+  },
+  {
+    "function": "NativeFindItemByGuid",
+    "kind": "helper",
+    "signature": "UFortItem* NativeFindItemByGuid(const FGuid& ItemGuid)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/AFortPlayerController/NativeFindItemByGuid.inc",
+    "address": "0x142380fd0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "GPSC142a3d9f0->helper142a3b0b0->ctor142364800 stores interface table14612a110 at598; slotb0 targets142380fd0. Inventory fields are reflected1738/1740/1748.",
+    "class": "AFortPlayerController"
+  },
+  {
+    "function": "NativeGetTeam163",
+    "kind": "helper",
+    "signature": "uint8 NativeGetTeam163()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortPlayerState/NativeGetTeam163.inc",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortPlayerState",
+    "address": "0x142419200",
+    "virtual": true
+  },
+  {
+    "function": "NativeGetSpectatingPlayerState163",
+    "kind": "helper",
+    "signature": "AFortPlayerState* NativeGetSpectatingPlayerState163()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortSpectateAFriendController/NativeGetSpectatingPlayerState163.inc",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortSpectateAFriendController",
+    "address": "0x141ed4ff0",
+    "virtual": true
+  },
+  {
+    "function": "NativeFindEnabledPlayerSettings163",
+    "kind": "helper",
+    "signature": "UFortPlayerSettingsComponentBase* NativeFindEnabledPlayerSettings163(FName Name, bool bIncludeDefault)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/AFortAthenaMutator_PlayerSettingsBase/NativeFindEnabledPlayerSettings163.inc",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortAthenaMutator_PlayerSettingsBase",
+    "address": "0x141aee020"
   }
 ]

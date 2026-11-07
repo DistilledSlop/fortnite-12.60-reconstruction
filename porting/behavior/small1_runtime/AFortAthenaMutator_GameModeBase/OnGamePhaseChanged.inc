@@ -2,7 +2,7 @@
 // Offset evidence: [RCX+0xf0] is Role (reflected); [RCX+0x260] is CachedGameState (reflected Object); int32 1000 written raw at +0x1f00.
 // The asm has no null check on CachedGameState and none is added here.
 // CONFIDENCE: HIGH
-if (static_cast<uint8>(Role) != 3 || static_cast<uint8>(NewPhase) != 3)
+if (static_cast<uint8>(GetLocalRole()) != 3 || static_cast<uint8>(NewPhase) != 3)
 {
     return;
 }
