@@ -1,0 +1,177 @@
+[
+  {
+    "class": "UFortGameplayAbility",
+    "function": "GetTooltip",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Leaf: returns reflected Tooltip at object offset 0x9d0 (receiver delta 0x408); group C so virtual."
+  },
+  {
+    "class": "AFortGameStatePvE",
+    "function": "GetPickupManagementSettings",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Role/bEnablePickupManagement gate, then copies FPickupManagementSettings from unknown pointee at NativeRecoveredPtr_0xfb8+0xd0 (inlined tail leaf)."
+  },
+  {
+    "class": "AFortGameStatePvE",
+    "function": "SetPickupManagementSettings",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Same gate; stores struct to pointee+0xd0 and byte 1 to pointee+0xcc (inlined tail leaf); pointee class unknown, raw."
+  },
+  {
+    "class": "AFortGameStateZone",
+    "function": "IsGameplayVoteActive",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Loop over GameplayVotesArray: first VoteType match returns VoteStatus < 2."
+  },
+  {
+    "class": "AFortGameStateZone",
+    "function": "IsGameplayVoteInProgress",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Loop over GameplayVotesArray: first VoteType match returns true (no status test in asm)."
+  },
+  {
+    "class": "AFortGameStateZone",
+    "function": "IsGameplayVoteLocked",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Loop over GameplayVotesArray: first VoteType match returns VoteStatus >= 2."
+  },
+  {
+    "class": "UFortGiftBoxItem",
+    "function": "GetGiftBoxDefinition",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Returns inherited ItemDefinition if it passes the static-class IsA check, else null; modelled as Cast."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "ClearAIFocalPoint",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "Call 0x142ee5dd0 (FWeakObjectPtr::Get shape, receiver is a weak-pointer sub-object of this+0x380 pointee) has 6 unrelated candidates; none is an ancestor of UFortGameplayAbility."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "GetOwningPlayerTeamPerkProgressiveActivationLevel",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "First call 0x142ee5dd0 has 6 unrelated candidates (no ancestor of receiver); the tail JMP 0x1423865f0 cannot be reached without it."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "SetAIFocalPoint",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "First call 0x142ee5dd0 has 6 unrelated candidates; receiver is a weak-pointer sub-object, not an ancestor-class object."
+  },
+  {
+    "class": "UFortGameplayAbility_AIPortal",
+    "function": "GetPortalBuilding",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "First call 0x142ee5dd0 (6 unrelated candidates) gates the return; receiver this+0x908 pointee is a weak-pointer sub-object."
+  },
+  {
+    "class": "AFortGameState",
+    "function": "DbgBoxSendToAllInternal_DoNotCall",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Once-guard byte 0x14812f404, verbosity 0x1481348e0, category 0x1481348e4 and string 0x146004730 are absolute globals; FMsg_Logf 0x142c54b70 side effect not exactly expressible."
+  },
+  {
+    "class": "AFortGameState",
+    "function": "DbgCapsuleSendToAllInternal_DoNotCall",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Once-guard byte 0x14812f404, verbosity 0x1481348e0, category 0x1481348e4 and string 0x1460046b0 are absolute globals; FMsg_Logf side effect not expressible."
+  },
+  {
+    "class": "AFortGameState",
+    "function": "DbgLineSendToAllInternal_DoNotCall",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Once-guard byte 0x14812f404, verbosity 0x1481348e0, category 0x1481348e4 and string 0x146004630 are absolute globals; FMsg_Logf side effect not expressible."
+  },
+  {
+    "class": "AFortGameState",
+    "function": "DbgSphereSendToAllInternal_DoNotCall",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Once-guard byte 0x14812f404, verbosity 0x1481348e0, category 0x1481348e4 and string 0x1460045b0 are absolute globals; FMsg_Logf side effect not expressible."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "GetTimedWinConditionTime",
+    "status": "blocked",
+    "case": "absolute_global_and_unresolved_callee",
+    "reason": "Non-null branch returns constant float from absolute 0x1459a979c behind log guard 0x1481348e0; tail JMP 0x14070fdf0 candidate AFortAthenaMutator_DadBro::StartNextSafeZonePhase has no float return."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "OnRep_Aircraft",
+    "status": "blocked",
+    "case": "tail_target_unlisted",
+    "reason": "JZ 0x1419a8ec0 target body is not in the job insns or any native listing, so the conditional behaviour cannot be ported."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "OnRep_TeamsLeft",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Call 0x14199e4e0 = AFortGameStateAthena::IsLastManStandingCN(const) is not declared in any generated header (grep of porting/native/Source)."
+  },
+  {
+    "class": "AFortGameStateZone",
+    "function": "GetTotalScore",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Default case (DL>2) logs via FMsg_Logf guarded by absolute verbosity 0x1481348e0, category 0x1481348e4 and string 0x146006440; that side effect is not exactly expressible. Case mapping verified: 0->0xdc8, 1->0xdcc, 2->0xdd0."
+  },
+  {
+    "class": "UFortGameUserSettings",
+    "function": "IsVideoPlaybackAllowed",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Reads dword at absolute global 0x14812e6f0 to decide the result."
+  },
+  {
+    "class": "UFortGameUserSettings",
+    "function": "SetDisplayGamma",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Also stores float to +0x934 of pointer global 0x148351eb8 (absolute address, not reflected)."
+  },
+  {
+    "class": "UFortGameUserSettings",
+    "function": "SetUserInterfaceContrast",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Also stores float to absolute global 0x147c52484."
+  },
+  {
+    "class": "UFortGiftBoxItem",
+    "function": "TryGetParamString",
+    "status": "blocked",
+    "case": "callee_signature_mismatch",
+    "reason": "Tail-forwards RDX/R8 (FString by pointer) to 0x142cf3b60 whose only candidate UMeshNetworkSubsystem::GetMetaDataWithKey takes (Struct, Name); receiver pointee at this+0x120 has no known class."
+  },
+  {
+    "class": "UFortGliderAnimInstance",
+    "function": "SetGliderFullyDeployed",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "JNZ 0x141a24a30 tail-jumps on OwnerGlider (+0x2a0) to a target with no callee candidate and no listing in the job insns."
+  },
+  {
+    "class": "UFortHeldObjectComponent",
+    "function": "GetInstigator",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "First call 0x142ee7880 has 3 unrelated candidates; both paths tail to shared 0x142ee5dd0 (6 unrelated candidates)."
+  }
+]

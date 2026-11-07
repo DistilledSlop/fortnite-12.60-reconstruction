@@ -1,0 +1,177 @@
+[
+  {
+    "class": "UFortHelpItem",
+    "function": "GetItemWithID",
+    "status": "proposed",
+    "case": "small_leaf_or_tail_call",
+    "reason": "Ported from asm with offset evidence; see .inc header."
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetPreviewMeshOffset",
+    "status": "blocked",
+    "case": "callee_signature_mismatch",
+    "reason": "callee_signature_mismatch: CALL 0x142c5c060 with RCX=this+0x2b4 and RDX=sret only; candidate AKairosHeroBase::BeginCapture(bool, CaptureParams, FramingInfo) does not match."
+  },
+  {
+    "class": "AFortLobbyBeaconPlayerState",
+    "function": "OnRep_LobbyTimeRemaining",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "shared_callee_ambiguous: tail JMP 0x140684de0 with RCX=this+0x3a8 (no reflected member there); six candidate classes, only zero-arg AFortGameState::OnRep_Teams matches and the receiver class is unverified."
+  },
+  {
+    "class": "AFortLobbyBeaconStateRM",
+    "function": "OnRep_LobbyTimeRemaining",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "shared_callee_ambiguous: CALL 0x140684de0 on element+0x3a8 (same six candidates, receiver type unverified); element type of TArray at +0x340 (stride 0x18) is not reflected."
+  },
+  {
+    "class": "AFortMatchmakingActor",
+    "function": "ShouldUseBlueprintMMSCode",
+    "status": "blocked",
+    "case": "absolute_global",
+    "reason": "absolute_global: CMP dword ptr [0x148133e24],0 reads a fixed global address, not expressible from object state."
+  },
+  {
+    "class": "UFortMcpContext",
+    "function": "CancelEpicPurchasingDisplay",
+    "status": "blocked",
+    "case": "unresolved_conditional_jump",
+    "reason": "unresolved_conditional_jump: JNZ 0x1411ce2d0 leaves the body with RCX=[this+0x378]; no callee candidate for that target."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "AreTeamsAsymmetrical",
+    "status": "proposed",
+    "case": "small_leaf_or_tail_call",
+    "reason": "Ported from asm with offset evidence; see .inc header."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "IsPlayerUsingClassSlot",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: AFortMinigame::GetClassSlotForPlayer (0x14208f010) is not declared in any generated header."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "OnFortPlayerDied",
+    "status": "blocked",
+    "case": "unresolved_conditional_jump",
+    "reason": "unresolved_conditional_jump: JNZ 0x1420a9a30 leaves the body; no callee candidate."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "OnRep_CurrentState",
+    "status": "blocked",
+    "case": "unresolved_conditional_jump",
+    "reason": "unresolved_conditional_jump: JZ 0x142097510 leaves the body; no callee candidate."
+  },
+  {
+    "class": "UFortMinigameObjectiveTrackerComponent",
+    "function": "GetTrackedObjective",
+    "status": "blocked",
+    "case": "array_storage_not_typed",
+    "reason": "array_storage_not_typed: TArray at +0x218/+0x220 is an unreflected gap in the own region with no typed-member form; the copy also writes FFastArraySerializerItem base fields at +0 and +8 as constant -1."
+  },
+  {
+    "class": "UFortMinigameItemListComponent",
+    "function": "AddItem",
+    "status": "blocked",
+    "case": "lock_cmpxchg_absolute_global",
+    "reason": "lock_cmpxchg_absolute_global: CMPXCHG.LOCK on absolute address 0x147c4e988 (static guard) and shared unresolved callees; not expressible."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "BoolToString",
+    "status": "blocked",
+    "case": "absolute_data_reference",
+    "reason": "absolute_data_reference: LEA of string literals at 0x1459acaa0/0x1459acab0; append calls 0x140680160/0x1406800e0 share unrelated candidate sets."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "DeclareWinningPlayer",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: AFortMinigame::DeclareWinnerImmediately (0x142089af0) is not declared in any generated header."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "DeclareWinningTeam",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: AFortMinigame::DeclareWinnerImmediately (0x142089af0) is not declared in any generated header."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "GetPlayerAttributeValue",
+    "status": "blocked",
+    "case": "unresolved_conditional_jump",
+    "reason": "unresolved_conditional_jump: JNZ 0x14246df30 leaves the body; no callee candidate."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "GetPlayers",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: ASOLFortGame::GetPlayers (0x14246e110) is not declared in ASOLFortGame.h or any generated header."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "GetTeam",
+    "status": "proposed",
+    "case": "small_leaf_or_tail_call",
+    "reason": "Ported from asm with offset evidence; see .inc header."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "GetTeams",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: ASOLFortGame::GetTeams (0x14246ed50) is not declared in any generated header."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "ObjectToString",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "shared_callee_ambiguous: CALL 0x142ce9f90 shares candidates with unrelated classes and receives a FName temporary in RCX."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "ResetUserVariables",
+    "status": "blocked",
+    "case": "unresolved_conditional_jump",
+    "reason": "unresolved_conditional_jump: JNZ 0x1424854f0 leaves the body; no callee candidate."
+  },
+  {
+    "class": "AFortMinigameSettingsBuilding",
+    "function": "CheckShowPublishWatermarkChanged",
+    "status": "proposed",
+    "case": "small_leaf_or_tail_call",
+    "reason": "Ported from asm with offset evidence; see .inc header."
+  },
+  {
+    "class": "AFortMission",
+    "function": "InitializeActorsForMission",
+    "status": "blocked",
+    "case": "callee_signature_mismatch",
+    "reason": "callee_signature_mismatch: CALL 0x143e89fa0 receives RCX=temp TArray and RDX=Mission; candidate GetActorsSpawnedMatchingQuery(bool, array, TagQuery) does not match the call ABI."
+  },
+  {
+    "class": "UFortMinigameVolumeComponent",
+    "function": "OnClientEnterVolume",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee_not_declared: AFortMinigame::NativeEnteredVolumeEvent (0x14209ba30) is not declared in any generated header."
+  },
+  {
+    "class": "AFortMission_RiftSpawners",
+    "function": "HandleAthenaGamePhaseChanged",
+    "status": "blocked",
+    "case": "unresolved_conditional_jump",
+    "reason": "unresolved_conditional_jump: JZ 0x1420cb500 leaves the body; no callee candidate."
+  }
+]

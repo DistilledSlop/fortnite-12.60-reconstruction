@@ -567,6 +567,9 @@ public:
 	UFUNCTION()
 	bool AreEnoughPlayersLeftToContinueMatch();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AreTeamsAsymmetrical() const;
+
 protected:
 	UFUNCTION()
 	void ClearPlayerInventory(AFortPlayerControllerAthena* PlayerController);

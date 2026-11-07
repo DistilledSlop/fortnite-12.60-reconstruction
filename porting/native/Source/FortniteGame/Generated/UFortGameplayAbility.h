@@ -291,6 +291,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	int32 GetMaxNumTrackedActors() const;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TSubclassOf<UFortTooltip> GetTooltip(bool bSummaryTooltip) const;
+public:
+
 	UFUNCTION(BlueprintNativeEvent)
 	void OnGenericNotifyFromAnimation(FGameplayTag NotifyTag);
 	virtual void OnGenericNotifyFromAnimation_Implementation(FGameplayTag NotifyTag);

@@ -1,0 +1,177 @@
+[
+ {
+  "class": "AFortMission_ActiveThreat",
+  "function": "HandleAthenaGamePhaseChanged",
+  "status": "blocked",
+  "case": "unresolved_jump_target",
+  "reason": "JZ 0x1420cb2e0 is a tail-jump target not present in job callee_candidates (empty map); cannot be expressed exactly."
+ },
+ {
+  "class": "UFortMissionLibrary",
+  "function": "GetMissionActorsInEncounterDirection",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee 0x1420b92b0 (UFortMissionLibrary::GetMissionActorsInVectorDirection) is absent from the generated header (grep)."
+ },
+ {
+  "class": "AFortMissionState",
+  "function": "SendMissionUIEvent",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x143e8a690 maps to 6 unrelated candidates; none is AFortMissionState or an ancestor."
+ },
+ {
+  "class": "AFortMountedTurret",
+  "function": "OnRep_TeamIndex",
+  "status": "blocked",
+  "case": "unresolved_jump_target",
+  "reason": "JNZ 0x14203df20 is a tail-jump target not present in job callee_candidates."
+ },
+ {
+  "class": "UFortMontageItemDefinitionBase",
+  "function": "PickRandomSectionByName",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Weighted section pick; Num==0 None, Num==1 element 0, else scan with element-0 fallback (0x141d8d26a reached from both paths). All instructions accounted."
+ },
+ {
+  "class": "UFortMusicAsset",
+  "function": "GetMusicSection",
+  "status": "blocked",
+  "case": "return_abi_mismatch",
+  "reason": "asm returns RAX = this+0x30+24*Section (element address, no copy into a return buffer) while header_decl returns FFortMusicSection by value."
+ },
+ {
+  "class": "UFortMutatorListComponent",
+  "function": "SetMutatorsActive",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee 0x1420ee180 (AFortGameplayMutator::SetMutatorActive) is absent from the generated header (grep)."
+ },
+ {
+  "class": "UFortNiagaraGameplayLibrary",
+  "function": "GetPlayerWaterType",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "Reads absolute global [0x1478c4478] with no reflected member covering it."
+ },
+ {
+  "class": "UFortNiagaraGameplayLibrary",
+  "function": "SetCustomTimeDilation",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "IsA(Niagara) exits; store CustomTimeDilation (reflected PSC +0x4d8) only when IsA(ParticleSystemComponent). Polarity read from JZ/JG/JNZ targets."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "AttemptMissionSave",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140682ce0 (FString copy of argument) maps to 6 unrelated candidates; none is AFortObjectiveBase or an ancestor."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "ClearObjectiveTimer",
+  "status": "blocked",
+  "case": "unresolved_jump_target",
+  "reason": "JNZ 0x141f1d900 is a tail-jump target not present in job callee_candidates."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "GetMission",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Owner (AActor +0xe0) returned when IsA(AFortMission), else null."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "GetObjectiveTimerTimeRemaining",
+  "status": "blocked",
+  "case": "unresolved_jump_target",
+  "reason": "JNZ 0x141f306a0 is a tail-jump target not present in job callee_candidates."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "GetRewardItemsByTag",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "Callee 0x1420bc990 (AFortMission::GetRewardItemsByTag) is absent from the generated header (grep)."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "GrantRewardsByTag",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Guards (Owner IsA AFortMission, Role==3) guard only call 0x1406801c0, an empty helper per job rules; call omitted, body has no remaining effect."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "PauseObjectiveTimer",
+  "status": "blocked",
+  "case": "unresolved_jump_target",
+  "reason": "JNZ 0x141f3fcc0 is a tail-jump target not present in this job callee_candidates (empty map)."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "SetObjectiveTimer",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x140682ce0 (FString copy of argument) maps to 6 unrelated candidates; none is AFortObjectiveBase or an ancestor."
+ },
+ {
+  "class": "AFortObjectiveBase",
+  "function": "UnpauseObjectiveTimer",
+  "status": "blocked",
+  "case": "unresolved_jump_target",
+  "reason": "JNZ 0x141f4e230 is a tail-jump target not present in job callee_candidates."
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "GetPrimaryContact",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "bool at +0x1290; ContactPoint/ContactNormal floats at +0x1244..+0x1258 (unreflected own-region gap, typed member_field entries)."
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "GetSeatSteerDeltas",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Scalar SSE float expression for Yaw (RDX), Pitch (R8), Roll (R9); SHUFPS lane-1 broadcast read as F126C/F1270 pair."
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "GetSeatSteerStrength",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Scalar SSE float expression returned in XMM0; all 31 instructions accounted."
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "GetTowhookCableAttachLocation",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ee5dd0 receiver is this+0x15ac; 6 shared candidates, none is AFortOctopusVehicle or an ancestor."
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "IsTowhookInAirExtending",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x141b720d0 receiver is sub-object this+0x1380; two shared vehicle candidates, neither matches the sub-object receiver."
+ },
+ {
+  "class": "UFortOutpostFunctionLibrary",
+  "function": "GetOutpostQuestMissionConfigDataFrontEnd",
+  "status": "blocked",
+  "case": "unresolved_jump_target",
+  "reason": "JNZ 0x142546670 is a tail-jump target outside the body and not present in job callee_candidates."
+ },
+ {
+  "class": "UFortPartyContext",
+  "function": "GetLocalPartyProgression",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "CALL 0x142ee7880 and 0x142ee5dd0 map to shared candidates; none is UFortPartyContext or an ancestor."
+ }
+]

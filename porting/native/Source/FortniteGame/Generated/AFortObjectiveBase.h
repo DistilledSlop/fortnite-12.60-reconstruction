@@ -10,12 +10,14 @@
 #include "EFortMissionVisibilityOverride.h"
 #include "EFortObjectiveRequirement.h"
 #include "EFortObjectiveStatus.h"
+#include "EFortRewardType.h"
 #include "EFortTeam.h"
 #include "FOnObjectiveIsVisibilityOverrideChanged.h"
 #include "FOnObjectiveIsVisibleChanged.h"
 #include "FOnObjectiveStatusChanged.h"
 #include "GameplayTagContainer.h"
 
+class AFortMission;
 class UFortBadgeItemDefinition;
 class UFortMissionTimerComponent;
 class UFortWorldItemDefinition;
@@ -101,7 +103,15 @@ public:
 	FOnObjectiveIsVisibilityOverrideChanged OnObjectiveVisibilityOverrideChanged;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortMission* GetMission() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortMissionTimerComponent* GetTimerComponent() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void GrantRewardsByTag(FGameplayTag RewardTag, EFortRewardType::Type RewardType);
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)

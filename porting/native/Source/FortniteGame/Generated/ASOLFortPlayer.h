@@ -62,5 +62,8 @@ public:
 	UPROPERTY()
 	FString string_d;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0x278;
+
 };
 

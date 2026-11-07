@@ -8,6 +8,9 @@
 
 #include "Math/Vector.h"
 
+class ASOLFortGame;
+class ASOLFortPlayer;
+
 #include "UFortMinigameStatics.generated.h"
 
 UCLASS()
@@ -18,6 +21,9 @@ class FORTNITEGAME_API UFortMinigameStatics : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION()
 	static float GetDistanceBetweenTwoVectors(FVector Source, FVector Dest);
+
+	UFUNCTION()
+	static int32 GetTeam(ASOLFortGame* Game, ASOLFortPlayer* Player);
 
 	UFUNCTION()
 	static FVector MakeVector(float X, float Y, float Z);

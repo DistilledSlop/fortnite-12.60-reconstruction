@@ -38,6 +38,9 @@ public:
 	FFortHelpAdditionalContent AdditionalContent;
 
 	UFUNCTION(BlueprintCallable)
+	virtual UFortHelpItem* GetItemWithID(FName _ItemID);
+
+	UFUNCTION(BlueprintCallable)
 	virtual TArray<UFortHelpItem*> GetSubItems();
 
 };

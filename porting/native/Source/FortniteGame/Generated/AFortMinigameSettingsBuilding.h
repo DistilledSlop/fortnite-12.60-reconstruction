@@ -43,6 +43,9 @@ public:
 	UPROPERTY(SaveGame)
 	bool bShowPublishWatermark;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x258): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0x258;
+
 	// table index 19, flags 0x10000010080000
 	UPROPERTY()
 	FGameDescriptionDataChangedDelegate OnGameDescriptionDataChanged;
@@ -114,6 +117,14 @@ public:
 	// table index 0, flags 0x40000000020001
 	UPROPERTY()
 	FGuid SavedActorGuid;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x320): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0x320;
+
+private:
+	UFUNCTION()
+	void CheckShowPublishWatermarkChanged();
+public:
 
 	UFUNCTION()
 	void OnRep_GameDescriptionData();

@@ -190,6 +190,51 @@ bool AFortGameStateZone::IsBuildingWithoutLayoutRequirementsAllowed() const
 	return AFortGameStateZone::bAllowBuildingWithoutLayoutRequirements;
 }
 
+bool AFortGameStateZone::IsGameplayVoteActive(EFortVoteType VoteType) const
+{
+	// Original body address: 0x141ea2430 (thunk 0x14292bbb0); leaf loop.
+	// Offset evidence: this+0xea0 = GameplayVotesArray (reflected TArray<FVoteData>), Num at +0xea8, element stride 0x78; FVoteData.VoteType at element +0, FVoteData.VoteStatus at element +0x70 (byte compare against 2).
+	// CONFIDENCE: HIGH
+	for (const FVoteData& Vote : GameplayVotesArray)
+	{
+	    if (Vote.VoteType == VoteType)
+	    {
+	        return static_cast<uint8>(Vote.VoteStatus) < 2;
+	    }
+	}
+	return false;
+}
+
+bool AFortGameStateZone::IsGameplayVoteInProgress(EFortVoteType VoteType) const
+{
+	// Original body address: 0x141ea2470 (thunk 0x14292bc40); leaf loop.
+	// Offset evidence: this+0xea0 = GameplayVotesArray (reflected TArray<FVoteData>), Num at +0xea8, element stride 0x78; FVoteData.VoteType at element +0. The asm returns true on the first VoteType match with no status test.
+	// CONFIDENCE: HIGH
+	for (const FVoteData& Vote : GameplayVotesArray)
+	{
+	    if (Vote.VoteType == VoteType)
+	    {
+	        return true;
+	    }
+	}
+	return false;
+}
+
+bool AFortGameStateZone::IsGameplayVoteLocked(EFortVoteType VoteType) const
+{
+	// Original body address: 0x141ea24b0 (thunk 0x14292bcd0); leaf loop.
+	// Offset evidence: this+0xea0 = GameplayVotesArray (reflected TArray<FVoteData>), Num at +0xea8, element stride 0x78; FVoteData.VoteType at element +0, FVoteData.VoteStatus at element +0x70 (byte compare against 2, JC returns false).
+	// CONFIDENCE: HIGH
+	for (const FVoteData& Vote : GameplayVotesArray)
+	{
+	    if (Vote.VoteType == VoteType)
+	    {
+	        return static_cast<uint8>(Vote.VoteStatus) >= 2;
+	    }
+	}
+	return false;
+}
+
 bool AFortGameStateZone::IsRespawningAllowed(AFortPlayerState* PlayerState) const
 {
 	// CONFIDENCE: high

@@ -8,6 +8,8 @@
 
 #include "FGiftBoxInfo.h"
 
+class UFortGiftBoxItemDefinition;
+
 #include "UFortGiftBoxItem.generated.h"
 
 UCLASS()
@@ -19,6 +21,9 @@ public:
 	// table index 0, flags 0x10000000000014
 	UPROPERTY()
 	FGiftBoxInfo GiftBoxInfo;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortGiftBoxItemDefinition* GetGiftBoxDefinition() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasAccountID() const;

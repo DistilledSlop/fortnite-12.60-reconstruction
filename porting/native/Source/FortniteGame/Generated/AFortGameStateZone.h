@@ -416,6 +416,15 @@ public:
 	bool IsBuildingWithoutLayoutRequirementsAllowed() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsGameplayVoteActive(EFortVoteType VoteType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsGameplayVoteInProgress(EFortVoteType VoteType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsGameplayVoteLocked(EFortVoteType VoteType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsRespawningAllowed(AFortPlayerState* PlayerState) const;
 
 	UFUNCTION(NetMulticast, Reliable)

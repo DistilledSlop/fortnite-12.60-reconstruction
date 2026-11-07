@@ -19,5 +19,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static void EndLegacyAnimTrails(UFXSystemComponent* Target);
 
+	UFUNCTION(BlueprintCallable)
+	static void SetCustomTimeDilation(UFXSystemComponent* Target, float Dilation);
+
 };
 

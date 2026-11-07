@@ -45,6 +45,24 @@ float AFortOctopusVehicle::GetAccelerationPercent() const
 	return NativeRecoveredFloat_0x1330;
 }
 
+void AFortOctopusVehicle::GetPrimaryContact(bool& bIstouching, FVector& ContactPoint, FVector& ContactNormal) const
+{
+	// Original body: 0x1419d60b0 (thunk 0x142a08980)
+	// Offset evidence: bool at +0x1290 (NativeRecoveredBool_0x1290); ContactPoint floats at +0x1244, +0x1248, +0x124c; ContactNormal floats at +0x1250, +0x1254, +0x1258. No reflected member covers these offsets in the class own region (min 0xf38).
+	// CONFIDENCE: HIGH
+	bIstouching = NativeRecoveredBool_0x1290;
+	if (!NativeRecoveredBool_0x1290)
+	{
+	    return;
+	}
+	ContactPoint.X = NativeRecoveredFloat_0x1244;
+	ContactPoint.Y = NativeRecoveredFloat_0x1248;
+	ContactPoint.Z = NativeRecoveredFloat_0x124c;
+	ContactNormal.X = NativeRecoveredFloat_0x1250;
+	ContactNormal.Y = NativeRecoveredFloat_0x1254;
+	ContactNormal.Z = NativeRecoveredFloat_0x1258;
+}
+
 FVector AFortOctopusVehicle::GetSeatForwardDir() const
 {
 	// Original address: 0x142a08af0.
@@ -67,6 +85,49 @@ FVector AFortOctopusVehicle::GetSeatRotationVelocity() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
 	return NativeRecoveredFVector_0x1308;
+}
+
+void AFortOctopusVehicle::GetSeatSteerDeltas(float& SeatSteerYawDelta, float& SeatSteerPitchDelta, float& SeatSteerRollDelta)
+{
+	// Original body: 0x1419d7ab0 (thunk 0x142a08bf0)
+	// Offset evidence: float fields at +0x1244/+0x1248 are not used here; inputs are floats at +0x126c, +0x1270, +0x1274 (bit-copied int read used as float), +0x12d8, +0x12dc, +0x12e0, +0x12e4, +0x12e8, +0x12ec, +0x12fc, +0x1300, +0x1304 (no reflected members in the class own region from 0xf38). Outputs: Yaw (RDX), Pitch (R8), Roll (R9). Every scalar SSE op is reproduced in order.
+	// CONFIDENCE: HIGH
+	const float P1 = NativeRecoveredFloat_0x12ec;
+	const float P2 = NativeRecoveredFloat_0x12d8;
+	const float P3 = NativeRecoveredFloat_0x12e0;
+	const float P4 = NativeRecoveredFloat_0x12dc;
+	const float P5 = NativeRecoveredFloat_0x12e8;
+	const float P6 = NativeRecoveredFloat_0x12e4;
+	const float F1274 = NativeRecoveredFloat_0x1274;
+	const float F126C = NativeRecoveredFloat_0x126c;
+	const float F1270 = NativeRecoveredFloat_0x1270;
+	const float F12FC = NativeRecoveredFloat_0x12fc;
+	const float F1300 = NativeRecoveredFloat_0x1300;
+	const float F1304 = NativeRecoveredFloat_0x1304;
+	const float S7 = (P2 * P1) - (P6 * P3);
+	const float S8 = (P3 * P5) - (P4 * P1);
+	const float X6 = (P6 * P4) - (P2 * P5);
+	SeatSteerYawDelta = ((S7 * F1300) + (S8 * F12FC)) + (X6 * F1304);
+	SeatSteerPitchDelta = ((F1300 * P4) + (F12FC * P2)) + (F1304 * P3);
+	SeatSteerRollDelta = ((S7 * F1270) + (S8 * F126C)) + (X6 * F1274);
+}
+
+float AFortOctopusVehicle::GetSeatSteerStrength() const
+{
+	// Original body: 0x1419d7be0 (thunk 0x142a08d30)
+	// Offset evidence: float fields at +0x12d8, +0x12dc, +0x12e0, +0x12e4, +0x12e8, +0x12ec, +0x12fc, +0x1300, +0x1304 (no reflected members in the class own region from 0xf38); scalar float expression reproduced in SSE op order.
+	// CONFIDENCE: HIGH
+	const float P1 = NativeRecoveredFloat_0x12ec;
+	const float P2 = NativeRecoveredFloat_0x12d8;
+	const float P3 = NativeRecoveredFloat_0x12e0;
+	const float P4 = NativeRecoveredFloat_0x12dc;
+	const float P5 = NativeRecoveredFloat_0x12e8;
+	const float P6 = NativeRecoveredFloat_0x12e4;
+	const float A = (P2 * P1) - (P6 * P3);
+	const float B = (P6 * P4) - (P2 * P5);
+	const float C = (P3 * P5) - (P4 * P1);
+	const float Strength = ((A * NativeRecoveredFloat_0x1300) + (C * NativeRecoveredFloat_0x12fc)) + (B * NativeRecoveredFloat_0x1304);
+	return Strength;
 }
 
 FVector AFortOctopusVehicle::GetSeatUpDir() const

@@ -7,6 +7,7 @@
 #include "AFortGameStateZone.h"
 
 #include "EFortRarity.h"
+#include "FPickupManagementSettings.h"
 
 class AFortAIPawn;
 class AFortAircraft;
@@ -63,14 +64,23 @@ public:
 	UPROPERTY()
 	bool bWeaponSwappingEnabled;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xfb8): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0xfb8;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortAircraft* GetAircraft() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void GetPickupManagementSettings(FPickupManagementSettings& PickupSettings);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMulchingAllowed() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsWeaponSwappingEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetPickupManagementSettings(FPickupManagementSettings& PickupSettings);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

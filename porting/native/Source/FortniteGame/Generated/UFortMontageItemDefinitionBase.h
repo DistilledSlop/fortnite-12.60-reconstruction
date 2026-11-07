@@ -83,6 +83,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual FName PickCosmeticDrivenSectionByName(AFortPawn* PawnPlayingMotage) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName PickRandomSectionByName(float RandomNumber) const;
+
 protected:
 	UFUNCTION()
 	void PreviewInPIE();
