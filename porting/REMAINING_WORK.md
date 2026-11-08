@@ -57,3 +57,20 @@ Earlier versions of this file and of the pool scripts excluded 24 whole classes 
 ## CommonUI declarations (affects about 99 CommonUI functions and CommonUI calls inside other ports)
 
 The project's `CommonUI` and `CommonInput` modules contain reflection-generated headers (UPROPERTY/UFUNCTION members, 61 CommonUI classes). The game install has only the plugin descriptor and content for CommonUI (no headers; shipped games do not include them). The non-reflected C++ members (native virtuals such as the activation and input-mode hooks, Slate widget classes, helper methods) are in the game binary, so they can be reconstructed from the class vtables and decompiles like any other class. Until that is done, worker ports use signatures from the Fortnite 14 CommonUI source, which must be checked against 12.60 before a build.
+
+## Which unported functions does the game actually need? (static bound, 2026-11-07)
+
+No runtime trace of a real match exists (the original client under Wine only reaches the frontend with the stub backend), so this is a static bound, not a measurement.
+Method: `scan_content_native_refs.py` read the import table of all 452,598 extracted cooked packages (no errors) and recorded the native functions each one calls; `analyze_content_needs.py` joins that with the unported set (10,223 in-scope functions at the time) and follows hard package imports from 8 roots (Frontend map, `Apollo_Terrain`, Athena game mode, player controller, pawn, game state).
+
+| Tier | Meaning | Unported functions |
+|---|---:|---:|
+| A | Called by cooked content reachable from the roots by hard imports (lower bound) | 188 |
+| B | Called by any cooked Blueprint or widget in the game (upper bound for content-driven needs; includes Save the World, Creative, cosmetics) | 3,698 |
+| C | Never referenced by content, but driven by the engine: network RPCs 594, OnRep handlers 718, Blueprint events 96 | 1,408 |
+| D | Never referenced by content and not network or event driven: BlueprintCallable with no cooked caller 2,936, natives with no Blueprint exposure 2,181. Needed only if another needed native calls them (needs a call-graph pass) | 5,117 |
+
+Content-referenced functions by blocker group (tier B): indirect calls 684, body 61-120 instructions 564, calls one internal helper 509, body 121-300 445, two helpers 253, recorded deferrals 234, several candidate bodies 219, no body address 216, three or more helpers 197, `UFortKismetLibrary` 171, body 301-1000 134, policy-emitted 37, thunk with extra work 32, ready 3.
+
+Caveats: a content reference is not an execution; hard imports miss soft references (asset manager loads, loadouts, widgets loaded by class from C++), so tier A is an underestimate; natives called only by other C++ are in tier D until a call graph is built; 3,688 content-referenced natives are engine or other-module functions and are out of this table.
+Conclusion: not all of the 10,223 need porting for a first playable game. The 3,698 content-referenced and 1,408 engine-driven functions are the candidate set (5,106 total); the remaining 5,117 only matter when called by something in that set.
