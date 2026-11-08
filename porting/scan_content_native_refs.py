@@ -2,7 +2,7 @@
 """Scan cooked .uasset/.umap headers for package dependencies and native function imports (read-only).
 Usage: python3 -I porting/scan_content_native_refs.py ROOT OUT.jsonl [WORKERS]
 ROOT is the extracted Content tree (FortniteGame/Content). One JSON line per package:
-{pkg, deps:[/Game/... package names], nat:[[module, class, function], ...], err?}.
+{pkg, deps:[hard imports], soft:[/Game/... names found only in the name table (soft references, string properties)], nat:[[module, class, function], ...], err?}.
 Only the package summary, name table and import table are read."""
 import json, multiprocessing as mp, os, struct, sys
 
@@ -56,7 +56,8 @@ def parse(path):
     for _ in range(imp_count):
         cp, cpn, cn, cnn, outer, on, onn = struct.unpack_from('<iiiiiii', blob, p); p += 28
         imps.append((names[cp], names[cn], outer, names[on]))
-    return imps
+    soft = {n.split('.')[0].split(':')[0] for n in names if n.startswith('/Game/')}
+    return imps, sorted(soft)
 
 
 def one(arg):
@@ -64,7 +65,7 @@ def one(arg):
     rel = os.path.relpath(path, root)
     pkg = '/Game/' + os.path.splitext(rel)[0].replace(os.sep, '/')
     try:
-        imps = parse(path)
+        imps, soft = parse(path)
         deps, nat = set(), set()
         for i, (cpkg, cname, outer, oname) in enumerate(imps):
             if cname == 'Package' and oname.startswith('/Game/'):
@@ -75,7 +76,7 @@ def one(arg):
                     mod = imps[-cls[2] - 1]
                     if mod[3].startswith('/Script/'):
                         nat.add((mod[3], cls[3], oname))
-        return dict(pkg=pkg, deps=sorted(deps), nat=sorted(nat))
+        return dict(pkg=pkg, deps=sorted(deps), soft=[x for x in soft if x not in deps and x != pkg], nat=sorted(nat))
     except Exception as e:
         return dict(pkg=pkg, err='%s: %s' % (type(e).__name__, e))
 

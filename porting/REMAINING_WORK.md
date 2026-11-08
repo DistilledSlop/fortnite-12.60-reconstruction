@@ -74,3 +74,12 @@ Content-referenced functions by blocker group (tier B): indirect calls 684, body
 
 Caveats: a content reference is not an execution; hard imports miss soft references (asset manager loads, loadouts, widgets loaded by class from C++), so tier A is an underestimate; natives called only by other C++ are in tier D until a call graph is built; 3,688 content-referenced natives are engine or other-module functions and are out of this table.
 Conclusion: not all of the 10,223 need porting for a first playable game. The 3,698 content-referenced and 1,408 engine-driven functions are the candidate set (5,106 total); the remaining 5,117 only matter when called by something in that set.
+
+### Refinement: soft references and call graph (same day)
+
+- **Soft references:** `scan_content_native_refs.py` now also records `/Game/...` names found in each package's name table (soft object paths and string properties). Following hard and soft references from the same 8 roots reaches 41,855 packages (of 452,598) and 958 unported native functions, up from 188 with hard imports only. Treat 958 as the better floor for what a session that loads the map, frontend and game mode will touch; it still misses content chosen at runtime (loadouts, cosmetics picked by a player, asset-manager scans).
+- **Call graph:** starting from the candidate set (tier B content-referenced plus tier C engine-driven, 5,106 functions), following direct CALL/JMP targets in their captured bodies to other unported functions adds 564, giving 5,670 functions needed by this analysis. The other 4,553 unported functions are not reached by content, the network layer, or a direct call from any of those bodies.
+- **Limit of the call graph:** the needed bodies contain 9,637 indirect calls (virtual or function-pointer) that are not followed, so some of the 4,553 may still be reached through a virtual call. Resolving those is the virtual-slot work described above.
+- Per-group counts of the 5,670 are in the `needed_by_group` field written by `analyze_content_needs.py`.
+
+Needed functions (5,670) by blocker group: indirect calls 997, body 121-300 809, body 61-120 765, one internal helper 705, several candidate bodies 646, no body address 358, recorded deferrals 331, two helpers 330, three or more helpers 256, body 301-1000 193, `UFortKismetLibrary` 191, thunk with extra work 44, policy-emitted 40, ready 5.
