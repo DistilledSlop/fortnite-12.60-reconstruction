@@ -42,5 +42,10 @@ protected:
 	virtual void ChangeBinding(bool bIsPrimarySlot, int32 Input, FKey NewKey);
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetInputDataIndexForActionName(FName ActionName) const;
+public:
+
 };
 

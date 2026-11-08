@@ -176,28 +176,12 @@
   "inc_path": "porting/behavior/rs1_runtime/UAIHotSpotSlot/GetHotSpot.inc"
  },
  {
-  "entry": "UFortMinigameStatics::GetTeam",
-  "kind": "exec",
-  "blocker": "clang_compile_error",
-  "reason": "member access into incomplete type 'ASOLFortGame'",
-  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
-  "inc_path": "porting/behavior/rs8_runtime/UFortMinigameStatics/GetTeam.inc"
- },
- {
   "entry": "UFortSkeletalAudioComponent::SetCustomTrackedTransform",
   "kind": "exec",
   "blocker": "clang_compile_error",
   "reason": "no viable overloaded '='",
   "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
   "inc_path": "porting/behavior/rs12_runtime/UFortSkeletalAudioComponent/SetCustomTrackedTransform.inc"
- },
- {
-  "entry": "ASOLFortGame::GetTeam",
-  "kind": "exec",
-  "blocker": "clang_compile_error",
-  "reason": "member access into incomplete type 'ASOLFortPlayer'",
-  "unblock": "Fix the body (declare missing recovered members, add includes, use public accessors) and re-add the port",
-  "inc_path": "porting/behavior/rs14_runtime/ASOLFortGame/GetTeam.inc"
  },
  {
   "entry": "UAthenaSpectateMatchModalBase::IsGameSessionString",
@@ -352,14 +336,6 @@
   "inc_path": "porting/behavior/wrapA6_runtime/UFortCollectionBookProgressionRewardDetailInspectWidget/SetAssociatedLevel.inc"
  },
  {
-  "entry": "UFortCollectionBookSectionPanel::OnSlotButtonHovered",
-  "kind": "exec",
-  "blocker": "clang_compile_error",
-  "reason": "member access into incomplete type 'UFortCollectionBookSlotView'",
-  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
-  "inc_path": "porting/behavior/wrapA6_runtime/UFortCollectionBookSectionPanel/OnSlotButtonHovered.inc"
- },
- {
   "entry": "UFortCollectionBookProgressionRewardWidget::SetAssociatedLevel",
   "kind": "exec",
   "blocker": "clang_compile_error",
@@ -374,14 +350,6 @@
   "reason": "'SpectatorPawn' is a private member of 'APlayerController'",
   "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
   "inc_path": "porting/behavior/rs10_runtime/AFortPlayerControllerSpectating/GetCurrentSpectatorCameraComponent.inc"
- },
- {
-  "entry": "UFortInputOptions::GetInputDataIndexForActionName",
-  "kind": "exec",
-  "blocker": "clang_compile_error",
-  "reason": "member access into incomplete type 'UFortOptionsMenuInputData'",
-  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
-  "inc_path": "porting/behavior/rs17_runtime/UFortInputOptions/GetInputDataIndexForActionName.inc"
  },
  {
   "entry": "AFortGameModeZone::OnMorningReached",
@@ -414,5 +382,29 @@
   "reason": "'Role' is a private member of 'AActor'",
   "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
   "inc_path": "porting/behavior/small3_runtime/AFortPlayerPawn/BP_ForceLockParachuteOpen.inc"
+ },
+ {
+  "entry": "AFortMeatballVehicle::GetSeatRotation",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no viable conversion from returned value of type 'const float' to function return type 'FQuat'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/AFortMeatballVehicle/GetSeatRotation.inc"
+ },
+ {
+  "entry": "UFortMinigameStatics::GetTeam",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "member access into incomplete type 'ASOLFortPlayer'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/rs8_runtime/UFortMinigameStatics/GetTeam.inc"
+ },
+ {
+  "entry": "UFortCollectionBookSectionPanel::OnSlotButtonHovered",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'SelectButtonAtIndex' in 'UCommonButtonGroup'; did you mean 'GetButtonAtIndex'?",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/wrapA6_runtime/UFortCollectionBookSectionPanel/OnSlotButtonHovered.inc"
  }
 ]

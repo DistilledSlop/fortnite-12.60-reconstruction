@@ -2,6 +2,7 @@
 // Original address: 0x14246eaf0 (thunk 0x142b900a0)
 // Offset evidence: this+0x278 is an unreflected gap in ASOLFortGame's own region (reflection min 0x218), recorded as NativeRecoveredPointer_0x278 and read as AFortMinigame*. Player+0x278 is the same gap on ASOLFortPlayer, read as APlayerState*. Null on either side returns -1; otherwise the tail jump 0x14208efa0 is AFortMinigame::GetBucketForPlayerState (declared in AFortMinigame.h).
 // CONFIDENCE: MEDIUM
+static_assert(sizeof(ASOLFortPlayer) > 0, "ASOLFortPlayer must be a complete type here");
 AFortMinigame* Minigame = reinterpret_cast<AFortMinigame*>(NativeRecoveredPointer_0x278);
 if (Minigame == nullptr || Player == nullptr)
 {

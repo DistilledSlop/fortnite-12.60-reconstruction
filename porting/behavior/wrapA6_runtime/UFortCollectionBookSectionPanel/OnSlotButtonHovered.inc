@@ -5,6 +5,7 @@
 // Offset evidence: MOV RCX,[RCX+0x288] on the slot view loads CollectionBookSlotButtonGroup (declared UCommonButtonGroup* at 0x288 in FortniteUI/Generated/UFortCollectionBookSlotView.h).
 // Callee: 0x1407f39f0 -> UCommonButtonGroup::SelectButtonAtIndex(int32 ButtonIndex) (CommonUI engine declaration, CommonButtonGroup.h); RDX = ButtonIx passed through unchanged; JMP is a tail call.
 // CONFIDENCE: MEDIUM
+static_assert(sizeof(UFortCollectionBookSlotView) > 0, "UFortCollectionBookSlotView must be a complete type here");
 uint8* Raw = reinterpret_cast<uint8*>(this);
 if (Raw[0x288] != 0)
 {

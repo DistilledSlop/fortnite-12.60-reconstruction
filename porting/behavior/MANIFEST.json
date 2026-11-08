@@ -65124,23 +65124,6 @@
     "status": "ported"
   },
   {
-    "access": "public",
-    "address": "0x1429b2360",
-    "class": "AFortMeatballVehicle",
-    "confidence": "high",
-    "decompile_source": null,
-    "function": "GetSeatRotation",
-    "inc_path": "porting/behavior/AFortMeatballVehicle/GetSeatRotation.inc",
-    "kind": "exec",
-    "notes": "Complete native struct getter. Original field writers and initialization remain unrecovered; build and runtime pending.",
-    "proxy_score": null,
-    "reflection_flags": "0x54820401",
-    "signature": "FQuat GetSeatRotation() const",
-    "signature_status": "proposed",
-    "static": false,
-    "status": "ported"
-  },
-  {
     "class": "UFortGlobals",
     "function": "GetGlobalSnowAltitude",
     "kind": "getter",
@@ -81409,5 +81392,84 @@
     "status": "ported",
     "class": "AFortAthenaMutator_PlayerSettingsBase",
     "address": "0x141aee020"
+  },
+  {
+    "class": "UFortPlayerSettingsComponentBase",
+    "function": "NativeEnabledSettingNames163",
+    "kind": "member_field",
+    "signature": "TSet<FName> NativeEnabledSettingNames163",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x210",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "AFortLiveBroadcastController",
+    "function": "NativeSpectatingPlayerState163",
+    "kind": "member_field",
+    "signature": "AFortPlayerState* NativeSpectatingPlayerState163",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x2da0",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "AFortSpectateAFriendController",
+    "function": "NativeSpectatingPlayerState163",
+    "kind": "member_field",
+    "signature": "AFortPlayerState* NativeSpectatingPlayerState163",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x2da0",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "ASOLFortGame",
+    "function": "GetTeam",
+    "kind": "exec",
+    "signature": "int32 GetTeam(ASOLFortPlayer* Player)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/rs14_runtime/ASOLFortGame/GetTeam.inc",
+    "confidence": "medium",
+    "address": "0x142b900a0",
+    "status": "ported",
+    "reflection_flags": "0x20401",
+    "static": false,
+    "virtual": false,
+    "access": "public",
+    "native_body_address": "0x14246eaf0",
+    "notes": "Raw-typed gap members this+0x278 (ASOLFortGame) and Player+0x278 (ASOLFortPlayer); tail-calls declared GetBucketForPlayerState."
+  },
+  {
+    "class": "UFortInputOptions",
+    "function": "GetInputDataIndexForActionName",
+    "kind": "exec",
+    "signature": "int32 GetInputDataIndexForActionName(FName ActionName) const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/rs17_runtime/UFortInputOptions/GetInputDataIndexForActionName.inc",
+    "confidence": "medium",
+    "address": "0x1452605b0",
+    "status": "ported",
+    "reflection_flags": "0x54080401",
+    "static": false,
+    "virtual": false,
+    "access": "protected",
+    "native_body_address": "0x144e722e0",
+    "notes": "Loops InputData (+0x310/+0x318) comparing element ActionKeyMapping.ActionName (+0x90); returns index or -1. Relies on FName == matching both halves."
+  },
+  {
+    "function": "IsSettingEnabled",
+    "kind": "exec",
+    "signature": "bool IsSettingEnabled(FName& PropertyName) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/generator_policies/target_filter163_runtime/UFortPlayerSettingsComponentBase_IsSettingEnabled.inc",
+    "confidence": "high",
+    "status": "ported",
+    "class": "UFortPlayerSettingsComponentBase",
+    "address": "0x142814f60"
   }
 ]

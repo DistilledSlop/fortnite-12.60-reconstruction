@@ -260,6 +260,12 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_EnabledSettings, Transient)
 	TArray<FString> EnabledSettings;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x210): not a UPROPERTY, not replicated.
+	TSet<FName> NativeEnabledSettingNames163;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsSettingEnabled(FName& PropertyName) const;
+
 	UFUNCTION()
 	void OnRep_AbilitySetOptionData();
 

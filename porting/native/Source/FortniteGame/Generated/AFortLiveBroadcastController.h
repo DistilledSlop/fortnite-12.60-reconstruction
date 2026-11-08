@@ -22,6 +22,9 @@ class FORTNITEGAME_API AFortLiveBroadcastController : public AFortLiveSpectatorC
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2da0): not a UPROPERTY, not replicated.
+	AFortPlayerState* NativeSpectatingPlayerState163;
+
 	// table index 4, flags 0x10000010080000
 	UPROPERTY()
 	FNoParamDelegate OnHideBusButtonFromServer;

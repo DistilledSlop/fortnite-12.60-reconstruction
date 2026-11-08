@@ -1562,7 +1562,7 @@ uint8 AFortPlayerPawn::NativeGetTeam163()
 	// CONFIDENCE: high
 	// Original address: 0x1423253f0
 	// 0x1423253f0, IFortTeamActorInterface byte slot 0x28.
-	AFortPlayerStateZone* State = Cast<AFortPlayerStateZone>(PlayerState);
+	AFortPlayerStateZone* State = Cast<AFortPlayerStateZone>(GetPlayerState());
 	uint8 Result = State ? State->NativeGetTeam163() : 1;
 	if (ControlledRCPawn.IsValid())
 	{

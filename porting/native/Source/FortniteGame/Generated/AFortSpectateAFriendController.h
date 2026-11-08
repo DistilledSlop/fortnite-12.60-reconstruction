@@ -20,6 +20,9 @@ class FORTNITEGAME_API AFortSpectateAFriendController : public AFortLiveSpectato
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2da0): not a UPROPERTY, not replicated.
+	AFortPlayerState* NativeSpectatingPlayerState163;
+
 	// table index 9, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerJoinedOn)
 	AFortPlayerStateAthena* PlayerJoinedOn;
