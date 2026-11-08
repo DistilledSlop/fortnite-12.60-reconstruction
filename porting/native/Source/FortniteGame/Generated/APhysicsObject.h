@@ -228,6 +228,12 @@ public:
 	virtual FString GetDisplayName() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetHealth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMaxHealth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetPreviousLinearAcceleration() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

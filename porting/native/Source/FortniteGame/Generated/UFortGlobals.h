@@ -7,6 +7,7 @@
 #include "UObject/Object.h"
 
 #include "EFortAccountLinkingUIConfig.h"
+#include "ETimeLimitForReplayCinematic.h"
 #include "Engine/Engine.h"
 #include "FChallengeObjectiveHotfix.h"
 #include "FKairosSubmitLogOptions.h"
@@ -628,10 +629,19 @@ public:
 	static int32 GetMaxTheaterListRefreshDelay();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static int64 GetMemoryRequirementForMediaStreamingMB();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static int32 GetMinTheaterListRefreshDelay();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool GetPapayaSpeakersEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static float GetTimeLimitForReplayCinematic(ETimeLimitForReplayCinematic TimeLimitForReplayCinematic);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static float GetTimeLimitForWatchBattlePassMovie(ETimeLimitForReplayCinematic TimeLimitForWatchBattlePassMovie);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsAccountLinkingEnabled();
@@ -677,6 +687,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsWIFEEnabled();
+
+	UFUNCTION(BlueprintCallable)
+	static void SetGlobalSnowAltitude(float Altitude);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool ShouldDisableParticleEffectsDuringMissionResults();

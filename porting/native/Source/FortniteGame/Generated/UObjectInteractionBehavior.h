@@ -10,6 +10,7 @@
 #include "Math/Color.h"
 
 class AFortCreativeMoveTool;
+class AFortPlayerController;
 class UFortGameplayAbility;
 class UObject;
 
@@ -91,6 +92,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortCreativeMoveTool* GetFortCreativeMoveTool() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerController* GetFortPlayerController() const;
 public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)

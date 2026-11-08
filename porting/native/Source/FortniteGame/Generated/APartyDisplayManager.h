@@ -13,6 +13,7 @@
 #include "FOnPrefabForCurrentlyDisplayedItemReady.h"
 #include "UObject/Object.h"
 
+class AFortPlayerPawn;
 class UFortItem;
 class UMaterialInstance;
 
@@ -71,6 +72,9 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	FFortAthenaLoadout CurrentlyDisplayedCosmeticLoadout;
+
+	UFUNCTION(BlueprintCallable)
+	AFortPlayerPawn* GetHeroPlayerPawnForCurrentDisplayedItem();
 
 protected:
 	UFUNCTION(BlueprintCallable)

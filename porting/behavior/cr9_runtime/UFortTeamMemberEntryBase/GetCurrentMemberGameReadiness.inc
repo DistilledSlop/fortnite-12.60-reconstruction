@@ -1,0 +1,17 @@
+// Original body 0x145119620 (thunk 0x1452ffad0). Offset evidence: this+0xb74 is a TWeakObjectPtr (IsValid helper 0x142ee7880, Get helper 0x142ee5dd0). The owner object's +0x30 is a second weak pointer. The result is byte +0x3d0 of the block from NativeGetLocalPartyMemberBlock140d91b30 (0x140d91b30). UFortTeamMemberEntryBase has no own reflected members, so these are raw offset accesses. Fallthrough return is 1 (MOV AL,1).
+// CONFIDENCE: MEDIUM
+const uint8* Raw = reinterpret_cast<const uint8*>(this);
+const TWeakObjectPtr<UObject>& MemberWeak = *reinterpret_cast<const TWeakObjectPtr<UObject>*>(Raw + 0xb74);
+if (MemberWeak.IsValid())
+{
+    UObject* OwnerObject = MemberWeak.Get();
+    const TWeakObjectPtr<UObject>& ContextWeak = *reinterpret_cast<const TWeakObjectPtr<UObject>*>(reinterpret_cast<const uint8*>(OwnerObject) + 0x30);
+    UObject* ContextObject = ContextWeak.Get();
+    if (ContextObject != nullptr)
+    {
+        static_assert(sizeof(UFortPartyContext) > 0, "UFortPartyContext must be complete for NativeGetLocalPartyMemberBlock140d91b30");
+        uint8* MemberBlock = UFortPartyContext::NativeGetLocalPartyMemberBlock140d91b30(static_cast<UFortPartyContext*>(ContextObject));
+        return static_cast<EGameReadiness>(MemberBlock[0x3d0]);
+    }
+}
+return static_cast<EGameReadiness>(1);

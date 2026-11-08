@@ -1,0 +1,22 @@
+// Original body: 0x144b38df0 (thunk 0x1451bd7d0; body shared with IsGameSessionString). Offset evidence: RDX is the by-value FString copy (Data at [RDX], Num at [RDX+8]); RCX (this) is never read.
+// Length is Num-1 (0 when Num is 0) and must equal 0x20; then every TCHAR (word at Data + 2*i) must be [0-9], [A-F] or [a-f]. Any other character returns false; reaching the end returns true.
+// CONFIDENCE: HIGH
+const int32 CharCount = GameSessionId.Len();
+if (CharCount != 0x20)
+{
+    return false;
+}
+
+const TCHAR* Chars = *GameSessionId;
+for (int32 Index = 0; Index < CharCount; ++Index)
+{
+    const TCHAR Character = Chars[Index];
+    const bool bDecimalDigit = Character >= TEXT('0') && Character <= TEXT('9');
+    const bool bUpperHex = Character >= TEXT('A') && Character <= TEXT('F');
+    const bool bLowerHex = Character >= TEXT('a') && Character <= TEXT('f');
+    if (!bDecimalDigit && !bUpperHex && !bLowerHex)
+    {
+        return false;
+    }
+}
+return true;

@@ -190,12 +190,16 @@ void AFortPlayerControllerGameplay::ServerAwardVehicleTrickPoints_Implementation
 
 void AFortPlayerControllerGameplay::ServerCreativeSetFlightSpeedIndex_Implementation(int32 Index)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body: 0x1406801c0 (shared empty body; thunk 0x142a668a0). Offset evidence: the body is a bare RET; no receiver or argument access.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerControllerGameplay::ServerCreativeSetFlightSprint_Implementation(bool bSprint)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body: 0x1406801c0 (shared empty body; thunk 0x142a66960). Offset evidence: the body is a bare RET; no receiver or argument access.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerControllerGameplay::ServerCreativeSetGhost_Implementation(bool bWantsToGhost)

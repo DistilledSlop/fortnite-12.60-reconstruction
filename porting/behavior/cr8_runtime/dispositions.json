@@ -1,0 +1,142 @@
+[
+ {
+  "class": "UFortSettingsContext",
+  "function": "OnPlaceDangerMarkerWhenTargetingChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "OnPlayerSurveysAllowedChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "OnQuickEditChanged",
+  "status": "proposed",
+  "case": "guarded_bool_store",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "OnReplayRecordingPreferenceChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "OnShadowPlayHighlightsChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "OnShowGlobalChatEnabledChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "OnTouchEditChanged",
+  "status": "proposed",
+  "case": "guarded_bool_store",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "OnTurboBuildChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "PeripheralLightingChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "PitchInversionChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "PowerSaverModeChanged",
+  "status": "proposed",
+  "case": "guarded_bool_store",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "RudderDeadZoneChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "RudderMaxThrottleChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "ScopedMultiplierValueChanged",
+  "status": "proposed",
+  "case": "guarded_float_store",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "SoundFXVolumeChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "SprintByDefaultChanged",
+  "status": "proposed",
+  "case": "setter_tail_call",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "SprintCancelsReloadChanged",
+  "status": "proposed",
+  "case": "guarded_bool_store",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "SprintToggleChanged",
+  "status": "proposed",
+  "case": "guarded_bool_store",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "TapInteractChanged",
+  "status": "proposed",
+  "case": "guarded_bool_store",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "TargetingMultiplierValueChanged",
+  "status": "proposed",
+  "case": "guarded_float_store",
+  "reason": "all body instructions accounted for"
+ }
+]

@@ -14,5 +14,14 @@ class FORTNITEUI_API UFortLeaderboardContext : public UBlueprintContextBase
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanShowGlobalLeaderboards() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanShowLeaderboards() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanShowStats() const;
+
 };
 

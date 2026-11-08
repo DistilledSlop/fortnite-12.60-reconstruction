@@ -253,6 +253,9 @@ public:
 	UPROPERTY()
 	bool bIsScalingInsteadOfRotating;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xf3c): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xf3c;
+
 	// table index 40, flags 0x20080000000000
 	UPROPERTY()
 	FQuat TargetRotationOffset;

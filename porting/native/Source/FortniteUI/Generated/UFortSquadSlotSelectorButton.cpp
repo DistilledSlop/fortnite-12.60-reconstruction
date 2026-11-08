@@ -20,11 +20,31 @@ bool UFortSquadSlotSelectorButton::GetInPreviewMode() const
 	return NativeRecoveredBool_0xbe8;
 }
 
+void UFortSquadSlotSelectorButton::OpenSquadSlot()
+{
+	// Original body 0x145132fc0 (thunk 0x1452ecab0). Offset evidence: this+0xb70 is passed as the Context of NativeHelper1450e86c0 (0x1450e86c0), which writes OutKey and OutIndex. OutIndex is broadcast on OnRequestOpenSquadSlotEvent (reflected at +0xb98, FOnRequestSquadSlotAction, one int32 parameter).
+	// CONFIDENCE: HIGH
+	uint64 OutKey = 0;
+	int32 OutIndex = 0;
+	UFortSquadSlotSelectorButton::NativeHelper1450e86c0(reinterpret_cast<uint8*>(this) + 0xb70, &OutKey, &OutIndex);
+	OnRequestOpenSquadSlotEvent.Broadcast(OutIndex);
+}
+
 void UFortSquadSlotSelectorButton::SquadSlotWidgetUpdated_Implementation()
 {
 	// Exact original shared stub 0x1406801c0.
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortSquadSlotSelectorButton::ViewInAll()
+{
+	// Original body 0x14513f8d0 (thunk 0x1452eda30). Offset evidence: this+0xb70 is passed as the Context of NativeHelper1450e86c0 (0x1450e86c0), which writes OutKey and OutIndex. OutIndex is broadcast on OnRequestViewInAllEvent (reflected at +0xba8, FOnRequestSquadSlotAction, one int32 parameter).
+	// CONFIDENCE: HIGH
+	uint64 OutKey = 0;
+	int32 OutIndex = 0;
+	UFortSquadSlotSelectorButton::NativeHelper1450e86c0(reinterpret_cast<uint8*>(this) + 0xb70, &OutKey, &OutIndex);
+	OnRequestViewInAllEvent.Broadcast(OutIndex);
 }
 
 void UFortSquadSlotSelectorButton::NativeHelper1450e86c0(uint8* Context, uint64* OutKey, int32* OutIndex)

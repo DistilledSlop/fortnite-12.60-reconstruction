@@ -641,6 +641,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static float GetPersonalXpBoost();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static float GetTeamXpBoost();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static int32 GetXpPerAccountLevel();
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

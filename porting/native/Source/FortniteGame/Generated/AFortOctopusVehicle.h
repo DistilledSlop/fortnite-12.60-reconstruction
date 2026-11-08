@@ -314,6 +314,9 @@ public:
 	virtual bool IsBoosting() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTowhookAttached() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTowhookContracting() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

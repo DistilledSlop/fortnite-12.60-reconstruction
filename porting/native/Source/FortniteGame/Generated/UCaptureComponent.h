@@ -144,6 +144,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void UpdateProgressReverseSpeed(int32 NumOfPlayers, int32 NumOfEmotingPlayers);
 
+private:
+	UFUNCTION()
+	void UpdateSmoothProgressStateByCaptureState();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

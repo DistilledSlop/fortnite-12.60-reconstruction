@@ -30,7 +30,9 @@ void AFortPlayerControllerOutpost::ServerCleanUpOnExit_Implementation()
 
 void AFortPlayerControllerOutpost::ServerDepositPOSTResource_Implementation(const FGuid& ItemGuid, int32 Count)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body: 0x1406801c0 (shared empty body; thunk 0x142a6c2e0). Offset evidence: the body is a bare RET; no receiver or argument access.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortPlayerControllerOutpost::ServerLeaveOutpostAsParty_Implementation()

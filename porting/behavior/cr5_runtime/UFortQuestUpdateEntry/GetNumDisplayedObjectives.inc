@@ -1,0 +1,7 @@
+// Behaviour snippet: UFortQuestUpdateEntry::GetNumDisplayedObjectives (body only).
+// Original address: 0x144fd0310 (thunk 0x1452b9b60)
+// Offset evidence: this+0x268 = ObjectivesBox (reflected Object, UPanelWidget*). Body is MOV RCX,[RCX+0x268]; JMP 0x143d5a2f0, a tail call to NativeHelper143d5a2f0 (declared static, int32 return).
+// CONFIDENCE: HIGH
+static_assert(sizeof(UPanelWidget) > 0, "UPanelWidget must be complete for the UObject upcast of ObjectivesBox");
+static_assert(sizeof(UFortAttributeList) > 0, "UFortAttributeList must be complete to call its helper");
+return UFortAttributeList::NativeHelper143d5a2f0(ObjectivesBox);

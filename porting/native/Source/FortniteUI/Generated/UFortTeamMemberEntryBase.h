@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "EGameReadiness.h"
+
 #include "UFortTeamMemberEntryBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFortTeamMemberEntryBase : public UCommonButton
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EGameReadiness GetCurrentMemberGameReadiness() const;
+public:
+
 };
 

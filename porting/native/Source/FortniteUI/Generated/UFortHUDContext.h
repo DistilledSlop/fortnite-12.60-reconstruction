@@ -442,6 +442,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortMissionManager* GetMissionManager() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetScoreDisplayFactor() const;
+
 private:
 	UFUNCTION(BlueprintCallable)
 	void HandleActorFocusedForCreative(AActor* NewActor);

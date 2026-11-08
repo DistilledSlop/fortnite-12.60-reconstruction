@@ -11,6 +11,7 @@
 #include "FCommonButtonClicked.h"
 #include "FCommonSelectedStateChanged.h"
 #include "Input/Reply.h"
+#include "Layout/Margin.h"
 #include "Sound/SlateSound.h"
 #include "Styling/SlateTypes.h"
 #include "Types/SlateEnums.h"
@@ -200,6 +201,12 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_OnUnhovered();
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetCurrentButtonPadding(FMargin& OutButtonPadding) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetCurrentCustomPadding(FMargin& OutCustomPadding) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetShouldSelectUponReceivingFocus() const;

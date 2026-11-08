@@ -1,0 +1,142 @@
+[
+ {
+  "class": "AFortPlayerController",
+  "function": "ServerSetAutoEquipBetterItems_Implementation",
+  "status": "proposed",
+  "case": "bitfield_write",
+  "reason": "Bit 0x1 of byte 0x1730 is the declared bAutoEquipBetterItems bitfield; the AND/OR pair writes only that bit from bAutoEquip."
+ },
+ {
+  "class": "AFortPlayerControllerAthena",
+  "function": "GetCurrentVolume",
+  "status": "proposed",
+  "case": "helper_tail_call",
+  "reason": "NativeResolveVolumeManager(this); null returns null; else NativeFindPlayerVolume(raw AController::PlayerState at 0x220)."
+ },
+ {
+  "class": "AFortPlayerControllerGameplay",
+  "function": "ServerCreativeSetFlightSpeedIndex_Implementation",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "Body is a bare RET (shared empty body 0x1406801c0); no effect."
+ },
+ {
+  "class": "AFortPlayerControllerGameplay",
+  "function": "ServerCreativeSetFlightSprint_Implementation",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "Body is a bare RET (shared empty body 0x1406801c0); no effect."
+ },
+ {
+  "class": "AFortPlayerControllerOutpost",
+  "function": "ServerDepositPOSTResource_Implementation",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "Body is a bare RET (shared empty body 0x1406801c0); no effect."
+ },
+ {
+  "class": "AFortPlayerControllerZone",
+  "function": "PopDeathInputComponent",
+  "status": "blocked",
+  "case": "virtual_call",
+  "reason": "virtual_slot_mismatch: JMP [RAX+0xbe0] passes RDX=[RCX+0x27e0]; candidate AFortPlayerController::OnRep_HoldingObject() takes no parameters."
+ },
+ {
+  "class": "AFortPlayerParachute",
+  "function": "GetParachuteRootMesh",
+  "status": "proposed",
+  "case": "field_read",
+  "reason": "Returns reflected ParachuteMesh (0x348) unchanged, reinterpret_cast to the header return type."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "BP_ForceLockParachuteOpen",
+  "status": "proposed",
+  "case": "role_and_bool_store",
+  "reason": "GetLocalRole()==ROLE_Authority (byte 0xf0 == 3) gates byte stores to reflected bools at 0x2284 and 0x2285."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "GetSlopeSlidingNormal",
+  "status": "blocked",
+  "case": "absolute_global_constant",
+  "reason": "Non-flagged path loads hidden constants via absolute addresses (MOVSD XMM0,qword ptr [0x147c31cb0]; MOV EAX,dword ptr [0x147c31cb8]); not expressible from source."
+ },
+ {
+  "class": "AFortRemoteControlledPawnAthena",
+  "function": "GetLaunchDelay",
+  "status": "proposed",
+  "case": "helper_tail_call",
+  "reason": "Null RemoteControlPawnSet returns 0.0f; else NativeHelper14070cc00(pointer + 0x1e8) via tail jump."
+ },
+ {
+  "class": "AFortRemoteControlledPawnAthena",
+  "function": "GetOutOfHealthExplodeDelay",
+  "status": "blocked",
+  "case": "absolute_global_constant",
+  "reason": "Null-pointer path returns MOVSS XMM0,dword ptr [0x1459a86fc], a hidden global float constant via absolute address."
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "IsTowhookAttached",
+  "status": "proposed",
+  "case": "weak_helper",
+  "reason": "Raw weak pointer at object 0x1380 (no reflected member); NativeIsWeakObjectValid1406a7ed0(weak,false) then IsValid."
+ },
+ {
+  "class": "AFortVolumeManager",
+  "function": "GetVolumeManager",
+  "status": "proposed",
+  "case": "static_out_params",
+  "reason": "Writes OutVolumeManager with the resolved pointer and OutIsValid byte as SETZ of that pointer."
+ },
+ {
+  "class": "AFortWeaponRanged",
+  "function": "ShouldPlayReloadFX",
+  "status": "blocked",
+  "case": "absolute_global_read",
+  "reason": "CMP dword ptr [RBX+0x16c8],EAX where EAX = dword ptr [0x14816dd98] (hidden global via absolute address); also needs an inline class check."
+ },
+ {
+  "class": "APartyDisplayManager",
+  "function": "GetHeroPlayerPawnForCurrentDisplayedItem",
+  "status": "proposed",
+  "case": "helper_tail_call",
+  "reason": "Tail jump to NativeGetHeroPlayerPawnByIndex141fc1840(this, 0)."
+ },
+ {
+  "class": "APhysicsObject",
+  "function": "GetHealth",
+  "status": "proposed",
+  "case": "helper_tail_call",
+  "reason": "HealthSet (0x708) null returns 0.0f; else NativeHelper14070cc00(HealthSet + 0x30)."
+ },
+ {
+  "class": "APhysicsObject",
+  "function": "GetMaxHealth",
+  "status": "proposed",
+  "case": "helper_tail_call",
+  "reason": "HealthSet (0x708) null returns 0.0f; else NativeHelper14070cc00(HealthSet + 0x58)."
+ },
+ {
+  "class": "ASOLFortPlayer",
+  "function": "RemoveAllInventoryItems",
+  "status": "proposed",
+  "case": "helper_call_discard",
+  "reason": "Calls NativeHelper142414c60 on existing member NativeRecoveredUint64_0x278; the trailing IsA check leads only to an empty callee and is omitted."
+ },
+ {
+  "class": "ASOLFortPlayer",
+  "function": "SetInfiniteAmmo",
+  "status": "proposed",
+  "case": "helper_call_cast_bit",
+  "reason": "Helper result cast to AFortPlayerControllerAthena (IsA) then bInfiniteAmmo (bit 0x4 of 0x1cb4) set from infinite."
+ },
+ {
+  "class": "UAthenaChallengeInfoPanel",
+  "function": "HandleCycleQuestsInputAction",
+  "status": "blocked",
+  "case": "unresolved_callee",
+  "reason": "JNZ 0x144b91020 tail-jumps to an address with no callee_candidates entry; no declaration can be named."
+ }
+]

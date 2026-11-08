@@ -68,5 +68,11 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
 	uint64 NativeRecoveredPointer_0x278;
 
+	UFUNCTION()
+	void RemoveAllInventoryItems();
+
+	UFUNCTION()
+	void SetInfiniteAmmo(bool infinite);
+
 };
 

@@ -1379,6 +1379,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AttemptInstantInteractSearch();
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void BP_ForceLockParachuteOpen(bool bLocked);
+public:
+
 	UFUNCTION(Client, Unreliable)
 	void ClientAcknowledgeVehicleInputState(float Timestamp);
 	void ClientAcknowledgeVehicleInputState_Implementation(float Timestamp);

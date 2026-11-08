@@ -1,0 +1,142 @@
+[
+ {
+  "class": "UFortMinigameObjectiveComponent",
+  "function": "SetTrackedProgress",
+  "status": "proposed",
+  "case": "helper_gated_field_store_and_broadcast",
+  "reason": ""
+ },
+ {
+  "class": "UFortMinigameObjectiveComponent",
+  "function": "SetTrackedState",
+  "status": "proposed",
+  "case": "helper_gated_two_field_store_and_broadcast",
+  "reason": ""
+ },
+ {
+  "class": "UFortMinigameStatics",
+  "function": "GetLocation",
+  "status": "blocked",
+  "case": "absolute_global_default_vector",
+  "reason": "Default-vector path (JZ 0x14246cf27) loads FVector default from absolute 0x148218630 (MOVSD) and 0x148218638 (MOV dword); hidden global value not expressible."
+ },
+ {
+  "class": "UFortMinigameStatics",
+  "function": "RemoveAllInventoryItems",
+  "status": "proposed",
+  "case": "helper_call_with_gate_folded",
+  "reason": ""
+ },
+ {
+  "class": "UFortMinigameStatics",
+  "function": "SetInfiniteAmmo",
+  "status": "proposed",
+  "case": "helper_gated_declared_bit_write",
+  "reason": ""
+ },
+ {
+  "class": "UFortMissionActivationInfo",
+  "function": "IsVoteActive",
+  "status": "blocked",
+  "case": "unset_return_on_not_found",
+  "reason": "Not-found exit (JZ 0x144f6643c, reached at 0x144f66431 when RAX==0 after CMOVZ at 0x144f6642a) returns with no write to EAX; EAX holds a stale probe value (Num from the JZ 0x144f66420 entry at 0x144f663c7, or -1 from the bucket check at 0x144f663ef or the chain end at 0x144f66419), so the return is not expressible."
+ },
+ {
+  "class": "UFortMissionActivationInfo",
+  "function": "IsVoteLocked",
+  "status": "blocked",
+  "case": "unset_return_on_not_found",
+  "reason": "Not-found exit (JZ 0x144f664dc, reached when RAX==0 after CMOVZ) returns with no write to EAX; EAX holds a stale probe value (Num from the JZ 0x144f664c0 entry, or -1 from the bucket check or chain end), so the return is not expressible."
+ },
+ {
+  "class": "UFortOstrichAnimInstance",
+  "function": "AnimNotify_JumpEnter",
+  "status": "blocked",
+  "case": "absolute_global_compare",
+  "reason": "MOVSS XMM0,dword ptr [0x145b6ece8] is compared with this+0x5d0 (COMISS) to select the branch; absolute constant is a hidden global, not expressible."
+ },
+ {
+  "class": "UFortPlayerSurveyAnswerWidgetBase",
+  "function": "HandleAnswerChanged_Implementation",
+  "status": "proposed",
+  "case": "constant_false_return_on_void",
+  "reason": ""
+ },
+ {
+  "class": "UFortPlayerSurveyDispatcher",
+  "function": "DisplaySurveys",
+  "status": "blocked",
+  "case": "branch_target_outside_body",
+  "reason": "0x144f9cc96 JZ 0x144f9c480 leaves the job body; the CurrentWidget-null continuation at 0x144f9c480 is separate code (porting/generated/frontend-native-evidence/native-ui-startup-40/144f9c480.asm, 362 lines), not part of this job."
+ },
+ {
+  "class": "UFortQuestUpdateEntry",
+  "function": "GetNumDisplayedObjectives",
+  "status": "proposed",
+  "case": "tail_call_helper_forward",
+  "reason": ""
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "AutoEquipChanged",
+  "status": "proposed",
+  "case": "record_gated_bool_store",
+  "reason": ""
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "ChatVolumeChanged",
+  "status": "proposed",
+  "case": "record_gated_setter_call",
+  "reason": ""
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "CinematicsVolumeChanged",
+  "status": "proposed",
+  "case": "record_gated_setter_call",
+  "reason": ""
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "DialogVolumeChanged",
+  "status": "proposed",
+  "case": "record_gated_setter_call",
+  "reason": ""
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "FirstPersonCameraChanged",
+  "status": "proposed",
+  "case": "record_gated_bool_store",
+  "reason": ""
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GamepadBuildingMultiplierValueChanged",
+  "status": "proposed",
+  "case": "record_gated_float_store_ordered_compare",
+  "reason": ""
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GamepadEditModeMultiplierValueChanged",
+  "status": "proposed",
+  "case": "record_gated_float_store_ordered_compare",
+  "reason": ""
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GamepadLookSensitivityXChanged",
+  "status": "blocked",
+  "case": "absolute_global_constants",
+  "reason": "Clamp uses absolute constants: MOVSS XMM1,[0x1459a86f8], ANDPS mask [0x1459a3d00], COMISS against [0x1459c03a0]; hidden global values not expressible."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GamepadLookSensitivityYChanged",
+  "status": "blocked",
+  "case": "absolute_global_constants",
+  "reason": "Clamp uses absolute constants: MOVSS XMM1,[0x1459a86f8], ANDPS mask [0x1459a3d00], COMISS against [0x1459c03a0]; hidden global values not expressible."
+ }
+]

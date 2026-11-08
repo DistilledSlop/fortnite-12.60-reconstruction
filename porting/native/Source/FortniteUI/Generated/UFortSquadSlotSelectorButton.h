@@ -49,9 +49,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetInPreviewMode() const;
 
+	UFUNCTION(BlueprintCallable)
+	void OpenSquadSlot();
+
 	UFUNCTION(BlueprintNativeEvent)
 	void SquadSlotWidgetUpdated();
 	virtual void SquadSlotWidgetUpdated_Implementation();
+
+	UFUNCTION(BlueprintCallable)
+	void ViewInAll();
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

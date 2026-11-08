@@ -8,6 +8,7 @@
 
 #include "Components/StaticMeshComponent.h"
 #include "EVolumeState.h"
+#include "EVolumeValidityResult.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FFortVolumeActiveUsers.h"
@@ -131,6 +132,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortVolume* GetVolumeForPlayerState(APlayerState* PlayerState) const;
+
+	UFUNCTION(BlueprintCallable)
+	static void GetVolumeManager(UObject* WorldContextObject, AFortVolumeManager*& OutVolumeManager, EVolumeValidityResult& OutIsValid);
 
 private:
 	UFUNCTION()

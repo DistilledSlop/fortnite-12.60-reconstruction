@@ -1,0 +1,142 @@
+[
+  {
+    "class": "UFortCreativeKeyLockComponent",
+    "function": "Lock",
+    "status": "proposed",
+    "case": "helper_gated_enum_compare",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortCreativeKeyLockComponent",
+    "function": "Unlock",
+    "status": "proposed",
+    "case": "helper_gated_enum_compare",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortDropdownMenu",
+    "function": "GetSelectedButton",
+    "status": "proposed",
+    "case": "group_call_tail_call",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortExpeditionRewardsWidget",
+    "function": "RefreshRewardsUI_Implementation",
+    "status": "proposed",
+    "case": "empty_native_body",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "SendUINavigationAnalytic",
+    "status": "proposed",
+    "case": "empty_callee_call_elided",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortGlobals",
+    "function": "GetMemoryRequirementForMediaStreamingMB",
+    "status": "proposed",
+    "case": "reflected_member_log_elided",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortGlobals",
+    "function": "GetTimeLimitForReplayCinematic",
+    "status": "proposed",
+    "case": "enum_switch_reflected_floats",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortGlobals",
+    "function": "GetTimeLimitForWatchBattlePassMovie",
+    "status": "proposed",
+    "case": "enum_gate_reflected_float",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortGlobals",
+    "function": "SetGlobalSnowAltitude",
+    "status": "proposed",
+    "case": "reflected_store",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortHUDCenterPopupMessageWidget",
+    "function": "GetCenterPopupMessageState",
+    "status": "proposed",
+    "case": "gap_member_leaf",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortHUDContext",
+    "function": "GetScoreDisplayFactor",
+    "status": "proposed",
+    "case": "reflected_member_leaf",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortLeaderboardContext",
+    "function": "CanShowGlobalLeaderboards",
+    "status": "proposed",
+    "case": "declared_bitfield_byte_raw",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortLeaderboardContext",
+    "function": "CanShowLeaderboards",
+    "status": "proposed",
+    "case": "declared_bitfield_byte_raw",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortLeaderboardContext",
+    "function": "CanShowStats",
+    "status": "proposed",
+    "case": "declared_bitfield_byte_raw",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortLocalPlayer",
+    "function": "GetClientSettings",
+    "status": "proposed",
+    "case": "helper_gated_reflected_pointer",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortLocalUserEntry",
+    "function": "HandleGetMenuContent",
+    "status": "proposed",
+    "case": "reflected_pointer_leaf",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  },
+  {
+    "class": "UFortMcpContext",
+    "function": "GetGroupXpBonusPercent",
+    "status": "blocked",
+    "case": "absolute_address_constant",
+    "reason": "GetGroupXpBonusPercent (0x1421d6bf0): MULSS XMM0,dword ptr [0x1459a8728] multiplies the loaded float (MOVSS XMM0,dword ptr [RAX + 0xfc]) by a float constant at an absolute address (hidden global, no reflected or ported source), then CVTTSS2SI truncates to int32; the factor cannot be expressed exactly without guessing."
+  },
+  {
+    "class": "UFortMcpContext",
+    "function": "GetPersonalXpBonusPercent",
+    "status": "blocked",
+    "case": "absolute_address_constant",
+    "reason": "GetPersonalXpBonusPercent (0x1421d89d0): MULSS XMM0,dword ptr [0x1459a8728] multiplies the loaded float (MOVSS XMM0,dword ptr [RAX + 0xf8]) by a float constant at an absolute address (hidden global, no reflected or ported source), then CVTTSS2SI truncates to int32; the factor cannot be expressed exactly without guessing."
+  },
+  {
+    "class": "UFortMcpContext",
+    "function": "GetRestXpBonusPercent",
+    "status": "blocked",
+    "case": "absolute_address_constant",
+    "reason": "GetRestXpBonusPercent (0x1421d9590): MULSS XMM0,dword ptr [0x1459a8728] multiplies the loaded float (MOVSS XMM0,dword ptr [RAX + 0x104]) by a float constant at an absolute address (hidden global, no reflected or ported source), then CVTTSS2SI truncates to int32; the factor cannot be expressed exactly without guessing."
+  },
+  {
+    "class": "UFortMinigameObjectiveComponent",
+    "function": "SetIsInteractionAllowed",
+    "status": "proposed",
+    "case": "helper_gated_bit_store_broadcast",
+    "reason": "Body fully accounted for in the .inc evidence header; see inc_path."
+  }
+]

@@ -8,6 +8,8 @@
 
 #include "FFilledGadgetSlot.h"
 
+class UFortGadgetItemDefinition;
+
 #include "UFortCampaignHeroLoadoutItem.generated.h"
 
 UCLASS()
@@ -39,6 +41,9 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	TMap<FName, FString> CrewMembers;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortGadgetItemDefinition* GetGadgetDefinitionBySlotIndex(int32 SlotIndex) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetLoadoutOrdinal() const;

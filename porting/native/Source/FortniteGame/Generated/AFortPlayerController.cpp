@@ -787,7 +787,10 @@ bool AFortPlayerController::ServerBeginEditingBuildingActor_Validate(ABuildingSM
 
 void AFortPlayerController::ServerBroadcastPlayerChangedBuildMode_Implementation(bool bIsInBuildMode)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1423aa2e0
+	// Offset evidence: ADD RCX,0x1b58 selects the reflected member OnPlayerChangedBuildMode (InlineMulticastDelegate, FOnPlayerEnteredBuildMode with one bool). The bool is spilled to a stack parameter block (MOV byte [RSP+0x38],DL) and broadcast via CALL 0x1406a9dc0.
+	// CONFIDENCE: HIGH
+	OnPlayerChangedBuildMode.Broadcast(bIsInBuildMode);
 }
 
 void AFortPlayerController::ServerBroadcastUIFeedbackEvent_Implementation(const FName& EventName)
@@ -1085,7 +1088,12 @@ void AFortPlayerController::ServerPingMinimap_Implementation(const FVector& Worl
 
 void AFortPlayerController::ServerPlayEmoteItem_Implementation(UFortMontageItemDefinitionBase* EmoteAsset, float EmoteRandomNumber)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1406801c0 (shared bare RET, no effect)
+	// Offset evidence: body is RET 0x0 only; no receiver or memory access; EmoteAsset and EmoteRandomNumber are never read.
+	// CONFIDENCE: HIGH
+	(void)EmoteAsset;
+	(void)EmoteRandomNumber;
+	return;
 }
 
 void AFortPlayerController::ServerReadyToStartMatch_Implementation()
@@ -1241,7 +1249,9 @@ void AFortPlayerController::ServerSetAntiAddictionPlayTimeMultiplier_Implementat
 
 void AFortPlayerController::ServerSetAutoEquipBetterItems_Implementation(bool bAutoEquip)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body: 0x1423ac470 (thunk 0x142a4d160). Offset evidence: [RCX+0x1730] is a dword RMW of bit 0x1 = AFortPlayerController::bAutoEquipBetterItems (declared bitfield, porting/generated/reflection/bool_bits.json); the bit is set from the bAutoEquip argument (DL).
+	// CONFIDENCE: HIGH
+	bAutoEquipBetterItems = bAutoEquip;
 }
 
 void AFortPlayerController::ServerSetClientHasFinishedLoading_Implementation(bool bInHasFinishedLoading)

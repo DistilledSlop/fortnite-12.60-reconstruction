@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "ECenterPopupMessageStateEnum.h"
 #include "UCommonActivatablePanel.h"
 
 class UUserWidget;
@@ -28,6 +29,9 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonActivatablePanel* CenterPopupModalWidget;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	ECenterPopupMessageStateEnum GetCenterPopupMessageState() const;
 
 };
 

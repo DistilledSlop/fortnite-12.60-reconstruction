@@ -1,0 +1,142 @@
+[
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnAimAssistChanged",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnAutoChangeMaterialChanged",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnAutoOpenDoorsChanged",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnAutoPickupWeaponsChanged",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnAutoPickupWeaponsConsolePCChanged",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnAutoSortConsumablesToRightChanged",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnBuildingPossessionChanged",
+    "status": "proposed",
+    "case": "helper_inline_bitstore",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnContextTutorialChanged",
+    "status": "proposed",
+    "case": "helper_inline_bitstore",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnCreativeModeReplayRecordingPreferenceChanged",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnCreativeTurboDeleteChanged",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnCreativeTurboDeleteReset",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnEditConfirmOnReleaseChanged",
+    "status": "proposed",
+    "case": "helper_inline_bitstore",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnEditModeAimAssistChanged",
+    "status": "proposed",
+    "case": "helper_inline_bitstore",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnEnableTryBuildOnFocusChanged",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnFocusOnFirstBuildingPieceWhenQuickbarSwappedChanged",
+    "status": "proposed",
+    "case": "helper_inline_bitstore",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnFocusOnFirstBuildingPieceWhenQuickbarSwappedChangedAthena",
+    "status": "proposed",
+    "case": "helper_inline_bitstore",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnForceFeedbackChanged",
+    "status": "proposed",
+    "case": "helper_inline_bitstore",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnGamepadAutoRunChanged",
+    "status": "proposed",
+    "case": "helper_inline_bitstore",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnHUDScaleChanged",
+    "status": "proposed",
+    "case": "helper_then_setter_float",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "OnLargeTeamsReplayRecordingPreferenceChanged",
+    "status": "proposed",
+    "case": "helper_then_setter",
+    "reason": "all instructions accounted for; receiver and offsets verified against asm"
+  }
+]

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class UObject;
+
 #include "UFortUIBlueprintFunctionLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEUI_API UFortUIBlueprintFunctionLibrary : public UBlueprintFunction
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static UObject* GetAssetFromTemplateId(FString TemplateId);
+
 };
 

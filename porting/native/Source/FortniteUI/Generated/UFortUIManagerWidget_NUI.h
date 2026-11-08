@@ -55,6 +55,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<FFortDialogDescription_NUI> ConfirmationQueue;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x318): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0x318;
+
 	// table index 4, flags 0x2008000008001c
 	UPROPERTY()
 	UNamedSlot* StateContentLayer;

@@ -12,6 +12,7 @@
 #include "FLockEvent.h"
 #include "FRemainingKeysChanged.h"
 
+class APawn;
 class UFortItemDefinition;
 
 #include "UFortCreativeKeyLockComponent.generated.h"
@@ -75,6 +76,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocked() const;
 
+	UFUNCTION(BlueprintCallable)
+	bool Lock(APawn* Pawn);
+
 protected:
 	UFUNCTION()
 	void OnRep_CurrentState();
@@ -90,6 +94,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetShouldConsumeKey(bool ShouldConsume);
+
+	UFUNCTION(BlueprintCallable)
+	bool Unlock(APawn* Pawn);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

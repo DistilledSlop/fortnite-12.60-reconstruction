@@ -357,6 +357,15 @@ public:
 	TArray<AFortGameModePickup_Wax*> WaxPickupsToDraw;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPlayerLives(AFortPlayerStateAthena* Player) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPlayerTeamScore(AFortPlayerStateAthena* Player) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTokensForPlayer(AFortPlayerStateAthena* Player) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayerTeamLeader(AFortPlayerStateAthena* Player) const;
 
 	UFUNCTION()

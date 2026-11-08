@@ -16,6 +16,8 @@
 #include "UObject/Object.h"
 #include "UObject/WeakObjectPtr.h"
 
+class AFortPlayerController;
+
 #include "UConsolidatedQuestComponent.generated.h"
 
 UCLASS(config=Engine)
@@ -80,9 +82,25 @@ public:
 	UPROPERTY()
 	FTimerHandle DelayUntilCurrentQuestsReady;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2b0): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0x2b0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2b8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x2b8;
+
 private:
 	UFUNCTION()
 	TArray<FString> Editor_GetValidObjectives() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	bool IsInteractable(AFortPlayerController* InteractingController);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void UpdateCompletedForPlayer(AFortPlayerController* InPlayerController, bool bCompleted);
 public:
 
 

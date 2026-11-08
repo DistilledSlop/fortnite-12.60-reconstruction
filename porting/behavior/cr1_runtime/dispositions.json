@@ -1,0 +1,142 @@
+[
+ {
+  "class": "AAIHotSpot",
+  "function": "GetSlotLocationByIndex",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "Default branch (index out of range or null slot) loads an FVector constant from absolute globals 0x1478c1890 (MOVSD XMM0,qword ptr [0x1478c1890]) and 0x1478c1898 (MOV EAX,dword ptr [0x1478c1898]); constant values are not available."
+ },
+ {
+  "class": "ABuildingGameplayActor",
+  "function": "GetTargetingSourceTransform_Implementation",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "Null [RCX+0x130] branch does LEA RAX,[0x1482184f0] and copies an FTransform from that absolute global (shared body 0x141bdd320); global value not available."
+ },
+ {
+  "class": "ABuildingGameplayActorConsumable",
+  "function": "GetDeathFXTransform_Implementation",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "Same shared body 0x141bdd320: null branch copies FTransform from absolute global 0x1482184f0 (LEA RAX,[0x1482184f0]); global value not available."
+ },
+ {
+  "class": "ABuildingTimeOfDayLights",
+  "function": "GetTimeOfDayBlueprintDefaultVariables_Implementation",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "Bare RET body at 0x1406801c0 (no effect); OutVariables unused."
+ },
+ {
+  "class": "ADeployableBaseCore",
+  "function": "GetSimpleDeathFXTransform_Implementation",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "Same shared body 0x141bdd320: null branch copies FTransform from absolute global 0x1482184f0 (LEA RAX,[0x1482184f0]); global value not available."
+ },
+ {
+  "class": "AFortAIPawn",
+  "function": "K2_FindExistingItemForDefinition",
+  "status": "proposed",
+  "case": "exact_port",
+  "reason": "Inventory@0x1a58 reflected. IsA(UFortWorldItemDefinition) inlined check (inferred). Tail call to NativeFindWorldItemByDefinition(def,false)."
+ },
+ {
+  "class": "AFortAthenaDoghouseVehicle",
+  "function": "IsStallingFromAltitude",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "Null [RCX+0x130] branch loads default vector from absolute globals 0x148218630 (MOVSD) and 0x148218638 (MOV EAX,dword ptr); constant values not available."
+ },
+ {
+  "class": "AFortAthenaMutator_Arsenic",
+  "function": "IsPlaylistDBNOEnabled",
+  "status": "proposed",
+  "case": "exact_port",
+  "reason": "CachedGameState@0x260 reflected; GetCurrentPlaylistAthena helper; DBNOType byte != 1 (SETNZ after CMP byte,1)."
+ },
+ {
+  "class": "AFortAthenaMutator_Bagel",
+  "function": "GetPlayerScore",
+  "status": "proposed",
+  "case": "exact_port",
+  "reason": "TArray at 0x12b0/0x12b8 as typed gap members; 0x80-byte record scan with PlayerState IsA key; OutScore=+0x50."
+ },
+ {
+  "class": "AFortAthenaMutator_Wax",
+  "function": "GetPlayerLives",
+  "status": "proposed",
+  "case": "exact_port",
+  "reason": "Static record finder helper; int32 at record+0x38; no null check in asm."
+ },
+ {
+  "class": "AFortAthenaMutator_Wax",
+  "function": "GetPlayerTeamScore",
+  "status": "proposed",
+  "case": "exact_port",
+  "reason": "Static record finder helper; int32 at record+0x28; no null check in asm."
+ },
+ {
+  "class": "AFortAthenaMutator_Wax",
+  "function": "GetTokensForPlayer",
+  "status": "proposed",
+  "case": "exact_port",
+  "reason": "Static record finder helper; int32 at record+0x20; no null check in asm."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "ServerSetPlayerHitMarkers_Implementation",
+  "status": "blocked",
+  "case": "unresolved_callee",
+  "reason": "JNZ 0x14284ce80 after CMP byte ptr [RCX+0x268],0x0 is a tail jump to 0x14284ce80, which is absent from callee_candidates (empty)."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerUpdateScaleAxis_Implementation",
+  "status": "blocked",
+  "case": "header_abi_mismatch",
+  "reason": "header_decl is const EScaleAxis& (RDX = pointer by ABI) but the asm stores DL (low byte of RDX) directly to +0xf81 with no dereference; the declared parameter cannot reproduce the asm. Needs signature check."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerUpdateTractorBeam_Implementation",
+  "status": "proposed",
+  "case": "exact_port",
+  "reason": "Float gap member 0xf3c typed; bIsPushPressed/bIsPullPressed declared bool bits at 0xf36/0xf37."
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "HasMinigameStarter",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "Uses absolute globals CMP EAX,dword ptr [0x148263a2c] and MOV RAX,qword ptr [0x148263a18] (object-array chunk table); the out-of-range path then executes MOV EAX,dword ptr [RAX+0x8] on a null pointer."
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "IsTowhookAttached",
+  "status": "proposed",
+  "case": "exact_port",
+  "reason": "Raw weak pointer at object+0x1380 (no reflected member); ported helper then weak IsValid helper."
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "ServerBroadcastPlayerChangedBuildMode_Implementation",
+  "status": "proposed",
+  "case": "exact_port",
+  "reason": "Broadcast of reflected OnPlayerChangedBuildMode at +0x1b58 with the bool parameter."
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "ServerPlayEmoteItem_Implementation",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "Bare RET body at 0x1406801c0 (no effect); parameters unused."
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "ServerSetAntiAddictionPlayTimeMultiplier_Implementation",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "Upper clamp MINSS XMM1,dword ptr [0x1459a86f8] reads an absolute-address global float whose value is not available."
+ }
+]

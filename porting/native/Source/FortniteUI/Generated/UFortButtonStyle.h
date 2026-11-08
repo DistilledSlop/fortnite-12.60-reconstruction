@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "EFortBrushSize.h"
 #include "FFortMultiSizeFont.h"
 #include "FFortMultiSizeMargin.h"
 #include "FFortStateStyle.h"
@@ -67,6 +68,12 @@ public:
 	// table index 0, flags 0x10000000010015
 	UPROPERTY()
 	FSlateSound HoveredSlateSound;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FMargin GetButtonPaddingBySize(EFortBrushSize::Type Size) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FMargin GetCustomPaddingBySize(EFortBrushSize::Type Size) const;
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

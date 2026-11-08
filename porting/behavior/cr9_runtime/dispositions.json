@@ -1,0 +1,142 @@
+[
+  {
+    "class": "UFortSettingsContext",
+    "function": "TargetingToggleChanged",
+    "status": "proposed",
+    "case": "helper_then_bool_setter",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "YawInversionChanged",
+    "status": "proposed",
+    "case": "helper_then_bool_setter",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "TouchBuildingMultiplierValueChanged",
+    "status": "proposed",
+    "case": "helper_then_float_setter",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "TouchDragScopedSensitivityValueChanged",
+    "status": "proposed",
+    "case": "helper_then_float_setter",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "TouchEditModeMultiplierValueChanged",
+    "status": "proposed",
+    "case": "helper_then_float_setter",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "TouchLookAccelerationMultiplierValueChanged",
+    "status": "proposed",
+    "case": "helper_then_float_setter",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "TouchLookSensitivityChanged",
+    "status": "proposed",
+    "case": "helper_then_float_setter",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "TouchTargetingMultiplierValueChanged",
+    "status": "proposed",
+    "case": "helper_then_float_setter",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "TouchVerticalSensitivityValueChanged",
+    "status": "proposed",
+    "case": "helper_then_float_setter",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSquadSlotSelectorButton",
+    "function": "OpenSquadSlot",
+    "status": "proposed",
+    "case": "helper_then_delegate_broadcast",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSquadSlotSelectorButton",
+    "function": "ViewInAll",
+    "status": "proposed",
+    "case": "helper_then_delegate_broadcast",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortTeamMemberEntryBase",
+    "function": "GetCurrentMemberGameReadiness",
+    "status": "proposed",
+    "case": "weak_chain_raw_offsets",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortUIBlueprintFunctionLibrary",
+    "function": "GetAssetFromTemplateId",
+    "status": "proposed",
+    "case": "static_helper_tail_call",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UGameDataSTW",
+    "function": "GetTeamXpBoost",
+    "status": "proposed",
+    "case": "static_helper_member_read",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortUIManagerWidget_NUI",
+    "function": "IsStateContentChildShowing",
+    "status": "proposed",
+    "case": "helper_count_and_gap_byte",
+    "reason": "all instructions accounted for"
+  },
+  {
+    "class": "UFortSquadManagementScreenBase",
+    "function": "NavigateToSquadSlot",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee 0x1407f7e90 (candidate UCommonButton::SetIsSelected(bGiveClickFeedback, InSelected)) is not declared in porting/native/Source/CommonUI/Generated/UCommonButton.h; only NativeSetIsSelected(bool bSelected, bool bGiveClickFeedback) exists, with a different name and parameter order."
+  },
+  {
+    "class": "UFortSquadSlotsView",
+    "function": "SelectSlot",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "callee 0x1407f7e90 (candidate UCommonButton::SetIsSelected(bGiveClickFeedback, InSelected)) is not declared in porting/native/Source/CommonUI/Generated/UCommonButton.h; only NativeSetIsSelected(bool bSelected, bool bGiveClickFeedback) exists, with a different name and parameter order."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "GetCurrencyItemDefinition",
+    "status": "blocked",
+    "case": "unreflected_layout_walk",
+    "reason": "inlined pointer and index walk with no declared layout: this+0x28 is below the class's own reflected region (min 0x40) and its pointee is unreflected; further loads from [+0x10], [+0x60], [+0x68], [+0x70], [+0x88] and dword/pointer compares against UFortAccountItemDefinition::StaticClass() (0x14278d2d0) fields +0x30/+0x38 cannot be typed exactly from declared types."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "isItemGrantUnique",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "LEA R8/RAX,[0x1459a4b30] loads an absolute global used as the empty-string comparand when TemplateId Num is 0 (contents not verified), plus an inlined walk over 0x38-byte entries at [this+0x28]+0x210/+0x218 with no declared layout."
+  },
+  {
+    "class": "UFortSwipePanel",
+    "function": "GetSwipeInfo",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "MOVSS XMM0,dword ptr [0x148218628] and XMM1,dword ptr [0x14821862c] supply default swipe values from absolute globals whose contents are not verified."
+  }
+]

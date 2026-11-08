@@ -1,0 +1,142 @@
+[
+ {
+  "class": "UAthenaQuickbarEditorBase",
+  "function": "GetFirstEquipSlotButton",
+  "status": "proposed",
+  "case": "helper_tail_call",
+  "reason": "Ported from body 0x144b2fe50; see porting/behavior/cr3_runtime/UAthenaQuickbarEditorBase/GetFirstEquipSlotButton.inc"
+ },
+ {
+  "class": "UAthenaSpectateMatchModalBase",
+  "function": "IsGameSessionString",
+  "status": "proposed",
+  "case": "pure_string_check",
+  "reason": "Ported from body 0x144b38df0; see porting/behavior/cr3_runtime/UAthenaSpectateMatchModalBase/IsGameSessionString.inc"
+ },
+ {
+  "class": "UAthenaViewStreamingReplayModalBase",
+  "function": "IsValidGameSessionId",
+  "status": "proposed",
+  "case": "pure_string_check",
+  "reason": "Ported from body 0x144b38df0; see porting/behavior/cr3_runtime/UAthenaViewStreamingReplayModalBase/IsValidGameSessionId.inc"
+ },
+ {
+  "class": "UAthenaWinnersList",
+  "function": "OnWinnersAnnounced_Implementation",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "Ported from body 0x1406801c0; see porting/behavior/cr3_runtime/UAthenaWinnersList/OnWinnersAnnounced_Implementation.inc"
+ },
+ {
+  "class": "UBuildingStructuralSupportSystem",
+  "function": "IsBuildingActorValid",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "CMP EAX,dword ptr [0x148263a2c] and MOV RAX,qword ptr [0x148263a18]: inline GUObjectArray lookup of ActorToTest; no known helper for it."
+ },
+ {
+  "class": "UCaptureComponent",
+  "function": "UpdateSmoothProgressStateByCaptureState",
+  "status": "proposed",
+  "case": "helper_call_byte_state",
+  "reason": "Ported from body 0x141d959a0; see porting/behavior/cr3_runtime/UCaptureComponent/UpdateSmoothProgressStateByCaptureState.inc"
+ },
+ {
+  "class": "UCommonButton",
+  "function": "GetCurrentButtonPadding",
+  "status": "proposed",
+  "case": "helper_call_raw_struct_copy",
+  "reason": "Ported from body 0x1407c2090; see porting/behavior/cr3_runtime/UCommonButton/GetCurrentButtonPadding.inc"
+ },
+ {
+  "class": "UCommonButton",
+  "function": "GetCurrentCustomPadding",
+  "status": "proposed",
+  "case": "helper_call_raw_struct_copy",
+  "reason": "Ported from body 0x1407c20c0; see porting/behavior/cr3_runtime/UCommonButton/GetCurrentCustomPadding.inc"
+ },
+ {
+  "class": "UCommonButton",
+  "function": "SetIsInteractableWhenSelected",
+  "status": "blocked",
+  "case": "tail_jump_outside_body",
+  "reason": "JZ 0x1407f7a20 at 0x1407f7a16 (bToggleable clear, bit changed, 0x2a1 bit0 set) enters 0x1407f7a20, a separate function (own prologue, virtual call [RAX+0x278], weak path +0xad0) outside this body; no declared callee for it."
+ },
+ {
+  "class": "UConsolidatedQuestComponent",
+  "function": "IsInteractable",
+  "status": "proposed",
+  "case": "weak_array_scan",
+  "reason": "Ported from body 0x141cd9370; see porting/behavior/cr3_runtime/UConsolidatedQuestComponent/IsInteractable.inc"
+ },
+ {
+  "class": "UConsolidatedQuestComponent",
+  "function": "UpdateCompletedForPlayer",
+  "status": "proposed",
+  "case": "weak_array_scan",
+  "reason": "Ported from body 0x141cf5ce0; see porting/behavior/cr3_runtime/UConsolidatedQuestComponent/UpdateCompletedForPlayer.inc"
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "GetCurrentHitTraceRule",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "CMP EAX,dword ptr [0x148263a2c] and MOV RAX,qword ptr [0x148263a18]: inline GUObjectArray lookup for CurrentMoveTool validity; no known helper for it."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "GetDropToFloorEnabled",
+  "status": "blocked",
+  "case": "hidden_global_absolute_address",
+  "reason": "CMP EAX,dword ptr [0x148263a2c] and MOV RAX,qword ptr [0x148263a18]: inline GUObjectArray lookup for CurrentMoveTool validity; no known helper for it."
+ },
+ {
+  "class": "UFortAlterationOption",
+  "function": "GetAlterationOptionType",
+  "status": "proposed",
+  "case": "gap_byte_member",
+  "reason": "Ported from body 0x144f22900; see porting/behavior/cr3_runtime/UFortAlterationOption/GetAlterationOptionType.inc"
+ },
+ {
+  "class": "UFortAthenaHoverCarMovementComponent",
+  "function": "ServerUpdateAthenaState_Implementation",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "Ported from body 0x140695430; see porting/behavior/cr3_runtime/UFortAthenaHoverCarMovementComponent/ServerUpdateAthenaState_Implementation.inc"
+ },
+ {
+  "class": "UFortButtonStyle",
+  "function": "GetButtonPaddingBySize",
+  "status": "proposed",
+  "case": "helper_margin_copy",
+  "reason": "Ported from body 0x144d79230; see porting/behavior/cr3_runtime/UFortButtonStyle/GetButtonPaddingBySize.inc"
+ },
+ {
+  "class": "UFortButtonStyle",
+  "function": "GetCustomPaddingBySize",
+  "status": "proposed",
+  "case": "helper_margin_copy",
+  "reason": "Ported from body 0x144d79690; see porting/behavior/cr3_runtime/UFortButtonStyle/GetCustomPaddingBySize.inc"
+ },
+ {
+  "class": "UFortButtonStyle",
+  "function": "GetMarginBySizeFromMultiSizeMargin",
+  "status": "proposed",
+  "case": "helper_margin_copy",
+  "reason": "Ported from body 0x144d7a5d0; see porting/behavior/cr3_runtime/UFortButtonStyle/GetMarginBySizeFromMultiSizeMargin.inc"
+ },
+ {
+  "class": "UFortCampaignHeroLoadoutItem",
+  "function": "GetGadgetDefinitionBySlotIndex",
+  "status": "proposed",
+  "case": "array_scan_asset_lookup",
+  "reason": "Ported from body 0x1425116b0; see porting/behavior/cr3_runtime/UFortCampaignHeroLoadoutItem/GetGadgetDefinitionBySlotIndex.inc"
+ },
+ {
+  "class": "UFortCreativeItemListTabPanel",
+  "function": "GetSelectedItemIndex",
+  "status": "blocked",
+  "case": "callee_receiver_mismatch",
+  "reason": "CALL 0x1407c1e20 (UFortAIGoalProvider::GetEncounterInfo) is applied to this+0x300 (CurrentItemEntry, FFortItemEntry struct) and to Items elements (stride 0x150), never to a UFortAIGoalProvider."
+ }
+]

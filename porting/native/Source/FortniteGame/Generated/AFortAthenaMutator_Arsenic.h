@@ -115,6 +115,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayerTeamRevealed(AFortPlayerStateAthena* PlayerState) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlaylistDBNOEnabled() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void RequestGameMessageOnServer(EArsenicGameMsgId MsgId) const;
 

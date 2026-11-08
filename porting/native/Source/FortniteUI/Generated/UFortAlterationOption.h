@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "EFortAlterationOptionType.h"
 #include "FAlterationOption.h"
 
 #include "UFortAlterationOption.generated.h"
@@ -22,6 +23,12 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0xbb0): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredByte_0xbb0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xbb0): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0xbb0;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortAlterationOptionType GetAlterationOptionType() const;
 
 };
 

@@ -14,5 +14,11 @@ class FORTNITEUI_API UInfiltrationPlacementOverlay : public UPostGamePlacementOv
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetIntelCaptured() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetIntelDownloaded() const;
+
 };
 

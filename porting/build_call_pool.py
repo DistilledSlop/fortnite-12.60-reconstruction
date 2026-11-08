@@ -48,6 +48,8 @@ for m in man:
 done = {(e['class'], e['function']) for e in man if e.get('status') == 'ported' and e.get('kind') != 'member_field'}
 done |= {(e['class'], e['function'][:-len('_Implementation')]) for e in man if e.get('status') == 'ported' and e['function'].endswith('_Implementation')}
 blocked = {x['entry'] for x in json.load(open('porting/behavior/stub_bulk_runtime/blocked.json'))}
+for _r in glob.glob('porting/behavior/stub_bulk_runtime/build_removed_*.json'):
+    blocked |= {x['entry'].replace('_Implementation::', '::') if False else (x['entry'][:-len('_Implementation')] if x['entry'].endswith('_Implementation') else x['entry']) for x in json.load(open(_r))}
 inscope = json.load(open('porting/progress/native_functions_inscope.json'))
 inscope = {(c, f) for c, fs in inscope.items() for f in fs}
 attempted = set()

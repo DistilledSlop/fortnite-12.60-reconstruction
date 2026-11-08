@@ -61,6 +61,7 @@ class UFortAccountItem;
 class UFortCharacterAttrSet;
 class UFortGameplayModifierItemDefinition;
 class UFortItem;
+class UFortItemDefinition;
 class UFortNavObstacleComponent;
 class UFortSimpleMiniMapIndicator;
 class UFortWeaponAttrSet;
@@ -832,6 +833,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInCombat() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* K2_FindExistingItemForDefinition(UFortItemDefinition* ItemDefinition, bool bInStorageVault) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItem* K2_GetDefenderItem() const;

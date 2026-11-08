@@ -288,6 +288,9 @@ public:
 	bool IsUIVisible() const;
 
 	UFUNCTION(BlueprintCallable)
+	void SendUINavigationAnalytic(FString Destination, bool bUserInitiated);
+
+	UFUNCTION(BlueprintCallable)
 	void SetContextHelpItem(UFortHelpItem* ContextSpecificHelpItem);
 
 	UFUNCTION(BlueprintCallable)

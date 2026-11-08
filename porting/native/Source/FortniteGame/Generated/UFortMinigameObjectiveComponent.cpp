@@ -2,6 +2,48 @@
 #include "UFortMinigameObjectiveComponent.h"
 #include "UObject/Object.h"
 
+void UFortMinigameObjectiveComponent::SetIsInteractionAllowed(bool bInIsInteractionAllowed)
+{
+	// Behaviour snippet: UFortMinigameObjectiveComponent::SetIsInteractionAllowed (body only; spliced into the generated member function).
+	// Original address: 0x1420a3e30 (thunk 0x1429d3460)
+	// Evidence: if NativeHelper1440b2120(this) (0x1440b2120) == 3: the argument (DL) is stored at byte +0x1a2, which is the declared bitfield bIsInteractionAllowed (mask 1); the declared bit member is written. Then OnObjectiveAllowedInteractionChanged (+0x188, FMinigameObjectiveUpdated) is broadcast with this (0x1406a9dc0). Otherwise nothing happens.
+	// CONFIDENCE: HIGH
+	if (UFortMinigameObjectiveComponent::NativeHelper1440b2120(this) == 3)
+	{
+	    bIsInteractionAllowed = bInIsInteractionAllowed;
+	    OnObjectiveAllowedInteractionChanged.Broadcast(this);
+	}
+}
+
+void UFortMinigameObjectiveComponent::SetTrackedProgress(float Percentage)
+{
+	// Behaviour snippet: UFortMinigameObjectiveComponent::SetTrackedProgress (body only; spliced into the generated member function).
+	// Original address: 0x1420a5cf0 (thunk 0x1429d36d0)
+	// Offset evidence: this+0x19c = ProgressPercentage (Float, reflected). this+0x168 = OnObjectiveUpdated (InlineMulticastDelegate); CALL 0x1406a9dc0 with packed {this} = Broadcast(this).
+	// Helper 0x1440b2120 = NativeHelper1440b2120 (declared static, uint8 return); the asm gates the body on its result == 3.
+	// CONFIDENCE: HIGH
+	if (UFortMinigameObjectiveComponent::NativeHelper1440b2120(this) == 3)
+	{
+		ProgressPercentage = Percentage;
+		OnObjectiveUpdated.Broadcast(this);
+	}
+}
+
+void UFortMinigameObjectiveComponent::SetTrackedState(uint8 InState, uint8 InStateOwnerTeam)
+{
+	// Behaviour snippet: UFortMinigameObjectiveComponent::SetTrackedState (body only; spliced into the generated member function).
+	// Original address: 0x1420a5d40 (thunk 0x1429d3750)
+	// Offset evidence: this+0x1a0 = TrackedState (Byte) written from DL (InState, ABI arg 2). this+0x1a1 = TrackedStateOwnerTeam (Byte) written from R8B (InStateOwnerTeam, ABI arg 3). this+0x178 = OnObjectiveStateChanged (InlineMulticastDelegate); CALL 0x1406a9dc0 = Broadcast(this).
+	// Helper 0x1440b2120 = NativeHelper1440b2120 (declared static, uint8 return); the asm gates the body on its result == 3.
+	// CONFIDENCE: HIGH
+	if (UFortMinigameObjectiveComponent::NativeHelper1440b2120(this) == 3)
+	{
+		TrackedState = InState;
+		TrackedStateOwnerTeam = InStateOwnerTeam;
+		OnObjectiveStateChanged.Broadcast(this);
+	}
+}
+
 uint8 UFortMinigameObjectiveComponent::NativeHelper1440b2120(UObject* Context)
 {
 	// Helper 0x1440b2120, host UFortMinigameObjectiveComponent (static).

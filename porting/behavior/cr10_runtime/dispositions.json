@@ -1,0 +1,37 @@
+[
+  {
+    "class": "UGameDataSTW",
+    "function": "GetXpPerAccountLevel",
+    "status": "proposed",
+    "case": "reflected_member_via_helper_chain",
+    "reason": "Member at +0xf0 reflected as XpPerAccountLevel; both helpers declared in header."
+  },
+  {
+    "class": "UInfiltrationPlacementOverlay",
+    "function": "GetIntelCaptured",
+    "status": "proposed",
+    "case": "raw_weak_ptr_and_helper_result",
+    "reason": "Raw access at unreflected object offset 0x2b4 and untyped helper pointee; confidence MEDIUM."
+  },
+  {
+    "class": "UInfiltrationPlacementOverlay",
+    "function": "GetIntelDownloaded",
+    "status": "proposed",
+    "case": "raw_weak_ptr_and_helper_result",
+    "reason": "Raw access at unreflected object offset 0x2b4 and untyped helper pointee; confidence MEDIUM."
+  },
+  {
+    "class": "UObjectInteractionBehavior",
+    "function": "GetFortPlayerController",
+    "status": "proposed",
+    "case": "raw_object_pointer_isa_chain",
+    "reason": "Inline class-membership tests are expressed as UObject::IsA; medium confidence for that equivalence."
+  },
+  {
+    "class": "UValetRaisinComponent",
+    "function": "ServerSelectOption",
+    "status": "proposed",
+    "case": "empty_void_discarded_lea",
+    "reason": "LEA computes this-0x28 into the discarded void return slot; no memory access, store or call."
+  }
+]

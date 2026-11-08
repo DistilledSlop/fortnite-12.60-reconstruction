@@ -58,6 +58,15 @@ public:
 	UPROPERTY()
 	bool bPurgeTrackingHistoryOnRemoval;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetIsInteractionAllowed(bool bInIsInteractionAllowed);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetTrackedProgress(float Percentage);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetTrackedState(uint8 InState, uint8 InStateOwnerTeam);
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

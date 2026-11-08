@@ -9,6 +9,8 @@
 #include "Math/Vector.h"
 #include "UObject/Object.h"
 
+class ASOLFortPlayer;
+
 #include "UFortMinigameStatics.generated.h"
 
 UCLASS()
@@ -22,6 +24,12 @@ public:
 
 	UFUNCTION()
 	static FVector MakeVector(float X, float Y, float Z);
+
+	UFUNCTION()
+	static void RemoveAllInventoryItems(ASOLFortPlayer* Player);
+
+	UFUNCTION()
+	static void SetInfiniteAmmo(ASOLFortPlayer* Player, bool infinite);
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

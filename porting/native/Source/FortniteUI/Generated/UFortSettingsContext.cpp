@@ -4,8 +4,11 @@
 #include "ECloudFileState.h"
 #include "EColorBlindMode.h"
 #include "EFortAllowBackgroundAudioSetting.h"
+#include "EFortMotionYawAxis.h"
+#include "ETouchInteractMode.h"
 #include "Engine/LocalPlayer.h"
 #include "GameFramework/PlayerController.h"
+#include "Math/Vector2D.h"
 #include "UFortClientSettingsRecord.h"
 #include "UFortLocalPlayer.h"
 
@@ -40,6 +43,173 @@ void UFortSettingsContext::AnonymousModeChanged(bool bInChecked)
 			SettingsRecord->bAnonymousMode = bInChecked;
 			SettingsRecord->bDirty = true;
 		}
+	}
+}
+
+void UFortSettingsContext::AutoEquipChanged(bool bInChecked)
+{
+	// Behaviour snippet: UFortSettingsContext::AutoEquipChanged (body only).
+	// Original address: 0x144cf77b0 (thunk 0x1452cd300)
+	// Offset evidence: record = NativeGetSettingsRecord144d03d50() (ported helper). record+0x470 = bAutoEquipBetterItems (bool, byte-form write of bInChecked). record+0x87e = bDirty (bool, set to 1 on change).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be complete for the settings writes");
+	if (UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50())
+	{
+		if (SettingsRecord->bAutoEquipBetterItems != bInChecked)
+		{
+			SettingsRecord->bAutoEquipBetterItems = bInChecked;
+			SettingsRecord->bDirty = true;
+		}
+	}
+}
+
+void UFortSettingsContext::ChatVolumeChanged(float NewValue)
+{
+	// Behaviour snippet: UFortSettingsContext::ChatVolumeChanged (body only).
+	// Original address: 0x144cfc250 (thunk 0x1452cd390)
+	// Offset evidence: record = NativeGetSettingsRecord144d03d50() (ported helper); the record is passed to UFortClientSettingsRecord::SetChatVolume(float) at 0x141e3aa60 with NewValue in XMM1.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be complete to call its setter");
+	if (UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50())
+	{
+		SettingsRecord->SetChatVolume(NewValue);
+	}
+}
+
+void UFortSettingsContext::CinematicsVolumeChanged(float NewValue)
+{
+	// Behaviour snippet: UFortSettingsContext::CinematicsVolumeChanged (body only).
+	// Original address: 0x144cfc450 (thunk 0x1452cd410)
+	// Offset evidence: record = NativeGetSettingsRecord144d03d50() (ported helper); the record is passed to UFortClientSettingsRecord::SetCinematicsVolume(float) at 0x141e3aa80 with NewValue in XMM1.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be complete to call its setter");
+	if (UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50())
+	{
+		SettingsRecord->SetCinematicsVolume(NewValue);
+	}
+}
+
+void UFortSettingsContext::DialogVolumeChanged(float NewValue)
+{
+	// Behaviour snippet: UFortSettingsContext::DialogVolumeChanged (body only).
+	// Original address: 0x144cfda10 (thunk 0x1452cd490)
+	// Offset evidence: record = NativeGetSettingsRecord144d03d50() (ported helper); the record is passed to UFortClientSettingsRecord::SetDialogueVolume(float) at 0x141e3b240 with NewValue in XMM1.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be complete to call its setter");
+	if (UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50())
+	{
+		SettingsRecord->SetDialogueVolume(NewValue);
+	}
+}
+
+void UFortSettingsContext::FirstPersonCameraChanged(bool bInChecked)
+{
+	// Behaviour snippet: UFortSettingsContext::FirstPersonCameraChanged (body only).
+	// Original address: 0x144cfff10 (thunk 0x1452cd510)
+	// Offset evidence: record = NativeGetSettingsRecord144d03d50() (ported helper). record+0x47b = bUseFirstPersonCamera (bool, byte-form write of bInChecked). record+0x87e = bDirty (bool, set to 1 on change).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be complete for the settings writes");
+	if (UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50())
+	{
+		if (SettingsRecord->bUseFirstPersonCamera != bInChecked)
+		{
+			SettingsRecord->bUseFirstPersonCamera = bInChecked;
+			SettingsRecord->bDirty = true;
+		}
+	}
+}
+
+void UFortSettingsContext::GamepadBuildingMultiplierValueChanged(float NewValue)
+{
+	// Behaviour snippet: UFortSettingsContext::GamepadBuildingMultiplierValueChanged (body only).
+	// Original address: 0x144d00690 (thunk 0x1452cd5a0)
+	// Offset evidence: record = NativeGetSettingsRecord144d03d50() (ported helper). record+0x2f4 = GamepadBuildingMultiplier (Float). record+0x87e = bDirty (bool). UCOMISS + JZ: the write runs only when NewValue is ordered and unequal to the stored value (NaN takes the skip path).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be complete for the settings writes");
+	if (UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50())
+	{
+		if (NewValue < SettingsRecord->GamepadBuildingMultiplier || NewValue > SettingsRecord->GamepadBuildingMultiplier)
+		{
+			SettingsRecord->bDirty = true;
+			SettingsRecord->GamepadBuildingMultiplier = NewValue;
+		}
+	}
+}
+
+void UFortSettingsContext::GamepadEditModeMultiplierValueChanged(float NewValue)
+{
+	// Behaviour snippet: UFortSettingsContext::GamepadEditModeMultiplierValueChanged (body only).
+	// Original address: 0x144d006d0 (thunk 0x1452cd620)
+	// Offset evidence: record = NativeGetSettingsRecord144d03d50() (ported helper). record+0x2f8 = GamepadEditModeMultiplier (Float). record+0x87e = bDirty (bool). UCOMISS + JZ: the write runs only when NewValue is ordered and unequal to the stored value (NaN takes the skip path).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be complete for the settings writes");
+	if (UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50())
+	{
+		if (NewValue < SettingsRecord->GamepadEditModeMultiplier || NewValue > SettingsRecord->GamepadEditModeMultiplier)
+		{
+			SettingsRecord->bDirty = true;
+			SettingsRecord->GamepadEditModeMultiplier = NewValue;
+		}
+	}
+}
+
+void UFortSettingsContext::GamepadLookStickDeadZoneChanged(float NewValue) const
+{
+	// Original address: 0x144d007f0 (thunk 0x1452cd7a0)
+	// Offset evidence: no field access. NativeGetSettingsRecord144d03d50 returns the settings record (RCX stays this, receiver delta 0); the non-null record receives NewValue via UFortClientSettingsRecord::SetGamepadLookStickDeadZone (0x141e3b680).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetGamepadLookStickDeadZone(NewValue);
+	}
+}
+
+void UFortSettingsContext::GamepadMoveStickDeadZoneChanged(float NewValue) const
+{
+	// Original address: 0x144d00820 (thunk 0x1452cd820)
+	// Offset evidence: no field access. NativeGetSettingsRecord144d03d50 returns the settings record (RCX stays this, receiver delta 0); the non-null record receives NewValue via UFortClientSettingsRecord::SetGamepadMoveStickDeadZone (0x141e3b6b0).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetGamepadMoveStickDeadZone(NewValue);
+	}
+}
+
+void UFortSettingsContext::GamepadScopedMultiplierValueChanged(float NewValue)
+{
+	// Original address: 0x144d00850 (thunk 0x1452cd8a0)
+	// Offset evidence: record +0x2f0 = GamepadScopedSlow (Float, exact); record +0x87e = bDirty (bitfield, mov8). UCOMISS sets ZF for equal and unordered, so bDirty is written only for ordered unequal values; the field store at 0x144d00876 runs unconditionally on the non-null path.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    if (NewValue < SettingsRecord->GamepadScopedSlow || NewValue > SettingsRecord->GamepadScopedSlow)
+	    {
+	        SettingsRecord->bDirty = true;
+	    }
+	    SettingsRecord->GamepadScopedSlow = NewValue;
+	}
+}
+
+void UFortSettingsContext::GamepadTargetingMultiplierValueChanged(float NewValue)
+{
+	// Original address: 0x144d00890 (thunk 0x1452cd920)
+	// Offset evidence: record +0x2ec = GamepadTargetingSlow (Float, exact); record +0x87e = bDirty (bitfield, mov8). Same flag/store pattern as the scoped multiplier: bDirty only for ordered unequal values, field store unconditional on the non-null path.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    if (NewValue < SettingsRecord->GamepadTargetingSlow || NewValue > SettingsRecord->GamepadTargetingSlow)
+	    {
+	        SettingsRecord->bDirty = true;
+	    }
+	    SettingsRecord->GamepadTargetingSlow = NewValue;
 	}
 }
 
@@ -181,6 +351,28 @@ float UFortSettingsContext::GetGamepadEditModeMultiplierValue() const
 	// Native 0x144d03e50; record offset 0x2f8.
 	const UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
 	return Record ? Record->GamepadEditModeMultiplier : 0.0f;
+}
+
+FVector2D UFortSettingsContext::GetGamepadLookSensitivityValue() const
+{
+	// Original address: 0x144d03e80 (thunk 0x1452ce300)
+	// Offset evidence: this+0x34 is below UFortSettingsContext's lowest own offset (0x3c), so it is raw inherited storage (float). Record +0x2d4 = GamepadLookSensitivity (FVector2D, X at +0x2d4, Y at +0x2d8). Constant [0x1459a86f8] is 1.0f in .rdata (checked in the PE image). Null record returns (0,0) (MOV qword [RBX],RAX with RAX=0). Native body writes through the hidden RDX out pointer and returns it in RAX; the port returns the FVector2D value.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (!SettingsRecord)
+	{
+	    return FVector2D(0.0f, 0.0f);
+	}
+	const uint8* Raw = reinterpret_cast<const uint8*>(this);
+	const float Divisor = *reinterpret_cast<const float*>(Raw + 0x34);
+	const float LookX = SettingsRecord->GamepadLookSensitivity.X;
+	const float LookY = SettingsRecord->GamepadLookSensitivity.Y;
+	// JNC on COMISS a,1.0: values at or above 1.0 (ordered) take MINSS(Divisor, a) = (Divisor < a) ? Divisor : a; otherwise the clamp is 1.0.
+	const float ClampX = (LookX >= 1.0f) ? ((Divisor < LookX) ? Divisor : LookX) : 1.0f;
+	const float ClampY = (LookY >= 1.0f) ? ((Divisor < LookY) ? Divisor : LookY) : 1.0f;
+	const float Inverse = 1.0f / Divisor;
+	return FVector2D(Inverse * ClampX, Inverse * ClampY);
 }
 
 float UFortSettingsContext::GetGamepadLookStickDeadZone() const
@@ -488,6 +680,104 @@ float UFortSettingsContext::GetTouchVerticalSensitivityValue() const
 	return Record ? Record->TouchVerticalMultiplier : 0.0f;
 }
 
+bool UFortSettingsContext::GetTurboBuild() const
+{
+	// Original address: 0x144d0dbe0 (thunk 0x1452cf260)
+	// Offset evidence: no field access. Null record returns false (XOR AL,AL); otherwise the result of UFortClientSettingsRecord::GetTurboBuild (0x141e2c2c0) is returned as a bool.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (!SettingsRecord)
+	{
+	    return false;
+	}
+	return SettingsRecord->GetTurboBuild();
+}
+
+bool UFortSettingsContext::GetVoiceChatEnabled() const
+{
+	// Original address: 0x144d0f3b0 (thunk 0x1452cf2f0)
+	// Offset evidence: no field access. Null record returns false (RAX=0); otherwise the body tail-jumps to UFortClientSettingsRecord::GetVoiceChatEnabled (0x141e2c560).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (!SettingsRecord)
+	{
+	    return false;
+	}
+	return SettingsRecord->GetVoiceChatEnabled();
+}
+
+bool UFortSettingsContext::GetYawInversionState() const
+{
+	// Original address: 0x144d0f780 (thunk 0x1452cf380)
+	// Offset evidence: no field access. Null record returns false; otherwise the result of UFortClientSettingsRecord::GetInvertedYaw (0x141e27600) is returned, normalised to a bool (TEST AL,AL / MOV AL,1).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (!SettingsRecord)
+	{
+	    return false;
+	}
+	return SettingsRecord->GetInvertedYaw();
+}
+
+void UFortSettingsContext::GyroSensitivityValueChanged(float NewValue)
+{
+	// Original address: 0x144d0f7b0 (thunk 0x1452cf3b0)
+	// Offset evidence: record +0x33c = GyroSensitivity (Float, exact); record +0x87e = bDirty (bitfield, mov8). bDirty is written only for ordered unequal values (JZ over the flag write); the field store is unconditional on the non-null path.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    if (NewValue < SettingsRecord->GyroSensitivity || NewValue > SettingsRecord->GyroSensitivity)
+	    {
+	        SettingsRecord->bDirty = true;
+	    }
+	    SettingsRecord->GyroSensitivity = NewValue;
+	}
+}
+
+void UFortSettingsContext::HiddenMatchmakingDelayMaxChanged(int32 inValue)
+{
+	// Original address: 0x144d12a80 (thunk 0x1452cf430)
+	// Offset evidence: no field access. The non-null record receives inValue via UFortClientSettingsRecord::SetHiddenMatchmakingDelayMax (0x141e3b9b0, tail-jump in the original).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetHiddenMatchmakingDelayMax(inValue);
+	}
+}
+
+void UFortSettingsContext::HiddenMatchmakingDelayMaxReset()
+{
+	// Original address: 0x144d12ab0 (thunk 0x1452cf4b0)
+	// Offset evidence: no field access. The non-null record receives 0 (XOR EDX,EDX) via UFortClientSettingsRecord::SetHiddenMatchmakingDelayMax (0x141e3b9b0, tail-jump in the original).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetHiddenMatchmakingDelayMax(0);
+	}
+}
+
+void UFortSettingsContext::HideOtherPlayerNamesChanged(bool bInChecked)
+{
+	// Original address: 0x144d12ae0 (thunk 0x1452cf4d0)
+	// Offset evidence: no field access. The non-null record receives bInChecked (zero-extended DL) via UFortClientSettingsRecord::SetHideOtherPlayerNames (0x141e3b9d0, tail-jump in the original).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetHideOtherPlayerNames(bInChecked);
+	}
+}
+
 void UFortSettingsContext::HoldToSwapPickupChanged(bool bInChecked)
 {
 	// Behaviour snippet: UFortSettingsContext::HoldToSwapPickupChanged (body only; spliced into the generated member function).
@@ -502,6 +792,59 @@ void UFortSettingsContext::HoldToSwapPickupChanged(bool bInChecked)
 	}
 }
 
+void UFortSettingsContext::InWorldInteractChanged(bool bInChecked)
+{
+	// Original address: 0x144d12b60 (thunk 0x1452cf5f0)
+	// Offset evidence: record +0x46d = TouchInteractionMode (ETouchInteractMode, Enum byte, exact); record +0x87e = bDirty (bitfield, mov8). The stored byte is (bInChecked ^ 1) + 1 (XOR BL,1; INC BL), i.e. 1 when checked and 2 otherwise. The mode compare and both writes are skipped together when the value is unchanged (JZ to epilogue).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    const uint8 Mode = bInChecked ? 1 : 2;
+	    if (static_cast<uint8>(SettingsRecord->TouchInteractionMode) != Mode)
+	    {
+	        SettingsRecord->TouchInteractionMode = static_cast<ETouchInteractMode>(Mode);
+	        SettingsRecord->bDirty = true;
+	    }
+	}
+}
+
+void UFortSettingsContext::MotionAxisValueChanged(int32 NewValue)
+{
+	// Original address: 0x144d14a00 (thunk 0x1452cf680)
+	// Offset evidence: record +0x339 = MotionYawAxis (EFortMotionYawAxis, Enum byte, exact); record +0x87e = bDirty (bitfield, mov8). The stored byte is 1 when NewValue is nonzero, else 0 (TEST EBX,EBX). bDirty is written only when the stored byte differs; the axis store itself is unconditional on the non-null path.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    const uint8 Axis = (NewValue != 0) ? 1 : 0;
+	    if (static_cast<uint8>(SettingsRecord->MotionYawAxis) != Axis)
+	    {
+	        SettingsRecord->bDirty = true;
+	    }
+	    SettingsRecord->MotionYawAxis = static_cast<EFortMotionYawAxis>(Axis);
+	}
+}
+
+void UFortSettingsContext::MotionControlEnabledValueChanged(bool NewValue)
+{
+	// Original address: 0x144d14a40 (thunk 0x1452cf700)
+	// Offset evidence: record byte +0x338 bit 0 = bMotionControlsEnabled (bool bitfield, bool_bits.json; the only declared bit in that byte). record +0x87e = bDirty (bitfield, mov8). bDirty is written only when the stored value changes; the bit store is unconditional on the non-null path.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    if (SettingsRecord->bMotionControlsEnabled != NewValue)
+	    {
+	        SettingsRecord->bDirty = true;
+	    }
+	    SettingsRecord->bMotionControlsEnabled = NewValue;
+	}
+}
+
 void UFortSettingsContext::MouseSensitivityMultiplierForAircraftChanged(float NewValue)
 {
 	// Behaviour snippet: UFortSettingsContext::MouseSensitivityMultiplierForAircraftChanged (body only; spliced into the generated member function).
@@ -513,6 +856,528 @@ void UFortSettingsContext::MouseSensitivityMultiplierForAircraftChanged(float Ne
 	{
 		SettingsRecord->MouseSensitivityMultiplierForAircraftValue = NewValue;
 		SettingsRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::MouseSensitivityXChanged(float NewValue)
+{
+	// Original address: 0x144d14d00 (thunk 0x1452cf990)
+	// Offset evidence: this+0x30 is below UFortSettingsContext's lowest own offset (0x3c), so it is raw inherited storage (float). Record +0x30c = MouseSensitivityX (Float, exact); record +0x87e = bDirty (bitfield, mov8). Constants: [0x1459c03a0] is 1e-08f in .rdata (checked in the PE image); [0x1459a3d00] is the sign-clear mask, so FMath::Abs matches ANDPS.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    uint8* Raw = reinterpret_cast<uint8*>(this);
+	    const float Scaled = NewValue * *reinterpret_cast<const float*>(Raw + 0x30);
+	    if (FMath::Abs(Scaled - SettingsRecord->MouseSensitivityX) > 1e-08f)
+	    {
+	        SettingsRecord->MouseSensitivityX = Scaled;
+	        SettingsRecord->bDirty = true;
+	    }
+	}
+}
+
+void UFortSettingsContext::MouseSensitivityYChanged(float NewValue)
+{
+	// Original address: 0x144d14d60 (thunk 0x1452cfa10)
+	// Offset evidence: this+0x30 is below UFortSettingsContext's lowest own offset (0x3c), so it is raw inherited storage (float). Record +0x310 = MouseSensitivityY (Float, exact); record +0x87e = bDirty (bitfield, mov8). Same constants as the X handler: 1e-08f at [0x1459c03a0] and the sign-clear mask at [0x1459a3d00].
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    uint8* Raw = reinterpret_cast<uint8*>(this);
+	    const float Scaled = NewValue * *reinterpret_cast<const float*>(Raw + 0x30);
+	    if (FMath::Abs(Scaled - SettingsRecord->MouseSensitivityY) > 1e-08f)
+	    {
+	        SettingsRecord->MouseSensitivityY = Scaled;
+	        SettingsRecord->bDirty = true;
+	    }
+	}
+}
+
+void UFortSettingsContext::MusicVolumeChanged(float NewValue)
+{
+	// Original address: 0x144d14dc0 (thunk 0x1452cfa90)
+	// Offset evidence: no field access. The non-null record receives NewValue via UFortClientSettingsRecord::SetMusicVolume (0x141e3c210; its parameter is named InVolume in the generated header).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetMusicVolume(NewValue);
+	}
+}
+
+void UFortSettingsContext::NotifyUsersWhenPlayingChanged(bool bNotify)
+{
+	// Original address: 0x144d14df0 (thunk 0x1452cfb10)
+	// Offset evidence: no field access. The non-null record receives bNotify (zero-extended DL) via UFortClientSettingsRecord::SetNotifyUsersWhenPlaying (0x141e3c260, tail-jump in the original).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortClientSettingsRecord) > 0, "UFortClientSettingsRecord must be a complete type");
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetNotifyUsersWhenPlaying(bNotify);
+	}
+}
+
+void UFortSettingsContext::OnAimAssistChanged(bool bInChecked)
+{
+	// Original body 0x144d14e20 (thunk 0x1452cfba0). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetAimAssistEnabled at 0x141e39a60 (tail/direct call with RCX=record, DL=bInChecked).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetAimAssistEnabled(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnAutoChangeMaterialChanged(bool bInChecked)
+{
+	// Original body 0x144d14ec0 (thunk 0x1452cfcc0). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetAutoChangeMaterial at 0x141e3a520 (tail/direct call with RCX=record, DL=bInChecked).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetAutoChangeMaterial(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnAutoOpenDoorsChanged(bool bInChecked)
+{
+	// Original body 0x144d14f20 (thunk 0x1452cfde0). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetAutoOpenDoors at 0x141e3a6e0 (tail/direct call with RCX=record, DL=bInChecked).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetAutoOpenDoors(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnAutoPickupWeaponsChanged(bool bInChecked)
+{
+	// Original body 0x144d14f50 (thunk 0x1452cfe70). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetAutoPickupWeapons at 0x141e3a730 (tail/direct call with RCX=record, DL=bInChecked).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetAutoPickupWeapons(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnAutoPickupWeaponsConsolePCChanged(bool bInChecked)
+{
+	// Original body 0x144d14f80 (thunk 0x1452cff00). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetAutoPickupWeaponsConsolePC at 0x141e3a750 (tail/direct call with RCX=record, DL=bInChecked).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetAutoPickupWeaponsConsolePC(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnAutoSortConsumablesToRightChanged(bool bInChecked)
+{
+	// Original body 0x144d14fb0 (thunk 0x1452cff90). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetAutoSortConsumablesToRight at 0x141e3a770 (tail/direct call with RCX=record, DL=bInChecked).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetAutoSortConsumablesToRight(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnBuildingPossessionChanged(bool bInChecked)
+{
+	// Original body 0x144d14fe0 (thunk 0x1452d0020). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: record+0x479 = bBuildingPossessionShown (bool_bits.json mask 0x1, mov8); record+0x87e = bDirty (mask 0x1, mov8). asm: CMP BL,byte ptr [RAX + 0x479]; JZ skip; MOV byte [RAX+0x479],BL; MOV byte [RAX+0x87e],1.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord && SettingsRecord->bBuildingPossessionShown != bInChecked)
+	{
+	    SettingsRecord->bBuildingPossessionShown = bInChecked;
+	    SettingsRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::OnContextTutorialChanged(bool bInChecked)
+{
+	// Original body 0x144d154d0 (thunk 0x1452d00b0). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: record+0x478 = bContextTutorialEnabled (bool_bits.json mask 0x1, mov8); record+0x87e = bDirty (mask 0x1, mov8). asm: CMP BL,byte ptr [RAX + 0x478]; JZ skip; MOV byte [RAX+0x478],BL; MOV byte [RAX+0x87e],1.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord && SettingsRecord->bContextTutorialEnabled != bInChecked)
+	{
+	    SettingsRecord->bContextTutorialEnabled = bInChecked;
+	    SettingsRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::OnCreativeModeReplayRecordingPreferenceChanged(bool bInChecked)
+{
+	// Original body 0x144d15500 (thunk 0x1452d0140). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetCreativeModeReplayRecordingEnabled at 0x141e3af20 (tail/direct call with RCX=record, DL=bInChecked).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetCreativeModeReplayRecordingEnabled(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnCreativeTurboDeleteChanged(bool bInChecked)
+{
+	// Original body 0x144d15530 (thunk 0x1452d01d0). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetCreativeTurboDelete at 0x141e3af40 (tail/direct call with RCX=record, DL=bInChecked).
+	// Job data: thunk 0x1452d01d0 and body 0x144d15530 are shared with OnCreativeTurboDeleteReset (identical body).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetCreativeTurboDelete(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnCreativeTurboDeleteReset(bool bInChecked)
+{
+	// Original body 0x144d15530 (thunk 0x1452d01d0). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetCreativeTurboDelete at 0x141e3af40 (tail/direct call with RCX=record, DL=bInChecked).
+	// Job data: thunk 0x1452d01d0 and body 0x144d15530 are shared with OnCreativeTurboDeleteChanged (identical body).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetCreativeTurboDelete(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnEditConfirmOnReleaseChanged(bool bInChecked)
+{
+	// Original body 0x144d15780 (thunk 0x1452d0370). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: record+0x474 = bEditConfirmOnReleaseEnabled (bool_bits.json mask 0x1, mov8); record+0x87e = bDirty (mask 0x1, mov8). asm: CMP byte ptr [RAX + 0x474],BL; JZ skip; MOV byte [RAX+0x474],BL; MOV byte [RAX+0x87e],1.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord && SettingsRecord->bEditConfirmOnReleaseEnabled != bInChecked)
+	{
+	    SettingsRecord->bEditConfirmOnReleaseEnabled = bInChecked;
+	    SettingsRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::OnEditModeAimAssistChanged(bool bInChecked)
+{
+	// Original body 0x144d157b0 (thunk 0x1452d0400). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: record+0x47c = bUseGamepadEditModeAimAssist (bool_bits.json mask 0x1, mov8); record+0x87e = bDirty (mask 0x1, mov8). asm: CMP BL,byte ptr [RAX + 0x47c]; JZ skip; MOV byte [RAX+0x47c],BL; MOV byte [RAX+0x87e],1.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord && SettingsRecord->bUseGamepadEditModeAimAssist != bInChecked)
+	{
+	    SettingsRecord->bUseGamepadEditModeAimAssist = bInChecked;
+	    SettingsRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::OnEnableTryBuildOnFocusChanged(bool bInChecked)
+{
+	// Original body 0x144d157e0 (thunk 0x1452d0490). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetEnableTryBuildOnFocus at 0x141e3b2d0 (tail/direct call with RCX=record, DL=bInChecked).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetEnableTryBuildOnFocus(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnFocusOnFirstBuildingPieceWhenQuickbarSwappedChanged(bool bInChecked)
+{
+	// Original body 0x144d15810 (thunk 0x1452d0520). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: record+0x480 = bNewFocusOnFirstBuildingPieceWhenQuickbarSwapped (bool_bits.json mask 0x1, mov8); record+0x87e = bDirty (mask 0x1, mov8). asm: CMP BL,byte ptr [RAX + 0x480]; JZ skip; MOV byte [RAX+0x480],BL; MOV byte [RAX+0x87e],1.
+	// asm writes +0x480 (bNewFocus...), not bFocus... at +0x47f (asm authoritative; header name kept as asm offset).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord && SettingsRecord->bNewFocusOnFirstBuildingPieceWhenQuickbarSwapped != bInChecked)
+	{
+	    SettingsRecord->bNewFocusOnFirstBuildingPieceWhenQuickbarSwapped = bInChecked;
+	    SettingsRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::OnFocusOnFirstBuildingPieceWhenQuickbarSwappedChangedAthena(bool bInChecked)
+{
+	// Original body 0x144d15840 (thunk 0x1452d05b0). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: record+0x482 = bNewFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena (bool_bits.json mask 0x1, mov8); record+0x87e = bDirty (mask 0x1, mov8). asm: CMP BL,byte ptr [RAX + 0x482]; JZ skip; MOV byte [RAX+0x482],BL; MOV byte [RAX+0x87e],1.
+	// asm writes +0x480 (bNewFocus...), not bFocus... at +0x47f (asm authoritative; header name kept as asm offset).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord && SettingsRecord->bNewFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena != bInChecked)
+	{
+	    SettingsRecord->bNewFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena = bInChecked;
+	    SettingsRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::OnForceFeedbackChanged(bool bInChecked)
+{
+	// Original body 0x144d15870 (thunk 0x1452d0640). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: record+0x476 = bForceFeedbackEnabled (bool_bits.json mask 0x1, mov8); record+0x87e = bDirty (mask 0x1, mov8). asm: CMP BL,byte ptr [RAX + 0x476]; JZ skip; MOV byte [RAX+0x476],BL; MOV byte [RAX+0x87e],1.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord && SettingsRecord->bForceFeedbackEnabled != bInChecked)
+	{
+	    SettingsRecord->bForceFeedbackEnabled = bInChecked;
+	    SettingsRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::OnGamepadAutoRunChanged(bool bInChecked)
+{
+	// Original body 0x144d158a0 (thunk 0x1452d06d0). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: record+0x47e = bUseGamepadAutoRun (bool_bits.json mask 0x1, mov8); record+0x87e = bDirty (mask 0x1, mov8). asm: CMP BL,byte ptr [RAX + 0x47e]; JZ skip; MOV byte [RAX+0x47e],BL; MOV byte [RAX+0x87e],1.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord && SettingsRecord->bUseGamepadAutoRun != bInChecked)
+	{
+	    SettingsRecord->bUseGamepadAutoRun = bInChecked;
+	    SettingsRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::OnHUDScaleChanged(float bInHUDScale)
+{
+	// Original body 0x144d158d0 (thunk 0x1452d0760). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetHUDScale at 0x141e3b750 (tail/direct call with RCX=record, XMM1=bInHUDScale).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetHUDScale(bInHUDScale);
+	}
+}
+
+void UFortSettingsContext::OnLargeTeamsReplayRecordingPreferenceChanged(bool bInChecked)
+{
+	// Original body 0x144d159a0 (thunk 0x1452d07e0). Helper 0x144d03d50 = UFortSettingsContext::NativeGetSettingsRecord144d03d50 yields the settings record;
+	// the native body does nothing when it is null.
+	// Offset evidence: no inline record field access; the store is inside UFortClientSettingsRecord::SetLargeTeamReplayRecordingEnabled at 0x141e3bcb0 (tail/direct call with RCX=record, DL=bInChecked).
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* SettingsRecord = NativeGetSettingsRecord144d03d50();
+	if (SettingsRecord)
+	{
+	    SettingsRecord->SetLargeTeamReplayRecordingEnabled(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnPlaceDangerMarkerWhenTargetingChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d16880 (thunk 0x1452d0900); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and bInChecked in DL to 0x141e3c2e0 (UFortClientSettingsRecord::SetPlaceDangerMarkerWhenTargeting).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetPlaceDangerMarkerWhenTargeting(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnPlayerSurveysAllowedChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d17390 (thunk 0x1452d0990); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and bInChecked in DL to 0x141e3c330 (UFortClientSettingsRecord::SetPlayerSurveysAllowed).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetPlayerSurveysAllowed(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnQuickEditChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d17a50 (thunk 0x1452d0a20); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: UFortClientSettingsRecord +0x475 = bQuickEditEnabled (porting/generated/reflection/bool_bits.json or reflected float); +0x87e = bDirty (bool_bits.json, mask 1, mov8).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); CMP byte + JZ skip: stores run only when the byte differs from the argument.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord && ClientRecord->bQuickEditEnabled != bInChecked)
+	{
+	    ClientRecord->bQuickEditEnabled = bInChecked;
+	    ClientRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::OnReplayRecordingPreferenceChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d18040 (thunk 0x1452d0ab0); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and bInChecked in DL to 0x141e3c530 (UFortClientSettingsRecord::SetReplayRecordingEnabled).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetReplayRecordingEnabled(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnShadowPlayHighlightsChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d18070 (thunk 0x1452d0b40); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and bInChecked in DL to 0x141e3c600 (UFortClientSettingsRecord::SetShadowPlayHighlightsEnabled).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetShadowPlayHighlightsEnabled(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnShowGlobalChatEnabledChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d180a0 (thunk 0x1452d0bd0); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and bInChecked in DL to 0x141e3c870 (UFortClientSettingsRecord::SetShowGlobalChatEnabled).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetShowGlobalChatEnabled(bInChecked);
+	}
+}
+
+void UFortSettingsContext::OnTouchEditChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d18250 (thunk 0x1452d0c60); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: UFortClientSettingsRecord +0x473 = bTouchEditEnabled (porting/generated/reflection/bool_bits.json or reflected float); +0x87e = bDirty (bool_bits.json, mask 1, mov8).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); CMP byte + JZ skip: stores run only when the byte differs from the argument.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord && ClientRecord->bTouchEditEnabled != bInChecked)
+	{
+	    ClientRecord->bTouchEditEnabled = bInChecked;
+	    ClientRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::OnTurboBuildChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d18280 (thunk 0x1452d0cf0); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and bInChecked in DL to 0x141e3cc50 (UFortClientSettingsRecord::SetTurboBuild).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetTurboBuild(bInChecked);
+	}
+}
+
+void UFortSettingsContext::PeripheralLightingChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d19990 (thunk 0x1452d0e10); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and bInChecked in DL to 0x141e3c2c0 (UFortClientSettingsRecord::SetPeripheralLightingEnabled).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetPeripheralLightingEnabled(bInChecked);
+	}
+}
+
+void UFortSettingsContext::PitchInversionChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d1a4e0 (thunk 0x1452d1050); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and bInChecked in DL to 0x141e3bb70 (UFortClientSettingsRecord::SetInvertedPitch).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetInvertedPitch(bInChecked);
+	}
+}
+
+void UFortSettingsContext::PowerSaverModeChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d1a770 (thunk 0x1452d1170); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: UFortClientSettingsRecord +0x63a = bUsePowerSavingMode (porting/generated/reflection/bool_bits.json or reflected float); +0x87e = bDirty (bool_bits.json, mask 1, mov8).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); CMP byte + JZ skip: stores run only when the byte differs from the argument.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord && ClientRecord->bUsePowerSavingMode != bInChecked)
+	{
+	    ClientRecord->bUsePowerSavingMode = bInChecked;
+	    ClientRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::RudderDeadZoneChanged(float NewValue)
+{
+	// Wrapper body at 0x144d1d430 (thunk 0x1452d15c0); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and NewValue in XMM1 to 0x141e3c550 (UFortClientSettingsRecord::SetRudderDeadZone).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetRudderDeadZone(NewValue);
+	}
+}
+
+void UFortSettingsContext::RudderMaxThrottleChanged(float NewValue)
+{
+	// Wrapper body at 0x144d1d460 (thunk 0x1452d1640); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and NewValue in XMM1 to 0x141e3c570 (UFortClientSettingsRecord::SetRudderMaxThrottle).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetRudderMaxThrottle(NewValue);
+	}
+}
+
+void UFortSettingsContext::ScopedMultiplierValueChanged(float NewValue)
+{
+	// Wrapper body at 0x144d1d4b0 (thunk 0x1452d1740); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: UFortClientSettingsRecord +0x2e8 = ScopedSlow (porting/generated/reflection/bool_bits.json or reflected float); +0x87e = bDirty (bool_bits.json, mask 1, mov8).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); UCOMISS + JZ skip: JZ also skips on unordered (NaN), so the store runs only for ordered inequality.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord && (NewValue < ClientRecord->ScopedSlow || NewValue > ClientRecord->ScopedSlow))
+	{
+	    ClientRecord->bDirty = true;
+	    ClientRecord->ScopedSlow = NewValue;
 	}
 }
 
@@ -612,6 +1477,215 @@ void UFortSettingsContext::SetVisualizeAudioSources(bool bEnable)
 	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
 	{
 	    Record->SetVisualizeAudioSources(bEnable);
+	}
+}
+
+void UFortSettingsContext::SoundFXVolumeChanged(float NewValue)
+{
+	// Wrapper body at 0x144d208a0 (thunk 0x1452d2400); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and NewValue in XMM1 to 0x141e3c9a0 (UFortClientSettingsRecord::SetSoundFXVolume).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetSoundFXVolume(NewValue);
+	}
+}
+
+void UFortSettingsContext::SprintByDefaultChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d208d0 (thunk 0x1452d2480); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: no direct field access; the record is passed in RCX and bInChecked in DL to 0x141e3c820 (UFortClientSettingsRecord::SetShouldSprintByDefault).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); null check on the record.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord)
+	{
+	    ClientRecord->SetShouldSprintByDefault(bInChecked);
+	}
+}
+
+void UFortSettingsContext::SprintCancelsReloadChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d20900 (thunk 0x1452d2510); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: UFortClientSettingsRecord +0x46b = bSprintCancelsReload (porting/generated/reflection/bool_bits.json or reflected float); +0x87e = bDirty (bool_bits.json, mask 1, mov8).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); CMP byte + JZ skip: stores run only when the byte differs from the argument.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord && ClientRecord->bSprintCancelsReload != bInChecked)
+	{
+	    ClientRecord->bSprintCancelsReload = bInChecked;
+	    ClientRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::SprintToggleChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d20930 (thunk 0x1452d25a0); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: UFortClientSettingsRecord +0x468 = bToggleSprint (porting/generated/reflection/bool_bits.json or reflected float); +0x87e = bDirty (bool_bits.json, mask 1, mov8).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); CMP byte + JZ skip: stores run only when the byte differs from the argument.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord && ClientRecord->bToggleSprint != bInChecked)
+	{
+	    ClientRecord->bDirty = true;
+	    ClientRecord->bToggleSprint = bInChecked;
+	}
+}
+
+void UFortSettingsContext::TapInteractChanged(bool bInChecked)
+{
+	// Wrapper body at 0x144d20de0 (thunk 0x1452d2630); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: UFortClientSettingsRecord +0x46c = bTapInteractEnabled (porting/generated/reflection/bool_bits.json or reflected float); +0x87e = bDirty (bool_bits.json, mask 1, mov8).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); CMP byte + JZ skip: stores run only when the byte differs from the argument.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord && ClientRecord->bTapInteractEnabled != bInChecked)
+	{
+	    ClientRecord->bTapInteractEnabled = bInChecked;
+	    ClientRecord->bDirty = true;
+	}
+}
+
+void UFortSettingsContext::TargetingMultiplierValueChanged(float NewValue)
+{
+	// Wrapper body at 0x144d20e10 (thunk 0x1452d26c0); receiver this_delta 0, RCX = UFortSettingsContext.
+	// Offset evidence: UFortClientSettingsRecord +0x2e4 = TargetingSlow (porting/generated/reflection/bool_bits.json or reflected float); +0x87e = bDirty (bool_bits.json, mask 1, mov8).
+	// Callee 0x144d03d50 = NativeGetSettingsRecord144d03d50 (declared in UFortSettingsContext.h); UCOMISS + JZ skip: JZ also skips on unordered (NaN), so the store runs only for ordered inequality.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* ClientRecord = NativeGetSettingsRecord144d03d50();
+	if (ClientRecord && (NewValue < ClientRecord->TargetingSlow || NewValue > ClientRecord->TargetingSlow))
+	{
+	    ClientRecord->bDirty = true;
+	    ClientRecord->TargetingSlow = NewValue;
+	}
+}
+
+void UFortSettingsContext::TargetingToggleChanged(bool bInChecked)
+{
+	// Original body 0x144d20e50 (thunk 0x1452d2740). Offset evidence: no object field access. The settings record from NativeGetSettingsRecord144d03d50 (0x144d03d50) is null-checked, then SetTargetingToggleable (0x141e3cac0) is tail-called with RDX = bInChecked.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	if (Record != nullptr)
+	{
+	    Record->SetTargetingToggleable(bInChecked);
+	}
+}
+
+void UFortSettingsContext::TouchBuildingMultiplierValueChanged(float NewValue)
+{
+	// Original body 0x144d20e80 (thunk 0x1452d27d0). Offset evidence: settings record from NativeGetSettingsRecord144d03d50 (0x144d03d50) at +0x32c = TouchBuildingMultiplier (reflected Float, exact lookup); record +0x87e = bDirty (reflected bool). UCOMISS sets ZF=0 only for ordered unequal operands, and only that case sets bDirty before the store.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	if (Record != nullptr)
+	{
+	    if (NewValue < Record->TouchBuildingMultiplier || NewValue > Record->TouchBuildingMultiplier)
+	    {
+	        Record->bDirty = true;
+	    }
+	    Record->TouchBuildingMultiplier = NewValue;
+	}
+}
+
+void UFortSettingsContext::TouchDragScopedSensitivityValueChanged(float NewValue)
+{
+	// Original body 0x144d20ec0 (thunk 0x1452d2850). Offset evidence: settings record from NativeGetSettingsRecord144d03d50 (0x144d03d50) at +0x328 = TouchScopedSlow (reflected Float, exact lookup); record +0x87e = bDirty (reflected bool). UCOMISS sets ZF=0 only for ordered unequal operands, and only that case sets bDirty before the store.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	if (Record != nullptr)
+	{
+	    if (NewValue < Record->TouchScopedSlow || NewValue > Record->TouchScopedSlow)
+	    {
+	        Record->bDirty = true;
+	    }
+	    Record->TouchScopedSlow = NewValue;
+	}
+}
+
+void UFortSettingsContext::TouchEditModeMultiplierValueChanged(float NewValue)
+{
+	// Original body 0x144d20f00 (thunk 0x1452d28d0). Offset evidence: settings record from NativeGetSettingsRecord144d03d50 (0x144d03d50) at +0x330 = TouchEditModeMultiplier (reflected Float, exact lookup); record +0x87e = bDirty (reflected bool). UCOMISS sets ZF=0 only for ordered unequal operands, and only that case sets bDirty before the store.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	if (Record != nullptr)
+	{
+	    if (NewValue < Record->TouchEditModeMultiplier || NewValue > Record->TouchEditModeMultiplier)
+	    {
+	        Record->bDirty = true;
+	    }
+	    Record->TouchEditModeMultiplier = NewValue;
+	}
+}
+
+void UFortSettingsContext::TouchLookAccelerationMultiplierValueChanged(float NewValue)
+{
+	// Original body 0x144d20f40 (thunk 0x1452d2950). Offset evidence: settings record from NativeGetSettingsRecord144d03d50 (0x144d03d50) at +0x31c = TouchLookAccelerationMultiplier (reflected Float, exact lookup); record +0x87e = bDirty (reflected bool). UCOMISS sets ZF=0 only for ordered unequal operands, and only that case sets bDirty before the store.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	if (Record != nullptr)
+	{
+	    if (NewValue < Record->TouchLookAccelerationMultiplier || NewValue > Record->TouchLookAccelerationMultiplier)
+	    {
+	        Record->bDirty = true;
+	    }
+	    Record->TouchLookAccelerationMultiplier = NewValue;
+	}
+}
+
+void UFortSettingsContext::TouchLookSensitivityChanged(float NewValue)
+{
+	// Original body 0x144d20f80 (thunk 0x1452d29d0). Offset evidence: settings record from NativeGetSettingsRecord144d03d50 (0x144d03d50) at +0x320 = TouchLookSensitivitySetting (reflected Float, exact lookup); record +0x87e = bDirty (reflected bool). UCOMISS sets ZF=0 only for ordered unequal operands, and only that case sets bDirty before the store.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	if (Record != nullptr)
+	{
+	    if (NewValue < Record->TouchLookSensitivitySetting || NewValue > Record->TouchLookSensitivitySetting)
+	    {
+	        Record->bDirty = true;
+	    }
+	    Record->TouchLookSensitivitySetting = NewValue;
+	}
+}
+
+void UFortSettingsContext::TouchTargetingMultiplierValueChanged(float NewValue)
+{
+	// Original body 0x144d20fc0 (thunk 0x1452d2a50). Offset evidence: settings record from NativeGetSettingsRecord144d03d50 (0x144d03d50) at +0x324 = TouchTargetingSlow (reflected Float, exact lookup); record +0x87e = bDirty (reflected bool). UCOMISS sets ZF=0 only for ordered unequal operands, and only that case sets bDirty before the store.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	if (Record != nullptr)
+	{
+	    if (NewValue < Record->TouchTargetingSlow || NewValue > Record->TouchTargetingSlow)
+	    {
+	        Record->bDirty = true;
+	    }
+	    Record->TouchTargetingSlow = NewValue;
+	}
+}
+
+void UFortSettingsContext::TouchVerticalSensitivityValueChanged(float NewValue)
+{
+	// Original body 0x144d21000 (thunk 0x1452d2ad0). Offset evidence: settings record from NativeGetSettingsRecord144d03d50 (0x144d03d50) at +0x334 = TouchVerticalMultiplier (reflected Float, exact lookup); record +0x87e = bDirty (reflected bool). UCOMISS sets ZF=0 only for ordered unequal operands, and only that case sets bDirty before the store.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	if (Record != nullptr)
+	{
+	    if (NewValue < Record->TouchVerticalMultiplier || NewValue > Record->TouchVerticalMultiplier)
+	    {
+	        Record->bDirty = true;
+	    }
+	    Record->TouchVerticalMultiplier = NewValue;
+	}
+}
+
+void UFortSettingsContext::YawInversionChanged(bool bInChecked)
+{
+	// Original body 0x144d21bd0 (thunk 0x1452d2c60). Offset evidence: no object field access. The settings record from NativeGetSettingsRecord144d03d50 (0x144d03d50) is null-checked, then SetInvertedYaw (0x141e3bc20) is tail-called with RDX = bInChecked.
+	// CONFIDENCE: HIGH
+	UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	if (Record != nullptr)
+	{
+	    Record->SetInvertedYaw(bInChecked);
 	}
 }
 

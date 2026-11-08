@@ -421,5 +421,62 @@
   "blocker": "clang_compile_error",
   "reason": "no member named 'ForwardMinigameActivityRankChanged' in 'UFortControllerComponent_MinigameActivity'",
   "inc_path": "porting/behavior/hp2_runtime/AFortPlayerControllerFrontEnd/NativeForwardMinigameRankChanged1423a1ea0.inc"
+ },
+ {
+  "entry": "UAthenaQuickbarEditorBase::GetFirstEquipSlotButton",
+  "kind": "exec",
+  "blocker": "cross_module_type",
+  "reason": "body uses UCommonButtonGroup, a class of another module (generator rejects it)",
+  "inc_path": "porting/behavior/cr3_runtime/UAthenaQuickbarEditorBase/GetFirstEquipSlotButton.inc"
+ },
+ {
+  "entry": "UFortDropdownMenu::GetSelectedButton",
+  "kind": "exec",
+  "blocker": "cross_module_type",
+  "reason": "body uses UCommonButton/UCommonButtonGroup, classes of another module",
+  "inc_path": "porting/behavior/cr4_runtime/UFortDropdownMenu/GetSelectedButton.inc"
+ },
+ {
+  "entry": "ABuildingTimeOfDayLights::GetTimeOfDayBlueprintDefaultVariables_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type is not a Blueprint-supported USTRUCT in this tree",
+  "inc_path": "porting/behavior/cr1_runtime/ABuildingTimeOfDayLights/GetTimeOfDayBlueprintDefaultVariables_Implementation.inc"
+ },
+ {
+  "entry": "UAthenaWinnersList::OnWinnersAnnounced_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type is not a Blueprint-supported USTRUCT in this tree",
+  "inc_path": "porting/behavior/cr3_runtime/UAthenaWinnersList/OnWinnersAnnounced_Implementation.inc"
+ },
+ {
+  "entry": "UFortButtonStyle::GetMarginBySizeFromMultiSizeMargin",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type is not a Blueprint-supported USTRUCT in this tree",
+  "inc_path": "porting/behavior/cr3_runtime/UFortButtonStyle/GetMarginBySizeFromMultiSizeMargin.inc"
+ },
+ {
+  "entry": "UFortExpeditionRewardsWidget::RefreshRewardsUI_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type is not a Blueprint-supported USTRUCT in this tree",
+  "inc_path": "porting/behavior/cr4_runtime/UFortExpeditionRewardsWidget/RefreshRewardsUI_Implementation.inc"
+ },
+ {
+  "entry": "UFortPlayerSurveyAnswerWidgetBase::HandleAnswerChanged_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type is not a Blueprint-supported USTRUCT in this tree",
+  "inc_path": "porting/behavior/cr5_runtime/UFortPlayerSurveyAnswerWidgetBase/HandleAnswerChanged_Implementation.inc"
+ },
+ {
+  "entry": "UFortUIManagerWidget_NUI::IsStateContentChildShowing",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "cannot initialize a parameter of type 'UObject *' with an lvalue of type 'UNamedSlot *const'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/cr9_runtime/UFortUIManagerWidget_NUI/IsStateContentChildShowing.inc"
  }
 ]

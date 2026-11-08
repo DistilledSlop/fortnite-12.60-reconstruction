@@ -52,5 +52,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<UFortQuestObjectiveEntry*> AvailableQuestObjectiveEntryArray;
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetNumDisplayedObjectives();
+
 };
 

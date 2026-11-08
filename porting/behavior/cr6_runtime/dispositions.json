@@ -1,0 +1,142 @@
+[
+ {
+  "class": "UFortSettingsContext",
+  "function": "GamepadLookStickDeadZoneChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GamepadMoveStickDeadZoneChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GamepadScopedMultiplierValueChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GamepadTargetingMultiplierValueChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GetGamepadLookSensitivityValue",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GetMouseSensitivityValue",
+  "status": "blocked",
+  "case": "hidden_writable_global_default",
+  "reason": "Body loads MOVSS XMM0,dword ptr [0x148218628] and MOVSS XMM1,dword ptr [0x14821862c] and stores them to the FVector2D out-pointer before the settings-record null check; both addresses are in the writable .data section of FortniteClient-Win64-Shipping.exe (not foldable constants), so the null-record result cannot be expressed exactly."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GetTurboBuild",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GetVoiceChatEnabled",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GetYawInversionState",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "GyroSensitivityValueChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "HiddenMatchmakingDelayMaxChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "HiddenMatchmakingDelayMaxReset",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "HideOtherPlayerNamesChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "InWorldInteractChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "MotionAxisValueChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "MotionControlEnabledValueChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "MouseSensitivityXChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "MouseSensitivityYChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "MusicVolumeChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ },
+ {
+  "class": "UFortSettingsContext",
+  "function": "NotifyUsersWhenPlayingChanged",
+  "status": "proposed",
+  "case": "direct_body",
+  "reason": "All body instructions accounted for against reflected members, raw this offsets, verified constants and resolved callees."
+ }
+]

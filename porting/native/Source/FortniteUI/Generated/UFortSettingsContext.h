@@ -11,6 +11,7 @@
 #include "ESettingType.h"
 #include "Engine/LocalPlayer.h"
 #include "GameFramework/PlayerController.h"
+#include "Math/Vector2D.h"
 #include "UFortClientSettingsRecord.h"
 
 #include "UFortSettingsContext.generated.h"
@@ -34,6 +35,39 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void AnonymousModeChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void AutoEquipChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void ChatVolumeChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void CinematicsVolumeChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void DialogVolumeChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void FirstPersonCameraChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void GamepadBuildingMultiplierValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void GamepadEditModeMultiplierValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void GamepadLookStickDeadZoneChanged(float NewValue) const;
+
+	UFUNCTION(BlueprintCallable)
+	void GamepadMoveStickDeadZoneChanged(float NewValue) const;
+
+	UFUNCTION(BlueprintCallable)
+	void GamepadScopedMultiplierValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void GamepadTargetingMultiplierValueChanged(float NewValue);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetAimAssistState() const;
@@ -85,6 +119,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetGamepadEditModeMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector2D GetGamepadLookSensitivityValue() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetGamepadLookStickDeadZone() const;
@@ -200,11 +237,155 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetTouchVerticalSensitivityValue() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetTurboBuild() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetVoiceChatEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetYawInversionState() const;
+
+	UFUNCTION(BlueprintCallable)
+	void GyroSensitivityValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void HiddenMatchmakingDelayMaxChanged(int32 inValue);
+
+	UFUNCTION(BlueprintCallable)
+	void HiddenMatchmakingDelayMaxReset();
+
+	UFUNCTION(BlueprintCallable)
+	void HideOtherPlayerNamesChanged(bool bInChecked);
+
 	UFUNCTION(BlueprintCallable)
 	void HoldToSwapPickupChanged(bool bInChecked);
 
 	UFUNCTION(BlueprintCallable)
+	void InWorldInteractChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void MotionAxisValueChanged(int32 NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void MotionControlEnabledValueChanged(bool NewValue);
+
+	UFUNCTION(BlueprintCallable)
 	void MouseSensitivityMultiplierForAircraftChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void MouseSensitivityXChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void MouseSensitivityYChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void MusicVolumeChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void NotifyUsersWhenPlayingChanged(bool bNotify);
+
+	UFUNCTION(BlueprintCallable)
+	void OnAimAssistChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnAutoChangeMaterialChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnAutoOpenDoorsChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnAutoPickupWeaponsChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnAutoPickupWeaponsConsolePCChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnAutoSortConsumablesToRightChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnBuildingPossessionChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnContextTutorialChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnCreativeModeReplayRecordingPreferenceChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnCreativeTurboDeleteChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnCreativeTurboDeleteReset(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnEditConfirmOnReleaseChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnEditModeAimAssistChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnEnableTryBuildOnFocusChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnFocusOnFirstBuildingPieceWhenQuickbarSwappedChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnFocusOnFirstBuildingPieceWhenQuickbarSwappedChangedAthena(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnForceFeedbackChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnGamepadAutoRunChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnHUDScaleChanged(float bInHUDScale);
+
+	UFUNCTION(BlueprintCallable)
+	void OnLargeTeamsReplayRecordingPreferenceChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnPlaceDangerMarkerWhenTargetingChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnPlayerSurveysAllowedChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnQuickEditChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnReplayRecordingPreferenceChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnShadowPlayHighlightsChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnShowGlobalChatEnabledChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnTouchEditChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void OnTurboBuildChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void PeripheralLightingChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void PitchInversionChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void PowerSaverModeChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void RudderDeadZoneChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void RudderMaxThrottleChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void ScopedMultiplierValueChanged(float NewValue);
 
 	UFUNCTION(BlueprintCallable)
 	void SetAllowGameVolumeWhenMinimized(EFortAllowBackgroundAudioSetting NewValue);
@@ -235,6 +416,51 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetVisualizeAudioSources(bool bEnable);
+
+	UFUNCTION(BlueprintCallable)
+	void SoundFXVolumeChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void SprintByDefaultChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void SprintCancelsReloadChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void SprintToggleChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void TapInteractChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void TargetingMultiplierValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void TargetingToggleChanged(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void TouchBuildingMultiplierValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void TouchDragScopedSensitivityValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void TouchEditModeMultiplierValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void TouchLookAccelerationMultiplierValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void TouchLookSensitivityChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void TouchTargetingMultiplierValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void TouchVerticalSensitivityValueChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void YawInversionChanged(bool bInChecked);
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

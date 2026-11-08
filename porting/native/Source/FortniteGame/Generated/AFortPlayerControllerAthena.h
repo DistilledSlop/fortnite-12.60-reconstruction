@@ -979,6 +979,9 @@ public:
 	UCreativeUserContentManager* GetCreativeUserContentManager() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortVolume* GetCurrentVolume() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortVolume* GetCurrentVolumeOrCreativePlotLinkedVolume() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
