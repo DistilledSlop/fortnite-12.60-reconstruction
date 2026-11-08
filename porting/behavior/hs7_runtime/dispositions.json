@@ -1,0 +1,50 @@
+[
+  {
+    "addr": "0x140c08400",
+    "status": "proposed",
+    "case": "utf8_decoder",
+    "reason": "pure byte decoder, every branch mapped to the asm; no calls, no globals"
+  },
+  {
+    "addr": "0x1445d9040",
+    "status": "proposed",
+    "case": "array_move_assign_raw",
+    "reason": "fully mapped raw TArray move-assign; element type not reflected so handled by offsets"
+  },
+  {
+    "addr": "0x140683100",
+    "status": "proposed",
+    "case": "sparse_array_empty",
+    "reason": "matches TSparseArray::Empty(0) with element destructor freeing the buffer at +8; hints for callees were unrelated and replaced"
+  },
+  {
+    "addr": "0x140724800",
+    "status": "proposed",
+    "case": "set_rehash_raw",
+    "reason": "matches TSet::Rehash with PointerHash; caller 0x141e3eaf0 passes this+8; raw storage because Rehash is private"
+  },
+  {
+    "addr": "0x1424aaf90",
+    "status": "blocked",
+    "case": "unknown_object_nonreflected_fields",
+    "reason": "RCX object reads maps at +0x50/+0xa0 and arrays at +0x30/+0x40 of an object that is not AFortMissionManager (lookup_offset finds no member at 0x30/0x40) and has no determinable class"
+  },
+  {
+    "addr": "0x141f612f0",
+    "status": "blocked",
+    "case": "unknown_object_nonreflected_fields",
+    "reason": "RCX is the result of caller helper 0x141f611f0 (object of undetermined class); pointer array at +0xb70 and 0x210-stride floats at +0x340 are not reflected (lookup_offset UFortKismetLibrary 0xb70 empty)"
+  },
+  {
+    "addr": "0x142c47170",
+    "status": "proposed",
+    "case": "guid_copy",
+    "reason": "16 byte copy returning destination"
+  },
+  {
+    "addr": "0x142bfa260",
+    "status": "proposed",
+    "case": "engine_idiom_is_in_audio_thread",
+    "reason": "GetCurrentThreadId == (GAudioThreadId ? GAudioThreadId : GGameThreadId)"
+  }
+]

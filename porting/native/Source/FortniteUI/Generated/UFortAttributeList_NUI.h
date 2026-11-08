@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "HAL/Platform.h"
+#include "UObject/Object.h"
+#include "UObject/WeakObjectPtrTemplates.h"
+
 class UFortAttributeListItem_NUI;
 
 #include "UFortAttributeList_NUI.generated.h"
@@ -28,5 +32,10 @@ public:
 	UPROPERTY()
 	TArray<UFortAttributeListItem_NUI*> ShownAttributeWidgets;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint8* NativeInitAttributeBlock142d5c1a0(uint8* OutBlock, bool bFlag);
+	static uint8* NativeMakeWeakObjectPair1442eb790(uint8* OutPair, UObject* Primary, UObject* Secondary);
 };
 

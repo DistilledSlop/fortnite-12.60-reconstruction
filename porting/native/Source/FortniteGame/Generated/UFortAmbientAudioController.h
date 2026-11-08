@@ -6,7 +6,13 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
+#include "Containers/Map.h"
+#include "Containers/SparseArray.h"
+#include "Containers/UnrealString.h"
 #include "GameplayTagContainer.h"
+#include "HAL/Platform.h"
+#include "HAL/UnrealMemory.h"
+#include "UObject/NameTypes.h"
 
 class AFortPlayerController;
 class UFortAmbientOneShotInstance;
@@ -52,5 +58,11 @@ public:
 	UPROPERTY(Transient)
 	UFortPOIAmbientAudioBank* GlobalOverride;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void* NativeMoveAssignArray1445d9040(void* DestArray, void* SrcArray);
+	static void NativeEmptySparseArray140683100(void* SparseArrayStorage);
+	static UFortPOIAmbientAudioBank* NativeFindBankForName1424689e0(UFortAmbientAudioController* Controller, FName BankName);
 };
 

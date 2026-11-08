@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "Components/SlateWrapperTypes.h"
+#include "Components/Widget.h"
 #include "EFortItemCardSize.h"
 #include "UFortAccountItem.h"
 #include "UFortItem.h"
@@ -108,5 +110,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsItemSlotted() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeSetOverlayStateVisibility1450cc750(UFortCollectionBookSlotWidget* Widget, uint8 State);
 };
 

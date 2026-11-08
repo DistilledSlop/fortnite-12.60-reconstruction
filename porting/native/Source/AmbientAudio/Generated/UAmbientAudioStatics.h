@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "CoreGlobals.h"
+#include "HAL/UnrealMemory.h"
 #include "UObject/Object.h"
 
 #include "UAmbientAudioStatics.generated.h"
@@ -20,5 +22,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static bool NativeHelper1446939a0(UObject* Context);
+	static bool NativeIsInAudioThread142bfa260();
+	static void NativeResizeArray28ByteElements1408cd320(uint8* ArrayMemory, int32 RequiredNum, int32 PreviousMax);
 };
 

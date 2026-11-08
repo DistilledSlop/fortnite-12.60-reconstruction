@@ -1,0 +1,180 @@
+[
+ {
+  "class": "UFortCollectionBookSlotWidget",
+  "function": "NativeSetOverlayStateVisibility1450cc750",
+  "kind": "helper",
+  "signature": "void NativeSetOverlayStateVisibility1450cc750(UFortCollectionBookSlotWidget* Widget, uint8 State)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/pilot4_runtime/UFortCollectionBookSlotWidget/NativeSetOverlayStateVisibility1450cc750.inc",
+  "address": "0x1450cc750",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "Components/Widget.h",
+   "Components/SlateWrapperTypes.h"
+  ],
+  "notes": "RCX=slot widget, DL=state 0..3; sets visibility of the three overlay widgets (vtable 0x270 = UWidget::SetVisibility)."
+ },
+ {
+  "class": "UFortSurvivorSquadSelectorButton",
+  "function": "NativeAssignHandleWithPointerArray1406af460",
+  "kind": "helper",
+  "signature": "uint8* NativeAssignHandleWithPointerArray1406af460(uint8* Dest, const uint8* Source)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/pilot4_runtime/UFortSurvivorSquadSelectorButton/NativeAssignHandleWithPointerArray1406af460.inc",
+  "address": "0x1406af460",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "Containers/Array.h",
+   "HAL/UnrealMemory.h"
+  ],
+  "notes": "Copy-assign of {16 byte header, TArray of 8-byte elements at +0x10}; returns Dest (RAX=RCX)."
+ },
+ {
+  "class": "UFortUINavigationManager",
+  "function": "NativeMoveAssignSharedReferencer14098bd50",
+  "kind": "helper",
+  "signature": "uint8* NativeMoveAssignSharedReferencer14098bd50(uint8* Dest, uint8* Source)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/pilot4_runtime/UFortUINavigationManager/NativeMoveAssignSharedReferencer14098bd50.inc",
+  "address": "0x14098bd50",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "CoreMinimal.h",
+   "Templates/SharedPointer.h"
+  ],
+  "notes": "Move-assign of a thread-safe shared reference controller pointer (TSharedPtr+8); releases the old controller; returns Dest."
+ },
+ {
+  "class": "ABuildingPropAtlas",
+  "function": "NativeResetOptionalSharedPtr140bf86b0",
+  "kind": "helper",
+  "signature": "void NativeResetOptionalSharedPtr140bf86b0(uint8* OptionalStorage)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/pilot4_runtime/ABuildingPropAtlas/NativeResetOptionalSharedPtr140bf86b0.inc",
+  "address": "0x140bf86b0",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "CoreMinimal.h",
+   "Templates/SharedPointer.h"
+  ],
+  "notes": "Reset of TOptional<TSharedPtr<T,ThreadSafe>>: clears flag at +0x18 and releases the controller at +8."
+ },
+ {
+  "class": "ABuildingPropAtlas",
+  "function": "NativeDestroyOptionalSharedPtrArray140682e80",
+  "kind": "helper",
+  "signature": "void NativeDestroyOptionalSharedPtrArray140682e80(uint8* ArrayStorage)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/pilot4_runtime/ABuildingPropAtlas/NativeDestroyOptionalSharedPtrArray140682e80.inc",
+  "address": "0x140682e80",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "CoreMinimal.h",
+   "Templates/SharedPointer.h",
+   "HAL/UnrealMemory.h"
+  ],
+  "notes": "Destructs a TArray of 0x30-byte elements, each with an optional shared pointer (ptr +0x10, flag +0x28), then frees the buffer."
+ },
+ {
+  "class": "UFortSurvivorSquadSelectorButton",
+  "function": "NativeRelocateSharedPtrRecord142c0bf30",
+  "kind": "helper",
+  "signature": "uint8* NativeRelocateSharedPtrRecord142c0bf30(uint8* Dest, uint8* Source)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/pilot4_runtime/UFortSurvivorSquadSelectorButton/NativeRelocateSharedPtrRecord142c0bf30.inc",
+  "address": "0x142c0bf30",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "CoreMinimal.h",
+   "Templates/SharedPointer.h"
+  ],
+  "notes": "Copies {object ptr, shared controller} into Dest (+1 ref), zeroes dword at +0x10, then releases the source reference; returns Dest."
+ },
+ {
+  "class": "AFortAIPawn",
+  "function": "NativeReserveBitArray140690880",
+  "kind": "helper",
+  "signature": "void NativeReserveBitArray140690880(uint8* BitArray, int32 Number)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/pilot4_runtime/AFortAIPawn/NativeReserveBitArray140690880.inc",
+  "address": "0x140690880",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "CoreMinimal.h",
+   "Containers/BitArray.h"
+  ],
+  "notes": "TBitArray<FDefaultBitArrayAllocator>::Reserve(Number): inline 4 words, NumBits at +0x18, MaxBits at +0x1c."
+ },
+ {
+  "class": "UFortNiagaraGameplayLibrary",
+  "function": "NativeSleepSeconds142cf1050",
+  "kind": "helper",
+  "signature": "void NativeSleepSeconds142cf1050(float Seconds)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/pilot4_runtime/UFortNiagaraGameplayLibrary/NativeSleepSeconds142cf1050.inc",
+  "address": "0x142cf1050",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "HAL/PlatformProcess.h"
+  ],
+  "notes": "Sleep for Seconds: ms = (int)(Seconds*1000); 0 -> SwitchToThread, else Sleep(ms) (FPlatformProcess::SleepNoStats)."
+ },
+ {
+  "class": "AFortGameModeAthena",
+  "function": "NativeRebuildChainPointerArray142e424e0",
+  "kind": "helper",
+  "signature": "void NativeRebuildChainPointerArray142e424e0(uint8* ArrayStorage)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/pilot4_runtime/AFortGameModeAthena/NativeRebuildChainPointerArray142e424e0.inc",
+  "address": "0x142e424e0",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "HAL/UnrealMemory.h"
+  ],
+  "notes": "Frees old buffer at [ArrayStorage], walks the node chain via +0x40 starting at ArrayStorage-0x30, stores each node+0x30 in reverse order."
+ },
+ {
+  "class": "UPlayspaceControllerComponent_PlayerSpawning",
+  "function": "NativeRehashWeakObjectSet1409579c0",
+  "kind": "helper",
+  "signature": "void NativeRehashWeakObjectSet1409579c0(uint8* Set)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/pilot4_runtime/UPlayspaceControllerComponent_PlayerSpawning/NativeRehashWeakObjectSet1409579c0.inc",
+  "address": "0x1409579c0",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "HAL/UnrealMemory.h"
+  ],
+  "notes": "TSet<TWeakObjectPtr<T>>::Rehash with the existing HashSize: rebuilds the bucket array (inline 1 / heap) over the sparse elements (16 bytes each)."
+ }
+]

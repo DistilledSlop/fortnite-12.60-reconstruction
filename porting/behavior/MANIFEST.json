@@ -89862,5 +89862,648 @@
       "Containers/UnrealString.h"
     ],
     "notes": "Is FString::AppendChars(const WIDECHAR*, int32): Count==0 returns; Num += (Num==0)+Count; grow; memcpy Count TCHARs; write terminator."
+  },
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "NativeGetMetaDataIntByKey1411322c0",
+    "kind": "helper",
+    "signature": "int32 NativeGetMetaDataIntByKey1411322c0(const uint8* MetaStruct, const FString* LookupKey, int32 FallbackValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/UFortStoreFrontOfferInfo/NativeGetMetaDataIntByKey1411322c0.inc",
+    "address": "0x1411322c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "Containers/UnrealString.h",
+      "Containers/Map.h",
+      "Misc/CString.h"
+    ],
+    "notes": "Case-insensitive key lookup in TArray<TPair<FString,FString>> at +0x20; numeric value -> Atoi else default."
+  },
+  {
+    "class": "AFortReplaySpectator",
+    "function": "NativeRemoveMulticastDelegateHandle1406d7fd0",
+    "kind": "helper",
+    "signature": "bool NativeRemoveMulticastDelegateHandle1406d7fd0(void* Delegate, FDelegateHandle Handle)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/AFortReplaySpectator/NativeRemoveMulticastDelegateHandle1406d7fd0.inc",
+    "address": "0x1406d7fd0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "notes": "TMulticastDelegate::Remove(FDelegateHandle) on the delegate object passed in RCX; handle by value in RDX."
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "NativeGetWorldTimerManager140f95ae0",
+    "kind": "helper",
+    "signature": "FTimerManager* NativeGetWorldTimerManager140f95ae0(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/AFortCreativeMoveTool/NativeGetWorldTimerManager140f95ae0.inc",
+    "address": "0x140f95ae0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "Engine/World.h",
+      "TimerManager.h"
+    ],
+    "notes": "Context->GetWorld() then GameInstance timer manager else world timer manager (UWorld::GetTimerManager)."
+  },
+  {
+    "class": "ABuildingFillFloor",
+    "function": "NativeSetActorLocation143f832a0",
+    "kind": "helper",
+    "signature": "bool NativeSetActorLocation143f832a0(AActor* Actor, const FVector& NewLocation, bool bSweep, FHitResult* OutSweepHitResult, uint8 TeleportMode)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/ABuildingFillFloor/NativeSetActorLocation143f832a0.inc",
+    "address": "0x143f832a0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Actor.h",
+      "Engine/EngineTypes.h",
+      "Math/Vector.h"
+    ],
+    "notes": "AActor::SetActorLocation: root MoveComponent(delta, quat, sweep, hit, 0, teleport) else default hit and false."
+  },
+  {
+    "class": "AFortAthenaMutator_SpecialEvent",
+    "function": "NativeBoolToString140ae9a90",
+    "kind": "helper",
+    "signature": "FString NativeBoolToString140ae9a90(bool bFlag)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/AFortAthenaMutator_SpecialEvent/NativeBoolToString140ae9a90.inc",
+    "address": "0x140ae9a90",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Containers/UnrealString.h"
+    ],
+    "notes": "Returns FString \"true\" or \"false\" from the bool in DL (hidden sret in RCX)."
+  },
+  {
+    "class": "UFortCreativeTeleporterManagerComponent",
+    "function": "NativeCopyAssignSet140769940",
+    "kind": "helper",
+    "signature": "void* NativeCopyAssignSet140769940(void* Dest, const void* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/UFortCreativeTeleporterManagerComponent/NativeCopyAssignSet140769940.inc",
+    "address": "0x140769940",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Set.h"
+    ],
+    "notes": "TSet copy-assignment over an 8-byte element set (layout and raw copy match TSet<uint64>); returns Dest."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "NativeSetStatFilterEntryValue1420a40c0",
+    "kind": "helper",
+    "signature": "void NativeSetStatFilterEntryValue1420a40c0(const void* UnusedOwner, uint8* EntryArray, UClass* FilterClass, int32 NewValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/AFortMinigame/NativeSetStatFilterEntryValue1420a40c0.inc",
+    "address": "0x1420a40c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Class.h",
+      "Containers/Array.h",
+      "Containers/Map.h"
+    ],
+    "notes": "Find-or-add {UClass*,int32} entry (stride 0x10) in TArray at RDX and store the int32 value at +8."
+  },
+  {
+    "class": "AFortConstructorBASE",
+    "function": "NativeSetToArray1415c07f0",
+    "kind": "helper",
+    "signature": "void* NativeSetToArray1415c07f0(const void* SetPtr, void* OutArray)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/AFortConstructorBASE/NativeSetToArray1415c07f0.inc",
+    "address": "0x1415c07f0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Set.h",
+      "Containers/Array.h"
+    ],
+    "notes": "TSet::Array() for an 8-byte element set; constructs the TArray into the sret address passed in RDX and returns it."
+  },
+  {
+    "class": "UFortCollectionBookSlotWidget",
+    "function": "NativeSetOverlayStateVisibility1450cc750",
+    "kind": "helper",
+    "signature": "void NativeSetOverlayStateVisibility1450cc750(UFortCollectionBookSlotWidget* Widget, uint8 State)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot4_runtime/UFortCollectionBookSlotWidget/NativeSetOverlayStateVisibility1450cc750.inc",
+    "address": "0x1450cc750",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/Widget.h",
+      "Components/SlateWrapperTypes.h"
+    ],
+    "notes": "RCX=slot widget, DL=state 0..3; sets visibility of the three overlay widgets (vtable 0x270 = UWidget::SetVisibility)."
+  },
+  {
+    "class": "UFortSurvivorSquadSelectorButton",
+    "function": "NativeAssignHandleWithPointerArray1406af460",
+    "kind": "helper",
+    "signature": "uint8* NativeAssignHandleWithPointerArray1406af460(uint8* Dest, const uint8* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot4_runtime/UFortSurvivorSquadSelectorButton/NativeAssignHandleWithPointerArray1406af460.inc",
+    "address": "0x1406af460",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Copy-assign of {16 byte header, TArray of 8-byte elements at +0x10}; returns Dest (RAX=RCX)."
+  },
+  {
+    "class": "UFortUINavigationManager",
+    "function": "NativeMoveAssignSharedReferencer14098bd50",
+    "kind": "helper",
+    "signature": "uint8* NativeMoveAssignSharedReferencer14098bd50(uint8* Dest, uint8* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot4_runtime/UFortUINavigationManager/NativeMoveAssignSharedReferencer14098bd50.inc",
+    "address": "0x14098bd50",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h",
+      "Templates/SharedPointer.h"
+    ],
+    "notes": "Move-assign of a thread-safe shared reference controller pointer (TSharedPtr+8); releases the old controller; returns Dest."
+  },
+  {
+    "class": "ABuildingPropAtlas",
+    "function": "NativeResetOptionalSharedPtr140bf86b0",
+    "kind": "helper",
+    "signature": "void NativeResetOptionalSharedPtr140bf86b0(uint8* OptionalStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot4_runtime/ABuildingPropAtlas/NativeResetOptionalSharedPtr140bf86b0.inc",
+    "address": "0x140bf86b0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h",
+      "Templates/SharedPointer.h"
+    ],
+    "notes": "Reset of TOptional<TSharedPtr<T,ThreadSafe>>: clears flag at +0x18 and releases the controller at +8."
+  },
+  {
+    "class": "ABuildingPropAtlas",
+    "function": "NativeDestroyOptionalSharedPtrArray140682e80",
+    "kind": "helper",
+    "signature": "void NativeDestroyOptionalSharedPtrArray140682e80(uint8* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot4_runtime/ABuildingPropAtlas/NativeDestroyOptionalSharedPtrArray140682e80.inc",
+    "address": "0x140682e80",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h",
+      "Templates/SharedPointer.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Destructs a TArray of 0x30-byte elements, each with an optional shared pointer (ptr +0x10, flag +0x28), then frees the buffer."
+  },
+  {
+    "class": "UFortSurvivorSquadSelectorButton",
+    "function": "NativeRelocateSharedPtrRecord142c0bf30",
+    "kind": "helper",
+    "signature": "uint8* NativeRelocateSharedPtrRecord142c0bf30(uint8* Dest, uint8* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot4_runtime/UFortSurvivorSquadSelectorButton/NativeRelocateSharedPtrRecord142c0bf30.inc",
+    "address": "0x142c0bf30",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h",
+      "Templates/SharedPointer.h"
+    ],
+    "notes": "Copies {object ptr, shared controller} into Dest (+1 ref), zeroes dword at +0x10, then releases the source reference; returns Dest."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "NativeReserveBitArray140690880",
+    "kind": "helper",
+    "signature": "void NativeReserveBitArray140690880(uint8* BitArray, int32 Number)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot4_runtime/AFortAIPawn/NativeReserveBitArray140690880.inc",
+    "address": "0x140690880",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h",
+      "Containers/BitArray.h"
+    ],
+    "notes": "TBitArray<FDefaultBitArrayAllocator>::Reserve(Number): inline 4 words, NumBits at +0x18, MaxBits at +0x1c."
+  },
+  {
+    "class": "UFortNiagaraGameplayLibrary",
+    "function": "NativeSleepSeconds142cf1050",
+    "kind": "helper",
+    "signature": "void NativeSleepSeconds142cf1050(float Seconds)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot4_runtime/UFortNiagaraGameplayLibrary/NativeSleepSeconds142cf1050.inc",
+    "address": "0x142cf1050",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/PlatformProcess.h"
+    ],
+    "notes": "Sleep for Seconds: ms = (int)(Seconds*1000); 0 -> SwitchToThread, else Sleep(ms) (FPlatformProcess::SleepNoStats)."
+  },
+  {
+    "class": "AFortGameModeAthena",
+    "function": "NativeRebuildChainPointerArray142e424e0",
+    "kind": "helper",
+    "signature": "void NativeRebuildChainPointerArray142e424e0(uint8* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot4_runtime/AFortGameModeAthena/NativeRebuildChainPointerArray142e424e0.inc",
+    "address": "0x142e424e0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Frees old buffer at [ArrayStorage], walks the node chain via +0x40 starting at ArrayStorage-0x30, stores each node+0x30 in reverse order."
+  },
+  {
+    "class": "UPlayspaceControllerComponent_PlayerSpawning",
+    "function": "NativeRehashWeakObjectSet1409579c0",
+    "kind": "helper",
+    "signature": "void NativeRehashWeakObjectSet1409579c0(uint8* Set)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot4_runtime/UPlayspaceControllerComponent_PlayerSpawning/NativeRehashWeakObjectSet1409579c0.inc",
+    "address": "0x1409579c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TSet<TWeakObjectPtr<T>>::Rehash with the existing HashSize: rebuilds the bucket array (inline 1 / heap) over the sparse elements (16 bytes each)."
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "NativeDecodeUtf8Codepoint140c08400",
+    "kind": "helper",
+    "signature": "uint32 NativeDecodeUtf8Codepoint140c08400(const uint8** Cursor, uint32 Remaining)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/UFortAbilitySystemComponent/NativeDecodeUtf8Codepoint140c08400.inc",
+    "address": "0x140c08400",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/Platform.h"
+    ],
+    "notes": "UTF-8 decoder: RCX=&cursor, EDX=bytes left; returns code point or 0x3f on malformed input and advances the cursor."
+  },
+  {
+    "class": "UFortAmbientAudioController",
+    "function": "NativeMoveAssignArray1445d9040",
+    "kind": "helper",
+    "signature": "void* NativeMoveAssignArray1445d9040(void* DestArray, void* SrcArray)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/UFortAmbientAudioController/NativeMoveAssignArray1445d9040.inc",
+    "address": "0x1445d9040",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Move-assign of a TArray whose 0x18-byte elements own a heap buffer at +8: frees dest elements, steals source buffer."
+  },
+  {
+    "class": "UFortAmbientAudioController",
+    "function": "NativeEmptySparseArray140683100",
+    "kind": "helper",
+    "signature": "void NativeEmptySparseArray140683100(void* SparseArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/UFortAmbientAudioController/NativeEmptySparseArray140683100.inc",
+    "address": "0x140683100",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/SparseArray.h",
+      "Containers/UnrealString.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "Empty(0) of a TSparseArray with 0x20-byte elements (FString at +8) and inline-4 allocation bitmap, then frees the buffers."
+  },
+  {
+    "class": "UFortCreativeTeleporterManagerComponent",
+    "function": "NativeRehashPointerSet140724800",
+    "kind": "helper",
+    "signature": "void NativeRehashPointerSet140724800(void* SetStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/UFortCreativeTeleporterManagerComponent/NativeRehashPointerSet140724800.inc",
+    "address": "0x140724800",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h",
+      "Templates/TypeHash.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "TSet<pointer>::Rehash on raw storage: re-links all 0x10-byte elements into the existing hash bucket array using PointerHash."
+  },
+  {
+    "class": "ABuildingProp_LockDevice",
+    "function": "NativeCopyGuid142c47170",
+    "kind": "helper",
+    "signature": "FGuid* NativeCopyGuid142c47170(FGuid* Dest, const FGuid* Src)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/ABuildingProp_LockDevice/NativeCopyGuid142c47170.inc",
+    "address": "0x142c47170",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Misc/Guid.h"
+    ],
+    "notes": "Copies a 16-byte FGuid from RDX to RCX and returns RCX."
+  },
+  {
+    "class": "UAmbientAudioStatics",
+    "function": "NativeIsInAudioThread142bfa260",
+    "kind": "helper",
+    "signature": "bool NativeIsInAudioThread142bfa260()",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/UAmbientAudioStatics/NativeIsInAudioThread142bfa260.inc",
+    "address": "0x142bfa260",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "CoreGlobals.h"
+    ],
+    "notes": "IsInAudioThread(): current thread id equals GAudioThreadId when set, else GGameThreadId."
+  },
+  {
+    "class": "UFortCreativeItemListMenu",
+    "function": "NativeEmptySparseArray1408a5b50",
+    "kind": "helper",
+    "signature": "void NativeEmptySparseArray1408a5b50(void* SparseArrayStorage, int32 ExpectedNumElements)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs8_runtime/UFortCreativeItemListMenu/NativeEmptySparseArray1408a5b50.inc",
+    "address": "0x1408a5b50",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/SparseArray.h",
+      "Containers/UnrealString.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "TSparseArray::Empty(ExpectedNumElements) for 0x20-byte elements holding an FString at +8, inline-4 bitmap."
+  },
+  {
+    "class": "UCustomCharacterPartAnimInstance",
+    "function": "NativeGetPathLeaf142c97120",
+    "kind": "helper",
+    "signature": "FString NativeGetPathLeaf142c97120(const FString& InPath)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs8_runtime/UCustomCharacterPartAnimInstance/NativeGetPathLeaf142c97120.inc",
+    "address": "0x142c97120",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/UnrealString.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "Returns the part of the path after the last / or \\\\ and before any trailing separators; empty when the separators are all trailing."
+  },
+  {
+    "class": "UFortGlobals",
+    "function": "NativeEmptySparseArray140fd9650",
+    "kind": "helper",
+    "signature": "void NativeEmptySparseArray140fd9650(void* SparseArrayStorage, int32 ExpectedNumElements)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs8_runtime/UFortGlobals/NativeEmptySparseArray140fd9650.inc",
+    "address": "0x140fd9650",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/SparseArray.h",
+      "Containers/UnrealString.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "TSparseArray::Empty(ExpectedNumElements) for 0x38-byte elements holding FStrings at +8 and +0x20."
+  },
+  {
+    "class": "ABuildingProp_LockDevice",
+    "function": "NativeLoadLeadingPointer1414da240",
+    "kind": "helper",
+    "signature": "void* NativeLoadLeadingPointer1414da240(const void* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs9_runtime/ABuildingProp_LockDevice/NativeLoadLeadingPointer1414da240.inc",
+    "address": "0x1414da240",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns the pointer-sized value stored at offset 0 of the source block (MOV RAX,[RCX]; RET)."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeSetByteSlotIfChanged1444889d0",
+    "kind": "helper",
+    "signature": "bool NativeSetByteSlotIfChanged1444889d0(uint8* Slots, uint32 Index, int32 NewValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs9_runtime/UFortKismetLibrary/NativeSetByteSlotIfChanged1444889d0.inc",
+    "address": "0x1444889d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Writes a byte into a 32-entry byte table when index < 0x20 and the value differs; returns whether it changed."
+  },
+  {
+    "class": "AFortAthenaVehicleSpawner",
+    "function": "NativeCopyKeyedTextArray1445d47d0",
+    "kind": "helper",
+    "signature": "uint8* NativeCopyKeyedTextArray1445d47d0(uint8* OutArray, const uint8* SourceArray)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs9_runtime/AFortAthenaVehicleSpawner/NativeCopyKeyedTextArray1445d47d0.inc",
+    "address": "0x1445d47d0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "Containers/UnrealString.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "Copy-constructs a TArray of 24-byte {8-byte key, FString} elements into OutArray and returns it (sret). Element key type unrecovered; kept as uint64."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeAllChildrenPass1445ebfe0",
+    "kind": "helper",
+    "signature": "bool NativeAllChildrenPass1445ebfe0(const uint8* Node)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs10_runtime/UFortKismetLibrary/NativeAllChildrenPass1445ebfe0.inc",
+    "address": "0x1445ebfe0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/Platform.h"
+    ],
+    "notes": "Recursive check: false when bytes +0x15,+0x10,+0x13 are all zero; otherwise true only if every non-null child pointer in the 0x10-stride array at +0x70 passes."
+  },
+  {
+    "class": "UFortAttributeList_NUI",
+    "function": "NativeInitAttributeBlock142d5c1a0",
+    "kind": "helper",
+    "signature": "uint8* NativeInitAttributeBlock142d5c1a0(uint8* OutBlock, bool bFlag)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs10_runtime/UFortAttributeList_NUI/NativeInitAttributeBlock142d5c1a0.inc",
+    "address": "0x142d5c1a0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/Platform.h"
+    ],
+    "notes": "Default-initialises a 0xb4-byte block (zeros, 0x80 at +0x44/+0x94, -1 at +0x48/+0x98, byte +0x11 = !flag) and returns it."
+  },
+  {
+    "class": "UFortAttributeList_NUI",
+    "function": "NativeMakeWeakObjectPair1442eb790",
+    "kind": "helper",
+    "signature": "uint8* NativeMakeWeakObjectPair1442eb790(uint8* OutPair, UObject* Primary, UObject* Secondary)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs10_runtime/UFortAttributeList_NUI/NativeMakeWeakObjectPair1442eb790.inc",
+    "address": "0x1442eb790",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "UObject/WeakObjectPtrTemplates.h"
+    ],
+    "notes": "Fills a 16-byte block with two weak object pointers: Primary at +0, Secondary at +8; returns the block."
+  },
+  {
+    "class": "UFortAmbientAudioController",
+    "function": "NativeFindBankForName1424689e0",
+    "kind": "helper",
+    "signature": "UFortPOIAmbientAudioBank* NativeFindBankForName1424689e0(UFortAmbientAudioController* Controller, FName BankName)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs10_runtime/UFortAmbientAudioController/NativeFindBankForName1424689e0.inc",
+    "address": "0x1424689e0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/NameTypes.h",
+      "Containers/Map.h"
+    ],
+    "notes": "Looks BankName up in Controller->BankMap; returns the mapped bank or Controller->DefaultAudioBank when absent."
+  },
+  {
+    "class": "UAmbientAudioStatics",
+    "function": "NativeResizeArray28ByteElements1408cd320",
+    "kind": "helper",
+    "signature": "void NativeResizeArray28ByteElements1408cd320(uint8* ArrayMemory, int32 RequiredNum, int32 PreviousMax)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs10_runtime/UAmbientAudioStatics/NativeResizeArray28ByteElements1408cd320.inc",
+    "address": "0x1408cd320",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray reserve for 0x1c-byte elements: quantizes RequiredNum*28 to a slot count, reallocates when it differs from PreviousMax, stores new Max at +0xc."
+  },
+  {
+    "class": "ABuildingProp_LockDevice",
+    "function": "NativeGrowArray64ByteElements1406d9890",
+    "kind": "helper",
+    "signature": "void NativeGrowArray64ByteElements1406d9890(uint8* ArrayMemory)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs10_runtime/ABuildingProp_LockDevice/NativeGrowArray64ByteElements1406d9890.inc",
+    "address": "0x1406d9890",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray growth for 0x40-byte elements: computes slack from Num (+8) and Max (+0xc), quantizes, stores new Max at +0xc and reallocates Data (+0)."
   }
 ]

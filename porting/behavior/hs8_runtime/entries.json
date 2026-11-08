@@ -1,0 +1,58 @@
+[
+  {
+    "class": "UFortCreativeItemListMenu",
+    "function": "NativeEmptySparseArray1408a5b50",
+    "kind": "helper",
+    "signature": "void NativeEmptySparseArray1408a5b50(void* SparseArrayStorage, int32 ExpectedNumElements)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs8_runtime/UFortCreativeItemListMenu/NativeEmptySparseArray1408a5b50.inc",
+    "address": "0x1408a5b50",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/SparseArray.h",
+      "Containers/UnrealString.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "TSparseArray::Empty(ExpectedNumElements) for 0x20-byte elements holding an FString at +8, inline-4 bitmap."
+  },
+  {
+    "class": "UCustomCharacterPartAnimInstance",
+    "function": "NativeGetPathLeaf142c97120",
+    "kind": "helper",
+    "signature": "FString NativeGetPathLeaf142c97120(const FString& InPath)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs8_runtime/UCustomCharacterPartAnimInstance/NativeGetPathLeaf142c97120.inc",
+    "address": "0x142c97120",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/UnrealString.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "Returns the part of the path after the last / or \\\\ and before any trailing separators; empty when the separators are all trailing."
+  },
+  {
+    "class": "UFortGlobals",
+    "function": "NativeEmptySparseArray140fd9650",
+    "kind": "helper",
+    "signature": "void NativeEmptySparseArray140fd9650(void* SparseArrayStorage, int32 ExpectedNumElements)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs8_runtime/UFortGlobals/NativeEmptySparseArray140fd9650.inc",
+    "address": "0x140fd9650",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/SparseArray.h",
+      "Containers/UnrealString.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "TSparseArray::Empty(ExpectedNumElements) for 0x38-byte elements holding FStrings at +8 and +0x20."
+  }
+]

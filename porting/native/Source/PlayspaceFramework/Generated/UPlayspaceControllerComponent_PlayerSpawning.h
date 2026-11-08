@@ -8,6 +8,7 @@
 
 #include "FOnPlayerQueuedToSpawn.h"
 #include "FReplicatedSpawnInfo.h"
+#include "HAL/UnrealMemory.h"
 
 class ACameraActor;
 
@@ -47,5 +48,9 @@ public:
 	bool ServerMarkReadyForSpawning_Validate();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeRehashWeakObjectSet1409579c0(uint8* Set);
 };
 

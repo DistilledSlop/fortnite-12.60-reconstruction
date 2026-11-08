@@ -7,6 +7,10 @@
 #include "UFortSquadSelectorButton.h"
 
 #include "AttributeSet.h"
+#include "Containers/Array.h"
+#include "CoreMinimal.h"
+#include "HAL/UnrealMemory.h"
+#include "Templates/SharedPointer.h"
 
 #include "UFortSurvivorSquadSelectorButton.generated.h"
 
@@ -24,5 +28,10 @@ public:
 	UPROPERTY()
 	TArray<FGameplayAttribute> FortTeamStatAttributes;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint8* NativeAssignHandleWithPointerArray1406af460(uint8* Dest, const uint8* Source);
+	static uint8* NativeRelocateSharedPtrRecord142c0bf30(uint8* Dest, uint8* Source);
 };
 

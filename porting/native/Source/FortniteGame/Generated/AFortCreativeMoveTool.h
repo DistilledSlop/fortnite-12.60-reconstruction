@@ -10,6 +10,7 @@
 #include "EScaleAxis.h"
 #include "ESelectionProperty.h"
 #include "ETransformationType.h"
+#include "Engine/World.h"
 #include "FActorAndTransformPair.h"
 #include "FAgingActorArray.h"
 #include "FCreativeOptionVariableBase.h"
@@ -43,6 +44,7 @@
 #include "Math/Rotator.h"
 #include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
+#include "TimerManager.h"
 #include "UObject/NoExportTypes.h"
 #include "UObject/Object.h"
 
@@ -621,5 +623,6 @@ public:
 	static bool NativeFillBytes32144487690(uint8* Bytes, uint8 FillByte);
 	static void NativeClampGridSnapIndex142681e90(AFortCreativeMoveTool* MoveTool, uint8 RequestedIndex);
 	static bool NativeRemoveHashedElement14462beb0(uint8* SetContainer, const uint64* KeyInput);
+	static FTimerManager* NativeGetWorldTimerManager140f95ae0(UObject* Context);
 };
 

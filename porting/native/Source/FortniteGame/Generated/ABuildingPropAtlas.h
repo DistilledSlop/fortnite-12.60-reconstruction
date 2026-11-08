@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "ABuildingProp.h"
 
+#include "CoreMinimal.h"
+#include "HAL/UnrealMemory.h"
+#include "Templates/SharedPointer.h"
+
 class UAudioComponent;
 class UMaterialInstanceDynamic;
 class UPrimitiveComponent;
@@ -80,5 +84,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetupAnimationTransition(UMaterialInstanceDynamic* MID, FName ParamName, float InTransitionTime);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeResetOptionalSharedPtr140bf86b0(uint8* OptionalStorage);
+	static void NativeDestroyOptionalSharedPtrArray140682e80(uint8* ArrayStorage);
 };
 

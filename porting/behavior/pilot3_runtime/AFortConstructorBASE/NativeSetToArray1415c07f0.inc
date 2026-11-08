@@ -1,0 +1,9 @@
+// Helper 0x1415c07f0: TSet<T>::Array() const for an 8-byte element type; RCX = the set (this), RDX = hidden sret TArray, returned in RAX.
+// Evidence: [RDX]/[RDX+8] zeroed (empty TArray), Reserve(Elements.Num [RCX+8] - NumFreeIndices [RCX+0x34]), then an iterator over the
+//   sparse array allocation bits (TBitArray inline at RCX+0x10, NumBits RCX+0x28, BSR/NEG-AND bit scan) copying the 8-byte value at
+//   [element+0] (stride 0x10) with TArray::Add (grow helper 0x140690bb0 = AddUninitialized). Matches Set.h TSet::Array().
+//   Callers receive the array via sret in RDX, so the helper takes the output address explicitly.
+// CONFIDENCE: MEDIUM
+const TSet<uint64>* SourceSet = static_cast<const TSet<uint64>*>(SetPtr);
+new (OutArray) TArray<uint64>(SourceSet->Array());
+return OutArray;

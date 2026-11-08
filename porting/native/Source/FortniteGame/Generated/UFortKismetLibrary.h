@@ -14,6 +14,7 @@
 #include "FFortDialogExternalLatentActionHandle.h"
 #include "GameFramework/GameStateBase.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "HAL/Platform.h"
 #include "HAL/UnrealMemory.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
@@ -139,5 +140,7 @@ public:
 	static int32 NativeGetGameStateWorldLevel141f881f0(UObject* Context);
 	static const TCHAR* NativeFindWideChar145809329(const TCHAR* Start, TCHAR Find);
 	static void NativeShrinkArray1414710e0(uint8* Array);
+	static bool NativeSetByteSlotIfChanged1444889d0(uint8* Slots, uint32 Index, int32 NewValue);
+	static bool NativeAllChildrenPass1445ebfe0(const uint8* Node);
 };
 

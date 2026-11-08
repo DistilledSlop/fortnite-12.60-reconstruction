@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "Containers/SparseArray.h"
+#include "Containers/UnrealString.h"
 #include "EFortAccountLinkingUIConfig.h"
 #include "ETimeLimitForReplayCinematic.h"
 #include "Engine/Engine.h"
@@ -18,6 +20,7 @@
 #include "FSubGameAccess.h"
 #include "FVoiceChatLogSubmitOptions.h"
 #include "FXPEventEntryHotfix.h"
+#include "HAL/Platform.h"
 #include "SharedFortGameLog.h"
 #include "UObject/UObjectGlobals.h"
 
@@ -718,5 +721,6 @@ public:
 	static UFortGlobals* NativeGetGlobals();
 	static int32 NativeCompareWideStringsNoCase142bcf940(const uint16* LeftChars, const uint16* RightChars, uint64 MaxCount);
 	static const uint16* NativeFindWideSubstringNoCase141e12980(const uint16* SearchChars, const uint16* PatternChars);
+	static void NativeEmptySparseArray140fd9650(void* SparseArrayStorage, int32 ExpectedNumElements);
 };
 

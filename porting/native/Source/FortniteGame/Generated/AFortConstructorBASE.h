@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ABuildingProp.h"
 
+#include "Containers/Array.h"
+#include "Containers/Set.h"
 #include "FBASEGameplayEffect.h"
 #include "FFortBaseWeaponStats.h"
 #include "FPatternBASEEffect.h"
@@ -70,5 +72,9 @@ private:
 	void OnNeighborDied(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
 public:
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void* NativeSetToArray1415c07f0(const void* SetPtr, void* OutArray);
 };
 

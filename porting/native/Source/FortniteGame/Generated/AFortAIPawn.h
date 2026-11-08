@@ -7,6 +7,8 @@
 #include "AFortPawn.h"
 
 #include "Abilities/GameplayAbilityTypes.h"
+#include "Containers/BitArray.h"
+#include "CoreMinimal.h"
 #include "EFortAILODLevel.h"
 #include "EFortAILevelRatingDisplayType.h"
 #include "EFortAIPawnGender.h"
@@ -948,5 +950,6 @@ public:
 	static int32 NativeParseTrailingUnderscoreNumber142cd4550(const char* Str, int32* IndexInOut);
 	static int32 NativeFNameNumberSuffix142cd4630(const uint16* Text, int32* InOutLength);
 	static float NativeGetDifficultyLevel141e9b630(UObject* Context);
+	static void NativeReserveBitArray140690880(uint8* BitArray, int32 Number);
 };
 

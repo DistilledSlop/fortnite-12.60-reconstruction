@@ -11,6 +11,7 @@
 #include "FPersonalVehicleBlockingChanged.h"
 #include "FReplicatedMontagePair.h"
 #include "GameplayTagContainer.h"
+#include "HAL/Platform.h"
 #include "UObject/Object.h"
 
 class UAnimMontage;
@@ -79,5 +80,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	bool HasNativeAction(const FGameplayTag& ActionTag);
 	static UObject* NativeGetOutermostObject142ec9ca0(UObject* Context);
+	static uint32 NativeDecodeUtf8Codepoint140c08400(const uint8** Cursor, uint32 Remaining);
 };
 

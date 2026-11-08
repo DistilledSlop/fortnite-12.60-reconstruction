@@ -10,6 +10,9 @@
 #include "ELockState.h"
 #include "FLockStateChangeEvent.h"
 #include "FLockableObjectChangeEvent.h"
+#include "HAL/UnrealMemory.h"
+#include "Misc/Guid.h"
+#include "UObject/Object.h"
 
 class AActor;
 class AController;
@@ -93,5 +96,11 @@ protected:
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static FGuid* NativeCopyGuid142c47170(FGuid* Dest, const FGuid* Src);
+	static void* NativeLoadLeadingPointer1414da240(const void* Source);
+	static void NativeGrowArray64ByteElements1406d9890(uint8* ArrayMemory);
 };
 

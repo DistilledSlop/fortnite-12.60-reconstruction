@@ -1,0 +1,108 @@
+[
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "NativeDecodeUtf8Codepoint140c08400",
+    "kind": "helper",
+    "signature": "uint32 NativeDecodeUtf8Codepoint140c08400(const uint8** Cursor, uint32 Remaining)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/UFortAbilitySystemComponent/NativeDecodeUtf8Codepoint140c08400.inc",
+    "address": "0x140c08400",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/Platform.h"
+    ],
+    "notes": "UTF-8 decoder: RCX=&cursor, EDX=bytes left; returns code point or 0x3f on malformed input and advances the cursor."
+  },
+  {
+    "class": "UFortAmbientAudioController",
+    "function": "NativeMoveAssignArray1445d9040",
+    "kind": "helper",
+    "signature": "void* NativeMoveAssignArray1445d9040(void* DestArray, void* SrcArray)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/UFortAmbientAudioController/NativeMoveAssignArray1445d9040.inc",
+    "address": "0x1445d9040",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Move-assign of a TArray whose 0x18-byte elements own a heap buffer at +8: frees dest elements, steals source buffer."
+  },
+  {
+    "class": "UFortAmbientAudioController",
+    "function": "NativeEmptySparseArray140683100",
+    "kind": "helper",
+    "signature": "void NativeEmptySparseArray140683100(void* SparseArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/UFortAmbientAudioController/NativeEmptySparseArray140683100.inc",
+    "address": "0x140683100",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/SparseArray.h",
+      "Containers/UnrealString.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "Empty(0) of a TSparseArray with 0x20-byte elements (FString at +8) and inline-4 allocation bitmap, then frees the buffers."
+  },
+  {
+    "class": "UFortCreativeTeleporterManagerComponent",
+    "function": "NativeRehashPointerSet140724800",
+    "kind": "helper",
+    "signature": "void NativeRehashPointerSet140724800(void* SetStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/UFortCreativeTeleporterManagerComponent/NativeRehashPointerSet140724800.inc",
+    "address": "0x140724800",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h",
+      "Templates/TypeHash.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "TSet<pointer>::Rehash on raw storage: re-links all 0x10-byte elements into the existing hash bucket array using PointerHash."
+  },
+  {
+    "class": "ABuildingProp_LockDevice",
+    "function": "NativeCopyGuid142c47170",
+    "kind": "helper",
+    "signature": "FGuid* NativeCopyGuid142c47170(FGuid* Dest, const FGuid* Src)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/ABuildingProp_LockDevice/NativeCopyGuid142c47170.inc",
+    "address": "0x142c47170",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Misc/Guid.h"
+    ],
+    "notes": "Copies a 16-byte FGuid from RDX to RCX and returns RCX."
+  },
+  {
+    "class": "UAmbientAudioStatics",
+    "function": "NativeIsInAudioThread142bfa260",
+    "kind": "helper",
+    "signature": "bool NativeIsInAudioThread142bfa260()",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs7_runtime/UAmbientAudioStatics/NativeIsInAudioThread142bfa260.inc",
+    "address": "0x142bfa260",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "CoreGlobals.h"
+    ],
+    "notes": "IsInAudioThread(): current thread id equals GAudioThreadId when set, else GGameThreadId."
+  }
+]

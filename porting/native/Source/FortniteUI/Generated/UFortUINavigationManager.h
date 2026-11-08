@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UUINavigationManager.h"
 
+#include "CoreMinimal.h"
 #include "EFortUINavigationOp.h"
 #include "FFortCollectionBookOp.h"
 #include "FFortExpeditionsOp.h"
@@ -22,6 +23,7 @@
 #include "FFortVaultItemNavigateRequest.h"
 #include "FFortVaultTabNavigateRequest.h"
 #include "HAL/UnrealMemory.h"
+#include "Templates/SharedPointer.h"
 #include "UFortCampaignHeroLoadoutItem.h"
 
 class UUserWidget;
@@ -111,5 +113,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static void NativeReserveArray48Bytes1406909c0(void* ArrayStorage, int32 RequestedCount, int32 CurrentMax);
+	static uint8* NativeMoveAssignSharedReferencer14098bd50(uint8* Dest, uint8* Source);
 };
 

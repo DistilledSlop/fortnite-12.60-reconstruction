@@ -696,6 +696,7 @@ public:
 	virtual TSubclassOf<AFortTimeOfDayManager> GetTimeOfDayManagerClassNative();
 	void NativeSetTimeOfDayManagerGameplayOverride(UClass* TimeOfDayManagerClass);
 	static uint8* NativeArenaAllocate142ec0180(uint8* ArenaState, int32 RequestedSize, int32 ReservedR8, bool bUseArena);
+	static void NativeRebuildChainPointerArray142e424e0(uint8* ArrayStorage);
 public:
     // Existing Linux fixture/runtime support; original native bodies remain open.
     // Definitions stay in Private/FortniteAthenaGameplay.cpp.

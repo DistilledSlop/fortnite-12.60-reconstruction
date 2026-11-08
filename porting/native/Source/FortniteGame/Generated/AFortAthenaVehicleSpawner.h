@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "Containers/Array.h"
+#include "Containers/UnrealString.h"
+#include "HAL/Platform.h"
+
 class UFortVehicleItemDefinition;
 class USceneComponent;
 
@@ -34,5 +38,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static int32* NativeFindSetElementId140708be0(uint8* Set, int32* OutElementId, uint64 Key);
 	static bool NativeAreSpawnBlockFlagsClear1445ed570(AFortAthenaVehicleSpawner* Spawner);
+	static uint8* NativeCopyKeyedTextArray1445d47d0(uint8* OutArray, const uint8* SourceArray);
 };
 

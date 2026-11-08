@@ -6,7 +6,11 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
+#include "Containers/Set.h"
 #include "FTeleporterGroup.h"
+#include "HAL/Platform.h"
+#include "HAL/UnrealMemory.h"
+#include "Templates/TypeHash.h"
 
 #include "UFortCreativeTeleporterManagerComponent.generated.h"
 
@@ -24,5 +28,10 @@ public:
 	UPROPERTY()
 	TMap<FName, FTeleporterGroup> TeleporterListedByTeleportToWhenReceived;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void* NativeCopyAssignSet140769940(void* Dest, const void* Source);
+	static void NativeRehashPointerSet140724800(void* SetStorage);
 };
 

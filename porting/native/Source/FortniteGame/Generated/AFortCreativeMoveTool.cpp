@@ -3,8 +3,10 @@
 #include "AFortPlayerController.h"
 #include "EHitTraceRule.h"
 #include "ESelectionProperty.h"
+#include "Engine/World.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/Pawn.h"
+#include "TimerManager.h"
 #include "UFortCreativeOption.h"
 #include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
@@ -581,6 +583,18 @@ bool AFortCreativeMoveTool::NativeRemoveHashedElement14462beb0(uint8* SetContain
 	*reinterpret_cast<int32*>(SetBytes + 0x34) = FreeCount + 1;
 	*reinterpret_cast<int32*>(SetBytes + 0x30) = ElemIndex;
 	return true;
+}
+
+FTimerManager* AFortCreativeMoveTool::NativeGetWorldTimerManager140f95ae0(UObject* Context)
+{
+	// Helper 0x140f95ae0: UWorld::GetTimerManager() of the receiver's world, returned as a pointer.
+	// Evidence: vtable slot 0x150 on RCX (shipping UObject vtable, GetWorld: the editor-only virtuals before it are compiled out);
+	//   result used as UWorld: lookup_offset UWorld 0x188 = OwningGameInstance (reflected); [GameInstance+0xc0] = FTimerManager*;
+	//   null game instance falls back to the world's own [UWorld+0x320] timer manager = UWorld::GetTimerManager().
+	// Callers (AAIHotSpot, AAthenaGoosePickup, ABuildingGameplayActor...) pass differently typed UObjects and use the result as FTimerManager*.
+	// CONFIDENCE: MEDIUM
+	UWorld* ContextWorld = Context->GetWorld();
+	return &ContextWorld->GetTimerManager();
 }
 
 void AFortCreativeMoveTool::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

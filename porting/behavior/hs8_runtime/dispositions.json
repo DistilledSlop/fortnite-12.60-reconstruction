@@ -1,0 +1,50 @@
+[
+  {
+    "addr": "0x144452b70",
+    "status": "blocked",
+    "case": "unknown_object_nonreflected_fields",
+    "reason": "[RCX+0x98]/[RCX+0xa0] are not members of ABuildingProp_LockDevice (lookup_offset shows AActor floats/struct), virtual call [vtbl+0x20] on an unknown class and raw deref chain +0x398 -> +0x2b0"
+  },
+  {
+    "addr": "0x143c2ad10",
+    "status": "blocked",
+    "case": "vtable_store_unknown_class",
+    "reason": "stores constant vtable pointer 0x145a5c580 of an unidentified class at [RCX] (LEA RAX,[0x145a5c580]; MOV [RCX],RAX); no callers to name the class"
+  },
+  {
+    "addr": "0x142c64390",
+    "status": "blocked",
+    "case": "writable_global",
+    "reason": "constructor of an unknown struct that reads mutable globals MOV RAX,[0x147c32678] and MOVSXD RCX,[0x147c32680] (array of 16-byte entries) and calls 0x1406ba850 on them"
+  },
+  {
+    "addr": "0x1408a5b50",
+    "status": "proposed",
+    "case": "sparse_array_empty",
+    "reason": "TSparseArray::Empty(Slack) with element buffer at +8; callee hints unrelated and replaced"
+  },
+  {
+    "addr": "0x142c97120",
+    "status": "proposed",
+    "case": "path_leaf_mid",
+    "reason": "two backward separator scans then FString::Mid; all branches mapped"
+  },
+  {
+    "addr": "0x1445f80a0",
+    "status": "blocked",
+    "case": "virtual_call_unknown_class",
+    "reason": "calls [[Data]+0x38](Data,0) on the first element of three raw arrays (+0x18/+0x28/+0x38); element class has no header or vtable record and no callers exist"
+  },
+  {
+    "addr": "0x142c88d40",
+    "status": "blocked",
+    "case": "virtual_call_unknown_class",
+    "reason": "tail-jumps through vtable slot 0 ([[RCX+0x10]]) of an embedded object of unknown class, guarded by a nonzero 16-byte id; no callers or class record"
+  },
+  {
+    "addr": "0x140fd9650",
+    "status": "proposed",
+    "case": "sparse_array_empty",
+    "reason": "TSparseArray::Empty(Slack) with element buffers at +0x20 and +8, stride 0x38"
+  }
+]

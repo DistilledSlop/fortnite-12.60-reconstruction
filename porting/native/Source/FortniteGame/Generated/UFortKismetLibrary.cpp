@@ -5,6 +5,7 @@
 #include "Engine/Level.h"
 #include "Engine/World.h"
 #include "GameFramework/GameStateBase.h"
+#include "HAL/Platform.h"
 #include "HAL/UnrealMemory.h"
 #include "Math/Rotator.h"
 #include "Math/UnrealMathUtility.h"
@@ -420,5 +421,46 @@ void UFortKismetLibrary::NativeShrinkArray1414710e0(uint8* Array)
 	        *reinterpret_cast<void**>(Array) = FMemory::Realloc(ArrayData, static_cast<SIZE_T>(static_cast<int64>(NewMax) * ElementStride), 0);
 	    }
 	}
+}
+
+bool UFortKismetLibrary::NativeSetByteSlotIfChanged1444889d0(uint8* Slots, uint32 Index, int32 NewValue)
+{
+	// Helper 0x1444889d0 (10 callers; caller 0x141bfbc10 passes &table, constant index 3/4/0xe/0x10 and value 0 in R8D).
+	// Asm: CMP EDX,0x20; JNC ret false; MOVZX EAX,[RDX+RCX]; CMP EAX,R8D; JZ ret false; MOV [RDX+RCX],R8B; ret true.
+	// Offset evidence: Slots is a stack byte table (RSP+0x20 in caller); bytes indexed directly, no class members.
+	// CONFIDENCE: HIGH
+	if (Index >= 0x20u)
+	{
+		return false;
+	}
+	if (static_cast<int32>(Slots[Index]) == NewValue)
+	{
+		return false;
+	}
+	Slots[Index] = static_cast<uint8>(NewValue);
+	return true;
+}
+
+bool UFortKismetLibrary::NativeAllChildrenPass1445ebfe0(const uint8* Node)
+{
+	// Helper 0x1445ebfe0 (10 callers; recursive, calls itself at 0x1445ec01 for each child).
+	// Asm: if (b[0x15]==0 && b[0x10]==0 && b[0x13]==0) return false; for each 0x10-byte element of array (Data +0x70, Num +0x78) with non-null first qword: if !Self(child) return false; return true.
+	// Offset evidence: Node has no recorded owning class; raw reads with asm widths (bytes at 0x10/0x13/0x15, qword at 0x70, int32 at 0x78).
+	// CONFIDENCE: HIGH
+	if (Node[0x15] == 0 && Node[0x10] == 0 && Node[0x13] == 0)
+	{
+		return false;
+	}
+	const uint8* Elements = *reinterpret_cast<const uint8* const*>(Node + 0x70);
+	const int32 ElementCount = *reinterpret_cast<const int32*>(Node + 0x78);
+	for (int32 ElementIndex = 0; ElementIndex < ElementCount; ++ElementIndex)
+	{
+		const uint8* Child = *reinterpret_cast<const uint8* const*>(Elements + static_cast<int64>(ElementIndex) * 0x10);
+		if (Child != nullptr && !UFortKismetLibrary::NativeAllChildrenPass1445ebfe0(Child))
+		{
+			return false;
+		}
+	}
+	return true;
 }
 

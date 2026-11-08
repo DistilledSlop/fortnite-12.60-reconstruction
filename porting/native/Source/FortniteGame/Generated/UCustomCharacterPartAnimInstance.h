@@ -10,6 +10,7 @@
 #include "EFortCustomPartType.h"
 #include "FFortAnimInput_SkydivingExternalForce.h"
 #include "FGameplayTagAnimations.h"
+#include "HAL/Platform.h"
 #include "UObject/Object.h"
 
 class AFortPlayerPawn;
@@ -261,5 +262,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static UObject* NativeGetAssociatedPawnFromOuter143fccf40(UCustomCharacterPartAnimInstance* AnimInstance);
 	static bool NativeIsSlashFree142d30420(const FString& Path);
+	static FString NativeGetPathLeaf142c97120(const FString& InPath);
 };
 

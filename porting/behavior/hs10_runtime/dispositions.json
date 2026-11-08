@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x1445ebfe0",
+  "status": "proposed",
+  "case": "pure_recursive",
+  "reason": "Recursive check: false when bytes +0x15,+0x10,+0x13 are all zero; otherwise true only if every non-null child pointer in the 0x10-stride array at +0x70 passes."
+ },
+ {
+  "addr": "0x142d5c1a0",
+  "status": "proposed",
+  "case": "struct_init",
+  "reason": "Default-initialises a 0xb4-byte block (zeros, 0x80 at +0x44/+0x94, -1 at +0x48/+0x98, byte +0x11 = !flag) and returns it."
+ },
+ {
+  "addr": "0x1442eb790",
+  "status": "proposed",
+  "case": "weakptr_pair",
+  "reason": "Fills a 16-byte block with two weak object pointers: Primary at +0, Secondary at +8; returns the block."
+ },
+ {
+  "addr": "0x1424689e0",
+  "status": "proposed",
+  "case": "tmap_find",
+  "reason": "Looks BankName up in Controller->BankMap; returns the mapped bank or Controller->DefaultAudioBank when absent."
+ },
+ {
+  "addr": "0x1408cd320",
+  "status": "proposed",
+  "case": "tarray_resize",
+  "reason": "TArray reserve for 0x1c-byte elements: quantizes RequiredNum*28 to a slot count, reallocates when it differs from PreviousMax, stores new Max at +0xc."
+ },
+ {
+  "addr": "0x1406d9890",
+  "status": "proposed",
+  "case": "tarray_grow",
+  "reason": "TArray growth for 0x40-byte elements: computes slack from Num (+8) and Max (+0xc), quantizes, stores new Max at +0xc and reallocates Data (+0)."
+ },
+ {
+  "addr": "0x142d529a0",
+  "status": "blocked",
+  "case": "writable_global_virtual_call",
+  "reason": "Loads writable global pointer 0x148260b30 (mutable singleton) and calls CALL [RAX+0x30] on it; no class/vtable record for that object, and RCX block (+0,+8) type is unknown."
+ },
+ {
+  "addr": "0x144022750",
+  "status": "blocked",
+  "case": "writable_global_state",
+  "reason": "Reads writable global pointer 0x148351eb8 (mutable singleton) and tests [obj+0x2a8] != 0; mutable game state of unrecorded object type."
+ }
+]

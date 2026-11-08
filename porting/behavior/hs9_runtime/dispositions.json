@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x1414da240",
+  "status": "proposed",
+  "case": "pure_helper",
+  "reason": "Returns the pointer-sized value stored at offset 0 of the source block (MOV RAX,[RCX]; RET)."
+ },
+ {
+  "addr": "0x1444889d0",
+  "status": "proposed",
+  "case": "pure_helper",
+  "reason": "Writes a byte into a 32-entry byte table when index < 0x20 and the value differs; returns whether it changed."
+ },
+ {
+  "addr": "0x1445d47d0",
+  "status": "proposed",
+  "case": "sret_array_copy",
+  "reason": "Copy-constructs a TArray of 24-byte {8-byte key, FString} elements into OutArray and returns it (sret). Element key type unrecovered; kept as uint64."
+ },
+ {
+  "addr": "0x14439a770",
+  "status": "blocked",
+  "case": "virtual_call_unknown_class",
+  "reason": "Calls vtable slot 0x400 on the receiver in RCX (CALL [RAX+0x400] with RDX=&0x147cdd8e0, a writable .data global address); receiver class is unknown (host UFortNiagaraGameplayLibrary is a function library, callers 0x1443977f0/0x14439a930 pass an unrecorded object; virt_name/virt_target have no record), and offsets 0x411/0x413/0x544+ have no owning class."
+ },
+ {
+  "addr": "0x1442bd890",
+  "status": "blocked",
+  "case": "virtual_call_unknown_class",
+  "reason": "Iterator step on {World*, Node*, Index, flags}; calls CALL [RAX+0x270] on [RCX] (receiver treated as UWorld; virtual_slots.virt_name UWorld 0x270 = None, no vtable record) and walks unknown node structs at +0x8/+0x10/+0x20/+0x40/+0x50 and world arrays at +0x1f0/+0x1f8."
+ },
+ {
+  "addr": "0x1442bd4d0",
+  "status": "blocked",
+  "case": "virtual_call_unknown_class",
+  "reason": "Same iterator as 0x1442bd890 with mask 0x1008041: CALL [RAX+0x270] on [RCX]; UWorld slot 0x270 has no vtable record (virt_name None) and node structs are unknown."
+ },
+ {
+  "addr": "0x1442bd6b0",
+  "status": "blocked",
+  "case": "virtual_call_unknown_class",
+  "reason": "Same iterator as 0x1442bd890 with mask 0x1000000008001: CALL [RAX+0x270] on [RCX]; UWorld slot 0x270 has no vtable record (virt_name None) and node structs are unknown."
+ },
+ {
+  "addr": "0x140aae670",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Broadcast loop over a delegate invocation list ([RCX] data, +8 num, +0x14 lock count) calling slot 0x50 with (RDX,R8) of unrecorded arg types, then tail-JMP 0x140685370 (hint AFortPlayerStateAthena::OnRep_SeasonLevelUIDisplay is wrong; it is the delegate list compaction with EDX=0) which has no callable equivalent for an untyped delegate list."
+ }
+]

@@ -6,6 +6,11 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "Containers/Array.h"
+#include "Containers/Map.h"
+#include "Containers/UnrealString.h"
+#include "Misc/CString.h"
+
 class UFortMtxOfferData;
 
 #include "UFortStoreFrontOfferInfo.generated.h"
@@ -68,5 +73,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsRefundable() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static int32 NativeGetMetaDataIntByKey1411322c0(const uint8* MetaStruct, const FString* LookupKey, int32 FallbackValue);
 };
 

@@ -9,6 +9,8 @@
 #include "AttributeSet.h"
 #include "Engine/EngineTypes.h"
 #include "FFillFloorPositionData.h"
+#include "GameFramework/Actor.h"
+#include "Math/Vector.h"
 
 class AFortPlayerPawn;
 
@@ -87,5 +89,9 @@ public:
 	void OnRep_StepIndex();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static bool NativeSetActorLocation143f832a0(AActor* Actor, const FVector& NewLocation, bool bSweep, FHitResult* OutSweepHitResult, uint8 TeleportMode);
 };
 

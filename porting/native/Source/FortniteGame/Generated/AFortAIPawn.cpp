@@ -2,6 +2,8 @@
 #include "AFortAIPawn.h"
 #include "AFortAIController.h"
 #include "AFortInventory.h"
+#include "Containers/BitArray.h"
+#include "CoreMinimal.h"
 #include "EFortCustomGender.h"
 #include "EFortMovementStyle.h"
 #include "EFortMovementUrgency.h"
@@ -549,6 +551,17 @@ float AFortAIPawn::NativeGetDifficultyLevel141e9b630(UObject* Context)
 	// evidence: single float load from Context+0xcc4 returned in XMM0; lookup_offset.py AFortAIPawn 0xcc4 finds no reflected member, so raw read
 	// CONFIDENCE: HIGH
 	return *reinterpret_cast<const float*>(reinterpret_cast<const uint8*>(Context) + 0xcc4);
+}
+
+void AFortAIPawn::NativeReserveBitArray140690880(uint8* BitArray, int32 Number)
+{
+	// Helper 0x140690880 (47 insns): RCX = bit array, EDX = bits to reserve. Layout from asm: [+0x18] NumBits, [+0x1c] MaxBits,
+	// secondary word pointer at +0x10 after 16 inline bytes = TBitArray<TInlineAllocator<4>> (FDefaultBitArrayAllocator, 32 bytes).
+	// Asm: if (Number > MaxBits) { Words = (Number+31)/32; Words <= 4 ? 4 : CalculateSlackGrow(Words, prevWords) via QuantizeSize
+	// (0x142bfce10); MaxBits = Words*32; Realloc(NumBits) (0x140690310) } = TBitArray::Reserve. Caller 0x142561160 does
+	// Reserve(NumBits+1) followed by NumBits++ (TBitArray::Add).
+	// CONFIDENCE: HIGH
+	reinterpret_cast<TBitArray<FDefaultBitArrayAllocator>*>(BitArray)->Reserve(Number);
 }
 
 void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

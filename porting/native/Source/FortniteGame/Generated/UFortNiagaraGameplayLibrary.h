@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "HAL/PlatformProcess.h"
 #include "UObject/Object.h"
 
 class UFXSystemComponent;
@@ -33,5 +34,6 @@ public:
 	static void NativeStoreTimedValue144123460(UObject* Target, const uint8* Source);
 	static void NativeSetFlagByte1440c9310(UObject* Object, uint8 FlagValue);
 	static void NativeCopyDoubleInt32144123690(uint8* Target, const uint8* Source);
+	static void NativeSleepSeconds142cf1050(float Seconds);
 };
 

@@ -1,0 +1,106 @@
+[
+ {
+  "class": "UFortKismetLibrary",
+  "function": "NativeAllChildrenPass1445ebfe0",
+  "kind": "helper",
+  "signature": "bool NativeAllChildrenPass1445ebfe0(const uint8* Node)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hs10_runtime/UFortKismetLibrary/NativeAllChildrenPass1445ebfe0.inc",
+  "address": "0x1445ebfe0",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "HAL/Platform.h"
+  ],
+  "notes": "Recursive check: false when bytes +0x15,+0x10,+0x13 are all zero; otherwise true only if every non-null child pointer in the 0x10-stride array at +0x70 passes."
+ },
+ {
+  "class": "UFortAttributeList_NUI",
+  "function": "NativeInitAttributeBlock142d5c1a0",
+  "kind": "helper",
+  "signature": "uint8* NativeInitAttributeBlock142d5c1a0(uint8* OutBlock, bool bFlag)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hs10_runtime/UFortAttributeList_NUI/NativeInitAttributeBlock142d5c1a0.inc",
+  "address": "0x142d5c1a0",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "HAL/Platform.h"
+  ],
+  "notes": "Default-initialises a 0xb4-byte block (zeros, 0x80 at +0x44/+0x94, -1 at +0x48/+0x98, byte +0x11 = !flag) and returns it."
+ },
+ {
+  "class": "UFortAttributeList_NUI",
+  "function": "NativeMakeWeakObjectPair1442eb790",
+  "kind": "helper",
+  "signature": "uint8* NativeMakeWeakObjectPair1442eb790(uint8* OutPair, UObject* Primary, UObject* Secondary)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hs10_runtime/UFortAttributeList_NUI/NativeMakeWeakObjectPair1442eb790.inc",
+  "address": "0x1442eb790",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h",
+   "UObject/WeakObjectPtrTemplates.h"
+  ],
+  "notes": "Fills a 16-byte block with two weak object pointers: Primary at +0, Secondary at +8; returns the block."
+ },
+ {
+  "class": "UFortAmbientAudioController",
+  "function": "NativeFindBankForName1424689e0",
+  "kind": "helper",
+  "signature": "UFortPOIAmbientAudioBank* NativeFindBankForName1424689e0(UFortAmbientAudioController* Controller, FName BankName)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hs10_runtime/UFortAmbientAudioController/NativeFindBankForName1424689e0.inc",
+  "address": "0x1424689e0",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "UObject/NameTypes.h",
+   "Containers/Map.h"
+  ],
+  "notes": "Looks BankName up in Controller->BankMap; returns the mapped bank or Controller->DefaultAudioBank when absent."
+ },
+ {
+  "class": "UAmbientAudioStatics",
+  "function": "NativeResizeArray28ByteElements1408cd320",
+  "kind": "helper",
+  "signature": "void NativeResizeArray28ByteElements1408cd320(uint8* ArrayMemory, int32 RequiredNum, int32 PreviousMax)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hs10_runtime/UAmbientAudioStatics/NativeResizeArray28ByteElements1408cd320.inc",
+  "address": "0x1408cd320",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "HAL/UnrealMemory.h"
+  ],
+  "notes": "TArray reserve for 0x1c-byte elements: quantizes RequiredNum*28 to a slot count, reallocates when it differs from PreviousMax, stores new Max at +0xc."
+ },
+ {
+  "class": "ABuildingProp_LockDevice",
+  "function": "NativeGrowArray64ByteElements1406d9890",
+  "kind": "helper",
+  "signature": "void NativeGrowArray64ByteElements1406d9890(uint8* ArrayMemory)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hs10_runtime/ABuildingProp_LockDevice/NativeGrowArray64ByteElements1406d9890.inc",
+  "address": "0x1406d9890",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "HAL/UnrealMemory.h"
+  ],
+  "notes": "TArray growth for 0x40-byte elements: computes slack from Num (+8) and Max (+0xc), quantizes, stores new Max at +0xc and reallocates Data (+0)."
+ }
+]
