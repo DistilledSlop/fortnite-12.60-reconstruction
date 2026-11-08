@@ -86,8 +86,6 @@ for e in f2:
         g = '01 interface dispatch (no body at interface level)'
     elif e['group'] == 'U':
         g = '02 no single body (pure virtual/embedded subobject)'
-    elif e['cls'] == 'UFortKismetLibrary':
-        g = '12 hand-written class with no generated header (UFortKismetLibrary)'
     elif defined_in_generated(e['cls'], e['fn']):
         g = '00 already emitted by a generator policy (done; no manifest entry, so not credited yet)'
     elif k in reg:

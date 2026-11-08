@@ -15,6 +15,7 @@
 
 class AActor;
 class AFortSkyTube;
+class AFortWeapon;
 class UBulletWhipTrackerComponentBase;
 class UCapsuleComponent;
 class UFortProjectileMovementComponent;
@@ -217,6 +218,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetGravityScale() const;
+
+	UFUNCTION(BlueprintCallable)
+	AFortWeapon* GetOwnerWeapon();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortSkyTube* GetSkyTube() const;

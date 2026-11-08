@@ -233,6 +233,15 @@ public:
 	int32 GetCurrentPhoenixXp() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetGroupXpBonusPercent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPersonalXpBonusPercent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRestXpBonusPercent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsRealMoneyPurchasePending() const;
 
 };

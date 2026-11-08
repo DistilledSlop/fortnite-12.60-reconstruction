@@ -76,6 +76,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	AFortPlayerPawn* GetHeroPlayerPawnForCurrentDisplayedItem();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetPartyMemberIndexByPlayerPawn(AFortPlayerPawn* PlayerPawn, int32& OutPlayerIndex) const;
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void NotifyPrefabChanged(AActor* PrefabActor, UFortItem* CurrentItem);

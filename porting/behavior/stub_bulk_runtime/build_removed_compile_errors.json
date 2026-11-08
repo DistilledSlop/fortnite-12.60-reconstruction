@@ -520,5 +520,28 @@
   "blocker": "clang_compile_error",
   "reason": "calls AFortGameStateAthena::PlaylistIsCreativeLTM, which is not declared in the generated header",
   "inc_path": "porting/behavior/ht4_runtime/AFortMinigame/NativeIsCreativeLTMPlaylist14199e380.inc"
+ },
+ {
+  "entry": "UBuildingStructuralSupportSystem::K2_GetGridIndicesFromWorldLoc",
+  "kind": "exec",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: FBuildingSupportCellIndex is not a Blueprint-supported USTRUCT in this tree",
+  "inc_path": "porting/behavior/kp2_runtime/UBuildingStructuralSupportSystem/K2_GetGridIndicesFromWorldLoc.inc"
+ },
+ {
+  "entry": "UFortKismetLibrary::GetFortPlayerControllerFromActor",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "invalid application of 'sizeof' to an incomplete type 'APlayerState'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/kp3_runtime/UFortKismetLibrary/GetFortPlayerControllerFromActor.inc"
+ },
+ {
+  "entry": "AFortPlayerPawn::OnRep_PossessedProp",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "'Mesh' is a private member of 'ACharacter'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/kp2_runtime/AFortPlayerPawn/OnRep_PossessedProp.inc"
  }
 ]

@@ -61,7 +61,15 @@ for p in glob.glob(f'{R}/work-batches/wrap[0-9A]*.json') + glob.glob(f'{R}/work-
         continue  # generated but never run by a worker: those functions are still open
     for j in json.load(open(p)):
         attempted.add((j['cls'], j['fn']))
-NO_GENERATED_HEADER = {'UFortKismetLibrary'}  # hand-written class: the generator cannot learn signatures for it
+# functions a worker already blocked with a recorded reason are not re-proposed until the reason changes
+for _d in glob.glob('porting/behavior/*_runtime/dispositions.json'):
+    try:
+        for _x in json.load(open(_d)):
+            if _x.get('status') == 'blocked' and _x.get('class') and _x.get('function'):
+                attempted.add((_x['class'], _x['function']))
+    except Exception:
+        pass
+NO_GENERATED_HEADER = set()  # UFortKismetLibrary is generator-owned now (was hand-written)
 hdr = {os.path.basename(p)[:-2]: p for p in glob.glob('porting/native/Source/*/Generated/*.h')}
 
 

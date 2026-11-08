@@ -31,5 +31,8 @@ public:
 	UPROPERTY()
 	TMap<FGameplayTag, int32> VehicleCountByTagMap;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetVehicleCountByTag(FGameplayTag VehicleTag) const;
+
 };
 

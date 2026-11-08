@@ -378,6 +378,9 @@ public:
 	void AddLightAndFogPhaseSettingOverrideMulticast(EFortDayPhase::Type DayPhase, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, float BlendInLength);
 	void AddLightAndFogPhaseSettingOverrideMulticast_Implementation(EFortDayPhase::Type DayPhase, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, float BlendInLength);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TEnumAsByte<EFortDayPhase::Type> GetPreviousDayPhase() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintCosmetic)
 	float GetStormStrength() const;
 

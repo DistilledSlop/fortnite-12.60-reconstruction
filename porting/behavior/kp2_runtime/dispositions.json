@@ -1,0 +1,121 @@
+[
+ {
+  "class": "AFortPlayerPawn",
+  "function": "OnRep_PossessedProp",
+  "status": "proposed",
+  "case": "small_leaf_medium",
+  "reason": ""
+ },
+ {
+  "class": "AFortProjectileBase",
+  "function": "GetOwnerWeapon",
+  "status": "proposed",
+  "case": "small_leaf_medium",
+  "reason": ""
+ },
+ {
+  "class": "AFortRemoteControlledPawnAthena",
+  "function": "GetOutOfHealthExplodeDelay",
+  "status": "proposed",
+  "case": "small_leaf_high",
+  "reason": ""
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "GetTowhookRotation",
+  "status": "blocked",
+  "case": "blocked_writable_data_constant",
+  "reason": "Loads .data (writable) constants 0x147c31cb8 (1.0), 0x147c31cb0 and 0x147c31cb4 (0.0) via MOVSS; writable .data globals stay blocked. Also unreflected FVector gaps at 0x1578/0x1584."
+ },
+ {
+  "class": "AFortTimeOfDayManager",
+  "function": "GetPreviousDayPhase",
+  "status": "proposed",
+  "case": "small_leaf_medium",
+  "reason": ""
+ },
+ {
+  "class": "AFortVehicleManager",
+  "function": "GetVehicleCountByTag",
+  "status": "proposed",
+  "case": "small_leaf_medium",
+  "reason": ""
+ },
+ {
+  "class": "AFortWeaponRanged",
+  "function": "ShouldPlayReloadFX",
+  "status": "blocked",
+  "case": "blocked_writable_global",
+  "reason": "CMP dword [RBX+0x16c8],EAX where EAX is loaded from writable .data global 0x14816dd98; writable .data globals stay blocked."
+ },
+ {
+  "class": "AFortWindManager",
+  "function": "GetCurrentWindImpulseCylinderDelta",
+  "status": "blocked",
+  "case": "blocked_hidden_sret_layout",
+  "reason": "NativeCopyWindImpulseCylinder141dbf6b0 returns by value into the caller's FFortWindImpulseCylinderDelta (hidden return slot), and element 0 of WindImpulseCylinderDeltas (a Delta, whose first member is DeltaCenter) is passed as const FFortWindImpulseCylinder&; the sret layout and the handle read at delta+0x8c are not expressible from the generated headers."
+ },
+ {
+  "class": "APartyDisplayManager",
+  "function": "GetPartyMemberIndexByPlayerPawn",
+  "status": "proposed",
+  "case": "small_leaf_medium",
+  "reason": ""
+ },
+ {
+  "class": "UAthenaChallengeInfoPanel",
+  "function": "HandleCycleQuestsInputAction",
+  "status": "blocked",
+  "case": "blocked_unresolved_tail_jump",
+  "reason": "CMP DL,R8B; JNZ 0x144b91020 tail-jumps outside the body to an address absent from callee_candidates. Page mapping 0->1, 1->2, 2->0, 3->2, other returns; the tail target is unresolved."
+ },
+ {
+  "class": "UBuildingStructuralSupportSystem",
+  "function": "GetFloorActor",
+  "status": "blocked",
+  "case": "blocked_writable_global",
+  "reason": "Reads writable .data globals 0x148263a2c and 0x148263a18 via absolute addresses (object table walk); writable .data globals stay blocked."
+ },
+ {
+  "class": "UBuildingStructuralSupportSystem",
+  "function": "IsBuildingActorValid",
+  "status": "blocked",
+  "case": "blocked_writable_global",
+  "reason": "Reads writable .data globals 0x148263a2c and 0x148263a18 via absolute addresses (object table walk); writable .data globals stay blocked."
+ },
+ {
+  "class": "UBuildingStructuralSupportSystem",
+  "function": "IsWorldLocValid",
+  "status": "proposed",
+  "case": "small_leaf_high",
+  "reason": ""
+ },
+ {
+  "class": "UBuildingStructuralSupportSystem",
+  "function": "K2_GetGridIndicesFromWorldLoc",
+  "status": "proposed",
+  "case": "small_leaf_high",
+  "reason": ""
+ },
+ {
+  "class": "UCaptureComponent",
+  "function": "OnRep_CaptureState",
+  "status": "blocked",
+  "case": "blocked_shared_callee_ambiguous",
+  "reason": "CALL 0x144630410 with receiver this+0x30 (PrimaryComponentTick). Its only candidate is AFortProjectileBase::OnRep_CurrentSkyTube, which is not an ancestor of UCaptureComponent, so the shared body is ambiguous."
+ },
+ {
+  "class": "UCommonButton",
+  "function": "SetIsInteractableWhenSelected",
+  "status": "blocked",
+  "case": "blocked_unresolved_tail_jump",
+  "reason": "bToggleable clear (0x2a0 mask 0x10) jumps to 0x1407f7a20, a different body with no callee candidate; the tail target is unresolved."
+ },
+ {
+  "class": "UCommonUILibrary",
+  "function": "FindParentWidgetOfType",
+  "status": "blocked",
+  "case": "blocked_null_type_fault_path",
+  "reason": "XOR EAX,EAX at 0x1407becce feeds LEA/MOVSXD at 0x1407becd0 with RAX=0 (dereferences address 0x38) when Type is null or not a UWidget; fault semantics are not expressible exactly, and the outer-walk helpers are not fully modeled."
+ }
+]

@@ -12,6 +12,7 @@
 #include "FGameplayTagAnimations.h"
 #include "UObject/Object.h"
 
+class AFortPlayerPawn;
 class AFortWeapon;
 class USkeletalMeshComponent;
 
@@ -242,6 +243,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TEnumAsByte<EFortCustomPartType::Type> PartType;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual AFortPlayerPawn* GetAssociatedPlayerPawn() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TEnumAsByte<EFortCustomPartType::Type> GetCharacterPartType() const;

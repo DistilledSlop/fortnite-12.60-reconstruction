@@ -1,0 +1,121 @@
+[
+ {
+  "class": "AAIHotSpot",
+  "function": "GetSlotLocationByIndex",
+  "status": "blocked",
+  "case": "writable_data_constant",
+  "reason": "Null-slot branch loads 12-byte default vector from writable .data 0x1478c1890/0x1478c1898 (not .rdata); blocked by rule."
+ },
+ {
+  "class": "ABuildingGameplayActor",
+  "function": "GetTargetingSourceTransform_Implementation",
+  "status": "blocked",
+  "case": "writable_data_constant",
+  "reason": "Null-branch copies 48-byte FTransform from writable .data 0x1482184f0; the this+0x130 pointee (+0x1c0 FTransform) is also unreflected."
+ },
+ {
+  "class": "ABuildingGameplayActorConsumable",
+  "function": "GetDeathFXTransform_Implementation",
+  "status": "blocked",
+  "case": "writable_data_constant",
+  "reason": "Shared body 0x141bdd320: null-branch copies 48-byte FTransform from writable .data 0x1482184f0."
+ },
+ {
+  "class": "ADeployableBaseCore",
+  "function": "GetSimpleDeathFXTransform_Implementation",
+  "status": "blocked",
+  "case": "writable_data_constant",
+  "reason": "Shared body 0x141bdd320: null-branch copies 48-byte FTransform from writable .data 0x1482184f0."
+ },
+ {
+  "class": "AFortAthenaDoghouseVehicle",
+  "function": "IsStallingFromAltitude",
+  "status": "blocked",
+  "case": "writable_data_constant",
+  "reason": "Null-branch fallback vector loaded from writable .data 0x148218630/0x148218638; blocked by rule."
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "ServerSetPlayerHitMarkers_Implementation",
+  "status": "blocked",
+  "case": "unresolved_tail_jump",
+  "reason": "JNZ 0x14284ce80 after CMP byte [this+0x268],0 is a tail jump to an address with no callee candidate; JNZ 0x1424bb536 target is not in listed insns."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerUpdateScaleAxis_Implementation",
+  "status": "blocked",
+  "case": "param_abi_conflict",
+  "reason": "Header takes const EScaleAxis& (pointer in RDX under Win64 ABI) but asm stores DL as a byte value into [this+0xf81]; faithful reading undecidable."
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "HasMinigameStarter",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "Inline object-table lookup reads absolute globals 0x148263a2c and 0x148263a18; not expressible."
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "IsMinigameStarter",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "Inline object-table lookup reads absolute globals 0x148263a2c and 0x148263a18; also calls 0x142414c60."
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "GetTowhookRotation",
+  "status": "blocked",
+  "case": "simd_and_writable_data_constant",
+  "reason": "Scalar/packed SSE chain (ANDPS mask, MAXSS, SQRTSS, JC on COMISS) with writable .data constants (e.g. 0x147c31cb0/0x147c31cb8); not exactly verifiable within rules."
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "ServerSetAntiAddictionPlayTimeMultiplier_Implementation",
+  "status": "proposed",
+  "case": "clamp_store_reflected",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerControllerGameplay",
+  "function": "AreHUDElementsVisible",
+  "status": "blocked",
+  "case": "unlisted_branch_targets",
+  "reason": "Miss/found branch targets 0x1423c8eee, 0x1423c8eca and 0x1423c8ed9 are not in listed insns; nested tag-container loop control flow not verifiable."
+ },
+ {
+  "class": "AFortPlayerControllerOutpost",
+  "function": "IsOutpostOwner",
+  "status": "blocked",
+  "case": "callee_param_type_mismatch",
+  "reason": "Helper 0x1425702e0 takes AFortPlayerControllerOutpost* but asm passes RCX=[this+0x220] (unreflected object); inline class check on that object unresolved."
+ },
+ {
+  "class": "AFortPlayerControllerSpectating",
+  "function": "IsPlayerInRelevancy",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "Inline object-table lookup reads absolute globals 0x148263a2c and 0x148263a18."
+ },
+ {
+  "class": "AFortPlayerControllerSpectating",
+  "function": "IsValidToFollow",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "Inline object-table lookup reads absolute globals 0x148263a2c and 0x148263a18; multiple callees."
+ },
+ {
+  "class": "AFortPlayerControllerZone",
+  "function": "PopDeathInputComponent",
+  "status": "blocked",
+  "case": "virtual_slot_mismatch",
+  "reason": "Vslot 0xbe0 tail-jump passes RDX=[this+0x27e0]; target AFortPlayerController::OnRep_HoldingObject() takes no arguments."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "GetSlopeSlidingNormal",
+  "status": "blocked",
+  "case": "writable_data_constant",
+  "reason": "Fallback FVector loaded from writable .data 0x147c31cb0/0x147c31cb8; blocked by rule."
+ }
+]

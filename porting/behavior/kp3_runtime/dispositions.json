@@ -1,0 +1,121 @@
+[
+ {
+  "class": "UCustomCharacterPartAnimInstance",
+  "function": "GetAssociatedPlayerPawn",
+  "status": "proposed",
+  "case": "call",
+  "reason": "Helper + StaticClass IsA; pawn returned or null. Offsets none."
+ },
+ {
+  "class": "UFortKismetLibrary",
+  "function": "AreAthenaVehiclesEnabled",
+  "status": "proposed",
+  "case": "call",
+  "reason": "Two NativeGetGlobals reads of reflected bools bAthenaSimVehicles and bAthenaUsesSimCollision."
+ },
+ {
+  "class": "UFortKismetLibrary",
+  "function": "AreCampaignVehiclesEnabled",
+  "status": "proposed",
+  "case": "call",
+  "reason": "Two NativeGetGlobals reads of reflected bools bCampaignSimVehicles and bCampaignUsesSimCollision."
+ },
+ {
+  "class": "UFortKismetLibrary",
+  "function": "GetFortPlayerControllerFromActor",
+  "status": "proposed",
+  "case": "call",
+  "reason": "Three IsA branches: Actor, APawn::Controller (GetController), APlayerState Owner (GetOwner). Long asm; MEDIUM."
+ },
+ {
+  "class": "UFortKismetLibrary",
+  "function": "K2_RemoveItemFromPlayerByGuid",
+  "status": "proposed",
+  "case": "leaf",
+  "reason": "Callee 0x140680300 is constant-0 stub; both paths return 0."
+ },
+ {
+  "class": "UFortKismetLibrary",
+  "function": "K2_RemoveItemsFromPlayerByIntStateValue",
+  "status": "proposed",
+  "case": "leaf",
+  "reason": "Tail-jump to constant-0 stub 0x140680300; returns 0."
+ },
+ {
+  "class": "UFortKismetLibrary",
+  "function": "K2_RemoveItemsFromPlayerByNameStateValue",
+  "status": "proposed",
+  "case": "leaf",
+  "reason": "Shares body 0x141efa6c0 with IntStateValue; tail-jump to constant-0 stub; returns 0."
+ },
+ {
+  "class": "UFortMcpContext",
+  "function": "GetGroupXpBonusPercent",
+  "status": "proposed",
+  "case": "call",
+  "reason": "UGameDataSTW::GroupBoost_XpBonusPercent * 100.0 (.rdata const), truncated."
+ },
+ {
+  "class": "UFortMcpContext",
+  "function": "GetPersonalXpBonusPercent",
+  "status": "proposed",
+  "case": "call",
+  "reason": "UGameDataSTW::PersonalBoost_XpBonusPercent * 100.0 (.rdata const), truncated."
+ },
+ {
+  "class": "UFortMcpContext",
+  "function": "GetRestXpBonusPercent",
+  "status": "proposed",
+  "case": "call",
+  "reason": "UGameDataSTW::Rest_XpBonusPercent * 100.0 (.rdata const), truncated."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "GetCurrentHitTraceRule",
+  "status": "blocked",
+  "case": "writable_global_table",
+  "reason": "Table lookup reads writable .data globals 0x148263a2c (count) and 0x148263a18 (base); pointee CurrentMoveTool offsets unreflected."
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "GetDropToFloorEnabled",
+  "status": "blocked",
+  "case": "writable_global_table",
+  "reason": "Table lookup reads writable .data globals 0x148263a2c and 0x148263a18; pointee CurrentMoveTool offset 0x1119 unreflected."
+ },
+ {
+  "class": "UFortCardPackItem",
+  "function": "CanStoreOpen",
+  "status": "blocked",
+  "case": "writable_global_absolute",
+  "reason": "Compares against writable .data globals (0x148164dc0, 0x148164db8, 0x148164dd8, 0x148164de0 and others)."
+ },
+ {
+  "class": "UFortCreativeItemListTabPanel",
+  "function": "GetSelectedItemIndex",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "Callee 0x1407c1e20 is UFortAIGoalProvider::GetEncounterInfo; receiver this+0x300 is a struct and UFortAIGoalProvider is not an ancestor of the panel."
+ },
+ {
+  "class": "UFortFrontEndContext",
+  "function": "GetFrontEndCamera",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "Callee 0x144cb7c20 is UFortGlobalUIContext::NativeGetContextPlayerController144cb7c20; UFortGlobalUIContext is not an ancestor of UFortFrontEndContext."
+ },
+ {
+  "class": "UFortGameUserSettings",
+  "function": "HasRecordedStat",
+  "status": "blocked",
+  "case": "ported_helper_signature_mismatch",
+  "reason": "Helper 0x140709840 declared (void* Set, uint64 Key) but asm passes RCX=set, RDX=&int32 out slot, R8=key."
+ },
+ {
+  "class": "UFortKismetLibrary",
+  "function": "GetTeamAffiliationBetweenTeams",
+  "status": "blocked",
+  "case": "hidden_return_slot",
+  "reason": "Body stores result to [RCX] and returns RCX (hidden return slot); header declares by-value TEnumAsByte return."
+ }
+]

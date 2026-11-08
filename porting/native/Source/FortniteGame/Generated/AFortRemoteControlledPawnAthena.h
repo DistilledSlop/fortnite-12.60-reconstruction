@@ -97,6 +97,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetLaunchDelay() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetOutOfHealthExplodeDelay() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool IsCurrentlyDelayingLaunch() const;
 

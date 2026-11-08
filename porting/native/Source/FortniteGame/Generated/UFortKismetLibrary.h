@@ -6,12 +6,14 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "EFortItemEntryState.h"
 #include "FFortClientEventName.h"
 #include "FFortDialogExternalLatentActionHandle.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
+#include "Misc/Guid.h"
 #include "UObject/NoExportTypes.h"
 
 class AActor;
@@ -27,6 +29,12 @@ class FORTNITEGAME_API UFortKismetLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool AreAthenaVehiclesEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool AreCampaignVehiclesEnabled();
+
 	UFUNCTION(BlueprintCallable)
 	static void CustomHandleActorStreamedInEditor(AActor* SourceActor);
 
@@ -98,6 +106,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	static void K2_RemoveItemFromAllPlayers(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 AmountToRemove);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static int32 K2_RemoveItemFromPlayerByGuid(AFortPlayerController* PlayerController, FGuid ItemGuid, int32 AmountToRemove, bool bForceRemoval);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static int32 K2_RemoveItemsFromPlayerByIntStateValue(AFortPlayerController* PlayerController, EFortItemEntryState::Type StateType, int32 StateValue, bool bForceRemoval);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static int32 K2_RemoveItemsFromPlayerByNameStateValue(AFortPlayerController* PlayerController, EFortItemEntryState::Type StateType, FName StateValue, bool bForceRemoval);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static FVector NormalizedAngleInDegreesToVector(float A);

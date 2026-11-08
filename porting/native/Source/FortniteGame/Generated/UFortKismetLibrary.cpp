@@ -3,6 +3,33 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "UFortGameInstance.h"
+#include "UFortGlobals.h"
+
+bool UFortKismetLibrary::AreAthenaVehiclesEnabled()
+{
+	// Behaviour snippet: UFortKismetLibrary::AreAthenaVehiclesEnabled (body only).
+	// Original address: 0x141ee5f10 (thunk 0x142966db0)
+	// Offset evidence: UFortGlobals bool members at object +0x213 (bAthenaSimVehicles, reflected bool_bits mask 1) and +0x212 (bAthenaUsesSimCollision, reflected). Helper 0x141ed2350 = UFortGlobals::NativeGetGlobals(), called once per read exactly as the asm does.
+	// CONFIDENCE: HIGH
+	if (!UFortGlobals::NativeGetGlobals()->bAthenaSimVehicles)
+	{
+		return false;
+	}
+	return UFortGlobals::NativeGetGlobals()->bAthenaUsesSimCollision;
+}
+
+bool UFortKismetLibrary::AreCampaignVehiclesEnabled()
+{
+	// Behaviour snippet: UFortKismetLibrary::AreCampaignVehiclesEnabled (body only).
+	// Original address: 0x141ee5f40 (thunk 0x142966de0)
+	// Offset evidence: UFortGlobals bool members at object +0x217 (bCampaignSimVehicles, reflected bool_bits mask 1) and +0x216 (bCampaignUsesSimCollision, reflected). Helper 0x141ed2350 = UFortGlobals::NativeGetGlobals(), called once per read exactly as the asm does.
+	// CONFIDENCE: HIGH
+	if (!UFortGlobals::NativeGetGlobals()->bCampaignSimVehicles)
+	{
+		return false;
+	}
+	return UFortGlobals::NativeGetGlobals()->bCampaignUsesSimCollision;
+}
 
 void UFortKismetLibrary::CustomHandleActorStreamedInEditor(AActor* SourceActor)
 {
@@ -203,6 +230,33 @@ void UFortKismetLibrary::K2_RemoveItemFromAllPlayers(UObject* WorldContextObject
 	// CONFIDENCE: MEDIUM
 	// Migrated from the hand-written UFortKismetLibrary in FortniteMapClasses.cpp.
 	return;
+}
+
+int32 UFortKismetLibrary::K2_RemoveItemFromPlayerByGuid(AFortPlayerController* PlayerController, FGuid ItemGuid, int32 AmountToRemove, bool bForceRemoval)
+{
+	// Behaviour snippet: UFortKismetLibrary::K2_RemoveItemFromPlayerByGuid (body only).
+	// Original address: 0x141efa680 (thunk 0x142973910)
+	// Offset evidence: no member access. The only call is to 0x140680300, which is XOR EAX,EAX; RET (constant 0, no effect). Both the zero-guid path and the call path return 0, so the call is folded.
+	// CONFIDENCE: HIGH
+	return 0;
+}
+
+int32 UFortKismetLibrary::K2_RemoveItemsFromPlayerByIntStateValue(AFortPlayerController* PlayerController, EFortItemEntryState::Type StateType, int32 StateValue, bool bForceRemoval)
+{
+	// Behaviour snippet: UFortKismetLibrary::K2_RemoveItemsFromPlayerByIntStateValue (body only).
+	// Original address: 0x141efa6c0 (thunk 0x142973a50)
+	// Offset evidence: no member access. The body tail-jumps to 0x140680300, which is XOR EAX,EAX; RET (constant 0, no effect). Every path returns 0, so the tail jump is folded.
+	// CONFIDENCE: HIGH
+	return 0;
+}
+
+int32 UFortKismetLibrary::K2_RemoveItemsFromPlayerByNameStateValue(AFortPlayerController* PlayerController, EFortItemEntryState::Type StateType, FName StateValue, bool bForceRemoval)
+{
+	// Behaviour snippet: UFortKismetLibrary::K2_RemoveItemsFromPlayerByNameStateValue (body only).
+	// Original address: 0x141efa6c0 (thunk 0x142973b80; body shared with K2_RemoveItemsFromPlayerByIntStateValue)
+	// Offset evidence: no member access. The body tail-jumps to 0x140680300, which is XOR EAX,EAX; RET (constant 0, no effect). Every path returns 0, so the tail jump is folded.
+	// CONFIDENCE: HIGH
+	return 0;
 }
 
 FVector UFortKismetLibrary::NormalizedAngleInDegreesToVector(float A)
