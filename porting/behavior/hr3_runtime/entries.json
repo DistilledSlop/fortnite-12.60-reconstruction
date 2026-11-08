@@ -1,0 +1,66 @@
+[
+  {
+    "class": "AFortAIGoalManager",
+    "function": "NativeEnsureArray24Capacity140690ee0",
+    "kind": "helper",
+    "signature": "void NativeEnsureArray24Capacity140690ee0(uint8* ArrayStorage, int32 NewNum)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr3_runtime/AFortAIGoalManager/NativeEnsureArray24Capacity140690ee0.inc",
+    "address": "0x140690ee0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Array Max/Data update for 24-byte elements; FMemory::QuantizeSize + Realloc; callers 0x1422b5db0, 0x144f65aa0."
+  },
+  {
+    "class": "AFortGameModeAthena",
+    "function": "NativeArenaAllocate142ec0180",
+    "kind": "helper",
+    "signature": "uint8* NativeArenaAllocate142ec0180(uint8* ArenaState, int32 RequestedSize, int32 ReservedR8, bool bUseArena)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr3_runtime/AFortGameModeAthena/NativeArenaAllocate142ec0180.inc",
+    "address": "0x142ec0180",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Arena bump allocator with Malloc fallback; R8 unread by asm (kept for ABI); field semantics inferred."
+  },
+  {
+    "class": "UFortPlayerAttrSet",
+    "function": "NativeResolveHandleValue142d66000",
+    "kind": "helper",
+    "signature": "void** NativeResolveHandleValue142d66000(uint8* HandleState, void** OutValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr3_runtime/UFortPlayerAttrSet/NativeResolveHandleValue142d66000.inc",
+    "address": "0x142d66000",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Handle payload resolver; writes sret slot and returns it; struct field meaning inferred from asm."
+  },
+  {
+    "class": "UFortGlobals",
+    "function": "NativeCompareWideStringsNoCase142bcf940",
+    "kind": "helper",
+    "signature": "int32 NativeCompareWideStringsNoCase142bcf940(const uint16* LeftChars, const uint16* RightChars, uint64 MaxCount)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr3_runtime/UFortGlobals/NativeCompareWideStringsNoCase142bcf940.inc",
+    "address": "0x142bcf940",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Bounded wide string compare with ASCII case folding; fold table verified from PE .rdata."
+  }
+]

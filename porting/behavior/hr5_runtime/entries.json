@@ -1,0 +1,51 @@
+[
+  {
+    "class": "UFortMinigameItemListComponent",
+    "function": "NativeGrowArrayStorage14072b9f0",
+    "kind": "helper",
+    "signature": "void NativeGrowArrayStorage14072b9f0(void* ArrayPtr)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr5_runtime/UFortMinigameItemListComponent/NativeGrowArrayStorage14072b9f0.inc",
+    "address": "0x14072b9f0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Grows TArray storage of 96-byte elements; FMemory::QuantizeSize/Realloc; EDX unused."
+  },
+  {
+    "class": "AFortWindManager",
+    "function": "NativeGrowArrayStorage1407f2000",
+    "kind": "helper",
+    "signature": "void NativeGrowArrayStorage1407f2000(void* ArrayPtr)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr5_runtime/AFortWindManager/NativeGrowArrayStorage1407f2000.inc",
+    "address": "0x1407f2000",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Grows TArray storage of 144-byte elements; FMemory::QuantizeSize/Realloc; EDX unused."
+  },
+  {
+    "class": "UFortPlayerAttrSet",
+    "function": "NativeHelper140762760",
+    "kind": "helper",
+    "signature": "int32 NativeHelper140762760()",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr5_runtime/UFortPlayerAttrSet/NativeHelper140762760.inc",
+    "address": "0x140762760",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns constant 0x77357463; no callers in batch."
+  }
+]

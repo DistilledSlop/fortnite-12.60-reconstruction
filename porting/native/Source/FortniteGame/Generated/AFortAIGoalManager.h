@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 #include "FPawnGoalSelectionTableEntry.h"
+#include "HAL/UnrealMemory.h"
 
 class UEnvQuery;
 class UFortAIAssignment;
@@ -48,5 +49,10 @@ public:
 	UPROPERTY()
 	TArray<FPawnGoalSelectionTableEntry> PawnGoalSelectionTable;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeArrayReserveSlack140690c30(void* ArrayStorage);
+	static void NativeEnsureArray24Capacity140690ee0(uint8* ArrayStorage, int32 NewNum);
 };
 

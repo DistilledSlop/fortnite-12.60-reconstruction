@@ -1,0 +1,105 @@
+[
+  {
+    "class": "UFortGameplayAbility",
+    "function": "NativeFmod142bc0d80",
+    "kind": "helper",
+    "signature": "float NativeFmod142bc0d80(float X, float Y)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq5_runtime/UFortGameplayAbility/NativeFmod142bc0d80.inc",
+    "address": "0x142bc0d80",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/UnrealMathUtility.h"
+    ],
+    "notes": "Float Fmod(X,Y) helper (UE FMath::Fmod shape). Returns 0 for |Y|<=1e-8; truncates quotient below 2^23; clamps remainder to |Y| on the positive side."
+  },
+  {
+    "class": "AFortGameModeZone",
+    "function": "NativeArrayRegrow1406d9800",
+    "kind": "helper",
+    "signature": "void NativeArrayRegrow1406d9800(void* Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq5_runtime/AFortGameModeZone/NativeArrayRegrow1406d9800.inc",
+    "address": "0x1406d9800",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray regrow for 20-byte elements (Data@0, Num@8, Max@0xc). New Max = Num*1.375 or max(1,Num) when Max==0; Realloc via FMemory."
+  },
+  {
+    "class": "AUnicornDriver",
+    "function": "NativeUnicornDriverWeakTarget14468f240",
+    "kind": "helper",
+    "signature": "UObject* NativeUnicornDriverWeakTarget14468f240(AUnicornDriver* Driver)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq5_runtime/AUnicornDriver/NativeUnicornDriverWeakTarget14468f240.inc",
+    "address": "0x14468f240",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "UObject/WeakObjectPtrTemplates.h"
+    ],
+    "notes": "If Driver+0x1d0 (int32) > 0, returns TWeakObjectPtr stored at Driver+0x1c8 resolved via Get(); otherwise null."
+  },
+  {
+    "class": "AFortCheckPointSplineActor",
+    "function": "NativeArraySetCapacity140694750",
+    "kind": "helper",
+    "signature": "void NativeArraySetCapacity140694750(void* Array, int32 NewCount)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq5_runtime/AFortCheckPointSplineActor/NativeArraySetCapacity140694750.inc",
+    "address": "0x140694750",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray capacity set for 12-byte elements (Data@0, Max@0xc). Max from QuantizeSize(NewCount*12)/12, INT32_MAX on overflow; Realloc when changed."
+  },
+  {
+    "class": "UFortMatchmakingContext",
+    "function": "NativeGetContextObject141e613c0",
+    "kind": "helper",
+    "signature": "UObject* NativeGetContextObject141e613c0(UFortMatchmakingContext* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq5_runtime/UFortMatchmakingContext/NativeGetContextObject141e613c0.inc",
+    "address": "0x141e613c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns the object pointer stored at Context+0x438 (MOV RAX,[RCX+0x438]; RET). Pointee type not reflected; typed UObject*."
+  },
+  {
+    "class": "ULevelSaveBaseComponent",
+    "function": "NativeAddUnique14085a990",
+    "kind": "helper",
+    "signature": "int32 NativeAddUnique14085a990(TArray<uint64>& Array, const uint64* Value)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq5_runtime/ULevelSaveBaseComponent/NativeAddUnique14085a990.inc",
+    "address": "0x14085a990",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h"
+    ],
+    "notes": "Linear find of 8-byte element in TArray; returns its index if present, else appends *Value and returns old Num."
+  }
+]

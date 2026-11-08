@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x1450b2410",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "all asm instructions accounted for"
+ },
+ {
+  "addr": "0x1423254c0",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "all asm instructions accounted for"
+ },
+ {
+  "addr": "0x1407ef240",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "all asm instructions accounted for"
+ },
+ {
+  "addr": "0x144c5b7c0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Unhinted indirect virtual call CALL qword ptr [RAX + 0x288] at 0x144c5b7d0 (and again at 0x144c5b84b, 0x144c5b851); no callee_hint for the vtable target."
+ },
+ {
+  "addr": "0x1420327f0",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "all asm instructions accounted for"
+ },
+ {
+  "addr": "0x143f832a0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Unhinted indirect virtual call CALL qword ptr [R10 + 0x470] at 0x143f8332b; no callee_hint for the vtable target."
+ },
+ {
+  "addr": "0x14072b4b0",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "all asm instructions accounted for"
+ },
+ {
+  "addr": "0x1406ce750",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "Writable global load CMP EAX,dword ptr [0x148263a2c] at 0x1406ce7e1 (also MOV RAX,qword ptr [0x148263a18] at 0x1406ce802, CMP byte ptr [0x1480cf7d8],0x3 at 0x1406ce775); also callee 0x142ce9f90 has three candidate hints with no way to pick one."
+ }
+]

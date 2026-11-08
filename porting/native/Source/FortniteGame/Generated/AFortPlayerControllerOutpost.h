@@ -9,6 +9,7 @@
 #include "FFortDepositedResources.h"
 #include "FFortItemEntry.h"
 #include "Misc/Guid.h"
+#include "UObject/Object.h"
 
 class UFortOutpostItemDefinition;
 
@@ -86,5 +87,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static bool NativeIsOutpostOwnerBit1425702e0(AFortPlayerControllerOutpost* ControllerObj);
+	static void NativeSetOutpostFlagBit0142429d20(UObject* Context, uint8 Value);
 };
 

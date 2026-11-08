@@ -19,6 +19,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "UObject/NoExportTypes.h"
+#include "UObject/Object.h"
 
 class AFortAIPawn;
 class AFortClientAnnouncementManager;
@@ -343,5 +344,9 @@ public:
 	void SetPlayerRespawningBlocked_Temporarily(bool bBlock);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static bool NativeGameStateRefHasFlag1442dd540(AFortGameState* GameState);
 };
 

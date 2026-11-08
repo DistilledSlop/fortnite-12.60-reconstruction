@@ -150,5 +150,9 @@ private:
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeUpdateSmoothedCaptureProgress141d92340(UCaptureComponent* Capture);
 };
 

@@ -1,0 +1,7 @@
+[
+ {"addr": "0x142119f50", "status": "proposed", "case": "helper_ported", "reason": "All asm instructions accounted for; omit 0x145803c70 (stack cookie); raw offsets for AFortWeapon."},
+ {"addr": "0x144b2b660", "status": "blocked", "case": "callee_unresolved", "reason": "Indirect virtual call CALL qword ptr [RAX+0x2c8] on the sub-object at [[[this+0x268]+0x30]]+0x50 has no hint and its class is unidentified; shared-reference release calls CALL [RDX] and CALL [R8+0x8] also have no hint."},
+ {"addr": "0x144b2b9f0", "status": "blocked", "case": "callee_unresolved", "reason": "Indirect vtable calls CALL qword ptr [RAX] and CALL qword ptr [RAX+0x8] on the shared-reference controller at [[this+0x268]+0x30]+8 have no hint; sub-object class at +0x58 unidentified."},
+ {"addr": "0x1423af600", "status": "proposed", "case": "helper_ported", "reason": "Sets bit0 of byte +0x28 from DL, keeps other bits; no callees; owner class medium confidence."},
+ {"addr": "0x1450cc750", "status": "blocked", "case": "callee_unresolved", "reason": "Indirect virtual calls CALL qword ptr [RAX+0x270] and tail JMP qword ptr [RAX+0x270] on widgets at this+0x278/0x280/0x288 have no hint; widget class unidentified."}
+]

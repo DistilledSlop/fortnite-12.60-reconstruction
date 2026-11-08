@@ -1,0 +1,36 @@
+[
+  {
+    "class": "AFortAIGoalManager",
+    "function": "NativeArrayReserveSlack140690c30",
+    "kind": "helper",
+    "signature": "void NativeArrayReserveSlack140690c30(void* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq1_runtime/AFortAIGoalManager/NativeArrayReserveSlack140690c30.inc",
+    "address": "0x140690c30",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Reserve/slack recompute of 24-byte-element TArray at +0x8 Num, +0xc Max; Realloc via FMemory."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "NativeArrayShrinkSlack14072c6c0",
+    "kind": "helper",
+    "signature": "void NativeArrayShrinkSlack14072c6c0(void* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq1_runtime/AAIHotSpot/NativeArrayShrinkSlack14072c6c0.inc",
+    "address": "0x14072c6c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Shrink-to-slack recompute of 8-byte-element TArray at +0x8 Num, +0xc Max; Realloc via FMemory."
+  }
+]

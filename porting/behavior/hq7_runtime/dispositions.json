@@ -1,0 +1,38 @@
+[
+ {
+  "addr": "0x142059ed0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "Full asm (14 insns) accounted for; kind-selected raw int32 read."
+ },
+ {
+  "addr": "0x14069eac0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "All 40 insns accounted for; FMemory::QuantizeSize and FMemory::Realloc hints used."
+ },
+ {
+  "addr": "0x140ae9a90",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x140680160 has two conflicting reflected hints (UAthenaLobbyBase::HandlePlaylistDataChanged, UCreativeMiniMapComponent::OnRep_IconData) and no engine_patterns entry; also CALL 0x1406800e0 (same conflict) and CALL 0x142bc7780 (hint OnRep_IconData with no params, used as copy of Len*2 bytes)."
+ },
+ {
+  "addr": "0x140db0d80",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x140680160 has two conflicting reflected hints and no engine_patterns entry; also CALL 0x1406800e0 (same conflict), CALL 0x142bc7780 (hint mismatch) and indirect CALL qword ptr [RAX+0x28]/[RAX+0x30] with no hint."
+ },
+ {
+  "addr": "0x144dd7320",
+  "status": "blocked",
+  "case": "jump_table",
+  "reason": "JMP R8 at 0x144dd734c dispatches through table at 0x144dd7608 indexed by byte [RDX] (guard JA 0x144dd74d8 at 0x144dd732f)."
+ },
+ {
+  "addr": "0x1406f19d0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "All 9 insns accounted for; full 32-byte copy."
+ }
+]

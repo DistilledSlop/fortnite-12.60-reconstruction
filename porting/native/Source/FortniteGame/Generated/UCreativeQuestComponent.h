@@ -6,11 +6,13 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
+#include "Containers/Array.h"
 #include "ECreativeQuestSharing.h"
 #include "ECreativeQuestStat.h"
 #include "EDeathCause.h"
 #include "EShowProgressMode.h"
 #include "FCreativeQuestData.h"
+#include "HAL/UnrealMemory.h"
 #include "UObject/Object.h"
 #include "UObject/WeakObjectPtr.h"
 
@@ -102,5 +104,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static UObject* NativeGetAthenaGameStateOrNull141641350(UCreativeQuestComponent* QuestComponent);
 	static bool NativeWeakObjectPtrEquivalent1407327b0(const uint8* A, const uint8* B);
+	static void NativeShrinkInt32Array14069eac0(TArray<int32>& Array);
 };
 

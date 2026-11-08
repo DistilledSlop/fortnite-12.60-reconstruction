@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x142099610",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "asm fully mapped; AFortMinigame end-condition check; callees CheckRemainingLivingPlayersForEndCondition/EvaluateStatQuery not declared in AFortMinigame.h"
+ },
+ {
+  "addr": "0x141c94c20",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "asm fully mapped; Tail-jump thunk: VolumeContainsUser on Context+0x288; AFortVolumeManager::VolumeContainsUser not declared in its generated header"
+ },
+ {
+  "addr": "0x14269eaa0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "asm fully mapped; Float getter: [Context+0x480] when flag set, else [Context+0x484]; tail-jumped from 0x142321eb0"
+ },
+ {
+  "addr": "0x141a5b620",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "asm fully mapped; Writes bit0 of byte [Context+0xfdd] from Value (AND 0xfe, OR Value)"
+ },
+ {
+  "addr": "0x142429d20",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "asm fully mapped; Writes bit0 of dword [Context+0x330] from Value (AND ~1, OR zero-extended Value)"
+ },
+ {
+  "addr": "0x141eaeb30",
+  "status": "blocked",
+  "case": "absolute_global_load_writable",
+  "reason": "MOV EAX,dword ptr [0x1478c4950] reads a .data (RW) global at file VA range 0x147812000+ (writable, not a constant); followed by a jump-table dispatch (JMP R8)"
+ },
+ {
+  "addr": "0x1419bb5c0",
+  "status": "blocked",
+  "case": "destructor_of_unnamed_struct",
+  "reason": "helper is the destructor of a stack struct (frees pointers at +0x48,+0x30 array of 0x10 elems,+0x20,+0x10,+0x0 via 0x142bee710); no typed struct for the caller's RBP-0x20 local"
+ },
+ {
+  "addr": "0x1423f46b0",
+  "status": "blocked",
+  "case": "absolute_global_load_writable",
+  "reason": "MOVSS XMM0,dword ptr [0x1478de918] reads a writable .data global (section RW, offset 0xCC918 in .data), not a read-only constant"
+ }
+]

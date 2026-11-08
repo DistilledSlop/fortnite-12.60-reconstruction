@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x144fcf460",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Virtual CALL qword ptr [RAX + 0x288] at 0x144fcf469 on RCX has no callee hint (hints cover only 0x142a69680 and 0x14237e580)."
+ },
+ {
+  "addr": "0x144c74f80",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Virtual CALL qword ptr [RAX + 0x2b8] at 0x144c74f99 on RCX has no callee hint; later virtual calls at 0x144c75007 and 0x144c7505c also unhinted."
+ },
+ {
+  "addr": "0x140690c30",
+  "status": "proposed",
+  "case": "",
+  "reason": "NativeArrayReserveSlack140690c30"
+ },
+ {
+  "addr": "0x14072c6c0",
+  "status": "proposed",
+  "case": "",
+  "reason": "NativeArrayShrinkSlack14072c6c0"
+ },
+ {
+  "addr": "0x14199e430",
+  "status": "proposed",
+  "case": "",
+  "reason": "NativeIsPlaylistCreativeOrPlayground14199e430"
+ },
+ {
+  "addr": "0x1444ac7a0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Virtual CALL qword ptr [RAX + 0x680] at 0x1444ac7c4 on RCX has no callee hint; 0x140682ce0 hint lists five unrelated candidates."
+ },
+ {
+  "addr": "0x14072a990",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x1406911b0 at 0x14072a9ba: hint lists three different reflected targets (UBarrierWidgetBase/UDiscoWidgetBase::OnMutatorObjectUpdated, UFortUICameraFramingFunctionLibrary::CalculateComponentSetBoundsForCameraFraming); no single target."
+ },
+ {
+  "addr": "0x142ba9300",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x1406800e0 at 0x142ba9348: hint lists two reflected targets with different receivers (UAthenaLobbyBase::HandlePlaylistDataChanged, UCreativeMiniMapComponent::OnRep_IconData); no single target."
+ }
+]

@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x141d92340",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "All instructions accounted for; 0x218 int32 has no reflected member (raw access)."
+ },
+ {
+  "addr": "0x141656140",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "Hash lookup fully accounted; map field names at +0x8/+0x34/+0x38/+0x40/+0x48/+0x68 unnamed (raw access)."
+ },
+ {
+  "addr": "0x141695990",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "Both loops accounted; element type at 0x20 stride is raw (qword at +0x10)."
+ },
+ {
+  "addr": "0x141af9290",
+  "status": "blocked",
+  "case": "absolute_writable_global",
+  "reason": "Writable .data global read at 0x141af92b5: CMP byte ptr [0x1481348e0],0x5; also unresolved indirect call CALL qword ptr [RAX + 0x28] at 0x141af9303 (no hint)."
+ },
+ {
+  "addr": "0x1415c07f0",
+  "status": "blocked",
+  "case": "callee_hint_mismatch",
+  "reason": "Call at 0x1415c0823 to 0x1406d9a30 is hinted as AFortAthenaExitCraftSpawner::DestroyBlockingActors with params [], but asm passes RCX=&array and EDX=count (TArray reserve shape); hint does not match."
+ },
+ {
+  "addr": "0x142681e90",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "All instructions accounted for; controller IsA check uses UObject::IsA equivalent to the asm class-tree walk."
+ },
+ {
+  "addr": "0x14199e3c0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "Two loads and tail call to ported PlaylistIsCreativeMode; fully accounted."
+ },
+ {
+  "addr": "0x1416299f0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Indirect virtual call CALL qword ptr [RAX + 0x70] at 0x141629a25 has no callee hint."
+ }
+]

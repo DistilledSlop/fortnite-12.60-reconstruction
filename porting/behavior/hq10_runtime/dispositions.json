@@ -1,0 +1,10 @@
+[
+{"addr": "0x141cb8820", "status": "proposed", "case": "guarded_forward_helper", "reason": "All 19 insns accounted; vtbl slot 0x758 (index 235) typed as void(*)(void*,void*,void*); payload copied from 16-byte R8 source."},
+{"addr": "0x1423c0800", "status": "blocked", "case": "tail_jump_signature_conflict", "reason": "JMP 0x142810956 is the real body of AFortPlayerController::ClientUpdateRichPresence (porting/generated/thunk-table/final2.json), but the header declares (const ERichPresenceStateChange&, bool) and the reflected hint order is (bool, Enum, Byte); the parameter mapping is unresolved."},
+{"addr": "0x141f8e580", "status": "proposed", "case": "pure_field_predicate", "reason": "All 12 insns accounted; int32 Num reads at +0x8/+0x18/+0x28 with bIncludeExtended gate; no calls."},
+{"addr": "0x1419bbd70", "status": "blocked", "case": "untyped_destructor_frees", "reason": "Struct move-assign of a 0x48-byte element whose embedded buffers are released via FMemory::Free 0x142bee710 (destructor-owned, omit-by-rule); no typed element struct is available in the signature, so the destructor frees cannot be emitted."},
+{"addr": "0x14205b290", "status": "proposed", "case": "pure_address_select", "reason": "All 13 insns accounted; returns Owner+offset selected by SlotKind (0x220/0x2b0/0x340)."},
+{"addr": "0x142607f40", "status": "proposed", "case": "virtual_gate_helper", "reason": "All 24 insns accounted; vtbl slot 0x28 (index 5) typed as bool(*)(void*); flags read at +0x3c0/+0x3b8/+0x570/+0x578."},
+{"addr": "0x141f88e20", "status": "proposed", "case": "pure_address_select", "reason": "All 22 insns accounted; EDX switch maps 0,1,2,4,5 and default to RCX offsets."},
+{"addr": "0x142f24280", "status": "blocked", "case": "callee_unresolved", "reason": "First call CALL qword ptr [0x1458fd3f8] is an indirect IAT slot with no callee hint (only 0x141b6ad20, 0x142f1d890, 0x142c7b670 are hinted); further unhinted IAT calls [0x1458fc608], [0x1458fc618], [0x1458fd3c8] also present."}
+]

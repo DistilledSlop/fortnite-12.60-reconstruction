@@ -1,0 +1,84 @@
+[
+  {
+    "class": "UFortGameStateComponent_EventLevel",
+    "function": "NativeForwardGuardedContext141cb8820",
+    "kind": "helper",
+    "signature": "void NativeForwardGuardedContext141cb8820(UObject* Component, void* Context, const void* Payload)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq10_runtime/UFortGameStateComponent_EventLevel/NativeForwardGuardedContext141cb8820.inc",
+    "address": "0x141cb8820",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Re-entrancy-guarded forward: sets guard byte +0xb8, stores Context at +0xb0, calls [+0xa0] vtbl slot 0x758 with 16-byte payload copy."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeHasAnyRewardEntries141f8e580",
+    "kind": "helper",
+    "signature": "bool NativeHasAnyRewardEntries141f8e580(const void* Rewards, bool bIncludeExtended)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq10_runtime/UFortKismetLibrary/NativeHasAnyRewardEntries141f8e580.inc",
+    "address": "0x141f8e580",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "True when Num at +0x18 or +0x8 is >0, or (bIncludeExtended and Num at +0x28 >0). Callers pass bIncludeExtended=false."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeGetQuickBarSlotStorage14205b290",
+    "kind": "helper",
+    "signature": "void* NativeGetQuickBarSlotStorage14205b290(UObject* Owner, uint8 SlotKind)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq10_runtime/AFortPlayerController/NativeGetQuickBarSlotStorage14205b290.inc",
+    "address": "0x14205b290",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns Owner+0x220 (kind 0 or >=3), +0x2b0 (kind 1) or +0x340 (kind 2)."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeCanToggleFullscreenMap142607f40",
+    "kind": "helper",
+    "signature": "bool NativeCanToggleFullscreenMap142607f40(UObject* Controller)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq10_runtime/AFortPlayerController/NativeCanToggleFullscreenMap142607f40.inc",
+    "address": "0x142607f40",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Gate: component at +0x3b8 (enabled when int32 +0x3c0 != 0 and vtbl slot 5 true) and byte +0x570 or qword +0x578 set."
+  },
+  {
+    "class": "UFortButtonStyle",
+    "function": "NativeSelectFontSlot141f88e20",
+    "kind": "helper",
+    "signature": "void* NativeSelectFontSlot141f88e20(uint8* Style, int32 SlotIndex)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq10_runtime/UFortButtonStyle/NativeSelectFontSlot141f88e20.inc",
+    "address": "0x141f88e20",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Selects font sub-struct address by size index: 0->base, 1->+0x50, 2->+0xa0, 4->+0x140, 5->+0x190, else +0xf0."
+  }
+]

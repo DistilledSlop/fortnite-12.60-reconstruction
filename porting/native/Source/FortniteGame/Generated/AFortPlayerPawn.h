@@ -7,7 +7,9 @@
 #include "AFortPawn.h"
 
 #include "Abilities/GameplayAbilityTypes.h"
+#include "Animation/AnimInstance.h"
 #include "AttributeSet.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Components/TimelineComponent.h"
 #include "EColorSwatchType.h"
 #include "EFortBuildingState.h"
@@ -55,6 +57,7 @@
 #include "FVortexParams.h"
 #include "FZiplinePawnState.h"
 #include "FZiplineStateChanged.h"
+#include "GameFramework/Character.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
@@ -63,6 +66,7 @@
 #include "Styling/SlateBrush.h"
 #include "UFortArmoredInterface.h"
 #include "UFortVehicleInterface.h"
+#include "UObject/Object.h"
 
 class AActor;
 class ABuildingGameplayActor;
@@ -1917,5 +1921,6 @@ public:
 	virtual uint8 NativeGetTeam163();
 	virtual IFortVehicleInterface* NativeGetVehicleInterface163();
 	static void NativeSetClothDynamicsState144517e00(AFortPlayerPawn* TargetPawn);
+	static void NativeSyncFacialInputToAnimInstances142345bd0(AFortPlayerPawn* Pawn);
 };
 

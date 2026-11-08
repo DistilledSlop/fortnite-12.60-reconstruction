@@ -11,6 +11,7 @@
 #include "FFortItemEntry.h"
 #include "FOnItemCountChangedDelegate.h"
 #include "FOnSelectionChangedDelegate.h"
+#include "HAL/UnrealMemory.h"
 #include "UObject/Object.h"
 
 class UAthenaCreativeItemTileView;
@@ -88,5 +89,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static int32 NativeFindIndexInItemList143d5c9c0(UFortCreativeItemListTabPanel* ListPanel, UObject* Target);
+	static void NativeGrowElementArray141c1ae10(uint8* ArrayStorage);
 };
 

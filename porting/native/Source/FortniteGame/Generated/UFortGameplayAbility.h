@@ -16,6 +16,7 @@
 #include "FFortGameplayAbilityMontageInfo.h"
 #include "FFortGameplayEffectContainer.h"
 #include "GameplayTagContainer.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/UnrealMathUtility.h"
 #include "Math/Vector.h"
 #include "UObject/Class.h"
@@ -324,5 +325,7 @@ public:
 	static void NativeClearCameraModeForKey141ca1b30(UObject* TargetObject, const int32* Key);
 	static void NativeSetCameraModeClassForKey141cb7690(UObject* TargetObject, UClass* CameraModeClass, const int32* Key);
 	static float NativeAtan2Approx142bbd380(float Y, float X);
+	static float NativeFmod142bc0d80(float X, float Y);
+	static void NativeGrowElementArray140a671f0(uint8* ArrayStorage);
 };
 

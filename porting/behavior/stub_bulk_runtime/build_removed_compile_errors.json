@@ -543,5 +543,61 @@
   "reason": "'Mesh' is a private member of 'ACharacter'",
   "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
   "inc_path": "porting/behavior/kp2_runtime/AFortPlayerPawn/OnRep_PossessedProp.inc"
+ },
+ {
+  "entry": "UFortCollectionBookSectionPanel::NativeGetSelectedSlotButton1450b2410",
+  "kind": "helper",
+  "blocker": "cross_module_class",
+  "reason": "body uses UCommonButtonGroup",
+  "inc_path": "porting/behavior/hq6_runtime/UFortCollectionBookSectionPanel/NativeGetSelectedSlotButton1450b2410.inc"
+ },
+ {
+  "entry": "AFortPlayerControllerGameplay::NativeIsPlaylistCreativeOrPlayground14199e430",
+  "kind": "helper",
+  "blocker": "callee_not_declared",
+  "reason": "calls PlaylistHasCreativeTag/PlaylistIsPlayground not members of AFortGameStateAthena",
+  "inc_path": "porting/behavior/hq1_runtime/AFortPlayerControllerGameplay/NativeIsPlaylistCreativeOrPlayground14199e430.inc"
+ },
+ {
+  "entry": "AFortGameModeAthena::NativeGameModePlaylistIsCreativeMode14199e3c0",
+  "kind": "helper",
+  "blocker": "callee_not_declared",
+  "reason": "calls PlaylistIsCreativeMode not a member of AFortGameStateAthena",
+  "inc_path": "porting/behavior/hq9_runtime/AFortGameModeAthena/NativeGameModePlaylistIsCreativeMode14199e3c0.inc"
+ },
+ {
+  "entry": "AFortPlayerControllerFrontEnd::NativeForwardMinigameRankChanged1423a1ea0",
+  "kind": "helper",
+  "blocker": "callee_not_declared",
+  "reason": "ForwardMinigameActivityRankChanged missing on UFortControllerComponent_MinigameActivity",
+  "inc_path": "porting/behavior/hq3_runtime/AFortPlayerControllerFrontEnd/NativeForwardMinigameRankChanged1423a1ea0.inc"
+ },
+ {
+  "entry": "AFortAthenaSKPushVehicle::NativeGetShoppingCartCoastActionName141eb9e80",
+  "kind": "helper",
+  "blocker": "cross_module_class",
+  "reason": "body uses UFortGlobalUIContext",
+  "inc_path": "porting/behavior/hq12_runtime/AFortAthenaSKPushVehicle/NativeGetShoppingCartCoastActionName141eb9e80.inc"
+ },
+ {
+  "entry": "AFortAthenaGoatVehicle::NativeGetGolfCartEBrakeActionName141eb9eb0",
+  "kind": "helper",
+  "blocker": "cross_module_class",
+  "reason": "body uses UFortGlobalUIContext",
+  "inc_path": "porting/behavior/hq12_runtime/AFortAthenaGoatVehicle/NativeGetGolfCartEBrakeActionName141eb9eb0.inc"
+ },
+ {
+  "entry": "AFortAthenaGoatVehicle::NativeGetGolfCartForwardActionName141eb9f30",
+  "kind": "helper",
+  "blocker": "cross_module_class",
+  "reason": "body uses UFortGlobalUIContext",
+  "inc_path": "porting/behavior/hq12_runtime/AFortAthenaGoatVehicle/NativeGetGolfCartForwardActionName141eb9f30.inc"
+ },
+ {
+  "entry": "AFortAthenaGoatVehicle::NativeGetGolfCartReverseActionName141eb9fa0",
+  "kind": "helper",
+  "blocker": "cross_module_class",
+  "reason": "body uses UFortGlobalUIContext",
+  "inc_path": "porting/behavior/hq12_runtime/AFortAthenaGoatVehicle/NativeGetGolfCartReverseActionName141eb9fa0.inc"
  }
 ]

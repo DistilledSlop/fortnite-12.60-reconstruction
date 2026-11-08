@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x142bc0d80",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body is a literal translation of the helper asm; see NativeFmod142bc0d80.inc."
+ },
+ {
+  "addr": "0x140f95ae0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Insn 3 'CALL qword ptr [RAX + 0x150]' is an unhinted virtual call on RCX (vtable slot 0x150, no name in callee_hints); the helper's result is then dereferenced at +0x188, +0xc0 or +0x320."
+ },
+ {
+  "addr": "0x1406d9800",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body is a literal translation of the helper asm; see NativeArrayRegrow1406d9800.inc."
+ },
+ {
+  "addr": "0x14468fb70",
+  "status": "blocked",
+  "case": "unsupported_sret_view",
+  "reason": "Member-style helper (RCX=this, RDX=sret) writes first qword = RCX+0x1c8 and dword +8 = 0 and leaves Max unwritten; no engine return type expresses this partially initialised view without fabricating a Data pointer. Callers read [RDX+8] Num and index into [RDX]."
+ },
+ {
+  "addr": "0x14468f240",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body is a literal translation of the helper asm; see NativeUnicornDriverWeakTarget14468f240.inc."
+ },
+ {
+  "addr": "0x140694750",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body is a literal translation of the helper asm; see NativeArraySetCapacity140694750.inc."
+ },
+ {
+  "addr": "0x141e613c0",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body is a literal translation of the helper asm; see NativeGetContextObject141e613c0.inc."
+ },
+ {
+  "addr": "0x14085a990",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Body is a literal translation of the helper asm; see NativeAddUnique14085a990.inc."
+ }
+]

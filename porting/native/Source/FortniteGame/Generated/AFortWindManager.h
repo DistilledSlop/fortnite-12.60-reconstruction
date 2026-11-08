@@ -26,6 +26,7 @@
 #include "FortniteMapClasses.h"
 #include "GenericQuadTree.h"
 #include "HAL/IConsoleManager.h"
+#include "HAL/UnrealMemory.h"
 #include "Kismet/KismetMaterialLibrary.h"
 #include "Materials/Material.h"
 #include "Materials/MaterialInstance.h"
@@ -254,5 +255,6 @@ public:
 	void NativeSampleWind(float DeltaSeconds);
 	FBox NativeGetInitialWindBounds();
 	static FFortWindImpulseCylinder NativeCopyWindImpulseCylinder141dbf6b0(const FFortWindImpulseCylinder& SourceCylinder);
+	static void NativeGrowArrayStorage1407f2000(void* ArrayPtr);
 };
 

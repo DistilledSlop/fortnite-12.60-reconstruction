@@ -1,0 +1,36 @@
+[
+  {
+    "class": "AFortWeapon",
+    "function": "NativeDecodeDamageStartVectors142119f50",
+    "kind": "helper",
+    "signature": "void NativeDecodeDamageStartVectors142119f50(AFortWeapon* WeaponObj, FVector& OutFirst, FVector& OutSecond)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr2_runtime/AFortWeapon/NativeDecodeDamageStartVectors142119f50.inc",
+    "address": "0x142119f50",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/Vector.h"
+    ],
+    "notes": "Decodes two XOR-keyed FVector records from weapon bytes +0xa3a/+0xa08 indices; stack cookie omitted; raw offsets."
+  },
+  {
+    "class": "UFortBaseButton",
+    "function": "NativeSetHoverFlagBit1423af600",
+    "kind": "helper",
+    "signature": "void NativeSetHoverFlagBit1423af600(UObject* TargetObj, uint8 Value)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr2_runtime/UFortBaseButton/NativeSetHoverFlagBit1423af600.inc",
+    "address": "0x1423af600",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Sets bit0 of byte +0x28 to Value, keeps other bits (AND 0xfe, OR DL). Owner class of target unidentified."
+  }
+]

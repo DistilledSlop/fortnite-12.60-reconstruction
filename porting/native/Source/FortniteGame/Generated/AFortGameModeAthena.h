@@ -22,6 +22,7 @@
 #include "FSupplyDropSpawnData.h"
 #include "FTimeOfDayOverride.h"
 #include "FortTrackedTimeOfDayClass.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/Vector.h"
 #include "SharedFortGameLog.h"
 #include "UFortMutatorOwner.h"
@@ -694,6 +695,7 @@ public:
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 	virtual TSubclassOf<AFortTimeOfDayManager> GetTimeOfDayManagerClassNative();
 	void NativeSetTimeOfDayManagerGameplayOverride(UClass* TimeOfDayManagerClass);
+	static uint8* NativeArenaAllocate142ec0180(uint8* ArenaState, int32 RequestedSize, int32 ReservedR8, bool bUseArena);
 public:
     // Existing Linux fixture/runtime support; original native bodies remain open.
     // Definitions stay in Private/FortniteAthenaGameplay.cpp.

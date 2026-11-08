@@ -21,6 +21,7 @@
 #include "FOnObjectivesUpdated.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
+#include "HAL/UnrealMemory.h"
 #include "Misc/Guid.h"
 
 class AActor;
@@ -328,5 +329,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual FText NativeMissionText690() const;
+	static int32* NativeFindWeakKeySlot1420b4ad0(uint8* Table, int32* OutIndex, int64 Key);
+	static void NativeShrinkArray16ByteSlack140690e50(void* ArrayStorage);
 };
 

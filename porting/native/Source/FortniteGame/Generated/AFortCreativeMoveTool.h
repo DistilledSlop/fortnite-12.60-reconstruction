@@ -619,5 +619,6 @@ public:
 	static AController* NativeGetInstigatorController143f76650(AFortCreativeMoveTool* MoveTool);
 	static UObject* NativeFindElementByKey141d7cd40(UObject* ContainerObject, uint64 SearchKey);
 	static bool NativeFillBytes32144487690(uint8* Bytes, uint8 FillByte);
+	static void NativeClampGridSnapIndex142681e90(AFortCreativeMoveTool* MoveTool, uint8 RequestedIndex);
 };
 

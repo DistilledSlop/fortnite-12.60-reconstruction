@@ -9,6 +9,7 @@
 #include "AFortPlayerPawn.h"
 #include "AFortPlayerStateAthena.h"
 #include "AFortWeapon.h"
+#include "CoreMinimal.h"
 #include "FBoolDelegate.h"
 #include "FIntDelegate.h"
 #include "FLinearColorDelegate.h"
@@ -19,6 +20,7 @@
 #include "FUInt8Delegate.h"
 #include "FWeaponDelegate.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "UObject/Object.h"
 
 #include "UAthenaRemotePlayerViewData.generated.h"
 
@@ -246,5 +248,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetSquadId() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeBroadcastPlayerStringDelegate144c1b2a0(FStringDelegate* Delegate, UAthenaRemotePlayerViewData* PlayerData, const FString& StringParam);
+	static UObject* NativeGetVehicleFromViewData1423254c0(UAthenaRemotePlayerViewData* ViewData);
 };
 

@@ -13,6 +13,8 @@
 #include "FOnRoomOwnerChanged.h"
 #include "FSpecialNavActorInteraction.h"
 #include "GameplayTagContainer.h"
+#include "HAL/UnrealMemory.h"
+#include "UObject/Object.h"
 #include "UObject/WeakObjectPtr.h"
 
 class AFortEventLevelCamera;
@@ -123,5 +125,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static UObject* NativeFindSceneCameraByKey141a78120(UFortGameStateComponent_EventLevel* ComponentObj, uint64 CameraKeyValue);
+	static void NativeForwardGuardedContext141cb8820(UObject* Component, void* Context, const void* Payload);
 };
 

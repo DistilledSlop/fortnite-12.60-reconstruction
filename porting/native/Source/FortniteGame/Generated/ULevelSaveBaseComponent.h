@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
+#include "Containers/Array.h"
+
 class AActor;
 class ULevelSaveRecord;
 
@@ -37,5 +39,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<AActor*> ActorToAddAfterWrite;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static int32 NativeAddUnique14085a990(TArray<uint64>& Array, const uint64* Value);
 };
 

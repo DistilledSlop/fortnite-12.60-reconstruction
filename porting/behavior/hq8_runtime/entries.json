@@ -1,0 +1,83 @@
+[
+  {
+    "class": "UFortHero",
+    "function": "NativeGetHeroLevel1407c1f50",
+    "kind": "helper",
+    "signature": "int32 NativeGetHeroLevel1407c1f50(UFortHero* Hero)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq8_runtime/UFortHero/NativeGetHeroLevel1407c1f50.inc",
+    "address": "0x1407c1f50",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns UFortHero level (int32 at +0xb8, UFortAccountItem::level). Pure getter, all insns accounted."
+  },
+  {
+    "class": "UFortPlayerAnimInstance",
+    "function": "NativeInterpStep142c50fc0",
+    "kind": "helper",
+    "signature": "float NativeInterpStep142c50fc0(float Current, float Target, float Rate, float DeltaTime)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq8_runtime/UFortPlayerAnimInstance/NativeInterpStep142c50fc0.inc",
+    "address": "0x142c50fc0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Clamped interpolation step; constants 1e-8f epsilon and 1.0f clamp read from PE .rdata."
+  },
+  {
+    "class": "UFortCreativeItemListTabPanel",
+    "function": "NativeGrowElementArray141c1ae10",
+    "kind": "helper",
+    "signature": "void NativeGrowElementArray141c1ae10(uint8* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq8_runtime/UFortCreativeItemListTabPanel/NativeGrowElementArray141c1ae10.inc",
+    "address": "0x141c1ae10",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray slack grow for 0x150-byte elements (QuantizeSize + Realloc); raw Data/Num/Max access."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "NativeGrowElementArray140a671f0",
+    "kind": "helper",
+    "signature": "void NativeGrowElementArray140a671f0(uint8* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq8_runtime/UFortGameplayAbility/NativeGrowElementArray140a671f0.inc",
+    "address": "0x140a671f0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray slack grow for 0xb8-byte elements (QuantizeSize + Realloc); raw Data/Num/Max access."
+  },
+  {
+    "class": "AFortGameState",
+    "function": "NativeGameStateRefHasFlag1442dd540",
+    "kind": "helper",
+    "signature": "bool NativeGameStateRefHasFlag1442dd540(AFortGameState* GameState)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq8_runtime/AFortGameState/NativeGameStateRefHasFlag1442dd540.inc",
+    "address": "0x1442dd540",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Bool gate: non-null object at GameState+0x128 with flag bit 0x20 at +0x1f4; inner class unverified."
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "class": "UCaptureComponent",
+    "function": "NativeUpdateSmoothedCaptureProgress141d92340",
+    "kind": "helper",
+    "signature": "void NativeUpdateSmoothedCaptureProgress141d92340(UCaptureComponent* Capture)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq9_runtime/UCaptureComponent/NativeUpdateSmoothedCaptureProgress141d92340.inc",
+    "address": "0x141d92340",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Smoothed capture progress update; broadcasts OnCaptureProgressUpdate. 0x218 int32 unnamed."
+  },
+  {
+    "class": "UFortAIEncounterInfo",
+    "function": "NativeFindWeakKeySlot141656140",
+    "kind": "helper",
+    "signature": "int32* NativeFindWeakKeySlot141656140(uint8* MapBase, int32* OutIndex, uint64 LookupKey)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq9_runtime/UFortAIEncounterInfo/NativeFindWeakKeySlot141656140.inc",
+    "address": "0x141656140",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Hash-map lookup of weak-pointer key in map at this+0xa38; writes index or -1. Map fields unnamed."
+  },
+  {
+    "class": "UFortAIEncounterInfo",
+    "function": "NativeCollectRiftPointers141695990",
+    "kind": "helper",
+    "signature": "TArray<UObject*>& NativeCollectRiftPointers141695990(UFortAIEncounterInfo* EncounterInfo, TArray<UObject*>& OutPointers)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq9_runtime/UFortAIEncounterInfo/NativeCollectRiftPointers141695990.inc",
+    "address": "0x141695990",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "UObject/Object.h"
+    ],
+    "notes": "Gathers qword at element+0x10 from arrays at +0x68 and +0xb0 (stride 0x20) into out array."
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "NativeClampGridSnapIndex142681e90",
+    "kind": "helper",
+    "signature": "void NativeClampGridSnapIndex142681e90(AFortCreativeMoveTool* MoveTool, uint8 RequestedIndex)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq9_runtime/AFortCreativeMoveTool/NativeClampGridSnapIndex142681e90.inc",
+    "address": "0x142681e90",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Controller.h"
+    ],
+    "notes": "Clamps GridSnapIndex to precision-1 and copies it into the instigator player controller at +0x14ab."
+  }
+]

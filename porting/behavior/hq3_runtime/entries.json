@@ -1,0 +1,47 @@
+[
+  {
+    "class": "UFortBaseButton",
+    "function": "NativeFindButtonStyleEntry144d7bab0",
+    "kind": "helper",
+    "signature": "uint8* NativeFindButtonStyleEntry144d7bab0(UFortBaseButton* Button)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq3_runtime/UFortBaseButton/NativeFindButtonStyleEntry144d7bab0.inc",
+    "address": "0x144d7bab0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Registry child lookup on Button+0x298 keyed by UFortButtonStyle::StaticClass(); returns Table+0x130 entry or null. Check B collapsed (unreachable fail edge)."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "NativeFindWeakKeySlot140972ca0",
+    "kind": "helper",
+    "signature": "int32* NativeFindWeakKeySlot140972ca0(uint8* Table, int32* OutIndex, int64 Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq3_runtime/AAIHotSpot/NativeFindWeakKeySlot140972ca0.inc",
+    "address": "0x140972ca0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "TMap-like lookup of FWeakObjectPtr key (int64) in table; writes found index or -1 to OutIndex; key compare via ported 0x1407327b0."
+  },
+  {
+    "class": "AFortMission",
+    "function": "NativeFindWeakKeySlot1420b4ad0",
+    "kind": "helper",
+    "signature": "int32* NativeFindWeakKeySlot1420b4ad0(uint8* Table, int32* OutIndex, int64 Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq3_runtime/AFortMission/NativeFindWeakKeySlot1420b4ad0.inc",
+    "address": "0x1420b4ad0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Duplicate of 0x140972ca0 lookup (same algorithm and table layout); key compare via ported 0x1407327b0."
+  }
+]

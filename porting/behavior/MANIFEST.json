@@ -86667,5 +86667,975 @@
     "status": "ported",
     "includes": [],
     "notes": "Slot 0x658 predicate: bit0 of byte at offset 0x3e0 (raw). Helper 0x1426a5ae0."
+  },
+  {
+    "class": "AFortAIGoalManager",
+    "function": "NativeArrayReserveSlack140690c30",
+    "kind": "helper",
+    "signature": "void NativeArrayReserveSlack140690c30(void* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq1_runtime/AFortAIGoalManager/NativeArrayReserveSlack140690c30.inc",
+    "address": "0x140690c30",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Reserve/slack recompute of 24-byte-element TArray at +0x8 Num, +0xc Max; Realloc via FMemory."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "NativeArrayShrinkSlack14072c6c0",
+    "kind": "helper",
+    "signature": "void NativeArrayShrinkSlack14072c6c0(void* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq1_runtime/AAIHotSpot/NativeArrayShrinkSlack14072c6c0.inc",
+    "address": "0x14072c6c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Shrink-to-slack recompute of 8-byte-element TArray at +0x8 Num, +0xc Max; Realloc via FMemory."
+  },
+  {
+    "class": "AFortCheckPointSplineActor",
+    "function": "NativeArrayGrowSlack12140694640",
+    "kind": "helper",
+    "signature": "void NativeArrayGrowSlack12140694640(void* Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq2_runtime/AFortCheckPointSplineActor/NativeArrayGrowSlack12140694640.inc",
+    "address": "0x140694640",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray slack growth, 12-byte elements; callers set Num then pass &array; ported from helper 0x140694640 asm."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "NativeByteArrayGrowSlack14069e940",
+    "kind": "helper",
+    "signature": "void NativeByteArrayGrowSlack14069e940(void* Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq2_runtime/AFortGameStateAthena/NativeByteArrayGrowSlack14069e940.inc",
+    "address": "0x14069e940",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray<uint8> slack growth (1-byte elements) from helper 0x14069e940; callers pass &array after bumping Num."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeHashTableFindIndex1407bda90",
+    "kind": "helper",
+    "signature": "void NativeHashTableFindIndex1407bda90(void* Table, int32& OutIndex, uint64 Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq2_runtime/AFortPlayerControllerAthena/NativeHashTableFindIndex1407bda90.inc",
+    "address": "0x1407bda90",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Hash-bucket lookup of uint64 key in table struct; writes index (or -1) through OutIndex; from helper 0x1407bda90."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeVectorToRotatorDegrees142c5cdf0",
+    "kind": "helper",
+    "signature": "FRotator* NativeVectorToRotatorDegrees142c5cdf0(const FVector* InVector, FRotator* OutRotator)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq2_runtime/UFortKismetLibrary/NativeVectorToRotatorDegrees142c5cdf0.inc",
+    "address": "0x142c5cdf0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/Vector.h",
+      "Math/Rotator.h",
+      "Math/UnrealMathUtility.h"
+    ],
+    "notes": "FVector to FRotator (pitch/yaw in degrees, roll 0) from helper 0x142c5cdf0; returns OutRotator."
+  },
+  {
+    "class": "UFortBlueprintAnalytics",
+    "function": "NativeArrayGrowSlack3214069e9b0",
+    "kind": "helper",
+    "signature": "void NativeArrayGrowSlack3214069e9b0(void* Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq2_runtime/UFortBlueprintAnalytics/NativeArrayGrowSlack3214069e9b0.inc",
+    "address": "0x14069e9b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray slack growth, 32-byte elements, from helper 0x14069e9b0; callers bump Num then pass &array."
+  },
+  {
+    "class": "UFortActorOptionsComponent",
+    "function": "NativeArrayResizeTo40140690fd0",
+    "kind": "helper",
+    "signature": "void NativeArrayResizeTo40140690fd0(void* Array, int32 NewMax)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq2_runtime/UFortActorOptionsComponent/NativeArrayResizeTo40140690fd0.inc",
+    "address": "0x140690fd0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray ResizeTo with 40-byte elements (QuantizeSize slack) from helper 0x140690fd0."
+  },
+  {
+    "class": "UFortBaseButton",
+    "function": "NativeFindButtonStyleEntry144d7bab0",
+    "kind": "helper",
+    "signature": "uint8* NativeFindButtonStyleEntry144d7bab0(UFortBaseButton* Button)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq3_runtime/UFortBaseButton/NativeFindButtonStyleEntry144d7bab0.inc",
+    "address": "0x144d7bab0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Registry child lookup on Button+0x298 keyed by UFortButtonStyle::StaticClass(); returns Table+0x130 entry or null. Check B collapsed (unreachable fail edge)."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "NativeFindWeakKeySlot140972ca0",
+    "kind": "helper",
+    "signature": "int32* NativeFindWeakKeySlot140972ca0(uint8* Table, int32* OutIndex, int64 Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq3_runtime/AAIHotSpot/NativeFindWeakKeySlot140972ca0.inc",
+    "address": "0x140972ca0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "TMap-like lookup of FWeakObjectPtr key (int64) in table; writes found index or -1 to OutIndex; key compare via ported 0x1407327b0."
+  },
+  {
+    "class": "AFortMission",
+    "function": "NativeFindWeakKeySlot1420b4ad0",
+    "kind": "helper",
+    "signature": "int32* NativeFindWeakKeySlot1420b4ad0(uint8* Table, int32* OutIndex, int64 Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq3_runtime/AFortMission/NativeFindWeakKeySlot1420b4ad0.inc",
+    "address": "0x1420b4ad0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Duplicate of 0x140972ca0 lookup (same algorithm and table layout); key compare via ported 0x1407327b0."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeSyncFacialInputToAnimInstances142345bd0",
+    "kind": "helper",
+    "signature": "void NativeSyncFacialInputToAnimInstances142345bd0(AFortPlayerPawn* Pawn)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq4_runtime/AFortPlayerPawn/NativeSyncFacialInputToAnimInstances142345bd0.inc",
+    "address": "0x142345bd0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "GameFramework/Character.h",
+      "Components/SkeletalMeshComponent.h",
+      "Animation/AnimInstance.h"
+    ],
+    "notes": "Copies pawn facial input (+0x2720 double, +0x2728 int32) to head-part and frontend anim instances after IsA checks. Offsets 0x18d0/0x278 from caller asm."
+  },
+  {
+    "class": "UAthenaRemotePlayerViewData",
+    "function": "NativeBroadcastPlayerStringDelegate144c1b2a0",
+    "kind": "helper",
+    "signature": "void NativeBroadcastPlayerStringDelegate144c1b2a0(FStringDelegate* Delegate, UAthenaRemotePlayerViewData* PlayerData, const FString& StringParam)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq4_runtime/UAthenaRemotePlayerViewData/NativeBroadcastPlayerStringDelegate144c1b2a0.inc",
+    "address": "0x144c1b2a0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h",
+      "UObject/Object.h"
+    ],
+    "notes": "Broadcasts FStringDelegate with (PlayerData, string); callers are OnLocationChanged (+0x78) and OnPlayerNameChanged (+0x58) forwarders."
+  },
+  {
+    "class": "UFortUINavigationManager",
+    "function": "NativeReserveArray48Bytes1406909c0",
+    "kind": "helper",
+    "signature": "void NativeReserveArray48Bytes1406909c0(void* ArrayStorage, int32 RequestedCount, int32 CurrentMax)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq4_runtime/UFortUINavigationManager/NativeReserveArray48Bytes1406909c0.inc",
+    "address": "0x1406909c0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray reserve for 48-byte elements (Data +0, Max +0xC): QuantizeSize/48 capacity, realloc on change. Raw access, element type not needed."
+  },
+  {
+    "class": "AFortMission",
+    "function": "NativeShrinkArray16ByteSlack140690e50",
+    "kind": "helper",
+    "signature": "void NativeShrinkArray16ByteSlack140690e50(void* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq4_runtime/AFortMission/NativeShrinkArray16ByteSlack140690e50.inc",
+    "address": "0x140690e50",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray slack shrink for 16-byte elements (Data +0, Num +8, Max +0xC): slack heuristic then realloc. Raw access."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "NativeFmod142bc0d80",
+    "kind": "helper",
+    "signature": "float NativeFmod142bc0d80(float X, float Y)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq5_runtime/UFortGameplayAbility/NativeFmod142bc0d80.inc",
+    "address": "0x142bc0d80",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/UnrealMathUtility.h"
+    ],
+    "notes": "Float Fmod(X,Y) helper (UE FMath::Fmod shape). Returns 0 for |Y|<=1e-8; truncates quotient below 2^23; clamps remainder to |Y| on the positive side."
+  },
+  {
+    "class": "AFortGameModeZone",
+    "function": "NativeArrayRegrow1406d9800",
+    "kind": "helper",
+    "signature": "void NativeArrayRegrow1406d9800(void* Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq5_runtime/AFortGameModeZone/NativeArrayRegrow1406d9800.inc",
+    "address": "0x1406d9800",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray regrow for 20-byte elements (Data@0, Num@8, Max@0xc). New Max = Num*1.375 or max(1,Num) when Max==0; Realloc via FMemory."
+  },
+  {
+    "class": "AUnicornDriver",
+    "function": "NativeUnicornDriverWeakTarget14468f240",
+    "kind": "helper",
+    "signature": "UObject* NativeUnicornDriverWeakTarget14468f240(AUnicornDriver* Driver)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq5_runtime/AUnicornDriver/NativeUnicornDriverWeakTarget14468f240.inc",
+    "address": "0x14468f240",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "UObject/WeakObjectPtrTemplates.h"
+    ],
+    "notes": "If Driver+0x1d0 (int32) > 0, returns TWeakObjectPtr stored at Driver+0x1c8 resolved via Get(); otherwise null."
+  },
+  {
+    "class": "AFortCheckPointSplineActor",
+    "function": "NativeArraySetCapacity140694750",
+    "kind": "helper",
+    "signature": "void NativeArraySetCapacity140694750(void* Array, int32 NewCount)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq5_runtime/AFortCheckPointSplineActor/NativeArraySetCapacity140694750.inc",
+    "address": "0x140694750",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray capacity set for 12-byte elements (Data@0, Max@0xc). Max from QuantizeSize(NewCount*12)/12, INT32_MAX on overflow; Realloc when changed."
+  },
+  {
+    "class": "UFortMatchmakingContext",
+    "function": "NativeGetContextObject141e613c0",
+    "kind": "helper",
+    "signature": "UObject* NativeGetContextObject141e613c0(UFortMatchmakingContext* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq5_runtime/UFortMatchmakingContext/NativeGetContextObject141e613c0.inc",
+    "address": "0x141e613c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns the object pointer stored at Context+0x438 (MOV RAX,[RCX+0x438]; RET). Pointee type not reflected; typed UObject*."
+  },
+  {
+    "class": "ULevelSaveBaseComponent",
+    "function": "NativeAddUnique14085a990",
+    "kind": "helper",
+    "signature": "int32 NativeAddUnique14085a990(TArray<uint64>& Array, const uint64* Value)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq5_runtime/ULevelSaveBaseComponent/NativeAddUnique14085a990.inc",
+    "address": "0x14085a990",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h"
+    ],
+    "notes": "Linear find of 8-byte element in TArray; returns its index if present, else appends *Value and returns old Num."
+  },
+  {
+    "class": "UAthenaRemotePlayerViewData",
+    "function": "NativeGetVehicleFromViewData1423254c0",
+    "kind": "helper",
+    "signature": "UObject* NativeGetVehicleFromViewData1423254c0(UAthenaRemotePlayerViewData* ViewData)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq6_runtime/UAthenaRemotePlayerViewData/NativeGetVehicleFromViewData1423254c0.inc",
+    "address": "0x1423254c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Helper 0x1423254c0; asm evidence and caller use in .inc comments."
+  },
+  {
+    "class": "AFortAthenaCreativePortal",
+    "function": "NativeRemoveMatchingWeakPtrs1407ef240",
+    "kind": "helper",
+    "signature": "int32 NativeRemoveMatchingWeakPtrs1407ef240(TArray<uint8*>& Items, const uint8* Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq6_runtime/AFortAthenaCreativePortal/NativeRemoveMatchingWeakPtrs1407ef240.inc",
+    "address": "0x1407ef240",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Helper 0x1407ef240; asm evidence and caller use in .inc comments."
+  },
+  {
+    "class": "AFortAthenaMutator_WarmupMovie",
+    "function": "NativeHelper1420327f0",
+    "kind": "helper",
+    "signature": "UObject* NativeHelper1420327f0(UObject* Owner)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq6_runtime/AFortAthenaMutator_WarmupMovie/NativeHelper1420327f0.inc",
+    "address": "0x1420327f0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Helper 0x1420327f0; asm evidence and caller use in .inc comments."
+  },
+  {
+    "class": "AFortBroadcastRemoteClientInfo",
+    "function": "NativeResizeArrayCapacity14072b4b0",
+    "kind": "helper",
+    "signature": "void NativeResizeArrayCapacity14072b4b0(TArray<int32>& Array, int32 NewNum, int32 PreviousMax)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq6_runtime/AFortBroadcastRemoteClientInfo/NativeResizeArrayCapacity14072b4b0.inc",
+    "address": "0x14072b4b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Helper 0x14072b4b0; asm evidence and caller use in .inc comments."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeGetSlotIndexByKind142059ed0",
+    "kind": "helper",
+    "signature": "int32 NativeGetSlotIndexByKind142059ed0(AFortPlayerController* Controller, uint8 Kind)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq7_runtime/AFortPlayerController/NativeGetSlotIndexByKind142059ed0.inc",
+    "address": "0x142059ed0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Kind-selected int32 slot index at controller offset 0x220/0x2b0/0x340; -1 for Kind>=3. Raw access, no reflected member."
+  },
+  {
+    "class": "UCreativeQuestComponent",
+    "function": "NativeShrinkInt32Array14069eac0",
+    "kind": "helper",
+    "signature": "void NativeShrinkInt32Array14069eac0(TArray<int32>& Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq7_runtime/UCreativeQuestComponent/NativeShrinkInt32Array14069eac0.inc",
+    "address": "0x14069eac0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray<int32> capacity hysteresis (Max-Num slack, 3Num<2Max rule) with QuantizeSize and Realloc on Data/Max."
+  },
+  {
+    "class": "AFortAthenaMutator_CustomStormMovement",
+    "function": "NativeCopySafeZoneRouteEntry1406f19d0",
+    "kind": "helper",
+    "signature": "void NativeCopySafeZoneRouteEntry1406f19d0(void* Dest, const void* Src)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq7_runtime/AFortAthenaMutator_CustomStormMovement/NativeCopySafeZoneRouteEntry1406f19d0.inc",
+    "address": "0x1406f19d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Plain 32-byte record copy (int32,int32,16 bytes,int64) used by OnRep_SafeZoneRouteIndex and OnPlaylistLoaded."
+  },
+  {
+    "class": "UFortHero",
+    "function": "NativeGetHeroLevel1407c1f50",
+    "kind": "helper",
+    "signature": "int32 NativeGetHeroLevel1407c1f50(UFortHero* Hero)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq8_runtime/UFortHero/NativeGetHeroLevel1407c1f50.inc",
+    "address": "0x1407c1f50",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns UFortHero level (int32 at +0xb8, UFortAccountItem::level). Pure getter, all insns accounted."
+  },
+  {
+    "class": "UFortPlayerAnimInstance",
+    "function": "NativeInterpStep142c50fc0",
+    "kind": "helper",
+    "signature": "float NativeInterpStep142c50fc0(float Current, float Target, float Rate, float DeltaTime)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq8_runtime/UFortPlayerAnimInstance/NativeInterpStep142c50fc0.inc",
+    "address": "0x142c50fc0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Clamped interpolation step; constants 1e-8f epsilon and 1.0f clamp read from PE .rdata."
+  },
+  {
+    "class": "UFortCreativeItemListTabPanel",
+    "function": "NativeGrowElementArray141c1ae10",
+    "kind": "helper",
+    "signature": "void NativeGrowElementArray141c1ae10(uint8* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq8_runtime/UFortCreativeItemListTabPanel/NativeGrowElementArray141c1ae10.inc",
+    "address": "0x141c1ae10",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray slack grow for 0x150-byte elements (QuantizeSize + Realloc); raw Data/Num/Max access."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "NativeGrowElementArray140a671f0",
+    "kind": "helper",
+    "signature": "void NativeGrowElementArray140a671f0(uint8* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq8_runtime/UFortGameplayAbility/NativeGrowElementArray140a671f0.inc",
+    "address": "0x140a671f0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray slack grow for 0xb8-byte elements (QuantizeSize + Realloc); raw Data/Num/Max access."
+  },
+  {
+    "class": "AFortGameState",
+    "function": "NativeGameStateRefHasFlag1442dd540",
+    "kind": "helper",
+    "signature": "bool NativeGameStateRefHasFlag1442dd540(AFortGameState* GameState)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq8_runtime/AFortGameState/NativeGameStateRefHasFlag1442dd540.inc",
+    "address": "0x1442dd540",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Bool gate: non-null object at GameState+0x128 with flag bit 0x20 at +0x1f4; inner class unverified."
+  },
+  {
+    "class": "UCaptureComponent",
+    "function": "NativeUpdateSmoothedCaptureProgress141d92340",
+    "kind": "helper",
+    "signature": "void NativeUpdateSmoothedCaptureProgress141d92340(UCaptureComponent* Capture)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq9_runtime/UCaptureComponent/NativeUpdateSmoothedCaptureProgress141d92340.inc",
+    "address": "0x141d92340",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Smoothed capture progress update; broadcasts OnCaptureProgressUpdate. 0x218 int32 unnamed."
+  },
+  {
+    "class": "UFortAIEncounterInfo",
+    "function": "NativeFindWeakKeySlot141656140",
+    "kind": "helper",
+    "signature": "int32* NativeFindWeakKeySlot141656140(uint8* MapBase, int32* OutIndex, uint64 LookupKey)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq9_runtime/UFortAIEncounterInfo/NativeFindWeakKeySlot141656140.inc",
+    "address": "0x141656140",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Hash-map lookup of weak-pointer key in map at this+0xa38; writes index or -1. Map fields unnamed."
+  },
+  {
+    "class": "UFortAIEncounterInfo",
+    "function": "NativeCollectRiftPointers141695990",
+    "kind": "helper",
+    "signature": "TArray<UObject*>& NativeCollectRiftPointers141695990(UFortAIEncounterInfo* EncounterInfo, TArray<UObject*>& OutPointers)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq9_runtime/UFortAIEncounterInfo/NativeCollectRiftPointers141695990.inc",
+    "address": "0x141695990",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "UObject/Object.h"
+    ],
+    "notes": "Gathers qword at element+0x10 from arrays at +0x68 and +0xb0 (stride 0x20) into out array."
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "NativeClampGridSnapIndex142681e90",
+    "kind": "helper",
+    "signature": "void NativeClampGridSnapIndex142681e90(AFortCreativeMoveTool* MoveTool, uint8 RequestedIndex)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq9_runtime/AFortCreativeMoveTool/NativeClampGridSnapIndex142681e90.inc",
+    "address": "0x142681e90",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Controller.h"
+    ],
+    "notes": "Clamps GridSnapIndex to precision-1 and copies it into the instigator player controller at +0x14ab."
+  },
+  {
+    "class": "UFortGameStateComponent_EventLevel",
+    "function": "NativeForwardGuardedContext141cb8820",
+    "kind": "helper",
+    "signature": "void NativeForwardGuardedContext141cb8820(UObject* Component, void* Context, const void* Payload)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq10_runtime/UFortGameStateComponent_EventLevel/NativeForwardGuardedContext141cb8820.inc",
+    "address": "0x141cb8820",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Re-entrancy-guarded forward: sets guard byte +0xb8, stores Context at +0xb0, calls [+0xa0] vtbl slot 0x758 with 16-byte payload copy."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeHasAnyRewardEntries141f8e580",
+    "kind": "helper",
+    "signature": "bool NativeHasAnyRewardEntries141f8e580(const void* Rewards, bool bIncludeExtended)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq10_runtime/UFortKismetLibrary/NativeHasAnyRewardEntries141f8e580.inc",
+    "address": "0x141f8e580",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "True when Num at +0x18 or +0x8 is >0, or (bIncludeExtended and Num at +0x28 >0). Callers pass bIncludeExtended=false."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeGetQuickBarSlotStorage14205b290",
+    "kind": "helper",
+    "signature": "void* NativeGetQuickBarSlotStorage14205b290(UObject* Owner, uint8 SlotKind)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq10_runtime/AFortPlayerController/NativeGetQuickBarSlotStorage14205b290.inc",
+    "address": "0x14205b290",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns Owner+0x220 (kind 0 or >=3), +0x2b0 (kind 1) or +0x340 (kind 2)."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeCanToggleFullscreenMap142607f40",
+    "kind": "helper",
+    "signature": "bool NativeCanToggleFullscreenMap142607f40(UObject* Controller)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq10_runtime/AFortPlayerController/NativeCanToggleFullscreenMap142607f40.inc",
+    "address": "0x142607f40",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Gate: component at +0x3b8 (enabled when int32 +0x3c0 != 0 and vtbl slot 5 true) and byte +0x570 or qword +0x578 set."
+  },
+  {
+    "class": "UFortButtonStyle",
+    "function": "NativeSelectFontSlot141f88e20",
+    "kind": "helper",
+    "signature": "void* NativeSelectFontSlot141f88e20(uint8* Style, int32 SlotIndex)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq10_runtime/UFortButtonStyle/NativeSelectFontSlot141f88e20.inc",
+    "address": "0x141f88e20",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Selects font sub-struct address by size index: 0->base, 1->+0x50, 2->+0xa0, 4->+0x140, 5->+0x190, else +0xf0."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "NativeGetHardcodedChangelistNumber142ba3400",
+    "kind": "helper",
+    "signature": "int32 NativeGetHardcodedChangelistNumber142ba3400()",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq12_runtime/AFortGameStateAthena/NativeGetHardcodedChangelistNumber142ba3400.inc",
+    "address": "0x142ba3400",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns constant 0xCB2E4E (13315662) from the helper asm; no arguments."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "NativeHasMatchingEndCondition142099610",
+    "kind": "helper",
+    "signature": "bool NativeHasMatchingEndCondition142099610(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr1_runtime/AFortMinigame/NativeHasMatchingEndCondition142099610.inc",
+    "address": "0x142099610",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "AFortMinigame end-condition check; callees CheckRemainingLivingPlayersForEndCondition/EvaluateStatQuery not declared in AFortMinigame.h"
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "NativeVolumeContainsUserAt288141c94c20",
+    "kind": "helper",
+    "signature": "bool NativeVolumeContainsUserAt288141c94c20(UObject* Context, UObject* Volume, UObject* PlayerState)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr1_runtime/AFortMinigame/NativeVolumeContainsUserAt288141c94c20.inc",
+    "address": "0x141c94c20",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Tail-jump thunk: VolumeContainsUser on Context+0x288; AFortVolumeManager::VolumeContainsUser not declared in its generated header"
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeSelectMeleeReticleAngle14269eaa0",
+    "kind": "helper",
+    "signature": "float NativeSelectMeleeReticleAngle14269eaa0(UObject* Context, bool bPrimary)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr1_runtime/AFortPawn/NativeSelectMeleeReticleAngle14269eaa0.inc",
+    "address": "0x14269eaa0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Float getter: [Context+0x480] when flag set, else [Context+0x484]; tail-jumped from 0x142321eb0"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeSetControllerFlagBit0141a5b620",
+    "kind": "helper",
+    "signature": "void NativeSetControllerFlagBit0141a5b620(UObject* Context, uint8 Value)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr1_runtime/AFortPlayerControllerAthena/NativeSetControllerFlagBit0141a5b620.inc",
+    "address": "0x141a5b620",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Writes bit0 of byte [Context+0xfdd] from Value (AND 0xfe, OR Value)"
+  },
+  {
+    "class": "AFortPlayerControllerOutpost",
+    "function": "NativeSetOutpostFlagBit0142429d20",
+    "kind": "helper",
+    "signature": "void NativeSetOutpostFlagBit0142429d20(UObject* Context, uint8 Value)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr1_runtime/AFortPlayerControllerOutpost/NativeSetOutpostFlagBit0142429d20.inc",
+    "address": "0x142429d20",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Writes bit0 of dword [Context+0x330] from Value (AND ~1, OR zero-extended Value)"
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "NativeDecodeDamageStartVectors142119f50",
+    "kind": "helper",
+    "signature": "void NativeDecodeDamageStartVectors142119f50(AFortWeapon* WeaponObj, FVector& OutFirst, FVector& OutSecond)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr2_runtime/AFortWeapon/NativeDecodeDamageStartVectors142119f50.inc",
+    "address": "0x142119f50",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/Vector.h"
+    ],
+    "notes": "Decodes two XOR-keyed FVector records from weapon bytes +0xa3a/+0xa08 indices; stack cookie omitted; raw offsets."
+  },
+  {
+    "class": "UFortBaseButton",
+    "function": "NativeSetHoverFlagBit1423af600",
+    "kind": "helper",
+    "signature": "void NativeSetHoverFlagBit1423af600(UObject* TargetObj, uint8 Value)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr2_runtime/UFortBaseButton/NativeSetHoverFlagBit1423af600.inc",
+    "address": "0x1423af600",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Sets bit0 of byte +0x28 to Value, keeps other bits (AND 0xfe, OR DL). Owner class of target unidentified."
+  },
+  {
+    "class": "AFortAIGoalManager",
+    "function": "NativeEnsureArray24Capacity140690ee0",
+    "kind": "helper",
+    "signature": "void NativeEnsureArray24Capacity140690ee0(uint8* ArrayStorage, int32 NewNum)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr3_runtime/AFortAIGoalManager/NativeEnsureArray24Capacity140690ee0.inc",
+    "address": "0x140690ee0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Array Max/Data update for 24-byte elements; FMemory::QuantizeSize + Realloc; callers 0x1422b5db0, 0x144f65aa0."
+  },
+  {
+    "class": "AFortGameModeAthena",
+    "function": "NativeArenaAllocate142ec0180",
+    "kind": "helper",
+    "signature": "uint8* NativeArenaAllocate142ec0180(uint8* ArenaState, int32 RequestedSize, int32 ReservedR8, bool bUseArena)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr3_runtime/AFortGameModeAthena/NativeArenaAllocate142ec0180.inc",
+    "address": "0x142ec0180",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Arena bump allocator with Malloc fallback; R8 unread by asm (kept for ABI); field semantics inferred."
+  },
+  {
+    "class": "UFortPlayerAttrSet",
+    "function": "NativeResolveHandleValue142d66000",
+    "kind": "helper",
+    "signature": "void** NativeResolveHandleValue142d66000(uint8* HandleState, void** OutValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr3_runtime/UFortPlayerAttrSet/NativeResolveHandleValue142d66000.inc",
+    "address": "0x142d66000",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Handle payload resolver; writes sret slot and returns it; struct field meaning inferred from asm."
+  },
+  {
+    "class": "UFortGlobals",
+    "function": "NativeCompareWideStringsNoCase142bcf940",
+    "kind": "helper",
+    "signature": "int32 NativeCompareWideStringsNoCase142bcf940(const uint16* LeftChars, const uint16* RightChars, uint64 MaxCount)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr3_runtime/UFortGlobals/NativeCompareWideStringsNoCase142bcf940.inc",
+    "address": "0x142bcf940",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Bounded wide string compare with ASCII case folding; fold table verified from PE .rdata."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeGetIndexedRecord14468e190",
+    "kind": "helper",
+    "signature": "uint8* NativeGetIndexedRecord14468e190(UObject* Owner)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr4_runtime/UFortKismetLibrary/NativeGetIndexedRecord14468e190.inc",
+    "address": "0x14468e190",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns Owner record at int32 index +0x168 (count +0x160, data +0x158, stride 0x78) or nullptr when out of range."
+  },
+  {
+    "class": "UFortMinigameItemListComponent",
+    "function": "NativeGrowArrayStorage14072b9f0",
+    "kind": "helper",
+    "signature": "void NativeGrowArrayStorage14072b9f0(void* ArrayPtr)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr5_runtime/UFortMinigameItemListComponent/NativeGrowArrayStorage14072b9f0.inc",
+    "address": "0x14072b9f0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Grows TArray storage of 96-byte elements; FMemory::QuantizeSize/Realloc; EDX unused."
+  },
+  {
+    "class": "AFortWindManager",
+    "function": "NativeGrowArrayStorage1407f2000",
+    "kind": "helper",
+    "signature": "void NativeGrowArrayStorage1407f2000(void* ArrayPtr)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr5_runtime/AFortWindManager/NativeGrowArrayStorage1407f2000.inc",
+    "address": "0x1407f2000",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Grows TArray storage of 144-byte elements; FMemory::QuantizeSize/Realloc; EDX unused."
+  },
+  {
+    "class": "UFortPlayerAttrSet",
+    "function": "NativeHelper140762760",
+    "kind": "helper",
+    "signature": "int32 NativeHelper140762760()",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hr5_runtime/UFortPlayerAttrSet/NativeHelper140762760.inc",
+    "address": "0x140762760",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns constant 0x77357463; no callers in batch."
   }
 ]

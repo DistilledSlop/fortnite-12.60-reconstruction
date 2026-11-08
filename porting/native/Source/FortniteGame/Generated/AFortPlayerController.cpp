@@ -18,6 +18,7 @@
 #include "UFortLocalPlayer.h"
 #include "UFortRegisteredPlayerInfo.h"
 #include "UFortWorldItem.h"
+#include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
 bool AFortPlayerController::CanAlterHostileWalls() const
@@ -1971,6 +1972,72 @@ UFortItem* AFortPlayerController::NativeFindItemByGuid(const FGuid& ItemGuid)
 	        return Item;
 	}
 	return ViewTargetInventory ? ViewTargetInventory->NativeFindItemByGuid(ItemGuid) : nullptr;
+}
+
+int32 AFortPlayerController::NativeGetSlotIndexByKind142059ed0(AFortPlayerController* Controller, uint8 Kind)
+{
+	// Helper 0x142059ed0 (AFortPlayerController), asm porting/generated/native102-impl/0x142059ed0.asm.
+	// Returns int32 at Controller+X chosen by Kind: Kind>=3 -> -1; Kind 0 -> +0x220; Kind 1 -> +0x2b0; Kind 2 -> +0x340.
+	// Offset evidence (lookup_offset.py): +0x220 is AController::PlayerState (Object), +0x2b0 is APlayerController::PlayerCameraManager (Object),
+	// +0x340 is APlayerController::PlayerInput (Object). The asm reads them as int32 slot indices, so raw access with the asm width is used.
+	// Callers (ActivateQuickbarSlot 0x141d70410, HandleMoveToolInteractionEnded 0x141d86ad0) compare the result against a slot index.
+	// CONFIDENCE: HIGH
+	if (Kind >= 3)
+	{
+	    return -1;
+	}
+	uint32 MemberOffset = 0x220;
+	if (Kind == 1)
+	{
+	    MemberOffset = 0x2b0;
+	}
+	else if (Kind == 2)
+	{
+	    MemberOffset = 0x340;
+	}
+	return *reinterpret_cast<const int32*>(reinterpret_cast<const uint8*>(Controller) + MemberOffset);
+}
+
+void* AFortPlayerController::NativeGetQuickBarSlotStorage14205b290(UObject* Owner, uint8 SlotKind)
+{
+	// Helper 0x14205b290 (AFortPlayerController), callers 0x142381130 and 0x142382cc0 (quickbar slot lookups).
+	// Asm evidence: SlotKind 1 -> RCX+0x2b0, SlotKind 2 -> RCX+0x340, otherwise (0 and >=3) -> RCX+0x220. Returns the address (LEA).
+	// CONFIDENCE: HIGH
+	uint8* RawOwner_hq10 = reinterpret_cast<uint8*>(Owner);
+	if (SlotKind == 1)
+	{
+		return RawOwner_hq10 + 0x2b0;
+	}
+	if (SlotKind == 2)
+	{
+		return RawOwner_hq10 + 0x340;
+	}
+	return RawOwner_hq10 + 0x220;
+}
+
+bool AFortPlayerController::NativeCanToggleFullscreenMap142607f40(UObject* Controller)
+{
+	// Helper 0x142607f40 (AFortPlayerController), callers 0x141ccfa40 and 0x14238e840 (fullscreen map gates; RCX = controller).
+	// Asm evidence: if int32 [+0x3c0] == 0 -> false; obj=[+0x3b8], null -> false; obj->vtbl[0x28] (slot 5)(obj) false -> false;
+	// else return byte [+0x570] != 0 || qword [+0x578] != 0.
+	// CONFIDENCE: HIGH
+	const uint8* RawController_hq10 = reinterpret_cast<const uint8*>(Controller);
+	if (*reinterpret_cast<const int32*>(RawController_hq10 + 0x3c0) == 0)
+	{
+		return false;
+	}
+	UObject* GateComponent_hq10 = *reinterpret_cast<UObject* const*>(RawController_hq10 + 0x3b8);
+	if (GateComponent_hq10 == nullptr)
+	{
+		return false;
+	}
+	using FGateQueryFn_hq10 = bool (*)(void*);
+	void** GateVtable_hq10 = *reinterpret_cast<void***>(GateComponent_hq10);
+	if (!reinterpret_cast<FGateQueryFn_hq10>(GateVtable_hq10[0x28 / sizeof(void*)])(GateComponent_hq10))
+	{
+		return false;
+	}
+	return *(RawController_hq10 + 0x570) != 0 || *reinterpret_cast<void* const*>(RawController_hq10 + 0x578) != nullptr;
 }
 
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

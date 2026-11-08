@@ -949,5 +949,6 @@ public:
 	virtual FFortBaseWeaponStats* NativeGetWeaponStats() const;
 	void NativeGetChargeRange(float& OutMin, float& OutMax) const;
 	virtual bool NativeIsEquippingWeapon() const;
+	static void NativeDecodeDamageStartVectors142119f50(AFortWeapon* WeaponObj, FVector& OutFirst, FVector& OutSecond);
 };
 

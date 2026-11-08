@@ -1,0 +1,74 @@
+[
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeSyncFacialInputToAnimInstances142345bd0",
+    "kind": "helper",
+    "signature": "void NativeSyncFacialInputToAnimInstances142345bd0(AFortPlayerPawn* Pawn)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq4_runtime/AFortPlayerPawn/NativeSyncFacialInputToAnimInstances142345bd0.inc",
+    "address": "0x142345bd0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "GameFramework/Character.h",
+      "Components/SkeletalMeshComponent.h",
+      "Animation/AnimInstance.h"
+    ],
+    "notes": "Copies pawn facial input (+0x2720 double, +0x2728 int32) to head-part and frontend anim instances after IsA checks. Offsets 0x18d0/0x278 from caller asm."
+  },
+  {
+    "class": "UAthenaRemotePlayerViewData",
+    "function": "NativeBroadcastPlayerStringDelegate144c1b2a0",
+    "kind": "helper",
+    "signature": "void NativeBroadcastPlayerStringDelegate144c1b2a0(FStringDelegate* Delegate, UAthenaRemotePlayerViewData* PlayerData, const FString& StringParam)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq4_runtime/UAthenaRemotePlayerViewData/NativeBroadcastPlayerStringDelegate144c1b2a0.inc",
+    "address": "0x144c1b2a0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h",
+      "UObject/Object.h"
+    ],
+    "notes": "Broadcasts FStringDelegate with (PlayerData, string); callers are OnLocationChanged (+0x78) and OnPlayerNameChanged (+0x58) forwarders."
+  },
+  {
+    "class": "UFortUINavigationManager",
+    "function": "NativeReserveArray48Bytes1406909c0",
+    "kind": "helper",
+    "signature": "void NativeReserveArray48Bytes1406909c0(void* ArrayStorage, int32 RequestedCount, int32 CurrentMax)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq4_runtime/UFortUINavigationManager/NativeReserveArray48Bytes1406909c0.inc",
+    "address": "0x1406909c0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray reserve for 48-byte elements (Data +0, Max +0xC): QuantizeSize/48 capacity, realloc on change. Raw access, element type not needed."
+  },
+  {
+    "class": "AFortMission",
+    "function": "NativeShrinkArray16ByteSlack140690e50",
+    "kind": "helper",
+    "signature": "void NativeShrinkArray16ByteSlack140690e50(void* ArrayStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq4_runtime/AFortMission/NativeShrinkArray16ByteSlack140690e50.inc",
+    "address": "0x140690e50",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray slack shrink for 16-byte elements (Data +0, Num +8, Max +0xC): slack heuristic then realloc. Raw access."
+  }
+]

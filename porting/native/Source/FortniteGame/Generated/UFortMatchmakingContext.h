@@ -156,5 +156,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static UObject* NativeGetLobbyBeaconClient141e61390(UFortMatchmakingContext* MatchmakingContext);
+	static UObject* NativeGetContextObject141e613c0(UFortMatchmakingContext* Context);
 };
 

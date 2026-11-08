@@ -12,9 +12,11 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
+#include "Math/UnrealMathUtility.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 #include "UObject/NoExportTypes.h"
+#include "UObject/Object.h"
 
 class AActor;
 class AFortPlayerController;
@@ -122,5 +124,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static float VectorToNormalizedAngleInDegrees(FVector V);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static FRotator* NativeVectorToRotatorDegrees142c5cdf0(const FVector* InVector, FRotator* OutRotator);
+	static bool NativeHasAnyRewardEntries141f8e580(const void* Rewards, bool bIncludeExtended);
+	static uint8* NativeGetIndexedRecord14468e190(UObject* Owner);
 };
 

@@ -22,6 +22,7 @@
 #include "UFortHealthSet.h"
 #include "UFortMovementComp_Character.h"
 #include "UFortMovementSet.h"
+#include "UObject/Object.h"
 #include "UObject/UnrealType.h"
 #include "Net/UnrealNetwork.h"
 
@@ -996,6 +997,16 @@ uint8* AFortPawn::NativeGetCurrentMovementStyle14231a980(uint8* OutValue) const
 	// CONFIDENCE: HIGH
 	*OutValue = CurrentMovementStyle;
 	return OutValue;
+}
+
+float AFortPawn::NativeSelectMeleeReticleAngle14269eaa0(UObject* Context, bool bPrimary)
+{
+	// Helper 0x14269eaa0 on AFortPawn (caller GetMeleeReticleStrikeAngle 0x142321eb0 tail-jumps here with DL preserved).
+	// Asm: TEST DL,DL; JZ -> MOVSS XMM0,[RCX+0x484], else MOVSS XMM0,[RCX+0x480]; RET.
+	// No reflected member covers 0x480/0x484, so raw float reads are used. All instructions accounted for.
+	// CONFIDENCE: HIGH
+	const uint8* Raw = reinterpret_cast<const uint8*>(Context);
+	return bPrimary ? *reinterpret_cast<const float*>(Raw + 0x480) : *reinterpret_cast<const float*>(Raw + 0x484);
 }
 
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

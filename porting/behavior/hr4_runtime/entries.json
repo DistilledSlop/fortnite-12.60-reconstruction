@@ -1,0 +1,19 @@
+[
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeGetIndexedRecord14468e190",
+    "kind": "helper",
+    "signature": "uint8* NativeGetIndexedRecord14468e190(UObject* Owner)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr4_runtime/UFortKismetLibrary/NativeGetIndexedRecord14468e190.inc",
+    "address": "0x14468e190",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns Owner record at int32 index +0x168 (count +0x160, data +0x158, stride 0x78) or nullptr when out of range."
+  }
+]

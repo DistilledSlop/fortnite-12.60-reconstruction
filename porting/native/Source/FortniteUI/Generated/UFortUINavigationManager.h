@@ -21,6 +21,7 @@
 #include "FFortUINavigationRequest.h"
 #include "FFortVaultItemNavigateRequest.h"
 #include "FFortVaultTabNavigateRequest.h"
+#include "HAL/UnrealMemory.h"
 #include "UFortCampaignHeroLoadoutItem.h"
 
 class UUserWidget;
@@ -106,5 +107,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool HasPendingNavigationOp(EFortUINavigationOp NavigationOp);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeReserveArray48Bytes1406909c0(void* ArrayStorage, int32 RequestedCount, int32 CurrentMax);
 };
 

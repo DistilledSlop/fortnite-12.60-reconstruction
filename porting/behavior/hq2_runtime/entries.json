@@ -1,0 +1,106 @@
+[
+  {
+    "class": "AFortCheckPointSplineActor",
+    "function": "NativeArrayGrowSlack12140694640",
+    "kind": "helper",
+    "signature": "void NativeArrayGrowSlack12140694640(void* Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq2_runtime/AFortCheckPointSplineActor/NativeArrayGrowSlack12140694640.inc",
+    "address": "0x140694640",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray slack growth, 12-byte elements; callers set Num then pass &array; ported from helper 0x140694640 asm."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "NativeByteArrayGrowSlack14069e940",
+    "kind": "helper",
+    "signature": "void NativeByteArrayGrowSlack14069e940(void* Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq2_runtime/AFortGameStateAthena/NativeByteArrayGrowSlack14069e940.inc",
+    "address": "0x14069e940",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray<uint8> slack growth (1-byte elements) from helper 0x14069e940; callers pass &array after bumping Num."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeHashTableFindIndex1407bda90",
+    "kind": "helper",
+    "signature": "void NativeHashTableFindIndex1407bda90(void* Table, int32& OutIndex, uint64 Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq2_runtime/AFortPlayerControllerAthena/NativeHashTableFindIndex1407bda90.inc",
+    "address": "0x1407bda90",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Hash-bucket lookup of uint64 key in table struct; writes index (or -1) through OutIndex; from helper 0x1407bda90."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeVectorToRotatorDegrees142c5cdf0",
+    "kind": "helper",
+    "signature": "FRotator* NativeVectorToRotatorDegrees142c5cdf0(const FVector* InVector, FRotator* OutRotator)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq2_runtime/UFortKismetLibrary/NativeVectorToRotatorDegrees142c5cdf0.inc",
+    "address": "0x142c5cdf0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/Vector.h",
+      "Math/Rotator.h",
+      "Math/UnrealMathUtility.h"
+    ],
+    "notes": "FVector to FRotator (pitch/yaw in degrees, roll 0) from helper 0x142c5cdf0; returns OutRotator."
+  },
+  {
+    "class": "UFortBlueprintAnalytics",
+    "function": "NativeArrayGrowSlack3214069e9b0",
+    "kind": "helper",
+    "signature": "void NativeArrayGrowSlack3214069e9b0(void* Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq2_runtime/UFortBlueprintAnalytics/NativeArrayGrowSlack3214069e9b0.inc",
+    "address": "0x14069e9b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray slack growth, 32-byte elements, from helper 0x14069e9b0; callers bump Num then pass &array."
+  },
+  {
+    "class": "UFortActorOptionsComponent",
+    "function": "NativeArrayResizeTo40140690fd0",
+    "kind": "helper",
+    "signature": "void NativeArrayResizeTo40140690fd0(void* Array, int32 NewMax)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq2_runtime/UFortActorOptionsComponent/NativeArrayResizeTo40140690fd0.inc",
+    "address": "0x140690fd0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray ResizeTo with 40-byte elements (QuantizeSize slack) from helper 0x140690fd0."
+  }
+]

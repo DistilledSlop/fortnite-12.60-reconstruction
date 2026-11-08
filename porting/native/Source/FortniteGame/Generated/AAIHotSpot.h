@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 #include "EAIHotSpotSlot.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/Vector.h"
 
 class AAIController;
@@ -149,5 +150,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static uint8 NativeHelper141291580(AAIHotSpot* HotSpotObj);
+	static void NativeArrayShrinkSlack14072c6c0(void* ArrayStorage);
+	static int32* NativeFindWeakKeySlot140972ca0(uint8* Table, int32* OutIndex, int64 Key);
 };
 

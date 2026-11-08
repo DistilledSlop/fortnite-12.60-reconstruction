@@ -61,10 +61,12 @@
 #include "FTimeStampedPhysicsPawnState.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "UObject/Object.h"
 
 class AActor;
 class ACameraActor;
@@ -1424,5 +1426,7 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
 	virtual UFortQuestManager* NativeGetQuestManager1423850c0(uint8 Mode);
+	static void NativeHashTableFindIndex1407bda90(void* Table, int32& OutIndex, uint64 Key);
+	static void NativeSetControllerFlagBit0141a5b620(UObject* Context, uint8 Value);
 };
 

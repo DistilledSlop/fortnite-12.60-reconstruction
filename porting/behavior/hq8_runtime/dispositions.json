@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x140769940",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "call 0x140690920 at 0x140769981: only hint AFortPlayerControllerSpectating::GetAddedPlayersMap (reflected, 3 params) does not match the asm (generic container reserve on RCX=this+0x38, EDX=0, R9D=4); 0x1406911b0 (at 0x1407699c7), 0x140690310 and 0x140690dd0 hints are unrelated reflected candidate lists"
+ },
+ {
+  "addr": "0x1407c1f50",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "Returns UFortHero level (int32 at +0xb8, UFortAccountItem::level). Pure getter, all insns accounted."
+ },
+ {
+  "addr": "0x1420a40c0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "call 0x140690dd0 at 0x1420a4108 (TArray grow on append, RCX=array, EDX=old index): only hints are AFortBroadcastRemoteClientInfo::OnRep_bActive and UFortTierIndicator::ClearPreviewState, both with no params, so the ABI cannot match"
+ },
+ {
+  "addr": "0x142c50fc0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "Clamped interpolation step; constants 1e-8f epsilon and 1.0f clamp read from PE .rdata."
+ },
+ {
+  "addr": "0x141c1ae10",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "TArray slack grow for 0x150-byte elements (QuantizeSize + Realloc); raw Data/Num/Max access."
+ },
+ {
+  "addr": "0x140a671f0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "TArray slack grow for 0xb8-byte elements (QuantizeSize + Realloc); raw Data/Num/Max access."
+ },
+ {
+  "addr": "0x1442dd540",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "Bool gate: non-null object at GameState+0x128 with flag bit 0x20 at +0x1f4; inner class unverified."
+ },
+ {
+  "addr": "0x141f6f180",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "indirect virtual call CALL qword ptr [RAX + 0x5e8] at 0x141f6f1a9 (receiver RCX, vtable slot 0x5e8): no callee_hint"
+ }
+]

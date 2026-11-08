@@ -716,5 +716,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static UFortGlobals* NativeGetGlobals();
+	static int32 NativeCompareWideStringsNoCase142bcf940(const uint16* LeftChars, const uint16* RightChars, uint64 MaxCount);
 };
 

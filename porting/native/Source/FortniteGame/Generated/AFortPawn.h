@@ -58,6 +58,7 @@
 #include "Styling/SlateBrush.h"
 #include "UFortAbilitySystemInterface.h"
 #include "UFortTeamActorInterface.h"
+#include "UObject/Object.h"
 
 class AActor;
 class AFortEmitterCameraLensEffectDirectional;
@@ -1094,5 +1095,6 @@ public:
 	virtual uint8 NativeGetTeam163();
 	static UAnimInstance* NativeGetMeshAnimInstance144114bd0(USkeletalMeshComponent* MeshComp);
 	uint8* NativeGetCurrentMovementStyle14231a980(uint8* OutValue) const;
+	static float NativeSelectMeleeReticleAngle14269eaa0(UObject* Context, bool bPrimary);
 };
 

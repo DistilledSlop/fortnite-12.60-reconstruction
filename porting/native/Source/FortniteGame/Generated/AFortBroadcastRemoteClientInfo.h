@@ -6,11 +6,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "Containers/Array.h"
 #include "EFortResourceType.h"
 #include "FAthenaQuickChatActiveEntry.h"
 #include "FBuildingWeakSpotData.h"
 #include "FFortWorldMarkerData.h"
 #include "FMarkerID.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/Vector2D.h"
 
 class ABuildingSMActor;
@@ -197,5 +199,9 @@ public:
 	void ServerSetPlayerInventoryActive_Implementation(bool bInventorypActive);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeResizeArrayCapacity14072b4b0(TArray<int32>& Array, int32 NewNum, int32 PreviousMax);
 };
 

@@ -1,0 +1,17 @@
+[
+  {
+    "class": "AFortGameStateAthena",
+    "function": "NativeGetHardcodedChangelistNumber142ba3400",
+    "kind": "helper",
+    "signature": "int32 NativeGetHardcodedChangelistNumber142ba3400()",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq12_runtime/AFortGameStateAthena/NativeGetHardcodedChangelistNumber142ba3400.inc",
+    "address": "0x142ba3400",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns constant 0xCB2E4E (13315662) from the helper asm; no arguments."
+  }
+]

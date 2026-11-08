@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "UObject/Object.h"
+#include "UObject/WeakObjectPtrTemplates.h"
+
 class UUnicornSocialComponent;
 class UUnicornWebAPIComponent;
 
@@ -145,5 +148,9 @@ public:
 	UPROPERTY(Config)
 	bool bShouldUploadHighlightsPayload;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeUnicornDriverWeakTarget14468f240(AUnicornDriver* Driver);
 };
 

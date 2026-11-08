@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "Containers/Array.h"
 #include "EFortAIUtility.h"
 #include "EFortEncounterPacingState.h"
 #include "EFortEncounterSpawnLimitType.h"
@@ -50,6 +51,7 @@
 #include "FSpawnGroupInstanceInfo.h"
 #include "FUtilityTypeFloatPair.h"
 #include "GameplayTagContainer.h"
+#include "UObject/Object.h"
 
 class AActor;
 class ABuildingRift;
@@ -681,5 +683,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetPawnNumberLimit(int32 InPawnNumberLimit);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static int32* NativeFindWeakKeySlot141656140(uint8* MapBase, int32* OutIndex, uint64 LookupKey);
+	static TArray<UObject*>& NativeCollectRiftPointers141695990(UFortAIEncounterInfo* EncounterInfo, TArray<UObject*>& OutPointers);
 };
 

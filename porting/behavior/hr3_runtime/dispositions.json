@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x140690ee0",
+  "status": "proposed",
+  "case": "ported_helper",
+  "reason": "Fully accounted asm; callees FMemory::QuantizeSize and FMemory::Realloc hinted."
+ },
+ {
+  "addr": "0x142ec0180",
+  "status": "proposed",
+  "case": "ported_helper",
+  "reason": "Fully accounted asm; Malloc tail call hinted; caller-observed R9B=1 and unread R8 kept as ABI param."
+ },
+ {
+  "addr": "0x142d66000",
+  "status": "proposed",
+  "case": "ported_helper",
+  "reason": "Fully accounted asm; no callees; sret pointer returned in RAX as confirmed by caller 0x142e5d3b0."
+ },
+ {
+  "addr": "0x142bcf940",
+  "status": "proposed",
+  "case": "ported_helper",
+  "reason": "Fully accounted asm; fold table at .rdata 0x1465b3720 read from PE image and matches ASCII lowercase mapping."
+ },
+ {
+  "addr": "0x142bfb130",
+  "status": "blocked",
+  "case": "writable_global_load",
+  "reason": "Absolute writable .data globals: CMP qword ptr [0x148215928] at 0x142bfb13a, CMP byte ptr [0x147c30b90] at 0x142bfb149, CMPXCHG/XADD on [0x148215938]/[0x148215940], and MOV RCX,[0x14823d250] with indirect tail jump [RAX+0x10] at 0x142bfb1b4-0x142bfb1df."
+ },
+ {
+  "addr": "0x142d6b710",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Indirect virtual call CALL qword ptr [RAX+0x270] at 0x142d6b7a6 (vtable slot on RDX); no callee_hints entry."
+ },
+ {
+  "addr": "0x142e424e0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x141384ca0 at 0x142e42534 has only two unrelated reflected candidates (UFortTierIndicator::ClearPreviewState, UMeshNetworkSubsystem::SetMetaDataWithKey) and no ported helper."
+ },
+ {
+  "addr": "0x1406cee40",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Indirect virtual call CALL qword ptr [RAX+0x270] at 0x1406ceef7 (vtable slot on RDX); no callee_hints entry."
+ }
+]

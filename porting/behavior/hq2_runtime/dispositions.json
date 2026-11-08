@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x140694640",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "all asm instructions accounted for"
+ },
+ {
+  "addr": "0x14069e940",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "all asm instructions accounted for"
+ },
+ {
+  "addr": "0x1407bda90",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "all asm instructions accounted for"
+ },
+ {
+  "addr": "0x142c5cdf0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "all asm instructions accounted for"
+ },
+ {
+  "addr": "0x144f9f990",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "indirect virtual call `CALL qword ptr [RAX + 0x268]` at 0x144f9f9c5 has no hint; callee 0x1424265c0 hint lists five unrelated reflected functions (ambiguous); answer struct types not determinable"
+ },
+ {
+  "addr": "0x1411322c0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "indirect import call `CALL qword ptr [0x1458fe030]` at 0x1411323f7 has no hint (also `CALL qword ptr [0x1458fd9e0]` at 0x141132419); hint for 0x142bcf780 (GetMetaDataWithKey) does not match the two-string call site"
+ },
+ {
+  "addr": "0x14069e9b0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "all asm instructions accounted for"
+ },
+ {
+  "addr": "0x140690fd0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "all asm instructions accounted for"
+ }
+]

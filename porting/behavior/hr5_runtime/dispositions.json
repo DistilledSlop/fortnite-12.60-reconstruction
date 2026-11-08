@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x14072b9f0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "asm fully accounted; 96-byte element from QuantizeSize divisor and caller stride"
+ },
+ {
+  "addr": "0x1407f2000",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "asm fully accounted; 144-byte element from divisor (/144) and caller stride 0x90"
+ },
+ {
+  "addr": "0x140762760",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "two instructions, constant return"
+ },
+ {
+  "addr": "0x1406dff70",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "MOV RAX,qword ptr [0x1480c4288] at 0x1406dff88 (writable .data stack cookie global, not a .rdata constant)"
+ },
+ {
+  "addr": "0x140682e80",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "indirect vtable calls CALL qword ptr [RAX] at 0x140682ed6 and CALL qword ptr [RAX+0x8] at 0x140682ef2 have no address hint"
+ },
+ {
+  "addr": "0x1406af460",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x1406d93e0 at 0x1406af4b7 has five reflected candidates, no unique resolution (likely TArray resize)"
+ },
+ {
+  "addr": "0x142ee5e30",
+  "status": "blocked",
+  "case": "writable_global",
+  "reason": "CMP EAX,dword ptr [0x148263a2c] at 0x142ee5e43 reads writable .data global"
+ },
+ {
+  "addr": "0x142ed9d70",
+  "status": "blocked",
+  "case": "tail_jump_receiver_clobbered",
+  "reason": "JMP 0x142c7b670 at 0x142ed9f09 tail-calls a member with RCX clobbered by the preceding FMsg::Logf call at 0x142ed9eff"
+ }
+]

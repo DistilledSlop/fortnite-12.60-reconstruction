@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x14237e620",
+  "status": "blocked",
+  "case": "tail_jump",
+  "reason": "JNZ 0x141f5dd20 after MOV RCX,[RCX+0x19e8]/TEST: conditional jump outside the helper body (tail call into another function)"
+ },
+ {
+  "addr": "0x143d4bfc0",
+  "status": "blocked",
+  "case": "tail_jump",
+  "reason": "JMP qword ptr [RAX + 0x248]: indirect tail call through vtable slot 0x248; no callee hint"
+ },
+ {
+  "addr": "0x140f91980",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL qword ptr [RAX + 0x8]: virtual call on object at [RCX] (vtable slot 0x8); no callee hint"
+ },
+ {
+  "addr": "0x1418d31e0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL qword ptr [RAX + 0x150]: virtual call on object at [RCX] (vtable slot 0x150); further unhinted virtual calls at slots 0x880 and 0x28"
+ },
+ {
+  "addr": "0x141bcbb90",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL qword ptr [RAX + 0x38]: virtual call on this (vtable slot 0x38); no callee hint; further virtual calls at 0xf0 and 0xe8"
+ },
+ {
+  "addr": "0x141692dd0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL qword ptr [RAX + 0x3e8]: virtual call on object (vtable slot 0x3e8); no callee hint; further virtual calls at 0x468"
+ },
+ {
+  "addr": "0x141b6a4a0",
+  "status": "blocked",
+  "case": "signature_unrepresentable",
+  "reason": "sret return (RDX) of 12 bytes: 8 raw bytes at [RCX+0x17c] plus int32 at [RCX+0x184]; no engine struct matches and no host-module struct can be declared; RCX is interior subobject (caller 0x1418ec960 passes Doghouse+0x12b0)"
+ },
+ {
+  "addr": "0x141b6a4d0",
+  "status": "blocked",
+  "case": "signature_unrepresentable",
+  "reason": "sret return (RDX) of 12 bytes: 8 raw bytes at [RCX+0x140] plus int32 at [RCX+0x148]; no engine struct matches and no host-module struct can be declared; RCX is interior subobject (caller 0x1418ec990 passes Doghouse+0x12b0)"
+ }
+]

@@ -76,6 +76,7 @@
 #include "GameFramework/Actor.h"
 #include "GameplayTagContainer.h"
 #include "HAL/Platform.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 #include "Misc/DateTime.h"
@@ -1169,5 +1170,7 @@ public:
 	static const TCHAR* NativeGetAthenaPhaseName(uint8 Phase);
 	virtual float NativeMatchTime780() const;
 	bool NativeAllowsFriendlyFire163(const FGameplayTagContainer& Tags, AFortPawn* Pawn);
+	static void NativeByteArrayGrowSlack14069e940(void* Array);
+	static int32 NativeGetHardcodedChangelistNumber142ba3400();
 };
 

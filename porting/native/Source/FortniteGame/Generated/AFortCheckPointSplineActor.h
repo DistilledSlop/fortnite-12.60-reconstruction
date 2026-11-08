@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 #include "EFortTeam.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/Color.h"
 
 class USplineMeshComponent;
@@ -55,5 +56,10 @@ public:
 	UPROPERTY()
 	bool bSplineMapUIAntialias;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeArrayGrowSlack12140694640(void* Array);
+	static void NativeArraySetCapacity140694750(void* Array, int32 NewCount);
 };
 

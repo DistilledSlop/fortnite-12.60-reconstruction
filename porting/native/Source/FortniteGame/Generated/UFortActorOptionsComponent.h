@@ -10,6 +10,7 @@
 #include "FAnyPropertyChangedDelegate.h"
 #include "FPropertyOverrideData.h"
 #include "FRestoreDefaultsDelegate.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/UnrealMathUtility.h"
 
 class AFortPawn;
@@ -89,5 +90,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static void NativeAdvanceSetBitIterator140687d00(uint8* Iterator);
+	static void NativeArrayResizeTo40140690fd0(void* Array, int32 NewMax);
 };
 

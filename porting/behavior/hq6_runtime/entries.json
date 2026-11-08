@@ -1,0 +1,72 @@
+[
+  {
+    "class": "UAthenaRemotePlayerViewData",
+    "function": "NativeGetVehicleFromViewData1423254c0",
+    "kind": "helper",
+    "signature": "UObject* NativeGetVehicleFromViewData1423254c0(UAthenaRemotePlayerViewData* ViewData)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq6_runtime/UAthenaRemotePlayerViewData/NativeGetVehicleFromViewData1423254c0.inc",
+    "address": "0x1423254c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Helper 0x1423254c0; asm evidence and caller use in .inc comments."
+  },
+  {
+    "class": "AFortAthenaCreativePortal",
+    "function": "NativeRemoveMatchingWeakPtrs1407ef240",
+    "kind": "helper",
+    "signature": "int32 NativeRemoveMatchingWeakPtrs1407ef240(TArray<uint8*>& Items, const uint8* Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq6_runtime/AFortAthenaCreativePortal/NativeRemoveMatchingWeakPtrs1407ef240.inc",
+    "address": "0x1407ef240",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Helper 0x1407ef240; asm evidence and caller use in .inc comments."
+  },
+  {
+    "class": "AFortAthenaMutator_WarmupMovie",
+    "function": "NativeHelper1420327f0",
+    "kind": "helper",
+    "signature": "UObject* NativeHelper1420327f0(UObject* Owner)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq6_runtime/AFortAthenaMutator_WarmupMovie/NativeHelper1420327f0.inc",
+    "address": "0x1420327f0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Helper 0x1420327f0; asm evidence and caller use in .inc comments."
+  },
+  {
+    "class": "AFortBroadcastRemoteClientInfo",
+    "function": "NativeResizeArrayCapacity14072b4b0",
+    "kind": "helper",
+    "signature": "void NativeResizeArrayCapacity14072b4b0(TArray<int32>& Array, int32 NewNum, int32 PreviousMax)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hq6_runtime/AFortBroadcastRemoteClientInfo/NativeResizeArrayCapacity14072b4b0.inc",
+    "address": "0x14072b4b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Helper 0x14072b4b0; asm evidence and caller use in .inc comments."
+  }
+]

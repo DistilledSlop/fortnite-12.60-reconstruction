@@ -1,0 +1,52 @@
+[
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeGetSlotIndexByKind142059ed0",
+    "kind": "helper",
+    "signature": "int32 NativeGetSlotIndexByKind142059ed0(AFortPlayerController* Controller, uint8 Kind)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq7_runtime/AFortPlayerController/NativeGetSlotIndexByKind142059ed0.inc",
+    "address": "0x142059ed0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Kind-selected int32 slot index at controller offset 0x220/0x2b0/0x340; -1 for Kind>=3. Raw access, no reflected member."
+  },
+  {
+    "class": "UCreativeQuestComponent",
+    "function": "NativeShrinkInt32Array14069eac0",
+    "kind": "helper",
+    "signature": "void NativeShrinkInt32Array14069eac0(TArray<int32>& Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq7_runtime/UCreativeQuestComponent/NativeShrinkInt32Array14069eac0.inc",
+    "address": "0x14069eac0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray<int32> capacity hysteresis (Max-Num slack, 3Num<2Max rule) with QuantizeSize and Realloc on Data/Max."
+  },
+  {
+    "class": "AFortAthenaMutator_CustomStormMovement",
+    "function": "NativeCopySafeZoneRouteEntry1406f19d0",
+    "kind": "helper",
+    "signature": "void NativeCopySafeZoneRouteEntry1406f19d0(void* Dest, const void* Src)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hq7_runtime/AFortAthenaMutator_CustomStormMovement/NativeCopySafeZoneRouteEntry1406f19d0.inc",
+    "address": "0x1406f19d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Plain 32-byte record copy (int32,int32,16 bytes,int64) used by OnRep_SafeZoneRouteIndex and OnPlaylistLoaded."
+  }
+]

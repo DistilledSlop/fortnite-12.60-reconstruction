@@ -79,5 +79,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static FMargin* NativeGetMarginBySize141f894c0(uint8* Base, int32 SizeIndex);
+	static void* NativeSelectFontSlot141f88e20(uint8* Style, int32 SlotIndex);
 };
 

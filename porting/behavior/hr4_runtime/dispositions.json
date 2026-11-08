@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x14468e190",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "all instructions accounted for; owner class unjustified so UObject* with raw offsets"
+ },
+ {
+  "addr": "0x142d68030",
+  "status": "blocked",
+  "case": "ambiguous_sret_layout",
+  "reason": "sret layout ambiguous: flag byte [RCX+0x8]!=0 path writes 8-byte value at [RDX] and flag at [RDX+0x8]; flag==0 path copies 16 bytes from [RAX+0x10] (RAX=[RCX]) with no flag write; callers list empty so the struct type cannot be justified"
+ },
+ {
+  "addr": "0x142c9a1e0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "indirect virtual calls CALL qword ptr [RAX+0x8] (0x142c9a232) and CALL qword ptr [RBX-0x40] (0x142c9a247) have no callee_hint; also absolute .data loads [0x147c37110], [0x147c37100] (0x142c9a254..)"
+ },
+ {
+  "addr": "0x142bc4490",
+  "status": "blocked",
+  "case": "writable_global_load",
+  "reason": "MOVSD XMM0,qword ptr [0x1481d47f0] (0x142bc4490): address is in .data (0x147812000-0x148400bd0), not .rdata; not a read-only constant"
+ },
+ {
+  "addr": "0x1406d8760",
+  "status": "blocked",
+  "case": "layout_unresolved",
+  "reason": "bit-set insertion over container fields [RAX+0x20],[RAX+0x30],[RAX+0x34] (0x1406d8790..0x1406d87bf) with no callers and no member evidence; container type unjustified"
+ },
+ {
+  "addr": "0x1409579c0",
+  "status": "blocked",
+  "case": "callee_hint_mismatch",
+  "reason": "callee 0x140690920 hint is reflected AFortPlayerControllerSpectating::GetAddedPlayersMap with Map/Struct/Object params, which does not match this helper's arguments; blocked to avoid a wrong call"
+ },
+ {
+  "addr": "0x14098bd50",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "indirect virtual calls CALL qword ptr [RAX] (0x14098bd93) and CALL qword ptr [RAX+0x8] (0x14098bda7) on refcount object have no callee_hint"
+ },
+ {
+  "addr": "0x1406921f0",
+  "status": "blocked",
+  "case": "writable_global_address",
+  "reason": "LEA RAX,[0x1480ce3f8] (0x1406921f0): address of writable .data global (0x147812000-0x148400bd0); no symbol to name it in C++"
+ }
+]

@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x141eb9eb0",
+  "status": "proposed",
+  "case": "helper_name_slot",
+  "reason": "Input-data FName slot read with gamepad/flag selection; all instructions accounted for"
+ },
+ {
+  "addr": "0x141eb9f30",
+  "status": "proposed",
+  "case": "helper_name_slot",
+  "reason": "Input-data FName slot read with gamepad/flag selection; all instructions accounted for"
+ },
+ {
+  "addr": "0x141eb9fa0",
+  "status": "proposed",
+  "case": "helper_name_slot",
+  "reason": "Input-data FName slot read with gamepad/flag selection; all instructions accounted for"
+ },
+ {
+  "addr": "0x141eb9e80",
+  "status": "proposed",
+  "case": "helper_name_slot",
+  "reason": "Single input-data FName read; all instructions accounted for"
+ },
+ {
+  "addr": "0x142ba3400",
+  "status": "proposed",
+  "case": "constant_return",
+  "reason": "MOV EAX,imm32; RET"
+ },
+ {
+  "addr": "0x141747910",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "indirect virtual tail call JMP qword ptr [RAX + 0x7a8] at 0x141747939 has no callee hint"
+ },
+ {
+  "addr": "0x141dec190",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "indirect virtual call CALL qword ptr [RAX + 0x60] at 0x141dec3b9 has no callee hint"
+ },
+ {
+  "addr": "0x141e08f60",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "indirect virtual call CALL qword ptr [RAX + 0x68] at 0x141e09186 has no callee hint"
+ }
+]

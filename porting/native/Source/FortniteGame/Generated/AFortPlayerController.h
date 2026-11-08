@@ -79,6 +79,7 @@
 #include "UFortTeamActorInterface.h"
 #include "UMcpProfileGroup.h"
 #include "UObject/CoreOnline.h"
+#include "UObject/Object.h"
 
 class AActor;
 class ABattleMapPawnLive;
@@ -1989,6 +1990,9 @@ public:
 	static void NativeRecordQuickBarSlotItem(AFortPlayerController* Controller, UFortItem* Item, EFortQuickBars Bar, int32 PreviousSlot, int32 NewSlot, UFortItem* ReplacedItem);
 	virtual uint8 NativeGetTeam163();
 	virtual UFortItem* NativeFindItemByGuid(const FGuid& ItemGuid);
+	static int32 NativeGetSlotIndexByKind142059ed0(AFortPlayerController* Controller, uint8 Kind);
+	static void* NativeGetQuickBarSlotStorage14205b290(UObject* Owner, uint8 SlotKind);
+	static bool NativeCanToggleFullscreenMap142607f40(UObject* Controller);
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 };

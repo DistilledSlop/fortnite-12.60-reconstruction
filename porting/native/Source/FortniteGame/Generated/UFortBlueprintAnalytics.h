@@ -8,6 +8,7 @@
 
 #include "EEnvironmentalItemEndReason.h"
 #include "EIDScannerResult.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/Vector.h"
 
 class AActor;
@@ -27,5 +28,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static void FireAnalyticEventItemIDScannerUsed(AFortPlayerController* FortPC, AActor* ConnectedActor, FVector ScanneraPos, EIDScannerResult IdScannerResult);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeArrayGrowSlack3214069e9b0(void* Array);
 };
 

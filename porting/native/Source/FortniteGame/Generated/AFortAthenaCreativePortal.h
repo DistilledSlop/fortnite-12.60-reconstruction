@@ -8,8 +8,10 @@
 
 #include "AttributeSet.h"
 #include "Blueprint/UserWidget.h"
+#include "Containers/Array.h"
 #include "FCreativeLoadedLinkData.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/Vector.h"
 
 class AActor;
@@ -241,5 +243,9 @@ protected:
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static int32 NativeRemoveMatchingWeakPtrs1407ef240(TArray<uint8*>& Items, const uint8* Key);
 };
 

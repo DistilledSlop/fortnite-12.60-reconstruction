@@ -8,6 +8,7 @@
 
 #include "FMinigameItemData.h"
 #include "FPickupInstigatorData.h"
+#include "HAL/UnrealMemory.h"
 
 #include "UFortMinigameItemListComponent.generated.h"
 
@@ -43,5 +44,9 @@ public:
 	bool RemoveItem(int32 ItemIndex);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeGrowArrayStorage14072b9f0(void* ArrayPtr);
 };
 

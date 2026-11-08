@@ -190,5 +190,10 @@ public:
 	void OnRep_Tech_Team();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void** NativeResolveHandleValue142d66000(uint8* HandleState, void** OutValue);
+	static int32 NativeHelper140762760();
 };
 

@@ -65,5 +65,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetUnclampedLevel() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static int32 NativeGetHeroLevel1407c1f50(UFortHero* Hero);
 };
 

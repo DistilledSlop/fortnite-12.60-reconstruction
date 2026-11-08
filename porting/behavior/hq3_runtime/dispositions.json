@@ -1,0 +1,10 @@
+[
+  {"addr": "0x1406d7fd0", "status": "blocked", "case": "callee_unresolved", "reason": "call 0x140685370 has hint AFortPlayerStateAthena::OnRep_SeasonLevelUIDisplay (player-state receiver) but asm passes the outer TArray pointer (RCX=R15) as receiver; vtable slots [RAX+0x30], [RAX+0x38] on UObject elements have no hint"},
+  {"addr": "0x144d7bab0", "status": "proposed", "case": "registry_child_lookup", "reason": ""},
+  {"addr": "0x144fbb020", "status": "blocked", "case": "callee_unresolved", "reason": "indirect call [R8+0x270] on widget child (EDX=0/4 and DL=1 arguments) has no hint or reflected name for vtable slot 0x270"},
+  {"addr": "0x140972ca0", "status": "proposed", "case": "weak_key_hash_lookup", "reason": ""},
+  {"addr": "0x1420237f0", "status": "blocked", "case": "callee_unresolved", "reason": "call 0x140680160 has two conflicting hints (UAthenaLobbyBase::HandlePlaylistDataChanged, UCreativeMiniMapComponent::OnRep_IconData) for RCX=this+0xe0, EDX=0; vtable slots [RAX+0x2d8] and [RAX+0x3e8] on RDI have no hint"},
+  {"addr": "0x1420b4ad0", "status": "proposed", "case": "weak_key_hash_lookup", "reason": ""},
+  {"addr": "0x142c521d0", "status": "blocked", "case": "writable_global_load", "reason": "MOVSS loads from writable .data globals dword ptr [0x148218638], [0x148218634], [0x148218630] (0x1482... range)"},
+  {"addr": "0x1423a1ea0", "status": "proposed", "case": "tail_call_forward", "reason": ""}
+]
