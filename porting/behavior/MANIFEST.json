@@ -90302,23 +90302,6 @@
     "notes": "Slots[Index] (reflected TArray at +0x238) -> UAIHotSpotSlot::GetSlotLocation(); invalid or null returns FVector(MAX_flt x3)."
   },
   {
-    "class": "ABuildingFillFloor",
-    "function": "OnRep_FloorZ",
-    "kind": "exec",
-    "signature": "void OnRep_FloorZ()",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/pv1_runtime/ABuildingFillFloor/OnRep_FloorZ.inc",
-    "confidence": "medium",
-    "address": "0x142740c50",
-    "status": "ported",
-    "reflection_flags": "0x80401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x141be59c0",
-    "notes": "Authority returns early; else sets actor location to (root world X,Y; FloorZ) via NativeSetActorLocation143f832a0 (no sweep, teleport 0). Zero vector if no root."
-  },
-  {
     "class": "ABuildingGameplayActor",
     "function": "GetTargetingSourceTransform_Implementation",
     "kind": "native_event_impl",
@@ -90529,23 +90512,6 @@
     "access": "protected",
     "native_body_address": "0x1419db530",
     "notes": "Tail-calls NativeClientUpdateRichPresence1423c0800(this, 0, true)."
-  },
-  {
-    "class": "UBuildingStructuralSupportSystem",
-    "function": "GetGridBox",
-    "kind": "exec",
-    "signature": "FBox GetGridBox(FBuildingSupportCellIndex& CellIndex) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/pv2_runtime/UBuildingStructuralSupportSystem/GetGridBox.inc",
-    "confidence": "medium",
-    "address": "0x14275c490",
-    "status": "ported",
-    "reflection_flags": "0x54c20403",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x141c77d20",
-    "notes": "Builds the cell FBox: centre = Cell*(512,512,384) + origin (+0x378..0x380, Z plus half-height), half extents (256,256,192); IsValid = 1."
   },
   {
     "class": "UBuildingStructuralSupportSystem",

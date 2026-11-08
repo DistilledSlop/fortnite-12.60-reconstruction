@@ -79,10 +79,8 @@ protected:
 	void OnLavaOverlap(AFortPlayerPawn* Pawn);
 public:
 
-protected:
 	UFUNCTION()
 	void OnRep_FloorZ();
-public:
 
 	UFUNCTION()
 	void OnRep_IsMoving();

@@ -793,5 +793,27 @@
   "blocker": "compile_error",
   "reason": "uses dropped helper NativeVolumeContainsUserAt288141c94c20",
   "inc_path": null
+ },
+ {
+  "entry": "UBuildingStructuralSupportSystem::GetGridBox",
+  "kind": "exec",
+  "blocker": "ustruct_not_blueprint_type",
+  "reason": "FBuildingSupportCellIndex is not a BlueprintType USTRUCT; UHT rejects the reflected parameter",
+  "inc_path": "porting/behavior/pv2_runtime/UBuildingStructuralSupportSystem/GetGridBox.inc"
+ },
+ {
+  "entry": "ABuildingFillFloor::OnRep_FloorZ",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'NativeRecoveredFloat_0x1d8' in 'USceneComponent'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/pv1_runtime/ABuildingFillFloor/OnRep_FloorZ.inc"
+ },
+ {
+  "entry": "ABuildingFillFloor::OnRep_FloorZ",
+  "kind": "exec",
+  "blocker": "engine_class_member_field",
+  "reason": "depends on USceneComponent member fields, which cannot be generated for engine classes",
+  "inc_path": "porting/behavior/pv1_runtime/ABuildingFillFloor/OnRep_FloorZ.inc"
  }
 ]
