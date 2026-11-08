@@ -9,6 +9,7 @@ import collections, glob, json, os, re, sys
 sys.path.insert(0, 'porting')
 import thunk_receiver as tr
 from generated_defs import defined_in_generated
+import virtual_slots
 
 MAXI = int(sys.argv[1]) if len(sys.argv) > 1 else 60
 R = 'porting/generated'
@@ -59,6 +60,44 @@ def span(p):
     return min(a), max(a)
 
 
+def this_virtuals(L):
+    """Slots of indirect calls made through the primary vptr of `this`; the second value counts every other indirect call.
+    Tracks RCX = this on entry, register copies, `MOV Rv,[Rthis]` (vptr) and `CALL/JMP [Rv + slot]`."""
+    reg = {'RCX': 'this'}
+    out, bad = [], 0
+    vol = ('RAX', 'RCX', 'RDX', 'R8', 'R9', 'R10', 'R11')
+    for i in L:
+        m = re.fullmatch(r'MOV (R\w+),(R\w+)', i)
+        if m:
+            reg[m.group(1)] = reg.get(m.group(2))
+            continue
+        m = re.fullmatch(r'MOV (R\w+),qword ptr \[(R\w+)\]', i)
+        if m:
+            reg[m.group(1)] = 'vptr' if reg.get(m.group(2)) == 'this' else None
+            continue
+        m = re.fullmatch(r'(?:CALL|JMP) qword ptr \[(R\w+)(?: \+ (0x[0-9a-f]+))?\]', i)
+        if m:
+            if reg.get(m.group(1)) == 'vptr':
+                out.append(int(m.group(2), 16) if m.group(2) else 0)
+            else:
+                bad += 1
+            if i.startswith('CALL'):
+                for r in vol:
+                    reg[r] = None
+            continue
+        if re.match(r'(CALL|JMP) ', i):
+            if i.startswith('CALL'):
+                for r in vol:
+                    reg[r] = None
+            if re.match(r'(CALL|JMP) R', i):
+                bad += 1
+            continue
+        m = re.match(r'(?:MOV|LEA|ADD|SUB|XOR|AND|OR|MOVZX|MOVSXD|MOVSX|SHL|SHR|IMUL|INC|DEC|POP|NEG|NOT|CMOV\w+|SET\w+) (R\w+)', i)
+        if m:
+            reg[m.group(1)] = None
+    return out, bad
+
+
 def insns(p):
     return [l.split(None, 1)[1].strip() for l in open(p) if len(l.split(None, 1)) > 1]
 
@@ -80,10 +119,28 @@ for e in f2:
     tg = [m.group(1) for i in L for m in [re.fullmatch(r'(?:CALL|JMP) (0x[0-9a-f]+)', i)] if m]
     ind = [i for i in L if re.match(r'(CALL|JMP) (qword ptr|R)', i)]
     tgt = [t for t in tg if t not in HELPERS and t not in STUBS]
-    if ind:
-        st['skip_indirect'] += 1
+    vslots, vbad = this_virtuals(L) if ind else ([], 0)
+    if ind and (vbad or len(vslots) != len(ind)):
+        st['skip_indirect_not_this_vptr'] += 1
         continue
     cal = {}
+    vnames = {}
+    for sl in vslots:
+        vn = virtual_slots.virt_name(e['cls'], sl)
+        if not vn:
+            vnames = None
+            break
+        vnames[sl] = vn
+    if vnames is None:
+        st['skip_virtual_slot_unnamed'] += 1
+        continue
+    for sl, (vc, vf) in vnames.items():
+        d = nf.get(vc, {}).get(vf, {})
+        fl = d.get('flags')
+        fl = fl if isinstance(fl, int) else int(fl, 16) if fl else 0
+        cal['virtual+0x%x' % sl] = [dict(virtual_slot=hex(sl), fn=f'{vc}::{vf}', static=bool(fl & 0x2000), const=bool(fl & 0x40000000),
+                                          params=[(q['name'], q['kind']) for q in d.get('params') or []],
+                                          note='virtual call on this through the class vtable (slot named by address): call %s()' % vf)]
     ok = True
     for t in tgt:
         if t in gp:
