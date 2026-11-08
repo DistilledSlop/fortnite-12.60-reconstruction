@@ -920,7 +920,15 @@ static const TCHAR* GLegacyFacebookTexturePath=TEXT("/Game/UI/Login/Art/T_TempIc
 static const TCHAR* GLegacyLoginPS4Path=TEXT("/Game/UI/Login/Art/M_TempIcon_Login_PS4.M_TempIcon_Login_PS4");
 static const TCHAR* GLegacyLoginXBoxPath=TEXT("/Game/UI/Login/Art/M_TempIcon_Login_XBox.M_TempIcon_Login_XBox");
 static const TCHAR* GLegacyLoginEpicPath=TEXT("/Game/UI/Login/Art/M_TempIcon_Login_Epic.M_TempIcon_Login_Epic");
-static bool IsLoginIconInstance(const FString& Path) { return Path==GLegacyLoginPS4Path || Path==GLegacyLoginXBoxPath || Path==GLegacyLoginEpicPath; }
+// Skew-button family: DF is a base UMaterial with a named Texture parameter (asset sampler) whose default texture T_SkewButtonShape_B_DF
+// is a PF_B8G8R8A8 eight-mip all-inline package cooked with FirstMipToSerialize=1 (runtime size 128x64 via SerializeCooked);
+// Chip is a nonstatic instance that overrides Texture with T_SkewButtonShape_DF and inherits DF's shader map.
+static const TCHAR* GLegacySkewDFPath=TEXT("/Game/UI/Login/Art/M_SkewButtonShape_DF.M_SkewButtonShape_DF");
+static const TCHAR* GLegacySkewDFTexturePath=TEXT("/Game/UI/Login/Art/T_SkewButtonShape_B_DF.T_SkewButtonShape_B_DF");
+static const TCHAR* GLegacySkewChipPath=TEXT("/Game/UI/Login/Art/M_SkewButtonShape_Chip.M_SkewButtonShape_Chip");
+static bool IsSkewBase(const FString& Path) { return Path==GLegacySkewDFPath; }
+static bool IsNamedTextureBase(const FString& Path) { return Path==GLegacyGooglePath || Path==GLegacyFacebookPath || Path==GLegacySkewDFPath; }
+static bool IsLoginIconInstance(const FString& Path) { return Path==GLegacyLoginPS4Path || Path==GLegacyLoginXBoxPath || Path==GLegacyLoginEpicPath || Path==GLegacySkewChipPath; }
 static bool IsLoginIconBase(const FString& Path) { return Path==GLegacyGooglePath || Path==GLegacyFacebookPath; }
 // Original 512-square ten-mip BC1 source packages of the login-icon base materials.
 struct FLoginIconSource { const TCHAR *Label,*TexturePath; int32 HeaderBytes; const TCHAR *HeaderSha,*ExportsSha,*BulkSha; };
@@ -934,6 +942,42 @@ static const FLoginIconSource* FindLoginIconSource(const FString& TexturePath)
 }
 static const TCHAR* GLegacyMediaPath = TEXT("/Game/UI/Materials/M_MediaPlayerButton_Base.M_MediaPlayerButton_Base");
 static const TCHAR* GLegacyMediaTexturePath = TEXT("/Game/UI/Icons/T_UI_MediaPlayerButton_Layered_A.T_UI_MediaPlayerButton_Layered_A");
+// Regular-Texture (no parameter identity, Clamp_WorldGroupSettings sampler, one inline 128x128 PF_B8G8R8A8 mip) family:
+// the Media button plus the original login-art ExternalLink and CornerBackArrow base materials. Every row value below is
+// taken from the original package bytes by export_login_art_ingress.py (and re-read from the staged files at run time).
+static const TCHAR* GLegacyExternalLinkPath=TEXT("/Game/UI/Login/Art/M-Icon-ExternalLink-64.M-Icon-ExternalLink-64");
+static const TCHAR* GLegacyExternalLinkTexturePath=TEXT("/Game/UI/Login/Art/T-Icon-ExternalLink-64.T-Icon-ExternalLink-64");
+static const TCHAR* GLegacyBackArrowPath=TEXT("/Game/UI/Login/Art/M_CornerBackArrow.M_CornerBackArrow");
+static const TCHAR* GLegacyBackArrowTexturePath=TEXT("/Game/UI/Login/Art/T-Icon-BackArrowk-64.T-Icon-BackArrowk-64");
+struct FMediaFamilySource { const TCHAR *Label,*OwnerPath,*TexturePath,*LodGroup; int32 HeaderBytes,ExportBytes,StoredOffset; const TCHAR *HeaderSha,*ExportsSha,*RawSha; };
+static const FMediaFamilySource* FindMediaFamilyByOwner(const FString& OwnerPath)
+{
+    static const FMediaFamilySource Sources[]={
+        {TEXT("Media"),GLegacyMediaPath,GLegacyMediaTexturePath,TEXT("TEXTUREGROUP_World"),854,65823,1113,TEXT("7fed5326ffdbf8e10bcd37f64eee4f3f8be41aca9593708a90f28e7046013c38"),TEXT("364e417cfee78e6e15ff3dc91bd800dd39d3babe3a47085b189c863778e34cd9"),TEXT("b842bc2606ab98a0f5c359e5e8b1b423a9af00d7544eed41900a7c7156b0ffc3")},
+        {TEXT("ExternalLink"),GLegacyExternalLinkPath,GLegacyExternalLinkTexturePath,TEXT("TEXTUREGROUP_UI"),900,65864,1200,TEXT("f59ad74054d30fad3b8e1f49e2077a00a4c5da7cd54ebb784337e8529385ac1e"),TEXT("46b127f21795c8d95e0e440bda2db7645101a60ebdb8e4012a8b1eb659415173"),TEXT("2e24070c2b9755542c57abdad6930c1acf3f5751414d751f94cbdce050c40d42")},
+        {TEXT("BackArrow"),GLegacyBackArrowPath,GLegacyBackArrowTexturePath,TEXT("TEXTUREGROUP_UI"),896,65864,1196,TEXT("f7237e4e4588a4f1f3496a0095480b62561e58ebe60e0d7bcee247c4e21e4502"),TEXT("72eba9e0e736835dfd1e9138deb5b0cdc6095c07e0108042387314c617876eb3"),TEXT("d89b1f9f9f3ad963f7a2cc03a76b883ccb53440b44d0e35d9f2f59498d63e4c5")}};
+    for (const auto& Source : Sources) if (OwnerPath==Source.OwnerPath) return &Source;
+    return nullptr;
+}
+static const FMediaFamilySource* FindMediaFamilyByTexture(const FString& TexturePath)
+{
+    const TCHAR* Owners[]={GLegacyMediaPath,GLegacyExternalLinkPath,GLegacyBackArrowPath};
+    for (const TCHAR* Owner : Owners)
+    { const FMediaFamilySource* Source=FindMediaFamilyByOwner(Owner); if (Source && TexturePath==Source->TexturePath) return Source; }
+    return nullptr;
+}
+static bool IsLoginArtPlain(const FString& Path) { return Path==GLegacyExternalLinkPath || Path==GLegacyBackArrowPath; }
+static bool IsMediaFamily(const FString& Path) { return Path==GLegacyMediaPath || IsLoginArtPlain(Path); }
+// Typed material-uniform resource slots come from the bundle's original expected layout ([texture, asset sampler, wrap, clamp]).
+static bool ReadMediaFamilySlots(const TSharedPtr<FJsonObject>& Fixture, int32& Texture, int32& Sampler, int32& Clamp)
+{
+    const auto Layout=Fixture ? Fixture->GetObjectField(TEXT("expected_layout")) : nullptr;
+    const TArray<TSharedPtr<FJsonValue>>* Offsets=nullptr; const TArray<TSharedPtr<FJsonValue>>* Types=nullptr;
+    if (!Layout || !Layout->TryGetArrayField(TEXT("resource_offsets"),Offsets) || Offsets->Num()!=4 || !Layout->TryGetArrayField(TEXT("resource_types"),Types) || Types->Num()!=4) return false;
+    Texture=int32((*Offsets)[0]->AsNumber()); Sampler=int32((*Offsets)[1]->AsNumber()); Clamp=int32((*Offsets)[3]->AsNumber());
+    return Texture>=0 && Sampler==Texture+8 && int32((*Offsets)[2]->AsNumber())==Texture+16 && Clamp==Texture+24 &&
+        int32((*Types)[0]->AsNumber())==int32(UBMT_TEXTURE) && int32((*Types)[1]->AsNumber())==int32(UBMT_SAMPLER) && int32((*Types)[3]->AsNumber())==int32(UBMT_SAMPLER);
+}
 static const TCHAR* GLegacyFlogoPath = TEXT("/Game/Athena/UI/Season/Art/M_UI_AthenaSeason_FadedFlogo.M_UI_AthenaSeason_FadedFlogo");
 static const TCHAR* GLegacyFlogoParentPath = TEXT("/Game/Athena/UI/Season/Art/M_UI_AthenaSeason_Stylized_Font.M_UI_AthenaSeason_Stylized_Font");
 static const TCHAR* GLegacyFlogoTexturePath = TEXT("/Game/UI/Foundation/Textures/Logo/T-Logo-Wordmark-1024x256.T-Logo-Wordmark-1024x256");
@@ -1032,7 +1076,7 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
             TArray<UTexture*> SourceReferences; SourceReferences.Add(Texture);
             return RestoreLegacyMaterialTextureReferences(Parent,SourceReferences,Error);
         }
-        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && SourceIdentity!=GLegacyGooglePath && SourceIdentity!=GLegacyFacebookPath && SourceIdentity!=GLegacyEpicLogoPath)
+        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && !IsLoginArtPlain(SourceIdentity) && SourceIdentity!=GLegacyGooglePath && SourceIdentity!=GLegacyFacebookPath && !IsSkewBase(SourceIdentity) && SourceIdentity!=GLegacyEpicLogoPath)
         {
             // Numeric-only manifests need no texture context. Only authenticated
             // base-material manifests may enter the general texture path.
@@ -1124,9 +1168,10 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
         { Error=TEXT("invalid original texture provenance"); return false; }
         const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
         const auto& Textures=Fixture->GetArrayField(TEXT("texture_2d_parameters"));
-        const bool bPlain=SourceIdentity==GLegacyKeybindPath || SourceIdentity==GLegacyHollowPath || SourceIdentity==GLegacySocialPath || SourceIdentity==GLegacyMediaPath || SourceIdentity==GLegacyEpicLogoPath;
-        const FString Expected=SourceIdentity==GLegacyEpicLogoPath ? FString(GLegacyEpicLogoTexturePath) : SourceIdentity==GLegacyGooglePath ? FString(GLegacyGoogleTexturePath) : SourceIdentity==GLegacyFacebookPath ? FString(GLegacyFacebookTexturePath) : SourceIdentity==GLegacyMediaPath ? FString(GLegacyMediaTexturePath) : SourceIdentity==GLegacySocialPath ? FString(GLegacySocialTexturePath) : SourceIdentity==GLegacyHollowPath ? FString(GLegacyHollowTexturePath) : bPlain ? FString(GLegacyKeybindTexturePath) : FString(TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon"));
-        if (IsLoginIconBase(SourceIdentity))
+        const bool bPlain=SourceIdentity==GLegacyKeybindPath || SourceIdentity==GLegacyHollowPath || SourceIdentity==GLegacySocialPath || SourceIdentity==GLegacyMediaPath || IsLoginArtPlain(SourceIdentity) || SourceIdentity==GLegacyEpicLogoPath;
+        const FMediaFamilySource* FamilySource=IsLoginArtPlain(SourceIdentity) ? FindMediaFamilyByOwner(SourceIdentity) : nullptr;
+        const FString Expected=FamilySource ? FString(FamilySource->TexturePath) : SourceIdentity==GLegacyEpicLogoPath ? FString(GLegacyEpicLogoTexturePath) : SourceIdentity==GLegacySkewDFPath ? FString(GLegacySkewDFTexturePath) : SourceIdentity==GLegacyGooglePath ? FString(GLegacyGoogleTexturePath) : SourceIdentity==GLegacyFacebookPath ? FString(GLegacyFacebookTexturePath) : SourceIdentity==GLegacyMediaPath ? FString(GLegacyMediaTexturePath) : SourceIdentity==GLegacySocialPath ? FString(GLegacySocialTexturePath) : SourceIdentity==GLegacyHollowPath ? FString(GLegacyHollowTexturePath) : bPlain ? FString(GLegacyKeybindTexturePath) : FString(TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon"));
+        if (IsNamedTextureBase(SourceIdentity))
         {
             const auto& T=Decoded.IR.Texture2DParameters[0];const TArray<TSharedPtr<FJsonValue>>* Refs=nullptr;
             if (T.Parameter.Name!=FName(TEXT("Texture")) || T.Parameter.Association!=GlobalParameter || T.Parameter.Index!=INDEX_NONE || T.SamplerSource!=SSM_FromTextureAsset ||
@@ -2294,6 +2339,110 @@ static bool CheckGoogleTextureBinding(UMaterialInterface* Owner,FMaterialResourc
     if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path)) { Error=TEXT("cannot save login-icon binding receipt");return false; }
     return true;
 }
+// DF default texture: PF_B8G8R8A8, eight mips (128x64 .. 1x1), all inline in the .uexp; no .ubulk exists.
+struct FSkewSource { int32 HeaderBytes,ExportBytes; const TCHAR *HeaderSha,*ExportsSha; };
+static const FSkewSource GSkewDFSource={936,44301,TEXT("798458fef31c3638c1a94826a81e6e4b7068af9ab58f592ea42478ee1b12f516"),TEXT("7ad32c393c128bda111eaf692705442d718265888b1700708b78e3dbda04e208")};
+static const int32 GSkewDFMipOffsets[8]={329,33133,41361,43445,43993,44157,44225,44269};
+static bool ReadSkewOriginalSource(const UTexture* Texture,const TSharedPtr<FJsonObject>& Fixture,TArray<TArray<uint8>>& OutMips,FString& Error)
+{
+    FString Asset;
+    if (!Texture || Texture->GetPathName()!=GLegacySkewDFTexturePath || !Fixture ||
+        !FPackageName::DoesPackageExist(Texture->GetOutermost()->GetName(),nullptr,&Asset) || FPaths::GetExtension(Asset)!=TEXT("uasset"))
+    { Error=TEXT("invalid Skew source texture/package"); return false; }
+    auto ReadChecked=[](const FString& Path,int32 Size,const TCHAR* Expected,TArray<uint8>& Bytes)
+    {
+        if (IFileManager::Get().FileSize(*Path)!=Size || !FFileHelper::LoadFileToArray(Bytes,*Path) || Bytes.Num()!=Size) return false;
+        uint8 Hash[32]; LegacyManifestSHA256(Bytes.GetData(),uint32(Bytes.Num()),Hash);
+        return BytesToHex(Hash,32).Equals(Expected,ESearchCase::IgnoreCase);
+    };
+    TArray<uint8> Header,Exports;
+    if (!ReadChecked(Asset,GSkewDFSource.HeaderBytes,GSkewDFSource.HeaderSha,Header) ||
+        !ReadChecked(FPaths::ChangeExtension(Asset,TEXT("uexp")),GSkewDFSource.ExportBytes,GSkewDFSource.ExportsSha,Exports))
+    { Error=TEXT("Skew actual staged source bytes differ"); return false; }
+    const auto Contract=Fixture->GetObjectField(TEXT("texture_contract"));
+    const auto Source=Contract ? Contract->GetObjectField(TEXT("source_platform_data")) : nullptr;
+    const TArray<TSharedPtr<FJsonValue>>* Records=nullptr;
+    const int64 Start=int64(GSkewDFSource.HeaderBytes)+GSkewDFSource.ExportBytes-4;
+    if (!Source || Source->GetStringField(TEXT("pixel_format"))!=TEXT("PF_B8G8R8A8") || Source->GetNumberField(TEXT("mip_count"))!=8 ||
+        Source->GetNumberField(TEXT("first_mip"))!=0 || Source->GetNumberField(TEXT("first_mip_serialized"))!=1 ||
+        Source->GetNumberField(TEXT("serialized_size_x"))!=256 || Source->GetNumberField(TEXT("serialized_size_y"))!=128 ||
+        Source->GetNumberField(TEXT("logical_width"))!=128 || Source->GetNumberField(TEXT("logical_height"))!=64 || Source->GetBoolField(TEXT("virtual_texture")) ||
+        Source->GetNumberField(TEXT("bulk_data_start_offset"))!=double(Start) || !Source->TryGetArrayField(TEXT("mip_receipts"),Records) || Records->Num()!=8)
+    { Error=TEXT("Skew source mip-chain receipt differs"); return false; }
+    for (int32 I=0;I<8;++I)
+    {
+        const int32 W=FMath::Max(128>>I,1), H=FMath::Max(64>>I,1), Count=W*H*4;
+        const auto R=(*Records)[I]->AsObject();
+        if (!R || R->GetNumberField(TEXT("level"))!=I || R->GetNumberField(TEXT("width"))!=W || R->GetNumberField(TEXT("height"))!=H ||
+            R->GetNumberField(TEXT("depth"))!=1 || R->GetNumberField(TEXT("cooked"))!=1 || R->GetNumberField(TEXT("bulk_flags"))!=0x48 ||
+            R->GetNumberField(TEXT("element_count"))!=Count || R->GetNumberField(TEXT("bgra_bytes"))!=Count ||
+            R->GetNumberField(TEXT("uexp_offset"))!=GSkewDFMipOffsets[I] ||
+            R->GetNumberField(TEXT("stored_bulk_offset"))!=double(GSkewDFSource.HeaderBytes+GSkewDFMipOffsets[I]) ||
+            R->GetNumberField(TEXT("cue_reported_bulk_offset"))!=double(Start+GSkewDFSource.HeaderBytes+GSkewDFMipOffsets[I]) ||
+            GSkewDFMipOffsets[I]>Exports.Num()-Count)
+        { Error=TEXT("Skew stored offset/mip frame differs"); return false; }
+        auto& Data=OutMips.AddDefaulted_GetRef(); Data.Append(Exports.GetData()+GSkewDFMipOffsets[I],Count);
+        uint8 Hash[32]; LegacyManifestSHA256(Data.GetData(),uint32(Data.Num()),Hash);
+        if (!BytesToHex(Hash,32).Equals(R->GetStringField(TEXT("bgra_sha256")),ESearchCase::IgnoreCase))
+        { Error=TEXT("Skew original BGRA mip hash differs"); return false; }
+    }
+    return true;
+}
+
+static bool CheckSkewTextureBinding(UMaterialInterface* Owner,FMaterialResource* Resource,
+    const TRefCountPtr<FMaterialShaderMap>& Map,const TSharedPtr<FJsonObject>& Fixture,FString& Error)
+{
+    int32 TextureSlot=0, SamplerSlot=0, ClampSlot=0;
+    if (!IsInGameThread() || !Owner || !IsSkewBase(Owner->GetPathName()) || !Resource || !Map || !ReadMediaFamilySlots(Fixture,TextureSlot,SamplerSlot,ClampSlot))
+    { Error=TEXT("invalid Skew actual owner"); return false; }
+    const UEnum* GroupEnum=StaticEnum<TextureGroup>();
+    const auto Refs=Resource->GetReferencedTextures(); UTexture2D* Texture=Refs.Num()==1 ? Cast<UTexture2D>(Refs[0]) : nullptr;
+    if (!Texture || Texture->GetPathName()!=GLegacySkewDFTexturePath || Texture->GetSizeX()!=128 || Texture->GetSizeY()!=64 ||
+        Texture->GetPixelFormat()!=PF_B8G8R8A8 || Texture->GetNumMips()!=8 || !Texture->SRGB || Texture->Filter!=TF_Default ||
+        !GroupEnum || GroupEnum->GetNameStringByValue(Texture->LODGroup)!=TEXT("TEXTUREGROUP_UI") || Texture->AddressX!=TA_Wrap || Texture->AddressY!=TA_Wrap)
+    { Error=TEXT("Skew original texture metadata differs"); return false; }
+    TArray<TArray<uint8>> OriginalMips; if (!ReadSkewOriginalSource(Texture,Fixture,OriginalMips,Error)) return false;
+    const int32 Before=Texture->GetNumResidentMips();
+    Texture->SetForceMipLevelsToBeResident(60.f);
+    if (Texture->GetNumResidentMips()!=8) { Texture->StreamIn(8,true); Texture->WaitForStreaming(); }
+    FlushRenderingCommands();
+    if (Texture->GetNumResidentMips()!=8) { Error=TEXT("Skew full original eight-mip residency unavailable"); return false; }
+    const auto& U=Map->GetUniformExpressionSet();
+    if (U.GetNumTextures(EMaterialTextureParameterType::Standard2D)!=1) { Error=TEXT("Skew expression count differs"); return false; }
+    const auto& E=U.GetTextureParameter(EMaterialTextureParameterType::Standard2D,0);
+    if (E.GetParameterInfo()!=FMaterialParameterInfo(FName(TEXT("Texture")),GlobalParameter,INDEX_NONE) || E.TextureIndex!=0 || E.SamplerSource!=SSM_FromTextureAsset)
+    { Error=TEXT("Skew exact named identity differs"); return false; }
+    UTexture* GT=nullptr; U.GetGameThreadTextureValue(EMaterialTextureParameterType::Standard2D,0,Owner,*Resource,GT,false);
+    if (GT!=Texture) { Error=TEXT("Skew GT named/indexed lookup differs"); return false; }
+    const FMaterialRenderProxy* Base=Owner->GetRenderProxy(); bool Matched=false; int32 Calls=0;
+    ENQUEUE_RENDER_COMMAND(CheckSkewTextureBinding)([Base,Resource,Map,Texture,TextureSlot,SamplerSlot,&Matched,&Calls](FRHICommandListImmediate&)
+    {
+        class FNamedProxy final:public FLegacyProbeProxy
+        {
+        public:
+            mutable int32 Calls=0; mutable bool Wrong=false;
+            virtual bool GetTextureValue(const FHashedMaterialParameterInfo& Info,const UTexture** Value,const FMaterialRenderContext& Context) const override
+            { ++Calls; if (Info!=FHashedMaterialParameterInfo(FName(TEXT("Texture")),GlobalParameter,INDEX_NONE)) Wrong=true; return bInherit && Base->GetTextureValue(Info,Value,Context); }
+        } Proxy;
+        const FMaterialRenderProxy* Fallback=nullptr;const FMaterial& Actual=Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5,Fallback);
+        if (&Actual!=Resource || !Texture->Resource || !Texture->TextureReference.TextureReferenceRHI || !Texture->Resource->SamplerStateRHI) return;
+        auto* RHI=Texture->TextureReference.TextureReferenceRHI->GetReferencedTexture();auto* R=RHI ? RHI->GetTexture2D() : nullptr;
+        if (!R || RHI==GWhiteTexture->TextureRHI.GetReference() || R->GetSizeX()!=128 || R->GetSizeY()!=64 || R->GetNumMips()!=8 || R->GetFormat()!=PF_B8G8R8A8 || !(R->GetFlags()&TexCreate_SRGB)) return;
+        Proxy.Base=Base;Proxy.bInherit=false;FMaterialRenderContext Default(&Proxy,Actual,nullptr);const UTexture* Indexed=nullptr;
+        Map->GetUniformExpressionSet().GetTextureValue(EMaterialTextureParameterType::Standard2D,0,Default,Actual,Indexed);
+        if (Indexed!=Texture || Proxy.Wrong) return;
+        Proxy.Calls=0;Proxy.bInherit=true;FMaterialRenderContext Context(&Proxy,Actual,nullptr);FUniformExpressionCache Cache;alignas(16) uint8 Contents[4112]={};
+        Map->GetUniformExpressionSet().FillUniformBuffer(Context,Cache,Contents,sizeof(Contents));Calls=Proxy.Calls;
+        void* Slot=nullptr;void* Sampler=nullptr;FMemory::Memcpy(&Slot,Contents+TextureSlot,sizeof(Slot));FMemory::Memcpy(&Sampler,Contents+SamplerSlot,sizeof(Sampler));
+        Matched=!Proxy.Wrong && Calls>0 && Slot==Texture->TextureReference.TextureReferenceRHI.GetReference() && Sampler==Texture->Resource->SamplerStateRHI.GetReference();
+    });
+    FlushRenderingCommands();if (!Matched) { Error=TEXT("Skew exact named/asset sampler RHI binding differs");return false; }
+    FString Directory;FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory);
+    const FString Path=FPaths::Combine(Directory,TEXT("SkewDFTexture.json"));
+    const FString Json=FString::Printf(TEXT("{\"texture_path\":\"%s\",\"parameter_name\":\"Texture\",\"parameter_number\":0,\"association\":2,\"index\":-1,\"width\":128,\"height\":64,\"format\":\"PF_B8G8R8A8\",\"srgb\":true,\"mips\":8,\"texture_slot\":%d,\"sampler_slot\":%d,\"resident_mips_before\":%d,\"resident_mips_after\":8,\"sampler_source\":0,\"asset_sampler_binding_match\":true,\"named_proxy_calls\":%d,\"indexed_default_match\":true,\"raw_bgra_gpu_readback_measured\":false}\n"),GLegacySkewDFTexturePath,TextureSlot,SamplerSlot,Before,Calls);
+    if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path)) { Error=TEXT("cannot save Skew binding receipt");return false; }
+    return true;
+}
 // Nonstatic login-icon instances have no resource: verify the original named Texture override identity on the
 // actual instance, the override texture's original metadata, and that the inherited parent map resolves it.
 static bool CheckLoginIconInstanceTexture(UMaterialInterface* Owner,FMaterialResource* Resource,
@@ -2479,6 +2628,161 @@ static bool DrawGoogleTextureControls(UMaterialInterface* Owner, FMaterialResour
     if (FPaths::FileExists(JsonPath) || !FFileHelper::SaveStringToFile(Json,*JsonPath)) { Error=TEXT("cannot write texture draw receipt"); return false; }
     if (!bEqual || (bRequired && !Changed)) { Error=TEXT("Google source/copy or combined checker failure; all frames preserved");return false; }
     UE_LOG(LogTemp,Display,TEXT("Legacy Google texture: original source and exact copy agree; checker changes %d pixels"),Changed);
+    return true;
+}
+
+
+
+static bool DrawSkewTextureControls(UMaterialInterface* Owner, FMaterialResource* Resource,
+    const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings,
+    const TSharedPtr<FJsonObject>& Fixture, FString& Error)
+{
+    int32 TextureSlot=0, SamplerSlot=0, ClampSlot=0;
+    if (!IsInGameThread() || !Owner || !IsSkewBase(Owner->GetPathName()) || !Resource || !Map || !Fixture || !ReadMediaFamilySlots(Fixture,TextureSlot,SamplerSlot,ClampSlot)) { Error=TEXT("invalid Skew texture draw owner"); return false; }
+    FString Directory;
+    if (!FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory) || !FPaths::DirectoryExists(Directory))
+    { Error=TEXT("Skew texture draw requires artifact directory"); return false; }
+    FString Profile=TEXT("defaults"), RequestedProfile;
+    if (FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacySkewProfile="),RequestedProfile)) Profile=RequestedProfile;
+    TArray<FLegacyOverride> ProfileOverrides;
+    if (Profile==TEXT("combined"))
+    {
+        const auto& Cases=Fixture->GetArrayField(TEXT("uniform_cases"));
+        TSharedPtr<FJsonObject> Combined; int32 Matches=0;
+        for (const auto& Value : Cases)
+        {
+            const auto Case=Value->AsObject();
+            if (Case && Case->GetStringField(TEXT("name"))==Profile) { Combined=Case; ++Matches; }
+        }
+        if (Matches!=1 || !ReadLegacyOverrides(Combined,ProfileOverrides,Error)) return false;
+    }
+    else if (Profile!=TEXT("defaults")) { Error=TEXT("unknown Skew texture diagnostic profile"); return false; }
+    FShaderType* VertexType=FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderVSfalse")));
+    FShaderType* PixelType=FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderPSDefault")));
+    const FMaterialRenderProxy* Base=Owner->GetRenderProxy();
+    const auto SourceReferences=Resource->GetReferencedTextures();
+    UTexture* SourceTexture=SourceReferences.Num()==1 ? Cast<UTexture>(SourceReferences[0]) : nullptr;
+    if (!VertexType || !PixelType || !Base || !SourceTexture || SourceTexture->GetPathName()!=GLegacySkewDFTexturePath) { Error=TEXT("Skew texture draw shader unavailable"); return false; }
+    TArray<TArray<uint8>> SourceMips;
+    if (!ReadSkewOriginalSource(SourceTexture,Fixture,SourceMips,Error)) return false;
+    TArray<FColor> Images[3]; bool bPassed=true; FString Failure; int32 NamedCalls=-1;
+    ENQUEUE_RENDER_COMMAND(DrawSkewTextureControls)([Map,Resource,Bindings,VertexType,PixelType,Base,SourceTexture,SourceMips,ProfileOverrides,TextureSlot,&Images,&bPassed,&Failure,&NamedCalls](FRHICommandListImmediate& RHICmdList)
+    {
+        class FPlainProxy final : public FLegacyProbeProxy
+        {
+        public:
+            mutable int32 Calls=0; mutable bool Wrong=false;
+            virtual bool GetTextureValue(const FHashedMaterialParameterInfo& Info,const UTexture** Value,const FMaterialRenderContext& Context) const override
+            { ++Calls; if (Info!=FHashedMaterialParameterInfo(FName(TEXT("Texture")),GlobalParameter,INDEX_NONE)) Wrong=true; return bInherit && Base->GetTextureValue(Info,Value,Context); }
+        } Proxy;
+        const auto VS=Map->GetShader(VertexType,0), PS=Map->GetShader(PixelType,0);
+        if (!VS.IsValid() || !PS.IsValid()) { bPassed=false; Failure=TEXT("missing original Skew texture shaders"); return; }
+        const FMaterialRenderProxy* Fallback=nullptr;
+        const FMaterial& Material=Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5,Fallback);
+        if (&Material!=Resource) { bPassed=false; Failure=TEXT("Skew texture draw selected fallback"); return; }
+        Proxy.Base=Base; Proxy.bInherit=true; Proxy.Overrides=ProfileOverrides;
+        FMaterialRenderContext Context(&Proxy,Material,nullptr); FUniformExpressionCache Cache;
+        const auto& Uniforms=Map->GetUniformExpressionSet();
+        const auto& Layout=Uniforms.GetUniformBufferLayout();
+        if (Layout.Resources.Num()!=4 || Layout.Resources[0].MemberOffset!=TextureSlot || Layout.Resources[0].MemberType!=UBMT_TEXTURE)
+        { bPassed=false; Failure=TEXT("unexpected source texture slot"); return; }
+        alignas(16) uint8 Contents[4112]={};
+        Uniforms.FillUniformBuffer(Context,Cache,Contents,sizeof(Contents)); NamedCalls=Proxy.Calls;
+        void* SourceSlot=nullptr; FMemory::Memcpy(&SourceSlot,Contents+TextureSlot,sizeof(SourceSlot));
+        if (!SourceTexture->TextureReference.TextureReferenceRHI || SourceSlot!=SourceTexture->TextureReference.TextureReferenceRHI.GetReference())
+        { bPassed=false; Failure=TEXT("default draw does not bind original texture reference"); return; }
+        if (NamedCalls<=0 || Proxy.Wrong) { bPassed=false; Failure=TEXT("Skew texture did not query its exact named override"); return; }
+        FTexture2DRHIRef Controls[2];
+        for (int32 Which=0; Which<2; ++Which)
+        {
+            FRHIResourceCreateInfo Info;
+
+            Controls[Which]=RHICreateTexture2D(128,64,PF_B8G8R8A8,8,1,TexCreate_ShaderResource | TexCreate_SRGB,Info);
+            if (!Controls[Which] || SourceMips.Num()!=8) { bPassed=false; Failure=TEXT("cannot create Skew eight-mip BGRA control"); return; }
+            for (int32 Mip=0;Mip<8;++Mip)
+            {
+                const int32 W=FMath::Max(128>>Mip,1),H=FMath::Max(64>>Mip,1),RowBytes=W*4;uint32 Stride=0;
+                uint8* Dest=static_cast<uint8*>(RHILockTexture2D(Controls[Which],Mip,RLM_WriteOnly,Stride,false));
+                if (!Dest || Stride<uint32(RowBytes) || SourceMips[Mip].Num()!=RowBytes*H)
+                { if (Dest) RHIUnlockTexture2D(Controls[Which],Mip,false);bPassed=false;Failure=TEXT("cannot fill Skew original BGRA mip");return; }
+                for (int32 Y=0;Y<H;++Y)
+                {
+                    uint8* Row=Dest+Y*Stride;
+                    if (!Which) FMemory::Memcpy(Row,SourceMips[Mip].GetData()+Y*RowBytes,RowBytes);
+                    else for (int32 X=0;X<W;++X)
+                    {
+                        const bool Cell=((X/7)+(Y/11))%2!=0; uint8* Pixel=Row+X*4;
+                        Pixel[0]=Cell ? 0x20 : 0xe0; Pixel[1]=Cell ? 0x80 : 0x20; Pixel[2]=Cell ? 0xe0 : 0x40; Pixel[3]=0xff;
+                    }
+                }
+                RHIUnlockTexture2D(Controls[Which],Mip,false);
+            }
+        }
+        FVertexDeclarationElementList Elements; const uint32 Stride=sizeof(FSlateVertex);
+        Elements.Add(FVertexElement(0,STRUCT_OFFSET(FSlateVertex,TexCoords),VET_Float4,0,Stride));
+        Elements.Add(FVertexElement(0,STRUCT_OFFSET(FSlateVertex,MaterialTexCoords),VET_Float2,1,Stride));
+        Elements.Add(FVertexElement(0,STRUCT_OFFSET(FSlateVertex,Position),VET_Float2,2,Stride));
+        Elements.Add(FVertexElement(0,STRUCT_OFFSET(FSlateVertex,Color),VET_Color,3,Stride));
+        Elements.Add(FVertexElement(0,STRUCT_OFFSET(FSlateVertex,PixelSize),VET_UShort2,4,Stride));
+        const auto Declaration=PipelineStateCache::GetOrCreateVertexDeclaration(Elements);
+        FSlateVertex Vertices[6];
+        const FVector2D Positions[]={{-1,-1},{1,-1},{-1,1},{-1,1},{1,-1},{1,1}};
+        const FVector2D UV[]={{0,1},{1,1},{0,0},{0,0},{1,1},{1,0}};
+        for (int32 I=0;I<6;++I)
+        {
+            Vertices[I].Position=Positions[I]; Vertices[I].MaterialTexCoords=UV[I];
+            Vertices[I].TexCoords[0]=UV[I].X; Vertices[I].TexCoords[1]=UV[I].Y;
+            Vertices[I].TexCoords[2]=1.f; Vertices[I].TexCoords[3]=1.f;
+            Vertices[I].Color=FColor::White; Vertices[I].PixelSize[0]=64; Vertices[I].PixelSize[1]=64;
+        }
+        FRHIResourceCreateInfo VertexInfo; FVertexBufferRHIRef VB=RHICreateVertexBuffer(sizeof(Vertices),BUF_Static,VertexInfo);
+        void* VertexData=RHILockVertexBuffer(VB,0,sizeof(Vertices),RLM_WriteOnly); FMemory::Memcpy(VertexData,Vertices,sizeof(Vertices)); RHIUnlockVertexBuffer(VB);
+        FRHIResourceCreateInfo TargetInfo(FClearValueBinding::Transparent);
+        FTexture2DRHIRef Target=RHICreateTexture2D(64,64,PF_B8G8R8A8,1,1,TexCreate_RenderTargetable | TexCreate_ShaderResource,TargetInfo);
+        for (int32 Pass=0; Pass<3; ++Pass)
+        {
+            alignas(16) uint8 Scratch[4112]; FMemory::Memcpy(Scratch,Contents,sizeof(Scratch));
+            if (Pass) { FRHITexture* Override=Controls[Pass-1].GetReference(); FMemory::Memcpy(Scratch+TextureSlot,&Override,sizeof(Override)); }
+            FUniformBufferRHIRef MaterialUB=RHICreateUniformBuffer(Scratch,Layout,UniformBuffer_SingleDraw);
+            RHICmdList.TransitionResource(EResourceTransitionAccess::EWritable,Target);
+            FRHIRenderPassInfo PassInfo(Target,ERenderTargetActions::Clear_Store); RHICmdList.BeginRenderPass(PassInfo,TEXT("OriginalPlainTextureControl"));
+            FGraphicsPipelineStateInitializer PSO; RHICmdList.ApplyCachedRenderTargets(PSO);
+            PSO.BlendState=TStaticBlendState<>::GetRHI(); PSO.RasterizerState=TStaticRasterizerState<FM_Solid,CM_None>::GetRHI();
+            PSO.DepthStencilState=TStaticDepthStencilState<false,CF_Always>::GetRHI(); PSO.PrimitiveType=PT_TriangleList;
+            PSO.BoundShaderState.VertexDeclarationRHI=Declaration; PSO.BoundShaderState.VertexShaderRHI=VS.GetVertexShader(); PSO.BoundShaderState.PixelShaderRHI=PS.GetPixelShader();
+            SetGraphicsPipelineState(RHICmdList,PSO); RHICmdList.SetViewport(0,0,0,64,64,1);
+            const FMatrix Matrix=FMatrix::Identity; const FVector4 Gamma(1.f,1.f/2.2f,0.f,1.f), Params(0.f,0.f,0.f,0.f);
+            RHICmdList.SetShaderParameter(VS.GetVertexShader(),Bindings.MatrixBuffer,Bindings.MatrixOffset,sizeof(Matrix),&Matrix);
+            RHICmdList.SetShaderParameter(PS.GetPixelShader(),Bindings.GammaBuffer,Bindings.GammaOffset,sizeof(Gamma),&Gamma);
+            RHICmdList.SetShaderParameter(PS.GetPixelShader(),Bindings.ParamsBuffer,Bindings.ParamsOffset,sizeof(Params),&Params);
+            RHICmdList.SetShaderUniformBuffer(PS.GetPixelShader(),Bindings.MaterialBuffer,MaterialUB);
+            RHICmdList.SetStreamSource(0,VB,0); RHICmdList.DrawPrimitive(0,2,1); RHICmdList.EndRenderPass();
+            RHICmdList.TransitionResource(EResourceTransitionAccess::EReadable,Target);
+            FReadSurfaceDataFlags Flags(RCM_UNorm); Flags.SetLinearToGamma(false);
+            RHICmdList.ReadSurfaceData(Target,FIntRect(0,0,64,64),Images[Pass],Flags);
+        }
+    });
+    FlushRenderingCommands();
+    if (!bPassed) { Error=Failure; return false; }
+    if (Images[0].Num()!=4096 || Images[1].Num()!=4096 || Images[2].Num()!=4096)
+    { Error=TEXT("invalid Skew source/copy/checker frame sizes"); return false; }
+    int32 Changed=0; FSHAHash Hashes[3];
+    for (int32 I=0;I<4096;++I) if (Images[0][I]!=Images[2][I]) ++Changed;
+    const bool bEqual=Images[0]==Images[1],bRequired=Profile==TEXT("combined");
+    const FString Names[]={FString(TEXT("SkewDF"))+TEXT("Draw-Source.rgba"),FString(TEXT("SkewDF"))+TEXT("Draw-Copy.rgba"),FString(TEXT("SkewDF"))+TEXT("Draw-Checker.rgba")};
+    for (int32 Pass=0;Pass<3;++Pass)
+    {
+        TArray<uint8> Bytes; Bytes.Reserve(4096*4);
+        for (const FColor& Pixel : Images[Pass]) { Bytes.Add(Pixel.R); Bytes.Add(Pixel.G); Bytes.Add(Pixel.B); Bytes.Add(Pixel.A); }
+        FSHA1::HashBuffer(Bytes.GetData(),Bytes.Num(),Hashes[Pass].Hash);
+        const FString Path=FPaths::Combine(Directory,Names[Pass]);
+        if (FPaths::FileExists(Path) || !FFileHelper::SaveArrayToFile(Bytes,*Path)) { Error=TEXT("cannot write texture draw artifact"); return false; }
+    }
+    const FString Json=FString::Printf(TEXT("{\"width\":64,\"height\":64,\"format\":\"RGBA8\",\"source_sha1\":\"%s\",\"copy_sha1\":\"%s\",\"checker_sha1\":\"%s\",\"checker_changed_pixels\":%d,\"named_proxy_calls\":%d,\"numeric_profile\":\"%s\",\"source_mips_uploaded\":8,\"source_texture_format\":\"B8G8R8A8_SRGB\",\"source_copy_equal\":%s,\"checker_delta_policy\":\"%s\",\"raw_bgra_gpu_readback_measured\":false,\"scope\":\"diagnostic scratch uniform buffers; source asset and material cache unchanged\"}\n"),*Hashes[0].ToString(),*Hashes[1].ToString(),*Hashes[2].ToString(),Changed,NamedCalls,*Profile,bEqual ? TEXT("true") : TEXT("false"),bRequired ? TEXT("required_positive") : TEXT("observational"));
+    const FString JsonPath=FPaths::Combine(Directory,FString(TEXT("SkewDFDraw.json")));
+    if (FPaths::FileExists(JsonPath) || !FFileHelper::SaveStringToFile(Json,*JsonPath)) { Error=TEXT("cannot write texture draw receipt"); return false; }
+    if (!bEqual || (bRequired && !Changed)) { Error=TEXT("Skew source/copy or combined checker failure; all frames preserved");return false; }
+    UE_LOG(LogTemp,Display,TEXT("Legacy Skew texture: original source and exact copy agree; checker changes %d pixels"),Changed);
     return true;
 }
 
@@ -2882,7 +3186,8 @@ static bool CheckSocialRejectedForms(const FLegacyOriginalMaterial& Original,con
 
 static bool CheckMediaSourcePackage(const UTexture* Texture, const TSharedPtr<FJsonObject>& Fixture, FString& Error)
 {
-    if (!Texture || Texture->GetPathName()!=GLegacyMediaTexturePath || !Fixture)
+    const FMediaFamilySource* Family=Texture ? FindMediaFamilyByTexture(Texture->GetPathName()) : nullptr;
+    if (!Family || !Fixture)
     { Error=TEXT("invalid Media source texture"); return false; }
     FString AssetFilename;
     if (!FPackageName::DoesPackageExist(Texture->GetOutermost()->GetName(),nullptr,&AssetFilename) ||
@@ -2896,17 +3201,17 @@ static bool CheckMediaSourcePackage(const UTexture* Texture, const TSharedPtr<FJ
         return BytesToHex(Digest,32).Equals(Hash,ESearchCase::IgnoreCase);
     };
     TArray<uint8> Header,Exports;
-    if (!ReadChecked(AssetFilename,854,TEXT("7fed5326ffdbf8e10bcd37f64eee4f3f8be41aca9593708a90f28e7046013c38"),Header) ||
-        !ReadChecked(ExportFilename,65823,TEXT("364e417cfee78e6e15ff3dc91bd800dd39d3babe3a47085b189c863778e34cd9"),Exports))
+    if (!ReadChecked(AssetFilename,Family->HeaderBytes,Family->HeaderSha,Header) ||
+        !ReadChecked(ExportFilename,Family->ExportBytes,Family->ExportsSha,Exports))
     { Error=TEXT("actual Media source package bytes differ"); return false; }
     const auto Contract=Fixture->GetObjectField(TEXT("texture_contract"));
     const auto Source=Contract ? Contract->GetObjectField(TEXT("source_platform_data")) : nullptr;
     if (!Source || Source->GetStringField(TEXT("pixel_format"))!=TEXT("PF_B8G8R8A8") || Source->GetNumberField(TEXT("mip_count"))!=1 ||
         Source->GetNumberField(TEXT("logical_width"))!=128 || Source->GetNumberField(TEXT("logical_height"))!=128 ||
-        Source->GetNumberField(TEXT("stored_bulk_offset"))!=1113 ||
-        Source->GetStringField(TEXT("raw_bgra_sha256"))!=TEXT("b842bc2606ab98a0f5c359e5e8b1b423a9af00d7544eed41900a7c7156b0ffc3"))
+        Source->GetNumberField(TEXT("stored_bulk_offset"))!=double(Family->StoredOffset) ||
+        Source->GetStringField(TEXT("raw_bgra_sha256"))!=Family->RawSha)
     { Error=TEXT("invalid Media source mip receipt"); return false; }
-    const int64 Offset=1113-Header.Num(), Size=65536;
+    const int64 Offset=int64(Family->StoredOffset)-Header.Num(), Size=65536;
     if (Offset<0 || Offset>int64(Exports.Num())-Size) { Error=TEXT("Media source mip escapes payload"); return false; }
     uint8 Digest[32]; LegacyManifestSHA256(Exports.GetData()+Offset,uint32(Size),Digest);
     if (!BytesToHex(Digest,32).Equals(Source->GetStringField(TEXT("raw_bgra_sha256")),ESearchCase::IgnoreCase))
@@ -2917,7 +3222,9 @@ static bool CheckMediaSourcePackage(const UTexture* Texture, const TSharedPtr<FJ
 static bool CheckMediaOriginalTexture(UMaterialInterface* Owner, FMaterialResource* Resource,
     const TRefCountPtr<FMaterialShaderMap>& Map, const TSharedPtr<FJsonObject>& Fixture, FString& Error)
 {
-    if (!IsInGameThread() || !Owner || !Resource || !Map || !Fixture) { Error=TEXT("invalid plain texture owner"); return false; }
+    const FMediaFamilySource* Family=Owner ? FindMediaFamilyByOwner(Owner->GetPathName()) : nullptr;
+    int32 TextureSlot=0, SamplerSlot=0, ClampSlot=0;
+    if (!IsInGameThread() || !Family || !Resource || !Map || !Fixture || !ReadMediaFamilySlots(Fixture,TextureSlot,SamplerSlot,ClampSlot)) { Error=TEXT("invalid plain texture owner"); return false; }
     const auto& Uniforms=Map->GetUniformExpressionSet();
     if (Uniforms.GetNumTextures(EMaterialTextureParameterType::Standard2D)!=1)
     { Error=TEXT("unexpected plain texture expression count"); return false; }
@@ -2927,9 +3234,10 @@ static bool CheckMediaOriginalTexture(UMaterialInterface* Owner, FMaterialResour
     { Error=TEXT("plain texture acquired a parameter identity or wrong source"); return false; }
     const auto References=Resource->GetReferencedTextures();
     UTexture2D* Texture=References.Num()==1 ? Cast<UTexture2D>(References[0]) : nullptr;
-    if (!Texture || Texture->GetPathName()!=GLegacyMediaTexturePath || Texture->GetSizeX()!=128 || Texture->GetSizeY()!=128 ||
+    const UEnum* GroupEnum=StaticEnum<TextureGroup>();
+    if (!Texture || Texture->GetPathName()!=Family->TexturePath || Texture->GetSizeX()!=128 || Texture->GetSizeY()!=128 ||
         Texture->GetClass()->GetPathName()!=TEXT("/Script/Engine.Texture2D") || Texture->GetNumMips()!=1 || Texture->GetPixelFormat()!=PF_B8G8R8A8 || !Texture->SRGB || Texture->AddressX!=TA_Wrap || Texture->AddressY!=TA_Wrap ||
-        Texture->Filter!=TF_Default || Texture->LODGroup!=TEXTUREGROUP_World)
+        Texture->Filter!=TF_Default || !GroupEnum || GroupEnum->GetNameStringByValue(Texture->LODGroup)!=Family->LodGroup)
     { Error=TEXT("plain texture source path or platform metadata differs"); return false; }
     if (!CheckMediaSourcePackage(Texture,Fixture,Error)) return false;
     UTexture* GameThreadValue=nullptr;
@@ -2941,12 +3249,12 @@ static bool CheckMediaOriginalTexture(UMaterialInterface* Owner, FMaterialResour
         int32(Default->GetNumberField(TEXT("width")))!=128 || int32(Default->GetNumberField(TEXT("height")))!=128 ||
         !Default->GetBoolField(TEXT("srgb")) || Default->GetArrayField(TEXT("mips")).Num()!=1 ||
         Default->GetStringField(TEXT("addressX"))!=TEXT("TA_Wrap") || Default->GetStringField(TEXT("addressY"))!=TEXT("TA_Wrap") ||
-        Default->GetStringField(TEXT("filter"))!=TEXT("TF_Default") || Default->GetStringField(TEXT("lodGroup"))!=TEXT("TEXTUREGROUP_World"))
+        Default->GetStringField(TEXT("filter"))!=TEXT("TF_Default") || Default->GetStringField(TEXT("lodGroup"))!=Family->LodGroup)
     { Error=TEXT("invalid source texture metadata receipt"); return false; }
     const FString ExpectedHash=Default->GetStringField(TEXT("rgbaSha256"));
     const FMaterialRenderProxy* Base=Owner->GetRenderProxy();
     TArray<FColor> Pixels; bool bMatched=false; int32 NamedCalls=-1;
-    ENQUEUE_RENDER_COMMAND(CheckMediaOriginalTexture)([Base,Resource,Map,Texture,&Pixels,&bMatched,&NamedCalls](FRHICommandListImmediate& RHICmdList)
+    ENQUEUE_RENDER_COMMAND(CheckMediaOriginalTexture)([Base,Resource,Map,Texture,TextureSlot,SamplerSlot,ClampSlot,&Pixels,&bMatched,&NamedCalls](FRHICommandListImmediate& RHICmdList)
     {
         class FPlainTextureProxy final : public FLegacyProbeProxy
         {
@@ -2969,11 +3277,11 @@ static bool CheckMediaOriginalTexture(UMaterialInterface* Owner, FMaterialResour
         Uniforms.GetTextureValue(EMaterialTextureParameterType::Standard2D,0,Context,Material,RenderValue);
         alignas(16) uint8 Contents[4112]={}; Uniforms.FillUniformBuffer(Context,Cache,Contents,sizeof(Contents));
         const auto& Layout=Uniforms.GetUniformBufferLayout();
-        if (Layout.Resources.Num()!=4 || Layout.Resources[0].MemberOffset!=48 || Layout.Resources[1].MemberOffset!=56) return;
-        if (Layout.Resources[3].MemberOffset!=72) return;
+        if (Layout.Resources.Num()!=4 || Layout.Resources[0].MemberOffset!=TextureSlot || Layout.Resources[1].MemberOffset!=SamplerSlot) return;
+        if (Layout.Resources[3].MemberOffset!=ClampSlot || sizeof(Contents)<uint32(ClampSlot)+sizeof(void*)) return;
         void* TextureRHI=nullptr; void* SamplerRHI=nullptr; void* ClampRHI=nullptr;
-        FMemory::Memcpy(&TextureRHI,Contents+48,sizeof(void*)); FMemory::Memcpy(&SamplerRHI,Contents+56,sizeof(void*));
-        FMemory::Memcpy(&ClampRHI,Contents+72,sizeof(void*));
+        FMemory::Memcpy(&TextureRHI,Contents+TextureSlot,sizeof(void*)); FMemory::Memcpy(&SamplerRHI,Contents+SamplerSlot,sizeof(void*));
+        FMemory::Memcpy(&ClampRHI,Contents+ClampSlot,sizeof(void*));
         NamedCalls=Proxy.Calls;
         if (RenderValue!=Texture || NamedCalls!=0 || TextureRHI!=Texture->TextureReference.TextureReferenceRHI.GetReference() || (!SamplerRHI || SamplerRHI!=ClampRHI)) return;
         FReadSurfaceDataFlags Flags(RCM_UNorm); Flags.SetLinearToGamma(false);
@@ -2991,17 +3299,17 @@ static bool CheckMediaOriginalTexture(UMaterialInterface* Owner, FMaterialResour
     FString Directory;
     if (FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory))
     {
-        const FString RawPath=FPaths::Combine(Directory,TEXT("MediaTexture.rgba"));
-        const FString JsonPath=FPaths::Combine(Directory,TEXT("MediaTexture.json"));
+        const FString RawPath=FPaths::Combine(Directory,FString(Family->Label)+TEXT("Texture.rgba"));
+        const FString JsonPath=FPaths::Combine(Directory,FString(Family->Label)+TEXT("Texture.json"));
         const auto& Layout=Uniforms.GetUniformBufferLayout();
         FString Resources;
         for (int32 I=0; I<Layout.Resources.Num(); ++I)
             Resources+=FString::Printf(TEXT("%s{\"offset\":%u,\"type\":%u}"),I ? TEXT(",") : TEXT(""),uint32(Layout.Resources[I].MemberOffset),uint32(Layout.Resources[I].MemberType));
-        const FString Json=FString::Printf(TEXT("{\"texture_path\":\"%s\",\"width\":128,\"height\":128,\"format\":\"PF_B8G8R8A8\",\"srgb\":true,\"mips\":1,\"named_proxy_calls\":%d,\"sampler_source\":2,\"world_clamp_binding_match\":true,\"source_uasset_sha256\":\"7fed5326ffdbf8e10bcd37f64eee4f3f8be41aca9593708a90f28e7046013c38\",\"source_uexp_sha256\":\"364e417cfee78e6e15ff3dc91bd800dd39d3babe3a47085b189c863778e34cd9\",\"source_bgra_sha256\":\"b842bc2606ab98a0f5c359e5e8b1b423a9af00d7544eed41900a7c7156b0ffc3\",\"rgba_sha256\":\"%s\",\"layout_hash\":%u,\"constant_bytes\":%u,\"resources\":[%s]}\n"),GLegacyMediaTexturePath,NamedCalls,*Hash,Layout.GetHash(),uint32(Layout.ConstantBufferSize),*Resources);
+        const FString Json=FString::Printf(TEXT("{\"texture_path\":\"%s\",\"width\":128,\"height\":128,\"format\":\"PF_B8G8R8A8\",\"srgb\":true,\"mips\":1,\"named_proxy_calls\":%d,\"sampler_source\":2,\"world_clamp_binding_match\":true,\"source_uasset_sha256\":\"%s\",\"source_uexp_sha256\":\"%s\",\"source_bgra_sha256\":\"%s\",\"rgba_sha256\":\"%s\",\"layout_hash\":%u,\"constant_bytes\":%u,\"resources\":[%s]}\n"),Family->TexturePath,NamedCalls,Family->HeaderSha,Family->ExportsSha,Family->RawSha,*Hash,Layout.GetHash(),uint32(Layout.ConstantBufferSize),*Resources);
         if (FPaths::FileExists(RawPath) || FPaths::FileExists(JsonPath) || !FFileHelper::SaveArrayToFile(Bytes,*RawPath) || !FFileHelper::SaveStringToFile(Json,*JsonPath))
         { Error=TEXT("cannot write plain texture artifact"); return false; }
     }
-    UE_LOG(LogTemp,Display,TEXT("Legacy Media texture: real indexed source, zero named proxy calls, GPU RGBA SHA256=%s"),*Hash);
+    UE_LOG(LogTemp,Display,TEXT("Legacy %s texture: real indexed source, zero named proxy calls, GPU RGBA SHA256=%s"),Family->Label,*Hash);
     return true;
 }
 
@@ -3011,7 +3319,9 @@ static bool DrawMediaTextureControls(UMaterialInterface* Owner, FMaterialResourc
     const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings,
     const TSharedPtr<FJsonObject>& Fixture, FString& Error)
 {
-    if (!IsInGameThread() || !Owner || !Resource || !Map || !Fixture) { Error=TEXT("invalid Media texture draw owner"); return false; }
+    const FMediaFamilySource* Family=Owner ? FindMediaFamilyByOwner(Owner->GetPathName()) : nullptr;
+    int32 TextureSlot=0, SamplerSlot=0, ClampSlot=0;
+    if (!IsInGameThread() || !Family || !Resource || !Map || !Fixture || !ReadMediaFamilySlots(Fixture,TextureSlot,SamplerSlot,ClampSlot)) { Error=TEXT("invalid Media texture draw owner"); return false; }
     FString Directory;
     if (!FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory) || !FPaths::DirectoryExists(Directory))
     { Error=TEXT("Media texture draw requires artifact directory"); return false; }
@@ -3035,7 +3345,7 @@ static bool DrawMediaTextureControls(UMaterialInterface* Owner, FMaterialResourc
     const FMaterialRenderProxy* Base=Owner->GetRenderProxy();
     const auto SourceReferences=Resource->GetReferencedTextures();
     UTexture* SourceTexture=SourceReferences.Num()==1 ? Cast<UTexture>(SourceReferences[0]) : nullptr;
-    if (!VertexType || !PixelType || !Base || !SourceTexture || SourceTexture->GetPathName()!=GLegacyMediaTexturePath) { Error=TEXT("Media texture draw shader unavailable"); return false; }
+    if (!VertexType || !PixelType || !Base || !SourceTexture || SourceTexture->GetPathName()!=Family->TexturePath) { Error=TEXT("Media texture draw shader unavailable"); return false; }
     const auto Default=Fixture->GetObjectField(TEXT("texture_contract"))->GetObjectField(TEXT("default"));
     TArray<uint8> SourceRGBA; const FString SourcePath=Default->GetStringField(TEXT("rgba"));
     if (IFileManager::Get().FileSize(*SourcePath)!=128*128*4 || !FFileHelper::LoadFileToArray(SourceRGBA,*SourcePath) || SourceRGBA.Num()!=128*128*4)
@@ -3044,7 +3354,7 @@ static bool DrawMediaTextureControls(UMaterialInterface* Owner, FMaterialResourc
     if (!BytesToHex(Digest,32).Equals(Default->GetStringField(TEXT("rgbaSha256")),ESearchCase::IgnoreCase))
     { Error=TEXT("Media source pixel hash differs"); return false; }
     TArray<FColor> Images[3]; bool bPassed=true; FString Failure; int32 NamedCalls=-1;
-    ENQUEUE_RENDER_COMMAND(DrawMediaTextureControls)([Map,Resource,Bindings,VertexType,PixelType,Base,SourceTexture,SourceRGBA,ProfileOverrides,&Images,&bPassed,&Failure,&NamedCalls](FRHICommandListImmediate& RHICmdList)
+    ENQUEUE_RENDER_COMMAND(DrawMediaTextureControls)([Map,Resource,Bindings,VertexType,PixelType,Base,SourceTexture,SourceRGBA,ProfileOverrides,TextureSlot,&Images,&bPassed,&Failure,&NamedCalls](FRHICommandListImmediate& RHICmdList)
     {
         class FPlainProxy final : public FLegacyProbeProxy
         {
@@ -3062,11 +3372,11 @@ static bool DrawMediaTextureControls(UMaterialInterface* Owner, FMaterialResourc
         FMaterialRenderContext Context(&Proxy,Material,nullptr); FUniformExpressionCache Cache;
         const auto& Uniforms=Map->GetUniformExpressionSet();
         const auto& Layout=Uniforms.GetUniformBufferLayout();
-        if (Layout.Resources.Num()!=4 || Layout.Resources[0].MemberOffset!=48 || Layout.Resources[0].MemberType!=UBMT_TEXTURE)
+        if (Layout.Resources.Num()!=4 || Layout.Resources[0].MemberOffset!=TextureSlot || Layout.Resources[0].MemberType!=UBMT_TEXTURE)
         { bPassed=false; Failure=TEXT("unexpected source texture slot"); return; }
         alignas(16) uint8 Contents[4112]={};
         Uniforms.FillUniformBuffer(Context,Cache,Contents,sizeof(Contents)); NamedCalls=Proxy.Calls;
-        void* SourceSlot=nullptr; FMemory::Memcpy(&SourceSlot,Contents+48,sizeof(SourceSlot));
+        void* SourceSlot=nullptr; FMemory::Memcpy(&SourceSlot,Contents+TextureSlot,sizeof(SourceSlot));
         if (!SourceTexture->TextureReference.TextureReferenceRHI || SourceSlot!=SourceTexture->TextureReference.TextureReferenceRHI.GetReference())
         { bPassed=false; Failure=TEXT("default draw does not bind original texture reference"); return; }
         if (NamedCalls!=0) { bPassed=false; Failure=TEXT("Media texture unexpectedly queried a named proxy"); return; }
@@ -3111,7 +3421,7 @@ static bool DrawMediaTextureControls(UMaterialInterface* Owner, FMaterialResourc
         for (int32 Pass=0; Pass<3; ++Pass)
         {
             alignas(16) uint8 Scratch[4112]; FMemory::Memcpy(Scratch,Contents,sizeof(Scratch));
-            if (Pass) { FRHITexture* Override=Controls[Pass-1].GetReference(); FMemory::Memcpy(Scratch+48,&Override,sizeof(Override)); }
+            if (Pass) { FRHITexture* Override=Controls[Pass-1].GetReference(); FMemory::Memcpy(Scratch+TextureSlot,&Override,sizeof(Override)); }
             FUniformBufferRHIRef MaterialUB=RHICreateUniformBuffer(Scratch,Layout,UniformBuffer_SingleDraw);
             RHICmdList.TransitionResource(EResourceTransitionAccess::EWritable,Target);
             FRHIRenderPassInfo PassInfo(Target,ERenderTargetActions::Clear_Store); RHICmdList.BeginRenderPass(PassInfo,TEXT("OriginalPlainTextureControl"));
@@ -3358,6 +3668,45 @@ static bool CheckLegacyOwnerExpectations(const UMaterialInstance* Instance, cons
 }
 #endif
 
+
+// The ingress handlers verify original textures by path inside UMaterial::PostLoad. A synchronous load there nests
+// inside async loading (RecursionNotAllowed) whenever the texture is not already resident, so every texture named by a
+// pinned bundle is loaded once at provider registration, outside any async load.
+static void CollectLegacyIngressTexturePaths(const TSharedPtr<FJsonValue>& Value, const FString& Key, TSet<FString>& Out)
+{
+    if (!Value.IsValid()) return;
+    if (Value->Type==EJson::Object)
+    { for (const auto& Field : Value->AsObject()->Values) CollectLegacyIngressTexturePaths(Field.Value,Field.Key,Out); }
+    else if (Value->Type==EJson::Array)
+    { for (const auto& Item : Value->AsArray()) CollectLegacyIngressTexturePaths(Item,Key,Out); }
+    else if (Value->Type==EJson::String &&
+             (Key==TEXT("default_texture_path") || Key==TEXT("ordered_texture_references") || Key==TEXT("texture_path") || Key==TEXT("override_texture_path") || Key==TEXT("asset_path")))
+    {
+        const FString Path=Value->AsString();
+        const FString Name=FPackageName::ObjectPathToObjectName(Path);
+        if (Path.StartsWith(TEXT("/Game/")) && (Name.StartsWith(TEXT("T_")) || Name.StartsWith(TEXT("T-")) || Name.StartsWith(TEXT("CA_")) || Name==TEXT("PolarCoords"))) Out.Add(Path);
+    }
+}
+static void PreloadLegacyIngressTextures()
+{
+    TSet<FString> Paths;
+    for (const auto& Pin : GLegacyIngressPins)
+    {
+        if (Pin.Json.IsEmpty()) continue;
+        TSharedPtr<FJsonObject> Root;
+        if (FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Pin.Json),Root) && Root.IsValid())
+            CollectLegacyIngressTexturePaths(MakeShared<FJsonValueObject>(Root),FString(),Paths);
+    }
+    int32 Loaded=0;
+    for (const FString& Path : Paths)
+    {
+        UTexture* Texture=LoadObject<UTexture>(nullptr,*Path);
+        if (Texture) { Texture->AddToRoot(); ++Loaded; }
+        else UE_LOG(LogTemp,Warning,TEXT("Legacy material ingress: pinned texture %s did not preload"),*Path);
+    }
+    UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: preloaded %d of %d pinned textures"),Loaded,Paths.Num());
+}
+
 void RegisterLegacyOriginalMaterialProvider()
 {
 #if PLATFORM_LINUX && !UE_SERVER
@@ -3385,7 +3734,13 @@ void RegisterLegacyOriginalMaterialProvider()
         {GLegacyFacebookPath,GLegacyFacebookPath,TEXT("8c00f790b3f785bb1b30fdd49c2f387dbfdf3da6"),TEXT("ca7e1b5d73ae1be9c1ddb1e6c0537870477286a2"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyFacebookPath,false,false},
         {GLegacyLoginPS4Path,GLegacyFacebookPath,TEXT("0e9ee8162f07588fb52549750a8929d1906b6469"),TEXT("ca7e1b5d73ae1be9c1ddb1e6c0537870477286a2"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterialInstanceConstant"),GLegacyFacebookPath,GLegacyFacebookPath,true,false},
         {GLegacyLoginXBoxPath,GLegacyFacebookPath,TEXT("db5126da82bd11b50ff407ef19eda14ab7a28918"),TEXT("ca7e1b5d73ae1be9c1ddb1e6c0537870477286a2"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterialInstanceConstant"),GLegacyLoginPS4Path,GLegacyFacebookPath,true,false},
-        {GLegacyLoginEpicPath,GLegacyFacebookPath,TEXT("963b30336b59f95de70c65d31dee2e024a409a21"),TEXT("ca7e1b5d73ae1be9c1ddb1e6c0537870477286a2"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterialInstanceConstant"),GLegacyLoginPS4Path,GLegacyFacebookPath,true,false}
+        {GLegacyLoginEpicPath,GLegacyFacebookPath,TEXT("963b30336b59f95de70c65d31dee2e024a409a21"),TEXT("ca7e1b5d73ae1be9c1ddb1e6c0537870477286a2"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterialInstanceConstant"),GLegacyLoginPS4Path,GLegacyFacebookPath,true,false},
+        // Login-art regular-Texture family (original ExternalLink and CornerBackArrow base materials).
+        {GLegacyExternalLinkPath,GLegacyExternalLinkPath,TEXT("688c9b715c5ee82a40f380bfc067d502b92166c2"),TEXT("0a0025ba4e70c60a7c2f6e18379f35d00f9f6e85"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyExternalLinkPath,false,false},
+        {GLegacyBackArrowPath,GLegacyBackArrowPath,TEXT("0f6f9cc66f038474582f70c4439ef0e94ce0e139"),TEXT("c934c63d89f1455664a0e6ecace622328992b61c"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyBackArrowPath,false,false},
+        // Skew-button family: DF is a base UMaterial; Chip is a nonstatic instance inheriting DF's resource.
+        {GLegacySkewDFPath,GLegacySkewDFPath,TEXT("cf0f7463e55d80ea6af70f05a54c24a42c382b2f"),TEXT("2a192decac478260cb9ab197a38c3b9e4ab2e6c7"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacySkewDFPath,false,false},
+        {GLegacySkewChipPath,GLegacySkewDFPath,TEXT("97365652ba578ea43a7ddfe57002f4631f03f4b7"),TEXT("2a192decac478260cb9ab197a38c3b9e4ab2e6c7"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterialInstanceConstant"),GLegacySkewDFPath,GLegacySkewDFPath,true,false}
     };
     auto IsHex=[](const FString& Value, int32 Length)
     {
@@ -3555,6 +3910,7 @@ void RegisterLegacyOriginalMaterialProvider()
     FModuleManager::LoadModuleChecked<IModuleInterface>(TEXT("SlateRHIRenderer"));
     RegisterLegacyMaterialAssetProvider(&ProvideLegacyOriginal);
     UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: registered pinned provider, configuration valid=1"));
+    PreloadLegacyIngressTextures();
 #endif
 }
 void ProbeLegacyOriginalMaterial()
@@ -3751,6 +4107,12 @@ void ProbeLegacyOriginalMaterial()
         }
         UE_LOG(LogTemp,Display,TEXT("Legacy Donut: indexed source texture and actual uniform texture/sampler match %s"),*TexturePath);
     }
+    if (IsSkewBase(OwnerPath))
+    {
+        FString TextureError;
+        if (!CheckSkewTextureBinding(Material,Resource,Map,Bundle->GetObjectField(TEXT("runtime_fixture")),TextureError))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Skew original binding failed: %s"),*TextureError);FPlatformMisc::RequestExitWithStatus(false,1);return; }
+    }
     if (IsLoginIconBase(OwnerPath))
     {
         FString TextureError;
@@ -3763,7 +4125,7 @@ void ProbeLegacyOriginalMaterial()
         if (!CheckLoginIconInstanceTexture(Material,Resource,Map,Bundle->GetObjectField(TEXT("runtime_fixture")),TextureError))
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: login-icon instance override failed: %s"),*TextureError);FPlatformMisc::RequestExitWithStatus(false,1);return; }
     }
-    if (OwnerPath==GLegacyMediaPath)
+    if (IsMediaFamily(OwnerPath))
     {
         FString TextureError;
         if (!CheckMediaOriginalTexture(Material,Resource,Map,Bundle->GetObjectField(TEXT("runtime_fixture")),TextureError))
@@ -3805,7 +4167,7 @@ void ProbeLegacyOriginalMaterial()
     bNegativeChecks &= RejectMutation(TEXT("trailing byte"),MoveTemp(Appended));
     bNegativeChecks &= RejectMutation(TEXT("shader end escapes resource"),MoveTemp(BadEnd));
     bNegativeChecks &= RejectMutation(TEXT("invalid local expression name"),MoveTemp(BadName));
-    if (OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacyMediaPath)
+    if (OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || IsMediaFamily(OwnerPath))
     {
         const auto TextureArray=Arrays->GetObjectField(TEXT("texture_2d"));
         const int32 Offset=int32(TextureArray->GetNumberField(TEXT("offset")))+4;
@@ -3851,13 +4213,13 @@ void ProbeLegacyOriginalMaterial()
     if (!bNegativeChecks)
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: original reader negative check failed")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     FString Error;
-    if (!CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("owner"),Error,(OwnerPath==GLegacyDonutPath || OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacySocialPath || OwnerPath==GLegacyMediaPath || IsLoginIconBase(OwnerPath)) ? Material : nullptr))
+    if (!CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("owner"),Error,(OwnerPath==GLegacyDonutPath || OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacySocialPath || IsMediaFamily(OwnerPath) || IsNamedTextureBase(OwnerPath)) ? Material : nullptr))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if ((OwnerPath == GLegacyPowerToastPath || OwnerPath == GLegacyMainLPath) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("instance"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live instance uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (Pin->bManifest && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("manifest owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
-    if ((OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacyFlogoPath || OwnerPath==GLegacySocialPath || OwnerPath==GLegacyMediaPath || IsLoginIconBase(OwnerPath)) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("plain texture owner"),Error,Material,TEXT("owner_uniform_cases")))
+    if ((OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacyFlogoPath || OwnerPath==GLegacySocialPath || IsMediaFamily(OwnerPath) || IsNamedTextureBase(OwnerPath)) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("plain texture owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: plain texture owner uniforms failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (OwnerPath==GLegacyDonutPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("Donut owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Donut owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
@@ -3945,6 +4307,13 @@ void ProbeLegacyOriginalMaterial()
         UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: Hollow owner complete and attached on both threads; seven shaders and controlled source sampling passed"));
         return;
     }
+    if (IsSkewBase(OwnerPath))
+    {
+        if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !bView || !DrawSkewTextureControls(Material,Resource,Map,Bindings,Fixture,Error))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Skew texture draw failed: %s"),*Error);FPlatformMisc::RequestExitWithStatus(false,1);return; }
+        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: Skew owner %s complete and attached on both threads; seven shaders and original eight-mip source/copy controls passed"),*OwnerPath);
+        FPlatformMisc::RequestExit(false);return;
+    }
     if (IsLoginIconBase(OwnerPath))
     {
         if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !bView || !DrawGoogleTextureControls(Material,Resource,Map,Bindings,Fixture,Error))
@@ -3952,11 +4321,11 @@ void ProbeLegacyOriginalMaterial()
         UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: login-icon owner %s complete and attached on both threads; seven shaders and original ten-mip source/copy controls passed"),*OwnerPath);
         FPlatformMisc::RequestExit(false);return;
     }
-    if (OwnerPath==GLegacyMediaPath)
+    if (IsMediaFamily(OwnerPath))
     {
         if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !bView || !DrawMediaTextureControls(Material,Resource,Map,Bindings,Fixture,Error))
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Media texture draw failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
-        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: Media owner complete and attached on both threads; seven shaders and source/copy checks passed"));
+        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: %s owner complete and attached on both threads; seven shaders and source/copy checks passed"),*OwnerPath);
         return;
     }
     if (OwnerPath==GLegacySocialPath)
