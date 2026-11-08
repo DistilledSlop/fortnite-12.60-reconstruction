@@ -146,13 +146,22 @@ for e in f2:
     for sl in vslots:
         vn = virtual_slots.virt_name(e['cls'], sl)
         if not vn:
-            vnames = None
-            break
+            _t = virtual_slots.virt_target(e['cls'], sl)
+            _chain = virtual_slots.PARENTS.get(e['cls'], [e['cls']])
+            _h = [h for h in hcand.get(_t, []) if h['fn'].partition('::')[0] in _chain and not h['static']] if _t else []
+            if not _h:
+                vnames = None
+                break
+            vnames[sl] = ('HELPER', _h[0])
+            continue
         vnames[sl] = vn
     if vnames is None:
         st['skip_virtual_slot_unnamed'] += 1
         continue
     for sl, (vc, vf) in vnames.items():
+        if vc == 'HELPER':
+            cal['virtual+0x%x' % sl] = [dict(vf, virtual_slot=hex(sl), note='ported helper for this vtable slot (non-virtual call on this): call %s on this exactly as declared' % vf['fn'])]
+            continue
         d = nf.get(vc, {}).get(vf, {})
         fl = d.get('flags')
         fl = fl if isinstance(fl, int) else int(fl, 16) if fl else 0

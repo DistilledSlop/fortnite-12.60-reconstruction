@@ -1,0 +1,79 @@
+[
+ {
+  "addr": "0x141f6d2f0",
+  "host": "AFortTimeOfDayManager",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x143f83280 (first call, before the bVisible branch) has no callee hint"
+ },
+ {
+  "addr": "0x143f793a0",
+  "host": "AFortTimeOfDayManager",
+  "status": "blocked",
+  "case": "writable_global",
+  "reason": "CMP EAX,dword ptr [0x148263a2c] loads a writable .data global (0x1482...); also [0x148263a18]"
+ },
+ {
+  "addr": "0x141f764a0",
+  "host": "AFortTimeOfDayManager",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x143f7a920 (first external call) has no callee hint; further unresolved calls 0x141f5a990, 0x141f67550 follow"
+ },
+ {
+  "addr": "0x143f709a0",
+  "host": "AFortVolume",
+  "status": "blocked",
+  "case": "semantics_unverified",
+  "reason": "Scans a TBitArray at this+0x198 with BSR bit-scans and an index-to-pointer lookup; iteration semantics not established from asm in this pass"
+ },
+ {
+  "addr": "0x143f793a0",
+  "host": "AFortVolumeManager",
+  "status": "blocked",
+  "case": "writable_global",
+  "reason": "CMP EAX,dword ptr [0x148263a2c] loads a writable .data global (0x1482...); also [0x148263a18]"
+ },
+ {
+  "addr": "0x143f709a0",
+  "host": "AFortVolumeManager",
+  "status": "blocked",
+  "case": "semantics_unverified",
+  "reason": "Scans a TBitArray at this+0x198 with BSR bit-scans and an index-to-pointer lookup; iteration semantics not established from asm in this pass"
+ },
+ {
+  "addr": "0x1414f1410",
+  "host": "AFortWaterBodyActor",
+  "status": "blocked",
+  "case": "indirect_call_unresolved",
+  "reason": "CALL qword ptr [RAX+0x630] is a virtual dispatch with no named slot; CALL 0x14413e990 also has no hint"
+ },
+ {
+  "addr": "0x143d60f70",
+  "host": "UCommonActivatableWidget",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x1442f9350 has no callee hint (after TWeakObjectPtr::Get)"
+ },
+ {
+  "addr": "0x140822890",
+  "host": "UFortHUDContext",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x1442f3c00 has no callee hint"
+ },
+ {
+  "addr": "0x1407ce810",
+  "host": "UFortMatchmakingKnobsModal",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x1407ae640 (guarded by [RCX+0x303]) has no callee hint; 0x142ce9f90 hint lists three unrelated functions"
+ },
+ {
+  "addr": "0x143d5e160",
+  "host": "UFortHUDElementWidget",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x1442f9350 has no callee hint; tail JMP 0x1442f4d20 is a tail-jump with no hint"
+ }
+]

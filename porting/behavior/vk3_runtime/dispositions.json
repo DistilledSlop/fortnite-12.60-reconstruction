@@ -1,0 +1,74 @@
+[
+  {
+    "addr": "0x1440bfec0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "UFortLayeredAudioComponent: CALL 0x1440bfee0 has no callee hint (UNRESOLVED)"
+  },
+  {
+    "addr": "0x143f793a0",
+    "status": "blocked",
+    "case": "absolute_global_load",
+    "reason": "AFortLightningActor: CMP EAX,dword ptr [0x148263a2c] reads writable .data global (0x1482...)"
+  },
+  {
+    "addr": "0x142029370",
+    "status": "blocked",
+    "case": "absolute_global_load",
+    "reason": "AFortPickup: MOV EAX,dword ptr [0x148218638] reads writable .data global; also CALL 0x14202dc10 UNRESOLVED and tail JMP 0x14203b400 unhinted"
+  },
+  {
+    "addr": "0x143f72550",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "AFortPickup: CALL 0x143f76f10 has no callee hint (UNRESOLVED); also MOVZX EAX,byte ptr [0x1482472e4] writable global"
+  },
+  {
+    "addr": "0x14238f050",
+    "status": "blocked",
+    "case": "tail_jump",
+    "reason": "AFortPlayerController: JMP 0x1444816f0 is a tail jump into an unhinted target (UNRESOLVED)"
+  },
+  {
+    "addr": "0x143f72550",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "AFortPlayerController: CALL 0x143f76f10 has no callee hint (UNRESOLVED); also MOVZX EAX,byte ptr [0x1482472e4] writable global"
+  },
+  {
+    "addr": "0x14233e6e0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "AFortPlayerPawn: CALL 0x143f7a920 has no callee hint (UNRESOLVED)"
+  },
+  {
+    "addr": "0x1423198d0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "AFortPlayerPawn: CALL 0x142c5d000 has no callee hint (UNRESOLVED)"
+  },
+  {
+    "addr": "0x14231a980",
+    "status": "proposed",
+    "case": "virtual_member_ported",
+    "reason": "Body fully accounted for by asm; no unhinted calls or absolute globals."
+  },
+  {
+    "addr": "0x144430060",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "AFortPawn: indirect CALL qword ptr [RAX+0x6a8] on object at [RCX+0x250] has no hinted target method"
+  },
+  {
+    "addr": "0x1440fe180",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "UFortProjectileMovementComponent: CALL 0x144123870 has no callee hint (UNRESOLVED)"
+  },
+  {
+    "addr": "0x1426a5ae0",
+    "status": "proposed",
+    "case": "virtual_member_ported",
+    "reason": "Body fully accounted for by asm; no unhinted calls or absolute globals."
+  }
+]

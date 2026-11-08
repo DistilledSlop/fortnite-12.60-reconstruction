@@ -1,0 +1,74 @@
+[
+ {
+  "addr": "0x141bc8570",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "calls 0x143f7a920 (no hint) and tail-jumps to 0x141f9f2c0 (no hint); also virtual [vtbl+0x150] on this"
+ },
+ {
+  "addr": "0x141bc2c30",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "calls 0x143f7a920 and 0x141f967e0 (no hints)"
+ },
+ {
+  "addr": "0x141bec430",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "calls 0x142ec9d30 (no hint); 0x142ce9f90 hint lists three unrelated functions with no match; CMP on absolute global 0x148134910"
+ },
+ {
+  "addr": "0x143f72550",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "calls 0x143f76f10, 0x1443771a0, 0x142cd8ed0, 0x14162c790, 0x144684d20, 0x144375f90, 0x142cd3770 (no hints); reads writable global 0x1482472e4"
+ },
+ {
+  "addr": "0x143f78ba0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "virtual calls [vtbl+0x568], [vtbl+0x558], tail [vtbl+0x490] on this/this+0x130 have no hints (callee_hints empty)"
+ },
+ {
+  "addr": "0x1440c9b30",
+  "status": "blocked",
+  "case": "callee_hint_mismatch",
+  "reason": "hints 0x142ecc600 and 0x144630410 both name AFortProjectileBase::OnRep_CurrentSkyTube with params []; asm passes EDX/DL arguments, so hint is inconsistent"
+ },
+ {
+  "addr": "0x143f793a0",
+  "status": "blocked",
+  "case": "writable_global",
+  "reason": "reads absolute globals 0x148263a2c and 0x148263a18 (.data range); also calls 0x14477bcd0 and ported helper 0x142eca940"
+ },
+ {
+  "addr": "0x14084be00",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "tail-jumps to 0x1419166e0 (no hint)"
+ },
+ {
+  "addr": "0x142680df0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "SIMD ANDPS/CMPLTPS/MULPS/MOVMSKPS not expressible; calls 0x1428c04b0 (no hint); absolute constants at 0x14816c240/0x14816c2a0/0x14816c2b0/0x1482184f0 and 0x147c31d50"
+ },
+ {
+  "addr": "0x1415ea920",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "calls 0x1415facd0 and 0x1406ad840 (no hints); virtual [vtbl+0x478] on RDI has no hint"
+ },
+ {
+  "addr": "0x141e9e640",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "calls 0x141a470e0 (no hint)"
+ },
+ {
+  "addr": "0x1440b4d10",
+  "status": "proposed",
+  "case": "ported_member",
+  "reason": "3-instruction body fully accounted; see NativeHelper1440b4d10.inc"
+ }
+]

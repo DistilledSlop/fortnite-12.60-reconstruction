@@ -1,0 +1,32 @@
+[
+  {
+    "class": "AFortPawn",
+    "function": "NativeGetCurrentMovementStyle14231a980",
+    "kind": "helper",
+    "signature": "uint8* NativeGetCurrentMovementStyle14231a980(uint8* OutValue) const",
+    "signature_status": "proposed",
+    "static": false,
+    "access": "public",
+    "inc_path": "porting/behavior/vk3_runtime/AFortPawn/NativeGetCurrentMovementStyle14231a980.inc",
+    "address": "0x14231a980",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "AFortPawn slot 0x998 (IsSprinting caller). Reads CurrentMovementStyle (0x53b) into OutValue, returns it. Helper 0x14231a980."
+  },
+  {
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "NativeHelper1426a5ae0",
+    "kind": "helper",
+    "signature": "bool NativeHelper1426a5ae0() const",
+    "signature_status": "proposed",
+    "static": false,
+    "access": "public",
+    "inc_path": "porting/behavior/vk3_runtime/AFortGameplayEffectDeliveryActor/NativeHelper1426a5ae0.inc",
+    "address": "0x1426a5ae0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Slot 0x658 predicate: bit0 of byte at offset 0x3e0 (raw). Helper 0x1426a5ae0."
+  }
+]

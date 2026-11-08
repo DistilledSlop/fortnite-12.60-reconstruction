@@ -1,0 +1,86 @@
+[
+ {
+  "addr": "0x143f793a0",
+  "host": "ABuildingActor",
+  "status": "blocked",
+  "case": "absolute_writable_global",
+  "reason": "absolute writable global: writable .data global load CMP EAX,dword ptr [0x148263a2c] (GUObjectArray NumElements) and MOV RAX,qword ptr [0x148263a18] (GUObjectArray chunk table); 0x1482 range is writable, not a read-only constant"
+ },
+ {
+  "addr": "0x143f793a0",
+  "host": "AFortPawn",
+  "status": "blocked",
+  "case": "absolute_writable_global",
+  "reason": "absolute writable global: writable .data global load CMP EAX,dword ptr [0x148263a2c] (GUObjectArray NumElements) and MOV RAX,qword ptr [0x148263a18] (GUObjectArray chunk table); 0x1482 range is writable, not a read-only constant"
+ },
+ {
+  "addr": "0x143d5e0b0",
+  "host": "UCommonActivatableWidget",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee_unresolved: 0x1442f9350 (predicate on this+0x218, no hint)"
+ },
+ {
+  "addr": "0x143f793a0",
+  "host": "AFortWeapon",
+  "status": "blocked",
+  "case": "absolute_writable_global",
+  "reason": "absolute writable global: writable .data global load CMP EAX,dword ptr [0x148263a2c] (GUObjectArray NumElements) and MOV RAX,qword ptr [0x148263a18] (GUObjectArray chunk table); 0x1482 range is writable, not a read-only constant"
+ },
+ {
+  "addr": "0x143d5e160",
+  "host": "UCommonActivatableWidget",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee_unresolved: 0x1442f9350 (predicate on this+0x218, no hint)"
+ },
+ {
+  "addr": "0x141999a60",
+  "host": "AFortGameStateAthena",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee_unresolved: 0x14197d010 (first call, no hint); also 0x144680860 and 0x1442e74f0 unresolved"
+ },
+ {
+  "addr": "0x143f793a0",
+  "host": "AFortGameStateBase",
+  "status": "blocked",
+  "case": "absolute_writable_global",
+  "reason": "absolute writable global: writable .data global load CMP EAX,dword ptr [0x148263a2c] (GUObjectArray NumElements) and MOV RAX,qword ptr [0x148263a18] (GUObjectArray chunk table); 0x1482 range is writable, not a read-only constant"
+ },
+ {
+  "addr": "0x1407cf590",
+  "host": "UCommonButton",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee_unresolved: indirect vtable call CALL qword ptr [RDX + 0x278] on TWeakObjectPtr::Get result; receiver class has no hint"
+ },
+ {
+  "addr": "0x140802f60",
+  "host": "UCommonButton",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee_unresolved: 0x142cd8ed0 (first call, no hint); also 0x1407c4fc0, 0x14081b6f0 unresolved"
+ },
+ {
+  "addr": "0x1410cf280",
+  "host": "UFortKismetLibrary",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee_unresolved: tail-jump JMP qword ptr [RAX + 0x150] is an indirect virtual call on Outer with no named target"
+ },
+ {
+  "addr": "0x143f793a0",
+  "host": "AFortPlayerController",
+  "status": "blocked",
+  "case": "absolute_writable_global",
+  "reason": "absolute writable global: writable .data global load CMP EAX,dword ptr [0x148263a2c] (GUObjectArray NumElements) and MOV RAX,qword ptr [0x148263a18] (GUObjectArray chunk table); 0x1482 range is writable, not a read-only constant"
+ },
+ {
+  "addr": "0x141b94c30",
+  "host": "ABuildingActor",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee_unresolved: 0x142cd8ed0 (first unhinted call after hinted 0x141ed1800 and 0x143e8b3b0); also 0x1406c6ef0, 0x1406ab0b0, 0x1415f4460"
+ }
+]

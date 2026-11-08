@@ -227,5 +227,6 @@ public:
 	bool NativeExcludeVehicleTarget163(const FFortTargetFilter& Filter, AActor* Candidate, AActor* Requester);
 	void NativeFilterTouchActors(const FFortTargetFilter& Filter, UWorld* World, AActor* Requester, TArray<AActor*>& Actors);
 	bool NativeGetVehicleOccupants163(AActor* Actor, TArray<APawn*>& Occupants);
+	bool NativeHelper1426a5ae0() const;
 };
 
