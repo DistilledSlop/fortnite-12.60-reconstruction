@@ -8,7 +8,7 @@ set -u
 R=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting
 G=$R/generated; M=$G/material_pipeline
 # Bundles whose hashes are compiled into LegacyMaterialShaderMapProbe.cpp (root-replay copies match the pins).
-B="$M/locker-ingress-bundle.json,$M/gradient-panel-ingress-bundle.json,$M/power-toast-ingress-bundle.json,$M/menu-button-ingress-bundle-active-time.json,$M/donut-ingress-bundle.json,$M/mainl-ingress-bundle-checked.json,$M/keybind-ingress-3/bundle.json,$M/flogo-ingress-root-replay-1/bundle.json,$M/google-envelope-1-a/bundle.json,$M/media_button-ingress-2/bundle.json,$M/social-atlas-corrected-ingress-3/bundle.json,$M/hollow-ingress-root-replay-1/bundle.json,$G/reconstruction-visual-2026-11-05/signin-debug-epic-ingress/bundle.json"
+B="$M/locker-ingress-bundle.json,$M/gradient-panel-ingress-bundle.json,$M/power-toast-ingress-bundle.json,$M/menu-button-ingress-bundle-active-time.json,$M/donut-ingress-bundle.json,$M/mainl-ingress-bundle-checked.json,$M/keybind-ingress-3/bundle.json,$M/flogo-ingress-root-replay-1/bundle.json,$M/google-envelope-1-a/bundle.json,$M/media_button-ingress-2/bundle.json,$M/social-atlas-corrected-ingress-3/bundle.json,$M/hollow-ingress-root-replay-1/bundle.json,$G/reconstruction-visual-2026-11-05/signin-debug-epic-ingress/bundle.json,$M/facebook-ingress-1/bundle.json,$M/login-icon-instances-1/M_TempIcon_Login_PS4.bundle.json,$M/login-icon-instances-1/M_TempIcon_Login_XBox.bundle.json,$M/login-icon-instances-1/M_TempIcon_Login_Epic.bundle.json"
 CM=$M/comicbubble-ingress-3/combined-manifest.json
 SHA=$(sha256sum "$CM" | cut -d' ' -f1)
 cd "$G/frontend-probes/paper2d-matched-stage-3/LinuxNoEditor/FortniteLinux/Binaries/Linux" || exit 2

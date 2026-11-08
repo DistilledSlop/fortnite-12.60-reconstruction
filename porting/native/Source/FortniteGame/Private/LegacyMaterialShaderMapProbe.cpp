@@ -913,6 +913,25 @@ static const TCHAR* GLegacyEpicLogoPath=TEXT("/Game/UI/Login/Art/M_EpicLogo_DF.M
 static const TCHAR* GLegacyEpicLogoTexturePath=TEXT("/Game/UI/Login/Art/T_EpicLogo_DF.T_EpicLogo_DF");
 static const TCHAR* GLegacyGooglePath=TEXT("/Game/UI/Login/Art/M_TempIcon_Login_Google.M_TempIcon_Login_Google");
 static const TCHAR* GLegacyGoogleTexturePath=TEXT("/Game/UI/Login/Art/T_TempIcon_Login_Google.T_TempIcon_Login_Google");
+// Login-icon family: Facebook is a base UMaterial with its own resource; PS4/XBox/Epic are nonstatic instances
+// (no serialized resource) that override the Texture parameter and inherit the Facebook shader map.
+static const TCHAR* GLegacyFacebookPath=TEXT("/Game/UI/Login/Art/M_TempIcon_Login_Facebook.M_TempIcon_Login_Facebook");
+static const TCHAR* GLegacyFacebookTexturePath=TEXT("/Game/UI/Login/Art/T_TempIcon_Login_Facebook.T_TempIcon_Login_Facebook");
+static const TCHAR* GLegacyLoginPS4Path=TEXT("/Game/UI/Login/Art/M_TempIcon_Login_PS4.M_TempIcon_Login_PS4");
+static const TCHAR* GLegacyLoginXBoxPath=TEXT("/Game/UI/Login/Art/M_TempIcon_Login_XBox.M_TempIcon_Login_XBox");
+static const TCHAR* GLegacyLoginEpicPath=TEXT("/Game/UI/Login/Art/M_TempIcon_Login_Epic.M_TempIcon_Login_Epic");
+static bool IsLoginIconInstance(const FString& Path) { return Path==GLegacyLoginPS4Path || Path==GLegacyLoginXBoxPath || Path==GLegacyLoginEpicPath; }
+static bool IsLoginIconBase(const FString& Path) { return Path==GLegacyGooglePath || Path==GLegacyFacebookPath; }
+// Original 512-square ten-mip BC1 source packages of the login-icon base materials.
+struct FLoginIconSource { const TCHAR *Label,*TexturePath; int32 HeaderBytes; const TCHAR *HeaderSha,*ExportsSha,*BulkSha; };
+static const FLoginIconSource* FindLoginIconSource(const FString& TexturePath)
+{
+    static const FLoginIconSource Sources[]={
+        {TEXT("Google"),GLegacyGoogleTexturePath,730,TEXT("dd5b879570082e8a9ce2b5422bce4defab5cb4ce33fc1504c8adaf8d05928077"),TEXT("d8ccb6760cb477ccca194f1e33596a6b4f9298fabd8ec7e8d8acb7750c5ea4d4"),TEXT("7e16cf5d986d0d1fc186102733357143beeac6f401850a0e91acd0ef17d0af72")},
+        {TEXT("Facebook"),GLegacyFacebookTexturePath,734,TEXT("663dee7eb64a456fadee74614cedefc4d110ffa4f8b65a8b0c2c7fe5ed0fd932"),TEXT("112af1d2fa19de568878c40ca8906410fd5a32c4a789cdb9137b24d4002c0394"),TEXT("533f0fa29c2f4193cdffa078d8c7eb5fb38478603d6a1ec7f4f3df16500fa049")}};
+    for (const auto& Source : Sources) if (TexturePath==Source.TexturePath) return &Source;
+    return nullptr;
+}
 static const TCHAR* GLegacyMediaPath = TEXT("/Game/UI/Materials/M_MediaPlayerButton_Base.M_MediaPlayerButton_Base");
 static const TCHAR* GLegacyMediaTexturePath = TEXT("/Game/UI/Icons/T_UI_MediaPlayerButton_Layered_A.T_UI_MediaPlayerButton_Layered_A");
 static const TCHAR* GLegacyFlogoPath = TEXT("/Game/Athena/UI/Season/Art/M_UI_AthenaSeason_FadedFlogo.M_UI_AthenaSeason_FadedFlogo");
@@ -1013,7 +1032,7 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
             TArray<UTexture*> SourceReferences; SourceReferences.Add(Texture);
             return RestoreLegacyMaterialTextureReferences(Parent,SourceReferences,Error);
         }
-        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && SourceIdentity!=GLegacyGooglePath && SourceIdentity!=GLegacyEpicLogoPath)
+        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && SourceIdentity!=GLegacyGooglePath && SourceIdentity!=GLegacyFacebookPath && SourceIdentity!=GLegacyEpicLogoPath)
         {
             // Numeric-only manifests need no texture context. Only authenticated
             // base-material manifests may enter the general texture path.
@@ -1106,13 +1125,13 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
         const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
         const auto& Textures=Fixture->GetArrayField(TEXT("texture_2d_parameters"));
         const bool bPlain=SourceIdentity==GLegacyKeybindPath || SourceIdentity==GLegacyHollowPath || SourceIdentity==GLegacySocialPath || SourceIdentity==GLegacyMediaPath || SourceIdentity==GLegacyEpicLogoPath;
-        const FString Expected=SourceIdentity==GLegacyEpicLogoPath ? FString(GLegacyEpicLogoTexturePath) : SourceIdentity==GLegacyGooglePath ? FString(GLegacyGoogleTexturePath) : SourceIdentity==GLegacyMediaPath ? FString(GLegacyMediaTexturePath) : SourceIdentity==GLegacySocialPath ? FString(GLegacySocialTexturePath) : SourceIdentity==GLegacyHollowPath ? FString(GLegacyHollowTexturePath) : bPlain ? FString(GLegacyKeybindTexturePath) : FString(TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon"));
-        if (SourceIdentity==GLegacyGooglePath)
+        const FString Expected=SourceIdentity==GLegacyEpicLogoPath ? FString(GLegacyEpicLogoTexturePath) : SourceIdentity==GLegacyGooglePath ? FString(GLegacyGoogleTexturePath) : SourceIdentity==GLegacyFacebookPath ? FString(GLegacyFacebookTexturePath) : SourceIdentity==GLegacyMediaPath ? FString(GLegacyMediaTexturePath) : SourceIdentity==GLegacySocialPath ? FString(GLegacySocialTexturePath) : SourceIdentity==GLegacyHollowPath ? FString(GLegacyHollowTexturePath) : bPlain ? FString(GLegacyKeybindTexturePath) : FString(TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon"));
+        if (IsLoginIconBase(SourceIdentity))
         {
             const auto& T=Decoded.IR.Texture2DParameters[0];const TArray<TSharedPtr<FJsonValue>>* Refs=nullptr;
             if (T.Parameter.Name!=FName(TEXT("Texture")) || T.Parameter.Association!=GlobalParameter || T.Parameter.Index!=INDEX_NONE || T.SamplerSource!=SSM_FromTextureAsset ||
                 !Fixture->TryGetArrayField(TEXT("ordered_texture_references"),Refs) || Refs->Num()!=1 || (*Refs)[0]->AsString()!=Expected)
-            { Error=TEXT("invalid Google original named reference context"); return false; }
+            { Error=TEXT("invalid login-icon original named reference context"); return false; }
         }
         if (bPlain)
         {
@@ -2177,9 +2196,10 @@ static bool ReadGoogleCompressedSource(const UTexture* Texture,const TSharedPtr<
                                       TArray<TArray<uint8>>& OutMips,FString& Error)
 {
     FString Asset;
-    if (!Texture || Texture->GetPathName()!=GLegacyGoogleTexturePath || !Fixture ||
+    const FLoginIconSource* Icon=Texture ? FindLoginIconSource(Texture->GetPathName()) : nullptr;
+    if (!Icon || !Fixture ||
         !FPackageName::DoesPackageExist(Texture->GetOutermost()->GetName(),nullptr,&Asset) || FPaths::GetExtension(Asset)!=TEXT("uasset"))
-    { Error=TEXT("invalid Google source texture/package"); return false; }
+    { Error=TEXT("invalid login-icon source texture/package"); return false; }
     auto ReadChecked=[](const FString& Path,int32 Size,const TCHAR* Expected,TArray<uint8>& Bytes)
     {
         if (IFileManager::Get().FileSize(*Path)!=Size || !FFileHelper::LoadFileToArray(Bytes,*Path) || Bytes.Num()!=Size) return false;
@@ -2187,17 +2207,18 @@ static bool ReadGoogleCompressedSource(const UTexture* Texture,const TSharedPtr<
         return BytesToHex(Hash,32).Equals(Expected,ESearchCase::IgnoreCase);
     };
     TArray<uint8> Header,Exports,Bulk;
-    if (!ReadChecked(Asset,730,TEXT("dd5b879570082e8a9ce2b5422bce4defab5cb4ce33fc1504c8adaf8d05928077"),Header) ||
-        !ReadChecked(FPaths::ChangeExtension(Asset,TEXT("uexp")),3310,TEXT("d8ccb6760cb477ccca194f1e33596a6b4f9298fabd8ec7e8d8acb7750c5ea4d4"),Exports) ||
-        !ReadChecked(FPaths::ChangeExtension(Asset,TEXT("ubulk")),172032,TEXT("7e16cf5d986d0d1fc186102733357143beeac6f401850a0e91acd0ef17d0af72"),Bulk))
-    { Error=TEXT("Google actual staged source bytes differ"); return false; }
+    if (!ReadChecked(Asset,Icon->HeaderBytes,Icon->HeaderSha,Header) ||
+        !ReadChecked(FPaths::ChangeExtension(Asset,TEXT("uexp")),3310,Icon->ExportsSha,Exports) ||
+        !ReadChecked(FPaths::ChangeExtension(Asset,TEXT("ubulk")),172032,Icon->BulkSha,Bulk))
+    { Error=TEXT("login-icon actual staged source bytes differ"); return false; }
     const auto Source=Fixture->GetObjectField(TEXT("texture_contract"))->GetObjectField(TEXT("source_platform_data"));
     const TArray<TSharedPtr<FJsonValue>>* Records=nullptr;
     if (!Source || Source->GetNumberField(TEXT("mip_count"))!=10 || Source->GetNumberField(TEXT("first_mip"))!=0 ||
-        Source->GetNumberField(TEXT("bulk_data_start_offset"))!=4036 || !Source->TryGetArrayField(TEXT("mip_receipts"),Records) || Records->Num()!=10)
-    { Error=TEXT("Google source mip-chain receipt differs"); return false; }
+        Source->GetNumberField(TEXT("bulk_data_start_offset"))!=double(Icon->HeaderBytes+3310-4) || !Source->TryGetArrayField(TEXT("mip_receipts"),Records) || Records->Num()!=10)
+    { Error=TEXT("login-icon source mip-chain receipt differs"); return false; }
     const int32 Offsets[]={0,131072,163840,322,2406,2954,3118,3186,3230,3274};
-    const int64 Stored[]={-4036,127036,159804,1052,3136,3684,3848,3916,3960,4004};
+    const int64 Start=Icon->HeaderBytes+3310-4;
+    int64 Stored[10]; for (int32 I=0;I<10;++I) Stored[I]=I<3 ? int64(Offsets[I])-Start : int64(Icon->HeaderBytes)+Offsets[I];
     for (int32 I=0;I<10;++I)
     {
         const int32 Dim=FMath::Max(512>>I,1), Blocks=FMath::Max((Dim+3)/4,1), Count=Blocks*Blocks*8;
@@ -2206,13 +2227,13 @@ static bool ReadGoogleCompressedSource(const UTexture* Texture,const TSharedPtr<
             R->GetNumberField(TEXT("logical_height"))!=Dim || R->GetNumberField(TEXT("stored_width"))!=FMath::Max(Dim,4) ||
             R->GetNumberField(TEXT("stored_height"))!=FMath::Max(Dim,4) || R->GetNumberField(TEXT("compressed_bytes"))!=Count ||
             R->GetNumberField(TEXT("stored_bulk_offset"))!=double(Stored[I]) || R->GetNumberField(TEXT("resolved_file_offset"))!=Offsets[I] ||
-            R->GetNumberField(TEXT("cue_reported_bulk_offset"))!=double(Stored[I]+4036) ||
+            R->GetNumberField(TEXT("cue_reported_bulk_offset"))!=double(Stored[I]+Start) ||
             R->GetStringField(TEXT("storage"))!=(I<3 ? TEXT("ubulk") : TEXT("uexp")) || Offsets[I]>Bytes.Num()-Count)
-        { Error=TEXT("Google signed offset/physical mip frame differs"); return false; }
+        { Error=TEXT("login-icon signed offset/physical mip frame differs"); return false; }
         auto& Data=OutMips.AddDefaulted_GetRef(); Data.Append(Bytes.GetData()+Offsets[I],Count);
         uint8 Hash[32]; LegacyManifestSHA256(Data.GetData(),uint32(Data.Num()),Hash);
         if (!BytesToHex(Hash,32).Equals(R->GetStringField(TEXT("bc1_sha256")),ESearchCase::IgnoreCase))
-        { Error=TEXT("Google original BC1 mip hash differs"); return false; }
+        { Error=TEXT("login-icon original BC1 mip hash differs"); return false; }
     }
     return true;
 }
@@ -2220,27 +2241,30 @@ static bool ReadGoogleCompressedSource(const UTexture* Texture,const TSharedPtr<
 static bool CheckGoogleTextureBinding(UMaterialInterface* Owner,FMaterialResource* Resource,
     const TRefCountPtr<FMaterialShaderMap>& Map,const TSharedPtr<FJsonObject>& Fixture,FString& Error)
 {
-    if (!IsInGameThread() || !Owner || Owner->GetPathName()!=GLegacyGooglePath || !Resource || !Map)
-    { Error=TEXT("invalid Google actual owner"); return false; }
+    if (!IsInGameThread() || !Owner || !IsLoginIconBase(Owner->GetPathName()) || !Resource || !Map)
+    { Error=TEXT("invalid login-icon actual owner"); return false; }
+    const FString IconTexturePath=Owner->GetPathName()==GLegacyGooglePath ? FString(GLegacyGoogleTexturePath) : FString(GLegacyFacebookTexturePath);
+    const FLoginIconSource* IconSource=FindLoginIconSource(IconTexturePath);
+    if (!IconSource) { Error=TEXT("unknown login-icon texture source"); return false; }
     const auto Refs=Resource->GetReferencedTextures(); UTexture2D* Texture=Refs.Num()==1 ? Cast<UTexture2D>(Refs[0]) : nullptr;
-    if (!Texture || Texture->GetPathName()!=GLegacyGoogleTexturePath || Texture->GetSizeX()!=512 || Texture->GetSizeY()!=512 ||
+    if (!Texture || Texture->GetPathName()!=IconTexturePath || Texture->GetSizeX()!=512 || Texture->GetSizeY()!=512 ||
         Texture->GetPixelFormat()!=PF_DXT1 || Texture->GetNumMips()!=10 || !Texture->SRGB || Texture->Filter!=TF_Default ||
         Texture->LODGroup!=TEXTUREGROUP_World || Texture->AddressX!=TA_Wrap || Texture->AddressY!=TA_Wrap)
-    { Error=TEXT("Google original texture metadata differs"); return false; }
+    { Error=TEXT("login-icon original texture metadata differs"); return false; }
     TArray<TArray<uint8>> OriginalMips; if (!ReadGoogleCompressedSource(Texture,Fixture,OriginalMips,Error)) return false;
     const int32 Before=Texture->GetNumResidentMips();
     // Explicit diagnostic residency request, after real owner load. No package/cache edits.
     Texture->SetForceMipLevelsToBeResident(60.f);
     if (Texture->GetNumResidentMips()!=10) { Texture->StreamIn(10,true); Texture->WaitForStreaming(); }
     FlushRenderingCommands();
-    if (Texture->GetNumResidentMips()!=10) { Error=TEXT("Google full original ten-mip residency unavailable"); return false; }
+    if (Texture->GetNumResidentMips()!=10) { Error=TEXT("login-icon full original ten-mip residency unavailable"); return false; }
     const auto& U=Map->GetUniformExpressionSet();
-    if (U.GetNumTextures(EMaterialTextureParameterType::Standard2D)!=1) { Error=TEXT("Google expression count differs"); return false; }
+    if (U.GetNumTextures(EMaterialTextureParameterType::Standard2D)!=1) { Error=TEXT("login-icon expression count differs"); return false; }
     const auto& E=U.GetTextureParameter(EMaterialTextureParameterType::Standard2D,0);
     if (E.GetParameterInfo()!=FMaterialParameterInfo(FName(TEXT("Texture")),GlobalParameter,INDEX_NONE) || E.TextureIndex!=0 || E.SamplerSource!=SSM_FromTextureAsset)
-    { Error=TEXT("Google exact named identity differs"); return false; }
+    { Error=TEXT("login-icon exact named identity differs"); return false; }
     UTexture* GT=nullptr; U.GetGameThreadTextureValue(EMaterialTextureParameterType::Standard2D,0,Owner,*Resource,GT,false);
-    if (GT!=Texture) { Error=TEXT("Google GT named/indexed lookup differs"); return false; }
+    if (GT!=Texture) { Error=TEXT("login-icon GT named/indexed lookup differs"); return false; }
     const FMaterialRenderProxy* Base=Owner->GetRenderProxy(); bool Matched=false; int32 Calls=0;
     ENQUEUE_RENDER_COMMAND(CheckGoogleTextureBinding)([Base,Resource,Map,Texture,&Matched,&Calls](FRHICommandListImmediate&)
     {
@@ -2263,13 +2287,52 @@ static bool CheckGoogleTextureBinding(UMaterialInterface* Owner,FMaterialResourc
         void* Slot=nullptr;void* Sampler=nullptr;FMemory::Memcpy(&Slot,Contents+48,sizeof(Slot));FMemory::Memcpy(&Sampler,Contents+56,sizeof(Sampler));
         Matched=!Proxy.Wrong && Calls>0 && Slot==Texture->TextureReference.TextureReferenceRHI.GetReference() && Sampler==Texture->Resource->SamplerStateRHI.GetReference();
     });
-    FlushRenderingCommands();if (!Matched) { Error=TEXT("Google exact named/asset sampler RHI binding differs");return false; }
+    FlushRenderingCommands();if (!Matched) { Error=TEXT("login-icon exact named/asset sampler RHI binding differs");return false; }
     FString Directory;FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory);
-    const FString Path=FPaths::Combine(Directory,TEXT("GoogleTexture.json"));
-    const FString Json=FString::Printf(TEXT("{\"texture_path\":\"%s\",\"parameter_name\":\"Texture\",\"parameter_number\":0,\"association\":2,\"index\":-1,\"width\":512,\"height\":512,\"format\":\"PF_DXT1\",\"srgb\":true,\"mips\":10,\"layout_hash\":%u,\"constant_bytes\":%u,\"resource_offsets\":[48,56,64,72],\"resource_types\":[5,8,8,8],\"resident_mips_before\":%d,\"resident_mips_after\":10,\"sampler_source\":0,\"asset_sampler_binding_match\":true,\"named_proxy_calls\":%d,\"indexed_default_match\":true,\"raw_bc1_gpu_readback_measured\":false}\n"),GLegacyGoogleTexturePath,U.GetUniformBufferLayout().GetHash(),uint32(U.GetUniformBufferLayout().ConstantBufferSize),Before,Calls);
-    if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path)) { Error=TEXT("cannot save Google binding receipt");return false; }
+    const FString Path=FPaths::Combine(Directory,FString(IconSource->Label)+TEXT("Texture.json"));
+    const FString Json=FString::Printf(TEXT("{\"texture_path\":\"%s\",\"parameter_name\":\"Texture\",\"parameter_number\":0,\"association\":2,\"index\":-1,\"width\":512,\"height\":512,\"format\":\"PF_DXT1\",\"srgb\":true,\"mips\":10,\"layout_hash\":%u,\"constant_bytes\":%u,\"resource_offsets\":[48,56,64,72],\"resource_types\":[5,8,8,8],\"resident_mips_before\":%d,\"resident_mips_after\":10,\"sampler_source\":0,\"asset_sampler_binding_match\":true,\"named_proxy_calls\":%d,\"indexed_default_match\":true,\"raw_bc1_gpu_readback_measured\":false}\n"),*IconTexturePath,U.GetUniformBufferLayout().GetHash(),uint32(U.GetUniformBufferLayout().ConstantBufferSize),Before,Calls);
+    if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path)) { Error=TEXT("cannot save login-icon binding receipt");return false; }
     return true;
 }
+// Nonstatic login-icon instances have no resource: verify the original named Texture override identity on the
+// actual instance, the override texture's original metadata, and that the inherited parent map resolves it.
+static bool CheckLoginIconInstanceTexture(UMaterialInterface* Owner,FMaterialResource* Resource,
+    const TRefCountPtr<FMaterialShaderMap>& Map,const TSharedPtr<FJsonObject>& Fixture,FString& Error)
+{
+    UMaterialInstance* Instance=Cast<UMaterialInstance>(Owner);
+    const TArray<TSharedPtr<FJsonValue>>* Rows=nullptr;
+    if (!IsInGameThread() || !Instance || !IsLoginIconInstance(Instance->GetPathName()) || !Resource || !Map || !Fixture ||
+        !Fixture->TryGetArrayField(TEXT("owner_texture_expectations"),Rows) || Rows->Num()!=1 || !(*Rows)[0]->AsObject())
+    { Error=TEXT("invalid login-icon instance texture context"); return false; }
+    const auto Row=(*Rows)[0]->AsObject(); const auto Parameter=Row->GetObjectField(TEXT("parameter")); const auto Name=Parameter ? Parameter->GetObjectField(TEXT("name")) : nullptr;
+    if (!Name || Name->GetStringField(TEXT("name"))!=TEXT("Texture") || int32(Name->GetNumberField(TEXT("number")))!=0 ||
+        int32(Parameter->GetNumberField(TEXT("association")))!=int32(GlobalParameter) || int32(Parameter->GetNumberField(TEXT("index")))!=-1)
+    { Error=TEXT("login-icon instance texture identity differs"); return false; }
+    const FString Path=Row->GetStringField(TEXT("texture_path"));
+    UTexture2D* Expected=LoadObject<UTexture2D>(nullptr,*Path);
+    auto EnumName=[](const UEnum* Enum,int64 Value){ return Enum ? Enum->GetNameStringByValue(Value) : FString(); };
+    if (!Expected || Expected->GetClass()!=UTexture2D::StaticClass() || Expected->GetPathName()!=Path ||
+        Expected->GetSizeX()!=int32(Row->GetNumberField(TEXT("width"))) || Expected->GetSizeY()!=int32(Row->GetNumberField(TEXT("height"))) ||
+        FString(TEXT("PF_"))+GPixelFormats[Expected->GetPixelFormat()].Name!=Row->GetStringField(TEXT("pixelFormat")) ||
+        Expected->GetNumMips()!=int32(Row->GetNumberField(TEXT("mip_count"))) || Expected->SRGB!=Row->GetBoolField(TEXT("srgb")) ||
+        EnumName(StaticEnum<TextureFilter>(),Expected->Filter)!=Row->GetStringField(TEXT("filter")) ||
+        EnumName(StaticEnum<TextureGroup>(),Expected->LODGroup)!=Row->GetStringField(TEXT("lodGroup")) ||
+        EnumName(StaticEnum<TextureAddress>(),Expected->AddressX)!=Row->GetStringField(TEXT("addressX")) ||
+        EnumName(StaticEnum<TextureAddress>(),Expected->AddressY)!=Row->GetStringField(TEXT("addressY")))
+    { Error=TEXT("login-icon instance override texture or its original metadata differs"); return false; }
+    UTexture* Override=nullptr;
+    if (!Instance->GetTextureParameterValue(FHashedMaterialParameterInfo(FName(TEXT("Texture")),GlobalParameter,INDEX_NONE),Override,true) || Override!=Expected)
+    { Error=TEXT("login-icon instance does not own the original Texture override"); return false; }
+    const auto& U=Map->GetUniformExpressionSet();
+    if (U.GetNumTextures(EMaterialTextureParameterType::Standard2D)!=1 ||
+        U.GetTextureParameter(EMaterialTextureParameterType::Standard2D,0).GetParameterInfo()!=FMaterialParameterInfo(FName(TEXT("Texture")),GlobalParameter,INDEX_NONE))
+    { Error=TEXT("login-icon inherited parent texture expression differs"); return false; }
+    UTexture* GT=nullptr; U.GetGameThreadTextureValue(EMaterialTextureParameterType::Standard2D,0,Owner,*Resource,GT,false);
+    if (GT!=Expected) { Error=TEXT("login-icon instance override is not resolved through the inherited map"); return false; }
+    UE_LOG(LogTemp,Display,TEXT("Legacy login-icon instance %s: original Texture override %s and metadata verified"),*Owner->GetPathName(),*Path);
+    return true;
+}
+
 static bool DrawGoogleTextureControls(UMaterialInterface* Owner, FMaterialResource* Resource,
     const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings,
     const TSharedPtr<FJsonObject>& Fixture, FString& Error)
@@ -2298,7 +2361,7 @@ static bool DrawGoogleTextureControls(UMaterialInterface* Owner, FMaterialResour
     const FMaterialRenderProxy* Base=Owner->GetRenderProxy();
     const auto SourceReferences=Resource->GetReferencedTextures();
     UTexture* SourceTexture=SourceReferences.Num()==1 ? Cast<UTexture>(SourceReferences[0]) : nullptr;
-    if (!VertexType || !PixelType || !Base || !SourceTexture || SourceTexture->GetPathName()!=GLegacyGoogleTexturePath) { Error=TEXT("Google texture draw shader unavailable"); return false; }
+    if (!VertexType || !PixelType || !Base || !SourceTexture || !FindLoginIconSource(SourceTexture->GetPathName())) { Error=TEXT("login-icon texture draw shader unavailable"); return false; }
     TArray<TArray<uint8>> SourceMips;
     if (!ReadGoogleCompressedSource(SourceTexture,Fixture,SourceMips,Error)) return false;
     TArray<FColor> Images[3]; bool bPassed=true; FString Failure; int32 NamedCalls=-1;
@@ -2401,7 +2464,8 @@ static bool DrawGoogleTextureControls(UMaterialInterface* Owner, FMaterialResour
     int32 Changed=0; FSHAHash Hashes[3];
     for (int32 I=0;I<4096;++I) if (Images[0][I]!=Images[2][I]) ++Changed;
     const bool bEqual=Images[0]==Images[1],bRequired=Profile==TEXT("combined");
-    const TCHAR* Names[]={TEXT("GoogleDraw-Source.rgba"),TEXT("GoogleDraw-Copy.rgba"),TEXT("GoogleDraw-Checker.rgba")};
+    const FLoginIconSource* DrawIcon=FindLoginIconSource(SourceTexture->GetPathName());
+    const FString Names[]={FString(DrawIcon->Label)+TEXT("Draw-Source.rgba"),FString(DrawIcon->Label)+TEXT("Draw-Copy.rgba"),FString(DrawIcon->Label)+TEXT("Draw-Checker.rgba")};
     for (int32 Pass=0;Pass<3;++Pass)
     {
         TArray<uint8> Bytes; Bytes.Reserve(4096*4);
@@ -2411,7 +2475,7 @@ static bool DrawGoogleTextureControls(UMaterialInterface* Owner, FMaterialResour
         if (FPaths::FileExists(Path) || !FFileHelper::SaveArrayToFile(Bytes,*Path)) { Error=TEXT("cannot write texture draw artifact"); return false; }
     }
     const FString Json=FString::Printf(TEXT("{\"width\":64,\"height\":64,\"format\":\"RGBA8\",\"source_sha1\":\"%s\",\"copy_sha1\":\"%s\",\"checker_sha1\":\"%s\",\"checker_changed_pixels\":%d,\"named_proxy_calls\":%d,\"numeric_profile\":\"%s\",\"source_mips_uploaded\":10,\"source_texture_format\":\"BC1_SRGB\",\"source_copy_equal\":%s,\"checker_delta_policy\":\"%s\",\"raw_bc1_gpu_readback_measured\":false,\"scope\":\"diagnostic scratch uniform buffers; source asset and material cache unchanged\"}\n"),*Hashes[0].ToString(),*Hashes[1].ToString(),*Hashes[2].ToString(),Changed,NamedCalls,*Profile,bEqual ? TEXT("true") : TEXT("false"),bRequired ? TEXT("required_positive") : TEXT("observational"));
-    const FString JsonPath=FPaths::Combine(Directory,TEXT("GoogleDraw.json"));
+    const FString JsonPath=FPaths::Combine(Directory,FString(DrawIcon->Label)+TEXT("Draw.json"));
     if (FPaths::FileExists(JsonPath) || !FFileHelper::SaveStringToFile(Json,*JsonPath)) { Error=TEXT("cannot write texture draw receipt"); return false; }
     if (!bEqual || (bRequired && !Changed)) { Error=TEXT("Google source/copy or combined checker failure; all frames preserved");return false; }
     UE_LOG(LogTemp,Display,TEXT("Legacy Google texture: original source and exact copy agree; checker changes %d pixels"),Changed);
@@ -3316,7 +3380,12 @@ void RegisterLegacyOriginalMaterialProvider()
         {GLegacySocialPath, GLegacySocialPath, TEXT("d5c2198bee653b99a95b219f517870d82979dd5f"), TEXT("c505c4a9977115634e87809ccd0b5e981bfc417d"), FString(), TEXT("fortnite.legacy-material-ingress.v5"), TEXT("UMaterial"), FString(), GLegacySocialPath, false, false},
         {GLegacyMediaPath, GLegacyMediaPath, TEXT("a920df3ab39fdca2bb82a62f6a2a9ac4601b91d0"), TEXT("8c5013f615de83c1fbaf6d3435c6aaa7f3414a69"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterial"), FString(), GLegacyMediaPath, false, false},
         {GLegacyEpicLogoPath,GLegacyEpicLogoPath,TEXT("fc2115d31cd8dfa18bf49dd4b70ecd9f1e63dd51"),TEXT("7b6f19ed809131439a35d6a51db689d652a3909b"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyEpicLogoPath,false,false},
-        {GLegacyGooglePath,GLegacyGooglePath,TEXT("a519120049649f3c0835b5e341e27778aa4ee781"),TEXT("e91924af4f38c08d7c9648768835473df361c16e"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyGooglePath,false,false}
+        {GLegacyGooglePath,GLegacyGooglePath,TEXT("a519120049649f3c0835b5e341e27778aa4ee781"),TEXT("e91924af4f38c08d7c9648768835473df361c16e"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyGooglePath,false,false},
+        // Login-icon family (field order: owner, shader identity, bundle sha1, resource sha1). Instances inherit Facebook's resource.
+        {GLegacyFacebookPath,GLegacyFacebookPath,TEXT("8c00f790b3f785bb1b30fdd49c2f387dbfdf3da6"),TEXT("ca7e1b5d73ae1be9c1ddb1e6c0537870477286a2"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyFacebookPath,false,false},
+        {GLegacyLoginPS4Path,GLegacyFacebookPath,TEXT("0e9ee8162f07588fb52549750a8929d1906b6469"),TEXT("ca7e1b5d73ae1be9c1ddb1e6c0537870477286a2"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterialInstanceConstant"),GLegacyFacebookPath,GLegacyFacebookPath,true,false},
+        {GLegacyLoginXBoxPath,GLegacyFacebookPath,TEXT("db5126da82bd11b50ff407ef19eda14ab7a28918"),TEXT("ca7e1b5d73ae1be9c1ddb1e6c0537870477286a2"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterialInstanceConstant"),GLegacyLoginPS4Path,GLegacyFacebookPath,true,false},
+        {GLegacyLoginEpicPath,GLegacyFacebookPath,TEXT("963b30336b59f95de70c65d31dee2e024a409a21"),TEXT("ca7e1b5d73ae1be9c1ddb1e6c0537870477286a2"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterialInstanceConstant"),GLegacyLoginPS4Path,GLegacyFacebookPath,true,false}
     };
     auto IsHex=[](const FString& Value, int32 Length)
     {
@@ -3470,7 +3539,7 @@ void RegisterLegacyOriginalMaterialProvider()
     // A non-static instance points to its actual resource-owning ancestor; it is
     // not treated as another serialized resource or an independent shader map.
     if (!GLegacyIngressConfigInvalid)
-        for (const auto& Pin : GLegacyIngressPins) if (Pin.bManifest)
+        for (const auto& Pin : GLegacyIngressPins) if (Pin.bManifest && !Pin.Json.IsEmpty())
         {
             const FLegacyIngressPin* Owner=nullptr;
             for (const auto& Candidate : GLegacyIngressPins) if (Candidate.Owner==Pin.ResourceOwner) { Owner=&Candidate; break; }
@@ -3682,11 +3751,17 @@ void ProbeLegacyOriginalMaterial()
         }
         UE_LOG(LogTemp,Display,TEXT("Legacy Donut: indexed source texture and actual uniform texture/sampler match %s"),*TexturePath);
     }
-    if (OwnerPath==GLegacyGooglePath)
+    if (IsLoginIconBase(OwnerPath))
     {
         FString TextureError;
         if (!CheckGoogleTextureBinding(Material,Resource,Map,Bundle->GetObjectField(TEXT("runtime_fixture")),TextureError))
-        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Google original binding failed: %s"),*TextureError);FPlatformMisc::RequestExitWithStatus(false,1);return; }
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: login-icon original binding failed: %s"),*TextureError);FPlatformMisc::RequestExitWithStatus(false,1);return; }
+    }
+    if (IsLoginIconInstance(OwnerPath))
+    {
+        FString TextureError;
+        if (!CheckLoginIconInstanceTexture(Material,Resource,Map,Bundle->GetObjectField(TEXT("runtime_fixture")),TextureError))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: login-icon instance override failed: %s"),*TextureError);FPlatformMisc::RequestExitWithStatus(false,1);return; }
     }
     if (OwnerPath==GLegacyMediaPath)
     {
@@ -3776,13 +3851,13 @@ void ProbeLegacyOriginalMaterial()
     if (!bNegativeChecks)
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: original reader negative check failed")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     FString Error;
-    if (!CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("owner"),Error,(OwnerPath==GLegacyDonutPath || OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacySocialPath || OwnerPath==GLegacyMediaPath || OwnerPath==GLegacyGooglePath) ? Material : nullptr))
+    if (!CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("owner"),Error,(OwnerPath==GLegacyDonutPath || OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacySocialPath || OwnerPath==GLegacyMediaPath || IsLoginIconBase(OwnerPath)) ? Material : nullptr))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if ((OwnerPath == GLegacyPowerToastPath || OwnerPath == GLegacyMainLPath) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("instance"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live instance uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (Pin->bManifest && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("manifest owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
-    if ((OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacyFlogoPath || OwnerPath==GLegacySocialPath || OwnerPath==GLegacyMediaPath || OwnerPath==GLegacyGooglePath) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("plain texture owner"),Error,Material,TEXT("owner_uniform_cases")))
+    if ((OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacyFlogoPath || OwnerPath==GLegacySocialPath || OwnerPath==GLegacyMediaPath || IsLoginIconBase(OwnerPath)) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("plain texture owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: plain texture owner uniforms failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (OwnerPath==GLegacyDonutPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("Donut owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Donut owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
@@ -3870,11 +3945,11 @@ void ProbeLegacyOriginalMaterial()
         UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: Hollow owner complete and attached on both threads; seven shaders and controlled source sampling passed"));
         return;
     }
-    if (OwnerPath==GLegacyGooglePath)
+    if (IsLoginIconBase(OwnerPath))
     {
         if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !bView || !DrawGoogleTextureControls(Material,Resource,Map,Bindings,Fixture,Error))
-        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Google texture draw failed: %s"),*Error);FPlatformMisc::RequestExitWithStatus(false,1);return; }
-        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: Google owner complete and attached on both threads; seven shaders and original ten-mip source/copy controls passed"));
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: login-icon texture draw failed: %s"),*Error);FPlatformMisc::RequestExitWithStatus(false,1);return; }
+        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: login-icon owner %s complete and attached on both threads; seven shaders and original ten-mip source/copy controls passed"),*OwnerPath);
         FPlatformMisc::RequestExit(false);return;
     }
     if (OwnerPath==GLegacyMediaPath)
