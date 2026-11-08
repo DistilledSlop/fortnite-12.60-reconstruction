@@ -6,7 +6,6 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerControllerSpectating.h"
 
-#include "Delegates/Delegate.h"
 #include "FServerHighlightsAvailableDelegate.h"
 #include "GameFramework/OnlineReplStructs.h"
 
@@ -86,9 +85,5 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortReplaySequenceComponent* GetSequencerComponent() const;
 
-
-	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
-	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
-	static bool NativeRemoveMulticastDelegateHandle1406d7fd0(void* Delegate, FDelegateHandle Handle);
 };
 

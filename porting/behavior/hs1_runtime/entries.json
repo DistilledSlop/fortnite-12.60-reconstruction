@@ -15,24 +15,5 @@
       "UObject/Object.h"
     ],
     "notes": "Returns float at Context+0xcc4 (raw, no reflected member). Callers: GetDifficultyLevel and difficulty event handlers."
-  },
-  {
-    "class": "UFortKismetLibrary",
-    "function": "NativeGetGameStateWorldLevel141f881f0",
-    "kind": "helper",
-    "signature": "int32 NativeGetGameStateWorldLevel141f881f0(UObject* Context)",
-    "signature_status": "proposed",
-    "static": true,
-    "access": "public",
-    "inc_path": "porting/behavior/hs1_runtime/UFortKismetLibrary/NativeGetGameStateWorldLevel141f881f0.inc",
-    "address": "0x141f881f0",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [
-      "UObject/Object.h",
-      "Engine/World.h",
-      "GameFramework/GameStateBase.h"
-    ],
-    "notes": "World->GameState cast to AFortGameState, returns WorldLevel (+0x2f4); 0 if any step fails. Vtbl 0x150 assumed GetWorld."
   }
 ]

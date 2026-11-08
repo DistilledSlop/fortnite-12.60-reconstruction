@@ -1,17 +1,17 @@
 [
- {
-  "class": "UFortLayeredAudioComponent",
-  "function": "NativeHelper1440b4d10",
-  "kind": "helper",
-  "signature": "bool NativeHelper1440b4d10() const",
-  "signature_status": "proposed",
-  "static": false,
-  "access": "public",
-  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/vk2_runtime/UFortLayeredAudioComponent/NativeHelper1440b4d10.inc",
-  "address": "0x1440b4d10",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [],
-  "notes": "Virtual slot 0x540 member; returns bit0 of byte +0x86 (3 insns, fully accounted). Semantic name unverified."
- }
+  {
+    "class": "UFortLayeredAudioComponent",
+    "function": "NativeHelper1440b4d10",
+    "kind": "helper",
+    "signature": "bool NativeHelper1440b4d10() const",
+    "signature_status": "proposed",
+    "static": false,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/vk2_runtime/UFortLayeredAudioComponent/NativeHelper1440b4d10.inc",
+    "address": "0x1440b4d10",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Virtual slot 0x540 member; returns bit0 of byte +0x86 (3 insns, fully accounted). Semantic name unverified."
+  }
 ]

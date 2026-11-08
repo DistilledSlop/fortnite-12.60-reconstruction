@@ -1,22 +1,5 @@
 [
   {
-    "class": "AFortPlayerControllerSpectating",
-    "function": "IsFollowedPlayerInBus",
-    "kind": "exec",
-    "signature": "@SIG@",
-    "signature_status": "proposed",
-    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/cs4_runtime/AFortPlayerControllerSpectating/IsFollowedPlayerInBus.inc",
-    "confidence": "high",
-    "address": "0x142a6be70",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x1423d9010",
-    "notes": "Wrapper body ported from reflected members and ported helpers; see .inc header."
-  },
-  {
     "class": "AFortPlayerPawn",
     "function": "IsSprinting",
     "kind": "exec",

@@ -66,23 +66,6 @@
     "notes": "Const fn that compacts TWeakObjectPtr array (+0x2a8 / Num +0x2b0, recovered members) in place and returns Num > 0. Body 0x144e0d830."
   },
   {
-    "class": "AFortMinigame",
-    "function": "IsPlayerInOurVolume",
-    "kind": "exec",
-    "signature": "@SIG@",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/cs2_runtime/AFortMinigame/IsPlayerInOurVolume.inc",
-    "confidence": "high",
-    "address": "0x1429c3560",
-    "status": "ported",
-    "reflection_flags": "0x54020403",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x14209a4e0",
-    "notes": "Resolves volume manager from reflected Volume (+0x910) and calls NativeVolumeContainsUserAt288141c94c20. Body 0x14209a4e0."
-  },
-  {
     "class": "AFortMusicManager",
     "function": "OnVoiceFinished",
     "kind": "exec",

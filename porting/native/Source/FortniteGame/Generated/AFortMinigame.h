@@ -745,9 +745,6 @@ public:
 	bool IsPlayerInMinigameByNetId(FUniqueNetIdRepl& UniqueNetId, bool bCheckSpectatingPlayers) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool IsPlayerInOurVolume(AFortPlayerState* PlayerState) const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayerPersistenceRequired(AFortPlayerState* PlayerState) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -898,8 +895,6 @@ public:
 	bool NativeAllowsFriendlyFire163(AFortPawn* Pawn);
 	static uint8* NativeFindStatFilterEntry14207a350(uint8* EntryArray, UClass* const* FilterClassKey);
 	static UObject* NativeGetAthenaGameMode141641300(UObject* MinigameObject);
-	static bool NativeHasMatchingEndCondition142099610(UObject* Context);
-	static bool NativeVolumeContainsUserAt288141c94c20(UObject* Context, UObject* Volume, UObject* PlayerState);
 	static void NativeSetStatFilterEntryValue1420a40c0(const void* UnusedOwner, uint8* EntryArray, UClass* FilterClass, int32 NewValue);
 };
 

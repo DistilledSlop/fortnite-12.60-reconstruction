@@ -1,22 +1,5 @@
 [
   {
-    "class": "UFortStoreFrontOfferInfo",
-    "function": "isItemGrantUnique",
-    "kind": "exec",
-    "signature": "@SIG@",
-    "signature_status": "proposed",
-    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/ct4_runtime/UFortStoreFrontOfferInfo/isItemGrantUnique.inc",
-    "confidence": "high",
-    "address": "0x1452f8280",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x1450d2610",
-    "notes": "Wrapper port of 0x1450d2610; owner at raw +0x28, TArray at owner +0x210/+0x218; see .inc evidence"
-  },
-  {
     "class": "UFortSwipePanel",
     "function": "GetSwipeInfo",
     "kind": "exec",

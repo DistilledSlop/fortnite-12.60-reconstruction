@@ -1,39 +1,5 @@
 [
   {
-    "class": "AFortMinigame",
-    "function": "NativeHasMatchingEndCondition142099610",
-    "kind": "helper",
-    "signature": "bool NativeHasMatchingEndCondition142099610(UObject* Context)",
-    "signature_status": "proposed",
-    "static": true,
-    "access": "public",
-    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr1_runtime/AFortMinigame/NativeHasMatchingEndCondition142099610.inc",
-    "address": "0x142099610",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [
-      "UObject/Object.h"
-    ],
-    "notes": "AFortMinigame end-condition check; callees CheckRemainingLivingPlayersForEndCondition/EvaluateStatQuery not declared in AFortMinigame.h"
-  },
-  {
-    "class": "AFortMinigame",
-    "function": "NativeVolumeContainsUserAt288141c94c20",
-    "kind": "helper",
-    "signature": "bool NativeVolumeContainsUserAt288141c94c20(UObject* Context, UObject* Volume, UObject* PlayerState)",
-    "signature_status": "proposed",
-    "static": true,
-    "access": "public",
-    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr1_runtime/AFortMinigame/NativeVolumeContainsUserAt288141c94c20.inc",
-    "address": "0x141c94c20",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [
-      "UObject/Object.h"
-    ],
-    "notes": "Tail-jump thunk: VolumeContainsUser on Context+0x288; AFortVolumeManager::VolumeContainsUser not declared in its generated header"
-  },
-  {
     "class": "AFortPawn",
     "function": "NativeSelectMeleeReticleAngle14269eaa0",
     "kind": "helper",

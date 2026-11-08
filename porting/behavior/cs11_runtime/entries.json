@@ -17,23 +17,6 @@
     "notes": "Ported from body 0x142425f90; see .inc comments for offset evidence."
   },
   {
-    "class": "UFortPortalComponent",
-    "function": "OnRep_LinkDataErrorStatus",
-    "kind": "exec",
-    "signature": "@SIG@",
-    "signature_status": "proposed",
-    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/cs11_runtime/UFortPortalComponent/OnRep_LinkDataErrorStatus.inc",
-    "confidence": "high",
-    "address": "0x142aa2640",
-    "status": "ported",
-    "reflection_flags": "0x40401",
-    "static": false,
-    "virtual": false,
-    "access": "private",
-    "native_body_address": "0x141f3f280",
-    "notes": "Ported from body 0x141f3f280; see .inc comments for offset evidence."
-  },
-  {
     "class": "UFortQuestManager",
     "function": "PopNextPendingFeatureUnlock",
     "kind": "exec",
@@ -66,23 +49,6 @@
     "access": "public",
     "native_body_address": "0x14248cf10",
     "notes": "Ported from body 0x14248cf10; see .inc comments for offset evidence."
-  },
-  {
-    "class": "UFortShowdownDetailView",
-    "function": "GetEventId",
-    "kind": "exec",
-    "signature": "@SIG@",
-    "signature_status": "proposed",
-    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/cs11_runtime/UFortShowdownDetailView/GetEventId.inc",
-    "confidence": "medium",
-    "address": "0x1452d89c0",
-    "status": "ported",
-    "reflection_flags": "0x4080401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x14506b370",
-    "notes": "Ported from body 0x14506b370; see .inc comments for offset evidence."
   },
   {
     "class": "UFortUIMessageManager",

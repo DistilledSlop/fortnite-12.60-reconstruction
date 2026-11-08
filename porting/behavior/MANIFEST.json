@@ -59163,21 +59163,6 @@
     "notes": "Reviewed against Gemini decompilation and reflected delegate signature; build and runtime pending."
   },
   {
-    "class": "UFortHeroLoadoutSlotButton",
-    "function": "HandleMenuOpenChanged",
-    "kind": "exec",
-    "signature": "void HandleMenuOpenChanged(bool bIsMenuOpen)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/UFortHeroLoadoutSlotButton/HandleMenuOpenChanged.inc",
-    "confidence": "high",
-    "address": "0x14524f9e0",
-    "status": "ported",
-    "reflection_flags": "0x40401",
-    "static": false,
-    "access": "public",
-    "notes": "Reviewed against Gemini decompilation and reflected delegate signature; build and runtime pending."
-  },
-  {
     "class": "UFortTabListWidgetBase",
     "function": "IsFirstTabActive",
     "kind": "exec",
@@ -87390,40 +87375,6 @@
     "notes": "Returns constant 0xCB2E4E (13315662) from the helper asm; no arguments."
   },
   {
-    "class": "AFortMinigame",
-    "function": "NativeHasMatchingEndCondition142099610",
-    "kind": "helper",
-    "signature": "bool NativeHasMatchingEndCondition142099610(UObject* Context)",
-    "signature_status": "proposed",
-    "static": true,
-    "access": "public",
-    "inc_path": "porting/behavior/hr1_runtime/AFortMinigame/NativeHasMatchingEndCondition142099610.inc",
-    "address": "0x142099610",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [
-      "UObject/Object.h"
-    ],
-    "notes": "AFortMinigame end-condition check; callees CheckRemainingLivingPlayersForEndCondition/EvaluateStatQuery not declared in AFortMinigame.h"
-  },
-  {
-    "class": "AFortMinigame",
-    "function": "NativeVolumeContainsUserAt288141c94c20",
-    "kind": "helper",
-    "signature": "bool NativeVolumeContainsUserAt288141c94c20(UObject* Context, UObject* Volume, UObject* PlayerState)",
-    "signature_status": "proposed",
-    "static": true,
-    "access": "public",
-    "inc_path": "porting/behavior/hr1_runtime/AFortMinigame/NativeVolumeContainsUserAt288141c94c20.inc",
-    "address": "0x141c94c20",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [
-      "UObject/Object.h"
-    ],
-    "notes": "Tail-jump thunk: VolumeContainsUser on Context+0x288; AFortVolumeManager::VolumeContainsUser not declared in its generated header"
-  },
-  {
     "class": "AFortPawn",
     "function": "NativeSelectMeleeReticleAngle14269eaa0",
     "kind": "helper",
@@ -87870,23 +87821,6 @@
     "notes": "Const fn that compacts TWeakObjectPtr array (+0x2a8 / Num +0x2b0, recovered members) in place and returns Num > 0. Body 0x144e0d830."
   },
   {
-    "class": "AFortMinigame",
-    "function": "IsPlayerInOurVolume",
-    "kind": "exec",
-    "signature": "bool IsPlayerInOurVolume(AFortPlayerState* PlayerState) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/cs2_runtime/AFortMinigame/IsPlayerInOurVolume.inc",
-    "confidence": "high",
-    "address": "0x1429c3560",
-    "status": "ported",
-    "reflection_flags": "0x54020403",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x14209a4e0",
-    "notes": "Resolves volume manager from reflected Volume (+0x910) and calls NativeVolumeContainsUserAt288141c94c20. Body 0x14209a4e0."
-  },
-  {
     "class": "AFortMusicManager",
     "function": "OnVoiceFinished",
     "kind": "exec",
@@ -88111,23 +88045,6 @@
     "status": "ported",
     "recovery_source": "small_leaf_batch",
     "notes": "Unreflected gap in own region read by cs3 wrapper bodies (object offset 0x14d8)."
-  },
-  {
-    "class": "AFortPlayerControllerSpectating",
-    "function": "IsFollowedPlayerInBus",
-    "kind": "exec",
-    "signature": "bool IsFollowedPlayerInBus() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/cs4_runtime/AFortPlayerControllerSpectating/IsFollowedPlayerInBus.inc",
-    "confidence": "high",
-    "address": "0x142a6be70",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x1423d9010",
-    "notes": "Wrapper body ported from reflected members and ported helpers; see .inc header."
   },
   {
     "class": "AFortPlayerPawn",
@@ -88783,23 +88700,6 @@
     "notes": "Ported from body 0x142425f90; see .inc comments for offset evidence."
   },
   {
-    "class": "UFortPortalComponent",
-    "function": "OnRep_LinkDataErrorStatus",
-    "kind": "exec",
-    "signature": "void OnRep_LinkDataErrorStatus()",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/cs11_runtime/UFortPortalComponent/OnRep_LinkDataErrorStatus.inc",
-    "confidence": "high",
-    "address": "0x142aa2640",
-    "status": "ported",
-    "reflection_flags": "0x40401",
-    "static": false,
-    "virtual": false,
-    "access": "private",
-    "native_body_address": "0x141f3f280",
-    "notes": "Ported from body 0x141f3f280; see .inc comments for offset evidence."
-  },
-  {
     "class": "UFortQuestManager",
     "function": "PopNextPendingFeatureUnlock",
     "kind": "exec",
@@ -88832,23 +88732,6 @@
     "access": "public",
     "native_body_address": "0x14248cf10",
     "notes": "Ported from body 0x14248cf10; see .inc comments for offset evidence."
-  },
-  {
-    "class": "UFortShowdownDetailView",
-    "function": "GetEventId",
-    "kind": "exec",
-    "signature": "FString GetEventId()",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/cs11_runtime/UFortShowdownDetailView/GetEventId.inc",
-    "confidence": "medium",
-    "address": "0x1452d89c0",
-    "status": "ported",
-    "reflection_flags": "0x4080401",
-    "static": false,
-    "virtual": false,
-    "access": "protected",
-    "native_body_address": "0x14506b370",
-    "notes": "Ported from body 0x14506b370; see .inc comments for offset evidence."
   },
   {
     "class": "UFortUIMessageManager",
@@ -89239,23 +89122,6 @@
     "notes": "Raw divisor +0x30; record MouseSensitivityX/Y clamp to [0,1]; zero fallback from snapshots."
   },
   {
-    "class": "UFortStoreFrontOfferInfo",
-    "function": "isItemGrantUnique",
-    "kind": "exec",
-    "signature": "bool isItemGrantUnique(FString TemplateId) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/ct4_runtime/UFortStoreFrontOfferInfo/isItemGrantUnique.inc",
-    "confidence": "high",
-    "address": "0x1452f8280",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x1450d2610",
-    "notes": "Wrapper port of 0x1450d2610; owner at raw +0x28, TArray at owner +0x210/+0x218; see .inc evidence"
-  },
-  {
     "class": "UFortSwipePanel",
     "function": "GetSwipeInfo",
     "kind": "exec",
@@ -89378,24 +89244,6 @@
       "HAL/UnrealMemory.h"
     ],
     "notes": "TArray<0x38-byte element>::ResizeTo: Data at +0, Max at +0xc; Realloc via FMemory; slack from QuantizeSize."
-  },
-  {
-    "class": "UCreativeQuickbarComponent",
-    "function": "NativeWeakObjectGet142ee6180",
-    "kind": "helper",
-    "signature": "UObject* NativeWeakObjectGet142ee6180(void* WeakPtr)",
-    "signature_status": "proposed",
-    "static": true,
-    "access": "public",
-    "inc_path": "porting/behavior/hr8_runtime/UCreativeQuickbarComponent/NativeWeakObjectGet142ee6180.inc",
-    "address": "0x142ee6180",
-    "confidence": "high",
-    "status": "ported",
-    "includes": [
-      "UObject/Object.h",
-      "UObject/UObjectArray.h"
-    ],
-    "notes": "TWeakObjectPtr<UObject> resolve via GUObjectArray; serial and index checks from asm."
   },
   {
     "class": "UFortKismetLibrary",
@@ -89557,25 +89405,6 @@
       "UObject/Object.h"
     ],
     "notes": "Returns float at Context+0xcc4 (raw, no reflected member). Callers: GetDifficultyLevel and difficulty event handlers."
-  },
-  {
-    "class": "UFortKismetLibrary",
-    "function": "NativeGetGameStateWorldLevel141f881f0",
-    "kind": "helper",
-    "signature": "int32 NativeGetGameStateWorldLevel141f881f0(UObject* Context)",
-    "signature_status": "proposed",
-    "static": true,
-    "access": "public",
-    "inc_path": "porting/behavior/hs1_runtime/UFortKismetLibrary/NativeGetGameStateWorldLevel141f881f0.inc",
-    "address": "0x141f881f0",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [
-      "UObject/Object.h",
-      "Engine/World.h",
-      "GameFramework/GameStateBase.h"
-    ],
-    "notes": "World->GameState cast to AFortGameState, returns WorldLevel (+0x2f4); 0 if any step fails. Vtbl 0x150 assumed GetWorld."
   },
   {
     "class": "AFortPlayerPawn",
@@ -89741,23 +89570,6 @@
     "notes": "Inlined FWindowsPlatformApplicationMisc::ClipboardCopy: IAT GetActiveWindow/OpenClipboard/EmptyClipboard/GlobalAlloc/GlobalLock/GlobalUnlock/SetClipboardData(13)/CloseClipboard; error log elided."
   },
   {
-    "class": "UCommonPopupMenu",
-    "function": "NativeCloseMenuAnchor143d4bfc0",
-    "kind": "helper",
-    "signature": "void NativeCloseMenuAnchor143d4bfc0(UMenuAnchor* AnchorToClose)",
-    "signature_status": "proposed",
-    "static": true,
-    "access": "public",
-    "inc_path": "porting/behavior/pilot2_runtime/UCommonPopupMenu/NativeCloseMenuAnchor143d4bfc0.inc",
-    "address": "0x143d4bfc0",
-    "confidence": "high",
-    "status": "ported",
-    "includes": [
-      "Components/MenuAnchor.h"
-    ],
-    "notes": "Receiver is UMenuAnchor (caller 0x1407f1730 passes weak OwningMenuAnchor @+0x414). [+0x150]=MyMenuAnchor; vcall(0,0,0)=SetIsOpen(false,false) = UMenuAnchor::Close."
-  },
-  {
     "class": "AAthenaCapturePoint",
     "function": "NativeSetTeamControllingPoint1418d31e0",
     "kind": "helper",
@@ -89774,23 +89586,6 @@
       "Engine/World.h"
     ],
     "notes": "Sets TeamControllingPoint(+0xab9); vtbl[0x150]=AActor::GetWorld, World+0x130=GameState, vtbl[0x880]=AFortGameState Teams(+0x470), [Team+0x218] vcall slot 0x28=NativeGetTeam163."
-  },
-  {
-    "class": "AFortAthenaAIBotController",
-    "function": "NativeEquipItemOnBotPawn141692dd0",
-    "kind": "helper",
-    "signature": "AFortWeapon* NativeEquipItemOnBotPawn141692dd0(AFortAthenaAIBotController* BotController, UFortWorldItem* ItemToEquip)",
-    "signature_status": "proposed",
-    "static": true,
-    "access": "public",
-    "inc_path": "porting/behavior/pilot2_runtime/AFortAthenaAIBotController/NativeEquipItemOnBotPawn141692dd0.inc",
-    "address": "0x141692dd0",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [
-      "CoreMinimal.h"
-    ],
-    "notes": "Item vtbl[0x3e8]=GetItemDefinitionBP (0x14205a2f0), vtbl[0x468]=GetItemGuid; 0x1423150b0=AFortPawn::EquipWeaponDefinition(WeaponData, Guid) on PlayerBotPawn(+0x400); +0x908 raw byte defers into Pendin"
   },
   {
     "class": "UFortSpectatorNameplateSettingsTab",
@@ -89882,23 +89677,6 @@
       "Misc/CString.h"
     ],
     "notes": "Case-insensitive key lookup in TArray<TPair<FString,FString>> at +0x20; numeric value -> Atoi else default."
-  },
-  {
-    "class": "AFortReplaySpectator",
-    "function": "NativeRemoveMulticastDelegateHandle1406d7fd0",
-    "kind": "helper",
-    "signature": "bool NativeRemoveMulticastDelegateHandle1406d7fd0(void* Delegate, FDelegateHandle Handle)",
-    "signature_status": "proposed",
-    "static": true,
-    "access": "public",
-    "inc_path": "porting/behavior/pilot3_runtime/AFortReplaySpectator/NativeRemoveMulticastDelegateHandle1406d7fd0.inc",
-    "address": "0x1406d7fd0",
-    "confidence": "medium",
-    "status": "ported",
-    "includes": [
-      "Delegates/Delegate.h"
-    ],
-    "notes": "TMulticastDelegate::Remove(FDelegateHandle) on the delegate object passed in RCX; handle by value in RDX."
   },
   {
     "class": "AFortCreativeMoveTool",

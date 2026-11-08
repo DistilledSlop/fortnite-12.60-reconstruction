@@ -62,11 +62,6 @@ public:
 	uint64 NativeRecoveredPointer_0x5c0;
 
 protected:
-	UFUNCTION(BlueprintCallable)
-	FString GetEventId();
-public:
-
-protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetTournamentPinUnlockScore() const;
 public:

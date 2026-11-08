@@ -11,7 +11,9 @@
     "address": "0x1412b1090",
     "confidence": "high",
     "status": "ported",
-    "includes": ["UObject/Object.h"],
+    "includes": [
+      "UObject/Object.h"
+    ],
     "notes": "Returns raw uint8 at receiver +0xba (MOVZX byte). Offset overlaps reflected OnTheaterPinClicked at +0xb8; read raw. Six listed callers."
   },
   {
@@ -26,7 +28,9 @@
     "address": "0x141e60d60",
     "confidence": "high",
     "status": "ported",
-    "includes": ["UObject/Object.h"],
+    "includes": [
+      "UObject/Object.h"
+    ],
     "notes": "Chained-hash find of uint8 key in raw map storage (+0x19a8..+0x19f0), 24-byte entries, value qword at +8. Used by GetInputTypeIcon."
   },
   {
@@ -41,7 +45,10 @@
     "address": "0x143e8a9c0",
     "confidence": "high",
     "status": "ported",
-    "includes": ["Containers/Array.h", "Math/IntPoint.h"],
+    "includes": [
+      "Containers/Array.h",
+      "Math/IntPoint.h"
+    ],
     "notes": "Equal-count check, then every left 8-byte pair must have an equal pair in right. Empty left returns true. Caller GetModificationStatus."
   },
   {

@@ -1,85 +1,85 @@
 [
- {
-  "class": "UFortVehicleAudioVoice",
-  "function": "NativeWrapFloatIntoRange144162f70",
-  "kind": "helper",
-  "signature": "void NativeWrapFloatIntoRange144162f70(float Lo, float Hi, float* Value, int32* WrapCount)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu2_runtime/UFortVehicleAudioVoice/NativeWrapFloatIntoRange144162f70.inc",
-  "address": "0x144162f70",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [
-   "Math/UnrealMathUtility.h"
-  ],
-  "notes": "Wraps *Value into [Lo,Hi] by whole periods; WrapCount gets |period count|. Constant 0.5f from .rdata."
- },
- {
-  "class": "AFortAIPawn",
-  "function": "NativeParseTrailingUnderscoreNumber142cd4550",
-  "kind": "helper",
-  "signature": "int32 NativeParseTrailingUnderscoreNumber142cd4550(const char* Str, int32* IndexInOut)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu2_runtime/AFortAIPawn/NativeParseTrailingUnderscoreNumber142cd4550.inc",
-  "address": "0x142cd4550",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [],
-  "notes": "Parses _<digits> ending before *IndexInOut; returns value+1 and moves index, else 0."
- },
- {
-  "class": "UFortGameplayCueFunctionLibrary",
-  "function": "NativeHelper142bf39b0",
-  "kind": "helper",
-  "signature": "double NativeHelper142bf39b0(UObject* Context)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu2_runtime/UFortGameplayCueFunctionLibrary/NativeHelper142bf39b0.inc",
-  "address": "0x142bf39b0",
-  "confidence": "high",
-  "status": "ported",
-  "includes": [
-   "UObject/Object.h"
-  ],
-  "notes": "Returns double at Context+0x50 (raw). Caller class not established."
- },
- {
-  "class": "UAmbientAudioStatics",
-  "function": "NativeHelper1446939a0",
-  "kind": "helper",
-  "signature": "bool NativeHelper1446939a0(UObject* Context)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu2_runtime/UAmbientAudioStatics/NativeHelper1446939a0.inc",
-  "address": "0x1446939a0",
-  "confidence": "high",
-  "status": "ported",
-  "includes": [
-   "UObject/Object.h"
-  ],
-  "notes": "Byte at +0x11a <=6 and bit set in 0x6a. Raw access; caller class not reflected."
- },
- {
-  "class": "UFortAbilitySystemComponent",
-  "function": "NativeGetOutermostObject142ec9ca0",
-  "kind": "helper",
-  "signature": "UObject* NativeGetOutermostObject142ec9ca0(UObject* Context)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu2_runtime/UFortAbilitySystemComponent/NativeGetOutermostObject142ec9ca0.inc",
-  "address": "0x142ec9ca0",
-  "confidence": "high",
-  "status": "ported",
-  "includes": [
-   "UObject/Object.h"
-  ],
-  "notes": "Walks the +0x20 (OuterPrivate) chain to its last non-null object."
- }
+  {
+    "class": "UFortVehicleAudioVoice",
+    "function": "NativeWrapFloatIntoRange144162f70",
+    "kind": "helper",
+    "signature": "void NativeWrapFloatIntoRange144162f70(float Lo, float Hi, float* Value, int32* WrapCount)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu2_runtime/UFortVehicleAudioVoice/NativeWrapFloatIntoRange144162f70.inc",
+    "address": "0x144162f70",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Math/UnrealMathUtility.h"
+    ],
+    "notes": "Wraps *Value into [Lo,Hi] by whole periods; WrapCount gets |period count|. Constant 0.5f from .rdata."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "NativeParseTrailingUnderscoreNumber142cd4550",
+    "kind": "helper",
+    "signature": "int32 NativeParseTrailingUnderscoreNumber142cd4550(const char* Str, int32* IndexInOut)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu2_runtime/AFortAIPawn/NativeParseTrailingUnderscoreNumber142cd4550.inc",
+    "address": "0x142cd4550",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Parses _<digits> ending before *IndexInOut; returns value+1 and moves index, else 0."
+  },
+  {
+    "class": "UFortGameplayCueFunctionLibrary",
+    "function": "NativeHelper142bf39b0",
+    "kind": "helper",
+    "signature": "double NativeHelper142bf39b0(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu2_runtime/UFortGameplayCueFunctionLibrary/NativeHelper142bf39b0.inc",
+    "address": "0x142bf39b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns double at Context+0x50 (raw). Caller class not established."
+  },
+  {
+    "class": "UAmbientAudioStatics",
+    "function": "NativeHelper1446939a0",
+    "kind": "helper",
+    "signature": "bool NativeHelper1446939a0(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu2_runtime/UAmbientAudioStatics/NativeHelper1446939a0.inc",
+    "address": "0x1446939a0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Byte at +0x11a <=6 and bit set in 0x6a. Raw access; caller class not reflected."
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "NativeGetOutermostObject142ec9ca0",
+    "kind": "helper",
+    "signature": "UObject* NativeGetOutermostObject142ec9ca0(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu2_runtime/UFortAbilitySystemComponent/NativeGetOutermostObject142ec9ca0.inc",
+    "address": "0x142ec9ca0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Walks the +0x20 (OuterPrivate) chain to its last non-null object."
+  }
 ]

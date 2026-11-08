@@ -1,55 +1,55 @@
 [
- {
-  "class": "ABuildingProp_LockDevice",
-  "function": "NativeLoadLeadingPointer1414da240",
-  "kind": "helper",
-  "signature": "void* NativeLoadLeadingPointer1414da240(const void* Source)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/hs9_runtime/ABuildingProp_LockDevice/NativeLoadLeadingPointer1414da240.inc",
-  "address": "0x1414da240",
-  "confidence": "high",
-  "status": "ported",
-  "includes": [
-   "UObject/Object.h"
-  ],
-  "notes": "Returns the pointer-sized value stored at offset 0 of the source block (MOV RAX,[RCX]; RET)."
- },
- {
-  "class": "UFortKismetLibrary",
-  "function": "NativeSetByteSlotIfChanged1444889d0",
-  "kind": "helper",
-  "signature": "bool NativeSetByteSlotIfChanged1444889d0(uint8* Slots, uint32 Index, int32 NewValue)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/hs9_runtime/UFortKismetLibrary/NativeSetByteSlotIfChanged1444889d0.inc",
-  "address": "0x1444889d0",
-  "confidence": "high",
-  "status": "ported",
-  "includes": [
-   "UObject/Object.h"
-  ],
-  "notes": "Writes a byte into a 32-entry byte table when index < 0x20 and the value differs; returns whether it changed."
- },
- {
-  "class": "AFortAthenaVehicleSpawner",
-  "function": "NativeCopyKeyedTextArray1445d47d0",
-  "kind": "helper",
-  "signature": "uint8* NativeCopyKeyedTextArray1445d47d0(uint8* OutArray, const uint8* SourceArray)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/hs9_runtime/AFortAthenaVehicleSpawner/NativeCopyKeyedTextArray1445d47d0.inc",
-  "address": "0x1445d47d0",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [
-   "Containers/Array.h",
-   "Containers/UnrealString.h",
-   "HAL/Platform.h"
-  ],
-  "notes": "Copy-constructs a TArray of 24-byte {8-byte key, FString} elements into OutArray and returns it (sret). Element key type unrecovered; kept as uint64."
- }
+  {
+    "class": "ABuildingProp_LockDevice",
+    "function": "NativeLoadLeadingPointer1414da240",
+    "kind": "helper",
+    "signature": "void* NativeLoadLeadingPointer1414da240(const void* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs9_runtime/ABuildingProp_LockDevice/NativeLoadLeadingPointer1414da240.inc",
+    "address": "0x1414da240",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns the pointer-sized value stored at offset 0 of the source block (MOV RAX,[RCX]; RET)."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeSetByteSlotIfChanged1444889d0",
+    "kind": "helper",
+    "signature": "bool NativeSetByteSlotIfChanged1444889d0(uint8* Slots, uint32 Index, int32 NewValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs9_runtime/UFortKismetLibrary/NativeSetByteSlotIfChanged1444889d0.inc",
+    "address": "0x1444889d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Writes a byte into a 32-entry byte table when index < 0x20 and the value differs; returns whether it changed."
+  },
+  {
+    "class": "AFortAthenaVehicleSpawner",
+    "function": "NativeCopyKeyedTextArray1445d47d0",
+    "kind": "helper",
+    "signature": "uint8* NativeCopyKeyedTextArray1445d47d0(uint8* OutArray, const uint8* SourceArray)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs9_runtime/AFortAthenaVehicleSpawner/NativeCopyKeyedTextArray1445d47d0.inc",
+    "address": "0x1445d47d0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "Containers/UnrealString.h",
+      "HAL/Platform.h"
+    ],
+    "notes": "Copy-constructs a TArray of 24-byte {8-byte key, FString} elements into OutArray and returns it (sret). Element key type unrecovered; kept as uint64."
+  }
 ]

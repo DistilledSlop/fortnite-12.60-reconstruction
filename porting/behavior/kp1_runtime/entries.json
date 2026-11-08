@@ -1,18 +1,18 @@
 [
- {
-  "class": "AFortPlayerController",
-  "function": "ServerSetAntiAddictionPlayTimeMultiplier_Implementation",
-  "kind": "impl",
-  "signature": "void ServerSetAntiAddictionPlayTimeMultiplier_Implementation(float NewPlayTimeRewardRate)",
-  "signature_status": "proposed",
-  "inc_path": "porting/behavior/kp1_runtime/AFortPlayerController/ServerSetAntiAddictionPlayTimeMultiplier_Implementation.inc",
-  "confidence": "high",
-  "address": "0x142a4d0b0",
-  "status": "ported",
-  "reflection_flags": "0x80280cc0",
-  "static": false,
-  "access": "protected",
-  "native_body_address": "0x1423ac440",
-  "notes": "Clamp to [0,1]: rate>=0 stores min(rate,1.0f) (.rdata 0x1459a86f8); negative/NaN stores 0. Reflected AntiAddictionPlayTimeMultiplier."
- }
+  {
+    "class": "AFortPlayerController",
+    "function": "ServerSetAntiAddictionPlayTimeMultiplier_Implementation",
+    "kind": "impl",
+    "signature": "void ServerSetAntiAddictionPlayTimeMultiplier_Implementation(float NewPlayTimeRewardRate)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/kp1_runtime/AFortPlayerController/ServerSetAntiAddictionPlayTimeMultiplier_Implementation.inc",
+    "confidence": "high",
+    "address": "0x142a4d0b0",
+    "status": "ported",
+    "reflection_flags": "0x80280cc0",
+    "static": false,
+    "access": "protected",
+    "native_body_address": "0x1423ac440",
+    "notes": "Clamp to [0,1]: rate>=0 stores min(rate,1.0f) (.rdata 0x1459a86f8); negative/NaN stores 0. Reflected AntiAddictionPlayTimeMultiplier."
+  }
 ]

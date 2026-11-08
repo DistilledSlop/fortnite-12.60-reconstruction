@@ -1,34 +1,34 @@
 [
- {
-  "class": "AFortPlayerPawn",
-  "function": "SetStasisMode",
-  "kind": "exec",
-  "signature": "@SIG@",
-  "signature_status": "proposed",
-  "inc_path": "porting/behavior/wrapA4_runtime/AFortPlayerPawn/SetStasisMode.inc",
-  "confidence": "high",
-  "address": "0x142a808a0",
-  "status": "ported",
-  "reflection_flags": "0x4020407",
-  "static": false,
-  "access": "public",
-  "native_body_address": "0x14234efe0",
-  "notes": "Wrapper: if StasisMode (reflected Enum +0x1065) differs, store and tail-call AFortPlayerPawn::HandleInStasis (declared in AFortPlayerPawn.h)."
- },
- {
-  "class": "UFortQuestManager",
-  "function": "HasQuestBeenSeenLocally",
-  "kind": "exec",
-  "signature": "@SIG@",
-  "signature_status": "proposed",
-  "inc_path": "porting/behavior/wrapA4_runtime/UFortQuestManager/HasQuestBeenSeenLocally.inc",
-  "confidence": "high",
-  "address": "0x142ab9830",
-  "status": "ported",
-  "reflection_flags": "0x54020401",
-  "static": false,
-  "access": "public",
-  "native_body_address": "0x1424443c0",
-  "notes": "Null Quest returns false; otherwise tail-call UFortAccountItem::HasBeenSeenLocally on the Quest argument (UFortQuestItem derives from UFortAccountItem)."
- }
+  {
+    "class": "AFortPlayerPawn",
+    "function": "SetStasisMode",
+    "kind": "exec",
+    "signature": "@SIG@",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/wrapA4_runtime/AFortPlayerPawn/SetStasisMode.inc",
+    "confidence": "high",
+    "address": "0x142a808a0",
+    "status": "ported",
+    "reflection_flags": "0x4020407",
+    "static": false,
+    "access": "public",
+    "native_body_address": "0x14234efe0",
+    "notes": "Wrapper: if StasisMode (reflected Enum +0x1065) differs, store and tail-call AFortPlayerPawn::HandleInStasis (declared in AFortPlayerPawn.h)."
+  },
+  {
+    "class": "UFortQuestManager",
+    "function": "HasQuestBeenSeenLocally",
+    "kind": "exec",
+    "signature": "@SIG@",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/wrapA4_runtime/UFortQuestManager/HasQuestBeenSeenLocally.inc",
+    "confidence": "high",
+    "address": "0x142ab9830",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "native_body_address": "0x1424443c0",
+    "notes": "Null Quest returns false; otherwise tail-call UFortAccountItem::HasBeenSeenLocally on the Quest argument (UFortQuestItem derives from UFortAccountItem)."
+  }
 ]

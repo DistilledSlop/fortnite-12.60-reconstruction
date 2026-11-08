@@ -59,9 +59,6 @@ public:
 	bool IsGiftable() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool isItemGrantUnique(FString TemplateId) const;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPriceInGameItems(int32 PriceIndex) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

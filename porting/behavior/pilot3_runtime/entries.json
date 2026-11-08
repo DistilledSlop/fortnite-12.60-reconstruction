@@ -1,148 +1,131 @@
 [
- {
-  "class": "UFortStoreFrontOfferInfo",
-  "function": "NativeGetMetaDataIntByKey1411322c0",
-  "kind": "helper",
-  "signature": "int32 NativeGetMetaDataIntByKey1411322c0(const uint8* MetaStruct, const FString* LookupKey, int32 FallbackValue)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/pilot3_runtime/UFortStoreFrontOfferInfo/NativeGetMetaDataIntByKey1411322c0.inc",
-  "address": "0x1411322c0",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [
-   "Containers/Array.h",
-   "Containers/UnrealString.h",
-   "Containers/Map.h",
-   "Misc/CString.h"
-  ],
-  "notes": "Case-insensitive key lookup in TArray<TPair<FString,FString>> at +0x20; numeric value -> Atoi else default."
- },
- {
-  "class": "AFortReplaySpectator",
-  "function": "NativeRemoveMulticastDelegateHandle1406d7fd0",
-  "kind": "helper",
-  "signature": "bool NativeRemoveMulticastDelegateHandle1406d7fd0(void* Delegate, FDelegateHandle Handle)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/pilot3_runtime/AFortReplaySpectator/NativeRemoveMulticastDelegateHandle1406d7fd0.inc",
-  "address": "0x1406d7fd0",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [
-   "Delegates/Delegate.h"
-  ],
-  "notes": "TMulticastDelegate::Remove(FDelegateHandle) on the delegate object passed in RCX; handle by value in RDX."
- },
- {
-  "class": "AFortCreativeMoveTool",
-  "function": "NativeGetWorldTimerManager140f95ae0",
-  "kind": "helper",
-  "signature": "FTimerManager* NativeGetWorldTimerManager140f95ae0(UObject* Context)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/pilot3_runtime/AFortCreativeMoveTool/NativeGetWorldTimerManager140f95ae0.inc",
-  "address": "0x140f95ae0",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [
-   "UObject/Object.h",
-   "Engine/World.h",
-   "TimerManager.h"
-  ],
-  "notes": "Context->GetWorld() then GameInstance timer manager else world timer manager (UWorld::GetTimerManager)."
- },
- {
-  "class": "ABuildingFillFloor",
-  "function": "NativeSetActorLocation143f832a0",
-  "kind": "helper",
-  "signature": "bool NativeSetActorLocation143f832a0(AActor* Actor, const FVector& NewLocation, bool bSweep, FHitResult* OutSweepHitResult, uint8 TeleportMode)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/pilot3_runtime/ABuildingFillFloor/NativeSetActorLocation143f832a0.inc",
-  "address": "0x143f832a0",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [
-   "GameFramework/Actor.h",
-   "Engine/EngineTypes.h",
-   "Math/Vector.h"
-  ],
-  "notes": "AActor::SetActorLocation: root MoveComponent(delta, quat, sweep, hit, 0, teleport) else default hit and false."
- },
- {
-  "class": "AFortAthenaMutator_SpecialEvent",
-  "function": "NativeBoolToString140ae9a90",
-  "kind": "helper",
-  "signature": "FString NativeBoolToString140ae9a90(bool bFlag)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/pilot3_runtime/AFortAthenaMutator_SpecialEvent/NativeBoolToString140ae9a90.inc",
-  "address": "0x140ae9a90",
-  "confidence": "high",
-  "status": "ported",
-  "includes": [
-   "Containers/UnrealString.h"
-  ],
-  "notes": "Returns FString \"true\" or \"false\" from the bool in DL (hidden sret in RCX)."
- },
- {
-  "class": "UFortCreativeTeleporterManagerComponent",
-  "function": "NativeCopyAssignSet140769940",
-  "kind": "helper",
-  "signature": "void* NativeCopyAssignSet140769940(void* Dest, const void* Source)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/pilot3_runtime/UFortCreativeTeleporterManagerComponent/NativeCopyAssignSet140769940.inc",
-  "address": "0x140769940",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [
-   "Containers/Set.h"
-  ],
-  "notes": "TSet copy-assignment over an 8-byte element set (layout and raw copy match TSet<uint64>); returns Dest."
- },
- {
-  "class": "AFortMinigame",
-  "function": "NativeSetStatFilterEntryValue1420a40c0",
-  "kind": "helper",
-  "signature": "void NativeSetStatFilterEntryValue1420a40c0(const void* UnusedOwner, uint8* EntryArray, UClass* FilterClass, int32 NewValue)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/pilot3_runtime/AFortMinigame/NativeSetStatFilterEntryValue1420a40c0.inc",
-  "address": "0x1420a40c0",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [
-   "UObject/Class.h",
-   "Containers/Array.h",
-   "Containers/Map.h"
-  ],
-  "notes": "Find-or-add {UClass*,int32} entry (stride 0x10) in TArray at RDX and store the int32 value at +8."
- },
- {
-  "class": "AFortConstructorBASE",
-  "function": "NativeSetToArray1415c07f0",
-  "kind": "helper",
-  "signature": "void* NativeSetToArray1415c07f0(const void* SetPtr, void* OutArray)",
-  "signature_status": "proposed",
-  "static": true,
-  "access": "public",
-  "inc_path": "porting/behavior/pilot3_runtime/AFortConstructorBASE/NativeSetToArray1415c07f0.inc",
-  "address": "0x1415c07f0",
-  "confidence": "medium",
-  "status": "ported",
-  "includes": [
-   "Containers/Set.h",
-   "Containers/Array.h"
-  ],
-  "notes": "TSet::Array() for an 8-byte element set; constructs the TArray into the sret address passed in RDX and returns it."
- }
+  {
+    "class": "UFortStoreFrontOfferInfo",
+    "function": "NativeGetMetaDataIntByKey1411322c0",
+    "kind": "helper",
+    "signature": "int32 NativeGetMetaDataIntByKey1411322c0(const uint8* MetaStruct, const FString* LookupKey, int32 FallbackValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/UFortStoreFrontOfferInfo/NativeGetMetaDataIntByKey1411322c0.inc",
+    "address": "0x1411322c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "Containers/UnrealString.h",
+      "Containers/Map.h",
+      "Misc/CString.h"
+    ],
+    "notes": "Case-insensitive key lookup in TArray<TPair<FString,FString>> at +0x20; numeric value -> Atoi else default."
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "NativeGetWorldTimerManager140f95ae0",
+    "kind": "helper",
+    "signature": "FTimerManager* NativeGetWorldTimerManager140f95ae0(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/AFortCreativeMoveTool/NativeGetWorldTimerManager140f95ae0.inc",
+    "address": "0x140f95ae0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "Engine/World.h",
+      "TimerManager.h"
+    ],
+    "notes": "Context->GetWorld() then GameInstance timer manager else world timer manager (UWorld::GetTimerManager)."
+  },
+  {
+    "class": "ABuildingFillFloor",
+    "function": "NativeSetActorLocation143f832a0",
+    "kind": "helper",
+    "signature": "bool NativeSetActorLocation143f832a0(AActor* Actor, const FVector& NewLocation, bool bSweep, FHitResult* OutSweepHitResult, uint8 TeleportMode)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/ABuildingFillFloor/NativeSetActorLocation143f832a0.inc",
+    "address": "0x143f832a0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Actor.h",
+      "Engine/EngineTypes.h",
+      "Math/Vector.h"
+    ],
+    "notes": "AActor::SetActorLocation: root MoveComponent(delta, quat, sweep, hit, 0, teleport) else default hit and false."
+  },
+  {
+    "class": "AFortAthenaMutator_SpecialEvent",
+    "function": "NativeBoolToString140ae9a90",
+    "kind": "helper",
+    "signature": "FString NativeBoolToString140ae9a90(bool bFlag)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/AFortAthenaMutator_SpecialEvent/NativeBoolToString140ae9a90.inc",
+    "address": "0x140ae9a90",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Containers/UnrealString.h"
+    ],
+    "notes": "Returns FString \"true\" or \"false\" from the bool in DL (hidden sret in RCX)."
+  },
+  {
+    "class": "UFortCreativeTeleporterManagerComponent",
+    "function": "NativeCopyAssignSet140769940",
+    "kind": "helper",
+    "signature": "void* NativeCopyAssignSet140769940(void* Dest, const void* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/UFortCreativeTeleporterManagerComponent/NativeCopyAssignSet140769940.inc",
+    "address": "0x140769940",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Set.h"
+    ],
+    "notes": "TSet copy-assignment over an 8-byte element set (layout and raw copy match TSet<uint64>); returns Dest."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "NativeSetStatFilterEntryValue1420a40c0",
+    "kind": "helper",
+    "signature": "void NativeSetStatFilterEntryValue1420a40c0(const void* UnusedOwner, uint8* EntryArray, UClass* FilterClass, int32 NewValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/AFortMinigame/NativeSetStatFilterEntryValue1420a40c0.inc",
+    "address": "0x1420a40c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Class.h",
+      "Containers/Array.h",
+      "Containers/Map.h"
+    ],
+    "notes": "Find-or-add {UClass*,int32} entry (stride 0x10) in TArray at RDX and store the int32 value at +8."
+  },
+  {
+    "class": "AFortConstructorBASE",
+    "function": "NativeSetToArray1415c07f0",
+    "kind": "helper",
+    "signature": "void* NativeSetToArray1415c07f0(const void* SetPtr, void* OutArray)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot3_runtime/AFortConstructorBASE/NativeSetToArray1415c07f0.inc",
+    "address": "0x1415c07f0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Set.h",
+      "Containers/Array.h"
+    ],
+    "notes": "TSet::Array() for an 8-byte element set; constructs the TArray into the sret address passed in RDX and returns it."
+  }
 ]

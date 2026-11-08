@@ -1,35 +1,35 @@
 [
- {
-  "class": "ABuildingActor",
-  "function": "SetTeam",
-  "kind": "exec",
-  "signature": "void SetTeam(uint8 InTeam)",
-  "signature_status": "proposed",
-  "inc_path": "porting/behavior/dv1_runtime/ABuildingActor/SetTeam.inc",
-  "confidence": "high",
-  "address": "0x142738600",
-  "status": "ported",
-  "reflection_flags": "0x4020400",
-  "static": false,
-  "virtual": true,
-  "access": "public",
-  "native_body_address": "0x141bc50c0",
-  "notes": "Role==ROLE_Authority gate (GetLocalRole); writes TeamIndex then Team from InTeam. All 5 instructions accounted for."
- },
- {
-  "class": "ABuildingTimeOfDayLights",
-  "function": "GetTimeOfDayBlueprintDefaultVariables_Implementation",
-  "kind": "native_event_impl",
-  "signature": "void GetTimeOfDayBlueprintDefaultVariables_Implementation(FTimeOfDayBlueprintDefaultVariables& OutVariables)",
-  "signature_status": "proposed",
-  "inc_path": "porting/behavior/dv1_runtime/ABuildingTimeOfDayLights/GetTimeOfDayBlueprintDefaultVariables_Implementation.inc",
-  "confidence": "high",
-  "address": "0x14275c6e0",
-  "status": "ported",
-  "reflection_flags": "0x8480c02",
-  "static": false,
-  "access": "protected",
-  "native_body_address": "0x1406801c0",
-  "notes": "Body is a bare RET 0x0 (no stores, no calls); empty body."
- }
+  {
+    "class": "ABuildingActor",
+    "function": "SetTeam",
+    "kind": "exec",
+    "signature": "void SetTeam(uint8 InTeam)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/dv1_runtime/ABuildingActor/SetTeam.inc",
+    "confidence": "high",
+    "address": "0x142738600",
+    "status": "ported",
+    "reflection_flags": "0x4020400",
+    "static": false,
+    "virtual": true,
+    "access": "public",
+    "native_body_address": "0x141bc50c0",
+    "notes": "Role==ROLE_Authority gate (GetLocalRole); writes TeamIndex then Team from InTeam. All 5 instructions accounted for."
+  },
+  {
+    "class": "ABuildingTimeOfDayLights",
+    "function": "GetTimeOfDayBlueprintDefaultVariables_Implementation",
+    "kind": "native_event_impl",
+    "signature": "void GetTimeOfDayBlueprintDefaultVariables_Implementation(FTimeOfDayBlueprintDefaultVariables& OutVariables)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/dv1_runtime/ABuildingTimeOfDayLights/GetTimeOfDayBlueprintDefaultVariables_Implementation.inc",
+    "confidence": "high",
+    "address": "0x14275c6e0",
+    "status": "ported",
+    "reflection_flags": "0x8480c02",
+    "static": false,
+    "access": "protected",
+    "native_body_address": "0x1406801c0",
+    "notes": "Body is a bare RET 0x0 (no stores, no calls); empty body."
+  }
 ]

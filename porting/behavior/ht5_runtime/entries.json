@@ -11,7 +11,10 @@
     "address": "0x144114bd0",
     "confidence": "high",
     "status": "ported",
-    "includes": ["Animation/AnimInstance.h", "Components/SkeletalMeshComponent.h"],
+    "includes": [
+      "Animation/AnimInstance.h",
+      "Components/SkeletalMeshComponent.h"
+    ],
     "notes": "Returns USkeletalMeshComponent+0x630 (AnimScriptInstance) by raw read; callers pass ACharacter::Mesh."
   },
   {
@@ -86,7 +89,9 @@
     "address": "0x143d5c9c0",
     "confidence": "medium",
     "status": "ported",
-    "includes": ["UObject/Object.h"],
+    "includes": [
+      "UObject/Object.h"
+    ],
     "notes": "Linear pointer search over TArray at +0x2e8/+0x2f0; reflection names +0x2e8 as a delegate (conflict noted)."
   },
   {
@@ -101,7 +106,9 @@
     "address": "0x141ca78b0",
     "confidence": "high",
     "status": "ported",
-    "includes": ["GameFramework/Actor.h"],
+    "includes": [
+      "GameFramework/Actor.h"
+    ],
     "notes": "Registry-index check on AFortPlayerCameraBase class entry, then returns raw +0x2718 of subsystem at +0x2b0."
   }
 ]

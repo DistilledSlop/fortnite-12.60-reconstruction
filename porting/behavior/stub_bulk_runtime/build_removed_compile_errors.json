@@ -662,5 +662,136 @@
   "blocker": "needs_new_module",
   "reason": "requires InstallBundleManager module dependency",
   "inc_path": "porting/behavior/pilot2_runtime/UFortGameInstance/NativeCancelContentInstallBundles141dec190.inc"
+ },
+ {
+  "entry": "UFortHeroLoadoutSlotButton::HandleMenuOpenChanged",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "too many arguments to function call, expected single argument 'InParam1', have 2 arguments",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/UFortHeroLoadoutSlotButton/HandleMenuOpenChanged.inc"
+ },
+ {
+  "entry": "AFortPlayerControllerSpectating::IsFollowedPlayerInBus",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "'this' argument to member function 'NativeGetSpectatingPlayerState163' has type 'const AFortPlayerControllerSpectating', but function is not marked const",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/cs4_runtime/AFortPlayerControllerSpectating/IsFollowedPlayerInBus.inc"
+ },
+ {
+  "entry": "UFortPortalComponent::OnRep_LinkDataErrorStatus",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'Num' in 'FString'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/cs11_runtime/UFortPortalComponent/OnRep_LinkDataErrorStatus.inc"
+ },
+ {
+  "entry": "UFortShowdownDetailView::GetEventId",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'Num' in 'FString'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/cs11_runtime/UFortShowdownDetailView/GetEventId.inc"
+ },
+ {
+  "entry": "UFortStoreFrontOfferInfo::isItemGrantUnique",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'Num' in 'FString'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/ct4_runtime/UFortStoreFrontOfferInfo/isItemGrantUnique.inc"
+ },
+ {
+  "entry": "AFortAthenaAIBotController::NativeEquipItemOnBotPawn141692dd0",
+  "kind": "helper",
+  "blocker": "compile_error",
+  "reason": "no member named 'GetWeaponItemDefinition' in 'UFortGadgetItemDefinition'",
+  "inc_path": "porting/behavior/pilot2_runtime/AFortAthenaAIBotController/NativeEquipItemOnBotPawn141692dd0.inc"
+ },
+ {
+  "entry": "AFortMinigame::NativeHasMatchingEndCondition142099610",
+  "kind": "helper",
+  "blocker": "compile_error",
+  "reason": "no member named 'CheckRemainingLivingPlayersForEndCondition' in 'AFortMinigame'",
+  "inc_path": "porting/behavior/hr1_runtime/AFortMinigame/NativeHasMatchingEndCondition142099610.inc"
+ },
+ {
+  "entry": "AFortMinigame::NativeVolumeContainsUserAt288141c94c20",
+  "kind": "helper",
+  "blocker": "compile_error",
+  "reason": "no member named 'VolumeContainsUser' in 'AFortVolumeManager'",
+  "inc_path": "porting/behavior/hr1_runtime/AFortMinigame/NativeVolumeContainsUserAt288141c94c20.inc"
+ },
+ {
+  "entry": "AFortPlayerControllerSpectating::IsFollowedPlayerInBus",
+  "kind": "exec",
+  "blocker": "compile_error",
+  "reason": "'this' argument to member function 'NativeGetSpectatingPlayerState163' has type 'const AFortPlayerControllerSpectating',",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/cs4_runtime/AFortPlayerControllerSpectating/IsFollowedPlayerInBus.inc"
+ },
+ {
+  "entry": "AFortReplaySpectator::NativeRemoveMulticastDelegateHandle1406d7fd0",
+  "kind": "helper",
+  "blocker": "compile_error",
+  "reason": "implicit instantiation of undefined template 'TMulticastDelegate<void ()>'",
+  "inc_path": "porting/behavior/pilot3_runtime/AFortReplaySpectator/NativeRemoveMulticastDelegateHandle1406d7fd0.inc"
+ },
+ {
+  "entry": "UCreativeQuickbarComponent::NativeWeakObjectGet142ee6180",
+  "kind": "helper",
+  "blocker": "compile_error",
+  "reason": "cannot initialize return object of type 'UObject *' with an lvalue of type 'class UObjectBase *'",
+  "inc_path": "porting/behavior/hr8_runtime/UCreativeQuickbarComponent/NativeWeakObjectGet142ee6180.inc"
+ },
+ {
+  "entry": "UFortKismetLibrary::NativeGetGameStateWorldLevel141f881f0",
+  "kind": "helper",
+  "blocker": "compile_error",
+  "reason": "'GameState' is a private member of 'UWorld'",
+  "inc_path": "porting/behavior/hs1_runtime/UFortKismetLibrary/NativeGetGameStateWorldLevel141f881f0.inc"
+ },
+ {
+  "entry": "UFortPortalComponent::OnRep_LinkDataErrorStatus",
+  "kind": "exec",
+  "blocker": "compile_error",
+  "reason": "no member named 'Num' in 'FString'",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/cs11_runtime/UFortPortalComponent/OnRep_LinkDataErrorStatus.inc"
+ },
+ {
+  "entry": "UFortHeroLoadoutSlotButton::HandleMenuOpenChanged",
+  "kind": null,
+  "blocker": "compile_error",
+  "reason": "too many arguments to function call, expected single argument 'InParam1', have 2 arguments",
+  "inc_path": null
+ },
+ {
+  "entry": "UFortShowdownDetailView::GetEventId",
+  "kind": "exec",
+  "blocker": "compile_error",
+  "reason": "no member named 'Num' in 'FString'",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/cs11_runtime/UFortShowdownDetailView/GetEventId.inc"
+ },
+ {
+  "entry": "UFortStoreFrontOfferInfo::isItemGrantUnique",
+  "kind": "exec",
+  "blocker": "compile_error",
+  "reason": "no member named 'Num' in 'FString'",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/ct4_runtime/UFortStoreFrontOfferInfo/isItemGrantUnique.inc"
+ },
+ {
+  "entry": "UCommonPopupMenu::NativeCloseMenuAnchor143d4bfc0",
+  "kind": null,
+  "blocker": "module_conflict",
+  "reason": "UMenuAnchor.h FOnMenuOpenChangedEvent clashes with FortniteUI delegate",
+  "inc_path": null
+ },
+ {
+  "entry": "AFortMinigame::IsPlayerInOurVolume",
+  "kind": null,
+  "blocker": "compile_error",
+  "reason": "uses dropped helper NativeVolumeContainsUserAt288141c94c20",
+  "inc_path": null
  }
 ]

@@ -773,22 +773,6 @@ bool AFortMinigame::IsPlayerInMinigameByNetId(FUniqueNetIdRepl& UniqueNetId, boo
 	return false;
 }
 
-bool AFortMinigame::IsPlayerInOurVolume(AFortPlayerState* PlayerState) const
-{
-	// Behaviour snippet: AFortMinigame::IsPlayerInOurVolume (body 0x14209a4e0, thunk 0x1429c3560).
-	// Offset evidence: Volume (reflected Object, +0x910) is passed as the volume-manager context and as the third volume argument (this_delta 0).
-	// Asm: VM = NativeResolveVolumeManager(Volume); if null return false; return NativeVolumeContainsUserAt288141c94c20(VM, PlayerState, Volume).
-	// CONFIDENCE: HIGH
-	static_assert(sizeof(AFortVolume) > 0, "AFortVolume must be complete for the Volume argument conversion");
-	static_assert(sizeof(AFortVolumeManager) > 0, "AFortVolumeManager must be complete for the helper return");
-	AFortVolumeManager* VolumeManager = AFortVolumeManager::NativeResolveVolumeManager(Volume);
-	if (VolumeManager == nullptr)
-	{
-	    return false;
-	}
-	return AFortMinigame::NativeVolumeContainsUserAt288141c94c20(VolumeManager, PlayerState, Volume);
-}
-
 bool AFortMinigame::IsPlayerPersistenceRequired(AFortPlayerState* PlayerState) const
 {
 	// CONFIDENCE: high; recovered native control flow, see native-evidence.json.
@@ -1352,47 +1336,6 @@ UObject* AFortMinigame::NativeGetAthenaGameMode141641300(UObject* MinigameObject
 		return Candidate;
 	}
 	return nullptr;
-}
-
-bool AFortMinigame::NativeHasMatchingEndCondition142099610(UObject* Context)
-{
-	// Helper 0x142099610 on AFortMinigame (caller CheckEndConditionsInternal 0x142087920).
-	// Asm: gate byte [this+0x75d]; call 0x142087960 (CheckRemainingLivingPlayersForEndCondition) true -> true;
-	// loop EndConditionArray (Data [+0x678], Num [+0x680], stride 0x30) calling EvaluateStatQuery(elem, -1) -> true on first true; else false.
-	// Argument order follows the ABI (RDX = element pointer, R8 = -1); the reflection hint lists params in a different order.
-	// Null guard on Context added; every other instruction is accounted for.
-	// CONFIDENCE: MEDIUM
-	AFortMinigame* Minigame = Cast<AFortMinigame>(Context);
-	if (Minigame == nullptr)
-	{
-		return false;
-	}
-	if (*(reinterpret_cast<const uint8*>(Minigame) + 0x75d) == 0)
-	{
-		return false;
-	}
-	if (Minigame->CheckRemainingLivingPlayersForEndCondition())
-	{
-		return true;
-	}
-	for (FMinigameEndCondition& Cond : Minigame->EndConditionArray)
-	{
-		if (Minigame->EvaluateStatQuery(Cond, -1))
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-bool AFortMinigame::NativeVolumeContainsUserAt288141c94c20(UObject* Context, UObject* Volume, UObject* PlayerState)
-{
-	// Helper 0x141c94c20 on AFortMinigame (callers IsPlayerInOurVolume 0x14209a4e0 and 3 others).
-	// Asm: ADD RCX,0x288; JMP 0x141c6ad60 (tail call to VolumeContainsUser, registers RDX/R8 pass through unchanged).
-	// Return value is AL from the callee; all instructions accounted for.
-	// CONFIDENCE: MEDIUM
-	AFortVolumeManager* Manager = reinterpret_cast<AFortVolumeManager*>(reinterpret_cast<uint8*>(Context) + 0x288);
-	return Manager->VolumeContainsUser(Volume, PlayerState);
 }
 
 void AFortMinigame::NativeSetStatFilterEntryValue1420a40c0(const void* UnusedOwner, uint8* EntryArray, UClass* FilterClass, int32 NewValue)
