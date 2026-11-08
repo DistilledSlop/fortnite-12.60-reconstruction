@@ -1,0 +1,58 @@
+[
+  {
+    "class": "UFortPlayerSurveyManager",
+    "function": "RemoveSurvey",
+    "status": "proposed",
+    "case": "small_leaf_port",
+    "reason": null
+  },
+  {
+    "class": "UFortPortalComponent",
+    "function": "OnRep_LinkDataErrorStatus",
+    "status": "proposed",
+    "case": "small_leaf_port",
+    "reason": null
+  },
+  {
+    "class": "UFortQuestManager",
+    "function": "PopNextPendingFeatureUnlock",
+    "status": "proposed",
+    "case": "small_leaf_port",
+    "reason": null
+  },
+  {
+    "class": "UFortReplayContext",
+    "function": "ToggleIconVisibility",
+    "status": "proposed",
+    "case": "small_leaf_port",
+    "reason": null
+  },
+  {
+    "class": "UFortShowdownDetailView",
+    "function": "GetEventId",
+    "status": "proposed",
+    "case": "small_leaf_port",
+    "reason": null
+  },
+  {
+    "class": "UFortSquadSlotsView",
+    "function": "HandleSelectedButtonChanged",
+    "status": "proposed",
+    "case": "small_leaf_port",
+    "reason": null
+  },
+  {
+    "class": "UFortUIMessageManager",
+    "function": "HandleMessageDisplayed",
+    "status": "proposed",
+    "case": "small_leaf_port",
+    "reason": null
+  },
+  {
+    "class": "UFortUICameraFramingFunctionLibrary",
+    "function": "CalculateCharacterBoundsForCameraFraming",
+    "status": "blocked",
+    "case": "data_consts_missing",
+    "reason": "data_consts_missing: absolute operands 0x148218630, 0x148218638, 0x1459a86ec, 0x1459a86f0, 0x1459a870c, 0x145a2062c, 0x145b5a934 have no data_consts values; SSE float math and sret struct FFortUICameraFrameTargetBounds cannot be verified."
+  }
+]

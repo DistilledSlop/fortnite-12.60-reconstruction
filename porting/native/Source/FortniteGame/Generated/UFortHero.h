@@ -54,6 +54,9 @@ public:
 	UPROPERTY()
 	TArray<UCustomCharacterPart*> CharacterParts;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x228): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x228;
+
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<FMcpVariantChannelInfo> OutfitVariantChannels;
@@ -64,6 +67,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetUnclampedLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLevelClamped() const;
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

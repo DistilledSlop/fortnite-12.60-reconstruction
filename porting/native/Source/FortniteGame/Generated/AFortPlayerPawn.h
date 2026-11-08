@@ -1498,6 +1498,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual USkeletalMeshComponent* GetSkeletalMeshForPartType(EFortCustomPartType::Type PartType) const;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetSlopeSlidingNormal() const;
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetStamina() const;
 

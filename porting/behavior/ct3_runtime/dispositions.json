@@ -1,0 +1,58 @@
+[
+  {
+    "class": "UCreativeHUDLContext",
+    "function": "GetDropToFloorEnabled",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Tool->IsPendingKill() via GUObjectArray flags; raw byte +0x1119 of CurrentMoveTool."
+  },
+  {
+    "class": "UFortCardPackItem",
+    "function": "CanStoreOpen",
+    "status": "blocked",
+    "case": "blocked_mutable_global_string_state",
+    "reason": "Compares FString +0xf8/+0x100 against wide strings chosen by CMP/CMOVNZ on writable globals 0x148164dc0/db8, 0x148164de0/dd8, 0x148164df0/de8, 0x148164e00/df8, 0x148164e10/e08 (runtime-set pointers, not constants)."
+  },
+  {
+    "class": "UFortFrontEndContext",
+    "function": "GetFrontEndCamera",
+    "status": "blocked",
+    "case": "blocked_callee_param_type_mismatch",
+    "reason": "Call 0x141ca78b0 (NativeGetFrontEndCamera141ca78b0) declares UFortFrontEndContext* but asm passes APlayerController* returned by 0x144cb7c20 in RCX."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "GetLocation",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Player+0x278 state (member_field), GetCurrentPawn, RootComponent+0x1d0 xyz floats; zero fallback."
+  },
+  {
+    "class": "UFortOstrichAnimInstance",
+    "function": "AnimNotify_JumpEnter",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Compare 0.6f with ChargeJumpFloatValue; copy 4 qword slots 0x668/0x688 to 0x6a8 raw."
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "GamepadLookSensitivityXChanged",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Raw base sens +0x34; record GamepadLookSensitivity.X clamp; bDirty on change > 1e-8."
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "GamepadLookSensitivityYChanged",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Raw base sens +0x34; record GamepadLookSensitivity.Y clamp; bDirty on change > 1e-8."
+  },
+  {
+    "class": "UFortSettingsContext",
+    "function": "GetMouseSensitivityValue",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Raw divisor +0x30; record MouseSensitivityX/Y clamp to [0,1]; zero fallback from snapshots."
+  }
+]

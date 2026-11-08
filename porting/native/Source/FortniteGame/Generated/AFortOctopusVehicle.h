@@ -15,6 +15,7 @@
 #include "FTowhookActionDelegate.h"
 #include "FTowhookParams.h"
 #include "FTowhookYankDelegate.h"
+#include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "UObject/WeakObjectPtr.h"
 
@@ -224,6 +225,12 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x13a0): not a UPROPERTY, not replicated.
 	uint32 NativePredicateStorage_0x13a0;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1578): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredVector_0x1578;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1584): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredVector_0x1584;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x15a8): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x15a8;
 
@@ -309,6 +316,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetTargetHeading() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FRotator GetTowhookRotation(bool bInterp) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsBoosting() const;

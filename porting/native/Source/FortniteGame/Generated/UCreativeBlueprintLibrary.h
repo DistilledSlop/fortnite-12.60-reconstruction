@@ -7,6 +7,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 
 #include "Engine/CollisionProfile.h"
+#include "Math/Vector.h"
 
 #include "UCreativeBlueprintLibrary.generated.h"
 
@@ -24,6 +25,11 @@ public:
 private:
 	UFUNCTION(BlueprintCallable)
 	static void LogHUDMessageWarning(FString InString);
+public:
+
+private:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static TArray<FVector> SegmentSphereIntersection(FVector& SegmentStart, FVector& SegmentEnd, FVector& SphereOrigin, float SphereRadius);
 public:
 
 };

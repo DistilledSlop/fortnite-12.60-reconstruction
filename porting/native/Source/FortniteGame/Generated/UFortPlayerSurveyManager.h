@@ -23,5 +23,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddSurvey(UFortPlayerSurveyBase* Survey);
 
+	UFUNCTION(BlueprintCallable)
+	void RemoveSurvey(UFortPlayerSurveyBase* Survey);
+
 };
 

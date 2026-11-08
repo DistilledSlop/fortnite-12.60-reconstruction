@@ -36,5 +36,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumDisplayedItems() const;
 
+private:
+	UFUNCTION()
+	void HandleMessageDisplayed(UFortUIMessageItemWidget* MessageItem);
+public:
+
 };
 

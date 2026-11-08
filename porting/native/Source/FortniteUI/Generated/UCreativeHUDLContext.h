@@ -155,6 +155,12 @@ public:
 	UFUNCTION()
 	void ForwardOnScaleAxisChanged(EScaleAxis Axis);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EHitTraceRule GetCurrentHitTraceRule() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetDropToFloorEnabled() const;
+
 	UFUNCTION()
 	void HandleOnCreativeModeEnabledChanged(bool bIsEnabled);
 

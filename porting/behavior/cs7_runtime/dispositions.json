@@ -1,0 +1,58 @@
+[
+ {
+  "class": "UCommonTabListWidget",
+  "function": "GetTabIdAtIndex",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UCreativeBlueprintLibrary",
+  "function": "SegmentSphereIntersection",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UFortAIEncounterInfo",
+  "function": "EncounterHasReservedSpawnRequestForEnemySpawner",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UFortAIEncounterInfo",
+  "function": "GetEncounterAssignmentGoalActors",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UFortAIEncounterInfo",
+  "function": "GetEncounterRifts",
+  "status": "blocked",
+  "case": "callee_receiver_mismatch",
+  "reason": "Call 0x141695990 passes RCX=[this+0xaa8] (RiftManager), but its only candidate NativeCollectRiftPointers141695990 takes UFortAIEncounterInfo* as first parameter."
+ },
+ {
+  "class": "UFortAthenaNpcGalileoComponent",
+  "function": "SetPatrolPath",
+  "status": "blocked",
+  "case": "callee_signature_mismatch",
+  "reason": "Call 0x14072b300 (RCX=&PatrolPath, EDX=new Num, resize before memcpy) has only candidate AFortGameModeZone::SetPlayerStartLocationOverrides(Object,Array,Struct); no declared helper matches."
+ },
+ {
+  "class": "UFortBaseButton",
+  "function": "GetCurrentButtonPadding",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UFortBaseButton",
+  "function": "GetCurrentCustomPadding",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ }
+]

@@ -4,6 +4,8 @@
 #include "AFortGameModeAthena.h"
 #include "AFortGameStateAthena.h"
 #include "AFortGameplayMutator.h"
+#include "AFortPlayerController.h"
+#include "AFortPlayerState.h"
 #include "AFortVolume.h"
 #include "AFortVolumeManager.h"
 #include "EFortMinigameEnd.h"
@@ -30,6 +32,7 @@
 #include "UFortMinigameLogicComponent.h"
 #include "UFortMinigamePlayerStartComponent.h"
 #include "UFortMinigameStatFilter.h"
+#include "UFortMinigameStatics.h"
 #include "UFortMutatorContext.h"
 #include "UFortMutatorListComponent.h"
 #include "UFortMutatorOwner.h"
@@ -622,6 +625,14 @@ void AFortMinigame::HandleVolumeEditModeChange_Implementation(bool bInEditMode)
 	}
 }
 
+bool AFortMinigame::HasMinigameStarter() const
+{
+	// Body 0x142098de0 (thunk 0x1429c2910). Offset evidence: [this+0xaa8] is MinigameStarter (reflected AFortPlayerState*). The body null-checks it and tests GUObjectArray item flag bit 29 (PendingKill) through its InternalIndex, which is UObject::IsPendingKill.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(AFortPlayerState) > 0, "AFortPlayerState must be complete for MinigameStarter->IsPendingKill()");
+	return MinigameStarter != nullptr && !MinigameStarter->IsPendingKill();
+}
+
 bool AFortMinigame::HasPlayerStartPads_Implementation(AFortPlayerState* InPlayerState) const
 {
 	// CONFIDENCE: high
@@ -712,6 +723,32 @@ bool AFortMinigame::IsMinigameComponent(UFortMinigameLogicComponent* MinigameCom
 	{
 	    return MinigameComponent && MinigameComponents.Contains(MinigameComponent);
 	}
+}
+
+bool AFortMinigame::IsMinigameStarter(AFortPlayerController* PlayerController) const
+{
+	// Body 0x14209a310 (thunk 0x1429c3290). Offset evidence: [this+0xaa8] is MinigameStarter (AFortPlayerState*). Checks in asm order: starter null, starter PendingKill, controller null, controller PendingKill (all false), then UFortMinigameStatics::NativeHelper142414c60(MinigameStarter) compared with the controller pointer.
+	// CONFIDENCE: MEDIUM
+	static_assert(sizeof(AFortPlayerState) > 0, "AFortPlayerState must be complete for MinigameStarter->IsPendingKill()");
+	static_assert(sizeof(AFortPlayerController) > 0, "AFortPlayerController must be complete for PlayerController->IsPendingKill()");
+	static_assert(sizeof(UFortMinigameStatics) > 0, "UFortMinigameStatics must be declared to call the ported helper");
+	if (MinigameStarter == nullptr)
+	{
+	    return false;
+	}
+	if (MinigameStarter->IsPendingKill())
+	{
+	    return false;
+	}
+	if (PlayerController == nullptr)
+	{
+	    return false;
+	}
+	if (PlayerController->IsPendingKill())
+	{
+	    return false;
+	}
+	return reinterpret_cast<uint8*>(UFortMinigameStatics::NativeHelper142414c60(MinigameStarter)) == reinterpret_cast<uint8*>(PlayerController);
 }
 
 bool AFortMinigame::IsMinigameStarting() const

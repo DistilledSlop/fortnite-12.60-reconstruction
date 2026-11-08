@@ -74,6 +74,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetTabCount() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetTabIdAtIndex(int32 Index) const;
+
 protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void HandleTabCreated(FName TabNameID, UCommonButton* TabButton);

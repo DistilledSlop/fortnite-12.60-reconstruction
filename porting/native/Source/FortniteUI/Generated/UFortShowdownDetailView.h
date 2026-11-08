@@ -58,6 +58,14 @@ public:
 	UPROPERTY()
 	FMargin TitlePaddingMobile;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x5c0): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPointer_0x5c0;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	FString GetEventId();
+public:
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetTournamentPinUnlockScore() const;

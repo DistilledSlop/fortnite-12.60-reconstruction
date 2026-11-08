@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFortAutoMulchCategory.h"
 #include "EFortFrontendInventoryFilter.h"
 
 #include "UFortItemAutoMulchActivatablePanel.generated.h"
@@ -19,6 +20,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortFrontendInventoryFilter GetFrontendInventoryFilter() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<EFortAutoMulchCategory> GetMulchCategoriesForInventoryFilter() const;
 public:
 
 };

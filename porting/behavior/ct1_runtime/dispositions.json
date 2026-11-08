@@ -1,0 +1,58 @@
+[
+ {
+  "class": "AAIHotSpot",
+  "function": "GetSlotLocationByIndex",
+  "status": "blocked",
+  "case": "call",
+  "reason": "writable_global_nonzero_fallback_unproven: fallback FVector reads .data globals 0x1478c1890/0x1478c1898 holding 0x7f7fffff (FLT_MAX), not provably constant; not guessed"
+ },
+ {
+  "class": "ABuildingGameplayActor",
+  "function": "GetTargetingSourceTransform",
+  "status": "blocked",
+  "case": "call",
+  "reason": "writable_global_fallback_extent_unverified: null RootComponent path copies a 0x30-byte FTransform from writable global 0x1482184f0; snapshot proves only the first qword is zero"
+ },
+ {
+  "class": "ABuildingGameplayActorConsumable",
+  "function": "GetDeathFXTransform",
+  "status": "blocked",
+  "case": "call",
+  "reason": "writable_global_fallback_extent_unverified: shared body 0x141bdd320, fallback copies 0x30 bytes from writable global 0x1482184f0; only first qword proven zero"
+ },
+ {
+  "class": "ADeployableBaseCore",
+  "function": "GetSimpleDeathFXTransform",
+  "status": "blocked",
+  "case": "call",
+  "reason": "writable_global_fallback_extent_unverified: shared body 0x141bdd320, fallback copies 0x30 bytes from writable global 0x1482184f0; only first qword proven zero"
+ },
+ {
+  "class": "AFortAthenaDoghouseVehicle",
+  "function": "IsStallingFromAltitude",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "HasMinigameStarter",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "IsMinigameStarter",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "GetTowhookRotation",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ }
+]

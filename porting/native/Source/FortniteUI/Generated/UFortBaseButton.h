@@ -13,6 +13,7 @@
 #include "FFortBaseButtonClicked.h"
 #include "FFortEnabledStateChanged.h"
 #include "FFortSelectedStateChanged.h"
+#include "Layout/Margin.h"
 #include "Math/Vector2D.h"
 #include "Sound/SlateSound.h"
 #include "Types/SlateEnums.h"
@@ -99,14 +100,26 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x2e7): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x2e7;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x7d8): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUInt64_0x7d8;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x7f8): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x7f8;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FMargin GetCurrentButtonPadding() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FMargin GetCurrentCustomPadding() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetSelected() const;
 
 	UFUNCTION(BlueprintCallable)
 	void SetBangVisibility(bool bVisible);
+
+	UFUNCTION(BlueprintCallable)
+	void SetHovered(bool InHovered);
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

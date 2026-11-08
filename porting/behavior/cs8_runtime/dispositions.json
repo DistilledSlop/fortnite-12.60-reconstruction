@@ -1,0 +1,58 @@
+[
+ {
+  "class": "UFortBaseButton",
+  "function": "SetHovered",
+  "status": "proposed",
+  "case": "gap_member_plus_raw_pointee",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortCreativeCreatureManagerComponent",
+  "function": "OnInfoComponentAdded",
+  "status": "proposed",
+  "case": "tarray_add",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortCreativeCreatureManagerComponent",
+  "function": "OnInfoComponentRemoved",
+  "status": "proposed",
+  "case": "tarray_remove_all",
+  "reason": "all body instructions accounted for"
+ },
+ {
+  "class": "UFortEventLeaderboardEntryData",
+  "function": "GetAveragePlacement",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "absolute_global_read: [0x14838ba48] and [0x14838ba40] select a static wide-string compare (LEA 0x1459a4b30) per entry (TSet walk with 0x140687d00 bit iterator); hidden globals not expressible"
+ },
+ {
+  "class": "UFortEventLeaderboardEntryData",
+  "function": "GetTotalEliminations",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "absolute_global_read: [0x14838ba58] and [0x14838ba50] select a static wide-string compare (LEA 0x1459a4b30) per entry; hidden globals not expressible"
+ },
+ {
+  "class": "UFortGameStateComponent_EventLevel",
+  "function": "HandleOnCameraCut",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "payload_uninitialized_stack_bytes: MOV byte [RSP+0x24],1 then MOVSS reads dword 0x24 (bytes 0x25-0x27 uninitialized); AND dword [RSP+0x2c] on uninitialized stack; struct passed to 0x141cb8820; also 0x141ca78b0 needs an unreflected FrontEndCtx type"
+ },
+ {
+  "class": "UFortGameplayMessageDispatcherComponent",
+  "function": "OnVolumeStateChanged",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "branch_targets_unverified: array reset path (JS 0x141d8c3a2 / JZ 0x141d8c3d7 / JNZ 0x141d8c3fb, resize 0x140690fd0 when Max!=0 and Num==0) cannot be mapped to one TArray method with certainty; element frees 0x142bee710 are destructor-generated"
+ },
+ {
+  "class": "UFortGlobalUIContext",
+  "function": "IsHUDVisible",
+  "status": "blocked",
+  "case": "blocked",
+  "reason": "absolute_global_read: [0x148351eb8] root pointer and dword compares against [0x14816a7d8]/[0x14816a7dc]/[0x14816a7e0]/[0x14816a7e4]; hidden globals not expressible"
+ }
+]

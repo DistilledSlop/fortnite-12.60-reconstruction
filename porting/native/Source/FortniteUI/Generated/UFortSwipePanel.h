@@ -50,5 +50,11 @@ public:
 	UPROPERTY()
 	FFortSwipeDetector SwipeDetector;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x240): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x240;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetSwipeInfo(int32& OutIndex, FVector2D& OutSwipePercentage) const;
+
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortOptionsTab.h"
 
+#include "EFortInputActionGroup.h"
 #include "InputCoreTypes.h"
 #include "UCommonListView.h"
 #include "UCommonTextBlock.h"
@@ -40,6 +41,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	virtual void ChangeBinding(bool bIsPrimarySlot, int32 Input, FKey NewKey);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<UFortOptionsMenuInputData*> GetActionItemsInGroup(EFortInputActionGroup InputActionGroup) const;
 public:
 
 protected:

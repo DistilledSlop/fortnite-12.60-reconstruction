@@ -1,0 +1,58 @@
+[
+ {
+  "class": "UFortGridWidgetBase",
+  "function": "SetClearWidgetType",
+  "status": "blocked",
+  "case": "inlined_isa_ladder_unmapped",
+  "reason": "Body (116 insns) mixes an inlined class-chain test (CMP [RAX+RCX*8],RDX on the parent table at ClearWidgetType+0x30/+0x38 against StaticClass+0x30) with DataProvider RemoveAt(0) (memmove 0x1458092f3 + 0x14072c6c0 shrink) and Add (0x140690bb0 grow) across several nested branch paths; the branch-to-source mapping of the IsA ladder cannot be confirmed from the asm alone, so no exact port."
+ },
+ {
+  "class": "UFortHero",
+  "function": "IsLevelClamped",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "UFortInputOptions",
+  "function": "GetActionItemsInGroup",
+  "status": "proposed",
+  "case": "leaf",
+  "reason": ""
+ },
+ {
+  "class": "UFortInventoryContext",
+  "function": "GetItemsToMulchBP",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "UFortInventoryContext",
+  "function": "GetNumItemsToMulch",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "UFortInventoryContext",
+  "function": "GetNumOfItemToMulch",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "UFortItemAutoMulchActivatablePanel",
+  "function": "GetMulchCategoriesForInventoryFilter",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "UFortItemManagementInventoryPanel",
+  "function": "GetSupportedSortTypesForCurrentInventory",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ }
+]

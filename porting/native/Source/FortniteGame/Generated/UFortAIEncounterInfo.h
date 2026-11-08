@@ -668,6 +668,12 @@ public:
 	UPROPERTY(Transient)
 	TArray<AFortGameplayMutator_AIEncounterModifierTags*> EncounterModifierTagsMutators;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool EncounterHasReservedSpawnRequestForEnemySpawner(AActor* EnemySpawner) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetEncounterAssignmentGoalActors(TArray<AActor*>& OutGoalActors) const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	AFortAIDirectorDataManager* GetEncounterDataManager();
 

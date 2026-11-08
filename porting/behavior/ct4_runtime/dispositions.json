@@ -1,0 +1,23 @@
+[
+ {
+  "class": "UFortStoreFrontOfferInfo",
+  "function": "isItemGrantUnique",
+  "status": "proposed",
+  "case": "raw_owner_offset",
+  "reason": "Ported from asm; string compare and element check fully accounted"
+ },
+ {
+  "class": "UFortStreamMediaSource",
+  "function": "UpdatePlayerOptions",
+  "status": "proposed",
+  "case": "member_field_elided_log",
+  "reason": "Ported; log elided per verbosity-gate rule"
+ },
+ {
+  "class": "UFortSwipePanel",
+  "function": "GetSwipeInfo",
+  "status": "proposed",
+  "case": "raw_pointee_offsets",
+  "reason": "Ported; fallback globals read as 0.0"
+ }
+]

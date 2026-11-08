@@ -160,6 +160,9 @@ public:
 	void ToggleHighlightsListVisibility();
 
 	UFUNCTION(BlueprintCallable)
+	bool ToggleIconVisibility(TSubclassOf<UObject> ToToggle);
+
+	UFUNCTION(BlueprintCallable)
 	void TogglePlayerListVisibility();
 
 	UFUNCTION(BlueprintCallable)

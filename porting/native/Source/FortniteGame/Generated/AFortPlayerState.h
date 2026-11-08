@@ -264,6 +264,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_InGhostMode, Transient)
 	bool bInGhostMode;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xd00): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0xd00;
+
 	UFUNCTION(Client, Reliable)
 	void ClientNotifyAwardGranted(UFortAwardItemDefinition* AwardDefinition);
 	void ClientNotifyAwardGranted_Implementation(UFortAwardItemDefinition* AwardDefinition);

@@ -90,8 +90,10 @@ private:
 	void OnRep_LinkCodeLockStatus();
 public:
 
+private:
 	UFUNCTION()
 	void OnRep_LinkDataErrorStatus();
+public:
 
 	UFUNCTION()
 	void OnRep_LoadedLinkData();

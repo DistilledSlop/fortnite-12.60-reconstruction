@@ -808,6 +808,9 @@ public:
 	void AnimNotify_EmptyPoseState(UAnimNotify* Notify);
 
 	UFUNCTION()
+	void AnimNotify_JumpEnter(UAnimNotify* Notify);
+
+	UFUNCTION()
 	void AnimNotify_MechBeginFire(UAnimNotify* Notify);
 
 };

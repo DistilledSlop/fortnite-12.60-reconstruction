@@ -284,6 +284,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsFollowedPlayerInBus() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsPlayerInRelevancy(AFortPlayerState* FPS) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsValidToFollow(AFortPlayerState* FPS) const;
+
 protected:
 	UFUNCTION()
 	virtual void OnRep_FollowedPlayerRemoteClientInfo();

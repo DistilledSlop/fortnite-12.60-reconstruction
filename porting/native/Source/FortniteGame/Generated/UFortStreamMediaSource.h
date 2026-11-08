@@ -84,6 +84,9 @@ public:
 	UPROPERTY()
 	UMediaSource* LocalFilePlaybackAsset;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e0): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x1e0;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x200): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x200;
 

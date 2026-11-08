@@ -288,6 +288,9 @@ private:
 	void ListChallenges(FString Filter) const;
 public:
 
+	UFUNCTION(BlueprintCallable)
+	FString PopNextPendingFeatureUnlock();
+
 	UFUNCTION()
 	void SetQuestMapMode(EQuestMapScreenMode NewQuestMapMode);
 

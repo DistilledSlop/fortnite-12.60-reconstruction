@@ -599,5 +599,54 @@
   "blocker": "cross_module_class",
   "reason": "body uses UFortGlobalUIContext",
   "inc_path": "porting/behavior/hq12_runtime/AFortAthenaGoatVehicle/NativeGetGolfCartReverseActionName141eb9fa0.inc"
+ },
+ {
+  "entry": "UFortSquadSlotsView::HandleSelectedButtonChanged",
+  "kind": "exec",
+  "blocker": "cross_module_class",
+  "reason": "body uses UCommonButton",
+  "inc_path": "porting/behavior/cs11_runtime/UFortSquadSlotsView/HandleSelectedButtonChanged.inc"
+ },
+ {
+  "entry": "UFortKismetLibrary::HasRewards",
+  "kind": "exec",
+  "blocker": "static_uses_instance_helper",
+  "reason": "static function calling instance helper NativeHasAnyRewardEntries141f8e580",
+  "inc_path": "porting/behavior/cs10_runtime/UFortKismetLibrary/HasRewards.inc"
+ },
+ {
+  "entry": "UFortStreamMediaSource::UpdatePlayerOptions",
+  "kind": "exec",
+  "blocker": "needs_new_module",
+  "reason": "requires MediaUtils module dependency",
+  "inc_path": "porting/behavior/ct4_runtime/UFortStreamMediaSource/UpdatePlayerOptions.inc"
+ },
+ {
+  "entry": "UFortMinigameStatics::GetLocation",
+  "kind": "exec",
+  "blocker": "explicit_virtual_static",
+  "reason": "explicit virtual requires an ordinary reflected member function",
+  "inc_path": "porting/behavior/ct3_runtime/UFortMinigameStatics/GetLocation.inc"
+ },
+ {
+  "entry": "USceneComponent::NativeRecoveredFloat_0x1d0",
+  "kind": "member_field",
+  "blocker": "class_not_generated",
+  "reason": "engine class USceneComponent is not generated",
+  "inc_path": null
+ },
+ {
+  "entry": "USceneComponent::NativeRecoveredFloat_0x1d4",
+  "kind": "member_field",
+  "blocker": "class_not_generated",
+  "reason": "engine class USceneComponent is not generated",
+  "inc_path": null
+ },
+ {
+  "entry": "USceneComponent::NativeRecoveredFloat_0x1d8",
+  "kind": "member_field",
+  "blocker": "class_not_generated",
+  "reason": "engine class USceneComponent is not generated",
+  "inc_path": null
  }
 ]

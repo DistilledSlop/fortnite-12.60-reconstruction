@@ -58,6 +58,12 @@ public:
 	void GamepadEditModeMultiplierValueChanged(float NewValue);
 
 	UFUNCTION(BlueprintCallable)
+	void GamepadLookSensitivityXChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void GamepadLookSensitivityYChanged(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
 	void GamepadLookStickDeadZoneChanged(float NewValue) const;
 
 	UFUNCTION(BlueprintCallable)
@@ -173,6 +179,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMouseSensitivityMultiplierForAircraft() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector2D GetMouseSensitivityValue() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetNotifyUsersWhenPlaying() const;

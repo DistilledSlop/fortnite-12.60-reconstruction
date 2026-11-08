@@ -122,6 +122,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool GetShouldPrioritizeFavorites();
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<EInventoryContentSortType> GetSupportedSortTypesForCurrentInventory() const;
+public:
+
 private:
 	UFUNCTION()
 	void HandleFilterTabButtonCreated(FName TabNameId, UCommonButton* TabButton);

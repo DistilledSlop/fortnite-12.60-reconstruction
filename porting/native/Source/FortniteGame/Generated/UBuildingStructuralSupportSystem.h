@@ -10,6 +10,7 @@
 #include "Math/Vector.h"
 
 class ABuildingLayoutRequirement;
+class ABuildingSMActor;
 class AController;
 class AFortNavigationGraph;
 
@@ -71,6 +72,11 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortNavigationGraph* NavGraph;
+
+private:
+	UFUNCTION(BlueprintCallable)
+	static bool IsBuildingActorValid(ABuildingSMActor* ActorToTest);
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsWorldLocValid(FVector& WorldLoc) const;

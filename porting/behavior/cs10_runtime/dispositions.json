@@ -1,0 +1,58 @@
+[
+ {
+  "class": "UFortKismetLibrary",
+  "function": "ComputePhysicsAngularVelocity",
+  "status": "blocked",
+  "case": "insn_limit_and_data_consts_missing",
+  "reason": "Body has ~130 instructions (job limit 60) of float/SSE math with stack spills, and float operands at 0x1459a86f8, 0x1459c03a0, 0x1459a86f0, 0x1459c03a4, 0x145a179fc, 0x148218630/38 have no data_consts values."
+ },
+ {
+  "class": "UFortKismetLibrary",
+  "function": "GetDirectionActorToActor",
+  "status": "blocked",
+  "case": "data_consts_missing",
+  "reason": "Null-actor and root-less fallback paths load constants at 0x148218640/0x148218648 and 0x148218630/0x148218638 with no data_consts values supplied; cannot pick the literals."
+ },
+ {
+  "class": "UFortKismetLibrary",
+  "function": "HasRewards",
+  "status": "proposed",
+  "case": "exact_tail_jump_to_ported_helper",
+  "reason": ""
+ },
+ {
+  "class": "UFortMatchmakingKnobsModal",
+  "function": "GetScrolledOffWhitelistedPlayers",
+  "status": "blocked",
+  "case": "body_mismatch_shared_tarray_resize",
+  "reason": "Body 0x140690a50 is a generic TArray resize helper (RCX=TArray*, EDX=new count, R8D=old max, QuantizeSize + FMemory::Realloc); it does not implement the no-arg getter declared in the header."
+ },
+ {
+  "class": "UFortMtxStoreRootBase",
+  "function": "GetStorefrontNames",
+  "status": "blocked",
+  "case": "body_mismatch_shared_tarray_resize",
+  "reason": "Body 0x140690a50 is shared with GetScrolledOffWhitelistedPlayers and is a generic TArray resize helper (RCX=TArray*, EDX=new count, R8D=old max), not the declared getter GetStorefrontNames() const."
+ },
+ {
+  "class": "UFortPlayerAnimInstance",
+  "function": "AnimNotify_SkydiveAdditiveEnd",
+  "status": "blocked",
+  "case": "data_consts_missing",
+  "reason": "DeltaTime argument loaded from 0x1459a86f4 has no data_consts value supplied."
+ },
+ {
+  "class": "UFortPlayerAnimInstance",
+  "function": "GetRelativeAngle",
+  "status": "blocked",
+  "case": "insn_limit_and_data_consts_missing",
+  "reason": "Body has ~75 instructions (job limit 60) and float constants 0x145a17a04, 0x145a179fc, 0x145a20640, 0x145a88e30, 0x145a17a18 have no data_consts values."
+ },
+ {
+  "class": "UFortPlayerSurveyAnswerWidgetDataTable",
+  "function": "GetClassForSurvey",
+  "status": "blocked",
+  "case": "insn_limit_exceeded",
+  "reason": "Body has ~110 instructions (job limit 60) with a nested hash/index walk over unreflected struct fields at this+0x30..0x78 and element stride 0x68/0x18; too large to port exactly under the rules."
+ }
+]

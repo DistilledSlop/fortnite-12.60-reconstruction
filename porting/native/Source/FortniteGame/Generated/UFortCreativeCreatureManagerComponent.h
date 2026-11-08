@@ -20,5 +20,11 @@ public:
 	UPROPERTY()
 	TArray<UFortCreativeCreatureManagerInfoComponent*> CreatureManagerInfos;
 
+	UFUNCTION(BlueprintCallable)
+	void OnInfoComponentAdded(UFortCreativeCreatureManagerInfoComponent* CreatureManagerInfoComponent);
+
+	UFUNCTION(BlueprintCallable)
+	void OnInfoComponentRemoved(UFortCreativeCreatureManagerInfoComponent* CreatureManagerInfoComponent);
+
 };
 

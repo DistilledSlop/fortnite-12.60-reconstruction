@@ -699,6 +699,9 @@ public:
 	void HandleVolumeEditModeChange(bool bInEditMode);
 	virtual void HandleVolumeEditModeChange_Implementation(bool bInEditMode);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasMinigameStarter() const;
+
 	UFUNCTION(BlueprintNativeEvent)
 	bool HasPlayerStartPads(AFortPlayerState* InPlayerState) const;
 	virtual bool HasPlayerStartPads_Implementation(AFortPlayerState* InPlayerState) const;
@@ -729,6 +732,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMinigameComponent(UFortMinigameLogicComponent* MinigameComponent) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMinigameStarter(AFortPlayerController* PlayerController) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMinigameStarting() const;

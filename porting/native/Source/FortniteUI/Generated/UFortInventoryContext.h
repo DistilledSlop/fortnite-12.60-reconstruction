@@ -129,6 +129,15 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x204): not a UPROPERTY, not replicated.
 	int32 CachedHeroItemCount;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2c8): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x2c8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2e8): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x2e8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2f0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x2f0;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool AreAnyItemsAnimate(TArray<UFortItem*>& Items);
 
@@ -152,6 +161,15 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool GetGameplayTagByIndex(FGameplayTagContainer GameplayTagContainer, int32 Index, FGameplayTag& Result);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<UFortItem*> GetItemsToMulchBP() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumItemsToMulch() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumOfItemToMulch(UFortItem* Item) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetVaultItemLimit() const;

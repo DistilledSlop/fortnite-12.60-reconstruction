@@ -1,0 +1,58 @@
+[
+ {
+  "class": "AFortPlayerControllerSpectating",
+  "function": "IsPlayerInRelevancy",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerControllerSpectating",
+  "function": "IsValidToFollow",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "GetSlopeSlidingNormal",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "AFortSpaghettiVehicle",
+  "function": "GetTowhookRotation",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "AFortWeaponRanged",
+  "function": "ShouldPlayReloadFX",
+  "status": "blocked",
+  "case": "call",
+  "reason": "mutable_global_0x14816dd98: Compares pawn+0x16c8 with writable .data global 0x14816dd98 (snapshot 0): a runtime counter, not a constant; cannot be expressed exactly without the global."
+ },
+ {
+  "class": "UBuildingStructuralSupportSystem",
+  "function": "GetFloorActor",
+  "status": "blocked",
+  "case": "call",
+  "reason": "unreflected_tset_hash_layout: Walks TSet-style hash buckets via [this+0x2a0]/[+0x2b0]/[+0x268]/[+0x270]/[+0x29c] (asm 0x141c77bf1..0x141c77c0c) with no typed TSet layout; not guessed."
+ },
+ {
+  "class": "UBuildingStructuralSupportSystem",
+  "function": "IsBuildingActorValid",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ },
+ {
+  "class": "UCreativeHUDLContext",
+  "function": "GetCurrentHitTraceRule",
+  "status": "proposed",
+  "case": "call",
+  "reason": ""
+ }
+]

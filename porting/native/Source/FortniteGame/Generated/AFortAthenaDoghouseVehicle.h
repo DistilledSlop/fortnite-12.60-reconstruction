@@ -156,6 +156,9 @@ public:
 	UPROPERTY(Config)
 	float ShootAimAheadDistance;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1238): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x1238;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x1240): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x1240;
 
@@ -207,6 +210,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsFreelooking() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsStallingFromAltitude() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsStandingInPlace() const;
