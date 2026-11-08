@@ -799,14 +799,15 @@
   "kind": "exec",
   "blocker": "ustruct_not_blueprint_type",
   "reason": "FBuildingSupportCellIndex is not a BlueprintType USTRUCT; UHT rejects the reflected parameter",
-  "inc_path": "porting/behavior/pv2_runtime/UBuildingStructuralSupportSystem/GetGridBox.inc"
+  "inc_path": "porting/behavior/pv2_runtime/UBuildingStructuralSupportSystem/GetGridBox.inc",
+  "unblock": "Re-add pv2 entry. FBuildingSupportCellIndex is generated as plain USTRUCT(); the original function is BlueprintCallable with this by-ref param, so the struct needs USTRUCT(BlueprintType) from the original struct flags (generator struct-flag fix), then GetGridBox compiles as written."
  },
  {
   "entry": "ABuildingFillFloor::OnRep_FloorZ",
   "kind": "exec",
   "blocker": "clang_compile_error",
   "reason": "no member named 'NativeRecoveredFloat_0x1d8' in 'USceneComponent'",
-  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "unblock": "Re-add pv1 entry, replace the three NativeRecoveredFloat_0x1d0/4/8 reads with RootComponent->GetComponentLocation(): USceneComponent::ComponentToWorld sits at +0x1c0 and its Translation at +0x1d0 (verified with ptype /o on the 4.25 build), so [Root+0x1d0..0x1d8] is the world location; no member_field on an engine class is needed.",
   "inc_path": "porting/behavior/pv1_runtime/ABuildingFillFloor/OnRep_FloorZ.inc"
  },
  {
@@ -814,6 +815,7 @@
   "kind": "exec",
   "blocker": "engine_class_member_field",
   "reason": "depends on USceneComponent member fields, which cannot be generated for engine classes",
-  "inc_path": "porting/behavior/pv1_runtime/ABuildingFillFloor/OnRep_FloorZ.inc"
+  "inc_path": "porting/behavior/pv1_runtime/ABuildingFillFloor/OnRep_FloorZ.inc",
+  "unblock": "Re-add pv1 entry, replace the three NativeRecoveredFloat_0x1d0/4/8 reads with RootComponent->GetComponentLocation(): USceneComponent::ComponentToWorld sits at +0x1c0 and its Translation at +0x1d0 (verified with ptype /o on the 4.25 build), so [Root+0x1d0..0x1d8] is the world location; no member_field on an engine class is needed."
  }
 ]
