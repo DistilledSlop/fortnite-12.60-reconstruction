@@ -1,0 +1,96 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/Animation/AnimCompressionTypes.cpp b/Engine/Source/Runtime/Engine/Private/Animation/AnimCompressionTypes.cpp
+index fbe91b21e..147b3f416 100644
+--- a/Engine/Source/Runtime/Engine/Private/Animation/AnimCompressionTypes.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Animation/AnimCompressionTypes.cpp
+@@ -11,6 +11,10 @@
+ #include "Animation/AnimCurveCompressionSettings.h"
+ #include "AnimationRuntime.h"
+ #include "UObject/FortniteMainBranchObjectVersion.h"
++#include "Animation/AnimCompress_BitwiseCompressOnly.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
++#include "UObject/Linker.h"
+ 
+ CSV_DECLARE_CATEGORY_MODULE_EXTERN(ENGINE_API, Animation);
+ 
+@@ -432,6 +436,39 @@ void FCompressedAnimSequence::SerializeCompressedData(FArchive& Ar, bool bDDCDat
+ 	Ar << CompressedTrackToSkeletonMapTable;
+ 	Ar << CompressedCurveNames;
+ 
++	// Original Fortnite 12.60 cooked layout (unversioned packages; no bone codec settings asset, no codec DDC handle):
++	// the legacy FUECompressedAnimData header sits right after the curve names, as
++	//   KeyEncodingFormat, Translation/Rotation/ScaleCompressionFormat (uint8 each), CompressedNumberOfFrames,
++	//   TrackOffsets.Num, ScaleOffsets.Num, ScaleOffsets.StripSize, ByteStream.Num,
++	// followed by the normal NumBytes / bUseBulkData / payload (offsets, scale offsets, stream), then the
++	// curve codec path. Stock 4.25 writes this header after the curve path and prefixes the path with a bone codec handle.
++	// On by default; -FortniteNoLegacyAnimCompression disables it for diagnosis.
++	const bool bLegacyFortniteLayout = Ar.IsLoading() && !bDDCData && Ar.GetLinker() && Ar.GetLinker()->Summary.bUnversioned
++		&& !FParse::Param(FCommandLine::Get(), TEXT("FortniteNoLegacyAnimCompression"));
++	if (bLegacyFortniteLayout)
++	{
++		// Bone codec is not stored; the legacy format-driven codec decodes any FUECompressedAnimData.
++		static UAnimBoneCompressionCodec* LegacyCodec = nullptr;
++		if (LegacyCodec == nullptr)
++		{
++			LegacyCodec = NewObject<UAnimCompress_BitwiseCompressOnly>(GetTransientPackage(), NAME_None, RF_Transient);
++			LegacyCodec->AddToRoot();
++		}
++		BoneCompressionCodec = LegacyCodec;
++		CompressedDataStructure = BoneCompressionCodec->AllocateAnimData();
++		FUECompressedAnimData& LegacyData = static_cast<FUECompressedAnimData&>(*CompressedDataStructure);
++		Ar << LegacyData.KeyEncodingFormat;
++		Ar << LegacyData.TranslationCompressionFormat;
++		Ar << LegacyData.RotationCompressionFormat;
++		Ar << LegacyData.ScaleCompressionFormat;
++		Ar << LegacyData.CompressedNumberOfFrames;
++		SerializeView(Ar, LegacyData.CompressedTrackOffsets);
++		SerializeView(Ar, LegacyData.CompressedScaleOffsets.OffsetData);
++		Ar << LegacyData.CompressedScaleOffsets.StripSize;
++		SerializeView(Ar, LegacyData.CompressedByteStream);
++		AnimationFormat_SetInterfaceLinks(LegacyData);
++	}
++
+ 	// Serialize the compressed byte stream from the archive to the buffer.
+ 	int32 NumBytes = CompressedByteStream.Num();
+ 	Ar << NumBytes;
+@@ -498,7 +535,10 @@ void FCompressedAnimSequence::SerializeCompressedData(FArchive& Ar, bool bDDCDat
+ 		FString BoneCodecDDCHandle;
+ 		FString CurveCodecPath;
+ 
+-		Ar << BoneCodecDDCHandle;
++		if (!bLegacyFortniteLayout)
++		{
++			Ar << BoneCodecDDCHandle;
++		}
+ 		Ar << CurveCodecPath;
+ 
+ 		check(!BoneCodecDDCHandle.Equals(TEXT("None"), ESearchCase::IgnoreCase)); // Failed DDC data?
+@@ -511,15 +551,24 @@ void FCompressedAnimSequence::SerializeCompressedData(FArchive& Ar, bool bDDCDat
+ 		Ar.Serialize(CompressedCurveByteStream.GetData(), NumCurveBytes);
+ 
+ 		// Lookup our codecs in our settings assets
+-		ValidateUObjectLoaded(BoneCompressionSettings, DataOwner);
++		if (!bLegacyFortniteLayout)
++		{
++			ValidateUObjectLoaded(BoneCompressionSettings, DataOwner);
++		}
+ 		ValidateUObjectLoaded(CurveCompressionSettings, DataOwner);
+-		BoneCompressionCodec = BoneCompressionSettings->GetCodec(BoneCodecDDCHandle);
++		if (!bLegacyFortniteLayout)
++		{
++			BoneCompressionCodec = BoneCompressionSettings->GetCodec(BoneCodecDDCHandle);
++		}
+ 		CurveCompressionCodec = CurveCompressionSettings->GetCodec(CurveCodecPath);
+ 
+ 		if (BoneCompressionCodec != nullptr)
+ 		{
+-			CompressedDataStructure = BoneCompressionCodec->AllocateAnimData();
+-			CompressedDataStructure->SerializeCompressedData(Ar);
++			if (!bLegacyFortniteLayout)
++			{
++				CompressedDataStructure = BoneCompressionCodec->AllocateAnimData();
++				CompressedDataStructure->SerializeCompressedData(Ar);
++			}
+ 			CompressedDataStructure->Bind(CompressedByteStream);
+ 
+ 			// The codec can be null if we are a default object, a sequence with no raw bone data (just curves),
