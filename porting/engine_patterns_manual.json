@@ -1,8 +1,52 @@
 {
- "0x145803c70": {"kind": "omit", "cpp": "", "note": "MSVC __security_check_cookie (stack canary check, compiler-generated): omit it and the matching `XOR RAX,RSP` cookie store/load pair"},
- "0x145803a44": {"kind": "static_guard", "cpp": "", "note": "MSVC _Init_thread_header(&guard): C++11 function-local static guard; write a plain function-local `static` initialiser (omit guard, header/footer calls)"},
- "0x1458039e4": {"kind": "static_guard", "cpp": "", "note": "MSVC _Init_thread_footer(&guard): see 0x145803a44"},
- "0x142bfd200": {"kind": "call", "cpp": "FMemory::Realloc(void* Original, SIZE_T Count, uint32 Alignment)", "note": "RCX=Original, RDX=Count, R8D=Alignment (goes through GMalloc vtable+0x20)"},
- "0x142bfce10": {"kind": "call", "cpp": "FMemory::QuantizeSize(SIZE_T Count, uint32 Alignment)", "note": "RCX=Count, EDX=Alignment; returns Count when GMalloc is null"},
- "0x142bfb0f0": {"kind": "call", "cpp": "FMemory::Malloc(SIZE_T Count, uint32 Alignment)", "note": "RCX=Count, EDX=Alignment; GMalloc created lazily"}
+ "0x145803c70": {
+  "kind": "omit",
+  "cpp": "",
+  "note": "MSVC __security_check_cookie (stack canary check, compiler-generated): omit it and the matching `XOR RAX,RSP` cookie store/load pair"
+ },
+ "0x145803a44": {
+  "kind": "static_guard",
+  "cpp": "",
+  "note": "MSVC _Init_thread_header(&guard): C++11 function-local static guard; write a plain function-local `static` initialiser (omit guard, header/footer calls)"
+ },
+ "0x1458039e4": {
+  "kind": "static_guard",
+  "cpp": "",
+  "note": "MSVC _Init_thread_footer(&guard): see 0x145803a44"
+ },
+ "0x142bfd200": {
+  "kind": "call",
+  "cpp": "FMemory::Realloc(void* Original, SIZE_T Count, uint32 Alignment)",
+  "note": "RCX=Original, RDX=Count, R8D=Alignment (goes through GMalloc vtable+0x20)"
+ },
+ "0x142bfce10": {
+  "kind": "call",
+  "cpp": "FMemory::QuantizeSize(SIZE_T Count, uint32 Alignment)",
+  "note": "RCX=Count, EDX=Alignment; returns Count when GMalloc is null"
+ },
+ "0x142bfb0f0": {
+  "kind": "call",
+  "cpp": "FMemory::Malloc(SIZE_T Count, uint32 Alignment)",
+  "note": "RCX=Count, EDX=Alignment; GMalloc created lazily"
+ },
+ "0x143f793a0": {
+  "kind": "virtual_call",
+  "cpp": "GetWorld()",
+  "note": "AActor::GetWorld (CDO / outer BeginDestroyed / outer unreachable check, then Cast<ULevel>(Outer)->OwningWorld): call GetWorld() on the receiver; the whole body is this engine function"
+ },
+ "0x140690bb0": {
+  "kind": "array_grow",
+  "cpp": "Arr.AddUninitialized(1) (slow path of Add for an 8-byte element TArray)",
+  "note": "TArray<8-byte element>::ResizeGrow(OldNum) (RCX=&array): the inlined Add/Emplace slow path; port the whole `Num+1 > Max -> grow` sequence as Arr.Add(...)/AddUninitialized(1), never as a separate call"
+ },
+ "0x140690ac0": {
+  "kind": "array_grow",
+  "cpp": "Arr.Reserve / FString::Reserve(NewMax) (2-byte element TArray, RCX=&array, EDX=NewMax, R8D=PrevMax)",
+  "note": "TArray<TCHAR>::ResizeTo-style realloc with FMemory::QuantizeSize slack; port as FString/TArray<TCHAR> Reserve or the Append/Add that triggered it"
+ },
+ "0x142bee820": {
+  "kind": "omit",
+  "cpp": "",
+  "note": "FMemory::GCreateMalloc lazy init (GMalloc creation): omit; FMemory::Malloc/Realloc/Free already do it"
+ }
 }

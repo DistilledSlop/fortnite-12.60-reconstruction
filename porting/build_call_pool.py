@@ -10,6 +10,7 @@ sys.path.insert(0, 'porting')
 import thunk_receiver as tr
 from generated_defs import defined_in_generated
 import virtual_slots
+import typed_virtuals
 
 MAXI = int(sys.argv[1]) if len(sys.argv) > 1 else 60
 R = 'porting/generated'
@@ -139,37 +140,49 @@ for e in f2:
     tg = [m.group(1) for i in L for m in [re.fullmatch(r'(?:CALL|JMP) (0x[0-9a-f]+)', i)] if m]
     ind = [i for i in L if re.match(r'(CALL|JMP) (qword ptr|R)', i)]
     tgt = [t for t in tg if t not in HELPERS and t not in STUBS]
-    vslots, vbad = this_virtuals(L) if ind else ([], 0)
+    vslots, vbad = [], 0
+    if ind:
+        _ri = tr.receiver_info(e['thunk'], b[0])
+        _wd = sum(r['this_delta'] for r in e['resolved'] if r['real'] == b[0])
+        vslots, vbad = typed_virtuals.analyse(L, e['cls'], (_ri['delta'] + _wd) if _ri else 0)
     if ind and (vbad or len(vslots) != len(ind)):
         st['skip_indirect_not_this_vptr'] += 1
         continue
     cal = {}
     vnames = {}
-    for sl in vslots:
-        vn = virtual_slots.virt_name(e['cls'], sl)
+    for (rc, sl, mem) in vslots:
+        vn = virtual_slots.virt_name(rc, sl)
         if not vn:
-            _t = virtual_slots.virt_target(e['cls'], sl)
-            _chain = virtual_slots.PARENTS.get(e['cls'], [e['cls']])
+            _t = virtual_slots.virt_target(rc, sl)
+            _chain = virtual_slots.PARENTS.get(rc, [rc])
             _h = [h for h in hcand.get(_t, []) if h['fn'].partition('::')[0] in _chain and not h['static']] if _t else []
+            if not _h and _t in ENGINE:
+                vnames[(rc, sl, mem)] = ('ENGINE', dict(fn=ENGINE[_t]['cpp'], note=ENGINE[_t]['note']))
+                continue
             if not _h:
                 vnames = None
                 break
-            vnames[sl] = ('HELPER', _h[0])
+            vnames[(rc, sl, mem)] = ('HELPER', _h[0])
             continue
-        vnames[sl] = vn
+        vnames[(rc, sl, mem)] = vn
     if vnames is None:
         st['skip_virtual_slot_unnamed'] += 1
         continue
-    for sl, (vc, vf) in vnames.items():
+    for (rc, sl, mem), (vc, vf) in vnames.items():
+        key = ('virtual+0x%x' % sl) if mem is None else ('virtual@%s+0x%x' % (mem, sl))
+        where = 'on this' if mem is None else 'on the object loaded from member %s (type %s)' % (mem, rc)
+        if vc == 'ENGINE':
+            cal[key] = [dict(vf, virtual_slot=hex(sl), static=False, params=[], note='engine function ' + vf['note'] + ' (virtual call ' + where + ')')]
+            continue
         if vc == 'HELPER':
-            cal['virtual+0x%x' % sl] = [dict(vf, virtual_slot=hex(sl), note='ported helper for this vtable slot (non-virtual call on this): call %s on this exactly as declared' % vf['fn'])]
+            cal[key] = [dict(vf, virtual_slot=hex(sl), note='ported helper for this vtable slot (non-virtual call %s): call %s exactly as declared' % (where, vf['fn']))]
             continue
         d = nf.get(vc, {}).get(vf, {})
         fl = d.get('flags')
         fl = fl if isinstance(fl, int) else int(fl, 16) if fl else 0
-        cal['virtual+0x%x' % sl] = [dict(virtual_slot=hex(sl), fn=f'{vc}::{vf}', static=bool(fl & 0x2000), const=bool(fl & 0x40000000),
-                                          params=[(q['name'], q['kind']) for q in d.get('params') or []],
-                                          note='virtual call on this through the class vtable (slot named by address): call %s()' % vf)]
+        cal[key] = [dict(virtual_slot=hex(sl), fn=f'{vc}::{vf}', static=bool(fl & 0x2000), const=bool(fl & 0x40000000),
+                         params=[(q['name'], q['kind']) for q in d.get('params') or []],
+                         note='virtual call %s through the class vtable (slot named by address): call %s()' % (where, vf))]
     ok = True
     for t in tgt:
         if t in gp:

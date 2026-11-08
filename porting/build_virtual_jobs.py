@@ -10,7 +10,7 @@ MAXI = int(sys.argv[4]) if len(sys.argv) > 4 else 300
 ns = {'__name__': 'x'}; sys.argv = ['x', '300']
 src = open('porting/build_call_pool.py').read()
 src = src.replace("        st['skip_virtual_slot_unnamed'] += 1\n        continue",
-                  "        st['skip_virtual_slot_unnamed'] += 1\n        UNNAMED.append((e['cls'], e['fn'], [x for x in vslots if not virtual_slots.virt_name(e['cls'], x)]))\n        continue", 1)
+                  "        st['skip_virtual_slot_unnamed'] += 1\n        UNNAMED.append((e['cls'], e['fn'], [x[1] for x in vslots if x[0] == e['cls'] and not virtual_slots.virt_name(x[0], x[1])]))\n        continue", 1)
 src = src.replace("pool, st = [], collections.Counter()", "UNNAMED = []\npool, st = [], collections.Counter()", 1)
 exec(compile(src[:src.index('# dependency filter')], 'b', 'exec'), ns)
 vs, idx, insns, span, hdr, named, gp, HELPERS, hcand = (ns[k] for k in ('virtual_slots', 'idx', 'insns', 'span', 'hdr', 'named', 'gp', 'HELPERS', 'hcand'))
