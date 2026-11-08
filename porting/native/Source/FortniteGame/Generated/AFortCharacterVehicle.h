@@ -38,7 +38,7 @@ class UTexture;
 #include "AFortCharacterVehicle.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortCharacterVehicle : public AFortPlayerPawnAthena
+class FORTNITEGAME_API AFortCharacterVehicle : public AFortPlayerPawnAthena, public IFortVehicleInterface
 {
 	GENERATED_BODY()
 

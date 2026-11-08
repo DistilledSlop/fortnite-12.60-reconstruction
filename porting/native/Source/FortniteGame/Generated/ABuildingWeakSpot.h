@@ -8,13 +8,14 @@
 
 #include "Engine/EngineTypes.h"
 #include "Math/Vector.h"
+#include "UFortTeamActorInterface.h"
 
 class ABuildingSMActor;
 
 #include "ABuildingWeakSpot.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API ABuildingWeakSpot : public AFortClientOnlyActor
+class FORTNITEGAME_API ABuildingWeakSpot : public AFortClientOnlyActor, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

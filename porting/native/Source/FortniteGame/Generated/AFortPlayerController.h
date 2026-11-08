@@ -76,6 +76,7 @@
 #include "Misc/Guid.h"
 #include "UFortAnalyticsControllerInterface.h"
 #include "UFortInventoryOwnerInterface.h"
+#include "UFortTeamActorInterface.h"
 #include "UMcpProfileGroup.h"
 #include "UObject/CoreOnline.h"
 
@@ -145,7 +146,7 @@ class UUserWidget;
 #include "AFortPlayerController.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortPlayerController : public APlayspacePlayerController, public IFortInventoryOwnerInterface, public IFortAnalyticsControllerInterface
+class FORTNITEGAME_API AFortPlayerController : public APlayspacePlayerController, public IFortTeamActorInterface, public IFortInventoryOwnerInterface, public IFortAnalyticsControllerInterface
 {
 	GENERATED_BODY()
 

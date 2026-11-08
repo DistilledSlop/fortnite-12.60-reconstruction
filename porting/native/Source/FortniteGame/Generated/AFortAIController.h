@@ -7,6 +7,7 @@
 #include "AIController.h"
 
 #include "FAIHotSpotUseInfo.h"
+#include "UFortTeamActorInterface.h"
 
 class AActor;
 class AFortAIPawn;
@@ -16,7 +17,7 @@ class UFortPathFollowingComponent;
 #include "AFortAIController.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortAIController : public AAIController
+class FORTNITEGAME_API AFortAIController : public AAIController, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

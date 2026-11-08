@@ -1212,9 +1212,9 @@ bool AFortMinigame::NativeAllowsFriendlyFire163(AFortPawn* Pawn)
 	            }
 	            else if (AFortVolumeManager* Manager = AFortVolumeManager::NativeResolveVolumeManager(ContextActor))
 	            {
-	                if (AFortVolume* Volume = Manager->NativeFindActorVolume(ContextActor))
+	                if (AFortVolume* ActorVolume = Manager->NativeFindActorVolume(ContextActor))
 	                {
-	                    Owners.AddUnique(Volume);
+	                    Owners.AddUnique(ActorVolume);
 	                }
 	            }
 	        }

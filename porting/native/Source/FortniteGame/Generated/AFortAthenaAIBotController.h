@@ -21,6 +21,7 @@
 #include "FOnAlertLevelChangedEvent.h"
 #include "FOnStealthMeterChangedEvent.h"
 #include "Math/Vector.h"
+#include "UFortTeamActorInterface.h"
 
 class AActor;
 class AController;
@@ -60,7 +61,7 @@ class UStatManager;
 #include "AFortAthenaAIBotController.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortAthenaAIBotController : public AAIController
+class FORTNITEGAME_API AFortAthenaAIBotController : public AAIController, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

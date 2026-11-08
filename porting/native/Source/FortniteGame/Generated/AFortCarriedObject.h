@@ -11,6 +11,7 @@
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 #include "Styling/SlateColor.h"
+#include "UFortTeamActorInterface.h"
 
 class ABuildingFlagSpawn;
 class UProjectileMovementComponent;
@@ -18,7 +19,7 @@ class UProjectileMovementComponent;
 #include "AFortCarriedObject.generated.h"
 
 UCLASS(config=Engine, abstract)
-class FORTNITEGAME_API AFortCarriedObject : public AActor
+class FORTNITEGAME_API AFortCarriedObject : public AActor, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

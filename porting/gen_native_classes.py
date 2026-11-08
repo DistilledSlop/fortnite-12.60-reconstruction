@@ -2415,6 +2415,10 @@ _fort_ability_interface_spec = _common_activation_import.spec_from_file_location
     "fort_ability_interface_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "ability_interface302_runtime", "source_policy.py"))
 _fort_ability_interface_policy = _common_activation_import.module_from_spec(_fort_ability_interface_spec)
 _fort_ability_interface_spec.loader.exec_module(_fort_ability_interface_policy)
+_native_virtual_interfaces_spec = _common_activation_import.spec_from_file_location(
+    "native_virtual_interfaces_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_virtual_interfaces_runtime", "source_policy.py"))
+_native_virtual_interfaces_policy = _common_activation_import.module_from_spec(_native_virtual_interfaces_spec)
+_native_virtual_interfaces_spec.loader.exec_module(_native_virtual_interfaces_policy)
 _native_checkpoint2040_spec = _common_activation_import.spec_from_file_location(
     "native_checkpoint2040_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_checkpoint2040_runtime", "source_policy.py"))
 _native_checkpoint2040_policy = _common_activation_import.module_from_spec(_native_checkpoint2040_spec)
@@ -2737,6 +2741,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _item_tag_interface_policy.apply(model, block, owner_fns)
     model = _pawn_ability_interface_policy.apply(model, block, owner_fns)
     model = _fort_ability_interface_policy.apply(model, block, owner_fns)
+    model = _native_virtual_interfaces_policy.apply(model)
     model = _native_checkpoint2040_policy.apply(model)
     model = _volume_accessor_policy.apply(model, block, owner_fns)
     model = _playerstate68_policy.apply(model, block, owner_fns)
@@ -3668,6 +3673,8 @@ def render_promoted_header(model, api, parent_include, source_label):
 def render_interface_header(name, source_label, api):
     """UINTERFACE U<Name> (parent UInterface) and its native interface I<Name>, in one header as UHT expects."""
     custom = _fort_ability_interface_policy.render_header(name, source_label, api)
+    if custom is None:
+        custom = _native_virtual_interfaces_policy.render_header(name, source_label, api)
     if custom is not None:
         return custom
     iname = "I" + name[1:]
@@ -3707,6 +3714,8 @@ def render_interface_header(name, source_label, api):
 
 def render_interface_cpp(name, source_label):
     custom = _fort_ability_interface_policy.render_cpp(name, source_label)
+    if custom is None:
+        custom = _native_virtual_interfaces_policy.render_cpp(name, source_label)
     if custom is not None:
         return custom
     return "\n".join([
@@ -3879,7 +3888,7 @@ def build_interface_map(names, listed, blocks, parents, evidence_fns, class_refs
         record, parent = blocks.get(block) or {}, parents.get(block) or {}
         if (name in listed and name.startswith("U") and len(name) > 1
                 and hx(record.get("class_flags")) & CLASS_INTERFACE
-                and (parent.get("parent_name") == "UInterface" or _fort_ability_interface_policy.derived_interface(name, parent))
+                and (parent.get("parent_name") == "UInterface" or _fort_ability_interface_policy.derived_interface(name, parent) or _native_virtual_interfaces_policy.derived_interface(name, parent))
                 and parent.get("package") in PROMOTE_PACKAGES):
             iname = "I" + name[1:]
             eligible[block] = iname
@@ -4064,7 +4073,7 @@ def promote(args):
         elif is_interface(block):
             # A UINTERFACE is generated as U<Name> (parent UInterface) with its I<Name> class. An interface that
             # extends another interface is not generated (the parent is not a UInterface).
-            if entry.get("parent_name") != "UInterface" and not _fort_ability_interface_policy.derived_interface(name, entry):
+            if entry.get("parent_name") != "UInterface" and not _fort_ability_interface_policy.derived_interface(name, entry) and not _native_virtual_interfaces_policy.derived_interface(name, entry):
                 errors.append("%s: UINTERFACE extending %s, not generated" % (name, entry.get("parent_name")))
         else:
             parent = entry.get("parent_name")

@@ -28,6 +28,7 @@
 #include "NavigationSystem.h"
 #include "TargetSelectionVolumeNative.h"
 #include "TimerManager.h"
+#include "UFortTeamActorInterface.h"
 
 class AFortPawn;
 class UNavArea;
@@ -36,7 +37,7 @@ class UPrimitiveComponent;
 #include "AFortGameplayEffectDeliveryActor.generated.h"
 
 UCLASS(config=Engine, abstract)
-class FORTNITEGAME_API AFortGameplayEffectDeliveryActor : public AActor
+class FORTNITEGAME_API AFortGameplayEffectDeliveryActor : public AActor, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

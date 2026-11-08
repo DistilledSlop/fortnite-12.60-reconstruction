@@ -55,6 +55,7 @@
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 #include "UFortAbilitySystemInterface.h"
+#include "UFortTeamActorInterface.h"
 
 class AActor;
 class AFortEmitterCameraLensEffectDirectional;
@@ -92,7 +93,7 @@ class UWeaponHitNotifyAudioBank;
 #include "AFortPawn.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortPawn : public ACharacter, public IFortAbilitySystemInterface
+class FORTNITEGAME_API AFortPawn : public ACharacter, public IFortAbilitySystemInterface, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

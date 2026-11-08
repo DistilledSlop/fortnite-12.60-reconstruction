@@ -5,4 +5,3 @@ AFortSkydivingShadowProxy	hand-written in porting/native/Source (not generated)
 AFortStaticMeshActor	hand-written in porting/native/Source (not generated)
 UFortKismetLibrary	hand-written in porting/native/Source (not generated)
 UFortMetaNavArea_Obstacles	hand-written in porting/native/Source (not generated)
-UFortTeamActorInterface	UINTERFACE extending UGenericTeamAgentInterface

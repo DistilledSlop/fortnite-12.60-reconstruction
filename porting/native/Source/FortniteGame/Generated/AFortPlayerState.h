@@ -21,6 +21,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 #include "UFortAbilitySystemInterface.h"
+#include "UFortTeamActorInterface.h"
 
 class AActor;
 class AFortPickup;
@@ -38,7 +39,7 @@ class UFortHeroType;
 #include "AFortPlayerState.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortPlayerState : public APlayerState, public IFortAbilitySystemInterface
+class FORTNITEGAME_API AFortPlayerState : public APlayerState, public IFortAbilitySystemInterface, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

@@ -6,10 +6,12 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 
+#include "UFortTeamActorInterface.h"
+
 #include "AFortDisconnectedAIController.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortDisconnectedAIController : public AAIController
+class FORTNITEGAME_API AFortDisconnectedAIController : public AAIController, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

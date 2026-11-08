@@ -7,6 +7,7 @@
 #include "GameFramework/Info.h"
 
 #include "FTeamSpottedActorInfoArray.h"
+#include "UFortTeamActorInterface.h"
 
 class AController;
 class AFortTeamPrivateInfo;
@@ -14,7 +15,7 @@ class AFortTeamPrivateInfo;
 #include "AFortTeamInfo.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortTeamInfo : public AInfo
+class FORTNITEGAME_API AFortTeamInfo : public AInfo, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

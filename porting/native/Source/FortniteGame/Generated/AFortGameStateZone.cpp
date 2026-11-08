@@ -8,6 +8,7 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/PlayerState.h"
 #include "SharedFortGameLog.h"
+#include "UFortTeamActorInterface.h"
 #include "UFortZoneTheme.h"
 #include "Net/UnrealNetwork.h"
 

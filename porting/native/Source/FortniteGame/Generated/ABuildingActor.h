@@ -28,6 +28,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "UFortTeamActorInterface.h"
 
 class AController;
 class AFortAthenaVehicle;
@@ -50,7 +51,7 @@ class USoundBase;
 #include "ABuildingActor.generated.h"
 
 UCLASS(config=Game, abstract)
-class FORTNITEGAME_API ABuildingActor : public AActor
+class FORTNITEGAME_API ABuildingActor : public AActor, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

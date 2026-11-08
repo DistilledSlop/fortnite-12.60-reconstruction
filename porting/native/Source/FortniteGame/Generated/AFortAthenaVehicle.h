@@ -35,6 +35,7 @@
 #include "Math/Color.h"
 #include "Math/Vector.h"
 #include "UFortAbilitySystemInterface.h"
+#include "UFortVehicleInterface.h"
 
 class AActor;
 class ABuildingActor;
@@ -73,7 +74,7 @@ class UWeaponHitNotifyAudioBank;
 #include "AFortAthenaVehicle.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortAthenaVehicle : public AFortPhysicsPawn, public IFortAbilitySystemInterface
+class FORTNITEGAME_API AFortAthenaVehicle : public AFortPhysicsPawn, public IFortAbilitySystemInterface, public IFortVehicleInterface
 {
 	GENERATED_BODY()
 

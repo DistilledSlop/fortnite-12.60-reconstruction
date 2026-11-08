@@ -8,13 +8,14 @@
 
 #include "FOnPickupReplicated.h"
 #include "FPickupInstigatorData.h"
+#include "UFortTeamActorInterface.h"
 
 class UFortCreativeCostComponent;
 
 #include "AFortPickupCreative.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortPickupCreative : public AFortPickupAthena
+class FORTNITEGAME_API AFortPickupCreative : public AFortPickupAthena, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 

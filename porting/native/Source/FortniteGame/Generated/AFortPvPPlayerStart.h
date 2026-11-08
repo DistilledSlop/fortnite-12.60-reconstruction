@@ -6,10 +6,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerStart.h"
 
+#include "UFortTeamActorInterface.h"
+
 #include "AFortPvPPlayerStart.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortPvPPlayerStart : public APlayerStart
+class FORTNITEGAME_API AFortPvPPlayerStart : public APlayerStart, public IFortTeamActorInterface
 {
 	GENERATED_BODY()
 
