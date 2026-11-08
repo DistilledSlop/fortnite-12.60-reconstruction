@@ -1523,6 +1523,9 @@ public:
 	bool HasRespawnedInAir() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCharacterCustomizationLoadingCompleted() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInFrontEndHologram() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

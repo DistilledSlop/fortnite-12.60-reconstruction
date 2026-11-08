@@ -40,6 +40,11 @@ for m in man:
     if a and m.get('kind') != 'member_field':
         fn = m['function'][:-len('_Implementation')] if m['function'].endswith('_Implementation') else m['function']
         named[a].add((m['class'], fn))
+hcand = collections.defaultdict(list)  # ported helper entries by native address: callable by their declared signature
+for m in man:
+    if m.get('status') == 'ported' and m.get('kind') in ('helper', 'static_helper') and m.get('address'):
+        hcand[m['address']].append(dict(fn=m['class'] + '::' + m['function'], static=bool(m.get('static') or m.get('kind') == 'static_helper'),
+                                        signature=m['signature'], note='ported helper for native %s: call it as declared' % m['address']))
 done = {(e['class'], e['function']) for e in man if e.get('status') == 'ported' and e.get('kind') != 'member_field'}
 done |= {(e['class'], e['function'][:-len('_Implementation')]) for e in man if e.get('status') == 'ported' and e['function'].endswith('_Implementation')}
 blocked = {x['entry'] for x in json.load(open('porting/behavior/stub_bulk_runtime/blocked.json'))}
@@ -145,6 +150,8 @@ for e in f2:
     for t in tgt:
         if t in gp:
             cal[t] = [dict(static_class=c + '::StaticClass()') for c in gp[t]]
+        elif t in hcand and t not in named:
+            cal[t] = hcand[t]
         elif t in named:
             cal[t] = []
             for c, f in sorted(named[t])[:6]:

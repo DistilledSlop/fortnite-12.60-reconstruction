@@ -1,0 +1,19 @@
+[
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsCharacterCustomizationLoadingCompleted",
+  "kind": "exec",
+  "signature": "@SIG@",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/ia2_runtime/AFortPlayerPawn/IsCharacterCustomizationLoadingCompleted.inc",
+  "confidence": "high",
+  "address": "0x142a7d0b0",
+  "status": "ported",
+  "reflection_flags": "0x54020401",
+  "static": false,
+  "virtual": false,
+  "access": "public",
+  "native_body_address": "0x142a7d0b0",
+  "notes": "Raw dword at object+0x2004 low byte & 0x18 == 0x10; bits not in declared bool bitfields; raw access."
+ }
+]

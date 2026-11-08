@@ -1,0 +1,212 @@
+[
+  {
+    "class": "UFortVFXMarshaller",
+    "function": "DeactivateAll",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x141dc9490': tail-jump to 0x141dc9490 with no callee_candidates entry (batch callee_candidates is empty) and 0x141dc9490 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "ClearHomingTarget",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x1426c5270': tail-jump to 0x1426c5270 with no callee_candidates entry (batch callee_candidates is empty) and 0x1426c5270 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "AInfiltrationCarryObjectSpawnPoint",
+    "function": "OnHeldObjectThrownLanded",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x141a85cd0': tail-jump to 0x141a85cd0 with no callee_candidates entry (batch callee_candidates is empty) and 0x141a85cd0 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "ULevelSaveRecord",
+    "function": "FailsafeTimerExpired",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x142056d30': tail-jump to 0x142056d30 with no callee_candidates entry (batch callee_candidates is empty) and 0x142056d30 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "ULevelRecordSpawner",
+    "function": "FailsafeTimerExpired",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x142056cf0': tail-jump to 0x142056cf0 with no callee_candidates entry (batch callee_candidates is empty) and 0x142056cf0 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortControllerComponent_PerkSystem",
+    "function": "OnRep_PerkSelection",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x141b4f860': tail-jump to 0x141b4f860 with no callee_candidates entry (batch callee_candidates is empty) and 0x141b4f860 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortControllerComponent_PerkSystem",
+    "function": "OnRep_RerollCount",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x141b4fb80': tail-jump to 0x141b4fb80 with no callee_candidates entry (batch callee_candidates is empty) and 0x141b4fb80 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortControllerComponent_PerkSystem",
+    "function": "OnRep_ServerTimeToRelease",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x141b4fc30': tail-jump to 0x141b4fc30 with no callee_candidates entry (batch callee_candidates is empty) and 0x141b4fc30 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "APhysicsObject",
+    "function": "OnRep_InitialParameters",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x141b4ef70': tail-jump to 0x141b4ef70 with no callee_candidates entry (batch callee_candidates is empty) and 0x141b4ef70 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "APhysicsObject",
+    "function": "TurnOffClientPrediction",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x141b566c0': tail-jump to 0x141b566c0 with no callee_candidates entry (batch callee_candidates is empty) and 0x141b566c0 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UAthenaHUDContext",
+    "function": "StopTargettingFromHUD",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144caf820': tail-jump to 0x144caf820 with no callee_candidates entry (batch callee_candidates is empty) and 0x144caf820 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UAthenaReplayActionFeedScreenBase",
+    "function": "HandleCloseActionFeed",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144c24b60': tail-jump to 0x144c24b60 with no callee_candidates entry (batch callee_candidates is empty) and 0x144c24b60 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UContentBrowserFilterEntry",
+    "function": "UpdateButtonText",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144cb2290': tail-jump to 0x144cb2290 with no callee_candidates entry (batch callee_candidates is empty) and 0x144cb2290 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortAccountLinkingWindow",
+    "function": "HandleLoginClicked",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144d3dfc0': tail-jump to 0x144d3dfc0 with no callee_candidates entry (batch callee_candidates is empty) and 0x144d3dfc0 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortAccountLinkingWindow",
+    "function": "HandleSkipLoginClicked",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144d3dfc0': tail-jump to 0x144d3dfc0 with no callee_candidates entry (batch callee_candidates is empty) and 0x144d3dfc0 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortBangWrapperContentButton",
+    "function": "FinishTutorialCallout",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x14514d5e0': tail-jump to 0x14514d5e0 with no callee_candidates entry (batch callee_candidates is empty) and 0x14514d5e0 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortBangWrapperContentWidget",
+    "function": "FinishTutorialCallout",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x14514d640': tail-jump to 0x14514d640 with no callee_candidates entry (batch callee_candidates is empty) and 0x14514d640 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortCollectionBookWidget",
+    "function": "OnCollectionBookSectionCloseRequest",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x1450c3920': tail-jump to 0x1450c3920 with no callee_candidates entry (batch callee_candidates is empty) and 0x1450c3920 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetEventId",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Body 'MOV RDX,qword ptr [RCX + 0x28]; MOV RCX,R8; ADD RDX,0x30; JMP 0x140683960' tail-jumps to 0x140683960 with no callee_candidates entry (batch callee_candidates is empty); 0x140683960 is not a known engine helper and its semantics are unverified, not guessed"
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetEventWindowId",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Body 'MOV RDX,qword ptr [RCX + 0x28]; MOV RCX,R8; ADD RDX,0x40; JMP 0x140683960' tail-jumps to 0x140683960 with no callee_candidates entry (batch callee_candidates is empty); 0x140683960 is not a known engine helper and its semantics are unverified, not guessed"
+  },
+  {
+    "class": "UFortCreativeCaptureScreenshotHUD",
+    "function": "AcceptPreview",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144d2a8d0': tail-jump to 0x144d2a8d0 with no callee_candidates entry (batch callee_candidates is empty) and 0x144d2a8d0 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortCreativeCaptureScreenshotHUD",
+    "function": "CancelPreview",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144d2e630': tail-jump to 0x144d2e630 with no callee_candidates entry (batch callee_candidates is empty) and 0x144d2e630 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortCreativeMiniGameInfo",
+    "function": "PopPanelInputComponent",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144d8f5a0': tail-jump to 0x144d8f5a0 with no callee_candidates entry (batch callee_candidates is empty) and 0x144d8f5a0 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortCreativeMiniGameInfo",
+    "function": "PushPanelInputComponent",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144d90220': tail-jump to 0x144d90220 with no callee_candidates entry (batch callee_candidates is empty) and 0x144d90220 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortCreativeSolarisModal",
+    "function": "Save",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144d93950': tail-jump to 0x144d93950 with no callee_candidates entry (batch callee_candidates is empty) and 0x144d93950 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortDirectAcquisitionOfferDetailsWidget",
+    "function": "Dismiss",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144df9600': tail-jump to 0x144df9600 with no callee_candidates entry (batch callee_candidates is empty) and 0x144df9600 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortDirectAcquisitionOfferDetailsWidget",
+    "function": "UpdateSwipeButtonsVisibility",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144e22b00': tail-jump to 0x144e22b00 with no callee_candidates entry (batch callee_candidates is empty) and 0x144e22b00 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "Logout",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144cd7fc0': tail-jump to 0x144cd7fc0 with no callee_candidates entry (batch callee_candidates is empty) and 0x144cd7fc0 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortGridPickerTile",
+    "function": "ForwardClicked",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144ebc2c0': tail-jump to 0x144ebc2c0 with no callee_candidates entry (batch callee_candidates is empty) and 0x144ebc2c0 is not a thunk-table key; callee unresolved, not guessed"
+  },
+  {
+    "class": "UFortItemCategoryIndicator",
+    "function": "ClearLabelColorOverride",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "Inline thunk body is only 'JMP 0x144f0e5f0': tail-jump to 0x144f0e5f0 with no callee_candidates entry (batch callee_candidates is empty) and 0x144f0e5f0 is not a thunk-table key; callee unresolved, not guessed"
+  }
+]

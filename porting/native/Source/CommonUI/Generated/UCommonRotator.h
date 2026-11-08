@@ -26,5 +26,11 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* MyText;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xbc0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xbc0;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSelectedIndex() const;
+
 };
 

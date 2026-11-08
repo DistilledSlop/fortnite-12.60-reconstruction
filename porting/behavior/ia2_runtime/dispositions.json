@@ -1,0 +1,212 @@
+[
+ {
+  "class": "AFortCarriedObject",
+  "function": "ReturnToSpawnPoint",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x141ca44a0) to the native implementation of AFortCarriedObject::ReturnToSpawnPoint itself (decomp index lists 0x141ca44a0 as AFortCarriedObject::ReturnToSpawnPoint); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "UFortContentControlsManager",
+  "function": "GetPlaytimeReportingFrequency",
+  "status": "blocked",
+  "case": "hidden_return_slot_unresolved_helper",
+  "reason": "LEA RDX,[RCX + 0xe0] ; MOV RCX,R8 ; JMP 0x140683960: FString result is returned through hidden return slot R8 (copied by RCX=R8) and the tail target 0x140683960 has no callee_candidates entry and no decomp index entry; not a known helper."
+ },
+ {
+  "class": "AFortGameStateZone",
+  "function": "OnRep_NumSurvivorsRescued",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x141ea68b0: target 0x141ea68b0 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "UFortItemLayerAnimInstance_Lobster",
+  "function": "AnimNotify_DeflectHold1Entered",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x141863210: target 0x141863210 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "UFortItemLayerAnimInstance_Lobster",
+  "function": "AnimNotify_DeflectHold2Entered",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x1418632d0: target 0x1418632d0 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "UFortItemLayerAnimInstance_Lobster",
+  "function": "AnimNotify_GuardLoopEntered",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x141863440) to the native implementation of UFortItemLayerAnimInstance_Lobster::AnimNotify_GuardLoopEntered itself (decomp index lists 0x141863440 as UFortItemLayerAnimInstance_Lobster::AnimNotify_GuardLoopEntered); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "UFortLevelSaveComponent",
+  "function": "OnRep_LoadedPlotInstanceId",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x141efdf40) to the native implementation of UFortLevelSaveComponent::OnRep_LoadedPlotInstanceId itself (decomp index lists 0x141efdf40 as UFortLevelSaveComponent::OnRep_LoadedPlotInstanceId); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "AFortMeatballVehicle",
+  "function": "StopDriverCameraShake",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x1419fcb50) to the native implementation of AFortMeatballVehicle::StopDriverCameraShake itself (decomp index lists 0x1419fcb50 as AFortMeatballVehicle::StopDriverCameraShake); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "OnSpawningFromSaveFinish",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x14209e770) to the native implementation of AFortMinigame::OnSpawningFromSaveFinish itself (decomp index lists 0x14209e770 as AFortMinigame::OnSpawningFromSaveFinish); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "AFortMission",
+  "function": "OnRep_CurrentFocusDisplayData",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x1420c46d0) to the native implementation of AFortMission::OnRep_CurrentFocusDisplayData itself (decomp index lists 0x1420c46d0 as AFortMission::OnRep_CurrentFocusDisplayData); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "AFortOctopusVehicle",
+  "function": "DestroyTowhookProjectile",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x1419ca960: target 0x1419ca960 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "UFortPartyContext",
+  "function": "LeaveParty",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x142261e30: target 0x142261e30 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "AFortPawn",
+  "function": "OnRep_PushMomentum",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x14233d3c0: target 0x14233d3c0 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "HandleViewTargetInventoryLocalUpdate",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x14238af50) to the native implementation of AFortPlayerController::HandleViewTargetInventoryLocalUpdate itself (decomp index lists 0x14238af50 as AFortPlayerController::HandleViewTargetInventoryLocalUpdate); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "AFortPlayerController",
+  "function": "ResetInputRotationScale",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x1423a8640) to the native implementation of AFortPlayerController::ResetInputRotationScale itself (decomp index lists 0x1423a8640 as AFortPlayerController::ResetInputRotationScale); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "UFortPlayerControllerAthenaXPComponent",
+  "function": "InitRestedXp",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x141a180c0) to the native implementation of UFortPlayerControllerAthenaXPComponent::InitRestedXp itself (decomp index lists 0x141a180c0 as UFortPlayerControllerAthenaXPComponent::InitRestedXp); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsCharacterCustomizationLoadingCompleted",
+  "status": "proposed",
+  "case": "small_leaf_raw_offset",
+  "reason": "Raw dword read at object+0x2004 (low byte & 0x18 == 0x10); 0x2004 not covered by a single reflected member and tested bits not in declared bool bits; all 6 instructions accounted for."
+ },
+ {
+  "class": "AFortPlayerParachute",
+  "function": "DisableTrailParticles",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x141a0ff50) to the native implementation of AFortPlayerParachute::DisableTrailParticles itself (decomp index lists 0x141a0ff50 as AFortPlayerParachute::DisableTrailParticles); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "AFortPlayerPawnAthena",
+  "function": "StopConsumableUseAudio",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x141a26520) to the native implementation of AFortPlayerPawnAthena::StopConsumableUseAudio itself (decomp index lists 0x141a26520 as AFortPlayerPawnAthena::StopConsumableUseAudio); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "AFortPlayerState",
+  "function": "GetPlatform",
+  "status": "blocked",
+  "case": "hidden_return_slot_unresolved_helper",
+  "reason": "LEA RDX,[RCX + 0x3a0] ; MOV RCX,R8 ; JMP 0x140683960: FString result is returned through hidden return slot R8 (copied by RCX=R8) and the tail target 0x140683960 has no callee_candidates entry and no decomp index entry; not a known helper."
+ },
+ {
+  "class": "AFortPlayerState",
+  "function": "OnRep_BannerInfo",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x14241fa20: target 0x14241fa20 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "AFortPlayerSpawnPad",
+  "function": "PrestreamChestTextures",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x1424b9950) to the native implementation of AFortPlayerSpawnPad::PrestreamChestTextures itself (decomp index lists 0x1424b9950 as AFortPlayerSpawnPad::PrestreamChestTextures); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "UPocketLevelInstance",
+  "function": "HandlePocketLevelShown",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x141bad010: target 0x141bad010 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "AFortPoiManager",
+  "function": "OnRep_PoiTagContainerTable",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x141a52240) to the native implementation of AFortPoiManager::OnRep_PoiTagContainerTable itself (decomp index lists 0x141a52240 as AFortPoiManager::OnRep_PoiTagContainerTable); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "AFortProjectileDecoHelper",
+  "function": "OnProjectileThrown",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x1426a9fe0: target 0x1426a9fe0 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "UFortStreamMediaSource",
+  "function": "ReinstateSharing",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x141f6ac50: target 0x141f6ac50 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "AFortUIZone",
+  "function": "CloseFullScreenMap",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x1425e8820) to the native implementation of AFortUIZone::CloseFullScreenMap itself (decomp index lists 0x1425e8820 as AFortUIZone::CloseFullScreenMap); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ },
+ {
+  "class": "UFortVehicleSeatComponent",
+  "function": "OnRep_PlayerSlots",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x141d0e770: target 0x141d0e770 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "AFortVolume",
+  "function": "OnRep_BoundsCollisionSetting",
+  "status": "blocked",
+  "case": "unresolved_tail_target",
+  "reason": "JMP 0x141c83c60: target 0x141c83c60 has no callee_candidates entry and no decomp index entry; callee unresolved."
+ },
+ {
+  "class": "UFortVFXMarshaller",
+  "function": "ActivateAll",
+  "status": "blocked",
+  "case": "self_tail_jump_impl",
+  "reason": "exec thunk tail-jumps (JMP 0x141dc2540) to the native implementation of UFortVFXMarshaller::ActivateAll itself (decomp index lists 0x141dc2540 as UFortVFXMarshaller::ActivateAll); the implementation body is not in insns, and callee_candidates is empty, so there is no other reflected callee to port."
+ }
+]
