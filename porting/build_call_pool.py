@@ -16,6 +16,8 @@ R = 'porting/generated'
 HELPERS = {'0x142bee710': 'FMemory::Free', '0x1406a9dc0': 'ProcessMulticastDelegate',
            '0x142c54b70': 'FMsg::Logf (verbosity-gated UE_LOG)',
            '0x142ee5dd0': 'TWeakObjectPtr::Get', '0x142ee7880': 'TWeakObjectPtr::IsValid', '0x142ee3b30': 'TWeakObjectPtr assign'}
+ENGINE = json.load(open(f'{R}/small-pool/engine_patterns.json')) if os.path.exists(f'{R}/small-pool/engine_patterns.json') else {}
+HELPERS.update({a: v['cpp'] or v['kind'] for a, v in ENGINE.items()})
 STUBS = {'0x1406801c0', '0x1406801d0', '0x1406801e0', '0x140680300'}
 idx = {}
 for d in glob.glob(f'{R}/native*/'):
@@ -197,7 +199,8 @@ for e in f2:
     d = nf[e['cls']][e['fn']]
     pool.append(dict(cls=e['cls'], fn=e['fn'], thunk=e['thunk'], body=b[0], group=e['group'], flags=d.get('flags'), shape='call' if tgt else 'leaf',
                      insns=L, receiver_delta=ri['delta'], this_delta_total=ri['delta'] + wd,
-                     params=[(p['name'], p['kind']) for p in d.get('params') or []], header=hdr.get(e['cls']), callee_candidates=cal))
+                     params=[(p['name'], p['kind']) for p in d.get('params') or []], header=hdr.get(e['cls']), callee_candidates=cal,
+                     engine_calls={t: ENGINE[t] for t in tg if t in ENGINE}))
     st['pool'] += 1
 
 

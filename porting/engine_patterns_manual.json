@@ -1,0 +1,8 @@
+{
+ "0x145803c70": {"kind": "omit", "cpp": "", "note": "MSVC __security_check_cookie (stack canary check, compiler-generated): omit it and the matching `XOR RAX,RSP` cookie store/load pair"},
+ "0x145803a44": {"kind": "static_guard", "cpp": "", "note": "MSVC _Init_thread_header(&guard): C++11 function-local static guard; write a plain function-local `static` initialiser (omit guard, header/footer calls)"},
+ "0x1458039e4": {"kind": "static_guard", "cpp": "", "note": "MSVC _Init_thread_footer(&guard): see 0x145803a44"},
+ "0x142bfd200": {"kind": "call", "cpp": "FMemory::Realloc(void* Original, SIZE_T Count, uint32 Alignment)", "note": "RCX=Original, RDX=Count, R8D=Alignment (goes through GMalloc vtable+0x20)"},
+ "0x142bfce10": {"kind": "call", "cpp": "FMemory::QuantizeSize(SIZE_T Count, uint32 Alignment)", "note": "RCX=Count, EDX=Alignment; returns Count when GMalloc is null"},
+ "0x142bfb0f0": {"kind": "call", "cpp": "FMemory::Malloc(SIZE_T Count, uint32 Alignment)", "note": "RCX=Count, EDX=Alignment; GMalloc created lazily"}
+}
