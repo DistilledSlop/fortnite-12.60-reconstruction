@@ -1,0 +1,122 @@
+[
+  {
+    "addr": "0x143f76650",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Returns MoveTool->Instigator->Controller (APawn+0x250) or null; Instigator at AActor+0x118. Asm fully accounted for."
+  },
+  {
+    "addr": "0x141125940",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Returns TargetActor->Instigator (AActor+0x118), no null check in asm. Parameter is AActor: callers pass a building actor."
+  },
+  {
+    "addr": "0x143d45e50",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Virtual call CALL qword ptr [RAX+0x48] at 0x143d45e60 on this+0x218 subobject and CALL qword ptr [RAX+0xc8] at 0x143d45e77 on this+0x4f8 subobject; no callee hint for either vtable slot."
+  },
+  {
+    "addr": "0x144d7b5a0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Virtual call CALL qword ptr [RAX+0x288] at 0x144d7b5ad on this (no hint); also CALL qword ptr [R8+0x610] at 0x144d7b639 (no hint)."
+  },
+  {
+    "addr": "0x143d5a270",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Linear search of Slots (+0x108 data, +0x110 num) for slot Content (UPanelSlot+0x30) equal to target; -1 if absent. Asm fully accounted for."
+  },
+  {
+    "addr": "0x141b61d80",
+    "status": "blocked",
+    "case": "absolute_global_load",
+    "reason": "MAXSS XMM0,dword ptr [0x1459c03a0] at 0x141b61d94 loads a float constant from an absolute global address."
+  },
+  {
+    "addr": "0x142c2e440",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Virtual call CALL qword ptr [RAX+0x10] at 0x142c2e44a on object loaded from this->[0]; no callee hint."
+  },
+  {
+    "addr": "0x141f34e50",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Tail virtual call JMP qword ptr [R8+0x610] at 0x141f34ed7 with no callee hint (earlier direct calls are hinted)."
+  },
+  {
+    "addr": "0x140e3aa70",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Virtual call CALL qword ptr [RAX+0x50] at 0x140e3aad1 on array element, no callee hint."
+  },
+  {
+    "addr": "0x1407c5240",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Style class (+0x260) must be UCommonButtonStyle child; returns its CDO if the CDO class is also a child, else null. Duplicate IsChildOf check elided."
+  },
+  {
+    "addr": "0x143d5cb70",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Virtual call CALL qword ptr [RAX+0x28] at 0x143d5cba9 (also [RAX+0x48], [RDX], [R8+0x8]) with no hints; CALL 0x143d5a140 hint HandleLeaderboardSetInView has params [] but the call passes an out pointer in RDX."
+  },
+  {
+    "addr": "0x1419166e0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Virtual call CALL qword ptr [RAX+0x408] at 0x141916703 on this+0x3b0 subobject, and CALL qword ptr [RAX+0x568] at 0x141916756; no hints."
+  },
+  {
+    "addr": "0x1440e9d30",
+    "status": "blocked",
+    "case": "simd_absolute_constant",
+    "reason": "MOVAPS XMM5,xmmword ptr [0x145a17a30] at 0x1440e9d34 loads a packed absolute global constant that feeds SHUFPS/MULPS lane math; not expressible without the constant value."
+  },
+  {
+    "addr": "0x141981b60",
+    "status": "blocked",
+    "case": "sret_struct_unresolved",
+    "reason": "By-value sret copy of a 0x40-byte struct (byte +0x0, ptr +0x8, shared-ref ptr +0x10 with LOCK INC, int +0x18, ptr +0x20, int +0x28, byte +0x2c, int +0x30/+0x34, ptr +0x38); the struct type is not identified, so no return type can be named."
+  },
+  {
+    "addr": "0x1406a7ed0",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Thunk JMP 0x142ee7880 (TWeakObjectPtr::IsValid). R8 bThreadsafeTest not set by callers; port uses default false."
+  },
+  {
+    "addr": "0x141b5b190",
+    "status": "blocked",
+    "case": "sret_struct_unresolved",
+    "reason": "By-value sret copy of a 0x20-byte struct (weak pointer assign via CALL 0x142ee3b30 at 0x141b5b1a3, 8-byte field +0x8, int +0x10, 8-byte field +0x14, int +0x1c); the struct type is not identified."
+  },
+  {
+    "addr": "0x140fa9940",
+    "status": "blocked",
+    "case": "struct_arg_unresolved",
+    "reason": "Tail JMP 0x140d7c5a0 (AFortPlayerState::AreUniqueIDsIdentical) at 0x140fa994b with inline struct args this+0x78 and this+0xa0; reflection lists InlineMulticastDelegate members at +0x70 and +0xa0, so the arg struct types and A/B order are unresolved."
+  },
+  {
+    "addr": "0x1423a1ea0",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "If byte +0x1cb4 & 0x40 (bUsePickers), forwards Rank to inline component +0x988 MinigameActivity ForwardMinigameActivityRankChanged. Hint lacks static/access flags."
+  },
+  {
+    "addr": "0x140b3dcc0",
+    "status": "blocked",
+    "case": "callee_hint_mismatch",
+    "reason": "CALL 0x142bcf780 at 0x140b3dd09 is hinted as UMeshNetworkSubsystem::GetMetaDataWithKey(MetaData, Key) but is called with two TCHAR* string data pointers and branches on EAX==0; the hint is inconsistent with the call and the callee identity is unverified."
+  },
+  {
+    "addr": "0x144c7c070",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Virtual call CALL qword ptr [RAX+0x288] at 0x144c7c081 on this (no hint); later direct calls are hinted."
+  }
+]

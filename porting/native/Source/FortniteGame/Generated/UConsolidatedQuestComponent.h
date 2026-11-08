@@ -13,6 +13,8 @@
 #include "FQuestComponentCustomVisualsPassed.h"
 #include "FSimpleQuestComponentDelegate.h"
 #include "GameplayTagContainer.h"
+#include "UObject/Object.h"
+#include "UObject/WeakObjectPtr.h"
 
 #include "UConsolidatedQuestComponent.generated.h"
 
@@ -83,5 +85,9 @@ private:
 	TArray<FString> Editor_GetValidObjectives() const;
 public:
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static bool NativeWeakObjectPtrMatches1406a7e80(TWeakObjectPtr<UObject>* SelfWeak, UObject* OtherObject);
 };
 

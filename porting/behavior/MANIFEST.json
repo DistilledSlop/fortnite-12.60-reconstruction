@@ -81490,22 +81490,6 @@
     "notes": "Role==ROLE_Authority gate (GetLocalRole); writes TeamIndex then Team from InTeam. All 5 instructions accounted for."
   },
   {
-    "class": "ABuildingTimeOfDayLights",
-    "function": "GetTimeOfDayBlueprintDefaultVariables_Implementation",
-    "kind": "native_event_impl",
-    "signature": "void GetTimeOfDayBlueprintDefaultVariables_Implementation(FTimeOfDayBlueprintDefaultVariables& OutVariables)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/dv1_runtime/ABuildingTimeOfDayLights/GetTimeOfDayBlueprintDefaultVariables_Implementation.inc",
-    "confidence": "high",
-    "address": "0x14275c6e0",
-    "status": "ported",
-    "reflection_flags": "0x8480c02",
-    "static": false,
-    "access": "protected",
-    "native_body_address": "0x1406801c0",
-    "notes": "Body is a bare RET 0x0 (no stores, no calls); empty body."
-  },
-  {
     "class": "AFortAthenaDoghouseVehicle",
     "function": "ServerUpdateControlState_Implementation",
     "kind": "impl",
@@ -81520,23 +81504,6 @@
     "access": "private",
     "native_body_address": "0x1418f7290",
     "notes": "Struct copy to reflected ControlState; Owner-null gated bool store to NativeRecoveredBool_0x1245 from bIsEngineOn."
-  },
-  {
-    "class": "AFortAthenaMutator_Bagel",
-    "function": "GetPlayerScore",
-    "kind": "exec",
-    "signature": "bool GetPlayerScore(AFortPlayerControllerAthena* AthenaPC, int32& OutScore) const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/dv2_runtime/AFortAthenaMutator_Bagel/GetPlayerScore.inc",
-    "confidence": "medium",
-    "address": "0x1427e8db0",
-    "status": "ported",
-    "reflection_flags": "0x54420401",
-    "static": false,
-    "virtual": false,
-    "access": "public",
-    "native_body_address": "0x141aae6e0",
-    "notes": "Linear scan of unreflected TArray (stride 0x80) matching PlayerState by key; writes OutScore on match."
   },
   {
     "class": "AFortAthenaMutator_SpecialEvent",
@@ -81923,5 +81890,357 @@
     "access": "public",
     "native_body_address": "0x142a7d0b0",
     "notes": "Raw dword at object+0x2004 low byte & 0x18 == 0x10; bits not in declared bool bitfields; raw access."
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "NativeGetInstigatorController143f76650",
+    "kind": "helper",
+    "signature": "AController* NativeGetInstigatorController143f76650(AFortCreativeMoveTool* MoveTool)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/AFortCreativeMoveTool/NativeGetInstigatorController143f76650.inc",
+    "address": "0x143f76650",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Pawn.h",
+      "GameFramework/Controller.h"
+    ],
+    "notes": "Returns MoveTool->Instigator->Controller (APawn+0x250) or null; Instigator at AActor+0x118. Asm fully accounted for."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeGetActorInstigator141125940",
+    "kind": "helper",
+    "signature": "APawn* NativeGetActorInstigator141125940(AActor* TargetActor)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/AFortWeaponRanged/NativeGetActorInstigator141125940.inc",
+    "address": "0x141125940",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Actor.h",
+      "GameFramework/Pawn.h"
+    ],
+    "notes": "Returns TargetActor->Instigator (AActor+0x118), no null check in asm. Parameter is AActor: callers pass a building actor."
+  },
+  {
+    "class": "UCommonVisibilitySwitcher",
+    "function": "NativeFindSwitcherChildIndex143d5a270",
+    "kind": "helper",
+    "signature": "int32 NativeFindSwitcherChildIndex143d5a270(UCommonVisibilitySwitcher* Switcher, UObject* TargetWidget)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/UCommonVisibilitySwitcher/NativeFindSwitcherChildIndex143d5a270.inc",
+    "address": "0x143d5a270",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/PanelSlot.h"
+    ],
+    "notes": "Linear search of Slots (+0x108 data, +0x110 num) for slot Content (UPanelSlot+0x30) equal to target; -1 if absent. Asm fully accounted for."
+  },
+  {
+    "class": "UCommonButton",
+    "function": "NativeGetButtonStyleDefault1407c5240",
+    "kind": "helper",
+    "signature": "UObject* NativeGetButtonStyleDefault1407c5240(UCommonButton* Button)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/UCommonButton/NativeGetButtonStyleDefault1407c5240.inc",
+    "address": "0x1407c5240",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Class.h"
+    ],
+    "notes": "Style class (+0x260) must be UCommonButtonStyle child; returns its CDO if the CDO class is also a child, else null. Duplicate IsChildOf check elided."
+  },
+  {
+    "class": "AFortOctopusVehicle",
+    "function": "NativeIsWeakObjectValid1406a7ed0",
+    "kind": "helper",
+    "signature": "bool NativeIsWeakObjectValid1406a7ed0(TWeakObjectPtr<UObject>* WeakObject, bool bEvenIfPendingKill)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/AFortOctopusVehicle/NativeIsWeakObjectValid1406a7ed0.inc",
+    "address": "0x1406a7ed0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/WeakObjectPtr.h"
+    ],
+    "notes": "Thunk JMP 0x142ee7880 (TWeakObjectPtr::IsValid). R8 bThreadsafeTest not set by callers; port uses default false."
+  },
+  {
+    "class": "UFortPartyContext",
+    "function": "NativeGetLocalPartyMemberBlock140d91b30",
+    "kind": "helper",
+    "signature": "uint8* NativeGetLocalPartyMemberBlock140d91b30(UFortPartyContext* PartyContextObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp3_runtime/UFortPartyContext/NativeGetLocalPartyMemberBlock140d91b30.inc",
+    "address": "0x140d91b30",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns raw this+0xf0 block; callers read byte +0x40 of it. Reflection names +0xf0 OnPartyPrivacyChanged, so block meaning is unverified."
+  },
+  {
+    "class": "UFortLocalPlayer",
+    "function": "NativeHelper141e32a40",
+    "kind": "helper",
+    "signature": "bool NativeHelper141e32a40(UFortLocalPlayer* LocalPlayerObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp3_runtime/UFortLocalPlayer/NativeHelper141e32a40.inc",
+    "address": "0x141e32a40",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "True when raw byte at +0x884 is 1 or 3 (DEC/TEST/SETZ). No reflected member covers 0x884; semantic name unknown."
+  },
+  {
+    "class": "APartyDisplayManager",
+    "function": "NativeGetHeroPlayerPawnByIndex141fc1840",
+    "kind": "helper",
+    "signature": "UObject* NativeGetHeroPlayerPawnByIndex141fc1840(APartyDisplayManager* ManagerObj, int32 SlotIndex)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp3_runtime/APartyDisplayManager/NativeGetHeroPlayerPawnByIndex141fc1840.inc",
+    "address": "0x141fc1840",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Raw int32-key hash-chain lookup (stride 0x180, value ptr at +8); raw because FHeroSlotInfo is generated empty. Bound by PlacementActors.Num()."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "NativeHelper141291580",
+    "kind": "helper",
+    "signature": "uint8 NativeHelper141291580(AAIHotSpot* HotSpotObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp3_runtime/AAIHotSpot/NativeHelper141291580.inc",
+    "address": "0x141291580",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns raw byte at +0x84 unchanged; no reflected member covers 0x84; semantic name unknown."
+  },
+  {
+    "class": "UFortGameStateComponent_EventLevel",
+    "function": "NativeFindSceneCameraByKey141a78120",
+    "kind": "helper",
+    "signature": "UObject* NativeFindSceneCameraByKey141a78120(UFortGameStateComponent_EventLevel* ComponentObj, uint64 CameraKeyValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp3_runtime/UFortGameStateComponent_EventLevel/NativeFindSceneCameraByKey141a78120.inc",
+    "address": "0x141a78120",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/WeakObjectPtr.h"
+    ],
+    "notes": "First valid SceneCameras entry whose uint64 at +0x7b8 equals the key; returns it, else null. Camera type named in body only."
+  },
+  {
+    "class": "UFortMinigameObjectiveComponent",
+    "function": "NativeHelper1440b2120",
+    "kind": "helper",
+    "signature": "uint8 NativeHelper1440b2120(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/UFortMinigameObjectiveComponent/NativeHelper1440b2120.inc",
+    "address": "0x1440b2120",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns byte +0xf0 of the object at Context+0xa0 (0 if null). Semantic name unclear; callers compare to 2."
+  },
+  {
+    "class": "APhysicsObject",
+    "function": "NativeHelper14070cc00",
+    "kind": "helper",
+    "signature": "float NativeHelper14070cc00(uint8* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/APhysicsObject/NativeHelper14070cc00.inc",
+    "address": "0x14070cc00",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Float read at +0xc of an interior struct; caller passes health sub-struct pointers (+0x30 and +0x58)."
+  },
+  {
+    "class": "UFortMinigameStatics",
+    "function": "NativeHelper142414c60",
+    "kind": "helper",
+    "signature": "uint8* NativeHelper142414c60(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/UFortMinigameStatics/NativeHelper142414c60.inc",
+    "address": "0x142414c60",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns Context+0xe0 when its class-slot array entry for AFortPlayerController matches; else null."
+  },
+  {
+    "class": "UFortAttributeList",
+    "function": "NativeHelper143d5a2f0",
+    "kind": "helper",
+    "signature": "int32 NativeHelper143d5a2f0(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/UFortAttributeList/NativeHelper143d5a2f0.inc",
+    "address": "0x143d5a2f0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "int32 read at +0x110; semantic name unclear. Reflection conflict at this offset noted in comments."
+  },
+  {
+    "class": "UFortSquadSlotSelectorButton",
+    "function": "NativeHelper1450e86c0",
+    "kind": "helper",
+    "signature": "void NativeHelper1450e86c0(uint8* Context, uint64* OutKey, int32* OutIndex)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/UFortSquadSlotSelectorButton/NativeHelper1450e86c0.inc",
+    "address": "0x1450e86c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Copies uint64 at +0x8 and int32 at +0x10 of an interior slot struct to two out parameters."
+  },
+  {
+    "class": "UFortButtonStyle",
+    "function": "NativeGetMarginBySize141f894c0",
+    "kind": "helper",
+    "signature": "FMargin* NativeGetMarginBySize141f894c0(uint8* Base, int32 SizeIndex)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/UFortButtonStyle/NativeGetMarginBySize141f894c0.inc",
+    "address": "0x141f894c0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Layout/Margin.h"
+    ],
+    "notes": "Selects a 16-byte margin entry by size index from a style sub-struct; returns its address."
+  },
+  {
+    "class": "AFortAthenaMutator_Wax",
+    "function": "NativeFindWaxRecordByKey141b48bf0",
+    "kind": "helper",
+    "signature": "uint8* NativeFindWaxRecordByKey141b48bf0(AFortAthenaMutator_Wax* Context, uint8* OutRecord, uint64 RecordKey)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/AFortAthenaMutator_Wax/NativeFindWaxRecordByKey141b48bf0.inc",
+    "address": "0x141b48bf0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Finds the 0x48-byte wax record whose key matches and copies it to OutRecord; otherwise writes a reset record."
+  },
+  {
+    "class": "UInfiltrationStatusComponent",
+    "function": "NativeHelper141b03e10",
+    "kind": "helper",
+    "signature": "uint8* NativeHelper141b03e10(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/UInfiltrationStatusComponent/NativeHelper141b03e10.inc",
+    "address": "0x141b03e10",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns the address of the state sub-object at +0x788 of the infiltration status component."
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "NativeFindRegistrationNode142eca940",
+    "kind": "helper",
+    "signature": "uint8* NativeFindRegistrationNode142eca940(UObject* Context, uint8* KeyRecord)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/UFortClientSettingsRecord/NativeFindRegistrationNode142eca940.inc",
+    "address": "0x142eca940",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Walks Context+0x20 list and returns the first node whose holder slot matches KeyRecord's class-slot entry."
+  },
+  {
+    "class": "UFortCreativeServersView",
+    "function": "NativeGetServerEntry1407c1f20",
+    "kind": "helper",
+    "signature": "UObject* NativeGetServerEntry1407c1f20(UObject* Context, int32 Index)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/UFortCreativeServersView/NativeGetServerEntry1407c1f20.inc",
+    "address": "0x1407c1f20",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "UObject/WeakObjectPtr.h"
+    ],
+    "notes": "Bounds-checked fetch of a weak object array element; returns null when out of range."
+  },
+  {
+    "class": "UConsolidatedQuestComponent",
+    "function": "NativeWeakObjectPtrMatches1406a7e80",
+    "kind": "helper",
+    "signature": "bool NativeWeakObjectPtrMatches1406a7e80(TWeakObjectPtr<UObject>* SelfWeak, UObject* OtherObject)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp1_runtime/UConsolidatedQuestComponent/NativeWeakObjectPtrMatches1406a7e80.inc",
+    "address": "0x1406a7e80",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "UObject/WeakObjectPtr.h"
+    ],
+    "notes": "True when SelfWeak refers to OtherObject's index and serial, or when neither weak pointer is valid."
   }
 ]

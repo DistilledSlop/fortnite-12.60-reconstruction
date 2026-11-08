@@ -14,6 +14,7 @@
 #include "Sound/SlateSound.h"
 #include "Styling/SlateTypes.h"
 #include "Types/SlateEnums.h"
+#include "UObject/Class.h"
 
 class UCommonActionWidget;
 class UCommonButtonInternal;
@@ -249,6 +250,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetStyle(TSubclassOf<UCommonButtonStyle> InStyle);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeGetButtonStyleDefault1407c5240(UCommonButton* Button);
 public:
     UCommonButton(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
     bool NativeIsInteractionEnabled() const;

@@ -1,0 +1,27 @@
+// Helper 0x141f894c0, host UFortButtonStyle (static).
+// Evidence: switch on EDX: 0 -> +0x0, 1 -> +0x10, 2 -> +0x20, 4 -> +0x40, 5 -> +0x50; 3 and all other values -> +0x30.
+// Returns the address (RAX), not a value. Callers pass Base = style+0x1758 (or +0x1998) and copy 16 bytes from the result.
+// FMargin is inferred from the 16-byte entry size and copy width.
+// CONFIDENCE: HIGH
+uint8* SelectedRaw = Base + 0x30;
+switch (SizeIndex)
+{
+case 0:
+    SelectedRaw = Base;
+    break;
+case 1:
+    SelectedRaw = Base + 0x10;
+    break;
+case 2:
+    SelectedRaw = Base + 0x20;
+    break;
+case 4:
+    SelectedRaw = Base + 0x40;
+    break;
+case 5:
+    SelectedRaw = Base + 0x50;
+    break;
+default:
+    break;
+}
+return reinterpret_cast<FMargin*>(SelectedRaw);

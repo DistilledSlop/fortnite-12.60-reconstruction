@@ -406,5 +406,20 @@
   "reason": "no member named 'SelectButtonAtIndex' in 'UCommonButtonGroup'; did you mean 'GetButtonAtIndex'?",
   "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
   "inc_path": "porting/behavior/wrapA6_runtime/UFortCollectionBookSectionPanel/OnSlotButtonHovered.inc"
+ },
+ {
+  "entry": "AFortAthenaMutator_Bagel::GetPlayerScore",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "member access into incomplete type 'AFortPlayerControllerAthena'",
+  "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
+  "inc_path": "porting/behavior/dv2_runtime/AFortAthenaMutator_Bagel/GetPlayerScore.inc"
+ },
+ {
+  "entry": "AFortPlayerControllerFrontEnd::NativeForwardMinigameRankChanged1423a1ea0",
+  "kind": "helper",
+  "blocker": "clang_compile_error",
+  "reason": "no member named 'ForwardMinigameActivityRankChanged' in 'UFortControllerComponent_MinigameActivity'",
+  "inc_path": "porting/behavior/hp2_runtime/AFortPlayerControllerFrontEnd/NativeForwardMinigameRankChanged1423a1ea0.inc"
  }
 ]

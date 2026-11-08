@@ -145,5 +145,9 @@ public:
 	void OnSlotOccupied(AAIController* AI, int32 Index, int32 UserId);
 	virtual void OnSlotOccupied_Implementation(AAIController* AI, int32 Index, int32 UserId);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint8 NativeHelper141291580(AAIHotSpot* HotSpotObj);
 };
 

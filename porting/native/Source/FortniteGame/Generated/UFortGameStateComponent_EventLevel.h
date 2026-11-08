@@ -13,6 +13,7 @@
 #include "FOnRoomOwnerChanged.h"
 #include "FSpecialNavActorInteraction.h"
 #include "GameplayTagContainer.h"
+#include "UObject/WeakObjectPtr.h"
 
 class AFortEventLevelCamera;
 class AFortEventLevelNavigationActor;
@@ -118,5 +119,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void NotifyRestedXpGenAmount(int32 RestedXp);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeFindSceneCameraByKey141a78120(UFortGameStateComponent_EventLevel* ComponentObj, uint64 CameraKeyValue);
 };
 

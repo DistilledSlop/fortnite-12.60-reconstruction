@@ -36,6 +36,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/Vector2D.h"
 #include "Misc/DateTime.h"
+#include "UObject/Object.h"
 
 #include "UFortClientSettingsRecord.generated.h"
 
@@ -1704,5 +1705,9 @@ public:
 	UFUNCTION()
 	void SetVisualizeAudioSources(bool bEnable);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint8* NativeFindRegistrationNode142eca940(UObject* Context, uint8* KeyRecord);
 };
 

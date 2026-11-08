@@ -1,0 +1,22 @@
+[
+  {"addr": "0x145014520", "status": "blocked", "case": "callee_unresolved", "reason": "virtual call CALL qword ptr [RAX + 0x288] at 0x145014529 on this; no callee hint"},
+  {"addr": "0x144e72020", "status": "blocked", "case": "absolute_global_load", "reason": "MOV R8,qword ptr [0x148323430] at 0x144e72045 loads an absolute global"},
+  {"addr": "0x143f76130", "status": "blocked", "case": "callee_unresolved", "reason": "virtual call CALL qword ptr [RAX + 0x150] at 0x143f76137 on this; no callee hint"},
+  {"addr": "0x1440b4920", "status": "blocked", "case": "callee_unresolved", "reason": "tail-jump JNZ 0x143f7a920 at 0x1440b492a with RCX=[this+0xa0]; target has no callee hint"},
+  {"addr": "0x140d91b30", "status": "proposed", "case": "helper_body", "reason": "LEA RAX,[RCX+0xf0]; RET; returns raw this+0xf0 address"},
+  {"addr": "0x1458092f3", "status": "blocked", "case": "absolute_global_jump", "reason": "JMP qword ptr [0x1458fd5d0] at 0x1458092f3 is an indirect jump through an absolute global"},
+  {"addr": "0x1458092f9", "status": "blocked", "case": "absolute_global_jump", "reason": "JMP qword ptr [0x1458fd5d8] at 0x1458092f9 is an indirect jump through an absolute global"},
+  {"addr": "0x140795480", "status": "blocked", "case": "struct_layout_unknown", "reason": "0x80-byte struct copy: LEA RAX,[0x1459eb9f8] at 0x140795480 stores an unidentified vtable at +0; struct type is unnamed and refcounts pointers at +0x40 and +0x78"},
+  {"addr": "0x143022250", "status": "blocked", "case": "callee_unresolved", "reason": "tail-jump JMP qword ptr [RAX] at 0x14302225a through vtable slot 0 of [this+0x330]; no callee hint"},
+  {"addr": "0x141e32a40", "status": "proposed", "case": "helper_body", "reason": "bool from raw byte +0x884 in {1,3} (DEC/TEST/SETZ); no reflected member at 0x884"},
+  {"addr": "0x14208d7e0", "status": "blocked", "case": "callee_declaration_missing", "reason": "reflected callee AFortPlayerState::AreUniqueIDsIdentical (UniqueNetIdRepl params, CALL at 0x14208d817) has no C++ declaration in porting/native/Source"},
+  {"addr": "0x141fc1840", "status": "proposed", "case": "helper_body", "reason": "int32-key hash-chain lookup with raw TSet-style offsets; bound check by PlacementActors.Num()"},
+  {"addr": "0x143d593e0", "status": "blocked", "case": "callee_unresolved", "reason": "virtual calls CALL qword ptr [RAX + 0x28] at 0x143d5940a and [RAX + 0x48] at 0x143d59428 on [this+0x2b0]; no callee hints"},
+  {"addr": "0x141291580", "status": "proposed", "case": "helper_body", "reason": "returns raw byte at +0x84 unchanged"},
+  {"addr": "0x143f69390", "status": "blocked", "case": "callee_unresolved", "reason": "tail-jump JNZ 0x14410a300 at 0x143f6939f with RCX=[this+0x130], RDX=arg; target has no callee hint"},
+  {"addr": "0x1406c7d70", "status": "blocked", "case": "null_path_undefined", "reason": "RAX=0 when RBX is null (JZ at 0x1406c7dab) or not UAttributeSet-derived (JG 0x1406c7dc2 / JNZ 0x1406c7dcf); then MOVSXD RAX,[RAX+0x38] at 0x1406c7de0 dereferences null with no defined result"},
+  {"addr": "0x14241af40", "status": "blocked", "case": "callee_unresolved", "reason": "virtual call CALL qword ptr [RAX + 0x6a8] at 0x14241af7b on [this+0xe0]; no callee hint"},
+  {"addr": "0x141ae8f20", "status": "blocked", "case": "callee_unresolved", "reason": "virtual call CALL qword ptr [RAX + 0x658] at 0x141ae8f82 on element+0x3b0; no callee hint"},
+  {"addr": "0x1416854c0", "status": "blocked", "case": "callee_unresolved", "reason": "virtual calls CALL qword ptr [RAX] at 0x14168550a and [RAX + 0x8] at 0x14168551e on refcounted [this+0x98]; no callee hints"},
+  {"addr": "0x141a78120", "status": "proposed", "case": "helper_body", "reason": "SceneCameras weak-pointer scan with 64-bit match at object +0x7b8"}
+]

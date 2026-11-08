@@ -1,0 +1,81 @@
+[
+  {
+    "class": "UFortPartyContext",
+    "function": "NativeGetLocalPartyMemberBlock140d91b30",
+    "kind": "helper",
+    "signature": "uint8* NativeGetLocalPartyMemberBlock140d91b30(UFortPartyContext* PartyContextObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp3_runtime/UFortPartyContext/NativeGetLocalPartyMemberBlock140d91b30.inc",
+    "address": "0x140d91b30",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns raw this+0xf0 block; callers read byte +0x40 of it. Reflection names +0xf0 OnPartyPrivacyChanged, so block meaning is unverified."
+  },
+  {
+    "class": "UFortLocalPlayer",
+    "function": "NativeHelper141e32a40",
+    "kind": "helper",
+    "signature": "bool NativeHelper141e32a40(UFortLocalPlayer* LocalPlayerObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp3_runtime/UFortLocalPlayer/NativeHelper141e32a40.inc",
+    "address": "0x141e32a40",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "True when raw byte at +0x884 is 1 or 3 (DEC/TEST/SETZ). No reflected member covers 0x884; semantic name unknown."
+  },
+  {
+    "class": "APartyDisplayManager",
+    "function": "NativeGetHeroPlayerPawnByIndex141fc1840",
+    "kind": "helper",
+    "signature": "UObject* NativeGetHeroPlayerPawnByIndex141fc1840(APartyDisplayManager* ManagerObj, int32 SlotIndex)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp3_runtime/APartyDisplayManager/NativeGetHeroPlayerPawnByIndex141fc1840.inc",
+    "address": "0x141fc1840",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Raw int32-key hash-chain lookup (stride 0x180, value ptr at +8); raw because FHeroSlotInfo is generated empty. Bound by PlacementActors.Num()."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "NativeHelper141291580",
+    "kind": "helper",
+    "signature": "uint8 NativeHelper141291580(AAIHotSpot* HotSpotObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp3_runtime/AAIHotSpot/NativeHelper141291580.inc",
+    "address": "0x141291580",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns raw byte at +0x84 unchanged; no reflected member covers 0x84; semantic name unknown."
+  },
+  {
+    "class": "UFortGameStateComponent_EventLevel",
+    "function": "NativeFindSceneCameraByKey141a78120",
+    "kind": "helper",
+    "signature": "UObject* NativeFindSceneCameraByKey141a78120(UFortGameStateComponent_EventLevel* ComponentObj, uint64 CameraKeyValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp3_runtime/UFortGameStateComponent_EventLevel/NativeFindSceneCameraByKey141a78120.inc",
+    "address": "0x141a78120",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/WeakObjectPtr.h"
+    ],
+    "notes": "First valid SceneCameras entry whose uint64 at +0x7b8 equals the key; returns it, else null. Camera type named in body only."
+  }
+]

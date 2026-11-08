@@ -7,6 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "UCommonButtonGroup.h"
+#include "UObject/Object.h"
+#include "UObject/WeakObjectPtr.h"
 
 class UFortCreativeServerInfo;
 class UFortCreativeServerOptionTile;
@@ -44,5 +46,9 @@ public:
 	UPROPERTY()
 	TArray<UFortCreativeServerInfo*> ServerList;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeGetServerEntry1407c1f20(UObject* Context, int32 Index);
 };
 

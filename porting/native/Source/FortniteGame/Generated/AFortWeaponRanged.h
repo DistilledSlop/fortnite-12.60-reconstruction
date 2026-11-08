@@ -14,6 +14,8 @@
 #include "FFortEffectDistanceQuality.h"
 #include "FOnOverheatValueChanged.h"
 #include "FOnProjectileSpawned.h"
+#include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
@@ -422,5 +424,9 @@ public:
 	bool UseFirstPersonTargeting() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static APawn* NativeGetActorInstigator141125940(AActor* TargetActor);
 };
 

@@ -1,0 +1,104 @@
+[
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "NativeGetInstigatorController143f76650",
+    "kind": "helper",
+    "signature": "AController* NativeGetInstigatorController143f76650(AFortCreativeMoveTool* MoveTool)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/AFortCreativeMoveTool/NativeGetInstigatorController143f76650.inc",
+    "address": "0x143f76650",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Pawn.h",
+      "GameFramework/Controller.h"
+    ],
+    "notes": "Returns MoveTool->Instigator->Controller (APawn+0x250) or null; Instigator at AActor+0x118. Asm fully accounted for."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeGetActorInstigator141125940",
+    "kind": "helper",
+    "signature": "APawn* NativeGetActorInstigator141125940(AActor* TargetActor)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/AFortWeaponRanged/NativeGetActorInstigator141125940.inc",
+    "address": "0x141125940",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Actor.h",
+      "GameFramework/Pawn.h"
+    ],
+    "notes": "Returns TargetActor->Instigator (AActor+0x118), no null check in asm. Parameter is AActor: callers pass a building actor."
+  },
+  {
+    "class": "UCommonVisibilitySwitcher",
+    "function": "NativeFindSwitcherChildIndex143d5a270",
+    "kind": "helper",
+    "signature": "int32 NativeFindSwitcherChildIndex143d5a270(UCommonVisibilitySwitcher* Switcher, UObject* TargetWidget)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/UCommonVisibilitySwitcher/NativeFindSwitcherChildIndex143d5a270.inc",
+    "address": "0x143d5a270",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/PanelSlot.h"
+    ],
+    "notes": "Linear search of Slots (+0x108 data, +0x110 num) for slot Content (UPanelSlot+0x30) equal to target; -1 if absent. Asm fully accounted for."
+  },
+  {
+    "class": "UCommonButton",
+    "function": "NativeGetButtonStyleDefault1407c5240",
+    "kind": "helper",
+    "signature": "UObject* NativeGetButtonStyleDefault1407c5240(UCommonButton* Button)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/UCommonButton/NativeGetButtonStyleDefault1407c5240.inc",
+    "address": "0x1407c5240",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Class.h"
+    ],
+    "notes": "Style class (+0x260) must be UCommonButtonStyle child; returns its CDO if the CDO class is also a child, else null. Duplicate IsChildOf check elided."
+  },
+  {
+    "class": "AFortOctopusVehicle",
+    "function": "NativeIsWeakObjectValid1406a7ed0",
+    "kind": "helper",
+    "signature": "bool NativeIsWeakObjectValid1406a7ed0(TWeakObjectPtr<UObject>* WeakObject, bool bEvenIfPendingKill)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/AFortOctopusVehicle/NativeIsWeakObjectValid1406a7ed0.inc",
+    "address": "0x1406a7ed0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/WeakObjectPtr.h"
+    ],
+    "notes": "Thunk JMP 0x142ee7880 (TWeakObjectPtr::IsValid). R8 bThreadsafeTest not set by callers; port uses default false."
+  },
+  {
+    "class": "AFortPlayerControllerFrontEnd",
+    "function": "NativeForwardMinigameRankChanged1423a1ea0",
+    "kind": "helper",
+    "signature": "void NativeForwardMinigameRankChanged1423a1ea0(AFortPlayerControllerFrontEnd* FrontEndController, int32 Rank)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hp2_runtime/AFortPlayerControllerFrontEnd/NativeForwardMinigameRankChanged1423a1ea0.inc",
+    "address": "0x1423a1ea0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "If byte +0x1cb4 & 0x40 (bUsePickers), forwards Rank to inline component +0x988 MinigameActivity ForwardMinigameActivityRankChanged. Hint lacks static/access flags."
+  }
+]

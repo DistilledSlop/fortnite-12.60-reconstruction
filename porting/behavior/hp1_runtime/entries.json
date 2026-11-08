@@ -1,0 +1,188 @@
+[
+ {
+  "class": "UFortMinigameObjectiveComponent",
+  "function": "NativeHelper1440b2120",
+  "kind": "helper",
+  "signature": "uint8 NativeHelper1440b2120(UObject* Context)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/UFortMinigameObjectiveComponent/NativeHelper1440b2120.inc",
+  "address": "0x1440b2120",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h"
+  ],
+  "notes": "Returns byte +0xf0 of the object at Context+0xa0 (0 if null). Semantic name unclear; callers compare to 2."
+ },
+ {
+  "class": "APhysicsObject",
+  "function": "NativeHelper14070cc00",
+  "kind": "helper",
+  "signature": "float NativeHelper14070cc00(uint8* Context)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/APhysicsObject/NativeHelper14070cc00.inc",
+  "address": "0x14070cc00",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [],
+  "notes": "Float read at +0xc of an interior struct; caller passes health sub-struct pointers (+0x30 and +0x58)."
+ },
+ {
+  "class": "UFortMinigameStatics",
+  "function": "NativeHelper142414c60",
+  "kind": "helper",
+  "signature": "uint8* NativeHelper142414c60(UObject* Context)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/UFortMinigameStatics/NativeHelper142414c60.inc",
+  "address": "0x142414c60",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h"
+  ],
+  "notes": "Returns Context+0xe0 when its class-slot array entry for AFortPlayerController matches; else null."
+ },
+ {
+  "class": "UFortAttributeList",
+  "function": "NativeHelper143d5a2f0",
+  "kind": "helper",
+  "signature": "int32 NativeHelper143d5a2f0(UObject* Context)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/UFortAttributeList/NativeHelper143d5a2f0.inc",
+  "address": "0x143d5a2f0",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h"
+  ],
+  "notes": "int32 read at +0x110; semantic name unclear. Reflection conflict at this offset noted in comments."
+ },
+ {
+  "class": "UFortSquadSlotSelectorButton",
+  "function": "NativeHelper1450e86c0",
+  "kind": "helper",
+  "signature": "void NativeHelper1450e86c0(uint8* Context, uint64* OutKey, int32* OutIndex)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/UFortSquadSlotSelectorButton/NativeHelper1450e86c0.inc",
+  "address": "0x1450e86c0",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [],
+  "notes": "Copies uint64 at +0x8 and int32 at +0x10 of an interior slot struct to two out parameters."
+ },
+ {
+  "class": "UFortButtonStyle",
+  "function": "NativeGetMarginBySize141f894c0",
+  "kind": "helper",
+  "signature": "FMargin* NativeGetMarginBySize141f894c0(uint8* Base, int32 SizeIndex)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/UFortButtonStyle/NativeGetMarginBySize141f894c0.inc",
+  "address": "0x141f894c0",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "Layout/Margin.h"
+  ],
+  "notes": "Selects a 16-byte margin entry by size index from a style sub-struct; returns its address."
+ },
+ {
+  "class": "AFortAthenaMutator_Wax",
+  "function": "NativeFindWaxRecordByKey141b48bf0",
+  "kind": "helper",
+  "signature": "uint8* NativeFindWaxRecordByKey141b48bf0(AFortAthenaMutator_Wax* Context, uint8* OutRecord, uint64 RecordKey)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/AFortAthenaMutator_Wax/NativeFindWaxRecordByKey141b48bf0.inc",
+  "address": "0x141b48bf0",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h",
+   "HAL/UnrealMemory.h"
+  ],
+  "notes": "Finds the 0x48-byte wax record whose key matches and copies it to OutRecord; otherwise writes a reset record."
+ },
+ {
+  "class": "UInfiltrationStatusComponent",
+  "function": "NativeHelper141b03e10",
+  "kind": "helper",
+  "signature": "uint8* NativeHelper141b03e10(UObject* Context)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/UInfiltrationStatusComponent/NativeHelper141b03e10.inc",
+  "address": "0x141b03e10",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h"
+  ],
+  "notes": "Returns the address of the state sub-object at +0x788 of the infiltration status component."
+ },
+ {
+  "class": "UFortClientSettingsRecord",
+  "function": "NativeFindRegistrationNode142eca940",
+  "kind": "helper",
+  "signature": "uint8* NativeFindRegistrationNode142eca940(UObject* Context, uint8* KeyRecord)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/UFortClientSettingsRecord/NativeFindRegistrationNode142eca940.inc",
+  "address": "0x142eca940",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h"
+  ],
+  "notes": "Walks Context+0x20 list and returns the first node whose holder slot matches KeyRecord's class-slot entry."
+ },
+ {
+  "class": "UFortCreativeServersView",
+  "function": "NativeGetServerEntry1407c1f20",
+  "kind": "helper",
+  "signature": "UObject* NativeGetServerEntry1407c1f20(UObject* Context, int32 Index)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/UFortCreativeServersView/NativeGetServerEntry1407c1f20.inc",
+  "address": "0x1407c1f20",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h",
+   "UObject/WeakObjectPtr.h"
+  ],
+  "notes": "Bounds-checked fetch of a weak object array element; returns null when out of range."
+ },
+ {
+  "class": "UConsolidatedQuestComponent",
+  "function": "NativeWeakObjectPtrMatches1406a7e80",
+  "kind": "helper",
+  "signature": "bool NativeWeakObjectPtrMatches1406a7e80(TWeakObjectPtr<UObject>* SelfWeak, UObject* OtherObject)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "porting/behavior/hp1_runtime/UConsolidatedQuestComponent/NativeWeakObjectPtrMatches1406a7e80.inc",
+  "address": "0x1406a7e80",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h",
+   "UObject/WeakObjectPtr.h"
+  ],
+  "notes": "True when SelfWeak refers to OtherObject's index and serial, or when neither weak pointer is valid."
+ }
+]

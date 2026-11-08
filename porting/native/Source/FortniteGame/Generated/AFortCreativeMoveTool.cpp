@@ -2,6 +2,8 @@
 #include "AFortCreativeMoveTool.h"
 #include "EHitTraceRule.h"
 #include "ESelectionProperty.h"
+#include "GameFramework/Controller.h"
+#include "GameFramework/Pawn.h"
 #include "UFortCreativeOption.h"
 #include "Net/UnrealNetwork.h"
 
@@ -396,6 +398,21 @@ void AFortCreativeMoveTool::ServerUpdateTractorBeam_Implementation(float NewTarg
 void AFortCreativeMoveTool::SpawnPlaysetVolumeOnServer_Implementation(UFortPlaysetItemDefinition* Playset, const FVector& SpawnLocation, const FRotator& SpawnRotation)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+AController* AFortCreativeMoveTool::NativeGetInstigatorController143f76650(AFortCreativeMoveTool* MoveTool)
+{
+	// Original body address: 0x143f76650 (helper, no thunk)
+	// Offset evidence: +0x118 AActor::Instigator (reflected Object, read as APawn*); +0x250 APawn::Controller (reflected Object) read only when Instigator is non-null.
+	// Asm: load Instigator, return null when it is zero, otherwise return Instigator->Controller.
+	// Callers (7) include AdjustOptionsBasedOnSelectionProperty, which compares the result against a class before use.
+	// CONFIDENCE: HIGH
+	APawn* InstigatorPawn = MoveTool->GetInstigator();
+	if (InstigatorPawn == nullptr)
+	{
+		return nullptr;
+	}
+	return InstigatorPawn->GetController();
 }
 
 void AFortCreativeMoveTool::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

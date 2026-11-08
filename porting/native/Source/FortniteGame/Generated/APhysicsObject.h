@@ -301,5 +301,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
+	static float NativeHelper14070cc00(uint8* Context);
 };
 

@@ -53,5 +53,9 @@ public:
 	void SquadSlotWidgetUpdated();
 	virtual void SquadSlotWidgetUpdated_Implementation();
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeHelper1450e86c0(uint8* Context, uint64* OutKey, int32* OutIndex);
 };
 

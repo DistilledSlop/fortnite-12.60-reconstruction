@@ -11,6 +11,7 @@
 #include "FHeroSlotInfo.h"
 #include "FOnPrefabForCurrentlyDisplayedItemChanged.h"
 #include "FOnPrefabForCurrentlyDisplayedItemReady.h"
+#include "UObject/Object.h"
 
 class UFortItem;
 class UMaterialInstance;
@@ -76,5 +77,9 @@ protected:
 	void NotifyPrefabChanged(AActor* PrefabActor, UFortItem* CurrentItem);
 public:
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeGetHeroPlayerPawnByIndex141fc1840(APartyDisplayManager* ManagerObj, int32 SlotIndex);
 };
 

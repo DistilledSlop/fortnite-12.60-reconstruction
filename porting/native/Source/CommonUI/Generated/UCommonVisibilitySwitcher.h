@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/Overlay.h"
 
+#include "Components/PanelSlot.h"
 #include "Components/SlateWrapperTypes.h"
 
 #include "UCommonVisibilitySwitcher.generated.h"
@@ -31,5 +32,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetActiveWidgetIndex() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static int32 NativeFindSwitcherChildIndex143d5a270(UCommonVisibilitySwitcher* Switcher, UObject* TargetWidget);
 };
 

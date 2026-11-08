@@ -1,0 +1,7 @@
+// Original address: 0x141e32a40 (UFortLocalPlayer helper; asm: MOVZX EAX,[RCX+0x884]; DEC AL; TEST AL,0xfd; SETZ AL; RET)
+// Offset evidence: byte at object +0x884; no reflected member covers 0x884. The 8-bit DEC wraps, so byte 0 yields false.
+// Result is true exactly when the byte is 1 or 3.
+// CONFIDENCE: HIGH
+const uint8 RawModeByte = *(reinterpret_cast<const uint8*>(LocalPlayerObj) + 0x884);
+const uint8 RawModeMinusOne = static_cast<uint8>(RawModeByte - 1);
+return (RawModeMinusOne & 0xfd) == 0;

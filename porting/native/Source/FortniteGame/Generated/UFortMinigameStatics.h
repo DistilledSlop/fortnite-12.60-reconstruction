@@ -7,6 +7,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 
 #include "Math/Vector.h"
+#include "UObject/Object.h"
 
 #include "UFortMinigameStatics.generated.h"
 
@@ -22,5 +23,9 @@ public:
 	UFUNCTION()
 	static FVector MakeVector(float X, float Y, float Z);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint8* NativeHelper142414c60(UObject* Context);
 };
 

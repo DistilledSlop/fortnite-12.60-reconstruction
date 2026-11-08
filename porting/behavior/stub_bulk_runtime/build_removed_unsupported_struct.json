@@ -126,5 +126,13 @@
   "reason": "UHT rejects the UFUNCTION: parameter type FFortUINavigationOperation is not a Blueprint-supported USTRUCT in this tree",
   "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
   "inc_path": "porting/behavior/rs21_runtime/UFortUINavigationManager/TryGetPendingNavigationOp.inc"
+ },
+ {
+  "entry": "ABuildingTimeOfDayLights::GetTimeOfDayBlueprintDefaultVariables_Implementation",
+  "kind": "native_event_impl",
+  "blocker": "blueprint_unsupported_struct_type",
+  "reason": "UHT rejects the UFUNCTION: parameter type FTimeOfDayBlueprintDefaultVariables is not a Blueprint-supported USTRUCT in this tree",
+  "unblock": "Declare the struct as a reflected USTRUCT(BlueprintType) with its recovered layout, then re-add the port",
+  "inc_path": "porting/behavior/dv1_runtime/ABuildingTimeOfDayLights/GetTimeOfDayBlueprintDefaultVariables_Implementation.inc"
  }
 ]

@@ -1,0 +1,21 @@
+// Original body address: 0x143d5a270 (helper, no thunk)
+// Offset evidence: UPanelWidget::Slots (reflected Array at +0x108) is read as TArray at +0x108 (Data) with Num at +0x110.
+// Each slot's Content is read at UPanelSlot +0x30 (reflected Content, Object); a null slot compares as null.
+// Asm: returns the first index whose slot Content equals the target (null slot counts as null), or -1 when there is no match or the count is not positive.
+// CONFIDENCE: HIGH
+const TArray<UPanelSlot*>& SlotArray = *reinterpret_cast<const TArray<UPanelSlot*>*>(reinterpret_cast<const uint8*>(Switcher) + 0x108);
+const int32 NumSlots = SlotArray.Num();
+for (int32 SlotIndex = 0; SlotIndex < NumSlots; ++SlotIndex)
+{
+	UPanelSlot* ChildSlot = SlotArray[SlotIndex];
+	UObject* ChildContent = nullptr;
+	if (ChildSlot != nullptr)
+	{
+		ChildContent = *reinterpret_cast<UObject* const*>(reinterpret_cast<const uint8*>(ChildSlot) + 0x30);
+	}
+	if (ChildContent == TargetWidget)
+	{
+		return SlotIndex;
+	}
+}
+return -1;

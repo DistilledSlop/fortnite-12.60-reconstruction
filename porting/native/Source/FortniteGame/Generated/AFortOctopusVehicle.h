@@ -16,6 +16,7 @@
 #include "FTowhookParams.h"
 #include "FTowhookYankDelegate.h"
 #include "Math/Vector.h"
+#include "UObject/WeakObjectPtr.h"
 
 class UCameraShake;
 class UFortOctopusVehicleConfigs;
@@ -337,5 +338,9 @@ public:
 	bool ServerUpdateTowhook_Validate(const FVector_NetQuantizeNormal& InNetTowhookAimDir);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static bool NativeIsWeakObjectValid1406a7ed0(TWeakObjectPtr<UObject>* WeakObject, bool bEvenIfPendingKill);
 };
 

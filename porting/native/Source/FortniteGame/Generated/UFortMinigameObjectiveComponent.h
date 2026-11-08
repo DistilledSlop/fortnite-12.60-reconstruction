@@ -8,6 +8,7 @@
 
 #include "EObjectiveType.h"
 #include "FMinigameObjectiveUpdated.h"
+#include "UObject/Object.h"
 
 #include "UFortMinigameObjectiveComponent.generated.h"
 
@@ -57,5 +58,9 @@ public:
 	UPROPERTY()
 	bool bPurgeTrackingHistoryOnRemoval;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint8 NativeHelper1440b2120(UObject* Context);
 };
 

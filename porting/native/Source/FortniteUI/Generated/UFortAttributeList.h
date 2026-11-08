@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortUserWidget.h"
 
+#include "UObject/Object.h"
+
 class UFortAttributeListItem;
 class UVerticalBox;
 
@@ -29,5 +31,9 @@ public:
 	UPROPERTY()
 	UVerticalBox* AttributeContainer;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static int32 NativeHelper143d5a2f0(UObject* Context);
 };
 

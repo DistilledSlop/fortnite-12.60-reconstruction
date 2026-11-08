@@ -18,8 +18,10 @@
 #include "FWaxTokenFlashSignature.h"
 #include "FWaxVisibilityModifiers.h"
 #include "GameplayTagContainer.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
+#include "UObject/Object.h"
 
 class AFortAthena_WaxToken;
 class AFortGameModePickup_Wax;
@@ -361,5 +363,9 @@ public:
 	void OnRep_Leaders();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint8* NativeFindWaxRecordByKey141b48bf0(AFortAthenaMutator_Wax* Context, uint8* OutRecord, uint64 RecordKey);
 };
 
