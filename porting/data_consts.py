@@ -36,10 +36,11 @@ def consts(L):
             if s in (None, '.text'):
                 continue
             _img.seek(a - BASE)
-            b = _img.read(8)
+            raw = _img.read(64)
+            b = raw[:8]
             if len(b) < 8:
                 continue
             u64 = struct.unpack('<Q', b)[0]
             out[m.group(1)] = dict(section=s, kind='constant' if s == '.rdata' else 'writable_global_snapshot',
-                                   u32=hex(u64 & 0xffffffff), f32=struct.unpack('<f', b[:4])[0], u64=hex(u64), f64=struct.unpack('<d', b)[0])
+                                   u32=hex(u64 & 0xffffffff), f32=struct.unpack('<f', b[:4])[0], u64=hex(u64), f64=struct.unpack('<d', b)[0], bytes64=raw.hex())
     return out

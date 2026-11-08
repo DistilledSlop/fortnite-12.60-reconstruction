@@ -1,0 +1,85 @@
+[
+ {
+  "class": "UFortAlterationModScreenBase",
+  "function": "NativeResizeCapacity1406946d0",
+  "kind": "helper",
+  "signature": "void NativeResizeCapacity1406946d0(void* ArrayRaw, int32 RequestedMax)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr8_runtime/UFortAlterationModScreenBase/NativeResizeCapacity1406946d0.inc",
+  "address": "0x1406946d0",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [
+   "HAL/UnrealMemory.h"
+  ],
+  "notes": "TArray<0x38-byte element>::ResizeTo: Data at +0, Max at +0xc; Realloc via FMemory; slack from QuantizeSize."
+ },
+ {
+  "class": "UCreativeQuickbarComponent",
+  "function": "NativeWeakObjectGet142ee6180",
+  "kind": "helper",
+  "signature": "UObject* NativeWeakObjectGet142ee6180(void* WeakPtr)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr8_runtime/UCreativeQuickbarComponent/NativeWeakObjectGet142ee6180.inc",
+  "address": "0x142ee6180",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h",
+   "UObject/UObjectArray.h"
+  ],
+  "notes": "TWeakObjectPtr<UObject> resolve via GUObjectArray; serial and index checks from asm."
+ },
+ {
+  "class": "UFortKismetLibrary",
+  "function": "NativeFindLevelRegistrationNode143f76730",
+  "kind": "helper",
+  "signature": "uint8* NativeFindLevelRegistrationNode143f76730(UObject* Context)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr8_runtime/UFortKismetLibrary/NativeFindLevelRegistrationNode143f76730.inc",
+  "address": "0x143f76730",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [
+   "UObject/Object.h",
+   "Engine/Level.h"
+  ],
+  "notes": "Tail-jumps to ported UFortClientSettingsRecord node finder with ULevel::StaticClass() as key."
+ },
+ {
+  "class": "AFortCharacterVehicle_Ostrich",
+  "function": "NativeMarkFlagAndClampPositive143fa3d30",
+  "kind": "helper",
+  "signature": "void NativeMarkFlagAndClampPositive143fa3d30(AFortCharacterVehicle_Ostrich* Vehicle, float Value)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr8_runtime/AFortCharacterVehicle_Ostrich/NativeMarkFlagAndClampPositive143fa3d30.inc",
+  "address": "0x143fa3d30",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [],
+  "notes": "Sets byte +0x26 to 1 and stores max(Value, 0) as float at +0x8 (MAXSS semantics)."
+ },
+ {
+  "class": "UFortAgeGateFlow",
+  "function": "NativeDaysInMonth142c90490",
+  "kind": "helper",
+  "signature": "int32 NativeDaysInMonth142c90490(int32 Year, int32 Month)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr8_runtime/UFortAgeGateFlow/NativeDaysInMonth142c90490.inc",
+  "address": "0x142c90490",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [],
+  "notes": "Days in month with Gregorian leap rule for February; table from .rdata 0x1465da1b8."
+ }
+]

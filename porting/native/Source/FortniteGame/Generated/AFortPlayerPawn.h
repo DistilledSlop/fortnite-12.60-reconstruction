@@ -417,6 +417,15 @@ public:
 	UPROPERTY(Transient)
 	TArray<AFortPlayerPawn*> GroupEmoteFollowers;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1134): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x1134;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1138): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x1138;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x113c): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x113c;
+
 	// table index 248, flags 0x10000000004000
 	UPROPERTY(Config)
 	float GroupEmoteMaximumZDifference;
@@ -1644,14 +1653,18 @@ public:
 	UFUNCTION()
 	void OnRep_GliderOverride();
 
+protected:
 	UFUNCTION()
 	void OnRep_GroupEmoteLookTarget();
+public:
 
 	UFUNCTION()
 	void OnRep_InVehicle();
 
+protected:
 	UFUNCTION()
 	void OnRep_IsEmoteLeader();
+public:
 
 	UFUNCTION()
 	void OnRep_IsInAnyStorm();

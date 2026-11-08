@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x1406946d0",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "TArray<0x38-byte element>::ResizeTo: Data at +0, Max at +0xc; Realloc via FMemory; slack from QuantizeSize."
+ },
+ {
+  "addr": "0x1407901a0",
+  "status": "blocked",
+  "case": "absolute_writable_table",
+  "reason": "LEA R11,[0x147c32cf0] indexes a 256-entry dword table (standard CRC-style values) that lies in writable .data (0x147812000 section); the job carries no data_consts snapshot, so the table values cannot be used as literals."
+ },
+ {
+  "addr": "0x142c90490",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "Days in month with Gregorian leap rule for February; table from .rdata 0x1465da1b8."
+ },
+ {
+  "addr": "0x142ebdc30",
+  "status": "blocked",
+  "case": "callee_other_module",
+  "reason": "CALL 0x142bcf780 hinted as UMeshNetworkSubsystem::GetMetaDataWithKey, a MeshNetwork-module class (porting/native/Source/MeshNetwork); cross-module class use is forbidden in bodies, and the call passes two raw pointers with no receiver."
+ },
+ {
+  "addr": "0x142ee6180",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "TWeakObjectPtr<UObject> resolve via GUObjectArray; serial and index checks from asm."
+ },
+ {
+  "addr": "0x143f76730",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "Tail-jumps to ported UFortClientSettingsRecord node finder with ULevel::StaticClass() as key."
+ },
+ {
+  "addr": "0x143fa3d30",
+  "status": "proposed",
+  "case": "helper_ported",
+  "reason": "Sets byte +0x26 to 1 and stores max(Value, 0) as float at +0x8 (MAXSS semantics)."
+ },
+ {
+  "addr": "0x1443771a0",
+  "status": "blocked",
+  "case": "absolute_writable_global_and_unresolved_virtual",
+  "reason": "CMP byte ptr [0x148247286],AL reads a writable .data global (0x1482...) with no data_consts snapshot in the job; also CALL qword ptr [RAX+0x368] is a virtual slot with no callee hint."
+ }
+]

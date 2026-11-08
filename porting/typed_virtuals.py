@@ -18,6 +18,8 @@ _props = {}
 for c in _rf['classes_in_groups_with_fort_names']:
     n = c.get('name') or _nm.get(c['block_va'])
     _props[n] = {p['offset']: p for p in c.get('properties') or [] if p.get('offset') is not None and p['kind'] == 'Object'}
+import os
+_iat = json.load(open('porting/generated/small-pool/iat.json')) if os.path.exists('porting/generated/small-pool/iat.json') else {}
 _chain = {v['name']: v.get('chain') or [v['name']] for v in _pm.values() if isinstance(v, dict) and v.get('name')}
 
 
@@ -49,6 +51,12 @@ def analyse(L, cls, delta):
                 reg[m.group(1)] = ('obj', mc[0], mc[1]) if mc else None
             else:
                 reg[m.group(1)] = None
+            continue
+        m = re.fullmatch(r'(?:CALL|JMP) qword ptr \[(0x14[0-9a-f]{7})\]', i)
+        if m and m.group(1) in _iat:  # import call (kernel32/CRT): resolved by name, not a virtual call
+            if i.startswith('CALL'):
+                for r in vol:
+                    reg[r] = None
             continue
         m = re.fullmatch(r'(?:CALL|JMP) qword ptr \[(R\w+)(?: \+ (0x[0-9a-f]+))?\]', i)
         if m:

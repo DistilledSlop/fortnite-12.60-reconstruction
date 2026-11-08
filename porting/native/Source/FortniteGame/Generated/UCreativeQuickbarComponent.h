@@ -12,6 +12,8 @@
 #include "FOnItemAddedToCreativeQuickbar.h"
 #include "FOnItemAddedToMoveTool.h"
 #include "Misc/Guid.h"
+#include "UObject/Object.h"
+#include "UObject/UObjectArray.h"
 
 class AActor;
 class UFortCreativeUserPrefabItemDefinition;
@@ -93,5 +95,9 @@ public:
 	void ServerAddToQuickBar_Implementation(const TArray<AActor*>& Actors, int32 DesiredSlotIndex);
 	bool ServerAddToQuickBar_Validate(const TArray<AActor*>& Actors, int32 DesiredSlotIndex);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeWeakObjectGet142ee6180(void* WeakPtr);
 };
 

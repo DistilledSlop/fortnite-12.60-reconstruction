@@ -7,6 +7,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 
 #include "EFortItemEntryState.h"
+#include "Engine/Level.h"
 #include "FFortClientEventName.h"
 #include "FFortDialogExternalLatentActionHandle.h"
 #include "GameFramework/OnlineReplStructs.h"
@@ -130,5 +131,6 @@ public:
 	static FRotator* NativeVectorToRotatorDegrees142c5cdf0(const FVector* InVector, FRotator* OutRotator);
 	static bool NativeHasAnyRewardEntries141f8e580(const void* Rewards, bool bIncludeExtended);
 	static uint8* NativeGetIndexedRecord14468e190(UObject* Owner);
+	static uint8* NativeFindLevelRegistrationNode143f76730(UObject* Context);
 };
 

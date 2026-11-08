@@ -1,0 +1,58 @@
+[
+ {
+  "class": "AFortPlayerPawn",
+  "function": "OnRep_GroupEmoteLookTarget",
+  "status": "proposed",
+  "case": "small_wrapper_port",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "OnRep_IsEmoteLeader",
+  "status": "proposed",
+  "case": "small_wrapper_port",
+  "reason": ""
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "GetDamageStartLocation",
+  "status": "proposed",
+  "case": "small_wrapper_port",
+  "reason": ""
+ },
+ {
+  "class": "AAIHotSpot",
+  "function": "GetSlotLocationByIndex",
+  "status": "blocked",
+  "case": "blocked_unverified_global",
+  "reason": "fallback FVector from writable globals 0x1478c1890/0x1478c1898 is 0x7f7fffff (FLT_MAX) per component, not zero; not expressible under the zero-snapshot rule. Asm: CALL 0x14165f120 (UAIHotSpotSlot::GetSlotLocation) is otherwise typed."
+ },
+ {
+  "class": "ABuildingGameplayActor",
+  "function": "GetTargetingSourceTransform_Implementation",
+  "status": "blocked",
+  "case": "blocked_unverified_global",
+  "reason": "fallback FTransform copied (48 bytes, MOVAPS) from writable global 0x1482184f0; only its first dword (0) is captured, so the full default value is unverified."
+ },
+ {
+  "class": "ABuildingGameplayActorConsumable",
+  "function": "GetDeathFXTransform_Implementation",
+  "status": "blocked",
+  "case": "blocked_unverified_global",
+  "reason": "same shared body 0x141bdd320 as ABuildingGameplayActor: fallback FTransform copied from writable global 0x1482184f0 with only the first dword captured; full default unverified."
+ },
+ {
+  "class": "ADeployableBaseCore",
+  "function": "GetSimpleDeathFXTransform_Implementation",
+  "status": "blocked",
+  "case": "blocked_unverified_global",
+  "reason": "same shared body 0x141bdd320: fallback FTransform copied from writable global 0x1482184f0 with only the first dword captured; full default unverified."
+ },
+ {
+  "class": "AFortPlayerControllerOutpost",
+  "function": "ToggleOwnerInPIE",
+  "status": "blocked",
+  "case": "blocked_unverified_global",
+  "reason": "branch gated by writable global byte 0x1482472b2 (snapshot 0, mutable state, not a zero fallback); gate cannot be ported without guessing. Rest (SETZ toggle of +0x2c70, IsA check of +0x220, helper 0x142429d20) is expressible."
+ }
+]

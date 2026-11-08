@@ -157,5 +157,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static UObject* NativeGetLobbyBeaconClient141e61390(UFortMatchmakingContext* MatchmakingContext);
 	static UObject* NativeGetContextObject141e613c0(UFortMatchmakingContext* Context);
+	static void* NativeGetMatchmakingPtrField144217e60(UFortMatchmakingContext* MatchmakingCtx);
 };
 

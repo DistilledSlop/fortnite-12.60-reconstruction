@@ -45,7 +45,9 @@ for r in ok:
         elif t in named:
             hint[t] = [dict(fn=f'{c}::{f}', params=[(p['name'], p['kind']) for p in nf.get(c, {}).get(f, {}).get('params') or []]) for c, f in sorted(named[t])[:5]]
     cs = callers[a]
-    jobs.append(dict(addr=a, host=hosts[0][0], host_header=hdr[hosts[0][0]], n_callers=r['any'], insns=L, callee_hints=hint,
+    _iat = json.load(open(f'{R}/small-pool/iat.json'))
+    iatc = {m.group(1): _iat[m.group(1)] for i in L for m in [re.search(r'(?:CALL|JMP) qword ptr \[(0x14[0-9a-f]{7})\]', i)] if m and m.group(1) in _iat}
+    jobs.append(dict(addr=a, host=hosts[0][0], host_header=hdr[hosts[0][0]], n_callers=r['any'], insns=L, callee_hints=hint, import_calls=iatc,
                      callers=[dict(cls=c, fn=f, body=b) for c, f, b in cs[:6]], asm=idx[a]))
 os.makedirs(f'{R}/work-batches', exist_ok=True)
 sel = jobs[:n]

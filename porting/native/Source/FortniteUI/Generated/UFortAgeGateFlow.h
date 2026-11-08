@@ -95,5 +95,9 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_AgeEntryChallengeError;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static int32 NativeDaysInMonth142c90490(int32 Year, int32 Month);
 };
 

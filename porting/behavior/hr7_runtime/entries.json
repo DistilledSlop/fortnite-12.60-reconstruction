@@ -1,0 +1,32 @@
+[
+ {
+  "class": "UFortHomebaseNodeItemUtilities",
+  "function": "NativeCaseInsensitiveCrc32140682990",
+  "kind": "helper",
+  "signature": "uint32 NativeCaseInsensitiveCrc32140682990(int32 Count, const uint16* Chars)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr7_runtime/UFortHomebaseNodeItemUtilities/NativeCaseInsensitiveCrc32140682990.inc",
+  "address": "0x140682990",
+  "confidence": "medium",
+  "includes": [],
+  "notes": "CRC-32-style hash of ASCII-uppercased UTF-16 string, seed 0. Table regenerated from verified .data bytes (MEDIUM)."
+ },
+ {
+  "class": "AFortAthenaMutator_Crucible",
+  "function": "NativeGrowArrayStride72_1407f1e50",
+  "kind": "helper",
+  "signature": "void NativeGrowArrayStride72_1407f1e50(void* ArrayStorage)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr7_runtime/AFortAthenaMutator_Crucible/NativeGrowArrayStride72_1407f1e50.inc",
+  "address": "0x1407f1e50",
+  "confidence": "high",
+  "includes": [
+   "HAL/UnrealMemory.h"
+  ],
+  "notes": "TArray ResizeGrow for 72-byte elements (Data/Num/Max raw); caller pre-increments Num; EDX unused."
+ }
+]

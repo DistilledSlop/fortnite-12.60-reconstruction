@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x142bfa300",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Indirect call CALL qword ptr [0x1458fcaf8] (IAT slot, no callee_hints entry) is unresolved; also reads writable .data globals 0x1482157f0 (object pointer, mutable state) and 0x148215828 (flag), no data_consts supplied."
+ },
+ {
+  "addr": "0x144267a30",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Indirect calls CALL qword ptr [0x1458fcaf8] and [0x1458fca10] (IAT slots, no callee_hints) are unresolved; reads writable .data globals 0x148332340, 0x1482472b6, 0x1482472d0 (mutable state, no data_consts); callers list empty so argument setup is unverified."
+ },
+ {
+  "addr": "0x140682990",
+  "status": "proposed",
+  "case": "crc_hash_wide_upper",
+  "reason": "Fully accounted loop: ASCII fold, two-byte table CRC update, seed 0. Table at 0x147c34cf0 (.data) verified against image as MSB-first poly 0x04C11DB7 and regenerated (MEDIUM). Callers checked: (len, wide string)."
+ },
+ {
+  "addr": "0x143d5c530",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Virtual call CALL qword ptr [RAX+0x150] on the receiver has no callee_hints entry, so the target and its return type are unknown; the rest (field at +0x188) alone does not define the helper."
+ },
+ {
+  "addr": "0x1407f1e50",
+  "status": "proposed",
+  "case": "tarray_resize_stride72",
+  "reason": "Full TArray ResizeGrow sequence for 72-byte elements with QuantizeSize/Realloc hints; Data/Num/Max offsets 0/8/0xc; callers 0x1410abe60 and 0x144afb0d0 confirm Num pre-increment and unused EDX."
+ },
+ {
+  "addr": "0x145803868",
+  "status": "blocked",
+  "case": "crt_onexit_registration",
+  "reason": "MSVC atexit/onexit registration for compiler-generated static destructor: writable CRT guard 0x1483ffba8 and CRT onexit table calls (0x145809515, 0x14580950f). Not game behavior; the C++ compiler emits this, so it should be omitted, not ported."
+ },
+ {
+  "addr": "0x140690880",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Call 0x140690310 has five reflected candidate hints with different params (OnMutatorObjectUpdated, GetTextForTokenFromAbilitySpec, GetPrimaryInstance, ...); no unique target can be chosen."
+ },
+ {
+  "addr": "0x142d2ac90",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Call 0x140696410 has two reflected candidate hints (UAthenaProfileStatsBase::NextStatSet / PrevStatSet) with identical empty params; target ambiguous. Also reads writable .data global 0x147c4d420 (array pointer, mutable state); callers list empty."
+ }
+]

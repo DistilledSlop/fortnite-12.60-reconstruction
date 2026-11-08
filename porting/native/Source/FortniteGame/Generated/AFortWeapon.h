@@ -766,6 +766,9 @@ public:
 	float GetCurrentMaxChargePercent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FVector GetDamageStartLocation(FVector& AimDir, int32 PatternIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetFiringRate() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

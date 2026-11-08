@@ -1,0 +1,58 @@
+[
+  {
+    "class": "AFortWeaponRanged",
+    "function": "ShouldPlayReloadFX",
+    "status": "blocked",
+    "case": "absolute_global_threshold",
+    "reason": "Compares [pawn+0x16c8] against writable global dword 0x14816dd98 (snapshot 0, mutable game state, not a constant); porting needs a hidden absolute-address global read. Offset 0x16c8 on AFortPlayerPawn is also unreflected (gap after BluePrintEditAnimation at 0x16c0)."
+  },
+  {
+    "class": "APhysicsObject",
+    "function": "ApplyImpulseFromPawnHit",
+    "status": "blocked",
+    "case": "asm_too_complex_unverified",
+    "reason": "125-instruction body mixing SSE impulse math, several pawn IsA checks, and a TArray push with unresolved layout at this+0x790/0x798/0x79c; cannot reach MEDIUM confidence without a full per-address re-read."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "GetGridBox",
+    "status": "blocked",
+    "case": "sse_rounding_lazy_static_cache",
+    "reason": "FBox math uses CVTSS2SI rounding and a lazily-initialised function-local static grid cache (MSVC static guard, globals 0x1481232a0-a8 written at runtime); not expressible exactly as a leaf wrapper."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "K2_GetGridBoxFromWorldLoc",
+    "status": "blocked",
+    "case": "sse_rounding_lazy_static_cache",
+    "reason": "Same CVTSS2SI rounding and lazily-initialised static grid cache (globals 0x1481232ac..a8, guard 0x145803a44) as GetGridBox; not expressible exactly."
+  },
+  {
+    "class": "UFortCardPackItem",
+    "function": "CanStoreOpen",
+    "status": "blocked",
+    "case": "tchar_compare_mutable_global_pointers",
+    "reason": "Four wide-string compares of a TArray at this+0xf8/0x100 against string pointers loaded from writable globals 0x148164db8/dd8/de8/df8/e08; the string contents are runtime state, not literals."
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetAveragePlacement",
+    "status": "blocked",
+    "case": "sparse_iteration_fname_compare_globals",
+    "reason": "Bitset/sparse iteration over a 0x70-stride array with FName-style compares against writable globals 0x14838ba40/0x14838ba48 (same loop shape as GetTotalEliminations; asm not fully re-read)."
+  },
+  {
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetTotalEliminations",
+    "status": "blocked",
+    "case": "sparse_iteration_fname_compare_globals",
+    "reason": "Bitset/sparse iteration over a 0x70-stride array with FName-style compares against writable globals 0x14838ba50/0x14838ba58 (calls 0x140687d00 each step); loop control and CMOV-selected compare pointers are not a faithful leaf wrapper."
+  },
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "IsHUDVisible",
+    "status": "blocked",
+    "case": "absolute_global_object_pointer",
+    "reason": "Dereferences writable global pointer 0x148351eb8 (+0x7c0 +0x40 chain) and compares fields against mutable sentinel globals 0x14816a7d8/dc/e0/e4; hidden absolute-address global state."
+  }
+]

@@ -7,6 +7,7 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "HAL/UnrealMemory.h"
 #include "UFortAlterableItem.h"
 
 class UFortAlterationModOptinScreenBase;
@@ -55,5 +56,9 @@ public:
 	UPROPERTY()
 	UFortAlterationOption* CurrentAlterationOptionInternal;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeResizeCapacity1406946d0(void* ArrayRaw, int32 RequestedMax);
 };
 

@@ -1,0 +1,32 @@
+[
+ {
+  "class": "UFortMatchmakingContext",
+  "function": "NativeGetMatchmakingPtrField144217e60",
+  "kind": "helper",
+  "signature": "void* NativeGetMatchmakingPtrField144217e60(UFortMatchmakingContext* MatchmakingCtx)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr6_runtime/UFortMatchmakingContext/NativeGetMatchmakingPtrField144217e60.inc",
+  "address": "0x144217e60",
+  "confidence": "high",
+  "status": "ported",
+  "includes": [],
+  "notes": "Raw read of [ctx+0x30] (null -> nullptr) then [ptr+0x278] as void*. Six asm instructions, all accounted for. Callers 141cad960, 14259f540."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "NativeRemoveHashedElement14462beb0",
+  "kind": "helper",
+  "signature": "bool NativeRemoveHashedElement14462beb0(uint8* SetContainer, const uint64* KeyInput)",
+  "signature_status": "proposed",
+  "static": true,
+  "access": "public",
+  "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hr6_runtime/AFortCreativeMoveTool/NativeRemoveHashedElement14462beb0.inc",
+  "address": "0x14462beb0",
+  "confidence": "medium",
+  "status": "ported",
+  "includes": [],
+  "notes": "TSet-style remove by 8-byte key: bucket unlink plus sparse free-list push. Container layout inferred from asm; key type not named. Caller 14462c4a0."
+ }
+]

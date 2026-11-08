@@ -1,0 +1,10 @@
+[
+ {"addr": "0x142e80830", "status": "blocked", "case": "callee_unresolved", "reason": "CALL qword ptr [RAX + 0x150] (virtual slot 0x150 of the receiver vtable) has no callee_hints entry; target unresolved."},
+ {"addr": "0x142cf1050", "status": "blocked", "case": "callee_unresolved", "reason": "JMP qword ptr [0x1458fc5b8] and JMP qword ptr [0x1458fcab0] are indirect tail-jumps through absolute IAT slots with no callee_hints entry. The MULSS constant 0x1459a872c has no data_consts value either."},
+ {"addr": "0x143a970b0", "status": "blocked", "case": "writable_global_address", "reason": "LEA RAX,[0x148300c18] takes the address of a writable .data global (0x1483... range); no data_consts entry and no named symbol, so the returned address cannot be expressed."},
+ {"addr": "0x14462beb0", "status": "proposed", "case": "helper_port", "reason": "Ported as NativeRemoveHashedElement14462beb0 with raw offsets. CONFIDENCE MEDIUM."},
+ {"addr": "0x140693f90", "status": "blocked", "case": "tail_jump_unresolved", "reason": "JZ 0x1440b3260 when [RCX+0xa8] is null tail-jumps into 0x1440b3260 (another function's code) with no callee_hints entry; the null-path result is unknown."},
+ {"addr": "0x144217e60", "status": "proposed", "case": "helper_port", "reason": "Ported as NativeGetMatchmakingPtrField144217e60. CONFIDENCE HIGH."},
+ {"addr": "0x142c0bf30", "status": "blocked", "case": "callee_unresolved", "reason": "CALL qword ptr [RAX] and CALL qword ptr [RAX + 0x8] on the shared-reference controller pointer [RDX+8] have no callee_hints entries (virtual dispose/destroy slots)."},
+ {"addr": "0x140bf86b0", "status": "blocked", "case": "callee_unresolved", "reason": "CALL qword ptr [RAX] and CALL qword ptr [RAX + 0x8] on the shared-reference controller pointer [RBX+8] have no callee_hints entries (virtual dispose/destroy slots)."}
+]

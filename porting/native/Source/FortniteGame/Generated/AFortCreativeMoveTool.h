@@ -620,5 +620,6 @@ public:
 	static UObject* NativeFindElementByKey141d7cd40(UObject* ContainerObject, uint64 SearchKey);
 	static bool NativeFillBytes32144487690(uint8* Bytes, uint8 FillByte);
 	static void NativeClampGridSnapIndex142681e90(AFortCreativeMoveTool* MoveTool, uint8 RequestedIndex);
+	static bool NativeRemoveHashedElement14462beb0(uint8* SetContainer, const uint64* KeyInput);
 };
 
