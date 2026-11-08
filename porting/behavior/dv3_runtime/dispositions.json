@@ -1,0 +1,170 @@
+[
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerDuplicateStartInteracting",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "RET 0x0 only; empty body."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerSpawnActorWithTransform",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "RET 0x0 only; empty body."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerSpawnSelectedActorsWithTransform",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "RET 0x0 only; empty body."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerStartInteracting",
+  "status": "proposed",
+  "case": "empty_body",
+  "reason": "RET 0x0 only; empty body."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerSetAllowGravity",
+  "status": "proposed",
+  "case": "bitfield_member",
+  "reason": "Byte store of DL to the byte holding reflected bool bAllowGravityOnPlace."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerSetAlwaysMoveFreely",
+  "status": "proposed",
+  "case": "bitfield_member",
+  "reason": "Byte store of DL to the byte holding reflected bool bAlwaysMoveFreely."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerUpdateRotationAxis",
+  "status": "proposed",
+  "case": "array_num_byte",
+  "reason": "Reads RotationAxes Num low byte (0xf78) via Num(); stores clamped index to RotationAxisIndex."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "OnWantedHitTraceRule",
+  "status": "proposed",
+  "case": "callee_and_delegate",
+  "reason": "GetValueAtIndex declared (UFortCreativeOption.h:60); value stored to WantedHitTraceRule.Value (+0x1154); byte gap member; delegate broadcast at 0xcd8."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "HandlePrecisionModePressed",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: JMP qword ptr [RAX+0xd90] is a tail virtual call to AFortCreativeMoveTool::HandleHitTraceRulePressed (slot 0xd90); the name is absent from every generated header (grep over porting/native/Source)."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerUpdateMirrored",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: CALL 0x14267e910 (UObjectInteractionBehavior::PlayGameplayAbility on [this+0xc60]) is absent from every generated header (grep). The other callee 0x1428f53b0 is UFortGameplayAbility::StaticClass(); only the PlayGameplayAbility call blocks the body."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerUpdateRotation",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: CALL 0x14267e910 (UObjectInteractionBehavior::PlayGameplayAbility on [this+0xc60]) is absent from every generated header (grep). The FQuat store to +0xf50 and bool stores to +0xf44/+0xf45 are otherwise expressible."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerUpdateScaleAxis",
+  "status": "blocked",
+  "case": "abi_mismatch",
+  "reason": "abi_mismatch: header_decl takes const EScaleAxis& (pointer in RDX), but MOV byte ptr [RCX+0xf81],DL stores the low byte of the register without dereferencing [RDX]. Value-vs-reference cannot be resolved from the asm."
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerUpdateTractorBeam",
+  "status": "blocked",
+  "case": "abi_mismatch",
+  "reason": "abi_mismatch: header_decl is (float, bool, bool), so the bools are ABI args 2 and 3 (RDX, R8). Asm reads R8B (-> +0xf36) and R9B (-> +0xf37) and never reads RDX; the implied fourth argument is absent from the header."
+ },
+ {
+  "class": "AFortGameState",
+  "function": "OnRep_PoiManager",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x140684de0 (RCX=this+0x4b8, an unreflected sub-object) has six unrelated candidates (AAthenaSkyCap::OnStopMovement, three AFortEventLevelNavigationActor handlers, AFortGameState::OnRep_Teams, AFortPlayerControllerZone::ClientOnPawnRevived); none is the receiver class."
+ },
+ {
+  "class": "UFortGameUserSettings",
+  "function": "SetHasSeenCreativeHeatmapTutorial",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: virtual slot 0x2a0 resolves to UFortGameUserSettings::SetDonutShopSequenceMarkedAsSeen, which is absent from every generated header (grep)."
+ },
+ {
+  "class": "UFortGameUserSettings",
+  "function": "SetHasSeenCreativePhoneTutorial",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: virtual slot 0x2a0 resolves to UFortGameUserSettings::SetDonutShopSequenceMarkedAsSeen, which is absent from every generated header (grep)."
+ },
+ {
+  "class": "UFortGameUserSettings",
+  "function": "SetHasSeenTapToShoot",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: virtual slot 0x2a0 resolves to UFortGameUserSettings::SetDonutShopSequenceMarkedAsSeen, which is absent from every generated header (grep)."
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "HasMinigameStarter",
+  "status": "blocked",
+  "case": "absolute_global",
+  "reason": "absolute_global: CMP EAX,dword ptr [0x148263a2c] and MOV RAX,qword ptr [0x148263a18] read hidden image globals (chunked table walk); the JGE 0x142098e21 path falls into MOV EAX,dword ptr [RAX+0x8] with RAX=0."
+ },
+ {
+  "class": "UFortHeroGameplayDefinition",
+  "function": "IsAbilityKitUnlockedForHero",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "callee_not_declared: CALL 0x142033440 (UFortItem::GetTier) and CALL 0x14250ce60 (UFortHeroGameplayDefinition::GetAbilityKitUnlockTierForHero) are absent from every generated header (grep)."
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "IsActorPositionInsideTerrain",
+  "status": "blocked",
+  "case": "absolute_constant",
+  "reason": "absolute_constant: the no-component path loads FVector from absolute 0x148218630 and dword 0x148218638 (values not in the asm). Also CALL 0x142099a10 (AFortMinigame::IsLocationInsideTerrain) is absent from the generated headers."
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "UnregisterVolumeAsNavigationObserver",
+  "status": "blocked",
+  "case": "virtual_slot_mismatch",
+  "reason": "virtual_slot_mismatch: CALL qword ptr [RAX+0x150] (AFortMinigame::OnRep_Volume) returns a pointer that is dereferenced (MOV RBX,qword ptr [RAX+0x120]), but OnRep_Volume is declared void (AFortMinigame.h:811). UAthenaNavSystem::UnregisterNavGenerationObserver is also undeclared."
+ },
+ {
+  "class": "AFortMinigameScoreRegistry",
+  "function": "OnRep_Playset",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "shared_callee_ambiguous: CALL 0x142ce9f90 has three unrelated candidates (AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard, UMeshNetworkSubsystem::GetMetaDataWithKey, UMeshNetworkSubsystem::SetMetaDataWithKey); none matches the receiver. Also reads absolute data at 0x1481348e0 and 0x1459a4b30."
+ },
+ {
+  "class": "UFortMinigameStatics",
+  "function": "GetLocation",
+  "status": "blocked",
+  "case": "absolute_constant",
+  "reason": "absolute_constant: the null-Player path builds the returned FVector from absolute 0x148218630 and dword 0x148218638 (values not in the asm); the sret return cannot be completed without them."
+ },
+ {
+  "class": "UFortOstrichAnimInstance",
+  "function": "AnimNotify_JumpEnter",
+  "status": "blocked",
+  "case": "absolute_global_float",
+  "reason": "absolute_global_float: COMISS XMM0,dword ptr [RCX+0x5d0] compares against a float loaded from absolute 0x145b6ece8 (value not in the asm); the branch selects one of two qword copy groups."
+ }
+]

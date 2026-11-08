@@ -1,0 +1,170 @@
+[
+  {
+    "class": "AFortAthenaDoghouseVehicle",
+    "function": "IsStallingFromAltitude",
+    "status": "blocked",
+    "case": "hidden_global",
+    "reason": "Null-pointer path loads an FVector constant from absolute 0x148218630/0x148218638 (unreflected global; value not available in batch or packet); pointee reads at [RAX+0x1d0] and [RAX+0x4a8] have no typed pointee."
+  },
+  {
+    "class": "AFortAthenaDoghouseVehicle",
+    "function": "ServerUpdateControlState_Implementation",
+    "status": "proposed",
+    "case": "struct_copy_and_owner_bool",
+    "reason": "Struct copy to reflected ControlState; Owner-null gated bool store to NativeRecoveredBool_0x1245 from bIsEngineOn."
+  },
+  {
+    "class": "AFortAthenaMutator_Bagel",
+    "function": "GetPlayerScore",
+    "status": "proposed",
+    "case": "tarray_scan_player_score",
+    "reason": "Linear scan of unreflected TArray (stride 0x80) matching PlayerState by key; writes OutScore on match."
+  },
+  {
+    "class": "AFortAthenaMutator_SpecialEvent",
+    "function": "OnAircraftEnteredDropZone",
+    "status": "proposed",
+    "case": "verbosity_log_elided",
+    "reason": "Body is entirely a verbosity-gated diagnostic log; elided per log rule."
+  },
+  {
+    "class": "AFortAthenaMutator_SpecialEvent",
+    "function": "OnAircraftExitedDropZone",
+    "status": "proposed",
+    "case": "verbosity_log_elided",
+    "reason": "Body is entirely a verbosity-gated diagnostic log; elided per log rule."
+  },
+  {
+    "class": "AFortAthenaSKPushCannon",
+    "function": "ServerSetPassengerTorquing_Implementation",
+    "status": "proposed",
+    "case": "leaf_bool_store",
+    "reason": "Single bool store to bPlayerTorquingRepped."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "GamepadUseOrExitPressedFromSeat",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slot 0xd30 target AFortAthenaVehicle::UseOrExitPressedFromSeat is not declared in any generated header (grep)."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "GetDesiredForwardVelocity",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slot 0x8c0 target AFortAthenaVehicle::GetDesiredForwardSpeedKmh is not declared in any generated header; the result is also multiplied by absolute-address constant 0x145dea9c8 (hidden global)."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "GetDesiredForwardVelocityDelta",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slots 0x890 (AFortAthenaVehicle::GetDesiredForwardVelocity) and 0x898 (AFortAthenaVehicle::GetCurrentForwardVelocity) are not declared in any generated header (grep)."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "OnPxComponentWake",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual tail jump slot 0x778 target AFortAthenaVehicle::WakeUp is not declared in any generated header (grep)."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "WakeUpOnGroundDied",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual tail jump slot 0x778 target AFortAthenaVehicle::WakeUp is not declared in any generated header (grep)."
+  },
+  {
+    "class": "UFortAthenaHoverCarMovementComponent",
+    "function": "ServerUpdateAthenaState_Implementation",
+    "status": "blocked",
+    "case": "adjustor_thunk",
+    "reason": "Body is LEA RAX,[RCX-0x28]; RET (this-0x28 adjustor with no field store); it is not the ServerUpdateAthenaState_Implementation body, so an empty port would silently drop the RPC."
+  },
+  {
+    "class": "UFortBannerUtilities",
+    "function": "GetRowNameForBannerColorItem",
+    "status": "proposed",
+    "case": "static_fname_return",
+    "reason": "Null-guarded read of ColorRowName (+0xe8) from the banner color item."
+  },
+  {
+    "class": "AFortBroadcastRemoteClientInfo",
+    "function": "ServerSetPlayerBuildableClass_Implementation",
+    "status": "proposed",
+    "case": "leaf_store_class",
+    "reason": "8-byte store of BuildableClass (RDX) to this+0x288 = reflected RemoteBuildableClass."
+  },
+  {
+    "class": "AFortBroadcastRemoteClientInfo",
+    "function": "ServerSetPlayerBuildingMaterial_Implementation",
+    "status": "proposed",
+    "case": "leaf_store_enum_byte",
+    "reason": "Byte store of Material (DL) to this+0x290 = reflected RemoteBuildingMaterial (TEnumAsByte)."
+  },
+  {
+    "class": "AFortBroadcastRemoteClientInfo",
+    "function": "ServerSetPlayerCanDBNORevive_Implementation",
+    "status": "proposed",
+    "case": "leaf_bool_store_declared_bit",
+    "reason": "Byte store of bCanDBNORevive (DL) to this+0x293"
+  },
+  {
+    "class": "AFortBroadcastRemoteClientInfo",
+    "function": "ServerSetPlayerEventScore_Implementation",
+    "status": "proposed",
+    "case": "leaf_store_int32",
+    "reason": "int32 store of EventScore (EDX) to this+0x2e8 = reflected RemoteEventScore."
+  },
+  {
+    "class": "AFortBroadcastRemoteClientInfo",
+    "function": "ServerSetPlayerFullScreenMapActive_Implementation",
+    "status": "proposed",
+    "case": "leaf_bool_store_declared_bit",
+    "reason": "Byte store of bFullScreenMapActive (DL) to this+0x291"
+  },
+  {
+    "class": "AFortBroadcastRemoteClientInfo",
+    "function": "ServerSetPlayerHitMarkers_Implementation",
+    "status": "blocked",
+    "case": "unresolved_callee",
+    "reason": "JNZ 0x14284ce80 (taken when [RCX+0x268] != 0) is a conditional tail jump with no callee candidate; the target body is unknown."
+  },
+  {
+    "class": "AFortBroadcastRemoteClientInfo",
+    "function": "ServerSetPlayerInteracting_Implementation",
+    "status": "proposed",
+    "case": "leaf_bool_store_declared_bit",
+    "reason": "Byte store of bInteracting (DL) to this+0x269"
+  },
+  {
+    "class": "AFortBroadcastRemoteClientInfo",
+    "function": "ServerSetPlayerInventoryActive_Implementation",
+    "status": "proposed",
+    "case": "leaf_bool_store_declared_bit",
+    "reason": "Byte store of bInventorypActive (DL) to this+0x292"
+  },
+  {
+    "class": "UFortClientSettingsRecord",
+    "function": "SetFromVoiceChatSettings",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x140684de0 has 6 candidates across 4 classes (AAthenaSkyCap, AFortEventLevelNavigationActor, AFortGameState, AFortPlayerControllerZone); none equals or is an ancestor of UFortClientSettingsRecord."
+  },
+  {
+    "class": "UFortCollectionBookPage",
+    "function": "GetSectionState",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "CALL 0x142ce9f90 has 3 candidates (AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard, UMeshNetworkSubsystem::GetMetaDataWithKey, UMeshNetworkSubsystem::SetMetaDataWithKey); none equals or is an ancestor of UFortCollectionBookPage; CALL 0x142bcf780 receiver is absolute global 0x1459a4b30."
+  },
+  {
+    "class": "UFortControllerComponent_HeldDeviceUsage",
+    "function": "DestroyDroppedDevice",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Tail JMP 0x143f6c200 target AFortVolume::DestroyVolume is not declared in any generated header; its candidate has params [] but the tail call passes EDX=0 and R8B=1; the receiver path also reads absolute globals 0x148263a18/0x148263a2c."
+  }
+]

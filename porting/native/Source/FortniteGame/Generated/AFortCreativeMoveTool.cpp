@@ -2,6 +2,7 @@
 #include "AFortCreativeMoveTool.h"
 #include "EHitTraceRule.h"
 #include "ESelectionProperty.h"
+#include "UFortCreativeOption.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortCreativeMoveTool::ClientAddItemToMoveToolComplete_Implementation(AFortPlayerControllerAthena* FortPC)
@@ -224,6 +225,31 @@ void AFortCreativeMoveTool::OnRep_SelectionProperty()
 	OnSelectionPropertyChanged.Broadcast(SelectionProperty);
 }
 
+void AFortCreativeMoveTool::OnWantedHitTraceRule(UFortCreativeOption* CreativeOption, uint8 Index)
+{
+	// Original body address: 0x14267d680 (thunk 0x1428c3ac0)
+	// Offset evidence: CreativeOption null exits with bare RET at 0x14267d6e4. CALL 0x141d85c50 = UFortCreativeOption::GetValueAtIndex(int32). MOV dword [+0x1154]: 0x114c is WantedHitTraceRule (FCreativeOptionVariableBase: FGameplayTag 8 bytes, int32 Value at +8), so +0x1154 is WantedHitTraceRule.Value. MOV byte [+0x114b]: gap after TraceType (0x1149), NativeRecoveredByte_0x114b. Delegate at 0xcd8 = OnMoveToolLineOfSightBlockingChanged (one EHitTraceRule param, byte in AL); RCX=this+0xcd8 at CALL 0x1406a9dc0.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortCreativeOption) > 0, "UFortCreativeOption must be complete for GetValueAtIndex");
+	if (!CreativeOption)
+	{
+	    return;
+	}
+	const int32 RuleValue = CreativeOption->GetValueAtIndex(static_cast<int32>(Index));
+	WantedHitTraceRule.Value = RuleValue;
+	uint8 RuleByte = 2;
+	if (RuleValue == 0)
+	{
+	    RuleByte = 0;
+	}
+	else if (RuleValue == 1)
+	{
+	    RuleByte = 1;
+	}
+	NativeRecoveredByte_0x114b = RuleByte;
+	OnMoveToolLineOfSightBlockingChanged.Broadcast(static_cast<EHitTraceRule>(RuleByte));
+}
+
 void AFortCreativeMoveTool::RemoteClientsUpdateSelectedActors_Implementation(const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, UObjectInteractionBehavior* CurrentObjectInteractionBehvaior)
 {
 	// Body not recovered: reflection-derived stub.
@@ -257,7 +283,10 @@ void AFortCreativeMoveTool::ServerDestroyActor_Implementation(AActor* ActorToDes
 
 void AFortCreativeMoveTool::ServerDuplicateStartInteracting_Implementation(const TArray<AActor*>& Actors, const FTransform& DragStart)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1406801c0 (thunk 0x1428c43a0)
+	// Offset evidence: asm is RET 0x0 only; no memory access, no call. Folded empty body shared at 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortCreativeMoveTool::ServerHandshakeFromClientForReceivingCutActors_Implementation()
@@ -287,27 +316,42 @@ void AFortCreativeMoveTool::ServerResetScale_Implementation()
 
 void AFortCreativeMoveTool::ServerSetAllowGravity_Implementation(bool bAllow)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x142681930 (thunk 0x1428c4950)
+	// Offset evidence: MOV byte ptr [RCX+0x1119],DL; RET. 0x1119 (4377) is the bool bitfield bAllowGravityOnPlace (bool_bits.json, mask 1, only declared bit in that byte). DL = bAllow.
+	// CONFIDENCE: HIGH
+	bAllowGravityOnPlace = bAllow;
 }
 
 void AFortCreativeMoveTool::ServerSetAlwaysMoveFreely_Implementation(bool bNewValue)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x142681940 (thunk 0x1428c4a10)
+	// Offset evidence: MOV byte ptr [RCX+0x118c],DL; RET. 0x118c (4492) is the bool bitfield bAlwaysMoveFreely (bool_bits.json, mask 1). DL = bNewValue.
+	// CONFIDENCE: HIGH
+	bAlwaysMoveFreely = bNewValue;
 }
 
 void AFortCreativeMoveTool::ServerSpawnActorWithTransform_Implementation(AActor* ActorToSpawn, const FTransform& TargetTransform, bool bAllowOverlap, bool bAllowGravity, bool bIgnoreStructuralIssues, bool bForPreviewing)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1406801c0 (thunk 0x1428c4ad0)
+	// Offset evidence: asm is RET 0x0 only; no memory access, no call. Folded empty body shared at 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortCreativeMoveTool::ServerSpawnSelectedActorsWithTransform_Implementation(bool bAllowOverlap, bool bAllowGravity, bool bIgnoreStructuralIssues, bool bForPreviewing)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1406801c0 (thunk 0x1428c4d60)
+	// Offset evidence: asm is RET 0x0 only; no memory access, no call. Folded empty body shared at 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortCreativeMoveTool::ServerStartInteracting_Implementation(const TArray<AActor*>& Actors, const FTransform& DragStart)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1406801c0 (thunk 0x1428c4f20)
+	// Offset evidence: asm is RET 0x0 only; no memory access, no call. Folded empty body shared at 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
 }
 
 void AFortCreativeMoveTool::ServerUpdateMirrored_Implementation(bool bMirrored)
@@ -327,7 +371,11 @@ void AFortCreativeMoveTool::ServerUpdateRotation_Implementation(const FQuat& Cli
 
 void AFortCreativeMoveTool::ServerUpdateRotationAxis_Implementation(uint8 AxisIndex)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1426819d0 (thunk 0x1428c53b0)
+	// Offset evidence: MOVZX R8D,byte [RCX+0xf78] is the low byte of RotationAxes.Num() (TArray at 0xf70, Num at +8). DEC R8B gives Num-1 as uint8; CMP DL,R8B + CMOVC keeps AxisIndex when AxisIndex < R8B, else R8B; byte stored to RotationAxisIndex (0xf80, reflected uint8).
+	// CONFIDENCE: HIGH
+	const uint8 LastAxisIndex = static_cast<uint8>(static_cast<uint8>(RotationAxes.Num()) - 1);
+	RotationAxisIndex = (AxisIndex < LastAxisIndex) ? AxisIndex : LastAxisIndex;
 }
 
 void AFortCreativeMoveTool::ServerUpdateScaleAxis_Implementation(const EScaleAxis& SelectedAxis)

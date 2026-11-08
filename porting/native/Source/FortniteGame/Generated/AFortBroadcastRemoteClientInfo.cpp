@@ -147,17 +147,26 @@ void AFortBroadcastRemoteClientInfo::OnServerRespawnTimeChanged(float InRespawnT
 
 void AFortBroadcastRemoteClientInfo::ServerSetPlayerBuildableClass_Implementation(TSubclassOf<ABuildingSMActor> BuildableClass)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1424bb4c0 (thunk 0x14284fa70, RPC implementation)
+	// Offset evidence: 8-byte store of BuildableClass (RDX) to this+0x288 = reflected RemoteBuildableClass.
+	// CONFIDENCE: HIGH
+	RemoteBuildableClass = BuildableClass;
 }
 
 void AFortBroadcastRemoteClientInfo::ServerSetPlayerBuildingMaterial_Implementation(EFortResourceType::Type Material)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1424bb4d0 (thunk 0x14284fb30, RPC implementation)
+	// Offset evidence: Byte store of Material (DL) to this+0x290 = reflected RemoteBuildingMaterial (TEnumAsByte).
+	// CONFIDENCE: HIGH
+	RemoteBuildingMaterial = Material;
 }
 
 void AFortBroadcastRemoteClientInfo::ServerSetPlayerCanDBNORevive_Implementation(bool bCanDBNORevive)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1424bb4e0 (thunk 0x14284fbe0, RPC implementation)
+	// Offset evidence: Byte store of bCanDBNORevive (DL) to this+0x293; bool_bits declares bRemoteCanDBNORevive at 0x293 mask 1, so the bit member is used.
+	// CONFIDENCE: HIGH
+	bRemoteCanDBNORevive = bCanDBNORevive;
 }
 
 void AFortBroadcastRemoteClientInfo::ServerSetPlayerEditTileData_Implementation(const TArray<int32>& EditTileData)
@@ -167,12 +176,18 @@ void AFortBroadcastRemoteClientInfo::ServerSetPlayerEditTileData_Implementation(
 
 void AFortBroadcastRemoteClientInfo::ServerSetPlayerEventScore_Implementation(int32 EventScore)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1424bb500 (thunk 0x14284fd60, RPC implementation)
+	// Offset evidence: int32 store of EventScore (EDX) to this+0x2e8 = reflected RemoteEventScore.
+	// CONFIDENCE: HIGH
+	RemoteEventScore = EventScore;
 }
 
 void AFortBroadcastRemoteClientInfo::ServerSetPlayerFullScreenMapActive_Implementation(bool bFullScreenMapActive)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1424bb510 (thunk 0x14284fe20, RPC implementation)
+	// Offset evidence: Byte store of bFullScreenMapActive (DL) to this+0x291; bool_bits declares bRemoteIsFullScreenMapActive at 0x291 mask 1.
+	// CONFIDENCE: HIGH
+	bRemoteIsFullScreenMapActive = bFullScreenMapActive;
 }
 
 void AFortBroadcastRemoteClientInfo::ServerSetPlayerHitMarkers_Implementation(const TArray<FVector2D>& RelativeScreenPositions)
@@ -182,12 +197,18 @@ void AFortBroadcastRemoteClientInfo::ServerSetPlayerHitMarkers_Implementation(co
 
 void AFortBroadcastRemoteClientInfo::ServerSetPlayerInteracting_Implementation(bool bInteracting)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1424bb540 (thunk 0x14284ffa0, RPC implementation)
+	// Offset evidence: Byte store of bInteracting (DL) to this+0x269; bool_bits declares bRemoteIsInteracting at 0x269 mask 1.
+	// CONFIDENCE: HIGH
+	bRemoteIsInteracting = bInteracting;
 }
 
 void AFortBroadcastRemoteClientInfo::ServerSetPlayerInventoryActive_Implementation(bool bInventorypActive)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original body address: 0x1424bb550 (thunk 0x142850060, RPC implementation)
+	// Offset evidence: Byte store of bInventorypActive (DL) to this+0x292; bool_bits declares bRemoteIsInventoryActive at 0x292 mask 1.
+	// CONFIDENCE: HIGH
+	bRemoteIsInventoryActive = bInventorypActive;
 }
 
 void AFortBroadcastRemoteClientInfo::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

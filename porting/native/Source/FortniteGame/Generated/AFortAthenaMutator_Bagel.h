@@ -29,6 +29,7 @@
 
 class AActor;
 class AFortAIPawn;
+class AFortPlayerControllerAthena;
 class AFortPlayerStart;
 class UFortAIEncounterInfo;
 class UFortDifficultyEncounterSettings;
@@ -282,6 +283,12 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerData)
 	FBagelPlayerDataArray PlayerDataArray;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x12b0): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0x12b0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x12b8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x12b8;
+
 	// table index 6, flags 0x20080100002034
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentPhase, Transient)
 	TEnumAsByte<EBagelPhase::Type> CurrentPhase;
@@ -305,6 +312,9 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FBagelLeaderboardQuery LocalPlayerFriendsLeaderboardQuery;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetPlayerScore(AFortPlayerControllerAthena* AthenaPC, int32& OutScore) const;
 
 protected:
 	UFUNCTION()

@@ -1,0 +1,170 @@
+[
+  {
+    "class": "UCommonActivatablePanel",
+    "function": "SetActionHandlerState",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Callee UCommonActivatablePanel::SetActionHandlerStateFromHandle (0x1407f3f90) is not declared in any generated header (whole-tree grep empty). Also the null-DataTable path (JZ 0x1407f3f7c is the CALL itself) skips MOVZX R8D,R9B and the stores, so RDX=0 and R8 carries the raw RowName; not expressible without asserting callee null handling."
+  },
+  {
+    "class": "UCommonButton",
+    "function": "SetIsInteractableWhenSelected",
+    "status": "blocked",
+    "case": "jump_target_outside_captured_asm",
+    "reason": "Captured insns end at RET (body offset 0x39); JZ 0x1407f7a1c and JZ 0x1407f7a20 target bytes beyond the captured body (native-cap-direct .asm has the same 16 lines). The decompile at porting/generated/native-cap-direct/0x1407f79e0.c shows calls beyond that point, so the control flow is incomplete."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "GetSlotLocationByIndex",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Out-of-range/null-slot fallback loads FVector constant from absolute globals (MOVSD XMM0,[0x1478c1890]; MOV EAX,[0x1478c1898]); not expressible exactly. Slots (0x238, Num at 0x240) and UAIHotSpotSlot::GetSlotLocation (declared) otherwise fit."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "GetSlotRotationByIndex",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Callee UAIHotSpotSlot::GetSlotRotation (0x14165f160) is not declared in any generated header (whole-tree grep empty). Fallback also reads absolute globals 0x1478c1880/0x1478c1888."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "OnMoveToSlotFinished",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slots 0x6f0 (AAIHotSpot::OccupySlotByIndex) and 0x6c8 (AAIHotSpot::RemoveFromHotspot) are not declared in any generated header (whole-tree grep empty). Asm otherwise fits: bResult from [RSP+0x28]; true tail-calls slot 0x6f0 with RDX=Index; false sets R8B=1 and tail-calls slot 0x6c8 with RDX=AI."
+  },
+  {
+    "class": "UAIHotSpotSlot",
+    "function": "ClearSlot",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slot 0x280 (UAIHotSpotSlot::SetSlotOwnerAndState) is not declared in any generated header (whole-tree grep empty). Asm: RDX=0 (null owner), R8B = bIsEnabled==0 ? 4 : 0 (NOT/AND 4 of flags>>5); R9 is the vtable, not an argument."
+  },
+  {
+    "class": "UAIHotSpotSlot",
+    "function": "SetSlotEnabled",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slot 0x298 (UAIHotSpotSlot::ClearSlot) is not declared in UAIHotSpotSlot.h (no ClearSlot in any generated header). bIsEnabled (0x70 mask 0x20) and the write-then-tail-call logic otherwise fit."
+  },
+  {
+    "class": "UAIHotSpotSlot",
+    "function": "SetSlotState",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slot 0x280 (UAIHotSpotSlot::SetSlotOwnerAndState) is not declared in any generated header (whole-tree grep empty). Owner (0x78, AAIController*) and NewState fit the asm (RDX=[this+0x78], R8=NewState)."
+  },
+  {
+    "class": "ABuildingActor",
+    "function": "GetHealthPercent",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slots 0x7b0 (ABuildingActor::GetMaxHealth) and 0x7a8 (ABuildingActor::GetHealth) are not declared in ABuildingActor.h (no GetHealth/GetMaxHealth declaration in any generated header for ABuildingActor). Also MINSS XMM0,[0x1459a86f8] reads an absolute-address constant."
+  },
+  {
+    "class": "ABuildingActor",
+    "function": "GetMissingHealth",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slots 0x7b0 (ABuildingActor::GetMaxHealth) and 0x7a8 (ABuildingActor::GetHealth) are not declared in ABuildingActor.h."
+  },
+  {
+    "class": "ABuildingActor",
+    "function": "HasHealthLeft",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slot 0x7a8 (ABuildingActor::GetHealth) is not declared in ABuildingActor.h."
+  },
+  {
+    "class": "ABuildingActor",
+    "function": "IsDamaged",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slots 0x7b0 (ABuildingActor::GetMaxHealth) and 0x7a8 (ABuildingActor::GetHealth) are not declared in ABuildingActor.h. Also ANDPS with [0x1459a3d00] and COMISS with [0x1459c03ac] read absolute-address constants."
+  },
+  {
+    "class": "ABuildingActor",
+    "function": "SetTeam",
+    "status": "proposed",
+    "case": "translated_leaf",
+    "reason": "Role==ROLE_Authority gate (GetLocalRole); writes TeamIndex then Team from InTeam. All 5 instructions accounted for."
+  },
+  {
+    "class": "ABuildingGameplayActor",
+    "function": "GetTargetingSourceTransform",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "LEA RAX,[0x1482184f0] loads a hidden global default FTransform (copied with MOVAPS) when [this+0x130] is null; the non-null path reads a pointee at +0x1c0 of unknown class. Not expressible exactly."
+  },
+  {
+    "class": "ABuildingGameplayActorConsumable",
+    "function": "GetDeathFXTransform",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Same body 0x141bdd320 as GetTargetingSourceTransform: LEA RAX,[0x1482184f0] hidden global default FTransform on the null path; pointee at +0x1c0 of unknown class."
+  },
+  {
+    "class": "ABuildingProp_AISpawner",
+    "function": "MinigameEnded",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slot 0xec8 (ABuildingProp_AISpawner::DestroyRift) is not declared in ABuildingProp_AISpawner.h (only SpawnRift is declared; whole-tree grep empty)."
+  },
+  {
+    "class": "ABuildingProp_DestructionObject",
+    "function": "OnBuildingAttributeSetHealthChanged",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slot 0x7a8 (ABuildingActor::GetHealth) is not declared in ABuildingActor.h. Delegate member OnBuildingAttributeSetHealthChangedDelegate (0xb98) and the packed {this, float} for broadcast 0x1406a9dc0 otherwise fit; signature of FOnBuildingAttributeSetHealthChangedSignature not checked."
+  },
+  {
+    "class": "ABuildingTrap",
+    "function": "OnBlockingBuildingDied",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slot 0xf50 (ABuildingTrap::TriggerIfAppropriate) is not declared in any generated header (whole-tree grep empty)."
+  },
+  {
+    "class": "ABuildingTrap",
+    "function": "OnTriggerTouch",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Virtual slot 0xf50 (ABuildingTrap::TriggerIfAppropriate) is not declared in any generated header (whole-tree grep empty)."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "IsBuildingActorValid",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Inlined object-index lookup reads GUObjectArray through absolute globals [0x148263a18] and [0x148263a2c]; no known helper applies, so not expressible exactly."
+  },
+  {
+    "class": "ABuildingTimeOfDayLights",
+    "function": "GetTimeOfDayBlueprintDefaultVariables",
+    "status": "proposed",
+    "case": "empty_body_ret",
+    "reason": "Body is a bare RET 0x0 (no stores, no calls); empty body."
+  },
+  {
+    "class": "ADeployableBaseCore",
+    "function": "GetSimpleDeathFXTransform",
+    "status": "blocked",
+    "case": "hidden_global_absolute_address",
+    "reason": "Same body 0x141bdd320: LEA RAX,[0x1482184f0] hidden global default FTransform on the null path; pointee at +0x1c0 of unknown class."
+  },
+  {
+    "class": "UFortAIFunctionLibrary",
+    "function": "MakeNoiseEvent",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Callee UFortAIFunctionLibrary::MakeNoiseEventAtLocation (0x1416a1b60) is not declared in any generated header (whole-tree grep empty). Null-location fallback also reads absolute globals 0x148218630 and 0x148218638."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "TriggerNoWeaponSpeech",
+    "status": "blocked",
+    "case": "callee_not_declared",
+    "reason": "Callee AFortPawn::TriggerFeedbackEvent (0x142356fc0) is not declared in any generated header (whole-tree grep empty). Also MOVSS XMM0,[0x1459a979c] reads an absolute-address constant and an inlined class-check walks unresolved pointees."
+  }
+]

@@ -135,6 +135,16 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void ClearAdditionalViewpoint();
 
+protected:
+	UFUNCTION()
+	void OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAthenaAircraft);
+public:
+
+protected:
+	UFUNCTION()
+	void OnAircraftExitedDropZone(AFortAthenaAircraft* FortAthenaAircraft);
+public:
+
 	UFUNCTION()
 	void OnRep_AdditionalViewpoint();
 

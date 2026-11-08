@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "ABuildingAutoNav.h"
 
+#include "FTimeOfDayBlueprintDefaultVariables.h"
 #include "Math/Vector.h"
 
 class ULightComponent;
@@ -33,6 +34,12 @@ public:
 	// table index 0, flags 0x20080000000015
 	UPROPERTY()
 	TArray<float> TimeOfDayControlledLightsInitalIntensities;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void GetTimeOfDayBlueprintDefaultVariables(FTimeOfDayBlueprintDefaultVariables& OutVariables);
+	virtual void GetTimeOfDayBlueprintDefaultVariables_Implementation(FTimeOfDayBlueprintDefaultVariables& OutVariables);
+public:
 
 };
 

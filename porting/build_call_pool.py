@@ -170,6 +170,62 @@ for e in f2:
                      insns=L, receiver_delta=ri['delta'], this_delta_total=ri['delta'] + wd,
                      params=[(p['name'], p['kind']) for p in d.get('params') or []], header=hdr.get(e['cls']), callee_candidates=cal))
     st['pool'] += 1
+
+
+# dependency filter: a callee must be declared in its class header, already ported, or itself in the pool (declared by the same promotion).
+_hdr_txt = {}
+
+
+def declared(c, f):
+    if (c, f) in done:
+        return True
+    if c not in _hdr_txt:
+        pth = hdr.get(c)
+        _hdr_txt[c] = open(pth).read() if pth else ''
+    return re.search(r'\b%s\s*\(' % re.escape(f), _hdr_txt[c]) is not None
+
+
+changed = True
+while changed:
+    changed = False
+    inpool = {(j['cls'], j['fn']) for j in pool}
+    keep = []
+    for j in pool:
+        bad = False
+        for cands in j['callee_candidates'].values():
+            for cd in cands:
+                if 'fn' in cd:
+                    c, _, f = cd['fn'].partition('::')
+                    if not (declared(c, f) or (c, f) in inpool):
+                        bad = True
+        if bad:
+            st['skip_callee_not_declared_or_pooled'] += 1
+            st['pool'] -= 1
+            changed = True
+        else:
+            keep.append(j)
+    pool = keep
+# keep dependent jobs adjacent so a batch contains a callee together with its callers
+comp = {}
+for j in pool:
+    comp[(j['cls'], j['fn'])] = (j['cls'], j['fn'])
+
+
+def find(x):
+    while comp[x] != x:
+        comp[x] = comp[comp[x]]
+        x = comp[x]
+    return x
+
+
+for j in pool:
+    for cands in j['callee_candidates'].values():
+        for cd in cands:
+            if 'fn' in cd:
+                c, _, f = cd['fn'].partition('::')
+                if (c, f) in comp:
+                    comp[find((j['cls'], j['fn']))] = find((c, f))
+pool.sort(key=lambda j: find((j['cls'], j['fn'])))
 os.makedirs(f'{R}/small-pool', exist_ok=True)
 json.dump(pool, open(f'{R}/small-pool/pool_resolved.json', 'w'))
 print(dict(st))

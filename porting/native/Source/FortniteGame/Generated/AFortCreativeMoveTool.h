@@ -46,6 +46,7 @@
 class AActor;
 class AFortPlayerControllerAthena;
 class UDeleteObjects;
+class UFortCreativeOption;
 class UFortItemDefinition;
 class UFortObjectMoverInputComponent;
 class UFortPlaysetItemDefinition;
@@ -502,6 +503,11 @@ public:
 protected:
 	UFUNCTION()
 	void OnRep_SelectionProperty();
+public:
+
+protected:
+	UFUNCTION()
+	void OnWantedHitTraceRule(UFortCreativeOption* CreativeOption, uint8 Index);
 public:
 
 	UFUNCTION(NetMulticast, Reliable)
