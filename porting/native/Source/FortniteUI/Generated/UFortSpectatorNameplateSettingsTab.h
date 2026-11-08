@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortReplayViewSettingsTabBase.h"
 
+#include "Blueprint/UserWidget.h"
 #include "UCommonUserWidget.h"
+#include "UObject/Object.h"
 
 #include "UFortSpectatorNameplateSettingsTab.generated.h"
 
@@ -20,5 +22,9 @@ public:
 	UPROPERTY()
 	UCommonUserWidget* Rotator_NameplatesEnabled;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeGetSpectatorClientSettingsRecord144fcf460(UUserWidget* SettingsTab);
 };
 

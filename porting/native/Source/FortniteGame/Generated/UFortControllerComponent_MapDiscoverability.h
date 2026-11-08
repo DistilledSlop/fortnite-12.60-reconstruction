@@ -7,6 +7,8 @@
 #include "UFortControllerComponent_HasCoupledWidgets.h"
 
 #include "AttributeSet.h"
+#include "Containers/Set.h"
+#include "CoreMinimal.h"
 #include "FPoiDiscoverabilityDataArray.h"
 
 class UMaterialInstanceDynamic;
@@ -55,5 +57,9 @@ public:
 	UMaterialInstanceDynamic* StencilMID;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeResetSet14072a990(void* SetStorage);
 };
 

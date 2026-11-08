@@ -1,0 +1,50 @@
+[
+  {
+    "addr": "0x144471420",
+    "status": "blocked",
+    "case": "sret_struct_unidentified",
+    "reason": "32-byte zero-filled sret (0x1483274c0/0x1483274d0 snapshots are 0); caller 0x141bfbc10 passes it to 0x1444889d0 by channel index, no engine struct of this size matched"
+  },
+  {
+    "addr": "0x142ce3730",
+    "status": "blocked",
+    "case": "writable_global_mutable",
+    "reason": "reads live writable global 0x14824b3c8 (count used as bound); not a constant"
+  },
+  {
+    "addr": "0x142bac5c0",
+    "status": "blocked",
+    "case": "other_module_class",
+    "reason": "callee 0x142bcf780 hinted as UMeshNetworkSubsystem::GetMetaDataWithKey (MeshNetwork module class, forbidden in bodies)"
+  },
+  {
+    "addr": "0x1406d8fe0",
+    "status": "blocked",
+    "case": "ambiguous_params",
+    "reason": "R8D selects memmove(this,Data,EDX*4) vs Realloc(Data,R8D*R9) paths; param roles unresolved and no caller asm located"
+  },
+  {
+    "addr": "0x142ee6220",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "IAT AcquireSRWLockShared/ReleaseSRWLockShared (0x1458fca90/0x1458fca88) have no hint; also mutable writable state 0x147c4ed58"
+  },
+  {
+    "addr": "0x143e88f50",
+    "status": "blocked",
+    "case": "callee_hint_mismatch",
+    "reason": "callee 0x140683960 hinted as UFortPlayerSurveyBlueprintLibrary::GetFreeFormTextAnswer (3 params) but called with 2 arguments"
+  },
+  {
+    "addr": "0x1445ed570",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "ported as static helper; see entries.json"
+  },
+  {
+    "addr": "0x141e12980",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "ported as static helper; see entries.json"
+  }
+]

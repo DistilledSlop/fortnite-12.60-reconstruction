@@ -1,0 +1,36 @@
+[
+  {
+    "class": "UFortGameplayCueFunctionLibrary",
+    "function": "NativeParseKeywordFloat142caa6e0",
+    "kind": "helper",
+    "signature": "bool NativeParseKeywordFloat142caa6e0(const uint16* Haystack, const uint16* Keyword, float* OutValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hs4_runtime/UFortGameplayCueFunctionLibrary/NativeParseKeywordFloat142caa6e0.inc",
+    "address": "0x142caa6e0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/UnrealString.h"
+    ],
+    "notes": "Finds Keyword (ASCII case-insensitive, not preceded by alnum) and parses number after it via FCString::Atod for _wtof."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeFindWideChar145809329",
+    "kind": "helper",
+    "signature": "const TCHAR* NativeFindWideChar145809329(const TCHAR* Start, TCHAR Find)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hs4_runtime/UFortKismetLibrary/NativeFindWideChar145809329.inc",
+    "address": "0x145809329",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Containers/UnrealString.h"
+    ],
+    "notes": "Thunk JMP [0x1458fd598] = VCRUNTIME140 wcschr (import_calls); mapped to FCString::Strchr."
+  }
+]

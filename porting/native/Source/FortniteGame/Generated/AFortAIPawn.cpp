@@ -14,6 +14,7 @@
 #include "UFortSimpleMiniMapIndicator.h"
 #include "UFortWorldItem.h"
 #include "UFortWorldItemDefinition.h"
+#include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortAIPawn::FastSharedReplication_Implementation(const FFortAISharedRepMovement& SharedRepMovement)
@@ -540,6 +541,14 @@ int32 AFortAIPawn::NativeFNameNumberSuffix142cd4630(const uint16* Text, int32* I
 	}
 	*InOutLength = TotalLen - NumDigits - 1;
 	return static_cast<int32>(ParsedValue + 1);
+}
+
+float AFortAIPawn::NativeGetDifficultyLevel141e9b630(UObject* Context)
+{
+	// helper 0x141e9b630 (host AFortAIPawn): MOVSS XMM0,[RCX+0xcc4]; RET
+	// evidence: single float load from Context+0xcc4 returned in XMM0; lookup_offset.py AFortAIPawn 0xcc4 finds no reflected member, so raw read
+	// CONFIDENCE: HIGH
+	return *reinterpret_cast<const float*>(reinterpret_cast<const uint8*>(Context) + 0xcc4);
 }
 
 void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

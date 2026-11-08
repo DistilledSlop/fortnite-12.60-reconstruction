@@ -33,5 +33,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static int32* NativeFindSetElementId140708be0(uint8* Set, int32* OutElementId, uint64 Key);
+	static bool NativeAreSpawnBlockFlagsClear1445ed570(AFortAthenaVehicleSpawner* Spawner);
 };
 

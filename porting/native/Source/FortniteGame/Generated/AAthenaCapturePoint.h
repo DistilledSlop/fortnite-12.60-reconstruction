@@ -7,10 +7,12 @@
 #include "ABuildingGameplayActor.h"
 
 #include "AttributeSet.h"
+#include "CoreMinimal.h"
 #include "ECapturePointState.h"
 #include "ECapturePointUnlockRules.h"
 #include "EContentionRuleType.h"
 #include "EFortTeam.h"
+#include "Engine/World.h"
 #include "FOnCaptureLock.h"
 #include "FOnCaptureLockBroken.h"
 #include "FOnCaptureStateChanged.h"
@@ -296,5 +298,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual uint8 NativeGetTeam163();
+	static void NativeSetTeamControllingPoint1418d31e0(AAthenaCapturePoint* CapturePoint, uint8 NewTeamIndex);
 };
 

@@ -89540,5 +89540,327 @@
     "status": "ported",
     "recovery_source": "small_leaf_batch",
     "notes": "Unreflected int32 gap in AFortPlayerPawn; stored 0 by OnRep emote-leader body."
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "NativeGetDifficultyLevel141e9b630",
+    "kind": "helper",
+    "signature": "float NativeGetDifficultyLevel141e9b630(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs1_runtime/AFortAIPawn/NativeGetDifficultyLevel141e9b630.inc",
+    "address": "0x141e9b630",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns float at Context+0xcc4 (raw, no reflected member). Callers: GetDifficultyLevel and difficulty event handlers."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeGetGameStateWorldLevel141f881f0",
+    "kind": "helper",
+    "signature": "int32 NativeGetGameStateWorldLevel141f881f0(UObject* Context)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs1_runtime/UFortKismetLibrary/NativeGetGameStateWorldLevel141f881f0.inc",
+    "address": "0x141f881f0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h",
+      "Engine/World.h",
+      "GameFramework/GameStateBase.h"
+    ],
+    "notes": "World->GameState cast to AFortGameState, returns WorldLevel (+0x2f4); 0 if any step fails. Vtbl 0x150 assumed GetWorld."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeFindSubstringNoCase142bb47d0",
+    "kind": "helper",
+    "signature": "const uint16* NativeFindSubstringNoCase142bb47d0(const uint16* Haystack, const uint16* Needle)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs3_runtime/AFortPlayerPawn/NativeFindSubstringNoCase142bb47d0.inc",
+    "address": "0x142bb47d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Case-insensitive ASCII wide substring search; returns match start or nullptr. Uses UFortGlobals NoCase compare helper."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeIncrementCounter142ee77f0",
+    "kind": "helper",
+    "signature": "void NativeIncrementCounter142ee77f0(UObject* Target)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs3_runtime/AFortPlayerPawn/NativeIncrementCounter142ee77f0.inc",
+    "address": "0x142ee77f0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Increments int32 at Target+0xc (raw access; owning class at that offset not justified from callers)."
+  },
+  {
+    "class": "UFortGameplayCueFunctionLibrary",
+    "function": "NativeParseKeywordFloat142caa6e0",
+    "kind": "helper",
+    "signature": "bool NativeParseKeywordFloat142caa6e0(const uint16* Haystack, const uint16* Keyword, float* OutValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs4_runtime/UFortGameplayCueFunctionLibrary/NativeParseKeywordFloat142caa6e0.inc",
+    "address": "0x142caa6e0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/UnrealString.h"
+    ],
+    "notes": "Finds Keyword (ASCII case-insensitive, not preceded by alnum) and parses number after it via FCString::Atod for _wtof."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeFindWideChar145809329",
+    "kind": "helper",
+    "signature": "const TCHAR* NativeFindWideChar145809329(const TCHAR* Start, TCHAR Find)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs4_runtime/UFortKismetLibrary/NativeFindWideChar145809329.inc",
+    "address": "0x145809329",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Containers/UnrealString.h"
+    ],
+    "notes": "Thunk JMP [0x1458fd598] = VCRUNTIME140 wcschr (import_calls); mapped to FCString::Strchr."
+  },
+  {
+    "class": "AFortAthenaVehicleSpawner",
+    "function": "NativeAreSpawnBlockFlagsClear1445ed570",
+    "kind": "helper",
+    "signature": "bool NativeAreSpawnBlockFlagsClear1445ed570(AFortAthenaVehicleSpawner* Spawner)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs5_runtime/AFortAthenaVehicleSpawner/NativeAreSpawnBlockFlagsClear1445ed570.inc",
+    "address": "0x1445ed570",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns true when byte flags +0x11 and +0x12 are both zero; raw byte reads, no reflected member."
+  },
+  {
+    "class": "UFortGlobals",
+    "function": "NativeFindWideSubstringNoCase141e12980",
+    "kind": "helper",
+    "signature": "const uint16* NativeFindWideSubstringNoCase141e12980(const uint16* SearchChars, const uint16* PatternChars)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs5_runtime/UFortGlobals/NativeFindWideSubstringNoCase141e12980.inc",
+    "address": "0x141e12980",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Case-insensitive wide substring search; tail compare via NativeCompareWideStringsNoCase142bcf940."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeDecrementCounter142ee43c0",
+    "kind": "helper",
+    "signature": "int32 NativeDecrementCounter142ee43c0(uint8* Self)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs6_runtime/AFortPlayerPawn/NativeDecrementCounter142ee43c0.inc",
+    "address": "0x142ee43c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Decrements int32 at +0x0C and returns the new value; caller asm not located."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeShrinkArray1414710e0",
+    "kind": "helper",
+    "signature": "void NativeShrinkArray1414710e0(uint8* Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs6_runtime/UFortKismetLibrary/NativeShrinkArray1414710e0.inc",
+    "address": "0x1414710e0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray shrink/slack policy for 0x48-byte elements (Data@0 Num@8 Max@12) via FMemory QuantizeSize/Realloc."
+  },
+  {
+    "class": "AFortGameStateZone",
+    "function": "NativeClientUpdateRichPresence1423c0800",
+    "kind": "helper",
+    "signature": "void NativeClientUpdateRichPresence1423c0800(AFortPlayerController* RichPresenceController, uint8 PresenceChange, bool bPresenceImportant)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot2_runtime/AFortGameStateZone/NativeClientUpdateRichPresence1423c0800.inc",
+    "address": "0x1423c0800",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h"
+    ],
+    "notes": "Wrapper JMP 0x142810956 = real body of AFortPlayerController::ClientUpdateRichPresence (thunk-table chain 0x142374290 -> 0x1423c0800). RDX=enum byte, R8B=bool."
+  },
+  {
+    "class": "UFortCreativePublishModal",
+    "function": "NativeClipboardCopy142f24280",
+    "kind": "helper",
+    "signature": "void NativeClipboardCopy142f24280(const TCHAR* TextToCopy)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot2_runtime/UFortCreativePublishModal/NativeClipboardCopy142f24280.inc",
+    "address": "0x142f24280",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h",
+      "HAL/PlatformApplicationMisc.h"
+    ],
+    "notes": "Inlined FWindowsPlatformApplicationMisc::ClipboardCopy: IAT GetActiveWindow/OpenClipboard/EmptyClipboard/GlobalAlloc/GlobalLock/GlobalUnlock/SetClipboardData(13)/CloseClipboard; error log elided."
+  },
+  {
+    "class": "UCommonPopupMenu",
+    "function": "NativeCloseMenuAnchor143d4bfc0",
+    "kind": "helper",
+    "signature": "void NativeCloseMenuAnchor143d4bfc0(UMenuAnchor* AnchorToClose)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot2_runtime/UCommonPopupMenu/NativeCloseMenuAnchor143d4bfc0.inc",
+    "address": "0x143d4bfc0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/MenuAnchor.h"
+    ],
+    "notes": "Receiver is UMenuAnchor (caller 0x1407f1730 passes weak OwningMenuAnchor @+0x414). [+0x150]=MyMenuAnchor; vcall(0,0,0)=SetIsOpen(false,false) = UMenuAnchor::Close."
+  },
+  {
+    "class": "AAthenaCapturePoint",
+    "function": "NativeSetTeamControllingPoint1418d31e0",
+    "kind": "helper",
+    "signature": "void NativeSetTeamControllingPoint1418d31e0(AAthenaCapturePoint* CapturePoint, uint8 NewTeamIndex)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot2_runtime/AAthenaCapturePoint/NativeSetTeamControllingPoint1418d31e0.inc",
+    "address": "0x1418d31e0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h",
+      "Engine/World.h"
+    ],
+    "notes": "Sets TeamControllingPoint(+0xab9); vtbl[0x150]=AActor::GetWorld, World+0x130=GameState, vtbl[0x880]=AFortGameState Teams(+0x470), [Team+0x218] vcall slot 0x28=NativeGetTeam163."
+  },
+  {
+    "class": "AFortAthenaAIBotController",
+    "function": "NativeEquipItemOnBotPawn141692dd0",
+    "kind": "helper",
+    "signature": "AFortWeapon* NativeEquipItemOnBotPawn141692dd0(AFortAthenaAIBotController* BotController, UFortWorldItem* ItemToEquip)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot2_runtime/AFortAthenaAIBotController/NativeEquipItemOnBotPawn141692dd0.inc",
+    "address": "0x141692dd0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "CoreMinimal.h"
+    ],
+    "notes": "Item vtbl[0x3e8]=GetItemDefinitionBP (0x14205a2f0), vtbl[0x468]=GetItemGuid; 0x1423150b0=AFortPawn::EquipWeaponDefinition(WeaponData, Guid) on PlayerBotPawn(+0x400); +0x908 raw byte defers into Pendin"
+  },
+  {
+    "class": "UFortSpectatorNameplateSettingsTab",
+    "function": "NativeGetSpectatorClientSettingsRecord144fcf460",
+    "kind": "helper",
+    "signature": "UObject* NativeGetSpectatorClientSettingsRecord144fcf460(UUserWidget* SettingsTab)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot2_runtime/UFortSpectatorNameplateSettingsTab/NativeGetSpectatorClientSettingsRecord144fcf460.inc",
+    "address": "0x144fcf460",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Blueprint/UserWidget.h",
+      "UObject/Object.h"
+    ],
+    "notes": "vtbl[0x288] shared target 0x143d5e160 = weak-pointer getter on [widget+0x218] (IsValid 0x142ee7880 + Get 0x142ee5dd0), cast to AFortPlayerControllerSpectating, then ported settings-record helper."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeGetPlayerName1444ac7a0",
+    "kind": "helper",
+    "signature": "FString* NativeGetPlayerName1444ac7a0(APlayerState* PlayerStateObject, FString* OutName)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot2_runtime/AFortPlayerControllerAthena/NativeGetPlayerName1444ac7a0.inc",
+    "address": "0x1444ac7a0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "GameFramework/PlayerState.h",
+      "Containers/UnrealString.h"
+    ],
+    "notes": "Is APlayerState::GetPlayerName() const: [+0x222] bit7 = bUseCustomPlayerNames, vtbl[0x680]=GetPlayerNameCustom, else copy PlayerNamePrivate(+0x2f8). RCX=this, RDX=sret FString, returns sret."
+  },
+  {
+    "class": "UFortControllerComponent_MapDiscoverability",
+    "function": "NativeResetSet14072a990",
+    "kind": "helper",
+    "signature": "void NativeResetSet14072a990(void* SetStorage)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot2_runtime/UFortControllerComponent_MapDiscoverability/NativeResetSet14072a990.inc",
+    "address": "0x14072a990",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Set.h",
+      "CoreMinimal.h"
+    ],
+    "notes": "Is TSet<T>::Reset() with default allocators: [+8] Data.Num vs [+0x34] NumFreeIndices early-out, clears alloc bits, FirstFree=-1, memset hash to 0xff; no element destructor calls."
+  },
+  {
+    "class": "UFortBlueprintAnalytics",
+    "function": "NativeAppendChars142ba9300",
+    "kind": "helper",
+    "signature": "void NativeAppendChars142ba9300(FString* TargetString, const TCHAR* Chars, int32 CharCount)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/pilot2_runtime/UFortBlueprintAnalytics/NativeAppendChars142ba9300.inc",
+    "address": "0x142ba9300",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Containers/UnrealString.h"
+    ],
+    "notes": "Is FString::AppendChars(const WIDECHAR*, int32): Count==0 returns; Num += (Num==0)+Count; grow; memcpy Count TCHARs; write terminator."
   }
 ]

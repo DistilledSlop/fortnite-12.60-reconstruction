@@ -7,6 +7,7 @@
 #include "AFortPlayerControllerZone.h"
 
 #include "AttributeSet.h"
+#include "Containers/UnrealString.h"
 #include "Delegates/Delegate.h"
 #include "EDeathCause.h"
 #include "EEndOfMatchReason.h"
@@ -60,6 +61,7 @@
 #include "FQuickBarData.h"
 #include "FTimeStampedPhysicsPawnState.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "GameFramework/PlayerState.h"
 #include "GameplayTagContainer.h"
 #include "HAL/UnrealMemory.h"
 #include "Math/Color.h"
@@ -1428,5 +1430,6 @@ public:
 	virtual UFortQuestManager* NativeGetQuestManager1423850c0(uint8 Mode);
 	static void NativeHashTableFindIndex1407bda90(void* Table, int32& OutIndex, uint64 Key);
 	static void NativeSetControllerFlagBit0141a5b620(UObject* Context, uint8 Value);
+	static FString* NativeGetPlayerName1444ac7a0(APlayerState* PlayerStateObject, FString* OutName);
 };
 

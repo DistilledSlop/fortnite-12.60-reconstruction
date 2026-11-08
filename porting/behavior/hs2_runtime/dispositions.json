@@ -1,0 +1,50 @@
+[
+  {
+    "addr": "0x140729a70",
+    "status": "blocked",
+    "case": "unresolved_semantics",
+    "reason": "sparse-array free-list update loop (stride 0x20, fields +0x20/+0x30/+0x34) not mapped to a container type"
+  },
+  {
+    "addr": "0x142c0a490",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "sort comparator virtual calls [RAX+0x8] and [RDX+0x8] have no hints"
+  },
+  {
+    "addr": "0x140822cb0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "hint for 0x140690920 is reflected AFortPlayerControllerSpectating::GetAddedPlayersMap (Map/Struct params), which does not fit the call site"
+  },
+  {
+    "addr": "0x142bae6f0",
+    "status": "blocked",
+    "case": "unresolved_semantics",
+    "reason": "separator-normalization branches around join points 0x142bae77d/0x142bae7c6 not uniquely resolved from the insns"
+  },
+  {
+    "addr": "0x140799740",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "virtual calls [RAX] and [RAX+0x8] on refcount controller at +0x28 have no hints"
+  },
+  {
+    "addr": "0x142bfedf0",
+    "status": "blocked",
+    "case": "writable_global",
+    "reason": "GMalloc pointer global 0x14823d250 read by absolute address; virtual [RAX+0x38]/[RAX+0x20] calls unhinted"
+  },
+  {
+    "addr": "0x142c0a030",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "allocator 0x141384ca0 hint lists unrelated reflected functions; constructor vtable stores 0x1465caf90/0x1465c7760 are not ported types"
+  },
+  {
+    "addr": "0x142cbc9e0",
+    "status": "blocked",
+    "case": "writable_global",
+    "reason": "returns address of global 0x147c398b0 (non-constant global, address-of)"
+  }
+]

@@ -7,6 +7,8 @@
 #include "UFortActivatablePanel.h"
 
 #include "AFortVolume.h"
+#include "CoreMinimal.h"
+#include "HAL/PlatformApplicationMisc.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 #include "UCommonWidgetSwitcher.h"
@@ -115,5 +117,9 @@ public:
 	UPROPERTY()
 	AFortVolume* VolumeToPublish;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeClipboardCopy142f24280(const TCHAR* TextToCopy);
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortGameState_InGame.h"
 
+#include "CoreMinimal.h"
 #include "Delegates/Delegate.h"
 #include "EFortAIDirectorEvent.h"
 #include "EFortCompletionResult.h"
@@ -36,6 +37,7 @@ class AFortCreativePortalManager;
 class AFortCreativeRealEstatePlotManager;
 class AFortGlobalEnvironmentAbilityActor;
 class AFortInGameMapManager;
+class AFortPlayerController;
 class AFortPlayerState;
 class AFortThreatParticleActor;
 class AFortThreatVisualsManager;
@@ -538,5 +540,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	void NativeGetLoadAnalyticsValues(int32& NumberPlayers, float& Difficulty, FString& ZoneName, FString& MissionName) const;
 	virtual bool NativeAreFriendlyActors163(AActor* Requester, AActor* Candidate);
+	static void NativeClientUpdateRichPresence1423c0800(AFortPlayerController* RichPresenceController, uint8 PresenceChange, bool bPresenceImportant);
 };
 

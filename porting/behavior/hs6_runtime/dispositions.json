@@ -1,0 +1,50 @@
+[
+  {
+    "addr": "0x142d30460",
+    "status": "blocked",
+    "case": "callee_ambiguous",
+    "reason": "callee 0x142ce9f90 has 3 conflicting hints (ApplyWrapToSaveTheWorldHoverboard, UMeshNetworkSubsystem Get/SetMetaDataWithKey); none fits the 2-arg call"
+  },
+  {
+    "addr": "0x140f50610",
+    "status": "blocked",
+    "case": "layout_unverified",
+    "reason": "TSet<int32> remove with inline hash table; offsets +0x30/+0x34/+0x40/+0x48 are not backed by any reflected or ported type"
+  },
+  {
+    "addr": "0x142ee43c0",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "ported as static helper; see entries.json"
+  },
+  {
+    "addr": "0x142ee3ad0",
+    "status": "blocked",
+    "case": "callee_hint_mismatch",
+    "reason": "callee 0x140695b20 hinted as UFortniteAutomationBlueprintLibrary::FindDerivedBlueprintClasses (5 params) but called with 1 argument"
+  },
+  {
+    "addr": "0x142d39800",
+    "status": "blocked",
+    "case": "indirect_tail_jump",
+    "reason": "tail-jump JMP [R9+0x1e8] through a virtual slot; target not nameable"
+  },
+  {
+    "addr": "0x142d34930",
+    "status": "blocked",
+    "case": "indirect_tail_jump",
+    "reason": "tail-jump JMP [R9+0x1f0] through a virtual slot; target not nameable"
+  },
+  {
+    "addr": "0x1414710e0",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "ported as static helper; see entries.json"
+  },
+  {
+    "addr": "0x142d1a620",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "IAT EnterCriticalSection (0x1458fc9f8) and LeaveCriticalSection (0x1458fca00) have no hint"
+  }
+]

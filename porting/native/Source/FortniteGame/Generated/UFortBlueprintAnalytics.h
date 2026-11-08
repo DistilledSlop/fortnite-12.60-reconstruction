@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "Containers/UnrealString.h"
 #include "EEnvironmentalItemEndReason.h"
 #include "EIDScannerResult.h"
 #include "HAL/UnrealMemory.h"
@@ -32,5 +33,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static void NativeArrayGrowSlack3214069e9b0(void* Array);
+	static void NativeAppendChars142ba9300(FString* TargetString, const TCHAR* Chars, int32 CharCount);
 };
 

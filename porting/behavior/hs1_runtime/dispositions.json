@@ -1,0 +1,50 @@
+[
+  {
+    "addr": "0x141e9b630",
+    "status": "proposed",
+    "case": "simple_field_read",
+    "reason": "single float load at +0xcc4 and RET"
+  },
+  {
+    "addr": "0x141f881f0",
+    "status": "proposed",
+    "case": "world_gamestate_cast_read",
+    "reason": "vtbl GetWorld, UWorld+0x130 GameState, IsA AFortGameState, int32 +0x2f4 (lookup confirms WorldLevel)"
+  },
+  {
+    "addr": "0x1420a1cb0",
+    "status": "blocked",
+    "case": "unresolved_semantics",
+    "reason": "byte compare/compaction loop (CMP [RCX+RBX],DL; memmove 0x1458092f3 hinted) with stride and index pairing (R13/R14/ESI) not pinned to one container type from the insns"
+  },
+  {
+    "addr": "0x1440f4040",
+    "status": "blocked",
+    "case": "unresolved_semantics",
+    "reason": "value-dependent tail: AddUnique 0x14085a990 called on stack copy [RSP+0x48] whose origin and the R14B flag meaning are not established; removal loop memcpy/shrink hints only"
+  },
+  {
+    "addr": "0x143d43c00",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "virtual calls [RAX+0x2d8] on this and [RAX+0x240] on [RSI+0x208] have no hint"
+  },
+  {
+    "addr": "0x142cebd80",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "import 0x1458fc5f0 KERNEL32!GetComputerNameW has no hint; also writable cache global 0x14825f050 (mutable state)"
+  },
+  {
+    "addr": "0x142bcf840",
+    "status": "blocked",
+    "case": "data_const_missing",
+    "reason": "byte table at 0x1465b3720 indexed per character; job has no data_consts value for it"
+  },
+  {
+    "addr": "0x142ca0410",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "import 0x1458fe040 api-ms-win-crt-string-l1-1-0.dll!iswspace has no hint and is not a memory thunk"
+  }
+]

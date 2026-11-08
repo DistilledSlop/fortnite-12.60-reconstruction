@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x142badc00",
+  "status": "blocked",
+  "case": "writable_global",
+  "reason": "LEA RAX,[0x1481cc410] returns the address of a writable .data global; no data_consts snapshot supplied and it is not a known engine constant"
+ },
+ {
+  "addr": "0x140725110",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee 0x140690920 hint is AFortPlayerControllerSpectating::GetAddedPlayersMap (Map accessor); no verified sparse-array reserve semantics for the TSet rehash"
+ },
+ {
+  "addr": "0x140724e90",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee 0x140690920 hint is AFortPlayerControllerSpectating::GetAddedPlayersMap (Map accessor); TSet rehash with hash mixing has unverified reserve semantics"
+ },
+ {
+  "addr": "0x142d50a30",
+  "status": "blocked",
+  "case": "writable_global",
+  "reason": "MOV RBX,qword ptr [0x148260b30] loads a writable .data global as mutable state; also virtual call [R10+0x20] on that object"
+ },
+ {
+  "addr": "0x142bac4e0",
+  "status": "blocked",
+  "case": "forbidden_class",
+  "reason": "callee 0x142bcf780 is UMeshNetworkSubsystem::GetMetaDataWithKey, a forbidden other-module class in bodies"
+ },
+ {
+  "addr": "0x1406f0010",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "indirect virtual calls CALL [RAX+0x40] / [RAX+0x38] on elements of unknown class (TArray copy-assign body)"
+ },
+ {
+  "addr": "0x142bb47d0",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "addr": "0x142ee77f0",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ }
+]

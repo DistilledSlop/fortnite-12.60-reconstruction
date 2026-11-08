@@ -1,0 +1,32 @@
+[
+  {
+    "class": "AFortAthenaVehicleSpawner",
+    "function": "NativeAreSpawnBlockFlagsClear1445ed570",
+    "kind": "helper",
+    "signature": "bool NativeAreSpawnBlockFlagsClear1445ed570(AFortAthenaVehicleSpawner* Spawner)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs5_runtime/AFortAthenaVehicleSpawner/NativeAreSpawnBlockFlagsClear1445ed570.inc",
+    "address": "0x1445ed570",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns true when byte flags +0x11 and +0x12 are both zero; raw byte reads, no reflected member."
+  },
+  {
+    "class": "UFortGlobals",
+    "function": "NativeFindWideSubstringNoCase141e12980",
+    "kind": "helper",
+    "signature": "const uint16* NativeFindWideSubstringNoCase141e12980(const uint16* SearchChars, const uint16* PatternChars)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs5_runtime/UFortGlobals/NativeFindWideSubstringNoCase141e12980.inc",
+    "address": "0x141e12980",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Case-insensitive wide substring search; tail compare via NativeCompareWideStringsNoCase142bcf940."
+  }
+]

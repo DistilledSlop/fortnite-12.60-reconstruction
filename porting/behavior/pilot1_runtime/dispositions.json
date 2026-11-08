@@ -1,0 +1,30 @@
+[
+ {
+  "class": "AFortAthenaAntelopeVehicle",
+  "function": "SetSkidActive",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x144398e20 (particle-system activation helper with absolute .data args [0x14810f328..0x14810f340], writable snapshots) and CALL 0x14439eed0 have no declaration/reflection/engine_patterns entry; virtual slots +0x268/+0x270 unnamed by virtual_slots"
+ },
+ {
+  "class": "AFortAthenaMutator_PlayerClassSettings",
+  "function": "RemoveDataSource",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x14108f3b0 (TMap/TSet find at this+0x3c0), 0x141b0abb0 (remove) and 0x1407ef240 are not declared, reflected or in engine_patterns; inlined TMap<uint8,...> lookup at this+0x410 needs them"
+ },
+ {
+  "class": "AFortAthenaSupplyDrop",
+  "function": "GetSupplyDropSpawnData",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x141949a30, 0x144212e10 (GetAllActorsOfClass-like), 0x142ecc620 undeclared; virtual +0x150 target unnamed; StaticClass getters 0x1428ee970/0x142b90cb0 unresolved to classes"
+ },
+ {
+  "class": "AFortAthenaSupplyDrop",
+  "function": "GroundTrace",
+  "status": "blocked",
+  "case": "callee_not_declared",
+  "reason": "CALL 0x1440b5c60 (line trace) and 0x14406cf40 (FCollisionQueryParams ctor) undeclared; function-local static FName init via TLS guard (0x142cd49c0) and virtual +0x150 unnamed; struct-by-ref args"
+ }
+]

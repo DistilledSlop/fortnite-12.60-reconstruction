@@ -1,0 +1,34 @@
+[
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeDecrementCounter142ee43c0",
+    "kind": "helper",
+    "signature": "int32 NativeDecrementCounter142ee43c0(uint8* Self)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs6_runtime/AFortPlayerPawn/NativeDecrementCounter142ee43c0.inc",
+    "address": "0x142ee43c0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Decrements int32 at +0x0C and returns the new value; caller asm not located."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "NativeShrinkArray1414710e0",
+    "kind": "helper",
+    "signature": "void NativeShrinkArray1414710e0(uint8* Array)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hs6_runtime/UFortKismetLibrary/NativeShrinkArray1414710e0.inc",
+    "address": "0x1414710e0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "TArray shrink/slack policy for 0x48-byte elements (Data@0 Num@8 Max@12) via FMemory QuantizeSize/Realloc."
+  }
+]

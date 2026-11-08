@@ -648,5 +648,19 @@
   "blocker": "class_not_generated",
   "reason": "engine class USceneComponent is not generated",
   "inc_path": null
+ },
+ {
+  "entry": "UFortGameInstance::NativePauseContentInstallBundles141e08f60",
+  "kind": "helper",
+  "blocker": "needs_new_module",
+  "reason": "requires InstallBundleManager module dependency",
+  "inc_path": "porting/behavior/pilot2_runtime/UFortGameInstance/NativePauseContentInstallBundles141e08f60.inc"
+ },
+ {
+  "entry": "UFortGameInstance::NativeCancelContentInstallBundles141dec190",
+  "kind": "helper",
+  "blocker": "needs_new_module",
+  "reason": "requires InstallBundleManager module dependency",
+  "inc_path": "porting/behavior/pilot2_runtime/UFortGameInstance/NativeCancelContentInstallBundles141dec190.inc"
  }
 ]

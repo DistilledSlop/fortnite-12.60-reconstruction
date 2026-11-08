@@ -717,5 +717,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static UFortGlobals* NativeGetGlobals();
 	static int32 NativeCompareWideStringsNoCase142bcf940(const uint16* LeftChars, const uint16* RightChars, uint64 MaxCount);
+	static const uint16* NativeFindWideSubstringNoCase141e12980(const uint16* SearchChars, const uint16* PatternChars);
 };
 

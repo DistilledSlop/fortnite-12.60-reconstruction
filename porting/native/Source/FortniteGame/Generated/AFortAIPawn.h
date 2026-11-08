@@ -42,6 +42,7 @@
 #include "Styling/SlateBrush.h"
 #include "TInteractionType.h"
 #include "UFortInventoryOwnerInterface.h"
+#include "UObject/Object.h"
 
 class AActor;
 class ABuildingActor;
@@ -946,5 +947,6 @@ public:
 	virtual uint8 NativeGetTeam163();
 	static int32 NativeParseTrailingUnderscoreNumber142cd4550(const char* Str, int32* IndexInOut);
 	static int32 NativeFNameNumberSuffix142cd4630(const uint16* Text, int32* InOutLength);
+	static float NativeGetDifficultyLevel141e9b630(UObject* Context);
 };
 

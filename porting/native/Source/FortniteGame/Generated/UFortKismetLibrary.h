@@ -6,11 +6,15 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "Containers/UnrealString.h"
 #include "EFortItemEntryState.h"
 #include "Engine/Level.h"
+#include "Engine/World.h"
 #include "FFortClientEventName.h"
 #include "FFortDialogExternalLatentActionHandle.h"
+#include "GameFramework/GameStateBase.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "HAL/UnrealMemory.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/UnrealMathUtility.h"
@@ -132,5 +136,8 @@ public:
 	static bool NativeHasAnyRewardEntries141f8e580(const void* Rewards, bool bIncludeExtended);
 	static uint8* NativeGetIndexedRecord14468e190(UObject* Owner);
 	static uint8* NativeFindLevelRegistrationNode143f76730(UObject* Context);
+	static int32 NativeGetGameStateWorldLevel141f881f0(UObject* Context);
+	static const TCHAR* NativeFindWideChar145809329(const TCHAR* Start, TCHAR Find);
+	static void NativeShrinkArray1414710e0(uint8* Array);
 };
 

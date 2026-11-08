@@ -1,0 +1,98 @@
+[
+ {
+  "addr": "0x1423c0800",
+  "status": "proposed",
+  "case": "tail_jump_to_reflected_rpc",
+  "reason": "Wrapper JMP 0x142810956 = real body of AFortPlayerController::ClientUpdateRichPresence (thunk-table chain 0x142374290 -> 0x1423c0800). RDX=enum byte, R8B=bool."
+ },
+ {
+  "addr": "0x142f24280",
+  "status": "proposed",
+  "case": "inlined_platform_call",
+  "reason": "Inlined FWindowsPlatformApplicationMisc::ClipboardCopy: IAT GetActiveWindow/OpenClipboard/EmptyClipboard/GlobalAlloc/GlobalLock/GlobalUnlock/SetClipboardData(13)/CloseClipboard; error log elided."
+ },
+ {
+  "addr": "0x143d4bfc0",
+  "status": "proposed",
+  "case": "receiver_resolved_to_engine_class",
+  "reason": "Receiver is UMenuAnchor (caller 0x1407f1730 passes weak OwningMenuAnchor @+0x414). [+0x150]=MyMenuAnchor; vcall(0,0,0)=SetIsOpen(false,false) = UMenuAnchor::Close."
+ },
+ {
+  "addr": "0x140f91980",
+  "status": "blocked",
+  "case": "receiver_type_unavailable",
+  "reason": "[this+0xba8] is a non-reflected Fortnite Social struct (FSocialInteractionHandle-like, GetInteractionName returns FName via vtbl[+8](obj,&out)); no header, class or vtable exists in the repo, so the virtual cannot be named or typed"
+ },
+ {
+  "addr": "0x1418d31e0",
+  "status": "proposed",
+  "case": "member_setter_with_resolved_virtuals",
+  "reason": "Sets TeamControllingPoint(+0xab9); vtbl[0x150]=AActor::GetWorld, World+0x130=GameState, vtbl[0x880]=AFortGameState Teams(+0x470), [Team+0x218] vcall slot 0x28=NativeGetTeam163."
+ },
+ {
+  "addr": "0x141bcbb90",
+  "status": "blocked",
+  "case": "virtual_slots_unnamed",
+  "reason": "receiver fields [+0x48] ptr, [+0x50] bool, [+0x54] weak lie in unreflected AActor 0x28..0x5e region; vtbl[0x38] (0x140693ed0) and vtbl[0xf0] (0x143f7acc0) of ABattleMapPawnReplay have no reflected name and [obj+0x218] byte target class is unknown"
+ },
+ {
+  "addr": "0x141692dd0",
+  "status": "proposed",
+  "case": "reflected_callees_resolved_by_params",
+  "reason": "Item vtbl[0x3e8]=GetItemDefinitionBP (0x14205a2f0), vtbl[0x468]=GetItemGuid; 0x1423150b0=AFortPawn::EquipWeaponDefinition(WeaponData, Guid) on PlayerBotPawn(+0x400); +0x908 raw byte defers into Pendin"
+ },
+ {
+  "addr": "0x141747910",
+  "status": "blocked",
+  "case": "virtual_slots_unnamed",
+  "reason": "receiver is AFortBotController (caller loops AssignedAI), not the host; vtbl[0x7a8] (AFortBotController vtable not recorded) and vtbl[0x400] of UBrainComponent (engine class, no vtable; StopLogic vs PauseLogic by slot count unprovable) cannot be named"
+ },
+ {
+  "addr": "0x141dec190",
+  "status": "proposed",
+  "case": "inlined_engine_interface_over_sparse_array",
+  "reason": "IInstallBundleManager* at +0x6c0 vtbl[0x60]=CancelUpdateContent(TArrayView<FName>,None); iterates TSparseArray(0x1a8 stride) at +0x6d0, FName arrays at elem+0x120/+0x130."
+ },
+ {
+  "addr": "0x141e08f60",
+  "status": "proposed",
+  "case": "inlined_engine_interface_over_sparse_array",
+  "reason": "IInstallBundleManager* at +0x6c0 vtbl[0x68]=PauseUpdateContent(TArrayView<FName>); iterates TSparseArray(0x1a8 stride) at +0x6d0, FName arrays at elem+0x120/+0x130."
+ },
+ {
+  "addr": "0x144fcf460",
+  "status": "proposed",
+  "case": "weak_owner_getter_plus_ported_helper",
+  "reason": "vtbl[0x288] shared target 0x143d5e160 = weak-pointer getter on [widget+0x218] (IsValid 0x142ee7880 + Get 0x142ee5dd0), cast to AFortPlayerControllerSpectating, then ported settings-record helper."
+ },
+ {
+  "addr": "0x144c74f80",
+  "status": "blocked",
+  "case": "virtual_slots_unnamed",
+  "reason": "vtbl[0x2b8] on UFortMobileActionButtonBehavior*, vtbl[0x280] on the IconPicker component and vtbl[0x10] on [this+0x80] (type unknown, unreflected) have no vtable record or header, so none can be named or typed"
+ },
+ {
+  "addr": "0x1444ac7a0",
+  "status": "proposed",
+  "case": "engine_member_function_sret_in_rdx",
+  "reason": "Is APlayerState::GetPlayerName() const: [+0x222] bit7 = bUseCustomPlayerNames, vtbl[0x680]=GetPlayerNameCustom, else copy PlayerNamePrivate(+0x2f8). RCX=this, RDX=sret FString, returns sret."
+ },
+ {
+  "addr": "0x14072a990",
+  "status": "proposed",
+  "case": "engine_container_method",
+  "reason": "Is TSet<T>::Reset() with default allocators: [+8] Data.Num vs [+0x34] NumFreeIndices early-out, clears alloc bits, FirstFree=-1, memset hash to 0xff; no element destructor calls."
+ },
+ {
+  "addr": "0x142ba9300",
+  "status": "proposed",
+  "case": "engine_member_function",
+  "reason": "Is FString::AppendChars(const WIDECHAR*, int32): Count==0 returns; Num += (Num==0)+Count; grow; memcpy Count TCHARs; write terminator."
+ },
+ {
+  "addr": "0x144f9f990",
+  "status": "blocked",
+  "case": "class_without_header_or_vtable",
+  "reason": "[this+0x2d8] is UFortPlayerSurveyQuestionSelector*, a class with no generated header and no vtable record: vtbl[0x268] (fills a FFortPlayerSurveyAnswer, whose generated struct is empty) cannot be named, and 0x1423ffd10 is ambiguous between MakeFreeFormTextAnswer/MakeMultipleChoiceAnswer copy forms"
+ }
+]

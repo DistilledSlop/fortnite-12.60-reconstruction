@@ -1,0 +1,50 @@
+[
+ {
+  "addr": "0x140690780",
+  "status": "blocked",
+  "case": "virtual_call",
+  "reason": "CALL qword ptr [RAX+0x38] on element objects of an unknown class (16-byte TArray element removal loop)"
+ },
+ {
+  "addr": "0x1406eec30",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee 0x140690310 hint lists several unrelated reflected owners (UBarrierWidgetBase, UDiscoWidgetBase, UFortGameplayAbilityTooltip, ...); no single helper"
+ },
+ {
+  "addr": "0x1410f8c40",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee 0x1407f2320 hint AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard takes no params but the call passes two; plus 0x140690310 ambiguous hint and virtual [RAX]/[RAX+8] releases of unknown class"
+ },
+ {
+  "addr": "0x140bbc340",
+  "status": "blocked",
+  "case": "virtual_call",
+  "reason": "CALL qword ptr [RAX] / [RAX+0x8] refcount release of element values of unknown class in the removal loop"
+ },
+ {
+  "addr": "0x142caa6e0",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "addr": "0x145809329",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "addr": "0x141d54c50",
+  "status": "blocked",
+  "case": "virtual_call",
+  "reason": "CALL qword ptr [RAX+0x270] on an object of unresolved class; object walk uses unknown member layout"
+ },
+ {
+  "addr": "0x1407bb0e0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "callee 0x1406911b0 hint is ambiguous (OnMutatorObjectUpdated on two classes, CalculateComponentSetBoundsForCameraFraming); plus virtual [RAX]/[RAX+8] releases"
+ }
+]

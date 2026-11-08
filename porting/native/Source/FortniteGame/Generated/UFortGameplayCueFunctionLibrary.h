@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "Containers/UnrealString.h"
 #include "UObject/Object.h"
 
 #include "UFortGameplayCueFunctionLibrary.generated.h"
@@ -20,5 +21,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static double NativeHelper142bf39b0(UObject* Context);
+	static bool NativeParseKeywordFloat142caa6e0(const uint16* Haystack, const uint16* Keyword, float* OutValue);
 };
 

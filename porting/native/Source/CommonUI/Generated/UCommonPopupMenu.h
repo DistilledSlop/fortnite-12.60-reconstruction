@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "Components/MenuAnchor.h"
+
 class UMenuAnchor;
 class UObject;
 
@@ -41,5 +43,9 @@ protected:
 	virtual void HandlePreDifferentContextProviderSet_Implementation();
 public:
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeCloseMenuAnchor143d4bfc0(UMenuAnchor* AnchorToClose);
 };
 

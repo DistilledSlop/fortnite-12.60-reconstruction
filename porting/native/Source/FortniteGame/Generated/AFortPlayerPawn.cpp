@@ -16,6 +16,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "SkeletalMeshComponentBudgeted.h"
 #include "UFortFootstepAudioBank.h"
+#include "UFortGlobals.h"
 #include "UFortKismetLibrary.h"
 #include "UFortMovementComp_Character.h"
 #include "UFortPlayerAttrSet.h"
@@ -1760,6 +1761,71 @@ void AFortPlayerPawn::NativeSyncFacialInputToAnimInstances142345bd0(AFortPlayerP
 			*reinterpret_cast<int32*>(FrontendBase + 0x2E0) = *reinterpret_cast<const int32*>(reinterpret_cast<const uint8*>(Pawn) + 0x2728);
 		}
 	}
+}
+
+const uint16* AFortPlayerPawn::NativeFindSubstringNoCase142bb47d0(const uint16* Haystack, const uint16* Needle)
+{
+	// helper 0x142bb47d0 (AFortPlayerPawn): ASCII case-insensitive wide-string substring search.
+	// Evidence: RDX=needle, RCX=haystack; needle[0] and haystack chars uppercased ('a'..'z' -> -0x20);
+	// on first-char match calls 0x142bcf940 (NativeCompareWideStringsNoCase142bcf940) with (haystack+1, needle+1, len-1),
+	// a zero result is a match and the function returns the haystack position of that first char; null inputs or end of haystack return nullptr.
+	// CONFIDENCE: HIGH
+	if (Haystack == nullptr || Needle == nullptr)
+	{
+	    return nullptr;
+	}
+	int32 NeedleLength = 0;
+	while (Needle[NeedleLength] != 0)
+	{
+	    ++NeedleLength;
+	}
+	const int64 CompareCount = static_cast<int64>(NeedleLength) - 1;
+	const uint16 NeedleHead = (Needle[0] >= 'a' && Needle[0] <= 'z') ? static_cast<uint16>(Needle[0] - 0x20) : Needle[0];
+
+	const uint16* Scan = Haystack;
+	uint16 Current = *Scan;
+	++Scan;
+	if (Current == 0)
+	{
+	    return nullptr;
+	}
+	while (true)
+	{
+	    const uint16 CurrentUpper = (Current >= 'a' && Current <= 'z') ? static_cast<uint16>(Current - 0x20) : Current;
+	    if (CurrentUpper == NeedleHead)
+	    {
+	        if (UFortGlobals::NativeCompareWideStringsNoCase142bcf940(Scan, Needle + 1, static_cast<uint64>(CompareCount)) == 0)
+	        {
+	            return Scan - 1;
+	        }
+	    }
+	    Current = *Scan;
+	    ++Scan;
+	    if (Current == 0)
+	    {
+	        return nullptr;
+	    }
+	}
+}
+
+void AFortPlayerPawn::NativeIncrementCounter142ee77f0(UObject* Target)
+{
+	// helper 0x142ee77f0 (AFortPlayerPawn host): MOV EAX,[RCX+0xc]; INC EAX; MOV [RCX+0xc],EAX; RET.
+	// Offset 0xc is not covered by a single reflected member of AFortPlayerPawn, so raw int32 access is used.
+	// CONFIDENCE: MEDIUM
+	int32* RawCounter = reinterpret_cast<int32*>(reinterpret_cast<uint8*>(Target) + 0xc);
+	++(*RawCounter);
+}
+
+int32 AFortPlayerPawn::NativeDecrementCounter142ee43c0(uint8* Self)
+{
+	// Native 0x142ee43c0: decrements the int32 counter at +0x0C of the struct and returns the new value.
+	// Asm evidence: MOV EAX,[RCX+0xc]; DEC EAX; MOV [RCX+0xc],EAX; RET (RAX holds the new value at return).
+	// Caller asm was not located, so the return value is the literal RAX result of the DEC.
+	// CONFIDENCE: MEDIUM
+	int32* CounterSlot = reinterpret_cast<int32*>(Self + 0xC);
+	*CounterSlot = *CounterSlot - 1;
+	return *CounterSlot;
 }
 
 void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

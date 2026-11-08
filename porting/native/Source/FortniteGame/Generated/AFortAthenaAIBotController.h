@@ -7,6 +7,7 @@
 #include "AIController.h"
 
 #include "AttributeSet.h"
+#include "CoreMinimal.h"
 #include "EAlertLevel.h"
 #include "EReachLocationValidationMode.h"
 #include "FAlertLevelInfo.h"
@@ -360,5 +361,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual uint8 NativeGetTeam163();
+	static AFortWeapon* NativeEquipItemOnBotPawn141692dd0(AFortAthenaAIBotController* BotController, UFortWorldItem* ItemToEquip);
 };
 

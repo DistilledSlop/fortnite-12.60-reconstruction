@@ -1,0 +1,34 @@
+[
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeFindSubstringNoCase142bb47d0",
+    "kind": "helper",
+    "signature": "const uint16* NativeFindSubstringNoCase142bb47d0(const uint16* Haystack, const uint16* Needle)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hs3_runtime/AFortPlayerPawn/NativeFindSubstringNoCase142bb47d0.inc",
+    "address": "0x142bb47d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Case-insensitive ASCII wide substring search; returns match start or nullptr. Uses UFortGlobals NoCase compare helper."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "NativeIncrementCounter142ee77f0",
+    "kind": "helper",
+    "signature": "void NativeIncrementCounter142ee77f0(UObject* Target)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hs3_runtime/AFortPlayerPawn/NativeIncrementCounter142ee77f0.inc",
+    "address": "0x142ee77f0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Increments int32 at Target+0xc (raw access; owning class at that offset not justified from callers)."
+  }
+]

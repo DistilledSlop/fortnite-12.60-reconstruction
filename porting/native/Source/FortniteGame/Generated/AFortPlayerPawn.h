@@ -1949,5 +1949,8 @@ public:
 	virtual IFortVehicleInterface* NativeGetVehicleInterface163();
 	static void NativeSetClothDynamicsState144517e00(AFortPlayerPawn* TargetPawn);
 	static void NativeSyncFacialInputToAnimInstances142345bd0(AFortPlayerPawn* Pawn);
+	static const uint16* NativeFindSubstringNoCase142bb47d0(const uint16* Haystack, const uint16* Needle);
+	static void NativeIncrementCounter142ee77f0(UObject* Target);
+	static int32 NativeDecrementCounter142ee43c0(uint8* Self);
 };
 
