@@ -521,6 +521,20 @@ def _verified_handwritten_kismet_extra(files):
     return done
 
 
+def _verified_policy_emitted(files):
+    """Credit functions whose real body is emitted by a generator policy (no manifest entry) while the generated definition is unchanged."""
+    ledger = parse_json_or_none(files.get("porting/progress/policy_emitted.json")) or {}
+    done = set()
+    for key, v in ledger.items():
+        cls, _, fn = key.partition("::")
+        text = files.get(v.get("file", ""), "")
+        for m in re.finditer(r'\b%s::(?:%s|%s_Implementation)\s*\([^)]*\)[^{;]*\n\{(.*?)\n\}' % (re.escape(cls), re.escape(fn), re.escape(fn)), text, re.S):
+            if 'Body not recovered' not in m.group(1) and hashlib.sha256(m.group(0).encode()).hexdigest() == v.get("sha256"):
+                done.add((cls, fn))
+                break
+    return done
+
+
 NATIVE_INSCOPE_REL = "porting/progress/native_functions_inscope.json"
 NATIVE_WORKFLOW_REL = "porting/progress/native_workflow.json"
 
@@ -551,7 +565,7 @@ def m_native_manifest(spec, ctx):
     units = {(e["class"], e["function"]) for e in entries
                 if e.get("status") == "ported" and e.get("kind") != "member_field"
                 and e.get("inc_path") in ctx.files and e.get("class") and e.get("function")}
-    units = _without_handwritten_kismet(units) | _verified_handwritten_kismet(ctx.files) | _verified_handwritten_kismet_extra(ctx.files)
+    units = _without_handwritten_kismet(units) | _verified_handwritten_kismet(ctx.files) | _verified_handwritten_kismet_extra(ctx.files) | _verified_policy_emitted(ctx.files)
     inscope = _inscope_natives(ctx.files.get(NATIVE_INSCOPE_REL))
     note = ""
     if inscope is not None:
@@ -999,7 +1013,7 @@ def _grid_reflection_recovery(spec, ctx):
 def _grid_native_behavior(spec, ctx):
     units = _unit_data("funcs", _load_funcs)
     done = (_without_handwritten_kismet(_unit_data("manifest", _load_manifest_ported))
-            | _verified_handwritten_kismet(ctx.files) | _verified_handwritten_kismet_extra(ctx.files))
+            | _verified_handwritten_kismet(ctx.files) | _verified_handwritten_kismet_extra(ctx.files) | _verified_policy_emitted(ctx.files))
     inscope = _inscope_natives(ctx.files.get(NATIVE_INSCOPE_REL))
     if inscope is not None:
         done = _credit_native_units(done, inscope)

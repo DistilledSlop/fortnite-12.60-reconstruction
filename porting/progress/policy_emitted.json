@@ -1,0 +1,226 @@
+{
+ "UBlueprintContextLibrary::GetContext": {
+  "file": "porting/native/Source/BlueprintContext/Generated/UBlueprintContextLibrary.cpp",
+  "sha256": "0f0f253515adec06095cf932600207806413efa7fb2b05bee4c3db8ae70cd607"
+ },
+ "UCommonActionWidget::GetDisplayText": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActionWidget.cpp",
+  "sha256": "daa8f74d56ad8020a3faa431933c36a42d4a13aa8c7040d96b54f6b31b75ae01"
+ },
+ "UCommonActionWidget::GetIcon": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActionWidget.cpp",
+  "sha256": "b2107e2474485675d41fcdf7824e6501ac8e360d560341903b79a69d8a97d801"
+ },
+ "UCommonActionWidget::IsHeldAction": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActionWidget.cpp",
+  "sha256": "6410fd514f5458db8429325026f4eb89fa233ed79e5712d970c57888edfc8368"
+ },
+ "UCommonActionWidget::SetIconRimBrush": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActionWidget.cpp",
+  "sha256": "905fc20a7f1baead8942b9ce98e986b90a76a06ad9404dc4435a2f3bfe7d91f3"
+ },
+ "UCommonActionWidget::SetInputAction": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActionWidget.cpp",
+  "sha256": "c38d3c30aab1fe28c063b2b8109fb305d501d1be2c1416f12b0af266a68cfc63"
+ },
+ "UCommonActionWidget::SetInputActions": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActionWidget.cpp",
+  "sha256": "4ddfc1ad85524bae3da353a83ddae75cfbc46f05997385a2efe39b3a58c9024f"
+ },
+ "UCommonActivatablePanel::AddInputActionHandler": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "86075718009e6a1fcc4aace3838b3e387a012b48955554f6f2b103feb31b47f3"
+ },
+ "UCommonActivatablePanel::AddInputActionHandlerWithPopup": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "72362cfc6816826affa0b923f29b407f6d179b539ac501e38f5e08ca32bf7739"
+ },
+ "UCommonActivatablePanel::AddInputActionHandlerWithProgress": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "f6bc04bd5da609aeb96898c1ce797d3f79656fcab068ad125b23f95ff72e9918"
+ },
+ "UCommonActivatablePanel::AddInputActionHandlerWithProgressPopup": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "8418b9a6b6bcd97bf5f6bb08d2355bd58aff7e55d18400b6ce0da78ec903f56e"
+ },
+ "UCommonActivatablePanel::AddInputActionNoHandler": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "7f3a8426eb95d9da7a4e7061d728369871986c49eb35c000dc00206fd1f37bb6"
+ },
+ "UCommonActivatablePanel::EndIntro": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "de6004dc89eeb3782fd6146ad7e45a790dc8e94351c88f2310921ec3055fbbf3"
+ },
+ "UCommonActivatablePanel::EndOutro": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "9e3a907434ba09184423aba25f375e6662f986de32daf63efebf377e1c8bb749"
+ },
+ "UCommonActivatablePanel::HasInputActionHandler": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "d99cabecb3ea71e0063221c820ac4a723ed09b3197e7b9787fe463a31215624d"
+ },
+ "UCommonActivatablePanel::RemoveAllInputActionHandlers": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "132db865879c182e1e051c4f4a31c88a87ea58e97060770206c5ec04fdf44242"
+ },
+ "UCommonActivatablePanel::RemoveInputActionHandler": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "c1403125a5afe8c8beff1cbed3ab9304ae1d60d68a1be3d7e82427936714fd1b"
+ },
+ "UCommonActivatablePanel::SetInputActionHandler": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "a86b9530216ab762ab778452ef57d14ab065e5e37dfb26f1f9376d1737119048"
+ },
+ "UCommonActivatablePanel::SetInputActionHandlerWithPopupMenu": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "1cf77f9d06fb2944d78a071b777896264f2cc48d18ed4889c2107776fa98941f"
+ },
+ "UCommonActivatablePanel::SetInputActionHandlerWithProgress": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "d96fdc8ce01c8381a2d912dffa99e2159be9871cd774ebf48f73ea8e9253a0fa"
+ },
+ "UCommonActivatablePanel::SetInputActionHandlerWithProgressPopupMenu": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatablePanel.cpp",
+  "sha256": "1117f4066103b60fd529dfe7f0f4d9462234de80d777f9cf8cc5b21468c13c7d"
+ },
+ "UCommonActivatableWidget::ActivateWidget": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatableWidget.cpp",
+  "sha256": "d63ad71e75a7e7c3394dee96f6dfb9f50f69c9b96f1c9714d80305a316f1cc10"
+ },
+ "UCommonActivatableWidget::DeactivateWidget": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatableWidget.cpp",
+  "sha256": "78be37e7020da57e8cd542812dfd4cac0508acaeb428473de3a65f8b5272592f"
+ },
+ "UCommonActivatableWidgetContainerBase::ClearWidgets": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonActivatableWidgetContainerBase.cpp",
+  "sha256": "526a4239ef9457e119caf9c28858902fa6811cb9471e4bdeb0aabd557e86bc3d"
+ },
+ "UCommonBorder::SetStyle": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonBorder.cpp",
+  "sha256": "12a106aa02400b71f77095b6b8cdbd9df0977ff032f375a688b9b7808bb86868"
+ },
+ "UCommonButton::ClearSelection": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonButton.cpp",
+  "sha256": "341a956a19ffbf74793c0125e98c3db50b3766b846a570f8e53a631f8035ef66"
+ },
+ "UCommonButton::GetCurrentTextStyleClass": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonButton.cpp",
+  "sha256": "541b693f39af296a0b7b6fdcc6e9f89f0d30c589334e9e963ac84fb6e7f5a286"
+ },
+ "UCommonButton::GetSelected": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonButton.cpp",
+  "sha256": "b50ffcfd4d1676cf99c9dec11d19db0096945c3c03181514e63dacbfdd62101e"
+ },
+ "UCommonButton::HandleButtonClicked": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonButton.cpp",
+  "sha256": "9bf9119c57ca97837271e34aa54260f680c71fd282e23bb63e829278ed130380"
+ },
+ "UCommonButton::HandleButtonPressed": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonButton.cpp",
+  "sha256": "fc3ffefc19865e205bd8416381fe51dac3cc33befd6f27e6b0e252c8fd0439b4"
+ },
+ "UCommonButton::HandleButtonReleased": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonButton.cpp",
+  "sha256": "f10182974ea6cbe6d5676ed7294c63c31212b83dd20baf8b4993afa4310c5138"
+ },
+ "UCommonButton::IsInteractionEnabled": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonButton.cpp",
+  "sha256": "5b5cdddbe19ef99ae3fd4adf26c8b0a795fb63cd3741a4f9ac43d081898ca9c6"
+ },
+ "UCommonButton::SetIsSelected": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonButton.cpp",
+  "sha256": "7d425f439090b5259b63b9c6a74fa8d1bc082662458c1d703221e1d9aa73f45b"
+ },
+ "UCommonButton::SetSelectedInternal": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonButton.cpp",
+  "sha256": "6194ce0e79dda3cb34a45e92958544a2a7729d0d13f2a6aa6e849faab06d14e3"
+ },
+ "UCommonButton::SetStyle": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonButton.cpp",
+  "sha256": "629968c34a157362554a58098e6ea64a74aba9620f08eba71ce7dee1354b6c8e"
+ },
+ "UCommonInputManager::IsInputSuspended": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonInputManager.cpp",
+  "sha256": "2c45c213199621d53f7507cd99db661e73e4130ac70992fa64e39a139f2ef99b"
+ },
+ "UCommonInputManager::PopActivatablePanel": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonInputManager.cpp",
+  "sha256": "032325a924eae91d350bf840d9a29d24737d1ec6f7707355da0cdd64581a2fb9"
+ },
+ "UCommonInputManager::PushActivatablePanel": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonInputManager.cpp",
+  "sha256": "5793732f16442de229d06ed7da943f31ebbb669ee5be94b392c2cb07f679fa3b"
+ },
+ "UCommonInputManager::ResumeStartingOperationProcessing": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonInputManager.cpp",
+  "sha256": "1ada88104ca9c22d1d331026d53a25e89e912b3a1b2fc7f3b6e3a646400ea86a"
+ },
+ "UCommonInputSubsystem::GetCurrentInputType": {
+  "file": "porting/native/Source/CommonInput/Generated/UCommonInputSubsystem.cpp",
+  "sha256": "97ffbbde12e58881b478943ccf49b4e89750ac518a50c69ca95254827ef08348"
+ },
+ "UCommonInputSubsystem::SetCurrentInputType": {
+  "file": "porting/native/Source/CommonInput/Generated/UCommonInputSubsystem.cpp",
+  "sha256": "15739a26f9c67b0e1693cef46fbdd1a9bcf5169535bff5ada83cb6b8bc905e3b"
+ },
+ "UCommonInputSubsystem::SetGamepadInputType": {
+  "file": "porting/native/Source/CommonInput/Generated/UCommonInputSubsystem.cpp",
+  "sha256": "5c48fb3df4a0cd08d94d20e75f632fcae07dee99fc0d770e55c7f677b1bba382"
+ },
+ "UCommonLazyImage::IsLoading": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonLazyImage.cpp",
+  "sha256": "300f3ecfc2f9d0b5e060c462ae8645cac04f557f5246f72a922d8c58fd3e820d"
+ },
+ "UCommonLazyImage::SetBrushFromLazyDisplayAsset": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonLazyImage.cpp",
+  "sha256": "0d476d86cd531c5eb7ed3d459432a06716a67ca6a616b2b850087a10effec20b"
+ },
+ "UCommonLazyImage::SetMaterialTextureParamName": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonLazyImage.cpp",
+  "sha256": "5d29263a8126c48220034c606e78835d84579c6a81b0ffe8013adee718e613ea"
+ },
+ "UCommonTextBlock::SetStyle": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonTextBlock.cpp",
+  "sha256": "e0b324ed5cf1abe304264b97e3777087f481444bbbe783e0d0e160ec9534bf11"
+ },
+ "UCommonTextBlock::SetTextCase": {
+  "file": "porting/native/Source/CommonUI/Generated/UCommonTextBlock.cpp",
+  "sha256": "ad90cc1ca1cb443d47e63777e0416f0e1c321d65f203607403f5652a16d1e7c3"
+ },
+ "UFortGlobalUIContext::GetInputPriority": {
+  "file": "porting/native/Source/FortniteUI/Generated/UFortGlobalUIContext.cpp",
+  "sha256": "3b43be281bdbc6b20b59a58ee984f3b632d6eae7b11f1c924532b932d8b27da6"
+ },
+ "UFortGlobalUIContext::IsInZone": {
+  "file": "porting/native/Source/FortniteUI/Generated/UFortGlobalUIContext.cpp",
+  "sha256": "a40a3103b13cd13e1ec6f190e907c533294321c2fa34c77b25cf446eeeef6ae4"
+ },
+ "UFortGlobals::IsErebus": {
+  "file": "porting/native/Source/FortniteGame/Generated/UFortGlobals.cpp",
+  "sha256": "c4d565aa4b25aa10a647e6107553ef1d7a05f431c566f4bfe5a2a947fe576b52"
+ },
+ "UFortProgressModal::InitializeModal": {
+  "file": "porting/native/Source/FortniteUI/Generated/UFortProgressModal.cpp",
+  "sha256": "f1eab27cf84055214e8d8a9bc25add9418e80455b17fbd3ca591a372795aeef5"
+ },
+ "UFortRestartClientModal::HandleButtonClicked": {
+  "file": "porting/native/Source/FortniteUI/Generated/UFortRestartClientModal.cpp",
+  "sha256": "a94b8d1d65ad7b4887a1e09af7226d091982f0abe57eb6afd73b195f59a74fab"
+ },
+ "UFortSignInWidget::HandleTextCommitted": {
+  "file": "porting/native/Source/FortniteUI/Generated/UFortSignInWidget.cpp",
+  "sha256": "06416d9775b8357b1830975a8dcc4e799a0387b0ac138c98b7fe99d348292cc7"
+ },
+ "UFortSignInWidget::StartSignIn": {
+  "file": "porting/native/Source/FortniteUI/Generated/UFortSignInWidget.cpp",
+  "sha256": "5996a60b1047cfac380b293b1a479cebc675ef24ca6bfb974e99914d68290207"
+ },
+ "UFortSignInWidget::UpdateSignInButton": {
+  "file": "porting/native/Source/FortniteUI/Generated/UFortSignInWidget.cpp",
+  "sha256": "158d36bd694f5b1ef1ac34807727720a54844d74b4d17d1f6701fa0451c7b56a"
+ },
+ "UFortUINotification::GetImageOverride": {
+  "file": "porting/native/Source/FortniteGame/Generated/UFortUINotification.cpp",
+  "sha256": "42a86c005b4f8e07d74e6d65e5c1e2d60c41541ed8cb065cf5052e5a0f3d97a0"
+ }
+}
