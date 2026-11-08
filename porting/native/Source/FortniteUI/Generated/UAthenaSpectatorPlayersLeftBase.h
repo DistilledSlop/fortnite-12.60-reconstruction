@@ -14,5 +14,30 @@ class FORTNITEUI_API UAthenaSpectatorPlayersLeftBase : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateMaxSquadSize(int32 MaxSquadSize);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdatePlayersLeft(int32 InPlayersLeft);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateTeamsLeft(int32 InTeamsLeft);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateTotalPlayers(int32 InTotalPlayers);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateTotalTeams(int32 InTotalTeams);
+public:
+
 };
 

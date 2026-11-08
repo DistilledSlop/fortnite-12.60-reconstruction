@@ -77,6 +77,16 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	int32 GetPriority();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnClientAnnouncementStart();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnClientAnnouncementStop();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

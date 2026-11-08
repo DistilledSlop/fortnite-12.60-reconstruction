@@ -1427,6 +1427,16 @@ public:
 	void UpdateUGCRestrictedForVolume_Implementation(AFortVolume* Volume, bool bRestricted);
 	bool UpdateUGCRestrictedForVolume_Validate(AFortVolume* Volume, bool bRestricted);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void PlayWinEffects(APawn* FinisherPawn, UFortWeaponItemDefinition* FinishingWeapon, EDeathCause DeathCause, bool bAudioOnly);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RevokeCreativeTool();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

@@ -19,5 +19,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ForceClickCommonButton(UCommonButton* Button);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMessagesReady(float SoundDuration);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewMessageReceived();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewMessagesQueryed();
+public:
+
 };
 

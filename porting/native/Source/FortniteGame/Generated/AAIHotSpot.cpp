@@ -260,6 +260,21 @@ void AAIHotSpot::OnSlotOccupied_Implementation(AAIController* AI, int32 Index, i
 	return;
 }
 
+void AAIHotSpot::OnMoveToSlotFinished_Implementation(AAIController* AI, int32 Index, int32 UserId, bool bResult)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AAIHotSpot::OnRemovedBehavior_Implementation(AAIController* AI, int32 Index, int32 UserId, EAIHotSpotSlot PrevState, bool bWasOnWaitingList)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AAIHotSpot::OnRemovedSlotlessBehavior_Implementation(AAIController* AI, bool bIsClamingSlot)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 uint8 AAIHotSpot::NativeHelper141291580(AAIHotSpot* HotSpotObj)
 {
 	// Original address: 0x141291580 (AAIHotSpot helper; asm: MOVZX EAX,byte ptr [RCX+0x84]; RET)

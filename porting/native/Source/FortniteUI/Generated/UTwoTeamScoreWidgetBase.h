@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "ETDMScoreProgressTypes.h"
+#include "FTDMTeamScoreData.h"
+
 #include "UTwoTeamScoreWidgetBase.generated.h"
 
 UCLASS()
@@ -41,6 +44,21 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 LastViewedTeam;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayScoreProgressSound(ETDMScoreProgressTypes ScoreProgressType, bool bIsLocalTeam);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateTeamScore(int32 TeamIndex, FTDMTeamScoreData& ScoreData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateTotalScore(FText& TotalScoreText, int32 Score);
+public:
 
 };
 

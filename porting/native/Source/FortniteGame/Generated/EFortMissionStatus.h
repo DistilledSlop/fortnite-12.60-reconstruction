@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortMissionStatus.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortMissionStatus : uint8
 {
 	Created = 0,

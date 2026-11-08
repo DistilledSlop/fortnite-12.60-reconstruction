@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "FFortResurrectionUIData.h"
+#include "GameplayTagContainer.h"
 #include "Styling/SlateColor.h"
 #include "UCommonTextBlock.h"
 
@@ -15,6 +17,8 @@ class UContentWidget;
 class UFortSocialAvatarIcon;
 class UFortVoiceChatStatusIconProxyAnim;
 class UImage;
+class UTexture2D;
+class UUserWidget;
 
 #include "UAthenaPlayerInfoBase.generated.h"
 
@@ -103,6 +107,61 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UAthenaLevelEffects* LevelEffects;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleDBNOStateChanged(bool bDBNO);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleGameModeIconChanged(UTexture2D* GameModeIcon);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleIsBeingRevivedStateChanged(bool bIsTalking);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleMutedStateChanged(bool bIsMuted);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandlePlayerNameReplicated(const FString& PlayerName);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandlePlaylistExtensionWidgetCreated(UUserWidget* Widget);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandlePlaylistLoaded(FName PlaylistName, FGameplayTagContainer& PlaylistContextTags);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleResurrectionStateChanged(FFortResurrectionUIData& ResurrectionStateData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleSeasonLevelUIDisplayChanged(int32 Level);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleTalkingStateChanged(bool bIsTalking);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleTalkingVisualDisplayChanged(bool bTalkingVisualsActive);
+public:
 
 };
 

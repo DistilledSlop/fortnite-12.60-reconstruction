@@ -62,5 +62,15 @@ public:
 	UPROPERTY()
 	UImage* LockIcon;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void EndInteraction(int32 PointerIndex);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartOngoingUse(int32 PointerIndex);
+public:
+
 };
 

@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortDailyRewards : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupDailyRewards();
+public:
+
 };
 

@@ -20,5 +20,20 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Navigation;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnObjectHoverBegin();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnObjectHoverEnd();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetBangState(bool bShowBang);
+public:
+
 };
 

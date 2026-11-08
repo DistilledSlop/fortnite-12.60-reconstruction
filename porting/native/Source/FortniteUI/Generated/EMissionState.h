@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EMissionState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EMissionState : uint8
 {
 	Locked = 0,

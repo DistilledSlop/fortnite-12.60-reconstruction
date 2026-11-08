@@ -35,5 +35,10 @@ public:
 	UPROPERTY()
 	UTutorialHighlight* TutorialHighlight;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVisibilitySetEvent(ESlateVisibility InVisibility);
+public:
+
 };
 

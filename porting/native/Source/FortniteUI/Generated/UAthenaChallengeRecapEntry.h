@@ -30,5 +30,20 @@ public:
 	UPROPERTY()
 	UWidgetSwitcher* Switcher_Progression;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartIntroAnim();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartOutroAnim();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateProgressBar(float StartingPercent, float EndingPercent);
+public:
+
 };
 

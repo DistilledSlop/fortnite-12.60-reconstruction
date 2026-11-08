@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortItemTileButton.h"
 
+#include "FHomebaseSquadSlotId.h"
+
 #include "UFortSquadSlotItemPickerTileButton.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,15 @@ class FORTNITEUI_API UFortSquadSlotItemPickerTileButton : public UFortItemTileBu
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemSlottedToDifferentSquad(FHomebaseSquadSlotId& SquadSlotId);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSlottingRestrictionReasonsChanged();
+public:
+
 };
 

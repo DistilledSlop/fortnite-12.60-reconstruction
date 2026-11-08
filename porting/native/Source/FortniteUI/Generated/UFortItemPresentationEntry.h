@@ -36,5 +36,15 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UTexture2D> RewardTexture;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitialIconAnimation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsPaidBattlePassRewardSet(bool bIsPaidBattlePassReward);
+public:
+
 };
 

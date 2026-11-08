@@ -29,5 +29,10 @@ public:
 	UPROPERTY()
 	TArray<UFortItem*> TemporaryGadgetItemInstances;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentTargetLoadoutSlotSetBP();
+public:
+
 };
 

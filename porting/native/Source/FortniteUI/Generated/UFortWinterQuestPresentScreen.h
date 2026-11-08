@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "ECommonInputType.h"
+#include "ECommonPlatformType.h"
 #include "UCommonTextBlock.h"
 #include "UFortGameStateComponent_EventLevel.h"
 
@@ -58,6 +60,36 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonTextBlock* Text_ReasonCannotOpen;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInputMethodChanged(ECommonInputType NewMethod);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartOpeningPresent();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStopOpeningPresent();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdatePlatformType(ECommonPlatformType PlatformType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateShakePercentage(float InPercentage);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateShakeRecharge(float InPercentage);
+public:
 
 };
 

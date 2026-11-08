@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UWidget* DropdownWidget;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDropdownMenuStatusUpdated(bool bIsExpanded);
+public:
+
 };
 

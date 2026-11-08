@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+class USoundBase;
+
 #include "ULTMPreRoundWidgetBase.generated.h"
 
 UCLASS()
@@ -14,5 +16,15 @@ class FORTNITEUI_API ULTMPreRoundWidgetBase : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePreRoundInfo_BP(int32 CurrentRound, FText& InRoundName, FText& InPOIName, USoundBase* InRoundSound);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePreRoundWidgetVisibilityChange_BP(bool bNewVisibility);
+public:
+
 };
 

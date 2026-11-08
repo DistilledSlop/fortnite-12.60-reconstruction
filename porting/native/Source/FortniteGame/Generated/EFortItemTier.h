@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortItemTier.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortItemTier : uint8
 {
 	No_Tier = 0,

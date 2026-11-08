@@ -15,7 +15,7 @@ class UFortWeaponItemDefinition;
 
 #include "FFortPlayerDeathReport.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FFortPlayerDeathReport
 {
 	GENERATED_BODY()

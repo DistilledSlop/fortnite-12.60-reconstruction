@@ -11,7 +11,7 @@ class UFortItemDefinition;
 
 #include "FFortReceivedItemLootInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortReceivedItemLootInfo
 {
 	GENERATED_BODY()

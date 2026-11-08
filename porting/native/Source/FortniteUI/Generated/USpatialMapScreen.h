@@ -7,6 +7,7 @@
 #include "UAthenaSpatialScreen.h"
 
 #include "FFortChallengeMapPoiData.h"
+#include "FSelectedChallengesData.h"
 #include "GameplayTagContainer.h"
 #include "UCommonBoundActionBar.h"
 #include "UCommonButton.h"
@@ -124,6 +125,26 @@ public:
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	UFortQuestItemDefinition* POIQuestItemDefinition;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCycleIconClicked();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelectedChallengesChanged(int32 CountOfSelected, FSelectedChallengesData& SelectedChallengesData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTabCycled(bool bCanShowCompletedCount, int32 ChallengesNum, int32 CountOfCompletedChallenges);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetRewardPreviewVisibility(bool bVisible);
+public:
 
 };
 

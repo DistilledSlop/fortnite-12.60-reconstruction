@@ -10,7 +10,7 @@
 
 #include "FGameplayFeedbackEventParams.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FGameplayFeedbackEventParams
 {
 	GENERATED_BODY()

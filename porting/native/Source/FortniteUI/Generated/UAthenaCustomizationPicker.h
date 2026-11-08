@@ -94,5 +94,25 @@ private:
 	void HandleFilterTabButtonCreated(FName TabNameId, UCommonButton* TabButton);
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentFilterSetBP();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemsAvailableInFilter();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNoItemsAvailableInFilter(FText& EmptyDisplayText);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSearchEnabled(bool bEnabled);
+public:
+
 };
 

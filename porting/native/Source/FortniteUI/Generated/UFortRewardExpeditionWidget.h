@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortRewardNotificationSubWidget.h"
 
+#include "FFortItemInstanceQuantityPair.h"
 #include "FOnExpeditionMcpErrorDelegate.h"
+#include "UFortExpeditionItem.h"
 
 #include "UFortRewardExpeditionWidget.generated.h"
 
@@ -19,6 +21,11 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FOnExpeditionMcpErrorDelegate OnMcpError;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCollectExpeditionCompleted(UFortExpeditionItem* Expedition, bool bSucceeded, TArray<FFortItemInstanceQuantityPair>& Rewards);
+public:
 
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "UFortQuestItem.h"
+
 #include "UAthenaContextualChallengeEntryWidget.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,15 @@ class FORTNITEUI_API UAthenaContextualChallengeEntryWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PopulateWithQuestItem(UFortQuestItem* QuestItem);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateQuestCompletion(UFortQuestItem* QuestItem);
+public:
+
 };
 

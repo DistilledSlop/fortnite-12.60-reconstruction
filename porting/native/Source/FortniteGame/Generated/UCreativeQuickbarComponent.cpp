@@ -60,3 +60,33 @@ bool UCreativeQuickbarComponent::ServerAddToQuickBar_Validate(const TArray<AActo
 	return true;
 }
 
+void UCreativeQuickbarComponent::ActivateQuickbarSlot_Implementation(int32 SlotIndex)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UCreativeQuickbarComponent::HandleCreativeQuickbarPressed_Implementation(int32 SlotIndex)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UCreativeQuickbarComponent::HandleCreativeQuickbarReleased_Implementation(int32 SlotIndex)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UCreativeQuickbarComponent::HandleQuickbarClutchPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UCreativeQuickbarComponent::HandleQuickbarClutchReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UCreativeQuickbarComponent::PopulateQuickbarSlotFromSelection_Implementation(int32 SlotIndex)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

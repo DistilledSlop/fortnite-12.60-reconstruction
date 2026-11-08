@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortCameraBase.h"
 
+class AFortTheaterMapTile;
+
 #include "AFortTheaterCamera.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,10 @@ class FORTNITEGAME_API AFortTheaterCamera : public AFortCameraBase
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetTileFocus(AFortTheaterMapTile* TargetTile);
+public:
+
 };
 

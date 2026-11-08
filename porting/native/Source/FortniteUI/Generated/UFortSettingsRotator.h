@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortSettingsRotator : public UCommonRotator
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnDefaultOptionSpecified(int32 DefaultOptionIndex);
+public:
+
 };
 

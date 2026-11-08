@@ -49,5 +49,10 @@ protected:
 	UMediaSource* GetVideo() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RefreshDataBP();
+public:
+
 };
 

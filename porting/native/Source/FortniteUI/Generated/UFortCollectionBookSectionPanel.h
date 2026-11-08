@@ -16,6 +16,7 @@
 #include "FOnSectionCloseRequest.h"
 #include "UCommonTextBlock.h"
 #include "UFortCollectionBookSection.h"
+#include "UFortItem.h"
 
 class UFortCollectionBookPicker;
 class UFortCollectionBookSectionCompletionRewardWidget;
@@ -174,6 +175,17 @@ public:
 protected:
 	UFUNCTION()
 	void OnLogAllowedItemsActionExecuted(bool& bPassThrough);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnSectionChanged(UFortCollectionBookSection* Section);
+	virtual void OnSectionChanged_Implementation(UFortCollectionBookSection* Section);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUnslotItemComplete(UFortItem* UnslottedItem, FName SlotId);
 public:
 
 };

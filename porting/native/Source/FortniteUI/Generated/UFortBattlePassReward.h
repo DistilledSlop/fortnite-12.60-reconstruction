@@ -7,6 +7,7 @@
 #include "UCommonButton.h"
 
 #include "UCommonTextBlock.h"
+#include "UFortItemDefinition.h"
 
 class UFortLazyImage;
 class UImage;
@@ -60,6 +61,31 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonTextBlock* Text_PaidLevelNumber;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void InitForReward(UFortItemDefinition* RewardItem);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ResetToDefault();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetChaseRewardVisuals();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetLargeRewardVisuals();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateVisualsToCompletedState();
+public:
 
 };
 

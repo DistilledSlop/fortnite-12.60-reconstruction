@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortCollectionBookState.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 #include "UFortCollectionBookPage.h"
@@ -53,6 +54,18 @@ public:
 	// table index 0, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortCollectionBookRewardModalWidget* RewardDetailsModalWidget;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnDetailsPageChanged(UFortCollectionBookPage* InNewDetailsPage);
+	virtual void OnDetailsPageChanged_Implementation(UFortCollectionBookPage* InNewDetailsPage);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnPageProgressionUpdated(int32 TotalFilledSlots, int32 TotalSlots, EFortCollectionBookState State);
+	virtual void OnPageProgressionUpdated_Implementation(int32 TotalFilledSlots, int32 TotalSlots, EFortCollectionBookState State);
+public:
 
 };
 

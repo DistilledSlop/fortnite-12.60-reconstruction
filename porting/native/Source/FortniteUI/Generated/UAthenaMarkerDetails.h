@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "EFortMarkerActions.h"
+#include "FFortWorldMarkerData.h"
 #include "UFortMarkerDetailsTable.h"
 
 class UAthenaMarkerPointer;
@@ -25,6 +27,16 @@ public:
 	// table index 0, flags 0x20080000000015
 	UPROPERTY()
 	UFortMarkerDetailsTable* DetailsTable;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateMarkerAction(EFortMarkerActions MarkerAction);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateMarkerData(FFortWorldMarkerData& MarkerData);
+public:
 
 };
 

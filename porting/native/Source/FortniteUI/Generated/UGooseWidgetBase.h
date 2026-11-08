@@ -14,5 +14,10 @@ class FORTNITEUI_API UGooseWidgetBase : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateNumberOfPlanes(int32 FriendlyPlaneCount, int32 EnemyPlaneCount);
+public:
+
 };
 

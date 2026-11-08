@@ -20,5 +20,30 @@ public:
 	UPROPERTY()
 	FFortPrioritizedWidgetData PrioritizationData;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownFinished();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownStarted(int32 TimeRemaining, FText& CountdownIntroText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownStopped();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownUpdate(int32 TimeRemaining, FText& CountdownUpdateText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayWarningMessage(FText& FirstLineText, FText& SecondLineText);
+public:
+
 };
 

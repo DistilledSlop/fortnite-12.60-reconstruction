@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EWinterQuestViewState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EWinterQuestViewState : uint8
 {
 	Intro = 0,

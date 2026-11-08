@@ -122,6 +122,16 @@ public:
 	UFUNCTION()
 	void OnRep_SwitchState();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnConfigurationChanged(int32 NewConfigurationIdx, int32 OldConfigurationIdx);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnSwitchStateChanged(int32 NewSwitchState, int32 OldSwitchState, int32 NumSwitchStates);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

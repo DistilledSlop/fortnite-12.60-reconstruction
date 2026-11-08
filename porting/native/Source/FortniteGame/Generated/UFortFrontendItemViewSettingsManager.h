@@ -6,6 +6,12 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "EFrontEndCamera.h"
+#include "ESubGame.h"
+#include "FFortItemViewSettings.h"
+
+class UFortItemDefinition;
+
 #include "UFortFrontendItemViewSettingsManager.generated.h"
 
 UCLASS()
@@ -14,5 +20,10 @@ class FORTNITEGAME_API UFortFrontendItemViewSettingsManager : public UObject
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	FFortItemViewSettings GetItemViewSettings(EFrontEndCamera Camera, ESubGame GameMode, UFortItemDefinition* ItemDefinition, int32 SubSlotIndex) const;
+public:
+
 };
 

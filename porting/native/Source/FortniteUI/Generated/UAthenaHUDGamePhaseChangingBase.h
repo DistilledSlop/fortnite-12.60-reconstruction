@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "EAthenaGamePhaseStep.h"
 #include "FFortPrioritizedWidgetData.h"
 
 #include "UAthenaHUDGamePhaseChangingBase.generated.h"
@@ -19,6 +20,16 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	FFortPrioritizedWidgetData PrioritizationData;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void GamePhaseStepChanged(EAthenaGamePhaseStep Step);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateMessaging(EAthenaGamePhaseStep Step, FText& Message, FText& TimeText);
+public:
 
 };
 

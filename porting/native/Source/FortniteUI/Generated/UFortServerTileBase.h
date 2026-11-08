@@ -24,5 +24,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Launch;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLaunchButtonEnableChanged(bool bEnableValue);
+public:
+
 };
 

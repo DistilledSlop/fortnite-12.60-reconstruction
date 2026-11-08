@@ -28,5 +28,25 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* TextBlock_NextVoteNumber;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayFadeIn();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayFadeOut();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayIdle();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayIncreaseVote();
+public:
+
 };
 

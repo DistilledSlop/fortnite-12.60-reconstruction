@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "AFortPlayerControllerSpectating.h"
+#include "AFortPlayerState.h"
+#include "ESpectatorCameraType.h"
 #include "UCommonButton.h"
 
 class UFortTimelineBase;
@@ -30,6 +33,31 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UIconTextButtonSpectatorBase* IconTextButtonReplay_PlayHighlights;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CenterControls();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleBattleMapTimelineModeChanged(bool bIsOnTimelineMode);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCameraTypeChanged(AFortPlayerControllerSpectating* SpectatorPC, ESpectatorCameraType NewCameraType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFollowedPlayerChanged(AFortPlayerControllerSpectating* SpectatorPC, AFortPlayerState* NewFollowedPlayer);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ResetFocusToPlayPauseIfNeeded();
+public:
 
 };
 

@@ -32,5 +32,10 @@ public:
 	UPROPERTY()
 	TArray<int32> QueuedLevels;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowWidget(int32 NewLevel);
+public:
+
 };
 

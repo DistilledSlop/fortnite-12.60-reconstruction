@@ -48,5 +48,9 @@ public:
 	void OnDeactivated();
 	virtual void OnDeactivated_Implementation();
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnActivated();
+	virtual void OnActivated_Implementation();
+
 };
 

@@ -52,5 +52,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEmptyList() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddListEntry(UFortItemQuantityListEntryBase* ListEntry);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemInspectModeChanged();
+public:
+
 };
 

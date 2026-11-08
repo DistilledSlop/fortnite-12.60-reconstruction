@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortReloadFXState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 namespace EFortReloadFXState
 {
 	enum Type

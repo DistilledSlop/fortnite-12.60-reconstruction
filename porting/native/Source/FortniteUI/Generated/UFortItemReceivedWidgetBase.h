@@ -45,5 +45,15 @@ public:
 	UPROPERTY()
 	TSubclassOf<UItemCardWidgetBase> ItemCardClass;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGiftBoxItemSet(bool bFromSelf);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowGiftBox();
+public:
+
 };
 

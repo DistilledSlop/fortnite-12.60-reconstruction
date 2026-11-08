@@ -41,5 +41,10 @@ protected:
 	void HandleSizeEstimateChanged(UObject* ChangedElement);
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	TArray<UFortQuestItem*> GetQuestsToDisplay();
+public:
+
 };
 

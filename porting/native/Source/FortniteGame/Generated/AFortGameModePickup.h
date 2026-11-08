@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	FScalableFloat InteractionTime;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalBeginLongUse();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalInterrupt();
+public:
+
 };
 

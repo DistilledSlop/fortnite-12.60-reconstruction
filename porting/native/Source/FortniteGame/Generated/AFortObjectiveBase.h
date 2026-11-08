@@ -16,11 +16,13 @@
 #include "FOnObjectiveIsVisibleChanged.h"
 #include "FOnObjectiveStatusChanged.h"
 #include "GameplayTagContainer.h"
+#include "Math/Color.h"
 
 class AFortMission;
 class UFortBadgeItemDefinition;
 class UFortMissionTimerComponent;
 class UFortWorldItemDefinition;
+class UTexture2D;
 
 #include "AFortObjectiveBase.generated.h"
 
@@ -139,6 +141,61 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	virtual void StopObjective(EFortObjectiveStatus Status, FString Description, UFortBadgeItemDefinition* ExtraBadgeToGrant);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	int32 BlueprintGetNumProgressBars() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	FText BlueprintGetObjectiveDisplayText() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	FLinearColor BlueprintGetProgressBarColor(int32 ProgressBarIdx) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	UTexture2D* BlueprintGetProgressBarIcon(int32 ProgressBarIdx) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	float BlueprintGetProgressBarPercentage(int32 ProgressBarIdx) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	FText BlueprintGetProgressBarText(int32 ProgressBarIdx) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void BlueprintOnActivated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void BlueprintOnObjectiveEnd(EFortObjectiveStatus Status);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void BlueprintOnStartPlaying();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void BlueprintPostObjectiveLoad();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnGenericObjectiveEvent();
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

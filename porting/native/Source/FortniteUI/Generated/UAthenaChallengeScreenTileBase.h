@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "FFortChallengeSetStyle.h"
 #include "UCommonTextBlock.h"
 
 class UFortLazyImage;
@@ -25,6 +26,21 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UFortLazyImage* LazyImage_RewardPreview;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeSetEstablished(FFortChallengeSetStyle& DisplayStyle, bool bIsComplete, bool bIsLocked);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnContainsPartyAssistedChallengeChanged(bool bHasPartyAssistedChallenge);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ResetToLocked();
+public:
 
 };
 

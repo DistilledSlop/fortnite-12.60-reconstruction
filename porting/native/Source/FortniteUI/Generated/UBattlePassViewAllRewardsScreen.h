@@ -53,5 +53,10 @@ public:
 	UPROPERTY()
 	UTileView* TileView_Rewards;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemViewed(UBattlePassViewRewardData* ItemDisplayed);
+public:
+
 };
 

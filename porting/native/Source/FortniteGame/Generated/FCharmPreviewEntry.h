@@ -10,7 +10,7 @@ class UObject;
 
 #include "FCharmPreviewEntry.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FCharmPreviewEntry
 {
 	GENERATED_BODY()

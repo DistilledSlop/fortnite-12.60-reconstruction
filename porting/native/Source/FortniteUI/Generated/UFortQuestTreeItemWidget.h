@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "UFortQuestCategory.h"
+#include "UFortQuestItem.h"
+
 class UObject;
 
 #include "UFortQuestTreeItemWidget.generated.h"
@@ -19,6 +22,21 @@ public:
 	// table index 0, flags 0x24080000000014
 	UPROPERTY()
 	TWeakObjectPtr<UObject> QuestOrCategory;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnQuestsUpdated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupAsCategory(UFortQuestCategory* Category);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupAsQuest(UFortQuestItem* Category);
+public:
 
 };
 

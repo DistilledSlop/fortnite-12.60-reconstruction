@@ -8,6 +8,7 @@
 
 class UFortUpgradeInfo;
 class UMediaPlayer;
+class UTexture2D;
 
 #include "UFortUpgradeDetailsBase.generated.h"
 
@@ -24,6 +25,26 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	UFortUpgradeInfo* UpgradeInfo;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPurchaseComplete();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnScreenActive();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowIcon(UTexture2D* Icon);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpgradeToDetailChanged();
+public:
 
 };
 

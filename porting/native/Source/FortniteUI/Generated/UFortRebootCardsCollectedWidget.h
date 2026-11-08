@@ -18,5 +18,10 @@ public:
 	UPROPERTY()
 	int32 NumCardsCollected;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRebootCardsCollectedChanged();
+public:
+
 };
 

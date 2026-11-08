@@ -59,6 +59,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ViewInAll();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePostDifferentSquadSlotSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePreDifferentSquadSlotSetBP();
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

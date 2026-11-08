@@ -46,5 +46,10 @@ protected:
 	void OnSelectionMade();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetItems_BP(UFortSpyTechItemDefinition* FirstItem, UFortSpyTechItemDefinition* SecondItem);
+public:
+
 };
 

@@ -142,5 +142,70 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMissionAlertTile() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnClientDeselect();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnClientSelect();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDefocus();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisableGoToPrompt();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnableGoToPrompt();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnFocus();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHostDeselect();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHostSelect();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitializeTile();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMarkedQuestChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMissionDataUpdated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnProfileBannerChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RefreshTile();
+public:
+
 };
 

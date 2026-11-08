@@ -30,5 +30,20 @@ public:
 	UPROPERTY()
 	UAthenaChallengeProgressBar* ChallengeProgress_ObjectivesCompleted;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleIsTrackedChallengeChanged(bool bIsTrackedChallenge);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeInfoSet(bool bIsComplete, bool bIsLocked, bool bCompact, bool HideRewards);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPartyAssistEnabledChanged(bool bIsPartyAssistEnabled);
+public:
+
 };
 

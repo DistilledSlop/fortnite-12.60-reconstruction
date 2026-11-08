@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "UCommonLazyImage.h"
+
 #include "UCampaignTopBar.generated.h"
 
 UCLASS()
@@ -14,5 +16,20 @@ class FORTNITEUI_API UCampaignTopBar : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddIconToScreen(UCommonLazyImage* Image);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetActiveInvitesCount(int32 NewActiveInvitesCount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetOnlineFriendsCount(int32 NewOnlineFriendsCount);
+public:
+
 };
 

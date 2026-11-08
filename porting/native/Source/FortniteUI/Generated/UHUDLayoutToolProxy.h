@@ -45,5 +45,10 @@ protected:
 	virtual void BP_SetPropertyValue_Implementation(int32 PropertyIndex, float NewValue);
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_SetMappedPropertyValue(FName& PropertyName, float NewValue);
+public:
+
 };
 

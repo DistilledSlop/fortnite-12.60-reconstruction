@@ -48,5 +48,10 @@ public:
 	UPROPERTY()
 	UDataTable* PayoutDisplayInfo;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDivisionChanged(int32 NewDivision);
+public:
+
 };
 

@@ -11,6 +11,7 @@
 #include "UCommonTextBlock.h"
 #include "UFortItem.h"
 
+class AFortItemPreviewSceneChanger;
 class UAthenaRewardItemTypeRarityTag;
 class UDynamicEntryBox;
 class UFortWinterQuestDetailsEntry;
@@ -62,6 +63,11 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UCommonButtonGroup* EntryBoxButtonGroup;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetRewardsSceneChanger(AFortItemPreviewSceneChanger* ItemPreviewSceneChanger);
+public:
 
 };
 

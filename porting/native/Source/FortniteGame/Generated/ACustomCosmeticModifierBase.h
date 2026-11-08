@@ -6,9 +6,15 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "EFortDayPhase.h"
+#include "EFortItemType.h"
 #include "EVehicleEnteredCosmeticReaction.h"
+#include "Engine/EngineTypes.h"
+#include "Math/Vector.h"
+#include "UFortVehicleInterface.h"
 
 class AFortPlayerPawn;
+class UFortItem;
 
 #include "ACustomCosmeticModifierBase.generated.h"
 
@@ -92,6 +98,61 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCosmetic)
 	void OnPostResIn();
 	virtual void OnPostResIn_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintCosmetic)
+	void OnBeginSkydiving();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintCosmetic)
+	void OnEndSkydiving();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnEnterVehicle(TScriptInterface<IFortVehicleInterface>& VehicleEntered);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnHitPawn(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, FHitResult& Hit);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewPlayerWeaponType(EFortItemType NewType, EFortItemType OldType);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnNewWeapons(TArray<UFortItem*>& WeaponsAsItems);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnPawnSet();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnTargetingOrFirstPersonCameraChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintCosmetic)
+	void OnWeaponFired();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void PreDestruction();
+public:
 
 };
 

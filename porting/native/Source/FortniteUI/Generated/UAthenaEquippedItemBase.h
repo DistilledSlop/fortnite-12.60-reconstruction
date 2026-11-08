@@ -6,10 +6,14 @@
 #include "CoreMinimal.h"
 #include "UBacchusHUDElement.h"
 
+#include "AFortWeapon.h"
 #include "Components/SlateWrapperTypes.h"
 #include "EEquippedWeaponDisplay.h"
+#include "EFortWeaponOverheatState.h"
+#include "EFortWeaponReloadType.h"
 #include "UCommonTextBlock.h"
 #include "UCommonVisibilitySwitcher.h"
+#include "UFortResourceItemDefinition.h"
 
 class UImage;
 class UPanelWidget;
@@ -81,6 +85,61 @@ public:
 	// table index 0, flags 0x40000000000004
 	UPROPERTY()
 	ESlateVisibility WeaponEquipVisibility;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleAmmoCountChanged(int32 MagazineAmmoCount, int32 SurplusAmmoCount, int32 TotalRemaining);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleHasAmmoChanged(bool bHasAmmo);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleHasBulletsPerClipChanged(bool bHasBulletsPerClip);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleResourceCountChanged(int32 ResourceCount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleResourceTypeChanged(UFortResourceItemDefinition* Item, int32 ResourceCount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleWeaponEquipped(AFortWeapon* NewWeapon, AFortWeapon* PrevWeapon);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleWeaponModeChanged(EEquippedWeaponDisplay Mode);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleWeaponOverheatValueChanged(float CurrentValue, float MaxValue, EFortWeaponOverheatState State, bool bIsInCooldown);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleWeaponReloadCancelled(AFortWeapon* Weapon);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleWeaponReloadStarted(float ReloadTime, EFortWeaponReloadType ReloadType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleWeaponTargetingChanged(bool bIsTargeting);
+public:
 
 };
 

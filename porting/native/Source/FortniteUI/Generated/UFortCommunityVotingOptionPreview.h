@@ -50,5 +50,20 @@ public:
 	UPROPERTY()
 	UCommonLoadGuard* LoadGuard;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayHoveredAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayUnhoveredAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayVotingAnimation();
+public:
+
 };
 

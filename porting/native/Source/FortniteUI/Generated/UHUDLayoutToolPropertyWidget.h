@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "ELayoutPropertyType.h"
 #include "UAnalogSlider.h"
 #include "UCommonTextBlock.h"
 
@@ -38,6 +39,22 @@ public:
 	// table index 0, flags 0x2408000008001c
 	UPROPERTY()
 	TWeakObjectPtr<UHUDLayoutToolPlacementWidget> CurrentWidget;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void RefreshProperties();
+	virtual void RefreshProperties_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetBoolValue(bool bNewValue);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetPropertyType(ELayoutPropertyType NewPropertyType);
+public:
 
 };
 

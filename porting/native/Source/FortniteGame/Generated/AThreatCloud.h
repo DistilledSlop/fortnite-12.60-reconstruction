@@ -6,11 +6,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "EFortThreatDeactivationType.h"
 #include "Math/Box.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 
+class ABuildingRift;
 class UBoxComponent;
 
 #include "AThreatCloud.generated.h"
@@ -75,6 +77,46 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FBox GetThreatVolume() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ManualLightningFlash();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginDeath();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCloudActivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCloudDeactivated(EFortThreatDeactivationType DeactivationType);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCloudHiddenChange(bool bCloudsAreHidden);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCloudStart();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnLightningStrike(FVector& StartLocation, FVector& EndLocation, ABuildingRift* Rift, bool bLightningStruckRift);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnThreatVolumeChanged();
+public:
 
 };
 

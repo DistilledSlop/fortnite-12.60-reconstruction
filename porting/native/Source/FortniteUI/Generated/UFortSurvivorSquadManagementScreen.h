@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortSquadManagementScreenBase.h"
 
+#include "FFortSurvivorSquadSlottingFeedbackData.h"
+#include "UFortWorker.h"
+
 class UFortSurvivorSquadStatMatchesBase;
 
 #include "UFortSurvivorSquadManagementScreen.generated.h"
@@ -19,6 +22,21 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UFortSurvivorSquadStatMatchesBase* StatMatchesWidget;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayFeedbackForSlottingPerson(UFortWorker* Worker, int32 SlotIndex, FFortSurvivorSquadSlottingFeedbackData& FeedbackData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowHelpDialog();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCycleButtons();
+public:
 
 };
 

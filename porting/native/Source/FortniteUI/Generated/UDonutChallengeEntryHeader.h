@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UAthenaChallengeCountdownDisplay* Timer_UnlockTimer;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPUpdateTitle(int32 InWeek);
+public:
+
 };
 

@@ -12,6 +12,7 @@
 #include "FOnBookPageSelected.h"
 #include "FOnBookSectionClicked.h"
 #include "UCommonTileView.h"
+#include "UFortCollectionBookPage.h"
 #include "UFortCollectionBookSection.h"
 
 class UFortCollectionBookOverviewWidget;
@@ -70,6 +71,18 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void OnSummonInfoPanelExecuted(bool& bPassThrough);
 	virtual void OnSummonInfoPanelExecuted_Implementation(bool& bPassThrough);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCollectionBookPageClicked(UFortCollectionBookPage* ClickedPage);
+	virtual void OnCollectionBookPageClicked_Implementation(UFortCollectionBookPage* ClickedPage);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCollectionBookPageSelected(UFortCollectionBookPage* SelectedPage);
+	virtual void OnCollectionBookPageSelected_Implementation(UFortCollectionBookPage* SelectedPage);
 public:
 
 };

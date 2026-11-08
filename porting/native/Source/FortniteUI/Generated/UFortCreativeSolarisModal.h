@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortCreativeSolarisModal : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void CloseModal();
+public:
+
 };
 

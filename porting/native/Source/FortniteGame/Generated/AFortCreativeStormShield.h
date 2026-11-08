@@ -111,6 +111,16 @@ public:
 	UFUNCTION()
 	void OnRep_GamePhaseStep();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnRep_GamePhaseStep();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnTargetRadiusReached();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

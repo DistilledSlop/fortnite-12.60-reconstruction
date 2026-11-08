@@ -7,6 +7,7 @@
 #include "GameplayCueNotify_Actor.h"
 
 #include "FFortParticleSystemParamBucket.h"
+#include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "Particles/WorldPSCPool.h"
 
@@ -90,6 +91,26 @@ public:
 	// table index 0, flags 0x400000000a001d
 	UPROPERTY()
 	UParticleSystemComponent* ParticleSystemComponent;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartParticleSystemSpawned(UParticleSystemComponent* SpawnedParticleSysComponent, FGameplayCueParameters& Parameters) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStopParticleSystemSpawned(UParticleSystemComponent* SpawnedParticleSysComponent, FGameplayCueParameters& Parameters) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWhileActiveParticleSystemActivate(UParticleSystemComponent* WhileActiveParticleSysComponent, FGameplayCueParameters& Parameters) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWhileActiveParticleSystemDeactivate(UParticleSystemComponent* WhileActiveParticleSysComponent, FGameplayCueParameters& Parameters) const;
+public:
 
 };
 

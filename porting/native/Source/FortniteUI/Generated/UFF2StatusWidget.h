@@ -14,5 +14,10 @@ class FORTNITEUI_API UFF2StatusWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetHealth(float CurrentHealth, float MaxHealth);
+public:
+
 };
 

@@ -13,6 +13,7 @@
 #include "UCommonBorder.h"
 #include "UCommonButton.h"
 #include "UCommonWidgetSwitcher.h"
+#include "UFortPlaylistAthena.h"
 
 class UAthenaChallengeInfoPanel;
 class UAthenaMissionInfoPanel;
@@ -22,6 +23,7 @@ class UFortAthenaMatchmakingWidgetLegacy;
 class UFortDivisionLobbyPanel;
 class UFortSquadSelectionMenu;
 class UFortTournamentLobbyPanel;
+class UStoreToastRequest;
 
 #include "UAthenaLobbyBase.generated.h"
 
@@ -106,6 +108,36 @@ public:
 	// table index 0, flags 0x40000000010001
 	UPROPERTY()
 	UCatalogMessaging* CatalogMessaging;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisplayGlyphQuestUpdated(int32 NewGlyphs);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisplayStoreUpdated(UStoreToastRequest* StoreUpdatedRequest);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLobbyChanged(EFortLobbyType& LobbyType);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlaylistChanged(EFortLobbyType LobbyType, UFortPlaylistAthena* PlaylistData);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateSocialImportButtonText(FText& NewText);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateGenericLinkText(FText& NewText);
+public:
 
 };
 

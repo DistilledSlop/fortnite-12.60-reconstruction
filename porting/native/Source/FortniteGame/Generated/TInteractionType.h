@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "TInteractionType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum TInteractionType
 {
 	IT_NoInteraction = 0,

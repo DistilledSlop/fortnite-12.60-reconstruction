@@ -25,5 +25,15 @@ public:
 	UPROPERTY()
 	UFortItemDefinition* ItemDefinition;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemCountChanged(int32 NewCount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemDefinitionChanged();
+public:
+
 };
 

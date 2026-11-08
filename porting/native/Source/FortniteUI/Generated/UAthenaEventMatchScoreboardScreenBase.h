@@ -48,5 +48,10 @@ private:
 	void HandleSquadKillScoreChanged(UAthenaRemoteSquadViewData* InSquadData, int32 InKillScore);
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSquadIdsVisible_BP(bool bSquadIdsVisible);
+public:
+
 };
 

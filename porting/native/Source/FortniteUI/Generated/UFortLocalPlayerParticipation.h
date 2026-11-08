@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortLocalPlayerParticipation : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalPlayerParticipationChanged(bool bIsParticipating);
+public:
+
 };
 

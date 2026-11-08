@@ -248,6 +248,80 @@ private:
 	void TeleportPlayerForPlotLoadComplete(AFortPlayerPawn* PlayerPawn);
 public:
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	bool BlueprintDisplayMobileInteractPrompt() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	bool BlueprintUseMobileHighlight() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClientSaveDisplayChanged(bool bSaving);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CuratedPortalChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisplayNameChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ErrorStateChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NotifyTeleportedPlayerPawn(AFortPlayerPawn* PlayerPawn, bool bTeleportedToIslandStart);
+public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	void NotifyTeleportedVehicle(AActor* VehicleActor);
+	virtual void NotifyTeleportedVehicle_Implementation(AActor* VehicleActor);
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReceivedNewIslandInfo();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnThumbnailTextureReady();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OverlappingOnBeginPlay(AActor* Actor);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OwningPlayerChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PopulationChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PortalOpenChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ServerOnInteractWithIslandPortal(AFortPlayerPawn* InteractingPawn);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

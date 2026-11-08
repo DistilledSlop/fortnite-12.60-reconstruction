@@ -110,5 +110,40 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetIdOfSquadToManageBP() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentSquadSetBP();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleNextSquadInputAction();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePreviousSquadInputAction();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSquadSlotPickerHidden();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSquadSlotPickerShown();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSquadStateChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ShowWarningReadOnlyWIFE(bool Force);
+public:
+
 };
 

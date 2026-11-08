@@ -14,5 +14,10 @@ class FORTNITEUI_API UWaxRespawnCounterWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetCount(int32 NewCount);
+public:
+
 };
 

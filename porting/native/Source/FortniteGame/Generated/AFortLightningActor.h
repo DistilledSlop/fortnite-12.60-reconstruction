@@ -52,5 +52,15 @@ public:
 	UPROPERTY(Transient)
 	TArray<UMaterialInstanceDynamic*> BoltMIDs;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLightingCleanup();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLightingInitialized();
+public:
+
 };
 

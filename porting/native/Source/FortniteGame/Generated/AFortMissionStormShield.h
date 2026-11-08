@@ -170,6 +170,12 @@ protected:
 	AFortMissionStormSafeZone* SpawnSafeAreaAtLocation(FVector& InLocation, float InRadius);
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void UpdateRadiusVisuals();
+	virtual void UpdateRadiusVisuals_Implementation();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -30,5 +30,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortAlterationOptionType GetAlterationOptionType() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetup();
+public:
+
 };
 

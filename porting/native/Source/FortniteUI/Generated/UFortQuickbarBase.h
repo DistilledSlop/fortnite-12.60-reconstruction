@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+class UFortQuickBarSlotBase;
+
 #include "UFortQuickbarBase.generated.h"
 
 UCLASS()
@@ -14,5 +16,15 @@ class FORTNITEUI_API UFortQuickbarBase : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	UFortQuickBarSlotBase* GetSpecificSlot(int32 SlotNumber);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShouldShowBothQuickbarsChanged(bool bShouldShowBothQuickbars);
+public:
+
 };
 

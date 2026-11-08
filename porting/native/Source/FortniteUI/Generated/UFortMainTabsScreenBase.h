@@ -7,6 +7,7 @@
 #include "UCommonActivatablePanel.h"
 
 #include "EFortUIFeature.h"
+#include "UCommonButton.h"
 
 class UFortTabListWidgetBase;
 class UHorizontalBox;
@@ -30,6 +31,16 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UFortTabListWidgetBase* TopTabList;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleMainTabCreated(FName TabNameId, UCommonButton* TabButton);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleMainTabSelected(FName TabNameId);
+public:
 
 };
 

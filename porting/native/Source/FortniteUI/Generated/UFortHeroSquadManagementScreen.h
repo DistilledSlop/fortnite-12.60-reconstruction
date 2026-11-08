@@ -7,6 +7,7 @@
 #include "UFortSquadManagementScreenBase.h"
 
 #include "Engine/DataTable.h"
+#include "UFortCharacter.h"
 
 class UFortHeroSquadBonusPerksWidgetBase;
 
@@ -25,6 +26,11 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UFortHeroSquadBonusPerksWidgetBase* BonusPerksWidget;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayFeedbackForSlottingPerson(UFortCharacter* Character, int32 SlotIndex);
+public:
 
 };
 

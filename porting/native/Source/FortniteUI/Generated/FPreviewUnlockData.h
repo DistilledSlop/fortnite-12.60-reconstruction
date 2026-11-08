@@ -8,7 +8,7 @@
 
 #include "FPreviewUnlockData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FPreviewUnlockData
 {
 	GENERATED_BODY()

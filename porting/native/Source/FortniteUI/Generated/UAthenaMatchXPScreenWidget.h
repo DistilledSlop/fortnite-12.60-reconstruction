@@ -101,5 +101,15 @@ public:
 	UPROPERTY()
 	UFortMatchXPRecap* Section_XPRecap;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnToggleDetailsRecap();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetStatButtonText(FText& InText);
+public:
+
 };
 

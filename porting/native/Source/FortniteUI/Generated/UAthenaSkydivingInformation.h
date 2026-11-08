@@ -20,5 +20,70 @@ public:
 	UPROPERTY()
 	UFortControllerComponent_SkydiveFeedback* PairedComponent;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnterGlider();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitSkydive();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewAltitude(float NewAltitude);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewCurrentAltitude(float NewCurrentAltitude);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewDuration(float NewDuration);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewGroundAltitude(float NewGroundAltitude);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewHorizontalSpeed(float NewHorizontalSpeed);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewNormalizedGroundAltitude(float NormalizedGroundAltitude);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewNormalizedOpeningAltitude(float NormalizedOpeningAltitude);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewNormalizedPlayerAltitude(float NormalizedPlayerAltitude);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewRating(float NewRating);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewVerticalSpeed(float NewVerticalSpeed);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartSkydive();
+public:
+
 };
 

@@ -61,6 +61,7 @@
 #include "UObject/Object.h"
 
 class AActor;
+class AController;
 class AFortEmitterCameraLensEffectDirectional;
 class AFortPickup;
 class AFortWeapon;
@@ -1101,6 +1102,80 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool WasDBNOOnDeath() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBaseChanged(AActor* NewBase);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnBuildingHitPlayEffects(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, FGameplayEffectContextHandle EffectContext, bool bPlayerPlaced);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBumpPushedPawn(AFortPawn* InstigatedBy, float PushTimeLeft);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnClearSentence();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDamagePlayEffects(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AFortPawn* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnDamageServer(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AController* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDamageZoneStatusChanged(EFortDamageZone::Type Zone, bool bStatus);
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCosmetic)
+	void OnDeathPlayEffects(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AFortPawn* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+	virtual void OnDeathPlayEffects_Implementation(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AFortPawn* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnDeathServer(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AController* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplaySentence(FText& SpeechText);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnOutOfControlResistanceServer(float ImpactDamageDone, FGameplayTagContainer& SourceTags, FGameplayEffectContextHandle& EffectContext, AController* EffectInstigator, AActor* EffectCauser);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintAuthorityOnly)
+	void OnStunned();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeleported();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponEquipped(AFortWeapon* NewWeapon, AFortWeapon* PrevWeapon);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PawnUniqueIDSet();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

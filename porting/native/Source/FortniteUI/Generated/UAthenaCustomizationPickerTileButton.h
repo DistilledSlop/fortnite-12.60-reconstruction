@@ -29,5 +29,15 @@ public:
 	UPROPERTY()
 	UImage* Image_ClassIcon;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChangeOwnedState(bool bOwned);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEquippedStateChanged(bool bEquipped, bool bOnDifferentSlot);
+public:
+
 };
 

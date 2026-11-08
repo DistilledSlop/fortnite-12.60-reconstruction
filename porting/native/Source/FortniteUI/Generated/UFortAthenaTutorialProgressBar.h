@@ -14,5 +14,15 @@ class FORTNITEUI_API UFortAthenaTutorialProgressBar : public UUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ResetProgressBarVisuals();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartNewProgressBarPhase(int32 CurrentPhase);
+public:
+
 };
 

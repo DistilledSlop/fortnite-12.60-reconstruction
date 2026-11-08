@@ -31,5 +31,15 @@ public:
 	UPROPERTY()
 	FFortItemEntry ItemEntry;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEntryClick(UAthenaCreativeItemTileButton* Entry);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoadedItem();
+public:
+
 };
 

@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FSceneTransitionOptions.h"
 #include "GameplayTagContainer.h"
+#include "UFortAccountItemDefinition.h"
 
 class AItemPreviewScene;
 class UCameraComponent;
@@ -85,6 +87,16 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSoundEnabled() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewSceneRequested(UFortAccountItemDefinition* PrimaryRequestedItem, FSceneTransitionOptions& TransitionOptions);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetZoom(bool bZoomedIn);
 public:
 
 };

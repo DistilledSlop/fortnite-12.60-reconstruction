@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UFortCampaignHeroLoadoutItem> TargetLoadoutItem;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentTargetLoadoutSetBP();
+public:
+
 };
 

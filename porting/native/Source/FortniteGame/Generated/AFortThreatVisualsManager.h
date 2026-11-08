@@ -8,6 +8,7 @@
 
 #include "FStormWindArray.h"
 #include "FThreatLocationArray.h"
+#include "FThreatLocationInfo.h"
 #include "Math/Vector.h"
 
 class AThreatCloud;
@@ -140,6 +141,21 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool StormsExist() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnBeginThreatVisualsPrecursor(AActor* SourceActor, FVector& EndLocation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnThreatCloudsChanged(TArray<FThreatLocationInfo>& ThreatLocationInfo);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWorldReady();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

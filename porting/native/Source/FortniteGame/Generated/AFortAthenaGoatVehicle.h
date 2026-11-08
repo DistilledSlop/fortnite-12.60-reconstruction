@@ -175,5 +175,40 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPowerSliding() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BoostBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BoostEnd();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BoostIncrease(int32 AccumulationStepIndex);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void EBrakeBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void EBrakeEnd();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PowerSlideBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PowerSlideEnd();
+public:
+
 };
 

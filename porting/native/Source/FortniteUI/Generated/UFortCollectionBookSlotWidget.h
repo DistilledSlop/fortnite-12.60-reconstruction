@@ -110,6 +110,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsItemSlotted() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemCardUpdated();
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

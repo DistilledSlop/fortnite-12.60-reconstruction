@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EAIHotSpotSlot.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EAIHotSpotSlot : uint8
 {
 	Free = 0,

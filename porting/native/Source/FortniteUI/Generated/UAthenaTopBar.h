@@ -11,6 +11,7 @@
 #include "UCommonActionWidget.h"
 #include "UCommonButton.h"
 #include "UCommonButtonGroup.h"
+#include "UCommonLazyImage.h"
 #include "UCommonTextBlock.h"
 
 class UDynamicEntryBox;
@@ -66,6 +67,16 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UCommonActionWidget* InputActionWidget_Prev;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddIconToScreen(UCommonLazyImage* Image);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMobileTabLabelChanged();
+public:
 
 };
 

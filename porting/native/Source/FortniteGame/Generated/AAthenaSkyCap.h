@@ -28,6 +28,11 @@ public:
 	UFUNCTION()
 	void OnRep_SkyCapState();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StormStarting_Client();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

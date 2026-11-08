@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "EFortCombatThresholds.h"
+#include "EFortDayPhase.h"
+#include "FFortPlayerDeathReport.h"
+
 class AFortPlayerController;
 class UFortMusicAsset;
 class UFortMusicManagerBank;
@@ -58,6 +62,31 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void PlayStinger(UFortMusicAsset* NewMusicAsset);
 	virtual void PlayStinger_Implementation(UFortMusicAsset* NewMusicAsset);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMusicBankChanged(UFortMusicManagerBank* NewBank);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerDowned(FFortPlayerDeathReport& DeathReport);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerSpawned();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnThresholdChange(EFortCombatThresholds::Type OldThreshold, EFortCombatThresholds::Type NewThreshold);
+public:
 
 };
 

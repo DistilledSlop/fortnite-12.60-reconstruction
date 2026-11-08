@@ -24,5 +24,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_GameTimeDuration;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEntrySet(int32 EntryIndex);
+public:
+
 };
 

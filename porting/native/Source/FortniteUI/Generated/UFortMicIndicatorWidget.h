@@ -14,5 +14,20 @@ class FORTNITEUI_API UFortMicIndicatorWidget : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerMicAvailable(bool bIsTalking);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerMuted(bool bIsMuted);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerTalkingChanged(bool bIsTalking);
+public:
+
 };
 

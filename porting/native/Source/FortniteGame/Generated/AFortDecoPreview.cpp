@@ -11,6 +11,31 @@ void AFortDecoPreview::OnInitializeDecoPreview_Implementation(ABuildingActor* Ne
 	return;
 }
 
+void AFortDecoPreview::OnBounceMotionUpdate_Implementation(float VectorScale)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortDecoPreview::OnUpdateScale_Implementation(float Scale, FVector& InWorldSpacePivot)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortDecoPreview::OnUpdateVisuals_Implementation(float DeltaSeconds, bool bSafeToPlace)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortDecoPreview::SetScalarParameterValueOnAllPreviewMIDs_Implementation(FName ParamName, float ParamValue)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortDecoPreview::SetVectorParameterValueOnAllPreviewMIDs_Implementation(FName ParamName, FLinearColor& ParamValue)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 FVector4 AFortDecoPreview::NativeMakeVector4142c47190(const FVector& InVector)
 {
 	// Helper 0x142c47190, host AFortDecoPreview (static, sret return). 9 instructions, RET-terminated, no callees.

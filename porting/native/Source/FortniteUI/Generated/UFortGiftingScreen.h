@@ -103,5 +103,30 @@ public:
 	UPROPERTY()
 	UFortGiftRecipientsTab* Activatable_RecipientsTab;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginGiftingSubmission();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndGiftingSubmission(bool bSuccess);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnMoveToFriendSelectStep();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnMoveToGiftWrapStep(bool bGiftingToSelf);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOfferSet(UFortStoreFrontOfferInfo* NewOfferInfo);
+public:
+
 };
 

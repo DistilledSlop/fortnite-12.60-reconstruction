@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortBasicTeamMemberEntry.h"
 
+#include "EGameReadiness.h"
+#include "ESubGame.h"
 #include "UCommonTextBlock.h"
 #include "UCommonWidgetSwitcher.h"
 
@@ -53,6 +55,26 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UImage* Image_HeroIcon;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCurrentSubGameChanged(ESubGame NewSubGame);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPedestalSelectedChanged(bool bIsSelected);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayReadyAudio(bool bIsReadyForMatchmaking);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReadyStatusChanged(EGameReadiness GameReadiness);
+public:
 
 };
 

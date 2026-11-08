@@ -539,6 +539,81 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetTargetingLaserAudioComp(UAudioComponent* TargetingLaserAudio);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	float GetChargeJumpingFloat();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	bool GetGroundSlamBool();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void GunnerShieldTakeDamage(float Damage);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	bool IsGunnerShieldActive();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NotiftyBlueprintShotgunFired();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NotifyBlueprintShotgunReload();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDetonateTimerStart(EOstrichDetonationState InDetonationState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDriverPrimaryFire();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDriverSecondaryFire();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFailedShieldBoost();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoadingRockets(bool bStarting);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPressHonk();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPressShieldBoost();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReleaseChargeJump(float ChargeAlpha);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartChargeJump();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

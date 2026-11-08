@@ -82,6 +82,11 @@ public:
 	void ServerUpgradePOST();
 	void ServerUpgradePOST_Implementation();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCleanUpOnExit();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

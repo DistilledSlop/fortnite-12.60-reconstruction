@@ -55,5 +55,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsValidAlterationSlot() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGenerateOption(EFortAlterationOptionType OptionType, UFortAlterationOption* OptionWidget);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemChanged(bool bIntroAlterations);
+public:
+
 };
 

@@ -7,12 +7,14 @@
 #include "ABuildingSMActor.h"
 
 #include "FFortAbilitySetHandle.h"
+#include "FFortCosmeticModification.h"
 #include "FFortTargetFilter.h"
 #include "GameplayTagContainer.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
 class AActor;
+class AController;
 class UAthenaTrapAIPerceptionStimuliSourceComponent;
 class UFortAbilitySet;
 class UFortAlterationItemDefinition;
@@ -207,6 +209,65 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool UseAttachedToWhenTargeted();
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnTrigger(TArray<AActor*>& TouchingActors, bool& bOutConsumeEvent);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDestroy();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinishedBuilding();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitAlteration(UFortAlterationItemDefinition* NewAlteration);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitCosmeticAlterations(FFortCosmeticModification CosmeticMod);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitTeam();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnModifyTrapIncomingDamage(float Damage, AController* EventInstigator, AActor* DamageCauser, float& OutDamage, bool& bOutConsumeEvent);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnOutOfDurability();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlaced();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnReloadBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnReloadEnd();
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintCosmetic)
+	void SwitchToAlternateMaterial();
+	virtual void SwitchToAlternateMaterial_Implementation();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

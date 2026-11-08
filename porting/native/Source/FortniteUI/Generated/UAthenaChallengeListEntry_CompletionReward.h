@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeListEntryBase.h"
 
+#include "FFortChallengeSetStyle.h"
 #include "UCommonRichTextBlock.h"
 
 class UAthenaChallengeProgressBar;
@@ -30,6 +31,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UAthenaChallengeProgressBar* ChallengeProgress_ObjectivesCompleted;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRewardInfoSet(bool bIsCompleted, FFortChallengeSetStyle& DisplayStyle);
+public:
 
 };
 

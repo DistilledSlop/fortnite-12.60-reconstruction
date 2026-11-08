@@ -32,5 +32,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentBoostAmount() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostAmountChanged();
+public:
+
 };
 

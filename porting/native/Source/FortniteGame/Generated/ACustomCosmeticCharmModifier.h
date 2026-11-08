@@ -32,5 +32,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPlayerCharm* GetCharmOwner() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCharmVisibilityChanged(bool bVisible);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnPawnAndCharmChanged();
+public:
+
 };
 

@@ -6,10 +6,13 @@
 #include "CoreMinimal.h"
 #include "UFortMatchmakingWidgetBase.h"
 
+#include "EFortLobbyType.h"
 #include "EFortMatchmakingViolatorStyle.h"
+#include "FPlaylistFrontEndData.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 #include "UFortMissionGenerator.h"
+#include "UFortPlaylistAthena.h"
 
 class UEnableMultiFactorModal;
 class UFortActivatablePanel;
@@ -115,6 +118,51 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UCommonTextBlock* TextBlock_PartySizeWarning;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAvailablePlaylistsUpdated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMatchmakingFinishedBlueprint(bool bSuccess, UFortPlaylistAthena* Playlist);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewModeViolatorUpdated(bool bShouldShow);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetCancelButtonText(FText& CancelButtonText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetPlayButtonText(FText& PlayButtonText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlaylistChanged(FPlaylistFrontEndData& NewPlaylist, FText& PlaylistCMSOverrideName, EFortLobbyType LobbyType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSquadFillText(bool InCurrentSquadFill);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShouldShowMatchmakingDetails(bool bShow);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCustomViolatorText(FText& ModeName, FText& SubText);
+public:
 
 };
 

@@ -120,5 +120,25 @@ public:
 	UPROPERTY(Transient)
 	bool bSkipDefault;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnActivateFactionOptions();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdatedRoomState();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void Start_BackToHenchmanInspection();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void Start_BackToHenchmanRoom();
+public:
+
 };
 

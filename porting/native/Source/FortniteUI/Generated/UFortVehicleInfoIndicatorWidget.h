@@ -24,5 +24,14 @@ public:
 	UPROPERTY()
 	float TimeToHideWhenDamaged;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVehicleChanged();
+public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnVehicleHealthChanged();
+	virtual void OnVehicleHealthChanged_Implementation();
+
 };
 

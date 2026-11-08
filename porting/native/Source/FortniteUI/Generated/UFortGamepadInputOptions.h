@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortGamepadInputOptions : public UFortInputOptions
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void HandleGamePadToggleMode();
+public:
+
 };
 

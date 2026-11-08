@@ -44,5 +44,20 @@ public:
 	UPROPERTY()
 	bool bShearText;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ChangeSecondaryText(FText& NewText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void RefreshUI();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetText(FText& NewText);
+public:
+
 };
 

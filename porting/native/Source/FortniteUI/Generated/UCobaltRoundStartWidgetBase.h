@@ -34,5 +34,20 @@ public:
 	UPROPERTY()
 	TArray<UCobaltPlayerPortraitWidget*> PlayerPortraits_Team2;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleUpdateIntelInfo_BP(int32 CurrentRound, uint8 LastRoundWinningTeam);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleUpdateRoundStartWidgetVisibility_BP(bool bNewVisibility);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleUpdateVsInfo_BP(int32 CurrentActiveRound, FText& RoundName, FText& POIName);
+public:
+
 };
 

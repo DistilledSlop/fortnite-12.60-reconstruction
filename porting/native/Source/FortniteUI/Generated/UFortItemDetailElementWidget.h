@@ -46,5 +46,50 @@ public:
 	UPROPERTY()
 	bool bIsUpdatingSuspended;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleInspectModeChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemToCompareWithChangedBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemToDetailChangedBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePostDifferentItemToCompareWithSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePostDifferentItemToDetailSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePreDifferentItemToCompareWithSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePreDifferentItemToDetailSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleQuantityOverrideChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleShouldPreviewUpgradingItemChanged();
+public:
+
 };
 

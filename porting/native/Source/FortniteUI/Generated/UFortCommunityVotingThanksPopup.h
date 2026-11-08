@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* ThanksForVoting_Countdown;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void FadeInPopup();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void FadeOutPopup();
+public:
+
 };
 

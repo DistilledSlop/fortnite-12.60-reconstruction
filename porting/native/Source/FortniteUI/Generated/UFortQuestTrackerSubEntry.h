@@ -39,5 +39,20 @@ protected:
 	void NotifyCompletionAnimationFinished();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayObjectiveCompletedAnimation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnQuestsUpdated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetup();
+public:
+
 };
 

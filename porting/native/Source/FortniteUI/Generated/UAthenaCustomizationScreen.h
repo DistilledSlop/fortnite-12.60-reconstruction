@@ -66,5 +66,10 @@ public:
 	UPROPERTY()
 	UFortCosmeticLoadoutSelector* LoadoutSelector;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoadoutChanged();
+public:
+
 };
 

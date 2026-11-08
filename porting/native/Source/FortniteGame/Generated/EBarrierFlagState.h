@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EBarrierFlagState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EBarrierFlagState : uint8
 {
 	FlagUp = 0,

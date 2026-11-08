@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortRarity.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 
@@ -44,6 +45,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonButton* Button_PageRight;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateRarity(EFortRarity Rarity);
+public:
 
 };
 

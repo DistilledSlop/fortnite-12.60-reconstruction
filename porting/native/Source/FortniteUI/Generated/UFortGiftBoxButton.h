@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	UCommonLazyImage* Image_Gift;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayGiftSelectedAnimation(bool bIsSelected);
+public:
+
 };
 

@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortBangType.h"
+#include "ETutorialType.h"
 
 class UNamedSlot;
 
@@ -29,6 +30,26 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UNamedSlot* ContentSlot;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBangStateChanged(bool bEnabled, int32 Count);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartCallout(FName TutorialObjectiveName, ETutorialType TutorialType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStopCallout();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTutorialCalloutFinished();
+public:
 
 };
 

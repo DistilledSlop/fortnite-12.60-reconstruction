@@ -25,6 +25,7 @@
 #include "FItemAndCount.h"
 #include "FMinigameClassSlot.h"
 #include "FMinigameEndCondition.h"
+#include "FMinigamePlayer.h"
 #include "FMinigamePlayerBucket.h"
 #include "FMinigamePlayers.h"
 #include "FMinigameTeam.h"
@@ -62,7 +63,9 @@ class AFortPawn;
 class AFortPlayerController;
 class AFortPlayerControllerAthena;
 class AFortPlayerState;
+class AFortPlayerStateAthena;
 class AFortVolume;
+class APawn;
 class APlayerState;
 class ASOLFortGame;
 class UCreativePlayerHealthInfoComponent;
@@ -890,6 +893,36 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool WasInProgress() const;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleMinigameComponentAdded(UFortMinigameLogicComponent* MinigameComponent);
+	virtual void HandleMinigameComponentAdded_Implementation(UFortMinigameLogicComponent* MinigameComponent);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleMinigameComponentRemoved(UFortMinigameLogicComponent* MinigameComponent);
+	virtual void HandleMinigameComponentRemoved_Implementation(UFortMinigameLogicComponent* MinigameComponent);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_RecordPostGameStatsForPlayer(FMinigamePlayer& PlayerEntry);
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintAuthorityOnly)
+	void RestartMinigame(AFortPlayerController* InstigatorPC);
+	virtual void RestartMinigame_Implementation(AFortPlayerController* InstigatorPC);
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupTeams();
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintAuthorityOnly)
+	void StartMinigame(AFortPlayerController* InstigatorPC);
+	virtual void StartMinigame_Implementation(AFortPlayerController* InstigatorPC);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

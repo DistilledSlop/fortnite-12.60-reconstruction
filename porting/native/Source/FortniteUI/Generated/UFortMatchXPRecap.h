@@ -56,5 +56,10 @@ public:
 	UPROPERTY()
 	UWidget* Leto_IGMMWrapper;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AnimateXPTotals();
+public:
+
 };
 

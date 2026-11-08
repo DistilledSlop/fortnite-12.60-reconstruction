@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "UCommonTextBlock.h"
+#include "UFortItemDefinition.h"
 
 class UOverlay;
 
@@ -33,6 +34,11 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UOverlay* Overlay_MainView;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetRarityMaterialValues(UFortItemDefinition* ItemDefinition);
+public:
 
 };
 

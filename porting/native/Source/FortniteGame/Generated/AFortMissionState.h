@@ -45,5 +45,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void UpdateUI();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnAllPlayersLoadedIn();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnMatchStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnWorldReady();
+public:
+
 };
 

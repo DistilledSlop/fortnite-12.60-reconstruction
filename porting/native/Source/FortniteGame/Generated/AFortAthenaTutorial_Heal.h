@@ -33,5 +33,10 @@ public:
 	UPROPERTY()
 	UFortItemDefinition* ShieldPotionItem;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpawnAmbushLoot();
+public:
+
 };
 

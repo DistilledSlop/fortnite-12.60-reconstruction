@@ -25,5 +25,25 @@ public:
 	UPROPERTY()
 	UFortControllerComponent_MapDiscoverability* AssociatedComponent;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_OnBecomeActive();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_OnBecomeInactive();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStompedByOtherWidget();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStompFailed();
+public:
+
 };
 

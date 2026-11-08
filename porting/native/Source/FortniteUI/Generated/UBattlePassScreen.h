@@ -6,9 +6,11 @@
 #include "CoreMinimal.h"
 #include "UFortItemPreviewScreen.h"
 
+#include "EBattlePassView.h"
 #include "Engine/DataTable.h"
 #include "FAthenaRewardItemReference.h"
 #include "FBattlePassRewardInfo.h"
+#include "FFortRarityItemData.h"
 #include "UAthenaCosmeticItemDefinition.h"
 #include "UAthenaSeasonItemDefinition.h"
 #include "UCommonButton.h"
@@ -16,6 +18,7 @@
 #include "UCommonTextBlock.h"
 #include "UCommonWidgetSwitcher.h"
 #include "UFortAccountItemDefinition.h"
+#include "UFortItemDefinition.h"
 
 class UAthenaRewardItemTypeRarityTag;
 class UBattlePassItemChoiceDisplay;
@@ -235,6 +238,91 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UBattlePassItemChoiceDisplay* ItemChoice_Display;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleOnUpdatedVisibleFriendCount(int32 LeftFriendCount, int32 RightFriendCount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleOnViewReward(FFortRarityItemData Rarity, bool bNoReward, int32 NumRewardsToPurchase, UFortItemDefinition* RewardItem);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBattlePassViewChanged(EBattlePassView NewView);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHandleAboutBattlePass();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHandleFriendLeaderboard();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHandleReplayCinematic();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHandleReturnToPreview();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHandleRotateReward();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHandleViewAllRewards();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHandleWatchVideo();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNoCurrentSeason();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRequestViewReward();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRequestViewRewardComplete();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetDifferentBPText();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetPurchasedAnnualPass(bool bIsPurchased);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupPurchaseSeasonLevel(TMap<int32, UFortSeasonPassLevelInfo*>& SeasonLevelInfos, UAthenaSeasonItemDefinition* CurrentSeasonData, UFortSeasonPassLevelInfo* CurrentLevel, int32 MaxLevelToPurchase, int32 LevelToBePurchased);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVariantUpdate(int32 CurrentIndex, int32 TotalNumVariants);
+public:
 
 };
 

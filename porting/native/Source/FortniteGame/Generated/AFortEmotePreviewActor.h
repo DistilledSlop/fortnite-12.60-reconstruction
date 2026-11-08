@@ -20,5 +20,10 @@ public:
 	UPROPERTY(Transient)
 	UFortMontageItemDefinitionBase* PreviewingEmote;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewEmote(UFortMontageItemDefinitionBase* Emote);
+public:
+
 };
 

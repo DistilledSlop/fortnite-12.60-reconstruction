@@ -67,5 +67,45 @@ private:
 	bool ShowTouchAndMotionOptions();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleBenchmarkComplete();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSettingsErrorMessageClosed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSettingsSaveComplete();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnApplySettings();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBack();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInputsResetToDefault();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResetToDefault();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnToggleMode();
+public:
+
 };
 

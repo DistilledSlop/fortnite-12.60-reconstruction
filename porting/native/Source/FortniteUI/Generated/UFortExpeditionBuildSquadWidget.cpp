@@ -8,3 +8,13 @@ void UFortExpeditionBuildSquadWidget::OnRefreshBuildSquadWidget_Implementation()
 	return;
 }
 
+void UFortExpeditionBuildSquadWidget::OnStartExpeditionCompleted_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortExpeditionBuildSquadWidget::SetData_Implementation(UFortExpeditionItem* InItem)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

@@ -37,5 +37,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<UAthenaXPFeedWidgetEntry*> AvailableEntries;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateRestXP(int32 RestXpRemaining);
+public:
+
 };
 

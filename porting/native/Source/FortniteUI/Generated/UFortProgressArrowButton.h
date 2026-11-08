@@ -28,5 +28,20 @@ public:
 	UPROPERTY()
 	FSlateColor ShadowColor;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnArrowColorSet();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsInteractiveSet(bool bIsInteractive);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShadowColorSet();
+public:
+
 };
 

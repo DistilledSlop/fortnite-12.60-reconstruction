@@ -11,6 +11,8 @@
 #include "UCommonTextBlock.h"
 #include "UFortItem.h"
 
+class UFortAlterationInfo;
+
 #include "UFortAlterationsWidget.generated.h"
 
 UCLASS()
@@ -42,6 +44,36 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	UCommonButtonGroup* ButtonGroup;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAlterationSlotIndexModifiedBP(int32 ModifiedIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFocusFirstItem();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGenerateAlteration(UFortAlterationInfo* AlterationInfo);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemChanged(bool bIntroAlterations, bool bWasFavoritedChanged);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemToCompareWithChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStateChanged();
+public:
 
 };
 

@@ -20,5 +20,15 @@ public:
 	UPROPERTY(Transient)
 	UAthenaXPFeedWidget* RelatedXPFeed;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OpenWidget(int32& XpValue, FText& DisplayName, bool bIsRested);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayFastOutro();
+public:
+
 };
 

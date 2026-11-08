@@ -8,8 +8,8 @@
 
 #include "FFortPublicAccountInfo.generated.h"
 
-USTRUCT()
-struct FFortPublicAccountInfo
+USTRUCT(BlueprintType)
+struct FORTNITEGAME_API FFortPublicAccountInfo
 {
 	GENERATED_BODY()
 

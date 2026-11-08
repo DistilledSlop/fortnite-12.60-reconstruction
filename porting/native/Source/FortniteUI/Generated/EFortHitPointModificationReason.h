@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortHitPointModificationReason.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortHitPointModificationReason : uint8
 {
 	Invalid = 0,

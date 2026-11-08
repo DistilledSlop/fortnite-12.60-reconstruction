@@ -91,5 +91,25 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ShowThrobber();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HideControls();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void MediaOpened();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void MediaOpenFailed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowControls();
+public:
+
 };
 

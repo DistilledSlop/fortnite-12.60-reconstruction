@@ -9,13 +9,16 @@
 #include "AbilitySystemComponent.h"
 #include "EFortItemType.h"
 #include "EFortRarity.h"
+#include "EFortReloadFXState.h"
 #include "EFortWeaponCoreAnimation.h"
 #include "EFortWeaponReduceMeshWorkSetting.h"
 #include "EFortWeaponTriggerType.h"
 #include "Engine/DataTable.h"
+#include "Engine/EngineTypes.h"
 #include "FCosmeticVariantCache.h"
 #include "FFortAbilitySetHandle.h"
 #include "FFortBaseWeaponStats.h"
+#include "FFortCosmeticModification.h"
 #include "FFortEffectDistanceQuality.h"
 #include "FFortGameplayAbilityBehaviorDistanceData.h"
 #include "FMaterialInterfaceArray.h"
@@ -48,6 +51,7 @@ class UAnimSequence;
 class UAthenaItemWrapDefinition;
 class UAudioComponent;
 class UCameraShake;
+class UFXSystemComponent;
 class UForceFeedbackEffect;
 class UFortAlterationItemDefinition;
 class UFortCameraMode;
@@ -947,6 +951,131 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	bool TryReloadAmmoFromAbility();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_OnUnEquip();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnAmmoCountChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChargeDown();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChargeUp();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndCharge();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnEquippedWeaponDestory();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitAlteration(UFortAlterationItemDefinition* NewAlteration);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitCosmeticAlterations(FFortCosmeticModification CosmeticMod);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitWeaponCosmetics();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInstigatorSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnOutOfAmmoFire();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayImpactFX(FHitResult& HitResult, EPhysicalSurface ImpactPhysicalSurface, UFXSystemComponent* SpawnedPSC);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnPlayReloadFX(EFortReloadFXState::Type ReloadStage);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnPlayWeaponFireFX(bool bPersistentFire, bool bSecondaryFire);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnReachedMaxCharge();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReachedMaxChargeForCurAmmo();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnReachedMinCharge();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnRemoteClientReachedMaxCharge();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnRemoteClientReachedMinCharge();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetTargeting(bool bNewIsTargeting);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartCharge();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnStopWeaponFireFX();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponAttached();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponDetached();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponVisibilityChanged(bool bVisible, bool bSetForLocalControllerOnly);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

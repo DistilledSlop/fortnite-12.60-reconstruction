@@ -14,5 +14,15 @@ class FORTNITEUI_API UFortAthenaTutorialTargetCounter : public UUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ResetCounterVisuals();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateTargetCounterVisuals(int32 NumberOfTargets);
+public:
+
 };
 

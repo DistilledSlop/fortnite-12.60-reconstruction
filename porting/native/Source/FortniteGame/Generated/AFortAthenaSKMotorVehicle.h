@@ -93,5 +93,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsStandingInPlace() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSpringCompression();
+public:
+
 };
 

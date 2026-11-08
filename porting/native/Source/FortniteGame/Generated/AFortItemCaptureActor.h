@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UFortItemThumbnailRenderer> Renderer;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupCapture(UFortItemThumbnailRenderer* InRenderer, UFortItemDefinition* InItemDefinition);
+public:
+
 };
 

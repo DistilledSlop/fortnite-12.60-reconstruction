@@ -89,5 +89,20 @@ public:
 	UPROPERTY()
 	UUserWidget* InventoryPanelOverride;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnPostGameEnded();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnPostGameStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWidgetStackCleared();
+public:
+
 };
 

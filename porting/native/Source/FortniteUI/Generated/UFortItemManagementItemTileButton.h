@@ -66,5 +66,45 @@ protected:
 	EFortItemManagementMode GetItemManagementMode() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemManagementModeSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleEquipSlotChanged(int32 EquipSlot);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleHasItemToCompareDetailsWithChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleHasItemToDetailChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemChangedBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemMulchStateChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleShowCollectionBookIndicatorChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleShowRefundIndicatorChanged();
+public:
+
 };
 

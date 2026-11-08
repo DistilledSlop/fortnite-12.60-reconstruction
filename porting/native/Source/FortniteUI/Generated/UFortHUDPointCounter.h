@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UTextBlock* Text_DebugId;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPointTextSet(bool bHasScore);
+public:
+
 };
 

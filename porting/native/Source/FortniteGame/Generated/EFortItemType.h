@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortItemType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortItemType : uint8
 {
 	WorldItem = 0,

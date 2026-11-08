@@ -7,7 +7,7 @@
 
 #include "FChannelData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FChannelData
 {
 	GENERATED_BODY()

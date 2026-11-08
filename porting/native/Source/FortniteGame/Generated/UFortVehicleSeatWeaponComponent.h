@@ -128,6 +128,11 @@ public:
 	UFUNCTION()
 	void OnRep_ShotsFired();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMountedWeaponFired(int32 SeatIdx, int32 ShotsRemaining);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

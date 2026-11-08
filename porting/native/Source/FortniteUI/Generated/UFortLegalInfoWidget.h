@@ -35,5 +35,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Close;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddJapaneseEULATabs();
+public:
+
 };
 

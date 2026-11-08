@@ -41,5 +41,15 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle EmoteInputAction;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnPlayerClicked();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerPanelHidden();
+public:
+
 };
 

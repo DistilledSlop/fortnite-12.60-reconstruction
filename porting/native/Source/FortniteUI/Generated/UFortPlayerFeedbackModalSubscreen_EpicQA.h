@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortPlayerFeedbackModalSubscreenBase.h"
 
+#include "EPlayerFeedback_EpicQAState.h"
 #include "UCommonButton.h"
 
 class UComboBoxString;
@@ -38,6 +39,11 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonButton* Button_ConfirmComponent;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStateUpdated(EPlayerFeedback_EpicQAState NewState);
+public:
 
 };
 

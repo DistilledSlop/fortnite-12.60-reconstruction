@@ -35,5 +35,15 @@ public:
 	UPROPERTY()
 	UAthenaChallengeProgressBar* ChallengeProgress_ObjectivesCompleted;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeInfoSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalPlayerMissingAssistedChallenge();
+public:
+
 };
 

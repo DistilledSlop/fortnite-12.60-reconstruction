@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	UOverlay* OverlayMain;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavigationLeft();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavigationRight();
+public:
+
 };
 

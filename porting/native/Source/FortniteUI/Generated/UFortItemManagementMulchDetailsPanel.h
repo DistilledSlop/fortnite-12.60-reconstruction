@@ -31,5 +31,15 @@ public:
 	UPROPERTY(Transient)
 	UFortInventoryContext* InventoryContext;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleHostSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSetOfItemsToMulchChangedBP();
+public:
+
 };
 

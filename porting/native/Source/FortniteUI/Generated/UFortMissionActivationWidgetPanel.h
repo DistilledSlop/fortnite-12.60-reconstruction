@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortVoteType.h"
+
 class UFortMissionActivationInfo;
 
 #include "UFortMissionActivationWidgetPanel.generated.h"
@@ -19,6 +21,31 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	UFortMissionActivationInfo* InfoObject;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void InfoObjectUpdated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnActiveVoteChangedBP(EFortVoteType VoteType, bool bIsVoteActive, int32 VoteResult);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMultiplayerChangedBP(bool bIsMultiplayer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVoteLockoutChangedBP(EFortVoteType VoteType, bool bIsLocked);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVoteUpdatedBP(EFortVoteType VoteType);
+public:
 
 };
 

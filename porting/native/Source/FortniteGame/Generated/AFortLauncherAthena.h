@@ -9,6 +9,7 @@
 #include "AttributeSet.h"
 #include "FServerLaunchInfo.h"
 
+class AFortPlayerPawnAthena;
 class USoundBase;
 
 #include "AFortLauncherAthena.generated.h"
@@ -41,6 +42,11 @@ public:
 
 	UFUNCTION()
 	void OnRepLaunchServerInfo();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void TriggerLaunchEffects(AFortPlayerPawnAthena* Pawn);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

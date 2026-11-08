@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortQuickBars.h"
 #include "UCommonButtonGroup.h"
 
 #include "UAthenaQuickbarEditorBase.generated.h"
@@ -23,6 +24,11 @@ public:
 	// table index 0, flags 0x20080000000005
 	UPROPERTY()
 	bool bCheckVisibilityBasedOffInventoryCapacity;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleQuickBarChangedBP(EFortQuickBars QuickBarType);
+public:
 
 };
 

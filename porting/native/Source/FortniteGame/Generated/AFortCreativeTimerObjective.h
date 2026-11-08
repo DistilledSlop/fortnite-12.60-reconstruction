@@ -30,5 +30,15 @@ public:
 	UPROPERTY()
 	bool MaintainInteractionWhileLookingAround;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	FName BP_GetDisplayTextStyle() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	FText BP_GetLabelText() const;
+public:
+
 };
 

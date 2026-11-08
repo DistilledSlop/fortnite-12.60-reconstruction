@@ -162,6 +162,20 @@ public:
 	void OnSlotOccupied(AAIController* AI, int32 Index, int32 UserId);
 	virtual void OnSlotOccupied_Implementation(AAIController* AI, int32 Index, int32 UserId);
 
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnMoveToSlotFinished(AAIController* AI, int32 Index, int32 UserId, bool bResult);
+	virtual void OnMoveToSlotFinished_Implementation(AAIController* AI, int32 Index, int32 UserId, bool bResult);
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnRemovedBehavior(AAIController* AI, int32 Index, int32 UserId, EAIHotSpotSlot PrevState, bool bWasOnWaitingList);
+	virtual void OnRemovedBehavior_Implementation(AAIController* AI, int32 Index, int32 UserId, EAIHotSpotSlot PrevState, bool bWasOnWaitingList);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnRemovedSlotlessBehavior(AAIController* AI, bool bIsClamingSlot);
+	virtual void OnRemovedSlotlessBehavior_Implementation(AAIController* AI, bool bIsClamingSlot);
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

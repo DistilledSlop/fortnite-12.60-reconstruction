@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortItemCardSize.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortItemCardSize : uint8
 {
 	XXS = 0,

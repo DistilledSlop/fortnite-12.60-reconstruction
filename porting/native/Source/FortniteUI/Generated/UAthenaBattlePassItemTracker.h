@@ -25,5 +25,15 @@ public:
 	UPROPERTY()
 	UCommonNumericTextBlock* Text_Counter;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInterpEnded(UCommonNumericTextBlock* NumericTextBlock, bool HadCompleted);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInterpStarted();
+public:
+
 };
 

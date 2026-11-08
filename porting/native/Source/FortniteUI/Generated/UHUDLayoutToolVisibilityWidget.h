@@ -38,5 +38,10 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UHUDLayoutToolPlacementWidget> CurrentWidget;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void Refresh();
+public:
+
 };
 

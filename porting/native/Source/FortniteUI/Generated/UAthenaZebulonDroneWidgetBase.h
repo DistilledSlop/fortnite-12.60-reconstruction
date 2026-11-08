@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "EAthenaGamePhaseStep.h"
+
 #include "UAthenaZebulonDroneWidgetBase.generated.h"
 
 UCLASS()
@@ -14,5 +16,10 @@ class FORTNITEUI_API UAthenaZebulonDroneWidgetBase : public UFortHUDElementWidge
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGamePhaseStepChanged(EAthenaGamePhaseStep GamePhaseStep);
+public:
+
 };
 

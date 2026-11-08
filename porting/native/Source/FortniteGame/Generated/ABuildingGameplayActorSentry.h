@@ -220,6 +220,31 @@ public:
 	UFUNCTION()
 	void OnRep_ExactIdleRotation();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnSentryStateChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayStartedIdleRotationAudio();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayStoppedIdleRotationAudio();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetLaserActive(bool bIsActive);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StopRotationSound();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

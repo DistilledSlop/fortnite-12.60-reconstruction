@@ -40,5 +40,15 @@ public:
 	UPROPERTY()
 	UScrollBox* ScrollBox_Quest;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void FinishedUpdateingQuests();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RunIntroAnim();
+public:
+
 };
 

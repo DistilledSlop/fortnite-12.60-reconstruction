@@ -121,6 +121,21 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void NotifyRestedXpGenAmount(int32 RestedXp);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleObjectSpecialInteraction(FGameplayTag ActionTag, FGameplayTag CameraTag, AFortEventLevelNavigationActor* InActor);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavActorHovered();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavActorSelected();
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

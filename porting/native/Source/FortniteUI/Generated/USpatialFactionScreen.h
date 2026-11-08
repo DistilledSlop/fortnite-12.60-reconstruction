@@ -33,5 +33,10 @@ protected:
 	void SetAboutScreenVisited();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFactionChoiceRequired();
+public:
+
 };
 

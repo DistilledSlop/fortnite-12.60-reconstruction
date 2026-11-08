@@ -10,7 +10,7 @@ class UUserWidget;
 
 #include "FFortHUDTagPromptData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FFortHUDTagPromptData
 {
 	GENERATED_BODY()

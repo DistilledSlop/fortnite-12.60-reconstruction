@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EBarrierObjectiveDamageState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EBarrierObjectiveDamageState : uint8
 {
 	Health_75 = 0,

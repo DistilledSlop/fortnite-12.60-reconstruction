@@ -34,5 +34,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortPlayerSurveyBase* GetSurvey() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerSurveyEnded();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartIntro_BP();
+public:
+
 };
 

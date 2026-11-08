@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "UCommonTextBlock.h"
+#include "UFortAccoladeItemDefinition.h"
 
 #include "UAthenaPunchCardEntry.generated.h"
 
@@ -31,6 +32,16 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UCommonTextBlock* Text_RewardQuantity_Recap;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewMedalPlaced(UFortAccoladeItemDefinition* PunchedMedal, bool bPlaySocketAnim);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetMedal(UFortAccoladeItemDefinition* PunchedMedal);
+public:
 
 };
 

@@ -17,6 +17,16 @@ void UFortMatchmakingKnobsModal::InitializeData()
 	return;
 }
 
+void UFortMatchmakingKnobsModal::HandleCancelClicked_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortMatchmakingKnobsModal::InitForOptionsComponent_Implementation(UFortActorOptionsComponent* OptionsComponent)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 bool UFortMatchmakingKnobsModal::NativeAllPairsContained143e8a9c0(const TArray<FIntPoint>& LeftPairs, const TArray<FIntPoint>& RightPairs)
 {
 	// Helper 0x143e8a9c0 (host UFortMatchmakingKnobsModal). Asm: 143e8a9c0..143e8aa56.

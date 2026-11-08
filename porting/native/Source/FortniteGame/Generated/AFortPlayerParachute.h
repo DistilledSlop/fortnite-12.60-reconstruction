@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "EFortDayPhase.h"
 #include "FMarshalledVFXRuntimeData.h"
 #include "Math/Rotator.h"
 
@@ -138,6 +139,31 @@ public:
 
 	UFUNCTION()
 	void OnRep_PlayerPawn();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_SetChuteMeshVisibility(bool bParachuteVisibility);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGliderFullyDeployed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnPlayerPawnSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReceiveParachuteItemdef();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

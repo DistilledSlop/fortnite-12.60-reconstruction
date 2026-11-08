@@ -23,5 +23,25 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TArray<UAthenaMatchStatView*> GetRecentMatches() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDataRecieved();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNoData();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRecentMatcheChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartFetchingData();
+public:
+
 };
 

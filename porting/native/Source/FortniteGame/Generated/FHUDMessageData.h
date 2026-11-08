@@ -13,8 +13,8 @@ class APlayerState;
 
 #include "FHUDMessageData.generated.h"
 
-USTRUCT()
-struct FHUDMessageData : public FAthenaGameMessageData
+USTRUCT(BlueprintType)
+struct FORTNITEGAME_API FHUDMessageData : public FAthenaGameMessageData
 {
 	GENERATED_BODY()
 

@@ -42,5 +42,10 @@ protected:
 	virtual void ShowWidget_Implementation(int32 NumRemaining);
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateNumber(int32 NumRemaining);
+public:
+
 };
 

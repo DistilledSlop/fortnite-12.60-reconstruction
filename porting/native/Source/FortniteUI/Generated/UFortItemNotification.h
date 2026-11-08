@@ -45,5 +45,20 @@ public:
 	UPROPERTY()
 	UFortItemInfoPresentationWidget* ItemInfoPresentationWidget;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCloseScreen();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNextItemDisplay();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetButtonText(bool bCanCloseWidget);
+public:
+
 };
 

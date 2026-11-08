@@ -30,5 +30,15 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* TextBlock_Header;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSelectionState(bool bIsSelected);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateSubreasonsIndicator(bool bHasSubreasons);
+public:
+
 };
 

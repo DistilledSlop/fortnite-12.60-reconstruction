@@ -37,5 +37,15 @@ public:
 	UPROPERTY(Transient)
 	AFortAIPawn* BossAIPawn;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinalBossFightStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinalBossHealthUpdate();
+public:
+
 };
 

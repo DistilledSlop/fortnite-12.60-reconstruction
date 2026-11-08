@@ -16,6 +16,7 @@
 #include "FTimeStampedPhysicsPawnState.h"
 #include "FVehicleHealthChanged.h"
 #include "FVehicleTargetOrientation.h"
+#include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
@@ -23,6 +24,8 @@
 
 class AActor;
 class ABuildingActor;
+class AController;
+class AFortPawn;
 class APawn;
 class APlayerController;
 class UBuildingEditModeMetadata;
@@ -304,6 +307,71 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void UpdateClientWithPhysicsObjectTestInput(const FVector& LinearVelocity, const FVector& AngularVelocity);
 	void UpdateClientWithPhysicsObjectTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnCollisionHitClient(FVector& HitLocation, FVector& VelocityOfHitter, FVector& HitNormal, AActor* HitActor, EPhysicalSurface HitSurfaceType);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnCollisionHitDamageEffects(float DamageTaken);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnCollisionHitServer(FVector& HitLocation, FVector& VelocityOfHitter, FVector& HitNormal, AActor* HitActor, EPhysicalSurface HitSurfaceType);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDamaged(float Damage, FGameplayTagContainer& DamageTags, FGameplayEffectContextHandle& EffectContext, AController* EventInstigator, AActor* DamageCauser);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDamagePlayEffects(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AFortPawn* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDeathPlayEffects(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AFortPawn* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnteredWaterVolume(FVector& WaterSurfacePoint);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitedWaterVolume(FVector& WaterSurfacePoint);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnImpactDamageApplied(float Damage, FVector ImpactNormal);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartTick();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStopTick();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSurfaceTypePhysicsObjectIsOnChanged(EPhysicalSurface SurfaceTypePhysicsObjectIsOn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PawnHitByPhysicsObject(AFortPawn* Pawn, FVector& ImpactPoint, FVector& ImpactNormal, FVector LaunchVector);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

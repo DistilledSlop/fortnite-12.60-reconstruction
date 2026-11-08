@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EIntelStateEnum.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EIntelStateEnum : uint8
 {
 	None = 0,

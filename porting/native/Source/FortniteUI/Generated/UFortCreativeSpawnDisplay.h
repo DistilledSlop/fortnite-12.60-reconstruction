@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	TArray<UFortItemDefinition*> AllItems;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoadedItems();
+public:
+
 };
 

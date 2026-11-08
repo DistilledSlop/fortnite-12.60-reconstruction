@@ -40,5 +40,10 @@ public:
 	UPROPERTY()
 	UImage* Icon;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentAttributeSetBP();
+public:
+
 };
 

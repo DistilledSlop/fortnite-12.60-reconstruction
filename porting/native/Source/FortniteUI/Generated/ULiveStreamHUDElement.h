@@ -14,5 +14,15 @@ class FORTNITEUI_API ULiveStreamHUDElement : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CreateVideoPlayer();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DestroyVideoPlayer();
+public:
+
 };
 

@@ -56,5 +56,20 @@ protected:
 	virtual void OnRefreshBuildSquadWidget_Implementation();
 public:
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRequestClosePicker();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnStartExpeditionCompleted();
+	virtual void OnStartExpeditionCompleted_Implementation();
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetData(UFortExpeditionItem* InItem);
+	virtual void SetData_Implementation(UFortExpeditionItem* InItem);
+
 };
 

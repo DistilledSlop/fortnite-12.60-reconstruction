@@ -87,5 +87,15 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_ToggleParticipation;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnParticipationChanged(bool bIsParticipating);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OpenBannerEditor();
+public:
+
 };
 

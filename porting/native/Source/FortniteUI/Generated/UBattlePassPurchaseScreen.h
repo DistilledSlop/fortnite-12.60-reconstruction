@@ -99,5 +99,20 @@ public:
 	UPROPERTY(Transient)
 	UBattlePassScreenPurchaseButton* SelectedButton;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinalPurchaseConfirmed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLeaveScreen();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPurchaseClicked(bool bPlayForward, bool bBuyBattleBundle);
+public:
+
 };
 

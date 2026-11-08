@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortVoteArbitratorType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortVoteArbitratorType : uint8
 {
 	Invalid = 0,

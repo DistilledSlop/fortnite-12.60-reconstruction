@@ -40,5 +40,15 @@ public:
 	UPROPERTY()
 	TArray<TWeakObjectPtr<UFortSquadSelectorButton>> SquadSelectorButtons;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	UFortSquadSelectorButton* CreateAndAddSquadButton(FName& SquadId);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ShowWarningReadOnlyWIFE(bool Force);
+public:
+
 };
 

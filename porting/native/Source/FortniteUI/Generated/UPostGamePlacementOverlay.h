@@ -20,5 +20,20 @@ public:
 	UPROPERTY()
 	TSubclassOf<AFortGameplayMutator> MutatorClassToWaitFor;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowLosingPlacement();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowTiePlacement();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowWinningPlacement();
+public:
+
 };
 

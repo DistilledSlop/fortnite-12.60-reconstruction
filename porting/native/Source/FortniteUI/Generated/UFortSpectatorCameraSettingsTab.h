@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortReplayViewSettingsTabBase.h"
 
+#include "EThirdPersonAutoFollowMode.h"
 #include "UCommonUserWidget.h"
 
 #include "UFortSpectatorCameraSettingsTab.generated.h"
@@ -19,6 +20,81 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonUserWidget* Rotator_PlayerOutlines;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBattleMapAutomaticCameraPlacementChanged(bool bInBattleMapAutomaticCameraPlacement);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBattleMapShowAllSquadMembersChanged(bool bBattleMapShowAllSquadMembers);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBattleMapShowNearbyChestsChanged(bool bBattleMapShowNearbyChests);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBattleMapShowTimeIndicatorChanged(bool bBattleMapShowTimeIndicator);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDamageFxEnabledChanged(bool bDamageFxEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDroneIgnoreJumpChanged(bool bDroneIgnoreJump);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHighQualityFxEnabledChanged(bool bHighQualityFxEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerOutlinesEnabledChanged(bool bPlayerOutlinesEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRelevancyZoneVisibleChanged(bool bRelevancyZoneVisible);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSafeZoneOpacityChanged(float SafeZoneOpacity);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShareLensSettingsChanged(bool bShareLensSettings);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStormEffectsEnabledChanged(bool bStormEffectsEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnThirdPersonAutoFollowModeChanged(EThirdPersonAutoFollowMode ThirdPersonAutoFollowMode);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnThirdPersonCameraCollisionChanged(bool bThirdPersonCameraCollision);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnThirdPersonDistanceToSubjectChanged(float ThirdPersonDistanceToSubject);
+public:
 
 };
 

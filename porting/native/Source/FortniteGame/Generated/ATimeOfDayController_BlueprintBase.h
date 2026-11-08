@@ -343,5 +343,15 @@ public:
 	UPROPERTY(Transient)
 	USkyLightComponent* SkyLight;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetPostProcessSettings();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSunOrMoonScale();
+public:
+
 };
 

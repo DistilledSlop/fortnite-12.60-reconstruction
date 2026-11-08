@@ -93,5 +93,37 @@ public:
 	void ServerAddToQuickBar_Implementation(const TArray<AActor*>& Actors, int32 DesiredSlotIndex);
 	bool ServerAddToQuickBar_Validate(const TArray<AActor*>& Actors, int32 DesiredSlotIndex);
 
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void ActivateQuickbarSlot(int32 SlotIndex);
+	virtual void ActivateQuickbarSlot_Implementation(int32 SlotIndex);
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleCreativeQuickbarPressed(int32 SlotIndex);
+	virtual void HandleCreativeQuickbarPressed_Implementation(int32 SlotIndex);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleCreativeQuickbarReleased(int32 SlotIndex);
+	virtual void HandleCreativeQuickbarReleased_Implementation(int32 SlotIndex);
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleQuickbarClutchPressed();
+	virtual void HandleQuickbarClutchPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleQuickbarClutchReleased();
+	virtual void HandleQuickbarClutchReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void PopulateQuickbarSlotFromSelection(int32 SlotIndex);
+	virtual void PopulateQuickbarSlotFromSelection_Implementation(int32 SlotIndex);
+public:
+
 };
 

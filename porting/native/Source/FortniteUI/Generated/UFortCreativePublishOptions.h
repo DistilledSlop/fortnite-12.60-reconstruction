@@ -72,5 +72,25 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Restore;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBackupMyIsland(bool bSuccess);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRestoreMyIslandFromBackup(bool bSuccess);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRestoreStateChanged(bool bReady);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSaveStateChanged(bool bSuccess);
+public:
+
 };
 

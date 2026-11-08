@@ -7,7 +7,7 @@
 
 #include "FFortItemHeaderInformation.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FFortItemHeaderInformation
 {
 	GENERATED_BODY()

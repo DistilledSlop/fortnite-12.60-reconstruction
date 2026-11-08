@@ -69,5 +69,10 @@ public:
 	UPROPERTY(Transient)
 	AActor* TrackedActor;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInteractionFocusChanged(bool bNewFocused);
+public:
+
 };
 

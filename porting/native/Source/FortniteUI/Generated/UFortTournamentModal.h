@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "Math/Color.h"
+
 class UFortTournamentDetailsPage;
 
 #include "UFortTournamentModal.generated.h"
@@ -19,6 +21,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UFortTournamentDetailsPage* TournamentDetailsPage;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTournamentSet(FLinearColor LeftColor, FLinearColor RightColor);
+public:
 
 };
 

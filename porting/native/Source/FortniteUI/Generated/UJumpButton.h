@@ -14,5 +14,10 @@ class FORTNITEUI_API UJumpButton : public UBacchusButton
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayerCanJumpToDeploy(bool bCanDeploy);
+public:
+
 };
 

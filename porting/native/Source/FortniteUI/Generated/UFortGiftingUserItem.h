@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "ESelectionState.h"
 #include "UCommonTextBlock.h"
 
 class UFortUserDetails;
@@ -25,6 +26,16 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonTextBlock* Text_DisplayName;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSelectionState(ESelectionState NewState, bool bAnimateOnSelect);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateMessageText(FText& NewMessage);
+public:
 
 };
 

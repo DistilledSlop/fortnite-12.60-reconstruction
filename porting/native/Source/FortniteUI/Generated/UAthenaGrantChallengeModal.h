@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortMessageReceivedScreen.h"
 
+#include "FFortChallengeSetStyle.h"
 #include "UCommonTextBlock.h"
 #include "UFortChallengeBundleItemDefinition.h"
 
@@ -32,6 +33,11 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonTextBlock* Text_BodyCopy;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeBundleSet(FFortChallengeSetStyle& DisplayStyle);
+public:
 
 };
 

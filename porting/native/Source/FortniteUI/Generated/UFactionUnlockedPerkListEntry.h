@@ -20,5 +20,20 @@ public:
 	UPROPERTY(Transient)
 	UFactionUnlockedPerkData* Perk;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPSetup(UFactionUnlockedPerkData* InPerk);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStaggerTimeElapsed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStaggerTimeStarted();
+public:
+
 };
 

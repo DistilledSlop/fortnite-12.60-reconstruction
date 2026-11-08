@@ -49,5 +49,15 @@ protected:
 	bool CanShowChallengePins() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleShowChallengePinsChanged(bool bInShowChallengePins);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChangeViewMode(bool bChallengesFocusedMode);
+public:
+
 };
 

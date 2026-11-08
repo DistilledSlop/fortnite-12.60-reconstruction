@@ -40,5 +40,20 @@ public:
 	UPROPERTY()
 	float RemoveDuration;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginRemove();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReturnedToPool();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnStackSizeChanged(int32 OldStackSize);
+public:
+
 };
 

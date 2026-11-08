@@ -66,5 +66,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<UAthenaReplayBrowserRowProxyInstance*> RowProxies;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnActionStateChanged(bool bHasAction);
+public:
+
 };
 

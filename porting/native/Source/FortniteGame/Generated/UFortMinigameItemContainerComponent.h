@@ -14,5 +14,10 @@ class FORTNITEGAME_API UFortMinigameItemContainerComponent : public UActorCompon
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_NotifyItemContainerChanged();
+public:
+
 };
 

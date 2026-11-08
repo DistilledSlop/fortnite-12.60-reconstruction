@@ -56,5 +56,10 @@ public:
 	UPROPERTY()
 	TArray<UFortQuestUpdateEntry*> QuestUpdateWidgets;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CreateAnnouncementUpdate(UFortQuestObjectiveInfo* QuestItemToCheck);
+public:
+
 };
 

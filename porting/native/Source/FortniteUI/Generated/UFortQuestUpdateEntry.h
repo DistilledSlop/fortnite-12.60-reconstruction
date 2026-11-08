@@ -55,5 +55,25 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetNumDisplayedObjectives();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void QuestItemSet(UFortQuestItem* QuestItemToCheck);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetupAsAnnouncement();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartQuestIntro();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartQuestOutro();
+public:
+
 };
 

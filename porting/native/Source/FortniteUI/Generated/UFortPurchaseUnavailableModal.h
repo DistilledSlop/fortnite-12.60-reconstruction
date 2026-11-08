@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Confirm;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateTextStyle(FText& OfferDisplayName);
+public:
+
 };
 

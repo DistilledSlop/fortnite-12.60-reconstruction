@@ -94,5 +94,17 @@ protected:
 	virtual void DisplayTarget_Implementation();
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void ActivateTextPrompt();
+	virtual void ActivateTextPrompt_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void DisplayNextButton();
+	virtual void DisplayNextButton_Implementation();
+public:
+
 };
 

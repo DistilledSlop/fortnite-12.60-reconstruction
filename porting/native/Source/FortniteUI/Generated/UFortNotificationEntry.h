@@ -40,5 +40,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void FinishNotificationOutro();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddNotificationBackIntoPool();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartNotificationIntro();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartNotificationOutro();
+public:
+
 };
 

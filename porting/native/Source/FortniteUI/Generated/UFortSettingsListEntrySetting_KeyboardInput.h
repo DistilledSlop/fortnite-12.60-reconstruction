@@ -44,5 +44,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Clear;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateKeyText(FText& PrimaryKeyText, FText& SecondaryKeyText);
+public:
+
 };
 

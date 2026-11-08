@@ -132,5 +132,20 @@ protected:
 	virtual void HandleMCPInventoryChanged(TSet<FString>& TypesChanged, int64 ProfileRvn);
 public:
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleObjectSpecialInteraction(FGameplayTag ActionTag, FGameplayTag CameraTag);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitializeForPlayer();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateWidgetVisibility(AFortPlayerController* PlayerController, bool bEnabled);
+public:
+
 };
 

@@ -7,6 +7,7 @@
 #include "UFortCompetitiveLeaderboardScreen.h"
 
 #include "Engine/DataTable.h"
+#include "FFortTournamentDisplayInfo.h"
 #include "UCommonActionWidget.h"
 #include "UCommonActivatableWidgetSwitcher.h"
 #include "UCommonButton.h"
@@ -74,6 +75,16 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UCommonButtonGroup* ViewButtonGroup;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnColorize(FFortTournamentDisplayInfo ColorInfo);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupForEvent(const FString& EventId, const FString& EventWindowId);
+public:
 
 };
 

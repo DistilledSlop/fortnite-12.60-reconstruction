@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "EPurchaseReturnStep.h"
 #include "Engine/DataTable.h"
+#include "FMtxPurchaseHistory.h"
 #include "UCommonButton.h"
 #include "UCommonButtonGroup.h"
 #include "UCommonListView.h"
@@ -94,6 +96,46 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UScrollBox* ScrollBox_ItemsToReturn;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void InitializeTickets(int32 NumTicketsAvailableToUse);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginRefundSubmission();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndRefundSubmission(bool bSuccess, int32 MtxRefunded, FText& CombinedDisplayNames, int32 TicketIndex, bool WasFreeRefund);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemRefresh(FMtxPurchaseHistory PurchaseHistory);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNoPurchasesAvailable();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOpenSubmitRequest(bool bIsSelectionTokenlessRefundable);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPopulateView(EPurchaseReturnStep CurrentStep);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateItemList(TArray<UCommonTextBlock*>& ItemsToReturn);
+public:
 
 };
 

@@ -14,5 +14,10 @@ class FORTNITEGAME_API UDeathEffectsPawnComponent : public UPawnComponent
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void ClientPlayWinnerDeathEffects();
+public:
+
 };
 

@@ -26,5 +26,15 @@ public:
 	UPROPERTY()
 	UButton* Button_ClickCatcher;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleModifierEnabled(bool bModifierEnabled);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetMaxLevelCompleted(int32 MaxLevel);
+public:
+
 };
 

@@ -7,6 +7,7 @@
 #include "AFortAbilityDecoTool.h"
 
 class AFortDecoHelper;
+class AFortWeapon;
 
 #include "AFortCustomizableAbilityDecoTool.generated.h"
 
@@ -39,6 +40,33 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerReleaseTrigger();
 	void ServerReleaseTrigger_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnEquip(AFortWeapon* OldWeapon);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnSetDecoObjectPreview(AFortDecoHelper* FortDecoHelper);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnUnEquip();
+public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	void BPPressSecondaryFire(AFortDecoHelper* FortDecoHelper);
+	virtual void BPPressSecondaryFire_Implementation(AFortDecoHelper* FortDecoHelper);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void BPPressTrigger(AFortDecoHelper* FortDecoHelper);
+	virtual void BPPressTrigger_Implementation(AFortDecoHelper* FortDecoHelper);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void BPReleaseTrigger(AFortDecoHelper* FortDecoHelper);
+	virtual void BPReleaseTrigger_Implementation(AFortDecoHelper* FortDecoHelper);
 
 };
 

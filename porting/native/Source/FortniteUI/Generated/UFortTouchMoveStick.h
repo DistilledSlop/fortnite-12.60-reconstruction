@@ -74,5 +74,10 @@ public:
 	void SetMovementLockStatus(bool MovementIsLocked);
 	virtual void SetMovementLockStatus_Implementation(bool MovementIsLocked);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetStickPositionBP(FVector2D NewPosition);
+public:
+
 };
 

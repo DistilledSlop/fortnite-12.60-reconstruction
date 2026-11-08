@@ -48,5 +48,10 @@ public:
 	UPROPERTY()
 	UCommonLazyImage* LazyImage_Flame;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleEffectsLevelChanged(int32 EffectsLevel);
+public:
+
 };
 

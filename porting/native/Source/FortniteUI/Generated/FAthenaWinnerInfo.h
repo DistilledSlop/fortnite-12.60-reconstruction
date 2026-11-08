@@ -7,7 +7,7 @@
 
 #include "FAthenaWinnerInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FAthenaWinnerInfo
 {
 	GENERATED_BODY()

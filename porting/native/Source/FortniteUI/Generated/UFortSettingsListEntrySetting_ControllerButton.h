@@ -41,5 +41,10 @@ public:
 	UPROPERTY()
 	UMenuAnchor* MenuAnchor_BindableActions;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSettingAssigned(FText& ActionText);
+public:
+
 };
 

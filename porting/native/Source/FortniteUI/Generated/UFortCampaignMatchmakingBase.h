@@ -14,5 +14,15 @@ class FORTNITEUI_API UFortCampaignMatchmakingBase : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGameReadinessChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeamMembershipChanged();
+public:
+
 };
 

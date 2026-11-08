@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ELayoutPropertyType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ELayoutPropertyType : uint8
 {
 	PropertyType_Float = 0,

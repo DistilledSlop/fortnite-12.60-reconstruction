@@ -56,5 +56,20 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* CommonTextBlock_RegionText;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SelectedEndTournament(bool bEndIsSelected);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SelectedFrontTournament(bool bFrontIsSelected);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SelectedTournamentChanged(const FString& SelectedTournament);
+public:
+
 };
 

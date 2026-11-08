@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EExitCraftState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EExitCraftState : uint8
 {
 	None = 0,

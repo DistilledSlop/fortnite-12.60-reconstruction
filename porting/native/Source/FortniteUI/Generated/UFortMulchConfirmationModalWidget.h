@@ -46,5 +46,10 @@ public:
 	UPROPERTY(Transient)
 	UFortInventoryContext* InventoryContext;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateConfirmationModal_BP();
+public:
+
 };
 

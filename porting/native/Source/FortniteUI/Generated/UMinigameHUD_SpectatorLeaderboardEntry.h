@@ -68,5 +68,20 @@ public:
 	UPROPERTY(Transient)
 	ESpectatorLeaderboardEntryType CachedEntryType;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayTypeChanged(ESpectatorLeaderboardEntryType EntryType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStandingChanged(int32 Standing, int32 Score);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetCoinVisibility(bool bVisible);
+public:
+
 };
 

@@ -7,6 +7,7 @@
 #include "ULTMWidgetBase.h"
 
 #include "AFortAthenaMutator_Infiltration.h"
+#include "EIntelStateEnum.h"
 
 #include "UInfiltrationBaseWidget.generated.h"
 
@@ -22,6 +23,26 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumOfRounds() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGroundTimerChanged(float NewTimeRemaining);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIntelStateChanged(EIntelStateEnum NewState);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsCurrentlyDefendedChanged(bool bNewBeingDefended);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMutatorReady();
+public:
 
 };
 

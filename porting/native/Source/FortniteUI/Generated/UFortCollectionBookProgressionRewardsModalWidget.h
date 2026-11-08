@@ -10,6 +10,7 @@
 #include "UCommonButtonGroup.h"
 #include "UCommonNumericTextBlock.h"
 #include "UCommonTextBlock.h"
+#include "UFortItem.h"
 
 class UFortCollectionBookProgressionRewardDetailInspectWidget;
 class UVerticalBox;
@@ -53,6 +54,17 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	UCommonButtonGroup* ButtonGroup;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void InspectItemBP(UFortItem* Item);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnLevelProgressionSet(int32 CurrentLevel, float NextLvlPct, int32 MaxAchievedLevel);
+	virtual void OnLevelProgressionSet_Implementation(int32 CurrentLevel, float NextLvlPct, int32 MaxAchievedLevel);
+public:
 
 };
 

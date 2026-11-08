@@ -129,6 +129,11 @@ protected:
 	void OnRep_AllowSecondInteraction();
 public:
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void BlueprintOnInteractInterrupted();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

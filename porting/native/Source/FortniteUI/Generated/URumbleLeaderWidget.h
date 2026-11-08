@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+#include "FFortInGameLeaderboardPlacementData.h"
+
 #include "URumbleLeaderWidget.generated.h"
 
 UCLASS()
@@ -14,5 +16,10 @@ class FORTNITEUI_API URumbleLeaderWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateDisplay(FFortInGameLeaderboardPlacementData& LeaderEntry, bool bIsTiedForLead);
+public:
+
 };
 

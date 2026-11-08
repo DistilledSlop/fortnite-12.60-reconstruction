@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EQuestMapScreenMode.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EQuestMapScreenMode : uint8
 {
 	Invalid = 0,

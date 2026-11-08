@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EDiscoCaptureUIState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EDiscoCaptureUIState : uint8
 {
 	None = 0,

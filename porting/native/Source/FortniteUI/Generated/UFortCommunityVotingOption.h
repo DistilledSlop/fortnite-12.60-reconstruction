@@ -56,5 +56,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool HaveVotesRemaining();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisableButtons();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void EnableButtons();
+public:
+
 };
 

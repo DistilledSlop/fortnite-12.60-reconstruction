@@ -39,6 +39,21 @@ public:
 	UFUNCTION()
 	void OnRep_bCapturePointEnabled();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewUIDetailState(bool bDetailed);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewUIVisibilityState(bool bVisible);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayOnIntelCapturedFX();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

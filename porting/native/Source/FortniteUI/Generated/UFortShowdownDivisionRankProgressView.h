@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	UProgressBar* Bar_DivisionProgress;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetInProgress(float NewPercent, bool bIsInProgress);
+public:
+
 };
 

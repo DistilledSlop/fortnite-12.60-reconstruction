@@ -41,5 +41,30 @@ public:
 	UPROPERTY()
 	UOverlay* PerkIntroOverlay;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPerkIntroFinished();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetReRollCount(int32 NewCount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetTimeRemaining(float TimeRemaining);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartClosingWidget();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateBackgroundImage(bool bShouldShowBackground);
+public:
+
 };
 

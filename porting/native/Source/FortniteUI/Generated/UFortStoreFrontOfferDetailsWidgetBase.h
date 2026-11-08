@@ -7,6 +7,7 @@
 #include "UFortActivatablePanelWithItemPreview.h"
 
 #include "Engine/DataTable.h"
+#include "GameplayTagContainer.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 #include "UFortItem.h"
@@ -114,6 +115,51 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldHavePurchaseConfirmation() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HideUndoInBottomBar();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOfferSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPurchasingStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateStatus();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVariantChanged(FGameplayTag VariantChannel, FGameplayTag VariantTag, bool IsOwned);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PurchaseAmountLeft();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PurchaseAmountRight();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowUndoInBottomBar();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateItemViewModeBP();
+public:
 
 };
 

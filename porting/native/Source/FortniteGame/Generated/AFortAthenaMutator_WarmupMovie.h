@@ -54,6 +54,16 @@ public:
 	UPROPERTY(Transient)
 	UMediaPlayer* MediaPlayer;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayMovie();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PushMovieWidget(UCommonActivatablePanel* Widget);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

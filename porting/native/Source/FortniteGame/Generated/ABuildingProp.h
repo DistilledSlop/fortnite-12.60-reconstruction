@@ -7,6 +7,11 @@
 #include "ABuildingTimeOfDayLights.h"
 
 #include "GameplayTagContainer.h"
+#include "Math/Rotator.h"
+#include "Math/Vector.h"
+
+class AActor;
+class AController;
 
 #include "ABuildingProp.generated.h"
 
@@ -23,6 +28,12 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bSuppressSimpleInteractionWidgetForTouch : 1;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void BP_GetEyesViewpoint(FVector& OutLocation, FRotator& OutRotation) const;
+	virtual void BP_GetEyesViewpoint_Implementation(FVector& OutLocation, FRotator& OutRotation) const;
+public:
 
 };
 

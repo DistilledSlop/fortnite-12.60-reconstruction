@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeListEntryBase.h"
 
+#include "EChallengeListSection.h"
 #include "UCommonTextBlock.h"
 
 #include "UAthenaChallengeListEntry_Header.generated.h"
@@ -19,6 +20,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonTextBlock* Text_SectionTitle;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSectionTypeSet(EChallengeListSection SectionType);
+public:
 
 };
 

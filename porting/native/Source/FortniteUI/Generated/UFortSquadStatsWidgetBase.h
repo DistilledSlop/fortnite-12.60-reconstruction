@@ -25,5 +25,15 @@ public:
 	UPROPERTY()
 	UFortAttributeList_NUI* DetailedStats;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePowerRatingChanged_BP(bool bHasTeamMebers);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSquadSlottingPreviewStateChanged();
+public:
+
 };
 

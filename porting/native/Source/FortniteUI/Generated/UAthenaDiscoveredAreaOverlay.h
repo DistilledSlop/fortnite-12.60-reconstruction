@@ -14,5 +14,10 @@ class FORTNITEUI_API UAthenaDiscoveredAreaOverlay : public UAthenaDiscoverabilit
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewDiscovery(FText& LocalizedLocationName, bool bIsNamedLocation);
+public:
+
 };
 

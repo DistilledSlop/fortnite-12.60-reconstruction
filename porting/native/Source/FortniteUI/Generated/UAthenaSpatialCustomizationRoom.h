@@ -66,5 +66,15 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle ManequinRotateInputAction;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRoomStateChanged(ESpatialCustomizationRoomState CurrentRoomState, ESpatialCustomizationRoomState PreviousRoomState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowFirstTimeInfo();
+public:
+
 };
 

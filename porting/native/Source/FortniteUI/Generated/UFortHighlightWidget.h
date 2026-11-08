@@ -28,5 +28,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_Description;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowNotification(bool bShowNotification);
+public:
+
 };
 

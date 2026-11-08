@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortQuickBars.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortQuickBars : uint8
 {
 	Primary = 0,

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EOstrichDetonationState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EOstrichDetonationState : uint8
 {
 	None = 0,

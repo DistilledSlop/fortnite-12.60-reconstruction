@@ -13,10 +13,12 @@
 #include "UCommonButton.h"
 #include "UCommonListView.h"
 #include "UCommonTextBlock.h"
+#include "UFortActorOptionsComponent.h"
 #include "UFortPlaylistAthena.h"
 #include "UPlaylistUserOptions.h"
 
 class APlayerState;
+class UFortMatchmakingKnobsSpinnerButton;
 class UFortUserPermissions;
 class UImage;
 class UObject;
@@ -100,6 +102,29 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void InitializeData();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleCancelClicked();
+	virtual void HandleCancelClicked_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void HandleNoOptionsLoaded();
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void InitForOptionsComponent(UFortActorOptionsComponent* OptionsComponent);
+	virtual void InitForOptionsComponent_Implementation(UFortActorOptionsComponent* OptionsComponent);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelectionUpdated(UFortMatchmakingKnobsSpinnerButton* CurrentSelection);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnSetInGameMode();
+public:
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

@@ -226,6 +226,26 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetLootSpawnWorldTransformOverride(FTransform& Transform);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnForcedCycle();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemCollectorStateChanged(EFortItemCollectorState InItemCollectorState);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReachedDepositGoal(AFortPlayerController* CurrentControllingPlayer, UFortWorldItemDefinition* CurrentActiveInputItem);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCollectorsActiveItem(int32 StartingSeedValue, UFortWorldItemDefinition* InputItem, UTexture* InputTexture, int32 CurrentGoal, int32 CurrentCollectedAmount, int32 CurrentCaptureCount, UTexture* OutputTexture);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

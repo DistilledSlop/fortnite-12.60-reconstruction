@@ -40,5 +40,15 @@ public:
 	UPROPERTY()
 	TMap<FName, FFortTabButtonLabelInfo> TabButtonLabelInfoMap;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentTargetLoadoutSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleFilterTabSelectedBP(FName TabId);
+public:
+
 };
 

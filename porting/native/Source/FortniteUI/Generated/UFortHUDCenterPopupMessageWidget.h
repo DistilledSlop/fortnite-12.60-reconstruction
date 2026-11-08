@@ -33,5 +33,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintCosmetic)
 	ECenterPopupMessageStateEnum GetCenterPopupMessageState() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnModalDisplayed(ECenterPopupMessageStateEnum NewState, UCommonActivatablePanel* ModalPopup);
+public:
+
 };
 

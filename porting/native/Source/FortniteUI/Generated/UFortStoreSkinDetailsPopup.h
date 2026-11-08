@@ -26,5 +26,15 @@ public:
 	UPROPERTY()
 	UCommonRichTextBlock* RichText_ItemPrompt;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RequestFadeIn();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RequuestFadeOut();
+public:
+
 };
 

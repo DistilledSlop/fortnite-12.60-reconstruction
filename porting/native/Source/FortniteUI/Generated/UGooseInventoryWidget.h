@@ -7,6 +7,9 @@
 #include "ULTMWidgetBase.h"
 
 #include "AttributeSet.h"
+#include "UFortWorldItemDefinition.h"
+
+class UTexture2D;
 
 #include "UGooseInventoryWidget.generated.h"
 
@@ -19,6 +22,16 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	FScalableFloat WidgetEnabled;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void CloseWidget();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OpenWidget(UTexture2D* IconTexture, UFortWorldItemDefinition* ItemDef);
+public:
 
 };
 

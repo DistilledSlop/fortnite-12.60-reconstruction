@@ -373,6 +373,106 @@ public:
 	void ServerUpdateControlState(const FReplicatedHeliControlState& InControlState);
 	void ServerUpdateControlState_Implementation(const FReplicatedHeliControlState& InControlState);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostFailed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostFinished();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostReady();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostStarted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCritRotor(float Damage, FVector& ImpactLocation, AController* DamageInstigator, AActor* DamageCauser, bool bMainRotor);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExplode();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnImpactOtherHoagie(FVector& HitLocation, FVector& NormalImpulse);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnImpactWhileCritical();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRotorDamageDealt(FHitResult& Impact, bool bInner);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRotorDamageDealtInner(FHitResult& Impact);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRotorDamageDealtOuter(FHitResult& Impact);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRotorDamagePlayer(FHitResult& Impact);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRotorsStop();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartCriticalHealth();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartupBegin();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartupEnd();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTickRotors(float RotorAngleDegrees);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetMainRotorRotation(float Degrees);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetRotorWashActive(bool bActive);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetTailRotorRotation(float Degrees);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

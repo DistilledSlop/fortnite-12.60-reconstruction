@@ -24,5 +24,10 @@ public:
 	UPROPERTY()
 	FGameplayTag RedTeamTag;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetTeam(bool bIsIt);
+public:
+
 };
 

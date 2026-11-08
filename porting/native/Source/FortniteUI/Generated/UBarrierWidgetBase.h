@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "EBarrierFoodTeam.h"
 #include "FBarrierObjectState.h"
 
 #include "UBarrierWidgetBase.generated.h"
@@ -23,6 +24,11 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	FBarrierObjectState EnemyTeamState;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateHealth(bool bFriendlyTeam, float HealthPercent, EBarrierFoodTeam FoodTeam, bool bFlashBar);
+public:
 
 };
 

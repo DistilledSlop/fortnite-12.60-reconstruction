@@ -87,5 +87,19 @@ public:
 	UPROPERTY()
 	UButton* Button_InternalButton;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnClicked();
+	virtual void OnClicked_Implementation();
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetButtonDisplayScale(float NewDisplayScale);
+	virtual void SetButtonDisplayScale_Implementation(float NewDisplayScale);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetButtonSize(float NewButtonSize);
+	virtual void SetButtonSize_Implementation(float NewButtonSize);
+
 };
 

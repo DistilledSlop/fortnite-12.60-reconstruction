@@ -30,5 +30,10 @@ public:
 	UPROPERTY()
 	UCommonRichTextBlock* Text_NumberOfPresents;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowCountdown(bool bShowCountdown);
+public:
+
 };
 

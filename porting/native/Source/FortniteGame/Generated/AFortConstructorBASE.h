@@ -17,8 +17,11 @@
 class AActor;
 class ABuildingSMActor;
 class AController;
+class AFortPawn;
+class UAbilitySystemComponent;
 class UFortDamageSet;
 class UPrimitiveComponent;
+class UStaticMeshComponent;
 
 #include "AFortConstructorBASE.generated.h"
 
@@ -74,6 +77,31 @@ public:
 private:
 	UFUNCTION()
 	void OnNeighborDied(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnPawnAddedToBase(AFortPawn* Pawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnPawnRemovedFromBase(AFortPawn* Pawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnPlaced(UAbilitySystemComponent* InstigatorAbilitySystemComponent);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void StartBuildingActorVisuals(ABuildingSMActor* BuildingActor, UStaticMeshComponent* EffectMeshComp);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void StopBuildingActorVisuals(ABuildingSMActor* BuildingActor, UStaticMeshComponent* EffectMeshComp);
 public:
 
 

@@ -38,5 +38,35 @@ public:
 	UPROPERTY(Transient)
 	bool CachedIsLocalPlayerAlive;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownFinished();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownStarted(int32 TimeRemaining);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownUpdate(int32 TimeRemaining);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalPlayerAlive();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalPlayerDead();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPhaseChanged(EMashPhase::Type NewPhase, int32 CurrentObjectiveIndex, int32 TotalObjectiveArea);
+public:
+
 };
 

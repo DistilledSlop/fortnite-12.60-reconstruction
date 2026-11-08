@@ -12,6 +12,7 @@
 #include "SharedFortGameLog.h"
 #include "UFortAlterationItemDefinition.h"
 #include "UFortAssetManager.h"
+#include "UFortItemDefinition.h"
 #include "UFortWorldItemDefinition.h"
 #include "UMcpProfile.h"
 

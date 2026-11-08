@@ -34,5 +34,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_MobileClose;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCanSaveAsNew(bool bCanSaveAsNew);
+public:
+
 };
 

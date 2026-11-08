@@ -13,6 +13,7 @@
 #include "EMissionGenerationCategory.h"
 #include "FFortBadgeCountArray.h"
 #include "FFortGeneratedDifficultyOptions.h"
+#include "FFortMissionEvent.h"
 #include "FFortMissionEventName.h"
 #include "FFortMissionFocusDisplayData.h"
 #include "FFortMissionInstancedConfigData.h"
@@ -25,15 +26,22 @@
 #include "Misc/Guid.h"
 
 class AActor;
+class AFortAIPawn;
 class AFortClientAnnouncement_Basic;
 class AFortObjectiveBase;
+class AFortPawn;
+class AFortPlayerController;
 class UAudioComponent;
+class UDataAsset;
 class UFortAIEncounterInfo;
 class UFortBotMissionLogic;
 class UFortItemDefinition;
+class UFortMissionEventParams;
 class UFortMissionGenerator;
 class UFortMissionInfo;
 class UFortMissionTimerComponent;
+class UFortWorldItemDefinition;
+class UObject;
 
 #include "AFortMission.generated.h"
 
@@ -323,6 +331,60 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	static TArray<AActor*> SpawnAtPlacementActorsAsArray(AFortMission* Mission, bool& bSucceeded);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void BlueprintCustomHandleMissionEvent(FGuid InMissionGuid, FGameplayTagContainer ObjectiveHandle, UFortMissionEventParams* Params, bool DO_NOT_USE_THIS_OR_VARIABLES_BELOW, UObject* EventFocus, UDataAsset* EventContent, AActor* EventInstigator, int32 GenericInt, float GenericFloat, FText& GenericText, FGameplayTagContainer GameplayTags, FFortMissionEvent& MissionEvent);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void BlueprintOnActivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void BlueprintOnMissionEnd(EFortMissionStatus Status);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void BlueprintOnStartPlaying();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void BlueprintPostMissionLoad();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	int32 GetAdditionalMissionCompletionMissionPoints(EFortMissionStatus CompletionStatus) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	bool GetAdditionalMissionSuccessBadges(TArray<UFortWorldItemDefinition*>& SuccessItems) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void HandleEnemyKilled(AFortPlayerController* KilledBy, AFortPawn* KilledPawn, FGameplayTagContainer& SourceTags);
+public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	void MissionTimerSet();
+	virtual void MissionTimerSet_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void MissionTimerVisibilityOverrideSet();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnEncounterEnemyAISpawned(UFortAIEncounterInfo* Encounter, AFortAIPawn* SpawnedEnemy);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortStoreFrontTileWidgetBase.h"
 
+#include "Styling/SlateBrush.h"
 #include "UCommonLoadGuard.h"
 #include "UFortItemThumbnailRenderer.h"
 
@@ -44,6 +45,41 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void RemoveAllOffers();
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOfferAdded();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOfferSet();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOfferTileBrushLoaded(FSlateBrush& OfferBrush);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateStatus();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewNextCarouselOffer();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupThumbnailRenderer(UFortItemThumbnailRenderer* InThumbnailRenderer);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCarousel(float InDeltaTime);
+public:
 
 };
 

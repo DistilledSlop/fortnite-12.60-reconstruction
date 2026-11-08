@@ -36,5 +36,10 @@ protected:
 	void SetActiveCharmSlot(int32 CharmSlotIn);
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPreviewCosmeticItem();
+public:
+
 };
 

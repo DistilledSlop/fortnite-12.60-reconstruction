@@ -14,6 +14,7 @@
 #include "UFortCreativeRealEstatePlotItemDefinition.h"
 
 class UFortCreativeIslandLink;
+class UFortCreativeIslandTemplateButton;
 
 #include "UFortCreativeIslandGeneration.generated.h"
 
@@ -82,6 +83,20 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	TArray<UFortCreativeIslandLink*> IslandLinks;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleCancelClicked();
+	virtual void HandleCancelClicked_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void HandleNoOptionsLoaded();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelectionUpdated(UFortCreativeIslandTemplateButton* CurrentSelection);
+public:
 
 };
 

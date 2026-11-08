@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_PoiName;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleTextChanged(bool bIsRedacted, bool bIsSpybase);
+public:
+
 };
 

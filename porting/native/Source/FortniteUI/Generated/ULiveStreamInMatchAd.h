@@ -14,5 +14,10 @@ class FORTNITEUI_API ULiveStreamInMatchAd : public UUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowAdvertisement();
+public:
+
 };
 

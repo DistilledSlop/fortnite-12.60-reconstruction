@@ -54,5 +54,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetIsInChoiceSelectionMode(bool InIsInChoiceSelectionMode);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CloseSummaryScreen();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleContextMenuOpenChangedBP(bool bIsOpen);
+public:
+
 };
 

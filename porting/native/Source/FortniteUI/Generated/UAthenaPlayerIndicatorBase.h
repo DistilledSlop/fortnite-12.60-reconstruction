@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActorIndicatorWidget.h"
 
+#include "AFortPlayerStateAthena.h"
+#include "ETeamMemberState.h"
+#include "Math/Color.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 
@@ -40,6 +43,41 @@ public:
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	FVector2D UnscaledScreenSpaceRelativeOffset;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandleBeingRevivedStateChanged(bool bIsBeingRevived, float MaxReviveTime);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandleDBNOStateChanged(bool bIsDBNO);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandlePinColorChanged(FLinearColor& PinColor);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandlePlayerNameReplicated(const FString& PlayerName);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandlePlayerStateSet(AFortPlayerStateAthena* PlayerStateAthena);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandleTalkingStateChanged(bool bIsTalking);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandleTeamMemberStateChanged(ETeamMemberState TeamMemberState);
+public:
 
 };
 

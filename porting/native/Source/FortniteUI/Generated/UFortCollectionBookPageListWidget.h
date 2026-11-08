@@ -6,8 +6,11 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "EFortCollectionBookState.h"
 #include "UCommonNumericTextBlock.h"
 #include "UCommonTextBlock.h"
+#include "UFortCollectionBookCategory.h"
+#include "UFortCollectionBookPage.h"
 
 class UObject;
 
@@ -38,6 +41,26 @@ public:
 	// table index 0, flags 0x20080000002014
 	UPROPERTY(Transient)
 	bool bIsExpanded;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCategoryDetailsUpdated(int32 AvailableSlots, int32 FilledSlots, int32 TotalSlots);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPageDetailsUpdated(int32 AvailableSlots, int32 FilledSlots, int32 TotalSlots, EFortCollectionBookState State);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupAsCategory(UFortCollectionBookCategory* Category);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupAsPage(UFortCollectionBookPage* Page);
+public:
 
 };
 

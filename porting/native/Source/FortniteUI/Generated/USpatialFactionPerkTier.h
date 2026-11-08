@@ -33,5 +33,15 @@ public:
 	UPROPERTY()
 	USpatialFactionPerkProgress* Progress_Faction2;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFactionSet(bool bIsCurrentFactionEarned, bool bIsRevealed, int32 FactionNumber);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitializePerkTier(int32 PerkLevel, bool bIsRevealed, int32 PerkIndex);
+public:
+
 };
 

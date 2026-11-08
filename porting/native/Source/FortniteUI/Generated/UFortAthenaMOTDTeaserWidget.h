@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EAthenaNewsStyle.h"
+
 class UFortAthenaMOTDSimpleNewsWidget;
 class UFortAthenaMOTDTileListView;
 class UFortAthenaMOTDWidget;
@@ -36,6 +38,21 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNewsCount() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleNewsStyle(EAthenaNewsStyle NewsStyle);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewsPopulated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ResetViewConfiguration();
 public:
 
 };

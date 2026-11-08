@@ -20,5 +20,30 @@ public:
 	UPROPERTY()
 	UTextBlock* Text_Watchers;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpectatorCountChanged_BP(int32 NewCount);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpectatorRemoved();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpectatorsAdded(bool bBigGroup);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpectatorsBegan(bool bBigGroup);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpectatorsEnded();
+public:
+
 };
 

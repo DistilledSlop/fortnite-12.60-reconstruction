@@ -55,5 +55,35 @@ public:
 	UFUNCTION()
 	void PushStoreSelection();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClearOfferWidgets();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NoOffersAvailable();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOffersGenerated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPurchasingDisabled();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartReadingOffers();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateOtherPlatformMTXMessage(bool HasOtherPlatformCurrency, FText& CurrencyMessageLocText);
+public:
+
 };
 

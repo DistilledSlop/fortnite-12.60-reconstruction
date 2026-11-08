@@ -117,6 +117,41 @@ public:
 	UPROPERTY()
 	AFortVolume* VolumeToPublish;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCodeConfirmation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCodeCopied();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDescriptionTextCommitted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNameTextCommitted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPublishBegin();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPublishError();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnValidCheckComplete(bool bSuccess);
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

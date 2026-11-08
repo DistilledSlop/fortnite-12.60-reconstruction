@@ -7,6 +7,7 @@
 #include "UFortActivatablePanel.h"
 
 #include "EFortMissionActivationWidgetState.h"
+#include "EFortVoteType.h"
 #include "GameplayTagContainer.h"
 
 class UCurveFloat;
@@ -38,6 +39,26 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortMissionActivationWidgetState GetCurrentState() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnActiveVoteChangedBP(EFortVoteType VoteType, bool bIsVoteActive, int32 VoteResult);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMultiplayerChangedBP(bool bIsMultiplayer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStateUpdated(EFortMissionActivationWidgetState ActiveState, EFortMissionActivationWidgetState PreviousState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVoteLockoutChangedBP(EFortVoteType VoteType, bool bIsLocked);
 public:
 
 };

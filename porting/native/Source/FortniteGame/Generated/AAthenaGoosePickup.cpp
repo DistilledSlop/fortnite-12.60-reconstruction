@@ -38,6 +38,36 @@ void AAthenaGoosePickup::OnStartDespawnWarning_Client_Implementation()
 	return;
 }
 
+void AAthenaGoosePickup::DeployTimerUp_Server_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AAthenaGoosePickup::OnDeployed_Client_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AAthenaGoosePickup::OnDeployed_Server_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AAthenaGoosePickup::OnFalling_Client_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AAthenaGoosePickup::OnFalling_Server_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AAthenaGoosePickup::OnImpactedByPlane_Server_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AAthenaGoosePickup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

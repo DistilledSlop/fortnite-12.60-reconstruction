@@ -38,6 +38,11 @@ public:
 	UFUNCTION()
 	void OnRep_MountedWeaponInfoRepped();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHostVehicleSetup();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

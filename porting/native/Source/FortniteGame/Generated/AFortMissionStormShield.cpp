@@ -53,6 +53,11 @@ AFortMissionStormSafeZone* AFortMissionStormShield::SpawnSafeAreaAtLocation(FVec
 	return nullptr;
 }
 
+void AFortMissionStormShield::UpdateRadiusVisuals_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortMissionStormShield::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

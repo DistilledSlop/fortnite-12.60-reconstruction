@@ -246,6 +246,56 @@ public:
 	UFUNCTION()
 	void OnRep_LootTier();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisableBacchusHighlight();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void EnableBacchusHighlight();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAuthorityRandomUpgradeApplied(FName& UpgradeTierGroup);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginSearch();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoot();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLootRepeat();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLootReset();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRaiseTreasure();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSearchInterrupted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetSearched();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

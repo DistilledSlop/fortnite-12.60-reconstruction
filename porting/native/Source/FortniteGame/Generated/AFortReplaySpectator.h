@@ -85,5 +85,35 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortReplaySequenceComponent* GetSequencerComponent() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNotifyNewPlaybackMultiplier(float NewMultiplier);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPauseStateChanged(bool bNewPauseState);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnZoomInBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnZoomInEnd();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnZoomOutBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnZoomOutEnd();
+public:
+
 };
 

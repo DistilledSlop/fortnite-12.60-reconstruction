@@ -47,6 +47,7 @@ class ABuildingFoundation;
 class AController;
 class AFortConstructorBASE;
 class AFortPawn;
+class AFortPlayerController;
 class AFortPlayerStateZone;
 class UAudioComponent;
 class UBuildingEditModeMetadata;
@@ -800,6 +801,37 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool WillRegisterWithStructuralGrid() const;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void BlueprintOnStructurallyUnstable();
+	virtual void BlueprintOnStructurallyUnstable_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure)
+	UMaterialInterface* GetOverrideMeshMaterial(UStaticMeshComponent* MeshComp, int32 MatIdx) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAttachToBuilding(ABuildingSMActor* AttachedToBuilding);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnBounceAnimationUpdate(FFortBounceData& Data);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDetachFromBuilding(ABuildingSMActor* AttachedToBuilding, bool bBeingDestroyed);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRepairStarted();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

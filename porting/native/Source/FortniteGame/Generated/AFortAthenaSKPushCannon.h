@@ -8,6 +8,8 @@
 
 #include "Math/Vector.h"
 
+class AFortPawn;
+class AFortPlayerPawn;
 class UCameraShake;
 
 #include "AFortAthenaSKPushCannon.generated.h"
@@ -65,6 +67,31 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSetPassengerTorquing(bool bSetTo);
 	void ServerSetPassengerTorquing_Implementation(bool bSetTo);
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLaunchPawn(AFortPlayerPawn* Pawn, FVector LaunchDir);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPostExitVehicle(AFortPawn* ExitingPawn, int32 SeatIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPreLaunchPawn(AFortPlayerPawn* Pawn, FVector LaunchDir);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPushCannonFired(int32 ShotsRemaining, bool bLaunchingPlayer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowCooldownCue(AFortPlayerPawn* Pawn, float Duration);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

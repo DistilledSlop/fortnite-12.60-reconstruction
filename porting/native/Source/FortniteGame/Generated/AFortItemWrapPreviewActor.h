@@ -9,7 +9,10 @@
 #include "FItemWrapPreviewEntry.h"
 
 class ACustomItemWrapModifier;
+class UAnimationAsset;
 class UAthenaItemWrapDefinition;
+class UObject;
+class USkeletalMesh;
 
 #include "AFortItemWrapPreviewActor.generated.h"
 
@@ -30,6 +33,16 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	ACustomItemWrapModifier* ItemWrapModifier;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPreviewSkeletalMeshLoaded(USkeletalMesh* LoadedMesh, UAnimationAsset* LoadedAnimationAsset, TSubclassOf<UObject> LoadedAnimInstanceClass, FItemWrapPreviewEntry& EntryInfo);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void PreviewItemWrap(UAthenaItemWrapDefinition* ItemWrap);
+public:
 
 };
 

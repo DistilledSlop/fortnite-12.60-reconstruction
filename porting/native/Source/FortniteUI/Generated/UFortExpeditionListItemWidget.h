@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UFortExpeditionItem> Item;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemChanged();
+public:
+
 };
 

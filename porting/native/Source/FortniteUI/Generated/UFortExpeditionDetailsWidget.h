@@ -35,5 +35,15 @@ public:
 	UPROPERTY()
 	UFortItemViewContext_ExpeditionSquadSlotsView* ItemViewContext_ExpeditionSlotsView;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnAbandonExpeditionCompleted();
+	virtual void OnAbandonExpeditionCompleted_Implementation();
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetData(UFortExpeditionItem* InItem);
+	virtual void SetData_Implementation(UFortExpeditionItem* InItem);
+
 };
 

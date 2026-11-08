@@ -14,5 +14,15 @@ class FORTNITEUI_API UCobaltRoundCompleteWidgetBase : public UCobaltWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HideDisplay();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowDisplay(bool bIsWin, bool bWasTie, bool bViewingWidgetOwner, int32 RoundNum, FText& RoundName, FText& POIName, int32 PrimaryTeamScore, int32 OpposingTeamScore);
+public:
+
 };
 

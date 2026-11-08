@@ -24,5 +24,30 @@ public:
 	UPROPERTY()
 	AFortCharacterVehicle_Ostrich* OwningOstrichVehicle;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupComplete();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RocketCooldown(float Percent);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RocketLoaded(float Percent, int32 Total);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RocketsFired();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShotgunReload(float Duration);
+public:
+
 };
 

@@ -517,6 +517,76 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetShouldSkipMovementFullSimulation(bool bInShouldSkipMovementFullSimulation);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BushStateChanged(bool bNewBushState);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCreativeStartGhost();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCreativeStopGhost();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnteredReplayRelevancy();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLeftReplayRelevancy();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOutsideSafeZonePhaseChanged(int32 SafeZonePhase);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnPawnLODChanged(int32 NewLOD);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReceivedStormSurgeDamage();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintCosmetic)
+	void OnResInDuringWarmup();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnSignificantTick(float Significance);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSpawnImmunityTimeReset();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSuccessfulBuildingEdit();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RemoveContrails();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetAlwaysShowContrails(bool bEnabled);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EDeathCause.h"
+#include "FPlayerBannerInfo.h"
 #include "UCommonTextBlock.h"
 #include "UCommonWidgetSwitcher.h"
 
@@ -104,6 +106,51 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UAthenaPlayerKillsBase* Widget_KillCounter;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	FText DeathCauseToText(EDeathCause DeathCause);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	bool IsEliminatedByIntroAnimFinished();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEliminatedByIntro();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResetSpectatingForCreative();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowPlacementBox();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateMultiwinner();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWinnerDetermined();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetBannerInfo(FPlayerBannerInfo& BannerInfo);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetPlaceTextFont();
+public:
 
 };
 

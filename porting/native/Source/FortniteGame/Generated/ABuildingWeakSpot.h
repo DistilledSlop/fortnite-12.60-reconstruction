@@ -60,6 +60,21 @@ public:
 	UPROPERTY()
 	TEnumAsByte<EPhysicalSurface> PhysicalSurfaceType;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFadeOut();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHit();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartDirectionEffect();
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

@@ -64,5 +64,10 @@ public:
 	UPROPERTY()
 	UImage* BulletPointImageThree;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HasActiveModalWidget(bool& OutWidgetActive);
+public:
+
 };
 

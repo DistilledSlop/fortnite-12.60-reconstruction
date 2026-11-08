@@ -14,5 +14,10 @@ class FORTNITEUI_API UAthenaWinnerDialogCN : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOpenMessage();
+public:
+
 };
 

@@ -8,6 +8,7 @@
 
 class UFortSetting;
 class UUserWidget;
+class UWidget;
 
 #include "UFortSettingsListEntryBase.generated.h"
 
@@ -24,6 +25,11 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UUserWidget* Background;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	UWidget* GetPrimaryGamepadFocusWidget();
+public:
 
 };
 

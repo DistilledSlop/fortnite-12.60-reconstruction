@@ -7,8 +7,8 @@
 
 #include "FPlayerBannerInfo.generated.h"
 
-USTRUCT()
-struct FPlayerBannerInfo
+USTRUCT(BlueprintType)
+struct FORTNITEGAME_API FPlayerBannerInfo
 {
 	GENERATED_BODY()
 

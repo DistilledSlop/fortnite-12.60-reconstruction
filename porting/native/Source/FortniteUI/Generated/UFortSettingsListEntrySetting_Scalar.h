@@ -41,5 +41,15 @@ protected:
 	void HandleSliderCaptureEnded();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDefaultValueChanged(float DefaultValue);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnValueChanged(float Value);
+public:
+
 };
 

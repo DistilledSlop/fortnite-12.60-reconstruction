@@ -10,6 +10,7 @@
 #include "Delegates/Delegate.h"
 #include "EFortAIDirectorEvent.h"
 #include "EFortCompletionResult.h"
+#include "EFortItemType.h"
 #include "EFortVoteArbitratorType.h"
 #include "EFortVoteType.h"
 #include "EServerStability.h"
@@ -533,6 +534,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool ShouldDisablePlayerTeleportingDuringMissionResults() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void GetSupressedCraftingFilterNames(TArray<FName>& OutNames) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void GetSupressedCraftingItemTypes(TArray<EFortItemType>& OutItemTypes) const;
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

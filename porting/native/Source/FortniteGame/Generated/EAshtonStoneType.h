@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EAshtonStoneType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EAshtonStoneType : uint8
 {
 	Purple = 0,

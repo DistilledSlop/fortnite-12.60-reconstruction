@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EMashPhase.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 namespace EMashPhase
 {
 	enum Type

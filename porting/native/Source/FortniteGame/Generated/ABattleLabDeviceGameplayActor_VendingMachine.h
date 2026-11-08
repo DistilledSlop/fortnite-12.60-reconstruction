@@ -55,6 +55,16 @@ public:
 	UFUNCTION()
 	void OnRep_DroppedIntoFunnelPickup();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void MachineTookCycleDamage(int32 NextIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void PickupDroppedIntoFunnel(AFortPickup* Pickup);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

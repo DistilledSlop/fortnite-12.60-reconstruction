@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UBacchusHUDElement.h"
 
+#include "EBacchusSignalQuality.h"
+
 #include "UBacchusSignalQualityWidget.generated.h"
 
 UCLASS()
@@ -14,5 +16,10 @@ class FORTNITEUI_API UBacchusSignalQualityWidget : public UBacchusHUDElement
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetNewSignalQuality(EBacchusSignalQuality NewSignalQuality);
+public:
+
 };
 

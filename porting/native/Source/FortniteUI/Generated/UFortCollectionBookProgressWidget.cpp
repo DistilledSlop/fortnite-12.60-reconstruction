@@ -15,3 +15,13 @@ void UFortCollectionBookProgressWidget::OnCollectionBookPreviewXPChange_Implemen
 	return;
 }
 
+void UFortCollectionBookProgressWidget::OnCollectionBookLevelChanged_Implementation(int32 NewLevel)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortCollectionBookProgressWidget::OnCollectionBookPageSelected_Implementation(UFortCollectionBookPage* SelectedPage)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

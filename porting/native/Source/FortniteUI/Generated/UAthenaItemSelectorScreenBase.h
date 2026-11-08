@@ -17,6 +17,7 @@ class UAthenaCosmeticUnlockingInfo;
 class UAthenaCustomizationPicker;
 class UFortItemBaseWidget;
 class UFortVariantPicker;
+class UMaterialInstance;
 class UVerticalBox;
 
 #include "UAthenaItemSelectorScreenBase.generated.h"
@@ -93,6 +94,31 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItem* GetCurrentItem() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCurrentItemChanged(UFortItem* SelectedItem);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinishedItemSetup(FText& CategoryDisplayName, FText& ItemDisplayTypeName, EAthenaCustomizationCategory SelectedCategory, UMaterialInstance* OverrideSlotImage);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinsihedItemSave();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSavingItemStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTabSelectionChanged(bool bShowingVariants);
+public:
 
 };
 

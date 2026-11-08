@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortStoreState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortStoreState : uint8
 {
 	Error = 0,

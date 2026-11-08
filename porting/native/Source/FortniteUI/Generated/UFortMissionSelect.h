@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	FMissionSelectNavigationDelegate OnNavigation;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	bool CanCaptureAcceptInput();
+public:
+
 };
 

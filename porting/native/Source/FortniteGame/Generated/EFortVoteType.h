@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortVoteType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortVoteType : uint8
 {
 	SurvivalVote = 0,

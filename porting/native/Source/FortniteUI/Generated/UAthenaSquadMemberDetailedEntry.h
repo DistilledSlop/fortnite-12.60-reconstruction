@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_ParticipationStatus;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadAssigned();
+public:
+
 };
 

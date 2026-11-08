@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	ERadarIconState IconState;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewIconState(ERadarIconState NewState);
+public:
+
 };
 

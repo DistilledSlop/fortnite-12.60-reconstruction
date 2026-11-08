@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortMatchmakingWidgetBase.h"
 
+#include "EGameReadiness.h"
+
 #include "UFortAthenaCreativeMatchmakingWidget.generated.h"
 
 UCLASS()
@@ -14,5 +16,25 @@ class FORTNITEUI_API UFortAthenaCreativeMatchmakingWidget : public UFortMatchmak
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleInGameReadinessChangedBP(EGameReadiness GameReadiness, int32 SquadMemberIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleMatchmakingPartyReadyBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePartyLeaderReadinessChangedBP(EGameReadiness GameReadiness, int32 SquadMemberIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdatedSquadReadyInformationBP(int32 SquadMembers, int32 ReadySquadMembers, bool AmIReady);
+public:
+
 };
 

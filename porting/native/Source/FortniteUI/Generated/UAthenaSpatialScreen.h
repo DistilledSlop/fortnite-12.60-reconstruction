@@ -45,5 +45,9 @@ public:
 	UPROPERTY()
 	bool bNeedsBottomBar;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnInputSuspensionChanged();
+	virtual void OnInputSuspensionChanged_Implementation();
+
 };
 

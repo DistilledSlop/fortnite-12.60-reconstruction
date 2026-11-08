@@ -37,5 +37,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* ContextualHelpText;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOpenSettings(FName TabNameId, const FString& SettingToSelect);
+public:
+
 };
 

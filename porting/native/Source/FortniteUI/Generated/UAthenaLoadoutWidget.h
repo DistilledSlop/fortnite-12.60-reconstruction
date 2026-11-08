@@ -30,5 +30,10 @@ public:
 	void OnLoadoutChosen(UFortAthenaInventoryLoadout* SelectedLoadout);
 	virtual void OnLoadoutChosen_Implementation(UFortAthenaInventoryLoadout* SelectedLoadout);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddEntryWidget(UAthenaLoadoutEntryWidget* NewWidget);
+public:
+
 };
 

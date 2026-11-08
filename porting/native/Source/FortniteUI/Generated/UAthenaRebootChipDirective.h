@@ -7,6 +7,7 @@
 #include "UFortHUDElementWidget.h"
 
 #include "AFortPlayerStateAthena.h"
+#include "EAthenaSquadListUpdateType.h"
 
 class UAthenaPlayerViewModel;
 
@@ -25,6 +26,11 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<AFortPlayerStateAthena*> SquadMemebers;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateSquadListDisplay(EAthenaSquadListUpdateType UpdateType, AFortPlayerStateAthena* PS);
+public:
 
 };
 

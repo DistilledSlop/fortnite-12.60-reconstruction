@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortPublicAccountInfo.h"
+
 #include "UFortAccountWidgetBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFortAccountWidgetBase : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAccountInfoChanged(FFortPublicAccountInfo& Result);
+public:
+
 };
 

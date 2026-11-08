@@ -93,5 +93,15 @@ public:
 	UPROPERTY()
 	EVisibilityResponse ActorResponse;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleCustomFailed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleCustomPass();
+public:
+
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class UAthenaMusicPackItemDefinition;
+
 #include "AFortMusicPackPreviewActor.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -14,5 +16,10 @@ class FORTNITEGAME_API AFortMusicPackPreviewActor : public AActor
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void PreviewMusicPack(UAthenaMusicPackItemDefinition* MusicPack);
+public:
+
 };
 

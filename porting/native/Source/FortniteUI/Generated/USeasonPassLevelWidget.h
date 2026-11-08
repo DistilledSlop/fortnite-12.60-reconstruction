@@ -23,5 +23,30 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortSeasonPassLevelInfo* GetLevelInfo() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAttemptClaimFinished(bool FreeClaimed, bool PaidClaimed);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLockedStatusChanged(bool FreeUnlocked, bool PaidUnlocked);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavigateTo();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetup();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void PlayIntro();
+public:
+
 };
 

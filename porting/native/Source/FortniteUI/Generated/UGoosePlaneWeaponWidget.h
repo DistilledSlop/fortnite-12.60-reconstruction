@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	TArray<FGooseWeaponDisplayData> DisplayData;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void CloseWidget();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OpenWidget(int32 DisplayIndex, FGooseWeaponDisplayData& InDisplayData, float StartTime);
+public:
+
 };
 

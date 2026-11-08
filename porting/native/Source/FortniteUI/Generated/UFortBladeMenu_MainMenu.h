@@ -43,5 +43,10 @@ public:
 	UPROPERTY()
 	UHorizontalBox* HBox_RatingIcons;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOpenSettings(FName TabNameId, const FString& SettingToSelect);
+public:
+
 };
 

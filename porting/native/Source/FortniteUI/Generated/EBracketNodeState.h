@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EBracketNodeState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EBracketNodeState : uint8
 {
 	LocalTeam = 0,

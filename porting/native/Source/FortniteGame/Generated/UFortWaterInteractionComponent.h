@@ -96,5 +96,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInWater() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnteredWaterBody(AFortWaterBodyActor* WaterBody, bool bIsFirstBody);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitedWaterBody(AFortWaterBodyActor* WaterBody, bool bIsLastBody);
+public:
+
 };
 

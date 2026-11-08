@@ -7,6 +7,7 @@
 #include "UCommonActivatableWidget.h"
 
 #include "UCommonUserWidget.h"
+#include "UFortSpectateClickableMapIcon.h"
 
 #include "UFortBroadcasterMapSettings.generated.h"
 
@@ -19,6 +20,11 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonUserWidget* PlayerIndicatorsRotator;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleMapIconAdded(UFortSpectateClickableMapIcon* MapIcon);
+public:
 
 };
 

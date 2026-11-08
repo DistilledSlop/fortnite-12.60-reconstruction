@@ -45,5 +45,25 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItem* GetItem() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnActivatableChanged(bool bNewActivatable);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnCooldownSecondsChanged(int32 NewCooldownSeconds);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnItemChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnItemSet(UFortItem* NewItem);
+public:
+
 };
 

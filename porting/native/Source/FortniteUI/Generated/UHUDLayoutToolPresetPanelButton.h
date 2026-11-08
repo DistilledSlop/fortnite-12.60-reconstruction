@@ -36,5 +36,17 @@ public:
 	UPROPERTY()
 	UCommonBorder* Border_Recommended;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void PlayIntroAnimation();
+	virtual void PlayIntroAnimation_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void PlayTileDeselectionAnimation();
+	virtual void PlayTileDeselectionAnimation_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void PlayTileSelectionAnimation();
+	virtual void PlayTileSelectionAnimation_Implementation();
+
 };
 

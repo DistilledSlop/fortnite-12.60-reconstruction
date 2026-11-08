@@ -47,5 +47,20 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFireModeType GetFireModeType() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnDeselected();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnSelected();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SelectFireMode();
+public:
+
 };
 

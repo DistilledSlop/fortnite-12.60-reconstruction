@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "FAthenaBossHealthData.h"
+
 #include "UCarmineHUDBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UCarmineHUDBase : public UUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBossHealthBarChanged(FAthenaBossHealthData& BossData);
+public:
+
 };
 

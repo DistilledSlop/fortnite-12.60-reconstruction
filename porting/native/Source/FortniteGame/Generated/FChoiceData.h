@@ -8,8 +8,8 @@
 
 #include "FChoiceData.generated.h"
 
-USTRUCT()
-struct FChoiceData
+USTRUCT(BlueprintType)
+struct FORTNITEGAME_API FChoiceData
 {
 	GENERATED_BODY()
 

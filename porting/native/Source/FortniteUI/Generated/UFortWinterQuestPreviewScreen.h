@@ -28,5 +28,15 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_OfferTwo;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateOfferOneText(FText& OfferText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateOfferTwoText(FText& OfferText);
+public:
+
 };
 

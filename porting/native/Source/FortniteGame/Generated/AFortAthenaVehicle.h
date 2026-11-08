@@ -31,6 +31,7 @@
 #include "FVehicleTargetOrientation.h"
 #include "FVehicleToggleableCollisionShapeChanged.h"
 #include "GameFramework/Pawn.h"
+#include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
@@ -39,6 +40,8 @@
 
 class AActor;
 class ABuildingActor;
+class AController;
+class AFortPawn;
 class AFortPlayerController;
 class AFortPlayerPawn;
 class AFortPlayerStateZone;
@@ -59,6 +62,7 @@ class UFortVehicleImminentCollisionComponent;
 class UFortVehicleMovementSet;
 class UFortVehiclePontoonsComponent;
 class UFortVehicleSeatComponent;
+class UFortVehicleSeatWeaponComponent;
 class UFortVehicleTrickSet;
 class UGameplayEffect;
 class UNiagaraComponent;
@@ -867,6 +871,126 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool WheelsOnGround() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void GunOverheat(UFortVehicleSeatWeaponComponent* WeaponComponent);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_ApplyCosmeticWrap(UAthenaItemWrapDefinition* LoadedWrap);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnCollisionHitDamageEffects(float DamageTaken);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnCollisionHitEffects(FVector& HitLocation, FVector& HitNormalImpulse, FVector& HitFrictionImpulse, FVector& HitNormal, AActor* HitActor, EPhysicalSurface HitSurfaceType);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDamaged(float Damage, FGameplayTagContainer& DamageTags, FGameplayEffectContextHandle& EffectContext, AController* EventInstigator, AActor* DamageCauser);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDamagePlayEffects(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AFortPawn* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDeathPlayEffects(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AFortPawn* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnteredWaterBody(AFortWaterBodyActor* WaterBody);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnteredWaterVolume(FVector& WaterSurfacePoint);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitedWaterBody(AFortWaterBodyActor* WaterBody);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitedWaterVolume(FVector& WaterSurfacePoint);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHealed(float Heal, FGameplayTagContainer& HealTags, FGameplayEffectContextHandle& EffectContext, AController* EventInstigator, AActor* HealCauser);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHoldExitStarted(AFortPawn* ExitingPawn, float ExitDuration);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHoldExitStopped(AFortPawn* ExitingPawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHonk();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnImpactDamageApplied(float Damage, FVector ImpactNormal);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsSprintingChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPawnEnterVehicle(AFortPlayerPawn* PlayerPawn, int32 SeatIdx);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartFire(uint8 FireModeNum);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartTick();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStopTick();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSurfaceTypeVehicleIsOnChanged(EPhysicalSurface SurfaceTypeVehicleIsOn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PawnHitByVehicle(AFortPawn* Pawn, FVector& ImpactPoint, FVector& ImpactNormal, FVector LaunchVector);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void WeaponFired(UFortVehicleSeatWeaponComponent* WeaponComponent, float Overheat);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

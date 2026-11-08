@@ -149,6 +149,21 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetIsItemCommandsEnabled(bool bInIsItemCommandEnabled);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnExitSubTab();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemsLoaded();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnSelectionOpened(FFortItemEntry& PreviousSelectedItem, FName PreviousTab);
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

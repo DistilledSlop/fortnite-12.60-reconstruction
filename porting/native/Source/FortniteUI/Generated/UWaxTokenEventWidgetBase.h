@@ -7,6 +7,7 @@
 #include "ULTMWidgetBase.h"
 
 #include "AFortAthenaMutator_Wax.h"
+#include "AFortPlayerStateAthena.h"
 
 #include "UWaxTokenEventWidgetBase.generated.h"
 
@@ -19,6 +20,21 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	AFortAthenaMutator_Wax* WaxMutator;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFlyingTokensApplied(AFortPlayerStateAthena* Player, int32 Amount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTokensAwarded(AFortPlayerStateAthena* Player, int32 Amount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTokensCollected(AFortPlayerStateAthena* Player, int32 Amount);
+public:
 
 };
 

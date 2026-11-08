@@ -24,5 +24,20 @@ public:
 	UPROPERTY()
 	TArray<FFortInGameLeaderboardPlacementData> TopPlacedEnemies;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerNearGoal(FFortInGameLeaderboardPlacementData& PlayerNearGoal);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateLocalPlayer(FFortInGameLeaderboardPlacementData& LocalPlayer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateTopThreeEnemies(TArray<FFortInGameLeaderboardPlacementData>& TopThreeEnemies);
+public:
+
 };
 

@@ -11,6 +11,7 @@
 #include "Math/Vector2D.h"
 
 class AFortExhibitActor;
+class AFortPlayerController;
 
 #include "AFortCameraBase.generated.h"
 
@@ -54,6 +55,26 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Exhibit(AFortExhibitActor* TargetActor);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnActivated(AFortPlayerController* PlayerController);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDeactivated(AFortPlayerController* PlayerController);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDragBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDragEnd();
+public:
 
 };
 

@@ -23,5 +23,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetReplayContext(UFortReplayContext* InReplayContext);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlaybackTimeChanged(float NowTime);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReplayPausedChanged(bool bIsPaused);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTimelineRangeChanged(float StartTime, float EndTime);
+public:
+
 };
 

@@ -26,5 +26,25 @@ public:
 	UPROPERTY()
 	FFortPrioritizedWidgetData PrioritizedWidgetData;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnWidgetActivated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_WidgetIsFinished();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewContextualHeader(FText& NewText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResetOutroDelay();
+public:
+
 };
 

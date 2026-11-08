@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UFortAccoladeItemDefinition.h"
+
 #include "UAthenaAccoladeListEntryWidget.generated.h"
 
 UCLASS()
@@ -14,5 +16,25 @@ class FORTNITEUI_API UAthenaAccoladeListEntryWidget : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetCount(int32 Count);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetIcon(UFortAccoladeItemDefinition* ItemDef);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetSource(FText& SourceText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetTitle(FText& TitleText);
+public:
+
 };
 

@@ -14,5 +14,10 @@ class SOCIALUMG_API USocialActionMenu : public UCommonActivatableWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOpened();
+public:
+
 };
 

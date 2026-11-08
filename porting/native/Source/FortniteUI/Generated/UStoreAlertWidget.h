@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UCatalogMessaging* CatalogMessaging;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisplayStoreUpdated(UStoreToastRequest* NewStoreUpdatedRequest);
+public:
+
 };
 

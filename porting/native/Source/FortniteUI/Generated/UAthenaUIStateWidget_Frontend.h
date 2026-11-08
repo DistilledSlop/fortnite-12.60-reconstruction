@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortUIStateWidgetBase.h"
 
+#include "EFrontendVisibilityMode.h"
 #include "FVideoConfig_Mono.h"
 #include "GameplayTagContainer.h"
 #include "UCommonActivatableWidget.h"
@@ -30,6 +31,7 @@ class UFortPlayerSurveyDispatcher;
 class UFortSocialImportPanel;
 class UGuidedTutorialLoadingScreen;
 class UHUDLayoutToolFireModePanel;
+class UMediaPlayer;
 
 #include "UAthenaUIStateWidget_Frontend.generated.h"
 
@@ -186,6 +188,21 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetVideoActive(bool bActive);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetFrontendVisibilityMode(EFrontendVisibilityMode InFrontendVisibilityMode);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartTrailerTransitionAudioCheck(UMediaPlayer* MediaPlayer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StopTrailerTransitionAudioCheck();
 public:
 
 };

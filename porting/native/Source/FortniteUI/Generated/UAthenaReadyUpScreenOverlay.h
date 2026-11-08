@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "Misc/Timespan.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 #include "UCommonWidgetSwitcher.h"
@@ -91,6 +92,56 @@ public:
 	// table index 0, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortAthenaMatchmakingWidgetLegacy* MatchmakingWidget;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCancelReadyUp();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownProgressed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownStarted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitToLobbyCountdownProgressed(float CountdownValue);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMatchmakingCancelled();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMatchmakingErrorMessage(FText& Message);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMatchmakingFinished(bool bSuccess);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMatchmakingStarted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMatchmakingUpdate(FTimespan ElapsedTime);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReadyUp();
+public:
 
 };
 

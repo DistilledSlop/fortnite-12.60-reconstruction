@@ -813,5 +813,60 @@ public:
 	UFUNCTION()
 	void AnimNotify_MechBeginFire(UAnimNotify* Notify);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFiredSingleRocket(int32& NumRocketsLeft);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFireShotgun();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReloadShotgun();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartSeatTransition_DriverEnter();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartSeatTransition_DriverExit();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartSeatTransition_PassengerEnter();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartSeatTransition_PassengerExit();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StopSeatTransition_DriverEnter();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StopSeatTransition_DriverExit();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StopSeatTransition_PassengerEnter();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StopSeatTransition_PassengerExit();
+public:
+
 };
 

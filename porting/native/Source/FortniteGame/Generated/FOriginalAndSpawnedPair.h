@@ -9,7 +9,7 @@ class AActor;
 
 #include "FOriginalAndSpawnedPair.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FOriginalAndSpawnedPair
 {
 	GENERATED_BODY()

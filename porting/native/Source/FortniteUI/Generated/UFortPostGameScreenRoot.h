@@ -63,5 +63,15 @@ public:
 	UPROPERTY()
 	UScaleBox* ScaleBox_PlacementOverlay_UserSpecified;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AnimateCinematicBars();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ToggleBlur();
+public:
+
 };
 

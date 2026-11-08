@@ -8,6 +8,7 @@
 
 #include "UCommonActivatableWidgetSwitcher.h"
 #include "UCommonButton.h"
+#include "UFortItem.h"
 
 class UAthenaQuickbarEditorBase;
 class UFortCreativeItemListMenu;
@@ -119,6 +120,16 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetBypassNotifications(bool bBypass);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOpenInventoryTab(int32 TabIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RequestEquip(UFortItem* Item);
 public:
 
 };

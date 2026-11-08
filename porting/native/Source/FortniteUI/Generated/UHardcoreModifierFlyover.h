@@ -14,5 +14,10 @@ class FORTNITEUI_API UHardcoreModifierFlyover : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleUpdateActiveModifiers(FText& ActiveModifierText);
+public:
+
 };
 

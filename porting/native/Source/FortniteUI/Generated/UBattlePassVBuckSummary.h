@@ -24,5 +24,10 @@ public:
 	UPROPERTY()
 	UCommonRichTextBlock* Text_TotalToBank;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetSummary();
+public:
+
 };
 

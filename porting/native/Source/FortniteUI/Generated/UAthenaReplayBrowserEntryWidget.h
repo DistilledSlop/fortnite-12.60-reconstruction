@@ -36,5 +36,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_Eliminations;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleReplayStateSet(bool bSaved, bool bOld, bool bCorrupt);
+public:
+
 };
 

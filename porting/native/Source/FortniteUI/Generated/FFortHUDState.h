@@ -7,7 +7,7 @@
 
 #include "FFortHUDState.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortHUDState
 {
 	GENERATED_BODY()

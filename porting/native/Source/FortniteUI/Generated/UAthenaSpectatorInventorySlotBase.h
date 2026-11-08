@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UFortItem.h"
+
 #include "UAthenaSpectatorInventorySlotBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,20 @@ class FORTNITEUI_API UAthenaSpectatorInventorySlotBase : public UCommonUserWidge
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	UFortItem* GetItem() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetIsSelected(bool bIsSelected);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetItem(UFortItem* Item);
+public:
+
 };
 

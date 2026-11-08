@@ -14,5 +14,10 @@ class FORTNITEUI_API ULoadoutWarningWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartWarning(float TimeToSwap);
+public:
+
 };
 

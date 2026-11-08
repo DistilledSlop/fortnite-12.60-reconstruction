@@ -38,5 +38,10 @@ public:
 	UPROPERTY()
 	int32 SetBonusSize;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleTraitValuesUpdatedBP();
+public:
+
 };
 

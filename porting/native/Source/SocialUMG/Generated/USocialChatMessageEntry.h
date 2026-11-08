@@ -36,5 +36,10 @@ protected:
 	bool CanInteract() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMessageSet();
+public:
+
 };
 

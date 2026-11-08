@@ -8,6 +8,7 @@
 
 #include "AFortPawn.h"
 #include "ECooldownTrackingType.h"
+#include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 
 #include "URadialBacchusButtonBase.generated.h"
@@ -38,6 +39,31 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetListenedGameplayTag(FGameplayTag InListenedTag);
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCooldownCompleted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCooldownStarted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ReceiveRadialProgressEvent_Blueprint(FName EventName, EGameplayCueEvent::Type EventType, FGameplayCueParameters& Parameters);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCooldown_Blueprint();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateDuration_Blueprint(float Remaining, float Duration);
+public:
 
 };
 

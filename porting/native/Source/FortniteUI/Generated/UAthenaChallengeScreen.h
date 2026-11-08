@@ -88,5 +88,10 @@ public:
 	UPROPERTY()
 	UDynamicEntryBox* EntryBox_StyleChallenges;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHandleReplayHolidayVideo();
+public:
+
 };
 

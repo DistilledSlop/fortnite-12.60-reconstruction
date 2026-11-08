@@ -51,5 +51,10 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle CancelAction;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetButtonText(UCommonButton* Button, FText& Text);
+public:
+
 };
 

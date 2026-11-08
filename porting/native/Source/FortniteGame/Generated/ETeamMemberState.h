@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ETeamMemberState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ETeamMemberState : uint8
 {
 	None = 0,

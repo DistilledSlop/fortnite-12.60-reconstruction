@@ -31,5 +31,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldBeVisible() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void FocusWidget();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayedTargetsUpdated();
+public:
+
 };
 

@@ -85,6 +85,21 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEmpty();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void FocusCurrentSelection();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ItemEquipped(FFortItemEntry& Item);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SelectTab();
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

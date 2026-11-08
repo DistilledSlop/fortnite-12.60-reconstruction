@@ -10,7 +10,7 @@ class AFortPlayerStateAthena;
 
 #include "FFortInGameLeaderboardPlacementData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FFortInGameLeaderboardPlacementData : public FFortChangeMonitoringStruct
 {
 	GENERATED_BODY()

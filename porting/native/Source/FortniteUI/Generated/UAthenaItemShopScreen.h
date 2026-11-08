@@ -102,5 +102,25 @@ public:
 	UPROPERTY(Transient)
 	UCommonButtonGroup* TabButtonGroup;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPPlayDonutAnimation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPSetupForDonutSequence(bool bEventEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEstablishingSections();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSectionsEstablished(bool bEmpty);
+public:
+
 };
 

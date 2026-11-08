@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "UFortVehicleTrickSet.h"
+
 #include "UAthenaTrickFeedBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,45 @@ class FORTNITEUI_API UAthenaTrickFeedBase : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void AddTrick(FText& TrickName);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void TrickSequenceCanceled();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void TrickSequenceComplete();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void TrickSequenceFailed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void TrickSequenceStarted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateMultiplier(int32 Multiplier);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateScore(UFortVehicleTrickSet* TrickSet, int32 TotalScore);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateTrickStats(FText& StatsText);
+public:
+
 };
 

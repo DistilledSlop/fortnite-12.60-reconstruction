@@ -11,7 +11,7 @@ class UObject;
 
 #include "FItemWrapPreviewEntry.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FItemWrapPreviewEntry
 {
 	GENERATED_BODY()

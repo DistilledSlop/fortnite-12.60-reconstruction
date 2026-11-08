@@ -24,5 +24,11 @@ public:
 	UPROPERTY()
 	TArray<UHUDLayoutToolFireModeButton*> FireModeButtons;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void SetOpenState(bool bNewOpenState);
+	virtual void SetOpenState_Implementation(bool bNewOpenState);
+public:
+
 };
 

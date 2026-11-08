@@ -20,5 +20,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<UAthenaSpectatorPlayerListRowData*> RowDataArray;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateListUI();
+public:
+
 };
 

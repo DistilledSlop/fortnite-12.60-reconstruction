@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortMinigameState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortMinigameState : uint8
 {
 	PreGame = 0,

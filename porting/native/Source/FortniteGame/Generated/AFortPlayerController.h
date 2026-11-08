@@ -11,6 +11,7 @@
 #include "EAthenaCustomizationCategory.h"
 #include "EFortBuildPreviewMarkerOptionalAdjustment.h"
 #include "EFortCostInfoTypes.h"
+#include "EFortDamageZone.h"
 #include "EFortGameplayState.h"
 #include "EFortItemEntryState.h"
 #include "EFortItemTier.h"
@@ -1987,6 +1988,26 @@ public:
 	void TogglePersonalVehicle(bool bOn);
 	void TogglePersonalVehicle_Implementation(bool bOn);
 	bool TogglePersonalVehicle_Validate(bool bOn);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_OnEnterVolume(AFortVolume* Volume);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_OnLeaveVolume(AFortVolume* Volume);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayHitMarker(FGameplayTagContainer& HitTags, EFortDamageZone::Type Zone);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalInteraction(AActor* ReceivingActor);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

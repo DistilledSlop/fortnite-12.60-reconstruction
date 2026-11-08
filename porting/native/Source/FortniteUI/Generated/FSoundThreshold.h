@@ -9,7 +9,7 @@ class USoundCue;
 
 #include "FSoundThreshold.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FSoundThreshold
 {
 	GENERATED_BODY()

@@ -15,3 +15,13 @@ void UFortHUDTargetUnderReticleWidget::OnTargetHealthChanged_Implementation()
 	return;
 }
 
+void UFortHUDTargetUnderReticleWidget::OnTargetDestroyed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortHUDTargetUnderReticleWidget::OnTargetDied_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+

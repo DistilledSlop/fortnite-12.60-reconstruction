@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortItemTransform : public UCommonActivatablePanel
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRequestCloseItemPicker();
+public:
+
 };
 

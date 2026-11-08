@@ -33,5 +33,20 @@ protected:
 	bool HaveSettingsBeenChanged() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HideSavingProgress();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSettingsDirtyStateChanged(bool bSettingsDirty);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowSavingProgress();
+public:
+
 };
 

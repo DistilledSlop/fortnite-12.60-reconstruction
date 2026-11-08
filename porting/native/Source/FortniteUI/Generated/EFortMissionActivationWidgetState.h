@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortMissionActivationWidgetState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortMissionActivationWidgetState : uint8
 {
 	Default = 0,

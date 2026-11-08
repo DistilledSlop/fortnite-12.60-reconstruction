@@ -48,5 +48,15 @@ public:
 	UPROPERTY()
 	TSubclassOf<UAthenaConfirmationWindow> ConfirmationWindowClass;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHasChallengeUpdated(bool bHasAssignedChallenge);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReplaceConfirmationClosed(bool bAcceptedReroll);
+public:
+
 };
 

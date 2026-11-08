@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UFortLazyImage* Image_DivisionIcon;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRankButtonSelected(bool bIsSelected);
+public:
+
 };
 

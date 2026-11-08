@@ -18,5 +18,15 @@ public:
 	UPROPERTY()
 	float ZOffset;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void InventoryActivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void MapActivated();
+public:
+
 };
 

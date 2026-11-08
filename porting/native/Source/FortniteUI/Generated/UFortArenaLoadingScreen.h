@@ -34,5 +34,10 @@ public:
 	UPROPERTY()
 	UFortLazyImage* Image_CurrentDivision;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateBackground(int32 DivisionRank);
+public:
+
 };
 

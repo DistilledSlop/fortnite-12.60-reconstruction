@@ -20,5 +20,30 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetCurrentRarity();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOfferShown();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowHovered();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowRarity(int32 Rarity);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowUnhovered();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpgradeRarity(int32 RarityToUpgradeTo);
+public:
+
 };
 

@@ -38,5 +38,15 @@ public:
 	UPROPERTY()
 	FLinearColor SwatchColor;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSwatchColorSet(bool bInNullColor);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSwatchLockedStateChanged(bool bLocked);
+public:
+
 };
 

@@ -75,5 +75,15 @@ public:
 	UPROPERTY()
 	UDynamicEntryBox* EntryBox_Challenges;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowSkinUnlockMessage(bool bShowMessage, int32 InChallengeNum);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateBPOwnedStateVisuals(bool bInOwnsBattlePass);
+public:
+
 };
 

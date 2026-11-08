@@ -45,5 +45,25 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 NumStatSets() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDataRecieved();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNoData();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartFetchingData();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStatSetChanged();
+public:
+
 };
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EMatchmakingCompleteResult.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EMatchmakingCompleteResult : uint8
 {
 	NotStarted = 0,

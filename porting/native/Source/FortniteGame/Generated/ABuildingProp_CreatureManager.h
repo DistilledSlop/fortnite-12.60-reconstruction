@@ -6,12 +6,16 @@
 #include "CoreMinimal.h"
 #include "ABuildingProp.h"
 
+#include "EFortMinigameState.h"
 #include "EScoreDistributionType.h"
 #include "GameplayTagContainer.h"
 
 class AFortAIPawn;
+class AFortMinigame;
 class UFortCreativeCreatureManagerInfoComponent;
 class UGameplayEffect;
+class UMaterialInterface;
+class USkeletalMesh;
 
 #include "ABuildingProp_CreatureManager.generated.h"
 
@@ -80,6 +84,20 @@ public:
 	// table index 0, flags 0x2008000008000c
 	UPROPERTY()
 	UFortCreativeCreatureManagerInfoComponent* CreatureInfoComponent;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void MinigameStateChange(AFortMinigame* Minigame, EFortMinigameState NewMinigameState);
+	virtual void MinigameStateChange_Implementation(AFortMinigame* Minigame, EFortMinigameState NewMinigameState);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupConfigurables();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SkeletalMeshLoadComplete(UMaterialInterface* Material, USkeletalMesh* Mesh);
+public:
 
 };
 

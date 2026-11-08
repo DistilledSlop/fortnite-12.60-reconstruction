@@ -8,9 +8,12 @@
 
 #include "EFortFrontendInventoryFilter.h"
 #include "EFortItemManagementMode.h"
+#include "EFortItemTier.h"
 #include "FOnItemViewRefreshed.h"
 #include "UFortAccountItem.h"
+#include "UFortConsumableAccountItem.h"
 #include "UFortItem.h"
+#include "UFortSchematicItem.h"
 
 class UFortInventoryContext;
 class UFortItemManagementCustomFilterModalWidget;
@@ -98,6 +101,66 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasItemBeenSeen(UFortAccountItem* AccountItem) const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleConsumeItemBP(UFortConsumableAccountItem* ConsumableItem);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleCraftAndSlotItemBP(UFortSchematicItem* SchematicItem, EFortItemTier RequestedTier, int32 CraftCount);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleCraftItemBP(UFortSchematicItem* SchematicItem, EFortItemTier RequestedTier, int32 CraftCount);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemManagementModeSetBP();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDropItemBP(UFortItem* Item);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleEquipItemBP(UFortItem* Item);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleInspectItemBP(UFortItem* Item);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleMulchQuantitySelection(UFortItem* Item);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleOpenAutoMulchOptionsBP();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleOpenCraftingOptionsBP(UFortSchematicItem* SchematicItem);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleTransferItemBP(UFortItem* Item);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ShowWarningReadOnlyWIFE(bool Force);
+public:
 
 };
 

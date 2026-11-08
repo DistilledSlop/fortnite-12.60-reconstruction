@@ -39,6 +39,11 @@ public:
 	UFUNCTION()
 	void OnRep_InteractingPawn();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalControllersInteractingPawnSet(AFortPlayerPawn* LocalPCPawn);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

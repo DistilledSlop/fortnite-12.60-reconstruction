@@ -47,5 +47,10 @@ public:
 	UPROPERTY()
 	USizeBox* SizeBox_Card;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateCard();
+public:
+
 };
 

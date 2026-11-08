@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	TArray<UAthenaSpectatorInventorySlotBase*> ItemSlots;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SelectSlot(int32 SlotIdx);
+public:
+
 };
 

@@ -13,6 +13,7 @@
 
 class AFortProjectileBase;
 class UAnimMontage;
+class USceneComponent;
 
 #include "AFortWeaponRanged_Ostrich.generated.h"
 
@@ -192,6 +193,26 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSetFiringRockets(bool bNewFiring, int32 NumToFire);
 	void ServerSetFiringRockets_Implementation(bool bNewFiring, int32 NumToFire);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoadedRockets(int32 NumRocketsLoaded);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRocketFired(USceneComponent* AttachToMesh, FName AttachToSocket);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRocketFiringStarted(USceneComponent* AttachToMesh, FName AttachToSocket);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRocketLauncherSettle(USceneComponent* AttachToMesh, FName AttachToSocket);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

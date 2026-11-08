@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UAthenaCosmeticItemDefinition.h"
 #include "UCommonButton.h"
 
 #include "UBattlePassItemChoiceDisplay.generated.h"
@@ -27,6 +28,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonButton* Button_SelectBase;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCosmeticItemChanged(UAthenaCosmeticItemDefinition* CosmeticItem);
+public:
 
 };
 

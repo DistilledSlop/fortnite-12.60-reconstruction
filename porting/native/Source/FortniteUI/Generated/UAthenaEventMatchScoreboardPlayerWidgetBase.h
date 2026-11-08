@@ -14,5 +14,10 @@ class FORTNITEUI_API UAthenaEventMatchScoreboardPlayerWidgetBase : public UAthen
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSquadIdVisible(bool InVisible);
+public:
+
 };
 

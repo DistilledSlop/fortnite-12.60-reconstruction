@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UCommonRichTextBlock* RichText_Title;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExpansionChanged(bool bIsExpanded);
+public:
+
 };
 

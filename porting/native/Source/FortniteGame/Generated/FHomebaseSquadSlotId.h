@@ -7,8 +7,8 @@
 
 #include "FHomebaseSquadSlotId.generated.h"
 
-USTRUCT()
-struct FHomebaseSquadSlotId
+USTRUCT(BlueprintType)
+struct FORTNITEGAME_API FHomebaseSquadSlotId
 {
 	GENERATED_BODY()
 

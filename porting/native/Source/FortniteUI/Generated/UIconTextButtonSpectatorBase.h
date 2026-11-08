@@ -14,5 +14,10 @@ class FORTNITEUI_API UIconTextButtonSpectatorBase : public UCommonButton
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetText(FText& Text);
+public:
+
 };
 

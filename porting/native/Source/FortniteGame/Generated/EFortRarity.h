@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortRarity.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortRarity : uint8
 {
 	Common = 0,

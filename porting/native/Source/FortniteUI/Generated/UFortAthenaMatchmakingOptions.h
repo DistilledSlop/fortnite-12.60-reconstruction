@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFillDisableReason.h"
+#include "EServerAccessSetting.h"
+#include "ESpectatorQueueType.h"
+#include "ESquadFillSetting.h"
 #include "FAthenaPlaylistEntry.h"
 #include "FPlaylistFrontEndData.h"
 #include "UCommonButton.h"
@@ -112,6 +116,51 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	bool IsLiveSpectateButtonEnabled();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnAffiliateUpdated(const FString& AffiliateName);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTileDoubleClicked(UCommonButton* ButtonClicked);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RepresentedPlaylistChanged(FPlaylistFrontEndData& NewRepresentedPlaylist);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetHardcoreModiferButtonText(FText& InText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetServerAccessText(EServerAccessSetting InServerAccessSetting);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSpectatorButtonText(ESpectatorQueueType InSpectatorQueueType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSquadFillText(ESquadFillSetting InSquadFillSetting);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateMMButtonStatusBP(bool bPlaylistIsEnabled, EFillDisableReason FillDisableReason);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateShowSupportAffiliateButton(bool bIsCreativeLTM);
 public:
 
 };

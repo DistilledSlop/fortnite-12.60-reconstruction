@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "AFortItemPreviewSceneChanger.h"
 
+#include "FSceneTransitionOptions.h"
+#include "UFortAccountItemDefinition.h"
+
 class UCurveFloat;
 
 #include "AItemPreviewSwapper.generated.h"
@@ -23,6 +26,11 @@ public:
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	float CameraTransitionLerpDuration;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReadyToSwap(UFortAccountItemDefinition* PrimaryRequestedItem, FSceneTransitionOptions& Options);
+public:
 
 };
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ESpectatorCameraType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ESpectatorCameraType : uint8
 {
 	ThirdPerson = 0,

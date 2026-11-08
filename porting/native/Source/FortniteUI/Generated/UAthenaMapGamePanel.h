@@ -58,5 +58,10 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle RemoveMarkerBinding;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateInspectText(FText& InText);
+public:
+
 };
 

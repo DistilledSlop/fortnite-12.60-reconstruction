@@ -51,6 +51,26 @@ public:
 	UFUNCTION()
 	void OnRep_WallGravity();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewBarrierState(EBarrierState NewState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowOrHideTimer(bool bNewVisibleState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateWallTime(float Digit_0, float Digit_1, float Digit_2, float Digit_3);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void WallStartingToComeDown(bool bIsOnBurgerSide);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

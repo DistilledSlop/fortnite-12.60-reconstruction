@@ -6,9 +6,12 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "FFortPlayerSurveyAnswerContainerChangeEventInfo.h"
 #include "Misc/DateTime.h"
 #include "UFortPlayerSurveyQuestion.h"
 #include "UFortPlayerSurveyQuestionSelector.h"
+
+class UWidget;
 
 #include "UFortPlayerSurveyAnswerWidgetBase.generated.h"
 
@@ -39,6 +42,38 @@ public:
 protected:
 	UFUNCTION()
 	virtual void NativeHandleAnswerContainerChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure)
+	UWidget* GetDefaultFocusedWidget() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure)
+	FText GetSubtitleText() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleAnswerChanged(FFortPlayerSurveyAnswerContainerChangeEventInfo& EventInfo);
+	virtual void HandleAnswerChanged_Implementation(FFortPlayerSurveyAnswerContainerChangeEventInfo& EventInfo);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleAnswerContainerChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleCommitCurrentAnswer();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleQuestionChanged();
+	virtual void HandleQuestionChanged_Implementation();
 public:
 
 };

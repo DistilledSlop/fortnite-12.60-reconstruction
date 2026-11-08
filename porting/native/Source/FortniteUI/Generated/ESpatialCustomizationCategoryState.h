@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ESpatialCustomizationCategoryState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ESpatialCustomizationCategoryState : uint8
 {
 	LockedByBattlePass = 0,

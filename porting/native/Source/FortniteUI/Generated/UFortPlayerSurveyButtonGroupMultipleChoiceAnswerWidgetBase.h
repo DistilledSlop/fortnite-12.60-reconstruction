@@ -31,5 +31,15 @@ public:
 	UPROPERTY(Transient)
 	TArray<UCommonButton*> ButtonWidgets;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleButtonClicked(int32 ButtonIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleButtonFocused(int32 ButtonIndex);
+public:
+
 };
 

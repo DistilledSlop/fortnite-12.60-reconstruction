@@ -7,6 +7,7 @@
 #include "UFortActivatablePanel.h"
 
 #include "AFortAthenaCreativePortal.h"
+#include "EFortCreativeIslandLinkValidationResult.h"
 #include "FCachedIslandsGroup.h"
 #include "FOnCreativeIslandCodeConfirmed.h"
 #include "FOnEditableTextIslandLinkModified.h"
@@ -112,6 +113,16 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetTargetPortal(AFortAthenaCreativePortal* Portal);
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCreativeIslandLinksPopulated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCreativeIslandLinkValidated(EFortCreativeIslandLinkValidationResult ValidateResult);
+public:
 
 };
 

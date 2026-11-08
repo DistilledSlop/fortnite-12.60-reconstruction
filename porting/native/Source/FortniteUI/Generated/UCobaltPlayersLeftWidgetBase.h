@@ -14,5 +14,10 @@ class FORTNITEUI_API UCobaltPlayersLeftWidgetBase : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateDisplay(int32 NewTeamPlayersLeft, int32 NewEnemyPlayersLeft);
+public:
+
 };
 

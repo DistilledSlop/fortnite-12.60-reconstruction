@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortWeaponOverheatState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortWeaponOverheatState : uint8
 {
 	None = 0,

@@ -40,5 +40,10 @@ public:
 	UPROPERTY()
 	TArray<AFortPlayerPawn*> DespawnPlayerOverlaps;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BlueprintShowRift();
+public:
+
 };
 

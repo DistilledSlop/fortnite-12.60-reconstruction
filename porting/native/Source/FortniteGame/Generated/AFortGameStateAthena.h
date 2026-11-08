@@ -1158,6 +1158,11 @@ protected:
 	void StopAutoPerfCaptureTimer();
 public:
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnWinnerAnnounced();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "ERedeemCodeFailureReason.h"
+
 class UEditableText;
 
 #include "UFortRedeemCodeBase.generated.h"
@@ -19,6 +21,11 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UEditableText* EditableText_FriendCodeEntry;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRedeemFriendCodeComplete(bool bSuccess, ERedeemCodeFailureReason FailureReason);
+public:
 
 };
 

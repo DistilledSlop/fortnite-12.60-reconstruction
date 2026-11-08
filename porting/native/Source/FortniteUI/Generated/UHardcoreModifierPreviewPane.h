@@ -46,5 +46,20 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_VRCount;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleModifierChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleMaxLevelCompleted(int32 Level);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetAccoladeCount(int32 AccoladeRank, int32 NumTimesEarned);
+public:
+
 };
 

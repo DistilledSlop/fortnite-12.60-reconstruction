@@ -46,5 +46,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetTooltipContext(UFortTooltipContext* InTooltipContext);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCombinedTooltipDescriptionReady(FText& Description);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPerkUpdated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTooltipDescriptionReady(TArray<FText>& DescriptionList);
+public:
+
 };
 

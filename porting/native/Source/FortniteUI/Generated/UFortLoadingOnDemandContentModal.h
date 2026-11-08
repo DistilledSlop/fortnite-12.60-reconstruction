@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Cancel;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdatedProgress(float Percent);
+public:
+
 };
 

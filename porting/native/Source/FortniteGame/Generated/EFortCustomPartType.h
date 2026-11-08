@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortCustomPartType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 namespace EFortCustomPartType
 {
 	enum Type

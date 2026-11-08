@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "ECommonInputType.h"
+
 class UFortWinterQuestButton;
 
 #include "UFortWinterQuestSpecialInteractionScreen.generated.h"
@@ -19,6 +21,26 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UFortWinterQuestButton* Button_Open;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGrantReward();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInputMethodChanged(ECommonInputType NewMethod);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartInteraction();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStopInteraction();
+public:
 
 };
 

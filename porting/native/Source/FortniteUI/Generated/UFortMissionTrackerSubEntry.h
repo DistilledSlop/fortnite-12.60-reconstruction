@@ -38,5 +38,15 @@ public:
 	UPROPERTY()
 	FOnSizeEstimateChanged OnSizeEstimateChangedDelegate;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHiddenByHeightConstraintChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnObjectiveSet();
+public:
+
 };
 

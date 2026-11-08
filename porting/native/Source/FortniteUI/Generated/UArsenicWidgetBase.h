@@ -14,5 +14,10 @@ class FORTNITEUI_API UArsenicWidgetBase : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_OnPlayerTeamRevealedOrChanged();
+public:
+
 };
 

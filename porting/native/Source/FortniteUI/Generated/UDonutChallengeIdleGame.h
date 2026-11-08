@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortDonutIdleGameObject.h"
 #include "FOnDonutDayNightCycleChanged.h"
 #include "FOnDonutIdleGameEndScore.h"
 #include "FOnDonutIdleGameScoreChanged.h"
@@ -201,6 +202,81 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonButton* Button_MobileJump;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPGameOver();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnCollision(EFortDonutIdleGameObject ObjectType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnCrash();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnFacingDirectionChanged(bool bIsLeftFacing);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnFailedJumpPress();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnGameInitialized();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnJump();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnMonsterNearChanged(bool bIsNearLevelMonster);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnNextLevelReached();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPOnSpeedUpdated(int32 NewCurSpeed);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPShowHighScore(int32 inNewHighScore);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPUpdateDistance(int32 NewDistance);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPUpdateSpeed(int32 NewSpeed);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPUpdateStyle(int32 NewStyle);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DebugBPFloat(float inFloat);
+public:
 
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "UFortAwardItemDefinition.h"
+
 class UAthenaPlayerViewModel;
 
 #include "UAthenaAwardAlertBase.generated.h"
@@ -19,6 +21,11 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	UAthenaPlayerViewModel* PlayerVM;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAwardGranted(UFortAwardItemDefinition* AwardDefinition);
+public:
 
 };
 

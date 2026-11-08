@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ABuildingGameplayActorConsumable.h"
 
+class AActor;
+
 #include "AFortAthenaRiftPortal.generated.h"
 
 UCLASS(config=Game)
@@ -14,5 +16,14 @@ class FORTNITEGAME_API AFortAthenaRiftPortal : public ABuildingGameplayActorCons
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintNativeEvent)
+	void NotifyTeleportedVehicle(AActor* VehicleActor);
+	virtual void NotifyTeleportedVehicle_Implementation(AActor* VehicleActor);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OverlappingOnBeginPlay(AActor* Actor);
+public:
+
 };
 

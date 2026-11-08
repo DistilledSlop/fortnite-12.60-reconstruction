@@ -24,5 +24,10 @@ public:
 	UPROPERTY()
 	EFortMemberConnectionState CurrentConnectionState;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeamMemberConnectionStateChanged(EFortMemberConnectionState NewConnectionState);
+public:
+
 };
 

@@ -14,5 +14,15 @@ class FORTNITEUI_API UFortStoreRootBase : public UCommonActivatablePanel
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnAffiliateUpdated(const FString& AffiliateName);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateOtherPlatformMTXMessage(bool HasOtherPlatformCurrency, FText& CurrencyMessageLocText);
+public:
+
 };
 

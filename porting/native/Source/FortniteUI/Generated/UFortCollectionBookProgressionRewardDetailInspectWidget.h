@@ -37,5 +37,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetXPRequired() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnXPRequiredChanged(int32 NewXPRequired);
+public:
+
 };
 

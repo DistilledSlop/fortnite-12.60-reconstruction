@@ -53,5 +53,10 @@ protected:
 	bool ShouldShowAsRefund() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void InitBundleLayout();
+public:
+
 };
 

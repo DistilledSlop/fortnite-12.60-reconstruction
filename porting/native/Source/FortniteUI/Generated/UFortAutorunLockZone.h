@@ -22,5 +22,10 @@ public:
 	UPROPERTY()
 	bool bIsAutorunLockEnabled;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInZoneChanged(bool bNewIsInZone);
+public:
+
 };
 

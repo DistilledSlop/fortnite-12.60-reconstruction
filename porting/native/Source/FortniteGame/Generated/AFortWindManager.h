@@ -44,6 +44,7 @@ class ABuildingSMActor;
 class UAudioComponent;
 class UMaterialInterface;
 class UObject;
+class UParticleSystemComponent;
 
 #include "AFortWindManager.generated.h"
 
@@ -234,6 +235,21 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool SetWindImpulse(const FFortWindImpulseHandle& ImpulseHandle, const FFortWindImpulseRadius& WindImpulse);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void AddWindParticleSystemComponent(UParticleSystemComponent* ParticleSystemComponent);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWorldReady();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void RemoveWindParticleSystemComponent(UParticleSystemComponent* ParticleSystemComponent);
+public:
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

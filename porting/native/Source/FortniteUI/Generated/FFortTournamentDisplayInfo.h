@@ -9,7 +9,7 @@
 
 #include "FFortTournamentDisplayInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortTournamentDisplayInfo : public FTableRowBase
 {
 	GENERATED_BODY()

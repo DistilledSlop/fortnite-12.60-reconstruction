@@ -24,5 +24,10 @@ public:
 	UPROPERTY()
 	TArray<UCobaltTournamentBracketNodeWidgetBase*> EnemyTeamNodes;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateTournamentBracket_BP(int32 CurrentActiveRound);
+public:
+
 };
 

@@ -28,5 +28,10 @@ public:
 	UPROPERTY()
 	UScaleBox* ScaleBox_Resize;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSizeChanged();
+public:
+
 };
 

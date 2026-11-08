@@ -7,6 +7,7 @@
 #include "AFortClientOnlyActor.h"
 
 #include "FFortDamageNumberColorInfo.h"
+#include "FFortDamageNumberInfo.h"
 #include "FLiveDamageNumberComponent.h"
 #include "FPooledDamageNumberComponents.h"
 #include "Math/Color.h"
@@ -152,6 +153,11 @@ public:
 	// table index 0, flags 0x20088000002000
 	UPROPERTY(Transient)
 	TArray<FLiveDamageNumberComponent> LiveComponents;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnNewDamageNumber(FFortDamageNumberInfo& NewDamageNumberInfo);
+public:
 
 };
 

@@ -9,7 +9,9 @@
 #include "AFortPlayerPawn.h"
 #include "EAthenaSpectatorNameplateDetailState.h"
 #include "EAthenaSpectatorNameplateDistanceState.h"
+#include "Math/Color.h"
 
+class AActor;
 class UAthenaRemotePlayerViewData;
 
 #include "UAthenaSpectatorNameplateBase.generated.h"
@@ -51,6 +53,61 @@ public:
 private:
 	UFUNCTION()
 	void OnPlayerPawnChanged(UAthenaRemotePlayerViewData* InPlayerData, AFortPlayerPawn* InPlayerPawn);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnDetailStateChanged(EAthenaSpectatorNameplateDetailState NewDetailState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnDistanceStateChanged(EAthenaSpectatorNameplateDistanceState NewDistanceState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerDataSet(UAthenaRemotePlayerViewData* InPlayerData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerNameChanged(UAthenaRemotePlayerViewData* InPlayerData, const FString& InPlayerName);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadIdChanged(UAthenaRemotePlayerViewData* InPlayerData, uint8 InSquadId);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnSquadIDsDisplayModeHoldUpdate();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeamColorChanged(UAthenaRemotePlayerViewData* InPlayerData, FLinearColor InTeamColor);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVehicleStateChanged(AActor* NewVehicle, AActor* OldVehicle);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetArrowTeamColorVisible(bool bArrowTeamColorVisible);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSquadIdVisibility(bool bSquadIdVisible);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetTeamColorVisible(bool bTeamColorVisible);
 public:
 
 };

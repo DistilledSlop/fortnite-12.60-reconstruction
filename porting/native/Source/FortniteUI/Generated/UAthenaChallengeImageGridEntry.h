@@ -36,5 +36,25 @@ public:
 	UPROPERTY(Transient)
 	int32 Row;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeSet(bool bIsComplete, bool bIsLocked);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupLockedToOwnState();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void TransitionFromLockedToOwnedState();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void TransitionFromOwnedToCompletedState();
+public:
+
 };
 

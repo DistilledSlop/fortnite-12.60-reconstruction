@@ -66,5 +66,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	void GetCustomizationSlotActiveState(bool& bOutAttachableCosmeticAvailable, bool& bOutActive) const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCardImageAndWidthChanged(TSoftObjectPtr<UTexture2D>& Image, float Width);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCustomizationSlotActiveStateChanged(bool bInAttachableCosmeticAvailable, bool bInActive);
+public:
+
 };
 

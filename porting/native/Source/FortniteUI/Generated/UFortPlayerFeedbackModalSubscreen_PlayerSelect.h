@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UDynamicEntryBox* Buttons_Players;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCreatedPlayerList(bool bHasPlayers);
+public:
+
 };
 

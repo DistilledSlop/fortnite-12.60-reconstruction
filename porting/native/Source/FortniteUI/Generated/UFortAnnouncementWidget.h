@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	AFortClientAnnouncement* BoundAnnouncement;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void AnnouncementStopped(AFortClientAnnouncement* Announcement);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void UpdateWidgetData(AFortClientAnnouncement* Announcement);
+public:
+
 };
 

@@ -14,5 +14,15 @@ class FORTNITEUI_API UAthenaChallengeListEntryBase : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void EndHighlight();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartHighlight();
+public:
+
 };
 

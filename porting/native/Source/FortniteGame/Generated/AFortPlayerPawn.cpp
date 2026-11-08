@@ -1681,6 +1681,16 @@ void AFortPlayerPawn::UpdateGameStateModifiedGravity(float GravityMultiplier)
 	// CONFIDENCE: HIGH
 }
 
+void AFortPlayerPawn::OnBeginParachuteMovement_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnEndParachuteMovement_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 bool AFortPlayerPawn::NativeIsLocalPlayer() const
 {
 	// CONFIDENCE: HIGH

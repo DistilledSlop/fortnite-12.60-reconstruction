@@ -26,5 +26,20 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_TierLevel;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPSetup(UBattlePassViewRewardData* InReward);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStaggerTimeElapsed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStaggerTimeStarted();
+public:
+
 };
 

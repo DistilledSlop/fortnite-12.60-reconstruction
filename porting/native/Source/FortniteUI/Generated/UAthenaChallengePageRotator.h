@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonRotator.h"
 
+#include "Components/SlateWrapperTypes.h"
 #include "Engine/DataTable.h"
 #include "UCommonButton.h"
 
@@ -40,6 +41,16 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	FDataTableRowHandle SecondaryPreviousInput;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNumPagesSet(int32 NumPages);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetInputBindingVisiblity(ESlateVisibility InVisibility);
+public:
 
 };
 

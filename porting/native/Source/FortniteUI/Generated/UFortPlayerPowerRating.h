@@ -43,5 +43,25 @@ protected:
 	int32 GetTeamPowerRating() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBasePowerRatingUpdated(int32 BasePowerRating);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPowerRatingProgressUpdated(float BaseRatingProgress, float TeamRatingProgress);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeamMembershipChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeamPowerRatingUpdated(int32 TeamPowerRating);
+public:
+
 };
 

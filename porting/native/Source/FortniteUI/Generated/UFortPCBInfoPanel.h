@@ -35,5 +35,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldDisplayPCBData() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CmsDataRead();
+public:
+
 };
 

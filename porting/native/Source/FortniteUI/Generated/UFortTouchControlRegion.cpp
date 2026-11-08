@@ -19,3 +19,63 @@ void UFortTouchControlRegion::SetFeedbackPosition_Implementation(FGeometry& InGe
 	// The original implementation returns without side effects.
 }
 
+void UFortTouchControlRegion::MovePlayerRegionTick_Implementation(FGeometry& InGeometry, float DeltaTime)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::OnAdditionalTouchEnded_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::OnAdditionalTouchLost_Implementation(int32 PointerIndex)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::OnMovePlayerRegionTouchEnded_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::OnMovePlayerRegionTouchLost_Implementation(int32 PointerIndex)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::OnMovePlayerRegionTouchMoved_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::OnMovePlayerRegionTouchStarted_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::OnRotatePlayerRegionTouchEnded_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::OnRotatePlayerRegionTouchLost_Implementation(int32 PointerIndex)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::OnRotatePlayerRegionTouchMoved_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent, FVector2D& MoveDelta)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::OnRotatePlayerRegionTouchStarted_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortTouchControlRegion::RotatePlayerRegionTick_Implementation(FGeometry& InGeometry, float DeltaTime)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

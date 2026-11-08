@@ -6,8 +6,12 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortChallengeSetStyle.h"
 #include "FObjectiveFinishedDisplaying.h"
+#include "UFortItemDefinition.h"
 #include "UFortQuestObjectiveInfo.h"
+
+class UTexture2D;
 
 #include "UFortQuestObjectiveEntry.generated.h"
 
@@ -24,6 +28,46 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	UFortQuestObjectiveInfo* MyObjectiveInfo;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HideRewardVisuals();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ObjectiveInfoSet(UFortQuestObjectiveInfo* ObjectiveInfo, bool IsAnnouncement, bool bQuestCompleted);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetRewardVisuals(UFortItemDefinition* RewardDef, FText& SourceText, FText& TypeText);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartDisplayingObjective();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateChallengeBundleObjectiveVisuals(FFortChallengeSetStyle& DisplayStyle, FText& ChallengeBundleName);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCharmObjectiveVisuals(FFortChallengeSetStyle& DisplayStyle, FText& CharmName, TSoftObjectPtr<UTexture2D>& CharmIcon);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateDefaultObjectiveVisuals();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateLevelUpObjectiveVisuals();
+public:
 
 };
 

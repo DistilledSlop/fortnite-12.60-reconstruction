@@ -53,5 +53,20 @@ protected:
 	void AnimationsComplete();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnConsoleDisplayURLProvided(FText& UniquePlayerURLText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetExitButtonText(FText& NewButtonText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetScreenConfiguration(bool bIsConsole);
+public:
+
 };
 

@@ -97,5 +97,10 @@ protected:
 	virtual void OnInsideGridStateChange_Implementation(bool bInsideGrid);
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResetToDefault();
+public:
+
 };
 

@@ -24,5 +24,15 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UFortItem> ItemToCompareWith;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemToCompareSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemToDetailSet();
+public:
+
 };
 

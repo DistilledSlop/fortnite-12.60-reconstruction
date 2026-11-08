@@ -40,5 +40,20 @@ public:
 	UPROPERTY()
 	UCommonLoadGuard* ItemToDetailLoadGuard;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleConsumeItemProgressChangedBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemToCompareSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemToDetailSetBP();
+public:
+
 };
 

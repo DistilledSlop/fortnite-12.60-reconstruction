@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ESpatialCustomizationRoomState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ESpatialCustomizationRoomState : uint8
 {
 	None = 0,

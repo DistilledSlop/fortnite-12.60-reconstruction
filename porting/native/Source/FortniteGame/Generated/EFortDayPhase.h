@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortDayPhase.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 namespace EFortDayPhase
 {
 	enum Type

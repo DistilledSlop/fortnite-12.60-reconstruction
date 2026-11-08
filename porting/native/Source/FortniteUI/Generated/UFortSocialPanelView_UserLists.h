@@ -158,5 +158,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_SearchFailed;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetVoiceChannelButtonText(FText& ButtonText);
+public:
+
 };
 

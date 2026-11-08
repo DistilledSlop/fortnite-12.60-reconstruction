@@ -28,5 +28,35 @@ public:
 	UPROPERTY()
 	AFortCharacterVehicle_Ostrich* OwningVehicle;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCancelSelfDestructPrime();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelfDestructFinish();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelfDestructStart(float WarningDuration);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupComplete();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartSelfDestructPrime(float Duration);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateSelfDestruct(float RemainingTime);
+public:
+
 };
 

@@ -9,6 +9,7 @@
 #include "Math/Color.h"
 #include "Math/Vector.h"
 
+class AFortPawn;
 class UFortAlterationItemDefinition;
 class UFortWorldItemDefinition;
 class USkeletalMesh;
@@ -70,6 +71,36 @@ public:
 	// table index 0, flags 0x14000000000015
 	UPROPERTY()
 	TSoftObjectPtr<USoundBase> PickupByNearbyPawnSound;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisableBacchusHighlight();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void EnableBacchusHighlight();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAboutToEnterBackpack(AFortPawn* PickupTarget);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAttached();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPickedUp();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTossed();
+public:
 
 };
 

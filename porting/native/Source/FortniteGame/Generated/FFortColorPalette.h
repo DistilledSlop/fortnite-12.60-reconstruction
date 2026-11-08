@@ -8,8 +8,8 @@
 
 #include "FFortColorPalette.generated.h"
 
-USTRUCT()
-struct FFortColorPalette
+USTRUCT(BlueprintType)
+struct FORTNITEGAME_API FFortColorPalette
 {
 	GENERATED_BODY()
 

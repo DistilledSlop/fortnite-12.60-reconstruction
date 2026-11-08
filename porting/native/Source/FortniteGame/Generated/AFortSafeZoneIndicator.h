@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "EFortSafeZoneState.h"
 #include "Engine/NetSerialization.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
@@ -237,6 +238,16 @@ public:
 
 	UFUNCTION()
 	void OnRep_NumActiveMegaStormCircles(int32 PrevNumActiveMegaStormCircles);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginStartingStateEffectsEvent();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSafeZoneStateChange(EFortSafeZoneState NewState, bool bInitial);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -6,10 +6,14 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaDoghouseVehicle.h"
 
+#include "Math/Vector.h"
+
+class ABuildingActor;
 class AFortPlayerPawn;
 class UCameraShake;
 class UFortFerretVehicleConfigs;
 class UFortVehicleAudioVoice;
+class UGameplayEffect;
 class UMaterialInstanceDynamic;
 class UParticleSystemComponent;
 class USceneComponent;
@@ -183,6 +187,46 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocalPlayerRiding() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BoostBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BoostEnd();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void LandedWithNoFuel();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSpringCompression();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetGrantWeaponGE(TSubclassOf<UGameplayEffect> NewGE);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowCooldownCueBoost(AFortPlayerPawn* Pawn, float Duration);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowCooldownCueFired(AFortPlayerPawn* Pawn, float Duration);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SmashedThroughBuildingPiece(FVector& ImpactPoint, FVector& ImpactNormal, ABuildingActor* BuildingHitActor);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EThirdPersonAutoFollowMode.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EThirdPersonAutoFollowMode : uint8
 {
 	Off = 0,

@@ -7,7 +7,10 @@
 #include "WaterBodyActor.h"
 
 #include "AttributeSet.h"
+#include "Engine/EngineTypes.h"
 #include "Math/Vector.h"
+
+class AFortPlayerPawn;
 
 #include "AFortWaterBodyActor.generated.h"
 
@@ -49,6 +52,21 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetSwampLocationAndRadius(FVector& InPosition, float InRadius);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerEnteredWaterBody(AFortPlayerPawn* Player, bool bIsFirstBody);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerExitedWaterBody(AFortPlayerPawn* Player, bool bIsLastBody);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReceivedBulletImpact(FHitResult& Hit);
+public:
 
 };
 

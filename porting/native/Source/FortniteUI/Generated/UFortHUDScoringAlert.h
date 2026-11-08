@@ -49,5 +49,10 @@ public:
 	UPROPERTY()
 	TSubclassOf<UFortTournamentAbandonMatchDialog> AbandonMatchClass;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPointScored();
+public:
+
 };
 

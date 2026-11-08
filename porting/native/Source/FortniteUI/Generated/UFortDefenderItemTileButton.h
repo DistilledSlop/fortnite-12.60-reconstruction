@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortDefenderItemTileButton : public UFortItemTileButton
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleEquipSlotChanged(int32 EquipSlot);
+public:
+
 };
 

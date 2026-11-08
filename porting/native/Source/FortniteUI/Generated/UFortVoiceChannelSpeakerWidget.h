@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "EChannelSpeakerStyle.h"
 #include "UCommonBorder.h"
 #include "UCommonTextBlock.h"
 
@@ -64,6 +65,16 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UImage* Image_ActiveVoiceIcon;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAnimateTalkingChanged(bool bIsNowTalking);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStyleAssigned(EChannelSpeakerStyle NewStyle);
+public:
 
 };
 

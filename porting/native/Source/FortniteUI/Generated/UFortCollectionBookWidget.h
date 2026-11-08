@@ -8,6 +8,7 @@
 
 #include "UCommonWidgetSwitcher.h"
 #include "UFortCollectionBookPage.h"
+#include "UFortCollectionBookSection.h"
 
 class UFortCollectionBookPrimaryPanel;
 class UFortCollectionBookProgressWidget;
@@ -48,6 +49,14 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	void OnCollectionBookPageClicked(UFortCollectionBookPage* ClickedPage);
 	virtual void OnCollectionBookPageClicked_Implementation(UFortCollectionBookPage* ClickedPage);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCollectionBookPageSelected(UFortCollectionBookPage* SelectedPage);
+	virtual void OnCollectionBookPageSelected_Implementation(UFortCollectionBookPage* SelectedPage);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCollectionBookSectionClicked(UFortCollectionBookSection* ClickedSection);
+	virtual void OnCollectionBookSectionClicked_Implementation(UFortCollectionBookSection* ClickedSection);
 
 };
 

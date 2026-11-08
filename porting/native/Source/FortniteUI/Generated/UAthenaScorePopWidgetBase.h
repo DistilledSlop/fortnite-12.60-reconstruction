@@ -14,5 +14,10 @@ class FORTNITEUI_API UAthenaScorePopWidgetBase : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewScoreEarned(int32 NewScoreValue, FText& NewScoreTypeText, int32 BigScoreThreshold);
+public:
+
 };
 

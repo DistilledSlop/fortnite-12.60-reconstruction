@@ -42,5 +42,10 @@ protected:
 	UFortEventLeaderboardEntryData* GetMyLeaderboardEntry();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLeaderboardEntrySelected(UFortEventLeaderboardEntryData* EntryData);
+public:
+
 };
 

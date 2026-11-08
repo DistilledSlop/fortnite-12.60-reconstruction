@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "FSimpleMetricInformation.h"
+#include "FVolumePerformanceMetrics.h"
+
 #include "UCreativePerformanceHUDBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +17,25 @@ class FORTNITEUI_API UCreativePerformanceHUDBase : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HideUIMetrics();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RefreshCostPreviewOfSelectedActor(int32 CostPreviewOfSelection, bool isThrowingPlayset);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSimpleUIMetrics(FSimpleMetricInformation& SimplePerformanceMetrics, int32 HeatmapCircleRadius);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetUIMetrics(FVolumePerformanceMetrics& VolumePerformanceMetrics);
+public:
+
 };
 

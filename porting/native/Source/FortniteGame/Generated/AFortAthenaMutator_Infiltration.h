@@ -156,6 +156,16 @@ public:
 	UFUNCTION()
 	void OnRep_ModeState(FInfiltrationModeState OldState);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ServerOnCaptured();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ServerOnDownloaded();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

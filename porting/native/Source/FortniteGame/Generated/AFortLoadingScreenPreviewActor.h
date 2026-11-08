@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	UAthenaLoadingScreenItemDefinition* DisplayedLoadingScreen;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewLoadingScreen(UAthenaLoadingScreenItemDefinition* LoadingScreen);
+public:
+
 };
 

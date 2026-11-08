@@ -8,6 +8,7 @@
 
 #include "Animation/CachedAnimData.h"
 #include "FFortAnimInput_Skydiving.h"
+#include "GameplayTagContainer.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
@@ -305,6 +306,11 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	UFortMontageItemDefinitionBase* LastObservedFrontEndEmote;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void TEMP_OnActiveTagChanged(FGameplayTag NewTag);
+public:
 
 };
 

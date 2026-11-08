@@ -50,5 +50,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetIsFilterActive(bool bInFilterActive);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateCheckMarkState(bool bIsChecked);
+public:
+
 };
 

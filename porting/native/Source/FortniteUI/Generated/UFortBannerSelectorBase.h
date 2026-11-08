@@ -39,5 +39,15 @@ public:
 	UPROPERTY(Config)
 	bool bFilterHomeBaseNameWithOSS;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHomebaseNameCommitFailed();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHomebaseNameCommitSucceeded();
+public:
+
 };
 

@@ -7,6 +7,7 @@
 #include "UFortHUDElementWidget.h"
 
 #include "AFortPlayerPawnAthena.h"
+#include "EAthenaPlayerActionAlert.h"
 
 #include "UAthenaHUDPlayerActionAlertBase.generated.h"
 
@@ -19,6 +20,16 @@ public:
 	// table index 0, flags 0x44000000002000
 	UPROPERTY(Transient)
 	TWeakObjectPtr<AFortPlayerPawnAthena> CurrentPlayerPawn;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AlertPlayer(EAthenaPlayerActionAlert Alert, FText& DetailText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClearAlert();
+public:
 
 };
 

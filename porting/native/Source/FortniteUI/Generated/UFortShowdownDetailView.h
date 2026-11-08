@@ -66,5 +66,10 @@ protected:
 	int32 GetTournamentPinUnlockScore() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RefreshDataBP();
+public:
+
 };
 

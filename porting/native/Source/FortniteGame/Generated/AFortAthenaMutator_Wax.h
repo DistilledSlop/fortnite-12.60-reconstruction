@@ -371,6 +371,36 @@ public:
 	UFUNCTION()
 	void OnRep_Leaders();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void FlyingTokensApplied(AFortPlayerStateAthena* Player, int32 Amount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGameEnd_Audio();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNearingEnd_Audio();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerRespawn_Audio();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void TokensAwarded(AFortPlayerStateAthena* Player, int32 Amount);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void TokensCollected(AFortPlayerStateAthena* Player, int32 Amount);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

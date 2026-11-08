@@ -32,5 +32,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TEnumAsByte<EFortCustomPartType::Type> GetCharacterPartType() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnPawnAndPartChanged();
+public:
+
 };
 

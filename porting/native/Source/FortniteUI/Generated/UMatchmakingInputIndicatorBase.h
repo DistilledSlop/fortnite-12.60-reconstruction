@@ -44,5 +44,10 @@ public:
 	UPROPERTY()
 	USizeBox* SizeBox_HotfixVisibility;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInputSourceTypeChanged(ECommonInputType InputType);
+public:
+
 };
 

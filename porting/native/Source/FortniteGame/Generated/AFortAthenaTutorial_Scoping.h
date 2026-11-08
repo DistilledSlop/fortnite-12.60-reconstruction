@@ -39,5 +39,10 @@ public:
 	UPROPERTY()
 	float ScopingCameraOutSpeed;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnScopingTargetsActivated();
+public:
+
 };
 

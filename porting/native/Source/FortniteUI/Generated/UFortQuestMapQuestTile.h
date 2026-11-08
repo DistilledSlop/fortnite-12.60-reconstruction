@@ -25,5 +25,15 @@ public:
 	UPROPERTY(Transient)
 	FFortQuestMapNode QuestNodeData;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleQuestDataChangedBP();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSelectedChange(bool Selected);
+public:
+
 };
 

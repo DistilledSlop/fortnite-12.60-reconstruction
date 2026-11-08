@@ -1011,6 +1011,11 @@ bool AFortPawn::WasDBNOOnDeath() const
 	return bWasDBNOOnDeath;
 }
 
+void AFortPawn::OnDeathPlayEffects_Implementation(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AFortPawn* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 bool AFortPawn::HasNativeAction(const FGameplayTag& ActionTag)
 {
 	// CONFIDENCE: MEDIUM

@@ -17,7 +17,7 @@ class UStaticMeshComponent;
 
 #include "FFortDamageNumberInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortDamageNumberInfo
 {
 	GENERATED_BODY()

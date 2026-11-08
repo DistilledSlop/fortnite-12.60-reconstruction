@@ -44,6 +44,11 @@ public:
 	UPROPERTY(Replicated)
 	float MaxHealth;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLowHealthPercentReached();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

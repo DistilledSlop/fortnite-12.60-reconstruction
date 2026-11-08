@@ -31,5 +31,10 @@ public:
 	UPROPERTY()
 	TSubclassOf<UFortRejoinWindowBase> RejoinWindowClass;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowTutorialDialog();
+public:
+
 };
 

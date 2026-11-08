@@ -8,7 +8,9 @@
 
 #include "AttributeSet.h"
 #include "FFortBuddyTagListener.h"
+#include "GameplayTagContainer.h"
 
+class AActor;
 class AFortPlayerPawn;
 class UFortWorldItemDefinition;
 
@@ -47,6 +49,31 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	TArray<FFortBuddyTagListener> TagListeners;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	FText GetInteractionString(AFortPlayerPawn* PlayerPawn) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemsConsumed(AFortPlayerPawn* PlayerPawn, int32 ItemsConsumed);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemsDrained(AFortPlayerPawn* PlayerPawn, int32 ItemsDrained);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnListenTagAdded(AActor* TargetActor, FGameplayTag Tag);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnListenTagRemoved(AActor* TargetActor, FGameplayTag Tag);
+public:
 
 };
 

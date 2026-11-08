@@ -8,6 +8,7 @@
 
 #include "FFortWeaponBoardDisplaySlot.h"
 #include "FFortWeaponBoardDisplaySlotItem.h"
+#include "UFortAccountItem.h"
 
 #include "AFortWeaponBoardBase.generated.h"
 
@@ -28,6 +29,11 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	TArray<FFortWeaponBoardDisplaySlotItem> DisplaySlotItemList;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplaySlotItemChanged(FFortWeaponBoardDisplaySlot DisplaySlot, UFortAccountItem* Item);
+public:
 
 };
 

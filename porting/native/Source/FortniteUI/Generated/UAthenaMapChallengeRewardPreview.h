@@ -35,5 +35,10 @@ public:
 	UPROPERTY(Config)
 	float CycleDelay;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ReplayIntroAnim();
+public:
+
 };
 

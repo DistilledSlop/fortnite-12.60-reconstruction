@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "EDiscoScoreProgressTypes.h"
 #include "FDiscoCaptureIconData.h"
+#include "FDiscoTeamScoreData.h"
 
 #include "UDiscoWidgetBase.generated.h"
 
@@ -55,6 +57,21 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 LastViewedTeam;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayScoreProgressSound(EDiscoScoreProgressTypes ScoreProgressType, bool bIsLocalTeam);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateCapturePoint(int32 IconIndex, FDiscoCaptureIconData& IconData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateTeamScore(int32 TeamIndex, FDiscoTeamScoreData& ScoreData);
+public:
 
 };
 

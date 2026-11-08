@@ -7,6 +7,8 @@
 #include "UFortHUDElementWidget.h"
 
 #include "AFortWeapon.h"
+#include "EFortWeaponOverheatState.h"
+#include "EFortWeaponReloadType.h"
 
 #include "UFortStWEquippedItemReticle.generated.h"
 
@@ -19,6 +21,36 @@ public:
 	// table index 0, flags 0x24080000000014
 	UPROPERTY()
 	TWeakObjectPtr<AFortWeapon> BoundWeapon;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAmmoChanged(int32 MagazineAmmoCount, int32 TotalRemaining);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponChanged(AFortWeapon* NewWeapon);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponOverheatValueChanged(float CurrentValue, float MaxValue, EFortWeaponOverheatState State, bool bIsInCooldown);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponReloadCancelled(AFortWeapon* Weapon);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponReloadStarted(float ReloadTime, EFortWeaponReloadType ReloadType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponTargetingChanged(bool bIsTargeting);
+public:
 
 };
 

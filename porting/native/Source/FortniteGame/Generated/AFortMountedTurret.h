@@ -84,6 +84,11 @@ public:
 	UFUNCTION()
 	void OnRep_TeamIndex(uint8 OldVal);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGetExitSocketTransform(FName ExitSocket, int32 SocketIndex, FTransform InTransform, bool& bOutOverriderExitSocket, FTransform& OutOverrideTransform);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

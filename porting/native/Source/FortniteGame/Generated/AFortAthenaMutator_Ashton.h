@@ -278,6 +278,21 @@ public:
 	UFUNCTION()
 	void OnRep_VillainLeaderLocationForSound();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayVillainLeaderDiedSound(FVector SoundLocation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayVillainLeaderSnapSound(FVector SoundLocation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayVillainLeaderSpawnedSound(FVector SoundLocation);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

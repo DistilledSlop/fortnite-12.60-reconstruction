@@ -6,13 +6,17 @@
 #include "CoreMinimal.h"
 #include "AFortItemPlacementActor.h"
 
+#include "EGameReadiness.h"
+#include "FAthenaTeamDisplayInfo.h"
 #include "FCachedComponentMaterials.h"
+#include "Math/Color.h"
 #include "UFortHero.h"
 #include "UObject/Object.h"
 
 class AAthenaSquadPedestalGroup;
 class UFortTeamMemberEntryBase;
 class UStaticMeshComponent;
+class UTexture2D;
 class UWidgetComponent;
 
 #include "AFortTeamMemberPedestal.generated.h"
@@ -88,6 +92,51 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInLocalSquadGroup() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAvatarChanged(UTexture2D* AvatarImage, FColor AvatarBackground, FColor HighlightColor);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnConnectedToCampaignLobby();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisconnectedToCampaignLobby();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGameReadinessChanged(EGameReadiness GameReadiness);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsCurrentlyInMatchChanged(bool bIsInMatch);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewSquadEstablished(bool bMultipleSquadsPopulated, bool bOwningSquadContainsLocalPlayer, FAthenaTeamDisplayInfo& OwningSquadStyle);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOwningPedestalGroupEstablished(int32 SquadIdx, bool bSquadHasLocalPlayer, bool bIsPopulated);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPedestalIsPopulatedChanged(bool bIsPopulated, bool bOwningSquadContainsLocalPlayer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeamMemberSet(bool bHasValidTeamMember);
 public:
 
 

@@ -614,6 +614,360 @@ public:
 	void SpawnPlaysetVolumeOnServer(UFortPlaysetItemDefinition* Playset, const FVector& SpawnLocation, const FRotator& SpawnRotation);
 	void SpawnPlaysetVolumeOnServer_Implementation(UFortPlaysetItemDefinition* Playset, const FVector& SpawnLocation, const FRotator& SpawnRotation);
 
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleActivateRotationModePressed();
+	virtual void HandleActivateRotationModePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleActivateScaleModePressed();
+	virtual void HandleActivateScaleModePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleActivateTranslateModePressed();
+	virtual void HandleActivateTranslateModePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleActorSelectedForQueuePressed();
+	virtual void HandleActorSelectedForQueuePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleActorSelectedForQueueReleased();
+	virtual void HandleActorSelectedForQueueReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleClearMultiSelectQueuePressed();
+	virtual void HandleClearMultiSelectQueuePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleCopyPickupPressed();
+	virtual void HandleCopyPickupPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleDeletePressed();
+	virtual void HandleDeletePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleDeleteReleased();
+	virtual void HandleDeleteReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleDuplicateActorPressed();
+	virtual void HandleDuplicateActorPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleDuplicateActorReleased();
+	virtual void HandleDuplicateActorReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleExitHeldDownLongEnough();
+	virtual void HandleExitHeldDownLongEnough_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleExitOrDeletePressed();
+	virtual void HandleExitOrDeletePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleExitPressed();
+	virtual void HandleExitPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleExitReleased();
+	virtual void HandleExitReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleHitTraceRuleHeldDownLongEnough();
+	virtual void HandleHitTraceRuleHeldDownLongEnough_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleHitTraceRulePressed();
+	virtual void HandleHitTraceRulePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleHitTraceRuleReleased();
+	virtual void HandleHitTraceRuleReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleMirrorPressed();
+	virtual void HandleMirrorPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandlePickupPressed();
+	virtual void HandlePickupPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandlePlaysetPreviewPlace();
+	virtual void HandlePlaysetPreviewPlace_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandlePrecisionModePressed();
+	virtual void HandlePrecisionModePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandlePrecisionModeReleased();
+	virtual void HandlePrecisionModeReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandlePullPressed();
+	virtual void HandlePullPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandlePullReleased();
+	virtual void HandlePullReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandlePushPressed();
+	virtual void HandlePushPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandlePushReleased();
+	virtual void HandlePushReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleResetRotationPressed();
+	virtual void HandleResetRotationPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleResetScalePressed();
+	virtual void HandleResetScalePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleRotateClockwisePressed();
+	virtual void HandleRotateClockwisePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleRotateClockwiseReleased();
+	virtual void HandleRotateClockwiseReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleRotateCounterclockwisePressed();
+	virtual void HandleRotateCounterclockwisePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleRotateCounterclockwiseReleased();
+	virtual void HandleRotateCounterclockwiseReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleRotateSingleClockwisePressed();
+	virtual void HandleRotateSingleClockwisePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleRotateSingleClockwiseReleased();
+	virtual void HandleRotateSingleClockwiseReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleRotateSingleCounterclockwisePressed();
+	virtual void HandleRotateSingleCounterclockwisePressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleRotateSingleCounterclockwiseReleased();
+	virtual void HandleRotateSingleCounterclockwiseReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleRotateSwitchAxisPressed();
+	virtual void HandleRotateSwitchAxisPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleRotateSwitchAxisReleased();
+	virtual void HandleRotateSwitchAxisReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleScaleDownPressed();
+	virtual void HandleScaleDownPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleScaleDownReleased();
+	virtual void HandleScaleDownReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleScaleSwitchAxisPressed();
+	virtual void HandleScaleSwitchAxisPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleScaleSwitchAxisReleased();
+	virtual void HandleScaleSwitchAxisReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleScaleUpPressed();
+	virtual void HandleScaleUpPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleScaleUpReleased();
+	virtual void HandleScaleUpReleased_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleTransformModeDownPressed();
+	virtual void HandleTransformModeDownPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleTransformModeUpPressed();
+	virtual void HandleTransformModeUpPressed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAddedToQuickbar(TArray<UMeshComponent*>& Components);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAllowGravityToggleChanged(bool bAllowGravity);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnCopyOrPickupFailed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHighlightSelectedActor(AActor* SelectedActor, TArray<UMeshComponent*>& SelectedComponents);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHoverChanged(TArray<UMeshComponent*>& NewHoveredComponents, TArray<UMeshComponent*>& UnhoveredComponents, UObjectInteractionBehavior* ObjectInteraction);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInteractionFinished(TArray<UMeshComponent*>& Components);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInteractionStarted(TArray<UMeshComponent*>& Components);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnObjectPlacement(TArray<UMeshComponent*>& Components, FOriginalAndSpawnedPair NewlyPlacedActorPair);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRemoveHighlightSelectedActor(AActor* SelectedActor, TArray<UMeshComponent*>& SelectedComponents);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnValidPlacementChanged(bool bValidPlacement);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnValidPlacementChangedActorInstance(AActor* ActorForPlacement, bool ValidPlacement);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void PopCreativeMoveToolEquippedInputComponent();
+	virtual void PopCreativeMoveToolEquippedInputComponent_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void PushCreativeMoveToolEquippedInputComponent();
+	virtual void PushCreativeMoveToolEquippedInputComponent_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SpawnPlaysetVolume(UFortPlaysetItemDefinition* Playset, FVector& SpawnLocation, FRotator& SpawnRotation);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

@@ -49,5 +49,10 @@ public:
 	UPROPERTY()
 	bool bWasTargeting;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTargetingChanged(bool bTargeting);
+public:
+
 };
 

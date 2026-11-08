@@ -1,0 +1,68 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/Rendering/SkinWeightVertexBuffer.cpp b/Engine/Source/Runtime/Engine/Private/Rendering/SkinWeightVertexBuffer.cpp
+index c97ad4b85..d8cf0dab3 100644
+--- a/Engine/Source/Runtime/Engine/Private/Rendering/SkinWeightVertexBuffer.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Rendering/SkinWeightVertexBuffer.cpp
+@@ -7,6 +7,20 @@
+ #include "SkeletalMeshTypes.h"
+ #include "UObject/AnimObjectVersion.h"
+ #include "ProfilingDebugging/LoadTimeTracker.h"
++#include "UObject/Linker.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
++
++// Original Fortnite 12.60 cooked skeletal meshes (unversioned packages, UE 4.23 based) serialize the skin weight
++// buffer in the pre-UnlimitedBoneInfluences layout: bExtraBoneInfluences, Stride, NumVertices, then the bulk array of
++// legacy weight entries (8 bit bone indices, no bUse16BitBoneIndex flag), and no lookup buffer. Unversioned packages
++// report the newest custom versions, so the version checks alone would select the new layout.
++// See porting/patches/ue425-legacy-skeletal-mesh-layout.patch. On by default; -FortniteNoLegacySkeletalMesh disables it.
++static bool FortniteUseLegacySkinWeightLayout(FArchive& Ar)
++{
++	static const bool bDisabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteNoLegacySkeletalMesh"));
++	return !bDisabled && Ar.IsLoading() && Ar.GetLinker() && Ar.GetLinker()->Summary.bUnversioned;
++}
+ 
+ /*-----------------------------------------------------------------------------
+ FSkinWeightLookupVertexBuffer
+@@ -289,7 +303,7 @@ FArchive& operator<<(FArchive& Ar, FSkinWeightDataVertexBuffer& VertexBuffer)
+ 	{
+ 		if (VertexBuffer.WeightData != NULL)
+ 		{
+-			if (Ar.IsLoading() && Ar.CustomVer(FAnimObjectVersion::GUID) < FAnimObjectVersion::UnlimitedBoneInfluences)
++			if (Ar.IsLoading() && (Ar.CustomVer(FAnimObjectVersion::GUID) < FAnimObjectVersion::UnlimitedBoneInfluences || FortniteUseLegacySkinWeightLayout(Ar)))
+ 			{
+ 				FStaticMeshVertexDataInterface* LegacyWeightData = nullptr;
+ 				bool bExtraBoneInfluences = VertexBuffer.MaxBoneInfluences > MAX_INFLUENCES_PER_STREAM;
+@@ -350,7 +364,8 @@ void FSkinWeightDataVertexBuffer::SerializeMetaData(FArchive& Ar)
+ 	Ar.UsingCustomVersion(FSkeletalMeshCustomVersion::GUID);
+ 	Ar.UsingCustomVersion(FAnimObjectVersion::GUID);
+ 
+-	if (Ar.IsLoading() && Ar.CustomVer(FAnimObjectVersion::GUID) < FAnimObjectVersion::UnlimitedBoneInfluences)
++	const bool bFortniteLegacySkinWeights = FortniteUseLegacySkinWeightLayout(Ar);
++	if (Ar.IsLoading() && (Ar.CustomVer(FAnimObjectVersion::GUID) < FAnimObjectVersion::UnlimitedBoneInfluences || bFortniteLegacySkinWeights))
+ 	{
+ 		bool bExtraBoneInfluences = false;
+ 		if (Ar.CustomVer(FSkeletalMeshCustomVersion::GUID) < FSkeletalMeshCustomVersion::SplitModelAndRenderData)
+@@ -371,8 +386,12 @@ void FSkinWeightDataVertexBuffer::SerializeMetaData(FArchive& Ar)
+ 		Ar << bVariableBonesPerVertex << MaxBoneInfluences << NumBones << NumVertices;
+ 	}
+ 	
+-	// bUse16BitBoneIndex doesn't exist before version IncreaseBoneIndexLimitPerChunk
+-	if (Ar.CustomVer(FAnimObjectVersion::GUID) >= FAnimObjectVersion::IncreaseBoneIndexLimitPerChunk)
++	// bUse16BitBoneIndex doesn't exist before version IncreaseBoneIndexLimitPerChunk (nor in the original 12.60 layout)
++	if (bFortniteLegacySkinWeights)
++	{
++		bUse16BitBoneIndex = false;
++	}
++	else if (Ar.CustomVer(FAnimObjectVersion::GUID) >= FAnimObjectVersion::IncreaseBoneIndexLimitPerChunk)
+ 	{
+ 		Ar << bUse16BitBoneIndex;
+ 	}
+@@ -639,7 +658,7 @@ FArchive& operator<<(FArchive& Ar, FSkinWeightVertexBuffer& VertexBuffer)
+ 	Ar.UsingCustomVersion(FAnimObjectVersion::GUID);	
+ 	Ar << VertexBuffer.DataVertexBuffer;
+ 
+-	if (Ar.IsLoading() && Ar.CustomVer(FAnimObjectVersion::GUID) < FAnimObjectVersion::UnlimitedBoneInfluences)
++	if (Ar.IsLoading() && (Ar.CustomVer(FAnimObjectVersion::GUID) < FAnimObjectVersion::UnlimitedBoneInfluences || FortniteUseLegacySkinWeightLayout(Ar)))
+ 	{
+ 		// LookupVertexBuffer doesn't exist before this version, so construct its content from scratch
+ 		uint32 MaxBoneInfluences = VertexBuffer.DataVertexBuffer.GetMaxBoneInfluences();

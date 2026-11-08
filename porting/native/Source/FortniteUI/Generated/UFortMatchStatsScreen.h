@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortMatchStatsScreen : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void EventUpdateStats();
+public:
+
 };
 

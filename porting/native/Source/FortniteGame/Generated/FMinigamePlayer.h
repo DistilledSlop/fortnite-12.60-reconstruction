@@ -14,7 +14,7 @@ class ASOLFortPlayer;
 
 #include "FMinigamePlayer.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FMinigamePlayer : public FFastArraySerializerItem
 {
 	GENERATED_BODY()

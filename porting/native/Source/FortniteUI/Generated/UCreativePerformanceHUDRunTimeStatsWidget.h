@@ -14,5 +14,10 @@ class FORTNITEUI_API UCreativePerformanceHUDRunTimeStatsWidget : public UFortHUD
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetRuntimeStats(TArray<FText>& DetailRuntimeStats);
+public:
+
 };
 

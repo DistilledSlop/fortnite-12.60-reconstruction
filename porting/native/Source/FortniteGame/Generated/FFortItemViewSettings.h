@@ -11,7 +11,7 @@
 
 #include "FFortItemViewSettings.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FFortItemViewSettings
 {
 	GENERATED_BODY()

@@ -135,6 +135,21 @@ public:
 	UFUNCTION()
 	void OnRep_SettingsVolume();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	int32 GetTeamSetting() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ShowSolaris();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UseSolaris(bool bShouldUse);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

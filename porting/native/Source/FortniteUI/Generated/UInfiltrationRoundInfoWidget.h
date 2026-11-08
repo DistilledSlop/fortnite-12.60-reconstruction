@@ -59,5 +59,15 @@ protected:
 	void SetWinningTeam(uint8 NewWinningTeam);
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnReadyToShowIntro();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnReadyToShowStuff(int32 CurrentRound, uint8 LastRoundWinningTeam);
+public:
+
 };
 

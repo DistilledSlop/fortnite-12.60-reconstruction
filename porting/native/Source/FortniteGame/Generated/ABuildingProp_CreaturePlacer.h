@@ -10,6 +10,7 @@
 #include "FOnCreatureVisualsLoadComplete.h"
 #include "FSpawnGroupVisuals.h"
 
+class AFortMinigame;
 class UFortDifficultyOptionEncounter_SpawnGroupProgression;
 class UFortDifficultyOptionEncounter_SpawnLimitPawns;
 class UFortGameplayReceiverMessageComponent;
@@ -82,6 +83,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponent* GetCreatureSkeletalMeshComponent() const;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void MinigameStateChanged(AFortMinigame* Minigame, EFortMinigameState NewMinigameState);
+	virtual void MinigameStateChanged_Implementation(AFortMinigame* Minigame, EFortMinigameState NewMinigameState);
 
 };
 

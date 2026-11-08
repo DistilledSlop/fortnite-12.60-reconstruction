@@ -20,6 +20,7 @@
 #include "EFortCustomPartType.h"
 #include "EFortFacialAnimTypes.h"
 #include "EFortPawnStasisMode.h"
+#include "EItemInteractionType.h"
 #include "Engine/CurveTable.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/SpringInterpolator.h"
@@ -1939,6 +1940,129 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void UpdateGameStateModifiedGravity(float GravityMultiplier);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void AnimTrailsDisable();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void AnimTrailsNotify(bool bActive);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void AnimTrailsSetup(UParticleSystem* ParticleSystemReference, UNiagaraSystem* NiagaraSystemReference, FName FirstSocketName, FName SecondSocketName, float Width, UFXSystemComponent* OverrideParticleComp, FName OverideFirstSocketName, FName OverideSecondSocketName);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NotifyTeammateSkydivedFromBus();
+public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnBeginParachuteMovement();
+	virtual void OnBeginParachuteMovement_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginWaterInteraction(FVector WaterSurfaceLocation, float WaterDepth);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginWaterSprintBoost();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCharacterPartsReinitialized();
+public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnEndParachuteMovement();
+	virtual void OnEndParachuteMovement_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndWaterInteraction(FVector PreviousWaterSurfaceLocation, float WaterDepth);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndWaterSprintBoost();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnteredVehicle();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnteredWaterBody(AFortWaterBodyActor* WaterBody, bool bIsFirstBody);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnteredWaterVolume();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitedVehicle();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitedWaterBody(AFortWaterBodyActor* WaterBody, bool bIsLastBody);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitedWaterVolume();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLandscapeCheckFailedAndTeleported();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalItemInteractionComplete(AActor* ReceivingActor);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLockOnSearchCompleted(bool& bConsumeEvent);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOpenParachute(bool& bConsumeEvent);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSlidingStateChanged(bool bNewSlidingState);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartLongInteract(AActor* ReceivingActor, bool& Out_bConsumeEvent, bool& Out_bSkipSetInteractDuration, bool& Out_bSkipStartAnimation, EItemInteractionType& Out_ItemInteractionType);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SafeZoneStatusChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetFirstPersonCamera(bool bNewUseFirstPersonCamera);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

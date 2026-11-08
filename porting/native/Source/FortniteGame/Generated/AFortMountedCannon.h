@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "AFortMountedTurret.h"
 
+class AFortPawn;
+class AFortPlayerPawn;
+
 #include "AFortMountedCannon.generated.h"
 
 UCLASS(config=Game)
@@ -14,5 +17,15 @@ class FORTNITEGAME_API AFortMountedCannon : public AFortMountedTurret
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLaunchPawn(AFortPlayerPawn* Pawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPostExitVehicle(AFortPawn* ExitingPawn, int32 SeatIndex);
+public:
+
 };
 

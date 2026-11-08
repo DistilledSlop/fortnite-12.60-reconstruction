@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	TArray<AWorldMapPin*> CurrentPins;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	AWorldMapPin* CreateWorldMapPin(const FString& TheaterId);
+public:
+
 };
 

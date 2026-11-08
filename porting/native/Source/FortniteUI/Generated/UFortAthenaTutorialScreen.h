@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "ECommonInputType.h"
 #include "Engine/DataTable.h"
 #include "UCommonWidgetSwitcher.h"
 
@@ -58,6 +59,21 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonWidgetSwitcher* Switcher;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTutorialProgressUpdated(int32 CurrentPhase);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupInputActionNames(TArray<FName>& Names);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateInputDisplay(ECommonInputType CurrentInputType);
+public:
 
 };
 

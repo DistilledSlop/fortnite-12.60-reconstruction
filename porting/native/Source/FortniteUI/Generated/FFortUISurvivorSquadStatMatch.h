@@ -10,7 +10,7 @@
 
 #include "FFortUISurvivorSquadStatMatch.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortUISurvivorSquadStatMatch
 {
 	GENERATED_BODY()

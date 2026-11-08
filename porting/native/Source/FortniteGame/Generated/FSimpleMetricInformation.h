@@ -9,8 +9,8 @@
 
 #include "FSimpleMetricInformation.generated.h"
 
-USTRUCT()
-struct FSimpleMetricInformation
+USTRUCT(BlueprintType)
+struct FORTNITEGAME_API FSimpleMetricInformation
 {
 	GENERATED_BODY()
 

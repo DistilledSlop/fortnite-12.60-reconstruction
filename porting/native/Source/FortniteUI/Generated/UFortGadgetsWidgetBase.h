@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 class UFortLazyImage;
+class UWidget;
 
 #include "UFortGadgetsWidgetBase.generated.h"
 
@@ -27,6 +28,11 @@ public:
 	// table index 0, flags 0x40008000002008
 	UPROPERTY(Transient)
 	TArray<UFortLazyImage*> Gadgets;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	UWidget* OnGenerateTooltipWidget(FText& Header, FText& Description);
+public:
 
 };
 

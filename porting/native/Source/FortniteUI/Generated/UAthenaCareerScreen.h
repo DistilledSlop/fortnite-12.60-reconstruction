@@ -49,5 +49,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_ChapterContext;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowFeats(bool bHasCompletedFeats);
+public:
+
 };
 

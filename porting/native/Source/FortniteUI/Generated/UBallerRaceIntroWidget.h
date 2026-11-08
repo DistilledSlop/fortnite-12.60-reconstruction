@@ -18,5 +18,15 @@ public:
 	UPROPERTY()
 	float LengthOfCountdown;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowIntro();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartCountdown();
+public:
+
 };
 

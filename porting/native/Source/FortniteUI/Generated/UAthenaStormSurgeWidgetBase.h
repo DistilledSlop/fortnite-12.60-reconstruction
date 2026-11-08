@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "EStormSurgeThresholdType.h"
+
 #include "UAthenaStormSurgeWidgetBase.generated.h"
 
 UCLASS()
@@ -14,5 +16,20 @@ class FORTNITEUI_API UAthenaStormSurgeWidgetBase : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartDisplaying(FText& TitleText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStopDisplaying();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateThresholdDisplay(FText& ThresholdText, EStormSurgeThresholdType ThresholdType);
+public:
+
 };
 

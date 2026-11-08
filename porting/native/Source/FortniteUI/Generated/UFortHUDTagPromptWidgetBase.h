@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "FFortHUDTagPromptData.h"
 #include "FOnOpenOrClosed.h"
 
 #include "UFortHUDTagPromptWidgetBase.generated.h"
@@ -23,6 +24,10 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void CloseWidget();
 	virtual void CloseWidget_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OpenWidget(FFortHUDTagPromptData& PrompData);
+	virtual void OpenWidget_Implementation(FFortHUDTagPromptData& PrompData);
 
 };
 

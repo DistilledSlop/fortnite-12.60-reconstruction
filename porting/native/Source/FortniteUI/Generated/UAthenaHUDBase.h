@@ -7,6 +7,7 @@
 #include "UFortUIStateWidgetBase.h"
 
 #include "AFortVolume.h"
+#include "EPlaylistUIExtensionSlot.h"
 #include "FMutatorAddedWidgets.h"
 #include "FPlaylistUIExtension.h"
 
@@ -115,6 +116,41 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetZoneCompleted(bool bValue);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleCursorModeChanged(bool bCursorModeEnabled, FName ActionName, UUserWidget* CustomWidget);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnDisplayGameOver();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHUDScaleChanged(float HUDScale);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlaylistExtensionWidgetCreated(EPlaylistUIExtensionSlot ExtensionSlot, UUserWidget* Widget);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlaylistExtensionWidgetRemoved(EPlaylistUIExtensionSlot ExtensionSlot, UUserWidget* Widget);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void PrepareToShowEndGameUI();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetQuickBarNative(bool bShouldDoQuickBarNative);
 public:
 
 };

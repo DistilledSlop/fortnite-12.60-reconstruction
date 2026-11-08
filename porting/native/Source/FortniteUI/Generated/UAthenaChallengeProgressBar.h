@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UCommonRichTextBlock* RichText_Progress;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetPercentValueForMaterialNumber(int32 PercentValue);
+public:
+
 };
 

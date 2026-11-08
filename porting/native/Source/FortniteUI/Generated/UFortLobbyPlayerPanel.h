@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFortFriendRequestStatus.h"
 #include "UCommonButton.h"
 
 class UFortPlayerBanner;
@@ -57,6 +58,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UImage* Image_PlatformIcon;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFriendStatusUpdated(EFortFriendRequestStatus FriendRequestStatus);
+public:
 
 };
 

@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortWinterQuestButton : public UCommonButton
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateOpenButtonState(bool bIsWinterQuestOwned, int32 UnusedKeys);
+public:
+
 };
 

@@ -17,7 +17,7 @@ class UFortWorldMarker;
 
 #include "FFortWorldMarkerData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FFortWorldMarkerData : public FFastArraySerializerItem
 {
 	GENERATED_BODY()

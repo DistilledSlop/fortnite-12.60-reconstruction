@@ -24,5 +24,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_Rewards;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPayoutDataSet(int32 EntryIndex);
+public:
+
 };
 

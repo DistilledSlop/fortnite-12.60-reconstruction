@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	EBracketNodeState CurrentBracketNodeState;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleBracketNodeStateSet_BP(EBracketNodeState NewState);
+public:
+
 };
 

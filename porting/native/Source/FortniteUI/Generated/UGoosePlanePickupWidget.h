@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	TArray<FGoosePickupDisplayData> DisplayData;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void CloseWidget();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OpenWidget(int32 DisplayIndex, FName ChestName, FText& DisplayText);
+public:
+
 };
 

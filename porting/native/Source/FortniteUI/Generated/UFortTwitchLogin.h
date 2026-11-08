@@ -32,5 +32,20 @@ public:
 	void OnLoginFlowModalDismissed(UFortTwitchLoginModalWidget* Modal);
 	virtual void OnLoginFlowModalDismissed_Implementation(UFortTwitchLoginModalWidget* Modal);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLinkedTwitchAccountChanged(const FString& AccountName);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoginStatusChanged(bool bLoggedIn, const FString& AccountName);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowLoginError(FText& ErrorTitle, FText& ErrorMessage);
+public:
+
 };
 

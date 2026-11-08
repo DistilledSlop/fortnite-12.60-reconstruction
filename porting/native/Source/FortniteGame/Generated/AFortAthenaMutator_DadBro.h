@@ -151,6 +151,16 @@ public:
 	UFUNCTION()
 	void OnRep_DadBroPawn();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DespawnIdleEffects();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SpawnIdleEffects(FVector& Location);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

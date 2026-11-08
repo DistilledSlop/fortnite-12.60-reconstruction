@@ -14,5 +14,10 @@ class FORTNITEUI_API ULiveStreamMenuToggleButton : public UCommonButton
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RefreshButton(bool IsLiveStreamEnabled);
+public:
+
 };
 

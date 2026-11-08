@@ -20,5 +20,15 @@ public:
 	UPROPERTY(Transient)
 	ERespawnUIState RespawnState;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateLives(int32 Lives);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateRespawnState(bool bEnabled);
+public:
+
 };
 

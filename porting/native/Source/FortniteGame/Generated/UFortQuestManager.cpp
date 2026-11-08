@@ -2,6 +2,7 @@
 #include "UFortQuestManager.h"
 #include "AFortMission.h"
 #include "AFortPlayerController.h"
+#include "AFortPlayerState.h"
 #include "Algo/StableSort.h"
 #include "EFortQuestState.h"
 #include "EObjectiveStatusUpdateType.h"

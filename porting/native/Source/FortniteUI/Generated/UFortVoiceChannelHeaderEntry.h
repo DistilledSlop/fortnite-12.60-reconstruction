@@ -35,5 +35,10 @@ public:
 	UPROPERTY(Transient)
 	UWidgetAnimation* Anim_Open;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateVisuals(bool bIsActive);
+public:
+
 };
 

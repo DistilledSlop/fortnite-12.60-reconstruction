@@ -30,5 +30,10 @@ public:
 	UPROPERTY()
 	UFortLazyImage* LazyImage_FeatIcon;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFeatDefinitionSet();
+public:
+
 };
 

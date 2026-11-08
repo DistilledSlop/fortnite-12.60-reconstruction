@@ -48,5 +48,15 @@ public:
 	UPROPERTY()
 	UCommonPopupButton* Button_ReportPlayer;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayIntroAnimation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetContinueButtonText(FText& InText);
+public:
+
 };
 

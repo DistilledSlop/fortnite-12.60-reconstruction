@@ -23,5 +23,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortAlterationInfo* GetAlterationInfo() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetup();
+public:
+
 };
 

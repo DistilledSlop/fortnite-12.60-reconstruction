@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ESpectatorLeaderboardEntryType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ESpectatorLeaderboardEntryType : uint8
 {
 	ScoreWithEndScore = 0,

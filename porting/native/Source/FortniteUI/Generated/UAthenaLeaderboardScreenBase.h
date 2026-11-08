@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "FAthenaPlaylistLeaderboardData.h"
 #include "FLeaderboardFilter.h"
 #include "UCommonBorder.h"
 #include "UCommonButton.h"
@@ -119,6 +120,31 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CanShowFriendsOnlyLeaderboard() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnQueryFinished();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnQueryStarted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateLeaderboardListUI(bool bWasSuccessful, UFortLeaderboardRowProxyInstance* LocalUserRow, FText& QueryErrorStr);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateListHeader(FAthenaPlaylistLeaderboardData& PlaylistTabData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateTabButtonText(UCommonButton* Button, FAthenaPlaylistLeaderboardData& PlaylistTabData);
 public:
 
 };

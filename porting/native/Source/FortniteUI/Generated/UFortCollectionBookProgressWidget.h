@@ -9,6 +9,7 @@
 #include "UCommonButton.h"
 #include "UCommonNumericTextBlock.h"
 #include "UCommonTextBlock.h"
+#include "UFortCollectionBookPage.h"
 
 class UFortCollectionBookPageDetailsWidget;
 class UFortCollectionBookProgressionRewardsModalWidget;
@@ -69,6 +70,16 @@ protected:
 	void OnCollectionBookPreviewXPChange(float PreviewCompletionPct);
 	virtual void OnCollectionBookPreviewXPChange_Implementation(float PreviewCompletionPct);
 public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCollectionBookLevelChanged(int32 NewLevel);
+	virtual void OnCollectionBookLevelChanged_Implementation(int32 NewLevel);
+public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCollectionBookPageSelected(UFortCollectionBookPage* SelectedPage);
+	virtual void OnCollectionBookPageSelected_Implementation(UFortCollectionBookPage* SelectedPage);
 
 };
 

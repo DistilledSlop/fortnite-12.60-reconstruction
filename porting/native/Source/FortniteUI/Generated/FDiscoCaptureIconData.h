@@ -11,7 +11,7 @@ class AAthenaCapturePoint;
 
 #include "FDiscoCaptureIconData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FDiscoCaptureIconData
 {
 	GENERATED_BODY()

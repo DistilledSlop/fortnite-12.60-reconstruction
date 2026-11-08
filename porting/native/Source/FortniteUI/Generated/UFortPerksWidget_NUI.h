@@ -7,6 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortPerksWidgetState.h"
+#include "FFortUIPerk.h"
+#include "FFortUIPerkTier.h"
 #include "UCommonLoadGuard.h"
 #include "UFortHero.h"
 #include "UFortTooltipContext.h"
@@ -49,6 +51,26 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonLoadGuard* PerksListLoadGuard;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGeneratePerk(FFortUIPerk FortPerk, UFortPerkWidget_NUI* PerkWidget);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGeneratePerkTier(FFortUIPerkTier FortPerkTier, UFortPerkTierWidget_NUI* PerkTierWidget);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHeroChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStateChanged();
+public:
 
 };
 

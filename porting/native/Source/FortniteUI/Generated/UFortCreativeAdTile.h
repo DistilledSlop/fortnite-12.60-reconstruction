@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	FCreativeAdData CMSAdEntry;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCMSDataUpdated();
+public:
+
 };
 

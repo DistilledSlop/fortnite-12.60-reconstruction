@@ -7,6 +7,7 @@
 #include "UFortItemPreviewScreen.h"
 
 #include "Engine/DataTable.h"
+#include "FFortItemHeaderInformation.h"
 #include "FFortReceivedItemLootInfo.h"
 #include "FOnFinalGiftingComplete.h"
 #include "UCommonBorder.h"
@@ -152,6 +153,61 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonButton* Button_RightScrollArrow;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCloseScreen();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayEquipButton(bool bCanEquip);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayItemsCollectedText(bool bCloseScreen);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinishDisplayingHotItems(bool bShowOtherRewards);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitialIconAnimation(bool bUsingListView);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSwitchToPaidItems();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateHeaderInformation(FFortItemHeaderInformation& HeaderInformation);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateItemEquipped();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateItemInformation(UFortItem* FortItem);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateNextButtonText(bool bShowNext);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateOwnedItemText(bool bShowText);
+public:
 
 };
 

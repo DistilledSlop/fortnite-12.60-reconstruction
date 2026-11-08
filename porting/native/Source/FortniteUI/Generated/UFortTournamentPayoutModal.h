@@ -39,5 +39,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<FTournamentPayoutThresholdData> TournamentPayoutData;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NotifyNoPayouts();
+public:
+
 };
 

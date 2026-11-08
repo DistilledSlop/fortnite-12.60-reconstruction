@@ -74,5 +74,20 @@ public:
 	UPROPERTY()
 	UUserWidget* Widget_EasyInteractFinger;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CompletedEnabled();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DragToTurnEnabled();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayFingerPointingAnimation();
+public:
+
 };
 

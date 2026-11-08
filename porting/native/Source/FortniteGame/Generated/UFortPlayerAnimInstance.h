@@ -36,6 +36,7 @@
 #include "FFortAnimInput_TurnInPlace.h"
 #include "FFortAnimInput_Zipline.h"
 #include "FGameplayTagAnimations.h"
+#include "GameplayTagContainer.h"
 #include "Math/Axis.h"
 #include "Math/Rotator.h"
 #include "Math/TransformNonVectorized.h"
@@ -1527,6 +1528,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetIsPatrolling(bool NewValue);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayMontageFromGameplayTagQuery(FGameplayTagQuery& MatchingQuery, UAnimMontage* MontagePlaying);
+public:
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

@@ -8,6 +8,8 @@
 
 #include "GameplayTagContainer.h"
 
+class AFortPlayerPawn;
+
 #include "AFortAthenaMutator_RespawnLocation.generated.h"
 
 UCLASS(config=Engine)
@@ -31,6 +33,11 @@ public:
 	// table index 0, flags 0x20080000010005
 	UPROPERTY()
 	float RespawnHeight;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerPawnResurrected(AFortPlayerPawn* PlayerPawn);
+public:
 
 };
 

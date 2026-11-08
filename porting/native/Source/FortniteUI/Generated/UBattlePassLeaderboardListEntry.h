@@ -30,5 +30,15 @@ public:
 	UPROPERTY()
 	bool bIsEntry;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEntryInitialized(int32 Rank, bool bIsLocalPlayer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateEntryVisibility();
+public:
+
 };
 

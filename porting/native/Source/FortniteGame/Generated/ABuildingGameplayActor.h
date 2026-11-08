@@ -112,5 +112,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetAbilitySourceLevel(int32 NewAbilitySourceLevel);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDropped(bool bValidLocation, bool bPassesPlacementRestrictions, bool bWasIntentionallyPlaced);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReplicatedVelocityStartOrStop(bool bStart);
+public:
+
 };
 

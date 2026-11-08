@@ -3,6 +3,7 @@
 #include "AFortPlayerStateAthena.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Pawn.h"
+#include "UFortWeaponItemDefinition.h"
 #include "UObject/Object.h"
 
 void AFortAthenaMutator_GG::NativeSetMutatorContext(UObject* Context)

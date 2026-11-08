@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortLobbyType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortLobbyType : uint8
 {
 	Default = 0,

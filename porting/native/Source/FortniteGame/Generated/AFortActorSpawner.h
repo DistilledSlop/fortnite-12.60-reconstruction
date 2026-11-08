@@ -32,5 +32,10 @@ public:
 	UPROPERTY()
 	uint8 bDestroyAfterSpawn : 1;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnActorSpawn(AActor* SpawnedActor);
+public:
+
 };
 

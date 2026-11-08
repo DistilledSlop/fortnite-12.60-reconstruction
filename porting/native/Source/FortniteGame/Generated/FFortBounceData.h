@@ -9,7 +9,7 @@
 
 #include "FFortBounceData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortBounceData
 {
 	GENERATED_BODY()

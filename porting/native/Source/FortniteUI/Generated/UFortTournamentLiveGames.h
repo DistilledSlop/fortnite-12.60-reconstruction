@@ -35,5 +35,15 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_WatchGame;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NotifyLoadingMoreGames(bool bIsLoading);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NotifyNoLiveGames();
+public:
+
 };
 

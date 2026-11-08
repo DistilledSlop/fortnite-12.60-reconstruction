@@ -30,5 +30,10 @@ public:
 	UPROPERTY(Transient)
 	UFortCreativeServerInfo* Server;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetBPData(UFortCreativeServerInfo* ServerInfo);
+public:
+
 };
 

@@ -123,6 +123,36 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsDriveModeOnly() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostEnd();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDriveModeChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnJumpChargeBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnJumpChargeEnd(float Charge);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnJumped(float Charge);
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

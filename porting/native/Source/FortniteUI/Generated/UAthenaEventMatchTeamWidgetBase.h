@@ -43,5 +43,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<TWeakObjectPtr<UAthenaRemotePlayerViewData>> PlayerDatas;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerWidgetAdded();
+public:
+
 };
 

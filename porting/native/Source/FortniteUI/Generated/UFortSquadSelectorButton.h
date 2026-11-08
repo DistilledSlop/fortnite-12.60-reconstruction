@@ -26,5 +26,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetIdOfSquadToManageBP() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentSquadSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSquadChangedBP();
+public:
+
 };
 

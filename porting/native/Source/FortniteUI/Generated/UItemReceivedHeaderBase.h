@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "FFortReceivedItemLootInfo.h"
 #include "UFortGiftBoxItem.h"
 
 #include "UItemReceivedHeaderBase.generated.h"
@@ -23,6 +24,16 @@ public:
 	// table index 0, flags 0x20080000000004
 	UPROPERTY()
 	FString FromUserName;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void InitFromGiftBoxItem_BP();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetBlueprintGiftBoxItem(UFortGiftBoxItem* GiftBox, const FString& FromUser, TArray<FFortReceivedItemLootInfo>& ItemDefs, bool bSelfGift);
+public:
 
 };
 

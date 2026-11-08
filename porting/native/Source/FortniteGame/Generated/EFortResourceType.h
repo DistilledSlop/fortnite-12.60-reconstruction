@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortResourceType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 namespace EFortResourceType
 {
 	enum Type

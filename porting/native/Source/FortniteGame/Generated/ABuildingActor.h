@@ -10,6 +10,8 @@
 #include "EAttributeInitLevelSource.h"
 #include "EDynamicBuildingPlacementType.h"
 #include "EFortBaseWeaponDamage.h"
+#include "EFortBuildingInitializationReason.h"
+#include "EFortBuildingPersistentState.h"
 #include "EFortBuildingType.h"
 #include "EFortDayPhase.h"
 #include "EFortTeam.h"
@@ -28,6 +30,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "TInteractionType.h"
 #include "UFortTeamActorInterface.h"
 #include "UObject/Object.h"
 
@@ -37,7 +40,9 @@ class AFortDecoTool;
 class AFortMission;
 class AFortPawn;
 class AFortPlacementActor;
+class AFortPlayerPawn;
 class AFortPlayerState;
+class AFortPlayerStateZone;
 class UActorComponent;
 class UBuildingActorHotSpotConfig;
 class UFortAbilitySystemComponent;
@@ -761,6 +766,90 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	bool UseDefaultHealthBar() const;
 	virtual bool UseDefaultHealthBar_Implementation() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure)
+	bool BlueprintCanInteract(AFortPawn* InteractingPawn, EInteractionBeingAttempted InteractionBeingAttempted, TInteractionType InteractionType) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	FText BlueprintGetFailedInteractionString(AFortPawn* InteractingPawn, EInteractionBeingAttempted InteractionBeingAttempted) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	FText BlueprintGetInteractionString(AFortPawn* InteractingPawn, EInteractionBeingAttempted InteractionBeingAttempted) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void BlueprintOnBeginInteract();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void BlueprintOnInteract(AFortPawn* InteractingPawn, EInteractionBeingAttempted InteractionBeingAttempted);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void BlueprintOnInterruptInteract();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	bool BlueprintOnLocalInteract(AFortPlayerPawn* InteractingPawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CustomStateChanged();
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnBuildingActorInitialized(EFortBuildingInitializationReason::Type InitializationReason, EFortBuildingPersistentState::Type BuildingPersistentState);
+	virtual void OnBuildingActorInitialized_Implementation(EFortBuildingInitializationReason::Type InitializationReason, EFortBuildingPersistentState::Type BuildingPersistentState);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDamagePlayEffects(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AFortPawn* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnDamageServer(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AController* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDeathPlayEffects(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AFortPawn* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnDeathServer(float Damage, FGameplayTagContainer& DamageTags, FVector Momentum, FHitResult& HitInfo, AController* InstigatedBy, AActor* DamageCauser, FGameplayEffectContextHandle EffectContext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMatchStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetCustomDepthStencilValue(TArray<UPrimitiveComponent*>& PrimComponents, bool bUseCustomDepth, int32 StencilValue, bool& bOutConsume);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWorldReady();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void PlacedByPlayer(AFortPlayerStateZone* PlayerState);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ESpectatorSquadIdMode.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ESpectatorSquadIdMode : uint8
 {
 	AlwaysOff = 0,

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EAthenaSpectatorNameplateDistanceState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EAthenaSpectatorNameplateDistanceState : uint8
 {
 	Near = 0,

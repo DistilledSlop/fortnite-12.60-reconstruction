@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EPlayerReportingStep.h"
 #include "UCommonButton.h"
 #include "UCommonButtonGroup.h"
 #include "UCommonListView.h"
@@ -118,6 +119,31 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UWidget* Widget_SendingReport;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnConfigureVisualsForConsole(bool bIsConsole);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayBlockButton(bool bShowBlockButton);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEntrySelectionMade(EPlayerReportingStep ReportingStep, FText& SelectedText);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFeedbackSentCallback(bool succeeded);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPopulateView(EPlayerReportingStep CurrentStep);
+public:
 
 };
 

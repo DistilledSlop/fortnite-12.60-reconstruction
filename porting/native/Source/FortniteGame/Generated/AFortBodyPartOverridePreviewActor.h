@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	FFortOnCameraFrameTargetSettingsChangedDelegate OnSettingsChangedDelegate;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPreviewCosmeticItem();
+public:
+
 };
 

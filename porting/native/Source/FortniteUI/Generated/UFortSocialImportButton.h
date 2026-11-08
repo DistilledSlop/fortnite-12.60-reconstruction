@@ -30,5 +30,10 @@ public:
 	UPROPERTY()
 	TSubclassOf<UFortSocialImportPanel> SocialImportPanelClass;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCaptionGenerated(FText& Caption);
+public:
+
 };
 

@@ -21,5 +21,20 @@ protected:
 	EGameReadiness GetCurrentMemberGameReadiness() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnTeamMemberEstablished(bool bHasValidMember);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMemberGameReadinessChanged(EGameReadiness ReadyStatus);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMemberIsInFrontendChanged(bool bIsInFrontend);
+public:
+
 };
 

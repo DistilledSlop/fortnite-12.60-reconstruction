@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	UFortMultiSizeItemCard* FortMultiSizeItemCard_Widget;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLootInfoSet();
+public:
+
 };
 

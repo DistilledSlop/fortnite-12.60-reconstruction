@@ -11,11 +11,14 @@
 #include "FHeroSlotInfo.h"
 #include "FOnPrefabForCurrentlyDisplayedItemChanged.h"
 #include "FOnPrefabForCurrentlyDisplayedItemReady.h"
+#include "Misc/Guid.h"
 #include "UObject/Object.h"
 
 class AFortPlayerPawn;
 class UFortItem;
 class UMaterialInstance;
+class UMeshComponent;
+class UObject;
 
 #include "APartyDisplayManager.generated.h"
 
@@ -82,6 +85,56 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void NotifyPrefabChanged(AActor* PrefabActor, UFortItem* CurrentItem);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CharacterCustomizationFinished(AFortPlayerPawn* Pawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void GetMeshForCurrentDisplayedItem(UMeshComponent*& OutDisplayedMesh);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	AActor* GetPrefabActorForCurrentDisplayedItem() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleLoadingAssetsForItemCompleted(UFortItem* ItemWhoseAssetsWereLoaded, TArray<UObject*>& LoadedAssets, FGuid& RequestId);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerPawnAddedToLobby(AFortPlayerPawn* Pawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayEvolutionEffect();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayLevelUpEffect();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ResOutPawnFromLobby(AFortPlayerPawn* Pawn, int32 PartyIndex);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupPrefabVisuals();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowItem(UFortItem* ItemToView, FGuid& RequestId);
 public:
 
 

@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	UCommonRichTextBlock* RichText_TimeRemaining;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayModeSet(bool bIsBanned);
+public:
+
 };
 

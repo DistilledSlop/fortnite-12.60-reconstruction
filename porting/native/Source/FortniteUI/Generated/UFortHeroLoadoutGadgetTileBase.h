@@ -36,5 +36,10 @@ public:
 	UPROPERTY(Transient)
 	UFortGadgetItemDefinition* GadgetToRepresent;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGadgetUpdated(bool bIsValidGadget);
+public:
+
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "EFortHitPointModificationReason.h"
 #include "EHealthBarType.h"
 
 class UAthenaPlayerViewModel;
@@ -58,6 +59,26 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetLastValuePercentage() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDBNOStateChanged(bool IsDBNO);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDeltaChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMaxValueChanged(float Value);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnValueChangedWithReason(float Value, EFortHitPointModificationReason Reason);
 public:
 
 };

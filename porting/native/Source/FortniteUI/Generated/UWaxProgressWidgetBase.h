@@ -20,5 +20,35 @@ public:
 	UPROPERTY()
 	AFortAthenaMutator_Wax* WaxMutator;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AdjustForSpectate(bool bIsSpectating);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DoCoinPulseFor(int32 BarIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HideCloseToVictoryIfShown();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_OnAnyTokenChange();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowEnemyCloseToVictory(int32 CoinsAwayFromVictory);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowPlayerCloseToVictory(int32 CoinsAwayFromVictory);
+public:
+
 };
 

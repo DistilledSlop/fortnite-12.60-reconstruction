@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_AllChallenges;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetChallengesInfo(int32 ChallengesNum, int32 CountOfCompletedChallenges);
+public:
+
 };
 

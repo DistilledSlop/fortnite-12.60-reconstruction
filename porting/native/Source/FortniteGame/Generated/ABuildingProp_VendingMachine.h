@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer AllowedItemRotationDamageTags;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCycleToNextItem();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerInventoryChange();
+public:
+
 };
 

@@ -18,6 +18,7 @@
 #include "Styling/SlateBrush.h"
 #include "UFortVehicleInterface.h"
 
+class AFortPawn;
 class AFortPlayerController;
 class AFortPlayerPawn;
 class AFortPlayerStateZone;
@@ -32,6 +33,7 @@ class UFortOstrichAnimInstance;
 class UFortOstrichSet;
 class UFortSkeletalAudioComponent;
 class UFortVehicleSeatComponent;
+class UFortVehicleSeatWeaponComponent;
 class USkeletalMeshComponent;
 class UTexture;
 
@@ -286,6 +288,46 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void SetAllowInteractionBetweenFortVolumes(bool bInteractBetweenVolumes);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	FText FormatActionLabelText(FName& ActionName, FText& InActionLabel);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void GunOverheat(UFortVehicleSeatWeaponComponent* WeaponComponent);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_ApplyCosmeticWrap(UAthenaItemWrapDefinition* LoadedWrap);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHoldExitStarted(AFortPawn* ExitingPawn, float ExitDuration);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHoldExitStopped(AFortPawn* ExitingPawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPawnEnterVehicle(AFortPlayerPawn* PlayerPawn, int32 SeatIdx);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnShutdown();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void WeaponFired(UFortVehicleSeatWeaponComponent* WeaponComponent, float Overheat);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

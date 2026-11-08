@@ -20,5 +20,15 @@ public:
 	UPROPERTY(Transient)
 	UFortSetting* Setting;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSettingAssigned(UFortSetting* InSetting);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSettingValueChanged(UFortSetting* InSetting);
+public:
+
 };
 

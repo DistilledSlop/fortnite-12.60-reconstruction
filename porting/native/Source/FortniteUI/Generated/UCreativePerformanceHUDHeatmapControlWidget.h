@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "Math/Vector.h"
+
 #include "UCreativePerformanceHUDHeatmapControlWidget.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UCreativePerformanceHUDHeatmapControlWidget : public UFortH
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RefreshHeatmap(FVector& PlayerPosition);
+public:
+
 };
 

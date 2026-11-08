@@ -25,5 +25,15 @@ public:
 	UPROPERTY()
 	ESpectatorBuildCountType BuildCountType;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBuildCountChanged(int32 OldCount, int32 NewCount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFollowedPlayerChanged_BP();
+public:
+
 };
 

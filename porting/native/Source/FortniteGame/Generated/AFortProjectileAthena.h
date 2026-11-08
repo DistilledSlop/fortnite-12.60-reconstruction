@@ -10,6 +10,7 @@
 #include "Engine/NetSerialization.h"
 
 class AActor;
+class AFortWaterBodyActor;
 class UPrimitiveComponent;
 
 #include "AFortProjectileAthena.generated.h"
@@ -70,6 +71,21 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerNotifyPawnHit(const FHitResult& Hit);
 	void ServerNotifyPawnHit_Implementation(const FHitResult& Hit);
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnSniperTraceWaterHit(FHitResult& WaterHit, AFortWaterBodyActor* WaterBody);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void ReplacedByRealProjectile(AFortProjectileAthena* RealProjectile);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void ReplacedPredictedProjectile(AFortProjectileBase* PredictedProjectile);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

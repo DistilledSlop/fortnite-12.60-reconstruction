@@ -15,6 +15,7 @@ class ABuildingTrapFloor;
 class AController;
 class AFortAIPawn;
 class AFortAthenaAIBotController;
+class AFortPawn;
 class ATriggerBox;
 class UPrimitiveComponent;
 
@@ -110,6 +111,36 @@ public:
 private:
 	UFUNCTION()
 	void HandleOnPlayerDamaged(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisableBotPawn();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAmbushStart();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetAIPaused(bool bPaused);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetAIAccuracy(float NewAccuracy);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetAIRateOfFire(float NewRateOfFire);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	AFortPawn* SpawnAmbushBot();
 public:
 
 };

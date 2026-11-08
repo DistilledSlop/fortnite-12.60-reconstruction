@@ -7,6 +7,8 @@
 #include "UFortHUDElementWidget.h"
 
 #include "EHeistExitCraftUIState.h"
+#include "FHeistBlingIconData.h"
+#include "FHeistExitCraftIconData.h"
 #include "GameplayTagContainer.h"
 
 #include "UHeistWidgetBase.generated.h"
@@ -56,6 +58,41 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	int32 CurrBlingAllyCount;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayBlingUI(bool bDisplay);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayExitCraftUI(bool bDisplay);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitCraftsUIChanged(EHeistExitCraftUIState NewState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateBlingIcon(FHeistBlingIconData& BlingIconData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateExitCraftIcon(FHeistExitCraftIconData& ExitCraftIconData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateStateText(FText& StateText, EHeistExitCraftUIState CurrState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateStateTimeText(FText& TimeText, EHeistExitCraftUIState CurrState);
+public:
 
 };
 

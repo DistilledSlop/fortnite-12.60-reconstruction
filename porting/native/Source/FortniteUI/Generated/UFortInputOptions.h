@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortOptionsTab.h"
 
+#include "ECommonInputType.h"
 #include "EFortInputActionGroup.h"
 #include "InputCoreTypes.h"
 #include "UCommonListView.h"
@@ -51,6 +52,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetInputDataIndexForActionName(FName ActionName) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleUsingGamepadChanged(ECommonInputType NewInputType);
 public:
 
 };

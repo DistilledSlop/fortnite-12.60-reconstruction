@@ -35,5 +35,20 @@ protected:
 	bool IsCustomFilterEnabled(EFortInventoryCustomFilter Filter) const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginCommitCustomFilter();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCustomFilterSetUpdated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndCommitCustomFilter(bool bWasSuccessful);
+public:
+
 };
 

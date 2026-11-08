@@ -14,5 +14,15 @@ class FORTNITEUI_API UFortCollectionBookItemPopupMenu : public UFortPopupMenu
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemChanged(bool bItemChanged, bool bAmmoChanged, bool bIngredientsChanged);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemUpdated();
+public:
+
 };
 

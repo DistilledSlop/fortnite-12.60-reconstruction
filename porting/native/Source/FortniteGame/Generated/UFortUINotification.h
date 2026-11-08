@@ -11,6 +11,9 @@
 #include "FFortUINotificationClearedDelegate.h"
 #include "GameFramework/OnlineReplStructs.h"
 
+class APlayerController;
+class UUserWidget;
+
 #include "UFortUINotification.generated.h"
 
 UCLASS(abstract)
@@ -72,6 +75,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	TSoftObjectPtr<UObject> GetImageOverride();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintCosmetic)
+	UUserWidget* CreateWidget(APlayerController* OwningPlayer);
+public:
 
 };
 

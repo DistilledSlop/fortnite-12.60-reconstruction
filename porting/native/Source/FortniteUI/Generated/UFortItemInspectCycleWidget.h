@@ -40,5 +40,10 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle NextItemActionRowHandle;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemCycled(UFortItem* OldItem, UFortItem* NewItem, int32 OffsetFromPreviousItem);
+public:
+
 };
 

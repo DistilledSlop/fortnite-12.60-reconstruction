@@ -8,6 +8,9 @@
 
 #include "FFortNotificationClearedDelegate.h"
 
+class APlayerController;
+class UUserWidget;
+
 #include "UFortNotificationHandler.generated.h"
 
 UCLASS(abstract)
@@ -31,6 +34,11 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintCosmetic)
 	void NotificationShown();
 	virtual void NotificationShown_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintCosmetic)
+	UUserWidget* CreateWidget(APlayerController* OwningPlayer);
+public:
 
 };
 

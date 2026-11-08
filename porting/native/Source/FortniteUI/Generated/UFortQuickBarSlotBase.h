@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "Components/SlateWrapperTypes.h"
 #include "EFortItemCardSize.h"
 #include "EFortQuickBars.h"
 #include "Math/Vector2D.h"
@@ -203,6 +204,31 @@ public:
 protected:
 	UFUNCTION()
 	void OnMinigameEnded();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void MaximizeSlot(bool bShouldSkipAnimation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void MinimizeSlot(bool bShouldSkipAnimation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnRefreshItem();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetBottomComboSwitcherVisibility_BP(ESlateVisibility InVisibility);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetSlotSelected(bool bSelected);
 public:
 
 };

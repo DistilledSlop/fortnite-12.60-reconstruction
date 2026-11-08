@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* CommonTextBlock_AvailableChallenges;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewVisited(FText& LocalizedLocationName, bool bIsNamedLocation);
+public:
+
 };
 

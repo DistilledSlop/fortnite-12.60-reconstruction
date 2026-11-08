@@ -939,6 +939,91 @@ public:
 	bool ShouldUseFiringCapsuleCollision();
 	virtual bool ShouldUseFiringCapsuleCollision_Implementation();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAppearanceOverridden();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginDeepWaterInteraction(FVector WaterSurfaceLocation, float WaterDepth);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnBeginSleepEffects();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginWaterInteraction(FVector WaterSurfaceLocation, float WaterDepth);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCheatUpdateSpecialEventGE(bool bShouldUseSpecialEventGE);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDefenderTrapSet(ABuildingTrapDefender* OldDefenderTrap);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndDeepWaterInteraction(FVector PreviousWaterSurfaceLocation, float WaterDepth);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnEndSleepEffects();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndWaterInteraction(FVector PreviousWaterSurfaceLocation, float WaterDepth);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnteredWaterBody(AFortWaterBodyActor* WaterBody, bool bIsFirstBody);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitedWaterBody(AFortWaterBodyActor* WaterBody, bool bIsLastBody);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnFinishedEncounterSpawn();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	bool OnOutsideOfTetherBeyondMaxTimeAllowed();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnStartedEncounterSpawn();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeamChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWaterNavMeshEnter();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWaterNavMeshExit();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

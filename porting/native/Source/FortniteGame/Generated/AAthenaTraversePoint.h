@@ -41,6 +41,26 @@ public:
 	UFUNCTION()
 	void OnRep_CurrentState();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewState_Active_Client();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewState_Finished_Client();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewState_Hidden_Client();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewState_TouchedByPlayer_Client();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

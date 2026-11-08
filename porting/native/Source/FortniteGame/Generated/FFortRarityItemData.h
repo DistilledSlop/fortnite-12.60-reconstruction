@@ -8,8 +8,8 @@
 
 #include "FFortRarityItemData.generated.h"
 
-USTRUCT()
-struct FFortRarityItemData
+USTRUCT(BlueprintType)
+struct FORTNITEGAME_API FFortRarityItemData
 {
 	GENERATED_BODY()
 

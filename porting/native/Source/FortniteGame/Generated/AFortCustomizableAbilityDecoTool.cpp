@@ -28,3 +28,18 @@ void AFortCustomizableAbilityDecoTool::ServerReleaseTrigger_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortCustomizableAbilityDecoTool::BPPressSecondaryFire_Implementation(AFortDecoHelper* FortDecoHelper)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCustomizableAbilityDecoTool::BPPressTrigger_Implementation(AFortDecoHelper* FortDecoHelper)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCustomizableAbilityDecoTool::BPReleaseTrigger_Implementation(AFortDecoHelper* FortDecoHelper)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

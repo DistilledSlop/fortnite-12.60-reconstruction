@@ -9,6 +9,7 @@
 #include "Components/TimelineComponent.h"
 #include "EBuildingAttachmentType.h"
 #include "EPlacementType.h"
+#include "Math/Color.h"
 #include "Math/Vector.h"
 #include "Math/Vector4.h"
 #include "UObject/NoExportTypes.h"
@@ -107,6 +108,26 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	void OnInitializeDecoPreview(ABuildingActor* NewBuildingActor, UFortDecoItemDefinition* NewDecoItemDefinition);
 	virtual void OnInitializeDecoPreview_Implementation(ABuildingActor* NewBuildingActor, UFortDecoItemDefinition* NewDecoItemDefinition);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnBounceMotionUpdate(float VectorScale);
+	virtual void OnBounceMotionUpdate_Implementation(float VectorScale);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnUpdateScale(float Scale, FVector& InWorldSpacePivot);
+	virtual void OnUpdateScale_Implementation(float Scale, FVector& InWorldSpacePivot);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnUpdateVisuals(float DeltaSeconds, bool bSafeToPlace);
+	virtual void OnUpdateVisuals_Implementation(float DeltaSeconds, bool bSafeToPlace);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetScalarParameterValueOnAllPreviewMIDs(FName ParamName, float ParamValue);
+	virtual void SetScalarParameterValueOnAllPreviewMIDs_Implementation(FName ParamName, float ParamValue);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetVectorParameterValueOnAllPreviewMIDs(FName ParamName, FLinearColor& ParamValue);
+	virtual void SetVectorParameterValueOnAllPreviewMIDs_Implementation(FName ParamName, FLinearColor& ParamValue);
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

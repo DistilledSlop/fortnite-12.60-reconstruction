@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "EFortFortMobileShareButtonOS.h"
+
 #include "UFortMobileShareButton.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFortMobileShareButton : public UCommonButton
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOSImageEnumSet(EFortFortMobileShareButtonOS OSType);
+public:
+
 };
 

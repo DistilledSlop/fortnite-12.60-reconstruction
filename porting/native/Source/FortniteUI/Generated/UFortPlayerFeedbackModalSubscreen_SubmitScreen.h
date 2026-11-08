@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortPlayerFeedbackModalSubscreenBase.h"
 
+#include "EPlayerFeedbackSubmitState.h"
 #include "UCommonButton.h"
 #include "UCommonRichTextBlock.h"
 #include "UCommonTextBlock.h"
@@ -47,6 +48,31 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonButton* Button_Submit;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitEpicQA();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitReportABug(FText& Reason);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitReportAPlayer(FText& PlayerName, FText& Reason);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitReportCreativeGame(FText& PlayerName, FText& Reason);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateSubmitState(EPlayerFeedbackSubmitState NewState);
+public:
 
 };
 

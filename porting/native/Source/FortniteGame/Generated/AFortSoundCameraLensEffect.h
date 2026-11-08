@@ -47,5 +47,30 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetInstigatingActor(AActor* NewInstigator);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	UTexture* GetDefaultIcon();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	FLinearColor GetDefaultTint();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEffectActivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEffectDeactivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEffectUpdated();
+public:
+
 };
 

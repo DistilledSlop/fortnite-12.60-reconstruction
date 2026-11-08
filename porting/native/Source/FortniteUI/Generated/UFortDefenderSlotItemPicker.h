@@ -29,5 +29,10 @@ public:
 	UPROPERTY()
 	EInventoryContentSortType CurrentSortType;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCurrentSortTypeChanged(EInventoryContentSortType SortType);
+public:
+
 };
 

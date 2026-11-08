@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortLoadoutCardType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortLoadoutCardType : uint8
 {
 	Items = 0,

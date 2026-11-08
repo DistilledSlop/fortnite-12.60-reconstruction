@@ -29,5 +29,10 @@ public:
 	UPROPERTY(Transient)
 	UAthenaSpatialCustomizationCategoryEntry* LastSelectedCategory;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnCategoriesSetup(int32 NumCategoriesFinalized);
+public:
+
 };
 

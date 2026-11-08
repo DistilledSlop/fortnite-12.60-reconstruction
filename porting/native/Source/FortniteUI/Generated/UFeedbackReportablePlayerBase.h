@@ -43,5 +43,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* TextBlock_RoleText;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSelectionState(bool bIsSelected, bool bAnimateOnSelect);
+public:
+
 };
 

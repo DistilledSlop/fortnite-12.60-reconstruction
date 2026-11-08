@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EParentalControlsViewState.h"
 #include "UCommonActivatableWidgetSwitcher.h"
 #include "UCommonButton.h"
 
@@ -79,6 +80,11 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UFortParentalControls_Renabling* SubView_Renabling;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewSubScreenSet(EParentalControlsViewState ScreenState);
+public:
 
 };
 

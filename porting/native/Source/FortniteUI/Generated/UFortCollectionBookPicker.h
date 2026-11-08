@@ -50,5 +50,10 @@ protected:
 	virtual void NotifyPanelDeactivated();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCollectComplete();
+public:
+
 };
 

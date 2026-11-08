@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortChatPanel : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWidgetIsOnFocusedPathChanged(bool bOnFocusPath);
+public:
+
 };
 

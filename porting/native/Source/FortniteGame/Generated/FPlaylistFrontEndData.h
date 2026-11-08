@@ -12,7 +12,7 @@ class UFortPlaylistAthena;
 
 #include "FPlaylistFrontEndData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FPlaylistFrontEndData
 {
 	GENERATED_BODY()

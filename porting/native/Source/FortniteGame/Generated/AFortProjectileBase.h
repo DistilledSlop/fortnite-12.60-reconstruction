@@ -243,6 +243,36 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetGravityScale(float InitialGravityScale);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBounce(FHitResult& Hit);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHitByMelee(FHitResult& Hit);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResumeSimulation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShot(FHitResult& Hit);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStop(FHitResult& Hit);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStoppedOnServer();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortBuildingPersistentState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 namespace EFortBuildingPersistentState
 {
 	enum Type

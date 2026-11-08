@@ -8,3 +8,8 @@ void UFortExpeditionReturnsWidget::OnExpeditionInProgressUpdated_Implementation(
 	return;
 }
 
+void UFortExpeditionReturnsWidget::SetData_Implementation(UFortExpeditionItem* InItem)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

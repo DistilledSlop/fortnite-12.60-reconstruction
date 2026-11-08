@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EWaxState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EWaxState : uint8
 {
 	None = 0,

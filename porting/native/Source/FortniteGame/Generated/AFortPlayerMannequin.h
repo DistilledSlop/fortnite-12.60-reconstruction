@@ -11,6 +11,7 @@
 #include "Engine/EngineTypes.h"
 #include "FMcpVariantChannelInfo.h"
 #include "FMorphValuePair.h"
+#include "GameplayTagContainer.h"
 
 class UAthenaBackpackItemDefinition;
 class UAthenaCharacterItemDefinition;
@@ -140,6 +141,16 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ToggleGenderBP();
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnPartChanged(UCustomCharacterPart* OldPart, UCustomCharacterPart* NewPart, EFortCustomPartType::Type PartType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnVariantChanged(FGameplayTag VariantChannel, FGameplayTag OldVariantTag, FGameplayTag NewVariantTag);
+public:
 
 };
 

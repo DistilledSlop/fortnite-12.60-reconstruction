@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EAthenaCustomizationCategory.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EAthenaCustomizationCategory : uint8
 {
 	None = 0,

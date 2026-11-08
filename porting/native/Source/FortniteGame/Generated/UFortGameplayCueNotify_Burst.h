@@ -9,6 +9,13 @@
 #include "FFortBurstEffectData.h"
 #include "FFortGameplayCueAttachInfo.h"
 #include "FFortGameplayCueSpawnCondition.h"
+#include "GameplayEffectTypes.h"
+
+class AActor;
+class ADecalActor;
+class UAudioComponent;
+class UCameraShake;
+class UParticleSystemComponent;
 
 #include "UFortGameplayCueNotify_Burst.generated.h"
 
@@ -29,6 +36,11 @@ public:
 	// table index 0, flags 0x10000000000015
 	UPROPERTY()
 	FFortBurstEffectData BurstEffectData;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBurst(AActor* MyTarget, FGameplayCueParameters& Parameters, TArray<UParticleSystemComponent*>& ParticleComponents, TArray<UAudioComponent*>& AudioComponents, UCameraShake* BurstCameraShakeInstance, ADecalActor* BurstDecalInstance) const;
+public:
 
 };
 

@@ -8,6 +8,8 @@
 
 #include "UCommonTextBlock.h"
 
+class UWidget;
+
 #include "UAthenaRespawnTimer.generated.h"
 
 UCLASS(abstract)
@@ -27,6 +29,21 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonTextBlock* Text_Time;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddExtensionWidget_BP(UWidget* Widget);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTickDown();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTimeEnded();
+public:
 
 };
 

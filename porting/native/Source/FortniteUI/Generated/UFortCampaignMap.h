@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	FFortSwipeDetector SwipeDetector;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowNextPage();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowPreviousPage();
+public:
+
 };
 

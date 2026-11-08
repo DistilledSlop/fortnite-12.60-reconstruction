@@ -2,6 +2,7 @@
 #include "AFortInventory.h"
 #include "FFortItemEntry.h"
 #include "Misc/Guid.h"
+#include "UFortItemDefinition.h"
 #include "UFortWorldItem.h"
 #include "Net/UnrealNetwork.h"
 

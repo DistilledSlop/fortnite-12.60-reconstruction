@@ -123,5 +123,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEnabled() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnStateChanged(AAIController* SlotOwner, EAIHotSpotSlot NewState);
+public:
+
 };
 

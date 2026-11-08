@@ -65,5 +65,20 @@ public:
 	UPROPERTY()
 	FActivatableScreenClosedEvent OnMenuClosed;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginLoadingCameraLevel();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCameraLevelLoaded();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoadingIndicatorShown(bool bShown);
+public:
+
 };
 

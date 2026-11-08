@@ -44,5 +44,20 @@ public:
 	UPROPERTY(Transient)
 	bool bPreviousHasScore;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLeaderboardChanged(int32 ScoreDelta, bool bIsWinner, bool bHasScore);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlacementChanged(int32 Placement);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnScoreChanged(int32 Score);
+public:
+
 };
 

@@ -355,6 +355,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetBotOwner(AActor* InBotOwner);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BlueprintOnBehaviorTreeStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAlertLevelChanged(EAlertLevel OldAlertLevel, EAlertLevel NewAlertLevel);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

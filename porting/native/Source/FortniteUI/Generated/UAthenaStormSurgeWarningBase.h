@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	FFortPrioritizedWidgetData PrioritizationData;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartDisplaying(FText& TitleText, FText& SubTitleText, bool bDisplaySubtitle, bool bPlayDamageActiveSound);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStopDisplaying();
+public:
+
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "FCreativeAdData.h"
+
 #include "UFeaturedCreativeContent.generated.h"
 
 UCLASS()
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFeaturedCreativeContent : public UUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupAds(TArray<FString>& MediaURLs, TArray<FCreativeAdData>& AdMetadata);
+public:
+
 };
 

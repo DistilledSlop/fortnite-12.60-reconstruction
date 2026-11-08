@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "ESpatialCustomizationCategoryState.h"
 #include "GameplayTagContainer.h"
+#include "Math/Color.h"
 #include "Math/Vector2D.h"
 
 class UFortLazyImage;
@@ -47,6 +49,11 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	FGameplayTag ChoiceTag;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupChoice(ESpatialCustomizationCategoryState State, FLinearColor Color);
+public:
 
 };
 

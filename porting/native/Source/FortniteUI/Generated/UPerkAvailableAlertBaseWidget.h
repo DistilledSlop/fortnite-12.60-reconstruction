@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<AFortAthenaMutator_PerkSystemMutator> CachedMutator;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPerkAvailibilityChanged(int32 TagCount);
+public:
+
 };
 

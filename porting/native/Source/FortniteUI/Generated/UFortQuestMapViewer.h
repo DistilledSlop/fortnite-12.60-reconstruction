@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EViewerNavigationDirection.h"
+#include "Styling/SlateColor.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 
@@ -13,6 +15,7 @@ class UCanvasPanel;
 class UFortQuestMapNodeLayout;
 class UFortQuestMapScreen;
 class USizeBox;
+class UUserWidget;
 
 #include "UFortQuestMapViewer.generated.h"
 
@@ -53,6 +56,21 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UFortQuestMapNodeLayout* NodeLayout;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayLayoutFadeInAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayLayoutOutroAnimation(EViewerNavigationDirection TravelDirection);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTryUpdateUserWidgetColor(UUserWidget* Widget, FSlateColor OverrideColor);
+public:
 
 };
 

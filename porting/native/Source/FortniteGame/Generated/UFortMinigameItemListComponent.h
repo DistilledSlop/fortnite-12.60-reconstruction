@@ -43,6 +43,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	bool RemoveItem(int32 ItemIndex);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_NotifyItemListChanged();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

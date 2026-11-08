@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "AFortPlayerControllerSpectating.h"
+#include "ESpectatorCameraType.h"
+
 #include "UFortReplayViewSettingsTabBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +17,20 @@ class FORTNITEUI_API UFortReplayViewSettingsTabBase : public UCommonActivatableP
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void CenterOnTab();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCameraTypeChanged(AFortPlayerControllerSpectating* FortPlayerControllerSpectating, ESpectatorCameraType CameraType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetWidgetValues();
+public:
+
 };
 

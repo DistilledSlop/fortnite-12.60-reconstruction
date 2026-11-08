@@ -37,5 +37,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UStoreCardObject* GetStoreCardObject() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemMulchStateChanged();
+public:
+
 };
 

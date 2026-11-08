@@ -11,6 +11,8 @@
 #include "FPlayerStartupControllerDestroyed.h"
 #include "FPlayerStartupControllerRegistered.h"
 
+class AFortPlayerControllerZone;
+
 #include "AFortPlayerStartupController.generated.h"
 
 UCLASS(config=Game)
@@ -104,6 +106,16 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
 	void HandlePlayerStartupControllerReset();
 	virtual void HandlePlayerStartupControllerReset_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnAllPlayersLoadedIn_BP();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnPlayerLoadedIn_BP(AFortPlayerControllerZone* NewPlayerPC);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

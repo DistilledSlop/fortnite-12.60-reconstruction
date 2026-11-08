@@ -12,7 +12,7 @@ class UFortHero;
 
 #include "FFortUIPerk.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortUIPerk
 {
 	GENERATED_BODY()

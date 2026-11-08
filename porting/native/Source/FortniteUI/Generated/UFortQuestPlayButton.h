@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EMatchmakingCompleteResult.h"
 #include "UFortQuestItem.h"
 
 #include "UFortQuestPlayButton.generated.h"
@@ -19,6 +20,31 @@ public:
 	// table index 0, flags 0x10000000000004
 	UPROPERTY()
 	UFortQuestItem* QuestItem;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleLobbyDisconnected();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleMatchmakingComplete(EMatchmakingCompleteResult Result);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleMatchmakingStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePlayerStateChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnContentMissing();
+public:
 
 };
 

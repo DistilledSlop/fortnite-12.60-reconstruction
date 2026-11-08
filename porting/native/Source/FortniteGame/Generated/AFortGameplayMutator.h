@@ -8,6 +8,8 @@
 
 #include "GameplayTagContainer.h"
 
+class UFortMutatorListComponent;
+
 #include "AFortGameplayMutator.generated.h"
 
 UCLASS(config=Engine)
@@ -38,6 +40,11 @@ public:
 protected:
 	UFUNCTION()
 	virtual void OnRep_bMutatorActive();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnMutatorListPropertiesApplied(UFortMutatorListComponent* MutatorList);
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

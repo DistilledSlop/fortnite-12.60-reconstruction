@@ -38,6 +38,11 @@ public:
 	UFUNCTION()
 	void OnRep_JumpFlashCount();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayEffectsForPlayerJumped();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

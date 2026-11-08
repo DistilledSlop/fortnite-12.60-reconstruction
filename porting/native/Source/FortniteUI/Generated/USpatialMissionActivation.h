@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EMissionState.h"
 #include "UCommonButton.h"
+#include "UFortItemDefinition.h"
 
 class UAthenaQuestProgression;
 class UWidgetSwitcher;
@@ -38,6 +40,21 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonButton* Button_ActivateMission;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddLockedReason(FText& Reason, bool bCompleted, int32 NeededCount, int32 CurrentCount);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClearLockedReasons();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateVisualState(EMissionState MissionState, UFortItemDefinition* DefaultItem, UFortItemDefinition* RewardItem, bool bIsAlter);
+public:
 
 };
 

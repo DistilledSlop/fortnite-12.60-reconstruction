@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "AFortPlayerControllerSpectating.h"
+#include "AFortPlayerState.h"
+#include "EFortResourceType.h"
+
 #include "UAthenaSpectatorMaterialCountsBase.generated.h"
 
 UCLASS(abstract)
@@ -17,6 +21,26 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	bool bIsInBuildMode;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnBuildingMaterialChanged(EFortResourceType::Type BuildingMaterial);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBuildModeChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFollowedPlayerChanged(AFortPlayerControllerSpectating* SpectatingPC, AFortPlayerState* FollowedPS);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReplayScrubComplete();
+public:
 
 };
 

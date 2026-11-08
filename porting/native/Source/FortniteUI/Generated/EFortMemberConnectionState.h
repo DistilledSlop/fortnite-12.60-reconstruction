@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortMemberConnectionState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortMemberConnectionState : uint8
 {
 	Open = 0,

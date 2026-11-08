@@ -8,6 +8,7 @@
 
 #include "AFortAthenaMutator_Mash.h"
 #include "AFortPlayerStateAthena.h"
+#include "EMashScoreEvent.h"
 #include "FMashPlayerDataEntry.h"
 
 #include "UMashScoreEventWidgetBase.generated.h"
@@ -33,6 +34,26 @@ public:
 	// table index 0, flags 0x20080000002014
 	UPROPERTY(Transient)
 	float StreakScoreMultiplierRemainingTime;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnScoreEvent(int32 ScoreValue, FText& ScoreText, EMashScoreEvent::Type ScoreEventType);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStreakScoreMultiplierCountdownUpdated(float RemainingTimeBeforeReset);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStreakScoreMultiplierKillCountUpdated(int32 TotalStreakKillCount, float StreakLevelProgressRatio);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStreakScoreMultiplierUpdated(uint8 StreakScoreLevel, uint8 MaxStreakScoreLevel, float ScoreMultiplier);
+public:
 
 };
 

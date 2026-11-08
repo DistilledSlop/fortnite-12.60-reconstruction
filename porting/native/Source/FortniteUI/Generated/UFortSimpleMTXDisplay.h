@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortSimpleMTXDisplay : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateAvailableMTX(int32 AvailableBalance);
+public:
+
 };
 

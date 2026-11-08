@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortAlterationOptionType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortAlterationOptionType : uint8
 {
 	Upgrade = 0,

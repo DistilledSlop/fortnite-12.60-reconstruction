@@ -51,3 +51,8 @@ void ABuildingGameplayActorConsumable::PrepareOnConsumeGameplayEffectSpec_Implem
 	return;
 }
 
+void ABuildingGameplayActorConsumable::OnAllowedToConsumeFailed_Implementation(AFortPawn* InteractingPawn)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

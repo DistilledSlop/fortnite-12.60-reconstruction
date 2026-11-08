@@ -52,5 +52,25 @@ protected:
 	void OnPageCycledIn();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnCyclePageIn(bool bForward);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnCyclePageOut(bool bForward);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnIsInGameSet(bool bIsInGame);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnNumPagesSet(int32 NumPages);
+public:
+
 };
 

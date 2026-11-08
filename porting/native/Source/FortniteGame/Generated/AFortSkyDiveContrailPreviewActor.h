@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class UAthenaSkyDiveContrailItemDefinition;
+
 #include "AFortSkyDiveContrailPreviewActor.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -14,5 +16,10 @@ class FORTNITEGAME_API AFortSkyDiveContrailPreviewActor : public AActor
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewContrail(UAthenaSkyDiveContrailItemDefinition* Contrail);
+public:
+
 };
 

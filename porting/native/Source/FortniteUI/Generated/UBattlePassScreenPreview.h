@@ -8,6 +8,7 @@
 
 #include "FPreviewUnlockData.h"
 #include "UCommonTextBlock.h"
+#include "UFortItem.h"
 
 class UBattlePassPreviewDisplayData;
 class UBattlePassScreenPreviewRewardWidget;
@@ -93,6 +94,21 @@ public:
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	float PreviewCycleRate;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleOnGainedFocus();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCyclePreviewReward(UFortItem* NextReward, bool bReadyToUnlock, int32 LevelUnlocked);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitData(FPreviewUnlockData& Data, UFortItem* SinglePreviewCycleReward, bool bReadyToUnlock, int32 LevelUnlocked, bool bPurchasedAnnualPass);
+public:
 
 };
 

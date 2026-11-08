@@ -53,5 +53,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPlayerPawn* GetFortPlayerPawn() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PetMaterialsOverride();
+public:
+
 };
 

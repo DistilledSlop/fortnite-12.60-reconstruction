@@ -28,5 +28,10 @@ public:
 	UPROPERTY()
 	bool bIsSlotFocusedInUI;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSlotFocusInUIChanged();
+public:
+
 };
 

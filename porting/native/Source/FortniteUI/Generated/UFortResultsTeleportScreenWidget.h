@@ -18,5 +18,20 @@ public:
 	UPROPERTY()
 	float ExitTime;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitTimePercentagePassedUpdated(float Percent);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitTimeRemainingUpdated(int32 TimeRemainingSeconds);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitTimerFinished();
+public:
+
 };
 

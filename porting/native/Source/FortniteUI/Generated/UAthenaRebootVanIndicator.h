@@ -32,5 +32,10 @@ public:
 	UPROPERTY()
 	float SpawnMachineCooldownEndTime;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSpawnMachineStateChanged();
+public:
+
 };
 

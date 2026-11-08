@@ -10,7 +10,7 @@
 
 #include "FFortWeaponBoardDisplaySlot.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortWeaponBoardDisplaySlot
 {
 	GENERATED_BODY()

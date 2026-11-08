@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortItemPreviewScreen.h"
 
+#include "EFortLoadoutCardType.h"
 #include "Engine/DataTable.h"
 #include "UCommonButton.h"
 #include "UFortCosmeticLockerItem.h"
@@ -71,6 +72,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UFortCosmeticLoadoutCard* Card_SelectedPreset;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPreviewTile(EFortLoadoutCardType CardType);
+public:
 
 };
 

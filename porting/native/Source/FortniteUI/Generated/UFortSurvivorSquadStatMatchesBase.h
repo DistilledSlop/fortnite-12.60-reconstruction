@@ -37,5 +37,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetSummaryView(bool bInSummaryView);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddStatMatch(UFortSurvivorSquadStatMatchBase* SetBonus);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentSquadSetBP();
+public:
+
 };
 

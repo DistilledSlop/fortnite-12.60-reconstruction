@@ -14,5 +14,15 @@ class FORTNITEUI_API UWaxSquadInfoWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetPlacement(int32 Placement);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetScore(int32 Score);
+public:
+
 };
 

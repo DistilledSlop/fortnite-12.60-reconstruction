@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/PrimitiveComponent.h"
 
+#include "UFortActorIndicatorInterface.h"
+
 #include "UFortIndicatorComponent.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,10 @@ class FORTNITEGAME_API UFortIndicatorComponent : public UPrimitiveComponent
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIndicatorRegistered(TScriptInterface<IFortActorIndicatorInterface>& NewIndicator);
+public:
+
 };
 

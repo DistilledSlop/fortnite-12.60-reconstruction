@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FThreatLocationInfo.h"
+
 #include "AFortThreatParticleActor.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,20 @@ class FORTNITEGAME_API AFortThreatParticleActor : public AActor
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnThreatCloudsChanged(TArray<FThreatLocationInfo>& ThreatLocationInfo);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnThreatOverrideChanged(bool bForceThreatOn);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWorldReady();
+public:
+
 };
 

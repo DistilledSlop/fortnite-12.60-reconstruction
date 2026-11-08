@@ -36,5 +36,10 @@ public:
 	UPROPERTY()
 	UFortEventTeamMatchHistoryEntryData* LastClickedMatchHistoryEntry;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupMatchHistory(const FString& TournamentId, const FString& EventWindowId);
+public:
+
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortGameplayAbility.h"
 
+#include "GameplayTagContainer.h"
+
 #include "UFortGameplayAbility_SpyTech.generated.h"
 
 UCLASS()
@@ -14,5 +16,10 @@ class FORTNITEGAME_API UFortGameplayAbility_SpyTech : public UFortGameplayAbilit
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAbilityGranted(FGameplayTagContainer& TagContainer);
+public:
+
 };
 

@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_VoiceChannel;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVoiceChannelSelected(bool bIsPartyChat);
+public:
+
 };
 

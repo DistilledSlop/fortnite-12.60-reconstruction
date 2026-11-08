@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FAthenaWinnerInfo.h"
+
 #include "UAthenaWinnersList.generated.h"
 
 UCLASS()
@@ -17,6 +19,10 @@ public:
 	// table index 0, flags 0x10000000000004
 	UPROPERTY()
 	bool bCanDisplayMultiWinners;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnWinnersAnnounced(FAthenaWinnerInfo& WinnerInfo);
+	virtual void OnWinnersAnnounced_Implementation(FAthenaWinnerInfo& WinnerInfo);
 
 };
 

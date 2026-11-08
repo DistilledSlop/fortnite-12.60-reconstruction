@@ -46,5 +46,15 @@ protected:
 	int32 GetQuantity() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemOrQuantitySetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetShowDescriptionBP(bool bInShowDescription);
+public:
+
 };
 

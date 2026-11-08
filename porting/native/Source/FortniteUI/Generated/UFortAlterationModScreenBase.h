@@ -56,6 +56,36 @@ public:
 	UPROPERTY()
 	UFortAlterationOption* CurrentAlterationOptionInternal;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAlterationModificationCompleted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAlterationModificationStarted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAlterationModificationSucess(int32 ModifiedSlotIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAlterationOptionChanged(UFortAlterationOption* CurrentAlterationOption);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemSlotChanged(bool SelectedSlot);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RefreshItemAndAlterationsBP();
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EInteractionBeingAttempted.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum EInteractionBeingAttempted
 {
 	FirstInteraction = 0,

@@ -29,5 +29,15 @@ public:
 	UPROPERTY()
 	UCommonNumericTextBlock* Number_PowerLevel;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowBackbackChanged(bool bShowBackpack);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowHeadAccessoryChanged(bool bShowHeadAccessory);
+public:
+
 };
 

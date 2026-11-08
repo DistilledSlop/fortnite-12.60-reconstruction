@@ -20,3 +20,13 @@ void UFortCollectionBookPrimaryPanel::OnSummonInfoPanelExecuted_Implementation(b
 	return;
 }
 
+void UFortCollectionBookPrimaryPanel::OnCollectionBookPageClicked_Implementation(UFortCollectionBookPage* ClickedPage)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortCollectionBookPrimaryPanel::OnCollectionBookPageSelected_Implementation(UFortCollectionBookPage* SelectedPage)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

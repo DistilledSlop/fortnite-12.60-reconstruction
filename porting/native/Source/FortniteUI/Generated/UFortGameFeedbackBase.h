@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFortUIGameFeedbackType.h"
 #include "UCommonButton.h"
 #include "UCommonButtonGroup.h"
 
@@ -81,6 +82,21 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void GetBugComponents();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBuildBugComponentListComplete();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFeedbackTypeChanged(EFortUIGameFeedbackType FeedbackType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitiateDebugInfoForFeedbackComplete();
 public:
 
 };

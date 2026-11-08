@@ -31,5 +31,10 @@ public:
 	UPROPERTY()
 	UImage* Icon_TimeRemaining;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSectionEstablished(bool bEmptySection);
+public:
+
 };
 

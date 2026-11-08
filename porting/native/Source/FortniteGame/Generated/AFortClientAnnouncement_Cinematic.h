@@ -14,5 +14,15 @@ class FORTNITEGAME_API AFortClientAnnouncement_Cinematic : public AFortClientAnn
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnteredCinematicState();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnPlayerSkippedCutscene();
+public:
+
 };
 

@@ -47,5 +47,25 @@ public:
 	UPROPERTY(Transient)
 	UAthenaCosmeticItemDefinition* CosmeticItemDef;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUnlockingInfoSet(bool bShowProgression);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RequestIntroAnim();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RequestOutroAnim();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RequestUpdateAnim();
+public:
+
 };
 

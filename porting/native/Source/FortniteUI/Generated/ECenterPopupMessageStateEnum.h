@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ECenterPopupMessageStateEnum.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ECenterPopupMessageStateEnum : uint8
 {
 	NotVisible = 0,

@@ -10,6 +10,7 @@
 #include "FLocationLerpData.h"
 #include "FRotationLerpData.h"
 #include "GameplayTagContainer.h"
+#include "Math/Vector.h"
 
 class AFortAthenaExitCraftBalloon;
 class AFortPlayerPawnAthena;
@@ -129,6 +130,31 @@ public:
 
 	UFUNCTION()
 	void OnRep_VehicleSkinIndex();
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	FVector GetBalloonLocation() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMoveEnd();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMoveStart();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewState(EExitCraftState NewState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnRemakeMIDs();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

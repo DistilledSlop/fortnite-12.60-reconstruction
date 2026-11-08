@@ -68,5 +68,30 @@ public:
 	UPROPERTY()
 	TArray<FCardSlotMedalData> MedalPunchData;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void FinishedPlacingMedals(bool bPlayOutro);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void MedalFInishedPlacing();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RunIntroAnim();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowWidget();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCardCompleted(bool bCompleted);
+public:
+
 };
 

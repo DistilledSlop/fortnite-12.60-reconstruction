@@ -152,5 +152,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsShuttingDown() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnabledChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnStartShuttingDown();
+public:
+
 };
 

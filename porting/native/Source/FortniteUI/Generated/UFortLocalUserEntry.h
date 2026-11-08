@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "ELocalUserOnlineStatus.h"
+
 class UFortLocalUserSettingsMenu;
 class UFortSocialAvatarIcon;
 class UImage;
@@ -52,6 +54,11 @@ public:
 protected:
 	UFUNCTION()
 	UWidget* HandleGetMenuContent();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOnlineStatusChanged(ELocalUserOnlineStatus OnlineStatus);
 public:
 
 };

@@ -9,3 +9,8 @@ USkeletalMeshComponent* ABuildingProp_CreaturePlacer::GetCreatureSkeletalMeshCom
 	return CreatureSkeletalMeshComponent;
 }
 
+void ABuildingProp_CreaturePlacer::MinigameStateChanged_Implementation(AFortMinigame* Minigame, EFortMinigameState NewMinigameState)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

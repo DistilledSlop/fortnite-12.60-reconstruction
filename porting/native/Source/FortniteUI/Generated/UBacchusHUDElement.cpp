@@ -9,3 +9,8 @@ FGameplayTag UBacchusHUDElement::BP_GetMobileVisualType_Implementation() const
 	return VisualType;
 }
 
+void UBacchusHUDElement::OnHUDStateUpdate_Implementation(FFortHUDState& NewState)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

@@ -26,5 +26,10 @@ public:
 	UPROPERTY(Transient)
 	AFortEventLevelNavigationActor* OwningNavigationActor;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitializedForPlayer();
+public:
+
 };
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EBarrierFoodTeam.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EBarrierFoodTeam : uint8
 {
 	Burger = 0,

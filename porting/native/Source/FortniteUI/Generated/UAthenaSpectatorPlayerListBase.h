@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "ESpectatorPlayerListSortMethod.h"
 #include "Engine/DataTable.h"
 #include "UCommonListView.h"
 
@@ -34,6 +35,16 @@ public:
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	FDataTableRowHandle ShowPlayerProfileRowHandle;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleCurrentSortMethodChanged(ESpectatorPlayerListSortMethod NewSortMethod);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandlePlayerEventScoreChanged(int32 EventScore);
+public:
 
 };
 

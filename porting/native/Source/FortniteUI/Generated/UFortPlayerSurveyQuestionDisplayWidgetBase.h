@@ -45,5 +45,10 @@ public:
 	UPROPERTY()
 	UCommonWidgetSwitcher* Switcher_Main;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleQAChanged();
+public:
+
 };
 

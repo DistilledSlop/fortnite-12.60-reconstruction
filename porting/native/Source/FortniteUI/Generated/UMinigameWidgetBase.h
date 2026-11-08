@@ -45,5 +45,50 @@ protected:
 	virtual void OnDisplayMinigameInProgressUI_Implementation(bool bDisplay);
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayCaptureObjectiveUI(bool bDisplay);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayLeavingVolumeUI(bool bDisplay);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayMiniGameAbortUI(bool bDisplay);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayMinigameEndUI(bool bDisplay);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayMinigamePregameCountdownUI(bool bDisplay);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayMinigameStartUI(bool bDisplay);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnObjectiveUpdated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerStatUpdated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ResetDisplayValues();
+public:
+
 };
 

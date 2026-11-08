@@ -6,8 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "EAthenaNewsStyle.h"
 #include "EFrontEndCamera.h"
 #include "Engine/DataTable.h"
+#include "FAthenaNewsEntry.h"
 #include "FPrimaryContentSetup.h"
 #include "GameplayTagContainer.h"
 #include "UCommonButton.h"
@@ -117,6 +119,56 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNewsCount() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleNewsStyle(EAthenaNewsStyle NewsStyle);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewsPopulated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayIntroAnim();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelectedNews(FAthenaNewsEntry& NewsEntry);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayIntroAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ResetViewConfiguration();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetDefaultImage();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetNormalButtonText(FText& InText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSpecialButtonText(FText& InText);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartSTWUpsell();
+public:
 
 };
 

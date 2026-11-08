@@ -7,6 +7,7 @@
 #include "UCommonActivatablePanel.h"
 
 #include "FFortSwipeDetector.h"
+#include "UFortItem.h"
 
 class UFortMulchConfirmationModalWidget;
 class UFortRewardNotificationData;
@@ -59,6 +60,61 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void ResetAllRewardData();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void InspectItem(UFortItem* ItemToInspect, int32 QuantityOverride);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMulchCompleted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavigationDown();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavigationLeft();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavigationRight();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavigationUp();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPrimaryActionDisabled();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPrimaryActionEnabled();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPrimaryActionHidden();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPrimaryActionTextChanged(FText& Text);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRewardsScreenClosed();
 public:
 
 };

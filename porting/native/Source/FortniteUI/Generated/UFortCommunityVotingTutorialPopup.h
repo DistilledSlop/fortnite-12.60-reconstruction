@@ -58,5 +58,20 @@ protected:
 	void OnSlideAnimationFinished();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayInSlideAnimation(int32 Index);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayOutSlideAnimation(int32 Index);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayTutorialAnimation();
+public:
+
 };
 

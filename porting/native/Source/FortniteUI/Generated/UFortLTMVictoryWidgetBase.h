@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortLTMVictoryWidgetBase : public UFortUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StartIntroSequence();
+public:
+
 };
 

@@ -46,5 +46,15 @@ public:
 	UPROPERTY()
 	UCommonLazyImage* Image_GiftBox;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCloseButtonClicked();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGiftInfoPopulated();
+public:
+
 };
 

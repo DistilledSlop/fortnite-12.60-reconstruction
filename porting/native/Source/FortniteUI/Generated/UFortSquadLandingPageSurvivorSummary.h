@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortAttributeModifierAccumulation.h"
+
 class UFortSquadStatValueWithIcon;
 
 #include "UFortSquadLandingPageSurvivorSummary.generated.h"
@@ -31,6 +33,16 @@ public:
 	// table index 0, flags 0x1000000008001c
 	UPROPERTY()
 	UFortSquadStatValueWithIcon* TechStatValue;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleAddSetBonusSummaryLineItemBP(FFortAttributeModifierAccumulation AttributeModifierAccumulation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleClearSetBonusSummaryLineItemsBP();
+public:
 
 };
 

@@ -54,5 +54,10 @@ public:
 	UPROPERTY()
 	UAthenaQuickbarEditorBase* AthenaQuickbar_Primary;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnQuickbarHighlight();
+public:
+
 };
 

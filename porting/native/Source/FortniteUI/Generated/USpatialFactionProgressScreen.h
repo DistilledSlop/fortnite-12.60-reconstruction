@@ -9,6 +9,7 @@
 #include "UCommonButton.h"
 #include "UCommonButtonGroup.h"
 #include "UFortPlayerPerksItemDefinition.h"
+#include "UFortSpyTechItemDefinition.h"
 
 class UDynamicEntryBox;
 class UFortSocialAvatarIcon;
@@ -62,6 +63,16 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UTextBlock* Text_PlayerName;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFactionSet(int32 PlayerFaction);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPerkSelected(UFortSpyTechItemDefinition* PerkItemDef, int32 PerkLevel, int32 PerkFaction, bool bIsRevealed, bool bIsEarned, bool bIsCurrentFaction);
+public:
 
 };
 

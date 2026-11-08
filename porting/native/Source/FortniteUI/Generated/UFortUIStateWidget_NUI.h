@@ -45,6 +45,36 @@ public:
 	void OnExitState(EFortUIState NextUIState);
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAutoHideBuildingMaterialsChanged(bool AutoHide);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFrontEndVisibilityUpdated(bool bHideHeader, bool bHideFooter, bool bHideChatWidget);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHUDScaleChanged(float HUDScale);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoadingScreenVisibilityChanged(bool IsVisible);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSocialButtonEnabled(bool bEnabled);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void RequestOpenSocialMenu();
+public:
+
 // Root-facing virtual contracts, source aliases of original slots 510/518.
 virtual void NativeActivateLegacyState510(uint8 PreviousState);
 virtual void NativeDeactivateLegacyState518(uint8 NextState);

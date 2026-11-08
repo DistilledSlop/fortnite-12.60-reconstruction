@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+#include "FFortInGameLeaderboardPlacementData.h"
 #include "FSoundThreshold.h"
 
 #include "URumbleLeaderBoard.generated.h"
@@ -19,6 +20,21 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	TArray<FSoundThreshold> ThresholdArray;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnThresholdPassed(FSoundThreshold& SoundThreshold, int32 ThresholdIndex, bool bIsLocalPlayer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetGoalValue(float NewValue);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateVisuals(TArray<FFortInGameLeaderboardPlacementData>& Data);
+public:
 
 };
 

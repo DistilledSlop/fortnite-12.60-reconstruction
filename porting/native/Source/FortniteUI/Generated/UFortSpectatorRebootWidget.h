@@ -20,5 +20,10 @@ public:
 	UPROPERTY(Transient)
 	AFortPlayerStateAthena* PlayerState;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResurrectionStateChanged();
+public:
+
 };
 

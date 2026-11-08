@@ -43,5 +43,30 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMinTreshold() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayBounceAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayInAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayOutAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetIndicatorText(FText& Text);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetScreenPercent(float Percent);
+public:
+
 };
 

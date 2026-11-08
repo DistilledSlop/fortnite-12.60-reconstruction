@@ -14,7 +14,7 @@ class AThreatCloud;
 
 #include "FThreatLocationInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FThreatLocationInfo : public FFastArraySerializerItem
 {
 	GENERATED_BODY()

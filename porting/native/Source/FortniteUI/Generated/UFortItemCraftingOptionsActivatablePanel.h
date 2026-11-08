@@ -87,5 +87,25 @@ public:
 	UPROPERTY()
 	UImage* TierImage_5;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBaseItemChanged(UFortSchematicItem* NewBaseItem);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMaxQuantityChanged(int32 NewMaxQuantity);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelectedQuantityChanged(int32 NewSelectedQuantity);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTargetItemChanged(UFortSchematicItem* NewTargetItem);
+public:
+
 };
 

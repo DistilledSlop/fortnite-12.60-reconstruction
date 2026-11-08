@@ -7,9 +7,11 @@
 #include "GameplayCueNotify_Static.h"
 
 #include "FFortParticleSystemParamBucket.h"
+#include "GameplayEffectTypes.h"
 #include "Particles/WorldPSCPool.h"
 
 class UParticleSystem;
+class UParticleSystemComponent;
 class USoundBase;
 
 #include "UFortGameplayCueNotify_Simple.generated.h"
@@ -59,6 +61,11 @@ public:
 	// table index 0, flags 0x10000000000015
 	UPROPERTY()
 	EPSCPoolMethod PoolingMethod;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartParticleSystemSpawned(UParticleSystemComponent* SpawnedParticleSysComponent, FGameplayCueParameters& Parameters) const;
+public:
 
 };
 

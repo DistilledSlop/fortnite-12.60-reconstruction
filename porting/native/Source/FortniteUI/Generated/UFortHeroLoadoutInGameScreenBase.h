@@ -12,6 +12,7 @@ class UFortHeroLoadoutGadgetTileBase;
 class UFortHeroLoadoutPerkTileBase;
 class UFortItemDetailsHostPanel;
 class UGridPanel;
+class UGridSlot;
 class UScrollBox;
 
 #include "UFortHeroLoadoutInGameScreenBase.generated.h"
@@ -53,6 +54,11 @@ public:
 	// table index 0, flags 0x40008000002008
 	UPROPERTY(Transient)
 	TArray<UFortHeroLoadoutGadgetTileBase*> GadgetTiles;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPerkWidgetAdded(UGridSlot* GridSlot);
+public:
 
 };
 

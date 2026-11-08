@@ -30,5 +30,10 @@ public:
 	UPROPERTY()
 	AFortWeapon* WeaponActor;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewPickaxeVariantsApplied(UAthenaPickaxeItemDefinition* Pickaxe);
+public:
+
 };
 

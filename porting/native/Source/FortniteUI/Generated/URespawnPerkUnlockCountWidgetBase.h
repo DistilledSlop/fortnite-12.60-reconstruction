@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* TextBlock_RequiredKills;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewTechAvailable(int32 NewCount);
+public:
+
 };
 

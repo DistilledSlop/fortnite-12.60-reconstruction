@@ -10,6 +10,7 @@
 #include "EFortCardinalDirection.h"
 #include "Math/Rotator.h"
 
+class APlayerCameraManager;
 class UAnimInstance;
 
 #include "UFortLiveEventLayerAnimInstance.generated.h"
@@ -215,6 +216,11 @@ public:
 	// table index 0, flags 0x10000000002014
 	UPROPERTY(Transient)
 	bool bTransition_UWSprintLoop_To_SprintStop;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void LocalUpdateFromCameraManager(APlayerCameraManager* CameraManager);
+public:
 
 };
 

@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "ESquadSlotType.h"
+#include "FHomebaseSquadSlot.h"
 #include "FOnDifferentSquadSlotSelected.h"
 #include "FOnRequestSquadSlotAction.h"
 #include "FSquadSlotSortTypes.h"
@@ -15,6 +16,8 @@
 
 class UFortCommittableButtonGroup;
 class UFortDisableAutoSlottingPromptAction;
+class UFortSquadSlotSelectorButton;
+class UWidget;
 
 #include "UFortSquadSlotsView.generated.h"
 
@@ -92,6 +95,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetIsSelectionLocked(bool ShouldSelectionBeLocked);
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	UFortSquadSlotSelectorButton* CreateAndAddSquadSlotButton(int32 SquadSlotIndex, FHomebaseSquadSlot& SquadSlotDefinition, UWidget*& OutSquadSlotButtonHost);
+public:
 
 };
 

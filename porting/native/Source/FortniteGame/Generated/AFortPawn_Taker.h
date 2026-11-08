@@ -8,6 +8,8 @@
 
 #include "FBuildingHitTime.h"
 
+class UMaterialInterface;
+
 #include "AFortPawn_Taker.generated.h"
 
 UCLASS(config=Game)
@@ -27,6 +29,21 @@ public:
 	// table index 0, flags 0x10000000002000
 	UPROPERTY(Transient)
 	TArray<FBuildingHitTime> BuildingCollisions;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OverrideMaterialAndCopyParametersOnCharacterMesh(UMaterialInterface* NewMaterialToApply);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void RestorePreviousMaterialOnCharacterMesh(float ScalarValue);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetScalarParameterOnAllCharacterMIDs(FName ParameterName, float ScalarValue);
+public:
 
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "EBattlePassPurchaseButtonLayout.h"
 #include "UCommonTextBlock.h"
 
 #include "UBattlePassScreenPurchaseButton.generated.h"
@@ -35,6 +36,11 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonTextBlock* Text_DiscountedPercentage;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetData(EBattlePassPurchaseButtonLayout LayoutType);
+public:
 
 };
 

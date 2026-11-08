@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortEventLevelScreen.h"
 
+#include "EWinterQuestViewState.h"
 #include "UCommonButton.h"
 
 class UFortGiftingScreen;
@@ -91,6 +92,26 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UFortWinterQuestDayCounter* WinterQuestDayCounter;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPresentOpened();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnScreenStateChanged(EWinterQuestViewState NewState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetAllUIVisibilityState(bool bIsHidden);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUserExitCabin();
+public:
 
 };
 

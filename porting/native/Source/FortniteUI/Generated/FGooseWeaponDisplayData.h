@@ -11,7 +11,7 @@ class UTexture2D;
 
 #include "FGooseWeaponDisplayData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FGooseWeaponDisplayData
 {
 	GENERATED_BODY()

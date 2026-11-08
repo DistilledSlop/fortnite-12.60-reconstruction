@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EIntelStateEnum.h"
+
 #include "UInfiltrationIntelStatusWidget.generated.h"
 
 UCLASS()
@@ -17,6 +19,21 @@ public:
 	// table index 0, flags 0x10000000000801
 	UPROPERTY()
 	int32 SpawnerIndex;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetIntelState(EIntelStateEnum NewState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetIsGroundTimer(bool bIsGroundTimer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateTimerVisuals(float TimeRemaining, float TotalTime);
+public:
 
 };
 

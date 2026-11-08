@@ -40,5 +40,10 @@ public:
 	UPROPERTY()
 	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTileSizeOverrideCheck(EFortItemCardSize SizeIn, EFortItemCardSize& SizeOut) const;
+public:
+
 };
 

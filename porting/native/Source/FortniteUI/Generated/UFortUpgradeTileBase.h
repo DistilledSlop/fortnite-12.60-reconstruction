@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UFortUpgradeInfo* UpgradeInfo;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDataRefresh(bool bUpgrade);
+public:
+
 };
 

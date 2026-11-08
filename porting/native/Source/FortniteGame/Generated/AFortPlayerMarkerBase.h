@@ -41,5 +41,30 @@ public:
 	UPROPERTY()
 	UStaticMeshComponent* StaticMeshComponent;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMarkerColorChanged(FLinearColor InColor);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMarkerHidden();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMarkerPlaced();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayMarkerSound();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupMarker(FFortWorldMarkerData& MarkerData);
+public:
+
 };
 

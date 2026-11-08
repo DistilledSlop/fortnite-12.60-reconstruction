@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortDamageZone.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 namespace EFortDamageZone
 {
 	enum Type

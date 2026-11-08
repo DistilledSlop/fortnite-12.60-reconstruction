@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "Math/Vector.h"
+
 class USplineComponent;
 class USplineMeshComponent;
 
@@ -24,6 +26,10 @@ public:
 	// table index 0, flags 0x2008800000200c
 	UPROPERTY(Transient)
 	TArray<USplineMeshComponent*> SplineMeshComponents;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetTrajectorySpline(TArray<FVector>& SplinePoints, TArray<FVector>& SplineTangents);
+	virtual void SetTrajectorySpline_Implementation(TArray<FVector>& SplinePoints, TArray<FVector>& SplineTangents);
 
 };
 

@@ -67,3 +67,28 @@ void UObjectInteractionBehavior::TickMovementMode_Implementation()
 	return;
 }
 
+void UObjectInteractionBehavior::EndCreativeInteraction_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UObjectInteractionBehavior::ExitCreativeInteraction_Implementation(bool bShouldClearActiveInteractionMode)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UObjectInteractionBehavior::StartCreativeInteractionOnClient_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UObjectInteractionBehavior::StartCreativeInteractionOnServer_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UObjectInteractionBehavior::TriggerInteractionBehavior_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+

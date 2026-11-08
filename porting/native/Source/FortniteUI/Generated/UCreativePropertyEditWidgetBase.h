@@ -43,5 +43,20 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual FText GetStepperLabelForIndex(int32 Index);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnEditWidgetClicked();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnModified(bool bModified);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_PostInitEditWidget();
+public:
+
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortTouchControlRegion.h"
 #include "Engine/EngineTypes.h"
 #include "Input/Events.h"
 #include "Layout/Geometry.h"
@@ -111,6 +112,93 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void SetFeedbackPosition(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
 	virtual void SetFeedbackPosition_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void MovePlayerRegionTick(FGeometry& InGeometry, float DeltaTime);
+	virtual void MovePlayerRegionTick_Implementation(FGeometry& InGeometry, float DeltaTime);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnAdditionalTouchEnded(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+	virtual void OnAdditionalTouchEnded_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnAdditionalTouchLost(int32 PointerIndex);
+	virtual void OnAdditionalTouchLost_Implementation(int32 PointerIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnMovePlayerRegionTouchEnded(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+	virtual void OnMovePlayerRegionTouchEnded_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnMovePlayerRegionTouchLost(int32 PointerIndex);
+	virtual void OnMovePlayerRegionTouchLost_Implementation(int32 PointerIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnMovePlayerRegionTouchMoved(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+	virtual void OnMovePlayerRegionTouchMoved_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnMovePlayerRegionTouchStarted(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+	virtual void OnMovePlayerRegionTouchStarted_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRegionTouchEnded(EFortTouchControlRegion Region, FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRegionTouchMoved(EFortTouchControlRegion Region, FGeometry& InGeometry, FPointerEvent& InGestureEvent, FVector2D& MoveDelta);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRegionTouchStarted(EFortTouchControlRegion Region, FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnRotatePlayerRegionTouchEnded(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+	virtual void OnRotatePlayerRegionTouchEnded_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnRotatePlayerRegionTouchLost(int32 PointerIndex);
+	virtual void OnRotatePlayerRegionTouchLost_Implementation(int32 PointerIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnRotatePlayerRegionTouchMoved(FGeometry& InGeometry, FPointerEvent& InGestureEvent, FVector2D& MoveDelta);
+	virtual void OnRotatePlayerRegionTouchMoved_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent, FVector2D& MoveDelta);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnRotatePlayerRegionTouchStarted(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+	virtual void OnRotatePlayerRegionTouchStarted_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void RotatePlayerRegionTick(FGeometry& InGeometry, float DeltaTime);
+	virtual void RotatePlayerRegionTick_Implementation(FGeometry& InGeometry, float DeltaTime);
 public:
 
 };

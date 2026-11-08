@@ -8,6 +8,7 @@
 
 #include "ESettingType.h"
 #include "FSettingValueChanged.h"
+#include "UCommonTextBlock.h"
 
 #include "UFortOptionsMenuSetting.generated.h"
 
@@ -28,6 +29,21 @@ public:
 	// table index 0, flags 0x10000000000005
 	UPROPERTY()
 	FText NameText;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void CenterOnWidget();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetControlsEnabled(bool bEnabled, FText& DisabledReason);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateSetting(UCommonTextBlock* TooltipTextBlock);
+public:
 
 };
 

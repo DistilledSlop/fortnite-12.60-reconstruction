@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortItemCooldownType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortItemCooldownType : uint8
 {
 	None = 0,

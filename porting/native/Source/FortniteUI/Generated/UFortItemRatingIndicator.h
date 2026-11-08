@@ -42,5 +42,10 @@ public:
 	UPROPERTY()
 	bool ShouldAppearEnchanted;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleViewModelChanged();
+public:
+
 };
 

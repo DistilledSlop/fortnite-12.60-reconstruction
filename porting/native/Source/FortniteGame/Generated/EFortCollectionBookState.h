@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortCollectionBookState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortCollectionBookState : uint8
 {
 	Active = 0,

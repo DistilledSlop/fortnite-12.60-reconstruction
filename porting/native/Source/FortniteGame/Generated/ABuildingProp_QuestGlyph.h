@@ -6,8 +6,10 @@
 #include "CoreMinimal.h"
 #include "ABuildingProp_Quest.h"
 
+#include "GameplayTagContainer.h"
 #include "Math/Color.h"
 
+class AFortPlayerController;
 class UFortMontageItemDefinitionBase;
 class UFortQuestItemDefinition;
 
@@ -46,6 +48,11 @@ public:
 	// table index 0, flags 0x10000000000001
 	UPROPERTY()
 	TArray<UFortMontageItemDefinitionBase*> GlyphActivationEmotes;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTriggeringEmote(AFortPlayerController* FortPC, UFortMontageItemDefinitionBase* EmoteAsset, FGameplayTagContainer& FilteredQuestMetaDataTags);
+public:
 
 };
 

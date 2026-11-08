@@ -7,6 +7,7 @@
 #include "ABuildingProp.h"
 
 class AAthenaCreativeRift;
+class ABuildingRift;
 class UFortCreativeCreatureManagerComponent;
 class UFortMinigameProgressComponent;
 class USceneComponent;
@@ -56,6 +57,15 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SpawnRift();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void MinigameEnded();
+	virtual void MinigameEnded_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSpawnedRift(ABuildingRift* SpawnedRift);
+public:
 
 };
 

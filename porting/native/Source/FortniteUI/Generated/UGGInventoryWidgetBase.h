@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "UGGWidgetBase.h"
 
+#include "EFortRarity.h"
 #include "UFortWeaponItemDefinition.h"
+
+class UTexture2D;
 
 #include "UGGInventoryWidgetBase.generated.h"
 
@@ -19,6 +22,16 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	UFortWeaponItemDefinition* NextItemToDisplay;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void LastWeaponReached();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateWidgetForNewWeapon(UTexture2D* Texture, EFortRarity Rarity);
+public:
 
 };
 

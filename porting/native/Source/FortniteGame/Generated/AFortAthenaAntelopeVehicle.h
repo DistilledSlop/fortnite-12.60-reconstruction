@@ -9,6 +9,7 @@
 #include "Math/Color.h"
 #include "Math/Vector.h"
 
+class ABuildingActor;
 class AFortPlayerPawn;
 class UCameraShake;
 class UCurveFloat;
@@ -317,6 +318,41 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSmashing() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BoostBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BoostEnd();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BoostFailed();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NaturalSlideBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NaturalSlideEnd();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowCooldownCue(AFortPlayerPawn* Pawn, float Duration);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SmashedThroughBuildingPiece(FVector& ImpactPoint, FVector& ImpactNormal, ABuildingActor* BuildingHitActor);
+public:
 
 };
 

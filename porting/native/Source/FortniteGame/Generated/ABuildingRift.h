@@ -19,6 +19,7 @@
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
 
+class AFortAIPawn;
 class UEnvQuery;
 class UFortDamageSet;
 class UFortSpectateClickableMapIcon;
@@ -216,6 +217,71 @@ public:
 
 	UFUNCTION()
 	void OnRep_RiftIsVisible();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BlueprintHideRift();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BlueprintHideVFX();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_Cosmetic_Idle();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_Cosmetic_Intro();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_Cosmetic_RampUp();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_Cosmetic_ShouldDie();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnActivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDeactivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnFinishedEncounterSpawn(AFortAIPawn* SpawnedAI);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnPlaced();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnRemoved();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnSpawnAI();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnStartedEncounterSpawn(AFortAIPawn* SpawnedAI);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

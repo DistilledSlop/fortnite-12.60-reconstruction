@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FAthenaTeamDisplayInfo.h"
+
 class UDynamicEntryBox;
 
 #include "UAthenaTeamSquadEntry.generated.h"
@@ -26,6 +28,16 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSquadId() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadAssigned(FAthenaTeamDisplayInfo& SquadStyle);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadIsEmptyChanged(bool bSquadIsEmpty, bool bMultipleSquadsPopulated);
 public:
 
 };

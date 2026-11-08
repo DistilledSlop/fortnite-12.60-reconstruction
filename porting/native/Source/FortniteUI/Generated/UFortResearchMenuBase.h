@@ -20,5 +20,20 @@ public:
 	UPROPERTY()
 	UFortItemDefinition* ResearchRespecToken;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPurchaseResearchLevelCompleted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPurchaseResearchLevelStarted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUseResearchRespecTokenComplete();
+public:
+
 };
 

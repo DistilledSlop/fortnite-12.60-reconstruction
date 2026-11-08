@@ -14,5 +14,15 @@ class FORTNITEUI_API UWaxHotelPromptWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void CloseWidget();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OpenWidget();
+public:
+
 };
 

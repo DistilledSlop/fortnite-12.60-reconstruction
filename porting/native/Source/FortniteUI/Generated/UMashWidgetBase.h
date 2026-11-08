@@ -25,5 +25,20 @@ public:
 	UPROPERTY(Transient)
 	AFortPlayerStateAthena* CachedLocalPlayerState;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerScoreUpdated(int32 Index, const FString& PlayerName, int32 Score, int32 StreakLevel, int32 MaxStreakLevel, float StreakMultiplier, bool IsLocalPlayer);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadScoreUpdated(int32 Score);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeamScoreMultiplierChanged(uint8 TeamScoreMultiplier);
+public:
+
 };
 

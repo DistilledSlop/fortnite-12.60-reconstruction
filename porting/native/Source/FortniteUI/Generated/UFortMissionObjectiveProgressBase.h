@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "AFortObjectiveBase.h"
 #include "UCommonTextBlock.h"
 
 class UProgressBar;
@@ -25,6 +26,15 @@ public:
 	// table index 0, flags 0x1000000008001c
 	UPROPERTY()
 	UCommonTextBlock* ProgressBarText;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure)
+	float GetHeightEstimate() const;
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Update(AFortObjectiveBase* Objective, int32 BarIndex);
+	virtual void Update_Implementation(AFortObjectiveBase* Objective, int32 BarIndex);
 
 };
 

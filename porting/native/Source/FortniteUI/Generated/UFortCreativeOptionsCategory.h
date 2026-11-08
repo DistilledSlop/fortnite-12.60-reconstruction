@@ -12,6 +12,7 @@
 #include "UFortCreativeOption.h"
 
 class UFortCreativeGlobalOptions;
+class UFortMatchmakingKnobsSpinnerButton;
 
 #include "UFortCreativeOptionsCategory.generated.h"
 
@@ -43,6 +44,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UCommonListView* GetOptionsList() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelectionUpdated(UFortMatchmakingKnobsSpinnerButton* CurrentSelection);
+public:
 
 };
 

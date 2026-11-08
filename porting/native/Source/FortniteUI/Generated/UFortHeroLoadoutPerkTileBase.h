@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortBrushSize.h"
+#include "EFortHeroPerkDisplayType.h"
 #include "UCommonTextBlock.h"
 #include "UFortAbilityKit.h"
 
@@ -65,6 +66,11 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortAbilityKit* AbilityKit;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPerkInitialized(EFortHeroPerkDisplayType InPerkType, bool bActive, bool bShowWarning);
+public:
 
 };
 

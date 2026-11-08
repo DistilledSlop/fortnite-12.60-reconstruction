@@ -35,6 +35,11 @@ void ABuildingFillFloor::OnRep_StepIndex()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingFillFloor::StartMovement_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 bool ABuildingFillFloor::NativeSetActorLocation143f832a0(AActor* Actor, const FVector& NewLocation, bool bSweep, FHitResult* OutSweepHitResult, uint8 TeleportMode)
 {
 	// Helper 0x143f832a0: AActor::SetActorLocation(NewLocation, bSweep, OutSweepHitResult, Teleport).

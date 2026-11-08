@@ -219,6 +219,11 @@ public:
 	UFUNCTION()
 	void SetNearCheckpoint(bool bNear);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSplineSet();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

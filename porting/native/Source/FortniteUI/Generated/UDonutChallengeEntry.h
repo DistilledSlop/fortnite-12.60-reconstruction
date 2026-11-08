@@ -36,5 +36,15 @@ public:
 	UPROPERTY()
 	UAthenaChallengeProgressBar* ProgressBar_Challenge;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPHasRewardTexture(bool InHasReward);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPIsCompleted(bool InCompletion);
+public:
+
 };
 

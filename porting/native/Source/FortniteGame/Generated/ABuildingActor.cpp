@@ -349,6 +349,11 @@ bool ABuildingActor::UseDefaultHealthBar_Implementation() const
 	return true;
 }
 
+void ABuildingActor::OnBuildingActorInitialized_Implementation(EFortBuildingInitializationReason::Type InitializationReason, EFortBuildingPersistentState::Type BuildingPersistentState)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void ABuildingActor::NativeOnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation)
 {
 	// CONFIDENCE: HIGH

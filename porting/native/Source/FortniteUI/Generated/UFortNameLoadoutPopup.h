@@ -39,5 +39,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_CloseMobile;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAcceptFailed();
+public:
+
 };
 

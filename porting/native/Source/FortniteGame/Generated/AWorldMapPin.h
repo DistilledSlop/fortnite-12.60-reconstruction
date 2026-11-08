@@ -24,5 +24,10 @@ public:
 	UPROPERTY()
 	FString TheaterId;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTheaterIdSet();
+public:
+
 };
 

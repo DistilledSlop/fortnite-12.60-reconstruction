@@ -51,6 +51,46 @@ public:
 	UFUNCTION()
 	void OnRep_CurrentState(ESpawnPointState OldState);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClientOnActive_CarryObjectInRange();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClientOnActive_CarryObjectOutOfRange();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClientOnIntelCaptured();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClientOnIntelDownloaded();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ServerOnActive_CarryObjectInRange();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ServerOnActive_CarryObjectOutOfRange();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ServerOnIntelCaptured();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ServerOnIntelDownloaded();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

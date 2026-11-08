@@ -129,5 +129,15 @@ public:
 	UPROPERTY(Transient)
 	FLinearColor CurrentColor;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnSwapColorPickerType(bool bToSwatch);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupColorPicker(EColorPickerType InColorPickerType);
+public:
+
 };
 

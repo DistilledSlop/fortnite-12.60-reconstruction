@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortHeroLoadoutAbilitiesDetailPanel : public UFortItemDeta
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerHomebaseChanged();
+public:
+
 };
 

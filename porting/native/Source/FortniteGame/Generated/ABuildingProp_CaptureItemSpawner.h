@@ -52,5 +52,10 @@ protected:
 	void ResetItemRefCount();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_NotifyFeedbackEvent(FGameplayFeedbackEventParams& EventParams, bool bFriendlyEvent);
+public:
+
 };
 

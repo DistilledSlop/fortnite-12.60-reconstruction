@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UAthenaSpectatorPlayerListRowData* PlayerListRowData;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEntryDataSet();
+public:
+
 };
 

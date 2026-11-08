@@ -29,5 +29,15 @@ public:
 	UPROPERTY()
 	UImage* Image_Duplicate;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RevealWinnerAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartRevealAnimation(float PlayRate);
+public:
+
 };
 

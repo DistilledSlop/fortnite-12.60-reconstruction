@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortServerMessageWidget : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAlertBegin(int32 SecondsRemainingStart, int32 SecondsRemainingEnd, FText& AlertText);
+public:
+
 };
 

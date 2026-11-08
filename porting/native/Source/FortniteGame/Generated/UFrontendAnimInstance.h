@@ -13,6 +13,7 @@
 #include "FFortAnimInput_PelvisAdjustment.h"
 #include "FFortAnimInput_RandomizeMontageSection.h"
 #include "FGameplayTagAnimations.h"
+#include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 
 class AFortPlayerPawn;
@@ -149,6 +150,11 @@ public:
 	// table index 0, flags 0x20080000000015
 	UPROPERTY()
 	FGameplayTagAnimations MaleGameplayTagAnimations;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayMontageFromGameplayTagQuery(FGameplayTagQuery& MatchingQuery, UAnimMontage* MontagePlaying);
+public:
 
 };
 

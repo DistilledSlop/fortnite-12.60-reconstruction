@@ -84,6 +84,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetupAnimationTransition(UMaterialInstanceDynamic* MID, FName ParamName, float InTransitionTime);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnRingSpinningLoop();
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

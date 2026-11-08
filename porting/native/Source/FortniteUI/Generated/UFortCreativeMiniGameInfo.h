@@ -60,5 +60,15 @@ public:
 	UPROPERTY()
 	UInputComponent* PanelInputComponent;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMiniGameStartedFromInputComponent();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTextSet();
+public:
+
 };
 

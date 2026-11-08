@@ -38,5 +38,15 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_AdditionalCurrency;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetDataForCharacter(bool bIsReadyToUnlock, float LayoutPosition);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetDataForCurrency(float LayoutPosition);
+public:
+
 };
 

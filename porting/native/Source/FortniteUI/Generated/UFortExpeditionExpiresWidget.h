@@ -26,5 +26,9 @@ protected:
 	virtual void OnExpeditionExpirationUpdated_Implementation();
 public:
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetData(UFortExpeditionItem* InItem);
+	virtual void SetData_Implementation(UFortExpeditionItem* InItem);
+
 };
 

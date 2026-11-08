@@ -415,6 +415,36 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetUseSpecificTimeOfDayEditing(bool bShouldUseSpecificTimeOfDay);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnDayPhaseChange();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnStormEnd();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnStormStart();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnUpdateDirectionalLightForTimeOfDay(FLinearColor& AboutToApplyDirectionalLightColor);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnWeatherEnd(int32 WeatherEventIndex);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnWeatherStart(int32 WeatherEventIndex);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

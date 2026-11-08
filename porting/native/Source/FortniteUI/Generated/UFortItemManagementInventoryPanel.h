@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortItemCardSize.h"
+#include "EFortQuickBars.h"
 #include "EInventoryContentSortType.h"
 #include "FFortItemManagementInventoryFilterTabLabelInfo.h"
 #include "UCommonButton.h"
@@ -19,6 +20,7 @@ class UFortItemManagementScreen;
 class UFortItemTileView;
 class UFortTabListWidgetBase;
 class UPanelWidget;
+class UUserWidget;
 class UWidget;
 
 #include "UFortItemManagementInventoryPanel.generated.h"
@@ -130,6 +132,51 @@ public:
 private:
 	UFUNCTION()
 	void HandleFilterTabButtonCreated(FName TabNameId, UCommonButton* TabButton);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleCursorModeChangedBP(bool bCursorModeEnabled, FName ActionName, UUserWidget* CursorModeContentWidget);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentFilterSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentFrontendInventoryFilterSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemManagementModeSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentSortTypeSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleFocusEquipSlotsBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleQuickBarChangedBP(EFortQuickBars QuickBarType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSetOfItemsToMulchChangedBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMulchRestrictionTextShown(bool bShown);
 public:
 
 };

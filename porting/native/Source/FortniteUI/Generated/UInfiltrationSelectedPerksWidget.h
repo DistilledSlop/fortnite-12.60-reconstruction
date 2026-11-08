@@ -30,5 +30,10 @@ public:
 	UPROPERTY()
 	FGameplayTag FilterTag;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdatePerks();
+public:
+
 };
 

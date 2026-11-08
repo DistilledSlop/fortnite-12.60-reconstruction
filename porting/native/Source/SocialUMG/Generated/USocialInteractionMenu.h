@@ -55,5 +55,10 @@ protected:
 	UWidget* GetFirstEntryToCenter() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnToggleConfirmation(bool bIsVisible);
+public:
+
 };
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EInventoryContentSortType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EInventoryContentSortType : uint8
 {
 	ByName = 0,

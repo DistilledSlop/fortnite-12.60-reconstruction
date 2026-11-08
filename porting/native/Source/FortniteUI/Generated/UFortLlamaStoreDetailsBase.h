@@ -50,5 +50,20 @@ protected:
 	int32 GetNotInCollectionBookCount() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOfferInfoChanged(int32 CurrentOfferRarity);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartUpgradingToGold();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartUpgradingToSilver();
+public:
+
 };
 

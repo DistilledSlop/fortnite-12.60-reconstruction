@@ -57,5 +57,35 @@ public:
 	UPROPERTY()
 	bool bIsHovered;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HoverFeat();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFeatCompletedThisSession();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFeatInfoSet(int32 NumFeatsOnDay, int32 IdxOnDay);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTimespanInfoSet(int32 NumDays);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWaitingForCompletedTimer();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UnHoverFeat();
+public:
+
 };
 

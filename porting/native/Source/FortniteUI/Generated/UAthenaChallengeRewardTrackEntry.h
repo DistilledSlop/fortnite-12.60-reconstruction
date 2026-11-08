@@ -43,5 +43,45 @@ public:
 	UPROPERTY()
 	UAthenaChallengeRewardDisplayEntry* MissionReward;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClearPreviewSelection();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CompletedCurrentNode(bool bAnimate, bool LastReward);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CompletedNextNode(bool bAnimate);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void NextRewardToEarn(bool bNext);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetAsCurrentPreviewItem();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetLastNodeInTrack(bool bIsLast);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetToDefaultState();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StyleChange(bool bViewingPrestige);
+public:
+
 };
 

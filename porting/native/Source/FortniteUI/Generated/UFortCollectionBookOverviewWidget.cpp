@@ -8,3 +8,8 @@ void UFortCollectionBookOverviewWidget::OnDeactivated_Implementation()
 	return;
 }
 
+void UFortCollectionBookOverviewWidget::OnActivated_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+

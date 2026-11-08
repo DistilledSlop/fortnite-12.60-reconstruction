@@ -14,5 +14,20 @@ class FORTNITEUI_API UAthenaShutdownWidget : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartShowing(float RemainingTime);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStopShowing(float RemainingTime);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateCountdown(float RemainingTime);
+public:
+
 };
 

@@ -79,5 +79,10 @@ public:
 	UPROPERTY()
 	UFortCommunityVotingThanksPopup* Com_ThanksForVotingMessage;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void FadeOutScreen();
+public:
+
 };
 

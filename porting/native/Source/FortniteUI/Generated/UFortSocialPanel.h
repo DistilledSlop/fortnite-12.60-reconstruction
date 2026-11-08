@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle CloseInputAction;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClosePanel();
+public:
+
 };
 

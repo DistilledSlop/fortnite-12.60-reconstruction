@@ -8,6 +8,7 @@
 
 #include "FFortPrioritizedWidgetData.h"
 #include "FXPUIEvent.h"
+#include "UFortAccoladeItemDefinition.h"
 
 #include "UAthenaAccoladesWidget.generated.h"
 
@@ -32,6 +33,28 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasMoreXPEvents() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void CloseWidget();
+	virtual void CloseWidget_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void EventAdded();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStompedByOtherWidget();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OpenWidget(UFortAccoladeItemDefinition* AccoladeDef, int32& XpValue, FText& DisplayName);
+	virtual void OpenWidget_Implementation(UFortAccoladeItemDefinition* AccoladeDef, int32& XpValue, FText& DisplayName);
 public:
 
 };

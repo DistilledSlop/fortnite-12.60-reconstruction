@@ -19,7 +19,9 @@
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
+#include "Math/Vector2D.h"
 
+class AFortProjectileBase;
 class AFortTracerBase;
 class UAnimMontage;
 class UAnimationAsset;
@@ -28,6 +30,7 @@ class UNiagaraSystem;
 class UParticleSystem;
 class UParticleSystemComponent;
 class USkeletalMesh;
+class UStaticMeshComponent;
 class UTexture2D;
 
 #include "AFortWeaponRanged.generated.h"
@@ -422,6 +425,51 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool UseFirstPersonTargeting() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AbortScopeFX();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ForceScopeFX();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void GetScopeParameters(UStaticMeshComponent*& ScopeComponent, FVector2D& DepthOfFieldVignetteRange, float& WeaponSightsCameraOffset);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinishedCooling();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalFailedToFireWhenOverheated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSpawnProjectile(AFortProjectileBase* SpawnProjectile);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartCooling();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartHeating();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartOverheated();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

@@ -2,6 +2,7 @@
 #include "AFortGameModeAthena.h"
 #include "AFortAthenaAircraft.h"
 #include "AFortGameStateAthena.h"
+#include "AFortGameplayMutator.h"
 #include "AFortTimeOfDayManager.h"
 #include "AFortWorldSettings.h"
 #include "Engine/World.h"

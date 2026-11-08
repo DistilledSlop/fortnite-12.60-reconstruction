@@ -59,5 +59,10 @@ public:
 	UPROPERTY()
 	FOnSizeEstimateChanged OnSizeEstimateChangedDelegate;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMissionSet();
+public:
+
 };
 

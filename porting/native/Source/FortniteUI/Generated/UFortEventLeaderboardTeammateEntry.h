@@ -26,5 +26,15 @@ public:
 	UPROPERTY()
 	UFortFlagImage* IdentityFlag;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLeaderboardEntryDeselected();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLeaderboardEntrySelected();
+public:
+
 };
 

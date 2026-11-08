@@ -14,5 +14,10 @@ class FORTNITEUI_API UPostGameSpectatedPlayerName : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowWidget(const FString& PlayerName, const FString& PlayerID);
+public:
+
 };
 

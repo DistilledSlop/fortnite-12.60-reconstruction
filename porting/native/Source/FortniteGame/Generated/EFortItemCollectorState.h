@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortItemCollectorState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortItemCollectorState : uint8
 {
 	CanInteract = 0,

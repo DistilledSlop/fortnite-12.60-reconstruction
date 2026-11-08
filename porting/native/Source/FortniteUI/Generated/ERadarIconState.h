@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ERadarIconState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ERadarIconState : uint8
 {
 	Closed = 0,

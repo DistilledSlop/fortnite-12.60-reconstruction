@@ -8,3 +8,8 @@ void UFortQuestExpiresWidget::OnQuestExpirationUpdated_Implementation()
 	return;
 }
 
+void UFortQuestExpiresWidget::SetData_Implementation(UFortQuestItem* InItem)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

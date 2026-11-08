@@ -105,6 +105,11 @@ bool ABuildingTrap::UseAttachedToWhenTargeted()
 	return ABuildingTrap::bTargetWithAttachedTo;
 }
 
+void ABuildingTrap::SwitchToAlternateMaterial_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 bool ABuildingTrap::NativeHasTrapData() const
 {
 	// Original primary vtable slot +0xf68, target 0x141c3dd40.

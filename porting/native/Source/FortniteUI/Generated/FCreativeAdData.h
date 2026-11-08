@@ -9,7 +9,7 @@
 
 #include "FCreativeAdData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FCreativeAdData
 {
 	GENERATED_BODY()

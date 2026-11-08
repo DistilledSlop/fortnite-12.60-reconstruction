@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	FFortUISurvivorSquadStatMatch StatMatch;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStatMatchUpdated(FFortUISurvivorSquadStatMatch UpdatedMatch);
+public:
+
 };
 

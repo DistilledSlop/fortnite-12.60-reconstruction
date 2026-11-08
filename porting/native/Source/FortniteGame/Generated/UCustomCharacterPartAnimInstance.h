@@ -8,13 +8,16 @@
 
 #include "Containers/UnrealString.h"
 #include "EFortCustomPartType.h"
+#include "EFortDayPhase.h"
 #include "FFortAnimInput_SkydivingExternalForce.h"
 #include "FGameplayTagAnimations.h"
+#include "GameplayTagContainer.h"
 #include "HAL/Platform.h"
 #include "UObject/Object.h"
 
 class AFortPlayerPawn;
 class AFortWeapon;
+class UAnimMontage;
 class USkeletalMeshComponent;
 
 #include "UCustomCharacterPartAnimInstance.generated.h"
@@ -256,6 +259,111 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponent* GetPartSkeletalMeshComponent() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginCrouching();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginFalling();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginJumping();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginPlayingEmote();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginSkydiving();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginTargeting();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCharacterCustomizationLoaded();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndCrouching();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndFalling();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndJumping();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndPlayingEmote();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndSkydiving();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndTargeting();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNotifyPartsStarted(FName Context);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNotifyPartsStopped(FName Context);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnParachuteClosed();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnParachuteOpened();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayMontageFromGameplayTagQuery(FGameplayTagQuery& MatchingQuery, UAnimMontage* MontagePlaying);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreDestruction();
+public:
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

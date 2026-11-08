@@ -20,3 +20,8 @@ void ABuildingProp_AISpawner::SpawnRift()
 	return;
 }
 
+void ABuildingProp_AISpawner::MinigameEnded_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class UAthenaMapMarkerItemDefinition;
+
 #include "AFortMapMarkerTopperActor.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -14,5 +16,20 @@ class FORTNITEGAME_API AFortMapMarkerTopperActor : public AActor
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMarkerMoved();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewMapMarker(UAthenaMapMarkerItemDefinition* Marker);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetLiveMapMarker(UAthenaMapMarkerItemDefinition* Marker);
+public:
+
 };
 

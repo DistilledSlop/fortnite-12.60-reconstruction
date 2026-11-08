@@ -7,6 +7,7 @@
 #include "UFortNotificationEntry.h"
 
 #include "UCommonTextBlock.h"
+#include "UFortItemDefinition.h"
 
 class UFortLazyImage;
 
@@ -29,6 +30,16 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UFortLazyImage* Reward_Preview_Shadow;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateLevelUpVisuals(UFortItemDefinition* RewardItem);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateQuestRewardVisuals(UFortItemDefinition* RewardItem);
+public:
 
 };
 

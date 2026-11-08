@@ -25,5 +25,10 @@ public:
 	UPROPERTY(Transient)
 	UFortPartyMember* CachedPartyMember;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetPartyMember(UFortPartyMember* NewPartyMember);
+public:
+
 };
 

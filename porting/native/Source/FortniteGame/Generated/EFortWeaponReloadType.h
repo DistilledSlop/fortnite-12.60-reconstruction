@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortWeaponReloadType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortWeaponReloadType : uint8
 {
 	ReloadWholeClip = 0,

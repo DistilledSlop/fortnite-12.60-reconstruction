@@ -3,6 +3,7 @@
 #include "AFortPlayerStateZone.h"
 #include "GameFramework/Pawn.h"
 #include "UFortVehicleInterface.h"
+#include "UFortVehicleSeatComponent.h"
 #include "Net/UnrealNetwork.h"
 
 bool AFortCharacterVehicle::AllowInteractionBetweenFortVolume() const

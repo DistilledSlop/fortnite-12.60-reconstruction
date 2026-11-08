@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "ESpatialCustomizationCategoryState.h"
+#include "Math/Color.h"
+
 class UAthenaSpatialCustomizationChoice;
 class UFortLazyImage;
 class UObject;
@@ -29,6 +32,11 @@ public:
 	// table index 0, flags 0x44000000010001
 	UPROPERTY()
 	TSoftObjectPtr<UObject> SelectedImage;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupChoice(ESpatialCustomizationCategoryState CategoryState, FLinearColor& CategoryStateColor);
+public:
 
 };
 

@@ -12,6 +12,8 @@
 #include "FGooseWeaponTierData.h"
 
 class UGameplayEffect;
+class UMaterialInterface;
+class UStaticMesh;
 
 #include "AAthenaGoosePickup.generated.h"
 
@@ -106,6 +108,47 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void OnStartDespawnWarning_Client();
 	virtual void OnStartDespawnWarning_Client_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void DeployTimerUp_Server();
+	virtual void DeployTimerUp_Server_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnDeployed_Client();
+	virtual void OnDeployed_Client_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnDeployed_Server();
+	virtual void OnDeployed_Server_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnFalling_Client();
+	virtual void OnFalling_Client_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnFalling_Server();
+	virtual void OnFalling_Server_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnImpactedByPlane_Server();
+	virtual void OnImpactedByPlane_Server_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetStaticMesh(UStaticMesh* NewStaticMesh, TArray<UMaterialInterface*>& MaterialsToSwap, int32 InDisplayIndex);
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

@@ -14,5 +14,15 @@ class FORTNITEUI_API UFortItemAutoMulchSettingRow : public UCommonButton
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleAutoMulchCategoryChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleAutoMulchModeChanged();
+public:
+
 };
 

@@ -8,8 +8,12 @@
 
 #include "EFortDefenderInteractionError.h"
 #include "FDefenderPawnOrItemSet.h"
+#include "Math/TransformNonVectorized.h"
 
 class AFortAIPawn;
+class AFortPlayerController;
+class AFortPlayerStateZone;
+class UFortDefenderItem;
 class UFortDefenderItemDefinition;
 class UFortWorldItem;
 
@@ -49,6 +53,26 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	UFortWorldItem* TakeWeaponAwayFromDefender(UFortWorldItem* WeaponToTakeAway);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void ClearCurrentDefender(bool bForceKillDefender);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void DeployDefender(AFortPlayerController* ItemSelectorPC, UFortDefenderItem* InDefenderItem, FName& InDefenderSquadId, UFortWorldItem* WeaponToGive, int32 AmmoQuantity);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	FTransform GetDefenderSpawnTransform() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void RemoveCurrentDefender(AFortPlayerStateZone* RequestingPlayer, bool bRemovalCausedByPlayerJoin);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

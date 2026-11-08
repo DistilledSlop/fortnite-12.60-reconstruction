@@ -9,6 +9,7 @@
 #include "EBarrierFlagState.h"
 #include "EBarrierFoodTeam.h"
 #include "FBarrierFlagDisplayData.h"
+#include "Math/Rotator.h"
 #include "Math/Vector.h"
 
 class AAthenaBarrierObjective;
@@ -49,6 +50,26 @@ public:
 
 	UFUNCTION()
 	void OnRep_FoodTeam();
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClientSetIsFriendly(bool bIsFriendlyLlama);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ClientSetLlamaRotation(FRotator NewDirection);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewFoodTeam(EBarrierFoodTeam NewFoodTeam);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStateChange(EBarrierFlagState NewState);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

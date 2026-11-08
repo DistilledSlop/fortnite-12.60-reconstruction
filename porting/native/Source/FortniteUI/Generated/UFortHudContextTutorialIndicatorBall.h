@@ -18,5 +18,15 @@ public:
 	UPROPERTY()
 	bool bCanArrowAnimationPlay;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayIntroAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetArrowOrientation(float Angle);
+public:
+
 };
 

@@ -68,5 +68,20 @@ public:
 	UPROPERTY()
 	float InterpolationSpeed;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnReachedTarget();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStart();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateToNewState();
+public:
+
 };
 

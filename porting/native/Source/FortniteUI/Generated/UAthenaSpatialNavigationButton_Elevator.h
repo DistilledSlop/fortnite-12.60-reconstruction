@@ -50,5 +50,10 @@ public:
 	UPROPERTY()
 	FGameplayTag IntroCameraTagToNavigateTo;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnElevatorStateChanged();
+public:
+
 };
 

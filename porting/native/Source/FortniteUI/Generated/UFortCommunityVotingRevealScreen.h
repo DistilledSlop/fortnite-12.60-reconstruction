@@ -75,5 +75,20 @@ public:
 	UPROPERTY()
 	UFortCommunityVotingOptionReveal* ComOptionRevealWinner;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartFadeInAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartFadeOutScreen(float Delay);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartFinalAnimation();
+public:
+
 };
 

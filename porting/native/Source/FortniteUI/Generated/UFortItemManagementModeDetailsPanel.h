@@ -39,5 +39,15 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UFortItemManagementScreen> HostItemManagementScreen;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemManagementModeSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleHostSet();
+public:
+
 };
 

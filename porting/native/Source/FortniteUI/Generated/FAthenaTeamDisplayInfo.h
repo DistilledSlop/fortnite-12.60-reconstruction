@@ -10,7 +10,7 @@ class UObject;
 
 #include "FAthenaTeamDisplayInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FAthenaTeamDisplayInfo
 {
 	GENERATED_BODY()

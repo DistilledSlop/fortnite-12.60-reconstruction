@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "EFriendLinkShareButtonType.h"
 #include "UCommonBorder.h"
 
 #include "UFortSocialPanelView_FriendLinkButton.generated.h"
@@ -19,6 +20,16 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonBorder* Border_ScreenTarget;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCopiedToClipboard();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShareButtonTypeSet(EFriendLinkShareButtonType Type);
+public:
 
 };
 

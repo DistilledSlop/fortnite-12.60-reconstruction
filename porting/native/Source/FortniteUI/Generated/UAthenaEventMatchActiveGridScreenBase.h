@@ -36,5 +36,15 @@ public:
 	UPROPERTY()
 	int32 MaxTeamSize;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnTeamChanged_BP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnTeamEliminated_BP();
+public:
+
 };
 

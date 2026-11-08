@@ -163,5 +163,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FText GetCategoryDisplayName(EAthenaCustomizationCategory InCategory);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginPickingLoadouts();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRefreshForNewLoadout(const FString& LoadoutName, bool bIsShuffleTile);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnScratchPadSaveStateUpdated(bool bSaved);
+public:
+
 };
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EHudVisibilityState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EHudVisibilityState : uint8
 {
 	FullyVisible = 0,

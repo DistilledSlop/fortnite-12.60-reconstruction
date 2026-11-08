@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EAthenaSpectatorNameplateDetailState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EAthenaSpectatorNameplateDetailState : uint8
 {
 	High = 0,

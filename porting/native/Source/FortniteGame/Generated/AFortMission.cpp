@@ -201,6 +201,11 @@ TArray<AActor*> AFortMission::SpawnAtPlacementActorsAsArray(AFortMission* Missio
 	return TArray<AActor*>();
 }
 
+void AFortMission::MissionTimerSet_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 FText AFortMission::NativeMissionText690() const
 {
 	// CONFIDENCE: HIGH

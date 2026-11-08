@@ -8,6 +8,8 @@
 
 #include "Math/Vector.h"
 
+class UFortItemDefinition;
+
 #include "AFortNavigationActor_OpenablePresent.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -31,6 +33,26 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	bool bCanInspect;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOpenPresent(bool bActionCancelled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResetPresent();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShakePresent(UFortItemDefinition* ItemDef);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdatePackageRotation(float XRotationValue, float YRotationValue);
+public:
 
 };
 

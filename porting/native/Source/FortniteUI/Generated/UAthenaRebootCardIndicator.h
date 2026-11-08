@@ -26,5 +26,15 @@ public:
 	UPROPERTY()
 	UImage* Image_PlayerMarker;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDisplayForSelf(bool bSelf);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupCountdown(float StartTimeLocalWorld, float EndTimeLocalWorld);
+public:
+
 };
 

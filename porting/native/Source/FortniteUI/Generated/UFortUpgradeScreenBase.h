@@ -56,5 +56,20 @@ protected:
 	bool IsPreviewing() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPurchaseNodeComplete();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpgradeInfoChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUseUpgradesRespecTokenComplete();
+public:
+
 };
 

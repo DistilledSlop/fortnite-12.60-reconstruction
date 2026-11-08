@@ -29,5 +29,10 @@ protected:
 	bool IsActiveChannel() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateVisuals(bool bIsActive, bool bRepresentingPlatformChat, bool bChannelAvailable);
+public:
+
 };
 

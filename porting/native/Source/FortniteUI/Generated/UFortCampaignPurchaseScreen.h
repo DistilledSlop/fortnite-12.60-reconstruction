@@ -75,5 +75,10 @@ public:
 	UPROPERTY()
 	TSubclassOf<UFortMtxStoreRootBase> StoreScreenClass;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnImageCycleTimeElapsed();
+public:
+
 };
 

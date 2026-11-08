@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ESubGame.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ESubGame : uint8
 {
 	Campaign = 0,

@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "AFortGameState.h"
+#include "FHUDMessageData.h"
+
 #include "UAthenaWinConditionMsgBase.generated.h"
 
 UCLASS()
@@ -14,5 +17,20 @@ class FORTNITEUI_API UAthenaWinConditionMsgBase : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnGameStateInitialized(AFortGameState* GameState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnMinigameEnded();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnShowHUDMessage(FHUDMessageData MessageData);
+public:
+
 };
 

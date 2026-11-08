@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+#include "EWaxState.h"
+
 #include "UWaxSquadStatusWidget.generated.h"
 
 UCLASS()
@@ -14,5 +16,20 @@ class FORTNITEUI_API UWaxSquadStatusWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateLives(int32 NewScore);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateScore(int32 NewScore);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateThreatValue(EWaxState NewWaxState);
+public:
+
 };
 

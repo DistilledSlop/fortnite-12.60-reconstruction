@@ -49,5 +49,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UMediaTexture* GetMediaTexture() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void MediaDimensionsUpdated(float NewWidth, float NewHeight);
+public:
+
 };
 

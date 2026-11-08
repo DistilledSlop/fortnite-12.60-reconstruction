@@ -8,7 +8,7 @@
 
 #include "FTimerDisplayData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FTimerDisplayData
 {
 	GENERATED_BODY()

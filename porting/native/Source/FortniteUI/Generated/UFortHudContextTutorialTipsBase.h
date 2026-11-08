@@ -58,5 +58,25 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle CloseObjectInputAction;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnButtonCloseImplementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnButtonCloseProgressImplementation(float Progress);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartWorldMarkerIntroAnimation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StopIntroAnimation();
+public:
+
 };
 

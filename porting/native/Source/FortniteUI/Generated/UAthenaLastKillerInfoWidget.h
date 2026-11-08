@@ -7,6 +7,9 @@
 #include "UCommonActivatableWidget.h"
 
 #include "FShouldShowDeathReport.h"
+#include "UFortWeaponItemDefinition.h"
+
+class UTexture2D;
 
 #include "UAthenaLastKillerInfoWidget.generated.h"
 
@@ -23,6 +26,26 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	float TimeToWait;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetKillerHealthAndShield(float HealthPercent, float ShieldPercent);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetKillerName(const FString& PlayerName, const FString& PlayerID);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetKillerWeaponIconAndName(UTexture2D* IconTexture, UFortWeaponItemDefinition* ItemDef);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetNumOfKillerKills(int32 NumOfKillers);
+public:
 
 };
 

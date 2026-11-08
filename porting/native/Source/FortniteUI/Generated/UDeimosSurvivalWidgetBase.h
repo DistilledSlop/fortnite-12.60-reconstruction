@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "FSurvivalObjectiveIconData.h"
 #include "FSurvivalObjectiveText.h"
 #include "GameplayTagContainer.h"
 
@@ -24,6 +25,16 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FGameplayTag ObjectiveTag;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateObjectiveIcon(FSurvivalObjectiveIconData& ObjectiveIconData);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateStateText(FText& StateText);
+public:
 
 };
 

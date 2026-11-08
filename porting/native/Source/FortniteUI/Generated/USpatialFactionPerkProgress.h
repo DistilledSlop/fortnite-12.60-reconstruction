@@ -14,5 +14,15 @@ class FORTNITEUI_API USpatialFactionPerkProgress : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFactionSet(bool bIsCurrentFaction);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitializePerkProgress(int32 FactionNumber, int32 PerkLevel, float PercentProgress, bool bIsRevealed, bool bIsCurrentFaction);
+public:
+
 };
 

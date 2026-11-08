@@ -37,5 +37,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetStackedDataCount() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChangedStackData(int32 NewStackCount, int32 NonCompletedCount);
+public:
+
 };
 

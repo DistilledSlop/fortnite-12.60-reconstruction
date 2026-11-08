@@ -9,3 +9,8 @@ void UFortHUDTagPromptWidgetBase::CloseWidget_Implementation()
 	OnOpenedOrClosed.Broadcast(false);
 }
 
+void UFortHUDTagPromptWidgetBase::OpenWidget_Implementation(FFortHUDTagPromptData& PrompData)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

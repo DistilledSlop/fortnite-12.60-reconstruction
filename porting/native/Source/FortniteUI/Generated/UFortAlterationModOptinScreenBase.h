@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	UFortItem* ItemToOptin;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemConversionComplete();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupItem();
+public:
+
 };
 

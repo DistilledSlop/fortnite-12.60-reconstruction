@@ -7,6 +7,7 @@
 #include "ULTMWidgetBase.h"
 
 #include "AFortAthenaMutator_Wax.h"
+#include "AFortPlayerStateAthena.h"
 #include "FWaxPlacementData.h"
 
 #include "UWaxPlacementWidgetBase.generated.h"
@@ -36,6 +37,16 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	FWaxPlacementData FourthPlacement;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPodiumChangeOccured(TArray<AFortPlayerStateAthena*>& Leaders);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateWaxPlacements();
+public:
 
 };
 

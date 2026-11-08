@@ -13,6 +13,13 @@
 #include "FFortGameplayCueForceFeedbackInfo.h"
 #include "FFortGameplayCueParticleInfo.h"
 #include "FFortGameplayCueSpawnResult.h"
+#include "GameplayEffectTypes.h"
+
+class AActor;
+class ADecalActor;
+class UAudioComponent;
+class UCameraShake;
+class UParticleSystemComponent;
 
 #include "AFortGameplayCueNotify_Loop.generated.h"
 
@@ -77,6 +84,26 @@ public:
 	// table index 0, flags 0x10000000010015
 	UPROPERTY()
 	float TickInterval;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnApplication(AActor* MyTarget, FGameplayCueParameters& Parameters, TArray<UParticleSystemComponent*>& ParticleComponents, TArray<UAudioComponent*>& AudioComponents, UCameraShake* BurstCameraShakeInstance, ADecalActor* BurstDecalInstance);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoopingStart(AActor* MyTarget, FGameplayCueParameters& Parameters, TArray<UParticleSystemComponent*>& ParticleComponents, TArray<UAudioComponent*>& AudioComponents);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRecurring(AActor* MyTarget, FGameplayCueParameters& Parameters, TArray<UParticleSystemComponent*>& ParticleComponents, TArray<UAudioComponent*>& AudioComponents, UCameraShake* BurstCameraShakeInstance, ADecalActor* BurstDecalInstance);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRemoval(AActor* MyTarget, FGameplayCueParameters& Parameters, TArray<UParticleSystemComponent*>& ParticleComponents, TArray<UAudioComponent*>& AudioComponents, UCameraShake* BurstCameraShakeInstance, ADecalActor* BurstDecalInstance);
+public:
 
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "ESocialImportPanelType.h"
 #include "FSocialImportPanelClosedDelegate.h"
 #include "UCommonButton.h"
 
@@ -51,6 +52,36 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UBorder* Border_OuterBorder;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnClaimViewRequested();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnImportViewRequested();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIncentivizedSet(bool bIncentivized);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLauncherImportOpened();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPanelTypeSet(ESocialImportPanelType NewType);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWaitingViewRequested();
+public:
 
 };
 

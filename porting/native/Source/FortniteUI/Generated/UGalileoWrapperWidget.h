@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	TSubclassOf<AFortGameplayMutator> MutatorClassToWaitFor;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResumeGame();
+public:
+
 };
 

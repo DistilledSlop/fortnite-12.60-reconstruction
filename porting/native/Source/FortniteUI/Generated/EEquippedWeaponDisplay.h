@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EEquippedWeaponDisplay.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EEquippedWeaponDisplay : uint8
 {
 	None = 0,

@@ -11,7 +11,7 @@ class UFortHeroSpecialization;
 
 #include "FFortUIPerkTier.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortUIPerkTier
 {
 	GENERATED_BODY()

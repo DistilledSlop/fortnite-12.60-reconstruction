@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	TArray<FTransform> SpawnPoints;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void TrapActivated(float CooldownDuration);
+public:
+
 };
 

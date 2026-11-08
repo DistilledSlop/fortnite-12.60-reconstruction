@@ -29,5 +29,20 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	void GetIdOfSquadSlotToManageBP(FName& OutSquadId, int32& OutSquadSlotIndex) const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentSquadSlotSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSquadSlotRestrictionFactorsChangedBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSquadSlotStateChangedBP();
+public:
+
 };
 

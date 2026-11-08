@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortHeroPerkDisplayType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortHeroPerkDisplayType : uint8
 {
 	CommanderPerk = 0,

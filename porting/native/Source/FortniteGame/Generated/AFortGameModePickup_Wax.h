@@ -65,6 +65,11 @@ public:
 	UPROPERTY()
 	FText UseInteractText_MultipleCoins;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalPickedUp();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

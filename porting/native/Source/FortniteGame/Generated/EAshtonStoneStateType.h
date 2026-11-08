@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EAshtonStoneStateType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EAshtonStoneStateType : uint8
 {
 	NotSpawned = 0,

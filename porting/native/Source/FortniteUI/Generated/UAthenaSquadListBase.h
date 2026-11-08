@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "AFortPlayerStateAthena.h"
 #include "Components/SlateWrapperTypes.h"
 
 class UAthenaPlayerInfoBase;
@@ -35,6 +36,11 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UAthenaPlayerViewModel* CachedPlayerVM;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSquadMemberDisconnected(AFortPlayerStateAthena* Player);
+public:
 
 };
 

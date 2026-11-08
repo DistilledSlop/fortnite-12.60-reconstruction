@@ -70,5 +70,65 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsTargeting : 1;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginCrouching();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginDiveMode();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginFloating();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginSkydiving();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginTargeting();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndCrouching();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndDiveMode();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndFloating();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndSkydiving();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndTargeting();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnParachuteClosed();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnParachuteOpened();
+public:
+
 };
 

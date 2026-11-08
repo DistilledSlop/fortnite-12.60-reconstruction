@@ -7,6 +7,7 @@
 #include "UFortReplayViewSettingsTabBase.h"
 
 #include "Blueprint/UserWidget.h"
+#include "ESpectatorSquadIdMode.h"
 #include "UCommonUserWidget.h"
 #include "UObject/Object.h"
 
@@ -21,6 +22,76 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonUserWidget* Rotator_NameplatesEnabled;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnArrowColorEnabledChanged(bool bArrowColorEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnArrowDistanceChanged(float ArrowDistance);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnArrowScaleMaxChanged(float ArrowScaleMax);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnArrowScaleMinChanged(float ArrowScaleMin);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHighDetailScaleMaxChanged(float HighDetailScaleMax);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHighDetailScaleMinChanged(float HighDetailScaleMin);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLowDetailDistanceChanged(float LowDetailDistance);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLowDetailScaleMaxChanged(float LowDetailScaleMax);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLowDetailScaleMinChanged(float LowDetailScaleMin);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNameplatesEnabledChanged(bool bNameplatesEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnScalingOptionsEnabledChanged(bool bScalingOptionsEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowTeamColorChanged(bool bShowTeamColor);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadIdModeChanged(ESpectatorSquadIdMode SquadIdMode);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnViewDistanceChanged(float ViewDistance);
+public:
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

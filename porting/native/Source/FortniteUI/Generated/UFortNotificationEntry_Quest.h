@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortNotificationEntry.h"
 
+#include "FFortChallengeSetStyle.h"
 #include "UCommonRichTextBlock.h"
 #include "UCommonTextBlock.h"
 #include "UFortQuestItem.h"
@@ -51,6 +52,16 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	FName ObjectiveName;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateDefaultObjectiveVisuals();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateQuestVisuals(FFortChallengeSetStyle& DisplayStyle);
+public:
 
 };
 

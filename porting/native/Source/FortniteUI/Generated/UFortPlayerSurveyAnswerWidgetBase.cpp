@@ -24,3 +24,13 @@ void UFortPlayerSurveyAnswerWidgetBase::NativeHandleAnswerContainerChanged()
 	return;
 }
 
+void UFortPlayerSurveyAnswerWidgetBase::HandleAnswerChanged_Implementation(FFortPlayerSurveyAnswerContainerChangeEventInfo& EventInfo)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortPlayerSurveyAnswerWidgetBase::HandleQuestionChanged_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+

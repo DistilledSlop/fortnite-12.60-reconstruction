@@ -60,5 +60,10 @@ public:
 	UPROPERTY()
 	UScrollBox* ScrollBox_Channels;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChatOpenChanged(bool bShouldBeOpen);
+public:
+
 };
 

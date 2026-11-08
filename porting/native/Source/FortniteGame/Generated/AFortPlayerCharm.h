@@ -52,5 +52,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponentBudgeted* GetCharmMeshComponent() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCharmVisibilityChanged(bool bVisible);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void PreDestruction();
+public:
+
 };
 

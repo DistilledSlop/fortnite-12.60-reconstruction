@@ -9,7 +9,7 @@ class UStaticMesh;
 
 #include "FTimeOfDayBlueprintDefaultVariables.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FTimeOfDayBlueprintDefaultVariables
 {
 	GENERATED_BODY()

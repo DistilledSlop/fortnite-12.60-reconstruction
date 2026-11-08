@@ -10,7 +10,7 @@ class UFortWeaponItemDefinition;
 
 #include "FGGCenterDisplayEntry.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FGGCenterDisplayEntry : public FFortChangeMonitoringStruct
 {
 	GENERATED_BODY()

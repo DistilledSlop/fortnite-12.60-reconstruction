@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortUIStateWidget_NUI.h"
 
+#include "EFortStoreState.h"
 #include "FBasicDynamicMulticastDelegate.h"
 #include "UFortGiftBoxItem.h"
 
@@ -44,6 +45,16 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortPlayerSurveyDispatcher* GetPlayerSurveyDispatcher() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMatchmakingV2Changed(bool matchmakingActive);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStoreStateChangedBP(EFortStoreState NewStoreState);
 public:
 
 };

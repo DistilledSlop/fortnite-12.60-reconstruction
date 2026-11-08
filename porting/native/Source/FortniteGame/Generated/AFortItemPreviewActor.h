@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 class UMaterialInstance;
+class UMaterialInterface;
 class USceneComponent;
 
 #include "AFortItemPreviewActor.generated.h"
@@ -32,6 +33,16 @@ public:
 	// table index 0, flags 0x40000000000004
 	UPROPERTY()
 	float ZoomLevel;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPreviewVisualsSpawned();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetFloorMaterial(UMaterialInterface* InMaterialInstance);
+public:
 
 };
 

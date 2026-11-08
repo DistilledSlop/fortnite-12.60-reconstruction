@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UAthenaProfileStatBox* ProfileStatBox;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStatChanged();
+public:
+
 };
 

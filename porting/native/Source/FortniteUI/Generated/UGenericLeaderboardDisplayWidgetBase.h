@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+#include "FFortInGameLeaderboardPlacementData.h"
+
 #include "UGenericLeaderboardDisplayWidgetBase.generated.h"
 
 UCLASS()
@@ -14,5 +16,10 @@ class FORTNITEUI_API UGenericLeaderboardDisplayWidgetBase : public ULTMWidgetBas
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateDisplay(TArray<FFortInGameLeaderboardPlacementData>& Data);
+public:
+
 };
 

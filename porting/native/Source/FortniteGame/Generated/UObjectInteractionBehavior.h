@@ -7,11 +7,13 @@
 #include "Components/ActorComponent.h"
 
 #include "Engine/DataTable.h"
+#include "FOriginalAndSpawnedPair.h"
 #include "Math/Color.h"
 
 class AFortCreativeMoveTool;
 class AFortPlayerController;
 class UFortGameplayAbility;
+class UMeshComponent;
 class UObject;
 
 #include "UObjectInteractionBehavior.generated.h"
@@ -109,6 +111,31 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	void TickMovementMode();
 	virtual void TickMovementMode_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void EndCreativeInteraction();
+	virtual void EndCreativeInteraction_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void ExitCreativeInteraction(bool bShouldClearActiveInteractionMode);
+	virtual void ExitCreativeInteraction_Implementation(bool bShouldClearActiveInteractionMode);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnObjectPlacement(TArray<UMeshComponent*>& Components, FOriginalAndSpawnedPair NewlyPlacedActorPair);
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void StartCreativeInteractionOnClient();
+	virtual void StartCreativeInteractionOnClient_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void StartCreativeInteractionOnServer();
+	virtual void StartCreativeInteractionOnServer_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void TriggerInteractionBehavior();
+	virtual void TriggerInteractionBehavior_Implementation();
 
 };
 

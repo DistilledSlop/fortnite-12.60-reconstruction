@@ -78,5 +78,30 @@ public:
 	UPROPERTY()
 	UFortConfirmationWindow* ConfirmationWindow_ConfirmationWidget;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	bool IsShowingModalsConfirmationsErrors();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnModalQueueEmptied();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStateEnded();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStateStarted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateStateWidgetContent(UFortUIStateWidget_NUI* StateWidget);
+public:
+
 };
 

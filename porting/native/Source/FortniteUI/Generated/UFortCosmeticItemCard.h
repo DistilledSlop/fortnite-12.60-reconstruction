@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortColorPalette.h"
 #include "GameplayTagContainer.h"
 #include "UCommonLoadGuard.h"
 #include "UFortItem.h"
@@ -13,6 +14,7 @@
 class UImage;
 class UMaterialInterface;
 class USizeBox;
+class UTexture2D;
 
 #include "UFortCosmeticItemCard.generated.h"
 
@@ -85,6 +87,56 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	UFortItem* ItemToRepresent;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCardTypeChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHover();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemIconVisibilityChanged(bool bIsVisible);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSizeChanged(float InCardWidth);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUnhover();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateEnhanced(bool bEnhanced);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateItemCardIcon(UTexture2D* Icon);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateItemCardMaterial(UMaterialInterface* Material);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateSeriesOrRarityColors(FFortColorPalette& ColorPalette);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateVisuals(bool bIsItem, bool bIsBorderAnimated, bool bIsHero, bool bReward, bool bIsShuffleItem);
+public:
 
 };
 

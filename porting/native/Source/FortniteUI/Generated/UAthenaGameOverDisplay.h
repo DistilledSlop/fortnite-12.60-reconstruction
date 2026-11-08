@@ -81,5 +81,10 @@ public:
 	UPROPERTY()
 	UFortSpectatedPlayerSwitcher* SpectatedPlayerSwitcher;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AttemptOpenPlayerReportingUI();
+public:
+
 };
 

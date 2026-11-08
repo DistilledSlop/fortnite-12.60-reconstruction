@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EColorPickerType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EColorPickerType : uint8
 {
 	Swatches = 0,

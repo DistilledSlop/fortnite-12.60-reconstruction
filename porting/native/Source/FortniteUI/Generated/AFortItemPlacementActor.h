@@ -30,5 +30,35 @@ public:
 	UPROPERTY(Transient)
 	AFortPlayerPawn* CurrentPawn;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHeroPawnSetupCompleted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHovered();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemClicked();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPreviewActorSpawned();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRemovePreviewActor();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUnhovered();
+public:
+
 };
 

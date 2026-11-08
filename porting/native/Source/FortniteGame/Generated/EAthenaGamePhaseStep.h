@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EAthenaGamePhaseStep.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EAthenaGamePhaseStep : uint8
 {
 	None = 0,

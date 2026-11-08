@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "Math/Color.h"
+
 #include "UAthenaSpatialCustomizationChoiceSelectButton.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UAthenaSpatialCustomizationChoiceSelectButton : public UCom
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupChoiceSelectButton(FLinearColor& CategoryStateColor);
+public:
+
 };
 

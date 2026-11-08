@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UAthenaSpatialCustomizationSubscreenBase.h"
 
+#include "ESpatialCustomizationCategoryState.h"
+#include "Math/Color.h"
 #include "UCommonButton.h"
 #include "UCommonRichTextBlock.h"
 #include "UCommonTextBlock.h"
@@ -99,6 +101,26 @@ public:
 	// table index 0, flags 0x40008000002008
 	UPROPERTY(Transient)
 	TArray<UAthenaSpatialCustomizationCategoryEntry*> Categories;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCategoryUpdated(ESpatialCustomizationCategoryState CategoryState, FLinearColor Color, bool bUseColorPicker);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinalizeChoiceFinished(bool bSucceeded);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinalizeChoiceStarted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateFinalizedText(FText& InFinalizedChoiceText);
+public:
 
 };
 

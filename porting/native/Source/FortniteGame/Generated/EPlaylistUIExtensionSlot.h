@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EPlaylistUIExtensionSlot.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EPlaylistUIExtensionSlot : uint8
 {
 	Primary = 0,

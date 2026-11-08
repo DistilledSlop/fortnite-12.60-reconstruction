@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+class USoundCue;
+
 #include "UAthenaXPWidgetBase.generated.h"
 
 UCLASS()
@@ -23,6 +25,21 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void OnWidgetAnimationDone();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateRestXP(int32 RestXpRemaining);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateXPAmount(int32 NewAmount, USoundCue* Cue);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateXPSource(FText& NewSourceText);
 public:
 
 };

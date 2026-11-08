@@ -61,5 +61,30 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* TextBlock_OptionDisplayName;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoadingStateChanged(bool bCurrentlyLoading);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavigatedLeft();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNavigatedRight();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSpinnerRotated(int32 Value, bool bUserInitiated);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSpinnerOptionsVisiblity(bool bVisible);
+public:
+
 };
 

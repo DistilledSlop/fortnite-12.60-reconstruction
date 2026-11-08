@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UGameInstance> RegisteredWithGameInstance;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void Execute();
+public:
+
 };
 

@@ -45,5 +45,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FGameplayTag GetNodeTag();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateDisplayMeshToOpened();
+public:
+
 };
 

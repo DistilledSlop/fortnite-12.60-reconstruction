@@ -24,5 +24,15 @@ public:
 	UPROPERTY()
 	bool bUseLargeFormat;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleEnterVehicle();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleExitVehicle();
+public:
+
 };
 

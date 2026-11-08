@@ -4,6 +4,7 @@
 #include "AFortGameModeAthena.h"
 #include "AFortGameStateAthena.h"
 #include "AFortGameplayMutator.h"
+#include "AFortPawn.h"
 #include "AFortPlayerController.h"
 #include "AFortPlayerState.h"
 #include "AFortVolume.h"
@@ -1151,6 +1152,26 @@ bool AFortMinigame::WasInProgress() const
 {
 	// CONFIDENCE: HIGH; direct captured wrapper.
 	return static_cast<uint8>(static_cast<uint8>(PreviousState) - 4) < 2;
+}
+
+void AFortMinigame::HandleMinigameComponentAdded_Implementation(UFortMinigameLogicComponent* MinigameComponent)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortMinigame::HandleMinigameComponentRemoved_Implementation(UFortMinigameLogicComponent* MinigameComponent)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortMinigame::RestartMinigame_Implementation(AFortPlayerController* InstigatorPC)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortMinigame::StartMinigame_Implementation(AFortPlayerController* InstigatorPC)
+{
+	// Body not recovered: reflection-derived stub.
 }
 
 void AFortMinigame::NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context)

@@ -151,6 +151,11 @@ void AFortAthenaCreativePortal::TeleportPlayerForPlotLoadComplete(AFortPlayerPaw
 	NativeRemoveMatchingWeakPtrs1407ef240(Items, reinterpret_cast<const uint8*>(&PawnWeak));
 }
 
+void AFortAthenaCreativePortal::NotifyTeleportedVehicle_Implementation(AActor* VehicleActor)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 int32 AFortAthenaCreativePortal::NativeRemoveMatchingWeakPtrs1407ef240(TArray<uint8*>& Items, const uint8* Key)
 {
 	// Helper 0x1407ef240 (AFortAthenaCreativePortal). Asm evidence (76 insns, all accounted for):

@@ -171,5 +171,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsStandingInPlace() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsCoastingChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSpringCompression();
+public:
+
 };
 

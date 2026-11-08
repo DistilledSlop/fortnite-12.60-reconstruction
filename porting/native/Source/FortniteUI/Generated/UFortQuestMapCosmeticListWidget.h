@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortQuestMapCosmeticListWidget : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCosmeticListDisplay();
+public:
+
 };
 

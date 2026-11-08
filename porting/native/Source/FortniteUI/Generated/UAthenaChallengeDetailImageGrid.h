@@ -33,5 +33,15 @@ public:
 	UPROPERTY(Transient)
 	TArray<FString> QuestIds;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLockedToOwnedTransitions(int32 Count, float TimeOffset, float AdditionalTime);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOwnedToCompleteTransitions(int32 Count, float TimeOffset, float AdditionalTime);
+public:
+
 };
 

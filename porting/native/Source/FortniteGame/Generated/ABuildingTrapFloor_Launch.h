@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "ABuildingTrapFloor.h"
 
+#include "Math/Vector.h"
+
+class AActor;
 class UForceFeedbackEffect;
 
 #include "ABuildingTrapFloor_Launch.generated.h"
@@ -23,6 +26,11 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	FName ForceFeedbackName;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	FVector GetImpulseDirection(AActor* LaunchingActor);
+public:
 
 };
 

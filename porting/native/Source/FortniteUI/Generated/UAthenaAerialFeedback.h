@@ -40,5 +40,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_Feedback;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleTextChanged();
+public:
+
 };
 

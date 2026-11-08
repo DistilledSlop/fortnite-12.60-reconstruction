@@ -25,5 +25,15 @@ public:
 	UPROPERTY()
 	UFortGridWidgetBase* Owner;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnClicked();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetData(UObject* InData);
+public:
+
 };
 

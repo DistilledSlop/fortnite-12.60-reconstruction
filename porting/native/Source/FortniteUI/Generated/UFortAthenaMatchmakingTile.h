@@ -57,5 +57,35 @@ public:
 	UPROPERTY(Transient)
 	FPlaylistFrontEndData TilePlaylistData;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCMSDataUpdated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlaylistChanged(FPlaylistFrontEndData& PlaylistToRepresent);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetDefaultImage();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetTileSize(int32 NumRowTiles);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void TilePlaylistSetAsMatchmakingPlaylist();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateTileAvailability(bool Available);
+public:
+
 };
 

@@ -14,5 +14,15 @@ class FORTNITEUI_API UCobaltPreRoundWidgetBase : public UCobaltWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandlePreRoundWidgetInfo_BP(int32 CurrentActiveRound, FText& RoundName, FText& POIName);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleUpdatePreRoundWidgetVisibility_BP(bool bNewVisibility);
+public:
+
 };
 

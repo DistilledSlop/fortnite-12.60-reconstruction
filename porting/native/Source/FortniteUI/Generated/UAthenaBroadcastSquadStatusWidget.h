@@ -7,6 +7,7 @@
 #include "UAthenaEventMatchSquadWidgetBase.h"
 
 #include "GameFramework/OnlineReplStructs.h"
+#include "UFortMinigameTeamIdentification.h"
 
 #include "UAthenaBroadcastSquadStatusWidget.generated.h"
 
@@ -19,6 +20,21 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	FUniqueNetIdRepl FollowedPlayerUID;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFollowedPlayerChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMinigameTeamIdChanged(UFortMinigameTeamIdentification* MinigameTeamId);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnPipModeChanged(bool bPipModeEnabled);
+public:
 
 };
 

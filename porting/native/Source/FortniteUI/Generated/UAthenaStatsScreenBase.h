@@ -123,5 +123,20 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetDisplayName(FText InDisplayName);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnQueryFinished(bool bWasSuccessful, bool bHasStatsToDisplay);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnQueryStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetPlatformButtonText(FText& PlatformButtonText);
+public:
+
 };
 

@@ -82,5 +82,15 @@ public:
 	UPROPERTY()
 	FTimerHandle GroundFXTimerHandle;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayLowFuelWarning();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void TryToPlayGroundEffects();
+public:
+
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+class AActor;
+class UAthenaRemotePlayerViewData;
 class UAthenaSpectatorHitPointBarBase;
 class UAthenaSpectatorPlayerWidgetBase;
 
@@ -32,6 +34,21 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UAthenaSpectatorHitPointBarBase* HitPointBar_Vehicle;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEliminatedStateChanged(UAthenaRemotePlayerViewData* PlayerData, bool bIsEliminated);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPipModeChanged(bool bPipModeEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVehicleStateChanged(AActor* NewVehicle, AActor* OldVehicle);
+public:
 
 };
 

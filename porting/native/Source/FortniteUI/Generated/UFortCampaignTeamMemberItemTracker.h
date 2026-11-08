@@ -18,5 +18,10 @@ public:
 	UPROPERTY()
 	TArray<FString> TemplateIdsToTrack;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTrackedItemsUpdated();
+public:
+
 };
 

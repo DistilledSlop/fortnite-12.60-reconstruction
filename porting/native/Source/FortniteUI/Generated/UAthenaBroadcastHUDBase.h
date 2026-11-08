@@ -6,9 +6,14 @@
 #include "CoreMinimal.h"
 #include "UAthenaHUDBase.h"
 
+#include "AFortGameStateAthena.h"
+#include "AFortMinigame.h"
+#include "EHudVisibilityState.h"
 #include "Engine/DataTable.h"
 #include "FPlaylistUIExtension.h"
+#include "GameplayTagContainer.h"
 #include "UCommonWidgetSwitcher.h"
+#include "UFortPlaylistAthena.h"
 
 class UAthenaBroadcastMapPanelBase;
 class UAthenaReplayActionFeedScreenBase;
@@ -123,6 +128,76 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UFortReplayHighlightsWindow* TopLeft_Highlights;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleFollowedPlayerRespawnTimeChanged(float RespawnTime);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGameStateSet_BP(AFortGameStateAthena* GameStateAthena);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHudVisibilityChanged(EHudVisibilityState NewVisibility);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIndicatorModeChanged(bool bIndicatorsEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMinigameChanged(AFortMinigame* NewMinigame);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPipModeChanged(bool bEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerTargetingChanged(bool bIsTargeting);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlaylistDataChanged(UFortPlaylistAthena* PlaylistData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnToggleFollowedPlayerInfoActionExecuted(bool& bPassthrough);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnToggleMatchStatusActionExecuted(bool& bPassthrough);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnToggleRemainingPlayersActionExecuted(bool& bPassthrough);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnToggleSquadStatusActionExecuted(bool& bPassthrough);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUnableToPerformAction(FGameplayTagContainer FailedReason, FText& FailureText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetFullscreenMapVisibility(bool bIsVisible);
+public:
 
 };
 

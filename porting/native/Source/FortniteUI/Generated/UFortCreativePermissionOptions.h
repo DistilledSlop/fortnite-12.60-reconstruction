@@ -25,5 +25,15 @@ public:
 	UPROPERTY()
 	TArray<FFortCreativeWhitelistUserEntry> WhitelistedUsers;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CloseDialog();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowWhitelistLimitError();
+public:
+
 };
 

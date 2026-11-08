@@ -122,5 +122,30 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetIsFaded(bool Faded);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnActivatePlayAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDeactivatePlayAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEventIndexChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayFadeAnimation(bool bIsFadeOut);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResetCallout();
+public:
+
 };
 

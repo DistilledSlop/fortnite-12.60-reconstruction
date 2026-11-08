@@ -36,5 +36,15 @@ public:
 	UPROPERTY()
 	AFortItemPreviewActor* ItemPreviewActor;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemDisplayed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemPreviewCleared();
+public:
+
 };
 

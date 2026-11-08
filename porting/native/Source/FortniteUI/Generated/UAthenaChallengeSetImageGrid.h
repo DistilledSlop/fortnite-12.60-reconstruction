@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeSetBaseDetails.h"
 
+#include "FFortChallengeSetStyle.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 
@@ -63,6 +64,11 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonButton* Button_NextSet;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeSetEstablished(FFortChallengeSetStyle& DisplayStyle, bool bIsComplete);
+public:
 
 };
 

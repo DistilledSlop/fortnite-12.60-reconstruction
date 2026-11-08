@@ -24,5 +24,25 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsBeingPreviewed() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemOrQuantitySetBP(bool IsBeingReset);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewEnded();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void RefreshListEntry();
+public:
+
 };
 

@@ -6,9 +6,14 @@
 #include "CoreMinimal.h"
 #include "AFortProjectileBase.h"
 
+#include "Engine/EngineTypes.h"
 #include "FAttachedInfo.h"
+#include "Math/Rotator.h"
+#include "Math/Vector.h"
 
 class AActor;
+class AController;
+class UPrimitiveComponent;
 
 #include "AFortAttachableProjectileBase.generated.h"
 
@@ -27,6 +32,21 @@ public:
 
 	UFUNCTION()
 	void OnRep_ReplicatedAttachedInfo();
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAttachedToDied(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAttachedToEndPlayed(AActor* DamagedActor, EEndPlayReason::Type EndPlayReason);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFinalizeAttachmentSocketLocandRot(FVector InWorldPos, FRotator InWorldRot, FName InSocketName, bool bFoundClosestOnPhysicsAsset, FVector& OutWorldPos, FRotator& OutWorldRot, FName& OutSocketName);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -45,5 +45,50 @@ protected:
 	void IsPrimaryActionHidden(bool& bHidden);
 public:
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnActivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnDeactivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnNavigationDown();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnNavigationLeft();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnNavigationRight();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnNavigationUp();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnPrimaryAction();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void TransitionInBegin();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void TransitionOutBegin();
+public:
+
 };
 

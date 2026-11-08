@@ -14,5 +14,10 @@ class FORTNITEUI_API UHardcoreModifierStatusBar : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleUpdateActiveModifiers(int32 NumActiveModifiers);
+public:
+
 };
 

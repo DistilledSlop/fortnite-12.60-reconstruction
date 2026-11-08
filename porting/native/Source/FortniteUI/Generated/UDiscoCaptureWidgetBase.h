@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "EDiscoCaptureUIState.h"
 #include "FDiscoCaptureUIData.h"
+
+class UMaterialInstanceDynamic;
 
 #include "UDiscoCaptureWidgetBase.generated.h"
 
@@ -27,6 +30,11 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 LastViewedTeam;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateCaptureUI(EDiscoCaptureUIState& CaptureState, FText& TextToDisplay, UMaterialInstanceDynamic* ImageMID, float FillAmount);
+public:
 
 };
 

@@ -49,5 +49,15 @@ public:
 	UPROPERTY()
 	UAthenaReplayActionFeedRowProxyInstance* RowProxy;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInstigatorNameUpdated(FText& InstigatorName);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVictimNameUpdated(FText& VictimName);
+public:
+
 };
 

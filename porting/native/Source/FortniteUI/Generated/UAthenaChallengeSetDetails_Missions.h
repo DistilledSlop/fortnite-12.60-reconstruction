@@ -73,5 +73,25 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsCurrentlyViewPrestige() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void HidePriestigeInfo(bool bHidePriestigeUpsell);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBundlePrestiged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateLevelUpBundleButtonText();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void VeiwingBundleLevelChanged();
+public:
+
 };
 

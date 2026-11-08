@@ -33,5 +33,15 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_AdSpace;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayIntroAnim();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetDefaultImage();
+public:
+
 };
 

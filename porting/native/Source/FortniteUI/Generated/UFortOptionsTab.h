@@ -55,5 +55,15 @@ protected:
 	virtual void TempNew_UpdateOptionsTab();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void CenterOnTab();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateOptionsTab();
+public:
+
 };
 

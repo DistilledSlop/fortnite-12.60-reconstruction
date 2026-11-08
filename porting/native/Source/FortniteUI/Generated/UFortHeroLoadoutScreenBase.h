@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanelWithItemPreview.h"
 
+#include "UFortCampaignHeroLoadoutItem.h"
+
 #include "UFortHeroLoadoutScreenBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFortHeroLoadoutScreenBase : public UFortActivatablePanelWi
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetHeroLoadout(UFortCampaignHeroLoadoutItem* HeroLoadout);
+public:
+
 };
 

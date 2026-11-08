@@ -40,5 +40,15 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_LoadoutName;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoadoutSet(int32 Selection);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNumLoadoutsFound(int32 NumLoadouts);
+public:
+
 };
 

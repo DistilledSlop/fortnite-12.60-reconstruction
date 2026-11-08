@@ -10,6 +10,7 @@
 
 class UDataTable;
 class UFortItemView;
+class UWidget;
 class UWidgetAnimation;
 
 #include "UFortActivatablePanelWithItemPreview.generated.h"
@@ -79,6 +80,11 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	float HideItemInfoHeaderDurationSecs;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	UWidget* GetWidgetForFramingViewedItem();
+public:
 
 };
 

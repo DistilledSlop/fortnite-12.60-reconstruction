@@ -41,5 +41,10 @@ public:
 	UPROPERTY()
 	UFortLazyImage* LazyImage_SpecialOffer;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOfferSet();
+public:
+
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class AFortPlayerController;
 class UFortLocalPlayer;
 
 #include "AQuestVisual.generated.h"
@@ -19,6 +20,16 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortLocalPlayer* OwningLocalPlayer;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ObjectiveCompleted(AFortPlayerController* PlayerController);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void QuestCompleted(AFortPlayerController* PlayerController);
+public:
 
 };
 

@@ -43,5 +43,10 @@ public:
 	UPROPERTY(Transient)
 	bool bWasPlaying;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGatheredFFTData(TArray<FChannelData>& FFTData, float& OutAmplitudeAverage);
+public:
+
 };
 

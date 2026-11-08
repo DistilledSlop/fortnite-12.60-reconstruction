@@ -14,5 +14,10 @@ class FORTNITEUI_API UAthenaPreserveSquadButton : public UCommonButton
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandlePreserveSquadChanged(bool bPreserveSquad);
+public:
+
 };
 

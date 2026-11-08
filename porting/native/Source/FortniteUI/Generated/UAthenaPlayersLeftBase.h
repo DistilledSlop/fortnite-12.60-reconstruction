@@ -14,5 +14,20 @@ class FORTNITEUI_API UAthenaPlayersLeftBase : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetBotsLeftText(FText& BotsText);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetHumansLeftText(FText& HumansText);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetPlayersLeftText(FText& PlayersText);
+public:
+
 };
 

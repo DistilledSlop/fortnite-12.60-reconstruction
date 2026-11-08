@@ -30,3 +30,8 @@ void UHUDLayoutToolPropertyPanel::OnWidgetMoved_Implementation(UHUDLayoutToolPla
 	return;
 }
 
+void UHUDLayoutToolPropertyPanel::OnWidgetSelected_Implementation(UHUDLayoutToolPlacementWidget* NewlySelectedWidget)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

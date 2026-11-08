@@ -8,6 +8,7 @@
 
 #include "FPickupStreamEntry.h"
 
+class UTexture2D;
 class UUserWidget;
 class UVerticalBox;
 
@@ -38,6 +39,11 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UVerticalBox* VerticalBox_PickupMessages;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RefreshPickupEntry(UUserWidget* EntryWidget, TSoftObjectPtr<UTexture2D>& Icon, int32 Count);
+public:
 
 };
 

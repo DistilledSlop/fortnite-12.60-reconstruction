@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "EAthenaGamePhaseStep.h"
+
 class UMaterialInterface;
 class UTextBlock;
 
@@ -28,6 +30,11 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UTextBlock* TimeText;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGamePhaseStepChanged(EAthenaGamePhaseStep GamePhaseStep);
+public:
 
 };
 

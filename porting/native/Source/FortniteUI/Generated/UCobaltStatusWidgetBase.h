@@ -28,5 +28,50 @@ public:
 	UPROPERTY()
 	float CountdownSoundStartTime;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayCountdownSound();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayLeadChangedSound(bool bTookTheLead);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayScoreProgressSound(bool bIsLocalTeam);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResetUI();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTieBreakerChangedSound();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateTeamScore(int32 TeamIndex, int32 Score, bool bIsTeamLeading, bool bPlayAnimation);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateTieBreakerUI(bool bHasTieBreaker);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowTimer();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateTimerVisuals(float TimeRemaining);
+public:
+
 };
 

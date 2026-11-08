@@ -57,5 +57,11 @@ protected:
 	virtual void OnWidgetMoved_Implementation(UHUDLayoutToolPlacementWidget* MovedWidget);
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnWidgetSelected(UHUDLayoutToolPlacementWidget* NewlySelectedWidget);
+	virtual void OnWidgetSelected_Implementation(UHUDLayoutToolPlacementWidget* NewlySelectedWidget);
+public:
+
 };
 

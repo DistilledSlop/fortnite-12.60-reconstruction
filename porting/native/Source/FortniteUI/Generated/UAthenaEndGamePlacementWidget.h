@@ -14,5 +14,10 @@ class FORTNITEUI_API UAthenaEndGamePlacementWidget : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetPlacement(int32 NewPlacement);
+public:
+
 };
 

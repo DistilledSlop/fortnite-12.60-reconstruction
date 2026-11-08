@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UAthenaEventScreenBase.h"
 
+class UAthenaRemotePlayerViewData;
+
 #include "UAthenaEventMatchStatusScreenBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,110 @@ class FORTNITEUI_API UAthenaEventMatchStatusScreenBase : public UAthenaEventScre
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerDeadStateChanged_BP(UAthenaRemotePlayerViewData* InPlayerData, bool bInIsDead);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateChestsLootedText(FText& ChestsLootedText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateCircleRadiusText(FText& CircleRadiusText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateDamageHealedText(FText& DamageHealedText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateDamageInflictedText(FText& DamageInflictedText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateDamageTakenText(FText& DamageTakenText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateFastestKillText(FText& FastestKillText, FText& FastestKillTime);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateGamePhaseText(FText& GamePhaseText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateGamePhaseTimeText(FText& GamePhaseTimeText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateGamePhaseTimeTitleText(FText& GamePhaseTimeTitleText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateLongestEliminationScore(FText& LongestEliminationScore);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateLongestEliminationText(FText& LongestEliminationText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateMatchTimeText(FText& MatchTimeText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateMostKillsScore(FText& MostKillsScore);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateMostKillsText(FText& MostKillsText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdatePiecesBuiltText(FText& PiecesBuiltText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdatePiecesDestroyedText(FText& PiecesDestroyedText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdatePlayersRemainingText(FText& PlayersRemainingText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateShotsFiredText(FText& ShotsFiredText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateSupplyDropsLootedText(FText& SupplyDropsLootedText);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateTimeSinceLastKillText(FText& TimeSinceLastKillText);
+public:
+
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "Math/Color.h"
 #include "UCommonTextBlock.h"
 
 #include "UFortWinterQuestPresentTag.generated.h"
@@ -23,6 +24,11 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonTextBlock* Text_CharacterName;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupCharacterNameTag(FLinearColor& CharacterName);
+public:
 
 };
 

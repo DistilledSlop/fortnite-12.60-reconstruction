@@ -25,5 +25,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsExemptFromShutdown() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void OnEnabledChanged();
+public:
+
 };
 

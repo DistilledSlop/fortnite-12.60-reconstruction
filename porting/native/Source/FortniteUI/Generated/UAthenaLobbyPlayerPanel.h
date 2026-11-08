@@ -35,5 +35,15 @@ public:
 	UPROPERTY()
 	UFortCosmeticLoadoutSelector* LoadoutSelector;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHasBattlePassUpdated(bool bHasBattlePass);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsMutedUpdated(bool bIsMuted);
+public:
+
 };
 

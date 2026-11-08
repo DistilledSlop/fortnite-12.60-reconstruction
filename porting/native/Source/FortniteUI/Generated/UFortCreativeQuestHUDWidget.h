@@ -37,5 +37,15 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_QuestDetails;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnProgressChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnQuestChanged(UCreativeQuestComponent* CurrentQuestComponent, bool bHasActiveQuest);
+public:
+
 };
 

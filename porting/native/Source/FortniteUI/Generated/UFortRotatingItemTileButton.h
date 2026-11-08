@@ -34,5 +34,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetTimeBeweenRotations(float InTimeBetweenRotations);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartPlayingRotateItemAnimation();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StopPlayingRotateItemAnimation();
+public:
+
 };
 

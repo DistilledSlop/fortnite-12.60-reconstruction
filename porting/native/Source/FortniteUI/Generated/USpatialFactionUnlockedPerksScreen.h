@@ -49,5 +49,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<UFactionUnlockedPerkData*> AllPerkItems;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemViewed(UFactionUnlockedPerkData* ItemDisplayed);
+public:
+
 };
 

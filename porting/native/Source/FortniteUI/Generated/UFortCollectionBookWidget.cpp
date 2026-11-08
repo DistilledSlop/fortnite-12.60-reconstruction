@@ -8,3 +8,13 @@ void UFortCollectionBookWidget::OnCollectionBookPageClicked_Implementation(UFort
 	return;
 }
 
+void UFortCollectionBookWidget::OnCollectionBookPageSelected_Implementation(UFortCollectionBookPage* SelectedPage)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortCollectionBookWidget::OnCollectionBookSectionClicked_Implementation(UFortCollectionBookSection* ClickedSection)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

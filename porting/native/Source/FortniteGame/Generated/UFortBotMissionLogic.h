@@ -7,6 +7,7 @@
 #include "UObject/Object.h"
 
 class AActor;
+class AFortAIController;
 class AFortBotController;
 class AFortBotStructureBuilder;
 class AFortMission;
@@ -46,6 +47,36 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ClearAllLocated();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAssignedBehavior(AFortAIController* BotAI);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	bool OnCanStartOtherMission(AFortAIController* BotAI, AFortMission* OtherMission);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	bool OnInteractWithMissionGoal(AFortAIController* BotAI, AActor* MissionGoal);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMissionActivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMissionFinished();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMissionStarted();
+public:
 
 };
 

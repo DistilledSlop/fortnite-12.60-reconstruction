@@ -90,5 +90,30 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetAttemptingConversion(bool bIsAttemptingConversion);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentInspectionModeSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDifferentItemToInspectSetBP();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleIsPreviewingChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemToInspectChangedBP(bool bWasFavoritedChanged);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemToInspectDestroyedBP();
+public:
+
 };
 

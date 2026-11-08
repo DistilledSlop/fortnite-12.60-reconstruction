@@ -689,6 +689,26 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetPawnNumberLimit(int32 InPawnNumberLimit);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFadeStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPeakStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRampStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRestStarted();
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

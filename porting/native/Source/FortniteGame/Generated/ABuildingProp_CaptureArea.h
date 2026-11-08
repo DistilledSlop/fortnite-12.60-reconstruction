@@ -69,5 +69,30 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void UnregisterPlayerInsideArea(AFortPlayerController* OldPlayerInside);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnPlayerTeamReplicated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnCaptureAreaOwnerChanged(AFortPlayerController* NewOwner);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOverlappedPlayerInventoryChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOverlappedPlayerInventoryValidated(AFortPlayerController* PlayerController);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeamsInfoChanged();
+public:
+
 };
 

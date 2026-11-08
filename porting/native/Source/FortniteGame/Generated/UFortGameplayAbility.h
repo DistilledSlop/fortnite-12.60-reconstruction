@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
 
+#include "Abilities/GameplayAbilityTypes.h"
 #include "EFortAILODLevel.h"
 #include "EFortAIWeaponUsage.h"
 #include "EFortGameplayAbilityActivation.h"
@@ -17,6 +18,7 @@
 #include "FFortGameplayEffectContainer.h"
 #include "GameplayTagContainer.h"
 #include "HAL/UnrealMemory.h"
+#include "Math/TransformNonVectorized.h"
 #include "Math/UnrealMathUtility.h"
 #include "Math/Vector.h"
 #include "UObject/Class.h"
@@ -316,6 +318,26 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	bool SetupPreviewImageOverride();
 	virtual bool SetupPreviewImageOverride_Implementation();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	FTransform GetCustomAbilitySourceTransform() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, BlueprintPure)
+	bool K2_ShouldUseDecoTool(FGameplayAbilityActorInfo ActorInfo) const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void K2_TriggerFromAnimation(FGameplayTag ApplicationTag);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAbilityInputReleased();
+public:
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

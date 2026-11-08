@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EGameReadiness.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EGameReadiness : uint8
 {
 	NotReady = 0,

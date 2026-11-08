@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "EFortVoteArbitratorType.h"
+#include "EFortVoteType.h"
+
 #include "UFortMissionVoteHUDElementWidget.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +17,20 @@ class FORTNITEUI_API UFortMissionVoteHUDElementWidget : public UFortHUDElementWi
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVoteEnded(EFortVoteType VoteType, EFortVoteArbitratorType ArbitratorType, bool VoteSucceeded);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVoteStarted(EFortVoteType VoteType, EFortVoteArbitratorType ArbitratorType, int32 YesVoteCount, int32 NoVoteCount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVoteUpdated(EFortVoteType VoteType, int32 YesVoteCount, int32 NoVoteCount);
+public:
+
 };
 

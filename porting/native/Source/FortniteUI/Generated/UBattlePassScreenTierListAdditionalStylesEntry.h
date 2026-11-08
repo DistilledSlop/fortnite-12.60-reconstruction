@@ -30,5 +30,15 @@ public:
 	UPROPERTY()
 	UFortLazyImage* VariantIcon;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BPSetup(UFortItem* InReward);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetupVariant();
+public:
+
 };
 

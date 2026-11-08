@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortLandingPageDefenderSummaryInfo.h"
 #include "UCommonNumericTextBlock.h"
 #include "UCommonTextBlock.h"
 
@@ -24,6 +25,16 @@ public:
 	// table index 0, flags 0x1000000008001c
 	UPROPERTY()
 	UCommonNumericTextBlock* PowerRating;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleAddDefenderSquadMemberBP(FName& SquadId, int32 Index);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleDefenderSquadInfoSetBP(FFortLandingPageDefenderSummaryInfo& DefenderSummaryInfo);
+public:
 
 };
 

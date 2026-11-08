@@ -26,5 +26,9 @@ protected:
 	virtual void OnQuestExpirationUpdated_Implementation();
 public:
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetData(UFortQuestItem* InItem);
+	virtual void SetData_Implementation(UFortQuestItem* InItem);
+
 };
 

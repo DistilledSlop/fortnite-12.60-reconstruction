@@ -14,5 +14,10 @@ class FORTNITEUI_API UAthenaSpectatorTeamTagBase : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdateMaxSquadSize(int32 MaxSquadSize);
+public:
+
 };
 

@@ -11,6 +11,7 @@
 #include "FOnTwoPointSolverFailed.h"
 #include "FOnTwoPointSolverFinished.h"
 #include "Math/Rotator.h"
+#include "Math/Vector.h"
 
 class UEnvQuery;
 class UFortAISystem;
@@ -77,6 +78,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetCustomRotationA(FRotator& Rotation);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCustomRotationMode(FVector& InPointA, FVector Querier);
+public:
 
 };
 

@@ -38,5 +38,26 @@ protected:
 	virtual void OnMinigameEnded_Implementation();
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnMinigameStarted();
+	virtual void OnMinigameStarted_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartTimeDisplay();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStopTimeDisplay();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateDisplay(FText& DisplayText, FName& DisplayTextStyle);
+public:
+
 };
 

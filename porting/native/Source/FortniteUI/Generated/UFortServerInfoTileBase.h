@@ -35,5 +35,15 @@ public:
 	UPROPERTY()
 	UVerticalBox* VerticalBox_Ownership;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOwnerNameUpdated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RequestUpdateBackgroundImage(int32 FriendListHash);
+public:
+
 };
 

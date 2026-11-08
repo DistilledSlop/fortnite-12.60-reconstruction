@@ -77,5 +77,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsModified();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnModified(bool bModified);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_PostInitSummaryData(UCreativePropertyEditWidgetBase* CustomEditWidget);
+public:
+
 };
 

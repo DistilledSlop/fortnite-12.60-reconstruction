@@ -7,6 +7,7 @@
 #include "UCommonButton.h"
 
 #include "UCommonTextBlock.h"
+#include "UFortItem.h"
 
 class UFortCosmeticItemCard;
 
@@ -33,6 +34,26 @@ public:
 	// table index 0, flags 0x40000000004000
 	UPROPERTY(Config)
 	TArray<FString> LootEntryItemTypesToExclude;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetHistory(bool bHasBeenRefunded, bool bIsTokenlessRefund, bool bPlayerHasTokens);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetPurchaseText(FText& PurchaseText, bool bHasBeenRefunded);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetupItemCard(UFortCosmeticItemCard* ItemCard, UFortItem* Item);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateItemList(TArray<UFortCosmeticItemCard*>& ItemCards);
+public:
 
 };
 

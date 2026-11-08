@@ -8,6 +8,7 @@
 
 class AActor;
 class AFortWeapon;
+class UAudioComponent;
 class UMeshComponent;
 
 #include "ACustomItemWrapModifier.generated.h"
@@ -35,6 +36,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortWeapon* GetWeapon() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void NotifyAudioComponentAdded(UAudioComponent* AudioComponent);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void NotifyAudioComponentVehicleTriggered(UAudioComponent* AudioComponent, int32 Priority);
+public:
 
 };
 

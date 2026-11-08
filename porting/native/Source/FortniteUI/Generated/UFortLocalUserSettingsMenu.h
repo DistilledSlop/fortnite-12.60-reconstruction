@@ -47,5 +47,10 @@ public:
 	UPROPERTY()
 	UFortLocalUserSettingsSection* Section_FriendSubscription;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFocused();
+public:
+
 };
 

@@ -7,3 +7,13 @@ bool UAthenaAccoladesWidget::HasMoreXPEvents() const
 	return XPEvents.Num() > 0;
 }
 
+void UAthenaAccoladesWidget::CloseWidget_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UAthenaAccoladesWidget::OpenWidget_Implementation(UFortAccoladeItemDefinition* AccoladeDef, int32& XpValue, FText& DisplayName)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

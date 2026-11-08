@@ -8,8 +8,8 @@
 
 #include "FVolumePerformanceMetrics.generated.h"
 
-USTRUCT()
-struct FVolumePerformanceMetrics
+USTRUCT(BlueprintType)
+struct FORTNITEGAME_API FVolumePerformanceMetrics
 {
 	GENERATED_BODY()
 

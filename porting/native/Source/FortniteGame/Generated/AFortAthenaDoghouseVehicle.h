@@ -234,6 +234,26 @@ public:
 	void ServerUpdateControlState(const FReplicatedControlState& InControlState);
 	void ServerUpdateControlState_Implementation(const FReplicatedControlState& InControlState);
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEngineStart();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEngineStop();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLanding();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTakeoff();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

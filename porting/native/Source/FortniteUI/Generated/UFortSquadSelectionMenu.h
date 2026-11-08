@@ -59,5 +59,10 @@ public:
 	UPROPERTY()
 	UOverlay* Mobile_Overlay;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalPlayerParticipationChanged(bool bIsParticipating);
+public:
+
 };
 

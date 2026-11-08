@@ -18,5 +18,10 @@ public:
 	UPROPERTY(Transient)
 	uint8 LastViewedTeam;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateTieBreakerUI(bool bHasTieBreaker);
+public:
+
 };
 

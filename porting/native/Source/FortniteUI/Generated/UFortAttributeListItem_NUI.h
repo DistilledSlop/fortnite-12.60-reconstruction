@@ -40,5 +40,25 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	void GetDisplayPreviewCopy(FFortDisplayAttribute& OutPreviewAttribute) const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisplayAttributeChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewEnded();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ValueChanged(float Delta);
+public:
+
 };
 

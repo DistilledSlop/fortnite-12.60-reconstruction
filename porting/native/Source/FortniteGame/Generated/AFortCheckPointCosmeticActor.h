@@ -32,6 +32,11 @@ public:
 	UPROPERTY(Replicated)
 	bool bIsEndPoint;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsEndPointChanged();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

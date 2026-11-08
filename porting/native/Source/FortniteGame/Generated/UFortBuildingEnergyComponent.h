@@ -28,6 +28,11 @@ public:
 	UFUNCTION()
 	void OnRep_EnergyAttrSet();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCurrentEnergyAttributesChanged();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

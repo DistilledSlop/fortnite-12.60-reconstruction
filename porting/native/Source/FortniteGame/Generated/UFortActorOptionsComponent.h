@@ -14,6 +14,7 @@
 #include "Math/UnrealMathUtility.h"
 
 class AFortPawn;
+class AFortPlayerPawn;
 class UFortItemDefinition;
 class UPlaylistUserOptionBase;
 class UPlaylistUserOptions;
@@ -84,6 +85,11 @@ public:
 
 	UFUNCTION()
 	void OnRep_PlayerOptionData();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	bool BlueprintOnLocalInteract(AFortPlayerPawn* InteractingPawn);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

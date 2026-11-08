@@ -55,6 +55,21 @@ public:
 	UFUNCTION()
 	void OnRep_WaypointGroup();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSpawnSpline();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWaypointCaptured();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWaypointReset();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

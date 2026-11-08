@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+#include "EAthenaGamePhaseStep.h"
+
 #include "UCobaltGamePhaseWidgetBase.generated.h"
 
 UCLASS()
@@ -17,6 +19,16 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	float StormComingWarningTime;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGamePhaseStepChanged(EAthenaGamePhaseStep GamePhaseStep);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateTimeDisplay(bool bSetWarningFont, FText& NewTimeDisplay);
+public:
 
 };
 

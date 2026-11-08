@@ -29,5 +29,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetAsStat(FGameplayTag& InStat);
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStatChanged();
+public:
+
 };
 

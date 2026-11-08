@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortPartyMemberLocation.h"
+#include "EGameReadiness.h"
 #include "UFortPartyMember.h"
 #include "USocialNameTextBlock.h"
 
@@ -52,6 +54,31 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEmptySlot() const;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsPartyLeaderChanged(bool bIsPartyLeader);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewLocation(EFortPartyMemberLocation NewLocation);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewReadiness(EGameReadiness GameReadiness);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUserSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWidgetReset();
+public:
 
 };
 

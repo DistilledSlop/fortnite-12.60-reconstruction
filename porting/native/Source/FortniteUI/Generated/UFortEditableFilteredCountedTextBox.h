@@ -55,5 +55,14 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_CharCount;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDirtyTextAttempted(bool bIsBadText, bool bAdditionalValidationFailed);
+public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetEntryCharLimit(int32 InCharLimit);
+	virtual void SetEntryCharLimit_Implementation(int32 InCharLimit);
+
 };
 

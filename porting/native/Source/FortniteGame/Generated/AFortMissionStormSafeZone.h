@@ -10,6 +10,8 @@
 #include "FOnSafeZoneInStormStateChanged.h"
 #include "UFortAbilitySystemInterface.h"
 
+class ABuildingActor;
+class AFortPlayerPawn;
 class UAbilitySystemComponent;
 class UFortGameplayAbility;
 class UStaticMeshComponent;
@@ -67,6 +69,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetSafeZoneRadius(float InRadius);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerPlacedBuildingActorInRadius(ABuildingActor* BuildingPlaced, AFortPlayerPawn* ByPlayer);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSafeZoneRadiusChanged(float NewRadius, float NewConvertedRadius);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

@@ -47,5 +47,10 @@ public:
 	UPROPERTY()
 	UAthenaMapLayer* MapLayer;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HandleSquadIdVisibilityChanged(bool bSquadIdsVisible);
+public:
+
 };
 

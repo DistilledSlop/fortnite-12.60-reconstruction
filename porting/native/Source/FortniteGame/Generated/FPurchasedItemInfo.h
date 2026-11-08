@@ -9,8 +9,8 @@ class UFortItem;
 
 #include "FPurchasedItemInfo.generated.h"
 
-USTRUCT()
-struct FPurchasedItemInfo
+USTRUCT(BlueprintType)
+struct FORTNITEGAME_API FPurchasedItemInfo
 {
 	GENERATED_BODY()
 

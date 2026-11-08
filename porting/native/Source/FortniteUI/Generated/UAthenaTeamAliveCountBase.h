@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "FAthenaTeamCountSlotData.h"
+
 #include "UAthenaTeamAliveCountBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UAthenaTeamAliveCountBase : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetTeamSlotData(int32 TeamIdx, FAthenaTeamCountSlotData& TeamSlotData);
+public:
+
 };
 

@@ -52,5 +52,20 @@ public:
 	UPROPERTY()
 	UScaleBox* ScaleBox_Main;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void IsTabsLayout(bool bShouldDisplayTabs);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnAffiliateUpdated(const FString& AffiliateName);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayToast(bool bDisplayToast);
+public:
+
 };
 

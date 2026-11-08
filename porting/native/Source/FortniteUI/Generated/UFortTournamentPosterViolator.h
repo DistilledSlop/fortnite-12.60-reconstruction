@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EEventTimeState.h"
 #include "UCommonTextBlock.h"
 
 #include "UFortTournamentPosterViolator.generated.h"
@@ -19,6 +20,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonTextBlock* Text_TimeRemaining;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnViolatorStateRefreshed(EEventTimeState NewTimeState);
+public:
 
 };
 

@@ -34,5 +34,25 @@ public:
 	UPROPERTY(Transient)
 	TWeakObjectPtr<UAthenaRemotePlayerViewData> PlayerData;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ChangeTextVisibility(bool bIsVisible);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnCurrentValueChanged(float InCurrentValue);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnDBNOChanged(bool bInIsDBNO);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnDeltaValueChanged(float InDeltaValue);
+public:
+
 };
 

@@ -35,5 +35,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_TimeRemaining;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeSet(FTimerDisplayData& DisplayStyle);
+public:
+
 };
 

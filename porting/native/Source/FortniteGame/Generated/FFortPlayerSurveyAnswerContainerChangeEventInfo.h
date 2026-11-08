@@ -8,7 +8,7 @@
 
 #include "FFortPlayerSurveyAnswerContainerChangeEventInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FFortPlayerSurveyAnswerContainerChangeEventInfo
 {
 	GENERATED_BODY()

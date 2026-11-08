@@ -7,8 +7,10 @@
 #include "UFortAccountWidgetBase.h"
 
 #include "UCommonTextBlock.h"
+#include "UFortItem.h"
 
 class UAthenaSeasonItemRewardIcon;
+class UTexture2D;
 
 #include "UAthenaPlayerLevelDisplay.generated.h"
 
@@ -25,6 +27,16 @@ public:
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()
 	UAthenaSeasonItemRewardIcon* RewardIcon;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateRewardIcon(UFortItem* RewardItem, TSoftObjectPtr<UTexture2D>& RewardTexture, bool bHasAdditionalStylesToDisplay, int32 RewardLevel, bool bRequiresBattlePass);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateXpBar(float Progress, bool bIsMaxLevel);
+public:
 
 };
 

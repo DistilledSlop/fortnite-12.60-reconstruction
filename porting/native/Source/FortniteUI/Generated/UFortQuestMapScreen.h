@@ -7,6 +7,7 @@
 #include "UCommonActivatablePanel.h"
 
 #include "EQuestMapScreenMode.h"
+#include "UFortQuestItem.h"
 #include "UFortQuestItemDefinition.h"
 #include "UFortQuestMapData.h"
 #include "UFortQuestMapDataAsset.h"
@@ -68,6 +69,41 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetBeyondCutoffQuest() const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleEventCalloutDataChangedBP();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleMapModeSwitch();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleQuestDetailsUpdated(UFortQuestItem* QuestDefinition);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleQuestPageChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEventCalloutButtonClicked();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEventCalloutExpandChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateQuestMapMode(EQuestMapScreenMode QuestMapMode);
+public:
 
 };
 

@@ -14,5 +14,15 @@ class FORTNITEUI_API UFortTournamentDetailsPage : public UFortShowdownDetailView
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnActivateScreen();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnHandleBack(bool& bResult);
+public:
+
 };
 

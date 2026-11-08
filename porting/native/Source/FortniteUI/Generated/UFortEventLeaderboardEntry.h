@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+class UFortEventLeaderboardEntryData;
 class UFortFlagImage;
 
 #include "UFortEventLeaderboardEntry.generated.h"
@@ -19,6 +20,11 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UFortFlagImage* FlagImage;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeammateDisplayNameAdded(UFortEventLeaderboardEntryData* LeaderboardEntryData);
+public:
 
 };
 

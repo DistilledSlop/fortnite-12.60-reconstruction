@@ -6,6 +6,11 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "UFortItem.h"
+#include "UFortItemSeriesDefinition.h"
+
+class UTexture2D;
+
 #include "UAthenaSeasonItemRewardIcon.generated.h"
 
 UCLASS()
@@ -14,5 +19,15 @@ class FORTNITEUI_API UAthenaSeasonItemRewardIcon : public UUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitializeReward(UFortItem* RewardItem, TSoftObjectPtr<UTexture2D>& RewardTexture, bool bHasAdditionalStylesToDisplay, int32 RewardLevel, bool bRequiresBattlePass);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitializeSeriesReward(UFortItemSeriesDefinition* SeriesData);
+public:
+
 };
 

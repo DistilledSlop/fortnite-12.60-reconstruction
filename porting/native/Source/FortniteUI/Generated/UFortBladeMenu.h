@@ -14,5 +14,15 @@ class FORTNITEUI_API UFortBladeMenu : public UCommonActivatableWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnClosed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOpened();
+public:
+
 };
 

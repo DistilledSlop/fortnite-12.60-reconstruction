@@ -12,6 +12,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 
+class ABuildingActor;
 class AFortAthenaVehicle;
 class APlayerController;
 class UCameraShake;
@@ -201,6 +202,31 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetSeatOffset() const;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostFailed();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostFinished();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostReady();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SmashedThroughBuildingPiece(FVector& ImpactPoint, FVector& ImpactNormal, ABuildingActor* BuildingHitActor);
+public:
 
 };
 

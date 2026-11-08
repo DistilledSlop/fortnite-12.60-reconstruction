@@ -9,3 +9,13 @@ void UFortAthenaTutorialTextPrompt::DisplayTarget_Implementation()
 	return;
 }
 
+void UFortAthenaTutorialTextPrompt::ActivateTextPrompt_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UFortAthenaTutorialTextPrompt::DisplayNextButton_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+

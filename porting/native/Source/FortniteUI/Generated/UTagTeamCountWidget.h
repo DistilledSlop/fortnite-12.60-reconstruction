@@ -14,5 +14,20 @@ class FORTNITEUI_API UTagTeamCountWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetBlueTeamSize(int32 TeamSize, int32 TotalSize);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetCurrentTeam(uint8 CurrentTeam);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetRedTeamSize(int32 TeamSize, int32 TotalSize);
+public:
+
 };
 

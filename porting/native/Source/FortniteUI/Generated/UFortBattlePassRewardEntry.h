@@ -7,6 +7,9 @@
 #include "UCommonButton.h"
 
 #include "UCommonTextBlock.h"
+#include "UFortItem.h"
+
+class UTexture2D;
 
 #include "UFortBattlePassRewardEntry.generated.h"
 
@@ -19,6 +22,41 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonTextBlock* Text_SocialUserName;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void FadeInSocialUser();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void FadeOutSocialUser(bool bCallback);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLoadSocialIcon(bool bSuccess, UTexture2D* Texture);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRotateReward(int32 Index);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetReward(UFortItem* InReward, int32 TierLevel, float TierProgress, bool bIsLastEntry, bool bHasAdditionalStylesToDisplay, TSoftObjectPtr<UTexture2D>& RewardTexture, bool bIsFreeItem, bool bOwnsBattlePass, int32 SeasonLevel, bool bIsFirstEntry);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetRotatingReward(UFortItem* InReward, bool bHasAdditionalStylesToDisplay, TSoftObjectPtr<UTexture2D>& RewardTexture, bool bIsFreeItem, bool bOwnsBattlePass, int32 SeasonLevel);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSocialPlayerProgress(float Progress);
+public:
 
 };
 

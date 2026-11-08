@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortThreatDeactivationType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortThreatDeactivationType : uint8
 {
 	Off = 0,

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FMinigameActivityEndedData.h"
+
 #include "UAthenaMinigameActivityWidget.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,30 @@ class FORTNITEUI_API UAthenaMinigameActivityWidget : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandleMinigameEnded(FMinigameActivityEndedData& EndData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandleMinigameRankChanged(int32 Rank);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandleMinigameScoreChanged(int32 CurrentScore, int32 TotalScore);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandleMinigameStarted(FText& MinigameName);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHandleMinigameTimeChanged(float Time, bool bInitialSet);
+public:
+
 };
 

@@ -9,7 +9,9 @@
 #include "EFortTeam.h"
 #include "HAL/UnrealMemory.h"
 #include "Math/Color.h"
+#include "Math/Vector.h"
 
+class USplineComponent;
 class USplineMeshComponent;
 
 #include "AFortCheckPointSplineActor.generated.h"
@@ -55,6 +57,16 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	bool bSplineMapUIAntialias;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	TArray<FVector> GetCheckPointLocations() const;
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	USplineComponent* GetSplineComponent() const;
+public:
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

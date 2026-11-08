@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "AFortItemPreviewSceneChanger.h"
 
+#include "FSceneTransitionOptions.h"
+#include "UFortAccountItemDefinition.h"
+
 #include "AItemPreviewRotator.generated.h"
 
 UCLASS(config=Engine)
@@ -17,6 +20,11 @@ public:
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	float CameraTransitionLerpDuration;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCameraTransitionReady(bool bPrimaryToSecondary, UFortAccountItemDefinition* PrimaryRequestedItem, FSceneTransitionOptions& Options);
+public:
 
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "AFortEventLevelNavigationActor.h"
 #include "Engine/DataTable.h"
 #include "FCameraWidgetBinding.h"
 #include "GameplayTagContainer.h"
@@ -49,6 +50,21 @@ public:
 	// table index 0, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortGameStateComponent_EventLevel* EventGameStateComponent;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEventLevelTransitionBegin(FGameplayTag& TargetCamera, AFortEventLevelNavigationActor* TargetNavActor);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEventLevelTransitionComplete(FGameplayTag& ActiveCamera);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelectedNavObjectChanged();
+public:
 
 };
 

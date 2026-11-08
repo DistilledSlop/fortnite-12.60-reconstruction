@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UAthenaSpatialNavigationButton.h"
 
+#include "ESpatialCustomizationCategoryState.h"
 #include "GameplayTagContainer.h"
+#include "Math/Color.h"
 #include "UCommonNumericTextBlock.h"
 #include "UCommonRichTextBlock.h"
 #include "UCommonTextBlock.h"
@@ -61,6 +63,11 @@ public:
 	// table index 0, flags 0x40000000000801
 	UPROPERTY()
 	float LowerClampingColorBound;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCategoryStateSet(ESpatialCustomizationCategoryState State, FLinearColor StateColor);
+public:
 
 };
 

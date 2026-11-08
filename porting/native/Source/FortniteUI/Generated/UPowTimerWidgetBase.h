@@ -25,5 +25,15 @@ public:
 	UPROPERTY()
 	AFortAthenaMutator_Pow* BaseMutator;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRespawnTimeElasped();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdatedRespawnTime(int32 Minutes, int32 Seconds);
+public:
+
 };
 

@@ -7,6 +7,7 @@
 #include "UFortItemPickerBase.h"
 
 #include "ABuildingTrapDefender.h"
+#include "UFortItem.h"
 
 class UFortItemDetailsHostPanel;
 
@@ -25,6 +26,11 @@ public:
 	// table index 0, flags 0x24080000000004
 	UPROPERTY()
 	TWeakObjectPtr<ABuildingTrapDefender> DefenderTrap;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleSelectionCommittedBP(UFortItem* CommittedItem);
+public:
 
 };
 

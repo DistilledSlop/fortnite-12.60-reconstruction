@@ -71,5 +71,10 @@ public:
 	UPROPERTY()
 	UCommonRichTextBlock* RichText_Technology;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalTeamMemberParticipationChanged(bool bIsParticipating);
+public:
+
 };
 

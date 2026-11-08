@@ -47,6 +47,11 @@ public:
 	UFUNCTION()
 	void OnRep_Ignited();
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCosmetic)
+	void ClientOnIgnite();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

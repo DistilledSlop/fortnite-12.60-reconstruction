@@ -9,3 +9,8 @@ void UAthenaTimeWidgetBase::OnMinigameEnded_Implementation()
 	return;
 }
 
+void UAthenaTimeWidgetBase::OnMinigameStarted_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+

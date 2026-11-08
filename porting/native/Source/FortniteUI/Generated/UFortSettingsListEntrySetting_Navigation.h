@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Navigate;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSettingAssigned(FText& ActionText);
+public:
+
 };
 

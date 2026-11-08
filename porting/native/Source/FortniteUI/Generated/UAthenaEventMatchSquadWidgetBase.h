@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "Math/Color.h"
+
+class UAthenaRemotePlayerViewData;
 class UAthenaRemoteSquadViewData;
 
 #include "UAthenaEventMatchSquadWidgetBase.generated.h"
@@ -19,6 +22,36 @@ public:
 	// table index 0, flags 0x24080000000014
 	UPROPERTY()
 	TWeakObjectPtr<UAthenaRemoteSquadViewData> SquadData;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerAdded(UAthenaRemoteSquadViewData* InSquadData, UAthenaRemotePlayerViewData* InPlayerData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadColorChanged(UAthenaRemoteSquadViewData* InSquadData, FLinearColor InSquadColor);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadIdChanged(UAthenaRemoteSquadViewData* InSquadData, uint8 InSquadId);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadKillscoreChanged(UAthenaRemoteSquadViewData* InSquadData, int32 InSquadKills);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadPlaceChanged(UAthenaRemoteSquadViewData* InSquadData, int32 InSquadPlace);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetSquadIdVisible(bool bSquadIdVisible);
+public:
 
 };
 

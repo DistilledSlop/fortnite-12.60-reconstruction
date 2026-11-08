@@ -30,5 +30,30 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_ActionText;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDismissSuggestion();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayInfoUpdated(bool bIsInvited, bool bIsPlaying);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewSuggestionAdded();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSuggestionAccepted();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSuggestionChanged();
+public:
+
 };
 

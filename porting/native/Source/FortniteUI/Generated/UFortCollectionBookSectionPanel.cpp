@@ -10,3 +10,8 @@ void UFortCollectionBookSectionPanel::OnLogAllowedItemsActionExecuted(bool& bPas
 	bPassThrough = false;
 }
 
+void UFortCollectionBookSectionPanel::OnSectionChanged_Implementation(UFortCollectionBookSection* Section)
+{
+	// Body not recovered: reflection-derived stub.
+}
+

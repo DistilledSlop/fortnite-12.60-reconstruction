@@ -19,6 +19,8 @@
 #include "Math/Vector.h"
 #include "UObject/WeakObjectPtr.h"
 
+class AActor;
+class AFortPlayerPawn;
 class UCameraShake;
 class UFortOctopusVehicleConfigs;
 class UFortVehicleAudioVoice;
@@ -349,6 +351,41 @@ public:
 	void ServerUpdateTowhook(const FVector_NetQuantizeNormal& InNetTowhookAimDir);
 	void ServerUpdateTowhook_Implementation(const FVector_NetQuantizeNormal& InNetTowhookAimDir);
 	bool ServerUpdateTowhook_Validate(const FVector_NetQuantizeNormal& InNetTowhookAimDir);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostBegin();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostBounce(FVector& Location, FVector& Normal, float Force, AActor* HitActor, int32 BounceCount);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBoostEnd();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHit(FVector& Location, FVector& Normal, float Force, AActor* HitActor);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHitPawn(FVector& Normal, float Force, AFortPlayerPawn* HitPawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdateTargetPoint(bool bAimAssistHitsTarget, FVector& TargetPoint);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowCooldownCue(AFortPlayerPawn* Pawn, float Duration);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

@@ -3083,7 +3083,9 @@ def check_helper_entry(e, name, package, ctx, by_name, all_names, taken):
     refs = (set(re.findall(r"[A-Za-z_]\w*", strip_comments(e["body"]))) & all_names) - {fname}
     return {"name": fname, "kind": kind, "tag": "%s::%s" % (name, fname), "ret": ret, "args": params,
             "const": const, "virtual": virtual, "static": member_static, "access": access, "body": e["body"], "refs": refs,
-            "includes": inc_body | inc_sig | set(explicit), "header_includes": inc_sig | set(explicit),
+            # A body may dereference a forward-declared signature class; the cpp needs its full definition.
+            "includes": inc_body | inc_sig | set(explicit) | {"%s.h" % t for t in fwd if t in ctx["class_pkg"] and t != name and package not in CLASS_EVENT_SKIP_PACKAGES},
+            "header_includes": inc_sig | set(explicit),
             "forward": fwd}, None
 
 
@@ -3765,6 +3767,171 @@ def build_interface_functions(block, name, package, owner_fns, resolver, interfa
     return out, skipped, merge_used(used_all), set(resolver.class_refs) - {name, "I" + name[1:]}
 
 
+CLASS_EVENT_ALLOWED_FLAGS = (0x800 | 0x8000000 | 0x400 | 0x4000000 | 0x10000000 | 0x40000000 | 0x400000 | 0x20000
+                             | 0x80000 | 0x4 | 0x8 | 0x2 | 0x800000 | 0x2000000)
+# Engine-owned/runtime-plugin packages whose classes carry curated policies: never given generated events.
+CLASS_EVENT_SKIP_PACKAGES = ("/Script/CommonUI", "/Script/CommonInput")
+CPP_KEYWORDS = frozenset({"class", "struct", "this", "new", "delete", "template", "typename", "default", "operator",
+                          "register", "union", "namespace", "signed", "unsigned", "auto", "explicit", "export"})
+# UHT: Blueprint-exposed function parameters must be Blueprint-compatible types.
+CLASS_EVENT_BAD_TYPE_RE = re.compile(
+    r"\b(uint16|uint32|uint64|int8|int16|double|TSharedPtr|TSharedRef|TUniquePtr|TFunction|TQueue|TFunctionRef)\b"
+    r"|TArray<\s*TArray|TArray<\s*TMap|TArray<\s*TSet|TMap<[^>]*(TArray|TMap|TSet)|TSet<\s*(TArray|TMap|TSet)"
+    r"|\bvoid\s*\*|\bchar\b|\bwchar_t\b|\bF\w+\s*\*|\bconst\s+F\w+\s*\*")
+
+
+def byref_event_arg(decl):
+    ctype, pname = decl.rsplit(" ", 1)
+    if ctype.endswith(("&", "*")) or ctype.startswith("const "):
+        return decl
+    if ctype in ("FString", "FText") or ctype.startswith(("TArray<", "TMap<", "TSet<")):
+        return "const %s& %s" % (ctype, pname)
+    return decl
+
+
+def build_class_events(model, name, package, resolver, owner_fns, block, snippets, chain_has, rendered_text):
+    """Reflected BlueprintImplementableEvents (and void BlueprintNativeEvents) of one promoted native UCLASS that its
+    header does not declare yet. Same fail-closed rules as build_interface_functions: anything not provably
+    mappable (types, flags, collisions with members, policies, manifest entries or the parent chain) is skipped
+    and reported. Returns (emitted function records, skip records)."""
+    skipped = []
+    out = []
+    taken = {f["name"] for f in model["functions"]} | {m["name"] for m in model["members_decl_order"]}
+    manifest = set()
+    for e in snippets:
+        fn_name = e.get("function") or ""
+        manifest.add(fn_name)
+        for suffix in ("_Implementation", "_Validate"):
+            if fn_name.endswith(suffix):
+                manifest.add(fn_name[:-len(suffix)])
+    header_text, cpp_text = rendered_text
+    seen = set()
+
+    def skip(fn, reason):
+        skipped.append({"class": name, "package": package, "function": fn.get("name"),
+                        "flags": fn.get("flags") or [c.get("flags") for c in fn.get("candidates") or []],
+                        "reason": reason})
+
+    for fn in block.get("functions") or []:
+        fname = fn.get("name") or ""
+        flags, params, problem = function_view(fn, owner_fns)
+        if flags is None:
+            continue    # unjoined flags: cannot even tell it is an event; already reported as flags_ambiguous
+        if not (flags & 0x800 and flags & 0x8000000):
+            continue    # not a Blueprint event: out of scope here
+        if params is None:
+            skip(fn, "params_not_decoded: %s" % problem)
+            continue
+        if not re.match(r"^[A-Za-z_]\w*$", fname) or fname in seen:
+            skip(fn, "bad_or_duplicate_name")
+            continue
+        seen.add(fname)
+        if fname in taken or fname in manifest:
+            skip(fn, "already_declared_by_members_or_policy" if fname in taken else "manifest_entry_exists")
+            continue
+        if re.search(r"\b%s\b" % re.escape(fname), header_text) or re.search(
+                r"::%s(_Implementation)?\s*\(" % re.escape(fname), cpp_text):
+            skip(fn, "name_collision_with_existing_declaration")
+            continue
+        hit = chain_has(fname)
+        if hit:
+            skip(fn, "name_collision_in_superclass: %s" % hit)
+            continue
+        if flags & FUNC_NET_ANY or flags & (FUNC_NET_REQUEST | FUNC_NET_RESPONSE):
+            skip(fn, "net_function")
+            continue
+        if flags & FUNC_STATIC:
+            skip(fn, "static_function")
+            continue
+        if flags & 0x100000 or flags & 0x10000:
+            skip(fn, "delegate_function")
+            continue
+        if flags & ~CLASS_EVENT_ALLOWED_FLAGS:
+            skip(fn, "unsupported_function_flags %#x" % (flags & ~CLASS_EVENT_ALLOWED_FLAGS))
+            continue
+        if flags & 0x40000:
+            skip(fn, "private_event")
+            continue
+        access = "protected" if flags & 0x80000 else "public"
+        if flags & 0x80000 and flags & 0x20000:
+            skip(fn, "conflicting_access_flags")
+            continue
+        native = bool(flags & 0x400)
+        mark = len(resolver.tokens)
+        resolver.wire_used = False
+        resolver.used = {}
+        enum_args = []
+        try:
+            ret, args = decode_params(params, resolver, enum_args, name, fname)
+        except Exception as exc:
+            skip(fn, "params_not_decoded: %s" % exc)
+            continue
+        used = resolver.used
+        new_tokens = resolver.tokens[mark:]
+        if new_tokens:
+            skip(fn, "unresolved_parameter_type: " + ", ".join(sorted(set(new_tokens))))
+            continue
+        pairs, _ = split_properties(params)
+        pflags = [hx(e.get("property_flags")) for e, _c in pairs]
+        has_out = any(pf & CPF_OUT_PARM and not pf & CPF_RETURN_PARM for pf in pflags)
+        if has_out != bool(flags & 0x400000):
+            skip(fn, "has_out_parms_flag_disagrees_with_parameters")
+            continue
+        if any("Delegate" in str(e.get("kind")) for e, _c in pairs):
+            skip(fn, "delegate_parameter")
+            continue
+        if any(pf & CPF_REFERENCE_PARM and not pf & (CPF_OUT_PARM | CPF_CONST_PARM) for pf in pflags):
+            skip(fn, "non_const_reference_parameter_without_out")
+            continue
+        if sum(1 for pf in pflags if pf & CPF_RETURN_PARM) > 1:
+            skip(fn, "multiple_return_values")
+            continue
+        # UHT's event thunk passes FString, FText and containers as `const T&` (PassCPPArgsByRef; structs stay by value) even
+        # when the property has no reference flags; the declaration must match it exactly.
+        args = [byref_event_arg(a) for a in args]
+        sig_types = [ret] + [a.rsplit(" ", 1)[0] for a in args]
+        if any(CLASS_EVENT_BAD_TYPE_RE.search(t) for t in sig_types):
+            skip(fn, "type_not_blueprint_compatible: " + ", ".join(t for t in sig_types if CLASS_EVENT_BAD_TYPE_RE.search(t)))
+            continue
+        if any(a.rsplit(" ", 1)[-1] in CPP_KEYWORDS or not re.match(r"^\w+$", a.rsplit(" ", 1)[-1]) for a in args):
+            skip(fn, "bad_parameter_name")
+            continue
+        bad_enum = None
+        for ufn in used:
+            info = resolver.gate.info(ufn) if resolver.gate else None
+            if info is not None and info.kind == "enum" and info.package in PROMOTE_PACKAGES:
+                if any(not 0 <= int(v["value"]) <= 255 for v in info.rec.get("enumerators") or []):
+                    bad_enum = info.cpp_name
+        if bad_enum:
+            skip(fn, "enum_not_uint8_blueprint_type: " + bad_enum)
+            continue
+        if native and ret != "void":
+            skip(fn, "native_event_with_return_value (needs a recovered body)")
+            continue
+        pure = bool(flags & FUNC_BLUEPRINT_PURE)
+        has_outputs = ret != "void" or has_out
+        if pure and not has_outputs:
+            skip(fn, "pure_without_outputs")
+            continue
+        specs = ["BlueprintNativeEvent" if native else "BlueprintImplementableEvent"]
+        if flags & 0x4000000:
+            specs.append("BlueprintCallable")
+        if pure:
+            specs.append("BlueprintPure")
+        elif flags & 0x4000000 and flags & FUNC_CONST and has_outputs:
+            specs.append("BlueprintPure=false")   # UHT would otherwise infer Pure from const + outputs
+        for bit, label in ((0x4, "BlueprintAuthorityOnly"), (0x8, "BlueprintCosmetic")):
+            if flags & bit:
+                specs.append(label)
+        BLUEPRINT_EVENT_TYPE_FNS.update(used)
+        rec = {"name": fname, "rpc": False, "service": None, "ret": ret, "const": bool(flags & FUNC_CONST),
+               "notify": False, "splice": False, "blueprint_event": not native, "native_event": native,
+               "class_event": True, "access": access, "specifiers": specs, "args": args, "used": used,
+               "original_flags": flags}
+        out.append(rec)
+    return out, skipped
+
+
 def render_interface_header(name, source_label, api, model=None):
     """UINTERFACE U<Name> (parent UInterface) and its native interface I<Name>, in one header as UHT expects."""
     custom = _fort_ability_interface_policy.render_header(name, source_label, api)
@@ -4401,6 +4568,62 @@ def promote(args):
     if native_gameplay_tags_sources:
         add_deps(_native_gameplay_tags_policy.MODULE, _native_gameplay_tags_policy.DEPENDENCIES)
 
+    class_event_skipped = []
+    class_event_emitted = []
+    chain_cache = {}
+    block_fn_names = {}
+
+    def reflected_fn_names(cls):
+        if cls not in block_fn_names:
+            blk = name_to_block.get(cls)
+            b = blocks_by_va.get(blk) if blk else None
+            block_fn_names[cls] = {f.get("name") for f in (b.get("functions") or [])} if b else set()
+        return block_fn_names[cls]
+
+    def class_text(cls):
+        """Header text (comments stripped) that declares ancestor cls: the generated header of a promoted class,
+        else its engine/plugin header. None when it cannot be found."""
+        if cls in chain_cache:
+            return chain_cache[cls]
+        text = None
+        blk = name_to_block.get(cls)
+        pkg = (parents.get(blk) or {}).get("package") if blk else None
+        if cls in listed and pkg:
+            path = os.path.join(PROJECT_NATIVE_DIR, "Source", pkg.rsplit("/", 1)[-1], "Generated", cls + ".h")
+            if os.path.isfile(path):
+                text = strip_comments(open(path, encoding="utf-8", errors="replace").read())
+        else:
+            mods = [pkg.rsplit("/", 1)[-1]] if pkg else []
+            mods += [m for m in ("Engine", "CoreUObject", "UMG", "AIModule", "GameplayAbilities", "GameplayTasks") if m not in mods]
+            for mod in mods:
+                rel = header_index.find(mod, cls)
+                if rel:
+                    base = registry.modules[mod]["dir"]
+                    for sub in ("Classes", "Public"):
+                        path = os.path.join(base, sub, rel)
+                        if os.path.isfile(path):
+                            text = strip_comments(open(path, encoding="utf-8", errors="replace").read())
+                            break
+                    if text is not None:
+                        break
+        chain_cache[cls] = text
+        return text
+
+    def class_event_chain_hit(cls, blk, fname):
+        """Description of the first ancestor that already has a member named fname, else None. An ancestor whose
+        declaring header cannot be found counts as a hit for a non-reflected engine class only when it is not UObject."""
+        for anc in (parents[blk].get("chain") or [])[1:]:
+            if fname in reflected_fn_names(anc):
+                return "%s (reflected function)" % anc
+            text = class_text(anc)
+            if text is None:
+                if anc == "UObject":
+                    continue
+                return "%s (header not found, cannot verify)" % anc
+            if re.search(r"\b%s\s*\(" % re.escape(fname), text) or re.search(r"\b%s\s*;" % re.escape(fname), text):
+                return "%s (declared in header)" % anc
+        return None
+
     for name in class_list:
         block = name_to_block[name]
         package = parents[block].get("package")
@@ -4445,6 +4668,21 @@ def promote(args):
                                      snippets_by_class.get(name, []), splice_ctx,
                                      native_execs=guarded_native_execs.get(name) if name in
                                  ("UCommonActivatablePanel", "UCommonInputManager", "UFortRestartClientModal", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary") else None)
+        if package not in CLASS_EVENT_SKIP_PACKAGES and not is_interface(block):
+            trial_header = render_promoted_header(model, "X_API", "Parent.h", "trial")
+            trial_cpp = render_promoted_cpp(model, "trial")
+            events, ev_skips = build_class_events(
+                model, name, package, resolver, owner_fns, blocks_by_va[block], snippets_by_class.get(name, []),
+                lambda fname, _n=name, _b=block: class_event_chain_hit(_n, _b, fname), (trial_header, trial_cpp))
+            class_event_skipped.extend(ev_skips)
+            if events:
+                model["functions"] = model["functions"] + events
+                model["used"] = merge_used([model["used"]] + [f["used"] for f in events])
+                refs = set(resolver.class_refs) - {name, model["parent"]}
+                model["forward_decls"] = sorted(set(model["forward_decls"]) | refs)
+                class_event_emitted.append({"class": name, "package": package,
+                                            "functions": [{"name": f["name"], "specifiers": f["specifiers"],
+                                                           "access": f["access"]} for f in events]})
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
         _native_checkpoint3058_policy.configure_model(model)
@@ -4514,6 +4752,9 @@ def promote(args):
         api = "%s_API" % module.upper()
         header = render_promoted_header(model, api, parent_include, source_label)
         header = _strict_panel_policy.finalize_header(model, header)
+        for ev in (f for f in model["functions"] if f.get("class_event")):
+            if len(re.findall(r"\b%s\s*\(" % re.escape(ev["name"]), header)) != 1:
+                raise SystemExit("%s: generated event %s collides with another declaration in the final header" % (name, ev["name"]))
         cpp = render_promoted_cpp(model, source_label)
         _input_cache_policy.validate_rendered(model, header, cpp)
         _action_slate_policy.validate_rendered(model, header, cpp)
@@ -4911,6 +5152,16 @@ def promote(args):
                                "functions_emitted": sum(len(e["functions"]) for e in interface_emitted),
                                "functions_skipped": len(interface_skipped), "skipped_by_reason": by_reason},
                    "skipped": interface_skipped}, fh, indent=1)
+        fh.write("\n")
+    with open(os.path.join(args.report_dir, "class_events_skipped.json"), "w", encoding="utf-8", newline="\n") as fh:
+        by_reason = {}
+        for r in class_event_skipped:
+            key = r["reason"].split(":")[0].split(" (")[0].split(" 0x")[0]
+            by_reason[key] = by_reason.get(key, 0) + 1
+        json.dump({"summary": {"classes_with_events": len(class_event_emitted),
+                               "functions_emitted": sum(len(e["functions"]) for e in class_event_emitted),
+                               "functions_skipped": len(class_event_skipped), "skipped_by_reason": by_reason},
+                   "emitted": class_event_emitted, "skipped": class_event_skipped}, fh, indent=1)
         fh.write("\n")
     with open(os.path.join(args.report_dir, "native_classes_index.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump({"summary": summary, "classes": index}, fh, indent=1)

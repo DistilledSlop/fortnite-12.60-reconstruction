@@ -8,6 +8,7 @@
 
 #include "EDespawnAIType.h"
 #include "EFortAIUtility.h"
+#include "EFortDayPhase.h"
 #include "EFortEncounterDirection.h"
 #include "EWardAffectType.h"
 #include "Engine/CurveTable.h"
@@ -439,6 +440,56 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPointTooCloseToPatrolWards(FVector& Point, EWardAffectType WardEffectTypeFilter) const;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnDirectorDeactivated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFadeStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnPawnDied(AFortAIPawn* KilledPawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPeakStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnPlayerDied(AFortPlayerPawn* PlayerPawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void OnPlayerSpawn(AFortPlayerPawn* PlayerPawn);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRampStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRestStarted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void PostDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintAuthorityOnly)
+	void ReceivePawnSpawned(AFortPawn* SpawnedPawn);
+public:
 
 };
 

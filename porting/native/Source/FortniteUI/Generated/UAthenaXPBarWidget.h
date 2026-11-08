@@ -22,5 +22,20 @@ public:
 	UPROPERTY()
 	int32 XpWaitingToBeEarned;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void InitilizeBar(int32 CurrentLevel, int32 CurrentXP, int32 TotalXP);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateBar(int32 XpToGain, int32 CurrentDisplayXp, int32 XpToLevel, int32 CurrentLevel, int32 TotalRestXpRemaining, bool bIsXPBarOnly);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateRestXP(int32 RestXpRemaining);
+public:
+
 };
 

@@ -25,5 +25,25 @@ public:
 	UPROPERTY()
 	TArray<FFortCountdownSounds> TrackList;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownActivated();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownFinished();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownStarted(int32 TimeRemaining);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCountdownUpdate(int32 TimeRemaining);
+public:
+
 };
 

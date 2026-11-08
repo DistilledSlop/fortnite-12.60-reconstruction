@@ -7,6 +7,8 @@
 #include "ULTMWidgetBase.h"
 
 #include "AFortAthenaMutator_Ashton.h"
+#include "EAshtonStoneStateType.h"
+#include "EAshtonStoneType.h"
 
 #include "UAshtonWidgetBase.generated.h"
 
@@ -19,6 +21,26 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortAthenaMutator_Ashton* AshtonMutatorRef;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCloseWidget();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOpenWidget();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStoneChanged(EAshtonStoneType StoneType, EAshtonStoneStateType StoneState);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnVillainRespawnCountChanged(int32 NumRespawnsLeft, float RespawnPercentLeft);
+public:
 
 };
 

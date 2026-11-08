@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "AFortPlayerPawn.h"
+#include "AFortPlayerStateAthena.h"
+#include "Math/Color.h"
+
 class UAthenaRemotePlayerViewData;
 
 #include "UAthenaEventMatchPlayerWidgetBase.generated.h"
@@ -19,6 +23,111 @@ public:
 	// table index 0, flags 0x24080000000004
 	UPROPERTY()
 	TWeakObjectPtr<UAthenaRemotePlayerViewData> PlayerData;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeingRevivedStateChanged(UAthenaRemotePlayerViewData* InPlayerData, bool bIsBeingRevived);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDBNOStateChanged(UAthenaRemotePlayerViewData* InPlayerData, bool bIsDBNO);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDeadStateChanged(UAthenaRemotePlayerViewData* InPlayerData, bool bIsDead);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisconnectedChanged(UAthenaRemotePlayerViewData* InPlayerData, bool bIsDisconnected);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHealthDamaged(UAthenaRemotePlayerViewData* InPlayerData, float InHealth, float InHealthMax);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHealthHealed(UAthenaRemotePlayerViewData* InPlayerData, float InHealth, float InHealthMax);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsFollowedPlayerChanged(UAthenaRemotePlayerViewData* InPlayerData, bool bInIsFollowedPlayer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsInRelevancyChanged(UAthenaRemotePlayerViewData* InPlayerData, bool bInIsInRelevancy);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnIsReplayRelevancyPlayerChanged(UAthenaRemotePlayerViewData* InPlayerData, bool bInIsReplayRelevancyPlayer);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnKillScoreChanged(UAthenaRemotePlayerViewData* InPlayerData, int32 InKillScore);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocationChanged(UAthenaRemotePlayerViewData* InPlayerData, const FString& InLocation);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMaterialCountChanged(UAthenaRemotePlayerViewData* InPlayerData, int32 InCount);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlaceChanged(UAthenaRemotePlayerViewData* InPlayerData, int32 InPlace);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerDataChanged(UAthenaRemotePlayerViewData* InPlayerData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerNameChanged(UAthenaRemotePlayerViewData* InPlayerData, const FString& InPlayerName);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerPawnChanged(UAthenaRemotePlayerViewData* InPlayerData, AFortPlayerPawn* InPlayerPawn);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerStateChanged(UAthenaRemotePlayerViewData* InPlayerData, AFortPlayerStateAthena* InPlayerState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShieldDamaged(UAthenaRemotePlayerViewData* InPlayerData, float InShield, float InShieldMax);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShieldHealed(UAthenaRemotePlayerViewData* InPlayerData, float InShield, float InShieldMax);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadIdChanged(UAthenaRemotePlayerViewData* InPlayerData, uint8 InSquadId);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTeamColorChanged(UAthenaRemotePlayerViewData* InPlayerData, FLinearColor InTeamColor);
+public:
 
 };
 

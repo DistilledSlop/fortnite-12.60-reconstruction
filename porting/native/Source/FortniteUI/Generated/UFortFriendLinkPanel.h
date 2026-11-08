@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EShareButtonType.h"
 #include "UCommonButton.h"
 
 #include "UFortFriendLinkPanel.generated.h"
@@ -19,6 +20,16 @@ public:
 	// table index 0, flags 0x4000000008000c
 	UPROPERTY()
 	UCommonButton* Button_ShareButton;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCopiedToClipboard();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShareButtonTypeSet(EShareButtonType Type);
+public:
 
 };
 

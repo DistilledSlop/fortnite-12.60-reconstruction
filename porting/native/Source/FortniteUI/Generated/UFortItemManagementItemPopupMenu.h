@@ -21,5 +21,10 @@ protected:
 	UFortItemManagementItemTileButton* GetHostButton() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemChanged(bool bItemChanged, bool bAmmoChanged, bool bIngredientsChanged);
+public:
+
 };
 

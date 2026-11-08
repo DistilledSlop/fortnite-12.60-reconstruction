@@ -8,6 +8,8 @@
 
 #include "UFortPlayerPerksItemDefinition.h"
 
+class UTexture2D;
+
 #include "USpatialFactionPerkReward.generated.h"
 
 UCLASS(abstract)
@@ -27,6 +29,16 @@ public:
 	// table index 0, flags 0x20080000010005
 	UPROPERTY()
 	UFortPlayerPerksItemDefinition* Faction2PerksItemDef;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFactionSet(bool bIsCurrentFaction);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitializePerkReward(int32 FactionNumber, int32 PerkLevel, TSoftObjectPtr<UTexture2D>& RewardTexture, bool bIsRevealed, bool bIsEarned, bool bIsCurrentFaction, bool bShowBang);
+public:
 
 };
 

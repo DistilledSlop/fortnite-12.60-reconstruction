@@ -40,5 +40,15 @@ protected:
 	FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetFocusInfo GetFocusInfo() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleButtonClicked(int32 ButtonIndex);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleFocusChanged();
+public:
+
 };
 

@@ -2,6 +2,7 @@
 #include "AFortGameStateZone.h"
 #include "AFortMission.h"
 #include "AFortMissionManager.h"
+#include "AFortPlayerController.h"
 #include "CoreMinimal.h"
 #include "EFortVoteArbitratorType.h"
 #include "EFortVoteType.h"

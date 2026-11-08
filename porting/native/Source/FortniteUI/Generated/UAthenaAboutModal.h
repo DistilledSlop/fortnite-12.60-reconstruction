@@ -53,5 +53,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_CloseMobile;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetContent(FText& InTitle, TArray<FText>& InEntries);
+public:
+
 };
 

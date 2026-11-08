@@ -14,5 +14,10 @@ class FORTNITEUI_API UAthenaBroadcastMatchStatusWidget : public UFortHUDElementW
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStormPhaseChanged(int32 StormPhase);
+public:
+
 };
 

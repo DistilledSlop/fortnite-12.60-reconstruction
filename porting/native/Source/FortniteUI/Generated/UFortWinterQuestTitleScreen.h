@@ -40,5 +40,15 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Continue;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginCabinTransition();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResetScreen();
+public:
+
 };
 

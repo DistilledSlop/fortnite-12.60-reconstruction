@@ -335,6 +335,11 @@ bool ABuildingSMActor::WillRegisterWithStructuralGrid() const
 	}
 }
 
+void ABuildingSMActor::BlueprintOnStructurallyUnstable_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 UMaterialInstanceDynamic* ABuildingSMActor::NativeGetOrCreateMID(UMeshComponent* Mesh, int32 Slot)
 {
 	// CONFIDENCE: HIGH

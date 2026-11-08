@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EAthenaGameFeatureStatus.h"
 #include "EFortGameFeature.h"
 #include "UCommonNumericTextBlock.h"
 #include "UCommonTextBlock.h"
@@ -60,6 +61,11 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonTextBlock* Text_ExtendedDisplayText;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStatusChanged(EAthenaGameFeatureStatus NewStatus);
+public:
 
 };
 

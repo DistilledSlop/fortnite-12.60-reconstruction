@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFrontEndCamera.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFrontEndCamera : uint8
 {
 	Invalid = 0,

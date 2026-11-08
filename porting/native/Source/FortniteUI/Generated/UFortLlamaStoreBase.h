@@ -65,5 +65,15 @@ public:
 	UPROPERTY()
 	bool bHideSoldOffers;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CreateTencentPuchaseOpenModal();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SwapToCardEnterState();
+public:
+
 };
 

@@ -20,5 +20,15 @@ public:
 	UPROPERTY()
 	TSubclassOf<UAthenaBroadcastHUDMenuStatusBase> HUDMenuStatusWidgetClass;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AddHUDMenuStatus(UAthenaBroadcastHUDMenuStatusBase* HUDMenuStatusWidget);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void RemoveHUDMenuStatus(UAthenaBroadcastHUDMenuStatusBase* HUDMenuStatusWidget);
+public:
+
 };
 

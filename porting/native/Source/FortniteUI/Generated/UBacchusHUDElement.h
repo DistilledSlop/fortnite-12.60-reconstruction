@@ -7,6 +7,7 @@
 #include "UFortMobileHUDElement.h"
 
 #include "EBacchusHUDStateType.h"
+#include "FFortHUDState.h"
 #include "FHUDLayoutDataEntry.h"
 #include "GameplayTagContainer.h"
 
@@ -141,6 +142,17 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	FGameplayTag BP_GetMobileVisualType() const;
 	virtual FGameplayTag BP_GetMobileVisualType_Implementation() const;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnHUDStateUpdate(FFortHUDState& NewState);
+	virtual void OnHUDStateUpdate_Implementation(FFortHUDState& NewState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowHighlight(bool Show);
+public:
 
 };
 

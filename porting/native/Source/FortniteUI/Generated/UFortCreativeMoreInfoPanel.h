@@ -55,5 +55,30 @@ public:
 	UPROPERTY()
 	UHorizontalBox* Hbox_SetPhoto;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAccept();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPreview();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSaveCallBack(bool bSuccess);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowError(const FString& Error);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowSpinner(bool bShow);
+public:
+
 };
 

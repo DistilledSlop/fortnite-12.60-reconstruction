@@ -14,5 +14,30 @@ class FORTNITEUI_API USeasonPassPageWidget : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	bool ContainsLevel(int32 Level);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void NavigatePageLeft();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void NavigatePageRight();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBattlePassChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ScreenShown();
+public:
+
 };
 

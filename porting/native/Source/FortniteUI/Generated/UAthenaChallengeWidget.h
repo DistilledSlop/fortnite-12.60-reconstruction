@@ -33,5 +33,25 @@ public:
 	UPROPERTY()
 	URichTextBlock* RichText_RewardDesc;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnChallengeInfoSet();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnIsInGameSet(bool bIsInGame);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnIsLastEntrySet(bool bIsLastEntry);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetState(bool bIsCompleted, bool bIsLocked);
+public:
+
 };
 

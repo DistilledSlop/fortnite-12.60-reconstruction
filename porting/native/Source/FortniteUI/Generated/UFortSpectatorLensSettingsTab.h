@@ -20,5 +20,35 @@ public:
 	UPROPERTY()
 	UCommonUserWidget* Rotator_AutoExposure;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnApertureChanged(int32 PresetApertureIdx);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAutoExposureEnabledChanged(bool bAutoExposureEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAutoFocusEnabledChanged(bool bAutoFocusEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFocalLengthChanged(TArray<FText>& FocalLengthTexts, int32 PresetFocalLengthIdx);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnManualExposureBiasChanged(float ManualExposureBias);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnManualFocusDistanceChanged(float ManualFocusDistance);
+public:
+
 };
 

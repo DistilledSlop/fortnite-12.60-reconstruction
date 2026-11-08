@@ -31,5 +31,10 @@ public:
 	UPROPERTY()
 	UFortSettingValueDiscreteDynamic_Bool* Setting;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSettingChanged(bool NewValue);
+public:
+
 };
 

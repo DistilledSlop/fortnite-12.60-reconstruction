@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	UFortGiftBoxItem* GiftBoxItem;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGiftBoxSet();
+public:
+
 };
 

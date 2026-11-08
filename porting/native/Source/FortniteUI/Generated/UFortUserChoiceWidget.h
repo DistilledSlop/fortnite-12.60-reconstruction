@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortUserWidget.h"
 
+#include "FChoiceData.h"
+
 #include "UFortUserChoiceWidget.generated.h"
 
 UCLASS()
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFortUserChoiceWidget : public UFortUserWidget
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetChoices(FChoiceData& ChoiceItems);
+public:
+
 };
 

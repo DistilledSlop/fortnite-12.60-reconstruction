@@ -22,5 +22,10 @@ public:
 	UPROPERTY()
 	float CountdownTime;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCountdownText();
+public:
+
 };
 

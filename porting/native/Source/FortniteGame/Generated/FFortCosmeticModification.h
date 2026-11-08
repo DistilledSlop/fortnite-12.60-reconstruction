@@ -13,7 +13,7 @@ class UParticleSystem;
 
 #include "FFortCosmeticModification.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortCosmeticModification
 {
 	GENERATED_BODY()

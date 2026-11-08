@@ -24,5 +24,15 @@ public:
 	UPROPERTY(Transient)
 	UFortAthenaBTTask_DynamicBlueprint* CachedTask;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAbort();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExecute(AActor* Activator);
+public:
+
 };
 

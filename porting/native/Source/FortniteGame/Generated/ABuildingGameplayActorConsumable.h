@@ -102,5 +102,14 @@ protected:
 	virtual void PrepareOnConsumeGameplayEffectSpec_Implementation(FGameplayEffectSpecHandle& SpecHandle);
 public:
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnAllowedToConsumeFailed(AFortPawn* InteractingPawn);
+	virtual void OnAllowedToConsumeFailed_Implementation(AFortPawn* InteractingPawn);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnLocalBeginUse();
+public:
+
 };
 

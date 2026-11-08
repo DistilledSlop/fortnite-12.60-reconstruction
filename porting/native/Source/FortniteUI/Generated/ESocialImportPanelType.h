@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ESocialImportPanelType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ESocialImportPanelType : uint8
 {
 	Athena = 0,

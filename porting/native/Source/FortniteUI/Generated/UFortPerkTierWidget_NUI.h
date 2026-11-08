@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortUIPerk.h"
 #include "FFortUIPerkTier.h"
+
+class UFortPerkWidget_NUI;
 
 #include "UFortPerkTierWidget_NUI.generated.h"
 
@@ -19,6 +22,11 @@ public:
 	// table index 0, flags 0x11000000000004
 	UPROPERTY()
 	FFortUIPerkTier FortPerkTier;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnGeneratePerk(FFortUIPerk Perk, UFortPerkWidget_NUI* PerkWidget);
+public:
 
 };
 

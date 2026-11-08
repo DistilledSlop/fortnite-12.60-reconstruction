@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* TabLabel;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUpdatedIsCurrentTab(bool bIsCurrent);
+public:
+
 };
 

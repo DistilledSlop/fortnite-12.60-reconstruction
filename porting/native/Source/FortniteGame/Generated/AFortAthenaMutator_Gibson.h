@@ -10,6 +10,7 @@
 #include "FMutatorGibsonArchetypeInfo.h"
 #include "FMutatorGibsonPathInfo.h"
 #include "FMutatorGibsonPendingReinforcement.h"
+#include "FMutatorGibsonSquadMemberInfo.h"
 
 class AActor;
 class UFortAthenaAIBotCustomizationData;
@@ -102,6 +103,16 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	uint8 CurrentSquadAliveCount;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnMutatorReady();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSquadSpawned(uint8 SquadId, TArray<FMutatorGibsonSquadMemberInfo>& SquadMembersInfo);
+public:
 
 };
 

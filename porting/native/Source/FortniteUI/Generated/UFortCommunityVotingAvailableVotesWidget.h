@@ -30,5 +30,35 @@ public:
 	UPROPERTY()
 	UFortEventDateTimeTextBlock* DateTimeTextBlock_VoteCountdown;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayAvailableVotes();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayCountdown(float StartValue);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayDecreaseVote();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayEventOver(float StartValue);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayIdle();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayIncreaseVote();
+public:
+
 };
 

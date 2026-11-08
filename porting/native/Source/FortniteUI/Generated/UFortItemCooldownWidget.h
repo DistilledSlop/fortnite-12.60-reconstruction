@@ -53,5 +53,15 @@ public:
 	UPROPERTY(Transient)
 	UMaterialInstanceDynamic* CooldownPercentageMID;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCooldownStarted(EFortItemCooldownType CooldownType);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCooldownStopped(EFortItemCooldownType CooldownType);
+public:
+
 };
 

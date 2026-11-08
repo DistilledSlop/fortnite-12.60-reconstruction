@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortRarityItemData.h"
 #include "UCommonTextBlock.h"
+#include "UFortItemSeriesDefinition.h"
 
 class UBorder;
 
@@ -33,6 +35,16 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonTextBlock* Text_ItemType;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitializeRarityWithoutSeries(FFortRarityItemData RarityData);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInitializeRarityWithSeries(UFortItemSeriesDefinition* SeriesData);
+public:
 
 };
 

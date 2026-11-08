@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeListEntryBase.h"
 
+#include "FFortChallengeSetStyle.h"
 #include "UCommonTextBlock.h"
 
 #include "UAthenaChallengeTreeEntry_ChallengeSet.generated.h"
@@ -27,6 +28,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonTextBlock* Text_PercentComplete;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeSetEstablished(FFortChallengeSetStyle& DisplayStyle);
+public:
 
 };
 

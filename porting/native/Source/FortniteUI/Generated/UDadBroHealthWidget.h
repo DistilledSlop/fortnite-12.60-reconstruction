@@ -8,6 +8,7 @@
 
 #include "AFortAIPawn.h"
 #include "AFortAthenaMutator_DadBro.h"
+#include "EDadBroHealthType.h"
 
 #include "UDadBroHealthWidget.generated.h"
 
@@ -28,6 +29,16 @@ public:
 	// table index 0, flags 0x20080000002014
 	UPROPERTY(Transient)
 	AFortAIPawn* BossAIPawn;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewHealthPercent(float NewHealth);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTransitionToNewHealthState(EDadBroHealthType NewHealthType);
+public:
 
 };
 

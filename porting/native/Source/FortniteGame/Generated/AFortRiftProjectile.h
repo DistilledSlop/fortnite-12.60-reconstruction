@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortProjectileBase.h"
 
+class AActor;
+
 #include "AFortRiftProjectile.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,9 @@ class FORTNITEGAME_API AFortRiftProjectile : public AFortProjectileBase
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintNativeEvent)
+	void NotifyTeleportedVehicle(AActor* VehicleActor);
+	virtual void NotifyTeleportedVehicle_Implementation(AActor* VehicleActor);
+
 };
 

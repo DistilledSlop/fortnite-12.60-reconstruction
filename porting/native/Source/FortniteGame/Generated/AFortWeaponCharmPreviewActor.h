@@ -11,6 +11,7 @@
 
 class AFortPlayerCharm;
 class UAthenaCharmItemDefinition;
+class USkeletalMesh;
 class USkeletalMeshComponent;
 
 #include "AFortWeaponCharmPreviewActor.generated.h"
@@ -44,6 +45,16 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetActiveCharmSlot(int32 CharmSlotIn);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPreviewSkeletalMeshLoaded(USkeletalMesh* LoadedMesh, FCharmPreviewEntry& EntryInfo);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void PreviewCharm(UAthenaCharmItemDefinition* Charm);
 public:
 
 };

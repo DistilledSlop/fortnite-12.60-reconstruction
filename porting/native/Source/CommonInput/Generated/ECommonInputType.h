@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ECommonInputType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ECommonInputType : uint8
 {
 	MouseAndKeyboard = 0,

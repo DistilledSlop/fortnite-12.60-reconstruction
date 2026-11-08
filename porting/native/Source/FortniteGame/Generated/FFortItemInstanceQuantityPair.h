@@ -10,7 +10,7 @@ class UFortItem;
 
 #include "FFortItemInstanceQuantityPair.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FFortItemInstanceQuantityPair
 {
 	GENERATED_BODY()

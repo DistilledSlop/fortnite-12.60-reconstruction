@@ -63,5 +63,20 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPerkUnlocked() const;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHeroUpdated();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStateChanged();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSupportTypeUpdated();
+public:
+
 };
 

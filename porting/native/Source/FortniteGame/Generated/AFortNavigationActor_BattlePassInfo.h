@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortEventLevelNavigationActor.h"
 
+class UFortItemDefinition;
+
 #include "AFortNavigationActor_BattlePassInfo.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -14,5 +16,10 @@ class FORTNITEGAME_API AFortNavigationActor_BattlePassInfo : public AFortEventLe
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void InitForBattlePassInfo(int32 CurrentLevel, int32 CurrentXp, int32 XpToLevel, UFortItemDefinition* NextReward);
+public:
+
 };
 

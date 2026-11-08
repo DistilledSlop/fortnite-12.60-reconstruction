@@ -46,6 +46,11 @@ public:
 	UPROPERTY()
 	TArray<UFortCreativeServerInfo*> ServerList;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCreativeServerListRefreshed();
+public:
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

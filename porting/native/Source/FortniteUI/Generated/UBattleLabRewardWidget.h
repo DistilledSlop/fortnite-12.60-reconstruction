@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "FBattleLabDisplayData.h"
 #include "FFortItemQuantityPair.h"
 #include "FFortPrioritizedWidgetData.h"
 #include "GameplayTagContainer.h"
@@ -42,6 +43,11 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	FGameplayTagContainer RequiredTags;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OpenWidget(FBattleLabDisplayData& DisplayData);
+public:
 
 };
 

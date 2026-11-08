@@ -28,5 +28,10 @@ public:
 	UPROPERTY()
 	int32 VoteResult;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnActionTaken();
+public:
+
 };
 

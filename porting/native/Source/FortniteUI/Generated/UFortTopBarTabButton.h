@@ -31,5 +31,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_DisplayName;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUseAlternateTab();
+public:
+
 };
 

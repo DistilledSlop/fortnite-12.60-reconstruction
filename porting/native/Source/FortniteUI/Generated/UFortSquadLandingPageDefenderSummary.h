@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortLandingPageDefenderSummaryInfo.h"
+
 #include "UFortSquadLandingPageDefenderSummary.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,20 @@ class FORTNITEUI_API UFortSquadLandingPageDefenderSummary : public UCommonUserWi
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleAddDefenderSquadDetailsBP(FFortLandingPageDefenderSummaryInfo DefenderSummaryInfo);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleAddLockedDefenderSquadDetailsBP(FFortLandingPageDefenderSummaryInfo DefenderSummaryInfo);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleClearDefenderSquadDetailsBP();
+public:
+
 };
 

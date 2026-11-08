@@ -41,5 +41,17 @@ protected:
 	virtual void OnTargetHealthChanged_Implementation();
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnTargetDestroyed();
+	virtual void OnTargetDestroyed_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnTargetDied();
+	virtual void OnTargetDied_Implementation();
+public:
+
 };
 

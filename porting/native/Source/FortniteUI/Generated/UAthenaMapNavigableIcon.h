@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 class UImage;
+class UTexture2D;
 
 #include "UAthenaMapNavigableIcon.generated.h"
 
@@ -31,6 +32,61 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsIconSelected() const;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnBeginIntroAnimation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeIconOverriden(UTexture2D* Icon);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeReset();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChallengeSet(bool bIsComplete, bool bIsLocked, bool bHasIconOverride, float Progress, bool bShouldShowBang);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnChangeBangVisibility(bool bShouldShow);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHovered(bool bUserInteraction);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelected(bool bUserInteraction);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetHasLocation(bool bHasLocation);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetIsInGame(bool bIsInGame);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUnhovered(bool bUserInteraction);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnUnselected(bool bUserInteraction);
+public:
 
 };
 

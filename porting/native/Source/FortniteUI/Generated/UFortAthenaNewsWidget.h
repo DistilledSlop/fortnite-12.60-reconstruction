@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EAthenaNewsStyle.h"
 #include "UCommonTextBlock.h"
 
 class UFortAthenaNewsTile;
@@ -64,6 +65,21 @@ public:
 	// table index 0, flags 0x2008000008000c
 	UPROPERTY()
 	UVerticalBox* VerticalBox_SpotlightNewsContainer;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleNewsStyle(EAthenaNewsStyle NewsStyle);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ResetViewConfiguration();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SingleItemConfiguration();
+public:
 
 };
 

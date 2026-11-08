@@ -20,5 +20,9 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UFortExpeditionItem> Item;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetData(UFortExpeditionItem* InItem);
+	virtual void SetData_Implementation(UFortExpeditionItem* InItem);
+
 };
 

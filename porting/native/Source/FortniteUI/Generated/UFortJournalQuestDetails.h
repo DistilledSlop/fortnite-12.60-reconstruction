@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UFortQuestItem* CurrentQuest;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleCurrentQuestChangedBP();
+public:
+
 };
 

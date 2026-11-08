@@ -415,6 +415,251 @@ void AFortCreativeMoveTool::SpawnPlaysetVolumeOnServer_Implementation(UFortPlays
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortCreativeMoveTool::HandleActivateRotationModePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleActivateScaleModePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleActivateTranslateModePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleActorSelectedForQueuePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleActorSelectedForQueueReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleClearMultiSelectQueuePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleCopyPickupPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleDeletePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleDeleteReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleDuplicateActorPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleDuplicateActorReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleExitHeldDownLongEnough_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleExitOrDeletePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleExitPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleExitReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleHitTraceRuleHeldDownLongEnough_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleHitTraceRulePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleHitTraceRuleReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleMirrorPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandlePickupPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandlePlaysetPreviewPlace_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandlePrecisionModePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandlePrecisionModeReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandlePullPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandlePullReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandlePushPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandlePushReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleResetRotationPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleResetScalePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleRotateClockwisePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleRotateClockwiseReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleRotateCounterclockwisePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleRotateCounterclockwiseReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleRotateSingleClockwisePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleRotateSingleClockwiseReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleRotateSingleCounterclockwisePressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleRotateSingleCounterclockwiseReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleRotateSwitchAxisPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleRotateSwitchAxisReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleScaleDownPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleScaleDownReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleScaleSwitchAxisPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleScaleSwitchAxisReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleScaleUpPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleScaleUpReleased_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleTransformModeDownPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::HandleTransformModeUpPressed_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::PopCreativeMoveToolEquippedInputComponent_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::PushCreativeMoveToolEquippedInputComponent_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 AController* AFortCreativeMoveTool::NativeGetInstigatorController143f76650(AFortCreativeMoveTool* MoveTool)
 {
 	// Original body address: 0x143f76650 (helper, no thunk)

@@ -14,5 +14,15 @@ class FORTNITEUI_API UGooseSkydivingWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEndSkydiving();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStartSkydiving();
+public:
+
 };
 

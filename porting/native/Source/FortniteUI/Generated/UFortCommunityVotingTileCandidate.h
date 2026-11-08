@@ -26,5 +26,10 @@ public:
 	UPROPERTY()
 	UCommonLoadGuard* LoadGuard;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void AnimateImage();
+public:
+
 };
 

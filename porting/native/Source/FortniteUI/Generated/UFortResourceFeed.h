@@ -57,5 +57,20 @@ public:
 	UPROPERTY()
 	UTextBlock* Text_ResourceGained;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFadeOut();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnResourceGained();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeakpointHit();
+public:
+
 };
 

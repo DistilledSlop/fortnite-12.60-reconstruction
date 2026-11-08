@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortChallengeSetStyle.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 #include "UFortPartyMember.h"
@@ -79,6 +80,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UImage* TimerImage;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetMissionStyle(FFortChallengeSetStyle Style);
+public:
 
 };
 

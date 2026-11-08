@@ -10,6 +10,10 @@
 #include "EBarrierFoodTeam.h"
 #include "EBarrierObjectiveDamageState.h"
 #include "FBarrierObjectiveDisplayData.h"
+#include "Math/Vector.h"
+
+class UMaterialInterface;
+class UStaticMesh;
 
 #include "AAthenaBarrierObjective.generated.h"
 
@@ -57,6 +61,31 @@ public:
 
 	UFUNCTION()
 	void OnRep_ObjectiveDamageState();
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ApplyTimerGE(float TimerLength);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHeadRotationSet(float NewYaw);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnNewDamageState(EBarrierObjectiveDamageState NewState);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetHeadMesh(UStaticMesh* NewMesh, FVector NewScale, FVector NewOffset, TArray<UMaterialInterface*>& MaterialsToSwap);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateInGameHealth(float NewHealthPercent);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

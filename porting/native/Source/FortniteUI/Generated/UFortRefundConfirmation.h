@@ -33,5 +33,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_CloseMobile;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetRefundsRemainingText(int32 RefundsRemaining, int32 TotalRefunds);
+public:
+
 };
 

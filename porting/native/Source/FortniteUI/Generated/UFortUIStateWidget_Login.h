@@ -51,5 +51,10 @@ public:
 	UPROPERTY()
 	UFortLoginInteractions* Login_Interactions;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetConsoleWidgetDisplayName();
+public:
+
 };
 

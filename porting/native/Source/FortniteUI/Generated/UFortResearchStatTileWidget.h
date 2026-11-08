@@ -60,5 +60,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsAtMaxResearchLevel() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnStatChanged();
+public:
+
 };
 

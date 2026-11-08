@@ -63,5 +63,15 @@ protected:
 	virtual void RefreshBannerEditor_Implementation();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowNextCategory();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnShowPreviousCategory();
+public:
+
 };
 

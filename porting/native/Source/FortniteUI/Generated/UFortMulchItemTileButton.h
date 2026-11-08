@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortItemTileButton.h"
 
+#include "UFortItem.h"
+
 #include "UFortMulchItemTileButton.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFortMulchItemTileButton : public UFortItemTileButton
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleItemChanged_BP(UFortItem* NewItem);
+public:
+
 };
 

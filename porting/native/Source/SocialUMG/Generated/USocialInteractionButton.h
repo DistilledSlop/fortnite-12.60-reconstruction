@@ -35,5 +35,10 @@ public:
 	UPROPERTY()
 	UBorder* Border_InteractionIndicator;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInteractionSet();
+public:
+
 };
 

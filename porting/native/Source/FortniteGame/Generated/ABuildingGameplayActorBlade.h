@@ -22,5 +22,15 @@ public:
 	void BroadcastOnPullStart();
 	void BroadcastOnPullStart_Implementation();
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPullAborted();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPullStart();
+public:
+
 };
 

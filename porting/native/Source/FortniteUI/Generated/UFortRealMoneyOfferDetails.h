@@ -7,6 +7,7 @@
 #include "UFortStoreFrontOfferDetailsWidgetBase.h"
 
 #include "Engine/DataTable.h"
+#include "FPurchasedItemInfo.h"
 #include "UCommonButton.h"
 
 class UEnableMultiFactorModal;
@@ -89,6 +90,26 @@ public:
 private:
 	UFUNCTION(BlueprintCallable)
 	void SetCanPurchase(bool bInCanPurchase);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSendGiftComplete(bool bSuccess);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ResetPurchaseButtonText();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowPurchaseConfirmation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowPurchasedOverlay(int32 QuantityPurchased, TArray<FPurchasedItemInfo>& PurchasedItems, const FString& OfferId);
 public:
 
 };

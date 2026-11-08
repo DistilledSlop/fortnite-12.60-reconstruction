@@ -24,5 +24,10 @@ public:
 	UPROPERTY()
 	TArray<FGGCenterDisplayEntry> CenterDisplayEntries;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateDisplayWith(TArray<FGGCenterDisplayEntry>& Entries, bool bUpdatingForLocalPlayer);
+public:
+
 };
 
