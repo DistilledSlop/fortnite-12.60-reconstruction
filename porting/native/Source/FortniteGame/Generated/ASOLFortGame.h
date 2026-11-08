@@ -24,9 +24,15 @@ public:
 	UPROPERTY()
 	int32 int_b;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x21c): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x21c;
+
 	// table index 9, flags 0x10000000000000
 	UPROPERTY()
 	int32 int_c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x220): not a UPROPERTY, not replicated.
+	int64 NativeRecoveredInt64_0x220;
 
 	// table index 8, flags 0x10000000000000
 	UPROPERTY()
@@ -72,6 +78,9 @@ public:
 
 	UFUNCTION()
 	int32 GetTeam(ASOLFortPlayer* Player);
+
+	UFUNCTION()
+	void ResetUserGamesVariables();
 
 };
 

@@ -213,6 +213,9 @@ public:
 	UPROPERTY()
 	TArray<TSubclassOf<AActor>> ActorsObjectDiesWhenHitting;
 
+	UFUNCTION(BlueprintCallable)
+	void ApplyImpulse(AActor* ImpulseInstigator, FVector& ImpulseToApply);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool CanTeleport() const;
 

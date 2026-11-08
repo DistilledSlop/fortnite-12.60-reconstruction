@@ -11,6 +11,23 @@ void ASOLFortPlayer::RemoveAllInventoryItems()
 	(void)UFortMinigameStatics::NativeHelper142414c60(Context);
 }
 
+void ASOLFortPlayer::ResetUserPlayerVariables()
+{
+	// Original body 0x1424854f0 (thunk 0x142b90770): zeroes object +0x218..+0x237 (int_a@0x218, gap 0x21c, gap 0x220, real_a..real_d@0x228..0x237) and Empty()s FStrings string_a@0x238, string_b@0x248, string_c@0x258, string_d@0x268
+	// CONFIDENCE: HIGH
+	int_a = 0;
+	NativeRecoveredInt32_0x21c = 0;
+	NativeRecoveredInt64_0x220 = 0;
+	real_a = 0.0f;
+	real_b = 0.0f;
+	real_c = 0.0f;
+	real_d = 0.0f;
+	string_a.Empty();
+	string_b.Empty();
+	string_c.Empty();
+	string_d.Empty();
+}
+
 void ASOLFortPlayer::SetInfiniteAmmo(bool infinite)
 {
 	// Original body: 0x1424876f0 (thunk 0x142b908b0). Offset evidence: [RCX+0x278] is the existing member NativeRecoveredUint64_0x278 (object offset 0x278). The helper result must be an AFortPlayerControllerAthena (IsA check); then byte 0x1cb4 bit 0x4 is written from the infinite argument, which is AFortPlayerController::bInfiniteAmmo (declared bitfield, bool_bits.json mask 0x4).

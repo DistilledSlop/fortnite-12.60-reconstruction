@@ -737,6 +737,9 @@ public:
 	bool IsPlayerInMinigameByNetId(FUniqueNetIdRepl& UniqueNetId, bool bCheckSpectatingPlayers) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayerInOurVolume(AFortPlayerState* PlayerState) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayerPersistenceRequired(AFortPlayerState* PlayerState) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

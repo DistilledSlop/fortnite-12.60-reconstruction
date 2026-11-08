@@ -12,6 +12,29 @@ UAIHotSpotSlot* AAIHotSpot::GetSlotByIndex(int32 Index) const
 	return Slots.IsValidIndex(Index) ? Slots[Index] : nullptr;
 }
 
+int32 AAIHotSpot::GetSlotIndexByOwner(AAIController* AIOwner) const
+{
+	// Original body address: 0x1416295f0 (thunk 0x142710c70)
+	// Offset evidence: this+0x278 is an unreflected gap directly after NoSlotAssignees (0x268, 16 bytes). The body loads a qword table pointer there and passes &this+0x278 to NativeFindWeakKeySlot140972ca0; table entries are 20 bytes and the returned value is the int32 at entry+0x8.
+	// Key: operator=(AIOwner) into a temporary FWeakObjectPtr; its qword is the key passed to the helper.
+	// CONFIDENCE: MEDIUM
+	TWeakObjectPtr<UObject> OwnerWeak;
+	OwnerWeak = AIOwner;
+	const int64 Key = *reinterpret_cast<const int64*>(&OwnerWeak);
+	int32 OutIndex = 0;
+	NativeFindWeakKeySlot140972ca0(reinterpret_cast<uint8*>(const_cast<uint64*>(&NativeRecoveredPtr_0x278)), &OutIndex, Key);
+	if (OutIndex == -1)
+	{
+	    return -1;
+	}
+	uint8* Entry = reinterpret_cast<uint8*>(NativeRecoveredPtr_0x278) + static_cast<int64>(OutIndex) * 20;
+	if (Entry == nullptr)
+	{
+	    return -1;
+	}
+	return *reinterpret_cast<const int32*>(Entry + 8);
+}
+
 AAIController* AAIHotSpot::GetSlotOwnerByIndex(int32 Index) const
 {
 	// Native0x1416296d0 CONFIDENCE: high
@@ -43,6 +66,25 @@ EAIHotSpotSlot AAIHotSpot::GetSlotStateByIndex(int32 Index) const
 	return EAIHotSpotSlot::Disabled;
 }
 
+EAIHotSpotSlot AAIHotSpot::GetSlotStateByOwner(AAIController* AIOwner) const
+{
+	// Original body address: 0x1416297a0 (thunk 0x142711070)
+	// Offset evidence: Slots is the reflected TArray at this+0x238 (Num at +0x240). A missing or out-of-range index, or a null slot, returns 4. Otherwise the helper NativeHelper141291580 is tail-called with the slot pointer.
+	// The Slots element type is UAIHotSpotSlot*; the helper receives the same pointer as AAIHotSpot*.
+	// CONFIDENCE: HIGH
+	const int32 SlotIndex = GetSlotIndexByOwner(AIOwner);
+	if (SlotIndex < 0 || SlotIndex >= Slots.Num())
+	{
+	    return static_cast<EAIHotSpotSlot>(4);
+	}
+	UAIHotSpotSlot* const SlotObject = Slots[SlotIndex];
+	if (SlotObject == nullptr)
+	{
+	    return static_cast<EAIHotSpotSlot>(4);
+	}
+	return static_cast<EAIHotSpotSlot>(NativeHelper141291580(reinterpret_cast<AAIHotSpot*>(SlotObject)));
+}
+
 int32 AAIHotSpot::GetSlotUserIdByIndex(int32 Index) const
 {
 	// Native0x1416297e0 CONFIDENCE: high
@@ -57,6 +99,49 @@ int32 AAIHotSpot::GetSlotUserIdByIndex(int32 Index) const
 	    return -1;
 	}
 	return Slot->UserId;
+}
+
+bool AAIHotSpot::HasAssignedAI(AAIController* AI, EAIHotSpotAssignmentFilter Filter) const
+{
+	// Original body address: 0x14162bca0 (thunk 0x1427111c0)
+	// Offset evidence: Slots = reflected TArray at this+0x238 (Num +0x240); NoSlotAssignees = reflected TArray<AAIController*> at this+0x268 (Num +0x270).
+	// Helper NativeHelper141291580(slot) returning 1 or 2 (DEC AL; CMP AL,1; JA) marks the slot as assigned.
+	// Filter 0: assigned or listed in NoSlotAssignees; Filter 1: assigned; Filter 2: listed in NoSlotAssignees; any other value: false.
+	// CONFIDENCE: MEDIUM
+	const uint8 FilterValue = static_cast<uint8>(Filter);
+	bool bSlotAssigned = false;
+	const int32 SlotIndex = GetSlotIndexByOwner(AI);
+	if (SlotIndex >= 0 && SlotIndex < Slots.Num())
+	{
+	    UAIHotSpotSlot* const SlotObject = Slots[SlotIndex];
+	    if (SlotObject != nullptr)
+	    {
+	        const uint8 SlotState = NativeHelper141291580(reinterpret_cast<AAIHotSpot*>(SlotObject));
+	        bSlotAssigned = (SlotState == 1 || SlotState == 2);
+	    }
+	}
+	bool bInNoSlotAssignees = false;
+	for (int32 Index = 0; Index < NoSlotAssignees.Num(); ++Index)
+	{
+	    if (NoSlotAssignees[Index] == AI)
+	    {
+	        bInNoSlotAssignees = true;
+	        break;
+	    }
+	}
+	if (FilterValue == 0)
+	{
+	    return bSlotAssigned || bInNoSlotAssignees;
+	}
+	if (FilterValue == 1)
+	{
+	    return bSlotAssigned;
+	}
+	if (FilterValue == 2)
+	{
+	    return bInNoSlotAssignees;
+	}
+	return false;
 }
 
 bool AAIHotSpot::HasEnabledSlots() const

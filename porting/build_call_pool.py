@@ -11,6 +11,7 @@ import thunk_receiver as tr
 from generated_defs import defined_in_generated
 import virtual_slots
 import typed_virtuals
+import data_consts
 
 MAXI = int(sys.argv[1]) if len(sys.argv) > 1 else 60
 R = 'porting/generated'
@@ -69,6 +70,8 @@ for _d in glob.glob('porting/behavior/*_runtime/dispositions.json'):
     try:
         for _x in json.load(open(_d)):
             if _x.get('status') == 'blocked' and _x.get('class') and _x.get('function'):
+                if re.search(r'global|constant|data_const|absolute', (_x.get('case') or '') + ' ' + (_x.get('reason') or ''), re.I):
+                    continue  # retried: jobs now carry data_consts values
                 attempted.add((_x['class'], _x['function']))
     except Exception:
         pass
@@ -213,7 +216,7 @@ for e in f2:
     pool.append(dict(cls=e['cls'], fn=e['fn'], thunk=e['thunk'], body=b[0], group=e['group'], flags=d.get('flags'), shape='call' if tgt else 'leaf',
                      insns=L, receiver_delta=ri['delta'], this_delta_total=ri['delta'] + wd,
                      params=[(p['name'], p['kind']) for p in d.get('params') or []], header=hdr.get(e['cls']), callee_candidates=cal,
-                     engine_calls={t: ENGINE[t] for t in tg if t in ENGINE}))
+                     engine_calls={t: ENGINE[t] for t in tg if t in ENGINE}, data_consts=data_consts.consts(L)))
     st['pool'] += 1
 
 

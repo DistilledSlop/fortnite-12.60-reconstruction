@@ -15,6 +15,7 @@
 #include "Math/Vector.h"
 
 class AActor;
+class AFortPlayerPawn;
 class AFortPlayerStateAthena;
 class AFortVolume;
 class UCapsuleComponent;
@@ -240,6 +241,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetInteractionInteractComponent(UPrimitiveComponent* PrimitiveComponent);
+public:
+
+private:
+	UFUNCTION()
+	void TeleportPlayerForPlotLoadComplete(AFortPlayerPawn* PlayerPawn);
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

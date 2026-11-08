@@ -759,6 +759,9 @@ public:
 	UPROPERTY()
 	AFortQuickBars* ClientQuickBars;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x14d8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x14d8;
+
 	// table index 126, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<FRecentlyRemovedQuickbarInfo> RecentlyRemovedQuickbarInfo;
@@ -1480,6 +1483,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortMcpProfileCampaign* GetMcpCampaignProfile() const;
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetNumQuickbarSlots(EFortQuickBars QuickBarType);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual AFortPlayerPawn* GetPlayerPawn() const;
 
@@ -1528,6 +1534,9 @@ public:
 	bool IsClientTimingOut() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsFullscreenMapVisible() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsHiddenControllerOnly(AActor* TargetActor) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -1535,6 +1544,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsNearActiveEncounters() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsUsingHarvestingTool() const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastClearWeakSpotData(ABuildingSMActor* ParentBuilding);
@@ -1928,6 +1940,9 @@ public:
 	void ServerUpgradeBuildingActor(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 	void ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 	bool ServerUpgradeBuildingActor_Validate(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
+
+	UFUNCTION(BlueprintCallable)
+	bool SetActorHiddenControllerOnly(AActor* TargetActor, bool bNewHidden);
 
 	UFUNCTION(BlueprintCallable)
 	void SetAtNameHomeBaseScreen(bool AtScreen);

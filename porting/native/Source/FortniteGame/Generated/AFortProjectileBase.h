@@ -240,6 +240,9 @@ public:
 	UFUNCTION()
 	void OnRep_SimulationStoppingHit();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetGravityScale(float InitialGravityScale);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

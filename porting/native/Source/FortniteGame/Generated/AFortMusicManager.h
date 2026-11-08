@@ -50,6 +50,11 @@ protected:
 	float GetPrimaryMusicVolume() const;
 public:
 
+private:
+	UFUNCTION()
+	void OnVoiceFinished(UFortMusicVoice* Voice);
+public:
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void PlayStinger(UFortMusicAsset* NewMusicAsset);
 	virtual void PlayStinger_Implementation(UFortMusicAsset* NewMusicAsset);

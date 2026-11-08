@@ -1,0 +1,58 @@
+[
+ {
+  "class": "AFortPlayerControllerSpectating",
+  "function": "IsFollowedPlayerInBus",
+  "status": "proposed",
+  "case": "wrapper_port",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsSprinting",
+  "status": "proposed",
+  "case": "wrapper_port",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "OnRep_GroupEmoteLookTarget",
+  "status": "blocked",
+  "case": "absolute_global_read",
+  "reason": "Fallback vector reads absolute globals [0x148218630] (double) and [0x148218638] (int32) whose values are not in the batch asm or any catalogue; the zero-component path cannot be expressed exactly."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "OnRep_IsEmoteLeader",
+  "status": "blocked",
+  "case": "absolute_global_read",
+  "reason": "Same body as OnRep_GroupEmoteLookTarget (thunk 0x142a7dd90, body 0x14233a020): fallback vector reads absolute globals [0x148218630] and [0x148218638] with unknown values."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "SetFacialTypeOverride",
+  "status": "proposed",
+  "case": "wrapper_port",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerSpawnPad",
+  "function": "InitializeChestProgression",
+  "status": "proposed",
+  "case": "wrapper_port",
+  "reason": ""
+ },
+ {
+  "class": "AFortPlayerStateAthena",
+  "function": "OnRep_MetricInformation",
+  "status": "blocked",
+  "case": "unreflected_delegate_broadcast",
+  "reason": "Broadcast via 0x1406a9dc0 on this+0x11f8, a gap with no reflected member (delegate signature unknown); packed param struct at RSP+0x20 (saved this plus array at +0x28) has no reflected signature."
+ },
+ {
+  "class": "AFortProjectileBase",
+  "function": "SetGravityScale",
+  "status": "proposed",
+  "case": "wrapper_port",
+  "reason": ""
+ }
+]

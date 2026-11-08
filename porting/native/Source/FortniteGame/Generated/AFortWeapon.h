@@ -746,6 +746,9 @@ public:
 	virtual TArray<UFortAlterationItemDefinition*> GetAlterations() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetAmmoCostPerFire(float ChargePercentage) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetChargePercent() const;
 
 protected:

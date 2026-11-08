@@ -811,6 +811,9 @@ public:
 	AFortWaterBodyActor* GetCurrentWaterBody() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static TEnumAsByte<EFortMovementStyle::Type> GetMovementStyle(AFortAIPawn* FortAIPawn);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static TEnumAsByte<EFortMovementUrgency::Type> GetMovementUrgency(AFortAIPawn* FortAIPawn);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

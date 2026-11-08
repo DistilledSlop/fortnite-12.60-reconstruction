@@ -20,5 +20,17 @@ public:
 	UPROPERTY()
 	TArray<UStaticMeshComponent*> Chests;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xb40): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0xb40;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xb48): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xb48;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xb4c): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xb4c;
+
+	UFUNCTION(BlueprintCallable)
+	void InitializeChestProgression();
+
 };
 

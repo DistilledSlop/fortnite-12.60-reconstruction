@@ -1,0 +1,58 @@
+[
+ {
+  "class": "AAIHotSpot",
+  "function": "GetSlotIndexByOwner",
+  "status": "proposed",
+  "case": "small_leaf_call",
+  "reason": ""
+ },
+ {
+  "class": "AAIHotSpot",
+  "function": "GetSlotStateByOwner",
+  "status": "proposed",
+  "case": "small_leaf_call",
+  "reason": ""
+ },
+ {
+  "class": "AAIHotSpot",
+  "function": "HasAssignedAI",
+  "status": "proposed",
+  "case": "small_leaf_call",
+  "reason": ""
+ },
+ {
+  "class": "AFortAIPawn",
+  "function": "GetMovementStyle",
+  "status": "proposed",
+  "case": "small_leaf_leaf",
+  "reason": ""
+ },
+ {
+  "class": "AFortAthenaCreativePortal",
+  "function": "TeleportPlayerForPlotLoadComplete",
+  "status": "proposed",
+  "case": "small_leaf_call",
+  "reason": ""
+ },
+ {
+  "class": "AFortAthenaMutator_Bagel",
+  "function": "HandleRiftDamaged",
+  "status": "proposed",
+  "case": "small_leaf_call",
+  "reason": ""
+ },
+ {
+  "class": "AFortAthenaMutator_Cobalt",
+  "function": "GetFinalRoundIndex",
+  "status": "proposed",
+  "case": "small_leaf_call",
+  "reason": ""
+ },
+ {
+  "class": "AFortAthenaMutator_Mash",
+  "function": "HandleRiftDamaged",
+  "status": "proposed",
+  "case": "small_leaf_call",
+  "reason": ""
+ }
+]

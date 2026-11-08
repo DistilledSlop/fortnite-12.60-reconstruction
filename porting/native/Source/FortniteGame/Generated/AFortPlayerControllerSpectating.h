@@ -281,6 +281,9 @@ protected:
 	virtual bool IsAllowedChangeCamera();
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsFollowedPlayerInBus() const;
+
 protected:
 	UFUNCTION()
 	virtual void OnRep_FollowedPlayerRemoteClientInfo();

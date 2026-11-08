@@ -26,14 +26,17 @@
 #include "FOnTeamScoreMultiplierChanged.h"
 #include "FRiftDamagerInfo.h"
 #include "GameplayTagContainer.h"
+#include "Math/Vector.h"
 
 class AActor;
+class AController;
 class AFortAIPawn;
 class AFortPlayerControllerAthena;
 class AFortPlayerStart;
 class UFortAIEncounterInfo;
 class UFortDifficultyEncounterSettings;
 class UMaterialInterface;
+class UPrimitiveComponent;
 
 #include "AFortAthenaMutator_Mash.generated.h"
 
@@ -309,6 +312,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetPlayerScore(AFortPlayerControllerAthena* AthenaPC, int32& OutScore) const;
+
+protected:
+	UFUNCTION()
+	void HandleRiftDamaged(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+public:
 
 protected:
 	UFUNCTION()

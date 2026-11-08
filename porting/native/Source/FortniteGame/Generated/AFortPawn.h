@@ -782,6 +782,15 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer ReplayItemActions;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xfb8): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0xfb8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xfc0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xfc0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xfc4): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xfc4;
+
 	// table index 4, flags 0x40000000010001
 	UPROPERTY()
 	FGameplayTagContainer HidingVisibilityTags;
@@ -798,6 +807,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void AddNonReplicatedTagToPawn(FGameplayTag& Tag);
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void AddWeaponTraceIgnoreActor(AActor* ActorToIgnore);
 
 	UFUNCTION(BlueprintCallable)
 	void AlignRotationToHitDirection(FVector& HitDirection);
@@ -864,6 +876,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetMeleeComboCounter() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMeleeReticleStrikeAngle(bool bPrimaryInput) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetShield() const;
@@ -1023,6 +1038,9 @@ public:
 	UFUNCTION(Client, Unreliable)
 	void PlaySound(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier);
 	void PlaySound_Implementation(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveWeaponTraceIgnoreActor(AActor* ActorToRemove);
 
 	UFUNCTION(BlueprintCallable)
 	void ResetFallingHeight();

@@ -1,0 +1,58 @@
+[
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "ServerSetPlayerEditTileData_Implementation",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerUpdatePrecisionMode_Implementation",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "AFortGameStateAthena",
+  "function": "OnRep_ServerChangelistNumber",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "AFortItemPreviewSceneChanger",
+  "function": "IsSoundEnabled",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "AFortMinigame",
+  "function": "IsPlayerInOurVolume",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "AFortMusicManager",
+  "function": "OnVoiceFinished",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "AFortBroadcastRemoteClientInfo",
+  "function": "ServerSetPlayerHitMarkers",
+  "status": "blocked",
+  "case": "unresolved_callee",
+  "reason": "Body 0x1424bb520: JNZ 0x14284ce80 at 0x1424bb530 is a conditional tail jump with RCX=this to a target with no callee_candidates entry or reflection match; cannot express exactly."
+ },
+ {
+  "class": "AFortGameplayEffectDeliveryActor",
+  "function": "OnComponentEndOverlap",
+  "status": "blocked",
+  "case": "virtual_slot_mismatch",
+  "reason": "Body 0x1426a78d0: JMP [vtable+0x670] passes RDX=OtherActor, R8=OtherComp; candidate NativePrepareTouchSpec(FGameplayEffectSpec&) takes one argument."
+ }
+]

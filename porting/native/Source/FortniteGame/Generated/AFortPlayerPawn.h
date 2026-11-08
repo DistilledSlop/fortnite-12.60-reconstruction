@@ -1285,6 +1285,9 @@ public:
 	UPROPERTY(Transient)
 	float GhostModeExitDuration;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2728): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x2728;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x272c): not a UPROPERTY, not replicated.
 	FHitResult NativeRecoveredThrownItemTrajectoryHitResult;
 
@@ -1574,6 +1577,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSkydivingFromLaunchPad() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsSprinting() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSurfaceSwimming() const;
@@ -1877,6 +1883,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetEquippedArmoredInterface(TScriptInterface<IFortArmoredInterface> InInterface);
+
+	UFUNCTION(BlueprintCallable)
+	void SetFacialTypeOverride(EFortFacialAnimTypes NewType);
 
 	UFUNCTION(BlueprintCallable)
 	void SetInSlipperyMovement(bool bIsSlippery);

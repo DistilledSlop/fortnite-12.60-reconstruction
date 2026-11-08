@@ -1,0 +1,58 @@
+[
+ {
+  "class": "AFortWeapon",
+  "function": "GetAmmoCostPerFire",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "AFortWeapon",
+  "function": "GetDamageStartLocation",
+  "status": "blocked",
+  "case": "absolute_global_constant",
+  "reason": "absolute_global_constant: MOVSD XMM0,[0x148218630] and MOV EAX,[0x148218638] seed the sret FVector from absolute-address constants whose values are not in the body; PatternIndex is unused."
+ },
+ {
+  "class": "APhysicsObject",
+  "function": "ApplyImpulse",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "APhysicsObject",
+  "function": "ApplyImpulseFromPawnHit",
+  "status": "blocked",
+  "case": "absolute_global_constant",
+  "reason": "absolute_global_constant: float constants at 0x1459a86f8, 0x145a38abc, 0x145dea988 and 0x145cf1b50 (SQRTSS/MAXSS/MULSS math) are read from absolute addresses; values not in the body."
+ },
+ {
+  "class": "ASOLFortGame",
+  "function": "ResetUserGamesVariables",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "ASOLFortPlayer",
+  "function": "ResetUserPlayerVariables",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "ForwardOnLocationChanged",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UAthenaRemotePlayerViewData",
+  "function": "GetVehicle",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ }
+]

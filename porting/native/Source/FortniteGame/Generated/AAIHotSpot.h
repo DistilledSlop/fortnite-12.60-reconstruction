@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "EAIHotSpotAssignmentFilter.h"
 #include "EAIHotSpotSlot.h"
 #include "HAL/UnrealMemory.h"
 #include "Math/Vector.h"
@@ -81,6 +82,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<AAIController*> NoSlotAssignees;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredPtr_0x278;
+
 	// table index 1, flags 0x20080000080008
 	UPROPERTY()
 	UPrimitiveComponent* RenderingComponent;
@@ -93,13 +97,22 @@ public:
 	UAIHotSpotSlot* GetSlotByIndex(int32 Index) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSlotIndexByOwner(AAIController* AIOwner) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AAIController* GetSlotOwnerByIndex(int32 Index) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EAIHotSpotSlot GetSlotStateByIndex(int32 Index) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EAIHotSpotSlot GetSlotStateByOwner(AAIController* AIOwner) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSlotUserIdByIndex(int32 Index) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasAssignedAI(AAIController* AI, EAIHotSpotAssignmentFilter Filter) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasEnabledSlots() const;

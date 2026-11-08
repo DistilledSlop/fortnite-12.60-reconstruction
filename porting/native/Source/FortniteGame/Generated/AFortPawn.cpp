@@ -2,6 +2,7 @@
 #include "AFortPawn.h"
 #include "AFortAIController.h"
 #include "AFortPlayerController.h"
+#include "AFortWeapon.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "Animation/AnimInstance.h"
@@ -16,6 +17,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
+#include "UCreativeQuestComponent.h"
 #include "UFortAbilitySystemComponent.h"
 #include "UFortAnimNotifyState_AbilityDecisionWindow.h"
 #include "UFortControlResistanceSet.h"
@@ -34,6 +36,29 @@ void AFortPawn::AddNonReplicatedTagToPawn(FGameplayTag& Tag)
 	{
 	    ASC->AddLooseGameplayTag(Tag);
 	}
+}
+
+void AFortPawn::AddWeaponTraceIgnoreActor(AActor* ActorToIgnore)
+{
+	// Body 0x142302e10 (thunk 0x142a1af30). TArray of 8-byte FWeakObjectPtr at object+0xfb8 (Data), Num +0xfc0, Max +0xfc4; no reflected member covers these (lookup_offset AFortPawn), so recovered gap members are used.
+	// Compare: UCreativeQuestComponent::NativeWeakObjectPtrEquivalent1407327b0 (0x1407327b0). Append path = TArray Add (grow helper 0x140690bb0).
+	// CONFIDENCE: MEDIUM
+	static_assert(sizeof(UCreativeQuestComponent) > 0, "UCreativeQuestComponent include for NativeWeakObjectPtrEquivalent1407327b0");
+	if (!ActorToIgnore)
+	{
+	    return;
+	}
+	TWeakObjectPtr<UObject> Weak;
+	Weak = ActorToIgnore;
+	TArray<TWeakObjectPtr<UObject>>& IgnoreList = *reinterpret_cast<TArray<TWeakObjectPtr<UObject>>*>(&NativeRecoveredUint64_0xfb8);
+	for (int32 i = 0; i < IgnoreList.Num(); ++i)
+	{
+	    if (UCreativeQuestComponent::NativeWeakObjectPtrEquivalent1407327b0(reinterpret_cast<const uint8*>(&IgnoreList[i]), reinterpret_cast<const uint8*>(&Weak)))
+	    {
+	        return;
+	    }
+	}
+	IgnoreList.Add(Weak);
 }
 
 void AFortPawn::AlignRotationToHitDirection(FVector& HitDirection)
@@ -261,6 +286,28 @@ int32 AFortPawn::GetMeleeComboCounter() const
 	    }
 	}
 	return 0;
+}
+
+float AFortPawn::GetMeleeReticleStrikeAngle(bool bPrimaryInput) const
+{
+	// Body 0x142321eb0 (thunk 0x142a1c4a0). DecisionWindowStack +0xbc0 (reflected, 24-byte FFortActiveMontageDecisionWindow, Num +0xbc8). First entry with non-null DecisionWindow: PrimaryInputStrikeAngle (+0x60) when bPrimaryInput else SecondaryInputStrikeAngle (+0x64) (reflected on UFortAnimNotifyState_AbilityDecisionWindow).
+	// Fallback: CurrentWeapon +0x588 (reflected) tail-calls AFortPawn::NativeSelectMeleeReticleAngle14269eaa0 (0x14269eaa0); null weapon returns 0.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(UFortAnimNotifyState_AbilityDecisionWindow) > 0, "UFortAnimNotifyState_AbilityDecisionWindow include for decision window fields");
+	static_assert(sizeof(AFortWeapon) > 0, "AFortWeapon include for CurrentWeapon helper call");
+	for (int32 i = 0; i < DecisionWindowStack.Num(); ++i)
+	{
+	    UFortAnimNotifyState_AbilityDecisionWindow* Window = DecisionWindowStack[i].DecisionWindow;
+	    if (Window)
+	    {
+	        return bPrimaryInput ? Window->PrimaryInputStrikeAngle : Window->SecondaryInputStrikeAngle;
+	    }
+	}
+	if (CurrentWeapon)
+	{
+	    return AFortPawn::NativeSelectMeleeReticleAngle14269eaa0(CurrentWeapon, bPrimaryInput);
+	}
+	return 0.0f;
 }
 
 float AFortPawn::GetShield() const
@@ -672,6 +719,31 @@ void AFortPawn::PlaySound_Implementation(USoundBase* Sound, float VolumeMultipli
 	UGameplayStatics::PlaySoundAtLocation(this, Sound, GetActorLocation(),
 	    FRotator::ZeroRotator, VolumeMultiplier, PitchMultiplier, 0.0f,
 	    nullptr, nullptr, nullptr);
+}
+
+void AFortPawn::RemoveWeaponTraceIgnoreActor(AActor* ActorToRemove)
+{
+	// Body 0x1423486d0 (thunk 0x142a1f4c0). Same TArray<8-byte> at object+0xfb8 (Data), Num +0xfc0 (recovered gap members, see AddWeaponTraceIgnoreActor).
+	// Compare: UCreativeQuestComponent::NativeWeakObjectPtrEquivalent1407327b0 (0x1407327b0). Stable removal of every equivalent entry; the run-based memmove (0x1458092f3) is expressed as the in-place compaction loop. Num written once at the end (asm: MOV [R13+0xfc0],R14D).
+	// CONFIDENCE: MEDIUM
+	static_assert(sizeof(UCreativeQuestComponent) > 0, "UCreativeQuestComponent include for NativeWeakObjectPtrEquivalent1407327b0");
+	if (!ActorToRemove)
+	{
+	    return;
+	}
+	TWeakObjectPtr<UObject> Weak;
+	Weak = ActorToRemove;
+	TArray<TWeakObjectPtr<UObject>>& IgnoreList = *reinterpret_cast<TArray<TWeakObjectPtr<UObject>>*>(&NativeRecoveredUint64_0xfb8);
+	int32 Kept = 0;
+	for (int32 i = 0; i < IgnoreList.Num(); ++i)
+	{
+	    if (!UCreativeQuestComponent::NativeWeakObjectPtrEquivalent1407327b0(reinterpret_cast<const uint8*>(&IgnoreList[i]), reinterpret_cast<const uint8*>(&Weak)))
+	    {
+	        IgnoreList[Kept] = IgnoreList[i];
+	        ++Kept;
+	    }
+	}
+	NativeRecoveredInt32_0xfc0 = Kept;
 }
 
 void AFortPawn::ResetFallingHeight()

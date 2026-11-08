@@ -22,6 +22,8 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "UObject/Object.h"
 
+class AActor;
+
 #include "UAthenaRemotePlayerViewData.generated.h"
 
 UCLASS()
@@ -207,6 +209,11 @@ public:
 
 private:
 	UFUNCTION()
+	void ForwardOnLocationChanged(FString InLocation);
+public:
+
+private:
+	UFUNCTION()
 	void ForwardOnSquadIdChanged(uint8 InSquadId);
 public:
 
@@ -247,6 +254,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetSquadId() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetVehicle() const;
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

@@ -1,0 +1,58 @@
+[
+  {
+    "class": "AFortPawn",
+    "function": "AddWeaponTraceIgnoreActor",
+    "status": "proposed",
+    "case": "small_leaf_wrapper",
+    "reason": ""
+  },
+  {
+    "class": "AFortPawn",
+    "function": "GetMeleeReticleStrikeAngle",
+    "status": "proposed",
+    "case": "small_leaf_wrapper",
+    "reason": ""
+  },
+  {
+    "class": "AFortPawn",
+    "function": "RemoveWeaponTraceIgnoreActor",
+    "status": "proposed",
+    "case": "small_leaf_wrapper",
+    "reason": ""
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "GetNumQuickbarSlots",
+    "status": "proposed",
+    "case": "small_leaf_wrapper",
+    "reason": ""
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "IsFullscreenMapVisible",
+    "status": "proposed",
+    "case": "small_leaf_wrapper",
+    "reason": ""
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "IsUsingHarvestingTool",
+    "status": "proposed",
+    "case": "small_leaf_wrapper",
+    "reason": ""
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "SetActorHiddenControllerOnly",
+    "status": "proposed",
+    "case": "small_leaf_wrapper",
+    "reason": ""
+  },
+  {
+    "class": "AFortPlayerControllerOutpost",
+    "function": "ToggleOwnerInPIE",
+    "status": "blocked",
+    "case": "hidden_global_gate",
+    "reason": "CMP byte ptr [0x1482472b2],0x0 (asm before CALL 0x142429d20) reads a hidden absolute-address global that gates the NativeSetOutpostFlagBit0142429d20 call; the global cannot be expressed exactly, so the whole body (flag toggle at +0x2c70 plus gated call) is blocked."
+  }
+]

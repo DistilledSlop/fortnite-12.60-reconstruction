@@ -61,6 +61,12 @@ public:
 	UPROPERTY(Transient)
 	AItemPreviewScene* ActiveScene;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2a8): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUint64_0x2a8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2b0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x2b0;
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	AItemPreviewScene* GetActiveScene();
@@ -74,6 +80,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	AItemPreviewScene* GetSceneTransitioningTo();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsSoundEnabled() const;
 public:
 
 };

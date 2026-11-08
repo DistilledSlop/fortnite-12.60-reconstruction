@@ -25,3 +25,47 @@ AItemPreviewScene* AFortItemPreviewSceneChanger::GetSceneTransitioningTo()
 	return SceneTransitioningTo;
 }
 
+bool AFortItemPreviewSceneChanger::IsSoundEnabled() const
+{
+	// Behaviour snippet: AFortItemPreviewSceneChanger::IsSoundEnabled (body 0x144e0d830, thunk 0x145278590).
+	// Offset evidence: sound-source TWeakObjectPtr array Data at object +0x2a8 and Num (int32) at +0x2b0 (both uncovered by reflection, recovered members). Body compacts the array in place, keeping runs whose IsValid() matches the run state starting from element 0 valid, writes the new Num, and returns Num > 0.
+	// Helper 0x142ee7880 is the FWeakObjectPtr validity check (IsValid); memmove 0x1458092f3 is FMemory::Memmove.
+	// CONFIDENCE: MEDIUM
+	AFortItemPreviewSceneChanger* Self = const_cast<AFortItemPreviewSceneChanger*>(this);
+	const int32 ItemCount = Self->NativeRecoveredInt32_0x2b0;
+	int32 NewCount = ItemCount;
+	if (ItemCount != 0)
+	{
+	    TWeakObjectPtr<UObject>* ItemData = reinterpret_cast<TWeakObjectPtr<UObject>*>(Self->NativeRecoveredUint64_0x2a8);
+	    int32 ReadIdx = 0;
+	    int32 WriteIdx = 0;
+	    bool bKeep = ItemData[0].IsValid();
+	    for (;;)
+	    {
+	        const int32 RunStartIdx = ReadIdx;
+	        ++ReadIdx;
+	        while (ReadIdx < ItemCount && ItemData[ReadIdx].IsValid() == bKeep)
+	        {
+	            ++ReadIdx;
+	        }
+	        const int32 RunLen = ReadIdx - RunStartIdx;
+	        if (bKeep)
+	        {
+	            if (WriteIdx != RunStartIdx)
+	            {
+	                FMemory::Memmove(&ItemData[WriteIdx], &ItemData[RunStartIdx], static_cast<SIZE_T>(RunLen) * sizeof(TWeakObjectPtr<UObject>));
+	            }
+	            WriteIdx += RunLen;
+	        }
+	        bKeep = !bKeep;
+	        if (ReadIdx >= ItemCount)
+	        {
+	            break;
+	        }
+	    }
+	    NewCount = WriteIdx;
+	    Self->NativeRecoveredInt32_0x2b0 = NewCount;
+	}
+	return NewCount > 0;
+}
+

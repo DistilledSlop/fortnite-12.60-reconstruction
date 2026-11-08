@@ -1,0 +1,58 @@
+[
+  {
+    "class": "UAthenaRemoteSquadViewData",
+    "function": "GetPlayerDatas",
+    "status": "blocked",
+    "case": "generic_reserve_helper_not_getter",
+    "reason": "Body 0x1406d93e0 is a TArray reserve helper (RCX=array at this+0x88, EDX=new count, R8D=expected max; QuantizeSize/Realloc, writes data ptr +0 and Max +0xc). It never produces a TArray return value and has no Num write, so it does not implement GetPlayerDatas."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "GetGridBox",
+    "status": "blocked",
+    "case": "unresolved_data_constants",
+    "reason": "Body 0x141c77d20 loads float constants from absolute data addresses (0x1478c3480/84/88, 0x148123290..98, 0x1459a86f0) whose values are not in the batch or packet; static-init guard at 0x14812329c stores them. Values cannot be given without guessing."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "K2_GetGridBoxFromWorldLoc",
+    "status": "blocked",
+    "case": "unresolved_data_constants",
+    "reason": "Body 0x141c77ec0 uses float data constants (0x1459a86f0, 0x145d79470, 0x145d7946c, 0x1478c3480..88, 0x1481232a0..a8) with values not present in the batch or packet; cannot port exactly without guessing."
+  },
+  {
+    "class": "UCaptureComponent",
+    "function": "OnRep_SmoothProgressState",
+    "status": "blocked",
+    "case": "shared_callee_ambiguous",
+    "reason": "Tail-jump 0x144630410 receives RCX=this+0x30 and DL=(AL!=2) but candidate AFortProjectileBase::OnRep_CurrentSkyTube takes no params and AFortProjectileBase is not an ancestor of UCaptureComponent; the receiver class at this+0x30 is unknown."
+  },
+  {
+    "class": "UCombatManagerComponentSTW",
+    "function": "ServerTriggerCombatEvent",
+    "status": "blocked",
+    "case": "insn_count_exceeds_limit",
+    "reason": "137 instructions (limit 60) with an indexed 0x38-stride table at this+0x218 and float clamp chains plus a 0x120..0x18c to 0xb0..0x11c copy; too large to port exactly in a leaf batch."
+  },
+  {
+    "class": "UCombatManagerComponentSTW",
+    "function": "ServerTriggerCombatEventBatch",
+    "status": "blocked",
+    "case": "insn_count_exceeds_limit",
+    "reason": "166 instructions (limit 60) with a TArray loop (element stride 8: float +0, byte +4) over the same clamp logic as ServerTriggerCombatEvent; too large to port exactly in a leaf batch."
+  },
+  {
+    "class": "UCommonActivatablePanel",
+    "function": "GetInputActions",
+    "status": "blocked",
+    "case": "sparse_bitarray_iteration_not_expressible",
+    "reason": "Iterates a sparse/bit array at this+0x360 (elements 0x98 bytes, bit-iterator helper 0x140687d00, grow helper 0x14069e9b0) with set-bit scanning and conditional append into InputActionDataRows; the exact iteration state (bit masks, sparse index) is not expressible as a single reflected member call without risking mismatch."
+  },
+  {
+    "class": "UCommonTabListWidget",
+    "function": "GetSelectedTabId",
+    "status": "blocked",
+    "case": "sparse_bitarray_iteration_not_expressible",
+    "reason": "Bit-array scan over this+0x2b8 with bit-iterator helper 0x140687d00 and element lookup via [RAX+RCX*8+0x10] plus flag test at +0x2a1 before returning an FName; the iteration is not expressible exactly as a member call."
+  }
+]

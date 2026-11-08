@@ -81,6 +81,9 @@ public:
 	UPROPERTY()
 	FCobaltPreRoundDisplayVisibility OnUpdatePreRoundDisplayVisibility;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3f0): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUint8_0x3f0;
+
 	// table index 80, flags 0x24080000010001
 	UPROPERTY()
 	TSubclassOf<AAthenaCobaltStormShield> StormShieldClass;
@@ -382,6 +385,9 @@ private:
 	UFUNCTION()
 	void ClientCobaltRoundTimerComplete();
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetFinalRoundIndex() const;
 
 private:
 	UFUNCTION()

@@ -7,6 +7,8 @@
 #include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerPawn.h"
 #include "AFortPlayerState.h"
+#include "AFortQuickBars.h"
+#include "AFortUIZone.h"
 #include "AnalyticsEventAttribute.h"
 #include "EFortQuickBars.h"
 #include "ELockOnState.h"
@@ -18,6 +20,7 @@
 #include "UFortLocalPlayer.h"
 #include "UFortRegisteredPlayerInfo.h"
 #include "UFortWorldItem.h"
+#include "ULevelSaveBaseComponent.h"
 #include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
@@ -459,6 +462,20 @@ UFortMcpProfileCampaign* AFortPlayerController::GetMcpCampaignProfile() const
 	return MainMcpProfile;
 }
 
+int32 AFortPlayerController::GetNumQuickbarSlots(EFortQuickBars QuickBarType)
+{
+	// Body 0x142382cc0 (thunk 0x142a47770). ClientQuickBars +0x14d0 (reflected AFortQuickBars*); bool gate at +0x14d8 (recovered gap member NativeRecoveredBool_0x14d8).
+	// Storage helper 0x14205b290 = AFortPlayerController::NativeGetQuickBarSlotStorage14205b290; int32 read at returned storage +0x18 (pointee not reflected, raw).
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(AFortQuickBars) > 0, "AFortQuickBars include for quickbar storage helper");
+	if (ClientQuickBars && NativeRecoveredBool_0x14d8)
+	{
+	    void* Storage = AFortPlayerController::NativeGetQuickBarSlotStorage14205b290(ClientQuickBars, static_cast<uint8>(QuickBarType));
+	    return *reinterpret_cast<const int32*>(static_cast<const uint8*>(Storage) + 0x18);
+	}
+	return 0;
+}
+
 AFortPlayerPawn* AFortPlayerController::GetPlayerPawn() const
 {
 	// Native target 0x1419d5f00; CONFIDENCE: high.
@@ -565,6 +582,20 @@ bool AFortPlayerController::IsClientTimingOut() const
 	return AFortPlayerController::bIsClientTimingOut;
 }
 
+bool AFortPlayerController::IsFullscreenMapVisible() const
+{
+	// Body 0x14238e840 (thunk 0x142a48080). MyHUD at +0x2a8 is an APlayerController member (engine ancestor, not generated): raw access at object offset.
+	// Class gate 0x142b26ed0 = AFortUIZone::StaticClass(); inline IsA chain check ([obj+0x10] class, depth +0x38, chain +0x30). Helper 0x142607f40 = AFortPlayerController::NativeCanToggleFullscreenMap142607f40, called with the HUD object.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(AFortUIZone) > 0, "AFortUIZone include for IsA check");
+	UObject* HUD = *reinterpret_cast<UObject* const*>(reinterpret_cast<const uint8*>(this) + 0x2a8);
+	if (!HUD || !HUD->IsA(AFortUIZone::StaticClass()))
+	{
+	    return false;
+	}
+	return AFortPlayerController::NativeCanToggleFullscreenMap142607f40(HUD);
+}
+
 bool AFortPlayerController::IsHiddenControllerOnly(AActor* TargetActor) const
 {
 	// Behaviour snippet: AFortPlayerController::IsHiddenControllerOnly (body only; spliced into the generated member function).
@@ -602,6 +633,19 @@ bool AFortPlayerController::IsNearActiveEncounters() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete reflected packed-bool word-shift getter; see bulk_bool_expansion_runtime/README.md.
 	return bIsNearActiveEncounters;
+}
+
+bool AFortPlayerController::IsUsingHarvestingTool() const
+{
+	// Body 0x142390980 (thunk 0x142a484f0). ClientQuickBars +0x14d0 (reflected) and bool gate +0x14d8 (recovered gap member NativeRecoveredBool_0x14d8). Index helper 0x142059ed0 = AFortPlayerController::NativeGetSlotIndexByKind142059ed0 with Kind 0; SlotIndex stays -1 when gated off.
+	// CONFIDENCE: HIGH
+	static_assert(sizeof(AFortQuickBars) > 0, "AFortQuickBars include for slot index helper");
+	int32 SlotIndex = -1;
+	if (ClientQuickBars && NativeRecoveredBool_0x14d8)
+	{
+	    SlotIndex = AFortPlayerController::NativeGetSlotIndexByKind142059ed0(reinterpret_cast<AFortPlayerController*>(ClientQuickBars), 0);
+	}
+	return SlotIndex == 0;
 }
 
 void AFortPlayerController::MulticastClearWeakSpotData_Implementation(ABuildingSMActor* ParentBuilding)
@@ -1554,6 +1598,26 @@ bool AFortPlayerController::ServerUpgradeBuildingActor_Validate(ABuildingActor* 
 	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
+}
+
+bool AFortPlayerController::SetActorHiddenControllerOnly(AActor* TargetActor, bool bNewHidden)
+{
+	// Body 0x1423ae360 (thunk 0x142a4eac0). HiddenActors TArray<uint64> at controller +0x2e8 (Num +0x2f0, Max +0x2f4); APlayerController is an engine ancestor (not generated), so raw access at object offset.
+	// Add path: ULevelSaveBaseComponent::NativeAddUnique14085a990 (0x14085a990) with the target pointer bits; returns true. Remove path: removal of every matching entry (asm run-compaction with memmove 0x1458092f3 expressed as TArray::Remove); returns true when anything was removed.
+	// CONFIDENCE: MEDIUM
+	static_assert(sizeof(ULevelSaveBaseComponent) > 0, "ULevelSaveBaseComponent include for NativeAddUnique14085a990");
+	if (!TargetActor)
+	{
+	    return false;
+	}
+	const uint64 ActorBits = reinterpret_cast<uint64>(TargetActor);
+	TArray<uint64>& HiddenList = *reinterpret_cast<TArray<uint64>*>(reinterpret_cast<uint8*>(this) + 0x2e8);
+	if (bNewHidden)
+	{
+	    ULevelSaveBaseComponent::NativeAddUnique14085a990(HiddenList, &ActorBits);
+	    return true;
+	}
+	return HiddenList.Remove(ActorBits) > 0;
 }
 
 void AFortPlayerController::SetAtNameHomeBaseScreen(bool AtScreen)

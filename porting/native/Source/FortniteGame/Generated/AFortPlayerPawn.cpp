@@ -637,6 +637,17 @@ bool AFortPlayerPawn::IsSkydivingFromLaunchPad() const
 	return bLocalIsSkydiving && !bIsSkydivingFromBus && bIsSkydivingFromLaunchPad;
 }
 
+bool AFortPlayerPawn::IsSprinting() const
+{
+	// Behaviour snippet: AFortPlayerPawn::IsSprinting (body only; spliced into the generated member function).
+	// Original body: 0x1423320a0 (thunk 0x142a7d4e0).
+	// Evidence: virtual slot +0x998 = AFortPawn::NativeGetCurrentMovementStyle14231a980 (returns pointer to OutValue); result byte compared to 3 (sprint style).
+	// CONFIDENCE: HIGH
+	uint8 StyleOutput = 0;
+	const uint8* StyleResult = NativeGetCurrentMovementStyle14231a980(&StyleOutput);
+	return *StyleResult == 3;
+}
+
 bool AFortPlayerPawn::IsSurfaceSwimming() const
 {
 	// CONFIDENCE: HIGH
@@ -1472,6 +1483,17 @@ void AFortPlayerPawn::SetEquippedArmoredInterface(TScriptInterface<IFortArmoredI
 	{
 	    ArmoredInterface.SetInterface(nullptr);
 	}
+}
+
+void AFortPlayerPawn::SetFacialTypeOverride(EFortFacialAnimTypes NewType)
+{
+	// Behaviour snippet: AFortPlayerPawn::SetFacialTypeOverride (body only; spliced into the generated member function).
+	// Original body: 0x14234c9d0 (thunk 0x142a7fff0).
+	// Evidence: [this+0x26b4] = FacialTypeOverride (reflected Enum, byte); [this+0x2728] unreflected byte in own region (NativeRecoveredByte_0x2728); tail JMP to static NativeSyncFacialInputToAnimInstances142345bd0(this).
+	// CONFIDENCE: HIGH
+	FacialTypeOverride = NewType;
+	NativeRecoveredByte_0x2728 = static_cast<uint8>(NewType);
+	NativeSyncFacialInputToAnimInstances142345bd0(this);
 }
 
 void AFortPlayerPawn::SetInSlipperyMovement(bool bIsSlippery)
