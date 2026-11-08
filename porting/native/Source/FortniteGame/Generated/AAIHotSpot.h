@@ -100,6 +100,9 @@ public:
 	int32 GetSlotIndexByOwner(AAIController* AIOwner) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetSlotLocationByIndex(int32 Index) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AAIController* GetSlotOwnerByIndex(int32 Index) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

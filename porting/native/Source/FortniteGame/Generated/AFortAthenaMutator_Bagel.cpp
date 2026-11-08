@@ -3,6 +3,7 @@
 #include "ABuildingRift.h"
 #include "AFortPlayerControllerAthena.h"
 #include "AFortPlayerStateAthena.h"
+#include "FBagelPlayerDataEntry.h"
 #include "FRiftDamagerInfo.h"
 #include "Net/UnrealNetwork.h"
 
@@ -89,6 +90,24 @@ void AFortAthenaMutator_Bagel::OnRep_PlayerData()
 void AFortAthenaMutator_Bagel::OnRep_TeamScoreMultiplier()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortAthenaMutator_Bagel::ResetStreakScoreMultiplier(AFortPlayerStateAthena* PlayerState)
+{
+	// Original body 0x141ab9dc0 (thunk 0x1427e9fd0) for AFortAthenaMutator_Bagel::ResetStreakScoreMultiplier.
+	// Offset evidence: [RCX+0x11a8] is PlayerDataArray (reflected FFastArraySerializer struct); Entries TArray at +0x108 (=0x12b0, Num 0x12b8), stride 0x80; entry+0x10 = PlayerState, +0x54/+0x55 = StreakScoreLevel/StreakMultiplierCurrentKillCount.
+	// Tail sequence (ReplicationID = ++IDCounter with wrap, ReplicationKey++, ItemMap reset via 0x14072a990, ArrayReplicationKey++ with wrap, CachedNumItems = -1) is FFastArraySerializer::MarkItemDirty.
+	// CONFIDENCE: MEDIUM
+	for (FBagelPlayerDataEntry& Entry : PlayerDataArray.Entries)
+	{
+		if (Entry.PlayerState == PlayerState)
+		{
+			Entry.StreakScoreLevel = 0;
+			Entry.StreakMultiplierCurrentKillCount = 0;
+			PlayerDataArray.MarkItemDirty(Entry);
+			return;
+		}
+	}
 }
 
 void AFortAthenaMutator_Bagel::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

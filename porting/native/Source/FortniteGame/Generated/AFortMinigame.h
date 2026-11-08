@@ -863,6 +863,12 @@ protected:
 	void SetMaxInitTeamSizeForTeam(uint8 TeamIndex, int32 TeamSize);
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetStatForGroup(TSubclassOf<UFortMinigameStatFilter> InFilter, int32 InValue);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetStatForPlayerBucket(int32 BucketIndex, TSubclassOf<UFortMinigameStatFilter> InFilter, int32 InValue);
+
 	UFUNCTION(BlueprintCallable)
 	void SetTeamColorIndexForTeam(uint8 TeamIndex, int32 TeamColorIndex);
 

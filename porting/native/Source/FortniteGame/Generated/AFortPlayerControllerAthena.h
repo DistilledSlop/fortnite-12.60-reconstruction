@@ -1006,6 +1006,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	void GetPlaysetSize(int32& SizeX, int32& SizeY, int32& SizeZ) const;
 
+protected:
+	UFUNCTION()
+	void HandlePlayersLeftChanged(int32 NumPlayersLeft);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasItems(TArray<EFortItemType>& ExcludedItemTypes) const;
 

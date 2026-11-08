@@ -15,6 +15,7 @@
 #include "Math/Vector.h"
 
 class AActor;
+class ABuildingSMActor;
 class AController;
 class UFortDamageSet;
 class UPrimitiveComponent;
@@ -66,6 +67,9 @@ public:
 	// table index 0, flags 0x10000000082008
 	UPROPERTY(Transient)
 	UFortDamageSet* DamageAttributeSet;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	TArray<ABuildingSMActor*> GetBuildingActorsInBase();
 
 private:
 	UFUNCTION()

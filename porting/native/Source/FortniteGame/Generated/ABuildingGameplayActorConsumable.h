@@ -9,6 +9,7 @@
 #include "EInteractionBeingAttempted.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
+#include "Math/TransformNonVectorized.h"
 
 class AFortPawn;
 class UAnimMontage;
@@ -86,6 +87,10 @@ protected:
 	TSubclassOf<UFortGameplayAbility> DetermineOnConsumeMontageAbility() const;
 	virtual TSubclassOf<UFortGameplayAbility> DetermineOnConsumeMontageAbility_Implementation() const;
 public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	FTransform GetDeathFXTransform() const;
+	virtual FTransform GetDeathFXTransform_Implementation() const;
 
 	UFUNCTION(BlueprintNativeEvent)
 	bool OnInteractAllowedToConsume(AFortPawn* InteractingPawn, EInteractionBeingAttempted InteractionBeingAttempted);

@@ -33,6 +33,7 @@ class AController;
 class AFortAIPawn;
 class AFortPlayerControllerAthena;
 class AFortPlayerStart;
+class AFortPlayerStateAthena;
 class UFortAIEncounterInfo;
 class UFortDifficultyEncounterSettings;
 class UMaterialInterface;
@@ -328,6 +329,11 @@ public:
 
 	UFUNCTION()
 	void OnRep_TeamScoreMultiplier();
+
+protected:
+	UFUNCTION()
+	void ResetStreakScoreMultiplier(AFortPlayerStateAthena* PlayerState);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -1,0 +1,72 @@
+[
+  {
+    "class": "AFortMinigame",
+    "function": "SetStatForPlayerBucket",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Authority and CurrentState != 0: finds or adds the RoundStats.PlayerBucketStats entry for BucketIndex, sets the filter value via helper, then OnRep_StatsChanged()."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "OnRep_MeshParentIds",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Whole body is a verbosity-gated diagnostic log joining MeshParentIds; no state change, empty body."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "HandlePlayersLeftChanged",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Tail-calls NativeClientUpdateRichPresence1423c0800(this, 0, true)."
+  },
+  {
+    "class": "AFortPlayerControllerOutpost",
+    "function": "ToggleOwnerInPIE",
+    "status": "blocked",
+    "case": "hidden_global_gate",
+    "reason": "CMP byte ptr [0x1482472b2],0x0 gates the call to 0x142429d20; writable global byte cannot be expressed (same disposition as earlier batches)."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "ShouldPlayReloadFX",
+    "status": "blocked",
+    "case": "hidden_global",
+    "reason": "MOV EAX,[0x14816dd98] / CMP dword [RBX+0x16c8],EAX: compared against a writable global (snapshot 0) that is mutable state, cannot be ported exactly."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "GetGridBox",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Builds the cell FBox: centre = Cell*(512,512,384) + origin (+0x378..0x380, Z plus half-height), half extents (256,256,192); IsValid = 1."
+  },
+  {
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "K2_GetGridBoxFromWorldLoc",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Maps WorldLocation to a cell (Round X,Y; Floor Z relative to origin at +0x378..0x380) then builds the same grid FBox as GetGridBox; IsValid = 1."
+  },
+  {
+    "class": "UFortCardPackItem",
+    "function": "CanStoreOpen",
+    "status": "blocked",
+    "case": "hidden_global_strings",
+    "reason": "Compares the FString at +0xf8 against five writable-global FString constants (0x148164db8/dd8/de8/df8/e08, lazily initialised, guarded by flag dwords); hidden globals cannot be expressed."
+  },
+  {
+    "class": "UFortControllerComponent_MapDiscoverability",
+    "function": "DiscoverAllAreas",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Sets byte +0x14 of every DiscoveredData.Entries element to 1 and marks each item dirty (inlined MarkItemDirty)."
+  },
+  {
+    "class": "UFortControllerComponent_MapDiscoverability",
+    "function": "UndiscoverAllAreas",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Sets byte +0x14 of every DiscoveredData.Entries element to 0 and marks each item dirty (inlined MarkItemDirty)."
+  }
+]

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "ABuildingActor.h"
 
+#include "EFortAbilityTargetingSource.h"
 #include "Engine/DataTable.h"
 #include "FBuildingGameplayActorAbilityDeliveryInfo.h"
 #include "FOnDeliverableAbilityInfoAppliedToTouchingActor.h"
@@ -14,6 +15,7 @@
 #include "FOnProximityPrePulse.h"
 #include "FOnProximityPulse.h"
 #include "GameplayTagContainer.h"
+#include "Math/TransformNonVectorized.h"
 
 class UFortAbilitySet;
 class UFortDamageSet;
@@ -102,6 +104,10 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
 	bool AcceptsEmoteSprays() const;
 	virtual bool AcceptsEmoteSprays_Implementation() const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	FTransform GetTargetingSourceTransform(EFortAbilityTargetingSource Source) const;
+	virtual FTransform GetTargetingSourceTransform_Implementation(EFortAbilityTargetingSource Source) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetAbilitySourceLevel(int32 NewAbilitySourceLevel);

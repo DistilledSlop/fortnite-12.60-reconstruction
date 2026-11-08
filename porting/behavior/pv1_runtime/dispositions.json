@@ -1,0 +1,72 @@
+[
+  {
+    "class": "AAIHotSpot",
+    "function": "GetSlotLocationByIndex",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Slots[Index] (reflected TArray at +0x238) -> UAIHotSpotSlot::GetSlotLocation(); invalid or null returns FVector(MAX_flt x3)."
+  },
+  {
+    "class": "ABuildingFillFloor",
+    "function": "OnRep_FloorZ",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Authority returns early; else sets actor location to (root world X,Y; FloorZ) via NativeSetActorLocation143f832a0 (no sweep, teleport 0). Zero vector if no root."
+  },
+  {
+    "class": "ABuildingGameplayActor",
+    "function": "GetTargetingSourceTransform",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Returns RootComponent ComponentToWorld (FTransform at root+0x1c0) or FTransform::Identity when no root."
+  },
+  {
+    "class": "ABuildingGameplayActorConsumable",
+    "function": "GetDeathFXTransform",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Returns RootComponent ComponentToWorld (FTransform at root+0x1c0) or FTransform::Identity when no root."
+  },
+  {
+    "class": "ADeployableBaseCore",
+    "function": "GetSimpleDeathFXTransform",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Returns RootComponent ComponentToWorld (FTransform at root+0x1c0) or FTransform::Identity when no root."
+  },
+  {
+    "class": "AFortAthenaMutator_Bagel",
+    "function": "ResetStreakScoreMultiplier",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Finds PlayerDataArray entry for PlayerState, zeroes StreakScoreLevel/StreakMultiplierCurrentKillCount (+0x54 word) and MarkItemDirty (inlined fast-array dirty sequence)."
+  },
+  {
+    "class": "AFortAthenaMutator_Mash",
+    "function": "ResetStreakScoreMultiplier",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Finds PlayerDataArray entry for PlayerState, zeroes StreakScoreLevel/StreakMultiplierCurrentKillCount (+0x54 word) and MarkItemDirty (inlined fast-array dirty sequence)."
+  },
+  {
+    "class": "AFortConstructorBASE",
+    "function": "GetBuildingActorsInBase",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Converts the set at +0xd60 to a temp array via NativeSetToArray1415c07f0 and returns the entries that are not pending kill."
+  },
+  {
+    "class": "AFortDecoHelper",
+    "function": "IsInValidPlacementSpot",
+    "status": "blocked",
+    "case": "callee_signature_mismatch",
+    "reason": "Helper 0x144621fb0 is declared `bool NativeIsLiveEntryHandle144621fb0(uint8*, const uint64*)` but the asm dereferences its returned RAX (CMP byte [RAX+1],2); and 0x140f95ae0 returns FTimerManager* fed as the uint8* sparse array pointer - cannot be expressed with the declared helpers."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "SetStatForGroup",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Authority and CurrentState != 0: sets RoundStats filter entry value via NativeSetStatFilterEntryValue1420a40c0, then OnRep_StatsChanged()."
+  }
+]

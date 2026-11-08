@@ -14,10 +14,22 @@ _gp = {}
 for c, v in _ci.items():
     for a in v.get('gpsc_targets') or []:
         _gp.setdefault(a, c)
+_crm = json.load(open('porting/generated/reflection/class_ref_map.json'))['resolved']
+for _a, _b in _crm.items():  # property class refs are thunk addresses -> class block -> name
+    if _nm.get(_b):
+        _gp.setdefault(_a, _nm[_b])
 _props = {}
+_arr = {}
 for c in _rf['classes_in_groups_with_fort_names']:
     n = c.get('name') or _nm.get(c['block_va'])
-    _props[n] = {p['offset']: p for p in c.get('properties') or [] if p.get('offset') is not None and p['kind'] == 'Object'}
+    _pl = c.get('properties') or []
+    _props[n] = {p['offset']: p for p in _pl if p.get('offset') not in (None, 0) and p['kind'] == 'Object'}
+    _arr[n] = {}
+    for _i, p in enumerate(_pl):  # an Array property is followed by its inner property (same name, offset 0)
+        if p['kind'] == 'Array' and p.get('offset') is not None and _i + 1 < len(_pl):
+            q = _pl[_i + 1]
+            if q['name'] == p['name'] and q['kind'] == 'Object' and (q.get('type_refs') or {}).get('class'):
+                _arr[n][p['offset']] = q
 import os
 _iat = json.load(open('porting/generated/small-pool/iat.json')) if os.path.exists('porting/generated/small-pool/iat.json') else {}
 _chain = {v['name']: v.get('chain') or [v['name']] for v in _pm.values() if isinstance(v, dict) and v.get('name')}
@@ -32,6 +44,15 @@ def member_class(cls, off):
     return None
 
 
+def array_class(cls, off):
+    for c in _chain.get(cls, [cls]):
+        q = _arr.get(c, {}).get(off)
+        if q:
+            k = _gp.get(q['type_refs']['class'])
+            return (k, q['name']) if k else None
+    return None
+
+
 def analyse(L, cls, delta):
     reg = {'RCX': ('this', cls)}
     out, bad = [], 0
@@ -41,6 +62,11 @@ def analyse(L, cls, delta):
         if m:
             reg[m.group(1)] = reg.get(m.group(2))
             continue
+        m = re.fullmatch(r'MOV (R\w+),qword ptr \[(R\w+) \+ R\w+\*0x8(?: \+ 0x[0-9a-f]+)?\]', i)
+        if m and reg.get(m.group(2)) and reg[m.group(2)][0] == 'arr':
+            a = reg[m.group(2)]
+            reg[m.group(1)] = ('obj', a[1], a[2])
+            continue
         m = re.fullmatch(r'MOV (R\w+),qword ptr \[(R\w+)(?: \+ (0x[0-9a-f]+))?\]', i)
         if m:
             src = reg.get(m.group(2)); off = int(m.group(3), 16) if m.group(3) else 0
@@ -48,7 +74,10 @@ def analyse(L, cls, delta):
                 reg[m.group(1)] = ('vptr', src[1], src[2] if len(src) > 2 else None)
             elif src and src[0] == 'this':
                 mc = member_class(src[1], delta + off)
-                reg[m.group(1)] = ('obj', mc[0], mc[1]) if mc else None
+                ac = None if mc else array_class(src[1], delta + off)
+                reg[m.group(1)] = ('obj', mc[0], mc[1]) if mc else (('arr', ac[0], ac[1]) if ac else None)
+            elif src and src[0] == 'arr':
+                reg[m.group(1)] = ('obj', src[1], src[2])
             else:
                 reg[m.group(1)] = None
             continue

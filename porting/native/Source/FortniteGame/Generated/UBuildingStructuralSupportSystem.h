@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FBuildingSupportCellIndex.h"
 #include "Math/Box.h"
 #include "Math/Vector.h"
 
@@ -73,6 +74,9 @@ public:
 	UPROPERTY(Transient)
 	AFortNavigationGraph* NavGraph;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FBox GetGridBox(FBuildingSupportCellIndex& CellIndex) const;
+
 private:
 	UFUNCTION(BlueprintCallable)
 	static bool IsBuildingActorValid(ABuildingSMActor* ActorToTest);
@@ -80,6 +84,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsWorldLocValid(FVector& WorldLoc) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FBox K2_GetGridBoxFromWorldLoc(FVector& WorldLocation) const;
 
 };
 
