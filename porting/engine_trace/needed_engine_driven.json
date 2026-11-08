@@ -1,0 +1,474 @@
+[
+{
+"body": "0x14198e650",
+"eng": "AActor::BeginPlay()",
+"classes": [
+"AFortGameStateAthena"
+],
+"ported": false
+},
+{
+"body": "0x141975090",
+"eng": "AActor::CheckStillInWorld()",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419b1350",
+"eng": "AActor::CheckStillInWorld()",
+"classes": [
+"AFortGameStateAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419fd5b0",
+"eng": "AActor::CheckStillInWorld()",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a27a70",
+"eng": "AActor::IsRootComponentCollisionRegistered() const",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141935d50",
+"eng": "AActor::PostLoadSubobjects(FObjectInstancingGraph*)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419a93b0",
+"eng": "AActor::PreInitializeComponents()",
+"classes": [
+"AFortGameStateAthena"
+],
+"ported": false
+},
+{
+"body": "0x14198ca20",
+"eng": "AActor::RegisterActorTickFunctions(bool)",
+"classes": [
+"AFortGameStateAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419ca9d0",
+"eng": "AActor::RegisterActorTickFunctions(bool)",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a0fcb0",
+"eng": "AActor::RegisterActorTickFunctions(bool)",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a3f760",
+"eng": "AActor::RegisterActorTickFunctions(bool)",
+"classes": [
+"AFortPlayerStateAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a206a0",
+"eng": "AActor::RegisterAllComponents()",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a0e450",
+"eng": "AActor::SetOwner(AActor*)",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a205b0",
+"eng": "AActor::UnregisterAllComponents(bool)",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a10420",
+"eng": "ACharacter::BeginPlay()",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a0d380",
+"eng": "ACharacter::Landed(FHitResult const&)",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a20d10",
+"eng": "ACharacter::PreReplication(IRepChangedPropertyTracker&)",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a158d0",
+"eng": "ACharacter::RecalculateBaseEyeHeight()",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419c4030",
+"eng": "AController::AddPawnTickDependency(APawn*)",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419f4330",
+"eng": "AController::GetControlRotation() const",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419dc8c0",
+"eng": "AController::PawnPendingDestroy(APawn*)",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419e4f50",
+"eng": "AController::Possess(APawn*)",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419d3420",
+"eng": "AController::RemovePawnTickDependency(APawn*)",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x141943030",
+"eng": "AGameMode::AddInactivePlayer(APlayerState*, APlayerController*)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14194b750",
+"eng": "AGameMode::HandleMatchHasStarted()",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14194bb50",
+"eng": "AGameMode::HandleMatchIsWaitingToStart()",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14194d820",
+"eng": "AGameMode::InitGame(FString const&, FString const&, FString&)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x141950f10",
+"eng": "AGameMode::PostLogin(APlayerController*)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14195d860",
+"eng": "AGameMode::ReadyToEndMatch_Implementation()",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14198e1b0",
+"eng": "AGameMode::StartMatch()",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x141960420",
+"eng": "AGameModeBase::ChangeName(AController*, FString const&, bool)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14193a360",
+"eng": "AGameModeBase::FindPlayerStart_Implementation(AController*, FString const&)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14195a020",
+"eng": "AGameModeBase::GameWelcomePlayer(UNetConnection*, FString&)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14194cd90",
+"eng": "AGameModeBase::GetDefaultPawnClassForController_Implementation(AController*)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419467e0",
+"eng": "AGameModeBase::InitGameState()",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x141959680",
+"eng": "AGameModeBase::Login(UPlayer*, ENetRole, FString const&, FString const&, FUniqueNetIdRepl const&, FString&)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x141950bd0",
+"eng": "AGameModeBase::PreLogin(FString const&, FString const&, FUniqueNetIdRepl const&, FString&)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x141943240",
+"eng": "AGameModeBase::ShouldSpawnAtStartSpot(AController*)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x141967ce0",
+"eng": "AGameModeBase::SpawnDefaultPawnAtTransform_Implementation(AController*, FTransform const&)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x141958fc0",
+"eng": "AGameModeBase::SpawnDefaultPawnFor_Implementation(AController*, AActor*)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14196b5b0",
+"eng": "AGameModeBase::SpawnPlayerController(ENetRole, FString const&)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14194d9e0",
+"eng": "AGameModeBase::UpdateGameplayMuteList(APlayerController*)",
+"classes": [
+"AFortGameModeAthena"
+],
+"ported": false
+},
+{
+"body": "0x14199cbd0",
+"eng": "AGameState::HandleMatchIsWaitingToStart()",
+"classes": [
+"AFortGameStateAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419aceb0",
+"eng": "AGameStateBase::AddPlayerState(APlayerState*)",
+"classes": [
+"AFortGameStateAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419a7060",
+"eng": "AGameStateBase::UpdateServerTimeSeconds()",
+"classes": [
+"AFortGameStateAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a110e0",
+"eng": "APawn::BecomeViewTarget(APlayerController*)",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a0b110",
+"eng": "APawn::DestroyPlayerInputComponent()",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a116b0",
+"eng": "APawn::Destroyed()",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a1fc00",
+"eng": "APawn::PreInitializeComponents()",
+"classes": [
+"AFortPlayerPawnAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419cef10",
+"eng": "APlayerController::BeginPlay()",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419dc800",
+"eng": "APlayerController::BeginSpectatingState()",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419bfcd0",
+"eng": "APlayerController::CanRestartPlayer()",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419d3ee0",
+"eng": "APlayerController::NotifyServerReceivedClientData(APawn*, float)",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419eabb0",
+"eng": "APlayerController::OnPossess(APawn*)",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419e7640",
+"eng": "APlayerController::SetInitialLocationAndRotation(FVector const&, FRotator const&)",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x1419d3dd0",
+"eng": "APlayerController::SetPawn(APawn*)",
+"classes": [
+"AFortPlayerControllerAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a4cac0",
+"eng": "APlayerState::Duplicate()",
+"classes": [
+"AFortPlayerStateAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a4d420",
+"eng": "APlayerState::OnDeactivated()",
+"classes": [
+"AFortPlayerStateAthena"
+],
+"ported": false
+},
+{
+"body": "0x141a46ad0",
+"eng": "APlayerState::SetPlayerNameInternal(FString const&)",
+"classes": [
+"AFortPlayerStateAthena"
+],
+"ported": false
+}
+]
