@@ -14,9 +14,9 @@
 .leaf-label,.leaf-pct,.tm-head{fill:var(--tm-ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .leaf-pct{font-weight:700}
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.4% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit da115d0 | Port policy-class batch pc1 (7 functions in UCommon*/UFort UI classes) | 2026-11-07T18:03:58-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
+.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 29.4% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit a9c85ba | Native virtual interfaces for vehicle/team-actor (generator policy); Linux Development bui | 2026-11-07T19:32:40-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Gameplay classes (/Script/FortniteGame)
-18.0% complete
+17.9% complete
 effort weight 673 | source: derived
 </title>
 <rect class="tile-frame tm-grp0" x="1.0" y="1.0" width="331.3" height="630.0" rx="4"/>
@@ -87,13 +87,13 @@ effort weight 75 | source: derived
 <text class="grp-head" x="755.7" y="555.6" font-size="12">Audio<tspan class="grp-pct"> · 27%</tspan></text>
 </g>
 <g><title>Native function bodies ported (behaviour)
-29.0% complete (4176/14391)
+28.6% complete (4110/14391)
 effort weight 150 | source: git
-4176 committed function bodies of 14391 (total 14391 from totals.json native_functions_with_exec); counted against the in-scope reflected function list (457 manifest entries are helpers, _Validate halves or otherwise not a reflected function and are not counted; ported `&lt;fn&gt;_Implementation` bodies count for `&lt;fn&gt;`). Body-location table for the 11407 functions unported by reflected name when built (snapshot): 788 inline, 8242 direct single-callee, 527 direct multi-candidate (needs review), 1594 virtual, 4 no single body; 9794 distinct bodies; 474 already covered via _Implementation, 61 _Validate-only; source recovery only; build/runtime validation follows separate batch checkpoints</title>
+4110 committed function bodies of 14391 (total 14391 from totals.json native_functions_with_exec); counted against the in-scope reflected function list (457 manifest entries are helpers, _Validate halves or otherwise not a reflected function and are not counted; ported `&lt;fn&gt;_Implementation` bodies count for `&lt;fn&gt;`). Body-location table for the 11407 functions unported by reflected name when built (snapshot): 788 inline, 8242 direct single-callee, 527 direct multi-candidate (needs review), 1594 virtual, 4 no single body; 9794 distinct bodies; 474 already covered via _Implementation, 61 _Validate-only; source recovery only; build/runtime validation follows separate batch checkpoints</title>
 <rect class="tile-body" x="5.0" y="25.0" width="244.5" height="175.7" rx="4"/>
 <clipPath id="stm-c0"><rect x="5.00" y="25.00" width="244.46" height="175.70" rx="4"/></clipPath>
-<g clip-path="url(#stm-c0)"><rect class="tile-fill" x="5.00" y="149.72" width="244.46" height="50.98"/>
-<rect class="tile-edge" x="5.00" y="148.72" width="244.46" height="2"/>
+<g clip-path="url(#stm-c0)"><rect class="tile-fill" x="5.00" y="150.52" width="244.46" height="50.18"/>
+<rect class="tile-edge" x="5.00" y="149.52" width="244.46" height="2"/>
 </g>
 <text class="leaf-label" x="10.0" y="40.0" font-size="11">Native function bodies ported</text>
 <text class="leaf-label" x="10.0" y="53.0" font-size="11">(behaviour)</text>
@@ -238,13 +238,13 @@ manual estimate (see rationale)</title>
 <rect class="tile-frame" x="95.4" y="563.6" width="64.9" height="63.4" rx="4"/>
 </g>
 <g><title>FortniteGame reflection declarations (not behavior)
-99.6% complete (2831/2842)
+99.6% complete (2832/2842)
 effort weight 15 | source: git
-2831 of 2842 tracked files (porting/native/Source/FortniteGame/Generated/[AU]*.h); total 2842 from totals.json uht_classes_named_by_package[/Script/FortniteGame]; also tracked, not counted: classes in other generated modules 100</title>
+2832 of 2842 tracked files (porting/native/Source/FortniteGame/Generated/[AU]*.h); total 2842 from totals.json uht_classes_named_by_package[/Script/FortniteGame]; also tracked, not counted: classes in other generated modules 100</title>
 <rect class="tile-body" x="162.3" y="406.6" width="62.6" height="65.8" rx="4"/>
 <clipPath id="stm-c14"><rect x="162.32" y="406.56" width="62.62" height="65.77" rx="4"/></clipPath>
-<g clip-path="url(#stm-c14)"><rect class="tile-fill" x="162.32" y="406.82" width="62.62" height="65.52"/>
-<rect class="tile-edge" x="162.32" y="405.82" width="62.62" height="2"/>
+<g clip-path="url(#stm-c14)"><rect class="tile-fill" x="162.32" y="406.80" width="62.62" height="65.54"/>
+<rect class="tile-edge" x="162.32" y="405.80" width="62.62" height="2"/>
 </g>
 <text class="leaf-pct" x="167.3" y="422.6" font-size="12">100%</text>
 <rect class="tile-frame" x="162.3" y="406.6" width="62.6" height="65.8" rx="4"/>
