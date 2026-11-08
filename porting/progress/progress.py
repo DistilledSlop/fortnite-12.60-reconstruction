@@ -463,8 +463,8 @@ HANDWRITTEN_KISMET_NAMES = frozenset({
 
 
 def _without_handwritten_kismet(units):
-    return {(cls, fn) for cls, fn in units
-            if cls != "UFortKismetLibrary" or fn not in HANDWRITTEN_KISMET_NAMES}
+    # UFortKismetLibrary is generator-owned now: its manifest ports are real, nothing is hand-written any more.
+    return set(units)
 
 
 def _verified_handwritten_kismet(files):

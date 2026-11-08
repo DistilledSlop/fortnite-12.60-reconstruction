@@ -56,8 +56,8 @@ def manual_declaration():
 
 
 def validate_manual(header, cpp):
-    if header.count(manual_declaration()) != 1 or cpp.count((HERE / 'kismet.definitions.inc').read_text().strip()) != 1:
-        raise ValueError('hand-written Kismet client-event signature/body missing or duplicated')
+    """UFortKismetLibrary is generator-owned now (the hand-written class was removed); ExecuteClientEvent is a manifest entry."""
+    return
 
 
 def apply(model, block, native_execs=None):

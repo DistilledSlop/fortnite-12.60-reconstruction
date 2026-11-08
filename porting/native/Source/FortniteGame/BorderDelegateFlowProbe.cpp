@@ -1,5 +1,6 @@
 #include "BorderDelegateFlowProbe.h"
 #include "FortniteMapClasses.h"
+#include "UFortKismetLibrary.h"
 #include "UCommonUserWidget.h"
 #include "Blueprint/WidgetTree.h"
 #include "Blueprint/UserWidget.h"
