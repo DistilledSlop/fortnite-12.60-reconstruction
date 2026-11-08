@@ -48,5 +48,15 @@
   "kind": "omit",
   "cpp": "",
   "note": "FMemory::GCreateMalloc lazy init (GMalloc creation): omit; FMemory::Malloc/Realloc/Free already do it"
+ },
+ "0x140680160": {
+  "kind": "array_grow",
+  "cpp": "Arr.Reserve(NewMax)-style TArray resize (RCX=&array, EDX=NewMax, R8D=PrevMax)",
+  "note": "COMDAT-folded TArray<T>::ResizeTo for a 1-byte element (shared by many unrelated reflected functions: IGNORE those candidate hints). Port the surrounding Add/Reserve as a TArray operation, not a call"
+ },
+ "0x1406800e0": {
+  "kind": "array_grow",
+  "cpp": "Arr.AddUninitialized(1) slow path (RCX=&array)",
+  "note": "COMDAT-folded TArray<T>::ResizeGrow for a 1-byte element (shared by many unrelated reflected functions: IGNORE those candidate hints). Port the whole `Num+1 > Max` sequence as Add/AddUninitialized"
  }
 }
