@@ -22,7 +22,7 @@ for d in glob.glob(f'{R}/native*/'):
         m = re.fullmatch(r'(0x[0-9a-f]+)\.asm', f)
         if m:
             idx.setdefault(m.group(1), d + f)
-f2 = json.load(open(f'{R}/thunk-table/final2.json'))
+f2 = json.load(open(f'{R}/thunk-table/final3.json'))
 nf = json.load(open(f'{R}/reflection/native_funcs.json'))
 ci = json.load(open(f'{R}/reflection/native_class_index.json'))
 man = json.load(open('porting/behavior/MANIFEST.json'))
