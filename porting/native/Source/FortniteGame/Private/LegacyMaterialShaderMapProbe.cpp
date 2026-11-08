@@ -968,6 +968,18 @@ static const FMediaFamilySource* FindMediaFamilyByTexture(const FString& Texture
 }
 static bool IsLoginArtPlain(const FString& Path) { return Path==GLegacyExternalLinkPath || Path==GLegacyBackArrowPath; }
 static bool IsMediaFamily(const FString& Path) { return Path==GLegacyMediaPath || IsLoginArtPlain(Path); }
+// TrackingLlama is deliberately NOT part of the Media family: its texture is 256x256 PF_DXT5 with 9 mips (top two in .ubulk)
+// and its sampler source is 0 (SSM_FromTextureAsset, not a shared WorldGroupSettings sampler). Sampling state (sRGB, Wrap/Wrap,
+// TF_Default, TEXTUREGROUP_World, TC_Default) is the UTexture2D class default: those properties are absent from the original
+// serialized property list (only ImportedSize and LightingGuid exist). See export_tracking_llama_ingress_v3.py.
+static const TCHAR* GLegacyLlamaPath=TEXT("/Game/UI/Foundation/Modals/ErrorWindow/Materials/M_UI_TrackingLlama.M_UI_TrackingLlama");
+static const TCHAR* GLegacyLlamaTexturePath=TEXT("/Game/UI/Foundation/Modals/ErrorWindow/Materials/Icon-Llama-NoEyes.Icon-Llama-NoEyes");
+struct FLlamaPackageFile { const TCHAR* Extension; int64 Bytes; const TCHAR* Sha256; };
+static const FLlamaPackageFile GLegacyLlamaFiles[]={
+    {TEXT("uasset"),748,TEXT("4c415a1c34a4b8d3f69219ab5485a61233abb7625e730473a89c63ebb0aea9ac")},
+    {TEXT("uexp"),6018,TEXT("2fdb9853caa5343ac5ee76d14edf30d4cfb7d4e9d16dfac75eb26f6e85283a3a")},
+    {TEXT("ubulk"),81920,TEXT("0e6187d315f165e7005e2b769afcdf2fef1b9e554079a1cdd45cdc0c9b367671")}};
+static bool IsLlama(const FString& Path) { return Path==GLegacyLlamaPath; }
 // Typed material-uniform resource slots come from the bundle's original expected layout ([texture, asset sampler, wrap, clamp]).
 static bool ReadMediaFamilySlots(const TSharedPtr<FJsonObject>& Fixture, int32& Texture, int32& Sampler, int32& Clamp)
 {
@@ -1076,7 +1088,7 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
             TArray<UTexture*> SourceReferences; SourceReferences.Add(Texture);
             return RestoreLegacyMaterialTextureReferences(Parent,SourceReferences,Error);
         }
-        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && !IsLoginArtPlain(SourceIdentity) && SourceIdentity!=GLegacyGooglePath && SourceIdentity!=GLegacyFacebookPath && !IsSkewBase(SourceIdentity) && SourceIdentity!=GLegacyEpicLogoPath)
+        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && !IsLoginArtPlain(SourceIdentity) && !IsLlama(SourceIdentity) && SourceIdentity!=GLegacyGooglePath && SourceIdentity!=GLegacyFacebookPath && !IsSkewBase(SourceIdentity) && SourceIdentity!=GLegacyEpicLogoPath)
         {
             // Numeric-only manifests need no texture context. Only authenticated
             // base-material manifests may enter the general texture path.
@@ -1168,9 +1180,9 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
         { Error=TEXT("invalid original texture provenance"); return false; }
         const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
         const auto& Textures=Fixture->GetArrayField(TEXT("texture_2d_parameters"));
-        const bool bPlain=SourceIdentity==GLegacyKeybindPath || SourceIdentity==GLegacyHollowPath || SourceIdentity==GLegacySocialPath || SourceIdentity==GLegacyMediaPath || IsLoginArtPlain(SourceIdentity) || SourceIdentity==GLegacyEpicLogoPath;
+        const bool bPlain=SourceIdentity==GLegacyKeybindPath || SourceIdentity==GLegacyHollowPath || SourceIdentity==GLegacySocialPath || SourceIdentity==GLegacyMediaPath || IsLoginArtPlain(SourceIdentity) || IsLlama(SourceIdentity) || SourceIdentity==GLegacyEpicLogoPath;
         const FMediaFamilySource* FamilySource=IsLoginArtPlain(SourceIdentity) ? FindMediaFamilyByOwner(SourceIdentity) : nullptr;
-        const FString Expected=FamilySource ? FString(FamilySource->TexturePath) : SourceIdentity==GLegacyEpicLogoPath ? FString(GLegacyEpicLogoTexturePath) : SourceIdentity==GLegacySkewDFPath ? FString(GLegacySkewDFTexturePath) : SourceIdentity==GLegacyGooglePath ? FString(GLegacyGoogleTexturePath) : SourceIdentity==GLegacyFacebookPath ? FString(GLegacyFacebookTexturePath) : SourceIdentity==GLegacyMediaPath ? FString(GLegacyMediaTexturePath) : SourceIdentity==GLegacySocialPath ? FString(GLegacySocialTexturePath) : SourceIdentity==GLegacyHollowPath ? FString(GLegacyHollowTexturePath) : bPlain ? FString(GLegacyKeybindTexturePath) : FString(TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon"));
+        const FString Expected=FamilySource ? FString(FamilySource->TexturePath) : IsLlama(SourceIdentity) ? FString(GLegacyLlamaTexturePath) : SourceIdentity==GLegacyEpicLogoPath ? FString(GLegacyEpicLogoTexturePath) : SourceIdentity==GLegacySkewDFPath ? FString(GLegacySkewDFTexturePath) : SourceIdentity==GLegacyGooglePath ? FString(GLegacyGoogleTexturePath) : SourceIdentity==GLegacyFacebookPath ? FString(GLegacyFacebookTexturePath) : SourceIdentity==GLegacyMediaPath ? FString(GLegacyMediaTexturePath) : SourceIdentity==GLegacySocialPath ? FString(GLegacySocialTexturePath) : SourceIdentity==GLegacyHollowPath ? FString(GLegacyHollowTexturePath) : bPlain ? FString(GLegacyKeybindTexturePath) : FString(TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon"));
         if (IsNamedTextureBase(SourceIdentity))
         {
             const auto& T=Decoded.IR.Texture2DParameters[0];const TArray<TSharedPtr<FJsonValue>>* Refs=nullptr;
@@ -3314,6 +3326,114 @@ static bool CheckMediaOriginalTexture(UMaterialInterface* Owner, FMaterialResour
 }
 
 
+static bool CheckLlamaSourcePackage(const UTexture* Texture, const TSharedPtr<FJsonObject>& Fixture, FString& Error)
+{
+    FString AssetFilename;
+    if (!Texture || !Fixture || Texture->GetPathName()!=GLegacyLlamaTexturePath ||
+        !FPackageName::DoesPackageExist(Texture->GetOutermost()->GetName(),nullptr,&AssetFilename) || FPaths::GetExtension(AssetFilename)!=TEXT("uasset"))
+    { Error=TEXT("Llama source package filename unavailable"); return false; }
+    const auto Contract=Fixture->GetObjectField(TEXT("texture_contract"));
+    const TArray<TSharedPtr<FJsonValue>>* Textures=nullptr;
+    const auto Row=(Contract && Contract->TryGetArrayField(TEXT("textures"),Textures) && Textures->Num()==1) ? (*Textures)[0]->AsObject() : nullptr;
+    const auto Package=Row ? Row->GetObjectField(TEXT("source_package")) : nullptr;
+    if (!Package) { Error=TEXT("Llama bundle lacks source package receipt"); return false; }
+    for (const FLlamaPackageFile& File : GLegacyLlamaFiles)
+    {
+        const auto Entry=Package->GetObjectField(File.Extension);
+        const FString Path=FPaths::ChangeExtension(AssetFilename,File.Extension);
+        TArray<uint8> Bytes; uint8 Digest[32];
+        if (!Entry || int64(Entry->GetNumberField(TEXT("bytes")))!=File.Bytes || !Entry->GetStringField(TEXT("sha256")).Equals(File.Sha256,ESearchCase::IgnoreCase) ||
+            IFileManager::Get().FileSize(*Path)!=File.Bytes || !FFileHelper::LoadFileToArray(Bytes,*Path) || Bytes.Num()!=File.Bytes)
+        { Error=FString::Printf(TEXT("Llama source .%s size or receipt differs"),File.Extension); return false; }
+        LegacyManifestSHA256(Bytes.GetData(),uint32(Bytes.Num()),Digest);
+        if (!BytesToHex(Digest,32).Equals(File.Sha256,ESearchCase::IgnoreCase))
+        { Error=FString::Printf(TEXT("actual Llama source .%s bytes differ"),File.Extension); return false; }
+    }
+    return true;
+}
+
+// Source/metadata/binding checks for the TrackingLlama DXT5 texture. There is intentionally no GPU readback hash: the
+// original data is block-compressed and no independent decoder-derived expectation exists, so only proven values are checked.
+static bool CheckLlamaOriginalTexture(UMaterialInterface* Owner, FMaterialResource* Resource,
+    const TRefCountPtr<FMaterialShaderMap>& Map, const TSharedPtr<FJsonObject>& Fixture, FString& Error)
+{
+    int32 TextureSlot=0, SamplerSlot=0, ClampSlot=0;
+    if (!IsInGameThread() || !Owner || !IsLlama(Owner->GetPathName()) || !Resource || !Map || !Fixture || !ReadMediaFamilySlots(Fixture,TextureSlot,SamplerSlot,ClampSlot))
+    { Error=TEXT("invalid Llama texture owner"); return false; }
+    const auto& Uniforms=Map->GetUniformExpressionSet();
+    if (Uniforms.GetNumTextures(EMaterialTextureParameterType::Standard2D)!=1)
+    { Error=TEXT("unexpected Llama texture expression count"); return false; }
+    const auto& Entry=Uniforms.GetTextureParameter(EMaterialTextureParameterType::Standard2D,0);
+    const auto Info=Entry.GetParameterInfo();
+    if (!Entry.ParameterInfo.Name.IsNone() || !Info.Name.IsNone() || Info.Association!=GlobalParameter || Info.Index!=INDEX_NONE || Entry.TextureIndex!=0 || Entry.SamplerSource!=SSM_FromTextureAsset)
+    { Error=TEXT("Llama texture acquired a parameter identity or sampler source other than 0 (FromTextureAsset)"); return false; }
+    const auto References=Resource->GetReferencedTextures();
+    UTexture2D* Texture=References.Num()==1 ? Cast<UTexture2D>(References[0]) : nullptr;
+    const UEnum* GroupEnum=StaticEnum<TextureGroup>();
+    if (!Texture || Texture->GetPathName()!=GLegacyLlamaTexturePath || Texture->GetClass()->GetPathName()!=TEXT("/Script/Engine.Texture2D") ||
+        Texture->GetSizeX()!=256 || Texture->GetSizeY()!=256 || Texture->GetNumMips()!=9 || Texture->GetPixelFormat()!=PF_DXT5 ||
+        !Texture->SRGB || Texture->AddressX!=TA_Wrap || Texture->AddressY!=TA_Wrap || Texture->Filter!=TF_Default || Texture->CompressionSettings!=TC_Default ||
+        !GroupEnum || GroupEnum->GetNameStringByValue(Texture->LODGroup)!=TEXT("TEXTUREGROUP_World"))
+    { Error=TEXT("Llama texture path or platform metadata differs"); return false; }
+    // The bundle must agree with the compiled-in proven values.
+    const auto Contract=Fixture->GetObjectField(TEXT("texture_contract"));
+    const TArray<TSharedPtr<FJsonValue>>* Rows=nullptr;
+    const auto Row=(Contract && Contract->TryGetArrayField(TEXT("textures"),Rows) && Rows->Num()==1) ? (*Rows)[0]->AsObject() : nullptr;
+    const auto Source=Row ? Row->GetObjectField(TEXT("source_platform_data")) : nullptr;
+    const auto Sampler=Row ? Row->GetObjectField(TEXT("effective_sampler")) : nullptr;
+    const auto Props=Row ? Row->GetObjectField(TEXT("effective_properties")) : nullptr;
+    if (!Source || !Sampler || !Props || !Row->HasTypedField<EJson::Boolean>(TEXT("effective_srgb")) || !Row->GetBoolField(TEXT("effective_srgb")) ||
+        Source->GetStringField(TEXT("pixel_format"))!=TEXT("PF_DXT5") || Source->GetNumberField(TEXT("mip_count"))!=9 || Source->GetNumberField(TEXT("first_mip"))!=0 ||
+        Source->GetNumberField(TEXT("logical_width"))!=256 || Source->GetNumberField(TEXT("logical_height"))!=256 ||
+        Sampler->GetNumberField(TEXT("sampler_source"))!=0 || Sampler->GetStringField(TEXT("sampler_source_mode"))!=TEXT("SSM_FromTextureAsset") ||
+        Sampler->GetStringField(TEXT("address_x"))!=TEXT("TA_Wrap") || Sampler->GetStringField(TEXT("address_y"))!=TEXT("TA_Wrap") || Sampler->GetStringField(TEXT("filter"))!=TEXT("TF_Default") ||
+        Props->GetStringField(TEXT("lod_group"))!=TEXT("TEXTUREGROUP_World") || Props->GetStringField(TEXT("compression_settings"))!=TEXT("TC_Default"))
+    { Error=TEXT("invalid Llama source texture metadata receipt"); return false; }
+    if (!CheckLlamaSourcePackage(Texture,Fixture,Error)) return false;
+    UTexture* GameThreadValue=nullptr;
+    Uniforms.GetGameThreadTextureValue(EMaterialTextureParameterType::Standard2D,0,Owner,*Resource,GameThreadValue,false);
+    if (GameThreadValue!=Texture) { Error=TEXT("Llama texture game-thread indexed lookup differs"); return false; }
+    const FMaterialRenderProxy* Base=Owner->GetRenderProxy();
+    bool bMatched=false; int32 NamedCalls=-1;
+    ENQUEUE_RENDER_COMMAND(CheckLlamaOriginalTexture)([Base,Resource,Map,Texture,TextureSlot,SamplerSlot,&bMatched,&NamedCalls](FRHICommandListImmediate&)
+    {
+        class FPlainTextureProxy final : public FLegacyProbeProxy
+        {
+        public:
+            mutable int32 Calls=0;
+            virtual bool GetTextureValue(const FHashedMaterialParameterInfo&,const UTexture**,const FMaterialRenderContext&) const override
+            { ++Calls; return false; }
+        } Proxy;
+        const FMaterialRenderProxy* Fallback=nullptr;
+        const FMaterial& Material=Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5,Fallback);
+        if (&Material!=Resource || !Texture->Resource || !Texture->TextureReference.TextureReferenceRHI || !Texture->Resource->SamplerStateRHI) return;
+        FRHITexture* RHI=Texture->TextureReference.TextureReferenceRHI->GetReferencedTexture();
+        FRHITexture2D* RHI2D=RHI ? RHI->GetTexture2D() : nullptr;
+        // Streaming may leave fewer than 9 mips resident; the resident chain is always 256>>(9-N) down to 1x1.
+        const uint32 Mips=RHI2D ? RHI2D->GetNumMips() : 0;
+        if (!RHI2D || RHI==GWhiteTexture->TextureRHI.GetReference() || Mips<1 || Mips>9 || RHI2D->GetSizeX()!=(256u>>(9u-Mips)) || RHI2D->GetSizeY()!=RHI2D->GetSizeX() ||
+            RHI2D->GetFormat()!=PF_DXT5 || !(RHI2D->GetFlags() & TexCreate_SRGB)) return;
+        Proxy.Base=Base; Proxy.bInherit=false;
+        FMaterialRenderContext Context(&Proxy,Material,nullptr); FUniformExpressionCache Cache;
+        const auto& Uniforms=Map->GetUniformExpressionSet();
+        const UTexture* RenderValue=nullptr;
+        Uniforms.GetTextureValue(EMaterialTextureParameterType::Standard2D,0,Context,Material,RenderValue);
+        alignas(16) uint8 Contents[4112]={}; Uniforms.FillUniformBuffer(Context,Cache,Contents,sizeof(Contents));
+        const auto& Layout=Uniforms.GetUniformBufferLayout();
+        if (Layout.Resources.Num()!=4 || Layout.Resources[0].MemberOffset!=TextureSlot || Layout.Resources[1].MemberOffset!=SamplerSlot || sizeof(Contents)<uint32(SamplerSlot)+sizeof(void*)) return;
+        void* TextureRHI=nullptr; void* SamplerRHI=nullptr;
+        FMemory::Memcpy(&TextureRHI,Contents+TextureSlot,sizeof(void*)); FMemory::Memcpy(&SamplerRHI,Contents+SamplerSlot,sizeof(void*));
+        NamedCalls=Proxy.Calls;
+        // Source 0 uses the texture asset's own sampler (not a shared world-group sampler).
+        if (RenderValue!=Texture || NamedCalls!=0 || TextureRHI!=Texture->TextureReference.TextureReferenceRHI.GetReference() || SamplerRHI!=Texture->Resource->SamplerStateRHI.GetReference()) return;
+        bMatched=true;
+    });
+    FlushRenderingCommands();
+    if (!bMatched || NamedCalls!=0) { Error=TEXT("Llama texture render lookup, sampler or RHI metadata differs"); return false; }
+    UE_LOG(LogTemp,Display,TEXT("Legacy Llama texture: real indexed 256x256 PF_DXT5 9-mip source, source package hashes, texture-asset sampler and zero named proxy calls verified (no readback hash)"));
+    return true;
+}
+
 
 static bool DrawMediaTextureControls(UMaterialInterface* Owner, FMaterialResource* Resource,
     const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings,
@@ -3738,6 +3858,8 @@ void RegisterLegacyOriginalMaterialProvider()
         // Login-art regular-Texture family (original ExternalLink and CornerBackArrow base materials).
         {GLegacyExternalLinkPath,GLegacyExternalLinkPath,TEXT("688c9b715c5ee82a40f380bfc067d502b92166c2"),TEXT("0a0025ba4e70c60a7c2f6e18379f35d00f9f6e85"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyExternalLinkPath,false,false},
         {GLegacyBackArrowPath,GLegacyBackArrowPath,TEXT("0f6f9cc66f038474582f70c4439ef0e94ce0e139"),TEXT("c934c63d89f1455664a0e6ecace622328992b61c"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyBackArrowPath,false,false},
+        // TrackingLlama (bundle-3: bundle-2 plus proven effective sampling state); resource SHA1 is the original serialized map.
+        {GLegacyLlamaPath,GLegacyLlamaPath,TEXT("1b17c8ddd47a348979d3dcbabc7d8ac133574535"),TEXT("de5324687872ecdca7ee90bc9745270120abd518"),FString(),TEXT("fortnite.legacy-material-ingress.v2"),TEXT("UMaterial"),FString(),GLegacyLlamaPath,false,false},
         // Skew-button family: DF is a base UMaterial; Chip is a nonstatic instance inheriting DF's resource.
         {GLegacySkewDFPath,GLegacySkewDFPath,TEXT("cf0f7463e55d80ea6af70f05a54c24a42c382b2f"),TEXT("2a192decac478260cb9ab197a38c3b9e4ab2e6c7"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacySkewDFPath,false,false},
         {GLegacySkewChipPath,GLegacySkewDFPath,TEXT("97365652ba578ea43a7ddfe57002f4631f03f4b7"),TEXT("2a192decac478260cb9ab197a38c3b9e4ab2e6c7"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterialInstanceConstant"),GLegacySkewDFPath,GLegacySkewDFPath,true,false}
@@ -4131,6 +4253,12 @@ void ProbeLegacyOriginalMaterial()
         if (!CheckMediaOriginalTexture(Material,Resource,Map,Bundle->GetObjectField(TEXT("runtime_fixture")),TextureError))
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: %s"),*TextureError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     }
+    if (IsLlama(OwnerPath))
+    {
+        FString TextureError;
+        if (!CheckLlamaOriginalTexture(Material,Resource,Map,Bundle->GetObjectField(TEXT("runtime_fixture")),TextureError))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Llama %s"),*TextureError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    }
     if (OwnerPath==GLegacySocialPath)
     {
         FString Why;
@@ -4167,7 +4295,7 @@ void ProbeLegacyOriginalMaterial()
     bNegativeChecks &= RejectMutation(TEXT("trailing byte"),MoveTemp(Appended));
     bNegativeChecks &= RejectMutation(TEXT("shader end escapes resource"),MoveTemp(BadEnd));
     bNegativeChecks &= RejectMutation(TEXT("invalid local expression name"),MoveTemp(BadName));
-    if (OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || IsMediaFamily(OwnerPath))
+    if (OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || IsMediaFamily(OwnerPath) || IsLlama(OwnerPath))
     {
         const auto TextureArray=Arrays->GetObjectField(TEXT("texture_2d"));
         const int32 Offset=int32(TextureArray->GetNumberField(TEXT("offset")))+4;
@@ -4213,13 +4341,13 @@ void ProbeLegacyOriginalMaterial()
     if (!bNegativeChecks)
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: original reader negative check failed")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     FString Error;
-    if (!CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("owner"),Error,(OwnerPath==GLegacyDonutPath || OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacySocialPath || IsMediaFamily(OwnerPath) || IsNamedTextureBase(OwnerPath)) ? Material : nullptr))
+    if (!CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("owner"),Error,(OwnerPath==GLegacyDonutPath || OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacySocialPath || IsMediaFamily(OwnerPath) || IsLlama(OwnerPath) || IsNamedTextureBase(OwnerPath)) ? Material : nullptr))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if ((OwnerPath == GLegacyPowerToastPath || OwnerPath == GLegacyMainLPath) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("instance"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live instance uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (Pin->bManifest && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("manifest owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
-    if ((OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacyFlogoPath || OwnerPath==GLegacySocialPath || IsMediaFamily(OwnerPath) || IsNamedTextureBase(OwnerPath)) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("plain texture owner"),Error,Material,TEXT("owner_uniform_cases")))
+    if ((OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacyFlogoPath || OwnerPath==GLegacySocialPath || IsMediaFamily(OwnerPath) || IsLlama(OwnerPath) || IsNamedTextureBase(OwnerPath)) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("plain texture owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: plain texture owner uniforms failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (OwnerPath==GLegacyDonutPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("Donut owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Donut owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
@@ -4326,6 +4454,14 @@ void ProbeLegacyOriginalMaterial()
         if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !bView || !DrawMediaTextureControls(Material,Resource,Map,Bindings,Fixture,Error))
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Media texture draw failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
         UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: %s owner complete and attached on both threads; seven shaders and source/copy checks passed"),*OwnerPath);
+        return;
+    }
+    if (IsLlama(OwnerPath))
+    {
+        // No draw/readback controls: the DXT5 source has no independently derived pixel expectation.
+        if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !bView)
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Llama shader verification failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: Llama owner %s complete and attached on both threads; seven shaders and DXT5 source/binding checks passed"),*OwnerPath);
         return;
     }
     if (OwnerPath==GLegacySocialPath)
