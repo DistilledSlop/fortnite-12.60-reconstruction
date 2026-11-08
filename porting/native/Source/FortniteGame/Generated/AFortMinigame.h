@@ -51,6 +51,7 @@
 #include "Math/UnrealMathSSE.h"
 #include "UFortMutatorOwner.h"
 #include "UFortVolumeAccessor.h"
+#include "UObject/Class.h"
 #include "UObject/Object.h"
 
 class AActor;
@@ -884,5 +885,7 @@ public:
 	virtual AFortVolume* NativeGetVolume();
 	bool NativeIsMatchPointDecided293() const;
 	bool NativeAllowsFriendlyFire163(AFortPawn* Pawn);
+	static uint8* NativeFindStatFilterEntry14207a350(uint8* EntryArray, UClass* const* FilterClassKey);
+	static UObject* NativeGetAthenaGameMode141641300(UObject* MinigameObject);
 };
 

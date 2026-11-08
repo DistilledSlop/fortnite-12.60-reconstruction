@@ -3,6 +3,7 @@
 #include "Abilities/GameplayAbility.h"
 #include "GameplayAbilitySpec.h"
 #include "GameplayTagContainer.h"
+#include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
 void UFortAbilitySystemComponent::BP_BlockAbilitiesWithTags(FGameplayTagContainer& Tags)
@@ -111,6 +112,23 @@ bool UFortAbilitySystemComponent::HasNativeAction(const FGameplayTag& ActionTag)
 	// Original address: 0x141603a40.
 	// See recovery.md for the original container layout and integration boundary.
 	return NativeActiveActionTags.HasTag(ActionTag);
+}
+
+UObject* UFortAbilitySystemComponent::NativeGetOutermostObject142ec9ca0(UObject* Context)
+{
+	// Helper 0x142ec9ca0 (static on UFortAbilitySystemComponent).
+	// Evidence: porting/generated/native-cap-direct/0x142ec9ca0.asm, 10 instructions, no calls.
+	// Behavior: follows the object pointer at +0x20 (UObject::OuterPrivate) until null and returns the last non-null object, or Context when it has no outer.
+	// Callers: 0x142e84670 (and others) use the returned pointer as an object; ABI RCX = object, returns RAX.
+	// CONFIDENCE: HIGH
+	UObject* CurrentObject = Context;
+	UObject* NextObject = CurrentObject->GetOuter();
+	while (NextObject != nullptr)
+	{
+	    CurrentObject = NextObject;
+	    NextObject = CurrentObject->GetOuter();
+	}
+	return CurrentObject;
 }
 
 void UFortAbilitySystemComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

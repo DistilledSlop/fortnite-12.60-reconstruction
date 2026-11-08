@@ -941,5 +941,7 @@ public:
 	virtual AFortInventory* NativeQuickBarInventory();
 	virtual AFortWeapon* NativeQuickBarHeldWeapon();
 	virtual uint8 NativeGetTeam163();
+	static int32 NativeParseTrailingUnderscoreNumber142cd4550(const char* Str, int32* IndexInOut);
+	static int32 NativeFNameNumberSuffix142cd4630(const uint16* Text, int32* InOutLength);
 };
 

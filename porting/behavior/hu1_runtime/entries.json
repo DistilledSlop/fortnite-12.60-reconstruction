@@ -1,0 +1,34 @@
+[
+  {
+    "class": "UFortGameUserSettings",
+    "function": "NativeFindHashedSetIndex140709840",
+    "kind": "helper",
+    "signature": "int32 NativeFindHashedSetIndex140709840(void* Set, uint64 Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu1_runtime/UFortGameUserSettings/NativeFindHashedSetIndex140709840.inc",
+    "address": "0x140709840",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Hashed set lookup, 20-byte elements, chain at +0xc. Same hash scheme as 0x1407bdf90. Returns index or -1."
+  },
+  {
+    "class": "UCustomCharacterPartAnimInstance",
+    "function": "NativeIsSlashFree142d30420",
+    "kind": "helper",
+    "signature": "bool NativeIsSlashFree142d30420(const FString& Path)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu1_runtime/UCustomCharacterPartAnimInstance/NativeIsSlashFree142d30420.inc",
+    "address": "0x142d30420",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Containers/UnrealString.h"
+    ],
+    "notes": "Returns true when the FString contains no wide '/' character. Caller 0x142ed4880 consumes it as no-slash."
+  }
+]

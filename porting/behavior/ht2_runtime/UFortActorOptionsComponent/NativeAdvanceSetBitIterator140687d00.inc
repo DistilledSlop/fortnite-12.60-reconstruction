@@ -1,0 +1,49 @@
+// Helper 0x140687d00, host UFortActorOptionsComponent (static). 48 instructions, no callees.
+// Iterator state from asm: +0x0 int32 word index; +0x4 lowest set bit of the found word; +0x8 pointer to bit array;
+//   +0x10 uint32 unvisited mask for the current word; +0x14 current bit index (clamped to NumBits); +0x18 base bit index.
+// Bit array: word storage at [array+0x10] when non-null, otherwise inline at array+0; int32 NumBits at [array+0x18].
+// Mask is set to all ones after each new word is loaded; base advances by 32 per word; end sets index to NumBits.
+// No reflected member covers these offsets (raw access per asm widths).
+// Callers: UCommonActivatablePanel::GetInputActions (0x1407c38f0), UCommonTabListWidget::DisableTabWithReason (0x1407b91a0).
+// The BSR zero-source path (asm 39-42) is unreachable here because the found word is nonzero.
+// CONFIDENCE: HIGH
+uint8* SetBitArray = *reinterpret_cast<uint8* const*>(Iterator + 0x8);
+const int32 SetBitNumBits = *reinterpret_cast<const int32*>(SetBitArray + 0x18);
+uint8* SetBitWordBase = *reinterpret_cast<uint8* const*>(SetBitArray + 0x10);
+if (SetBitWordBase == nullptr)
+{
+	SetBitWordBase = SetBitArray;
+}
+const uint32* SetBitWords = reinterpret_cast<const uint32*>(SetBitWordBase);
+const int32 SetBitLastWord = (SetBitNumBits - 1) / 32;
+int32 SetBitWordIndex = *reinterpret_cast<const int32*>(Iterator + 0x0);
+uint32 SetBitWord = SetBitWords[SetBitWordIndex] & *reinterpret_cast<const uint32*>(Iterator + 0x10);
+if (SetBitWord == 0)
+{
+	for (;;)
+	{
+		*reinterpret_cast<int32*>(Iterator + 0x18) += 32;
+		++SetBitWordIndex;
+		*reinterpret_cast<int32*>(Iterator + 0x0) = SetBitWordIndex;
+		if (SetBitWordIndex > SetBitLastWord)
+		{
+			*reinterpret_cast<int32*>(Iterator + 0x14) = SetBitNumBits;
+			return;
+		}
+		*reinterpret_cast<uint32*>(Iterator + 0x10) = 0xffffffffu;
+		SetBitWord = SetBitWords[SetBitWordIndex];
+		if (SetBitWord != 0)
+		{
+			break;
+		}
+	}
+}
+const uint32 SetBitLowBit = SetBitWord & (0u - SetBitWord);
+*reinterpret_cast<uint32*>(Iterator + 0x4) = SetBitLowBit;
+const int32 SetBitInWord = static_cast<int32>(FMath::FloorLog2(SetBitLowBit));
+int32 SetBitResult = *reinterpret_cast<const int32*>(Iterator + 0x18) + SetBitInWord;
+if (SetBitResult > SetBitNumBits)
+{
+	SetBitResult = SetBitNumBits;
+}
+*reinterpret_cast<int32*>(Iterator + 0x14) = SetBitResult;

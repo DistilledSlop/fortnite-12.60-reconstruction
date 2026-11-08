@@ -1,0 +1,73 @@
+// Helper 0x140708be0 (AFortAthenaVehicleSpawner static). Hash-set lookup of a 64-bit key; writes the element index.
+// Layout (offsets relative to Set, the TSet subobject passed in RCX by callers): [+0x0] element array pointer, elements
+// 16 bytes each {int64 Key @+0, int32 NextIndex @+8}; [+0x8] int32 count compared with [+0x34] for an early not-found exit;
+// [+0x38] inline hash-bucket array, replaced by the pointer at [+0x40] when non-null; [+0x48] int32 bucket count (mask = count-1).
+// Bucket hash: Jenkins-style 32-bit mix of (Key >> 4) with constant 0x9e3779b9, combined as 64-bit (ECX sign-extended XOR
+// (R9D >> 15)), masked by bucket count - 1. Chain walk compares the 64-bit key and follows NextIndex until -1.
+// Result: *OutElementId = index or -1; returns OutElementId (the asm returns R11 in RAX).
+// CONFIDENCE: MEDIUM
+const int32 CountA = *reinterpret_cast<const int32*>(Set + 0x8);
+if (CountA == *reinterpret_cast<const int32*>(Set + 0x34))
+{
+    *OutElementId = -1;
+    return OutElementId;
+}
+const uint8* ExternBuckets = *reinterpret_cast<const uint8* const*>(Set + 0x40);
+const uint8* Buckets = ExternBuckets ? ExternBuckets : (Set + 0x38);
+
+uint32 HashLow = static_cast<uint32>(Key >> 4);
+uint32 H9 = 0x9e3779b9u - HashLow;
+uint32 Tmp = HashLow << 8;
+H9 ^= Tmp;
+Tmp = H9 >> 13;
+uint32 C = H9 + HashLow;
+HashLow = HashLow - H9;
+C = 0u - C;
+C ^= Tmp;
+HashLow -= C;
+Tmp = C >> 12;
+HashLow ^= Tmp;
+H9 -= HashLow;
+Tmp = HashLow;
+H9 -= C;
+Tmp <<= 16;
+H9 ^= Tmp;
+C -= H9;
+Tmp = H9 >> 5;
+C -= HashLow;
+C ^= Tmp;
+HashLow -= H9;
+HashLow -= C;
+Tmp = C >> 3;
+HashLow ^= Tmp;
+H9 -= HashLow;
+Tmp = HashLow;
+H9 -= C;
+Tmp <<= 10;
+H9 ^= Tmp;
+C -= H9;
+const uint64 WideH9 = static_cast<uint64>(H9) >> 15;
+C -= HashLow;
+const uint64 MixedBits = static_cast<uint64>(static_cast<int64>(static_cast<int32>(C))) ^ WideH9;
+const int64 BucketMask = static_cast<int64>(*reinterpret_cast<const int32*>(Set + 0x48)) - 1;
+const int64 BucketIndex = static_cast<int64>(MixedBits & static_cast<uint64>(BucketMask));
+
+int32 ElementId = reinterpret_cast<const int32*>(Buckets)[BucketIndex];
+if (ElementId == -1)
+{
+    *OutElementId = -1;
+    return OutElementId;
+}
+const uint8* Elements = *reinterpret_cast<const uint8* const*>(Set);
+while (ElementId != -1)
+{
+    const uint8* Entry = Elements + static_cast<int64>(ElementId) * 16;
+    if (*reinterpret_cast<const uint64*>(Entry) == Key)
+    {
+        *OutElementId = ElementId;
+        return OutElementId;
+    }
+    ElementId = *reinterpret_cast<const int32*>(Entry + 8);
+}
+*OutElementId = -1;
+return OutElementId;

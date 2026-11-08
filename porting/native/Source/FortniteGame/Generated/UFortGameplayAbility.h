@@ -16,7 +16,10 @@
 #include "FFortGameplayAbilityMontageInfo.h"
 #include "FFortGameplayEffectContainer.h"
 #include "GameplayTagContainer.h"
+#include "Math/UnrealMathUtility.h"
 #include "Math/Vector.h"
+#include "UObject/Class.h"
+#include "UObject/Object.h"
 
 class AFortPawn;
 class AFortProjectileBase;
@@ -37,6 +40,9 @@ class FORTNITEGAME_API UFortGameplayAbility : public UGameplayAbility
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x388): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x388;
+
 	// table index 63, flags 0x10000000010015
 	UPROPERTY()
 	EFortGameplayAbilityActivation ActivationType;
@@ -269,6 +275,9 @@ public:
 	virtual void AddDynamicGameplayEffectContainer(FGameplayTag& ApplicationTag, FFortGameplayEffectContainer& Container);
 
 	UFUNCTION(BlueprintCallable)
+	void ClearCameraMode();
+
+	UFUNCTION(BlueprintCallable)
 	void EquipVehicleWeapon(UFortWeaponItemDefinition* WeaponDefinition, int32 SeatIndex, int32 ItemLevel);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -300,9 +309,20 @@ public:
 	void OnGenericNotifyFromAnimation(FGameplayTag NotifyTag);
 	virtual void OnGenericNotifyFromAnimation_Implementation(FGameplayTag NotifyTag);
 
+	UFUNCTION(BlueprintCallable)
+	void SetCameraMode(TSubclassOf<UFortCameraMode> CameraModeClass);
+
 	UFUNCTION(BlueprintNativeEvent)
 	bool SetupPreviewImageOverride();
 	virtual bool SetupPreviewImageOverride_Implementation();
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint32 NativeHashUInt32142ce11c0(uint32 Value);
+	static bool NativeIsObjectFlagBit4Clear1406ceaa0(UObject* TargetObject);
+	static void NativeClearCameraModeForKey141ca1b30(UObject* TargetObject, const int32* Key);
+	static void NativeSetCameraModeClassForKey141cb7690(UObject* TargetObject, UClass* CameraModeClass, const int32* Key);
+	static float NativeAtan2Approx142bbd380(float Y, float X);
 };
 

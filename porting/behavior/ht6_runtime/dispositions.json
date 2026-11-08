@@ -1,0 +1,50 @@
+[
+  {
+    "addr": "0x1412b1090",
+    "status": "proposed",
+    "case": "raw_field_read",
+    "reason": "MOVZX EAX,byte ptr [RCX+0xba]; RET. Ported as raw uint8 read; all instructions accounted for."
+  },
+  {
+    "addr": "0x141e60d60",
+    "status": "proposed",
+    "case": "raw_map_lookup",
+    "reason": "Chained-hash lookup of a byte key through raw offsets 0x19a8-0x19f0; every instruction mapped; no unresolved calls."
+  },
+  {
+    "addr": "0x1458092ff",
+    "status": "blocked",
+    "case": "absolute_global_tail_jump",
+    "reason": "JMP qword ptr [0x1458fd5e0] at 0x1458092ff: indirect tail jump through an absolute global (no resolvable callee hint)."
+  },
+  {
+    "addr": "0x144f483b0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "CALL qword ptr [RDX+0x268] at 0x144f483df is an unhinted virtual call (also [RDX+0x270] at 0x144f483fd, [RDX+0x268] at 0x144f4844b, [RDX+0x270] at 0x144f4847d)."
+  },
+  {
+    "addr": "0x143e8a9c0",
+    "status": "proposed",
+    "case": "pure_array_compare",
+    "reason": "Equal-Num check and nested pair search over two TArray<8-byte pair> args; every instruction mapped; no calls."
+  },
+  {
+    "addr": "0x142c770f0",
+    "status": "blocked",
+    "case": "writable_global_load",
+    "reason": "MOVZX EAX,byte ptr [0x14821d220] at 0x142c770f0 reads a writable .data global in the 0x1482... range."
+  },
+  {
+    "addr": "0x1407c5360",
+    "status": "proposed",
+    "case": "raw_field_read",
+    "reason": "MOV EAX,[RCX+0x2c0]; SUB EAX,[RCX+0x2ec]; RET. Ported as raw int32 difference with 32-bit wrap; confidence medium."
+  },
+  {
+    "addr": "0x143d60da0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "CALL 0x143d5a140 at 0x143d60db2 has a malformed hint (a list naming UFortCompetitiveLeaderboardScreen::HandleLeaderboardSetInView with params []) that does not match the call (RDX out-pointer); also unhinted virtual calls CALL [RAX+0x28] 0x143d60dde, [RAX+0x48] 0x143d60e01, [RDX] 0x143d60e6f, [R8+0x8] 0x143d60e82."
+  }
+]

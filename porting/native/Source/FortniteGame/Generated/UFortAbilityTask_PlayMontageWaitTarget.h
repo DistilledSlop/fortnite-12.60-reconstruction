@@ -6,8 +6,10 @@
 #include "CoreMinimal.h"
 #include "Abilities/Tasks/AbilityTask.h"
 
+#include "Containers/Array.h"
 #include "FFortGameplayAbilityMontageInfo.h"
 #include "FWaitTargetSelectionDelegate.h"
+#include "Templates/UnrealTemplate.h"
 
 #include "UFortAbilityTask_PlayMontageWaitTarget.generated.h"
 
@@ -33,5 +35,9 @@ public:
 	UPROPERTY()
 	FFortGameplayAbilityMontageInfo MontageInfo;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint8* NativeMoveAssignMontageInfo141616d70(uint8* Destination, uint8* Source);
 };
 

@@ -37,9 +37,11 @@
 #include "Misc/DateTime.h"
 #include "UFortHelpItem.h"
 #include "UFortInputData.h"
+#include "UObject/Object.h"
 
 class UAthenaMatchReadyDesktopPopup;
 class UFortUIMessageManager;
+class UTexture2D;
 
 #include "UFortGlobalUIContext.generated.h"
 
@@ -230,6 +232,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetHamsterballShootActionName(ECommonInputType OverrideInputType) const;
 
+	UFUNCTION(BlueprintCallable)
+	UTexture2D* GetInputTypeIcon(ECommonInputType InputType);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetJackalBoostActionName(ECommonInputType OverrideInputType) const;
 
@@ -314,5 +319,6 @@ public:
 	APlayerController* NativeGetContextPlayerController144cb7c20(bool bAllowNonFortController) const;
 	UFortInputData* NativeGetInputData141fc0b30() const;
 	bool NativeUsesGamepad142390950(APlayerController* Controller) const;
+	static void* NativeFindByteKeyEntry141e60d60(UObject* MapOwner, uint8 LookupKey);
 };
 

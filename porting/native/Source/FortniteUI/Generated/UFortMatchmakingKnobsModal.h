@@ -7,7 +7,9 @@
 #include "UFortActivatablePanel.h"
 
 #include "AFortMinigameSettingsBuilding.h"
+#include "Containers/Array.h"
 #include "FPlaylistFrontEndData.h"
+#include "Math/IntPoint.h"
 #include "UCommonButton.h"
 #include "UCommonListView.h"
 #include "UCommonTextBlock.h"
@@ -99,5 +101,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void InitializeData();
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static bool NativeAllPairsContained143e8a9c0(const TArray<FIntPoint>& LeftPairs, const TArray<FIntPoint>& RightPairs);
 };
 

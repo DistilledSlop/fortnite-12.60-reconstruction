@@ -1,0 +1,86 @@
+[
+  {
+    "addr": "0x140682990",
+    "status": "blocked",
+    "case": "writable_global_table",
+    "reason": "LEA RBX,[0x147c34cf0] addresses a 256-entry lookup table in writable .data (PE section .data is writable); table is not a read-only literal."
+  },
+  {
+    "addr": "0x140693f90",
+    "status": "blocked",
+    "case": "tail_jump",
+    "reason": "JZ 0x1440b3260 when [RCX+0xa8]==0 transfers control into another function (tail jump), not a local branch."
+  },
+  {
+    "addr": "0x1406d8760",
+    "status": "blocked",
+    "case": "complex_container_layout",
+    "reason": "Bit-array plus hash-chain insert loop (ROL/SHL index math, JNS/SAR sign-adjust, [RAX+0x30]/[RAX+0x34] bookkeeping) with no reflected or ported container helper for this layout; not transcribed."
+  },
+  {
+    "addr": "0x140708cf0",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Hash-set index lookup: asm 32-bit mix of Key>>4, bucket chain over 0x20-stride elements; returns index or -1 via out pointer. Set layout raw, not reflected. CONFIDENCE MEDIUM."
+  },
+  {
+    "addr": "0x14083c280",
+    "status": "blocked",
+    "case": "simd_approximation",
+    "reason": "RSQRTSS XMM5,XMM4 (and XMM4/XMM3 variants) use the hardware approximate reciprocal square root, which C++ cannot reproduce bit-exactly."
+  },
+  {
+    "addr": "0x142bad770",
+    "status": "blocked",
+    "case": "writable_global_load",
+    "reason": "MOV RAX,qword ptr [0x1481d4728] reads a writable .data global (PE section .data is writable); writable .data globals stay blocked."
+  },
+  {
+    "addr": "0x142cd3330",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "CALL qword ptr [0x1458fca10] has no callee_hint; CALL 0x140680160 hint is ambiguous (two unrelated reflected functions); CALL 0x1406800e0 hints are equally ambiguous."
+  },
+  {
+    "addr": "0x142cd3420",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "CALL qword ptr [0x1458fca10] has no callee_hint; CMP byte ptr [0x148247e50],0x5 reads a writable .data global; CALL 0x140680160 hint is ambiguous."
+  },
+  {
+    "addr": "0x1440c2b50",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "CALL qword ptr [RAX + 0x310] is an unhinted virtual dispatch (no callee_hint); MOV qword ptr [0x148327900],0x0 also stores a writable .data global."
+  },
+  {
+    "addr": "0x144123220",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Stores a double plus int32 pair at raw +0x11c/+0x124 of the target. Every instruction accounted for. CONFIDENCE HIGH."
+  },
+  {
+    "addr": "0x144123460",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Stores a double plus int32 pair at raw +0x128/+0x130 of the target. Every instruction accounted for. CONFIDENCE HIGH."
+  },
+  {
+    "addr": "0x144165c40",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Evaluated 0x1c-stride curve-key pair: dt<=0 and Mode 1 hold KeyA.Value, Mode 0 linear, other modes cubic. Constant 0x145a38ac0 = 1/3 read from PE .rdata. Transcribed instruction by instruction. CONFIDENCE MEDIUM (layout from one caller)."
+  },
+  {
+    "addr": "0x144621fb0",
+    "status": "proposed",
+    "case": "ported",
+    "reason": "Sparse-array handle validity (index bit set, handle match, state != 4); asm returns nonzero word, ported as bool since callers test zero only. CONFIDENCE MEDIUM."
+  },
+  {
+    "addr": "0x14462beb0",
+    "status": "blocked",
+    "case": "complex_container_layout",
+    "reason": "Set-insert path: ROL bit mask writes into the bit array (AND dword ptr [R11+RCX*4],R10D), hash bucket relinks through [R8+0x30]/[R8+0x34]; no ported container helper supplies this layout and it was not transcribed."
+  }
+]

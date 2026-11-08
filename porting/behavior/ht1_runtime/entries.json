@@ -1,0 +1,120 @@
+[
+  {
+    "class": "UFortQuestManager",
+    "function": "NativeHelper141f60080",
+    "kind": "helper",
+    "signature": "UObject* NativeHelper141f60080(UFortQuestManager* QuestManagerObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht1_runtime/UFortQuestManager/NativeHelper141f60080.inc",
+    "address": "0x141f60080",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/WeakObjectPtr.h",
+      "UObject/Object.h"
+    ],
+    "notes": "Tail-jump to TWeakObjectPtr::Get on this+0x1e4; returns weak-resolved UObject*."
+  },
+  {
+    "class": "UCommonUILibrary",
+    "function": "NativeGetParentWidget143d5e2e0",
+    "kind": "helper",
+    "signature": "UPanelWidget* NativeGetParentWidget143d5e2e0(UWidget* WidgetObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht1_runtime/UCommonUILibrary/NativeGetParentWidget143d5e2e0.inc",
+    "address": "0x143d5e2e0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/Widget.h",
+      "Components/PanelSlot.h",
+      "Components/PanelWidget.h"
+    ],
+    "notes": "Returns widget->Slot->Parent (null if Slot is null). Reflected UWidget::Slot and UPanelSlot::Parent."
+  },
+  {
+    "class": "AFortPlayerControllerOutpost",
+    "function": "NativeIsOutpostOwnerBit1425702e0",
+    "kind": "helper",
+    "signature": "bool NativeIsOutpostOwnerBit1425702e0(AFortPlayerControllerOutpost* ControllerObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht1_runtime/AFortPlayerControllerOutpost/NativeIsOutpostOwnerBit1425702e0.inc",
+    "address": "0x1425702e0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns bit 0 of byte at +0x330 (raw). Reflection overlap with APlayerController::CheatManager noted in .inc."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "NativeHelper1423cb760",
+    "kind": "helper",
+    "signature": "bool NativeHelper1423cb760(AFortWeaponRanged* WeaponObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht1_runtime/AFortWeaponRanged/NativeHelper1423cb760.inc",
+    "address": "0x1423cb760",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns whether raw byte at +0x2670 equals 2."
+  },
+  {
+    "class": "AFortTeamMemberPedestal",
+    "function": "NativeGetOuterUnlessDefault140f930b0",
+    "kind": "helper",
+    "signature": "UObject* NativeGetOuterUnlessDefault140f930b0(UObject* ObjectArg)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht1_runtime/AFortTeamMemberPedestal/NativeGetOuterUnlessDefault140f930b0.inc",
+    "address": "0x140f930b0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns null when ObjectFlags bit 0x10 is set, else the outer object (+0x20)."
+  },
+  {
+    "class": "AFortTeamMemberPedestal",
+    "function": "NativeHelper142261600",
+    "kind": "helper",
+    "signature": "bool NativeHelper142261600(UObject* TargetObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht1_runtime/AFortTeamMemberPedestal/NativeHelper142261600.inc",
+    "address": "0x142261600",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns whether byte at +0x220 of the target is below 3 (unsigned)."
+  },
+  {
+    "class": "AFortTeamMemberPedestal",
+    "function": "NativeHelper144e0d6f0",
+    "kind": "helper",
+    "signature": "bool NativeHelper144e0d6f0(UObject* GroupObj)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht1_runtime/AFortTeamMemberPedestal/NativeHelper144e0d6f0.inc",
+    "address": "0x144e0d6f0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns whether int32 at +0x21c of the group is <= 0 (signed)."
+  }
+]

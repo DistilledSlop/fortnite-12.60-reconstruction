@@ -1,0 +1,86 @@
+[
+  {
+    "addr": "0x14998573a",
+    "status": "blocked",
+    "case": "truncated_bad_instruction",
+    "reason": "Single instruction MOV EAX,0x9c7ce690 (5 bytes) with no RET or jump; Ghidra reports bad instruction data and halts (FUN_14998573a, halt_baddata). Control flow falls past the asm window. Reached by JMP from OnLootSpawned 0x14191d000."
+  },
+  {
+    "addr": "0x142ce11c0",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "All 11 instructions accounted; pure uint32 mix of ECX."
+  },
+  {
+    "addr": "0x1407327b0",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "All 24 instructions accounted; weak equivalence using IsValid 0x142ee7880 on A then B."
+  },
+  {
+    "addr": "0x142c5c060",
+    "status": "blocked",
+    "case": "writable_global_load",
+    "reason": "First instruction MOVAPS XMM5,xmmword ptr [0x1482185e0] loads writable .data (0x1482...). The remaining 123 instructions are packed-SSE math (DIVPS, CVTTPS2DQ, CMPLEPS, SHUFPS) and reference more 0x1482 constants."
+  },
+  {
+    "addr": "0x1406ceaa0",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "All 5 instructions accounted; returns the inverse of bit 0x10 of the uint32 at +0x8."
+  },
+  {
+    "addr": "0x140687d00",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "All 48 instructions accounted; set-bit iterator advance over raw bit-array layout."
+  },
+  {
+    "addr": "0x14108f3b0",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "All 91 instructions accounted; hash-chain lookup on a raw set transcribed step by step."
+  },
+  {
+    "addr": "0x141d7cd40",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "All 22 instructions accounted; linear search by uint64 key over pointer array."
+  },
+  {
+    "addr": "0x142c47190",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "All 9 instructions accounted; sret FVector4 with W=1.0f."
+  },
+  {
+    "addr": "0x14237e580",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "All 29 instructions accounted; MEDIUM because the ClientSettingsRecord pointer is forwarded to NativeHelper141e32a40, which is declared with a UFortLocalPlayer* parameter."
+  },
+  {
+    "addr": "0x141e5b2a0",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "All 5 instructions accounted; tail-chains asset manager getters."
+  },
+  {
+    "addr": "0x141dd0170",
+    "status": "blocked",
+    "case": "writable_global_load",
+    "reason": "MOV R8D,dword ptr [0x148218638] (instruction 11, after JNZ 0x141dd0443) loads writable .data (0x1482...). Also contains packed/scalar float math including RSQRTSS."
+  },
+  {
+    "addr": "0x141e622f0",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "All 2 instructions accounted; tail-calls TWeakObjectPtr::Get on context+0x468."
+  },
+  {
+    "addr": "0x14405fbf0",
+    "status": "blocked",
+    "case": "writable_global_load",
+    "reason": "MOV RCX,qword ptr [0x148351eb8] (instruction 3) loads writable .data (0x1483...) before the call to 0x141914f10; not a read-only constant."
+  }
+]

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "UObject/Object.h"
+
 class UFXSystemComponent;
 
 #include "UFortNiagaraGameplayLibrary.generated.h"
@@ -22,5 +24,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static void SetCustomTimeDilation(UFXSystemComponent* Target, float Dilation);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static bool NativeIsParticleSystemObject141a07d50(UObject* QueryObject);
+	static int32* NativeFindSetIndex140708cf0(uint8* SetPtr, int32* OutIndexPtr, uint64 LookupKey);
+	static void NativeStoreTimedValue144123220(UObject* Target, const uint8* Source);
+	static void NativeStoreTimedValue144123460(UObject* Target, const uint8* Source);
+	static void NativeSetFlagByte1440c9310(UObject* Object, uint8 FlagValue);
+	static void NativeCopyDoubleInt32144123690(uint8* Target, const uint8* Source);
 };
 

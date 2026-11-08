@@ -147,5 +147,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldDisplayOverallQuestInformation() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static bool NativeQuestObjectiveKeyMatches14418a050(uint8* LeftKey, uint8* RightKey);
 };
 

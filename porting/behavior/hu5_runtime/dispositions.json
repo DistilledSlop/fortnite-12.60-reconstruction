@@ -1,0 +1,86 @@
+[
+  {
+    "addr": "0x1442bd6b0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Indirect virtual CALL qword ptr [RAX+0x270] at 0x1442bd768 has no callee_hints entry; no callers in job."
+  },
+  {
+    "addr": "0x1443771a0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Indirect virtual CALL qword ptr [RAX+0x368] at 0x1443771a7 has no callee_hints entry."
+  },
+  {
+    "addr": "0x145809be1",
+    "status": "blocked",
+    "case": "indirect_tail_jump",
+    "reason": "JMP qword ptr [0x1458fc838] at 0x145809be1 is an indirect tail-jump through an absolute global."
+  },
+  {
+    "addr": "0x145804230",
+    "status": "blocked",
+    "case": "absolute_global_indirect_call",
+    "reason": "CALL qword ptr [0x1458fe1e8] at 0x14580423b is an indirect call through an absolute global with no callee_hints entry."
+  },
+  {
+    "addr": "0x145804008",
+    "status": "blocked",
+    "case": "absolute_global_indirect_call",
+    "reason": "CALL qword ptr [0x1458fc840] at 0x145804013 is an indirect call through an absolute global with no callee_hints entry; trailing JMP qword ptr [0x1458fc458] is a tail-jump."
+  },
+  {
+    "addr": "0x1424689e0",
+    "status": "blocked",
+    "case": "callee_hint_ambiguous",
+    "reason": "CALL 0x140696410 at 0x142468a0b/0x142468a20 has two callee_hints (UAthenaProfileStatsBase::NextStatSet and PrevStatSet); the target cannot be chosen from the job data."
+  },
+  {
+    "addr": "0x144022750",
+    "status": "blocked",
+    "case": "absolute_global_load",
+    "reason": "MOV RAX,qword ptr [0x148351eb8] at 0x144022750 reads a writable .data (0x1483...) global."
+  },
+  {
+    "addr": "0x144487690",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "Body transcribed from asm; see entries.json."
+  },
+  {
+    "addr": "0x1406cee40",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Indirect virtual CALL qword ptr [RAX+0x270] at 0x1406ceef7 has no callee_hints entry."
+  },
+  {
+    "addr": "0x1440c9310",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "Body transcribed from asm; see entries.json."
+  },
+  {
+    "addr": "0x142d66000",
+    "status": "blocked",
+    "case": "abi_return_unverified",
+    "reason": "Result is returned in RAX as the RDX out-pointer; its 8-byte value (from [Ptr+0x18] or [Ptr+0x28]) has no engine type and the job has zero callers to verify the convention."
+  },
+  {
+    "addr": "0x142d68030",
+    "status": "blocked",
+    "case": "abi_return_unverified",
+    "reason": "Returns a 16-byte value copied from [Ptr+0x10] through RDX out-pointer; no engine/host type identified and zero callers in the job to verify it."
+  },
+  {
+    "addr": "0x14079cf10",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Shared-controller release calls CALL qword ptr [RDX] at 0x14079cf78 and CALL qword ptr [R8+0x8] at 0x14079cf8b have no callee_hints entries."
+  },
+  {
+    "addr": "0x140781c40",
+    "status": "proposed",
+    "case": "helper_ported",
+    "reason": "Body transcribed from asm; see entries.json."
+  }
+]

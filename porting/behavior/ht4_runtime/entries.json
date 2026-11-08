@@ -1,0 +1,119 @@
+[
+  {
+    "class": "UFortGameplayAbility",
+    "function": "NativeClearCameraModeForKey141ca1b30",
+    "kind": "helper",
+    "signature": "void NativeClearCameraModeForKey141ca1b30(UObject* TargetObject, const int32* Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/ht4_runtime/UFortGameplayAbility/NativeClearCameraModeForKey141ca1b30.inc",
+    "address": "0x141ca1b30",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Class.h"
+    ],
+    "notes": "Compare int32 at +0x2710 with *Key; on match clear pointer slot +0x2708 and set key to -1. Raw offsets, no reflected members."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "NativeSetCameraModeClassForKey141cb7690",
+    "kind": "helper",
+    "signature": "void NativeSetCameraModeClassForKey141cb7690(UObject* TargetObject, UClass* CameraModeClass, const int32* Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/ht4_runtime/UFortGameplayAbility/NativeSetCameraModeClassForKey141cb7690.inc",
+    "address": "0x141cb7690",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Class.h"
+    ],
+    "notes": "Stores class and key when CameraModeClass IsChildOf UFortCameraMode (inline class-tree test in asm). Raw offsets 0x2708/0x2710."
+  },
+  {
+    "class": "UFortMatchmakingContext",
+    "function": "NativeGetLobbyBeaconClient141e61390",
+    "kind": "helper",
+    "signature": "UObject* NativeGetLobbyBeaconClient141e61390(UFortMatchmakingContext* MatchmakingContext)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/ht4_runtime/UFortMatchmakingContext/NativeGetLobbyBeaconClient141e61390.inc",
+    "address": "0x141e61390",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns raw pointer at +0x430 (no null check in asm). Name from GetLobbyBeaconClient caller, which dereferences result at +0x158."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "NativeFindStatFilterEntry14207a350",
+    "kind": "helper",
+    "signature": "uint8* NativeFindStatFilterEntry14207a350(uint8* EntryArray, UClass* const* FilterClassKey)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/ht4_runtime/AFortMinigame/NativeFindStatFilterEntry14207a350.inc",
+    "address": "0x14207a350",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Class.h"
+    ],
+    "notes": "Scans 0x10-byte TArray entries (class ptr at +0) for one matching the wanted UFortMinigameStatFilter class; returns entry address or null."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "NativeGetAthenaGameMode141641300",
+    "kind": "helper",
+    "signature": "UObject* NativeGetAthenaGameMode141641300(UObject* MinigameObject)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/ht4_runtime/AFortMinigame/NativeGetAthenaGameMode141641300.inc",
+    "address": "0x141641300",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns raw pointer at +0x128 when it IsA AFortGameModeAthena, else null. Object param is UObject* because callers span several classes."
+  },
+  {
+    "class": "UFortMinigameObjectiveTrackerComponent",
+    "function": "NativeCompareTrackedFlags141f60cd0",
+    "kind": "helper",
+    "signature": "int32 NativeCompareTrackedFlags141f60cd0(uint8 First, uint8 Second)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/ht4_runtime/UFortMinigameObjectiveTrackerComponent/NativeCompareTrackedFlags141f60cd0.inc",
+    "address": "0x141f60cd0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Pure byte comparison: 0 when equal, 2 when both non-zero, else 1. No memory or calls."
+  },
+  {
+    "class": "UFortNiagaraGameplayLibrary",
+    "function": "NativeIsParticleSystemObject141a07d50",
+    "kind": "helper",
+    "signature": "bool NativeIsParticleSystemObject141a07d50(UObject* QueryObject)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/ht4_runtime/UFortNiagaraGameplayLibrary/NativeIsParticleSystemObject141a07d50.inc",
+    "address": "0x141a07d50",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "IsA test of the object against UParticleSystem::StaticClass(); no null check, matching the asm."
+  }
+]

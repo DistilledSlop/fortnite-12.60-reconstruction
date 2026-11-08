@@ -10,6 +10,7 @@
 #include "FFortVehicleAudioOneshotGate.h"
 #include "FFortVehicleAudioParam.h"
 #include "FOnVehicleAudioVoiceOneShot.h"
+#include "Math/UnrealMathUtility.h"
 #include "Math/Vector2D.h"
 
 class USoundBase;
@@ -72,5 +73,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetParamRange(float Min, float Max);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeWrapFloatIntoRange144162f70(float Lo, float Hi, float* Value, int32* WrapCount);
+	static float NativeEvalCurveKeyPair144165c40(const uint8* KeyA, const uint8* KeyB, float EvalTime);
 };
 

@@ -1,0 +1,135 @@
+[
+  {
+    "class": "ABuildingActor",
+    "function": "NativeGetBuildingHighlightTarget141f60110",
+    "kind": "helper",
+    "signature": "UObject* NativeGetBuildingHighlightTarget141f60110(ABuildingActor* BuildingActor)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht3_runtime/ABuildingActor/NativeGetBuildingHighlightTarget141f60110.inc",
+    "address": "0x141f60110",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns raw pointer at ABuildingActor+0x258 (unnamed). Name follows SetQuestHighlight/SetBuildingHighlight callers. Asm fully accounted."
+  },
+  {
+    "class": "ABuildingContainer",
+    "function": "NativeIsGameModeOne141ed8c70",
+    "kind": "helper",
+    "signature": "bool NativeIsGameModeOne141ed8c70(UObject* ContextObject)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht3_runtime/ABuildingContainer/NativeIsGameModeOne141ed8c70.inc",
+    "address": "0x141ed8c70",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Tail-jump wrapper: UFortGameInstance::NativeIsGameMode141ed8de0(ctx, 1). Asm: MOV DL,1; JMP 0x141ed8de0."
+  },
+  {
+    "class": "UCreativeQuestComponent",
+    "function": "NativeGetAthenaGameStateOrNull141641350",
+    "kind": "helper",
+    "signature": "UObject* NativeGetAthenaGameStateOrNull141641350(UCreativeQuestComponent* QuestComponent)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht3_runtime/UCreativeQuestComponent/NativeGetAthenaGameStateOrNull141641350.inc",
+    "address": "0x141641350",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns this+0x130 if non-null and IsA AFortGameStateAthena, else null. IsA check per asm (hinted StaticClass 0x14290f690)."
+  },
+  {
+    "class": "UCustomCharacterPartAnimInstance",
+    "function": "NativeGetAssociatedPawnFromOuter143fccf40",
+    "kind": "helper",
+    "signature": "UObject* NativeGetAssociatedPawnFromOuter143fccf40(UCustomCharacterPartAnimInstance* AnimInstance)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht3_runtime/UCustomCharacterPartAnimInstance/NativeGetAssociatedPawnFromOuter143fccf40.inc",
+    "address": "0x143fccf40",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns GetOuter()->+0xa0 with no null check (asm has none). Name from GetAssociatedPlayerPawn caller; +0xa0 field unnamed."
+  },
+  {
+    "class": "UFortAbilityTask_PlayMontageWaitTarget",
+    "function": "NativeMoveAssignMontageInfo141616d70",
+    "kind": "helper",
+    "signature": "uint8* NativeMoveAssignMontageInfo141616d70(uint8* Destination, uint8* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht3_runtime/UFortAbilityTask_PlayMontageWaitTarget/NativeMoveAssignMontageInfo141616d70.inc",
+    "address": "0x141616d70",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "Containers/Array.h",
+      "Templates/UnrealTemplate.h"
+    ],
+    "notes": "Struct copy-assign of MontageInfo (+0xb0 of host): raw fields plus three TArray<uint8> move-assigns at +0x20/+0x30/+0x48. Returns Destination."
+  },
+  {
+    "class": "AFortAthenaJackalVehicle",
+    "function": "NativeInitBoostTimerDefaults141b5af50",
+    "kind": "helper",
+    "signature": "uint8* NativeInitBoostTimerDefaults141b5af50(uint8* Self, float FloatArg2, float FloatArg3, float FloatArg4, float FloatArg5, float FloatArg6, float FloatArg7, float FloatArg8)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht3_runtime/AFortAthenaJackalVehicle/NativeInitBoostTimerDefaults141b5af50.inc",
+    "address": "0x141b5af50",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Initializer for a static global struct (RCX = Self). Writes 7 groups, 7 floats at +0xa8..+0xc0 and raw zeros. Field names unnamed; returns Self."
+  },
+  {
+    "class": "AFortAthenaMutator_PlayerTeamSettings",
+    "function": "NativeSizedDeleteBuffer141384cb0",
+    "kind": "helper",
+    "signature": "void NativeSizedDeleteBuffer141384cb0(void* Pointer, uint32 AllocationSize)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht3_runtime/AFortAthenaMutator_PlayerTeamSettings/NativeSizedDeleteBuffer141384cb0.inc",
+    "address": "0x141384cb0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "HAL/UnrealMemory.h"
+    ],
+    "notes": "Tail-jump to FMemory::Free(0x142bee710); AllocationSize (EDX) ignored by asm. Free written out, not omitted, since it is the whole behavior."
+  },
+  {
+    "class": "AFortCreativeLockDevice",
+    "function": "NativeGetPreviewAreaSlot14239b310",
+    "kind": "helper",
+    "signature": "uint8* NativeGetPreviewAreaSlot14239b310(AFortCreativeLockDevice* LockDevice, int32 Index)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht3_runtime/AFortCreativeLockDevice/NativeGetPreviewAreaSlot14239b310.inc",
+    "address": "0x14239b310",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns this + 0x1750 + 0x18*Index (sign-extended). Pure address arithmetic; no reflected member covers +0x1750."
+  }
+]

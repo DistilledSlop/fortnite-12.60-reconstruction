@@ -123,5 +123,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsDriveModeOnly() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint8* NativeInitBoostTimerDefaults141b5af50(uint8* Self, float FloatArg2, float FloatArg3, float FloatArg4, float FloatArg5, float FloatArg6, float FloatArg7, float FloatArg8);
 };
 

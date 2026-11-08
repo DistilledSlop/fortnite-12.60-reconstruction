@@ -46,5 +46,9 @@ public:
 	FTrackedObjectiveArray ObjectiveArray;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static int32 NativeCompareTrackedFlags141f60cd0(uint8 First, uint8 Second);
 };
 

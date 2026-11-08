@@ -1,0 +1,16 @@
+[
+  {"addr": "0x1407bdf90", "status": "proposed", "case": "hashed_set_lookup", "reason": "Ported to NativeFindHashedSetIndex1407bdf90 (MEDIUM)."},
+  {"addr": "0x140709840", "status": "proposed", "case": "hashed_set_lookup", "reason": "Ported to NativeFindHashedSetIndex140709840 (MEDIUM)."},
+  {"addr": "0x142ba9300", "status": "blocked", "case": "callee_unresolved", "reason": "Call at 0x142ba9300+0x0b targets 0x1406800e0, which has two conflicting callee_hints (UAthenaLobbyBase::HandlePlaylistDataChanged and UCreativeMiniMapComponent::OnRep_IconData)."},
+  {"addr": "0x142be0c20", "status": "blocked", "case": "tail_jump_absolute", "reason": "Body is `JMP qword ptr [0x1458fdac8]`, an indirect tail-jump through an absolute pointer with no direct target."},
+  {"addr": "0x142bfce10", "status": "blocked", "case": "absolute_writable_global", "reason": "`MOV R9,qword ptr [0x14823d250]` loads a writable 0x1482 global, then tail-jumps through a vtable slot."},
+  {"addr": "0x142bcf940", "status": "blocked", "case": "absolute_table_unread", "reason": "Case-fold lookup table at `LEA RBX,[0x1465b3720]` was not verified as .rdata nor byte-read in this batch."},
+  {"addr": "0x14536f502", "status": "blocked", "case": "tail_jump_absolute", "reason": "Body is `JMP qword ptr [0x1458fc550]`, an indirect tail-jump through an absolute pointer with no direct target."},
+  {"addr": "0x140799740", "status": "blocked", "case": "atomic_refcount_untyped", "reason": "LOCK XADD refcount release with indirect `CALL qword ptr [RAX]` and `CALL qword ptr [RAX+0x8]` on an untyped owner at +0x28; no typed owner or sanctioned atomic expression."},
+  {"addr": "0x142d30420", "status": "proposed", "case": "string_contains_char", "reason": "Ported to NativeIsSlashFree142d30420 (HIGH)."},
+  {"addr": "0x142d6b710", "status": "blocked", "case": "indirect_vcall_untyped", "reason": "Body makes `CALL qword ptr [RAX+0x270]` on an untyped owner and walks ability-component fields with no typed members."},
+  {"addr": "0x140729850", "status": "blocked", "case": "sparse_array_untyped", "reason": "Sparse-array free-list and bit-array mutation (24-byte elements, fields at +0x20/+0x30/+0x34) has no typed reflected member; semantics unproven."},
+  {"addr": "0x142bac5c0", "status": "blocked", "case": "callee_reflected_instance", "reason": "Calls 0x142bcf780 (UMeshNetworkSubsystem::GetMetaDataWithKey, instance/FName params) which is not expressible as a static helper call here."},
+  {"addr": "0x142d2ac90", "status": "blocked", "case": "absolute_writable_global", "reason": "Reads absolute writable global `LEA RCX,[0x147c4d420]` and calls 0x140696410 whose hint is ambiguous (NextStatSet vs PrevStatSet)."},
+  {"addr": "0x1407901a0", "status": "blocked", "case": "absolute_table_unverified", "reason": "Hash uses absolute table `LEA R11,[0x147c32cf0]`, not verified as read-only .rdata."}
+]

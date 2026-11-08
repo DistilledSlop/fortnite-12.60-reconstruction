@@ -10,6 +10,7 @@
 #include "FAnyPropertyChangedDelegate.h"
 #include "FPropertyOverrideData.h"
 #include "FRestoreDefaultsDelegate.h"
+#include "Math/UnrealMathUtility.h"
 
 class AFortPawn;
 class UFortItemDefinition;
@@ -84,5 +85,9 @@ public:
 	void OnRep_PlayerOptionData();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeAdvanceSetBitIterator140687d00(uint8* Iterator);
 };
 

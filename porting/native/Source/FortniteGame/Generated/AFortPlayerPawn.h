@@ -1916,5 +1916,6 @@ public:
 	virtual bool NativeIsLocalPlayer() const;
 	virtual uint8 NativeGetTeam163();
 	virtual IFortVehicleInterface* NativeGetVehicleInterface163();
+	static void NativeSetClothDynamicsState144517e00(AFortPlayerPawn* TargetPawn);
 };
 

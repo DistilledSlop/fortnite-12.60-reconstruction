@@ -35,7 +35,10 @@
 #include "FVaultItemViewed.h"
 #include "FVaultItemsViewed.h"
 #include "FViewingPhoenixTheaterChangedDelegate.h"
+#include "GameFramework/Actor.h"
 #include "UFortItemDefinition.h"
+#include "UObject/Object.h"
+#include "UObject/WeakObjectPtr.h"
 
 class UFortServerBrowserHelper;
 class UObject;
@@ -213,5 +216,8 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual UWorld* GetWorld() const;
+	static UObject* NativeGetFrontEndWeakObject141e622f0(UFortFrontEndContext* FrontEndContext);
+	static uint8 NativeHelper1412b1090(UObject* ContextObject);
+	static AActor* NativeGetFrontEndCamera141ca78b0(UFortFrontEndContext* FrontEndCtx);
 };
 

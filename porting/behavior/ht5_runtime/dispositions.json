@@ -1,0 +1,16 @@
+[
+  {"addr": "0x144114bd0", "status": "proposed", "case": "member_getter_pointer", "reason": "MOV RAX,[RCX+0x630]; RET; RCX is USkeletalMeshComponent (caller passes [pawn+0x278]); AnimScriptInstance reflected at +0x630"},
+  {"addr": "0x144517e00", "status": "proposed", "case": "member_store_byte", "reason": "MOV byte [RCX+0x6f6],2; RET; overlaps reflected DBNOLandingSound (8-byte Object) at +0x6f0; MEDIUM"},
+  {"addr": "0x14418a050", "status": "proposed", "case": "struct_key_compare", "reason": "CMP qword +0x0 and dwords +0x8/+0xc of two key pointers; returns bool; all instructions accounted"},
+  {"addr": "0x141e2b6c0", "status": "proposed", "case": "member_getter_byte", "reason": "MOVZX EAX,byte [RCX+0x57e]; RET; no reflected member at +0x57e"},
+  {"addr": "0x141f9f270", "status": "blocked", "case": "callee_unresolved", "reason": "CALL qword ptr [R8 + 0x610] at 0x141f9f28c is an indirect vtable call; only 0x142b39750 has a callee hint"},
+  {"addr": "0x141dbf6b0", "status": "proposed", "case": "struct_sret_copy", "reason": "0x90-byte FFortWindImpulseCylinder copy with RAX=RCX return; struct declared in AFortWindManager.h host module; MEDIUM"},
+  {"addr": "0x141dbea90", "status": "blocked", "case": "absolute_writable_global_load", "reason": "MOVSD XMM0,qword ptr [0x148218630] at 0x141dbea90 (also MOV EAX,dword ptr [0x148218638]) reads writable .data globals (0x1482...)"},
+  {"addr": "0x144cf4f20", "status": "blocked", "case": "callee_unresolved", "reason": "CALL qword ptr [RAX] at 0x144cf4f52 is an indirect vtable call (shared-reference release) with no callee hint"},
+  {"addr": "0x144caca70", "status": "blocked", "case": "callee_unresolved", "reason": "CALL 0x1406af1d0 at 0x144caca80 has two hint candidates with different arity (SetCommunicationGroup 2 params, ApplyGameplayEffectContainer 5 params); call passes only RCX"},
+  {"addr": "0x143d4b880", "status": "blocked", "case": "callee_unresolved", "reason": "CALL qword ptr [RAX + 0x2d8] at 0x143d4b8d3 is an indirect virtual call with no callee hint"},
+  {"addr": "0x143d5c9c0", "status": "proposed", "case": "array_find_pointer", "reason": "linear pointer scan of TArray at +0x2e8/+0x2f0 returning index or -1; no calls; MEDIUM"},
+  {"addr": "0x143d8a480", "status": "blocked", "case": "callee_unresolved", "reason": "CALL qword ptr [RAX + 0x288] at 0x143d8a490 is an indirect virtual call with no callee hint (first call in body)"},
+  {"addr": "0x143d285c0", "status": "blocked", "case": "callee_unresolved", "reason": "CALL qword ptr [RAX + 0x48] at 0x143d285eb is an indirect virtual call with no callee hint (first call in body)"},
+  {"addr": "0x141ca78b0", "status": "proposed", "case": "static_class_registry_lookup", "reason": "all instructions accounted: StaticClass hint 0x142a35cb0, registry index check, raw reads at +0x2b0 and +0x2718"}
+]

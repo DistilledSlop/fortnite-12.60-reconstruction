@@ -1,0 +1,86 @@
+[
+  {
+    "addr": "0x142c9a1e0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Unhinted indirect 'CALL qword ptr [RAX + 0x8]' (virtual on element object) and 'CALL qword ptr [RBX + -0x40]' (function pointer in element); also absolute global load 'MOV RAX,qword ptr [0x147c37110]'."
+  },
+  {
+    "addr": "0x142c51a60",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Unhinted virtual 'CALL qword ptr [RAX + 0x10]' on object at [RCX+0x10]; element release calls 'CALL qword ptr [RAX]' / '[RAX + 0x8]' unhinted; tail 'JMP 0x1406911b0' hint lists three unrelated targets."
+  },
+  {
+    "addr": "0x142cd4630",
+    "status": "proposed",
+    "case": "",
+    "reason": "Proposed: Parses trailing _<digits> suffix (FName number encoding, value+1); all asm paths accounted; callers pass R11 length in RDX."
+  },
+  {
+    "addr": "0x14098bd50",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Unhinted virtual 'CALL qword ptr [RAX]' and 'CALL qword ptr [RAX + 0x8]' on the shared-reference controller at [RCX]."
+  },
+  {
+    "addr": "0x142bfa260",
+    "status": "blocked",
+    "case": "writable_global",
+    "reason": "Writable globals 'MOV ECX,dword ptr [0x1482472dc]' and 'MOV EDX,dword ptr [0x1482472d0]'; unhinted import 'CALL qword ptr [0x1458fcaf8]'."
+  },
+  {
+    "addr": "0x142bbd380",
+    "status": "proposed",
+    "case": "",
+    "reason": "Proposed: atan2(Y,X) polynomial approximation; coefficients read from PE .rdata; callers VectorToNormalizedAngleInDegrees, GetTowhookRotation."
+  },
+  {
+    "addr": "0x140708be0",
+    "status": "proposed",
+    "case": "",
+    "reason": "Proposed: TSet<int64> FindId: hash mix hand-transcribed, chain walk; returns OutElementId pointer as asm does. Raw offsets, owner type not justified."
+  },
+  {
+    "addr": "0x144471420",
+    "status": "blocked",
+    "case": "writable_global",
+    "reason": "Reads writable .data globals 'MOVUPS XMM0,xmmword ptr [0x1483274c0]' and 'MOVUPS XMM1,xmmword ptr [0x1483274d0]'."
+  },
+  {
+    "addr": "0x145803af0",
+    "status": "blocked",
+    "case": "writable_global",
+    "reason": "Writable global 'MOV RAX,qword ptr [0x1483ffc10]'; unhinted indirect 'JMP qword ptr [0x1458fe2f0]' and 'CALL qword ptr [0x1458fca00]'."
+  },
+  {
+    "addr": "0x145803aac",
+    "status": "blocked",
+    "case": "writable_global",
+    "reason": "Writable global 'MOV RAX,qword ptr [0x1483ffc18]'; unhinted indirect 'JMP qword ptr [0x1458fe2f0]' and 'CALL qword ptr [0x1458fc438]'. Job lists no callers and a direct-call grep found none."
+  },
+  {
+    "addr": "0x144123690",
+    "status": "proposed",
+    "case": "",
+    "reason": "Proposed: Copies {double,int32} from Source to Target+0x134/+0x13c; owning type not justified by callers, raw bytes used."
+  },
+  {
+    "addr": "0x142ebdc30",
+    "status": "blocked",
+    "case": "callee_hint_mismatch",
+    "reason": "Call 0x142bcf780 is hinted as UMeshNetworkSubsystem::GetMetaDataWithKey(Bool, Struct, Name), three parameters returning Bool; the call site passes two pointers (RCX,RDX) and tests the 32-bit EAX result."
+  },
+  {
+    "addr": "0x1442bd890",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Unhinted virtual 'CALL qword ptr [RAX + 0x270]' on [RCX]; no hint for that slot."
+  },
+  {
+    "addr": "0x1442bd4d0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Unhinted virtual 'CALL qword ptr [RAX + 0x270]' on [RCX]; no hint for that slot."
+  }
+]

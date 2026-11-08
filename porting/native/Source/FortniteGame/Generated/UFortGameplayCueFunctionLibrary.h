@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "UObject/Object.h"
+
 #include "UFortGameplayCueFunctionLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortGameplayCueFunctionLibrary : public UBlueprintFuncti
 	GENERATED_BODY()
 
 public:
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static double NativeHelper142bf39b0(UObject* Context);
 };
 

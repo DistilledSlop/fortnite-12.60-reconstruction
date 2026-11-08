@@ -478,5 +478,47 @@
   "reason": "cannot initialize a parameter of type 'UObject *' with an lvalue of type 'UNamedSlot *const'",
   "unblock": "Fix the body (declare missing recovered members, use public accessors, avoid thunk transcription) and re-add the port",
   "inc_path": "porting/behavior/cr9_runtime/UFortUIManagerWidget_NUI/IsStateContentChildShowing.inc"
+ },
+ {
+  "entry": "UCommonTabListWidget::NativeFindHashedSetIndex1407bdf90",
+  "kind": "helper",
+  "blocker": "cross_module_type",
+  "reason": "body uses UFortGameplayAbility, a class of another module",
+  "inc_path": "porting/behavior/hu1_runtime/UCommonTabListWidget/NativeFindHashedSetIndex1407bdf90.inc"
+ },
+ {
+  "entry": "UCommonButtonGroup::SelectNextButton",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "clang error: callee UCommonButtonGroup::SelectButtonAtIndex (0x1407f39f0) is not declared in the generated header",
+  "inc_path": "porting/behavior/tg1_runtime/UCommonButtonGroup/SelectNextButton.inc"
+ },
+ {
+  "entry": "UCommonButtonGroup::SelectPreviousButton",
+  "kind": "exec",
+  "blocker": "clang_compile_error",
+  "reason": "clang error: callee UCommonButtonGroup::SelectButtonAtIndex (0x1407f39f0) is not declared in the generated header",
+  "inc_path": "porting/behavior/tg1_runtime/UCommonButtonGroup/SelectPreviousButton.inc"
+ },
+ {
+  "entry": "UCommonButtonGroup::NativeSelectNextEnabledButton1407f3a90",
+  "kind": "helper",
+  "blocker": "clang_compile_error",
+  "reason": "clang error: callee UCommonButtonGroup::SelectButtonAtIndex (0x1407f39f0) is not declared in the generated header",
+  "inc_path": "porting/behavior/ht1_runtime/UCommonButtonGroup/NativeSelectNextEnabledButton1407f3a90.inc"
+ },
+ {
+  "entry": "UCommonButtonGroup::NativeSelectPreviousEnabledButton1407f3b20",
+  "kind": "helper",
+  "blocker": "clang_compile_error",
+  "reason": "clang error: callee UCommonButtonGroup::SelectButtonAtIndex (0x1407f39f0) is not declared in the generated header",
+  "inc_path": "porting/behavior/ht1_runtime/UCommonButtonGroup/NativeSelectPreviousEnabledButton1407f3b20.inc"
+ },
+ {
+  "entry": "AFortMinigame::NativeIsCreativeLTMPlaylist14199e380",
+  "kind": "helper",
+  "blocker": "clang_compile_error",
+  "reason": "calls AFortGameStateAthena::PlaylistIsCreativeLTM, which is not declared in the generated header",
+  "inc_path": "porting/behavior/ht4_runtime/AFortMinigame/NativeIsCreativeLTMPlaylist14199e380.inc"
  }
 ]

@@ -53,6 +53,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xc0): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0xc0;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xc0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xc0;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0xc4): not a UPROPERTY, not replicated.
 	int32 NativeHoveredButtonIndex;
 

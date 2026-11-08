@@ -1,0 +1,62 @@
+[
+  {
+    "class": "UFortFrontEndContext",
+    "function": "NativeHelper1412b1090",
+    "kind": "helper",
+    "signature": "uint8 NativeHelper1412b1090(UObject* ContextObject)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht6_runtime/UFortFrontEndContext/NativeHelper1412b1090.inc",
+    "address": "0x1412b1090",
+    "confidence": "high",
+    "status": "ported",
+    "includes": ["UObject/Object.h"],
+    "notes": "Returns raw uint8 at receiver +0xba (MOVZX byte). Offset overlaps reflected OnTheaterPinClicked at +0xb8; read raw. Six listed callers."
+  },
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "NativeFindByteKeyEntry141e60d60",
+    "kind": "helper",
+    "signature": "void* NativeFindByteKeyEntry141e60d60(UObject* MapOwner, uint8 LookupKey)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht6_runtime/UFortGlobalUIContext/NativeFindByteKeyEntry141e60d60.inc",
+    "address": "0x141e60d60",
+    "confidence": "high",
+    "status": "ported",
+    "includes": ["UObject/Object.h"],
+    "notes": "Chained-hash find of uint8 key in raw map storage (+0x19a8..+0x19f0), 24-byte entries, value qword at +8. Used by GetInputTypeIcon."
+  },
+  {
+    "class": "UFortMatchmakingKnobsModal",
+    "function": "NativeAllPairsContained143e8a9c0",
+    "kind": "helper",
+    "signature": "bool NativeAllPairsContained143e8a9c0(const TArray<FIntPoint>& LeftPairs, const TArray<FIntPoint>& RightPairs)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht6_runtime/UFortMatchmakingKnobsModal/NativeAllPairsContained143e8a9c0.inc",
+    "address": "0x143e8a9c0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": ["Containers/Array.h", "Math/IntPoint.h"],
+    "notes": "Equal-count check, then every left 8-byte pair must have an equal pair in right. Empty left returns true. Caller GetModificationStatus."
+  },
+  {
+    "class": "UFortTabListWidgetBase",
+    "function": "NativeHelper1407c5360",
+    "kind": "helper",
+    "signature": "int32 NativeHelper1407c5360(UFortTabListWidgetBase* TabListWidget)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht6_runtime/UFortTabListWidgetBase/NativeHelper1407c5360.inc",
+    "address": "0x1407c5360",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns int32 [+0x2c0] minus int32 [+0x2ec]. +0x2c0 lies inside reflected RegisteredTabsByID map; semantics inferred from caller only."
+  }
+]

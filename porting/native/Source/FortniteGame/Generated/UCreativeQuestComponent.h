@@ -11,6 +11,8 @@
 #include "EDeathCause.h"
 #include "EShowProgressMode.h"
 #include "FCreativeQuestData.h"
+#include "UObject/Object.h"
+#include "UObject/WeakObjectPtr.h"
 
 #include "UCreativeQuestComponent.generated.h"
 
@@ -95,5 +97,10 @@ public:
 	void OnRep_QuestUpdate();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeGetAthenaGameStateOrNull141641350(UCreativeQuestComponent* QuestComponent);
+	static bool NativeWeakObjectPtrEquivalent1407327b0(const uint8* A, const uint8* B);
 };
 

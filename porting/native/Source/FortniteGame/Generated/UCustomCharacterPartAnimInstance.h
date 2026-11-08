@@ -6,9 +6,11 @@
 #include "CoreMinimal.h"
 #include "UFortAnimInstance.h"
 
+#include "Containers/UnrealString.h"
 #include "EFortCustomPartType.h"
 #include "FFortAnimInput_SkydivingExternalForce.h"
 #include "FGameplayTagAnimations.h"
+#include "UObject/Object.h"
 
 class AFortWeapon;
 class USkeletalMeshComponent;
@@ -250,5 +252,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponent* GetPartSkeletalMeshComponent() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeGetAssociatedPawnFromOuter143fccf40(UCustomCharacterPartAnimInstance* AnimInstance);
+	static bool NativeIsSlashFree142d30420(const FString& Path);
 };
 

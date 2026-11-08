@@ -41,3 +41,11 @@ for label, s in (('BR content only', only_br), ('Frontend/UI content only', only
     line('   of which UI-module classes', ui)
     line('   of which Athena-named classes', {k for k in s if 'Athena' in k[0]})
 print('in-scope total', len(allin), 'ported', len(allin - unp))
+if len(sys.argv) > 2:  # write the unported target set with blocker group: ported_by_area.py pkgs2.jsonl OUT.json
+    grp = {}
+    for g, v in json.load(open('porting/generated/remaining/classification.json')).items():
+        for x in v: grp[tuple(x.split('::'))] = g
+    tgt = sorted(k for k in (only_br | only_ui | both) if k in unp)
+    json.dump([dict(cls=k[0], fn=k[1], group=grp.get(k), ui=mod.get(k[0]) in ('FortniteUI', 'CommonUI')) for k in tgt], open(sys.argv[2], 'w'))
+    c = collections.Counter((t['ui'], t['group']) for t in map(lambda k: dict(ui=mod.get(k[0]) in ('FortniteUI', 'CommonUI'), group=grp.get(k)), tgt))
+    for (ui, g), n in sorted(c.items(), key=lambda x: (-x[0][0], -x[1])): print('UI ' if ui else 'BR ', n, g)

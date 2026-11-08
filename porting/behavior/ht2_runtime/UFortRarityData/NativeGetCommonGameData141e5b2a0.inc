@@ -1,0 +1,7 @@
+// Helper 0x141e5b2a0, host UFortRarityData (static). 5 instructions: SUB RSP,0x28; CALL 0x141df62a0; MOV RCX,RAX; ADD RSP,0x28; JMP 0x141df7530.
+// 0x141df62a0 = UFortAssetManager::NativeGetFortAssetManager (static, returns a reference).
+// 0x141df7530 = UFortAssetManager::NativeGetCommonGameData (member), tail-called with the asset manager as this.
+// Callers: UAthenaShoutItemDefinition::SpawnSoundComponent (0x141d923b0), ABuildingContainer::BounceContainer (0x141bd6eb0).
+// CONFIDENCE: HIGH
+UFortAssetManager& AssetManager = UFortAssetManager::NativeGetFortAssetManager();
+return AssetManager.NativeGetCommonGameData();

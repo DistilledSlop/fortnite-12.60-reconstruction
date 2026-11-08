@@ -23,6 +23,7 @@
 #include "FOnOutpostDiscoveryFailure.h"
 #include "FOnReadyUpStatusChangedDelegate.h"
 #include "FOnWorldRecordLoadedChangedDelegate.h"
+#include "UObject/Object.h"
 
 #include "UFortMatchmakingContext.generated.h"
 
@@ -151,5 +152,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetMatchmakingFlowActive(bool InFlow);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeGetLobbyBeaconClient141e61390(UFortMatchmakingContext* MatchmakingContext);
 };
 

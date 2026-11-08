@@ -23,7 +23,10 @@
 #include "FOnQuestsUpdated.h"
 #include "FOnXpDeltasUpdated.h"
 #include "GameplayTagContainer.h"
+#include "UObject/Object.h"
+#include "UObject/WeakObjectPtr.h"
 
+class AFortPlayerController;
 class AFortPlayerState;
 class APawn;
 class UDataTable;
@@ -232,6 +235,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetNumCompletedObjectives(UFortQuestItemDefinition* Definition);
 
+private:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerController* GetPlayerControllerBP() const;
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EQuestMapScreenMode GetQuestMapMode() const;
 
@@ -288,5 +296,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static bool NativeShouldDisplayObjectiveStatus(const UFortQuestObjectiveInfo* Objective, const FFortMcpQuestObjectiveInfo* DefinitionObjective, const UFortQuestItem* Quest);
 	void NativeApplyAssistedObjectiveUpdate(const FFortUpdatedObjectiveStat& Update, AFortPlayerState* Owner, AFortPlayerState* Assisted);
+	static UObject* NativeHelper141f60080(UFortQuestManager* QuestManagerObj);
 };
 

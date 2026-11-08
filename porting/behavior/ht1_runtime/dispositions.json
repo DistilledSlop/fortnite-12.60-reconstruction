@@ -1,0 +1,86 @@
+[
+ {
+  "addr": "0x141f60080",
+  "status": "proposed",
+  "case": "proposed_helper",
+  "reason": "All asm instructions accounted for (see .inc evidence); callee hints and member offsets checked."
+ },
+ {
+  "addr": "0x1407f3a90",
+  "status": "proposed",
+  "case": "proposed_helper",
+  "reason": "All asm instructions accounted for (see .inc evidence); callee hints and member offsets checked."
+ },
+ {
+  "addr": "0x1407f3b20",
+  "status": "proposed",
+  "case": "proposed_helper",
+  "reason": "All asm instructions accounted for (see .inc evidence); callee hints and member offsets checked."
+ },
+ {
+  "addr": "0x143d5e2e0",
+  "status": "proposed",
+  "case": "proposed_helper",
+  "reason": "All asm instructions accounted for (see .inc evidence); callee hints and member offsets checked."
+ },
+ {
+  "addr": "0x1425702e0",
+  "status": "proposed",
+  "case": "proposed_helper",
+  "reason": "Asm fully traced; typed parameter or field meaning is inferred, see .inc evidence."
+ },
+ {
+  "addr": "0x1423cb760",
+  "status": "proposed",
+  "case": "proposed_helper",
+  "reason": "Asm fully traced; typed parameter or field meaning is inferred, see .inc evidence."
+ },
+ {
+  "addr": "0x140f930b0",
+  "status": "proposed",
+  "case": "proposed_helper",
+  "reason": "Asm fully traced; typed parameter or field meaning is inferred, see .inc evidence."
+ },
+ {
+  "addr": "0x142261600",
+  "status": "proposed",
+  "case": "proposed_helper",
+  "reason": "Asm fully traced; typed parameter or field meaning is inferred, see .inc evidence."
+ },
+ {
+  "addr": "0x144e0d6f0",
+  "status": "proposed",
+  "case": "proposed_helper",
+  "reason": "Asm fully traced; typed parameter or field meaning is inferred, see .inc evidence."
+ },
+ {
+  "addr": "0x141d886d0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "141d8875f CALL qword ptr [RAX+0x28] is a virtual call on the embedded member [RBX+0x318] of the key object (RBX=RDX); no callee hint. Other calls are hinted or elided."
+ },
+ {
+  "addr": "0x141d7ad50",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "141d7adaa CALL 0x140690dd0 has two conflicting hints (AFortBroadcastRemoteClientInfo::OnRep_bActive and UFortTierIndicator::ClearPreviewState, both zero-arg). Asm is a TArray grow (Num at +0x8, Max at +0xc) for 16-byte entries at this+0xf0."
+ },
+ {
+  "addr": "0x140aae720",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "140aae78f CALL qword ptr [RAX+0x50] is a virtual call on each array element (stride 0x10, element+0x8 checked) with no callee hint."
+ },
+ {
+  "addr": "0x142305e80",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "142305f21 CALL qword ptr [RAX+0x4e0] is a virtual call on [RBX+0x1980] with no callee hint (slot 156)."
+ },
+ {
+  "addr": "0x143d88560",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "143d885bf CALL 0x142fd0d50 hinted UFortTierIndicator::ClearPreviewState with no params, but asm passes RCX=[this+0x1d8] and RDX=&{ptr this+0x108, byte 1, ptr 0, int 0}; hint arity mismatch."
+ }
+]

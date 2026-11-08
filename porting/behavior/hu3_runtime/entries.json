@@ -1,0 +1,81 @@
+[
+  {
+    "class": "UFortVehicleAudioVoice",
+    "function": "NativeEvalCurveKeyPair144165c40",
+    "kind": "helper",
+    "signature": "float NativeEvalCurveKeyPair144165c40(const uint8* KeyA, const uint8* KeyB, float EvalTime)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hu3_runtime/UFortVehicleAudioVoice/NativeEvalCurveKeyPair144165c40.inc",
+    "address": "0x144165c40",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Curve-key pair evaluator: dt<=0 or Mode 1 holds KeyA.Value; Mode 0 linear; other modes cubic per asm dataflow."
+  },
+  {
+    "class": "UFortNiagaraGameplayLibrary",
+    "function": "NativeFindSetIndex140708cf0",
+    "kind": "helper",
+    "signature": "int32* NativeFindSetIndex140708cf0(uint8* SetPtr, int32* OutIndexPtr, uint64 LookupKey)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hu3_runtime/UFortNiagaraGameplayLibrary/NativeFindSetIndex140708cf0.inc",
+    "address": "0x140708cf0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Hash-set index lookup over 0x20-stride elements with 32-bit mixed bucket hash; returns index or -1 via OutIndexPtr."
+  },
+  {
+    "class": "UCommonNumericTextBlock",
+    "function": "NativeIsLiveEntryHandle144621fb0",
+    "kind": "helper",
+    "signature": "bool NativeIsLiveEntryHandle144621fb0(uint8* SparseArrayPtr, const uint64* HandlePtr)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hu3_runtime/UCommonNumericTextBlock/NativeIsLiveEntryHandle144621fb0.inc",
+    "address": "0x144621fb0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Sparse-array handle validity: index bit set, entry handle matches, entry state not 4. Returns bool."
+  },
+  {
+    "class": "UFortNiagaraGameplayLibrary",
+    "function": "NativeStoreTimedValue144123220",
+    "kind": "helper",
+    "signature": "void NativeStoreTimedValue144123220(UObject* Target, const uint8* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hu3_runtime/UFortNiagaraGameplayLibrary/NativeStoreTimedValue144123220.inc",
+    "address": "0x144123220",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Copies a double plus int32 pair into the target at raw offsets 0x11c and 0x124."
+  },
+  {
+    "class": "UFortNiagaraGameplayLibrary",
+    "function": "NativeStoreTimedValue144123460",
+    "kind": "helper",
+    "signature": "void NativeStoreTimedValue144123460(UObject* Target, const uint8* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hu3_runtime/UFortNiagaraGameplayLibrary/NativeStoreTimedValue144123460.inc",
+    "address": "0x144123460",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Copies a double plus int32 pair into the target at raw offsets 0x128 and 0x130."
+  }
+]

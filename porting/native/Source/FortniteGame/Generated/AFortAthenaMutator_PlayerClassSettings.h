@@ -35,5 +35,9 @@ protected:
 	uint8 GetClassContext() const;
 public:
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static int32* NativeFindKeyIndex14108f3b0(uint8* SetStorage, int32* OutIndex, const int32* Key);
 };
 

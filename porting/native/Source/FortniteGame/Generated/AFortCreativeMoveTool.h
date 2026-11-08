@@ -44,6 +44,7 @@
 #include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
 #include "UObject/NoExportTypes.h"
+#include "UObject/Object.h"
 
 class AActor;
 class AFortPlayerControllerAthena;
@@ -616,5 +617,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static AController* NativeGetInstigatorController143f76650(AFortCreativeMoveTool* MoveTool);
+	static UObject* NativeFindElementByKey141d7cd40(UObject* ContainerObject, uint64 SearchKey);
+	static bool NativeFillBytes32144487690(uint8* Bytes, uint8 FillByte);
 };
 

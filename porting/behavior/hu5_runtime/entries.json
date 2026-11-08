@@ -1,0 +1,49 @@
+[
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "NativeFillBytes32144487690",
+    "kind": "helper",
+    "signature": "bool NativeFillBytes32144487690(uint8* Bytes, uint8 FillByte)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu5_runtime/AFortCreativeMoveTool/NativeFillBytes32144487690.inc",
+    "address": "0x144487690",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Fills 32 bytes with FillByte, returns whether any byte changed. Single caller IsLocationInsideTerrain path."
+  },
+  {
+    "class": "UFortNiagaraGameplayLibrary",
+    "function": "NativeSetFlagByte1440c9310",
+    "kind": "helper",
+    "signature": "void NativeSetFlagByte1440c9310(UObject* Object, uint8 FlagValue)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu5_runtime/UFortNiagaraGameplayLibrary/NativeSetFlagByte1440c9310.inc",
+    "address": "0x1440c9310",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Clears bit0 of byte +0x86 then ORs full FlagValue byte in. Raw offset, no reflected member."
+  },
+  {
+    "class": "UCommonNumericTextBlock",
+    "function": "NativeFindElementIndex140781c40",
+    "kind": "helper",
+    "signature": "int32 NativeFindElementIndex140781c40(uint8* SetData, uint64 LookupKey)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/hu5_runtime/UCommonNumericTextBlock/NativeFindElementIndex140781c40.inc",
+    "address": "0x140781c40",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Hashed TSet-layout find by 64-bit key; returns element index or -1. Field names at +0x8/+0x34 unnamed."
+  }
+]

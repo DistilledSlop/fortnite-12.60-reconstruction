@@ -26,5 +26,9 @@ public:
 	UPROPERTY()
 	AFortPlayerController* CachedLocalController;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static uint8* NativeGetPreviewAreaSlot14239b310(AFortCreativeLockDevice* LockDevice, int32 Index);
 };
 

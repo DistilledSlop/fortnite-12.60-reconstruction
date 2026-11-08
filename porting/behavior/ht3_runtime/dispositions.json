@@ -1,0 +1,86 @@
+[
+  {
+    "addr": "0x1418693d0",
+    "status": "blocked",
+    "case": "callee_hint_conflict",
+    "reason": "CALL 0x141384ca0 at 0x1418693e5 is an allocator-shaped wrapper (asm: XOR EDX,EDX; JMP 0x142bfb0f0), called with ECX=0x80 and null-checked. Hints UFortTierIndicator::ClearPreviewState() and UMeshNetworkSubsystem::SetMetaDataWithKey do not match."
+  },
+  {
+    "addr": "0x141f60110",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Returns raw pointer at ABuildingActor+0x258; no reflected member covers it. Name follows caller names."
+  },
+  {
+    "addr": "0x141bd52c0",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Virtual call CALL qword ptr [RAX + 0x150] at 0x141bd52c9 on this, and CALL qword ptr [RAX + 0xcd8] at 0x141bd5309 on the object loaded from +0x128 of the first result; neither has a callee hint."
+  },
+  {
+    "addr": "0x141ed8c70",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Tail-jump 0x141ed8de0 with DL=1; maps to ported UFortGameInstance::NativeIsGameMode141ed8de0(ctx, 1) as declared."
+  },
+  {
+    "addr": "0x141641350",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Returns this+0x130 if it is non-null and IsA AFortGameStateAthena (hinted StaticClass), else null. Fully accounted."
+  },
+  {
+    "addr": "0x143fccf40",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Returns GetOuter()->+0xa0 with no null check, matching asm. Pawn name inferred from callers; the +0xa0 type is unnamed."
+  },
+  {
+    "addr": "0x141616d70",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Struct copy-assign (MontageInfo layout): raw field copies plus three TArray<uint8> move-assigns; FMemory::Free calls are the move frees. Returns Destination."
+  },
+  {
+    "addr": "0x141f30980",
+    "status": "blocked",
+    "case": "callee_hint_conflict",
+    "reason": "CALL 0x142bcf780 at 0x141f309f2 compares two TCHAR* strings word by word and returns 0 on equality (asm at 0x142bcf780). Hint UMeshNetworkSubsystem::GetMetaDataWithKey expects a subsystem receiver and FName key, so it does not match."
+  },
+  {
+    "addr": "0x141b5af50",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Initializer: raw writes into Self (RCX) from float args 2..8 (XMM1..3 then stack) and zeros; returns Self. Field names unnamed, so medium confidence."
+  },
+  {
+    "addr": "0x141384cb0",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Tail-jump to FMemory::Free(0x142bee710). Pointer is RCX; EDX size ignored. Free written out because it is the whole behavior, not a destructor-internal free."
+  },
+  {
+    "addr": "0x142666060",
+    "status": "blocked",
+    "case": "callee_unresolved",
+    "reason": "Virtual call CALL qword ptr [RAX + 0x3e8] at 0x1426660a5 on each element of the array at this+0xc70 with RDX as argument; no callee hint."
+  },
+  {
+    "addr": "0x143f84060",
+    "status": "blocked",
+    "case": "callee_hint_conflict",
+    "reason": "CALL 0x142ecc600 at 0x143f8407b (RCX object, EDX flag mask, bool result from outer-chain flag test) and CALL 0x144630410 at 0x143f8408c (RCX=+0x28 subobject, DL bool) are both hinted as AFortProjectileBase::OnRep_CurrentSkyTube() with no parameters, which cannot match."
+  },
+  {
+    "addr": "0x14239b310",
+    "status": "proposed",
+    "case": "proposed",
+    "reason": "Returns this + 0x1750 + 0x18*Index (sign-extended EDX). Pure address arithmetic, fully accounted."
+  },
+  {
+    "addr": "0x140742690",
+    "status": "blocked",
+    "case": "struct_layout_unknown",
+    "reason": "Inlined pointer-keyed TSet-style insert: hash of key>>4 mixed with 0x9e3779b9 (asm 0x140742694..0x140742741), bucket table at this+0x38 or pointer at +0x40 (mask +0x48), element pool at [this] with 16-byte entries, bit array at this+0x10, count at +0x34, free index at +0x30. Element and table types are unnamed, so the probe/insert cannot be expressed from verified layouts."
+  }
+]

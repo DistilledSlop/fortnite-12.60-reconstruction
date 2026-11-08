@@ -1,0 +1,135 @@
+[
+ {
+  "class": "ABuildingGameplayActor",
+  "function": "GetTargetingSourceTransform",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "Loads a constant FTransform from absolute address 0x1482184f0 (LEA RAX,[0x1482184f0] then MOVAPS xmm) when the +0x130 pointer is null, plus 16-byte SSE struct copies to the sret pointer RDX; the constant table cannot be expressed exactly."
+ },
+ {
+  "class": "AFortPlayerControllerOutpost",
+  "function": "IsOutpostOwner",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "CMP byte ptr [0x1482472b2],0 is a gate on an absolute-address global flag that cannot be modelled exactly."
+ },
+ {
+  "class": "AFortTeamMemberPedestal",
+  "function": "GetCurrentTeamSize",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "AFortTeamMemberPedestal",
+  "function": "IsInFrontend",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "AFortTeamMemberPedestal",
+  "function": "IsInLocalSquadGroup",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "AFortWeaponRanged",
+  "function": "ShouldPlayReloadFX",
+  "status": "blocked",
+  "case": "hidden_global",
+  "reason": "CMP dword ptr [0x14816dd98] compares against an absolute-address global, and the branch depends on a raw read of the instigator at +0x16c8; the global value is not modelled."
+ },
+ {
+  "class": "APartyDisplayManager",
+  "function": "GetPartyMemberIndexByPlayerPawn",
+  "status": "blocked",
+  "case": "unbounded_container_walk",
+  "reason": "Hash-bucket walk over the party member TSet/TArray layouts (0x18 and 0x80 stride math, SHL RCX,7, CMOVNZ bucket select) with multiple loop exits; more than 60 instructions and the set layout is not typed."
+ },
+ {
+  "class": "UCommonButtonGroup",
+  "function": "SelectNextButton",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UCommonButtonGroup",
+  "function": "SelectPreviousButton",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UCommonUILibrary",
+  "function": "FindParentWidgetOfType",
+  "status": "blocked",
+  "case": "multi_branch_widget_walk",
+  "reason": "Multi-branch parent/outer walk calling NativeGetParentWidget and four StaticClass IsA gates (UWidget, UWidgetTree, UUserWidget) with [RSI+0x20] outer hops; more than 60 instructions."
+ },
+ {
+  "class": "UFortCreativeItemListTabPanel",
+  "function": "GetSelectedItemIndex",
+  "status": "blocked",
+  "case": "shared_callee_ambiguous",
+  "reason": "Callee 0x1407c1e20 has a single candidate UFortAIGoalProvider::GetEncounterInfo, which is not the class of the receivers (sub-object at this+0x300 and 0x150-stride elements); no class in the receiver chain matches."
+ },
+ {
+  "class": "UFortFrontEndContext",
+  "function": "GetFrontEndCamera",
+  "status": "blocked",
+  "case": "callee_receiver_class_mismatch",
+  "reason": "Callee 0x144cb7c20 candidate is UFortGlobalUIContext::NativeGetContextPlayerController144cb7c20, but the receiver is UFortFrontEndContext (not a UFortGlobalUIContext child); also 0x141ca78b0 is declared for UFortFrontEndContext* but receives a controller pointer."
+ },
+ {
+  "class": "UFortGameplayAbility",
+  "function": "ClearCameraMode",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UFortGameplayAbility",
+  "function": "SetCameraMode",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UFortGlobalUIContext",
+  "function": "GetInputTypeIcon",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UFortMutatorListComponent",
+  "function": "GetMutatorByClass",
+  "status": "blocked",
+  "case": "ambiguous_control_flow",
+  "reason": "The class-validity gate (MutatorClass IsChildOf AFortGameplayMutator) falls into the element loop, and the null-class path cannot be determined from the asm without deeper trace; not guessed."
+ },
+ {
+  "class": "UFortQuestManager",
+  "function": "GetPlayerControllerBP",
+  "status": "proposed",
+  "case": "ported",
+  "reason": ""
+ },
+ {
+  "class": "UFortQuestManager",
+  "function": "IsQuestObjectivePartyAssisted",
+  "status": "blocked",
+  "case": "unbounded_container_walk",
+  "reason": "Nested walk over the quest objective table at +0x30c8 (0x50 stride) with inner 0x10-stride array scans and flag compares; more than 60 instructions."
+ },
+ {
+  "class": "UFortStreamMediaSource",
+  "function": "UpdatePlayerOptions",
+  "status": "blocked",
+  "case": "simd_fp_math",
+  "reason": "Float-to-integer conversion chain (CVTSS/CVTPS2PD/CVTTSD2SI, UNPCKLPD/MOVMSKPD), magic-number IMUL time decomposition and a verbosity-gated log at 0x142c54b70 guarded by the global at 0x148136e80; not exact."
+ }
+]

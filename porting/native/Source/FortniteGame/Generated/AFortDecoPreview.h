@@ -10,6 +10,8 @@
 #include "EBuildingAttachmentType.h"
 #include "EPlacementType.h"
 #include "Math/Vector.h"
+#include "Math/Vector4.h"
+#include "UObject/NoExportTypes.h"
 
 class ABuildingActor;
 class AFortDecoHelper;
@@ -106,5 +108,9 @@ public:
 	void OnInitializeDecoPreview(ABuildingActor* NewBuildingActor, UFortDecoItemDefinition* NewDecoItemDefinition);
 	virtual void OnInitializeDecoPreview_Implementation(ABuildingActor* NewBuildingActor, UFortDecoItemDefinition* NewDecoItemDefinition);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static FVector4 NativeMakeVector4142c47190(const FVector& InVector);
 };
 

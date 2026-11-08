@@ -8,7 +8,9 @@
 
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
+#include "Animation/AnimInstance.h"
 #include "Components/SceneComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "EFortControlRecoveryBehavior.h"
 #include "EFortDamageZone.h"
 #include "EFortFootstepSurfaceType.h"
@@ -1090,5 +1092,6 @@ public:
 	virtual bool NativeIsLocalPlayer() const;
 	bool IsDead() const;
 	virtual uint8 NativeGetTeam163();
+	static UAnimInstance* NativeGetMeshAnimInstance144114bd0(USkeletalMeshComponent* MeshComp);
 };
 

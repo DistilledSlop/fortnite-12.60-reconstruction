@@ -253,5 +253,6 @@ public:
 	void NativeUpdateWindAudio(float DeltaSeconds);
 	void NativeSampleWind(float DeltaSeconds);
 	FBox NativeGetInitialWindBounds();
+	static FFortWindImpulseCylinder NativeCopyWindImpulseCylinder141dbf6b0(const FFortWindImpulseCylinder& SourceCylinder);
 };
 

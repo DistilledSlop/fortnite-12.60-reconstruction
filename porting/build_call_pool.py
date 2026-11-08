@@ -52,6 +52,9 @@ for _r in glob.glob('porting/behavior/stub_bulk_runtime/build_removed_*.json'):
     blocked |= {x['entry'].replace('_Implementation::', '::') if False else (x['entry'][:-len('_Implementation')] if x['entry'].endswith('_Implementation') else x['entry']) for x in json.load(open(_r))}
 inscope = json.load(open('porting/progress/native_functions_inscope.json'))
 inscope = {(c, f) for c, fs in inscope.items() for f in fs}
+if os.environ.get('TARGETS'):  # restrict to a target list [{cls,fn}] (content-used functions)
+    _t = {(x['cls'], x['fn']) for x in json.load(open(os.environ['TARGETS']))}
+    inscope &= _t
 attempted = set()
 for p in glob.glob(f'{R}/work-batches/wrap[0-9A]*.json') + glob.glob(f'{R}/work-batches/bcast*.json') + glob.glob(f'{R}/work-batches/rs[0-9]*.json'):
     if not os.path.isdir('porting/behavior/%s_runtime' % os.path.basename(p)[:-5]):

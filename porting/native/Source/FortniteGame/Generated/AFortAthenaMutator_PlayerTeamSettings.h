@@ -7,6 +7,7 @@
 #include "AFortAthenaMutator_PlayerSettingsBase.h"
 
 #include "FMutatorPlayerSettingsData.h"
+#include "HAL/UnrealMemory.h"
 
 class UFortPlayerTeamSettingsComponent;
 
@@ -31,5 +32,9 @@ protected:
 	uint8 GetTeamContext() const;
 public:
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeSizedDeleteBuffer141384cb0(void* Pointer, uint32 AllocationSize);
 };
 

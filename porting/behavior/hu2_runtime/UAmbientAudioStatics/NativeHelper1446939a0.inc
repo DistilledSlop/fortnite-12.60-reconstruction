@@ -1,0 +1,12 @@
+// Helper 0x1446939a0 (static on UAmbientAudioStatics).
+// Evidence: porting/generated/native-cap-helpers3/0x1446939a0.asm, 10 instructions, no calls.
+// Caller evidence: AFortTimeOfDayManager::ApplyDirectOverrides (0x141f57d30), OnRep_DirectOverrides (0x141f65c40),
+// SetTimeOfDayManagerVisibility (0x141f6ee50) pass the manager object in RCX; the byte at +0x11a is raw (no reflected member used).
+// Behavior: state = byte [Context+0x11a] (unsigned); returns true when state <= 6 and bit `state` of 0x6a is set.
+// CONFIDENCE: HIGH
+const uint8 StateValue = *reinterpret_cast<const uint8*>(reinterpret_cast<const uint8*>(Context) + 0x11a);
+if (StateValue > 6)
+{
+    return false;
+}
+return ((0x6a >> StateValue) & 1) != 0;

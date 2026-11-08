@@ -1,0 +1,86 @@
+[
+ {
+  "addr": "0x144162f70",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Semantics and signature derived from helper asm; body checked against every instruction."
+ },
+ {
+  "addr": "0x142e424e0",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "Call 0x141384ca0 (size-1 allocation) hints UFortTierIndicator::ClearPreviewState and UMeshNetworkSubsystem::SetMetaDataWithKey, which do not match an allocation; RDX passed through to 0x141384cb0 is unset."
+ },
+ {
+  "addr": "0x142cd4550",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Semantics and signature derived from helper asm; body checked against every instruction."
+ },
+ {
+  "addr": "0x143a970b0",
+  "status": "blocked",
+  "case": "absolute_data_address",
+  "reason": "LEA RAX,[0x148300c18] returns the address of a writable .data object; its identity is not established."
+ },
+ {
+  "addr": "0x142bf39b0",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Semantics and signature derived from helper asm; body checked against every instruction."
+ },
+ {
+  "addr": "0x1406921f0",
+  "status": "blocked",
+  "case": "absolute_data_address",
+  "reason": "LEA RAX,[0x1480ce3f8] returns the address of a writable .data object; its identity is not established."
+ },
+ {
+  "addr": "0x142c47790",
+  "status": "blocked",
+  "case": "absolute_global_and_callee_unresolved",
+  "reason": "CMP dword ptr [0x1482183a8],EDI at 0x142c477c0 and MOV RCX,qword ptr [0x1482183a0] at 0x142c477cc read writable .data; CALL 0x141384ca0 at 0x142c478d1 has mismatched hints; indirect vtable calls have no typed interface."
+ },
+ {
+  "addr": "0x142bc4490",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "MOVSD XMM0,qword ptr [0x1481d47f0] at 0x142bc4490 reads a writable .data global."
+ },
+ {
+  "addr": "0x140682e80",
+  "status": "blocked",
+  "case": "indirect_call_unhinted",
+  "reason": "TSharedPtr controller release uses CALL qword ptr [RAX] and CALL qword ptr [RAX+0x8] with no typed interface or callee hint."
+ },
+ {
+  "addr": "0x142bfa300",
+  "status": "blocked",
+  "case": "absolute_global_and_indirect_call",
+  "reason": "CMP qword ptr [0x1482157f0],0x0 at 0x142bfa304 and MOV EAX,dword ptr [0x148215828] read writable .data; CALL qword ptr [0x1458fcaf8] at 0x142bfa318 has no hint."
+ },
+ {
+  "addr": "0x1410f8c40",
+  "status": "blocked",
+  "case": "callee_unresolved",
+  "reason": "CALL 0x1407f2320 at 0x1410f8e09 is passed RCX,EDX but its hint names a no-argument member; CALL 0x140690310 at 0x1410f8e4b has a hint listing four unrelated functions."
+ },
+ {
+  "addr": "0x142ce3730",
+  "status": "blocked",
+  "case": "absolute_global_load",
+  "reason": "MOV EAX,dword ptr [0x14824b3c8] at 0x142ce3730 reads a writable .data global."
+ },
+ {
+  "addr": "0x1446939a0",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Semantics and signature derived from helper asm; body checked against every instruction."
+ },
+ {
+  "addr": "0x142ec9ca0",
+  "status": "proposed",
+  "case": "ported",
+  "reason": "Semantics and signature derived from helper asm; body checked against every instruction."
+ }
+]

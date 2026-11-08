@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "Components/PanelSlot.h"
+#include "Components/PanelWidget.h"
+#include "Components/Widget.h"
+
 #include "UCommonUILibrary.generated.h"
 
 UCLASS()
@@ -14,5 +18,9 @@ class COMMONUI_API UCommonUILibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UPanelWidget* NativeGetParentWidget143d5e2e0(UWidget* WidgetObj);
 };
 

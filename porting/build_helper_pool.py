@@ -48,6 +48,26 @@ for a in anyc:
         tu = [t for t in ts if t not in HELPERS and t not in gp and t not in named and t not in hcand and not (lo <= int(t, 16) <= hi)]
     rows.append(dict(addr=a, only=only[a], any=anyc[a], captured=cap, insns=len(L) if L else None, targets_unres=tu,
                      hosts=hosts[a].most_common(4)))
+# transitive: a helper that calls other unresolved helpers makes those callees needed too (depth <= 4)
+known = {r['addr']: r for r in rows}
+frontier = list(rows)
+for _ in range(4):
+    nxt = []
+    for r in frontier:
+        for t in r['targets_unres'] or []:
+            if t in known:
+                known[t]['any'] += r['any']
+                continue
+            cap = t in idx
+            L = insns(idx[t]) if cap else None
+            tu = None
+            if L:
+                ts = [m.group(1) for i in L for m in [re.fullmatch(r'(?:CALL|JMP) (0x[0-9a-f]+)', i)] if m]
+                lo, hi = span(idx[t])
+                tu = [x for x in ts if x not in HELPERS and x not in gp and x not in named and x not in hcand and not (lo <= int(x, 16) <= hi)]
+            nr = dict(addr=t, only=0, any=r['any'], captured=cap, insns=len(L) if L else None, targets_unres=tu, hosts=r['hosts'], depth=1)
+            known[t] = nr; rows.append(nr); nxt.append(nr)
+    frontier = nxt
 rows.sort(key=lambda r: (-r['only'], -r['any']))
 os.makedirs('porting/generated/small-pool', exist_ok=True)
 json.dump(rows, open('porting/generated/small-pool/helpers_rank.json', 'w'))

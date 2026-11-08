@@ -1,0 +1,16 @@
+[
+  {"addr": "0x141ca1b30", "status": "proposed", "case": "field_compare_store", "reason": "Every asm instruction accounted for: int32 compare at +0x2710 with *Key, then null at +0x2708 and -1 at +0x2710."},
+  {"addr": "0x141cb7690", "status": "proposed", "case": "class_isa_store", "reason": "Null checks, UFortCameraMode::StaticClass(0x142856e60), inline IsChildOf of the class param, then store of class and key. Class-tree inference is MEDIUM."},
+  {"addr": "0x141e61390", "status": "proposed", "case": "raw_pointer_load", "reason": "Single raw qword load at +0x430 and return, no null check; pointee class not identified, so UObject* return."},
+  {"addr": "0x1442f3c00", "status": "blocked", "case": "callee_unresolved", "reason": "JNZ 0x14139ae30 at 0x1442f3c07 is a conditional tail-jump to target 0x14139ae30, which has no callee hint (callee_hints is empty)."},
+  {"addr": "0x14207a350", "status": "proposed", "case": "array_search", "reason": "Scan of 0x10-byte TArray entries with IsChildOf filters against UFortMinigameStatFilter::StaticClass(0x1429d45e0); all instructions accounted for."},
+  {"addr": "0x143f76150", "status": "blocked", "case": "virtual_call_unresolved", "reason": "CALL qword ptr [RAX+0x150] at 0x143f7615c is a virtual call through vtable slot 0x150 with no callee hint."},
+  {"addr": "0x141641300", "status": "proposed", "case": "isa_field_return", "reason": "Raw load of +0x128 and IsA test against AFortGameModeAthena::StaticClass(0x1428ee970); returns object or null."},
+  {"addr": "0x14199e380", "status": "proposed", "case": "tail_call_ported", "reason": "Null-fallback pick of +0x1df8 then +0x1df0, tail-jump to ported AFortGameStateAthena::PlaylistIsCreativeLTM (0x141a4a530) with its result returned."},
+  {"addr": "0x14216e500", "status": "blocked", "case": "callee_unresolved", "reason": "JNZ 0x14216e520 at 0x14216e50a is a conditional tail-jump to target 0x14216e520, outside this helper and with no callee hint."},
+  {"addr": "0x141f60cd0", "status": "proposed", "case": "pure_compare", "reason": "Pure byte comparison with three return values (0, 1, 2); all 11 instructions accounted for."},
+  {"addr": "0x14207e880", "status": "blocked", "case": "writable_global", "reason": "MOVAPS XMM0,[0x1482184f0] at 0x14207e920 (and 0x148218500, 0x148218510 after it) reads writable .data; also CALL 0x140680160 at 0x14207e8bf and 0x14207e8f6 has two candidate hints, none unique."},
+  {"addr": "0x141e8ddd0", "status": "blocked", "case": "virtual_tail_call", "reason": "JMP qword ptr [RAX+0xae0] at 0x141e8de03 is a virtual tail-call through vtable slot 0xae0 with no callee hint."},
+  {"addr": "0x1419bbef0", "status": "blocked", "case": "callee_unresolved", "reason": "CALL 0x14077d430 at 0x1419bbf84 has four candidate reflected hints, none unique; CALL 0x140682ce0 and 0x1406af1d0 also have multiple candidates."},
+  {"addr": "0x141a07d50", "status": "proposed", "case": "isa_check", "reason": "IsA test of the object against UParticleSystem::StaticClass(0x1447aaa50); all instructions accounted for."}
+]

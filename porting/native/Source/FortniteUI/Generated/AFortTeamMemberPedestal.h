@@ -8,6 +8,7 @@
 
 #include "FCachedComponentMaterials.h"
 #include "UFortHero.h"
+#include "UObject/Object.h"
 
 class AAthenaSquadPedestalGroup;
 class UFortTeamMemberEntryBase;
@@ -74,5 +75,26 @@ public:
 	UPROPERTY()
 	bool bTimeToPawnLoadedEnabled;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentTeamSize() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInFrontend() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInLocalSquadGroup() const;
+public:
+
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UObject* NativeGetOuterUnlessDefault140f930b0(UObject* ObjectArg);
+	static bool NativeHelper142261600(UObject* TargetObj);
+	static bool NativeHelper144e0d6f0(UObject* GroupObj);
 };
 

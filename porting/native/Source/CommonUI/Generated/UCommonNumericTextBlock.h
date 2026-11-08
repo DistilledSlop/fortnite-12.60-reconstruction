@@ -81,5 +81,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInterpolatingNumericValue() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static bool NativeIsLiveEntryHandle144621fb0(uint8* SparseArrayPtr, const uint64* HandlePtr);
+	static int32 NativeFindElementIndex140781c40(uint8* SetData, uint64 LookupKey);
 };
 

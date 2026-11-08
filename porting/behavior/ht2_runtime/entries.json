@@ -1,0 +1,167 @@
+[
+  {
+    "class": "UFortGameplayAbility",
+    "function": "NativeHashUInt32142ce11c0",
+    "kind": "helper",
+    "signature": "uint32 NativeHashUInt32142ce11c0(uint32 Value)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht2_runtime/UFortGameplayAbility/NativeHashUInt32142ce11c0.inc",
+    "address": "0x142ce11c0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Pure 32-bit mix of the input dword; all 11 instructions accounted. Raw uint32 signature."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "NativeIsObjectFlagBit4Clear1406ceaa0",
+    "kind": "helper",
+    "signature": "bool NativeIsObjectFlagBit4Clear1406ceaa0(UObject* TargetObject)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht2_runtime/UFortGameplayAbility/NativeIsObjectFlagBit4Clear1406ceaa0.inc",
+    "address": "0x1406ceaa0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Returns true when bit 0x10 of the uint32 at UObject+0x8 is clear. No reflected member at +0x8; raw read."
+  },
+  {
+    "class": "UCreativeQuestComponent",
+    "function": "NativeWeakObjectPtrEquivalent1407327b0",
+    "kind": "helper",
+    "signature": "bool NativeWeakObjectPtrEquivalent1407327b0(const uint8* A, const uint8* B)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht2_runtime/UCreativeQuestComponent/NativeWeakObjectPtrEquivalent1407327b0.inc",
+    "address": "0x1407327b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/WeakObjectPtr.h"
+    ],
+    "notes": "Weak-pointer equivalence: equal index+serial, or both IsValid false. Args are 8-byte weak records."
+  },
+  {
+    "class": "UFortActorOptionsComponent",
+    "function": "NativeAdvanceSetBitIterator140687d00",
+    "kind": "helper",
+    "signature": "void NativeAdvanceSetBitIterator140687d00(uint8* Iterator)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht2_runtime/UFortActorOptionsComponent/NativeAdvanceSetBitIterator140687d00.inc",
+    "address": "0x140687d00",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/UnrealMathUtility.h"
+    ],
+    "notes": "Set-bit iterator advance over raw bit array (inline at +0, heap at +0x10, NumBits +0x18). Iterator layout inferred from asm."
+  },
+  {
+    "class": "AFortAthenaMutator_PlayerClassSettings",
+    "function": "NativeFindKeyIndex14108f3b0",
+    "kind": "helper",
+    "signature": "int32* NativeFindKeyIndex14108f3b0(uint8* SetStorage, int32* OutIndex, const int32* Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht2_runtime/AFortAthenaMutator_PlayerClassSettings/NativeFindKeyIndex14108f3b0.inc",
+    "address": "0x14108f3b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Hash-chain lookup on a raw set at +0x3c0; mix transcribed literally; returns element index or -1."
+  },
+  {
+    "class": "AFortCreativeMoveTool",
+    "function": "NativeFindElementByKey141d7cd40",
+    "kind": "helper",
+    "signature": "UObject* NativeFindElementByKey141d7cd40(UObject* ContainerObject, uint64 SearchKey)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht2_runtime/AFortCreativeMoveTool/NativeFindElementByKey141d7cd40.inc",
+    "address": "0x141d7cd40",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Linear search of pointer array (+0x30/+0x38) matching uint64 key at element +0x110/+0x114."
+  },
+  {
+    "class": "AFortDecoPreview",
+    "function": "NativeMakeVector4142c47190",
+    "kind": "helper",
+    "signature": "FVector4 NativeMakeVector4142c47190(const FVector& InVector)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht2_runtime/AFortDecoPreview/NativeMakeVector4142c47190.inc",
+    "address": "0x142c47190",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/Vector.h",
+      "Math/Vector4.h"
+    ],
+    "notes": "sret FVector4 from FVector with W=1.0f; all 9 instructions accounted."
+  },
+  {
+    "class": "AFortPlayerControllerGameplay",
+    "function": "NativeGetClientSettingsRecord14237e580",
+    "kind": "helper",
+    "signature": "UObject* NativeGetClientSettingsRecord14237e580(AFortPlayerControllerGameplay* PlayerControllerObject)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht2_runtime/AFortPlayerControllerGameplay/NativeGetClientSettingsRecord14237e580.inc",
+    "address": "0x14237e580",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Player IsA UFortLocalPlayer, ClientSettingsRecord passes 0x141e32a40; MEDIUM: callee declares UFortLocalPlayer* param."
+  },
+  {
+    "class": "UFortRarityData",
+    "function": "NativeGetCommonGameData141e5b2a0",
+    "kind": "helper",
+    "signature": "UFortGameData* NativeGetCommonGameData141e5b2a0()",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht2_runtime/UFortRarityData/NativeGetCommonGameData141e5b2a0.inc",
+    "address": "0x141e5b2a0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Tail-chains asset manager getter then NativeGetCommonGameData; all 5 instructions accounted."
+  },
+  {
+    "class": "UFortFrontEndContext",
+    "function": "NativeGetFrontEndWeakObject141e622f0",
+    "kind": "helper",
+    "signature": "UObject* NativeGetFrontEndWeakObject141e622f0(UFortFrontEndContext* FrontEndContext)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/ht2_runtime/UFortFrontEndContext/NativeGetFrontEndWeakObject141e622f0.inc",
+    "address": "0x141e622f0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/WeakObjectPtr.h"
+    ],
+    "notes": "Tail-calls TWeakObjectPtr::Get on context+0x468; raw member offset, no reflected member."
+  }
+]

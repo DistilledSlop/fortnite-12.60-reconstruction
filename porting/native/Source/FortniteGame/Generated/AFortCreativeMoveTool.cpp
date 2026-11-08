@@ -5,6 +5,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/Pawn.h"
 #include "UFortCreativeOption.h"
+#include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortCreativeMoveTool::ClientAddItemToMoveToolComplete_Implementation(AFortPlayerControllerAthena* FortPC)
@@ -418,6 +419,51 @@ AController* AFortCreativeMoveTool::NativeGetInstigatorController143f76650(AFort
 		return nullptr;
 	}
 	return InstigatorPawn->GetController();
+}
+
+UObject* AFortCreativeMoveTool::NativeFindElementByKey141d7cd40(UObject* ContainerObject, uint64 SearchKey)
+{
+	// Helper 0x141d7cd40, host AFortCreativeMoveTool (static). 22 instructions, no callees.
+	// Container layout from asm (raw, no reflected member on the owner): element pointer array at +0x30, int32 Num at +0x38.
+	// SearchKey is a uint64: low dword compared with element +0x110, high dword compared with element +0x114.
+	// Returns the first matching element as UObject*, else nullptr.
+	// Callers: AFortCreativeMoveTool::HandleDropToFloorPressed (0x142673fe0), HandleHitTraceRuleHeldDownLongEnough (0x142674d80).
+	// CONFIDENCE: HIGH
+	uint8* ContainerBase = reinterpret_cast<uint8*>(ContainerObject);
+	uint8** ElementData = *reinterpret_cast<uint8***>(ContainerBase + 0x30);
+	const int32 ElementCount = *reinterpret_cast<const int32*>(ContainerBase + 0x38);
+	const uint32 KeyLow = static_cast<uint32>(SearchKey);
+	const uint32 KeyHigh = static_cast<uint32>(SearchKey >> 32);
+	for (int32 ElementIndex = 0; ElementIndex < ElementCount; ++ElementIndex)
+	{
+		uint8* Candidate = ElementData[ElementIndex];
+		const bool bHighMatches = *reinterpret_cast<const uint32*>(Candidate + 0x114) == KeyHigh;
+		const bool bLowMatches = *reinterpret_cast<const uint32*>(Candidate + 0x110) == KeyLow;
+		if (bHighMatches && bLowMatches)
+		{
+			return reinterpret_cast<UObject*>(Candidate);
+		}
+	}
+	return nullptr;
+}
+
+bool AFortCreativeMoveTool::NativeFillBytes32144487690(uint8* Bytes, uint8 FillByte)
+{
+	// Helper 0x144487690 (host AFortCreativeMoveTool, static). Fills a 32-byte buffer with FillByte and reports whether any byte changed.
+	// Evidence: RCX = Bytes (32-byte buffer), DL = FillByte. Caller 0x142099a10 @0x142099ad4 sets LEA RCX,[RSP+0x78] and MOV EDX,0x1 before the call.
+	// The loop runs once (EBX 0 -> 0x20). Each element is compared with DL and stored only when different; R8B accumulates the changed flag.
+	// Return: MOVZX EAX,R8B.
+	// CONFIDENCE: HIGH
+	bool bChanged = false;
+	for (int32 ByteIndex = 0; ByteIndex < 32; ++ByteIndex)
+	{
+		if (Bytes[ByteIndex] != FillByte)
+		{
+			Bytes[ByteIndex] = FillByte;
+			bChanged = true;
+		}
+	}
+	return bChanged;
 }
 
 void AFortCreativeMoveTool::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

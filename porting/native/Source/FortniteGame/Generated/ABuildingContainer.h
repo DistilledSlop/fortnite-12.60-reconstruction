@@ -14,6 +14,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
+#include "UObject/Object.h"
 
 class UAudioComponent;
 class UCurveFloat;
@@ -246,5 +247,9 @@ public:
 	void OnRep_LootTier();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static bool NativeIsGameModeOne141ed8c70(UObject* ContextObject);
 };
 

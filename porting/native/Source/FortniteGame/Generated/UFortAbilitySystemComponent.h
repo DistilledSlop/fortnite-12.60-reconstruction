@@ -11,6 +11,7 @@
 #include "FPersonalVehicleBlockingChanged.h"
 #include "FReplicatedMontagePair.h"
 #include "GameplayTagContainer.h"
+#include "UObject/Object.h"
 
 class UAnimMontage;
 
@@ -77,5 +78,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	bool HasNativeAction(const FGameplayTag& ActionTag);
+	static UObject* NativeGetOutermostObject142ec9ca0(UObject* Context);
 };
 

@@ -1,0 +1,64 @@
+[
+  {
+    "class": "AFortAIPawn",
+    "function": "NativeFNameNumberSuffix142cd4630",
+    "kind": "helper",
+    "signature": "int32 NativeFNameNumberSuffix142cd4630(const uint16* Text, int32* InOutLength)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hu4_runtime/AFortAIPawn/NativeFNameNumberSuffix142cd4630.inc",
+    "address": "0x142cd4630",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Parses trailing _<digits> suffix (FName number encoding, value+1); all asm paths accounted; callers pass R11 length in RDX."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "NativeAtan2Approx142bbd380",
+    "kind": "helper",
+    "signature": "float NativeAtan2Approx142bbd380(float Y, float X)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hu4_runtime/UFortGameplayAbility/NativeAtan2Approx142bbd380.inc",
+    "address": "0x142bbd380",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Math/UnrealMathUtility.h"
+    ],
+    "notes": "atan2(Y,X) polynomial approximation; coefficients read from PE .rdata; callers VectorToNormalizedAngleInDegrees, GetTowhookRotation."
+  },
+  {
+    "class": "AFortAthenaVehicleSpawner",
+    "function": "NativeFindSetElementId140708be0",
+    "kind": "helper",
+    "signature": "int32* NativeFindSetElementId140708be0(uint8* Set, int32* OutElementId, uint64 Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hu4_runtime/AFortAthenaVehicleSpawner/NativeFindSetElementId140708be0.inc",
+    "address": "0x140708be0",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "TSet<int64> FindId: hash mix hand-transcribed, chain walk; returns OutElementId pointer as asm does. Raw offsets, owner type not justified."
+  },
+  {
+    "class": "UFortNiagaraGameplayLibrary",
+    "function": "NativeCopyDoubleInt32144123690",
+    "kind": "helper",
+    "signature": "void NativeCopyDoubleInt32144123690(uint8* Target, const uint8* Source)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/hu4_runtime/UFortNiagaraGameplayLibrary/NativeCopyDoubleInt32144123690.inc",
+    "address": "0x144123690",
+    "confidence": "medium",
+    "status": "ported",
+    "includes": [],
+    "notes": "Copies {double,int32} from Source to Target+0x134/+0x13c; owning type not justified by callers, raw bytes used."
+  }
+]

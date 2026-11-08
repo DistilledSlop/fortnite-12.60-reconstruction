@@ -29,6 +29,7 @@
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 #include "UFortTeamActorInterface.h"
+#include "UObject/Object.h"
 
 class AController;
 class AFortAthenaVehicle;
@@ -768,5 +769,6 @@ public:
 	virtual void NativeOnDayPhaseChanged(EFortDayPhase::Type CurrentDayPhase, EFortDayPhase::Type PreviousDayPhase, bool bAtCreation);
 	virtual bool NativeUsesDayPhaseChange() const;
 	virtual uint8 NativeGetTeam163();
+	static UObject* NativeGetBuildingHighlightTarget141f60110(ABuildingActor* BuildingActor);
 };
 
