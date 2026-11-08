@@ -23,7 +23,6 @@
 #include "FFortWindResponder.h"
 #include "FortAssets.h"
 #include "FortDelayedObjectLoader.h"
-#include "FortniteMapClasses.h"
 #include "GenericQuadTree.h"
 #include "HAL/IConsoleManager.h"
 #include "HAL/UnrealMemory.h"

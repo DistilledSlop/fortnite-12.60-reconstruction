@@ -63539,8 +63539,7 @@
     "inc_path": "porting/behavior/AFortWindManager/NativeGetInitialWindBounds.inc",
     "includes": [
       "EngineUtils.h",
-      "Engine/Level.h",
-      "FortniteMapClasses.h"
+      "Engine/Level.h"
     ],
     "notes": "Collects active static mesh actor bounds, filters level settings and paths, and clips against structural support world bounds using NativeClipWindImpulseBounds. Caller integration and build/runtime verification remain pending."
   },

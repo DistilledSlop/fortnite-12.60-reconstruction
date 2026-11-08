@@ -16,6 +16,7 @@ class AController;
 class AFortAIPawn;
 class AFortAthenaAIBotController;
 class AFortPawn;
+class AFortStaticMeshActor;
 class ATriggerBox;
 class UPrimitiveComponent;
 
@@ -38,6 +39,10 @@ public:
 	// table index 18, flags 0x14000000000015
 	UPROPERTY()
 	TSubclassOf<AActor> ShieldItemSpawnerBlueprint;
+
+	// table index 17, flags 0x10000000000015
+	UPROPERTY()
+	AFortStaticMeshActor* BlockerAmbush;
 
 	// table index 15, flags 0x10000000000015
 	UPROPERTY()

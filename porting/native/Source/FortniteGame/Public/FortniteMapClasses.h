@@ -1,10 +1,7 @@
 #pragma once
 
-#include "Engine/LevelScriptActor.h"
-#include "Engine/StaticMeshActor.h"
 #include "GameFramework/Actor.h"
 #include "Components/ActorComponent.h"
-#include "NavAreas/NavAreaMeta.h"
 #include "NavigationSystem.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FFortClientEventName.h"
@@ -19,26 +16,8 @@ class AFortPlayerController;
 // AFortWorldSettings, AFortAthenaMapInfo, AFortPoiManager and AFortWorldManager are generated in
 // Generated/ from the reflection tables and are not declared here.
 
-// Initial reflection-compatible bases for loading a recovered map. Gameplay
-// behavior and serialized Fortnite properties still need reconstruction.
-UCLASS()
-class FORTNITEGAME_API AFortLevelScriptActor : public ALevelScriptActor
-{
-    GENERATED_BODY()
-};
-
-UCLASS()
-class FORTNITEGAME_API AFortStaticMeshActor : public AStaticMeshActor
-{
-    GENERATED_BODY()
-};
-
-UCLASS()
-class FORTNITEGAME_API UFortMetaNavArea_Obstacles : public UNavAreaMeta
-{
-    GENERATED_BODY()
-};
-
+// AFortLevelScriptActor, AFortStaticMeshActor and UFortMetaNavArea_Obstacles are generated in Generated/.
+// Only the shadow proxy stays hand-written: it has a constructor creating DefaultSceneRoot.
 UCLASS()
 class FORTNITEGAME_API AFortSkydivingShadowProxy : public AActor
 {

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "AFortStaticMeshActor.h"
 #include "GameplayTagContainer.h"
 
 class AFortItemPreviewSceneChanger;
@@ -36,6 +37,10 @@ public:
 	// table index 3, flags 0x400000000a201d
 	UPROPERTY(Transient)
 	UChildActorComponent* SceneBackgroundComponent;
+
+	// table index 2, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortStaticMeshActor* SceneBackground;
 
 	// table index 1, flags 0x400000000a201d
 	UPROPERTY(Transient)

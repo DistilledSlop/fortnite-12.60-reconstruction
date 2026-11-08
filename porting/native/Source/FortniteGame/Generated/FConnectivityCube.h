@@ -12,5 +12,23 @@ struct FConnectivityCube
 {
 	GENERATED_BODY()
 
+	// Native Serialize (ops HasSerializer; 6 x TBitArray<>, 192 bytes in the ops table). Not reflected.
+	TBitArray<> Faces[6];
+
+	bool Serialize(FArchive& Ar)
+	{
+		for (TBitArray<>& Face : Faces)
+		{
+			Ar << Face;
+		}
+		return true;
+	}
+
+};
+
+template<>
+struct TStructOpsTypeTraits<FConnectivityCube> : public TStructOpsTypeTraitsBase2<FConnectivityCube>
+{
+	enum { WithSerializer = true };
 };
 

@@ -2954,6 +2954,8 @@ def validate_manual_map_support(header, listed, blocklist, package):
     """Authorize the existing FortniteGame stand-in only while its ownership is intact."""
     name = "AFortStaticMeshActor"
     declaration = r"\bUCLASS\s*\(\s*\)\s*class\s+FORTNITEGAME_API\s+AFortStaticMeshActor\s*:\s*public\s+AStaticMeshActor\s*\{\s*GENERATED_BODY\s*\(\s*\)"
+    if package == "/Script/FortniteGame" and name in listed and name not in blocklist:
+        return {}  # the generator owns the class; no handwritten stand-in to authorize
     if (package != "/Script/FortniteGame" or name in listed or name not in blocklist or
             len(re.findall(declaration, strip_comments(header))) != 1 or
             '#include "Engine/StaticMeshActor.h"' not in header):
@@ -5897,6 +5899,42 @@ def verify_struct_net(model, header):
         raise SystemExit("%s: native NetSerialize is not spliced as written: %s" % (name, "; ".join(problems)))
 
 
+# Structs whose shipping ops table has HasSerializer (STRUCT_SerializeNative) and no reflected properties, so the
+# cooked bytes are not tagged properties. FConnectivityCube: ops size 192 = 6 x sizeof(TBitArray<>) (32); the cooked
+# EMP_* data assets store it as 6 x {int32 NumBits = 25, uint32 word} (TBitArray operator<<, a 5x5 face each), 48 bytes.
+# Without this serializer the engine reads those bytes as tagged-property tags and overruns the export.
+NATIVE_BITARRAY_SERIALIZER_STRUCTS = {"FConnectivityCube": 6}
+
+
+def native_serializer_declarations(name):
+    count = NATIVE_BITARRAY_SERIALIZER_STRUCTS.get(name)
+    if not count:
+        return []
+    return ["\t// Native Serialize (ops HasSerializer; %d x TBitArray<>, %d bytes in the ops table). Not reflected." % (count, count * 32),
+            "\tTBitArray<> Faces[%d];" % count,
+            "",
+            "\tbool Serialize(FArchive& Ar)",
+            "\t{",
+            "\t\tfor (TBitArray<>& Face : Faces)",
+            "\t\t{",
+            "\t\t\tAr << Face;",
+            "\t\t}",
+            "\t\treturn true;",
+            "\t}",
+            ""]
+
+
+def native_serializer_traits(name):
+    if name not in NATIVE_BITARRAY_SERIALIZER_STRUCTS:
+        return []
+    return ["template<>",
+            "struct TStructOpsTypeTraits<%s> : public TStructOpsTypeTraitsBase2<%s>" % (name, name),
+            "{",
+            "\tenum { WithSerializer = true };",
+            "};",
+            ""]
+
+
 def render_struct_header(model, source_label):
     name = model["cpp_name"]
     net = model.get("net") or {}
@@ -5956,6 +5994,7 @@ def render_struct_header(model, source_label):
         lines.extend(_inventory_entry_policy.fields_after(model, m))
         lines.extend(_maps_fog_policy.fields_after(model, m))
         lines.extend(_maps_wind_building_policy.fields_after(model, m))
+    lines.extend(native_serializer_declarations(name))
     lines.extend(_maps_fog_policy.declarations(model))
     lines.extend(_maps_wind_handle_policy.declarations(model))
     lines.extend(_maps_wind_make_policy.declarations(model))
@@ -5995,6 +6034,7 @@ def render_struct_header(model, source_label):
         lines.append(postlude)
     lines.extend(_confirmation_policy.footer(model))
     lines.extend(_maps_wind_building_policy.postamble(model))
+    lines.extend(native_serializer_traits(name))
     if delta:
         lines.append("template<>")
         lines.append("struct TStructOpsTypeTraits<%s> : public TStructOpsTypeTraitsBase2<%s>" % (name, name))

@@ -482,8 +482,8 @@ AFortTrack
 ABuildingProp_CreaturePlacer
 ABuildingProp_DeimosSpawner
 # Round 3, batch 2: 300 more classes, same rule as batch 1 (usable-module ancestry, depth order). Classes that
-# are hand-written in porting/native/Source (AFortLevelScriptActor, AFortStaticMeshActor,
-# AFortSkydivingShadowProxy, UFortKismetLibrary, UFortMetaNavArea_Obstacles) are not generated and are blocklisted.
+# are hand-written in porting/native/Source (AFortSkydivingShadowProxy) are not generated and are blocklisted.
+# AFortLevelScriptActor, AFortStaticMeshActor, UFortMetaNavArea_Obstacles and UFortKismetLibrary are generated (listed at the end).
 AAthenaBismuthSpawner
 ABattleMapEdge
 AFortAIController
@@ -4678,3 +4678,6 @@ UFortAbilitySystemInterface
 AFortHLODSMActor
 UFortTeamActorInterface
 UFortKismetLibrary
+AFortLevelScriptActor
+AFortStaticMeshActor
+UFortMetaNavArea_Obstacles

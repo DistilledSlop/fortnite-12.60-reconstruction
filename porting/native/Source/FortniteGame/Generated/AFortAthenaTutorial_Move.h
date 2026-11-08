@@ -8,6 +8,7 @@
 
 #include "GameplayTagContainer.h"
 
+class AFortStaticMeshActor;
 class ATriggerBox;
 
 #include "AFortAthenaTutorial_Move.generated.h"
@@ -33,6 +34,14 @@ public:
 	// table index 4, flags 0x10000000000015
 	UPROPERTY()
 	ATriggerBox* CrouchEndTriggerBox;
+
+	// table index 3, flags 0x10000000000015
+	UPROPERTY()
+	AFortStaticMeshActor* BlockerJump;
+
+	// table index 2, flags 0x10000000000015
+	UPROPERTY()
+	AFortStaticMeshActor* BlockerCrouch;
 
 	// table index 1, flags 0x10000000000015
 	UPROPERTY()

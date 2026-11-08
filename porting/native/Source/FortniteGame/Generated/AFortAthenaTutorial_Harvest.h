@@ -10,6 +10,7 @@
 
 class AActor;
 class ABuildingProp;
+class AFortStaticMeshActor;
 class ATriggerBox;
 
 #include "AFortAthenaTutorial_Harvest.generated.h"
@@ -31,6 +32,10 @@ public:
 	// table index 3, flags 0x10000000000015
 	UPROPERTY()
 	ATriggerBox* HarvestTriggerBox;
+
+	// table index 2, flags 0x10000000000015
+	UPROPERTY()
+	AFortStaticMeshActor* BlockerHarvest;
 
 	// table index 1, flags 0x10000000000015
 	UPROPERTY()

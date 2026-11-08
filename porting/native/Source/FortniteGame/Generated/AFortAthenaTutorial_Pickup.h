@@ -8,6 +8,8 @@
 
 #include "GameplayTagContainer.h"
 
+class AFortStaticMeshActor;
+
 #include "AFortAthenaTutorial_Pickup.generated.h"
 
 UCLASS(config=Engine)
@@ -16,6 +18,10 @@ class FORTNITEGAME_API AFortAthenaTutorial_Pickup : public AFortAthenaTutorialBa
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000000000015
+	UPROPERTY()
+	AFortStaticMeshActor* BlockerCollect;
+
 	// table index 1, flags 0x10000000000015
 	UPROPERTY()
 	FGameplayTag GunToPickUpTag;

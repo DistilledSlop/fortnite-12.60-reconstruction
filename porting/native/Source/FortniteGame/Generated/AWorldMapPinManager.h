@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class AFortStaticMeshActor;
 class AWorldMapPin;
 
 #include "AWorldMapPinManager.generated.h"
@@ -16,6 +17,10 @@ class FORTNITEGAME_API AWorldMapPinManager : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x20080000000015
+	UPROPERTY()
+	AFortStaticMeshActor* WorldMapMesh;
+
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	TArray<AWorldMapPin*> CurrentPins;

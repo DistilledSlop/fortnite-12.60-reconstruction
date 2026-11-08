@@ -4,7 +4,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FortniteMapClasses.h"
+#include "AFortStaticMeshActor.h"
 
 #include "FImposterBatch.h"
 #include "Math/Vector.h"
