@@ -1,0 +1,39 @@
+--- a/Engine/Source/Runtime/Engine/Private/StaticMesh.cpp
++++ b/Engine/Source/Runtime/Engine/Private/StaticMesh.cpp
+@@ -233,13 +233,23 @@
+ 	FStaticMeshLODResources
+ -----------------------------------------------------------------------------*/
+ 
+-// Probe-only: Fortnite 12.60 cooked static meshes carry newer custom versions in their package summary but do
+-// not serialize bForceOpaque, bShouldExpandTo32Bit or the ray tracing geometry array (see
+-// porting/patches/cue4parse-fortnite-12.60-static-mesh.patch). Enabled with -FortniteLegacyStaticMeshLayout.
++// Original Fortnite 12.60 cooked static meshes (unversioned packages) carry newer custom versions in their package
++// summary but do not serialize bForceOpaque (FStaticMeshSection), bShouldExpandTo32Bit (FRawStaticIndexBuffer) or the
++// ray tracing geometry array (FStaticMeshLODResources::SerializeBuffers); see
++// porting/patches/cue4parse-fortnite-12.60-static-mesh.patch and porting/patches/ue425-legacy-static-mesh-default-on.patch
++// (byte-level evidence from /Game/Packages/PBW/Metal/L1/PBW_M1_Archway). Packages cooked by this engine are versioned
++// (non-zero UE4Ver) and keep the stock layout. On by default for unversioned packages; -FortniteNoLegacyStaticMesh
++// disables it, -FortniteLegacyStaticMeshLayout forces it for every package (diagnostic).
+ bool FortniteUseLegacyStaticMeshLayout(FArchive& Ar)
+ {
+-	static const bool bEnabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteLegacyStaticMeshLayout"));
+-	if (!bEnabled || !Ar.IsLoading())
++	static const bool bDisabled = FParse::Param(FCommandLine::Get(), TEXT("FortniteNoLegacyStaticMesh"));
++	static const bool bForced = FParse::Param(FCommandLine::Get(), TEXT("FortniteLegacyStaticMeshLayout"));
++	if (bDisabled || !Ar.IsLoading())
++	{
++		return false;
++	}
++	const FLinker* Linker = Ar.GetLinker();
++	if (!bForced && !(Linker && Linker->Summary.bUnversioned))
+ 	{
+ 		return false;
+ 	}
+@@ -259,7 +269,6 @@
+ 		}
+ 		return Result;
+ 	}();
+-	const FLinker* Linker = Ar.GetLinker();
+ 	if (Linker && Linker->LinkerRoot && StockPackages.Contains(Linker->LinkerRoot->GetName()))
+ 	{
+ 		return false;
