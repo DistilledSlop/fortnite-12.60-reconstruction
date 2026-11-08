@@ -8,7 +8,7 @@
 
 #include "FFortTabButtonLabelInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortTabButtonLabelInfo
 {
 	GENERATED_BODY()

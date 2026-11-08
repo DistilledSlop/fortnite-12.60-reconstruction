@@ -11,7 +11,7 @@ class AFortPickup;
 
 #include "FPickupInstigatorData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FPickupInstigatorData
 {
 	GENERATED_BODY()

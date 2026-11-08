@@ -15,7 +15,7 @@ class UPrimitiveComponent;
 
 #include "FInteractionType.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FInteractionType
 {
 	GENERATED_BODY()

@@ -11,7 +11,7 @@ class UTexture2D;
 
 #include "FFortConversationSentence.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortConversationSentence
 {
 	GENERATED_BODY()

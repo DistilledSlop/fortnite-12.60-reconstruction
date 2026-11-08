@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EWardAffectType.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EWardAffectType : uint8
 {
 	AffectsBothStartAndEndPoints = 0,

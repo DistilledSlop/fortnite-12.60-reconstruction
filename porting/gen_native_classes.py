@@ -3670,7 +3670,102 @@ def render_promoted_header(model, api, parent_include, source_label):
     return "\n".join(lines) + "\n"
 
 
-def render_interface_header(name, source_label, api):
+# Struct/enum fns (construct functions) that a recovered Blueprint event signature names: UHT requires them to be
+# BlueprintType. The original FFunctionParams of a BlueprintEvent could only have been compiled with such types.
+BLUEPRINT_EVENT_TYPE_FNS = set()
+INTERFACE_FN_ALLOWED_FLAGS = 0x08000000 | 0x4000000 | 0x10000000 | 0x40000000 | 0x400000 | 0x20000 | 0xc00 | 0xc
+
+
+def interface_policy_header_is_custom(name, api="X_API"):
+    return (_fort_ability_interface_policy.render_header(name, "", api) is not None
+            or _native_virtual_interfaces_policy.render_header(name, "", api) is not None)
+
+
+def interface_policy_declarations(name):
+    return [*_mutator_owner_policy.interface_declarations(name), *_controller_analytics_policy.interface_declarations(name),
+            *_volume_accessor_policy.interface_declarations(name), *_world_ready_policy.interface_declarations(name)]
+
+
+def build_interface_functions(block, name, package, owner_fns, resolver, interface_name_override=None):
+    """Reflected UFUNCTIONs of one UINTERFACE, derived only from the recorded flags and parameter table.
+    Returns (functions, skipped records, used, class_refs). Fail closed: a function whose flags or parameter types
+    cannot be mapped faithfully is skipped and reported, never guessed. UHT shape in a native interface:
+    BlueprintNativeEvent = FUNC_Event|FUNC_Native|FUNC_BlueprintEvent, BlueprintImplementableEvent = FUNC_Event|
+    FUNC_BlueprintEvent. Both are declared as a plain `Ret Name(Args) [const];` in the I class; UHT itself emits the
+    Execute_ thunk and the virtual Name_Implementation, so declaring _Implementation here would redefine it."""
+    resolver.todos = []
+    resolver.class_refs = set()
+    resolver.skipped = []
+    skipped = []
+    out = []
+    used_all = []
+    taken_decl = " ".join(interface_policy_declarations(name))
+    seen = set()
+
+    def skip(fn, reason):
+        skipped.append({"interface": name, "package": package, "function": fn.get("name"),
+                        "flags": fn.get("flags"), "reason": reason})
+
+    for fn in block.get("functions") or []:
+        fname = fn.get("name") or ""
+        flags, params, problem = function_view(fn, owner_fns)
+        if flags is None or params is None:
+            skip(fn, "flags_or_params_not_joined: %s" % problem)
+            continue
+        if not re.match(r"^[A-Za-z_]\w*$", fname) or fname in seen:
+            skip(fn, "bad_or_duplicate_name")
+            continue
+        if re.search(r"\b%s\s*\(" % re.escape(fname), taken_decl):
+            skip(fn, "already_declared_by_a_policy")
+            continue
+        if not flags & 0x800 or not flags & 0x8000000:
+            skip(fn, "not_a_blueprint_event (flags %#x): a plain native function would need a body" % flags)
+            continue
+        if flags & ~INTERFACE_FN_ALLOWED_FLAGS:
+            skip(fn, "unsupported_function_flags %#x" % (flags & ~INTERFACE_FN_ALLOWED_FLAGS))
+            continue
+        if not flags & 0x20000:
+            skip(fn, "not_public")
+            continue
+        native = bool(flags & 0x400)
+        mark = len(resolver.tokens)
+        resolver.wire_used = False
+        resolver.used = {}
+        enum_args = []
+        try:
+            ret, args = decode_params(params, resolver, enum_args, name, fname)
+        except Exception as exc:  # fail closed on any undecodable table
+            skip(fn, "params_not_decoded: %s" % exc)
+            continue
+        used = resolver.used
+        new_tokens = resolver.tokens[mark:]
+        if new_tokens:
+            skip(fn, "unresolved_parameter_type: " + ", ".join(sorted(set(new_tokens))))
+            continue
+        pairs, _ = split_properties(params)
+        has_out = any(hx(e.get("property_flags")) & CPF_OUT_PARM and not hx(e.get("property_flags")) & CPF_RETURN_PARM
+                      for e, _c in pairs)
+        if has_out != bool(flags & 0x400000):
+            skip(fn, "has_out_parms_flag_disagrees_with_parameters")
+            continue
+        if any("Delegate" in str(e.get("kind")) for e, _c in pairs):
+            skip(fn, "delegate_parameter")
+            continue
+        specs = ["BlueprintNativeEvent" if native else "BlueprintImplementableEvent"]
+        # UHT: "BlueprintPure specifier is not allowed for interface functions", so FUNC_BlueprintPure is dropped.
+        for bit, label in ((0x4000000, "BlueprintCallable"),
+                           (0x4, "BlueprintAuthorityOnly"), (0x8, "BlueprintCosmetic")):
+            if flags & bit:
+                specs.append(label)
+        seen.add(fname)
+        BLUEPRINT_EVENT_TYPE_FNS.update(fn_ for fn_ in used)
+        out.append({"name": fname, "ret": ret, "args": args, "const": bool(flags & 0x40000000),
+                    "specifiers": specs, "flags": flags})
+        used_all.append(used)
+    return out, skipped, merge_used(used_all), set(resolver.class_refs) - {name, "I" + name[1:]}
+
+
+def render_interface_header(name, source_label, api, model=None):
     """UINTERFACE U<Name> (parent UInterface) and its native interface I<Name>, in one header as UHT expects."""
     custom = _fort_ability_interface_policy.render_header(name, source_label, api)
     if custom is None:
@@ -3678,10 +3773,14 @@ def render_interface_header(name, source_label, api):
     if custom is not None:
         return custom
     iname = "I" + name[1:]
+    model = model or {}
+    functions = model.get("functions") or []
     lines = [
         "// Generated by porting/gen_native_classes.py --promote from %s." % source_label,
         ("// Do not edit by hand: run porting/promote_native_classes.sh. Native initialization methods are recovered."
          if name == "UFortInitializationInterface" else
+         "// Do not edit by hand: run porting/promote_native_classes.sh. Reflected UFUNCTIONs are emitted from the recorded flags and parameters."
+         if functions else
          "// Do not edit by hand: run porting/promote_native_classes.sh. The interface's UFUNCTIONs are not recovered."),
         "#pragma once",
         "",
@@ -3690,10 +3789,13 @@ def render_interface_header(name, source_label, api):
         *(['#include "McpProfileItem.h"'] if name == "UMcpItemAware" else []),
         *_volume_accessor_policy.interface_preamble(name),
         *_world_ready_policy.interface_preamble(name),
+        *["#include \"%s\"" % inc for inc in model.get("includes", [])],
         "",
+        *["class %s;" % ref for ref in model.get("forward_decls", [])],
+        *([""] if model.get("forward_decls") else []),
         "#include \"%s.generated.h\"" % name,
         "",
-        "UINTERFACE()",
+        "UINTERFACE(Blueprintable)" if functions else "UINTERFACE()",
         "class %s %s : public UInterface" % (api, name),
         "{",
         "\tGENERATED_BODY()",
@@ -3706,6 +3808,10 @@ def render_interface_header(name, source_label, api):
         *_controller_analytics_policy.interface_declarations(name),
         *_volume_accessor_policy.interface_declarations(name),
         *_world_ready_policy.interface_declarations(name),
+        *(["", "public:"] if functions else []),
+        *[line for f in functions for line in (
+            "\tUFUNCTION(%s)" % ", ".join(f["specifiers"]),
+            "\t%s %s(%s)%s;" % (f["ret"], f["name"], ", ".join(f["args"]), " const" if f["const"] else ""))],
         "};",
         "",
     ]
@@ -4241,6 +4347,9 @@ def promote(args):
     all_skipped = []
     class_models = []
     class_outputs = []
+    iface_models = []       # pseudo models (package, used) of interfaces that emit UFUNCTIONs
+    interface_skipped = []
+    interface_emitted = []
     module_deps = {}   # module -> modules its emitted items need (engine modules and promoted modules)
     package_of = {n: parents[name_to_block[n]].get("package") for n in listed if n in name_to_block}
     # Behaviour snippets (see attach_snippets). Disabled with FN_BEHAVIOR_SPLICE=0 or --no-behavior.
@@ -4299,7 +4408,35 @@ def promote(args):
         module_deps.setdefault(module, set())
         if is_interface(block):
             # UINTERFACE: no properties or functions are recovered for it; it only has to exist for TScriptInterface.
-            class_outputs.append((name, module, render_interface_header(name, source_label, "%s_API" % module.upper()),
+            api = "%s_API" % module.upper()
+            imodel = None
+            if interface_policy_header_is_custom(name, api):
+                for fn in blocks_by_va[block].get("functions") or []:
+                    interface_skipped.append({"interface": name, "package": package, "function": fn.get("name"),
+                                              "flags": fn.get("flags"), "reason": "interface_header_owned_by_a_policy"})
+            else:
+                gate.current_package = package
+                funcs, skips, used, refs = build_interface_functions(
+                    blocks_by_va[block], name, package, set(evidence_fns.get(block, [])), resolver)
+                interface_skipped.extend(skips)
+                if funcs:
+                    imodel = {"name": name, "package": package, "functions": funcs, "used": used,
+                              "forward_decls": sorted(refs), "includes": sorted(set(own_includes(gate, used, package)))}
+                    iface_modules = include_interface_headers(imodel, iface_packages)
+                    add_deps(module, iface_modules)
+                    fwd = sorted("%s.h" % ref for ref in imodel["forward_decls"]
+                                 if (package_of.get(ref) or "") in PROMOTE_PACKAGES and package_of.get(ref) != package)
+                    if fwd:
+                        imodel["includes"] = sorted(set(imodel["includes"]) | set(fwd))
+                        imodel["forward_decls"] = [r for r in imodel["forward_decls"] if "%s.h" % r not in fwd]
+                    add_deps(module, [gate.engine.module_of_inc.get(inc) for inc in imodel["includes"]])
+                    add_deps(module, cross_module_modules(gate, used, package))
+                    add_deps(module, [(package_of.get(ref) or "").rsplit("/", 1)[-1] for ref in sorted(refs)
+                                      if (package_of.get(ref) or "") in PROMOTE_PACKAGES and package_of.get(ref) != package])
+                    iface_models.append(imodel)
+                    interface_emitted.append({"interface": name, "package": package,
+                                              "functions": [{"name": f["name"], "specifiers": f["specifiers"]} for f in funcs]})
+            class_outputs.append((name, module, render_interface_header(name, source_label, api, imodel),
                                   render_interface_cpp(name, source_label)))
             continue
         owner_fns = set(evidence_fns.get(block, []))
@@ -4415,7 +4552,7 @@ def promote(args):
 
     # Closure: every promoted struct, enum and delegate used by an emitted member or RPC, transitively.
     seeds = {}
-    for model in class_models:
+    for model in class_models + iface_models:
         for fn, kinds in model["used"].items():
             seeds.setdefault(fn, set()).update(kinds)
     # Accepted native bodies can name promoted types absent from reflected signatures.
@@ -4437,7 +4574,7 @@ def promote(args):
     _common_input_policy.add_roots(gate, seeds)
     if 'CommonUI' in module_deps:
         _action_commited_policy.add_roots(gate, seeds)
-    models, texts, all_used = emit_types(gate, seeds, source_label, class_models)
+    models, texts, all_used = emit_types(gate, seeds, source_label, class_models + iface_models)
     # struct_net (behaviour kind): each native NetSerialize is checked as text in its header, and every entry is reported
     # as spliced or rejected with its reason. Nothing is written before this check.
     native_structs = {}
@@ -4466,6 +4603,12 @@ def promote(args):
                 reason = gate.struct_net_reasons.get(cls) or \
                     "the struct has no native NetSerialize in the binary (ops traits)"
             splice_rejects.append({"entry": tag, "kind": STRUCT_NET_KIND, "reason": reason})
+    # Fail closed: every promoted type an interface function names must be among the emitted type headers.
+    for imodel in iface_models:
+        for fn in imodel["used"]:
+            info = gate.info(fn)
+            if info is not None and info.package in PROMOTE_PACKAGES and fn not in models:
+                raise SystemExit("%s: interface function type %s is not emitted" % (imodel["name"], info.cpp_name))
     engine_used = []
     for fn, kinds in sorted(all_used.items()):
         info = gate.info(fn)
@@ -4758,6 +4901,16 @@ def promote(args):
     with open(os.path.join(args.report_dir, "skipped_properties.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump({"summary": summary, "properties": props, "functions": funcs, "rep_notify": notify},
                   fh, indent=1)
+        fh.write("\n")
+    with open(os.path.join(args.report_dir, "interface_functions_skipped.json"), "w", encoding="utf-8", newline="\n") as fh:
+        by_reason = {}
+        for r in interface_skipped:
+            key = r["reason"].split(":")[0].split(" (")[0].split(" 0x")[0]
+            by_reason[key] = by_reason.get(key, 0) + 1
+        json.dump({"summary": {"interfaces_with_functions": len(interface_emitted),
+                               "functions_emitted": sum(len(e["functions"]) for e in interface_emitted),
+                               "functions_skipped": len(interface_skipped), "skipped_by_reason": by_reason},
+                   "skipped": interface_skipped}, fh, indent=1)
         fh.write("\n")
     with open(os.path.join(args.report_dir, "native_classes_index.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump({"summary": summary, "classes": index}, fh, indent=1)
@@ -5242,7 +5395,7 @@ class TypeGate:
                 model["blueprint_type"] = True
                 for member in model["members"]:
                     member["runtime_property_specifiers"] = ["BlueprintReadOnly", "Transient"]
-            if info.cpp_name in UHT_BLUEPRINT_STRUCTS:
+            if info.cpp_name in UHT_BLUEPRINT_STRUCTS or info.fn in BLUEPRINT_EVENT_TYPE_FNS:
                 model["blueprint_type"] = True
             model = _native_checkpoint2040_policy.apply_struct(info, model)
             model = _native_checkpoint3058_policy.apply_struct(info, model)
@@ -5624,7 +5777,7 @@ def render_enum_header(model, source_label):
         "#include \"CoreMinimal.h\"",
         "#include \"%s.generated.h\"" % namespace,
         "",
-        "UENUM()",
+        "UENUM(BlueprintType)" if model.get("blueprint_type") else "UENUM()",
     ]
     if model["form"] == "Namespaced" and type_name:
         lines += ["namespace %s" % namespace, "{", "\tenum %s" % type_name, "\t{"]
@@ -5702,6 +5855,8 @@ def emit_types(gate, seeds, source_label, class_models=()):
             continue
         model = gate.model(info)
         model["includes"] = own_includes(gate, model["used"], info.package)
+        if info.kind in ("enum", "struct") and info.fn in BLUEPRINT_EVENT_TYPE_FNS:
+            model["blueprint_type"] = True
         if (model.get("net") or {}).get("kind") == "native":
             # Types the native NetSerialize body names (TypeGate.native_net_serializer) are included too.
             model["includes"] = sorted(set(model["includes"]) | set(model["net"]["includes"]))

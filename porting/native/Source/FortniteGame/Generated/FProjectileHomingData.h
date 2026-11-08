@@ -11,7 +11,7 @@ class AActor;
 
 #include "FProjectileHomingData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FProjectileHomingData
 {
 	GENERATED_BODY()

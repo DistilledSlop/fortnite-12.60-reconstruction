@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "EFortHomingStyle.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EFortHomingStyle : uint8
 {
 	None = 0,
