@@ -33,3 +33,10 @@ its consequences are not fully understood. Both are temporary modifications
 to the running process, not changes to the executable on disk. The diagnostic
 is currently necessary for a persistent tested session. See
 [LAUNCHER_PROBE.md](LAUNCHER_PROBE.md) for the supplied-launcher result.
+
+A narrower experimental exit diagnostic can be selected with
+`FN_PATCH_APPES_DIAGNOSTIC=timer`. It skips the observed 20-second timer
+registration call instead of replacing the exit callback; the unsafe-handler
+patch is still applied. One local session reached the locker and saved a
+style with the original callback bytes intact. The call site's full scope and
+the underlying trigger are unknown; see [EXIT_TRACE.md](EXIT_TRACE.md).

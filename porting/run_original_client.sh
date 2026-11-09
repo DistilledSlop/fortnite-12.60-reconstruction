@@ -72,8 +72,10 @@ if [[ "$FN_PATCH_VERIFY" == 1 ]]; then
     python3 "$porting_dir/server/patch_curl_verify.py" "$seconds" "$client_log" > "$generated/patch-curl-verify.out" 2>&1 &
     patcher=$!
 fi
-if [[ "${FN_PATCH_APPES_DIAGNOSTIC:-0}" == 1 ]]; then
-    python3 "$porting_dir/server/patch_appes_diagnostic.py" "$seconds" "$client_log" > "$generated/patch-appes-diagnostic.out" 2>&1 &
+if [[ "${FN_PATCH_APPES_DIAGNOSTIC:-0}" == 1 || "${FN_PATCH_APPES_DIAGNOSTIC:-0}" == timer ]]; then
+    appes_mode=callback
+    [[ "$FN_PATCH_APPES_DIAGNOSTIC" != timer ]] || appes_mode=timer
+    python3 "$porting_dir/server/patch_appes_diagnostic.py" "$seconds" "$client_log" "$appes_mode" > "$generated/patch-appes-diagnostic.out" 2>&1 &
     appes_patcher=$!
 fi
 trap 'kill $server $patcher $appes_patcher 2>/dev/null || true' EXIT
