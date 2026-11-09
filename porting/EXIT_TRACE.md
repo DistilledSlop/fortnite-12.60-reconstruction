@@ -33,3 +33,11 @@ not exclude an earlier call, and static inspection found other delegate vtables
 that reference the callback. The run reached authenticated account endpoints
 before shutdown. Its trace, client log and redacted request metadata are under
 `porting/generated/wine-investigation/20261109-early-exit-trace/` (ignored).
+
+Another run captured the timer's delegate at the exit callback. Its vtable is
+`0x1459a9ed8`, and its method pointer is `0x142120970`; the target object's
+vtable `0x1461e7520` maps to `AFortPlayerControllerFrontEnd`. The timer data
+contains a 20-second rate. A statically identified confirmation-message timer
+uses a 15-second rate, so the delegate type and target alone do not prove that
+path created this timer. The captured trace and client log are under
+`porting/generated/wine-investigation/20261109-delegate-vtable/` (ignored).
