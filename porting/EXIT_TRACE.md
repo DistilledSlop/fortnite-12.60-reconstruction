@@ -6,8 +6,9 @@ GDB attached after frontend load and installed hardware breakpoints at the
 unsafe-environment handler (`0x142121930`), exit callback (`0x142120970`), and
 the confirmation-message function and timer registration (`0x1423b66d0` and
 `0x1423b6948`). Live bytes at those locations were checked against the runtime
-image before tracing. The client logged in, then the trace hit the unsafe
-handler and the exit callback. It recorded no hit on either confirmation
+image before tracing. The trace hit the unsafe handler and the exit callback
+after frontend load. The client log for this run was subsequently overwritten,
+so login in this specific trace is not independently confirmed. It recorded no hit on either confirmation
 breakpoint between attachment and exit. GDB detached with a thread bookkeeping
 error during shutdown; this does not prove what scheduled the callback or
 exclude a call before attachment.
