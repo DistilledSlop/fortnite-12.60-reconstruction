@@ -39,7 +39,7 @@ from pathlib import Path
 from typing import Callable
 
 from api_common import ApiError, Err
-from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, MTX_PLATFORMS, PROFILE_IDS,
+from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, WRAP_SLOT_COUNT, MTX_PLATFORMS, PROFILE_IDS,
                               SLOT_CATEGORIES, build, empty_slots)
 
 # lockExpiration is an FDateTime (reflected member of FProfileUpdateSingle, sent as ISO 8601). A profile
@@ -198,11 +198,13 @@ def _locker(ctx, locker_id):
     return tx, item
 
 
-def _equip(ctx, locker_id, category, item_id, slot_index, variant_updates=None):
+def _equip(ctx, locker_id, category, item_id, slot_index, variant_updates=None, *, allow_wrap_all=False):
     """Place an owned cosmetic into one slot of a locker. An empty item_id clears the slot."""
     if category not in SLOT_CATEGORIES:
         raise _invalid(f"category {category} is not a slot category.")
-    if not 0 <= slot_index <= MAX_SLOT_INDEX:
+    apply_all = category == "ItemWrap" and slot_index == -1 and allow_wrap_all
+    max_index = WRAP_SLOT_COUNT - 1 if category == "ItemWrap" else MAX_SLOT_INDEX
+    if not apply_all and not 0 <= slot_index <= max_index:
         raise _invalid("slotIndex is out of range.")
     tx, locker = _locker(ctx, locker_id)
     slots = copy.deepcopy(locker["attributes"].get("locker_slots_data", {"slots": empty_slots()}))
@@ -248,14 +250,17 @@ def _equip(ctx, locker_id, category, item_id, slot_index, variant_updates=None):
         if updates:
             tx.set_item_attr(resolved_id, "variants", variants)
     items = list(entry.get("items", []))
-    while len(items) <= slot_index:
+    indices = range(WRAP_SLOT_COUNT) if apply_all else (slot_index,)
+    while len(items) <= max(indices):
         items.append("")
-    items[slot_index] = template
+    for index in indices:
+        items[index] = template
     entry["items"] = items
     active_variants = list(entry.get("activeVariants", []))[:len(items)]
     while len(active_variants) < len(items):
         active_variants.append({"variants": []})
-    active_variants[slot_index] = {"variants": variants}
+    for index in indices:
+        active_variants[index] = {"variants": copy.deepcopy(variants)}
     entry["activeVariants"] = active_variants
     tx.set_item_attr(locker_id, "locker_slots_data", slots)
 
@@ -330,8 +335,8 @@ def _set_cosmetic_locker_slot(ctx):
     locker_id = ctx.str_field("lockerItem")
     category = ctx.str_field("category")
     item_id = ctx.str_field("itemToSlot", allow_empty=True, required=False) or ""
-    index = ctx.int_field("slotIndex", default=0, maximum=MAX_SLOT_INDEX)
-    _equip(ctx, locker_id, category, item_id, index, updates)
+    index = ctx.int_field("slotIndex", default=0, minimum=-1, maximum=WRAP_SLOT_COUNT - 1)
+    _equip(ctx, locker_id, category, item_id, index, updates, allow_wrap_all=True)
 
 
 @command("SetCosmeticLockerSlots", ("athena",), "observed",
@@ -349,7 +354,7 @@ def _set_cosmetic_locker_slots(ctx):
         fields = CommandContext(ctx.service, ctx.account_id, ctx.profile_id, entry)
         category = fields.str_field("slotName")
         item_id = fields.str_field("itemToSlot", allow_empty=True)
-        index = fields.int_field("indexWithinSlot", maximum=MAX_SLOT_INDEX)
+        index = fields.int_field("indexWithinSlot", maximum=WRAP_SLOT_COUNT - 1)
         _equip(ctx, locker_id, category, item_id, index, updates)
 
 
@@ -359,7 +364,7 @@ def _equip_battle_royale_customization(ctx):
     locker_id = ctx.tx("athena").profile["stats"]["attributes"]["last_applied_loadout"]
     category = ctx.str_field("slotName")
     item_id = ctx.str_field("itemToSlot", allow_empty=True, required=False) or ""
-    index = ctx.int_field("indexWithinSlot", default=0, maximum=MAX_SLOT_INDEX)
+    index = ctx.int_field("indexWithinSlot", default=0, maximum=WRAP_SLOT_COUNT - 1)
     _equip(ctx, locker_id, category, item_id, index)
 
 

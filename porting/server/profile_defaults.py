@@ -39,7 +39,8 @@ CATEGORY_BY_PREFIX = {
     "AthenaDance": "Dance",
     "AthenaItemWrap": "ItemWrap",
 }
-MAX_SLOT_INDEX = 5  # guess: six slots per category
+MAX_SLOT_INDEX = 5  # guess: six slots for categories other than ItemWrap
+WRAP_SLOT_COUNT = 7  # observed: seven wrap tiles, indexed 0 through 6
 # observed: these platform strings all appear in the 12.60 binary.
 MTX_PLATFORMS = ("EpicPC", "PSN", "XBL", "Nintendo", "Samsung", "IOS", "Android")
 
