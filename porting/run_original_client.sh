@@ -24,7 +24,7 @@ seconds=${1:-120}
 shift || true
 
 if [[ -z "${FN_NETNS_INNER:-}" ]]; then
-    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_ACTIONS="${FN_ACTIONS:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -45,14 +45,20 @@ python3 "$porting_dir/server/probe_server.py" --port 443 --stub \
     > "$generated/probe-server.out" 2>&1 &
 server=$!
 patcher=
+appes_patcher=
 if [[ "$FN_PATCH_VERIFY" == 1 ]]; then
     python3 "$porting_dir/server/patch_curl_verify.py" "$seconds" "$client_log" > "$generated/patch-curl-verify.out" 2>&1 &
     patcher=$!
 fi
-trap 'kill $server $patcher 2>/dev/null || true' EXIT
+if [[ "${FN_PATCH_APPES_DIAGNOSTIC:-0}" == 1 ]]; then
+    python3 "$porting_dir/server/patch_appes_diagnostic.py" "$seconds" "$client_log" > "$generated/patch-appes-diagnostic.out" 2>&1 &
+    appes_patcher=$!
+fi
+trap 'kill $server $patcher $appes_patcher 2>/dev/null || true' EXIT
 
 mkdir -p "$generated/shots"
 chown "$FN_USER" "$generated/shots"
+set +e
 sudo -n -u "$user" env WINEPREFIX="$generated/wine-prefix" WINEDEBUG=-all SHOTS_DIR="$generated/shots" FN_ACTIONS="$FN_ACTIONS" \
     xvfb-run -a -s '-screen 0 1280x720x24' timeout "${seconds}s" \
     bash -c '
@@ -75,4 +81,11 @@ exec wine FortniteClient-Win64-Shipping.exe "$@"' "$bin_dir" \
     "$FN_PORTAL_ARG" -nosound -NoSplash -log -epicapp=Fortnite -epicenv="$FN_EPICENV" \
     -epiclocale=en-us -skippatchcheck -nobe -noeac -fromfl=none \
     -AUTH_LOGIN=unused "-AUTH_PASSWORD=local-username:$username" -AUTH_TYPE=exchangecode "$@" \
-    > "$generated/original-client-run.out" 2>&1 || true
+    > "$generated/original-client-run.out" 2>&1
+status=$?
+set -e
+printf 'Original client runner exit status: %s\n' "$status"
+if [[ "$status" == 124 ]]; then
+    exit 0 # A client still running at the observation deadline is expected.
+fi
+exit "$status"

@@ -310,6 +310,21 @@ class OAuthTests(ServiceTestCase):
         self.assertEqual(status, 204)
         self.assertError(jcall(self.base, "GET", "/account/api/oauth/verify", token=token), 401, Err.TOKEN_INVALID)
 
+    def test_kill_other_account_client_service_preserves_caller(self):
+        old = self.sign_in()["access_token"]
+        caller = self.sign_in()["access_token"]
+        other_account = self.new_account("Unaffected")
+        theirs = self.sign_in_account(other_account)["access_token"]
+        status, _, _ = call(self.base, "DELETE",
+                            "/account/api/oauth/sessions/kill?killType=OTHERS_ACCOUNT_CLIENT_SERVICE",
+                            token=caller)
+        self.assertEqual(status, 204)
+        self.assertError(jcall(self.base, "GET", "/account/api/oauth/verify", token=old),
+                         401, Err.TOKEN_INVALID)
+        for token in (caller, theirs):
+            status, _, _ = jcall(self.base, "GET", "/account/api/oauth/verify", token=token)
+            self.assertEqual(status, 200)
+
     def test_kill_one_removes_own_session_and_refuses_another_accounts(self):
         mine = self.sign_in()["access_token"]
         other_account = self.new_account("Stranger")

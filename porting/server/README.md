@@ -52,6 +52,21 @@ or anti-cheat. The same username (case-insensitive, ignoring surrounding whitesp
 reopens the same local account and locker. Different usernames have separate profiles
 and cloud files. This is local identity selection, not identity verification.
 
+The original client's `OTHERS_ACCOUNT_CLIENT_SERVICE` session cleanup preserves its
+current token and revokes other sessions for that local account. A Wine probe with
+this behavior reached the `Completed` sign-in step without the previous invalid-token
+responses. The original client still needs its launcher/security path resolved.
+
+For isolated investigation only, `FN_PATCH_APPES_DIAGNOSTIC=1` on
+`run_original_client.sh` changes the running 12.60 process after login begins,
+redirecting an unsafe-environment notification handler to its cleanup path. The
+change is signature checked, confined to the runner's network namespace and never
+written to the executable. It suppresses all reasons handled there, does not fix
+the underlying check, and is off by default. In a 2026-11-08 probe the client
+completed local sign-in and displayed the first-run graphics settings prompt, then
+exited before a usable lobby was established. Do not treat this diagnostic as an
+entitlement pass or a working launcher.
+
 For a client that supports the local grant, POST `/account/api/oauth/token` with form
 `grant_type=local_username` and `username=<chosen name>`. The existing client exchange-code
 transport can instead use `exchange_code=local-username:<chosen name>`; this is an

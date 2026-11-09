@@ -217,7 +217,15 @@ class OAuthService:
     def kill_all(self, req, match):
         """DELETE /account/api/oauth/sessions/kill: end every session of the caller's account."""
         session = self.authenticate(req)
+        others_only = req.query.get("killType") == "OTHERS_ACCOUNT_CLIENT_SERVICE"
         for other in list(self._by_access.values()):
+            if others_only:
+                # All locally issued sessions advertise the same client_service
+                # (fortnite). Client-credentials sessions have no account.
+                if (session.account_id is not None and other is not session
+                        and other.account_id == session.account_id):
+                    self._drop(other)
+                continue
             if other is session or (session.account_id is not None and other.account_id == session.account_id):
                 self._drop(other)
         return 204, None
