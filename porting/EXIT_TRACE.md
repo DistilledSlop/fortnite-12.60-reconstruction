@@ -22,3 +22,14 @@ A separate retry exposed a stale Wine server left in a previous network
 namespace: the new client could not reach its local backend. The runner now
 waits briefly for the prefix's existing server to exit and refuses to start if
 it is still in use, rather than killing other Wine applications.
+
+A follow-up run attached immediately after the FortniteBR content bundle
+finished mounting and before the frontend `LoadMap` entry. With TLS patching
+on and the AppES diagnostic off, it hit the unsafe-environment handler, logged
+`LogAppES: closing code 1`, and hit the exit callback approximately 20 seconds
+later. The confirmation-message function and its timer registration did not
+hit between attachment and exit. This narrows the observation window but does
+not exclude an earlier call, and static inspection found other delegate vtables
+that reference the callback. The run reached authenticated account endpoints
+before shutdown. Its trace, client log and redacted request metadata are under
+`porting/generated/wine-investigation/20261109-early-exit-trace/` (ignored).
