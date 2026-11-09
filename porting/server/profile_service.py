@@ -184,15 +184,10 @@ def _invalid(message):
 
 
 def _check_variant_updates(body):
-    # The reflected request and response types identify variant fields, but do
-    # not establish the server's ownership and update rules. Never acknowledge
-    # a style change while silently discarding it.
     updates = body.get("variantUpdates", [])
     if not isinstance(updates, list):
         raise _invalid("variantUpdates must be a list.")
-    if updates:
-        raise ApiError(400, Err.OPERATION_NOT_FOUND,
-                       "Cosmetic variant updates are not implemented by the local stand-in.")
+    return updates
 
 
 def _locker(ctx, locker_id):
@@ -203,7 +198,7 @@ def _locker(ctx, locker_id):
     return tx, item
 
 
-def _equip(ctx, locker_id, category, item_id, slot_index):
+def _equip(ctx, locker_id, category, item_id, slot_index, variant_updates=None):
     """Place an owned cosmetic into one slot of a locker. An empty item_id clears the slot."""
     if category not in SLOT_CATEGORIES:
         raise _invalid(f"category {category} is not a slot category.")
@@ -212,15 +207,21 @@ def _equip(ctx, locker_id, category, item_id, slot_index):
     tx, locker = _locker(ctx, locker_id)
     slots = copy.deepcopy(locker["attributes"].get("locker_slots_data", {"slots": empty_slots()}))
     entry = slots["slots"].setdefault(category, {"items": [], "activeVariants": []})
+    updates = variant_updates or []
     if item_id == "":
+        if updates:
+            raise _invalid("Cannot apply variants to an empty slot.")
         template = ""
+        variants = []
     else:
         # Clients can send either an owned item instance ID or its template ID.
         # Prefer an exact instance ID if the two namespaces happen to overlap.
-        item = tx.profile["items"].get(item_id)
+        resolved_id = item_id
+        item = tx.profile["items"].get(resolved_id)
         if item is None:
-            item = next((owned for owned in tx.profile["items"].values()
-                         if owned["templateId"].casefold() == item_id.casefold()), None)
+            resolved_id = next((key for key, owned in tx.profile["items"].items()
+                                if owned["templateId"].casefold() == item_id.casefold()), None)
+            item = tx.profile["items"].get(resolved_id)
         if item is None:
             raise _invalid(f"The item {item_id} is not owned by this profile.")
         template = item["templateId"]
@@ -228,11 +229,34 @@ def _equip(ctx, locker_id, category, item_id, slot_index):
         if not any(key.casefold() == prefix.casefold() and value == category
                    for key, value in CATEGORY_BY_PREFIX.items()):
             raise _invalid(f"{template} cannot be placed in the {category} slot.")
+        variants = copy.deepcopy(item["attributes"].get("variants", []))
+        seen = set()
+        for update in updates:
+            if not isinstance(update, dict):
+                raise _invalid("variantUpdates must contain objects.")
+            channel, active, owned = update.get("channel"), update.get("active"), update.get("owned", [])
+            if (not isinstance(channel, str) or not channel or not isinstance(active, str) or not active
+                    or not isinstance(owned, list) or not all(isinstance(value, str) for value in owned)):
+                raise _invalid("Invalid variant update.")
+            if channel in seen:
+                raise _invalid("Duplicate variant channel.")
+            seen.add(channel)
+            variant = next((v for v in variants if isinstance(v, dict) and v.get("channel") == channel), None)
+            if variant is None or not isinstance(variant.get("owned"), list) or active not in variant["owned"]:
+                raise _invalid("Variant is not owned by this cosmetic.")
+            variant["active"] = active
+        if updates:
+            tx.set_item_attr(resolved_id, "variants", variants)
     items = list(entry.get("items", []))
     while len(items) <= slot_index:
         items.append("")
     items[slot_index] = template
     entry["items"] = items
+    active_variants = list(entry.get("activeVariants", []))[:len(items)]
+    while len(active_variants) < len(items):
+        active_variants.append({"variants": []})
+    active_variants[slot_index] = {"variants": variants}
+    entry["activeVariants"] = active_variants
     tx.set_item_attr(locker_id, "locker_slots_data", slots)
 
 
@@ -300,14 +324,14 @@ def _set_item_favorite_batch(ctx):
 
 
 @command("SetCosmeticLockerSlot", ("athena",), "observed",
-         "lockerItem, category, itemToSlot, slotIndex (inferred). Nonempty variantUpdates unsupported.")
+         "lockerItem, category, itemToSlot, slotIndex and variantUpdates (inferred).")
 def _set_cosmetic_locker_slot(ctx):
-    _check_variant_updates(ctx.body)
+    updates = _check_variant_updates(ctx.body)
     locker_id = ctx.str_field("lockerItem")
     category = ctx.str_field("category")
     item_id = ctx.str_field("itemToSlot", allow_empty=True, required=False) or ""
     index = ctx.int_field("slotIndex", default=0, maximum=MAX_SLOT_INDEX)
-    _equip(ctx, locker_id, category, item_id, index)
+    _equip(ctx, locker_id, category, item_id, index, updates)
 
 
 @command("SetCosmeticLockerSlots", ("athena",), "observed",
@@ -321,12 +345,12 @@ def _set_cosmetic_locker_slots(ctx):
     for entry in entries:
         if not isinstance(entry, dict):
             raise _invalid("loadoutData must contain objects.")
-        _check_variant_updates(entry)
+        updates = _check_variant_updates(entry)
         fields = CommandContext(ctx.service, ctx.account_id, ctx.profile_id, entry)
         category = fields.str_field("slotName")
         item_id = fields.str_field("itemToSlot", allow_empty=True)
         index = fields.int_field("indexWithinSlot", maximum=MAX_SLOT_INDEX)
-        _equip(ctx, locker_id, category, item_id, index)
+        _equip(ctx, locker_id, category, item_id, index, updates)
 
 
 @command("EquipBattleRoyaleCustomization", ("athena",), "guess",
