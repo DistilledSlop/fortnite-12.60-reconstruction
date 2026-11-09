@@ -1,0 +1,23 @@
+# Native functions imported by Blueprints loaded for /Game/Maps/Frontend but not declared in our generated classes.
+# Source: 'LoadImports ... Skipping import Function ... depends on missing native class' lines from run_frontend_map.sh logs (2026-11-09).
+# Extend by re-running: porting/frontend/run_frontend_map.sh /Game/Maps/Frontend OUT.log SHOT.png 150 -FortniteSkipUnconvertedLegacyShaderMaps
+/Script/AmbientAudio.AmbientAudioStatics:AddAmbientEntry
+/Script/FortniteGame.AthenaShoutItemDefinition:SpawnSoundComponent
+/Script/FortniteGame.FortAmbientAudioController:ClearAudioBankOverride
+/Script/FortniteGame.FortAsyncAction_SendQuestStatEvent:SendClientStatEvent
+/Script/FortniteGame.FortEmitterCameraLensEffectDirectional:SetStrength
+/Script/FortniteGame.FortFXManager:AddMIDAnimationFloat
+/Script/FortniteGame.FortGameplayCueFunctionLibrary:AddGameplayCueLocal
+/Script/FortniteGame.FortKismetLibrary:CopyHideElements
+/Script/FortniteGame.FortKismetLibrary:GetSubGame
+/Script/FortniteGame.FortKismetLibrary:IsCriticalHit
+/Script/FortniteGame.FortKismetLibrary:SetTimeOfDay
+/Script/FortniteGame.FortMusicContext:GetEquippedMusicPack
+/Script/FortniteGame.FortPlayerPawn:ForceDetachFromRemoteControlledPawn
+/Script/FortniteGame.FortPlayerPawn:GetCharacterBodyType
+/Script/FortniteGame.FortPlayerPawn:InvokeWaterHandSplashAttached
+/Script/FortniteGame.FortTimeOfDayManager:GetTimeOfDayManagerFromContext
+/Script/FortniteUI.FortFrontEndContext:GetHeroPlayerPawnByIndex
+/Script/FortniteUI.FortFrontEndContext:GetHeroPlayerPawnForCurrentDisplayedItem
+/Script/FortniteUI.FortGlobalUIContext:GetFeatureState
+/Script/FortniteUI.FortGlobalUIContext:GetSubGame
