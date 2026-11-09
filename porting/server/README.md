@@ -64,9 +64,10 @@ suppressing a separate timer callback observed requesting exit. Both changes are
 signature checked, confined to the runner's network namespace and never written to
 the executable. The callback's full purpose is unknown, and the patch suppresses
 all its calls. It does not fix the underlying checks and is off by default. A
-diagnostic probe completed local sign-in and reached the game-mode selector; a
-usable lobby and locker remain unverified. Do not treat this diagnostic as an
-entitlement pass or a working launcher.
+diagnostic probe completed local sign-in and rendered the Battle Royale locker
+with default cosmetics using DXVK and software Vulkan. The run ended before a
+locker change or persistence could be verified. Do not treat this diagnostic as
+an entitlement pass or a working launcher.
 
 For a client that supports the local grant, POST `/account/api/oauth/token` with form
 `grant_type=local_username` and `username=<chosen name>`. The existing client exchange-code

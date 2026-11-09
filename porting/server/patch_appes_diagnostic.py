@@ -28,7 +28,7 @@ def main():
     while time.monotonic() < deadline:
         try:
             with open(log_path, 'rb') as log:
-                if b'LoginWaitingRoom' not in log.read():
+                if b'LogLoad: LoadMap: /Game/Maps/Frontend' not in log.read():
                     time.sleep(0.05)
                     continue
         except OSError:

@@ -5,12 +5,15 @@
 # Usage: run_original_client.sh [--username NAME] [seconds] [extra client args...]
 # FN_ACTIONS="60:shot 70:click,640,600 80:key,Return" runs X11 actions at those seconds after
 # launch; screenshots go to generated/shots/ (debug aids, never committed).
+# FN_WINEPREFIX selects an alternate prefix; FN_WINEDLLOVERRIDES and
+# FN_VK_ICD_FILENAMES pass renderer settings into the isolated client.
 set -euo pipefail
 
 porting_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 install_dir=$(cd -- "$porting_dir/.." && pwd)
 bin_dir="$install_dir/Fortnite/FortniteGame/Binaries/Win64"
 generated="$porting_dir/generated"
+wineprefix=${FN_WINEPREFIX:-"$generated/wine-prefix"}
 username=${FN_USERNAME:-LocalPlayer}
 if [[ "${1:-}" == --username ]]; then
     if [[ $# -lt 2 || -z "$2" ]]; then
@@ -24,7 +27,7 @@ seconds=${1:-120}
 shift || true
 
 if [[ -z "${FN_NETNS_INNER:-}" ]]; then
-    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -38,7 +41,7 @@ fi
 chown -R "$FN_USER" "$generated/hosts" "$generated/tls"
 mount --bind "$generated/hosts" /etc/hosts
 user=$FN_USER
-client_log="$generated/wine-prefix/drive_c/users/$user/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log"
+client_log="$wineprefix/drive_c/users/$user/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log"
 rm -f "$client_log" "$generated/server-requests.jsonl"
 python3 "$porting_dir/server/probe_server.py" --port 443 --stub \
     --tls-cert "$generated/tls/cert.pem" --tls-key "$generated/tls/key.pem" \
@@ -59,7 +62,10 @@ trap 'kill $server $patcher $appes_patcher 2>/dev/null || true' EXIT
 mkdir -p "$generated/shots"
 chown "$FN_USER" "$generated/shots"
 set +e
-sudo -n -u "$user" env WINEPREFIX="$generated/wine-prefix" WINEDEBUG=-all SHOTS_DIR="$generated/shots" FN_ACTIONS="$FN_ACTIONS" \
+wine_env=(WINEPREFIX="$wineprefix" WINEDEBUG=-all SHOTS_DIR="$generated/shots" FN_ACTIONS="$FN_ACTIONS")
+[[ -z "${FN_WINEDLLOVERRIDES:-}" ]] || wine_env+=(WINEDLLOVERRIDES="$FN_WINEDLLOVERRIDES")
+[[ -z "${FN_VK_ICD_FILENAMES:-}" ]] || wine_env+=(VK_ICD_FILENAMES="$FN_VK_ICD_FILENAMES")
+sudo -n -u "$user" env "${wine_env[@]}" \
     xvfb-run -a -s '-screen 0 1280x720x24' timeout "${seconds}s" \
     bash -c '
 cd "$0"
