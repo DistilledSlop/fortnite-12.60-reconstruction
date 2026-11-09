@@ -109,6 +109,11 @@ class ProfileTx:
         self.profile["items"][item_id] = item
         self.changes.append({"changeType": "itemAdded", "itemId": item_id, "item": copy.deepcopy(item)})
 
+    def remove_item(self, item_id):
+        self.item(item_id)
+        del self.profile["items"][item_id]
+        self.changes.append({"changeType": "itemRemoved", "itemId": item_id})
+
     @property
     def changed(self):
         return bool(self.changes)
@@ -394,6 +399,45 @@ def _copy_cosmetic_loadout(ctx):
                 stats.get("last_applied_loadout") == replaced_id):
             tx.set_stat("last_applied_loadout", new_id)
     tx.set_stat("loadouts", loadouts)
+
+
+@command("SetActiveLoadoutIndex", ("athena",), "observed",
+         "index (reflected name; JSON casing inferred). Selection policy is local.")
+def _set_active_loadout_index(ctx):
+    tx = ctx.tx("athena")
+    loadouts = tx.profile["stats"]["attributes"].get("loadouts", [])
+    index = ctx.int_field("index")
+    if index >= len(loadouts):
+        raise _invalid("index is out of range.")
+    _locker(ctx, loadouts[index])
+    tx.set_stat("active_loadout_index", index)
+    tx.set_stat("last_applied_loadout", loadouts[index])
+
+
+@command("DeleteCosmeticLoadout", ("athena",), "observed",
+         "index and fallbackLoadoutIndex (reflected names; JSON casing inferred). Deletion policy is local.")
+def _delete_cosmetic_loadout(ctx):
+    tx = ctx.tx("athena")
+    stats = tx.profile["stats"]["attributes"]
+    loadouts = list(stats.get("loadouts", []))
+    index = ctx.int_field("index")
+    fallback = ctx.int_field("fallbackLoadoutIndex")
+    if index >= len(loadouts) or fallback >= len(loadouts) or index == fallback:
+        raise _invalid("index and fallbackLoadoutIndex must refer to different existing loadouts.")
+    active = stats.get("active_loadout_index")
+    if not isinstance(active, int) or isinstance(active, bool) or not 0 <= active < len(loadouts):
+        raise _invalid("active loadout index is invalid.")
+    _locker(ctx, loadouts[index])
+    selected = fallback if active == index else active
+    _locker(ctx, loadouts[selected])
+    removed = loadouts.pop(index)
+    if selected > index:
+        selected -= 1
+    tx.set_stat("loadouts", loadouts)
+    tx.set_stat("active_loadout_index", selected)
+    tx.set_stat("last_applied_loadout", loadouts[selected])
+    if removed not in loadouts:
+        tx.remove_item(removed)
 
 
 class ProfileService:
