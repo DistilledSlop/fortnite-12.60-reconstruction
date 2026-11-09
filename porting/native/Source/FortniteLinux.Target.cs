@@ -11,5 +11,7 @@ public class FortniteLinuxTarget : TargetRules
         ExtraModuleNames.Add("FortniteUI");
         ExtraModuleNames.Add("SocialUMG");
         ExtraModuleNames.Add("KairosSceneCapture");
+        ExtraModuleNames.Add("EpicCMSUIFramework");
+        ExtraModuleNames.Add("SubtitlesWidgets");
     }
 }

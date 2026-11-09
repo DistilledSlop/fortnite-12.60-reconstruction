@@ -7,6 +7,7 @@
 #include "UFortTeamMemberEntryBase.h"
 
 class UFortPlayerBanner;
+class UFortSocialNameTextBlock;
 class UFortVoiceChatStatusIcon;
 class UImage;
 
@@ -25,6 +26,10 @@ public:
 	// table index 3, flags 0x40000000080008
 	UPROPERTY()
 	UFortPlayerBanner* Banner_MemberBanner;
+
+	// table index 2, flags 0x40000000080008
+	UPROPERTY()
+	UFortSocialNameTextBlock* Text_SocialName;
 
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()

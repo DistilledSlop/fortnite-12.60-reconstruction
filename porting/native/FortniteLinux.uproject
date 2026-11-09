@@ -73,9 +73,18 @@
       "Name": "SubtitlesWidgets",
       "Type": "Runtime",
       "LoadingPhase": "Default"
+    },
+    {
+      "Name": "EpicCMSUIFramework",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
     }
   ],
   "Plugins": [
+    {
+      "Name": "TimeSynth",
+      "Enabled": true
+    },
     {
       "Name": "GLTFImporter",
       "Enabled": true

@@ -8,6 +8,7 @@
 
 #include "UCommonBorder.h"
 #include "UCommonTextBlock.h"
+#include "UEpicCMSImage.h"
 
 #include "UFortAthenaNewsTile.generated.h"
 
@@ -17,6 +18,10 @@ class FORTNITEUI_API UFortAthenaNewsTile : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x2008000008001c
+	UPROPERTY()
+	UEpicCMSImage* CMSImage_NewsImage;
+
 	// table index 3, flags 0x2008000008000c
 	UPROPERTY()
 	UCommonTextBlock* Text_NewsTitle;

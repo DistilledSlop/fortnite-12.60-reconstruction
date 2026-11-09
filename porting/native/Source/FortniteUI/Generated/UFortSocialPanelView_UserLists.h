@@ -18,6 +18,7 @@ class UFortFriendSearchButton;
 class UFortJoinVoiceChannelButton;
 class UFortLocalUserEntry;
 class UFortSocialTab;
+class UFortSocialUserTreeView;
 class UFortVoiceChannelHeaderEntry;
 class UFortVoiceChannelToggleButton;
 class UVerticalBox;
@@ -70,6 +71,14 @@ public:
 	UPROPERTY()
 	UFortSocialTab* SocialTab_VoiceChat;
 
+	// table index 25, flags 0x40000000080008
+	UPROPERTY()
+	UFortSocialUserTreeView* UserTree_FriendsLists;
+
+	// table index 24, flags 0x40000000080008
+	UPROPERTY()
+	UFortSocialUserTreeView* UserTree_VoiceChat;
+
 	// table index 23, flags 0x40000000080008
 	UPROPERTY()
 	UFortVoiceChannelHeaderEntry* PartyVoiceChannelHeader;
@@ -81,6 +90,10 @@ public:
 	// table index 21, flags 0x40000000080008
 	UPROPERTY()
 	UFortVoiceChannelHeaderEntry* PlatformVoiceChannelHeader;
+
+	// table index 20, flags 0x40000000080008
+	UPROPERTY()
+	UFortSocialUserTreeView* UserTree_AddFriends;
 
 	// table index 19, flags 0x40000000080008
 	UPROPERTY()
@@ -149,6 +162,10 @@ public:
 	// table index 3, flags 0x40000000080008
 	UPROPERTY()
 	UCommonWidgetSwitcher* Switcher_AddFriends;
+
+	// table index 2, flags 0x40000000080008
+	UPROPERTY()
+	UFortSocialUserTreeView* UserTree_SearchResults;
 
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()

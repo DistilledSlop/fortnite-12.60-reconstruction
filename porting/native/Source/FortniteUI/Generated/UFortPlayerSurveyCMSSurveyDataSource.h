@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "UEpicCMSManager.h"
+
 #include "UFortPlayerSurveyCMSSurveyDataSource.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEUI_API UFortPlayerSurveyCMSSurveyDataSource : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x20080000000000
+	UPROPERTY()
+	UEpicCMSManager* CMSManager;
+
 };
 

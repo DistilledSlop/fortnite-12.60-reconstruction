@@ -8,6 +8,7 @@
 
 #include "UCommonTextBlock.h"
 
+class UFortSocialNameTextBlock;
 class UImage;
 
 #include "UFortPartySuggestionButton.generated.h"
@@ -21,6 +22,10 @@ public:
 	// table index 3, flags 0x40000000080008
 	UPROPERTY()
 	UImage* Image_PartySize;
+
+	// table index 2, flags 0x40000000080008
+	UPROPERTY()
+	UFortSocialNameTextBlock* Text_SocialName;
 
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()

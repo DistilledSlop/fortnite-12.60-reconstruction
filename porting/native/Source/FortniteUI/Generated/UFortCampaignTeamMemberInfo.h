@@ -12,6 +12,7 @@
 
 class UFortPlayerBanner;
 class UFortPlayerPowerRating;
+class UFortSocialNameTextBlock;
 class UFortVoiceChatStatusIcon;
 class UImage;
 
@@ -42,6 +43,10 @@ public:
 	// table index 8, flags 0x40000000080008
 	UPROPERTY()
 	UFortPlayerPowerRating* Moonbeam_PowerRating_MemberRating;
+
+	// table index 7, flags 0x40000000080008
+	UPROPERTY()
+	UFortSocialNameTextBlock* Text_MemberName;
 
 	// table index 6, flags 0x40000000080008
 	UPROPERTY()

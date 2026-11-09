@@ -7,6 +7,7 @@
 #include "Engine/DataAsset.h"
 
 #include "FFortVideoInfo.h"
+#include "UFortMediaSubtitlesPlayer.h"
 
 class UFortActivatableVideoPanel;
 class UMediaPlayer;
@@ -22,6 +23,10 @@ public:
 	// table index 7, flags 0x10000000010001
 	UPROPERTY()
 	UMediaPlayer* FortVideoPlayer;
+
+	// table index 6, flags 0x10000000010001
+	UPROPERTY()
+	UFortMediaSubtitlesPlayer* SubtitlePlayer;
 
 	// table index 5, flags 0x14000000010001
 	UPROPERTY()

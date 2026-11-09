@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortUserWidget.h"
 
+#include "UFortMediaSubtitlesPlayer.h"
+#include "USubtitleDisplay.h"
+
 class UImage;
 class UMediaPlayer;
 class UMediaSoundComponent;
@@ -51,9 +54,17 @@ public:
 	UPROPERTY(Transient)
 	UMediaSoundComponent* SoundComponent;
 
+	// table index 2, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UFortMediaSubtitlesPlayer* SubtitlePlayer;
+
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()
 	UImage* Image_VideoTexture;
+
+	// table index 0, flags 0x40000000080008
+	UPROPERTY()
+	USubtitleDisplay* Subtitles;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UMediaPlayer* GetMediaPlayer() const;

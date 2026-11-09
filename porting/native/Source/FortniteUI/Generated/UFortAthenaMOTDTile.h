@@ -7,6 +7,7 @@
 #include "UCommonButton.h"
 
 #include "UCommonBorder.h"
+#include "UEpicCMSImage.h"
 
 class URichTextBlock;
 
@@ -18,6 +19,10 @@ class FORTNITEUI_API UFortAthenaMOTDTile : public UCommonButton
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x2008000008001c
+	UPROPERTY()
+	UEpicCMSImage* CMSImage_NewsImage;
+
 	// table index 2, flags 0x2008000008000c
 	UPROPERTY()
 	URichTextBlock* RichTextBlock_NewsTitle;

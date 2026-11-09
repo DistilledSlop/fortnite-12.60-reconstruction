@@ -10,6 +10,7 @@
 #include "FPlaylistFrontEndData.h"
 #include "UCommonBorder.h"
 #include "UCommonTextBlock.h"
+#include "UEpicCMSImage.h"
 
 class UFortActiveFriendsViolator;
 
@@ -21,6 +22,10 @@ class FORTNITEUI_API UFortAthenaMatchmakingTile : public UCommonButton
 	GENERATED_BODY()
 
 public:
+	// table index 9, flags 0x2008000008001c
+	UPROPERTY()
+	UEpicCMSImage* GameModeImage;
+
 	// table index 8, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonBorder* AdSpace;

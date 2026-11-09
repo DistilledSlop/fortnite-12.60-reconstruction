@@ -8,6 +8,7 @@
 
 #include "UCommonWidgetCarousel.h"
 #include "UCommonWidgetCarouselNavBar.h"
+#include "UEpicCMSSimpleMessage.h"
 
 #include "UFortCMSInfoCarousel.generated.h"
 
@@ -17,6 +18,10 @@ class FORTNITEUI_API UFortCMSInfoCarousel : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x24080000000015
+	UPROPERTY()
+	TMap<FString, TSubclassOf<UEpicCMSSimpleMessage>> MessageWidgetLayoutMap;
+
 	// table index 3, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonWidgetCarousel* Carousel;

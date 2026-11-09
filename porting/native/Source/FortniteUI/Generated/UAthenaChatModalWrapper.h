@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+class UFortChatContainer;
+
 #include "UAthenaChatModalWrapper.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,9 @@ class FORTNITEUI_API UAthenaChatModalWrapper : public UCommonActivatableWidget
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x1000000008001c
+	UPROPERTY()
+	UFortChatContainer* ChatContainer_Chat;
+
 };
 

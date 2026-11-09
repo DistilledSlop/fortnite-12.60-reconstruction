@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "FCreativeAdData.h"
+#include "UEpicCMSImage.h"
 
 #include "UFortCreativeAdTile.generated.h"
 
@@ -16,6 +17,10 @@ class FORTNITEUI_API UFortCreativeAdTile : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x2008000008001c
+	UPROPERTY()
+	UEpicCMSImage* Image_CreativeAd;
+
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	FCreativeAdData CMSAdEntry;

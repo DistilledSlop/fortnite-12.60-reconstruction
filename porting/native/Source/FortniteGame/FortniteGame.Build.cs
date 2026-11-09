@@ -14,9 +14,9 @@ public class FortniteGame : ModuleRules
             "GameplayTasks", "ClothingSystemRuntimeInterface", "OnlineSubsystem",
             "Gauntlet", "ReplicationGraph", "Landscape", "NiagaraAnimNotifies", "AnimationSharing", "PhysXVehicles", "AnimationBudgetAllocator", "SignificanceManager", "Foliage", "Niagara", "RHI", "RenderCore",
             // WebBrowser: the JS bridge net-service types (FWebJSFunction, FWebJSResponse) of UFortGameInstance.
-            "WebBrowser",
+            "WebBrowser", "TimeSynth",
             // Runtime modules generated from packages outside the engine tree (porting/native_classes_status.md).
-            "Account", "AmbientAudio", "BlueprintContext", "CommonInput", "CommonUI", "SubtitlesWidgets", "MeshNetwork", "ModularGameplay", "McpProfileSys" });
+            "Account", "AmbientAudio", "BlueprintContext", "CommonInput", "CommonUI", "SubtitlesWidgets", "EpicCMSUIFramework", "MeshNetwork", "ModularGameplay", "McpProfileSys" });
         if (Target.IsInPlatformGroup(UnrealPlatformGroup.Linux) && Target.Type != TargetType.Server)
         {
             PrivateDependencyModuleNames.Add("Renderer");

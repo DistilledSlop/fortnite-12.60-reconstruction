@@ -1,0 +1,26 @@
+diff --git a/Engine/Source/Runtime/CoreUObject/Private/Serialization/AsyncLoading.cpp b/Engine/Source/Runtime/CoreUObject/Private/Serialization/AsyncLoading.cpp
+index dfad9b7b2..45e4915f3 100644
+--- a/Engine/Source/Runtime/CoreUObject/Private/Serialization/AsyncLoading.cpp
++++ b/Engine/Source/Runtime/CoreUObject/Private/Serialization/AsyncLoading.cpp
+@@ -3123,7 +3123,7 @@ void FAsyncPackage::EventDrivenSerializeExport(int32 LocalExportIndex)
+ 				if (!SuperStruct)
+ 				{
+ 					// see FLinkerLoad::CreateExport, there may be some more we can do here
+-					UE_LOG(LogStreaming, Fatal, TEXT("Could not find SuperStruct %s to create %s"), *Linker->ImpExp(Export.SuperIndex).ObjectName.ToString(), *Export.ObjectName.ToString());
++					UE_LOG(LogStreaming, Error, TEXT("Could not find SuperStruct %s to create %s (skipping the export; the reconstructed native class does not declare it)"), *Linker->ImpExp(Export.SuperIndex).ObjectName.ToString(), *Export.ObjectName.ToString());
+ 					Export.bExportLoadFailed = true;
+ 					return;
+ 				}
+@@ -3505,7 +3505,11 @@ EAsyncPackageState::Type FAsyncPackage::ProcessImportsAndExports_Event()
+ 				{
+ 					FObjectExport& Export = Linker->ExportMap[LocalExportIndex];
+ 					UObject* Object = Export.Object;
+-					check(!Object || !Object->HasAnyFlags(RF_NeedLoad));
++					// Shipping builds do not compile this check out as a crash: keep loading and report which export failed to serialize.
++					if (Object && Object->HasAnyFlags(RF_NeedLoad))
++					{
++						UE_LOG(LogStreaming, Error, TEXT("Export %s is still RF_NeedLoad after serialization (the reconstructed native class likely mismatches the cooked data)."), *Object->GetPathName());
++					}
+ 				}
+ 			}
+ 			else

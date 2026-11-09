@@ -7,6 +7,7 @@
 #include "UCommonActivatableWidget.h"
 
 #include "UCommonButton.h"
+#include "UEpicCMSImage.h"
 
 class URichTextBlock;
 
@@ -18,6 +19,10 @@ class FORTNITEUI_API UFortAthenaMOTDSimpleNewsWidget : public UCommonActivatable
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x2008000008001c
+	UPROPERTY()
+	UEpicCMSImage* CMSImage_NewsImage;
+
 	// table index 2, flags 0x2008000008001c
 	UPROPERTY()
 	URichTextBlock* RichTextBlock_NewsTitle;

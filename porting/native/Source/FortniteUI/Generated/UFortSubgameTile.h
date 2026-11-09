@@ -10,6 +10,7 @@
 #include "ESubgameTileType.h"
 #include "Math/Color.h"
 #include "UCommonTextBlock.h"
+#include "UEpicCMSImage.h"
 
 class UBorder;
 class UImage;
@@ -75,6 +76,10 @@ public:
 	// table index 10, flags 0x40000000000001
 	UPROPERTY()
 	FLinearColor GradientColor;
+
+	// table index 9, flags 0x40000000080008
+	UPROPERTY()
+	UEpicCMSImage* Image_KeyArt;
 
 	// table index 8, flags 0x40000000080008
 	UPROPERTY()

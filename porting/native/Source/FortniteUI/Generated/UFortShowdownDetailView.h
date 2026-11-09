@@ -11,6 +11,7 @@
 #include "FShowdownTournamentEntry.h"
 #include "Layout/Margin.h"
 #include "UCommonTextBlock.h"
+#include "UEpicCMSImage.h"
 
 class UTextBlock;
 
@@ -37,6 +38,22 @@ public:
 	// table index 10, flags 0x2008000008001c
 	UPROPERTY()
 	UTextBlock* Text_DebugId;
+
+	// table index 9, flags 0x2008000008000c
+	UPROPERTY()
+	UEpicCMSImage* Image_PosterFront;
+
+	// table index 8, flags 0x2008000008000c
+	UPROPERTY()
+	UEpicCMSImage* Image_PosterBack;
+
+	// table index 7, flags 0x2008000008000c
+	UPROPERTY()
+	UEpicCMSImage* Image_LoadingScreen;
+
+	// table index 6, flags 0x2008000008000c
+	UPROPERTY()
+	UEpicCMSImage* Image_PlaylistTile;
 
 	// table index 5, flags 0x20080000000005
 	UPROPERTY()

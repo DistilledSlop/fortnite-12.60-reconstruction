@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+class UFortChatContainer;
+
 #include "UFortChatPanel.generated.h"
 
 UCLASS(abstract)
@@ -14,6 +16,10 @@ class FORTNITEUI_API UFortChatPanel : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x4000000008001c
+	UPROPERTY()
+	UFortChatContainer* ChatContainer;
+
 public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnWidgetIsOnFocusedPathChanged(bool bOnFocusPath);

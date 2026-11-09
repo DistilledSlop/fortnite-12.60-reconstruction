@@ -1518,6 +1518,7 @@ RUNTIME_MODULE_PACKAGES = (
     "/Script/BlueprintContext", "/Script/MeshNetwork", "/Script/CommonUI", "/Script/AmbientAudio", "/Script/Account",
     "/Script/ModularGameplay", "/Script/McpProfileSys", "/Script/CommonInput", "/Script/FortniteUI",
     "/Script/SubtitlesWidgets",  # Reflected subtitle display enums used by client settings.
+    "/Script/EpicCMSUIFramework",  # CMS UI widgets referenced by the frontend main-menu Blueprints.
     "/Script/SocialUMG", "/Script/KairosSceneCapture", "/Script/HoagieRuntime",   # stage 2 (coverage cause C1); see native_classes_status.md
 )
 HAND_WRITTEN_MODULES = ("FortniteGame", "PlayspaceFramework")   # Build.cs and IMPLEMENT_* files are not generated

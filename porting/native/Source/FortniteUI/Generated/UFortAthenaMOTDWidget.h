@@ -14,6 +14,7 @@
 #include "GameplayTagContainer.h"
 #include "UCommonButton.h"
 #include "UCommonButtonGroup.h"
+#include "UEpicCMSImage.h"
 
 class UBattlePassPurchaseScreen;
 class UFortActivatableMovieWidget_Monolithic;
@@ -97,6 +98,14 @@ public:
 	// table index 6, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonButton* Button_NormalAction;
+
+	// table index 5, flags 0x40000000080008
+	UPROPERTY()
+	UEpicCMSImage* CMSImage_SelectedNewsImage;
+
+	// table index 4, flags 0x40000000080008
+	UPROPERTY()
+	UEpicCMSImage* CMSImage_SelectedNewsImage_Blurred;
 
 	// table index 3, flags 0x40000000080008
 	UPROPERTY()
