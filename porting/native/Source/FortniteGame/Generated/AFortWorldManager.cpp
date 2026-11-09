@@ -4,6 +4,7 @@
 #include "AFortGameState.h"
 #include "AFortGameStateZone.h"
 #include "AFortWindManager.h"
+#include "Components/SceneComponent.h"
 #include "Engine/DataTable.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
@@ -210,3 +211,10 @@ void AFortWorldManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME(AFortWorldManager, InitialGlobalWind);
 }
 
+
+AFortWorldManager::AFortWorldManager(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    USceneComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<USceneComponent>(TEXT("MySceneComponent"));
+    (void)NativeDefaultSubobject0;
+}

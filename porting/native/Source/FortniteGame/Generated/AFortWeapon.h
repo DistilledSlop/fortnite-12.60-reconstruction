@@ -76,6 +76,8 @@ class FORTNITEGAME_API AFortWeapon : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortWeapon(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 178, flags 0x10000010080000
 	UPROPERTY()
 	FOnRateOfFireChanged OnWeaponRateOfFireChanged;

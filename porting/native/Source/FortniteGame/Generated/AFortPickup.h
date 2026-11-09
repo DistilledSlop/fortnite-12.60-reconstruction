@@ -37,6 +37,8 @@ class FORTNITEGAME_API AFortPickup : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortPickup(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 50, flags 0x10000000010015
 	UPROPERTY()
 	bool bUsePickupWidget;

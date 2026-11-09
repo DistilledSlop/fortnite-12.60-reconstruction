@@ -14,5 +14,7 @@ class FORTNITEGAME_API AFortPawn_FeedbackAnnouncer : public AFortPawn
 	GENERATED_BODY()
 
 public:
+    AFortPawn_FeedbackAnnouncer(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 };
 

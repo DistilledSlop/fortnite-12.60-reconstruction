@@ -19,6 +19,8 @@ class FORTNITEGAME_API AFortProjectileTrajectory : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortProjectileTrajectory(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 2, flags 0x2008000008200c
 	UPROPERTY(Transient)
 	USplineComponent* SplineComponent;

@@ -1,0 +1,66 @@
+diff --git a/Engine/Source/Runtime/CoreUObject/Private/UObject/ScriptCore.cpp b/Engine/Source/Runtime/CoreUObject/Private/UObject/ScriptCore.cpp
+index 44893a27b..b99a11508 100644
+--- a/Engine/Source/Runtime/CoreUObject/Private/UObject/ScriptCore.cpp
++++ b/Engine/Source/Runtime/CoreUObject/Private/UObject/ScriptCore.cpp
+@@ -838,9 +838,33 @@ void ProcessScriptFunction(UObject* Context, UFunction* Function, FFrame& Stack,
+ 	}
+ }
+ 
++// The bytecode imported a native function that is not declared by our reconstructed native classes ("Skipping import Function"
++// in the loader log lists them). Evaluate and discard the parameters, leave Result untouched and continue instead of crashing.
++static void SkipCallToUndeclaredNativeFunction(FFrame& Stack)
++{
++	static TSet<const UFunction*> ReportedCallers;
++	if (!ReportedCallers.Contains(Stack.Node))
++	{
++		ReportedCallers.Add(Stack.Node);
++		UE_LOG(LogScriptCore, Warning, TEXT("Blueprint %s calls an undeclared native function (null import); skipping the call."), *GetPathNameSafe(Stack.Node));
++	}
++	alignas(16) uint8 Scratch[4096];
++	while (*Stack.Code != EX_EndFunctionParms)
++	{
++		FMemory::Memzero(Scratch, sizeof(Scratch));
++		Stack.Step(Stack.Object, Scratch);
++	}
++	Stack.Code++;
++}
++
+ DEFINE_FUNCTION(UObject::execCallMathFunction)
+ {
+ 	UFunction* Function = (UFunction*)Stack.ReadObject();
++	if (UNLIKELY(Function == nullptr))
++	{
++		SkipCallToUndeclaredNativeFunction(Stack);
++		return;
++	}
+ 	checkSlow(Function);
+ 	checkSlow(Function->FunctionFlags & FUNC_Native);
+ 	// ProcessContext is the arbiter of net callspace, so we can't call net functions using this instruction:
+@@ -874,6 +898,12 @@ void UObject::CallFunction( FFrame& Stack, RESULT_DECL, UFunction* Function )
+ 	FScopeCycleCounterUObject ContextScope(bShouldTrackObject ? this : nullptr);
+ #endif
+ 
++	if (UNLIKELY(Function == nullptr))
++	{
++		SkipCallToUndeclaredNativeFunction(Stack);
++		return;
++	}
++
+ 	checkSlow(Function);
+ 
+ 	if (Function->FunctionFlags & FUNC_Native)
+@@ -2919,7 +2949,13 @@ IMPLEMENT_VM_FUNCTION( EX_LocalVirtualFunction, execLocalVirtualFunction );
+ DEFINE_FUNCTION(UObject::execLocalFinalFunction)
+ {
+ 	// Call the final function.
+-	ProcessLocalFunction(Context, (UFunction*)Stack.ReadObject(), Stack, RESULT_PARAM);
++	UFunction* LocalFunction = (UFunction*)Stack.ReadObject();
++	if (UNLIKELY(LocalFunction == nullptr))
++	{
++		SkipCallToUndeclaredNativeFunction(Stack);
++		return;
++	}
++	ProcessLocalFunction(Context, LocalFunction, Stack, RESULT_PARAM);
+ }
+ IMPLEMENT_VM_FUNCTION( EX_LocalFinalFunction, execLocalFinalFunction );
+ 

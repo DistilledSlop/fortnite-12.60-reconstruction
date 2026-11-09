@@ -20,6 +20,8 @@ class FORTNITEGAME_API ABGAConsumableSpawner : public ABuildingActor
 	GENERATED_BODY()
 
 public:
+    ABGAConsumableSpawner(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 8, flags 0x20080000080008
 	UPROPERTY()
 	USceneComponent* DummyRoot;

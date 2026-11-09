@@ -16,6 +16,8 @@ class FORTNITEGAME_API AWorldMapPin : public AActor
 	GENERATED_BODY()
 
 public:
+    AWorldMapPin(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x400000000a001d
 	UPROPERTY()
 	USceneComponent* SceneComponent;

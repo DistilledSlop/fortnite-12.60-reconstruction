@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "Animation/AnimInstance.h"
 #include "AttributeSet.h"
+#include "Components/AudioComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "EFortControlRecoveryBehavior.h"
@@ -1125,3 +1126,10 @@ void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 	DOREPLIFETIME(AFortPawn, bIgnoreNextFallingDamage);
 }
 
+
+AFortPawn::AFortPawn(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer.SetDefaultSubobjectClass<UFortMovementComp_Character>(TEXT("CharMoveComp")))
+{
+    UAudioComponent* NativeDefaultSubobject3 = CreateDefaultSubobject<UAudioComponent>(TEXT("FeedbackAudioComp0"));
+    (void)NativeDefaultSubobject3;
+}

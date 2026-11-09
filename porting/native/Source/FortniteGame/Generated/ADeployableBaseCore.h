@@ -20,6 +20,8 @@ class FORTNITEGAME_API ADeployableBaseCore : public ABuildingGameplayActor
 	GENERATED_BODY()
 
 public:
+    ADeployableBaseCore(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 3, flags 0x20080000002014
 	UPROPERTY(Transient)
 	ADeployableBasePlot* Plot;

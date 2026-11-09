@@ -25,6 +25,8 @@ class FORTNITEGAME_API AFortTheaterMapTile : public AFortClientOnlyActor
 	GENERATED_BODY()
 
 public:
+    AFortTheaterMapTile(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 28, flags 0x10000000000014
 	UPROPERTY()
 	bool bFocused;

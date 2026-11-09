@@ -32,6 +32,8 @@ class FORTNITEGAME_API AFortObjectiveBase : public AFortMissionState
 	GENERATED_BODY()
 
 public:
+    AFortObjectiveBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 21, flags 0x10000001000000
 	UPROPERTY(SaveGame)
 	UFortBadgeItemDefinition* ObjectiveRewardBadge;

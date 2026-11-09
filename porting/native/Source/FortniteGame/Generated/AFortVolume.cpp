@@ -5,6 +5,7 @@
 #include "AFortPawn.h"
 #include "AFortVolumeManager.h"
 #include "Components/PostProcessComponent.h"
+#include "Components/SceneComponent.h"
 #include "EVolumeShape.h"
 #include "EVolumeState.h"
 #include "Engine/Engine.h"
@@ -312,3 +313,10 @@ void AFortVolume::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	DOREPLIFETIME(AFortVolume, ObjectTrackingComponent);
 }
 
+
+AFortVolume::AFortVolume(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    USceneComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultScene"));
+    (void)NativeDefaultSubobject0;
+}

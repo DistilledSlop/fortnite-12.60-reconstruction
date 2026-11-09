@@ -11,9 +11,12 @@
 #include "EScoreDistributionType.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Math/Rotator.h"
+#include "UFortAbilitySystemComponent.h"
 #include "UFortAccountItem.h"
 #include "UFortItem.h"
 #include "UFortItemDefinition.h"
+#include "UFortMovementComp_AIChar.h"
+#include "UFortPooledSkelMeshComponent.h"
 #include "UFortSimpleMiniMapIndicator.h"
 #include "UFortWeaponItemDefinition.h"
 #include "UFortWorldItem.h"
@@ -606,3 +609,10 @@ void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	DOREPLIFETIME(AFortAIPawn, AttributeReplicationProxy);
 }
 
+
+AFortAIPawn::AFortAIPawn(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer.SetDefaultSubobjectClass<UFortMovementComp_AIChar>(TEXT("CharMoveComp")).SetDefaultSubobjectClass<UFortPooledSkelMeshComponent>(TEXT("CharacterMesh0")))
+{
+    UFortAbilitySystemComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<UFortAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+    AbilitySystemComponent = NativeDefaultSubobject0;
+}

@@ -19,6 +19,8 @@ class FORTNITEGAME_API AFortClientAnnouncement_Conversation : public AFortClient
 	GENERATED_BODY()
 
 public:
+    AFortClientAnnouncement_Conversation(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 6, flags 0x11000000000025
 	UPROPERTY(Replicated)
 	FFortClientAnnouncementData_Conversation ConversationData;

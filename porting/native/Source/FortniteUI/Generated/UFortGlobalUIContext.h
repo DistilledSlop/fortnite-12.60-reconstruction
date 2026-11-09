@@ -13,6 +13,7 @@
 #include "EFortUIFeatureState.h"
 #include "EFortUIFeatureStateReason.h"
 #include "EInputPriority.h"
+#include "ESubGame.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/LocalPlayer.h"
 #include "FFortGlobalUIContextGenericChange.h"
@@ -261,6 +262,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetShoppingCartCoastActionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ESubGame GetSubGame() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FName GetTargetActionName(ECommonInputType OverrideInputType) const;

@@ -14,5 +14,7 @@ class FORTNITEGAME_API ARigidBall : public APhysicsObject
 	GENERATED_BODY()
 
 public:
+    ARigidBall(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 };
 

@@ -16,6 +16,8 @@ class FORTNITEGAME_API AHoverDronePawn : public AFortReplaySpectatorPawnBase
 	GENERATED_BODY()
 
 public:
+    AHoverDronePawn(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x20080000082008
 	UPROPERTY(Transient)
 	UHoverDroneMovementComponent* HoverMoveComponent;

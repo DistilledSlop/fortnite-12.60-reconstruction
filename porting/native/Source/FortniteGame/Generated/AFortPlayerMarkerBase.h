@@ -21,6 +21,8 @@ class FORTNITEGAME_API AFortPlayerMarkerBase : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortPlayerMarkerBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 4, flags 0x20080000000014
 	UPROPERTY()
 	FVector ImpactLocation;

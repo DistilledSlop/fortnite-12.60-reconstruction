@@ -30,6 +30,8 @@ class FORTNITEGAME_API AFortProjectileBase : public AFortGameplayEffectDeliveryA
 	GENERATED_BODY()
 
 public:
+    AFortProjectileBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 45, flags 0x10000000000005
 	UPROPERTY()
 	FCurveTableRowHandle VerticleFireOffset;

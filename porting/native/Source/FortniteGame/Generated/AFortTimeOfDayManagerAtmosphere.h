@@ -16,6 +16,8 @@ class FORTNITEGAME_API AFortTimeOfDayManagerAtmosphere : public AFortTimeOfDayMa
 	GENERATED_BODY()
 
 public:
+    AFortTimeOfDayManagerAtmosphere(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x400000000a001d
 	UPROPERTY()
 	USkyAtmosphereComponent* SkyAtmosphereComponent;

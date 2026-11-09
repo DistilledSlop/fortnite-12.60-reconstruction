@@ -130,6 +130,8 @@ class FORTNITEGAME_API AFortPlayerPawn : public AFortPawn
 	GENERATED_BODY()
 
 public:
+    AFortPlayerPawn(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 322, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_VehicleInputStateReliableForReplay)
 	FFortAthenaVehicleInputStateReliable VehicleInputStateReliable;

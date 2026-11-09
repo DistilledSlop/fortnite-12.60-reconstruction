@@ -32,6 +32,8 @@ class FORTNITEGAME_API AFortAthenaMapInfo : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortAthenaMapInfo(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 40, flags 0x10000000000015
 	UPROPERTY()
 	FScalableFloat GoldenPoiPercents;

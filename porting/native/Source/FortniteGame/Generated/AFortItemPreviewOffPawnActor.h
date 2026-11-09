@@ -18,6 +18,8 @@ class FORTNITEGAME_API AFortItemPreviewOffPawnActor : public AFortItemPreviewSin
 	GENERATED_BODY()
 
 public:
+    AFortItemPreviewOffPawnActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 3, flags 0x400000000a001d
 	UPROPERTY()
 	UChildActorComponent* PreviewActorComponent;

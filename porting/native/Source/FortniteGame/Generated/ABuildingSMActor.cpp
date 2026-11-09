@@ -412,3 +412,10 @@ void ABuildingSMActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(ABuildingSMActor, TextureData);
 }
 
+
+ABuildingSMActor::ABuildingSMActor(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UStaticMeshComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent0"));
+    (void)NativeDefaultSubobject0;
+}

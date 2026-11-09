@@ -36,6 +36,8 @@ class FORTNITEGAME_API AFortCharacterVehicle_Ostrich : public AFortCharacterVehi
 	GENERATED_BODY()
 
 public:
+    AFortCharacterVehicle_Ostrich(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 120, flags 0x20080000000015
 	UPROPERTY()
 	bool bExplodeOnDetonate;

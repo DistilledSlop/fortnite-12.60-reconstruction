@@ -66,6 +66,8 @@ class FORTNITEGAME_API AFortAthenaAIBotController : public AAIController, public
 	GENERATED_BODY()
 
 public:
+    AFortAthenaAIBotController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 76, flags 0x40000000000015
 	UPROPERTY()
 	uint8 bIsAnAthenaGameParticipant : 1;

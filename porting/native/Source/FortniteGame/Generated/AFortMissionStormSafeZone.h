@@ -24,6 +24,8 @@ class FORTNITEGAME_API AFortMissionStormSafeZone : public AActor, public IFortAb
 	GENERATED_BODY()
 
 public:
+    AFortMissionStormSafeZone(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 7, flags 0x100000000a001d
 	UPROPERTY()
 	UStaticMeshComponent* SafeZoneMesh;

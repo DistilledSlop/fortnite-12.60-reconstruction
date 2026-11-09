@@ -20,6 +20,8 @@ class FORTNITEGAME_API AFortSplineAudioActor : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortSplineAudioActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 12, flags 0x10000000000001
 	UPROPERTY()
 	float UpdateFrequencyInaudible;

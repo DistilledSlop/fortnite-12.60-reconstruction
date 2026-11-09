@@ -16,6 +16,8 @@ class FORTNITEGAME_API AFortPlacementActor : public ABuildingActor
 	GENERATED_BODY()
 
 public:
+    AFortPlacementActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x14000000000000
 	UPROPERTY()
 	TWeakObjectPtr<AActor> OccupyingActor;

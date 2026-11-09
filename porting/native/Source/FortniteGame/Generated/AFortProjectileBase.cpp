@@ -4,6 +4,8 @@
 #include "AFortPlayerState.h"
 #include "AFortWeapon.h"
 #include "UFortProjectileMovementComponent.h"
+#include "UFortProjectileRootComponent.h"
+#include "UFortWaterInteractionComponent.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortProjectileBase::AddTagToDefaultTags(FGameplayTag TagToAddToProjectileDefaultTags)
@@ -157,3 +159,14 @@ void AFortProjectileBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME_CONDITION(AFortProjectileBase, ReplicatedMaxSpeed, COND_InitialOnly);
 }
 
+
+AFortProjectileBase::AFortProjectileBase(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UFortProjectileRootComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<UFortProjectileRootComponent>(TEXT("CollisionCapsule0"));
+    (void)NativeDefaultSubobject0;
+    UFortProjectileMovementComponent* NativeDefaultSubobject1 = CreateDefaultSubobject<UFortProjectileMovementComponent>(TEXT("ProjectileComp0"));
+    (void)NativeDefaultSubobject1;
+    UFortWaterInteractionComponent* NativeDefaultSubobject2 = CreateDefaultSubobject<UFortWaterInteractionComponent>(TEXT("WaterComponentName"));
+    (void)NativeDefaultSubobject2;
+}

@@ -14,5 +14,7 @@ class FORTNITEUI_API USpatialMapPreviewScreen : public UFortItemPreviewScreen
 	GENERATED_BODY()
 
 public:
+    USpatialMapPreviewScreen(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 };
 

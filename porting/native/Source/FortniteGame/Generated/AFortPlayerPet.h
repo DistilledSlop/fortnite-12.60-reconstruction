@@ -22,6 +22,8 @@ class FORTNITEGAME_API AFortPlayerPet : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortPlayerPet(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 7, flags 0x20080000000014
 	UPROPERTY()
 	UAthenaPetItemDefinition* PetItemDef;

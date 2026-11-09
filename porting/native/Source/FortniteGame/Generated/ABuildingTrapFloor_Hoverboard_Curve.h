@@ -17,6 +17,8 @@ class FORTNITEGAME_API ABuildingTrapFloor_Hoverboard_Curve : public ABuildingTra
 	GENERATED_BODY()
 
 public:
+    ABuildingTrapFloor_Hoverboard_Curve(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x100000000a001d
 	UPROPERTY()
 	USceneComponent* Target;

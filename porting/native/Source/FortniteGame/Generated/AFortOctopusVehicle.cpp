@@ -2,7 +2,11 @@
 #include "AFortOctopusVehicle.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
+#include "UFortDamageSet.h"
 #include "UFortGameplayAbility.h"
+#include "UFortSkyTubePhysicsComponent.h"
+#include "UFortVehicleSeatComponent.h"
+#include "UFortVehicleSkelMeshComponent.h"
 #include "UObject/WeakObjectPtr.h"
 #include "Net/UnrealNetwork.h"
 
@@ -275,3 +279,16 @@ void AFortOctopusVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME(AFortOctopusVehicle, ReplicatedAttachState);
 }
 
+
+AFortOctopusVehicle::AFortOctopusVehicle(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UFortDamageSet* NativeDefaultSubobject0 = CreateDefaultSubobject<UFortDamageSet>(TEXT("DamageSet"));
+    DamageSet = NativeDefaultSubobject0;
+    UFortVehicleSkelMeshComponent* NativeDefaultSubobject1 = CreateDefaultSubobject<UFortVehicleSkelMeshComponent>(TEXT("SkeletalMeshComponent"));
+    (void)NativeDefaultSubobject1;
+    UFortSkyTubePhysicsComponent* NativeDefaultSubobject2 = CreateDefaultSubobject<UFortSkyTubePhysicsComponent>(TEXT("SkyTubePhysicsComponent"));
+    SkyTubePhysicsComponent = NativeDefaultSubobject2;
+    UFortVehicleSeatComponent* NativeDefaultSubobject3 = CreateDefaultSubobject<UFortVehicleSeatComponent>(TEXT("VehicleSeatComponent"));
+    VehicleSeatComponent = NativeDefaultSubobject3;
+}

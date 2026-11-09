@@ -35,6 +35,8 @@ class FORTNITEGAME_API ABuildingTrap : public ABuildingSMActor
 	GENERATED_BODY()
 
 public:
+    ABuildingTrap(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 39, flags 0x100000000a001d
 	UPROPERTY()
 	USceneComponent* TraceLocation;

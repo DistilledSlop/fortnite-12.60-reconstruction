@@ -21,6 +21,8 @@ class FORTNITEGAME_API AFortAthenaVehicleSpawner : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortAthenaVehicleSpawner(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x10000000080008
 	UPROPERTY()
 	USceneComponent* DummyRoot;

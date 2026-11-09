@@ -16,6 +16,8 @@ class FORTNITEGAME_API ACobaltPOICameraActor : public AFortPOICameraActor
 	GENERATED_BODY()
 
 public:
+    ACobaltPOICameraActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x400000000a001d
 	UPROPERTY()
 	USceneComponent* TranslationSceneComponent;

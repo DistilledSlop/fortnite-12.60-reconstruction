@@ -17,6 +17,8 @@ class FORTNITEGAME_API AAthenaAIController : public AFortAIController
 	GENERATED_BODY()
 
 public:
+    AAthenaAIController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 2, flags 0x20080000000000
 	UPROPERTY()
 	UFortGameplayAbility* PrimaryMeleeAttackAbilityInstance;

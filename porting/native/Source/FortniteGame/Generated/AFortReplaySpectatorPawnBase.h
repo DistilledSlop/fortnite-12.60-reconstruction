@@ -18,6 +18,8 @@ class FORTNITEGAME_API AFortReplaySpectatorPawnBase : public ASpectatorPawn
 	GENERATED_BODY()
 
 public:
+    AFortReplaySpectatorPawnBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x200800000a001d
 	UPROPERTY()
 	UFortSpectatorCameraComponent* SpectatorCameraComponent;

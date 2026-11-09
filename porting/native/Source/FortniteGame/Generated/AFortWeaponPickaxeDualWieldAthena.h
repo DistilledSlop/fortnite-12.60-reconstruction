@@ -23,6 +23,8 @@ class FORTNITEGAME_API AFortWeaponPickaxeDualWieldAthena : public AFortWeaponPic
 	GENERATED_BODY()
 
 public:
+    AFortWeaponPickaxeDualWieldAthena(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 18, flags 0x100000000a001d
 	UPROPERTY()
 	USkeletalMeshComponentBudgeted* WeaponMeshOffhand;

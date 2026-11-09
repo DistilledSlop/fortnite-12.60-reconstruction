@@ -25,6 +25,8 @@ class FORTNITEUI_API UAthenaChallengeSetImageGrid : public UAthenaChallengeSetBa
 	GENERATED_BODY()
 
 public:
+    UAthenaChallengeSetImageGrid(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 9, flags 0x40000000080008
 	UPROPERTY()
 	UCommonTextBlock* Text_ChallengeContext;

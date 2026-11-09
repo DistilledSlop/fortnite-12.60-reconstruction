@@ -42,6 +42,8 @@ class FORTNITEGAME_API AFortTimeOfDayManager : public AInfo
 	GENERATED_BODY()
 
 public:
+    AFortTimeOfDayManager(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 83, flags 0x20080100002034
 	UPROPERTY(ReplicatedUsing=OnRep_TimeOfDayInit, Transient)
 	float TimeOfDay;

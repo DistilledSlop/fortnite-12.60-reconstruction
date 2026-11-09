@@ -30,6 +30,8 @@ class FORTNITEGAME_API AFortMissionStormShield : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortMissionStormShield(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 34, flags 0x200800000a001d
 	UPROPERTY()
 	USceneComponent* Root;

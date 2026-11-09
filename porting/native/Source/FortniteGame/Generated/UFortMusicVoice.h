@@ -16,6 +16,8 @@ class FORTNITEGAME_API UFortMusicVoice : public UObject
 	GENERATED_BODY()
 
 public:
+    UFortMusicVoice(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x10000010080000
 	UPROPERTY()
 	FOnMusicVoiceEvent OnVoiceStarted;

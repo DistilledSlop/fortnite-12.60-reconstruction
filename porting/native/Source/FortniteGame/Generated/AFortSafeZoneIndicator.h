@@ -26,6 +26,8 @@ class FORTNITEGAME_API AFortSafeZoneIndicator : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortSafeZoneIndicator(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 50, flags 0x10000000080008
 	UPROPERTY()
 	UFortMiniMapComponent* MinimapComp;

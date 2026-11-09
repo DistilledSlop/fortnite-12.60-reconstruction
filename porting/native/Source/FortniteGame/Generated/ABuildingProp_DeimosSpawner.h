@@ -22,6 +22,8 @@ class FORTNITEGAME_API ABuildingProp_DeimosSpawner : public ABuildingProp_AISpaw
 	GENERATED_BODY()
 
 public:
+    ABuildingProp_DeimosSpawner(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 28, flags 0x14000000000015
 	UPROPERTY()
 	TArray<TSubclassOf<AAthenaCreativeRift>> DeimosSpawnerOptions;

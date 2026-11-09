@@ -5,6 +5,7 @@
 #include "AFortPlayerStateAthena.h"
 #include "AFortVolume.h"
 #include "AFortVolumeManager.h"
+#include "Components/SceneComponent.h"
 #include "Containers/UnrealString.h"
 #include "Delegates/Delegate.h"
 #include "EVolumeState.h"
@@ -12,9 +13,29 @@
 #include "GameFramework/PlayerState.h"
 #include "HAL/UnrealMemory.h"
 #include "SharedFortGameLog.h"
+#include "UAthenaMarkerComponent.h"
+#include "UAthenaResurrectionComponent.h"
+#include "UFortControllerComponent_Aircraft.h"
+#include "UFortControllerComponent_Autofire.h"
+#include "UFortControllerComponent_ContextualChallenges.h"
+#include "UFortControllerComponent_HeldDeviceUsage.h"
+#include "UFortControllerComponent_IndicatedActorManagement.h"
+#include "UFortControllerComponent_Inspector.h"
+#include "UFortControllerComponent_Interaction.h"
+#include "UFortControllerComponent_InventoryNetworkManagement.h"
+#include "UFortControllerComponent_LocalizationService.h"
+#include "UFortControllerComponent_MapDiscoverability.h"
+#include "UFortControllerComponent_MinigameActivity.h"
+#include "UFortControllerComponent_PluginHUDContent.h"
+#include "UFortControllerComponent_Portal.h"
+#include "UFortControllerComponent_QuickHeal.h"
+#include "UFortControllerComponent_RechargeWeapons.h"
+#include "UFortControllerComponent_SkydiveFeedback.h"
+#include "UFortControllerComponent_Telemetry.h"
 #include "UFortGameInstance.h"
 #include "UFortLevelSaveComponent.h"
 #include "UFortMinigameVolumeComponent.h"
+#include "UFortPlayerControllerAthenaXPComponent.h"
 #include "UFortPlaysetItemDefinition.h"
 #include "UFortQuestManager.h"
 #include "UFortRegisteredPlayerInfo.h"
@@ -2064,3 +2085,48 @@ void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimePro
 	DOREPLIFETIME(AFortPlayerControllerAthena, FocalPoint);
 }
 
+
+AFortPlayerControllerAthena::AFortPlayerControllerAthena(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UFortControllerComponent_Aircraft* NativeDefaultSubobject0 = CreateDefaultSubobject<UFortControllerComponent_Aircraft>(TEXT("AircraftComp"));
+    (void)NativeDefaultSubobject0;
+    UFortControllerComponent_Autofire* NativeDefaultSubobject1 = CreateDefaultSubobject<UFortControllerComponent_Autofire>(TEXT("AutofireComp"));
+    (void)NativeDefaultSubobject1;
+    UFortControllerComponent_ContextualChallenges* NativeDefaultSubobject2 = CreateDefaultSubobject<UFortControllerComponent_ContextualChallenges>(TEXT("ContextualChallenges"));
+    ContextualChallenges = NativeDefaultSubobject2;
+    UFortControllerComponent_MapDiscoverability* NativeDefaultSubobject3 = CreateDefaultSubobject<UFortControllerComponent_MapDiscoverability>(TEXT("DiscoverabilityComponent"));
+    DiscoverabilityComponent = NativeDefaultSubobject3;
+    UFortControllerComponent_HeldDeviceUsage* NativeDefaultSubobject4 = CreateDefaultSubobject<UFortControllerComponent_HeldDeviceUsage>(TEXT("HeldDeviceUsageComponent"));
+    HeldDeviceUsageComponent = NativeDefaultSubobject4;
+    UFortControllerComponent_IndicatedActorManagement* NativeDefaultSubobject5 = CreateDefaultSubobject<UFortControllerComponent_IndicatedActorManagement>(TEXT("IndicatedActorManagementComponent"));
+    IndicatedActorManagementComponent = NativeDefaultSubobject5;
+    UFortControllerComponent_Inspector* NativeDefaultSubobject6 = CreateDefaultSubobject<UFortControllerComponent_Inspector>(TEXT("InspectorComp"));
+    (void)NativeDefaultSubobject6;
+    UFortControllerComponent_Interaction* NativeDefaultSubobject7 = CreateDefaultSubobject<UFortControllerComponent_Interaction>(TEXT("InteractionComp"));
+    (void)NativeDefaultSubobject7;
+    UFortControllerComponent_InventoryNetworkManagement* NativeDefaultSubobject8 = CreateDefaultSubobject<UFortControllerComponent_InventoryNetworkManagement>(TEXT("InventoryManagementComp"));
+    (void)NativeDefaultSubobject8;
+    UFortControllerComponent_LocalizationService* NativeDefaultSubobject9 = CreateDefaultSubobject<UFortControllerComponent_LocalizationService>(TEXT("LocalizationServiceComponent"));
+    LocalizationServiceComponent = NativeDefaultSubobject9;
+    UAthenaMarkerComponent* NativeDefaultSubobject10 = CreateDefaultSubobject<UAthenaMarkerComponent>(TEXT("MarkerComponent"));
+    MarkerComponent = NativeDefaultSubobject10;
+    UFortControllerComponent_MinigameActivity* NativeDefaultSubobject11 = CreateDefaultSubobject<UFortControllerComponent_MinigameActivity>(TEXT("MinigameActivityComponent"));
+    MinigameActivityComponent = NativeDefaultSubobject11;
+    UFortControllerComponent_PluginHUDContent* NativeDefaultSubobject12 = CreateDefaultSubobject<UFortControllerComponent_PluginHUDContent>(TEXT("PluginHUDContentComponent"));
+    (void)NativeDefaultSubobject12;
+    UFortControllerComponent_Portal* NativeDefaultSubobject13 = CreateDefaultSubobject<UFortControllerComponent_Portal>(TEXT("PortalComp"));
+    (void)NativeDefaultSubobject13;
+    UFortControllerComponent_QuickHeal* NativeDefaultSubobject14 = CreateDefaultSubobject<UFortControllerComponent_QuickHeal>(TEXT("QuickhealComp"));
+    (void)NativeDefaultSubobject14;
+    UFortControllerComponent_RechargeWeapons* NativeDefaultSubobject15 = CreateDefaultSubobject<UFortControllerComponent_RechargeWeapons>(TEXT("RechargeWeaponsComponent"));
+    (void)NativeDefaultSubobject15;
+    UAthenaResurrectionComponent* NativeDefaultSubobject16 = CreateDefaultSubobject<UAthenaResurrectionComponent>(TEXT("ResurrectionComponent"));
+    ResurrectionComponent = NativeDefaultSubobject16;
+    UFortControllerComponent_SkydiveFeedback* NativeDefaultSubobject17 = CreateDefaultSubobject<UFortControllerComponent_SkydiveFeedback>(TEXT("SkydiveFeedbackComponent"));
+    (void)NativeDefaultSubobject17;
+    UFortControllerComponent_Telemetry* NativeDefaultSubobject18 = CreateDefaultSubobject<UFortControllerComponent_Telemetry>(TEXT("TelemetryComp"));
+    (void)NativeDefaultSubobject18;
+    UFortPlayerControllerAthenaXPComponent* NativeDefaultSubobject20 = CreateDefaultSubobject<UFortPlayerControllerAthenaXPComponent>(TEXT("XPComponent"));
+    XPComponent = NativeDefaultSubobject20;
+}

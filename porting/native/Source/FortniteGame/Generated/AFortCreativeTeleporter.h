@@ -19,6 +19,8 @@ class FORTNITEGAME_API AFortCreativeTeleporter : public ABuildingProp
 	GENERATED_BODY()
 
 public:
+    AFortCreativeTeleporter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 5, flags 0x14000000000005
 	UPROPERTY()
 	TSubclassOf<UGameplayAbility> TeleporterAbility;

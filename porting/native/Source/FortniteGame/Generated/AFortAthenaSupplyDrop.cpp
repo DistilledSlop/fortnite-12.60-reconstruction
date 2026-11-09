@@ -2,6 +2,7 @@
 #include "AFortAthenaSupplyDrop.h"
 #include "AFortPickupAthena.h"
 #include "Engine/World.h"
+#include "UFortSpectateClickableMapIcon.h"
 #include "Net/UnrealNetwork.h"
 
 bool AFortAthenaSupplyDrop::IsPlayingAReplay() const
@@ -47,3 +48,10 @@ void AFortAthenaSupplyDrop::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	DOREPLIFETIME(AFortAthenaSupplyDrop, SpecialActorID);  // TODO: replication condition not recovered (COND_None assumed)
 }
 
+
+AFortAthenaSupplyDrop::AFortAthenaSupplyDrop(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UFortSpectateClickableMapIcon* NativeDefaultSubobject0 = CreateDefaultSubobject<UFortSpectateClickableMapIcon>(TEXT("FortSpectateClickableMapIcon"));
+    (void)NativeDefaultSubobject0;
+}

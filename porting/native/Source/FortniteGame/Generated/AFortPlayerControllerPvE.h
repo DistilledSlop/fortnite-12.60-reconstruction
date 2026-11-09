@@ -20,6 +20,8 @@ class FORTNITEGAME_API AFortPlayerControllerPvE : public AFortPlayerControllerZo
 	GENERATED_BODY()
 
 public:
+    AFortPlayerControllerPvE(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 9, flags 0x10000000010001
 	UPROPERTY()
 	bool bForceAutoSlotWeaponsAtStart;

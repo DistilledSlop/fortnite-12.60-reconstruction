@@ -16,6 +16,8 @@ class FORTNITEGAME_API AFortDecoPreview_StaticMesh : public AFortDecoPreview
 	GENERATED_BODY()
 
 public:
+    AFortDecoPreview_StaticMesh(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x200800000a0009
 	UPROPERTY()
 	UStaticMeshComponent* PrimaryMeshComponent;

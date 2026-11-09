@@ -31,6 +31,8 @@ class FORTNITEGAME_API AFortPlayerMannequin : public ASkeletalMeshActor
 	GENERATED_BODY()
 
 public:
+    AFortPlayerMannequin(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 22, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UFortHeroType* CurrentFortHeroType;

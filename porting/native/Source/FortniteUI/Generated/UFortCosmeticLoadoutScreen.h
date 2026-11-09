@@ -25,6 +25,8 @@ class FORTNITEUI_API UFortCosmeticLoadoutScreen : public UFortItemPreviewScreen
 	GENERATED_BODY()
 
 public:
+    UFortCosmeticLoadoutScreen(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 11, flags 0x40000000000001
 	UPROPERTY()
 	FDataTableRowHandle BackAction;

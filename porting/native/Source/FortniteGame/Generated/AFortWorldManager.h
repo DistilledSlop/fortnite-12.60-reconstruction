@@ -43,6 +43,8 @@ class FORTNITEGAME_API AFortWorldManager : public AInfo
 	GENERATED_BODY()
 
 public:
+    AFortWorldManager(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 55, flags 0x40000000000000
 	UPROPERTY()
 	TArray<FFortLevelStreamingInfo> StreamedLevels;

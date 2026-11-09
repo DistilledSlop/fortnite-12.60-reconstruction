@@ -27,6 +27,8 @@ class FORTNITEGAME_API AFortAthenaSupplyDrop : public ABuildingGameplayActor
 	GENERATED_BODY()
 
 public:
+    AFortAthenaSupplyDrop(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 14, flags 0x10000000000015
 	UPROPERTY()
 	FCollisionProfileName GroundCollsionProfile;

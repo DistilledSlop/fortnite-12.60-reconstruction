@@ -8,6 +8,7 @@
 #include "GameFramework/Pawn.h"
 #include "TimerManager.h"
 #include "UFortCreativeOption.h"
+#include "UFortObjectMoverInputComponent.h"
 #include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
@@ -860,3 +861,10 @@ void AFortCreativeMoveTool::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	DOREPLIFETIME(AFortCreativeMoveTool, bIsPreviewingMove);
 }
 
+
+AFortCreativeMoveTool::AFortCreativeMoveTool(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UFortObjectMoverInputComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<UFortObjectMoverInputComponent>(TEXT("MoveToolInputComponent"));
+    (void)NativeDefaultSubobject0;
+}

@@ -17,6 +17,8 @@ class FORTNITEGAME_API AAthenaWrapPreviewActor : public AFortItemPreviewMultiAng
 	GENERATED_BODY()
 
 public:
+    AAthenaWrapPreviewActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 5, flags 0x200800000a001d
 	UPROPERTY()
 	UCameraComponent* ZoomedInWeaponCameraComponent;

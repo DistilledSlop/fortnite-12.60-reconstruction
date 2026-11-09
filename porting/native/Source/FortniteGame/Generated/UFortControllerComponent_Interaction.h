@@ -25,6 +25,8 @@ class FORTNITEGAME_API UFortControllerComponent_Interaction : public UFortContro
 	GENERATED_BODY()
 
 public:
+    UFortControllerComponent_Interaction(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 26, flags 0x20080000082008
 	UPROPERTY(Transient)
 	UAudioComponent* LongInteractAudioComponent;

@@ -47,6 +47,8 @@ class FORTNITEGAME_API AFortPlayerPawnAthena : public AFortPlayerPawn
 	GENERATED_BODY()
 
 public:
+    AFortPlayerPawnAthena(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 97, flags 0x10000010080000
 	UPROPERTY()
 	FOnInteractionFailedCallback OnInteractionFailedCallback;

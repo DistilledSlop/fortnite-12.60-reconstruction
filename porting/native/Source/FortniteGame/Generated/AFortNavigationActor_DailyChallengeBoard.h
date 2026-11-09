@@ -16,6 +16,8 @@ class FORTNITEGAME_API AFortNavigationActor_DailyChallengeBoard : public AFortEv
 	GENERATED_BODY()
 
 public:
+    AFortNavigationActor_DailyChallengeBoard(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 2, flags 0x400000000a001d
 	UPROPERTY()
 	UStaticMeshComponent* S_NoteCard_Top;

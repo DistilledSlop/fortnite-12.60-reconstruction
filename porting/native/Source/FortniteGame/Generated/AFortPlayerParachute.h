@@ -27,6 +27,8 @@ class FORTNITEGAME_API AFortPlayerParachute : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortPlayerParachute(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 22, flags 0x14000000002000
 	UPROPERTY(Transient)
 	TSoftObjectPtr<USoundBase> GliderOpenSoundFromDef;

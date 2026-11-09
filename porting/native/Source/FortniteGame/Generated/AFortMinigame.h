@@ -84,6 +84,8 @@ class FORTNITEGAME_API AFortMinigame : public AInfo, public IFortVolumeAccessor,
 	GENERATED_BODY()
 
 public:
+    AFortMinigame(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 141, flags 0x10000000002000
 	UPROPERTY(Transient)
 	TSet<FUniqueNetIdRepl> PendingPlayers;

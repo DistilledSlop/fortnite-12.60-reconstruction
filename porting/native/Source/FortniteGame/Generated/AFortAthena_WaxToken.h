@@ -20,6 +20,8 @@ class FORTNITEGAME_API AFortAthena_WaxToken : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortAthena_WaxToken(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 15, flags 0x400000000a001d
 	UPROPERTY()
 	UStaticMeshComponent* TokenMesh;

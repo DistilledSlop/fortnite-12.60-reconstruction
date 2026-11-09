@@ -24,6 +24,8 @@ class FORTNITEGAME_API ABuildingTrapFloor_Turret : public ABuildingTrapFloor
 	GENERATED_BODY()
 
 public:
+    ABuildingTrapFloor_Turret(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 29, flags 0x1000000008000c
 	UPROPERTY()
 	UFortMinigameLogicComponent* MinigameLogic;

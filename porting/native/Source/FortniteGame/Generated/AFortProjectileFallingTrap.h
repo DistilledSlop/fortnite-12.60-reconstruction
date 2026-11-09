@@ -16,6 +16,8 @@ class FORTNITEGAME_API AFortProjectileFallingTrap : public AFortProjectileBase
 	GENERATED_BODY()
 
 public:
+    AFortProjectileFallingTrap(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x100000000a001d
 	UPROPERTY()
 	UStaticMeshComponent* MeshComponent;

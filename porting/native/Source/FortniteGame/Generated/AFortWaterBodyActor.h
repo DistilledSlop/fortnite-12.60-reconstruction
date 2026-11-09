@@ -20,6 +20,8 @@ class FORTNITEGAME_API AFortWaterBodyActor : public AWaterBody
 	GENERATED_BODY()
 
 public:
+    AFortWaterBodyActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
 	FScalableFloat WaterVelocityRemapInputRange;

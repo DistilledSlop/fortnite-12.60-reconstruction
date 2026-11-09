@@ -20,6 +20,8 @@ class FORTNITEGAME_API AFortWeaponRangedDual : public AFortWeaponRanged
 	GENERATED_BODY()
 
 public:
+    AFortWeaponRangedDual(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 8, flags 0x100000000a0009
 	UPROPERTY()
 	USkeletalMeshComponentBudgeted* LeftHandWeaponMesh;

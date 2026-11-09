@@ -14,6 +14,8 @@ class FORTNITEGAME_API AFortPlayerStateEndless : public AFortPlayerStatePvE
 	GENERATED_BODY()
 
 public:
+    AFortPlayerStateEndless(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	int32 BluGloActivityScore;

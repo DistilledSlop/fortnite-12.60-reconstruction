@@ -7,6 +7,7 @@
 #include "EFortPickerMode.h"
 #include "EFortUIFeatureState.h"
 #include "EFortUIFeatureStateReason.h"
+#include "ESubGame.h"
 #include "Engine/LocalPlayer.h"
 #include "FFortUIFeatureStruct.h"
 #include "FortAssets.h"
@@ -354,6 +355,15 @@ FName UFortGlobalUIContext::GetShoppingCartCoastActionName() const
 	(void)UFortGlobals::NativeGetGlobals();
 	const UFortInputData* Data = NativeGetInputData141fc0b30();
 	return Data ? Data->ShoppingCartCoastName : NAME_None;
+}
+
+ESubGame UFortGlobalUIContext::GetSubGame() const
+{
+	// Original address: 0x141ef70e0; decompile source: porting/generated/native-cap-direct/.
+	// CONFIDENCE: HIGH
+	// Exec 0x145249620 calls 0x141ef70e0, which resolves globals and tail-calls 0x141ed4e30 with this context.
+	(void)UFortGlobals::NativeGetGlobals();
+	return static_cast<ESubGame>(UFortGameInstance::NativeGetGameMode141ed4e30(this));
 }
 
 FName UFortGlobalUIContext::GetTargetActionName(ECommonInputType OverrideInputType) const

@@ -1,7 +1,7 @@
-ported: 1100
-skipped: 181
-declared_in_header: 1087
-pending_declaration: 5
-fail: 0
-ported_functions: 1040
-member_fields: 60
+ported: 5682
+skipped: 148
+declared_in_header: 5660
+pending_declaration: 8
+fail: 4852
+ported_functions: 5056
+member_fields: 626

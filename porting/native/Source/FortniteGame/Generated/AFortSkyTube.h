@@ -18,6 +18,8 @@ class FORTNITEGAME_API AFortSkyTube : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortSkyTube(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 31, flags 0x20080000000001
 	UPROPERTY()
 	bool bExemptFromShutdown;

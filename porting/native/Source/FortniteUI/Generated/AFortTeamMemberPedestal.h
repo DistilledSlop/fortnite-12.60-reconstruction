@@ -27,6 +27,8 @@ class FORTNITEUI_API AFortTeamMemberPedestal : public AFortItemPlacementActor
 	GENERATED_BODY()
 
 public:
+    AFortTeamMemberPedestal(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 13, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FCachedComponentMaterials> CachedComponentMaterials;

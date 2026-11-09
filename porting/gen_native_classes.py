@@ -2399,6 +2399,10 @@ _native_gameplay_tags_spec = _common_activation_import.spec_from_file_location(
     "native_gameplay_tags_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_gameplay_tags_runtime", "source_policy.py"))
 _native_gameplay_tags_policy = _common_activation_import.module_from_spec(_native_gameplay_tags_spec)
 _native_gameplay_tags_spec.loader.exec_module(_native_gameplay_tags_policy)
+_default_subobjects_spec = _common_activation_import.spec_from_file_location(
+    "native_default_subobjects_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "native_default_subobjects", "source_policy.py"))
+_default_subobjects_policy = _common_activation_import.module_from_spec(_default_subobjects_spec)
+_default_subobjects_spec.loader.exec_module(_default_subobjects_policy)
 _aircraft_events_spec = _common_activation_import.spec_from_file_location(
     "aircraft_events_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "aircraft_events_runtime", "source_policy.py"))
 _aircraft_events_policy = _common_activation_import.module_from_spec(_aircraft_events_spec)
@@ -4509,6 +4513,9 @@ def promote(args):
     if 'UFortRootViewportLayout' in listed:
         _root_slate_policy.validate_classes(blocks_by_va, name_to_block)
     header_index = ModuleHeaderIndex(registry)
+    default_subobjects = _default_subobjects_policy.Policy(
+        os.path.join(os.path.dirname(args.reflection), "native_default_subobjects.json"),
+        parents, listed, header_index, blocks_by_va, names, type_map)
     source_label = os.path.relpath(args.reflection, REPO)
 
     # Pass 1: build every model. Nothing is written until the module dependencies are checked.
@@ -4698,6 +4705,7 @@ def promote(args):
         model = _panel_queue_policy.header_prelude(model)
         _client_event_policy.configure_model(model)
         _local_signin_policy.configure_model(model)
+        default_subobjects.configure(model)
         if name == 'UCommonInputControllerData':
             _controller_brush_policy.validate_model(model)
         if model.get('common_input_settings_cache_runtime'):
@@ -4758,6 +4766,7 @@ def promote(args):
             if len(re.findall(r"\b%s\s*\(" % re.escape(ev["name"]), header)) != 1:
                 raise SystemExit("%s: generated event %s collides with another declaration in the final header" % (name, ev["name"]))
         cpp = render_promoted_cpp(model, source_label)
+        header, cpp = _default_subobjects_policy.finalize(model, header, cpp)
         _input_cache_policy.validate_rendered(model, header, cpp)
         _action_slate_policy.validate_rendered(model, header, cpp)
         if model.get('common_action_widget_icon_runtime'):

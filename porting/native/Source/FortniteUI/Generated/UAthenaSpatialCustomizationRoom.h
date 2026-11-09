@@ -26,6 +26,8 @@ class FORTNITEUI_API UAthenaSpatialCustomizationRoom : public UAthenaSpatialMann
 	GENERATED_BODY()
 
 public:
+    UAthenaSpatialCustomizationRoom(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 12, flags 0x44000000010001
 	UPROPERTY()
 	TSubclassOf<UBattlePassPurchaseScreen> PurchaseBattlePassScreen;

@@ -19,6 +19,8 @@ class FORTNITEGAME_API AFortPhysicsBall : public ABuildingGameplayActor
 	GENERATED_BODY()
 
 public:
+    AFortPhysicsBall(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 24, flags 0x10000000000015
 	UPROPERTY()
 	bool bDetachRootChildrenOnServer;

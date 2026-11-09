@@ -18,6 +18,8 @@ class FORTNITEGAME_API AFortAthenaPatrolPath : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortAthenaPatrolPath(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 5, flags 0x40000000000001
 	UPROPERTY()
 	EPatrollingMode Mode;

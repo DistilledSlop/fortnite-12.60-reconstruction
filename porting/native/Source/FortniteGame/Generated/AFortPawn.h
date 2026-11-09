@@ -102,6 +102,8 @@ class FORTNITEGAME_API AFortPawn : public ACharacter, public IFortAbilitySystemI
 	GENERATED_BODY()
 
 public:
+    AFortPawn(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 199, flags 0x10000000000005
 	UPROPERTY()
 	uint8 bUseBaseChanged : 1;

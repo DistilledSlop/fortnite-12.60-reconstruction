@@ -23,6 +23,8 @@ class FORTNITEGAME_API AFortAthenaGoatVehicle : public AFortAthenaSKMotorVehicle
 	GENERATED_BODY()
 
 public:
+    AFortAthenaGoatVehicle(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 27, flags 0x10000000020001
 	UPROPERTY()
 	FVector LeanPositionFR;

@@ -27,6 +27,8 @@ class FORTNITEGAME_API AFortTrack : public ABuildingProp
 	GENERATED_BODY()
 
 public:
+    AFortTrack(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 20, flags 0x10000010080000
 	UPROPERTY()
 	FFortTrackGraphChanged OnTrackGraphChanged;

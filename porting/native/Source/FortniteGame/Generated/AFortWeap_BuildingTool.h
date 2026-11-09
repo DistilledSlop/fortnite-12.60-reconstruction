@@ -23,6 +23,8 @@ class FORTNITEGAME_API AFortWeap_BuildingTool : public AFortWeap_BuildingToolBas
 	GENERATED_BODY()
 
 public:
+    AFortWeap_BuildingTool(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 7, flags 0x20080000000001
 	UPROPERTY()
 	UMaterialInterface* BlueprintPaperMaterial;

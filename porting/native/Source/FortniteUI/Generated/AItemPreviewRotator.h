@@ -17,6 +17,8 @@ class FORTNITEUI_API AItemPreviewRotator : public AFortItemPreviewSceneChanger
 	GENERATED_BODY()
 
 public:
+    AItemPreviewRotator(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	float CameraTransitionLerpDuration;

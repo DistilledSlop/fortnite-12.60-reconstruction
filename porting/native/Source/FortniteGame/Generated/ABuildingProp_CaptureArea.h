@@ -26,6 +26,8 @@ class FORTNITEGAME_API ABuildingProp_CaptureArea : public ABuildingProp
 	GENERATED_BODY()
 
 public:
+    ABuildingProp_CaptureArea(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 4, flags 0x10000000000014
 	UPROPERTY()
 	TArray<FCaptureAreaTeamInfo> CaptureAreaTeamsInfo;

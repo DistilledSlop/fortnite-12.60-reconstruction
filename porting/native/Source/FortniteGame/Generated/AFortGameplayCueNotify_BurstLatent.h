@@ -24,6 +24,8 @@ class FORTNITEGAME_API AFortGameplayCueNotify_BurstLatent : public AFortGameplay
 	GENERATED_BODY()
 
 public:
+    AFortGameplayCueNotify_BurstLatent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 2, flags 0x10000000000015
 	UPROPERTY()
 	FFortBurstEffectData BurstEffectData;

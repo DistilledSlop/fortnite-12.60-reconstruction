@@ -19,6 +19,8 @@ class FORTNITEUI_API AItemPreviewSwapper : public AFortItemPreviewSceneChanger
 	GENERATED_BODY()
 
 public:
+    AItemPreviewSwapper(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x40000000000001
 	UPROPERTY()
 	UCurveFloat* CameraTransitionCurve;

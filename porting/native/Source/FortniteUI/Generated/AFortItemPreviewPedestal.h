@@ -23,6 +23,8 @@ class FORTNITEUI_API AFortItemPreviewPedestal : public AFortItemPlacementActor
 	GENERATED_BODY()
 
 public:
+    AFortItemPreviewPedestal(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 7, flags 0x24080000000014
 	UPROPERTY()
 	TWeakObjectPtr<APlayerController> ContextualPlayerController;

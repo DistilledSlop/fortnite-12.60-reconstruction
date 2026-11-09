@@ -34,6 +34,8 @@ class FORTNITEUI_API UFortItemPresentationScreen : public UFortItemPreviewScreen
 	GENERATED_BODY()
 
 public:
+    UFortItemPresentationScreen(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 31, flags 0x10100010080000
 	UPROPERTY()
 	FOnFinalGiftingComplete OnFinalGiftingComplete;

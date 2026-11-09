@@ -33,6 +33,8 @@ class FORTNITEGAME_API ABuildingRift : public ABuildingActor
 	GENERATED_BODY()
 
 public:
+    ABuildingRift(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 48, flags 0x10000000082008
 	UPROPERTY(Transient)
 	UFortDamageSet* DamageSet;

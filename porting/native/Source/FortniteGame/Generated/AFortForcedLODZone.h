@@ -16,6 +16,8 @@ class FORTNITEGAME_API AFortForcedLODZone : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortForcedLODZone(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x10000000000001
 	UPROPERTY()
 	EFortAILODLevel ForcedLODLevel;

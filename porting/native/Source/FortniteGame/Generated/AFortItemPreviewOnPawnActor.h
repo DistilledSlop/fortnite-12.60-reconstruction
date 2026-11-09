@@ -18,6 +18,8 @@ class FORTNITEGAME_API AFortItemPreviewOnPawnActor : public AFortItemPreviewMult
 	GENERATED_BODY()
 
 public:
+    AFortItemPreviewOnPawnActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 14, flags 0x200800000a001d
 	UPROPERTY()
 	UCameraComponent* ZoomedInBodyCameraComponent;

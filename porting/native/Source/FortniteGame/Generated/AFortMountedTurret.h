@@ -22,6 +22,8 @@ class FORTNITEGAME_API AFortMountedTurret : public AFortAthenaSKMotorVehicle
 	GENERATED_BODY()
 
 public:
+    AFortMountedTurret(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 15, flags 0x10000100002024
 	UPROPERTY(ReplicatedUsing=OnRep_TeamIndex, Transient)
 	uint8 TeamIndex;

@@ -26,6 +26,8 @@ class FORTNITEGAME_API ABuildingGameplayActorSentry : public ABuildingGameplayAc
 	GENERATED_BODY()
 
 public:
+    ABuildingGameplayActorSentry(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 48, flags 0x100000000a001d
 	UPROPERTY()
 	UStaticMeshComponent* CameraStaticMeshComp;

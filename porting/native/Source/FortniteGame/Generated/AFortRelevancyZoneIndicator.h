@@ -20,6 +20,8 @@ class FORTNITEGAME_API AFortRelevancyZoneIndicator : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortRelevancyZoneIndicator(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 8, flags 0x200800000a001d
 	UPROPERTY()
 	UStaticMeshComponent* RelevancyZoneMesh;

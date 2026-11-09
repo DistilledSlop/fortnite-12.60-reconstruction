@@ -24,6 +24,8 @@ class FORTNITEGAME_API AFortAthenaAircraft : public AFortAircraft
 	GENERATED_BODY()
 
 public:
+    AFortAthenaAircraft(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 22, flags 0x10000000010001
 	UPROPERTY()
 	FLinearColor MinimapIconColorTeammate;

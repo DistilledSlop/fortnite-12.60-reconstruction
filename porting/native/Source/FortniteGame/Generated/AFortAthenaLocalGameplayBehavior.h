@@ -16,6 +16,8 @@ class FORTNITEGAME_API AFortAthenaLocalGameplayBehavior : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortAthenaLocalGameplayBehavior(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x40000000000001
 	UPROPERTY()
 	bool bNeedToAwakeDuringExecution;

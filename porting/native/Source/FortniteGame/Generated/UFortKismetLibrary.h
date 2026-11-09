@@ -8,6 +8,7 @@
 
 #include "Containers/UnrealString.h"
 #include "EFortItemEntryState.h"
+#include "ESubGame.h"
 #include "Engine/Level.h"
 #include "FFortClientEventName.h"
 #include "FFortDialogExternalLatentActionHandle.h"
@@ -25,6 +26,7 @@
 class AActor;
 class AFortPlayerController;
 class UFortWorldItemDefinition;
+class UMaterialInstanceDynamic;
 class UObject;
 
 #include "UFortKismetLibrary.generated.h"
@@ -40,6 +42,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool AreCampaignVehiclesEnabled();
+
+	UFUNCTION(BlueprintCallable)
+	static void CopyHideElements(UMaterialInstanceDynamic* SourceMID, UMaterialInstanceDynamic* TargetMID);
 
 	UFUNCTION(BlueprintCallable)
 	static void CustomHandleActorStreamedInEditor(AActor* SourceActor);
@@ -67,6 +72,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static float GetAngleDegrees(FVector& Source, FVector& Target);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static ESubGame GetSubGame(UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable)
 	static void InvalidateLatentActionHandle(FFortDialogExternalLatentActionHandle& Handle);

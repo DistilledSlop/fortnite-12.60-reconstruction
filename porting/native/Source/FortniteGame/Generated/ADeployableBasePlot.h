@@ -39,6 +39,8 @@ class FORTNITEGAME_API ADeployableBasePlot : public ABuildingGameplayActor, publ
 	GENERATED_BODY()
 
 public:
+    ADeployableBasePlot(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 35, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_OccupantNetID, Transient)
 	FUniqueNetIdRepl OccupantNetID;

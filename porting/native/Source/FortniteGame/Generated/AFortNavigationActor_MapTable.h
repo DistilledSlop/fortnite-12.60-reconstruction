@@ -18,6 +18,8 @@ class FORTNITEGAME_API AFortNavigationActor_MapTable : public AFortEventLevelNav
 	GENERATED_BODY()
 
 public:
+    AFortNavigationActor_MapTable(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 4, flags 0x200800000a0009
 	UPROPERTY()
 	UStaticMeshComponent* ApolloMap;

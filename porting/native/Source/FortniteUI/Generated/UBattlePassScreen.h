@@ -43,6 +43,8 @@ class FORTNITEUI_API UBattlePassScreen : public UFortItemPreviewScreen
 	GENERATED_BODY()
 
 public:
+    UBattlePassScreen(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 53, flags 0x40000000002000
 	UPROPERTY(Transient)
 	int32 RewardInViewLevel;

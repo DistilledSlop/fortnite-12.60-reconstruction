@@ -19,6 +19,8 @@ class FORTNITEUI_API AItemPreviewScene : public AActor
 	GENERATED_BODY()
 
 public:
+    AItemPreviewScene(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 6, flags 0x400000000a201d
 	UPROPERTY(Transient)
 	UChildActorComponent* FocusCameraTargetComponent;

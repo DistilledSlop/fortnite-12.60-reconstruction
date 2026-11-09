@@ -16,6 +16,8 @@ class FORTNITEGAME_API AAthenaNavInvokerBox : public AActor
 	GENERATED_BODY()
 
 public:
+    AAthenaNavInvokerBox(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x40000000000001
 	UPROPERTY()
 	float GenerationRange;

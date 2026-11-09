@@ -28,6 +28,8 @@ class FORTNITEUI_API UAthenaItemSelectorScreenBase : public UFortActivatablePane
 	GENERATED_BODY()
 
 public:
+    UAthenaItemSelectorScreenBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 20, flags 0x24080000000015
 	UPROPERTY()
 	TSubclassOf<UCommonButton> TabButtonType;

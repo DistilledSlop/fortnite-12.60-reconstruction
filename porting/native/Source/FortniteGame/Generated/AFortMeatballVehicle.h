@@ -32,6 +32,8 @@ class FORTNITEGAME_API AFortMeatballVehicle : public AFortAthenaSKVehicle
 	GENERATED_BODY()
 
 public:
+    AFortMeatballVehicle(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 38, flags 0x10000000000015
 	UPROPERTY()
 	FFortRechargingActionTimer BoostAction;

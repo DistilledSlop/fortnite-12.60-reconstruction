@@ -20,6 +20,8 @@ class FORTNITEUI_API AFortCameraTargetPedestal : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortCameraTargetPedestal(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 3, flags 0x40000000000001
 	UPROPERTY()
 	FGameplayTag CameraTargetTag;

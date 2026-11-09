@@ -36,6 +36,8 @@ class FORTNITEGAME_API AAthenaCapturePoint : public ABuildingGameplayActor
 	GENERATED_BODY()
 
 public:
+    AAthenaCapturePoint(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 62, flags 0x10000000000000
 	UPROPERTY()
 	UMaterialInstanceDynamic* HUDIndicatorMID;

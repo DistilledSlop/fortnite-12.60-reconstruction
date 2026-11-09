@@ -22,6 +22,8 @@ class FORTNITEUI_API UAthenaCustomizationScreen : public UFortItemPreviewScreen
 	GENERATED_BODY()
 
 public:
+    UAthenaCustomizationScreen(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 11, flags 0x20080000000014
 	UPROPERTY()
 	bool bCustomizationSelectionBeingProcessed;

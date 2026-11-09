@@ -14,5 +14,7 @@ class FORTNITEGAME_API AFortGameStateBR : public AFortGameStateAthena
 	GENERATED_BODY()
 
 public:
+    AFortGameStateBR(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 };
 

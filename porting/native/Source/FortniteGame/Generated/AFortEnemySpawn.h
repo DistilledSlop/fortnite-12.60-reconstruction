@@ -14,6 +14,8 @@ class FORTNITEGAME_API AFortEnemySpawn : public ABuildingActor
 	GENERATED_BODY()
 
 public:
+    AFortEnemySpawn(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x10000000000000
 	UPROPERTY()
 	float ClusterRadius;

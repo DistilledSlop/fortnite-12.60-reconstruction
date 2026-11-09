@@ -18,6 +18,8 @@ class FORTNITEGAME_API ABuildingTrapCeiling_Falling : public ABuildingTrapCeilin
 	GENERATED_BODY()
 
 public:
+    ABuildingTrapCeiling_Falling(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 2, flags 0x100000000a001d
 	UPROPERTY()
 	UStaticMeshComponent* VisibleMeshComponent;

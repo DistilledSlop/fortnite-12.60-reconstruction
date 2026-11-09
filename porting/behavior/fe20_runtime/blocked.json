@@ -1,0 +1,137 @@
+[
+  {
+    "entry": "UAmbientAudioStatics::AddAmbientEntry",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Audio device lookup 0x1412e68f0 and entry registration path remain unresolved.",
+    "body_or_callee": "0x1412e4060",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "UAthenaShoutItemDefinition::SpawnSoundComponent",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Large native body captured but its audio, object and struct operations remain unmapped.",
+    "body_or_callee": "0x141d923b0",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "UFortAmbientAudioController::ClearAudioBankOverride",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Bank refresh 0x142484400 and map operation 0x140823160 have not been reconstructed.",
+    "body_or_callee": "0x142465320",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "AFortEmitterCameraLensEffectDirectional::SetStrength",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Particle component virtual +0x870 and global parameter name at 0x14812db90 are unresolved.",
+    "body_or_callee": null,
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "AFortFXManager::AddMIDAnimationFloat",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Animation container creation 0x141dbbe30 and update 0x141dcc0b0 plus manager state are unresolved.",
+    "body_or_callee": "0x141dc3420",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "UFortGameplayCueFunctionLibrary::AddGameplayCueLocal",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Global accessor 0x1406c6ef0 and virtual dispatches +0x298/+0x2b0 are unresolved.",
+    "body_or_callee": "0x14161d610",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "UFortKismetLibrary::IsCriticalHit",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Derived FFortGameplayEffectContext validation 0x1415f4460 and critical bit at +0x71 lack a recovered layout.",
+    "body_or_callee": "0x141ef9490",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "UFortKismetLibrary::SetTimeOfDay",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Depends on unresolved context manager lookup and setter 0x141f6eda0.",
+    "body_or_callee": "0x141f06010",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "UFortMusicContext::GetEquippedMusicPack",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Player, loadout, and fallback paths in helper 0x141da5980 are unresolved.",
+    "body_or_callee": "0x141da5980",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "AFortPlayerPawn::ForceDetachFromRemoteControlledPawn",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Calls undeclared AFortRemoteControlledPawnAthena::HandleControllingPlayerOutOfHealth at 0x14243a470.",
+    "body_or_callee": "0x14243a470",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "AFortPlayerPawn::GetCharacterBodyType",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Player-state +0x5d8 and nested +0x30 chain and HACK_CustomPRIComponent fallback are unmapped.",
+    "body_or_callee": null,
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "AFortPlayerPawn::InvokeWaterHandSplashAttached",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Native body has multiple unresolved calls and virtual dispatches.",
+    "body_or_callee": "0x142330b00",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "AFortTimeOfDayManager::GetTimeOfDayManagerFromContext",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Global 0x141ef3ab0, context volume lookups 0x141c7c5c0/0x141c7d420 and extraction 0x141f9f270 unresolved.",
+    "body_or_callee": "0x141f611f0",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "UFortFrontEndContext::GetHeroPlayerPawnByIndex",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Context resolution 0x144cb7480 before party-display-manager lookup is unresolved.",
+    "body_or_callee": "0x144cb7480",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "UFortFrontEndContext::GetHeroPlayerPawnForCurrentDisplayedItem",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Context resolution 0x144cb7480 before party-display-manager lookup is unresolved.",
+    "body_or_callee": "0x144cb7480",
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "UFortGlobalUIContext::GetFeatureState",
+    "kind": "exec",
+    "blocker": "unresolved_native",
+    "reason": "Large native switch includes unresolved service and helper calls.",
+    "body_or_callee": null,
+    "unblock": "Recover the listed native dependencies and data layouts from the original binary."
+  },
+  {
+    "entry": "UFortAsyncAction_SendQuestStatEvent::SendClientStatEvent",
+    "kind": "exec",
+    "blocker": "generator_static_parameter_collision",
+    "reason": "Native body 0x1424274b0 allocates action and assigns QuestManager, ObjectiveStat and Count; generator rejects references to parameters because they share instance field names.",
+    "unblock": "Fix static body validation to distinguish parameter names from unqualified instance members."
+  }
+]

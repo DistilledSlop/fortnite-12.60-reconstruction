@@ -22,6 +22,8 @@ class FORTNITEUI_API AFortItemPreviewWorld : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortItemPreviewWorld(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 6, flags 0x40000000000001
 	UPROPERTY()
 	FGameplayTag PreviewSceneChangerTag;

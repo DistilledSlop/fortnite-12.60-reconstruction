@@ -3,6 +3,7 @@
 #include "AFortGameStateAthena.h"
 #include "AFortTeamInfo.h"
 #include "AFortTeamInfoAthena.h"
+#include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
 #include "Engine/World.h"
 #include "Net/UnrealNetwork.h"
@@ -127,3 +128,12 @@ void AAthenaCapturePoint::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME(AAthenaCapturePoint, IconMaterialIndexParameter);
 }
 
+
+AAthenaCapturePoint::AAthenaCapturePoint(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UBoxComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<UBoxComponent>(TEXT("CaptureComponent"));
+    CaptureComponent = NativeDefaultSubobject0;
+    UBoxComponent* NativeDefaultSubobject1 = CreateDefaultSubobject<UBoxComponent>(TEXT("StructuralComponent"));
+    StructuralComponent = NativeDefaultSubobject1;
+}

@@ -119,3 +119,10 @@ void AFortObjectiveBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AFortObjectiveBase, ObjectiveHandle);
 }
 
+
+AFortObjectiveBase::AFortObjectiveBase(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UFortMissionTimerComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<UFortMissionTimerComponent>(TEXT("TimerComponent0"));
+    (void)NativeDefaultSubobject0;
+}

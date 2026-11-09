@@ -82,6 +82,8 @@ class FORTNITEGAME_API AFortAIPawn : public AFortPawn, public IFortInventoryOwne
 	GENERATED_BODY()
 
 public:
+    AFortAIPawn(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 194, flags 0x10008000000000
 	UPROPERTY()
 	FGameplayCueParameters DeimosBatchedGameplayCueParameters;

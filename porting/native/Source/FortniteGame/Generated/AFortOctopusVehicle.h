@@ -34,6 +34,8 @@ class FORTNITEGAME_API AFortOctopusVehicle : public AFortAthenaSKVehicle
 	GENERATED_BODY()
 
 public:
+    AFortOctopusVehicle(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 37, flags 0x10000000000004
 	UPROPERTY()
 	UCameraShake* CacheDriverCameraShake;

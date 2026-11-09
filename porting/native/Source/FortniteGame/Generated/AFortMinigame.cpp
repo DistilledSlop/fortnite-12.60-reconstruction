@@ -9,6 +9,7 @@
 #include "AFortPlayerState.h"
 #include "AFortVolume.h"
 #include "AFortVolumeManager.h"
+#include "ASOLFortGame.h"
 #include "Containers/Array.h"
 #include "Containers/Map.h"
 #include "EFortMinigameEnd.h"
@@ -33,6 +34,9 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 #include "Math/UnrealMathSSE.h"
+#include "UCreativePlayerHealthInfoComponent.h"
+#include "UFortCreativeCreatureManagerComponent.h"
+#include "UFortCreativeTeleporterManagerComponent.h"
 #include "UFortMinigameLogicComponent.h"
 #include "UFortMinigamePlayerStartComponent.h"
 #include "UFortMinigameStatFilter.h"
@@ -1478,3 +1482,16 @@ void AFortMinigame::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	DOREPLIFETIME(AFortMinigame, UIExtensionTags);
 }
 
+
+AFortMinigame::AFortMinigame(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UFortCreativeCreatureManagerComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<UFortCreativeCreatureManagerComponent>(TEXT("CreatureManagerComponent"));
+    CreatureManagerComponent = NativeDefaultSubobject0;
+    UCreativePlayerHealthInfoComponent* NativeDefaultSubobject1 = CreateDefaultSubobject<UCreativePlayerHealthInfoComponent>(TEXT("PlayerHealthComponent"));
+    (void)NativeDefaultSubobject1;
+    ASOLFortGame* NativeDefaultSubobject2 = CreateDefaultSubobject<ASOLFortGame>(TEXT("SOLGame"));
+    (void)NativeDefaultSubobject2;
+    UFortCreativeTeleporterManagerComponent* NativeDefaultSubobject3 = CreateDefaultSubobject<UFortCreativeTeleporterManagerComponent>(TEXT("TeleporterManagerComponent"));
+    TeleporterManagerComponent = NativeDefaultSubobject3;
+}

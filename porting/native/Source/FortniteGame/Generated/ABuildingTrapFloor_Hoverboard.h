@@ -16,6 +16,8 @@ class FORTNITEGAME_API ABuildingTrapFloor_Hoverboard : public ABuildingTrapFloor
 	GENERATED_BODY()
 
 public:
+    ABuildingTrapFloor_Hoverboard(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x100000000a001d
 	UPROPERTY()
 	UArrowComponent* DirectionArrow;

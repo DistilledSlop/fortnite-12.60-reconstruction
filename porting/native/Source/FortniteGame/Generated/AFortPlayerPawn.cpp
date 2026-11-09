@@ -1909,3 +1909,12 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME_CONDITION(AFortPlayerPawn, VehicleInputStateReliable, COND_ReplayOnly);
 }
 
+
+AFortPlayerPawn::AFortPlayerPawn(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UParticleSystemComponent* NativeDefaultSubobject4 = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PlayerInWaterFX"));
+    PSC_PlayerInWater = NativeDefaultSubobject4;
+    UParticleSystemComponent* NativeDefaultSubobject5 = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PlayerInWaterSurfaceSwimmingFX"));
+    PSC_PlayerInWaterSurfaceSwimming = NativeDefaultSubobject5;
+}

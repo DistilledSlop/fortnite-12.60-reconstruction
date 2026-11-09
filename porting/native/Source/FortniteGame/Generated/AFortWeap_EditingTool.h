@@ -16,6 +16,8 @@ class FORTNITEGAME_API AFortWeap_EditingTool : public AFortWeap_BuildingToolBase
 	GENERATED_BODY()
 
 public:
+    AFortWeap_EditingTool(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_EditActor, Transient)
 	ABuildingSMActor* EditActor;

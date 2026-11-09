@@ -14,5 +14,7 @@ class FORTNITEGAME_API AFortInspectorCameraCreative : public ACameraActor
 	GENERATED_BODY()
 
 public:
+    AFortInspectorCameraCreative(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 };
 

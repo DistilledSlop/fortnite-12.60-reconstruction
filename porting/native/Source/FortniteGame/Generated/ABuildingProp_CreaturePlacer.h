@@ -25,6 +25,8 @@ class FORTNITEGAME_API ABuildingProp_CreaturePlacer : public ABuildingProp_AISpa
 	GENERATED_BODY()
 
 public:
+    ABuildingProp_CreaturePlacer(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 14, flags 0x10000000000015
 	UPROPERTY()
 	TArray<FSpawnGroupVisuals> SpawnGroupVisuals;

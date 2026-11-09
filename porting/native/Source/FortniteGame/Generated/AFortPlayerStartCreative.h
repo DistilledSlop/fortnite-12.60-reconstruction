@@ -18,6 +18,8 @@ class FORTNITEGAME_API AFortPlayerStartCreative : public APlayerStart
 	GENERATED_BODY()
 
 public:
+    AFortPlayerStartCreative(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 7, flags 0x10000000000005
 	UPROPERTY()
 	FGameplayTagContainer PlayerStartTags;

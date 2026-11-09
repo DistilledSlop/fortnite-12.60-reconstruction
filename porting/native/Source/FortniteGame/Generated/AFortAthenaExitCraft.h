@@ -28,6 +28,8 @@ class FORTNITEGAME_API AFortAthenaExitCraft : public AFortAthenaVehicle
 	GENERATED_BODY()
 
 public:
+    AFortAthenaExitCraft(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 23, flags 0x100000000a001d
 	UPROPERTY()
 	UStaticMeshComponent* MeshComponent;

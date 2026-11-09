@@ -14,5 +14,7 @@ class FORTNITEGAME_API AFortPlayerCameraZone : public AFortPlayerCameraBase
 	GENERATED_BODY()
 
 public:
+    AFortPlayerCameraZone(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 };
 

@@ -16,6 +16,8 @@ class FORTNITEGAME_API AFortMeshNetworkActor : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortMeshNetworkActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x10000000080009
 	UPROPERTY()
 	UMeshNetworkComponent* MeshNetworkComponent;

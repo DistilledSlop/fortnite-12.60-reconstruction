@@ -17,6 +17,8 @@ class FORTNITEGAME_API AFortBallSpawner : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortBallSpawner(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x14000000000005
 	UPROPERTY()
 	TSubclassOf<ABuildingGameplayActor> BallToSpawn;

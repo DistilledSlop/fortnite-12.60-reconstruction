@@ -14,5 +14,7 @@ class FORTNITEGAME_API AFortReplaySpectatorAthena : public AFortReplaySpectator
 	GENERATED_BODY()
 
 public:
+    AFortReplaySpectatorAthena(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 };
 

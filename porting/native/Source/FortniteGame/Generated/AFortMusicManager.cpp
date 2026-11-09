@@ -57,3 +57,12 @@ void AFortMusicManager::PlayStinger_Implementation(UFortMusicAsset* NewMusicAsse
 	return;
 }
 
+
+AFortMusicManager::AFortMusicManager(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UFortMusicVoice* NativeDefaultSubobject0 = CreateDefaultSubobject<UFortMusicVoice>(TEXT("MusicVoiceA"));
+    (void)NativeDefaultSubobject0;
+    UFortMusicVoice* NativeDefaultSubobject1 = CreateDefaultSubobject<UFortMusicVoice>(TEXT("MusicVoiceB"));
+    (void)NativeDefaultSubobject1;
+}

@@ -18,6 +18,8 @@ class FORTNITEGAME_API ABuildingPropPlaygroundMusicPlayer : public ABuildingProp
 	GENERATED_BODY()
 
 public:
+    ABuildingPropPlaygroundMusicPlayer(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 7, flags 0x20080000090009
 	UPROPERTY()
 	UFortMinigameLogicComponent* MinigameLogicComponent;

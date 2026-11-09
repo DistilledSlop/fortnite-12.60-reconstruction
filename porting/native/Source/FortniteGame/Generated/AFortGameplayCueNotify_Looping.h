@@ -24,6 +24,8 @@ class FORTNITEGAME_API AFortGameplayCueNotify_Looping : public AGameplayCueNotif
 	GENERATED_BODY()
 
 public:
+    AFortGameplayCueNotify_Looping(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 17, flags 0x10000000000015
 	UPROPERTY()
 	USoundBase* StartSound;

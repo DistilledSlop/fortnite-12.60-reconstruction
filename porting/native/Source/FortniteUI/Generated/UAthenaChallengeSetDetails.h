@@ -26,6 +26,8 @@ class FORTNITEUI_API UAthenaChallengeSetDetails : public UAthenaChallengeSetBase
 	GENERATED_BODY()
 
 public:
+    UAthenaChallengeSetDetails(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 10, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonTextBlock* Text_ChallengeContext;

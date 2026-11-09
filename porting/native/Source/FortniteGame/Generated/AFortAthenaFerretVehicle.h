@@ -27,6 +27,8 @@ class FORTNITEGAME_API AFortAthenaFerretVehicle : public AFortAthenaDoghouseVehi
 	GENERATED_BODY()
 
 public:
+    AFortAthenaFerretVehicle(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 34, flags 0x10000000002014
 	UPROPERTY(Transient)
 	float BoostParam;

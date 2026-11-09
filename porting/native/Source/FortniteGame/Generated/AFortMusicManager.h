@@ -23,6 +23,8 @@ class FORTNITEGAME_API AFortMusicManager : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortMusicManager(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 5, flags 0x10000000000014
 	UPROPERTY()
 	AFortPlayerController* ControllerOwner;

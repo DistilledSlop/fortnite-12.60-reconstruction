@@ -1,0 +1,15 @@
+[
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "GetSubGame",
+    "kind": "exec",
+    "signature": "ESubGame GetSubGame() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/fe20_ui/GetSubGame.inc",
+    "confidence": "high",
+    "address": "0x141ef70e0",
+    "status": "ported",
+    "decompile_source": "porting/generated/native194-fresh-bulk/0x145249620.c",
+    "notes": "Exec 0x145249620 forwards this to 0x141ef70e0, which resolves globals and tail-calls 0x141ed4e30."
+  }
+]

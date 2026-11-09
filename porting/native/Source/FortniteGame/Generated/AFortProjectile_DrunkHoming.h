@@ -14,5 +14,7 @@ class FORTNITEGAME_API AFortProjectile_DrunkHoming : public AFortProjectileBase
 	GENERATED_BODY()
 
 public:
+    AFortProjectile_DrunkHoming(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 };
 

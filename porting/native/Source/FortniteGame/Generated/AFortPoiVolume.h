@@ -19,6 +19,8 @@ class FORTNITEGAME_API AFortPoiVolume : public AVolume
 	GENERATED_BODY()
 
 public:
+    AFortPoiVolume(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 6, flags 0x10000000020001
 	UPROPERTY()
 	bool bIsLargeGameVolume;

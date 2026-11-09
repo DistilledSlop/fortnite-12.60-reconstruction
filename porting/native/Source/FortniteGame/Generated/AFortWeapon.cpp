@@ -645,3 +645,10 @@ void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	DOREPLIFETIME_CONDITION(AFortWeapon, bIsEquippingWeapon, COND_SkipOwner);
 }
 
+
+AFortWeapon::AFortWeapon(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    USkeletalMeshComponentBudgeted* NativeDefaultSubobject0 = CreateDefaultSubobject<USkeletalMeshComponentBudgeted>(TEXT("WeaponMesh0"));
+    (void)NativeDefaultSubobject0;
+}

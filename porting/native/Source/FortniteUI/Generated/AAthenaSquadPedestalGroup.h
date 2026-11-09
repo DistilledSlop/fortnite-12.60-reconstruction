@@ -19,6 +19,8 @@ class FORTNITEUI_API AAthenaSquadPedestalGroup : public AActor
 	GENERATED_BODY()
 
 public:
+    AAthenaSquadPedestalGroup(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 4, flags 0x40000000000001
 	UPROPERTY()
 	ESubGame UsedSubgame;

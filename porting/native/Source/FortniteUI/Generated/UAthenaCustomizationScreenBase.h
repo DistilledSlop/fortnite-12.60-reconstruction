@@ -32,6 +32,8 @@ class FORTNITEUI_API UAthenaCustomizationScreenBase : public UFortActivatablePan
 	GENERATED_BODY()
 
 public:
+    UAthenaCustomizationScreenBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 32, flags 0x20080000000004
 	UPROPERTY()
 	bool bCustomizationSelectionBeingProcessed;

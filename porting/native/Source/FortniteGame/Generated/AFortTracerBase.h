@@ -21,6 +21,8 @@ class FORTNITEGAME_API AFortTracerBase : public AFortClientOnlyActor
 	GENERATED_BODY()
 
 public:
+    AFortTracerBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 16, flags 0x400000000a001d
 	UPROPERTY()
 	UMovementComp_Tracer* TracerMovementComponent;

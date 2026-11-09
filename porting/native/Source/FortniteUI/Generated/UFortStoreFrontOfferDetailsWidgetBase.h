@@ -25,6 +25,8 @@ class FORTNITEUI_API UFortStoreFrontOfferDetailsWidgetBase : public UFortActivat
 	GENERATED_BODY()
 
 public:
+    UFortStoreFrontOfferDetailsWidgetBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 20, flags 0x20080000010001
 	UPROPERTY()
 	FDataTableRowHandle EnterViewModeInputActionRowHandle;

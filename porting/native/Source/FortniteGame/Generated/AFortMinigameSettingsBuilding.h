@@ -27,6 +27,8 @@ class FORTNITEGAME_API AFortMinigameSettingsBuilding : public AInfo, public IFor
 	GENERATED_BODY()
 
 public:
+    AFortMinigameSettingsBuilding(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 24, flags 0x1000000008001d
 	UPROPERTY()
 	UFortCreativeVolumeLinkComponent* CreativeLinkComponent;

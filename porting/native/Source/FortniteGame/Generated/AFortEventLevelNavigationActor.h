@@ -27,6 +27,8 @@ class FORTNITEGAME_API AFortEventLevelNavigationActor : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortEventLevelNavigationActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 31, flags 0x20080000000001
 	UPROPERTY()
 	FText NavDisplayName;

@@ -20,6 +20,8 @@ class FORTNITEGAME_API ABuildingTrapFloor_Waypoint : public ABuildingTrapFloor
 	GENERATED_BODY()
 
 public:
+    ABuildingTrapFloor_Waypoint(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 7, flags 0x10000001000034
 	UPROPERTY(Replicated, SaveGame)
 	FWaypointIndex Index;

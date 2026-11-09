@@ -21,6 +21,8 @@ class FORTNITEGAME_API AFortHookGunRope : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortHookGunRope(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 10, flags 0x200800000a001d
 	UPROPERTY()
 	UStaticMeshComponent* RopeMesh;

@@ -23,6 +23,8 @@ class FORTNITEUI_API UFortItemInspectionScreen : public UFortActivatablePanelWit
 	GENERATED_BODY()
 
 public:
+    UFortItemInspectionScreen(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 12, flags 0x20080000000004
 	UPROPERTY()
 	EFortItemInspectionMode CurrentInspectMode;

@@ -17,6 +17,8 @@ class FORTNITEGAME_API AFortMeshNetworkEventsLoader : public AInfo
 	GENERATED_BODY()
 
 public:
+    AFortMeshNetworkEventsLoader(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)
 	bool bMeshNetworkReady;

@@ -32,6 +32,8 @@ class FORTNITEGAME_API AFortPlayerPushableCart : public ABuildingGameplayActor
 	GENERATED_BODY()
 
 public:
+    AFortPlayerPushableCart(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 22, flags 0x10000010080000
 	UPROPERTY()
 	FOnCheckPointReached OnCheckPointReached;

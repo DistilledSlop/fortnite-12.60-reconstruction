@@ -16,6 +16,8 @@ class FORTNITEGAME_API AFortAthenaPatrolPoint : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortAthenaPatrolPoint(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	AFortAthenaLocalGameplayBehavior* LocalGameplayBehavior;

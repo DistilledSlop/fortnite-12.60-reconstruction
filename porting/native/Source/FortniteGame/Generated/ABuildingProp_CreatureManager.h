@@ -25,6 +25,8 @@ class FORTNITEGAME_API ABuildingProp_CreatureManager : public ABuildingProp
 	GENERATED_BODY()
 
 public:
+    ABuildingProp_CreatureManager(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 15, flags 0x14000000000015
 	UPROPERTY()
 	TArray<TSoftClassPtr<AFortAIPawn>> AITypeOptions;

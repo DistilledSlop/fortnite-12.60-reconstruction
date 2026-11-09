@@ -128,6 +128,8 @@ class FORTNITEGAME_API AFortPlayerControllerAthena : public AFortPlayerControlle
 	GENERATED_BODY()
 
 public:
+    AFortPlayerControllerAthena(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 171, flags 0x10000000004000
 	UPROPERTY(Config)
 	float FireAbilityToWeaponSwitchTime;

@@ -18,6 +18,8 @@ class FORTNITEGAME_API AFortAthenaSKPushVehicle : public AFortAthenaSKVehicle
 	GENERATED_BODY()
 
 public:
+    AFortAthenaSKPushVehicle(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 25, flags 0x10000000000001
 	UPROPERTY()
 	float AntiGravityScalerWhenEmpty;

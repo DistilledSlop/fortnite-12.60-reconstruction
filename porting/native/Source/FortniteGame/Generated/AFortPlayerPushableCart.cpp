@@ -293,3 +293,10 @@ void AFortPlayerPushableCart::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 	DOREPLIFETIME(AFortPlayerPushableCart, SplineComponent);
 }
 
+
+AFortPlayerPushableCart::AFortPlayerPushableCart(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UFortMovementComp_GroundSpline* NativeDefaultSubobject0 = CreateDefaultSubobject<UFortMovementComp_GroundSpline>(TEXT("Ground Spline Movement Component"));
+    (void)NativeDefaultSubobject0;
+}

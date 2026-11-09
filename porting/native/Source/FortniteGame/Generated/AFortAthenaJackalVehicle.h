@@ -25,6 +25,8 @@ class FORTNITEGAME_API AFortAthenaJackalVehicle : public AFortAthenaSKVehicle
 	GENERATED_BODY()
 
 public:
+    AFortAthenaJackalVehicle(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 20, flags 0x14000000010001
 	UPROPERTY()
 	TSubclassOf<UFortAthenaJackalVehicleConfigs> FortJackalVehicleConfigsClass;

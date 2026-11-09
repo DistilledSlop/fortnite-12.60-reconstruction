@@ -2,6 +2,8 @@
 #include "ADeployableBasePlot.h"
 #include "AFortInventory.h"
 #include "AFortWeapon.h"
+#include "Components/BoxComponent.h"
+#include "Components/SceneComponent.h"
 #include "UFortWeaponItemDefinition.h"
 #include "Net/UnrealNetwork.h"
 
@@ -87,3 +89,18 @@ void ADeployableBasePlot::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME(ADeployableBasePlot, OccupantNetID);
 }
 
+
+ADeployableBasePlot::ADeployableBasePlot(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    UBoxComponent* NativeDefaultSubobject0 = CreateDefaultSubobject<UBoxComponent>(TEXT("BuildableSpaceComponent"));
+    BuildableSpaceComponent = NativeDefaultSubobject0;
+    USceneComponent* NativeDefaultSubobject1 = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultScene"));
+    (void)NativeDefaultSubobject1;
+    UBoxComponent* NativeDefaultSubobject2 = CreateDefaultSubobject<UBoxComponent>(TEXT("EntirePlotSpaceComponent"));
+    EntirePlotSpaceComponent = NativeDefaultSubobject2;
+    UBoxComponent* NativeDefaultSubobject3 = CreateDefaultSubobject<UBoxComponent>(TEXT("SavableSpaceComponent"));
+    SavableSpaceComponent = NativeDefaultSubobject3;
+    USceneComponent* NativeDefaultSubobject4 = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
+    (void)NativeDefaultSubobject4;
+}

@@ -18,6 +18,8 @@ class FORTNITEGAME_API AFortAthenaExitCraftSpawner : public AActor
 	GENERATED_BODY()
 
 public:
+    AFortAthenaExitCraftSpawner(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 4, flags 0x200800000a001d
 	UPROPERTY()
 	UCapsuleComponent* DestructionOverlapCapsule;

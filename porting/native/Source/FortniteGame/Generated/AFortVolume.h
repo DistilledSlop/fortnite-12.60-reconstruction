@@ -54,6 +54,8 @@ class FORTNITEGAME_API AFortVolume : public AGameplayVolume, public IFortVolumeA
 	GENERATED_BODY()
 
 public:
+    AFortVolume(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 39, flags 0x1000000008201c
 	UPROPERTY(Transient)
 	UPawnOverlapComponent* BoundsComponent;

@@ -1,0 +1,34 @@
+[
+  {
+    "class": "UFortKismetLibrary",
+    "function": "GetSubGame",
+    "kind": "exec",
+    "signature": "ESubGame GetSubGame(UObject* WorldContextObject)",
+    "signature_status": "proposed",
+    "static": true,
+    "inc_path": "porting/behavior/fe20_kismet/GetSubGame.inc",
+    "confidence": "high",
+    "address": "0x141ef70e0",
+    "status": "ported",
+    "decompile_source": "porting/generated/native-cap-direct/0x141ef70e0.c",
+    "notes": "Exec 0x14296ffe0 forwards the world context to 0x141ef70e0, which calls NativeGetGlobals and returns NativeGetGameMode141ed4e30's byte as ESubGame."
+  },
+  {
+    "class": "UFortKismetLibrary",
+    "function": "CopyHideElements",
+    "kind": "exec",
+    "signature": "void CopyHideElements(UMaterialInstanceDynamic* SourceMID, UMaterialInstanceDynamic* TargetMID)",
+    "signature_status": "proposed",
+    "static": true,
+    "inc_path": "porting/behavior/fe20_kismet/CopyHideElements.inc",
+    "confidence": "high",
+    "address": "0x141ee94b0",
+    "status": "ported",
+    "decompile_source": "porting/generated/native-cap-direct/0x141ee94b0.c",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h",
+      "Materials/MaterialLayersFunctions.h"
+    ],
+    "notes": "Exec 0x142968380 calls 0x141ee94b0. It checks both MIDs, queries global scalar overrides named Hide Element 01 through 10 with overridden-only true, and sets each successful result on target."
+  }
+]

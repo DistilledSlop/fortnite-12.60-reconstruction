@@ -22,6 +22,8 @@ class FORTNITEGAME_API AFortLiveBroadcastController : public AFortLiveSpectatorC
 	GENERATED_BODY()
 
 public:
+    AFortLiveBroadcastController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x2da0): not a UPROPERTY, not replicated.
 	AFortPlayerState* NativeSpectatingPlayerState163;
 

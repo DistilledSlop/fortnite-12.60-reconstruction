@@ -68,6 +68,8 @@ class FORTNITEGAME_API AFortCreativeMoveTool : public AFortWeapon
 	GENERATED_BODY()
 
 public:
+    AFortCreativeMoveTool(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
 	// table index 95, flags 0x20080000080008
 	UPROPERTY()
 	UFortObjectMoverInputComponent* CreativeMoveToolInputComponent;
