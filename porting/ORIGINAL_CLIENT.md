@@ -13,6 +13,11 @@ The number is the maximum session duration in seconds. Omit `FN_DISPLAY` to
 use a private virtual display for automated probes. `--username NAME` before
 the duration selects a local profile. The default Wine prefix is
 `porting/generated/wine-prefix`; set `FN_WINEPREFIX` to use a prepared prefix.
+The runner waits briefly for an existing Wine server for that prefix to exit;
+close other Wine applications using the prefix before launching. Set
+`FN_WINESERVER` to the wineserver executable if it is not on `PATH` or in the
+standard Debian x86-64 location.
+
 Optional `FN_WINEDLLOVERRIDES` and `FN_VK_ICD_FILENAMES` select renderer
 settings. For example, the software-rendering probe used a prefix with DXVK
 installed, `FN_WINEDLLOVERRIDES='d3d11,dxgi=n'`, and
