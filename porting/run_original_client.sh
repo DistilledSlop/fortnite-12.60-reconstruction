@@ -9,6 +9,7 @@
 # FN_VK_ICD_FILENAMES pass renderer settings into the isolated client.
 # Set FN_DISPLAY and, if required, FN_XAUTHORITY to use an existing X11 display.
 # Without FN_DISPLAY, the runner creates a private Xvfb display.
+# FN_STATE_DIR selects a separate local backend account/profile directory.
 set -euo pipefail
 
 porting_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
@@ -43,7 +44,7 @@ if [[ -z "${FN_NETNS_INNER:-}" ]]; then
         printf 'Wine is still using prefix %s. Close its Wine applications and stop its wineserver before retrying.\n' "$wineprefix" >&2
         exit 1
     fi
-    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -59,7 +60,9 @@ mount --bind "$generated/hosts" /etc/hosts
 user=$FN_USER
 client_log="$wineprefix/drive_c/users/$user/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log"
 rm -f "$client_log" "$generated/server-requests.jsonl"
-python3 "$porting_dir/server/probe_server.py" --port 443 --stub \
+state_args=()
+[[ -z "${FN_STATE_DIR:-}" ]] || state_args=(--state-dir "$FN_STATE_DIR")
+python3 "$porting_dir/server/probe_server.py" --port 443 --stub "${state_args[@]}" \
     --tls-cert "$generated/tls/cert.pem" --tls-key "$generated/tls/key.pem" \
     > "$generated/probe-server.out" 2>&1 &
 server=$!

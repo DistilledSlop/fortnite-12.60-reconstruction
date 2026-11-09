@@ -11,7 +11,8 @@ FN_PATCH_APPES_DIAGNOSTIC=1 ./run_original_client.sh 3600
 
 The number is the maximum session duration in seconds. Omit `FN_DISPLAY` to
 use a private virtual display for automated probes. `--username NAME` before
-the duration selects a local profile. The default Wine prefix is
+the duration selects a local profile. Set `FN_STATE_DIR` to isolate backend
+accounts and profiles in a separate directory. The default Wine prefix is
 `porting/generated/wine-prefix`; set `FN_WINEPREFIX` to use a prepared prefix.
 The runner waits briefly for an existing Wine server for that prefix to exit;
 close other Wine applications using the prefix before launching. Set
