@@ -4815,6 +4815,28 @@ def promote(args):
                     seeds.setdefault(info.fn, set()).add("")
     _native_checkpoint3058_policy.add_roots(gate, seeds)
     _common_input_policy.add_roots(gate, seeds)
+    # Native anim-node structs that only Animation Blueprint generated classes reference (so no promoted class
+    # reaches them): every promoted-package struct whose parent chain reaches FAnimNode_Base. Without the real struct
+    # the loader substitutes the 8-byte FallbackStruct for the node property, and FExposedValueHandler::Initialize /
+    # UAnimBlueprintGeneratedClass::LinkFunctionsToDefaultObjectNodes then treat that slot as an FAnimNode_Base and
+    # corrupt the following node's vtable. Engine-owned nodes (other packages) are declared by engine headers.
+    anim_roots = []
+    for info in gate.tables.by_fn.values():
+        if info.kind != "struct" or info.package not in PROMOTE_PACKAGES:
+            continue
+        cur, hops = info, 0
+        while cur is not None and hops < 32:
+            if cur.cpp_name == "FAnimNode_Base":
+                anim_roots.append(info)
+                break
+            cur = gate.info(cur.rec.get("super_fn"))
+            hops += 1
+    if len({i.cpp_name for i in anim_roots}) != len(anim_roots):
+        raise ValueError("ambiguous anim node struct roots: " + ", ".join(sorted(i.cpp_name for i in anim_roots)))
+    for info in sorted(anim_roots, key=lambda i: i.cpp_name):
+        if gate.reason(info) is not None:
+            raise ValueError("anim node struct %s cannot be emitted: %s" % (info.cpp_name, gate.reason(info)))
+        seeds.setdefault(info.fn, set()).add("")
     if 'CommonUI' in module_deps:
         _action_commited_policy.add_roots(gate, seeds)
     models, texts, all_used = emit_types(gate, seeds, source_label, class_models + iface_models)

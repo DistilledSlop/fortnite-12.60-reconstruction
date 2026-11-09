@@ -1,0 +1,43 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/InstancedStaticMesh.cpp b/Engine/Source/Runtime/Engine/Private/InstancedStaticMesh.cpp
+index 0c0981d04..93207e852 100644
+--- a/Engine/Source/Runtime/Engine/Private/InstancedStaticMesh.cpp
++++ b/Engine/Source/Runtime/Engine/Private/InstancedStaticMesh.cpp
+@@ -518,4 +518,17 @@ void FStaticMeshInstanceBuffer::BindInstanceVertexBuffer(const class FVertexFact
+ 
+ 
++// Original Fortnite 12.60 cooked instanced static mesh components (unversioned packages) predate the per-instance
++// custom data layout: they serialize no PerInstanceSMCustomData bulk array, and the cooked FStaticMeshInstanceData
++// carries neither NumCustomDataFloats nor the InstanceCustomData buffer (byte-level evidence from
++// Athena_Tutorial_Map_A FoliageInstancedStaticMeshComponent: bCooked, PerInstanceSMData(64,11), u64 RenderDataSize=560 =
++// 4+4+(8+16*11)+(8+24*11)+(8+8*11), then the HISM cluster tree). Unversioned packages report the newest custom
++// versions, so the stock PerInstanceCustomData gates would read the newer layout. Same default-on gate and opt-out
++// (-FortniteNoLegacyStaticMesh) as the static mesh layout. See porting/patches/ue425-legacy-ism-layout.patch.
++static bool FortniteUseLegacyInstancedMeshLayout(FArchive& Ar)
++{
++	extern bool FortniteUseLegacyStaticMeshLayout(FArchive& Ar);
++	return Ar.IsLoading() && FortniteUseLegacyStaticMeshLayout(Ar);
++}
++
+ void FStaticMeshInstanceData::Serialize(FArchive& Ar)
+ {	
+@@ -536,5 +549,5 @@ void FStaticMeshInstanceData::Serialize(FArchive& Ar)
+ 	Ar << NumInstances;
+ 
+-	if (!Ar.IsLoading() || Ar.CustomVer(FRenderingObjectVersion::GUID) >= FRenderingObjectVersion::PerInstanceCustomData)
++	if (!Ar.IsLoading() || (Ar.CustomVer(FRenderingObjectVersion::GUID) >= FRenderingObjectVersion::PerInstanceCustomData && !FortniteUseLegacyInstancedMeshLayout(Ar)))
+ 	{
+ 		Ar << NumCustomDataFloats;
+@@ -581,5 +594,5 @@ void FStaticMeshInstanceData::Serialize(FArchive& Ar)
+ 	}
+ 
+-	if (!Ar.IsLoading() || Ar.CustomVer(FRenderingObjectVersion::GUID) >= FRenderingObjectVersion::PerInstanceCustomData)
++	if (!Ar.IsLoading() || (Ar.CustomVer(FRenderingObjectVersion::GUID) >= FRenderingObjectVersion::PerInstanceCustomData && !FortniteUseLegacyInstancedMeshLayout(Ar)))
+ 	{
+ 		InstanceCustomData->Serialize(Ar);
+@@ -2155,5 +2168,5 @@ void UInstancedStaticMeshComponent::Serialize(FArchive& Ar)
+ 	}
+ 
+-	if (!Ar.IsLoading() || Ar.CustomVer(FRenderingObjectVersion::GUID) >= FRenderingObjectVersion::PerInstanceCustomData)
++	if (!Ar.IsLoading() || (Ar.CustomVer(FRenderingObjectVersion::GUID) >= FRenderingObjectVersion::PerInstanceCustomData && !FortniteUseLegacyInstancedMeshLayout(Ar)))
+ 	{
+ 		PerInstanceSMCustomData.BulkSerialize(Ar);
