@@ -58,3 +58,11 @@ error; confirming it requested exit. These runs do not establish what produced
 the reason code or timer. Trace, logs, and screenshot are in the ignored
 `porting/generated/wine-investigation/20261109-handler-only/` and
 `porting/generated/wine-investigation/20261109-timer-only/` directories.
+
+An unpatched run captured construction of the reason-1 notification task at
+`0x142117050` (returning to `0x14211ebd2`), followed by the 20-second exit
+registration (returning to `0x14211ed8c`). Both hits had the same stack pointer
+and matching deeper stack data, linking the two operations to the same active
+execution frame in this run. This does not identify the check that entered the
+frame. The trace is under `porting/generated/wine-investigation/20261109-producer/`
+(ignored).
