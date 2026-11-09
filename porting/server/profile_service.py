@@ -215,10 +215,18 @@ def _equip(ctx, locker_id, category, item_id, slot_index):
     if item_id == "":
         template = ""
     else:
-        item = tx.item(item_id)
+        # Clients can send either an owned item instance ID or its template ID.
+        # Prefer an exact instance ID if the two namespaces happen to overlap.
+        item = tx.profile["items"].get(item_id)
+        if item is None:
+            item = next((owned for owned in tx.profile["items"].values()
+                         if owned["templateId"].casefold() == item_id.casefold()), None)
+        if item is None:
+            raise _invalid(f"The item {item_id} is not owned by this profile.")
         template = item["templateId"]
         prefix = template.split(":", 1)[0]
-        if CATEGORY_BY_PREFIX.get(prefix) != category:
+        if not any(key.casefold() == prefix.casefold() and value == category
+                   for key, value in CATEGORY_BY_PREFIX.items()):
             raise _invalid(f"{template} cannot be placed in the {category} slot.")
     items = list(entry.get("items", []))
     while len(items) <= slot_index:
