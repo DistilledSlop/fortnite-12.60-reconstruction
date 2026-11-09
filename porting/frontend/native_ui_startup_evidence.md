@@ -681,3 +681,24 @@ opening Ghidra without creating a function; that exception did not emit a
 bookkeeping diff. Successful missing-function probes53/61/62 used rollback
 transactions. No program was saved or renamed. No original execution,
 Native/Engine/stage mutation or runtime parity is claimed.
+
+### Director lifecycle source follow-up
+
+The lifecycle sources can be typed more narrowly from the director callbacks and
+source implementations. `142c976d0` supplies the core ticker; `142ba9030`
+registers the zero-delay delegate. Callback `145174cf0` takes a float delta,
+updates manager selection, invokes current manager virtual `278` with that
+delta if present, and returns true. The handle at director `b0` is removed in
+Deinitialize. `142ec9f90` supplies the post-garbage-collection multicast:
+`142e520b0` broadcasts it at the end of collection, corresponding to UE 4.25
+`FCoreUObjectDelegates::GetPostGarbageCollect()`. Callback `1451540c0` scans
+weak widget entries at `b8`, diagnoses surviving widgets with `OBJ REFS`, and
+clears the array. Deinitialize removes subscriptions owned by the director.
+Probe excerpts are in `porting/generated/bench/ui_integrate/lifecycle-evidence/`.
+
+The manager transition still requires the original interface methods and their
+argument types. It saves the old interface state and attached players, shuts
+down the old manager, creates the selected class with director outer, initializes
+it, restores the players and interface state, and broadcasts the director
+multicast even if the result is null. The lifecycle discovery does not close
+that transition or the game-instance startup caller.

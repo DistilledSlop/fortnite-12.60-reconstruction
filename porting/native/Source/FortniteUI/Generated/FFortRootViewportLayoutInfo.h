@@ -23,5 +23,14 @@ struct FFortRootViewportLayoutInfo
 	UPROPERTY()
 	UUserWidget* RootLayout;
 
+	// Native attachment state; the object pointers above remain GC-visible.
+	bool bAttached;
+
 };
+
+static_assert(sizeof(FFortRootViewportLayoutInfo) == 0x18, "Root layout entry stride changed");
+static_assert(alignof(FFortRootViewportLayoutInfo) == 8, "Root layout entry alignment changed");
+static_assert(STRUCT_OFFSET(FFortRootViewportLayoutInfo, LocalPlayer) == 0, "Root layout player offset changed");
+static_assert(STRUCT_OFFSET(FFortRootViewportLayoutInfo, RootLayout) == 8, "Root layout widget offset changed");
+static_assert(STRUCT_OFFSET(FFortRootViewportLayoutInfo, bAttached) == 0x10, "Root layout attachment offset changed");
 

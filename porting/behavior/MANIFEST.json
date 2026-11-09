@@ -90607,5 +90607,44 @@
     "status": "ported",
     "decompile_source": "porting/generated/native194-fresh-bulk/0x145249620.c",
     "notes": "Exec 0x145249620 forwards this to 0x141ef70e0, which resolves globals and tail-calls 0x141ed4e30."
+  },
+  {
+    "function": "ShouldCreateSubsystem",
+    "kind": "helper",
+    "signature": "bool ShouldCreateSubsystem(UObject* Outer) const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/UFortUIDirector/ShouldCreateSubsystem.inc",
+    "confidence": "medium",
+    "address": "0x1407fb210",
+    "status": "ported",
+    "decompile_source": "native-ui-startup-checkpoint-2 vtable +0x260; common-input-manager-queue-12/1407fb210.c; native-ui-startup-50/14421ee60.c",
+    "notes": "Override binding inferred from adjacent ordered subsystem slots; assumes subsystem collection supplies a game instance. Exact original test is context RunAsDedicated, not IsDedicatedServerInstance.",
+    "virtual": true,
+    "access": "public",
+    "class": "UFortUIDirector",
+    "includes": [
+      "Engine/GameInstance.h",
+      "Engine/Engine.h"
+    ],
+    "override": true
+  },
+  {
+    "function": "GetWorld",
+    "kind": "helper",
+    "signature": "UWorld* GetWorld() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/UFortUIManager/GetWorld.inc",
+    "confidence": "medium",
+    "address": "0x14514f610",
+    "status": "ported",
+    "decompile_source": "director_player_root_runtime/manager-world.definitions.inc",
+    "notes": "Original manager world lookup; assumes original director and game-instance outer chain.",
+    "virtual": true,
+    "access": "public",
+    "class": "UFortUIManager",
+    "includes": [
+      "Engine/GameInstance.h"
+    ],
+    "override": true
   }
 ]

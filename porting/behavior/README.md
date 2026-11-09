@@ -124,6 +124,7 @@ Manifest fields, in addition to the usual ones (`class`, `function`, `signature`
   The return type is spelled as it is written (`UFortPlaylistAthena* GetCurrentPlaylistAthena() const`), then the name,
   then the parameter list. Every parameter has a type and a name. `const` is allowed only on `helper`.
 - `virtual` (`helper` only, optional boolean): emit a native C++ virtual member when original vtable evidence establishes dispatch. The signature still omits `virtual`; generation and the checker reject loss of the keyword. This does not make the helper a Blueprint event.
+- `override` (`helper` only, optional boolean): emit and verify `override` on the declaration; omit it from the signature and definition. The C++ compiler checks the inherited virtual signature. Static helpers cannot use it.
 - `access` (`helper` only, required): `public` or `protected`. A `static_helper` takes no access. A helper that another
   class calls must be `public` (a `protected` member is not visible to that class).
 - `includes` (optional): a list of header spellings (for example `Engine/World.h`) for types that the signature or the

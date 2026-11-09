@@ -1181,6 +1181,23 @@ def helper_self_test(check):
     check("static helper cannot be virtual", bool(rejected["rejected"]))
     rejected = attach_snippets("ASelfTest", [], [dict(entries[2], virtual="true")], ctx, "/Script/FortniteGame")
     check("virtual helper needs boolean", bool(rejected["rejected"]))
+    override_res = attach_snippets("ASelfTest", [], [dict(entries[2], override=True)], ctx, "/Script/FortniteGame")
+    override_model = dict(model, helpers=override_res["helpers"], static_helpers=[])
+    override_header = render_promoted_header(override_model, "SELFTEST_API", "AActor.h", "self-test")
+    override_cpp = render_promoted_cpp(override_model, "self-test")
+    check("override helper declared with const before override",
+          "UFortPlaylistAthena* Pick() const override;" in override_header)
+    check("override omitted from definition", "ASelfTest::Pick() const\n" in override_cpp)
+    verify_spliced(override_model, override_header, override_cpp)
+    try:
+        verify_spliced(override_model, override_header.replace(" const override;", " const;"), override_cpp)
+        lost_override_detected = False
+    except SystemExit:
+        lost_override_detected = True
+    check("lost override rejected by verification", lost_override_detected)
+    for entry in (dict(entries[0], override=True), dict(entries[2], override="true"),
+                  dict(entries[2], static=True, override=True)):
+        check("invalid override rejected", bool(attach_snippets("ASelfTest", [], [entry], ctx, "/Script/FortniteGame")["rejected"]))
 def field_self_test(check):
     """member_field kind on synthetic input: signature, rules, placement by offset, rendering and verification."""
     def field_rejects(sig):
@@ -2371,6 +2388,10 @@ _ui_config_spec = _common_activation_import.spec_from_file_location(
     "ui_config_singleton_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "ui_config_singleton_runtime", "policy.py"))
 _ui_config_policy = _common_activation_import.module_from_spec(_ui_config_spec)
 _ui_config_spec.loader.exec_module(_ui_config_policy)
+_ui_root_layout_spec = _common_activation_import.spec_from_file_location(
+    "ui_root_layout_info_runtime_policy", os.path.join(os.path.dirname(__file__), "generator_policies", "ui_root_layout_info_runtime", "source_policy.py"))
+_ui_root_layout_policy = _common_activation_import.module_from_spec(_ui_root_layout_spec)
+_ui_root_layout_spec.loader.exec_module(_ui_root_layout_policy)
 _legacy_state_spec = _common_activation_import.spec_from_file_location(
     "legacy_state_event_bridge_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "legacy_state_event_bridge_runtime", "policy.py"))
 _legacy_state_policy = _common_activation_import.module_from_spec(_legacy_state_spec)
@@ -3057,8 +3078,8 @@ def check_helper_entry(e, name, package, ctx, by_name, all_names, taken):
     member_static = e.get("static", False)
     if not isinstance(member_static, bool) or ("static" in e and kind != "helper"):
         return None, "static must be a boolean on a member helper only"
-    if member_static and e.get("virtual"):
-        return None, "a member helper cannot be both static and virtual"
+    if member_static and (e.get("virtual") or e.get("override")):
+        return None, "a static member helper cannot be virtual or override"
     try:
         ret, sname, params, const = parse_helper_signature(e.get("signature"), kind == "static_helper" or member_static)
     except ValueError as exc:
@@ -3070,6 +3091,9 @@ def check_helper_entry(e, name, package, ctx, by_name, all_names, taken):
     virtual = e.get("virtual", False)
     if not isinstance(virtual, bool) or ("virtual" in e and kind != "helper"):
         return None, "virtual must be a boolean on a member helper only"
+    override = e.get("override", False)
+    if not isinstance(override, bool) or ("override" in e and kind != "helper"):
+        return None, "override must be a boolean on a member helper only"
     access = e.get("access")
     if kind == "helper" and access not in HELPER_ACCESS:
         return None, "a helper needs access public or protected, not %r" % (access,)
@@ -3088,7 +3112,7 @@ def check_helper_entry(e, name, package, ctx, by_name, all_names, taken):
         return None, "; ".join(problems)
     refs = (set(re.findall(r"[A-Za-z_]\w*", strip_comments(e["body"]))) & all_names) - {fname}
     return {"name": fname, "kind": kind, "tag": "%s::%s" % (name, fname), "ret": ret, "args": params,
-            "const": const, "virtual": virtual, "static": member_static, "access": access, "body": e["body"], "refs": refs,
+            "const": const, "virtual": virtual, "override": override, "static": member_static, "access": access, "body": e["body"], "refs": refs,
             # A body may dereference a forward-declared signature class; the cpp needs its full definition.
             "includes": inc_body | inc_sig | set(explicit) | {"%s.h" % t for t in fwd if t in ctx["class_pkg"] and t != name and package not in CLASS_EVENT_SKIP_PACKAGES},
             "header_includes": inc_sig | set(explicit),
@@ -3482,7 +3506,7 @@ def verify_spliced(model, header, cpp):
         ret, args = h["ret"], ", ".join(h["args"])
         const = " const" if h["const"] else ""
         tag = "%s::%s" % (name, h["name"])
-        decl = squash("%s%s %s(%s)%s;" % ("static " if h.get("static") else "virtual " if h.get("virtual") else "", ret, h["name"], args, const))
+        decl = squash("%s%s %s(%s)%s%s;" % ("static " if h.get("static") else "virtual " if h.get("virtual") else "", ret, h["name"], args, const, " override" if h.get("override") else ""))
         if count(hsq, decl) != 1:
             problems.append("%s: declaration found %d times in header" % (tag, count(hsq, decl)))
         else:
@@ -3545,8 +3569,9 @@ def render_helper_declarations(model):
         if h["access"] != current:
             lines.append("%s:" % h["access"])
             current = h["access"]
-        lines.append("\t%s%s %s(%s)%s;" % ("static " if h.get("static") else "virtual " if h.get("virtual") else "", h["ret"], h["name"],
-                                            ", ".join(h["args"]), " const" if h["const"] else ""))
+        lines.append("\t%s%s %s(%s)%s%s;" % ("static " if h.get("static") else "virtual " if h.get("virtual") else "", h["ret"], h["name"],
+                                            ", ".join(h["args"]), " const" if h["const"] else "",
+                                            " override" if h.get("override") else ""))
     return lines
 
 
@@ -6025,6 +6050,7 @@ def render_struct_header(model, source_label):
         lines.extend(_inventory_entry_policy.fields_after(model, m))
         lines.extend(_maps_fog_policy.fields_after(model, m))
         lines.extend(_maps_wind_building_policy.fields_after(model, m))
+        lines.extend(_ui_root_layout_policy.fields_after(model, m))
     lines.extend(native_serializer_declarations(name))
     lines.extend(_maps_fog_policy.declarations(model))
     lines.extend(_maps_wind_handle_policy.declarations(model))
@@ -6065,6 +6091,7 @@ def render_struct_header(model, source_label):
         lines.append(postlude)
     lines.extend(_confirmation_policy.footer(model))
     lines.extend(_maps_wind_building_policy.postamble(model))
+    lines.extend(_ui_root_layout_policy.postamble(model))
     lines.extend(native_serializer_traits(name))
     if delta:
         lines.append("template<>")

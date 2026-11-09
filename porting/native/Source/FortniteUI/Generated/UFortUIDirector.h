@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortUIDirectorSubsystemBase.h"
 
+#include "Engine/Engine.h"
+#include "Engine/GameInstance.h"
 #include "UObject/NoExportTypes.h"
 
 class UFortUIManager;
@@ -46,5 +48,9 @@ public:
 	UPROPERTY(Transient)
 	UFortUIManager* CurrentManager;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool ShouldCreateSubsystem(UObject* Outer) const override;
 };
 

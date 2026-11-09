@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "Engine/GameInstance.h"
 #include "FFortRootViewportLayoutInfo.h"
 
 class UUserWidget;
@@ -30,5 +31,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<FFortRootViewportLayoutInfo> RootViewportLayouts;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UWorld* GetWorld() const override;
 };
 

@@ -56,7 +56,7 @@ ENGINE_NAMES = {"UClass", "UObject", "AActor", "FWeakObjectPtr", "TWeakObjectPtr
                 "FVector", "TArray", "static_cast", "Cast", "UWorld", "FConstPlayerControllerIterator", "AGameStateBase", "GetLocalRole", "ROLE_Authority",
                 "FGameplayTag", "FFortNativeGameplayTagsRuntime", "GameState", "GetOwner", "GetWorld", "FMath", "FApp", "FEngineVersion", "ESearchCase", "ESearchDir", "INDEX_NONE"}
 # UE_LOG is the Engine logging macro; LogFort is declared by SharedFortGameLog.h.
-ENGINE_NAMES.update({"UE_LOG", "LogFort", "Verbose", "Warning"})
+ENGINE_NAMES.update({"UE_LOG", "LogFort", "Verbose", "Warning", "UGameInstance", "FWorldContext", "GetOuter"})
 # The NetSerialize signature of kind struct_net (gen_native_classes.py NATIVE_NET_SIGNATURE, the same text).
 NATIVE_NET_SIGNATURE = "bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)"
 STRUCT_NET_KIND = "struct_net"
@@ -277,8 +277,10 @@ def check_kind(e, problems):
         return
     if "virtual" in e and (kind not in ("helper", "getter", "exec") or not isinstance(e["virtual"], bool)):
         problems.append(("FAIL", tag, "virtual must be a boolean on a member helper or reflected function"))
-    if e.get("virtual") and e.get("static"):
-        problems.append(("FAIL", tag, "static function cannot be virtual"))
+    if "override" in e and (kind != "helper" or not isinstance(e["override"], bool)):
+        problems.append(("FAIL", tag, "override must be a boolean on a member helper only"))
+    if e.get("static") and (e.get("virtual") or e.get("override")):
+        problems.append(("FAIL", tag, "static function cannot be virtual or override"))
     if "reflection_flags" in e and (kind not in ("getter", "exec", "native_event_impl") or
             not re.fullmatch(r"0x[0-9a-fA-F]+", str(e["reflection_flags"]))):
         problems.append(("FAIL", tag, "reflection_flags must be a hex string on getter/exec/native_event_impl"))
@@ -448,7 +450,8 @@ def check_generated(e, rejected, problems, counts):
         return
     hl = [squash(line) for line in hdr.splitlines()]
     linkage = "virtual " if e.get("virtual") or e["kind"] == "native_event_impl" else ("static " if e.get("static") else "")
-    decl_key = squash("%s%s %s(%s)%s;" % (linkage, ret, sfn, args, const))
+    decl_key = squash("%s%s %s(%s)%s%s;" % (linkage, ret, sfn, args, const,
+                                                " override" if e.get("override") else ""))
     if hl.count(decl_key) != 1:
         problems.append(("FAIL", tag, "declaration %r found %d times in header" % (decl_key, hl.count(decl_key))))
         return
