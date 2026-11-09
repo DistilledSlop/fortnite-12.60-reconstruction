@@ -20,3 +20,10 @@ Windows path. They now identify the exact shipping executable within their own
 network namespace. With that fix, the TLS patch attached and the second run
 successfully signed in. The local screenshot and request evidence are under
 `generated/wine-investigation/20261109-launcher/` (ignored by Git).
+
+Static inspection of the unsafe-environment handler shows reason values 2, 3,
+and 4 select the shared `UnsafeEnvironment_Body` message, whose English source
+warns about a cheat or reverse-engineering tool. If the launcher's logged code 3
+is the same value passed to that handler, it would select that message. The
+launcher run did not capture the handler argument or dialog; this mapping does
+not establish what the client detected or why it closed.
