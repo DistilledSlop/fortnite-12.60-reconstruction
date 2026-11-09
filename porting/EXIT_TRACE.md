@@ -41,3 +41,10 @@ contains a 20-second rate. A statically identified confirmation-message timer
 uses a 15-second rate, so the delegate type and target alone do not prove that
 path created this timer. The captured trace and client log are under
 `porting/generated/wine-investigation/20261109-delegate-vtable/` (ignored).
+
+A conditional breakpoint on timer setup subsequently caught registration of
+this exact delegate at `0x1446278d0`, returning to `0x14211ed8c`; the timer
+rate was 20.0 seconds. The callback later fired from the timer dispatcher. This
+identifies the registration caller independently of the confirmation-message
+path. The trace and client log are under
+`porting/generated/wine-investigation/20261109-timer-register/` (ignored).
