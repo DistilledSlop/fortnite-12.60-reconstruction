@@ -430,6 +430,8 @@ def _copy_cosmetic_loadout(ctx):
         if (stats.get("active_loadout_index") == target and
                 stats.get("last_applied_loadout") == replaced_id):
             tx.set_stat("last_applied_loadout", new_id)
+        if replaced_id not in loadouts and stats.get("last_applied_loadout") != replaced_id:
+            tx.remove_item(replaced_id)
     tx.set_stat("loadouts", loadouts)
 
 
