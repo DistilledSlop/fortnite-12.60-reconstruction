@@ -7,7 +7,8 @@ previewed Stage 1. Saving it sent `SetCosmeticLockerSlot` with a Progressive
 variant update; the backend returned 200 and persisted Stage 1 in the item and
 locker. After closing and relaunching the client and backend, the locker rendered
 Stage 1 and the style editor showed Stage 1 selected. The other four stages
-remained locked.
+remained locked. The client then selected Stage 0, saved it successfully, and
+rendered the base style; the backend recorded Stage 0 as active.
 
 The owned stages were seeded only in the disposable profile for this probe;
 this does not establish how the original service granted or unlocked styles.
