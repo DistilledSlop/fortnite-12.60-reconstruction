@@ -22,6 +22,8 @@ using CUE4Parse.UE4.Assets.Exports.Texture;
 using CUE4Parse.UE4.Objects.Core.Misc;
 using CUE4Parse.UE4.Objects.Core.Math;
 using CUE4Parse.UE4.Objects.Engine;
+using CUE4Parse.UE4.Objects.GameplayTags;
+using CUE4Parse.UE4.Objects.Core.i18N;
 using CUE4Parse.UE4.Objects.UObject;
 using CUE4Parse.UE4.Readers;
 using CUE4Parse.UE4.Versions;
@@ -40,6 +42,7 @@ bool showPseudo = args.Contains("--pseudo");
 bool showImports = args.Contains("--imports");
 bool importsJson = args.Contains("--imports-json");
 bool exportMapJson = args.Contains("--export-map-json");
+bool propertyReport = args.Contains("--property-report");
 bool registryMode = args.Contains("--registry");
 bool pakSources = args.Contains("--pak-sources");
 bool registryPaths = args.Contains("--registry-paths");
@@ -86,7 +89,7 @@ string? extractSeedArgument = args.SingleOrDefault(arg => arg.StartsWith("--seed
 bool auditDuplicates = args.Contains("--audit-duplicates");
 bool repairDuplicates = args.Contains("--repair");
 string? duplicatesOutArgument = args.SingleOrDefault(arg => arg.StartsWith("--duplicates-out=", StringComparison.Ordinal));
-Globals.FatalObjectSerializationErrors = exportGlb || exportAnim || exportLandscape || exportLandscapeGrid || exportLandscapeWeightmapGrid || exportPng || exportLandscapeWeightmaps || materialReport || functionReport || landscapeReport || actorReport || streamingReport;
+Globals.FatalObjectSerializationErrors = exportGlb || exportAnim || exportLandscape || exportLandscapeGrid || exportLandscapeWeightmapGrid || exportPng || exportLandscapeWeightmaps || materialReport || functionReport || landscapeReport || actorReport || streamingReport || propertyReport;
 string? keyFileArgument = args.SingleOrDefault(arg => arg.StartsWith("--key-file=", StringComparison.Ordinal));
 string? keyFilePath = keyFileArgument is not null ? keyFileArgument["--key-file=".Length..] : Environment.GetEnvironmentVariable("FORTNITE_AES_KEY_FILE");
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
@@ -97,13 +100,14 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg != classesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--scan-export-classes" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-anim" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--streaming-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg != classesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--property-report" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--scan-export-classes" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-anim" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--streaming-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
 bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || scanExportClasses || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
 if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, scanExportClasses, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <package-path> [source-directory] --imports-json [--loose]");
     Console.Error.WriteLine("   or: Cue4Inspect <package-path> [source-directory] --export-map-json [--loose]");
+    Console.Error.WriteLine("   or: Cue4Inspect <package-path> [source-directory] --property-report [--loose]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --save-list [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --sizes [--all-keys]");
@@ -233,7 +237,7 @@ try
             provider.Files.AddFiles(engineProvider.Files);
             enginePackages = engineProvider.LooseFileCount;
         }
-        (importsJson ? Console.Error : Console.Out).WriteLine($"Indexed {provider.LooseFileCount + enginePackages} loose package(s).");
+        (importsJson || propertyReport ? Console.Error : Console.Out).WriteLine($"Indexed {provider.LooseFileCount + enginePackages} loose package(s).");
     }
     else
     {
@@ -656,6 +660,26 @@ try
         var parsed = material.Properties.Select(x => x.Name.Text).ToArray();
         if (!names.SequenceEqual(parsed)) throw new InvalidDataException("Tag list disagrees with normal object parser");
         Console.WriteLine(JsonSerializer.Serialize(new { package = assetPath, sourceSha256 = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(bytes)).ToLowerInvariant(), ue4 = p.Summary.FileVersionUE.FileVersionUE4, customVersions = p.Summary.CustomVersionContainer?.Versions.Length, cooked = false, filterEditorOnly = false, classDefaultObject = false, staticPermutation = material.bHasStaticPermutationResource, exportOffset = entry.SerialOffset, exportSize = entry.SerialSize, netIndex, tagNames = names, guidFlag, nativeStart = ar.Position, constants = new { removeNetIndex = (int) EUnrealEngineObjectUE4Version.REMOVE_NET_INDEX, overrides = (int) EUnrealEngineObjectUE4Version.MATERIAL_INSTANCE_BASE_PROPERTY_OVERRIDES, phase2 = (int) EUnrealEngineObjectUE4Version.MATERIAL_INSTANCE_BASE_PROPERTY_OVERRIDES_PHASE_2, fixedSerialization = (int) EUnrealEngineObjectUE4Version.FIX_MATERIAL_PROPERTY_OVERRIDE_SERIALIZE, shadowDepth = (int) EUnrealEngineObjectUE4Version.STATIC_SHADOW_DEPTH_MAPS, dither = (int) EUnrealEngineObjectUE4Version.MATERIAL_INSTANCE_BASE_PROPERTY_OVERRIDES_DITHERED_LOD_TRANSITION, purged = (int) EUnrealEngineObjectUE4Version.PURGED_FMATERIAL_COMPILE_OUTPUTS, collections = (int) EUnrealEngineObjectUE4Version.COLLECTIONS_IN_SHADERMAPID } }));
+        return 0;
+    }
+    if (propertyReport)
+    {
+        Console.WriteLine(JsonSerializer.Serialize(new
+        {
+            package = assetPath,
+            exports = packageData.GetExports().Select(item => new
+            {
+                name = item.Name,
+                exportType = item.ExportType,
+                parserType = item.GetType().Name,
+                properties = item.Properties.Select(property => new
+                {
+                    name = property.Name.Text,
+                    type = property.PropertyType.Text,
+                    value = MaterialValue(property.Tag)
+                }).ToArray()
+            }).ToArray()
+        }, new JsonSerializerOptions { WriteIndented = true }));
         return 0;
     }
     if (exportMapJson)
@@ -2213,12 +2237,12 @@ static void WriteJson(string? path, object value)
     Console.WriteLine($"Wrote {full}");
 }
 
-// Restrict recursive reporting to known material property representations. Unknown
+// Restrict recursive reporting to known property representations. Unknown
 // types remain explicit so absence of a decoder cannot masquerade as parity.
 static object? MaterialValue(object? value, int depth = 0)
 {
     if (value is null) return null;
-    if (depth > 12) return new { unsupported = "depth limit" };
+    if (depth > 32) return new { unsupported = "depth limit" };
     return value switch
     {
         FPropertyTagType tag => MaterialValue(tag.GenericValue, depth + 1),
@@ -2227,6 +2251,9 @@ static object? MaterialValue(object? value, int depth = 0)
         UScriptArray array => array.Properties.Select(p => MaterialValue(p, depth + 1)).ToArray(),
         FExpressionInput input => new { expression = input.Expression?.Name, expressionIndex = input.Expression?.Index, inputName = input.InputName.Text, expressionName = input.ExpressionName.Text, input.OutputIndex, input.Mask, input.MaskR, input.MaskG, input.MaskB, input.MaskA, fallback = MaterialValue(input.FallbackStruct, depth + 1) },
         FPackageIndex index => new { name = index.Name, index = index.Index, isImport = index.IsImport },
+        FGameplayTagContainer tags => tags.GameplayTags.Select(tag => tag.TagName.Text).ToArray(),
+        FText text => new { display = text.ToString() },
+        FSoftObjectPath path => new { path = path.ToString() },
         FName name => name.Text,
         FGuid guid => new { type = "FGuid", value = guid.ToString() },
         string or bool or byte or sbyte or short or ushort or int or uint or long or ulong or float or double => value,
