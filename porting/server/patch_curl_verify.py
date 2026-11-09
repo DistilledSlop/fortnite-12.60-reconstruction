@@ -8,9 +8,10 @@ the first byte. Memory of the running process only; no file is modified. Needs r
 Usage: patch_curl_verify.py timeout_seconds client_log_path
 """
 import re
-import subprocess
 import sys
 import time
+
+from client_process import shipping_client_pids
 
 BASE = 0x140000000
 DATA_RVA, DATA_SIZE = 0x7812000, 0x8bc000  # .data section of the 12.60 shipping exe
@@ -21,11 +22,6 @@ SIGNATURE = re.compile(rb"\x01[\x00\x01][\x00\x01]\x00\x10\x00\x00\x00\x00{8}\x0
 
 
 LOG_PATH = sys.argv[2] if len(sys.argv) > 2 else ""
-
-
-def find_pid():
-    out = subprocess.run(["pgrep", "-f", f"^{EXE}"], capture_output=True, text=True).stdout.split()
-    return int(out[0]) if out else None
 
 
 def log_ready(log_path):
@@ -40,7 +36,7 @@ def main():
     deadline = time.time() + float(sys.argv[1] if len(sys.argv) > 1 else 90)
     pid = None
     while time.time() < deadline:
-        pid = pid or find_pid()
+        pid = pid or next(iter(shipping_client_pids()), None)
         if pid and log_ready(LOG_PATH):
             try:
                 with open(f"/proc/{pid}/mem", "r+b", buffering=0) as mem:

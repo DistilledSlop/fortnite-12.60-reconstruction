@@ -6,9 +6,10 @@ entitlement checks succeeded. The callback may also have other callers; this
 is an intrusive investigation aid. The executable on disk is not modified.
 """
 import os
-import subprocess
 import sys
 import time
+
+from client_process import shipping_client_pids
 
 ADDRESS = 0x140000000 + 0x2121984
 EXPECTED = bytes.fromhex('0f 84 7b 03 00 00')
@@ -34,10 +35,7 @@ def main():
         except OSError:
             time.sleep(0.05)
             continue
-        result = subprocess.run(
-            ['pgrep', '-f', '^FortniteClient-Win64-Shipping.exe'],
-            capture_output=True, text=True, check=False)
-        for pid in result.stdout.split():
+        for pid in shipping_client_pids():
             try:
                 if os.readlink(f'/proc/{int(pid)}/ns/net') != os.readlink('/proc/self/ns/net'):
                     continue
