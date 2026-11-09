@@ -59,12 +59,13 @@ responses. The original client still needs its launcher/security path resolved.
 
 For isolated investigation only, `FN_PATCH_APPES_DIAGNOSTIC=1` on
 `run_original_client.sh` changes the running 12.60 process after login begins,
-redirecting an unsafe-environment notification handler to its cleanup path. The
-change is signature checked, confined to the runner's network namespace and never
-written to the executable. It suppresses all reasons handled there, does not fix
-the underlying check, and is off by default. In a 2026-11-08 probe the client
-completed local sign-in and displayed the first-run graphics settings prompt, then
-exited before a usable lobby was established. Do not treat this diagnostic as an
+redirecting an unsafe-environment notification handler to its cleanup path and
+suppressing a separate timer callback observed requesting exit. Both changes are
+signature checked, confined to the runner's network namespace and never written to
+the executable. The callback's full purpose is unknown, and the patch suppresses
+all its calls. It does not fix the underlying checks and is off by default. A
+diagnostic probe completed local sign-in and reached the game-mode selector; a
+usable lobby and locker remain unverified. Do not treat this diagnostic as an
 entitlement pass or a working launcher.
 
 For a client that supports the local grant, POST `/account/api/oauth/token` with form
