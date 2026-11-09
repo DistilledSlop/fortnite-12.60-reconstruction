@@ -15,6 +15,8 @@ Evidence:
             entry is 32 zero bytes as a placeholder. It is not a real key.
 """
 
+from catalog import storefronts
+
 LIGHTSWITCH_STATUSES = ("UP", "DOWN", "MAINTENANCE")  # inferred values
 CATALOG_OVERRIDE_ID = "a7f138b2e51945ffbfdacc1af0541053"  # from the earlier stub
 LAUNCHER_INFO = {"appName": "Fortnite", "catalogItemId": "4fe75bbc5a674f4f9b356b5c90567da5", "namespace": "fn"}
@@ -63,7 +65,7 @@ class ContentService:
     def timeline(self, req, match):
         now = self.ctx.iso()
         state = {
-            "activeStorefronts": [], "eventNamedWeights": {}, "seasonNumber": 12,
+            "activeStorefronts": ["BRDailyStorefront"], "eventNamedWeights": {}, "seasonNumber": 12,
             "seasonTemplateId": "AthenaSeason:athenaseason12", "matchXpBonusPoints": 0,
             "seasonBegin": "2020-06-02T00:00:00Z", "seasonEnd": "2099-01-01T00:00:00.000Z",
             "seasonDisplayedEnd": "2099-01-01T00:00:00.000Z", "weeklyStoreEnd": "2099-01-01T00:00:00.000Z",
@@ -79,7 +81,7 @@ class ContentService:
 
     def catalog(self, req, match):
         far = "2099-01-01T00:00:00.000Z"
-        return 200, {"refreshIntervalHrs": 1, "dailyPurchaseHrs": 24, "expiration": far, "storefronts": []}
+        return 200, {"refreshIntervalHrs": 1, "dailyPurchaseHrs": 24, "expiration": far, "storefronts": storefronts()}
 
     def keychain(self, req, match):
         return 200, [KEYCHAIN_PLACEHOLDER]

@@ -599,7 +599,7 @@ class ProfileTests(ServiceTestCase):
                          400, Err.PROFILE_ID_INVALID)
         self.assertError(mcp(self.base, self.token, LOCAL, "NoSuchCommand"), 400, Err.OPERATION_NOT_FOUND)
         self.assertError(mcp(self.base, self.token, LOCAL, "PurchaseCatalogEntry", profile="common_core"),
-                         400, Err.OPERATION_NOT_FOUND)
+                         400, Err.INVALID_PAYLOAD)
         self.assertError(mcp(self.base, self.token, LOCAL, "SetMtxPlatform", profile="athena",
                              body={"newPlatform": "PSN"}), 400, Err.INVALID_PROFILE_COMMAND)
         self.assertError(mcp(self.base, self.token, "b" * 32, "QueryProfile"), 403, Err.MISSING_PERMISSION)
@@ -780,7 +780,7 @@ class ProfileTests(ServiceTestCase):
             "sourceIndex": 5, "targetIndex": 0}), 400, Err.INVALID_PAYLOAD)
 
     def test_unimplemented_commands_are_named_in_the_error(self):
-        status, body, _ = mcp(self.base, self.token, LOCAL, "PurchaseCatalogEntry", "common_core")
+        status, body, _ = mcp(self.base, self.token, LOCAL, "GiftCatalogEntry", "common_core")
         self.assertEqual(status, 400)
         self.assertIn("not implemented", body["errorMessage"])
 

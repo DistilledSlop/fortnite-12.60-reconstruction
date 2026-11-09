@@ -39,6 +39,7 @@ from pathlib import Path
 from typing import Callable
 
 from api_common import ApiError, Err
+from catalog import get_offer
 from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, WRAP_SLOT_COUNT, MTX_PLATFORMS, PROFILE_IDS,
                               SLOT_CATEGORIES, build, empty_slots)
 
@@ -47,7 +48,7 @@ from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, WRAP_SLOT_COUN
 LOCK_EXPIRATION_UNLOCKED = "0001-01-01T00:00:00.000Z"
 
 # observed: these names are in the 12.60 binary but have no implementation here yet.
-UNIMPLEMENTED = ("PurchaseCatalogEntry", "GiftCatalogEntry", "RemoveGiftBox",
+UNIMPLEMENTED = ("GiftCatalogEntry", "RemoveGiftBox",
                  "RefreshExpeditions", "SetActiveHeroLoadout", "ClearHeroLoadout")
 
 COMMANDS = {}
@@ -92,6 +93,15 @@ class ProfileTx:
         item["attributes"][name] = value
         self.changes.append({"changeType": "itemAttrChanged", "itemId": item_id,
                              "attributeName": name, "attributeValue": value})
+        return True
+
+    def set_item_quantity(self, item_id, value):
+        item = self.item(item_id)
+        if item["quantity"] == value:
+            return False
+        item["quantity"] = value
+        self.changes.append({"changeType": "itemQuantityChanged", "itemId": item_id,
+                             "quantity": value})
         return True
 
     def set_stat(self, name, value):
@@ -266,6 +276,63 @@ def _equip(ctx, locker_id, category, item_id, slot_index, variant_updates=None, 
 
 
 # Commands ---------------------------------------------------------------
+
+@command("PurchaseCatalogEntry", ("common_core",), "observed",
+         "offerId, purchaseQuantity, currency, currencySubType and expectedTotalPrice (inferred).")
+def _purchase_catalog_entry(ctx):
+    offer_id = ctx.str_field("offerId")
+    ctx.int_field("purchaseQuantity", minimum=1, maximum=1)
+    currency = ctx.str_field("currency")
+    subtype = ctx.str_field("currencySubType", allow_empty=True)
+    expected = ctx.int_field("expectedTotalPrice")
+    offer = get_offer(offer_id)
+    if offer is None:
+        raise _invalid("Unknown catalog offer.")
+    prices = offer.get("prices", [])
+    matching = [p for p in prices if p.get("currencyType") == currency
+                and p.get("currencySubType", "") == subtype]
+    if currency != "MtxCurrency" or subtype != "" or len(matching) != 1:
+        raise _invalid("Unsupported offer currency.")
+    price = matching[0].get("finalPrice")
+    if isinstance(price, bool) or not isinstance(price, int) or price < 0 or price != expected:
+        raise _invalid("Offer price does not match expectedTotalPrice.")
+
+    grants = offer.get("itemGrants", [])
+    if not isinstance(grants, list) or not grants:
+        raise _invalid("Offer has no cosmetic grants.")
+    templates = []
+    prefixes = {prefix.lower() for prefix in CATEGORY_BY_PREFIX}
+    for grant in grants:
+        if not isinstance(grant, dict):
+            raise _invalid("Invalid cosmetic grant.")
+        template = grant.get("templateId")
+        quantity = grant.get("quantity")
+        if (not isinstance(template, str) or ":" not in template
+                or template.split(":", 1)[0].lower() not in prefixes
+                or not template.split(":", 1)[1]
+                or isinstance(quantity, bool) or not isinstance(quantity, int) or quantity != 1):
+            raise _invalid("Invalid cosmetic grant.")
+        templates.append(template)
+    folded = [template.casefold() for template in templates]
+    if len(set(folded)) != len(folded):
+        raise _invalid("Duplicate cosmetic grant.")
+    athena = ctx.tx("athena")
+    owned = {item["templateId"].casefold() for item in athena.profile["items"].values()}
+    if owned.intersection(folded):
+        raise _invalid("A cosmetic in this offer is already owned.")
+    core = ctx.tx("common_core")
+    wallets = [(item_id, item) for item_id, item in core.profile["items"].items()
+               if item["templateId"].casefold() == "currency:mtxgiveaway"]
+    if len(wallets) != 1:
+        raise _invalid("Local currency balance is unavailable.")
+    wallet_id, wallet = wallets[0]
+    balance = wallet.get("quantity")
+    if isinstance(balance, bool) or not isinstance(balance, int) or balance < price:
+        raise _invalid("Insufficient local currency balance.")
+    core.set_item_quantity(wallet_id, balance - price)
+    for template in templates:
+        item_id = ctx.service._new_item_id("item", athena.profile)
+        athena.add_item(item_id, template, {"item_seen": False, "favorite": False, "variants": []})
 
 @command("ClientQuestLogin", ("athena",), "observed", "no body. Once per UTC day: advances the daily login counter.")
 def _client_quest_login(ctx):
