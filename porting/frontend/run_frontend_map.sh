@@ -22,16 +22,22 @@ timeout "$SECS" xvfb-run -a -s "-screen 0 1280x720x24 -fbdir $FB" $RUN "$MAP" -v
   -FortniteLegacyMaterialIngress="$B" -log \
   -FortniteLegacyMaterialManifest="$CM" -FortniteLegacyMaterialManifestSHA256="$SHA" "$@" > "$O" 2>&1 &
 PID=$!
-sleep $((SECS-8)); python3 - "$FB" "$PNG" <<'PY'
+cat > "$FB.snap.py" <<'PY'
 import sys,glob,struct
 from PIL import Image
 f=glob.glob(sys.argv[1]+'/Xvfb_screen0')
 if f:
-    d=open(f[0],'rb').read(); hs=struct.unpack('>I',d[:4])[0]
-    w,h=struct.unpack('>II',d[16:24]); nc=struct.unpack('>I',d[76:80])[0]
-    off=hs+nc*12
-    Image.frombuffer('RGBX',(w,h),d[off:off+w*h*4],'raw','BGRX',0,1).convert('RGB').save(sys.argv[2])
+    try:
+        d=open(f[0],'rb').read(); hs=struct.unpack('>I',d[:4])[0]
+        w,h=struct.unpack('>II',d[16:24]); nc=struct.unpack('>I',d[76:80])[0]
+        off=hs+nc*12
+        Image.frombuffer('RGBX',(w,h),d[off:off+w*h*4],'raw','BGRX',0,1).convert('RGB').save(sys.argv[2]+'.tmp.png')
+        import os; os.replace(sys.argv[2]+'.tmp.png',sys.argv[2])
+    except Exception as e:
+        pass
 PY
+# snapshot every 5 s while the client is alive; the last good frame is kept at $PNG
+while kill -0 $PID 2>/dev/null; do sleep 5; python3 "$FB.snap.py" "$FB" "$PNG"; done
 wait $PID; echo rc=$?
-rm -rf "$FB"
+rm -rf "$FB" "$FB.snap.py"
 grep -a -n "Fatal error\|Signal 11\|Assertion failed" "$O" | head -3 | cut -c1-250
