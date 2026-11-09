@@ -24,3 +24,10 @@ A further run with the favorite set reached the lobby and remained running until
 the 330-second observation timeout; no crash dump was produced. The item was
 not reopened before timeout, so fresh-session marker readback remains unverified.
 This run shows the earlier crashes are not deterministic for a favorited item.
+
+A later isolated-profile run used the narrower timer diagnostic, marked the
+Squire Shield non-favorite and then favorite through the client, and received
+HTTP 200 for both updates. After the client and backend restarted, the client
+reopened the back bling picker and displayed the favorite star on the shield.
+The final profile held `favorite: true`. Screenshots and request metadata are in
+`porting/generated/wine-investigation/20261109-favorite-restart/` (ignored).
