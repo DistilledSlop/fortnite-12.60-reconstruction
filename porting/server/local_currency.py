@@ -30,6 +30,7 @@ def main():
                          if item["templateId"] == "Currency:MtxGiveaway"), None)
         if currency is None:
             raise RuntimeError("local currency item missing from profile")
+        tx.set_item_attr(currency, "platform", "EpicPC")
         balance = tx.item(currency)["quantity"] + args.amount
         tx.set_item_quantity(currency, balance)
         service._store(account, {"common_core": tx})

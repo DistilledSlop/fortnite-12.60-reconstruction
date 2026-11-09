@@ -48,6 +48,8 @@ class PurchaseTests(unittest.TestCase):
         self.assertEqual(after[0]["rvn"], before[0]["rvn"] + 1)
         self.assertEqual(after[1]["rvn"], before[1]["rvn"] + 1)
         self.assertEqual(result["profileChanges"][0]["changeType"], "itemQuantityChanged")
+        loot = result["notifications"][0]["lootResult"]["items"]
+        self.assertEqual([item["itemType"] for item in loot], [g["templateId"] for g in OFFER["itemGrants"]])
         self.assertEqual(result["multiUpdate"][0]["profileId"], "athena")
         self.assertEqual([c["changeType"] for c in result["multiUpdate"][0]["profileChanges"]],
                          ["itemAdded", "itemAdded"])

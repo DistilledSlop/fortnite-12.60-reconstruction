@@ -95,7 +95,7 @@ def build_athena(ctx, account_id):
 
 def build_common_core(ctx, account_id):
     currency_id = ctx.stable_id(f"{account_id}|common_core|currency")
-    items = {currency_id: {"templateId": "Currency:MtxGiveaway", "attributes": {}, "quantity": 0}}
+    items = {currency_id: {"templateId": "Currency:MtxGiveaway", "attributes": {"platform": "EpicPC"}, "quantity": 0}}
     attributes = {
         "mfa_reward_claimed": True,
         "current_mtx_platform": "EpicPC",

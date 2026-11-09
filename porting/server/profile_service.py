@@ -39,7 +39,7 @@ from pathlib import Path
 from typing import Callable
 
 from api_common import ApiError, Err
-from catalog import get_offer
+from catalog import SEASON12_PASS_OFFER, get_offer
 from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, WRAP_SLOT_COUNT, MTX_PLATFORMS, PROFILE_IDS,
                               SLOT_CATEGORIES, build, empty_slots)
 
@@ -277,6 +277,19 @@ def _equip(ctx, locker_id, category, item_id, slot_index, variant_updates=None, 
 
 # Commands ---------------------------------------------------------------
 
+def _debit_local_currency(ctx, price):
+    core = ctx.tx("common_core")
+    wallets = [(item_id, item) for item_id, item in core.profile["items"].items()
+               if item["templateId"].casefold() == "currency:mtxgiveaway"]
+    if len(wallets) != 1:
+        raise _invalid("Local currency balance is unavailable.")
+    wallet_id, wallet = wallets[0]
+    balance = wallet.get("quantity")
+    if isinstance(balance, bool) or not isinstance(balance, int) or balance < price:
+        raise _invalid("Insufficient local currency balance.")
+    core.set_item_quantity(wallet_id, balance - price)
+
+
 @command("PurchaseCatalogEntry", ("common_core",), "observed",
          "offerId, purchaseQuantity, currency, currencySubType and expectedTotalPrice (inferred).")
 def _purchase_catalog_entry(ctx):
@@ -296,6 +309,17 @@ def _purchase_catalog_entry(ctx):
     price = matching[0].get("finalPrice")
     if isinstance(price, bool) or not isinstance(price, int) or price < 0 or price != expected:
         raise _invalid("Offer price does not match expectedTotalPrice.")
+
+    if offer_id == SEASON12_PASS_OFFER:
+        # The ID and profile field are recovered; their pairing and the 950
+        # price are local assumptions, not an observed purchase transaction.
+        athena = ctx.tx("athena")
+        stats = athena.profile["stats"]["attributes"]
+        if stats.get("season_num") != 12 or stats.get("book_purchased") is not False:
+            raise _invalid("Season 12 Battle Pass is unavailable or already purchased.")
+        _debit_local_currency(ctx, price)
+        athena.set_stat("book_purchased", True)
+        return
 
     grants = offer.get("itemGrants", [])
     if not isinstance(grants, list) or not grants:
@@ -320,19 +344,18 @@ def _purchase_catalog_entry(ctx):
     owned = {item["templateId"].casefold() for item in athena.profile["items"].values()}
     if owned.intersection(folded):
         raise _invalid("A cosmetic in this offer is already owned.")
-    core = ctx.tx("common_core")
-    wallets = [(item_id, item) for item_id, item in core.profile["items"].items()
-               if item["templateId"].casefold() == "currency:mtxgiveaway"]
-    if len(wallets) != 1:
-        raise _invalid("Local currency balance is unavailable.")
-    wallet_id, wallet = wallets[0]
-    balance = wallet.get("quantity")
-    if isinstance(balance, bool) or not isinstance(balance, int) or balance < price:
-        raise _invalid("Insufficient local currency balance.")
-    core.set_item_quantity(wallet_id, balance - price)
+    _debit_local_currency(ctx, price)
+    loot = []
     for template in templates:
         item_id = ctx.service._new_item_id("item", athena.profile)
-        athena.add_item(item_id, template, {"item_seen": False, "favorite": False, "variants": []})
+        attributes = {"item_seen": False, "favorite": False, "variants": []}
+        athena.add_item(item_id, template, attributes)
+        loot.append({"itemType": template, "itemGuid": item_id, "quantity": 1,
+                     "attributes": attributes, "itemProfile": "athena"})
+    # CatalogPurchaseNotification and McpLootResult fields are reflected;
+    # the type discriminator is inferred from a client string.
+    ctx.notifications.append({"type": "CatalogPurchase", "lootResult": {
+        "tierGroupName": "", "items": loot}})
 
 @command("ClientQuestLogin", ("athena",), "observed", "no body. Once per UTC day: advances the daily login counter.")
 def _client_quest_login(ctx):

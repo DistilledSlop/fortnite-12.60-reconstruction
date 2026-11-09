@@ -20,6 +20,7 @@ class LocalCurrencyTests(unittest.TestCase):
             account = backend.accounts.get_or_create_username('Buyer')['id']
             core = backend.profiles.profile(account, 'common_core')
             self.assertEqual(next(iter(core['items'].values()))['quantity'], 1000)
+            self.assertEqual(next(iter(core['items'].values()))['attributes']['platform'], 'EpicPC')
             with (Path(directory) / '.backend.lock').open('a') as lock:
                 fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
                 second = subprocess.run(cmd, capture_output=True, text=True)

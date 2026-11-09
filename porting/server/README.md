@@ -257,9 +257,9 @@ rejected rather than selecting a different account. This is a local policy, not 
 The local catalog contains sample cosmetic offers and local prices. PurchaseCatalogEntry
 checks the catalog price and owned items, deducts the local balance, and grants the
 cosmetic to the Athena profile in one transaction. Catalog entries, purchase payload,
-and response semantics are inferred and still need original-client verification.
-This is virtual local currency; no payment provider is connected. Battle Pass and
-real-money purchases are not implemented.
+and response semantics are partly inferred. A real-client cosmetic purchase has
+been observed; the Battle Pass path is experimental. This is virtual local currency;
+no payment provider is connected and real-money purchases are not implemented.
 
 With the server stopped, credit an account in its persistent state directory:
 
