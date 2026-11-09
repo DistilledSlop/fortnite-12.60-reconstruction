@@ -7,6 +7,8 @@
 # launch; screenshots go to generated/shots/ (debug aids, never committed).
 # FN_WINEPREFIX selects an alternate prefix; FN_WINEDLLOVERRIDES and
 # FN_VK_ICD_FILENAMES pass renderer settings into the isolated client.
+# Set FN_DISPLAY and, if required, FN_XAUTHORITY to use an existing X11 display.
+# Without FN_DISPLAY, the runner creates a private Xvfb display.
 set -euo pipefail
 
 porting_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
@@ -27,7 +29,7 @@ seconds=${1:-120}
 shift || true
 
 if [[ -z "${FN_NETNS_INNER:-}" ]]; then
-    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -65,8 +67,15 @@ set +e
 wine_env=(WINEPREFIX="$wineprefix" WINEDEBUG=-all SHOTS_DIR="$generated/shots" FN_ACTIONS="$FN_ACTIONS")
 [[ -z "${FN_WINEDLLOVERRIDES:-}" ]] || wine_env+=(WINEDLLOVERRIDES="$FN_WINEDLLOVERRIDES")
 [[ -z "${FN_VK_ICD_FILENAMES:-}" ]] || wine_env+=(VK_ICD_FILENAMES="$FN_VK_ICD_FILENAMES")
+if [[ -n "${FN_DISPLAY:-}" ]]; then
+    wine_env+=(DISPLAY="$FN_DISPLAY")
+    [[ -z "${FN_XAUTHORITY:-}" ]] || wine_env+=(XAUTHORITY="$FN_XAUTHORITY")
+    display_cmd=()
+else
+    display_cmd=(xvfb-run -a -s '-screen 0 1280x720x24')
+fi
 sudo -n -u "$user" env "${wine_env[@]}" \
-    xvfb-run -a -s '-screen 0 1280x720x24' timeout "${seconds}s" \
+    "${display_cmd[@]}" timeout "${seconds}s" \
     bash -c '
 cd "$0"
 if [[ -n "$FN_ACTIONS" ]]; then
