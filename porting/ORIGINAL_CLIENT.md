@@ -40,3 +40,9 @@ registration call instead of replacing the exit callback; the unsafe-handler
 patch is still applied. One local session reached the locker and saved a
 style with the original callback bytes intact. The call site's full scope and
 the underlying trigger are unknown; see [EXIT_TRACE.md](EXIT_TRACE.md).
+
+For controlled investigations, `FN_PATCH_APPES_DIAGNOSTIC=handler-only` and
+`timer-only` enable each patch separately. In an isolated profile, the
+handler-only run still registered and fired the exit timer. The timer-only run
+stayed open past that timer but displayed a blocking launcher error; confirming
+it requested exit. Neither is a complete launch mode.

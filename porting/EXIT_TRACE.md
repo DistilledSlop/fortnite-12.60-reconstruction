@@ -48,3 +48,13 @@ rate was 20.0 seconds. The callback later fired from the timer dispatcher. This
 identifies the registration caller independently of the confirmation-message
 path. The trace and client log are under
 `porting/generated/wine-investigation/20261109-timer-register/` (ignored).
+
+The handler's observed reason code `1` selects the client localization key
+`UnsafeEnvironment_BodyMissingLauncher`. A controlled handler-only patch did
+not prevent registration or execution of the 20-second timer, and the client
+exited. Conversely, a timer-only patch left the handler active: the client
+remained running past the timer deadline but displayed a blocking launcher
+error; confirming it requested exit. These runs do not establish what produced
+the reason code or timer. Trace, logs, and screenshot are in the ignored
+`porting/generated/wine-investigation/20261109-handler-only/` and
+`porting/generated/wine-investigation/20261109-timer-only/` directories.

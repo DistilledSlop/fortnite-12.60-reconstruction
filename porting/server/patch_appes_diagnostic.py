@@ -33,11 +33,16 @@ def main():
     deadline = time.monotonic() + float(sys.argv[1])
     log_path = sys.argv[2]
     mode = sys.argv[3] if len(sys.argv) > 3 else 'callback'
-    if mode not in ('callback', 'timer'):
-        raise ValueError('mode must be callback or timer')
-    exit_address, exit_expected, exit_replacement = (
-        (EXIT_CALLBACK, EXIT_EXPECTED, EXIT_REPLACEMENT) if mode == 'callback'
-        else (TIMER_CALL, TIMER_EXPECTED, TIMER_REPLACEMENT))
+    patches = {
+        'callback': [(ADDRESS, EXPECTED, REPLACEMENT),
+                     (EXIT_CALLBACK, EXIT_EXPECTED, EXIT_REPLACEMENT)],
+        'timer': [(ADDRESS, EXPECTED, REPLACEMENT),
+                  (TIMER_CALL, TIMER_EXPECTED, TIMER_REPLACEMENT)],
+        'handler-only': [(ADDRESS, EXPECTED, REPLACEMENT)],
+        'timer-only': [(TIMER_CALL, TIMER_EXPECTED, TIMER_REPLACEMENT)],
+    }
+    if mode not in patches:
+        raise ValueError('unknown diagnostic mode')
     while time.monotonic() < deadline:
         try:
             with open(log_path, 'rb') as log:
@@ -52,27 +57,24 @@ def main():
                 if os.readlink(f'/proc/{int(pid)}/ns/net') != os.readlink('/proc/self/ns/net'):
                     continue
                 with open(f'/proc/{int(pid)}/mem', 'r+b', buffering=0) as mem:
-                    mem.seek(ADDRESS)
-                    actual = mem.read(len(EXPECTED))
-                    mem.seek(exit_address)
-                    callback = mem.read(len(exit_expected))
-                    if actual == EXPECTED and callback == exit_expected:
-                        mem.seek(exit_address)
-                        mem.write(exit_replacement)
-                        mem.seek(exit_address)
-                        if mem.read(len(exit_replacement)) != exit_replacement:
-                            raise RuntimeError('exit patch verification failed')
-                        mem.seek(ADDRESS)
-                        mem.write(REPLACEMENT)
-                        mem.seek(ADDRESS)
-                        if mem.read(len(REPLACEMENT)) != REPLACEMENT:
-                            raise RuntimeError('patch verification failed')
-                        print(f'diagnostic handler and {mode} exit patch applied to pid {pid}', flush=True)
+                    selected = patches[mode]
+                    actual = []
+                    for address, expected, _ in selected:
+                        mem.seek(address)
+                        actual.append(mem.read(len(expected)))
+                    if all(value == expected for value, (_, expected, _) in zip(actual, selected)):
+                        for address, _, replacement in selected:
+                            mem.seek(address)
+                            mem.write(replacement)
+                            mem.seek(address)
+                            if mem.read(len(replacement)) != replacement:
+                                raise RuntimeError('diagnostic patch verification failed')
+                        print(f'diagnostic {mode} patch applied to pid {pid}', flush=True)
                         return 0
             except (OSError, ValueError):
                 pass
         time.sleep(0.05)
-    print('expected handler and callback signatures not found before timeout', flush=True)
+    print('expected diagnostic signatures not found before timeout', flush=True)
     return 1
 
 
