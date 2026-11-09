@@ -65,9 +65,12 @@ signature checked, confined to the runner's network namespace and never written 
 the executable. The callback's full purpose is unknown, and the patch suppresses
 all its calls. It does not fix the underlying checks and is off by default. A
 diagnostic probe completed local sign-in and rendered the Battle Royale locker
-with default cosmetics using DXVK and software Vulkan. The run ended before a
-locker change or persistence could be verified. Do not treat this diagnostic as
-an entitlement pass or a working launcher.
+using DXVK and software Vulkan. On 2026-11-09 the client renamed a preset and
+cleared an owned back bling; both changes reappeared after restarting the client
+and backend. A subsequent equip request exposed a template-ID mismatch; after
+the backend fix, the client equipped that back bling and the profile stored it.
+Style changes and the full range of locker operations remain unverified. Do not
+treat this diagnostic as an entitlement pass or a working launcher.
 
 For a client that supports the local grant, POST `/account/api/oauth/token` with form
 `grant_type=local_username` and `username=<chosen name>`. The existing client exchange-code
