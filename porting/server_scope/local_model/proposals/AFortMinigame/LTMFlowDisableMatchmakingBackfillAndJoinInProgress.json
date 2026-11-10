@@ -1,0 +1,8 @@
+{
+ "function": "AFortMinigame::LTMFlowDisableMatchmakingBackfillAndJoinInProgress",
+ "status": "blocked",
+ "blocker": "Body at 0x14209acf0 fully read (asm), flow resolved (world=vtable[0x150], 90.0f cooldown, IsA AFortGameStateAthena/AFortGameModeAthena/AFortGameSessionDedicatedAthena, then session stop-backfill + pause-beacon-requests). UNRESOLVED: exact C++ names for the two private session methods (0x142178c40, 0x14216e500 - not reflected natives), the vtable[0x150] slot, world+0x540, AFortMinigame floats at 0x9c/0x760, and the GameState bool gate FUN_14199e380 (0x1df8/0x1df0). Next step: read AFortGameSessionDedicatedAthena vtable (class block 0x1463e3170) to name the two methods, and AFortMinigame vtable to confirm slot 0x150 + member names.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100826",
+ "batch_seconds": 892
+}
