@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingGameplayActorPlayerPropAttachment::InitProp",
+  "status": "blocked",
+  "signature": "void InitProp(AActor* PropActorToAttach)",
+  "evidence": {
+    "reflection_exec": "0x142743f80",
+    "exec_capture": "captures/c008b6bd46cc4ee6abe77be50e8873e4/0x142743f80.c",
+    "native": "0x141be1620",
+    "native_capture": "captures/3cdf659dbde246098685412da8db1fb8/0x141be1620.c",
+    "building_actor": "0x142732ac0 identifies ABuildingActor. It clears byte +0x3e7 mask 1 (bObstructTrapTargeting), then calls 0x141bc4db0, captures/b7a712cb9a14407392314d374411d4d4/0x141bc4db0.c, which sets byte +0x3e5 mask 0x20 (bPlayerPlaced). Both bit names confirmed by field-offset queries.",
+    "building_sm_actor": "0x142752f80 identifies ABuildingSMActor. Native repeatedly invokes virtual byte slot +0xcb0 on the actor with BuildingActorsAttachedTo[0], false, nullptr, false while count is positive and the first element is non-null; field-offset identifies the array at +0xa70.",
+    "owner": "For any non-null argument, casts owner at +0xe0 to AFortPlayerPawn and calls native SetPossessedProp 0x14234ec60. Reflected setter exec 0x142a806a0 confirms mapping.",
+    "investigation": "Captured exec and native implementation and helpers 0x141bc4db0, 0x14234ec60. Reflected DetachBuildingActorFromMe wrapper 0x142755b60 invokes slot +0xca0, not +0xcb0, so it cannot be substituted. Captured wrapper at captures/5d26412bbdac48babcdc5554a604ec1c/0x142755b60.c. Native class index has no verified ABuildingSMActor vtable."
+  },
+  "blocker": "Virtual byte slot +0xcb0 has no proven source-level name, signature or dynamic implementations; it may have side effects beyond array removal. Derive the ABuildingSMActor constructor vtable, resolve this slot and overrides for derived classes, then recover and declare the native virtual contract. AFortPlayerPawn::SetPossessedProp declaration and implementation are also absent and must be restored.",
+  "verification": "No build or runtime test performed."
+}

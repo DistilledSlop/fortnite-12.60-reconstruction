@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingActor::GetLootTierGroupOverride",
+ "status": "blocked",
+ "blocker": "Volume component class and predicate, volume selection and ordering, component entry types and second actor tag array require resolution before faithful implementation.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-2",
+ "batch_seconds": 0
+}

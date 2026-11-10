@@ -1,0 +1,20 @@
+{
+  "function": "ABuildingGameplayActorPlayerPropAttachment::AttachProp",
+  "status": "proposed",
+  "signature": "void AttachProp(AActor* PropActorToAttach)",
+  "evidence": {
+    "reflection_exec": "0x142743b30",
+    "exec_capture": "captures/c008b6bd46cc4ee6abe77be50e8873e4/0x142743b30.c",
+    "native": "0x141bd56a0",
+    "native_capture": "captures/3cdf659dbde246098685412da8db1fb8/0x141bd56a0.c",
+    "attachment_helper": "0x143f69390, captures/b7a712cb9a14407392314d374411d4d4/0x143f69390.c: starts with actor root +0x130 and implements scene component attachment",
+    "attachment_rules": "Native packed 0x01010102 gives SnapToTarget, KeepWorld, KeepWorld, weld true, in the declaration order in UE 4.25 EngineTypes.h; zero FName is NAME_None.",
+    "fields": "field-offset queries map this+0x130 to AActor::RootComponent and this+0xe0 to AActor::Owner.",
+    "owner_cast": "0x142a75f10 identifies AFortPlayerPawn; 0x14234ec60 is the native target of the reflected AFortPlayerPawn::SetPossessedProp exec 0x142a806a0, as captured in captures/b7a712cb9a14407392314d374411d4d4/0x14234ec60.c and existing capture of the exec."
+  },
+  "integration_dependencies": [
+    "Restore AFortPlayerPawn::SetPossessedProp declaration and faithful implementation; native setter checks authority and validity, broadcasts a global native multicast with pawn, new prop and old prop before assignment. Global delegate identity and listeners remain unresolved.",
+    "Add required AFortPlayerPawn and attachment rule includes and reflected function declaration during integration."
+  ],
+  "verification": "No build or runtime test performed."
+}

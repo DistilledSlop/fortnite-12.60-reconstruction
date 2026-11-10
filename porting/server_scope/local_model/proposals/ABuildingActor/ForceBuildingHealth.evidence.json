@@ -1,0 +1,24 @@
+{
+  "function": "ABuildingActor::ForceBuildingHealth",
+  "status": "blocked",
+  "reflection": {
+    "exec": "0x142736690",
+    "flags": "0x4020405",
+    "parameter": "float NewHealth"
+  },
+  "native": "0x141b990d0",
+  "captures": [
+    "checkout/porting/generated/callee_probe/building_vitals_1/0x142736690.c",
+    "checkout/porting/generated/callee_probe/building_vitals_dependencies_1/0x141b990d0.c",
+    "checkout/porting/generated/callee_probe/building_vitals_dependencies_3/0x141b94070.c",
+    "checkout/porting/behavior/building_health_setter_batch_runtime/README.md"
+  ],
+  "findings": [
+    "Authority role byte +0xf0 must equal 3; lazily creates attribute set when absent, non-template, policy +0x34d equals 1 and engine byte +0xc7 is set.",
+    "Retains BuildingAttributeSet at +0x318; constructs and applies MaxHealth then Health to the set ability system with a fresh lookup for each.",
+    "Reflection identifies +0x318 BuildingAttributeSet and +0x34d AbilitySystemComponentCreationPolicy."
+  ],
+  "blocker": "Creation helper 0x141b94070 requires faithful component flag clears, engine byte +0xc7, registration/list target, and virtual initialization including 0x141b8f710. Existing source draft is incomplete; replacing creation with a null guard changes behavior.",
+  "next_step": "Resolve creator side effects and virtual initialization against original captures and engine declarations, then implement dependencies before setter.",
+  "verification": "No build or runtime test performed."
+}

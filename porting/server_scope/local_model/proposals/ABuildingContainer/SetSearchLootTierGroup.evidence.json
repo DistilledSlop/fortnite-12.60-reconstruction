@@ -1,0 +1,31 @@
+{
+  "function": "ABuildingContainer::SetSearchLootTierGroup",
+  "status": "blocked",
+  "reflection": {
+    "exec": "0x14273c3f0",
+    "parameter": "FName InSearchLootTierGroup",
+    "flags": "0x4020405"
+  },
+  "implementation": "0x141beb120",
+  "captures": [
+    "checkout/porting/generated/native98-impl/0x14273c3f0.c",
+    "checkout/porting/generated/native98-impl/0x141beb120.c",
+    "checkout/porting/generated/native98-impl/0x141beb120.asm",
+    "captures/efe99551e0ed4147ac4643653e759438/0x141bd52c0.c",
+    "captures/efe99551e0ed4147ac4643653e759438/0x141bd5330.c",
+    "checkout/porting/generated/native144-virtual-helpers/0x141ed8de0.c",
+    "captures/f07a60dc405c447f9615a21b57ba65d3/",
+    "captures/12038a03adba41dca2c573a83d72e557/"
+  ],
+  "findings": [
+    "Stores SearchLootTierGroup at 0xba8, then calls game-mode predicate 0x141bd52c0, which checks the world authoritative game mode and invokes its virtual byte slot 0xcd8.",
+    "If that predicate succeeds, mode check 0x141ed8c70 and native flag 0xc4a mask 2 govern invocation of 0x141bd5330 with true; otherwise mask 4 is redundantly written when already set.",
+    "0x141bd5330 executes random upgrade selection with playlist and scalable-float conditions, updates the reflected ChosenRandomUpgrade and SearchLootTierGroup and calls 0x14273b260; masks 2 and 4 are not identified in reflected fields.",
+    "0x1428f1e50 identifies AFortGameModeZone::StaticClass; 0x141bd5330 sets mask 4 on every normal exit including after selection.",
+    "0x14273b260 is a name-based ProcessEvent thunk; matching it to OnAuthorityRandomUpgradeApplied requires registration proof.",
+    "FRandomUpgradeData.h identifies the entry fields LootTierGroupIfApplied, ChanceToApplyPerContainer, Enabled and CalendarDrivenEnableState."
+  ],
+  "blocker": "Game-mode virtual slot 0xcd8 contract and unreflected flag declarations and complete random-upgrade helper remain unresolved. An assignment-only body would omit observable behavior.",
+  "next_step": "Identify virtual implementers and their source contracts; recover upgrade entry conditions, playlist lookup, RNG and 0x14273b260 side effects and declare native flag fields before implementing the setter.",
+  "verification": "No build or runtime verification performed."
+}

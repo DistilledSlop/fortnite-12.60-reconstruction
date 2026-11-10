@@ -1,0 +1,30 @@
+{
+  "function": "ABuildingActor::GetLootTierGroupOverride",
+  "status": "blocked",
+  "reflection": {
+    "exec": "0x1427370d0",
+    "flags": "0x4080401",
+    "return": "FName"
+  },
+  "native": "0x141ba7040",
+  "captures": [
+    "checkout/porting/generated/native100-broad/0x1427370d0.c",
+    "checkout/porting/generated/native100-impl/0x141ba7040.c",
+    "checkout/porting/generated/native247-fresh-callees/0x141c7ca90.c",
+    "checkout/porting/generated/decomp_batches/run-20261031T224546Z-b001/_adhoc/0x141c74820__141c74820.c",
+    "captures/d3b72e79483746528d97190c7993084a/0x142adf3a0.c",
+    "captures/d3b72e79483746528d97190c7993084a/0x141c784d0.c",
+    "checkout/porting/generated/native103-impl/0x14070fdf0.c"
+  ],
+  "findings": [
+    "Original gets world via virtual slot 0x150 and resolves a game context via 0x141c74820.",
+    "Calls 0x141c7ca90 to find volumes and components for class 0x142adf3a0; requires nonzero result and predicate 0x141c784d0.",
+    "Scans returned component +0x110 array of 16-byte name pairs in order; first non-None first name exactly matching either actor name array at +0x410 or +0x420 yields second name; otherwise returns NAME_None.",
+    "Reflection identifies +0x410 as StaticGameplayTags; +0x420 is unreflected in offset lookup.",
+    "Class getter 0x142adf3a0 identifies UFortSpecialGameplayAreaComponent; +0x110 is reflected OverrideLootData.",
+    "Gate 0x141c784d0 evaluates an FScalableFloat at level 0 at returned object +0x2f0 and accepts abs(value - 1.0) <= 0.001."
+  ],
+  "blocker": "Exact world/game context and volume search contracts including 0x141c7ca90 ordering, identity of scalable float at +0x2f0, component entry types and second tag array are not established.",
+  "next_step": "Trace 0x141c74820 and 0x141c7ca90 and identify their return objects and ordering; resolve scalable float field, OverrideLootData entry reflection and +0x420 storage before implementing dependencies.",
+  "verification": "No build or runtime test performed."
+}

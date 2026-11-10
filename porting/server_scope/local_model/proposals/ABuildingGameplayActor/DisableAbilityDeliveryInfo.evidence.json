@@ -1,0 +1,29 @@
+{
+  "class": "ABuildingGameplayActor",
+  "parameter": {
+    "name": "BucketTag",
+    "type": "FGameplayTag",
+    "property_flags": "0x10000000000080"
+  },
+  "authority": "AActor.Role at 0xf0 must equal 3",
+  "delivery_info": "DeliverableAbilityInfo at 0x6c8; array buckets are 0x90 bytes each, compare tag as two 32-bit words and visit every match",
+  "captures": [
+    "checkout/porting/generated/native107-broad/0x14273fbc0.c",
+    "checkout/porting/generated/native107-broad/0x14273ff20.c",
+    "checkout/porting/generated/native107-impl/0x141bd96a0.c",
+    "checkout/porting/generated/native107-impl/0x141bda910.c",
+    "captures/6d52d1defcc54887a17ae539876f108c/0x141bea180.c",
+    "captures/6d52d1defcc54887a17ae539876f108c/0x141bda9a0.c",
+    "captures/384489ceb1f54408bd47c49935d6d1e8/0x141611160.c",
+    "captures/384489ceb1f54408bd47c49935d6d1e8/0x141be7f80.c",
+    "captures/384489ceb1f54408bd47c49935d6d1e8/0x141bd4af0.c",
+    "captures/384489ceb1f54408bd47c49935d6d1e8/0x141bdad90.c",
+    "captures/384489ceb1f54408bd47c49935d6d1e8/0x141be51d0.c"
+  ],
+  "verification": "No build or runtime verification performed.",
+  "function": "DisableAbilityDeliveryInfo",
+  "exec_address": "0x14273fbc0",
+  "implementation_address": "0x141bd96a0",
+  "findings": "Calls bucket toggle 0x141bea180 with false, which clears persistent ability handles using 0x141611160 and performs 0x141be7f80. Clears both timer handles only if owner and owner world exist and no nonmatching bucket has bit 4 set. Native info has unreflected timer fields.",
+  "blocker": "Recover exact persistent ability removal and effect cleanup contracts, identify native timer members and owner world virtual call 0x150, then implement reusable bucket/info helpers."
+}

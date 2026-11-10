@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingActor::ForceBuildingHealth",
+ "status": "blocked",
+ "blocker": "Creator 0x141b94070 requires unresolved component flags, engine policy byte, registration and virtual initialization; preserve lazy creation before applying both attributes.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-2",
+ "batch_seconds": 0
+}

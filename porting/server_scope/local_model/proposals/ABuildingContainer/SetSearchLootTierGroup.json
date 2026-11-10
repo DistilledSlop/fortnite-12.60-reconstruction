@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingContainer::SetSearchLootTierGroup",
+ "status": "blocked",
+ "blocker": "Unresolved game-mode virtual predicate, native state flags, and full random-upgrade selection helper 0x141bd5330; identify virtual implementers and recover selection and side effects.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-2",
+ "batch_seconds": 0
+}

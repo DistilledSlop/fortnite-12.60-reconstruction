@@ -1,0 +1,13 @@
+{
+ "owner": "terra-11",
+ "functions": [
+  "ABuildingActor::ForceBuildingHealth",
+  "ABuildingActor::GetLootTierGroupOverride",
+  "ABuildingContainer::SetSearchLootTierGroup",
+  "ABuildingGameplayActor::DisableAbilityDeliveryInfo",
+  "ABuildingGameplayActor::EnableAbilityDeliveryInfo",
+  "ABuildingGameplayActorPlayerPropAttachment::InitProp"
+ ],
+ "effort": "medium",
+ "brief": "Cluster: building actors. A previous terra run recorded these as blocked; its blocker notes are in /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/server_scope/local_model/proposals/<Class>/<Fn>.json with evidence beside them (lazy ability-system creation, ability delivery bucket and timer contracts, loot tier selection, the virtual at slot 0xcb0). Treat them as leads. Resolve the named gaps yourself and finish each function; dependencies are shared between Enable/DisableAbilityDeliveryInfo."
+}

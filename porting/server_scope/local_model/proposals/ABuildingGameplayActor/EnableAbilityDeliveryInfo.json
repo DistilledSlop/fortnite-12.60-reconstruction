@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingGameplayActor::EnableAbilityDeliveryInfo",
+ "status": "blocked",
+ "blocker": "Recover 0x141bd4af0 and 0x141bdad90 activation contracts and 0x141bda9a0 timer fields, callback bindings and parameters before implementing.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-2",
+ "batch_seconds": 0
+}

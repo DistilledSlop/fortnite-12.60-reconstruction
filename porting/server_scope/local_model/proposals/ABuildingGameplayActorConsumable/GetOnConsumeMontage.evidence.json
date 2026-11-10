@@ -1,0 +1,23 @@
+{
+  "function": "ABuildingGameplayActorConsumable::GetOnConsumeMontage",
+  "status": "proposed",
+  "signature": "UAnimMontage* GetOnConsumeMontage() const",
+  "reflection": {
+    "exec": "0x142743ef0",
+    "flags": "0x54020401",
+    "return_class": "0x1446bdf40"
+  },
+  "captures": [
+    "checkout/porting/generated/native107-broad/0x142743ef0.asm",
+    "checkout/porting/generated/native107-impl/0x1427429c0.c",
+    "captures/bacac1ca7e0d413696945cc937c0235d/0x140374e70.asm",
+    "checkout/porting/generated/native362-callees/0x142743d10.c",
+    "checkout/porting/behavior/virtual_bulk111a_runtime/ABuildingGameplayActorConsumable_DetermineOnConsumeMontage_Implementation.inc"
+  ],
+  "findings": [
+    "Exec calls 0x141bdea40, a direct jump to 0x1427429c0, and returns its result. The dispatcher performs FindFunctionChecked and ProcessEvent with a zero-initialized return parameter.",
+    "Initializer 0x140374e70 initializes the FName at 0x1481767a8 from UTF-16 string at 0x146260ad8, DetermineOnConsumeMontage. The dispatched BlueprintNativeEvent must be called, preserving derived Blueprint overrides.",
+    "DetermineOnConsumeMontage native implementation returns OnConsumeMontage, but calling the implementation directly would bypass dispatch."
+  ],
+  "verification": "No build or runtime verification performed."
+}

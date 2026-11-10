@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingGameplayActor::DisableAbilityDeliveryInfo",
+ "status": "blocked",
+ "blocker": "Recover 0x141bea180 persistent-handle removal and 0x141be7f80 effect cleanup, native timer members and owner world virtual contract before implementing.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-2",
+ "batch_seconds": 0
+}

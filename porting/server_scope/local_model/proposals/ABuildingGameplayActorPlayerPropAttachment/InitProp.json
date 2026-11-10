@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingGameplayActorPlayerPropAttachment::InitProp",
+ "status": "blocked",
+ "blocker": "Resolve ABuildingSMActor virtual byte slot 0xcb0 and derived overrides before expressing the required detach loop; also restore AFortPlayerPawn::SetPossessedProp.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-2",
+ "batch_seconds": 0
+}
