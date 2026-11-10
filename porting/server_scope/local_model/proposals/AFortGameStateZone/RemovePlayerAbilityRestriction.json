@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameStateZone::RemovePlayerAbilityRestriction",
+ "status": "blocked",
+ "blocker": "Real body 0x141eaa670 is fully decompiled but cannot be expressed as faithful named C++: it shares the exact unresolved dependency set of ApplyPlayerAbilityRestriction (static global &DAT_148130770 tag at +0x788; native fields this+0x780/0x888/0x8b8/0x710/0x728; helper methods FUN_140744d30/FUN_143e8f0b0/FUN_141ea5f80/FUN_140684de0), none of which resolve to names via reflection. Writing raw offsets would be a forbidden memory-layout stand-in.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100754",
+ "batch_seconds": 1106
+}

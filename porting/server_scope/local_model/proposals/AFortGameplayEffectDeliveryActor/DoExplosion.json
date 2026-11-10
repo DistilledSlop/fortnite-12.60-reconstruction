@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameplayEffectDeliveryActor::DoExplosion",
+ "status": "blocked",
+ "blocker": "DoExplosion's exec (0x1410aabf0) is a pure virtual-dispatch thunk: FFrame::NextLocalVar then tail-jump to the actor's vtable+0x630. The real implementation is the function at that vtable slot, but the CDO/vtable of AFortGameplayEffectDeliveryActor could not be located (no object in the UClass pointer range has ClassPrivate==0x1463dfa30; candidate vtables are 0x10-apart structs). Without the vtable+0x630 target address, the body cannot be decompiled or written.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100754",
+ "batch_seconds": 1106
+}
