@@ -49,7 +49,7 @@ def pick(n_runs):
     rows.sort()
     if not rows: return None
     np0 = rows[0][0]
-    size = 8 if np0 <= 1 else 3 if np0 == 2 else 1
+    size = 3 if np0 <= 1 else 2 if np0 == 2 else 1
     out, seen = [], {}
     for np_, c, f, k in rows:
         if (np_ <= 1) != (np0 <= 1) or (np_ >= 3) != (np0 >= 3): break
@@ -73,12 +73,12 @@ def run_batch(batch, np0, tag):
             + "Use the existing porting/behavior/*.inc files of other functions of the same class in the checkout as style references. Do not touch the main checkout.\n\n"
             "When a function is finished, record it with scripts/inventory_progress.py record (status proposed). When you cannot finish one because a contract is unresolved, "
             "record it as blocked with the address, the missing evidence, what you tried and a concrete next step. Never invent callees or returns. "
-            "Stop after all are recorded. Finish with one line: proposed count, blocked count.\n")
+            "Keep your context small: never print a whole decompile or asm file, use sed -n ranges or head/tail with a few hundred lines at most, and record each function the moment it is finished instead of at the end. Stop after all are recorded. Finish with one line: proposed count, blocked count.\n")
     open(os.path.join(wd, 'ASSIGNMENT.txt'), 'w').write(text)
     env = dict(os.environ, OPENCODE_CONFIG_CONTENT=open(CFG).read())
     t0 = time.time()
     with open(os.path.join(wd, 'run.log'), 'w') as lg:
-        subprocess.run(['timeout', '1800' if heavy else '3600', './scripts/sandbox.sh', os.path.expanduser('~/.opencode/bin/opencode'),
+        subprocess.run(['timeout', '2400' if heavy else '1800', './scripts/sandbox.sh', os.path.expanduser('~/.opencode/bin/opencode'),
                         'run', '--standalone', '--auto', '-m', MODEL, text], cwd=PKG, env=env, stdout=lg, stderr=subprocess.STDOUT)
     return keys, wd, time.time() - t0
 
