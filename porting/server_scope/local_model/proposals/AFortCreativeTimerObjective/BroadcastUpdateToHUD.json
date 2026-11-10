@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeTimerObjective::BroadcastUpdateToHUD",
+ "status": "blocked",
+ "blocker": "AFortVolume member at offset 0x500 (TArray of 16-byte FFunctionHandle-shaped entries broadcast via helper 0x1406a9dc0 through ProcessEvent) is unreflected in the 12.60 data; C++ name/element type unresolved (23.20 SDK has TaskQueue there, different layout). Next step: resolve name via AFortVolume field-layout reconstruction / name-pool evidence near Z_Construct 0x142b32780.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100710",
+ "batch_seconds": 1255
+}
