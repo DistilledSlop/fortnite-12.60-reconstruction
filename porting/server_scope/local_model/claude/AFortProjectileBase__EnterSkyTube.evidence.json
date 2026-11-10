@@ -1,0 +1,22 @@
+{
+  "function": "AFortProjectileBase::EnterSkyTube",
+  "status": "proposed",
+  "original": "0x142aa5b70",
+  "signature": "void AFortProjectileBase::EnterSkyTube(bool& bIsFirstTube, AFortSkyTube* SkyTube)  [exec, bIsFirstTube is CPF_OutParm]",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142aa5b70.c",
+    "captures/56d7140b3f0d49ec9a8ce450268de84b/0x1426c86b0.c"
+  ],
+  "callees": {
+    "0x1426c86b0": "helper: sets CurrentSkyTube (+0x7A8) and reports whether this is the first tube (out bool); deps AFortProjectileBase__EnterSkyTube__Helper.json",
+    "0x1426f5f90": "gate check before the change (not captured)",
+    "0x143f84060": "called when a tube is entered while simulating (+0x6F4 bit 0) (not captured)",
+    "0x143f72550": "AActor::ForceNetUpdate (vslot 0x5E8), see AFortProjectileBase ResumeSimulation evidence",
+    "0x14070fdf0": "scalar lookup used for the lerp factor (not captured)",
+    "0x1440e9d30": "vector lookup from the tube (not captured)",
+    "0x1426f9da0": "tube-relative interpolation helper (not captured)",
+    "FFrame_Step / FFrame_StepExplicitProperty": "named engine helpers"
+  },
+  "notes": "Thunk ported fully. The helper body is ported at MEDIUM for the state flow (gate, change detection, ForceNetUpdate, first-tube flag) and LOW for the interpolation of the projectile location (vector math not fully read).",
+  "confidence": "MEDIUM"
+}

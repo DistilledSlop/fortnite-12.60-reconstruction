@@ -1,0 +1,21 @@
+{
+  "function": "AFortProjectileDecoHelper::Tick",
+  "status": "proposed",
+  "original": "0x142aa7200",
+  "signature": "void AFortProjectileDecoHelper::Tick(float DeltaSeconds)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142aa7200.c",
+    "captures/085e4222f7624092a0606a6e2096341e/0x1426b6860.c",
+    "captures/736e8ba99c964c6dafba3f30e77fe1a9/0x1426862d0.c",
+    "captures/736e8ba99c964c6dafba3f30e77fe1a9/0x1426b9c40.c"
+  ],
+  "callees": {
+    "0x1426b6860": "Tick dispatch helper (vslot 0x450): calls 0x1426862d0 then vslot 0x668 with the same DeltaSeconds",
+    "0x1426862d0": "PreTickHelper: calls 0x143f871b0 (Super-tick, not captured) and then, unless the object is an instance of class 0x142aa3b50, calls vslot 0x668. Captured and read in full",
+    "0x1426b9c40": "TickDecoHelper (vslot 0x668): decoration tick body, see deps. Captured and read in full; depth-2 helpers 0x14079d060, 0x14268aa60, 0x14266fa20, 0x14266fb10, 0x1423bf5c0, 0x14237e3e0, 0x142c0c150 not captured",
+    "0x143f871b0": "Super tick (not captured)",
+    "0x142aa3b50": "static class getter used as the IsA check in PreTickHelper (not captured)"
+  },
+  "notes": "Thunk path noted: the exec-style thunk 0x142aa7200 reads a float and calls 0x1426b6860 which runs 0x1426862d0 then 0x668. The two-step native Tick is ported as one body. MEDIUM confidence: the PreTickHelper class test is read from the IsA pattern (index compare plus chain walk).",
+  "confidence": "MEDIUM"
+}

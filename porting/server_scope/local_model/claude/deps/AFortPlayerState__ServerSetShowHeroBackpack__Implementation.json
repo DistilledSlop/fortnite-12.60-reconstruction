@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerState__ServerSetShowHeroBackpack__Implementation",
+  "address": "0x142427750",
+  "signature": "void AFortPlayerState::ServerSetShowHeroBackpack_Implementation(bool bShow)",
+  "inc_or_decl": "if (bShowHeroBackpack == bShow)\n{\n    return;\n}\nbShowHeroBackpack = bShow;\nApplyCustomizationToCharacter();  // virtual 0x728 -> 0x1424089c0",
+  "evidence": "captures/71e6340442374a51ba4866ac1e51bf60/0x142427750.c"
+}

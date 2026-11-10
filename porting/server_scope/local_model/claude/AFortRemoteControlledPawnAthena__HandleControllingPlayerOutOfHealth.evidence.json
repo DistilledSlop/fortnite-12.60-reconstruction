@@ -1,0 +1,18 @@
+{
+  "function": "AFortRemoteControlledPawnAthena::HandleControllingPlayerOutOfHealth",
+  "status": "proposed",
+  "original": "0x142ac24a0",
+  "signature": "void AFortRemoteControlledPawnAthena::HandleControllingPlayerOutOfHealth()",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142ac24a0.c",
+    "captures/8ab1b59c901c457aa8397e0816b78ffe/0x14243a470.c"
+  ],
+  "callees": {
+    "0x14243a470": "helper body (deps AFortRemoteControlledPawnAthena__HandleControllingPlayerOutOfHealth__Helper.json): hands the remote-controlled pawn back to the controlling player once that player is out of health",
+    "0x14234bec0 / 0x14234b560 / 0x14416eac0 / 0x1423318f0 / 0x142331180 / 0x1429f5d30 / 0x142ee3b30": "pawn and controller helpers called from the helper (not captured; described from call sites only)",
+    "AFortPlayerControllerAthena_StaticClass": "named engine helper",
+    "FWeakObjectPtr_IsValid / FWeakObjectPtr_Get": "named engine helpers"
+  },
+  "notes": "Thunk ported fully (no parameters). The helper is ported at MEDIUM: the un-possess and flag/weak-pointer clearing sequence is in the right order and the ForceNetUpdate calls are on the controller, the remote pawn and this. Depth-2 helpers listed above were not captured.",
+  "confidence": "MEDIUM"
+}

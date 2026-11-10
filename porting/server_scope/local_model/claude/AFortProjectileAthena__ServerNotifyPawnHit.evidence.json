@@ -1,0 +1,24 @@
+{
+  "function": "AFortProjectileAthena::ServerNotifyPawnHit",
+  "status": "proposed",
+  "original": "0x142aa6590",
+  "signature": "void AFortProjectileAthena::ServerNotifyPawnHit(FHitResult Hit)  [RPC Server, WithValidation]",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142aa6590.c",
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142aa6590.asm",
+    "captures/4943dd9f417a4974847075560f71ede8/0x141a59110.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB: RPC _Validate (vslot 0x6f8), Stub_ReturnTrue, always true",
+    "0x141a59110": "AFortProjectileAthena::ServerNotifyPawnHit_Implementation (vslot 0x700); deps AFortProjectileAthena__ServerNotifyPawnHit__Implementation.json",
+    "0x1406a7ed0": "weak-pointer validity check on the hit actor, used in _Implementation (not captured)",
+    "0x143f832a0": "ProcessHit path called from _Implementation (not captured)",
+    "0x140f95ae0": "GetWorldTimerManager-style accessor (not captured)",
+    "0x144621fb0": "timer handle validity check (not captured)",
+    "0x1426d1d80": "hit dispatch to the owning projectile (not captured)",
+    "0x142697a90": "AFortProjectileBase::DoExplosion (vslot 0x630, header-model name)",
+    "FTimerManager_InternalClearTimer / FWeakObjectPtr_Get / FFrame_Step": "named engine helpers"
+  },
+  "notes": "Thunk ported fully. Validate is a shared STUB. Implementation ported at MEDIUM. The FHitResult layout here is taken from the struct copy offsets (Actor weak pointer +0x6C, Component weak pointer +0x74, blocking flag at byte 0, struct size 0x8C). The struct type name is assumed FHitResult from the size and fields, not from a reflected name.",
+  "confidence": "MEDIUM"
+}

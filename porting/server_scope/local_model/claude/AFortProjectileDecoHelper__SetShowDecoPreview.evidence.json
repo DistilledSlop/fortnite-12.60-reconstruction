@@ -1,0 +1,14 @@
+{
+  "function": "AFortProjectileDecoHelper::SetShowDecoPreview",
+  "status": "proposed",
+  "original": "0x142aa7070",
+  "signature": "void AFortProjectileDecoHelper::SetShowDecoPreview(bool bInShowDecoPreview)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142aa7070.c"
+  ],
+  "callees": {
+    "FFrame_Step / FFrame_StepExplicitProperty": "named engine helpers (bool read from the script frame)"
+  },
+  "notes": "Fully ported. No calls besides the frame read. Member at +0x42D (1069) has no reflected name from field-offset; it is read by the tick path (0x1426b9c40 at byte +0x42D as the show-preview flag), which supports the proposed name bShowDecoPreview.",
+  "confidence": "HIGH"
+}

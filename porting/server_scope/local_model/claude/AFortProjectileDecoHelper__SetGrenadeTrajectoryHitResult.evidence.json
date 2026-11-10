@@ -1,0 +1,14 @@
+{
+  "function": "AFortProjectileDecoHelper::SetGrenadeTrajectoryHitResult",
+  "status": "proposed",
+  "original": "0x142aa68c0",
+  "signature": "void AFortProjectileDecoHelper::SetGrenadeTrajectoryHitResult(FHitResult InHitResult)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142aa68c0.c"
+  ],
+  "callees": {
+    "FFrame_Step / FFrame_StepExplicitProperty": "named engine helpers (struct read from the script frame)"
+  },
+  "notes": "Fully ported as a struct assignment. The struct is FHitResult by size (0x8C) and the same struct type as ServerNotifyPawnHit (type ref 0x144704460). The destination block at +0x3A0 has no reflected member name. Confidence HIGH for the copy, MEDIUM for the struct type name.",
+  "confidence": "HIGH"
+}

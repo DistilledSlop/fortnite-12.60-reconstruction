@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerState__ServerSetShowHeroHeadAccessories__Implementation",
+  "address": "0x142427790",
+  "signature": "void AFortPlayerState::ServerSetShowHeroHeadAccessories_Implementation(bool bShow)",
+  "inc_or_decl": "if (bShowHeroHeadAccessories == bShow)\n{\n    return;\n}\nbShowHeroHeadAccessories = bShow;\nApplyCustomizationToCharacter();  // virtual 0x728 -> 0x1424089c0",
+  "evidence": "captures/8a73ba2d97d5476d851605087f1f1e2c/0x142427790.c"
+}

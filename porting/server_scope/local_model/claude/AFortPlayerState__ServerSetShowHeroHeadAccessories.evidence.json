@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerState::ServerSetShowHeroHeadAccessories",
+  "status": "proposed",
+  "original": "0x142a89ba0",
+  "signature": "void AFortPlayerState::ServerSetShowHeroHeadAccessories(bool bShow)  [RPC Server, WithValidation]",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a89ba0.c",
+    "captures/8a73ba2d97d5476d851605087f1f1e2c/0x142427790.c",
+    "captures/1e765c9bf1794c70ada09412aa73d9d9/0x1424089c0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB: RPC _Validate (vslot 0x718), Stub_ReturnTrue, always true",
+    "0x142427790": "AFortPlayerState::ServerSetShowHeroHeadAccessories_Implementation (vslot 0x720); deps AFortPlayerState__ServerSetShowHeroHeadAccessories__Implementation.json",
+    "0x1424089c0": "ApplyCustomizationToCharacter (vslot 0x728), shared with the backpack RPC; deps AFortPlayerState__ServerSetShowHeroBackpack__ApplyCustomizationToCharacter.json",
+    "FFrame_Step / FFrame_StepExplicitProperty / RPC_ValidateFailed": "named engine helpers"
+  },
+  "notes": "Exec thunk ported fully. Same shape as ServerSetShowHeroBackpack; differs in the flag bit (bShowHeroHeadAccessories, byte 0x331 mask 0x01, uint mask 0x100) and the vslot numbers (0x718 / 0x720).",
+  "confidence": "HIGH"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerStateAthena__IsInSquad__SquadHelper",
+  "address": "0x141a4aa10",
+  "signature": "bool AFortPlayerStateAthena::IsInSquadHelper() const",
+  "inc_or_decl": "AFortGameStateAthena* GameState = GetFortGameStateAthena();  // 0x1419d3ff0\nif (GameState == nullptr)\n{\n    return false;\n}\nconst FSquadRecord* Squad = GameState->GetSquadRecord(SquadId);  // 0x1419982c0, SquadId = byte at +0xFDC\nreturn Squad->MemberCount > 1;  // dword at record +0x8",
+  "evidence": "captures/7fe8d6f38d0948738e6f179014e5e35d/0x141a4aa10.c"
+}

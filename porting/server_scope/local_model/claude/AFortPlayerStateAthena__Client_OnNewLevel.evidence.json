@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerStateAthena::Client_OnNewLevel",
+  "status": "proposed",
+  "original": "0x142a8d6e0",
+  "signature": "void AFortPlayerStateAthena::Client_OnNewLevel(int32 NewLevel)  [RPC Client]",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a8d6e0.c",
+    "captures/362795d588f34da58642796410d03ed7/0x141a3d950.c"
+  ],
+  "callees": {
+    "0x141a3d950": "AFortPlayerStateAthena::Client_OnNewLevel_Implementation (vslot 0x888); deps AFortPlayerStateAthena__Client_OnNewLevel__Implementation.json",
+    "FFrame_Step / FFrame_StepExplicitProperty": "named engine helpers (int read from script frame)"
+  },
+  "notes": "Thunk ported fully. The Implementation body is large (625 decompile lines). Its branch structure and payload keys are ported at MEDIUM confidence. The depth-2 helpers that build the message object (0x142c26f20, 0x142c18a00, 0x142c255f0, 0x141ed1800, 0x143e8b3b0, 0x141e5b2a0, 0x141e5f780, 0x142c0c460, 0x142c2e440, 0x141a2d0f0) are described from call sites only and were not captured.",
+  "confidence": "HIGH"
+}

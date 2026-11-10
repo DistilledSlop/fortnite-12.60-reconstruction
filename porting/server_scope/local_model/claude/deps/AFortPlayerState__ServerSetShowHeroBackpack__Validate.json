@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerState__ServerSetShowHeroBackpack__Validate",
+  "address": "0x1406801d0",
+  "signature": "bool AFortPlayerState::ServerSetShowHeroBackpack_Validate(bool bShow)",
+  "inc_or_decl": "// STUB: vslot 0x708 resolves to the shared Stub_ReturnTrue (0x1406801d0), so validation always passes.\nreturn true;",
+  "evidence": "porting/generated/native-cap-virtual/0x1406801d0.c"
+}

@@ -1,0 +1,17 @@
+{
+  "function": "AFortProjectileTrajectory::SetTrajectorySpline",
+  "status": "proposed",
+  "original": "0x142aac870",
+  "signature": "void AFortProjectileTrajectory::SetTrajectorySpline(TArray<FVector> SplinePoints, TArray<FVector> SplineTangents)  [exec]",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142aac870.c",
+    "captures/50c73de6a3f24817bd3a87e285f804b9/0x1426e0280.c"
+  ],
+  "callees": {
+    "0x1426e0280": "SetTrajectorySpline implementation (vslot 0x628, resolved for AFortProjectileTrajectory; the class has no primary vtable in the class-vtable map, so the slot was resolved with virtual_slots.virt_target). deps AFortProjectileTrajectory__SetTrajectorySpline__Implementation.json",
+    "FMemory_Free": "named engine helper (releases the two arrays)",
+    "FFrame_Step / FFrame_StepExplicitProperty": "named engine helpers"
+  },
+  "notes": "Thunk ported: the two frame reads and the array release. The array parameter types are TArray<FVector> by the struct type ref and the 0x18-byte element stride used in the native body. Implementation is MEDIUM: the spline setup and the mesh segment loop are ported at structure level, the tangent normalisation is described in words and the depth-2 spline helpers (0x1441505c0, 0x1441512d0, 0x144121f60, 0x14413aad0, 0x144140c10, 0x1441402b0, 0x144150b60) were not captured.",
+  "confidence": "MEDIUM"
+}

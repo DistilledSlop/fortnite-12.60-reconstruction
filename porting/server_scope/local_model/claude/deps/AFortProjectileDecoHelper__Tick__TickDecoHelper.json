@@ -1,0 +1,7 @@
+{
+  "name": "AFortProjectileDecoHelper__Tick__TickDecoHelper",
+  "address": "0x1426b9c40",
+  "signature": "void AFortProjectileDecoHelper::TickDecoHelper(float DeltaSeconds)  (virtual, vslot 0x668)",
+  "inc_or_decl": "// MEDIUM. Depth-2 helpers named from call sites only.\nstatic const FName DecoTickName;   // one-time init at DAT_1480CF398\nAddDecoTickTag(DecoTickName);       // 0x14079d060 on this+0x68\nUpdateDecoTracking();              // 0x14268aa60\nAFortDecoOwner* Owner = GetDecoOwner();   // 0x14266fa20\nif (PreviewComponent == nullptr || GetPreviewState() == nullptr || Owner == nullptr)   // this+0x218, 0x14266fb10\n{\n    DecoState = 4;                 // this+0x338\n    return;\n}\nbool bVisible = Owner->vcall_0x1978() && bShowDecoPreview;   // 0x42D flag\nPreviewComponent->vcall_0x2f8(!bVisible);\nDecoState = 0;                    // this+0x338\nbDecoFlagAt42C = false;           // this+0x42C\nvslot 0x648(this, DeltaSeconds, 0);\nvslot 0x660(this);\nif (Owner->bHasSecondaryPreview)  // byte +0x7AA on the owner\n{\n    bool bArg = true;\n    if (bVisible && DecoState == 0)\n    {\n        bArg = IsWeakPtrValid(this+0x2FC);\n    }\n    if (AFortDecoPreviewChild* Child = GetSecondaryPreview(Owner))   // 0x14237e3e0\n    {\n        Child->vcall_0x2f8(bArg);\n    }\n}\nFinishDecoTick(Owner, this);      // 0x1423bf5c0",
+  "evidence": "captures/736e8ba99c964c6dafba3f30e77fe1a9/0x1426b9c40.c"
+}

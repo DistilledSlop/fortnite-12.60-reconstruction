@@ -1,0 +1,21 @@
+{
+  "function": "AFortRemoteControlledPawnAthena::SetupRemoteControlPawn",
+  "status": "proposed",
+  "original": "0x142ac2920",
+  "signature": "void AFortRemoteControlledPawnAthena::SetupRemoteControlPawn(AFortPlayerControllerAthena* InFortPC, AFortPawn* InControllingPawn, uint8 CustomMovementType, TArray<FFortEffectContainerSpec> EffectContainerSpecOnKill)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142ac2920.c",
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142ac2920.asm",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native247-fresh-callees/0x142450a20.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native150-large-helpers/0x140682d50.c"
+  ],
+  "callees": {
+    "0x142450a20": "SetupRemoteControlPawn helper (326 decompile lines, read in full, ported at MEDIUM/LOW; deps AFortRemoteControlledPawnAthena__SetupRemoteControlPawn__Helper.json)",
+    "0x140682d50": "TArray element release helper (used by the teardown loop; cached decompile read, the RAII destructor in the port)",
+    "FMemory_Free / FMemory_Realloc": "named engine helpers",
+    "0x142ee3b30": "weak pointer assign (not captured; used for +0x30A4 and the delegate context)",
+    "0x142443470 / 0x142443590 / 0x142451640": "delegate/timer callbacks taken by address (not captured)"
+  },
+  "notes": "Thunk ported fully (frame reads in reverse declaration order, array teardown noted as RAII). The helper is ported at structure level only (guard, weak-pointer binding, ForceNetUpdate and the remote-control delegate bind, the effects-array refresh and two timer branches). Depth-2 helpers not captured: 0x14234bec0, 0x14234f000, 0x14442be60, 0x142bad740, 0x14242e840, 0x1415e6e30, 0x14070cc00, 0x1446278d0, 0x1429f5d30, 0x142927a60 and others.",
+  "confidence": "MEDIUM"
+}

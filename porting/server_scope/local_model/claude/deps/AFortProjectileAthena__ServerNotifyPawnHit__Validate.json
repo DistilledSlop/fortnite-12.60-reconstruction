@@ -1,0 +1,7 @@
+{
+  "name": "AFortProjectileAthena__ServerNotifyPawnHit__Validate",
+  "address": "0x1406801d0",
+  "signature": "bool AFortProjectileAthena::ServerNotifyPawnHit_Validate(const FHitResult& Hit)",
+  "inc_or_decl": "// STUB: vslot 0x6F8 resolves to the shared Stub_ReturnTrue (0x1406801d0), so validation always passes.\nreturn true;",
+  "evidence": "porting/generated/native-cap-virtual/0x1406801d0.c"
+}

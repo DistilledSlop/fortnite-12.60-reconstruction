@@ -1,0 +1,33 @@
+{
+  "function": "AFortPlayerState::ServerSetShowHeroBackpack",
+  "status": "proposed",
+  "original": "0x142a89ae0",
+  "signature": "void AFortPlayerState::ServerSetShowHeroBackpack(bool bShow)  [RPC Server, WithValidation]",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a89ae0.c",
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a89ae0.asm",
+    "captures/71e6340442374a51ba4866ac1e51bf60/0x142427750.c",
+    "captures/1e765c9bf1794c70ada09412aa73d9d9/0x1424089c0.c",
+    "captures/2bb4b37f42b5426b94030f01365225b5/0x142a3d9f0.c",
+    "captures/2bb4b37f42b5426b94030f01365225b5/0x142a75f10.c",
+    "captures/2bb4b37f42b5426b94030f01365225b5/0x142407c60.c",
+    "captures/2bb4b37f42b5426b94030f01365225b5/0x142380c30.c",
+    "captures/2bb4b37f42b5426b94030f01365225b5/0x142408c00.c",
+    "captures/2bb4b37f42b5426b94030f01365225b5/0x14242c440.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB: RPC _Validate for slots 0x708 (also 0x6f8 ProjectileAthena); Stub_ReturnTrue, always true",
+    "0x142427750": "AFortPlayerState::ServerSetShowHeroBackpack_Implementation (vslot 0x710); deps AFortPlayerState__ServerSetShowHeroBackpack__Implementation.json",
+    "0x1424089c0": "AFortPlayerState::ApplyCustomizationToCharacter (vslot 0x728, name from log string); deps AFortPlayerState__ServerSetShowHeroBackpack__ApplyCustomizationToCharacter.json",
+    "0x14242c440": "vslot 0x730 on this, called from ApplyCustomizationToCharacter with the owning controller; depth-2 not fully ported",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass() (static class getter)",
+    "0x142a75f10": "AFortPlayerPawn::StaticClass() (static class getter)",
+    "0x142407c60": "ApplyCustomization on the pawn (218-line helper, authority path); depth-2 summarised only",
+    "0x142380c30": "helper returning a controller-side object (GetX on controller, checked against a class); depth-2 summarised",
+    "0x142408c00": "client-side customization path (83-line helper); depth-2 summarised only",
+    "FFrame_Step / FFrame_StepExplicitProperty": "named engine helpers (bool read from script frame)",
+    "RPC_ValidateFailed": "named engine helper"
+  },
+  "notes": "Exec thunk ported fully. The Validate call is kept faithfully but resolves to the shared STUB that always returns true. Bitfield bShowHeroBackpack (byte 0x331 bit mask 0x80) is written inside _Implementation. Depth-2 helpers of the customization path are only partly ported; see the ApplyCustomizationToCharacter dep.",
+  "confidence": "HIGH"
+}

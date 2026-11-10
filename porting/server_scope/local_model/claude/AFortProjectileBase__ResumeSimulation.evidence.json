@@ -1,0 +1,20 @@
+{
+  "function": "AFortProjectileBase::ResumeSimulation",
+  "status": "proposed",
+  "original": "0x142aa6370",
+  "signature": "void AFortProjectileBase::ResumeSimulation()",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142aa6370.c",
+    "captures/f53fefae2ecb42e8bb5c053057c101ed/0x142aa4a00.c",
+    "captures/f53fefae2ecb42e8bb5c053057c101ed/0x143f72550.c"
+  ],
+  "callees": {
+    "0x142aa4a00": "UObject-level call: resolves a reflected function by name (UObject_FindFunctionChecked on the constant at DAT_1481b8840) and calls vslot 0x210 on the object with arg 0. Read in full; the target name constant is not decoded",
+    "0x143f72550": "AActor::ForceNetUpdate (vslot 0x5E8, header-model name). Captured and read in full. Flushes net dormancy (logs NET_AActor_FlushNetDormancy) and calls FUN_143f76f10 / FUN_1443771a0 / FUN_144684d20 / FUN_144375f90 (not captured)",
+    "CollisionComponent (+0x3F0) vslot 0x618": "UPrimitiveComponent::SetCollisionEnabled (inferred from ECollisionEnabled 3 = QueryAndPhysics; vtable not resolvable in the map)",
+    "ProjectileMovementComponent (+0x640) vslot 0x440": "UProjectileMovementComponent::SetUpdatedComponent (inferred from the arg +0x638 CapsuleComponent; not resolvable in the map)",
+    "FFrame": "not used (no params)"
+  },
+  "notes": "Field names confirmed by field-offset: 0x3F0 CollisionComponent, 0x640 ProjectileMovementComponent, 0x638 CapsuleComponent, 0x6F0 ResumeSimulationCount (int), 0x654 bStoppedSimulatingDueToHit, 0x653 bDisableCollisionOnStop, 0x7A8 CurrentSkyTube. The Role byte is AActor::Role at 0xF0 (value 3 = ROLE_Authority). The two vslot names are inferred, not reflected: MEDIUM confidence overall.",
+  "confidence": "MEDIUM"
+}

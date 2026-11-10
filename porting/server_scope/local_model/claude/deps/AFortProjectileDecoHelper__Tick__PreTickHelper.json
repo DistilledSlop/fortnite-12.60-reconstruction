@@ -1,0 +1,7 @@
+{
+  "name": "AFortProjectileDecoHelper__Tick__PreTickHelper",
+  "address": "0x1426862d0",
+  "signature": "void AFortProjectileDecoHelper::PreTickHelper(float DeltaSeconds)",
+  "inc_or_decl": "SuperTick(DeltaSeconds);                       // 0x143f871b0 (not captured)\nif (this == nullptr)\n{\n    TickDecoHelper(DeltaSeconds);             // vslot 0x668\n    return;\n}\nif (!IsA(DecoPreviewClassForPreTick()))   // 0x142aa3b50 class check\n{\n    TickDecoHelper(DeltaSeconds);             // vslot 0x668\n}",
+  "evidence": "captures/736e8ba99c964c6dafba3f30e77fe1a9/0x1426862d0.c"
+}

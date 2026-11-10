@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerStateZone::MulticastTriggerOnGadgetTrackedAttributeDestroyedFX",
+  "status": "proposed",
+  "original": "0x142a951d0",
+  "signature": "void AFortPlayerStateZone::MulticastTriggerOnGadgetTrackedAttributeDestroyedFX(UFortGadgetItemDefinition* GadgetItemDefinition)  [NetMulticast]",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a951d0.c",
+    "captures/ec5d58e699ea452d839d1683c6a89fc4/0x14241d950.c"
+  ],
+  "callees": {
+    "0x14241d950": "AFortPlayerStateZone::MulticastTriggerOnGadgetTrackedAttributeDestroyedFX_Implementation (vslot 0x800); deps AFortPlayerStateZone__MulticastTriggerOnGadgetTrackedAttributeDestroyedFX__Implementation.json",
+    "FFrame_Step / FFrame_StepExplicitProperty": "named engine helpers"
+  },
+  "notes": "Thunk ported fully. Implementation (107 decompile lines) ported at MEDIUM. Depth-2 helpers 0x1406d93e0 (TArray alloc), 0x1419b6d20, 0x142abf870, 0x144693810, 0x141a664c0, 0x14422ffb0, 0x1419b68c0, 0x144230ed0 are described from call sites and not captured.",
+  "confidence": "HIGH"
+}

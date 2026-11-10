@@ -1,0 +1,18 @@
+{
+  "function": "AFortProjectileBase::OnRep_CurrentSkyTube",
+  "status": "proposed",
+  "original": "0x142aa6290",
+  "signature": "void AFortProjectileBase::OnRep_CurrentSkyTube()",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142aa6290.c",
+    "captures/a2f2d1ddad854e9aa8cd3be571406374/0x142ecc600.c",
+    "captures/a2f2d1ddad854e9aa8cd3be571406374/0x144630410.c"
+  ],
+  "callees": {
+    "0x142ecc600": "HasComponentWithFlags(mask): walks a linked list at +0x20 and returns 1 if any node's word at +0x8 has the mask bits (mask 0x30 here). Proposed name; captured and read in full",
+    "0x144630410": "SetRegisteredFlag(bool) on the sub-object at this+0x28: if the registration pointer (+0x20) is valid and its flag bit 0 is set, it unregisters (0x14462c250), writes the flag at +0xB, and re-registers (0x14461b1b0). When the flag becomes false it sets a float -1.0 at the registration +0x24. Captured and read in full; 0x14462c250 and 0x14461b1b0 not captured",
+    "FFrame": "not used (no thunk, the notify takes no parameters)"
+  },
+  "notes": "Flags: +0x6F4 bit 0 is the simulation/active flag, +0x32 bit 1 gates the component check. The +0x32 field has no reflected name in the inventory. Confidence MEDIUM because the sub-object name at +0x28 is PrimaryActorTick by layout (AActor::PrimaryActorTick is at +0x28 in the field-offset map).",
+  "confidence": "MEDIUM"
+}
