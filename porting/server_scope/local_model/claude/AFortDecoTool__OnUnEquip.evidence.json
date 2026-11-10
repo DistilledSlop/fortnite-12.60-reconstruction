@@ -1,0 +1,27 @@
+{
+  "function": "AFortDecoTool::OnUnEquip",
+  "status": "proposed",
+  "original": "0x14283dc50",
+  "signature": "void OnUnEquip()",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x14283dc50.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x1426aad70.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x1426aafb0.c",
+    "captures/44d47592926e48b394ba11a5e200418f/0x143f84060.c",
+    "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x1426b2930.c",
+    "captures/b05277d5018c4c6a8645214e9d3bc4df/0x14269e2e0.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x14237e3e0.c",
+    "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x142698610.c"
+  ],
+  "callees": {
+    "0x1426aad70": "real body of OnUnEquip (exec thunk dispatches virtually to it): bIsEquipped=false; CleanupUnequipState; SetAttachedVisibility(false); DecoHelper vcall 0x640; if Role==Authority {vcall 0xb28; vcall 0xae8(null,true)}; BuildPreviewMarker SetActorHiddenInGame(true)",
+    "0x1426aafb0": "CleanupUnequipState: 385-line native helper, captured, not ported here. Proposed: AFortDecoTool::CleanupUnequipState",
+    "0x143f84060": "SetAttachedVisibility(this, bool): if (flags32 & 2) and not FUN_142ecc600(this,0x30) then FUN_144630410(this+0x28, bool). Partially read. Proposed: AFortDecoTool::SetAttachedVisibility",
+    "0x142698610": "vcall 0xb28 target, 353 lines, captured, not ported. Proposed: AFortDecoTool::ReleaseDecoPlacementState (name LOW)",
+    "0x1426b2930": "SetDecoItemDefinitionInternal(ItemDef, bool): if bIsEquipped { ItemDefinition=ItemDef; if PC && PC vcall0x6a8 { if GetDecoItemDefinition() && DecoHelper { DecoHelper vcall0x628(item,bool) } } }. Fully read",
+    "0x14269e2e0": "GetInstigatorController (see ServerCreateBuildingAndSpawnDeco evidence)",
+    "0x14237e3e0": "returns controller->BuildPreviewMarker (+0x1190)",
+    "0x1406801c0": "Stub_Empty (used by AFortDecoTool vcall 0xb30; not on this path)"
+  },
+  "notes": "Exec thunk 0x14283dc50 is a pure virtual dispatch to 0x1426aad70 (owner AFortDecoTool), so the real behaviour is 0x1426aad70. Field names from field-offset: bIsEquipped at 0xbda (bool bits), Role at 0xf0 (ROLE_Authority=3), DecoHelper 0xb98, ItemDefinition 0xb90, BuildPreviewMarker on AFortPlayerController 0x1190. Unresolved: vcall 0x640 target class, vcall 0x6a8 on controller, and the 385-line and 353-line native helpers, which are the main open items for this function."
+}

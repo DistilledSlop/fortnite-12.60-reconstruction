@@ -1,0 +1,33 @@
+{
+  "function": "AFortDecoTool::ServerCreateBuildingAndSpawnDeco",
+  "status": "proposed",
+  "original": "0x1428d6f90",
+  "signature": "void ServerCreateBuildingAndSpawnDeco(FVector BuildingLocation, FRotator BuildingRotation, FVector Location, FRotator Rotation, EBuildingAttachmentType InBuildingAttachmentType)  // RPC (Server, WithValidation)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428d6f90.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x1426b04d0.c",
+    "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x14269bb00.c",
+    "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x142008e60.c",
+    "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x141ed1800.c",
+    "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x141eeaa20.c",
+    "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x14237a640.c",
+    "captures/01ef3df0f433489286259b6bf47b8942/0x142752f80.c",
+    "captures/01ef3df0f433489286259b6bf47b8942/0x140680300.c",
+    "captures/b05277d5018c4c6a8645214e9d3bc4df/0x14269e2e0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "_Validate virtual (slot 0xaa8): Stub_ReturnTrue",
+    "0x1426b04d0": "_Implementation virtual (slot 0xab0): ported inline in the .inc",
+    "0x14269e2e0": "GetInstigatorController: controller of the instigator pawn (directly or via vehicle interface). Partially read; the vehicle-interface branch uses vcall 0x3b8 on IFortVehicleInterface (unresolved)",
+    "0x14269bb00": "GetDecoItemDefinition(this): returns ItemDefinition (+0xb90) if it is a FortDecoItemDefinition, else the deco item of a gadget. Fully read",
+    "0x142008e60": "GetDecoBuildingClasses: FUN_141ff8220(DecoItemDef+0xb40, out, 1). Captured; 0x141ff8220 (104 lines) not ported",
+    "0x141eeaa20": "QueryDecoOverrideFlag: returns false in all paths after a side-effect virtual on param+0x30 slot 0x10 and an FName compare",
+    "0x141ed1800": "GetFortGlobals: process-wide singleton accessor (&DAT_148130770) with one-time init",
+    "0x14237a640": "FindBuildingForDecoPlacement(PC, out Building, bool, TArray candidates, bool): 112 lines, captured, not ported",
+    "0x142752f80": "ABuildingSMActor::StaticClass (named)",
+    "0x140680300": "SpawnDecoBuildingActor: target is `return 0` (null stub). Treated as returning nullptr. LOW confidence the real spawn was mis-resolved",
+    "0x1426b0d50": "ServerSpawnDeco_Implementation, see AFortDecoTool__ServerSpawnDeco evidence",
+    "0x142752f80_repeat": "second IsA check in the decompile is identical to the first and never changes the result"
+  },
+  "notes": "Thunk read order (declaration order by offset): BuildingLocation@0, BuildingRotation@12, Location@24, Rotation@36, InBuildingAttachmentType@48. The validate call passes the same order. Spawn-path result depends on the 0x140680300 stub: if that call really spawns a building, the ServerSpawnDeco follow-up is live; the port keeps the branch. The FUN_140680300 call passes the bool as 0 (uVar7 & ~0xff in the decompile). Unresolved in this pass: GetWorld()->+0x540 field name, the 104-line 0x141ff8220, the 112-line 0x14237a640 and the controller vcall 0x3b8 on IFortVehicleInterface."
+}

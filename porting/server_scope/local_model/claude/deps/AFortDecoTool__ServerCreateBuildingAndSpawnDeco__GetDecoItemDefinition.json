@@ -1,0 +1,7 @@
+{
+  "name": "AFortDecoTool::GetDecoItemDefinition",
+  "address": "0x14269bb00 (virtual slot 0xb00)",
+  "signature": "UFortDecoItemDefinition* GetDecoItemDefinition() const",
+  "inc_or_decl": "if (ItemDefinition != nullptr && ItemDefinition->IsA(UFortDecoItemDefinition::StaticClass())) return ItemDefinition; if (ItemDefinition != nullptr && ItemDefinition->IsA(UFortGadgetItemDefinition::StaticClass())) { UFortDecoItemDefinition* Deco = GetGadgetDecoItem(ItemDefinition); if (Deco != nullptr && Deco->IsA(UFortDecoItemDefinition::StaticClass())) return Deco; } return nullptr;",
+  "evidence": "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x14269bb00.c (37 lines, fully read). ItemDefinition at +0xb90. The gadget-to-deco helper (0x1420140e0) decompiles as void in its capture, so its return value is taken from the call site (LOW on that step)."
+}

@@ -1,0 +1,22 @@
+{
+  "function": "AFortGameState::Client_RefreshEventCalendar",
+  "status": "proposed",
+  "original": "0x142737dd0",
+  "signature": "void Client_RefreshEventCalendar()  // Client RPC",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737dd0.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x141e94760.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x141e5b2c0.c",
+    "captures/6efb1241727e4d638a4125f43c983a91/0x141bd9690.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x14224a780.c"
+  ],
+  "callees": {
+    "0x141e94760": "_Implementation via vslot 0x738 (owner AFortGameState); ported inline",
+    "0x141e5b2c0": "GetEventCalendarOwner: world-from-context(this)+0x188 with class check against 0x1428ea7f0 (named by use). Fully read",
+    "0x141bd9690": "returns +0x7a0 sub-object (fully read)",
+    "0x14224a780": "RefreshEventCalendar(calendar): if calendar+0x130 set, FUN_142244b30(calendar, out) and return; else FUN_1410bc110(out, calendar, FUN_142264f20, ctx) and FUN_1411430b0(calendar+0xb0), then release out. Helpers 0x142244b30, 0x1410bc110, 0x1411430b0 not captured in this pass",
+    "0x1428ea7f0": "expected class for the event-calendar owner (named by use, not captured)",
+    "0x144640410": "GetWorldFromContextObject (named by use)"
+  },
+  "notes": "HIGH confidence on the RPC body and the owner chain. The refresh step (0x14224a780) has two paths; its helpers were not captured in this pass and are described, not ported."
+}

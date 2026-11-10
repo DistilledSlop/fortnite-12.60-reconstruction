@@ -1,0 +1,16 @@
+{
+  "function": "AFortGameState::Client_InitiateEndOfDayRecap",
+  "status": "proposed",
+  "original": "0x14290cba0",
+  "signature": "void Client_InitiateEndOfDayRecap(FFortEndOfDayRecap EndOfDayRecap)  // Client RPC, struct by value",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x14290cba0.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x141e94750.c"
+  ],
+  "callees": {
+    "0x141e94750": "_Implementation via vslot 0x740 (owner AFortGameState): counter +1 at +0x344, reverse scan of delegate list +0x330 flagging invalid/unbound/rejecting listeners (vcall 0x50), counter -1, then FMulticastDelegateBase_CompactInvocationList(+0x330, false) if flagged. Ported in the .inc. The recap parameter is not used",
+    "FMulticastDelegateBase_CompactInvocationList": "engine helper (named)",
+    "FMemory_Free": "engine helper (named), used by the thunk's TArray destructor loop only"
+  },
+  "notes": "The thunk's destructor loop (element stride 0x2A8, freeing string/array members and releasing a refcounted pointer) is the implicit destruction of the by-value EndOfDayRecap parameter, so it is not ported as code. The implementation has no broadcast: despite the name, it only compacts the delegate list. MEDIUM because the 0x50 listener check target is not resolved to a named function."
+}

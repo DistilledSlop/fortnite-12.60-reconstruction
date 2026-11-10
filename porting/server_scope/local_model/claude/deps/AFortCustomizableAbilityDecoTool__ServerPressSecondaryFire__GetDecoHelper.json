@@ -1,0 +1,7 @@
+{
+  "name": "AFortDecoTool::GetDecoHelper",
+  "address": "0x14269c7f0",
+  "signature": "UObject* GetDecoHelper() const",
+  "inc_or_decl": "return DecoHelper;",
+  "evidence": "captures/c62bf762b0d346f1afce54f23053d9d0/0x14269c7f0.c (7 lines, fully read). Member DecoHelper at +0xb98 (field-offset: DecoHelper, Object, offset 2968)."
+}

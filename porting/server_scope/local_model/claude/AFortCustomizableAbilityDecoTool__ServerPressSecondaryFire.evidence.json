@@ -1,0 +1,21 @@
+{
+  "function": "AFortCustomizableAbilityDecoTool::ServerPressSecondaryFire",
+  "status": "proposed",
+  "original": "0x1428ce460",
+  "signature": "void ServerPressSecondaryFire()  // RPC (Server, WithValidation)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428ce460.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x1406801d0.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x14267f2c0.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x14269c7f0.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x1428cbea0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "_Validate virtual (slot 0xb50): Stub_ReturnTrue, always true",
+    "0x14267f2c0": "_Implementation virtual (slot 0xb58): GetDecoHelper + CallDecoBlueprintEvent(OnPressSecondaryFire)",
+    "0x14269c7f0": "GetDecoHelper(this): returns this->DecoHelper (+0xb98). Proposed: AFortDecoTool::GetDecoHelper",
+    "0x1428cbea0": "CallDecoBlueprintEvent(this, FName, obj): ProcessEvent(FindFunctionChecked(FName), &obj). Proposed: CallDecoBlueprintEvent",
+    "RPC_ValidateFailed": "engine helper (named)"
+  },
+  "notes": "Thunk validates then calls the _Implementation virtual. FName global DAT_148192d60 is not resolvable from the package; event name OnPressSecondaryFire is inferred (MEDIUM) from sibling UFortWeaponComponent events of the same name, with the press/release pairing matching ServerPressTrigger and ServerReleaseSecondaryFire. Single parameter is the DecoHelper object."
+}

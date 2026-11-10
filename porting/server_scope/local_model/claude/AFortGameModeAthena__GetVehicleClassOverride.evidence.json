@@ -1,0 +1,20 @@
+{
+  "function": "AFortGameModeAthena::GetVehicleClassOverride",
+  "status": "proposed",
+  "original": "0x1428f0350",
+  "signature": "TSubclassOf<AFortAthenaVehicle> GetVehicleClassOverride(TSubclassOf<AFortAthenaVehicle> DefaultVehicleClass)  // BlueprintPure",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f0350.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x141949f60.c"
+  ],
+  "callees": {
+    "0x141949f60": "override lookup (113 lines, read fully): walks AthenaVehicleOverrides (+0x1330, stride 0x60). Resolves weak key (FWeakObjectPtr_Get, FUN_142ed4d40 repair path). Returns the override value on a key match, null if the value fails class checks, else the default",
+    "0x143f76130": "world/owner helper for the eligibility test (not captured)",
+    "0x1428ea7f0": "class check helper (GameMode-like class, not captured)",
+    "0x141bd9690": "returns this+0x7a0 sub-object (named by offset only)",
+    "0x142261550": "active-for-world predicate on the sub-object (not captured)",
+    "0x1446acb00": "class validation for the override value (not captured)",
+    "0x1407d0ea0": "value accessor for the override entry (+0x38), not captured"
+  },
+  "notes": "Eligibility test is simplified in the port to the structure of the decompile: an entry whose state is >=2 and whose world check passes is skipped. The exact predicate is in FUN_142261550 and the entry state bytes; both are not captured in this pass, so the skip condition is MEDIUM at best. Matched-but-invalid value returns null, which is what the decompile does by setting the result to 0. Field names on AthenaVehicleOverrides confirmed via field-offset (0x1330 = AthenaVehicleOverrides, Array)."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "AFortDecoTool::CallDecoBlueprintEvent",
+  "address": "0x1428cbea0 (FName DAT_148192d60), 0x1428cbee0 (DAT_148192d68), 0x1428cbf20 (DAT_148192d70)",
+  "signature": "void CallDecoBlueprintEvent(FName EventName, UObject* Param)",
+  "inc_or_decl": "UFunction* Fn = FindFunctionChecked(EventName); struct { UObject* Target; } Parms; Parms.Target = Param; ProcessEvent(Fn, &Parms);",
+  "evidence": "captures/c62bf762b0d346f1afce54f23053d9d0/0x1428cbea0.c, 0x1428cbee0.c, 0x1428cbf20.c (17 lines each, fully read). Event names inferred as OnPressSecondaryFire, OnPressTrigger, OnReleaseSecondaryFire (MEDIUM); the FName values are not resolvable from the package."
+}

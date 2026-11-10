@@ -1,0 +1,7 @@
+{
+  "name": "AFortDecoTool::GetInstigatorFortPlayerPawn",
+  "address": "0x14268c4c0",
+  "signature": "AFortPlayerPawn* GetInstigatorFortPlayerPawn() const",
+  "inc_or_decl": "AActor* Pawn = Instigator; if (Pawn != nullptr && Pawn->IsA(AFortPlayerPawn::StaticClass())) return Pawn; return nullptr;",
+  "evidence": "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x14268c4c0.c (20 lines, fully read). Instigator via 0x141125940 = AActor::Instigator (+0x118, field-offset confirmed). AFortPlayerPawn::StaticClass = 0x142a75f10 (named)."
+}

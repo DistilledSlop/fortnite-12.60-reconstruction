@@ -1,0 +1,18 @@
+{
+  "function": "AFortGameModeAthena::AddAIClassToReplicationGraph",
+  "status": "proposed",
+  "original": "0x1428f0020",
+  "signature": "void AddAIClassToReplicationGraph(TSubclassOf<AActor> NewAIClass)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f0020.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x1419331a0.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x140690780.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x1406911b0.c"
+  ],
+  "callees": {
+    "0x1419331a0": "helper body (60 lines, read fully): reentrancy-guarded prune of a global listener array using vtable slots 0x50 (accepts class arg) and 0x20 (stale, no arg); RemoveAt via 0x140690780; Shrink via 0x1406911b0. Context unused",
+    "0x140690780": "TArray RemoveAt(index, count, bAllowShrink) (engine-style, named TArray helper, not re-read)",
+    "0x1406911b0": "TArray Shrink (engine-style, named helper)"
+  },
+  "notes": "NewAIClass is not added to the array here; it is only passed to the listeners' accept check. The variable `OldCount` in the port is the element count before the prune pass (the decompile reads _DAT_1478c2678 + -1 at entry, and the count before compaction is _DAT_1478c2678 at the shrink comparison). Listener element type and the vtable targets for slots 0x50/0x20 are not resolved in this pass. MEDIUM because the function purpose (add vs prune) is inferred from the behaviour, not from a named symbol."
+}

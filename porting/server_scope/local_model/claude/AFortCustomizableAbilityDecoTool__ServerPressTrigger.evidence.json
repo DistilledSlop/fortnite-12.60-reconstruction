@@ -1,0 +1,20 @@
+{
+  "function": "AFortCustomizableAbilityDecoTool::ServerPressTrigger",
+  "status": "proposed",
+  "original": "0x1428ce4b0",
+  "signature": "void ServerPressTrigger()  // RPC (Server, WithValidation)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428ce4b0.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x1406801d0.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x1426818d0.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x1428cbee0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "_Validate virtual (slot 0xb80): Stub_ReturnTrue",
+    "0x1426818d0": "_Implementation virtual (slot 0xb88): GetDecoHelper + CallDecoBlueprintEvent(OnPressTrigger)",
+    "0x14269c7f0": "GetDecoHelper(this) (see ServerPressSecondaryFire evidence)",
+    "0x1428cbee0": "CallDecoBlueprintEvent with FName global DAT_148192d68 (proposed OnPressTrigger)",
+    "RPC_ValidateFailed": "engine helper (named)"
+  },
+  "notes": "FName DAT_148192d68 unresolved in package; name OnPressTrigger is MEDIUM (matches UFortWeaponComponent::OnPressTrigger and the pairing with the other two RPCs)."
+}

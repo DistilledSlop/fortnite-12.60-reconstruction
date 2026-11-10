@@ -1,0 +1,7 @@
+{
+  "name": "AFortDecoTool::SetDecoItemDefinitionInternal",
+  "address": "0x1426b2930 (virtual slot 0xae8)",
+  "signature": "void SetDecoItemDefinitionInternal(UFortDecoItemDefinition* NewItemDef, bool bFlag)",
+  "inc_or_decl": "if (!bIsEquipped) return; ItemDefinition = NewItemDef; AFortPlayerController* PC = GetInstigatorController(); if (PC != nullptr && PC-><vcall 0x6a8>()) { UObject* Item = GetDecoItemDefinition(); if (Item != nullptr && DecoHelper != nullptr) { DecoHelper-><vcall 0x628>(Item, bFlag); } }",
+  "evidence": "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x1426b2930.c (24 lines, fully read). bIsEquipped at 0xbda, ItemDefinition at 0xb90, DecoHelper at 0xb98. Vcall 0x6a8 (controller) and 0x628 (DecoHelper class) are not resolved in this pass."
+}

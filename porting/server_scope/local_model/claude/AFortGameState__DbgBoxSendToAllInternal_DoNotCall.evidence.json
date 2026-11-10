@@ -1,0 +1,15 @@
+{
+  "function": "AFortGameState::DbgBoxSendToAllInternal_DoNotCall",
+  "status": "proposed",
+  "original": "0x14290cd10",
+  "signature": "void DbgBoxSendToAllInternal_DoNotCall(FVector Center, FVector Extent, FRotator Rotation, FColor Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness)  // Server/Multicast-style RPC, debug",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x14290cd10.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x141e95d40.c"
+  ],
+  "callees": {
+    "0x141e95d40": "_Implementation via vslot 0x718 (owner AFortGameState): takes no params; if DAT_14812f404 clear, logs a Warning when DAT_1481348e0 > 1 and sets the flag. Fully read",
+    "FMsg_Logf_Internal": "engine logging helper (named)"
+  },
+  "notes": "Parameter order from the thunk reads (Center@0 first, Thickness@52 last), confirmed against the inventory reflection offsets (Center 0, Extent 12, Rotation 24, Color 36, bPersistentLines 40, LifeTime 44, DepthPriority 48, Thickness 52). The thunk's virtual dispatch passes all args but the target ignores them. Log category global DAT_1481348e4 is not named in the package; the .inc uses LogFortnite as a placeholder category."
+}

@@ -1,0 +1,19 @@
+{
+  "function": "AFortCustomizableAbilityDecoTool::ServerReleaseSecondaryFire",
+  "status": "proposed",
+  "original": "0x1428ce500",
+  "signature": "void ServerReleaseSecondaryFire()  // RPC (Server, WithValidation)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428ce500.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x1406801d0.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x1426801c0.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x1428cbf20.c"
+  ],
+  "callees": {
+    "0x1406801d0": "_Validate virtual (slot 0xb38): Stub_ReturnTrue",
+    "0x1426801c0": "_Implementation virtual (slot 0xb40): GetDecoHelper + CallDecoBlueprintEvent(OnReleaseSecondaryFire)",
+    "0x1428cbf20": "CallDecoBlueprintEvent with FName global DAT_148192d70 (proposed OnReleaseSecondaryFire)",
+    "RPC_ValidateFailed": "engine helper (named)"
+  },
+  "notes": "FName DAT_148192d70 unresolved in package; OnReleaseSecondaryFire is MEDIUM (matches UFortWeaponComponent::OnReleaseSecondaryFire)."
+}

@@ -1,0 +1,25 @@
+{
+  "function": "AFortGameModeZone::SetJoinability",
+  "status": "proposed",
+  "original": "0x1428f39c0",
+  "signature": "void SetJoinability(bool bMatchJoinable)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f39c0.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x141eafcd0.c",
+    "captures/c62bf762b0d346f1afce54f23053d9d0/0x14195e100.c"
+  ],
+  "callees": {
+    "0x141eafcd0": "impl (108 lines, read fully). Ported in the .inc with the session-plumbing helpers left as named calls",
+    "0x142908180": "notify on this+0x270 GameSession (not captured, not ported)",
+    "0x150 vcall": "GetWorld (named)",
+    "0x140fc7960": "gets a session helper for World (not captured)",
+    "0x142cd4ab0": "builds FName/FString from literal GATHERABLE (not captured)",
+    "0x140d5d310": "SetGatherableProperty(entry, name, bool, 2) (not captured)",
+    "0x142ee3b30": "copy-construct record helper (not captured)",
+    "0x142bad740": "record field helper (not captured)",
+    "0x14217ac30": "RegisterGatherableUpdate on FortGameSession (+0x3d8) (not captured)",
+    "0x142149480": "FlushGatherableUpdates on FortGameSession (not captured)",
+    "0x142927a60": "AFortGameState::StaticClass (named by use; IsA check on this+0x278 GameState)"
+  },
+  "notes": "Thunk reads one bool and calls virtual 0xbe8 on this; the impl 0x141eafcd0 is owned by AFortGameModeZone and inherited by AFortGameModeAthena (vtable_lookup). Fields: GameSession +0x270 (AGameModeBase), GameState +0x278, FortGameSession +0x3d8, GameState joinable byte +0x968 (AFortGameState name not resolved). LOW: the GATHERABLE entry layout, the 0x30-byte record and the session helper are only partially read."
+}

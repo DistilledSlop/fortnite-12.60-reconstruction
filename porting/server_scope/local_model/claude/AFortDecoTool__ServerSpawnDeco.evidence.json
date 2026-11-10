@@ -1,0 +1,41 @@
+{
+  "function": "AFortDecoTool::ServerSpawnDeco",
+  "status": "proposed",
+  "original": "0x1428d7390",
+  "signature": "void ServerSpawnDeco(FVector Location, FRotator Rotation, AActor* AttachedActor, EBuildingAttachmentType InBuildingAttachmentType)  // RPC (Server, WithValidation)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428d7390.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x1426b0d50.c",
+    "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x14269bb00.c",
+    "captures/b97f38ebe68c4728a79304d43fa614e0/0x142009ac0.c",
+    "captures/3e2c0e56ad034cb4af605f7bbcef1e5a/0x142c0c240.c",
+    "captures/b97f38ebe68c4728a79304d43fa614e0/0x142663ee0.c",
+    "captures/b97f38ebe68c4728a79304d43fa614e0/0x1426b4070.c",
+    "captures/25399358626e4b3bb45ff3f97318ba90/0x1426b5370.c",
+    "captures/b97f38ebe68c4728a79304d43fa614e0/0x142b218b0.c",
+    "captures/b97f38ebe68c4728a79304d43fa614e0/0x142a3ee00.c",
+    "captures/b97f38ebe68c4728a79304d43fa614e0/0x142a3bde0.c",
+    "captures/b97f38ebe68c4728a79304d43fa614e0/0x14201e070.c",
+    "captures/b97f38ebe68c4728a79304d43fa614e0/0x14201e050.c"
+  ],
+  "callees": {
+    "0x1406801d0": "_Validate virtual (slot 0xab8): Stub_ReturnTrue",
+    "0x1426b0d50": "_Implementation virtual (slot 0xac0): ported inline in the .inc",
+    "0x14269e2e0": "GetInstigatorController (partially read)",
+    "0x14269bb00": "GetDecoItemDefinition (fully read)",
+    "0x142009ac0": "returns out after FUN_141ff85e0(out, this+0xad0, 1): first entry of the deco building-class list. Helper 0x141ff85e0 not captured",
+    "0x142732ac0": "ABuildingActor::StaticClass (named)",
+    "0x142c0c240": "copies a shared reference from global 0x1407c2c80 and increments its refcount (TSharedRef copy)",
+    "0x14268c4c0": "GetInstigatorFortPlayerPawn: instigator if it is an AFortPlayerPawn (fully read)",
+    "0x142663ee0": "CanPlaceDecoAt: 583-line feasibility check, returns 0/1/2. Captured, NOT ported in this pass",
+    "0x1426b4070": "virtual 0xb10 direct placement, 195 lines. Captured, NOT ported in this pass",
+    "0x142b218b0": "UFortTrapItemDefinition::StaticClass (named)",
+    "0x1426b5370": "virtual 0xac8 SpawnDecoFromClass, 254 lines. Captured, NOT ported in this pass",
+    "0x1406801c0": "Stub_Empty (virtual 0xb30): no-op",
+    "0x142a3ee00": "PC->ProcessEvent(FName DAT_1481af1a0, struct of 4 floats, bool). Proposed event name unresolved",
+    "0x142a3bde0": "PC->ProcessEvent(FName DAT_1481aef78, no params). Proposed event name unresolved",
+    "0x14201e070": "returns bit 0 of byte +0xb34 (flag for event 1481af1a0)",
+    "0x14201e050": "returns bit 1 of byte +0xb34 (flag for event 1481aef78)"
+  },
+  "notes": "Thunk read order: Location@0, Rotation@12, AttachedActor@24, Type@32 (matches inventory reversed order). Validate receives the same order. The 4-float payload passed to 0x142a3ee00 is { this->0x880 low dword, this->0x8c4, this->0x888 low dword, this->0x8cc } (cached placement offsets; names not resolved). The TSharedRef release at scope end is RAII. Unresolved in this pass: the 583-line CanPlaceDecoAt (0x142663ee0), 195-line 0xb10 placement, 254-line 0xac8 spawn, and the bit-field names for DecoItemDef +0xb34/+0xb70."
+}

@@ -1,0 +1,29 @@
+{
+  "function": "AFortDecoTool::TryToPlace",
+  "status": "proposed",
+  "original": "0x1428d7c20",
+  "signature": "bool TryToPlace()  // BlueprintCallable exec, returns bool",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428d7c20.c",
+    "captures/d01c00f2008341ed94668b6c28eea28b/0x1426b8990.c",
+    "captures/5692ae2ae2d6483b9cd3169cc0eb9bf6/0x14269bb00.c",
+    "captures/b05277d5018c4c6a8645214e9d3bc4df/0x14269e2e0.c"
+  ],
+  "callees": {
+    "0x1426b8990": "TryToPlace body (118 lines, read fully): decompiles as void. Calls virtual 0xb08 gate, FUN_142678960(DecoHelper,0), FUN_142388df0 (cancel), FUN_14266c030/c020, FUN_142c5d000, FUN_14201dfa0, FUN_141363fb0, virtual 0xad8/0xae0/0x688, Gadget bookkeeping",
+    "0x1428d7c20": "exec thunk: FFrame-less call, result is the uninitialised rax of the void body",
+    "0x14269e2e0": "GetInstigatorController (partially read)",
+    "0x14269bb00": "GetDecoItemDefinition (fully read)",
+    "0x142678960": "HelperAcceptsPlacement(helper, 0): not captured",
+    "0x142388df0": "CancelPlacement(PC, helper): not captured",
+    "0x14266c030": "returns helper transform sub-object (+0x10/+0x18 and copy): not captured",
+    "0x14266c020": "returns helper extra object when item flag set: not captured",
+    "0x14201dfa0": "item-definition flag predicate: not captured",
+    "0x1428e9db0": "UFortGadgetItemDefinition::StaticClass (named)",
+    "0x142cea230": "gadget notify helper: not captured",
+    "0x142659400": "returns an object used by the gadget notify path: not captured",
+    "0x1417a0fd0": "gadget notify helper: not captured",
+    "0x142027b30": "gadget notify helper (lVar9,0,1,0): not captured"
+  },
+  "notes": "Return value is the main ambiguity: the body 0x1426b8990 is decompiled void and the thunk forwards whatever rax holds. The port uses the 0xb08 gate result as the bool, which is a guess (LOW). Several virtual targets (0xb08, 0xad8, 0xae0, 0x688) and the captured helpers were not resolved or ported in this pass."
+}
