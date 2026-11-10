@@ -23,3 +23,11 @@ reported success, the balance became 251, and `book_purchased` persisted as
 true. The UI showed the level-one rewards as unlocked, but the first version of
 the backend did not grant their inventory items; level purchases also stalled
 because their catalog offers were absent. These gaps require follow-up.
+
+After adding the Season 12 reward schedule and restoring the first-level
+rewards to the existing test account, the client purchased level 2 for 150.
+The request returned 200, the client reported success and advanced its reward
+screen, the balance fell from 251 to 101, and the profile gained the level-2
+`AthenaDance:EID_CallMe` emote. The first-level Maya and Agent Peely items were
+present after the repair. A fresh pass purchase with reward grants and the
+purchase-presentation behavior still require client verification.

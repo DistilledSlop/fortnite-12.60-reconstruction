@@ -29,6 +29,17 @@ class LocalCurrencyTests(unittest.TestCase):
             restored = Backend(state_dir=directory).profiles.profile(account, 'common_core')
             self.assertEqual(core, restored)
 
+    def test_season_repair_refuses_active_state(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cmd = [sys.executable, str(Path(__file__).with_name('repair_season12.py')),
+                   directory, 'account']
+            with (Path(directory) / '.backend.lock').open('a') as lock:
+                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                result = subprocess.run(cmd, capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('already in use', result.stderr)
+            self.assertFalse((Path(directory) / 'profiles.sqlite3').exists())
+
 
 if __name__ == '__main__':
     unittest.main()
