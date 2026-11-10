@@ -1,0 +1,38 @@
+{
+  "function": "ABuildingSMActor::CancelAutoBuild",
+  "original_address": "0x142755b20",
+  "status": "blocked",
+  "decompile_source": "captures (porting/generated/native103-broad/0x142755b20.c)",
+  "asm_source": "captures (porting/generated/native103-broad/0x142755b20.asm)",
+  "flag_proof": {
+    "reflection_flags": "0x4080404",
+    "note": "No net bits set (no FUNC_NET 0x40, no FUNC_NET_MULTICAST 0x4000). Non-net native exec. Bits present: 0x4, 0x400, 0x80000, 0x4000000."
+  },
+  "resolved_behavior": [
+    "ASM-authoritative body (the whole function): shared native prologue (SETNZ/ADD 'flag touch' at [rdx+0x20]) then 'mov rax,[rcx]; jmp [rax+0xd88]' — a tail-call to the class virtual at vtable byte offset 0xd88 (index 433) with no arguments.",
+    "C decompile confirms the single indirect call: (**(code **)(*param_1 + 0xd88))(); where param_1 = this (ABuildingSMActor*).",
+    "This is the canonical UE exec -> _Implementation dispatch thunk, identical in shape to ABuildingSMActor::ForceIntoStructuralGridDuringRuntime (proposed, tail-call at 0xa58) and ABuildingRift::BroadcastRiftSpawningAI (proposed, tail-call at 0xa00)."
+  ],
+  "unresolved_contract": {
+    "contract": "Identify the ABuildingSMActor virtual at vtable byte offset 0xd88 (index 433) that the exec body tail-calls.",
+    "inferred_name": "CancelAutoBuild_Implementation",
+    "inference_basis": "UE naming convention: a UFUNCTION named X whose exec body forwards to a virtual uses X_Implementation. The body is unambiguously an exec -> _Implementation thunk, so the target virtual is almost certainly CancelAutoBuild_Implementation.",
+    "why_not_confirmed": [
+      "The generated header checkout/porting/native/Source/FortniteGame/Generated/ABuildingSMActor.h does NOT declare CancelAutoBuild or CancelAutoBuild_Implementation. It declares 46 UFUNCTIONs / 12 _Implementation virtuals, but the reflection inventory lists 62 ABuildingSMActor functions — the header is incomplete and omits CancelAutoBuild.",
+      "ABuildingSMActor is a game class not present in porting/behavior/vtable_slots.json (only 6 game classes are modelled), so the vtable slot name cannot be looked up there.",
+      "native_class_index.json records vtable_addr: None for ABuildingSMActor (the vtable-finding heuristic failed), so the entry at index 433 cannot be read from the runtime dump image to confirm the target function."
+    ]
+  },
+  "attempted": [
+    "Read the generated header ABuildingSMActor.h: CancelAutoBuild is not declared (header is incomplete; 46 UFUNCTIONs vs 62 in the reflection inventory).",
+    "Confirmed the exec body is a tail-call to the virtual at vtable offset 0xd88 (index 433) from the asm (0x142755b20.asm).",
+    "Checked the vtable_slots.json (runtime/projection): ABuildingSMActor is not in the modelled class set.",
+    "Checked native_class_index.json: ABuildingSMActor vtable_addr is None (vtable not located).",
+    "Traced the CDO class path: GetPrivateStaticClass 0x142752f80 -> CDO ctor FUN_142753fc0 -> shared class-registration helper 0x142d6f540; that helper contains no 'lea reg,[vtable]' store, so the primary vtable base could not be located this way."
+  ],
+  "concrete_next_step": "Locate ABuildingSMActor's primary vtable by finding its class C++ constructor's 'lea reg,[vtable]; mov [base],reg' store (a constructor distinct from the shared UObject/class-registration helper 0x142d6f540; search the .text for a constructor that stores a .data-range vtable pointer into [rcx] and cross-check that slot index 331 = 0xa58 resolves to ForceIntoStructuralGridDuringRuntime_Implementation, which is known). Then read vtable[433] (0xd88) to confirm the target function is CancelAutoBuild_Implementation and propose the body 'CancelAutoBuild_Implementation();'.",
+  "confidence_if_inferred": "MEDIUM (name inferred from the universal UE UFUNCTION -> _Implementation convention and the unambiguous exec-thunk shape, but not confirmed by the header or a readable vtable entry)",
+  "remaining_questions": [
+    "Confirm the vtable slot 0xd88 (index 433) name directly (readable vtable entry or completed generated header) before proposing."
+  ]
+}

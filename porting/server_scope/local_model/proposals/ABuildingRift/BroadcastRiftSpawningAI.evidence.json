@@ -1,0 +1,37 @@
+{
+  "function": "ABuildingRift::BroadcastRiftSpawningAI",
+  "original_address": "0x14274fd50",
+  "decompile_source": "captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x14274fd50.c",
+  "asm_source": "captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x14274fd50.asm",
+  "proposal": "work/q27-11100120/BroadcastRiftSpawningAI.inc",
+  "flag_proof": {
+    "reflection_flags": "0x24c40",
+    "project_flag_scheme": "gen_native_classes.py: FUNC_NET=0x40, FUNC_NET_RELIABLE=0x80, FUNC_NET_MULTICAST=0x4000",
+    "decoded_net_flags": "FUNC_NET (0x40) | FUNC_NET_MULTICAST (0x4000); FUNC_NET_RELIABLE (0x80) is NOT set",
+    "note": "Net + NetMulticast without Reliable matches the generated header UFUNCTION(NetMulticast, Unreliable). Remaining bits 0x400/0x800/0x20000 are non-net EFunctionFlags not in the project's net-flag table."
+  },
+  "observations": [
+    "ASM-authoritative body: shared native prologue (SETNZ/ADD flag touch at [rdx+0x20]) then 'mov rax,[rcx]; jmp [rax+0xa00]' — a tail-call to the class virtual at vtable byte offset 0xa00 (index 320) with no arguments.",
+    "C decompile confirms the single indirect call: (**(code **)(*param_1 + 0xa00))(); where param_1 = this (ABuildingRift*).",
+    "The generated header ABuildingRift.h declares exactly ONE non-UFUNCTION virtual for this class: void BroadcastRiftSpawningAI_Implementation();. GetLifetimeReplicatedProps is declared as 'override' (replaces an inherited slot, not a new slot).",
+    "Parent ABuildingActor's vtable therefore ends at index 319 (320 entries), so ABuildingRift's first and only new vtable slot, index 320 = byte offset 0xa00, is BroadcastRiftSpawningAI_Implementation.",
+    "This is the canonical UE dispatch for a native NetMulticast RPC whose exec body forwards to the _Implementation virtual (same shape as ABuildingGameplayActorBlade::BroadcastOnPullStart).",
+    "Reflection params: [] (no reflected parameters) — consistent with the no-argument _Implementation virtual."
+  ],
+  "header_declaration": {
+    "present": true,
+    "location": "checkout/porting/native/Source/FortniteGame/Generated/ABuildingRift.h lines 207-209",
+    "note": "UFUNCTION(NetMulticast, Unreliable) void BroadcastRiftSpawningAI(); plus void BroadcastRiftSpawningAI_Implementation();"
+  },
+  "vtable": {
+    "offset": "0xa00",
+    "index": 320,
+    "slot_name": "BroadcastRiftSpawningAI_Implementation",
+    "note": "Named slot is inferred: ABuildingRift is a game class not present in vtable_slots.json (only 6 game classes are modelled), so the slot pointer could not be read directly from the runtime image. The mapping rests on the class declaring exactly one non-UFUNCTION virtual and the parent vtable length placing that slot at index 320."
+  },
+  "confidence": "HIGH",
+  "remaining_questions": [
+    "The vtable slot 0xa00 -> BroadcastRiftSpawningAI_Implementation mapping is inferred from the class's single non-UFUNCTION virtual and the parent (ABuildingActor) vtable length; the data-section vtable entry pointer was not read directly (ABuildingRift is not in the modelled vtable set).",
+    "The _Implementation virtual body itself is out of scope for this function (it is the separate native/manifest member, not the RPC exec)."
+  ]
+}

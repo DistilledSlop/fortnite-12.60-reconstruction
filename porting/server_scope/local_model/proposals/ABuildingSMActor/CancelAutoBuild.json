@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingSMActor::CancelAutoBuild",
+ "status": "blocked",
+ "blocker": "Exec body tail-calls ABuildingSMActor virtual at vtable offset 0xd88 (index 433); the target virtual name is unresolved. Header is incomplete (does not declare CancelAutoBuild/its _Implementation; 46 UFUNCTIONs vs 62 in reflection inventory), ABuildingSMActor is not in vtable_slots.json, and native_class_index.json vtable_addr is None so vtable[433] cannot be read. Inferred name: CancelAutoBuild_Implementation (UE UFUNCTION->_Implementation convention). Next step: locate ABuildingSMActor's primary vtable via its class C++ constructor 'lea reg,[vtable]' store and read index 433 to confirm.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100120",
+ "batch_seconds": 913
+}

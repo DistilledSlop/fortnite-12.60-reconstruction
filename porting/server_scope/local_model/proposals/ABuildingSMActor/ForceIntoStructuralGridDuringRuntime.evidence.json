@@ -1,0 +1,37 @@
+{
+  "function": "ABuildingSMActor::ForceIntoStructuralGridDuringRuntime",
+  "original_address": "0x142725810",
+  "decompile_source": "captures/e6d09d88f2d1409d99e93c27c1388f16/0x142725810.c",
+  "asm_source": "captures/e6d09d88f2d1409d99e93c27c1388f16/0x142725810.asm",
+  "proposal": "work/q27-11100120/ForceIntoStructuralGridDuringRuntime.inc",
+  "flag_proof": {
+    "reflection_flags": "0x4024cc0",
+    "project_flag_scheme": "gen_native_classes.py: FUNC_NET=0x40, FUNC_NET_RELIABLE=0x80, FUNC_NET_MULTICAST=0x4000",
+    "decoded_net_flags": "FUNC_NET (0x40) | FUNC_NET_RELIABLE (0x80) | FUNC_NET_MULTICAST (0x4000)",
+    "note": "Net + NetReliable + NetMulticast matches the generated header UFUNCTION(NetMulticast, Reliable). Remaining bits (0x20,0x100,0x200,0x1000,0x20000,0x4000000) are non-net EFunctionFlags."
+  },
+  "observations": [
+    "ASM-authoritative body: shared native prologue (SETNZ/ADD flag touch at [rdx+0x20]) then 'mov rax,[rcx]; jmp [rax+0xa58]' — a tail-call to the class virtual at vtable byte offset 0xa58 (index 331) with no arguments.",
+    "C decompile confirms the single indirect call: (**(code **)(*param_1 + 0xa58))(); where param_1 = this (ABuildingSMActor*).",
+    "The generated header ABuildingSMActor.h (lines 628-630) declares the UFUNCTION and its _Implementation virtual: UFUNCTION(NetMulticast, Reliable) void ForceIntoStructuralGridDuringRuntime(); and void ForceIntoStructuralGridDuringRuntime_Implementation();.",
+    "ForceIntoStructuralGridRuntime_Implementation is the FIRST new (non-override) virtual declared by ABuildingSMActor in the header (the preceding CanDoBuildingAnimations is an inherited-slot override, not a new slot). Its slot is therefore the base offset where the class's new vtable slots begin: index 331 = byte offset 0xa58, which matches the exec tail-call exactly.",
+    "This is the canonical UE dispatch for a native NetMulticast Reliable RPC whose exec body forwards to the _Implementation virtual.",
+    "Reflection params: [] (no reflected parameters) — consistent with the no-argument _Implementation virtual."
+  ],
+  "header_declaration": {
+    "present": true,
+    "location": "checkout/porting/native/Source/FortniteGame/Generated/ABuildingSMActor.h lines 628-630",
+    "note": "UFUNCTION(NetMulticast, Reliable) void ForceIntoStructuralGridDuringRuntime(); plus void ForceIntoStructuralGridDuringRuntime_Implementation();"
+  },
+  "vtable": {
+    "offset": "0xa58",
+    "index": 331,
+    "slot_name": "ForceIntoStructuralGridDuringRuntime_Implementation",
+    "note": "Named slot is inferred: ABuildingSMActor is a game class not present in vtable_slots.json (only 6 game classes are modelled) and its vtable was not located (native_class_index.json vtable_addr: None). The mapping rests on the header declaring ForceIntoStructuralGridDuringRuntime_Implementation as the class's first new (non-override) virtual, placing that slot at the base offset 331, which matches the exec tail-call."
+  },
+  "confidence": "HIGH",
+  "remaining_questions": [
+    "The base vtable offset (331) is inferred from the header declaration order (first new non-override virtual) and the exec tail-call; the data-section vtable entry pointer was not read directly (ABuildingSMActor is not in the modelled vtable set and its vtable_addr is None in native_class_index.json).",
+    "The _Implementation virtual body itself is out of scope for this function (it is the separate native/manifest member, not the RPC exec)."
+  ]
+}
