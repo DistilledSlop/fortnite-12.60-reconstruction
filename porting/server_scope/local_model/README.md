@@ -50,7 +50,8 @@ Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 
 | 25 | done, 15 recorded proposed (PlayerPawn gender, parachute, vehicle input; plus 2 extra _Implementation bodies) |
 | 26 | done, 15 recorded proposed (PlayerPawn DBNO/vehicle/part RPCs; helpers partial) |
 | 27 | done (15 proposed) |
-| 28, 29 | running (2 workers max at a time); chunks 22-53 are the regenerated remainder |
+| 28 | done (15 proposed) |
+| 29, 30 | running (2 workers max at a time); chunks 22-53 are the regenerated remainder |
 
 Recording a finished chunk: from the package dir `python3 -I work/claude/record_chunk.py NN` (claims or reopens each function as owner `claude-br`, then records proposed; copy in `claude/record_chunk.py`). Worker outputs are mirrored into `claude/` here (`<Class>__<Fn>.inc`, `.evidence.json`, `deps/`), with `claude/WORKER.md` the worker prompt. Chunk 00 helper deps include five not-yet-decompiled virtual targets (0x880, 0x888, 0x708, UpdateHighlightState, IsAthenaSpawnOverrideActive): chunk 00 follow-up item.
 
@@ -101,3 +102,4 @@ The runtime dump has a SECOND `.text` section at `0x148d2c000` (size `0x1121600`
 - Chunk 25: `OnBeginParachuteMovement` (full 228-line body of 0x142335930) treats the packed chain `0x140c31764 -> 0x1495a4a24` as a no-op (PACKED, see section above); Niagara and glider internals LOW; `PostResIn` and `ReviveFromDBNO` event FNames unresolved; `IsEmoteBlockedByMovement` adds a CharacterMovement null guard the original lacks.
 - Chunk 26 (PlayerPawn Server RPCs): partial helpers: `ReinitializeCharacterPart` (depth one), `0x142336990` (hoist reset, 406 lines), `0x142359070` (attachment); `ServerRespawnFromDBNO` is a no-op on Athena (CanRespawnFromDBNO returns false stub); `ServerOnExitVehicle` return value not meaningful; `this+0x1194` snapshot block name proposed; FNames unresolved for the vehicle input UFunctions; thunk reads Part before ChosenCharacterPart (reverse of reflection).
 - Chunk 27 (PlayerPawn/PlayerPawnAthena/PlayerState): partial: `StopCarryingPlayer` callee 0x142336990 `CompleteCarryTransition` (401 lines; rotation, timer-install and teardown branches summarised); `ChangeActiveVariantForCosmeticItem` (0x14240c7c0, LOW; depth-two helpers 0x142ec9900, 0x141d42070, 0x141d507d0, 0x14234e0f0, 0x142407c60 not read); `ServerSetInteractingItem` store through actor slot LOW; `UnableToPerformAction` controller class a medium guess; Athena-pawn virtual slots above 0x13f0 have no class mapping.
+- Chunk 28 (PlayerState/Projectile/RemoteControlledPawn): depth-two helpers named from call sites only; `Client_OnNewLevel` impl (625 lines, MEDIUM; message-building helpers not captured); `SetupRemoteControlPawn` helper (326 lines, structure-level); `EnterSkyTube` interpolation math LOW; `SetTrajectorySpline` tangent math summarised; struct types (FHitResult 0x8C) inferred from layout; `ReadObjectParam()` placeholder in SetupRemoteControlPawn thunk; no PACKED callees.
