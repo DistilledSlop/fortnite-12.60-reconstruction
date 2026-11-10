@@ -43,7 +43,8 @@ Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 
 | 18 | done, 15 recorded proposed (mostly LOW: forwarders to unread slots) |
 | 19 | done, 15 recorded proposed (PlayerController Server RPCs S-U; ~40 helper callees only described) |
 | 20 | done, 15 recorded proposed (5 creative-plot implementations not ported; they are creative-only, so out of scope now) |
-| 21 | running (2 workers max at a time); chunks 22-53 are the regenerated remainder |
+| 21 | done, 15 recorded proposed (helpers read to depth one only) |
+| 22, 23 | running (2 workers max at a time); chunks 22-53 are the regenerated remainder |
 
 Recording a finished chunk: from the package dir `python3 -I work/claude/record_chunk.py NN` (claims or reopens each function as owner `claude-br`, then records proposed; copy in `claude/record_chunk.py`). Worker outputs are mirrored into `claude/` here (`<Class>__<Fn>.inc`, `.evidence.json`, `deps/`), with `claude/WORKER.md` the worker prompt. Chunk 00 helper deps include five not-yet-decompiled virtual targets (0x880, 0x888, 0x708, UpdateHighlightState, IsAthenaSpawnOverrideActive): chunk 00 follow-up item.
 
@@ -83,3 +84,4 @@ Scope note: the target is the 1,110 in queue.json only (user decision). The 3,05
 ## Second scope cut (2026-11-10)
 
 28 more functions in unlaunched chunks whose NAMES mention Creative, Plot, Minigame, Island, LinkCode, Playground, Mission or Quest (word 'Request' excluded: an early regex wrongly caught `ServerRequestNewSkydiveLeader`; fixed) were added to `claude/cut_not_br.json` (now 308). Chunks 22-53 regenerated from the remaining 472, BR-core classes first. New target = 330 (chunks 00-21) + 472 = **802 functions**.
+- Chunk 21 (PlayerControllerAthena Server RPCs): helpers read to depth one; deeper callees are `Helper_<addr>` placeholders (see evidence). `ServerAddSimulatedXp` grants no XP in this build (its only callee releases a text ref): STUB/STRIPPED candidate. `ServerLoadPlotForPortalFromMnemonic` (creative) arg order unresolved; creative-flavoured ones (`ServerEndMinigame`, Ostrich RPCs) were already in the chunk.
