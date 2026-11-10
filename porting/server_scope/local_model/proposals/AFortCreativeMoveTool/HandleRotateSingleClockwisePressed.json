@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeMoveTool::HandleRotateSingleClockwisePressed",
+ "status": "blocked",
+ "blocker": "Virtual tail-call target at vtable byte offset 0xd00 on AFortCreativeMoveTool unresolved (needs live FClass->CDO->vtable); also 2nd arg (RDX) type and its +0x20 'armed' counter field (0 stays 0; n>=1 -> n+1) unresolved. Next: resolve class vtable slots 0xd00/0xd08/0xd10 and find callers of 0x1428c2f20.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100452",
+ "batch_seconds": 526
+}
