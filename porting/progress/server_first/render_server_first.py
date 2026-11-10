@@ -24,9 +24,44 @@ def filt(n):
     w=sum(k['weight'] for k in kids)
     return dict(n,weight=w,pct=round(sum(k['weight']*k['pct'] for k in kids)/w,3),children=kids)
 groups=[g for g in (filt(g) for g in res['groups']) if g]
+
+# ---- Server-function scope for the native-bodies tile -------------------------------------------------------------------
+# The dashboard scores gameplay.native_behavior over all 14,391 reflected functions. This view scores it only over the server
+# functions being recovered: the evidence-based required floor (proven/strong/likely) already ported, plus the unported floor
+# (porting/server_scope/local_model/queue.json) minus the functions cut as probably not battle royale (claude/cut_not_br.json).
+# A function counts as done when it is ported (floor) or has a proposed source body (claude/<Class>__<Function>.inc); proposed
+# bodies are not built or run, which the tile's evidence text says.
+REPO = os.path.abspath(os.path.join(HERE, '..', '..', '..'))
+SS = os.path.join(REPO, 'porting', 'server_scope')
+LM = os.path.join(SS, 'local_model')
+_rows = [json.loads(l) for l in open(os.path.join(SS, 'functions.jsonl'))]
+_floor_ported = {f"{r['c']}::{r['f']}" for r in _rows if r['v'] == 'required' and r['conf'] in ('proven', 'strong', 'likely') and r['p']}
+_queue = {f"{c}::{f}" for c, f in json.load(open(os.path.join(LM, 'queue.json')))}
+_cut = set(json.load(open(os.path.join(LM, 'claude', 'cut_not_br.json'))))
+_target = _queue - _cut
+def _proposed(fn):
+    c, f = fn.split('::')
+    return os.path.exists(os.path.join(LM, 'claude', f'{c}__{f}.inc'))
+_prop = {fn for fn in _target if _proposed(fn)}
+_cells = ([('Ported before the recovery (required floor)', fn, True) for fn in sorted(_floor_ported)]
+          + [('Proposed source body (not built or run)', fn, True) for fn in sorted(_prop)]
+          + [('To do', fn, False) for fn in sorted(_target - _prop)])
+_done, _total = len(_floor_ported) + len(_prop), len(_floor_ported) + len(_target)
+def _override(n):
+    if n['kind'] == 'leaf':
+        if n['id'] == 'gameplay.native_behavior':
+            n.update(name='Server native functions ported or proposed', done=_done, total=_total, pct=round(100.0 * _done / _total, 3),
+                     evidence=(f"{len(_floor_ported)} required-floor functions already ported plus {len(_prop)} proposed source bodies, of {_total} server "
+                               f"functions in scope ({len(_target)} being recovered after {len(_cut)} cut as probably not battle royale). Proposed bodies are "
+                               "written source with evidence, not built or run; verified-ported alone is " f"{len(_floor_ported)} of {_total}."))
+        return
+    for k in n['children']: _override(k)
+    n['pct'] = round(sum(k['weight'] * k['pct'] for k in n['children']) / sum(k['weight'] for k in n['children']), 3)
+for _g in groups: _override(_g)
 leaves=[l for g in groups for l in P.walk_leaves(g)]
 W=sum(l['weight'] for l in leaves); overall=sum(l['weight']*l['pct'] for l in leaves)/W
 grids=P.build_unit_grids(model,files,{l['id']:l for l in res['leaves']})
+grids['gameplay.native_behavior']=_cells
 width,height=P.STANDALONE_W,P.STANDALONE_H
 header=(f'<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Server-first scope (mock-up): overall {overall:.1f}% (effort-weighted)</text>'
  f'<text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Same treemap as the port dashboard at commit {head[:7]}, with client-only components removed | {len(leaves)} of {len(res["leaves"])} components</text>')
