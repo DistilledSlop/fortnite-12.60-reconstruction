@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerRemoveDefender",
+  "status": "proposed",
+  "original": "0x142a4c480",
+  "signature": "void AFortPlayerController::ServerRemoveDefender(AActor* DefenderTrap)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4c480.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/8a48b49b4ec54e02a63ef1e9347ead6f/0x1423abe70.c"
+  ],
+  "callees": {
+    "0x1138 (validate)": "Stub_ReturnTrue, 0x1406801d0",
+    "0x1140 (impl)": "0x1423abe70, _Implementation body, see deps/AFortPlayerController__ServerRemoveDefender_Implementation.json",
+    "RPC_ValidateFailed": "engine helper (named)",
+    "FFrame_Step/FFrame_StepExplicitProperty": "engine helpers (parameter unmarshalling, not ported)"
+  },
+  "notes": "The class returned by FUN_142a92a00 is not identified. Thunk param-cleanup and P_FINISH frame bookkeeping are engine plumbing and not ported.",
+  "confidence": "LOW"
+}

@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerRequestGameplayAction",
+  "status": "proposed",
+  "original": "0x142a4ceb0",
+  "signature": "void AFortPlayerController::ServerRequestGameplayAction(uint8 RequestedAction)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4ceb0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/ba18a321fd7842699172f8c763b9ac4a/0x1423ac080.c"
+  ],
+  "callees": {
+    "0x1490 (validate)": "Stub_ReturnTrue, 0x1406801d0",
+    "0x1498 (impl)": "0x1423ac080, _Implementation body, see deps/AFortPlayerController__ServerRequestGameplayAction_Implementation.json",
+    "RPC_ValidateFailed": "engine helper (named)",
+    "FFrame_Step/FFrame_StepExplicitProperty": "engine helpers (parameter unmarshalling, not ported)"
+  },
+  "notes": "Pure forwarder; RequestedAction is passed through, and the decompile does not show it on the forwarded call. Thunk param-cleanup and P_FINISH frame bookkeeping are engine plumbing and not ported.",
+  "confidence": "LOW"
+}

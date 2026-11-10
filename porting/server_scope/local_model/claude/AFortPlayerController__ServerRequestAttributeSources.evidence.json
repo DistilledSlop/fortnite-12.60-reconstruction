@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerRequestAttributeSources",
+  "status": "proposed",
+  "original": "0x142a4cb50",
+  "signature": "void AFortPlayerController::ServerRequestAttributeSources(UAbilitySystemComponent* AbilitySystemComponent, FAttributeSourceRequest Attribute)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4cb50.c",
+    "/opt/fortnite/local-model-package/captures/ee19a393f3ba4854959075c5eac26699/0x1423ac030.c",
+    "/opt/fortnite/local-model-package/captures/9f1e4766e2dc42438089218bd45190f9/0x1423abf70.c"
+  ],
+  "callees": {
+    "0x1278 (validate)": "real validate 0x1423ac030, read in full",
+    "0x1280 (impl)": "0x1423abf70, _Implementation body, see deps/AFortPlayerController__ServerRequestAttributeSources_Implementation.json",
+    "RPC_ValidateFailed": "engine helper (named)",
+    "FFrame_Step/FFrame_StepExplicitProperty": "engine helpers (parameter unmarshalling, not ported)"
+  },
+  "notes": "The validate 0x1423ac030 is read: it releases the request arrays and returns (AbilitySystemComponent != nullptr). Thunk param-cleanup and P_FINISH frame bookkeeping are engine plumbing and not ported.",
+  "confidence": "LOW"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerReplyToReadyCheck_Implementation",
+  "address": "0x1423abf10",
+  "signature": "void AFortPlayerController::ServerReplyToReadyCheck_Implementation(bReady)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerReplyToReadyCheck_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/ba2f209456d748c89c0adf856dbfe3b3/0x1423abf10.c"
+  ]
+}

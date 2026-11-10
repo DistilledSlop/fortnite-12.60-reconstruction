@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerPingMinimap_Implementation",
+  "address": "0x1423abd50",
+  "signature": "void AFortPlayerController::ServerPingMinimap_Implementation(WorldLocation, PingColor, RequiredTeam)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerPingMinimap_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/4e99c255a8e7493981d3e1cbaa7719b1/0x1423abd50.c"
+  ]
+}

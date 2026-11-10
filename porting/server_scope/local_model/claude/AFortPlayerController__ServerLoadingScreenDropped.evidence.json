@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerLoadingScreenDropped",
+  "status": "proposed",
+  "original": "0x142a4bd70",
+  "signature": "void AFortPlayerController::ServerLoadingScreenDropped()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4bd70.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/dd24fcb0189043d99178c2c1ef1a29e4/0x1423abb20.c"
+  ],
+  "callees": {
+    "0x1350 (validate)": "Stub_ReturnTrue, 0x1406801d0",
+    "0x1358 (impl)": "0x1423abb20, _Implementation body, see deps/AFortPlayerController__ServerLoadingScreenDropped_Implementation.json",
+    "RPC_ValidateFailed": "engine helper (named)",
+    "FFrame_Step/FFrame_StepExplicitProperty": "engine helpers (parameter unmarshalling, not ported)"
+  },
+  "notes": "Flag is set on all paths, including when GetWorld is null. Thunk param-cleanup and P_FINISH frame bookkeeping are engine plumbing and not ported.",
+  "confidence": "MEDIUM"
+}

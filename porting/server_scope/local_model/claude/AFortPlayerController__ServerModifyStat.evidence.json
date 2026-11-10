@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerModifyStat",
+  "status": "proposed",
+  "original": "0x142a4bdc0",
+  "signature": "void AFortPlayerController::ServerModifyStat(FName StatName, int32 Amount, <enum> ModType, bool bForceStatSave)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4bdc0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/e267d286af3947d79d2fae6de81fcae5/0x1423abba0.c"
+  ],
+  "callees": {
+    "0xf10 (validate)": "Stub_ReturnTrue, 0x1406801d0",
+    "0xf18 (impl)": "0x1423abba0, _Implementation body, see deps/AFortPlayerController__ServerModifyStat_Implementation.json",
+    "RPC_ValidateFailed": "engine helper (named)",
+    "FFrame_Step/FFrame_StepExplicitProperty": "engine helpers (parameter unmarshalling, not ported)"
+  },
+  "notes": "Only partly read: FUN_1423a9940 and FUN_1424b3430 are not finished. Thunk param-cleanup and P_FINISH frame bookkeeping are engine plumbing and not ported.",
+  "confidence": "LOW"
+}

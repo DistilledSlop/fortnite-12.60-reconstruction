@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerRemoveInventoryStateValue",
+  "status": "proposed",
+  "original": "0x142a4c720",
+  "signature": "void AFortPlayerController::ServerRemoveInventoryStateValue(uint8 StateValueType, FGuid ItemGuid)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4c720.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/fb746bf75cb44e509110085b336d1329/0x1423a8370.c"
+  ],
+  "callees": {
+    "0x1010 (validate)": "Stub_ReturnTrue, 0x1406801d0",
+    "0x1018 (impl)": "0x1423a8370, _Implementation body, see deps/AFortPlayerController__ServerRemoveInventoryStateValue_Implementation.json",
+    "RPC_ValidateFailed": "engine helper (named)",
+    "FFrame_Step/FFrame_StepExplicitProperty": "engine helpers (parameter unmarshalling, not ported)"
+  },
+  "notes": "Argument mapping is unverified. The impl may use StateValueType in a path the decompile does not show. Thunk param-cleanup and P_FINISH frame bookkeeping are engine plumbing and not ported.",
+  "confidence": "LOW"
+}

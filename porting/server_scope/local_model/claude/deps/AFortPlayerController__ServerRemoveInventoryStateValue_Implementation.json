@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerRemoveInventoryStateValue_Implementation",
+  "address": "0x1423a8370",
+  "signature": "void AFortPlayerController::ServerRemoveInventoryStateValue_Implementation(ItemGuid, StateValueType)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerRemoveInventoryStateValue_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/fb746bf75cb44e509110085b336d1329/0x1423a8370.c"
+  ]
+}

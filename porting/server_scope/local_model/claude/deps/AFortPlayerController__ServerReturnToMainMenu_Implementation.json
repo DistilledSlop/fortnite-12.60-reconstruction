@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerReturnToMainMenu_Implementation",
+  "address": "0x1423ac090",
+  "signature": "void AFortPlayerController::ServerReturnToMainMenu_Implementation()",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerReturnToMainMenu_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/4bfbc13c0fb44e2e9fa4f8185b6738af/0x1423ac090.c"
+  ]
+}

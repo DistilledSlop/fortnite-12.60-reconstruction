@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerRemoveInventoryItem",
+  "status": "proposed",
+  "original": "0x142a4c540",
+  "signature": "void AFortPlayerController::ServerRemoveInventoryItem(FGuid ItemGuid, int32 Count, bool bForceRemoveFromQuickBars, bool bForceRemoval, bool bForcePersistWhenEmpty)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4c540.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/a7ba83d067264784a45f77c4006b78b3/0x1423abed0.c"
+  ],
+  "callees": {
+    "0x1040 (validate)": "Stub_ReturnTrue, 0x1406801d0",
+    "0x1048 (impl)": "0x1423abed0, _Implementation body, see deps/AFortPlayerController__ServerRemoveInventoryItem_Implementation.json",
+    "RPC_ValidateFailed": "engine helper (named)",
+    "FFrame_Step/FFrame_StepExplicitProperty": "engine helpers (parameter unmarshalling, not ported)"
+  },
+  "notes": "Argument order follows the thunk read order (reverse of the reflection list). Thunk param-cleanup and P_FINISH frame bookkeeping are engine plumbing and not ported.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerReplyToReadyCheck",
+  "status": "proposed",
+  "original": "0x142a4c900",
+  "signature": "void AFortPlayerController::ServerReplyToReadyCheck(bool bReady)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4c900.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/ba2f209456d748c89c0adf856dbfe3b3/0x1423abf10.c"
+  ],
+  "callees": {
+    "0x1460 (validate)": "Stub_ReturnTrue, 0x1406801d0",
+    "0x1468 (impl)": "0x1423abf10, _Implementation body, see deps/AFortPlayerController__ServerReplyToReadyCheck_Implementation.json",
+    "RPC_ValidateFailed": "engine helper (named)",
+    "FFrame_Step/FFrame_StepExplicitProperty": "engine helpers (parameter unmarshalling, not ported)"
+  },
+  "notes": "The 1/2 encoding is read from the xor expression; the enum name is not known. Thunk param-cleanup and P_FINISH frame bookkeeping are engine plumbing and not ported.",
+  "confidence": "MEDIUM"
+}

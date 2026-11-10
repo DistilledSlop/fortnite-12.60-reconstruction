@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerRemoveInventoryItem_Implementation",
+  "address": "0x1423abed0",
+  "signature": "void AFortPlayerController::ServerRemoveInventoryItem_Implementation(ItemGuid, Count, bForceRemoveFromQuickBars, bForceRemoval, bForcePersistWhenEmpty)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerRemoveInventoryItem_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/a7ba83d067264784a45f77c4006b78b3/0x1423abed0.c"
+  ]
+}

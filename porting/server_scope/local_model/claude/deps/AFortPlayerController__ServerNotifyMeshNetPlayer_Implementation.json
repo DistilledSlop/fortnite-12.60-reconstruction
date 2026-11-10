@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerNotifyMeshNetPlayer_Implementation",
+  "address": "0x1423abbe0",
+  "signature": "void AFortPlayerController::ServerNotifyMeshNetPlayer_Implementation(Tag)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerNotifyMeshNetPlayer_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/1b2ebd7ec253473ea4b3ebbf864de98b/0x1423abbe0.c"
+  ]
+}

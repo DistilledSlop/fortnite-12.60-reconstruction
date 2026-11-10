@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerReadyToStartMatch_Implementation",
+  "address": "0x1423abda0",
+  "signature": "void AFortPlayerController::ServerReadyToStartMatch_Implementation()",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerReadyToStartMatch_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/b92141562409497ab47dfc4d1d43c901/0x1423abda0.c"
+  ]
+}

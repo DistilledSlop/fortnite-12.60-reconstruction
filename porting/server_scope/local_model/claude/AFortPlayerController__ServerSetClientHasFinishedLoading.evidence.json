@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerSetClientHasFinishedLoading",
+  "status": "proposed",
+  "original": "0x142a4d220",
+  "signature": "void AFortPlayerController::ServerSetClientHasFinishedLoading(bool bInHasFinishedLoading)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4d220.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/3bbd8015861d42eea2cec191bcf5088c/0x1423ac490.c"
+  ],
+  "callees": {
+    "0x1360 (validate)": "Stub_ReturnTrue, 0x1406801d0",
+    "0x1368 (impl)": "0x1423ac490, _Implementation body, see deps/AFortPlayerController__ServerSetClientHasFinishedLoading_Implementation.json",
+    "RPC_ValidateFailed": "engine helper (named)",
+    "FFrame_Step/FFrame_StepExplicitProperty": "engine helpers (parameter unmarshalling, not ported)"
+  },
+  "notes": "The flag logic is fully read; the slot 0x1588 target is not read. Thunk param-cleanup and P_FINISH frame bookkeeping are engine plumbing and not ported.",
+  "confidence": "MEDIUM"
+}

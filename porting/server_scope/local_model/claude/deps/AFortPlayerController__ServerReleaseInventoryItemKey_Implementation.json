@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerReleaseInventoryItemKey_Implementation",
+  "address": "0x1423abdb0",
+  "signature": "void AFortPlayerController::ServerReleaseInventoryItemKey_Implementation(ItemGuid)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerReleaseInventoryItemKey_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/353560a60b2a48efbc10cad49ce76cfc/0x1423abdb0.c"
+  ]
+}

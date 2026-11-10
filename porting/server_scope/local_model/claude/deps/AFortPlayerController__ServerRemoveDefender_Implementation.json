@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerRemoveDefender_Implementation",
+  "address": "0x1423abe70",
+  "signature": "void AFortPlayerController::ServerRemoveDefender_Implementation(DefenderTrap)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerRemoveDefender_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/8a48b49b4ec54e02a63ef1e9347ead6f/0x1423abe70.c"
+  ]
+}

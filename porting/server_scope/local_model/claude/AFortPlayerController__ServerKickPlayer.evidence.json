@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerKickPlayer",
+  "status": "proposed",
+  "original": "0x142a4bb90",
+  "signature": "void AFortPlayerController::ServerKickPlayer(FText Reason, <struct> PlayerToKick)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4bb90.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/5cf38c0cd2284df2b1ac0f0bd0fb6287/0x1423aba80.c"
+  ],
+  "callees": {
+    "0xf20 (validate)": "Stub_ReturnTrue, 0x1406801d0",
+    "0xf28 (impl)": "0x1423aba80, _Implementation body, see deps/AFortPlayerController__ServerKickPlayer_Implementation.json",
+    "RPC_ValidateFailed": "engine helper (named)",
+    "FFrame_Step/FFrame_StepExplicitProperty": "engine helpers (parameter unmarshalling, not ported)"
+  },
+  "notes": "Impl body is read; the GameMode-side handler at slot 0xa00 and the predicate helpers are not fully read. Thunk param-cleanup and P_FINISH frame bookkeeping are engine plumbing and not ported.",
+  "confidence": "LOW"
+}

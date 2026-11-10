@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerKickPlayer_Implementation",
+  "address": "0x1423aba80",
+  "signature": "void AFortPlayerController::ServerKickPlayer_Implementation(Reason, PlayerToKick)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerKickPlayer_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/5cf38c0cd2284df2b1ac0f0bd0fb6287/0x1423aba80.c"
+  ]
+}

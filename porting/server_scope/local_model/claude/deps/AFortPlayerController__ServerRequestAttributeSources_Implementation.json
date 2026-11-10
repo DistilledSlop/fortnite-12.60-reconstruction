@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerRequestAttributeSources_Implementation",
+  "address": "0x1423abf70",
+  "signature": "void AFortPlayerController::ServerRequestAttributeSources_Implementation(Attribute, AbilitySystemComponent)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerRequestAttributeSources_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/9f1e4766e2dc42438089218bd45190f9/0x1423abf70.c"
+  ]
+}

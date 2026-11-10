@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerRequestGameplayAction_Implementation",
+  "address": "0x1423ac080",
+  "signature": "void AFortPlayerController::ServerRequestGameplayAction_Implementation(RequestedAction)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerRequestGameplayAction_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/ba18a321fd7842699172f8c763b9ac4a/0x1423ac080.c"
+  ]
+}

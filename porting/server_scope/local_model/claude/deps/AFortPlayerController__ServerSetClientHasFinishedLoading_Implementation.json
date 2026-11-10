@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController::ServerSetClientHasFinishedLoading_Implementation",
+  "address": "0x1423ac490",
+  "signature": "void AFortPlayerController::ServerSetClientHasFinishedLoading_Implementation(bInHasFinishedLoading)",
+  "inc_or_decl": "work/claude/out/AFortPlayerController__ServerSetClientHasFinishedLoading_Implementation.inc",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/3bbd8015861d42eea2cec191bcf5088c/0x1423ac490.c"
+  ]
+}
