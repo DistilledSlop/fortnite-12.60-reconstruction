@@ -46,3 +46,7 @@ One-shot finish for a chunk (record + mirror + commit): from the package dir `wo
 
 Scope note: the target is the 1,110 in queue.json only (user decision). The 3,057 unresolved and the 7,222 ceiling of porting/server_scope are out of scope for this goal.
 - Chunk 06: `AFortAIPawn::NetMulticast_BatchedDamageCues` implementation 0x1422de590 only described in deps (port it); `PlayAdditiveHitReactsNative` montage helpers 0x143fd6e10/0x143fd6b30 read partially; `ReviveFromDBNO` LOW; `AbilitySpawnDeco` LOW (0x1426b5370 unexpanded); placeholder member names (AIFlags1344, ProtectedFlags520); capsule slot 0x800 target and predicate 0x1444aa6b0 unconfirmed.
+
+## Scope cut (user decision, 2026-11-10: "cut the probably not ones")
+
+280 functions in probably-not-BR classes (Creative, Minigame, Mission, Quest, MiniMap, Niagara/FX, Media, Analytics, MeshNetwork, Outpost, MangData, LockDevice, CaptureItem, Playground, Music, Ostrich/Meatball vehicles, etc.) are cut from the goal; the list is `claude/cut_not_br.json`. Chunks 00-08 (135 functions, already done or launched) are unchanged. Chunks 09-55 were regenerated from the remaining 695, BR-core classes first. New target = 135 + 695 = **830 functions** (was 1,110). Progress is N of 830.
