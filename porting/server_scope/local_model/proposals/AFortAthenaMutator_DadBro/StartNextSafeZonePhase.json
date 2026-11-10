@@ -1,0 +1,8 @@
+{
+ "function": "AFortAthenaMutator_DadBro::StartNextSafeZonePhase",
+ "status": "blocked",
+ "blocker": "Unresolved callee 0x14196ede0: the body is P_FINISH + tail 0x141ae9610 = 'if (GetLocalRole()==ROLE_Authority && CachedGameMode(+0x258)) tail-call 0x14196ede0(CachedGameMode, -1)'; 0x14196ede0 is a ~11.5KB non-reflected shared game-mode helper (not in reflection dump, not an exec address) whose name/contract is unknown. Next step: xref-scan its other call sites and identify callees 0x14290f690/0x1419635f0 to match it against the AFortGameMode/AFortGameModeZone UFUNCTION set.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100216",
+ "batch_seconds": 796
+}

@@ -1,0 +1,39 @@
+{
+  "function": "AFortAthenaSupplyDrop::OnLootSpawned",
+  "original_address": "0x1428347d0",
+  "decompile_source": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native92-broad/0x1428347d0.c (Ghidra 'bad instruction data'; .asm is authoritative)",
+  "asm_source": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native92-broad/0x1428347d0.asm",
+  "proposal": "work/q27-11100216/OnLootSpawned.inc",
+  "status": "proposed",
+  "flag_proof": {
+    "reflection_flags": "0x4080405",
+    "decoded": "FUNC_Native | FUNC_Event | FUNC_BlueprintCallable | FUNC_BlueprintEvent | FUNC_Foreach(0x800000) | FUNC_BlueprintAuthorityOnly(0x4000000)",
+    "note": "BlueprintAuthorityOnly native; no Net bits."
+  },
+  "body_proof": {
+    "instructions": [
+      "1428347d0 MOV RAX,[RDX+0x20]  (P_FINISH: shared native prologue counter)",
+      "1428347d4 XOR R8D,R8D",
+      "1428347d7 TEST RAX,RAX",
+      "1428347da SETNZ R8B",
+      "1428347de ADD R8,RAX",
+      "1428347e1 MOV [RDX+0x20],R8",
+      "1428347e5 JMP 0x14191d000 (jump table; entry 0 is JMP 0x14998573a, the shared epilogue stub: PUSH RBP; LEA RBP,[0x241c1c3f6]; XCHG [RSP],RBP; JMP ...)"
+    ],
+    "calls": [],
+    "indirect_calls": 0,
+    "conclusion": "P_FINISH only, then the shared ret/epilogue. No native statement."
+  },
+  "precedent": [
+    "porting/behavior/AFortPawn/MovingEmoteStopped.inc: identical instruction shape at 0x14075b6b0 (P_FINISH + JMP 0x1406801c0 shared ret), ported as an empty body with CONFIDENCE HIGH.",
+    "porting/decompilation_notes.md 'Excerpts' A: the first line of every exec thunk is P_FINISH and is not part of the native body.",
+    "Three sibling execs of the same class share the identical 26-byte P_FINISH-only body: OnCheckForBeingInStorm 0x142834710, OnDespawnDueToStorm 0x142834730, OnRep_NumPlayersInteracting 0x142834970 (labels from native92-broad JSON captures)."
+  ],
+  "header_declaration": {
+    "present": false,
+    "location": "checkout porting/native/Source/FortniteGame/Generated/AFortAthenaSupplyDrop.h",
+    "note": "Generator discrepancy: the header declares only IsPlayingAReplay (BlueprintCallable,BlueprintPure), OnRep_NumPlayersInteracting and SetLootTableNameOverride (BlueprintCallable,BlueprintAuthorityOnly) plus the GetLifetimeReplicatedProps override. OnLootSpawned (exec 0x1428347d0, flags 0x4080405) is not declared; the generator emits the declaration when the behaviour splice is on."
+  },
+  "confidence": "HIGH",
+  "remaining_questions": []
+}

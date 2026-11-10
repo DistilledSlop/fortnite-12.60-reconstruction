@@ -1,0 +1,38 @@
+{
+  "function": "AFortAthenaSKPushCannon::MultiCastPushCannonLaunchedPlayer",
+  "original_address": "0x1428315e0",
+  "decompile_source": "captures/bb4acc6161154cdbad8c73096e883910/0x1428315e0.c",
+  "asm_source": "captures/bb4acc6161154cdbad8c73096e883910/0x1428315e0.asm",
+  "sibling_capture": "captures/<run>/0x142831990.asm (ServerSetPassengerTorquing exec, captured with work/q27-11100216/requests3.json)",
+  "proposal": "work/q27-11100216/MultiCastPushCannonLaunchedPlayer.inc",
+  "status": "proposed",
+  "flag_proof": {
+    "reflection_flags": "0x24cc0",
+    "decoded": "FUNC_Native | FUNC_Event | FUNC_BlueprintCallable | FUNC_BlueprintEvent | FUNC_NetReliable | FUNC_NetMulticast | FUNC_NetServer",
+    "note": "NetMulticast Reliable native RPC, matching the generated header UFUNCTION(NetMulticast, Reliable)."
+  },
+  "body_proof": {
+    "instructions": [
+      "1428315e0-1428315f1: P_FINISH (shared native prologue counter at [rdx+0x20])",
+      "1428315f5 MOV RAX,[RCX]   (vtable of this)",
+      "1428315f8 JMP [RAX+0xeb8]  (tail-call to class virtual at vtable byte offset 0xeb8 = index 195)"
+    ],
+    "calls": [],
+    "indirect_calls": 1,
+    "conclusion": "After P_FINISH the body is a single tail-call to the vtable slot 0xeb8; canonical UE RPC-exec -> _Implementation dispatch."
+  },
+  "vtable_slot_mapping": {
+    "method": "declaration order of the class's own non-UFUNCTION virtuals, confirmed by the sibling Server-RPC exec",
+    "evidence": "AFortAthenaSKPushCannon.h declares exactly two own non-UFUNCTION virtuals: MultiCastPushCannonLaunchedPlayer_Implementation (line 63) and ServerSetPassengerTorquing_Implementation (line 67); GetLifetimeReplicatedProps (line 69) overrides a base slot. The ServerSetPassengerTorquing exec (0x142831990) calls vtable slot 0xec0 (validate; on false, string at 0x14632c860 through shared RPC_ValidateFailed dispatcher 0x142d6e0f0, identified in porting/decompilation_notes.md) and slot 0xec8 (implementation). 0xeb8 is the slot immediately before that pair, i.e. the first own slot: MultiCastPushCannonLaunchedPlayer_Implementation.",
+    "precedent": "work/q27-11100027/BroadcastOnPullAborted.evidence.json (same dispatch pattern, vtable slots 0xa90/0xa98 mapped by declaration order)."
+  },
+  "header_declaration": {
+    "present": true,
+    "location": "checkout porting/native/Source/FortniteGame/Generated/AFortAthenaSKPushCannon.h lines 61-63",
+    "note": "UFUNCTION(NetMulticast, Reliable) void MultiCastPushCannonLaunchedPlayer(); + void MultiCastPushCannonLaunchedPlayer_Implementation();"
+  },
+  "confidence": "HIGH",
+  "remaining_questions": [
+    "The vtable slot -> _Implementation mapping is inferred from declaration order and confirmed relative to the sibling RPC's validate/impl pair (0xec0/0xec8); the vtable data section was not read directly (consistent with prior findings that it is not readable in the runtime image)."
+  ]
+}

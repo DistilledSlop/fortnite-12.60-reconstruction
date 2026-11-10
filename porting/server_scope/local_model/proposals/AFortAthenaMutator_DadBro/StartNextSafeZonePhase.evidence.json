@@ -1,0 +1,47 @@
+{
+  "function": "AFortAthenaMutator_DadBro::StartNextSafeZonePhase",
+  "original_address": "0x1427fede0",
+  "decompile_source": "captures/bb4acc6161154cdbad8c73096e883910/0x1427fede0.c (asm: .../0x1427fede0.asm)",
+  "tail_helper_capture": "same capture includes 0x141ae9610; callee capture: captures/12235e74cb4148a4825c13c3278189f1/0x14196ede0.{c,asm,json}",
+  "status": "blocked",
+  "flag_proof": {
+    "reflection_flags": "0x4020401",
+    "decoded": "FUNC_Final | FUNC_Native | FUNC_BlueprintCallable | FUNC_NetServer | FUNC_BlueprintAuthorityOnly",
+    "note": "Server-side native (NetServer|BlueprintAuthorityOnly), no params."
+  },
+  "resolved_body_shape": {
+    "instructions": [
+      "1427fede0-1427fedf1: P_FINISH (shared native prologue counter at [rdx+0x20])",
+      "1427fedf5: JMP 0x141ae9610 (shared tail helper, this in RCX)"
+    ],
+    "tail_helper_0x141ae9610": [
+      "CMP byte [RCX+0xf0], 3      ; AActor::Role == 3 (ROLE_Authority) — same offset as the authority check in ported bodies (e.g. work/q27-11100136/ForceKillNoDBNO.evidence.json)",
+      "JNZ out",
+      "MOV RCX, [RCX+0x258]       ; this->CachedGameMode: resolved by evidence.py field-offset AFortAthenaMutator_DadBro 0x258 -> AFortAthenaMutator::CachedGameMode (Object, offset 600=0x258, property flags 0x20080000002000)",
+      "TEST RCX,RCX / JZ out",
+      "MOV EDX, 0xffffffff        ; int32 argument = -1",
+      "JMP 0x14196ede0            ; tail-call CachedGameMode-><unresolved>(-1)",
+      "out: RET"
+    ],
+    "c_cpp_shape": "if (GetLocalRole() == ROLE_Authority && CachedGameMode != nullptr) { CachedGameMode-><UNRESOLVED>(-1); }"
+  },
+  "unresolved_contract": {
+    "item": "identity of the method at 0x14196ede0, called on CachedGameMode (AGameModeBase*/AFortGameMode* per the CachedGameMode property type) with a single int32 argument (-1)",
+    "what_is_known": "large shared helper (Ghidra body from 0x14196ede0 to at least 0x141971856, ~11.5 KB, 0x168 stack frame); reads [RCX+0x278] into RSI and null-checks it; calls 0x14290f690, 0x1419635f0 and others; increments [R15+0xfe0] on a negative-argument branch; not a UFunction: 0x14196ede0 does not occur anywhere in porting/generated/reflection/fortnite_game_reflection.json and is not an exec address in the inventory",
+    "missing_evidence": "a name/contract for 0x14196ede0 (its other call sites, or a vtable/UFunction mapping)",
+    "what_was_tried": [
+      "Ghidra capture of 0x14196ede0 (work/q27-11100216/requests2.json): body too large and callee-dense to identify by shape within the lookup budget",
+      "inventory_query show 0x141ae9610 / 0x14196ede0: neither is an exec address of a reflected function",
+      "grep of checkout/porting (behavior + generated + notes) for 14196ede0 / 141ae9610: no prior identification",
+      "inventory scan of remaining AFortGameMode*/zone/phase functions with a single Int/Bool param: no candidate (5 hits, none matching)",
+      "full reflection-dump scan for 14196ede0: 0 occurrences"
+    ],
+    "next_step": "Find the other call sites of 0x14196ede0 in the image (xref scan) and/or identify its callees 0x14290f690 and 0x1419635f0; match the method against the AFortGameMode/AFortGameModeZone UFUNCTION set (e.g. a zone-phase start/change method taking an int32 phase index) to name it; then emit the body: if (GetLocalRole()==ROLE_Authority && CachedGameMode) CachedGameMode-><named>(-1);"
+  },
+  "header_declaration": {
+    "present": false,
+    "location": "checkout porting/native/Source/FortniteGame/Generated/AFortAthenaMutator_DadBro.h",
+    "note": "Generator discrepancy: the header declares only DoDebugSphereForImpulse (NetMulticast,Reliable), OnRep_DadBroCodeState and OnRep_DadBroPawn; StartNextSafeZonePhase (exec 0x1427fede0, flags 0x4020401) is not declared."
+  },
+  "confidence": "BODY SHAPE HIGH / CALLEE UNRESOLVED"
+}
