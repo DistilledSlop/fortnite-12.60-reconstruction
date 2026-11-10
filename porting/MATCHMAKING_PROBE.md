@@ -20,3 +20,10 @@ changelist (12896485) as the session build ID. The client then accepted the
 session, fetched its encryption key, and posted to the session's `/join`
 endpoint. That route returned 404, so no game-server connection was attempted.
 The network checksum 683914758 is a different value from the matchmaking build ID.
+
+After the local join endpoint was added, the original client reported session
+join success and sent UDP packets to the dedicated server. The server received
+them but repeatedly reported `IncomingConnectionless: Error reading handshake
+packet`; no game-world join occurred. A loopback packet capture showed a
+25-byte initial client handshake. Its exact format and the compatibility fix
+remain under investigation.
