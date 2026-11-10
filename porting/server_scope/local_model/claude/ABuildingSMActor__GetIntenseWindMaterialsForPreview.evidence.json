@@ -1,0 +1,20 @@
+{
+  "function": "GetIntenseWindMaterialsForPreview",
+  "status": "proposed",
+  "original": "0x14273fe60",
+  "signature": "bool GetIntenseWindMaterialsForPreview(TArray<UMaterialInterface*>& Materials)  [reflected: ReturnValue Bool, Materials Array of Object]",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14273fe60.c",
+    "captures/8d574529b9c442589beb7980ad0871de/0x1406801e0.c",
+    "captures/a1df577680414b3eb836926c786836ad/0x142ed9cf0.c",
+    "captures/a1df577680414b3eb836926c786836ad/0x142ed9d20.c",
+    "porting/generated/callee_probe/extra/0x142bee710.c"
+  ],
+  "callees": {
+    "0x1406801e0": "Stub_ReturnFalse: returns false (shared engine stub)",
+    "0x142ed9cf0": "FFrame_Step (named engine helper)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (named engine helper)",
+    "0x142bee710": "FMemory_Free (named engine helper)"
+  },
+  "notes": "Only the bool return is observable. Label mismatch (HasItems) noted above; the reflected signature and the body agree, so the exec address is accepted."
+}

@@ -1,0 +1,16 @@
+{
+  "function": "NetMulticast_InvokeGameplayCueAdded",
+  "status": "proposed",
+  "original": "0x1427567a0",
+  "signature": "void NetMulticast_InvokeGameplayCueAdded(FGameplayTag GameplayCueTag, FPredictionKey PredictionKey, FGameplayEffectContextHandle EffectContext) [RPC multicast; offsets Tag 0, PredictionKey 8, EffectContext 32]",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427567a0.c",
+    "captures/f25d9aed367644dcbb9309a83efd40a4/0x141c105f0.c",
+    "captures/213f801148724ca286cbaf09223da07f/0x1406d0860.c"
+  ],
+  "callees": {
+    "0x141c105f0": "ABuildingSMActor virtual body (slot +0xa20) for NetMulticast_InvokeGameplayCueAdded: null check then forward to ASC",
+    "0x1406d0860": "UFortAbilitySystemComponent virtual (slot +0x550) NetMulticast_InvokeGameplayCueAdded_Implementation"
+  },
+  "notes": "Virtual slot-to-name mapping verified against the AFortPawn gameplay-cue wrappers (pawn wrappers 0x1422dea20..0x1422defe0 call the same UFortAbilitySystemComponent slots: +0x530 CuesAddedAndWhileActive_WithParams, +0x538 AddedAndWhileActive_WithParams, +0x540 AddedAndWhileActive_FromSpec, +0x548 Added_WithParams, +0x550 Added, +0x558 CuesExecuted_WithParams, +0x560 Executed_WithParams, +0x568 CuesExecuted, +0x570 Executed, +0x578 Executed_FromSpec). The reflected ABuildingSMActor function is an RPC (NetMulticast); the port belongs on NetMulticast_*_Implementation (kind impl). The ASC object is typed UAbilitySystemComponent in reflection; the Cast assumes the runtime component is UFortAbilitySystemComponent, which is the class the slot numbers were read from. "
+}

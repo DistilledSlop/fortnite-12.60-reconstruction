@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::EnsureBuildingAttributeSet",
+  "address": "0x141b9b750",
+  "signature": "UBuildingAttributeSet* EnsureBuildingAttributeSet()",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "returns BuildingAttributeSet (+0x318), creating it lazily (FUN_142ecc600 gate, FUN_141ed2350 check, FUN_141b94070 init when Role is authority and +0x34d == 1)",
+    "captures": [
+      "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141b9b750.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

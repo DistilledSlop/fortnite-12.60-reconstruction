@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::FinishRepairBlueprintEvent",
+  "address": "0x142753f70",
+  "signature": "void FinishRepairBlueprintEvent()",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "ProcessEvent of an FName-looked-up Blueprint event (vslot +0x210); the FName is a global constant",
+    "captures": [
+      "captures/dd73b1cfc6e54100a55bc90b2a6aa2bc/0x142753f70.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

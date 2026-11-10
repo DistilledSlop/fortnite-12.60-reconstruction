@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::UpdateNetDormancyForRepair",
+  "address": "0x143f72550",
+  "signature": "void UpdateNetDormancyForRepair()",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "virtual +0x5e8. Dormancy-related flush for repair (FName compare, FUN_144684d20, FUN_144375f90) then a BP event via vslot +0x330",
+    "captures": [
+      "captures/dd73b1cfc6e54100a55bc90b2a6aa2bc/0x143f72550.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

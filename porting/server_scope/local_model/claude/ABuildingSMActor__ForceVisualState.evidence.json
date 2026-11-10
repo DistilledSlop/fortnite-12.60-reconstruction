@@ -1,0 +1,20 @@
+{
+  "function": "ForceVisualState",
+  "status": "proposed",
+  "original": "0x142755ed0",
+  "signature": "void ForceVisualState(uint8 VisualState)  [reflected: VisualState Enum (enum 0x142755440) plus its UnderlyingType byte, which the exec passes as the single value]",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142755ed0.c",
+    "captures/f25d9aed367644dcbb9309a83efd40a4/0x141c05a90.c",
+    "captures/cb24826448ae472baa5a36e8d04d7bc6/0x143f72040.c",
+    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141b9b750.c",
+    "captures/9bfb3e9ed6ea458cb15a587b5db45a05/0x141c1a5f0.c"
+  ],
+  "callees": {
+    "0x141c05a90": "ABuildingSMActor::ForceVisualState real body (slot +0xd80)",
+    "0x143f72040": "AActor::FlushNetDormancy (stat string NET_AActor_FlushNetDormancy); called when NetDormancy > 1",
+    "0x141b9b750": "EnsureBuildingAttributeSet: returns BuildingAttributeSet (0x318), creating it lazily; result ignored by the caller",
+    "0x141c1a5f0": "ScheduleForcedVisualState: stores the forced byte at 0x6b1 and, if nonzero and the role is authority, arms a timer (FTimerManager_InternalClearTimer, FUN_1446278d0) to re-apply the state after 1.5x the scaled delay, minimum 0.5"
+  },
+  "notes": "Callees read in full. FUN_141c1a5f0 calls further engine helpers (FUN_143f7a920, virtual +0xdd0, FUN_144621fb0) that are not relied on here beyond the names above. Member names at 0xf0 (AActor::Role) and 0xf1 (AActor::NetDormancy) come from field-offset. The enum argument is passed as a byte; the reflected UnderlyingType parameter is the enum backing storage and is not a separate source parameter."
+}

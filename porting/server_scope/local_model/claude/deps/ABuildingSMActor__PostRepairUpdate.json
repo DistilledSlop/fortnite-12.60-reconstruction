@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::PostRepairUpdate",
+  "address": "0x141c1fde0",
+  "signature": "void PostRepairUpdate()",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "virtual +0xda8. Repair visual refresh and resource-type update (FUN_141c0a8f0, FUN_14422fe30, FUN_141ef7230, FUN_1424ae970)",
+    "captures": [
+      "captures/dd73b1cfc6e54100a55bc90b2a6aa2bc/0x141c1fde0.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

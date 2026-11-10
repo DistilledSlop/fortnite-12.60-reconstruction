@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::PlayFullHealthEffectsInternal",
+  "address": "0x141c1fd20",
+  "signature": "void PlayFullHealthEffectsInternal()",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "virtual +0xda0. Calls +0xb58 (0x141c1cd40), reads GetWorld()+0x540 into +0xac4, sets 0x6ac bits 0xc0, collects effect components (+0xde0) and applies a colour to each (FUN_1440fc3b0 index 7)",
+    "captures": [
+      "captures/9bfb3e9ed6ea458cb15a587b5db45a05/0x141c1fd20.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

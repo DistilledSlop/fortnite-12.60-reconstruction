@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::GetMissingHealth",
+  "address": "0x141ba76d0",
+  "signature": "float GetMissingHealth()",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "max(0, GetMaxHealth() - GetCurrentHealth()) using virtual +0x7b0 and +0x7a8",
+    "captures": [
+      "porting/generated/native100-impl/0x141ba76d0.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

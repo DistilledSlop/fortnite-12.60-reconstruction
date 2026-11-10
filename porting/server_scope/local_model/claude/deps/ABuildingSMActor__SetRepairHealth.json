@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::SetRepairHealth",
+  "address": "0x141c1b910",
+  "signature": "void SetRepairHealth(float RepairAmount)",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "virtual +0xd90. Writes +0x13a, updates flag 0x6a9 bits 0x8/0x10 and arms the repair timer (FUN_1446278d0, 5.0); ~144 lines, internals not ported",
+    "captures": [
+      "captures/dd73b1cfc6e54100a55bc90b2a6aa2bc/0x141c1b910.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

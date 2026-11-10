@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::GetStructuralGridForWorld",
+  "address": "0x141c77490",
+  "signature": "UStructuralGrid* GetStructuralGridForWorld(UWorld* World)",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "world subsystem lookup (FUN_144640410, FUN_142927a60 index check, FUN_141e9e770); null when absent",
+    "captures": [
+      "captures/678363f78c5e4ebdb6b782b509c1a1b1/0x141c77490.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

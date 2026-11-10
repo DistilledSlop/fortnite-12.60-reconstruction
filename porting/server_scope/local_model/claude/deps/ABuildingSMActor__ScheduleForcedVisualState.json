@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::ScheduleForcedVisualState",
+  "address": "0x141c1a5f0",
+  "signature": "void ScheduleForcedVisualState(uint8 VisualState)",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "stores the byte at +0x6b1; when nonzero and authority, clears any old timer (FTimerManager_InternalClearTimer) and arms a 1.5x-scaled re-apply timer with a 0.5 floor",
+    "captures": [
+      "captures/9bfb3e9ed6ea458cb15a587b5db45a05/0x141c1a5f0.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

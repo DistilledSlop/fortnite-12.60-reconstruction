@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::CanBeRepaired",
+  "address": "0x141c104d0",
+  "signature": "bool CanBeRepaired()",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "virtual +0xc60: false when flag 0x6a9 bit 0x8 set, or +0xc40 true, or +0xc58 false, or FUN_141baf210 false",
+    "captures": [
+      "captures/dd73b1cfc6e54100a55bc90b2a6aa2bc/0x141c104d0.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

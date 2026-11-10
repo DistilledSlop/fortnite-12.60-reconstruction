@@ -1,0 +1,31 @@
+{
+  "function": "MulticastPlayFullHealthEffects",
+  "status": "proposed",
+  "original": "0x1427262d0",
+  "signature": "void MulticastPlayFullHealthEffects()  [RPC multicast, no parameters]",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427262d0.c",
+    "captures/f25d9aed367644dcbb9309a83efd40a4/0x141c10490.c",
+    "captures/9bfb3e9ed6ea458cb15a587b5db45a05/0x141bc6310.c",
+    "captures/9bfb3e9ed6ea458cb15a587b5db45a05/0x141c1fd20.c",
+    "captures/4caacbbda5d24232a257f156d098f898/0x141c1cd40.c",
+    "captures/4caacbbda5d24232a257f156d098f898/0x141c06230.c",
+    "captures/4caacbbda5d24232a257f156d098f898/0x1440fc3b0.c",
+    "captures/4caacbbda5d24232a257f156d098f898/0x141b86080.c",
+    "captures/4caacbbda5d24232a257f156d098f898/0x141bd3db0.c",
+    "captures/44d47592926e48b394ba11a5e200418f/0x143f84060.c",
+    "captures/cb24826448ae472baa5a36e8d04d7bc6/0x143f793a0.c"
+  ],
+  "callees": {
+    "0x141c10490": "MulticastPlayFullHealthEffects real body: calls +0x940 then +0xda0 on this",
+    "0x141bc6310": "virtual +0x940 (RequestFullHealthVisualRefresh): if the deferred-refresh flag is off, FUN_143f84060 (sets bit 0x2 path, FUN_144630410) else queues via FUN_141b86080 and FUN_141bd3db0; sets flag 0x3e5 bit 0x40",
+    "0x141c1fd20": "virtual +0xda0 (PlayFullHealthEffectsInternal): calls +0xb58, reads GetWorld()+0x540 into 0xac4, sets flags 0x6ac bits 0xc0, collects effect components via +0xde0, applies a colour to each through FUN_1440fc3b0",
+    "0x141c1cd40": "virtual +0xb58 called by PlayFullHealthEffectsInternal: refreshes the attached-component set and per-component render parameters (large; read in full, internals not ported here)",
+    "0x141c06230": "virtual +0xde0: copies the effect component list (0x8f8 array, count 0x900) into the output TArray",
+    "0x1440fc3b0": "SetPrimitiveColorParameter(Component, Index, Color): builds a 4-float array and calls FUN_1440fc130",
+    "0x141b86080": "lookup helper used on the deferred path (FUN_142739510 world/class checks, FUN_14460d300 map lookup)",
+    "0x141bd3db0": "append to a delegate-like list at this+0x58 (FUN_14085a990)",
+    "0x143f84060": "sets the refresh request via FUN_144630410 when flag 0x32 bit 0x2 is set and FUN_142ecc600 is clear"
+  },
+  "notes": "Confidence LOW: the two virtual targets are read in full, but the effect-component collection and deferred-refresh helpers (FUN_141c1cd40 internals, FUN_144630410, FUN_14460d300) are described at purpose level only. The 0x941/0xda0 names are proposed."
+}

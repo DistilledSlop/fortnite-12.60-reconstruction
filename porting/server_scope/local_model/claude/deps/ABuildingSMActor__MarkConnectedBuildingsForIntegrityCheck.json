@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::MarkConnectedBuildingsForIntegrityCheck",
+  "address": "0x141c82b90",
+  "signature": "void MarkConnectedBuildingsForIntegrityCheck(UStructuralGrid* Grid, ABuildingSMActor* Building)",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "stat scope, FUN_141c7b870 collection of connected buildings, two FUN_141c57460 passes and FUN_141c56ef0 marking; passes are not read to leaf level",
+    "captures": [
+      "captures/678363f78c5e4ebdb6b782b509c1a1b1/0x141c82b90.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

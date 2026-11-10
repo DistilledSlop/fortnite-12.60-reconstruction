@@ -1,0 +1,20 @@
+{
+  "function": "MarkConnectedBuildingsForStructuralIntegrityCheck",
+  "status": "proposed",
+  "original": "0x142756780",
+  "signature": "void MarkConnectedBuildingsForStructuralIntegrityCheck()",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142756780.c",
+    "captures/cb24826448ae472baa5a36e8d04d7bc6/0x143f793a0.c",
+    "captures/678363f78c5e4ebdb6b782b509c1a1b1/0x141c77490.c",
+    "captures/678363f78c5e4ebdb6b782b509c1a1b1/0x141c82b90.c",
+    "captures/678363f78c5e4ebdb6b782b509c1a1b1/0x142cd3770.c"
+  ],
+  "callees": {
+    "0x143f793a0": "virtual +0x150 on ABuildingSMActor = UObject::GetWorld (walks Outer, checks RF flags)",
+    "0x141c77490": "GetStructuralGridForWorld(World): world subsystem lookup, returns the grid object or null",
+    "0x141c82b90": "MarkConnectedBuildingsForIntegrityCheck(Grid, Building): stat scope, FUN_141c7b870 collection, FUN_141c57460 twice and FUN_141c56ef0 marking passes; return value is a stat name pointer and is ignored",
+    "0x142cd3770": "stat scope end (FStatScope-style, thread-id check); diagnostic only"
+  },
+  "notes": "Callees read in full (FUN_142cd3770 read to end: stat-scope end with GameThread name and hitch log only, no gameplay effect). FUN_141c82b90 calls FUN_141c7b870, FUN_141c57460 and FUN_141c56ef0 which are not read here; the body depends only on the name given to FUN_141c82b90. Flag-bit names need a bit-level check against the reflection before promotion."
+}

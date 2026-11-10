@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::BlueprintEventRepairRejected",
+  "address": "0x142753190",
+  "signature": "void BlueprintEventRepairRejected()",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "ProcessEvent of an FName-looked-up Blueprint event via FindFunctionChecked (vslot +0x210)",
+    "captures": [
+      "captures/dd73b1cfc6e54100a55bc90b2a6aa2bc/0x142753190.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingSMActor::RequestFullHealthVisualRefresh",
+  "address": "0x141bc6310",
+  "signature": "void RequestFullHealthVisualRefresh()",
+  "inc_or_decl": "decl",
+  "evidence": {
+    "description": "virtual +0x940. Queues or immediately runs the full-health visual refresh (FUN_143f84060 or FUN_141b86080 + FUN_141bd3db0), sets flag 0x3e5 bit 0x40",
+    "captures": [
+      "captures/9bfb3e9ed6ea458cb15a587b5db45a05/0x141bc6310.c"
+    ],
+    "status": "proposed; body is a separate port item"
+  }
+}

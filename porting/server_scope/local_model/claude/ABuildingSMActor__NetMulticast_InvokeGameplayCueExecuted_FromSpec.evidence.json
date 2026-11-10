@@ -1,0 +1,20 @@
+{
+  "function": "NetMulticast_InvokeGameplayCueExecuted_FromSpec",
+  "status": "proposed",
+  "original": "0x142757080",
+  "signature": "void NetMulticast_InvokeGameplayCueExecuted_FromSpec(FGameplayEffectSpecForRPC Spec, FPredictionKey PredictionKey)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142757080.c",
+    "captures/f25d9aed367644dcbb9309a83efd40a4/0x141c10730.c",
+    "captures/9bfb3e9ed6ea458cb15a587b5db45a05/0x1406d09d0.c",
+    "porting/generated/decomp_batches/run-20261031T224546Z-b001/_adhoc/0x1406ed110__1406ed110.c",
+    "porting/generated/decomp_batches/run-20261031T224546Z-b001/_adhoc/0x1406ae6c0__1406ae6c0.c"
+  ],
+  "callees": {
+    "0x141c10730": "ABuildingSMActor virtual body (slot +0xa48) for NetMulticast_InvokeGameplayCueExecuted_FromSpec: null check then forward to ASC",
+    "0x1406d09d0": "UFortAbilitySystemComponent virtual (slot +0x578) NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation",
+    "0x1406ed110": "FGameplayEffectSpecForRPC copy constructor (dst, src): copies handle, tag containers, modifiers array",
+    "0x1406ae6c0": "FGameplayEffectSpecForRPC destructor: releases handle and tag containers, then FUN_1406ad770"
+  },
+  "notes": "Virtual slot-to-name mapping verified against the AFortPawn gameplay-cue wrappers (pawn wrappers 0x1422dea20..0x1422defe0 call the same UFortAbilitySystemComponent slots: +0x530 CuesAddedAndWhileActive_WithParams, +0x538 AddedAndWhileActive_WithParams, +0x540 AddedAndWhileActive_FromSpec, +0x548 Added_WithParams, +0x550 Added, +0x558 CuesExecuted_WithParams, +0x560 Executed_WithParams, +0x568 CuesExecuted, +0x570 Executed, +0x578 Executed_FromSpec). The reflected ABuildingSMActor function is an RPC (NetMulticast); the port belongs on NetMulticast_*_Implementation (kind impl). The ASC object is typed UAbilitySystemComponent in reflection; the Cast assumes the runtime component is UFortAbilitySystemComponent, which is the class the slot numbers were read from. The forwarder first copies Spec (FUN_1406ed110, copy constructor) and destroys the copy after the call (FUN_1406ae6c0, destructor). The copy is made in source by value."
+}
