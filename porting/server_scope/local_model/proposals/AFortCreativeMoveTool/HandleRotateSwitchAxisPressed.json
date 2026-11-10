@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeMoveTool::HandleRotateSwitchAxisPressed",
+ "status": "blocked",
+ "blocker": "Exec thunk (0x142757d30) resolves to vtable 0x146204508 slot 0xd20 = 0x142675c40, whose behavior is unresolved: early-exit predicate FUN_141ed91f0, a 0x30-byte temp object (vtables DAT_1459a9e80/DAT_1459a9ed8, ctor-ish FUN_142ee3b30, virtual +0x40), and generic utility FUN_1446278d0(&world, &this[0xc38], &out, (int)[this+0xc40]); no direct RPC visible. Next step: identify FUN_141ed91f0 and the 0x30-byte object class, then decompile FUN_1446278d0 to locate any ServerUpdateRotationAxis issue.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100501",
+ "batch_seconds": 848
+}
