@@ -1,0 +1,8 @@
+{
+ "function": "AFortAthenaLocalGameplayBehavior::FinishExecute",
+ "status": "blocked",
+ "blocker": "Non-reflected member helper 0x143f84be0(this,2) and task helper 0x1418a0060(CachedTask) have unresolved contracts (no reflection names, not in helpers.json). Body fields resolved: CachedTask@0x220, bReplicates@0x5b.0, bNeedToAwakeDuringExecution@0x218; body at 0x1418c14f0. Next: identify 0x143f84be0/0x1418a0060 via Ghidra pass (callees 0x14463f3c0/0x1449c6900).",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100203",
+ "batch_seconds": 752
+}

@@ -1,0 +1,8 @@
+{
+ "function": "AFortAIPawn::ReviveFromDBNO",
+ "status": "blocked",
+ "blocker": "Complex body 0x1422eab80 with ~15 non-reflected callees (0x141ed1800, 0x141f88460, 0x141f887c0, 0x142ce11c0, 0x141bcc800, 0x1416954e0, 0x142792260, 0x141702e20, 0x1416578f0, 0x144a007f0, 0x143e8b3b0, 0x1406fd020, vtable 0xa50/0x150/0xcf8/0x18/0x620) plus an unresolved global 24-byte element array (_DAT_148263a18) and pending-kill flag (element+8 bit 0x1d). Body structure, log paths (NOT DBNO / pending kill) and field offsets documented. Next: multi-pass Ghidra identification of the name/map helpers, delegate broadcast, and virtual slots.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100203",
+ "batch_seconds": 752
+}

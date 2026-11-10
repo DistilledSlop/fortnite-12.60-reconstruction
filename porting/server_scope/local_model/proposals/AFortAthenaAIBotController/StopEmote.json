@@ -1,0 +1,8 @@
+{
+ "function": "AFortAthenaAIBotController::StopEmote",
+ "status": "blocked",
+ "blocker": "Non-reflected contracts: pawn component @0x4c8 + its vtable[2]() getter, helpers 0x1406d7fd0/0x140fedb0, pawn vtable slot 0xdc0, and controller emote fields 0x9e8(ref)/0x9e0(index). Resolved: PlayerBotPawn@0x400, LastReplicatedEmoteExecuted@0x8d0; body 0x1416b03f0. Next: identify 0x4c8 component + getter and the two helpers via Ghidra pass.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100203",
+ "batch_seconds": 752
+}
