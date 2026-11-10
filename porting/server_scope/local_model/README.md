@@ -27,7 +27,8 @@ Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 
 | 01 | done, 15 recorded proposed (confidence mostly LOW/MEDIUM; worker reformatted 13 chunk-00 evidence JSONs, bodies unchanged) |
 | 02 | done, 15 recorded proposed (some bodies LOW: unresolved receivers, partial helper reads, raw-offset comments to clean in a later review pass) |
 | 03, 04 | done, 15 recorded proposed each |
-| 05, 06 | running (2 workers max at a time) |
+| 05 | done, 15 recorded proposed |
+| 06, 07 | running (2 workers max at a time) |
 
 Recording a finished chunk: from the package dir `python3 -I work/claude/record_chunk.py NN` (claims or reopens each function as owner `claude-br`, then records proposed; copy in `claude/record_chunk.py`). Worker outputs are mirrored into `claude/` here (`<Class>__<Fn>.inc`, `.evidence.json`, `deps/`), with `claude/WORKER.md` the worker prompt. Chunk 00 helper deps include five not-yet-decompiled virtual targets (0x880, 0x888, 0x708, UpdateHighlightState, IsAthenaSpawnOverrideActive): chunk 00 follow-up item.
 
@@ -40,3 +41,4 @@ One-shot finish for a chunk (record + mirror + commit): from the package dir `wo
 - Chunk 00: virtual targets 0x880, 0x888, 0x708, UpdateHighlightState, IsAthenaSpawnOverrideActive undecompiled.
 - Chunk 02: `BlueprintModifyIncomingDamage` receivers (virtual 0x1ae0, instigator controller) unresolved; large helpers 0x141befa00, 0x14409cc80, 0x1407babb0 read partially.
 - Chunk 03: collision slots 0x800/0x810 names mismatched (AdjustCollisionOfStaticMesh, LockDevice), `MinigameStateChanged` slot 0xf08 (124 lines) partly traced.
+- Chunk 05: `ABuildingTrap::TriggerIfAppropriate` and `AFortAIPawn::FastSharedReplication` LOW (helpers behind their deps unread, member names proposed); `SetCurrentGoalDiscouragement` parameter order inferred; StaticMeshComponent slot 0x4e0 target unknown (SetMirrored).
