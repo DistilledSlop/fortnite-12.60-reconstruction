@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeMoveTool::HandlePrecisionModeReleased",
+ "status": "blocked",
+ "blocker": "Concrete handler 0x1426753d0 (vtable slot 0xd88) has 6 unresolved callees (0x144621fb0, 0x143f76650, 0x142a62c80, 0x1423d3b90, 0x141d7cd40, 0x141d870c0) and a final virtual dispatch at vtable +0xd98; fields 0xbe0 and 0x112c unresolved. Next step: capture and decompile those callees and resolve the +0xd98 slot.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100407",
+ "batch_seconds": 1242
+}
