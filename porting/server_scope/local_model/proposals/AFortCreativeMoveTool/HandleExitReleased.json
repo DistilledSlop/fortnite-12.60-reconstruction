@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeMoveTool::HandleExitReleased",
+ "status": "blocked",
+ "blocker": "exec 0x1428c2cc0 is a non-zero-guarded 64-bit increment of [param_2+0x20] then a tail JMP to the AFortCreativeMoveTool vtable slot at byte offset 0xcc0 (index 408). UNRESOLVED: (1) identity of the virtual function at vtable 0xcc0 (the real handler body); (2) identity of param_2 (RDX) and its +0x20 field - the function has no reflected params so RDX is a hidden/system arg. Next step: read the CDO/runtime vtable entry at 0xcc0 and find the caller binding these handlers (name->exec table at 0x1463a5970).",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100342",
+ "batch_seconds": 818
+}
