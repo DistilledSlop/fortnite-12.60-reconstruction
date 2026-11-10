@@ -16,3 +16,11 @@ Exec thunks are wrappers: `param_2+0x20 += (...)` is P_FINISH; results go throug
 ## Output per function
 
 Body-only `.inc` (C++ statements, `// CONFIDENCE:` and original addresses), an `*.evidence.json`, then `inventory_progress.py record --owner claude-br --function Class::Fn --status proposed --evidence ... --inc ...`. Shared helpers, members and virtuals go under `dependencies/`. Order: const/getter thunks, direct-callee thunks, vtable ones, then the large match-flow functions.
+
+## Haiku worker waves (2026-11-10)
+
+Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 chunks of 15 functions: `work/claude/chunks/NN.json` in the package, instructions in `work/claude/WORKER.md`, outputs in `work/claude/out/<Class>__<Fn>.{inc,evidence.json}` (+ `out/deps/`). Workers only write files; the orchestrator reviews and bulk-records proposals with `inventory_progress.py` (workers must not touch the state file) and commits. Wave 1 = chunks 00-03 (pilot, check quality before launching more). Track which chunks are launched/reviewed/recorded here:
+
+| Chunks | Status |
+|---|---|
+| 00-03 | launched, awaiting review |
