@@ -1,0 +1,7 @@
+{
+  "name": "FTextRelease",
+  "address": "0x1409f53f0",
+  "signature": "void FTextRelease(FText* Text)",
+  "inc_or_decl": "// Temporary release in the decompile: reset the vtable, free the data block if present, drop the shared reference and free the object when the count reaches zero. In C++ this is the destructor of a temporary FText block; no separate statement is needed when the object goes out of scope.",
+  "evidence": "porting/generated/native-cap-helpers32/0x1409f53f0.c (31 lines, read in full)"
+}

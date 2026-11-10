@@ -1,0 +1,7 @@
+{
+  "name": "SetCraftedItemParams",
+  "address": "0x1420ee680",
+  "signature": "void SetCraftedItemParams(UObject* Params, UObject* TierObject, AFortPlayerController* Controller, int32 CraftResult, bool bQuickCraft)",
+  "inc_or_decl": "Params->TierObject_0x28 = TierObject; Params->Controller_0x30 = Controller; Params->CraftResult_0x38 = CraftResult; Params->bQuickCraft_0x3c = bQuickCraft;",
+  "evidence": "porting/generated/native-cap-helpers30/0x1420ee680.c (12 lines, read in full)"
+}

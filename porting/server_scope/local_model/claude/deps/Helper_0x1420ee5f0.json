@@ -1,0 +1,7 @@
+{
+  "name": "SetToggledEditModeParams",
+  "address": "0x1420ee5f0",
+  "signature": "void SetToggledEditModeParams(UObject* Params, AFortPlayerController* Controller, UObject* EditableActor, bool bOpened)",
+  "inc_or_decl": "Params->Controller_0x28 = Controller; Params->EditableActor_0x30 = EditableActor; Params->bOpened_0x38 = bOpened;",
+  "evidence": "porting/generated/native-cap-helpers30/0x1420ee5f0.c (10 lines, read in full)"
+}

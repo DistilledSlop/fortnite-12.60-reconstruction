@@ -1,0 +1,7 @@
+{
+  "name": "AllChatCharactersValid",
+  "address": "0x142c2e460",
+  "signature": "bool AllChatCharactersValid(FString* Text)",
+  "inc_or_decl": "TArray<TCHAR>& Chars = Text->Data(); if (Chars.Num() > 1) { for (int32 i = 0; i < Chars.Num() - 1; ++i) { if (!IsValidChatCharacter_0x142bfa540(Chars[i])) return false; } } return true;",
+  "evidence": "porting/generated/native102-deps/0x142c2e460.c (23 lines, read in full). The predicate 0x142bfa540 (10 lines) is not read; the array accessor is virtual slot 0x10 on the source object."
+}

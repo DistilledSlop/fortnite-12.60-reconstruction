@@ -1,0 +1,30 @@
+{
+  "function": "AFortPlayerController::ServerCraftSchematic",
+  "status": "proposed",
+  "original": "0x142a4a8f0",
+  "signature": "void ServerCraftSchematic(FString ItemId, int32 PostCraftSlot, int32 CraftAmount, uint8 RequestedTier, bool bIsQuickCrafted)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4a8f0.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423aa9f0.c",
+    "/opt/fortnite/local-model-package/captures/a742e6381a5b44ed811f88f09b5f951a/0x1420b7ab0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-helpers20/0x1425490f0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0x10a0)",
+    "0x1423aa9f0": "Implementation (slot 0x10a8), inlined",
+    "0x140682ce0": "FString copy (argument-less call in impl; not reconstructed)",
+    "0x14237ca50": "FindAccountItemById (see deps/AFortPlayerController__Helper_0x14237ca50.json) (read; calls 0x1410fe060, not ported)",
+    "0x142acf990": "FortSchematicItem StaticClass",
+    "0x142e80820": "transient package getter (9 lines, not read)",
+    "0x142ed7360": "StaticConstructObject (160 lines, not ported)",
+    "0x142b6dbd0": "FFortItemCraftedParams StaticClass",
+    "0x1420b7ab0": "GetZoneMissionManager (read in full)",
+    "0x1425490f0": "requested-tier object lookup from the schematic (48 lines, not read in full)",
+    "0x1420ee680": "crafted-params setter: +0x28 object, +0x30 controller, +0x38 craft result, +0x3c quick flag (read in full, see deps)",
+    "0x1407c2c80": "mission event context getter (21 lines, read: returns a shared global)",
+    "0x140680300": "STRIPPED: shared stub (xor eax,eax; ret); its only use is the dead lookup branch",
+    "slot 0x518 on schematic item": "craft computation (name unresolved; not read)",
+    "slot 0x638 on MissionManager": "HandleMissionEvent (name unresolved)"
+  },
+  "notes": "CONFIDENCE LOW. The top-level flow is read. The craft computation (slot 0x518) and the requested-tier lookup are not ported. The item lookup argument is partly lost in the decompile. The crafted-params object and the mission dispatch are as read."
+}

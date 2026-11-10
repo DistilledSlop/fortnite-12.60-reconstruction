@@ -1,0 +1,7 @@
+{
+  "name": "CanPlayerEditItemListComponent",
+  "address": "0x142087550",
+  "signature": "bool CanPlayerEditItemListComponent(UObject* ItemContainer, AFortPlayerControllerAthena* Controller)",
+  "inc_or_decl": "PARTIAL. Body structure read in full: Owner = ItemContainer->Field_0xa0; if (Owner == nullptr || Controller == nullptr || !Controller->IsA(AFortPlayerControllerAthena::StaticClass())) return false; if (!FUN_1419c3880(Controller, &Found)) return false; if (Found != nullptr && (Found->Flag_0x408 == 1 || (Found->Bits_0x2d8 & 1))) return false; Key = FUN_141c74820(Owner); if (Key == nullptr) return true; return Found == FUN_141c7c5c0(Key, Owner);  // 0x1419c3880 (62 lines), 0x141c74820 (43 lines), 0x141c7c5c0 (180 lines) not read.",
+  "evidence": "porting/generated/native240-fresh-callees/0x142087550.c (41 lines, read in full); callees not ported."
+}

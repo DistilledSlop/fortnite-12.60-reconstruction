@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerController::ServerClientPawnLoaded",
+  "status": "proposed",
+  "original": "0x142a4a710",
+  "signature": "void ServerClientPawnLoaded(bool bIsPawnLoaded)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4a710.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423aa960.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0x1330)",
+    "0x1423aa960": "Implementation (slot 0x1338), inlined",
+    "0x143f793a0": "AActor::GetWorld (slot 0x150)",
+    "0x142927a60": "AFortGameStateZone StaticClass (named by the engine-name table)",
+    "slot 0x9c8 on GameState": "server pawn-loaded notification taking the controller (name unresolved; target 0x1444864e0 not captured)"
+  },
+  "notes": "CONFIDENCE HIGH on control flow. The flag word at this+0x658 is an unnamed uint32. The IsA check is against AFortGameStateZone, as in the decompile. The slot 0x9c8 target was not read, so its effect is not ported."
+}

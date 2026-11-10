@@ -1,0 +1,24 @@
+{
+  "function": "AFortPlayerController::ServerEmote",
+  "status": "proposed",
+  "original": "0x142a4b240",
+  "signature": "void ServerEmote(FName AssetName)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4b240.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423ab040.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-direct/0x142ce3730.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0xe40)",
+    "0x1423ab040": "Implementation (slot 0xe48), inlined",
+    "0x142ce3730": "FName index validity check (ComparisonIndex < NumNames + 1)",
+    "0x141f1ffc0": "soft asset path builder for category 0x67 (1006 lines, NOT ported)",
+    "0x141df62a0": "UFortAssetManager getter (error string confirmed)",
+    "0x141df72f0": "asset manager sub-call (7 lines, not read)",
+    "0x142ee3b30": "delegate field copy (17 lines, not read)",
+    "0x142bad740": "load context getter (23 lines, not read)",
+    "slot 0x308 on asset manager": "async load request (name unresolved)",
+    "0x1406801d0 (Stub_Empty)": "delegate placeholder"
+  },
+  "notes": "CONFIDENCE LOW. The validity check, the asset-path request and the delegate layout are ported. The soft path builder 0x141f1ffc0 (1006 lines) and the completion callback are not ported. The equip effect of the completion is missing from this port."
+}

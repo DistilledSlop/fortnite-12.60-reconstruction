@@ -1,0 +1,25 @@
+{
+  "function": "AFortPlayerController::ServerClearItemList",
+  "status": "proposed",
+  "original": "0x142a4a650",
+  "signature": "void ServerClearItemList(UObject* ItemContainerComponent)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4a650.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423aa7f0.c",
+    "/opt/fortnite/local-model-package/captures/a742e6381a5b44ed811f88f09b5f951a/0x1420b7ab0.c",
+    "/opt/fortnite/local-model-package/captures/721204a3a86444af8e243f285c4c1622/0x141a4a6f0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native240-fresh-callees/0x142087550.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0x13d0)",
+    "0x1423aa7f0": "Implementation (slot 0x13d8), inlined",
+    "0x143f793a0": "AActor::GetWorld (slot 0x150)",
+    "0x141ed2350": "Engine getter (error string: FortEngine or FortUnrealEdEngine), flag +0xc9 read",
+    "0x14199e3c0": "item-options gate wrapper; forwards this+0x1df8 (or +0x1df0) to 0x141a4a6f0",
+    "0x141a4a6f0": "item-options entry match (see deps/FUN_141a4a6f0)",
+    "0x142087550": "CanPlayerEditItemListComponent (partially read, see deps)",
+    "0x142ce9f90": "object name to FString formatter (not ported; proposed GetNameForLog)",
+    "slot 0x3e8 on item container": "ClearItemList (name unresolved)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Thunk and implementation control flow fully read. Log verbosity gating is represented by UE_LOG. Engine flag and item-container slot names are placeholders. The engine getter and 0x142087550 callees are not fully ported."
+}

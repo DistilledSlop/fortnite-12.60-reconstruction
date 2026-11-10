@@ -1,0 +1,7 @@
+{
+  "name": "GetZoneMissionManager",
+  "address": "0x1420b7ab0",
+  "signature": "UFortMissionManager* GetZoneMissionManager(UWorld* World)",
+  "inc_or_decl": "if (World == nullptr) return nullptr; AGameStateBase* GameState = World->GameState; if (GameState == nullptr || !GameState->IsA(AFortGameState::StaticClass())) return nullptr; return GameState->MissionManager;  // GameState +0x3b0 (AFortGameState::MissionManager). AFortGameState StaticClass = 0x142908ec0.",
+  "evidence": "captures/a742e6381a5b44ed811f88f09b5f951a/0x1420b7ab0.c"
+}

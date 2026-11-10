@@ -1,0 +1,7 @@
+{
+  "name": "ItemOptionsEntryMatch",
+  "address": "0x141a4a6f0",
+  "signature": "bool ItemOptionsEntryMatch(UObject* Target)",
+  "inc_or_decl": "if (Target == nullptr) return false; FortItemOptionsConfig* Config = GetItemOptionsConfig_0x141ed1800(); bool bNameIsNone = FName_EqualsEName(Config->NameField_0x1748, NAME_None); int32 Index2 = Config->Field_0x174c; if (Index2 != 0 || !bNameIsNone) { bool bFound = false; for (auto& Pair : Target->Array_0xd0[0..Num_0xd8]) { if (Pair.Key == Config->NameField_0x1748) { bFound = true; if (Pair.Value == Index2) goto Matched; } } for (auto& Pair : Target->Array_0xe0[0..Num_0xe8]) { if (Pair.Key == Config->NameField_0x1748 && Pair.Value == Index2) goto Matched; } } return false; Matched: return (Target->Flags_0x9fc & 1) != 0;",
+  "evidence": "captures/721204a3a86444af8e243f285c4c1622/0x141a4a6f0.c (read in full). Callees: 0x141ed1800 config getter (not read), FName_EqualsEName (engine)."
+}

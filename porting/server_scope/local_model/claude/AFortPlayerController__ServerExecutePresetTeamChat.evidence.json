@@ -1,0 +1,25 @@
+{
+  "function": "AFortPlayerController::ServerExecutePresetTeamChat",
+  "status": "proposed",
+  "original": "0x142a4b490",
+  "signature": "void ServerExecutePresetTeamChat(FUniqueNetIdRepl SenderID, FText ChatText)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4b490.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423ab340.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423ab1a0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native102-deps/0x142c2e460.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-helpers32/0x1409f53f0.c"
+  ],
+  "callees": {
+    "0x1423ab340": "Validate (slot 0x1428), ported literally",
+    "0x1423ab1a0": "Implementation (slot 0x1430), inlined",
+    "0x142c2e460": "all-characters check over an FString/FText array (reads all but the terminator); uses 0x142bfa540 per character, not read",
+    "0x1409f53f0": "FText release (refcount drop, free)",
+    "0x14468fb70": "world PlayerControllerList accessor (World +0x1c8)",
+    "0x142a3d9f0": "AFortPlayerController StaticClass",
+    "0x142a3c240": "per-controller team chat send (133 lines, NOT ported)",
+    "0x142bfa540": "per-character predicate (10 lines, not read)",
+    "slot 0x28 on PlayerState / team state": "team key getter (name unresolved)"
+  },
+  "notes": "CONFIDENCE LOW. The validate is ported literally and its inverted return sense is flagged. The team-chat send 0x142a3c240 is not ported; the .inc names it only. The first argument of the character-check helper is taken from the validate arguments."
+}

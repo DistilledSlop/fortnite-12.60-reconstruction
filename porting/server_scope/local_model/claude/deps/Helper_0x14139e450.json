@@ -1,0 +1,7 @@
+{
+  "name": "SetStartLeavingZoneParams",
+  "address": "0x14139e450",
+  "signature": "void SetStartLeavingZoneParams(UObject* Params, AFortPlayerController* Controller)",
+  "inc_or_decl": "Params->Controller_0x28 = Controller;",
+  "evidence": "porting/generated/native-cap-helpers30/0x14139e450.c (8 lines, read in full)"
+}

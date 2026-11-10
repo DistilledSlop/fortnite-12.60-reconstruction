@@ -1,0 +1,7 @@
+{
+  "name": "ProcessEventWithParams",
+  "address": "0x142a3f210",
+  "signature": "void ProcessEventWithParams(UObject* Target, const FGuid* Guid, int32 Count, bool b0, bool b1, bool b2)",
+  "inc_or_decl": "struct FParams { FGuid Guid; int32 Count; bool b0; bool b1; bool b2; } Params{*Guid, Count, b0, b1, b2}; Target->ProcessEvent(Target->FindFunctionChecked(ProcessEventName_0x1481af200), &Params);",
+  "evidence": "porting/generated/native-cap-helpers20/0x142a3f210.c (28 lines, read in full). The event FName global 0x1481af200 and the 0x210 ProcessEvent slot are used as-is."
+}

@@ -1,0 +1,22 @@
+{
+  "function": "AFortPlayerController::ServerHandleMissionEvent_ToggledEditMode",
+  "status": "proposed",
+  "original": "0x142a4b970",
+  "signature": "void ServerHandleMissionEvent_ToggledEditMode(UObject* EditableActor, bool bOpened)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4b970.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423ab820.c",
+    "/opt/fortnite/local-model-package/captures/a742e6381a5b44ed811f88f09b5f951a/0x1420b7ab0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-helpers30/0x1420ee5f0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0xed8)",
+    "0x1423ab820": "Implementation (slot 0xee0), inlined",
+    "0x1420b7ab0": "GetZoneMissionManager (read in full)",
+    "0x142b6f8a0": "FFortToggledEditModeParams StaticClass",
+    "0x1420ee5f0": "params setter: Controller +0x28, EditableActor +0x30, bOpened +0x38 (read in full)",
+    "0x142ed7360": "StaticConstructObject (not ported)",
+    "slot 0x638 on MissionManager": "HandleMissionEvent (name unresolved)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Same shape as the other mission events. The diff against ToggledCursorMode was read in full."
+}

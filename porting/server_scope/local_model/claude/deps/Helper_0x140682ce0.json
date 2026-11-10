@@ -1,0 +1,7 @@
+{
+  "name": "FStringCopy",
+  "address": "0x140682ce0",
+  "signature": "FString* FStringCopy(FString* Dest, const FString* Src)",
+  "inc_or_decl": "Dest->Clear(); Dest->SetNum(Src->Num()); memcpy(Dest->Data(), Src->Data(), Src->Num() * sizeof(TCHAR));  // copy-construct; equivalent to FString Dest = Src in C++",
+  "evidence": "captures/547f13f8abf24622bd9830a15ad99fbe/0x140682ce0.c (20 lines, read in full). Calls 0x140690ac0 (allocate) and memcpy."
+}

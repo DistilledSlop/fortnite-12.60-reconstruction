@@ -1,0 +1,7 @@
+{
+  "name": "DropCarriedObjectHelper",
+  "address": "0x1423786d0",
+  "signature": "void DropCarriedObjectHelper(AFortPlayerController* this)",
+  "inc_or_decl": "if (CarriedObject_0x220 != nullptr && CarriedObject_0x220->IsA(AFortCarriedBase::StaticClass_0x142a92a00())) { UObject* DropTarget = CarriedObject_0x220->GetDropTarget_0x810(); if (DropTarget != nullptr) { if (Role_0xf0 < ROLE_Authority) this->DropRemote_0x1630(); else DropTarget->Sub_0x218->Release_0x18(); } } if (Role_0xf0 == ROLE_Authority && Sub_0x248 != nullptr && Sub_0x248->IsA(AFortZoneHelper::StaticClass_0x142a75f10())) { (void)FindHelper_0x141ef3c30(Sub_0x248); /* Stub_Empty */ }",
+  "evidence": "captures/ (PORTED from porting/generated/native-cap-virtual1/0x1423786d0.c); callees 0x142a92a00, 0x142a75f10, 0x141ef3c30 not read in full"
+}

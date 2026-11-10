@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerController::ServerDropAllItems",
+  "status": "proposed",
+  "original": "0x142a4afa0",
+  "signature": "void ServerDropAllItems(UObject* IgnoreItemDef)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4afa0.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423aaff0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0xdc8)",
+    "0x1423aaff0": "Implementation (slot 0xdd0), inlined",
+    "0x141ed1800": "config/engine getter, reads field +0xba8 (body not ported)"
+  },
+  "notes": "CONFIDENCE MEDIUM. The implementation is a single guarded interface call. The interface at +0x30 and its slot 0x18 are unnamed. The getter 0x141ed1800 was not read in full."
+}

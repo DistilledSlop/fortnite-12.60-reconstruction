@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::ServerItemWillBeDestroyed",
+  "status": "proposed",
+  "original": "0x142a4ba70",
+  "signature": "void ServerItemWillBeDestroyed(FGuid DestroyedItemGuid, int32 Count)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4ba70.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423aba50.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-helpers20/0x142a3f210.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0x10b8)",
+    "0x1423aba50": "Implementation (slot 0x10c0), inlined",
+    "0x142a3f210": "ProcessEvent with a parameter block: copies the 16-byte guid, the int32 count and three bool bytes (0,1,0), then calls ProcessEvent (vtable slot 0x210) with UObject_FindFunctionChecked(name)"
+  },
+  "notes": "CONFIDENCE MEDIUM. The decompile passes the controller through a mis-decoded first argument at the call site (the same helper is used for the deploy event). The flags 0,1,0 are read from the 0x142a3f210 call arguments. The FName global and the event function name are unresolved."
+}

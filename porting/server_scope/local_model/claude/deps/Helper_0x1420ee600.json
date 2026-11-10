@@ -1,0 +1,7 @@
+{
+  "name": "SetToggledCursorModeParams",
+  "address": "0x1420ee600",
+  "signature": "void SetToggledCursorModeParams(UObject* Params, AFortPlayerController* Controller, bool bOpened)",
+  "inc_or_decl": "Params->Controller_0x28 = Controller; Params->bOpened_0x30 = bOpened;",
+  "evidence": "porting/generated/native-cap-helpers7/0x1420ee600.c (9 lines, read in full)"
+}

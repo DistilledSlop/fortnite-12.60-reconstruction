@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerDisassembleInventoryItems",
+  "status": "proposed",
+  "original": "0x142a4ae80",
+  "signature": "void ServerDisassembleInventoryItems(TArray<FGuid> ItemGuids, TArray<int32> ItemCounts)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4ae80.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423aafe0.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423aaec0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-helpers20/0x142376c20.c"
+  ],
+  "callees": {
+    "0x1423aafe0": "Validate (slot 0x1030): Num() equality of the two arrays",
+    "0x1423aaec0": "Implementation (slot 0x1038), inlined: pack pairs and call 0x142376c20",
+    "0x1406d9800": "TArray growth (Reserve/Add slow path)",
+    "0x142376c20": "Disassemble helper (323 lines, NOT ported; callee of the impl)"
+  },
+  "notes": "CONFIDENCE MEDIUM. The pair packing and the validate are fully read. The disassemble helper 0x142376c20 is not ported, so the disassembly effect itself is not in the .inc. Element stride 0x14 = 16-byte GUID plus 4-byte count."
+}

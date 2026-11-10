@@ -1,0 +1,24 @@
+{
+  "function": "AFortPlayerController::ServerHandleMissionEvent_ToggledCursorMode",
+  "status": "proposed",
+  "original": "0x142a4b8b0",
+  "signature": "void ServerHandleMissionEvent_ToggledCursorMode(bool bOpened)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4b8b0.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423ab600.c",
+    "/opt/fortnite/local-model-package/captures/a742e6381a5b44ed811f88f09b5f951a/0x1420b7ab0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-helpers7/0x1420ee600.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0xec8)",
+    "0x1423ab600": "Implementation (slot 0xed0), inlined",
+    "0x1420b7ab0": "GetZoneMissionManager (read in full)",
+    "0x142b6f670": "FFortToggledCursorModeParams StaticClass",
+    "0x1420ee600": "params setter: Controller +0x28, bOpened +0x30 (read in full)",
+    "0x142ed7360": "StaticConstructObject (not ported)",
+    "0x142e80820": "outer/package getter (not read)",
+    "0x1407c2c80": "mission event context getter (not read)",
+    "slot 0x638 on MissionManager": "HandleMissionEvent (name unresolved)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Same shape as StartLeavingZone; the diff between the two was read in full. The global tag value differs (_DAT_14813fb18)."
+}

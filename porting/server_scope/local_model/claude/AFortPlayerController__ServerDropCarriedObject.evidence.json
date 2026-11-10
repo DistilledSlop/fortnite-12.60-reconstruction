@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerController::ServerDropCarriedObject",
+  "status": "proposed",
+  "original": "0x142a4b060",
+  "signature": "void ServerDropCarriedObject()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4b060.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423ab030.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual1/0x1423786d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0x1300)",
+    "0x1423ab030": "Implementation (slot 0x1308): forwards to slot 0x1638",
+    "0x1423786d0": "Drop helper (slot 0x1638), inlined: 40 lines read in full",
+    "0x142a92a00": "carried-object class StaticClass (name unresolved)",
+    "0x142a75f10": "second class StaticClass (name unresolved)",
+    "0x141ef3c30": "helper call in the second block (not read)",
+    "0x1406801d0 (Stub_Empty)": "no-op call in the second block"
+  },
+  "notes": "CONFIDENCE HIGH on control flow. The member at +0x220 (carried object), the sub-object at +0x248, and the role byte at +0xf0 are read from the decompile. Slot 0x810 and the 0x1630 / 0x18 virtual targets are unnamed. The second block's FUN_141ef3c30 result is not used by any effect."
+}

@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerController::ServerDeployDefender",
+  "status": "proposed",
+  "original": "0x142a4ac00",
+  "signature": "void ServerDeployDefender(UObject* DefenderTrap, FString SelectedItemInstanceId, FName DefenderSquadId, FGuid WeaponToGiveGuid, int32 AmmoQuantity)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4ac00.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423aaeb0.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423aad80.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x14237ca50.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-helpers30/0x142760820.c"
+  ],
+  "callees": {
+    "0x1423aaeb0": "Validate (slot 0x1148): AmmoQuantity >= 0",
+    "0x1423aad80": "Implementation (slot 0x1150), inlined",
+    "0x140682ce0": "FString copy",
+    "0x14237ca50": "FindAccountItemById (see deps/AFortPlayerController__Helper_0x14237ca50.json) (reads the item, returns its definition; calls 0x1410fe060 not ported)",
+    "0x1428d23f0": "AFortDefenderItem StaticClass",
+    "0x142760820": "Defender deploy dispatch: UObject ProcessEvent with FindFunctionChecked(name) and a parameter block {controller, item, squad, weapon, ammo}; ported in deps",
+    "0x1406801d0": "Stub_ReturnTrue (not used here; the real validate is 0x1423aaeb0)"
+  },
+  "notes": "CONFIDENCE MEDIUM. The decompile drops the first argument to 0x14237ca50 in the item lookup path; the call is ported from the impl's use of the result. The trap-component and inventory slot names are placeholders. The member names DefenderTrap_0xd10 and InventoryManager_0x1738 are unresolved offsets."
+}

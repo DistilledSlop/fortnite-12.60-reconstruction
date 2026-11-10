@@ -1,0 +1,7 @@
+{
+  "name": "DispatchDefenderDeploy",
+  "address": "0x142760820",
+  "signature": "void DispatchDefenderDeploy(UObject* DefenderTrap, AFortPlayerController* Controller, UFortAccountItem* Item, FName* Squad, UObject* Weapon, int32 Ammo)",
+  "inc_or_decl": "struct FDefenderDeployParams { AFortPlayerController* Controller; UFortAccountItem* Item; FName Squad; UObject* Weapon; int32 Ammo; }; FDefenderDeployParams Params{Controller, Item, *Squad, Weapon, Ammo}; DefenderTrap->ProcessEvent(DefenderTrap->FindFunctionChecked(DeployDefenderEventName_0x148178448), &Params);",
+  "evidence": "porting/generated/native-cap-helpers30/0x142760820.c (26 lines, read in full). The event FName global 0x148178448 is unnamed. ProcessEvent is vtable slot 0x210."
+}

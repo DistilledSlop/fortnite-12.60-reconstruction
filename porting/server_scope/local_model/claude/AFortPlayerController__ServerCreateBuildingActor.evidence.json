@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::ServerCreateBuildingActor",
+  "status": "proposed",
+  "original": "0x142a4aab0",
+  "signature": "void ServerCreateBuildingActor(FCreateBuildingActorData CreateBuildingData)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4aab0.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423aad00.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0x1178)",
+    "0x1423aad00": "Implementation (slot 0x1180): reads only, both branches return",
+    "0x143f793a0": "AActor::GetWorld (slot 0x150)",
+    "0x142927a60": "AFortGameStateZone StaticClass"
+  },
+  "notes": "CONFIDENCE HIGH that the implementation has no effect. The decompile shows the same return on both branches of the IsA and index-range check. Treat the RPC as a validated no-op in this build. The struct is an FCreateBuildingActorData (porting/behavior/FCreateBuildingActorData exists)."
+}

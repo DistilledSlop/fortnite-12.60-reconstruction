@@ -1,0 +1,24 @@
+{
+  "function": "AFortPlayerController::ServerHandleMissionEvent_StartLeavingZone",
+  "status": "proposed",
+  "original": "0x142a4b860",
+  "signature": "void ServerHandleMissionEvent_StartLeavingZone()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4b860.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1423ab3f0.c",
+    "/opt/fortnite/local-model-package/captures/a742e6381a5b44ed811f88f09b5f951a/0x1420b7ab0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate slot 0xeb8)",
+    "0x1423ab3f0": "Implementation (slot 0xec0), inlined",
+    "0x1420b7ab0": "GetZoneMissionManager: GameState IsA AFortGameState, returns GameState +0x3b0 (MissionManager). Read in full.",
+    "0x142908ec0": "AFortGameState StaticClass",
+    "0x142b6fbb0": "FFortStartLeavingZoneParams StaticClass",
+    "0x142ed7360": "StaticConstructObject (160 lines, not ported; the object is created through it)",
+    "0x142e80820": "outer/package getter for the constructed params (9 lines, not read)",
+    "0x14139e450": "params setter: Controller at +0x28 (ported, see deps)",
+    "0x1407c2c80": "mission event context getter (21 lines, not read)",
+    "slot 0x638 on MissionManager": "HandleMissionEvent (name unresolved)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Gate, object construction and dispatch are read. StaticConstructObject and the context getter are not ported. The uStack_b8 tag value is an unnamed global. The engine assert string attached to the construct call is not part of the behaviour."
+}
