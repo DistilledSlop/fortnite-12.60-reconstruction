@@ -115,8 +115,9 @@ class MatchmakingService:
         self._sessions = {}
         self._session_keys = {}
 
-    def _session_record(self, owner_id, owner_name, players):
+    def _session_record(self, session_id, owner_id, owner_name, players):
         return {
+            "id": session_id,  # [observed] required session GUID
             "ownerId": owner_id,  # [guess] field value; name [observed] in binary
             "ownerName": owner_name,  # [guess]
             "serverName": "local-dedicated",  # [guess]
@@ -171,7 +172,7 @@ class MatchmakingService:
         with self._lock:
             self._tickets[ticket_id] = {"matchId": match_id, "sessionId": session_id,
                                         "playerCount": len(players)}
-            self._sessions[session_id] = self._session_record(account_id, owner_name, players)
+            self._sessions[session_id] = self._session_record(session_id, account_id, owner_name, players)
         body = {  # [observed] field names per section 3; values [guess]
             "serviceUrl": f"{self.websocket_origin}{MATCHMAKING_WS_PATH}/{ticket_id}",
             "ticketType": TICKET_TYPE,

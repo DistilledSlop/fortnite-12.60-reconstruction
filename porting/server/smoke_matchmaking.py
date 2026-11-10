@@ -36,7 +36,7 @@ SERVER = HERE / "probe_server.py"
 DEFAULT_RECORD = HERE.parents[0] / "generated" / "smoke-matchmaking-requests.jsonl"
 ACCOUNT = "00000000000000000000000000000001"
 ALL_FIELDS_SESSION = {
-    "ownerId", "ownerName", "serverName", "serverAddress", "serverPort", "maxPublicPlayers",
+    "id", "ownerId", "ownerName", "serverName", "serverAddress", "serverPort", "maxPublicPlayers",
     "openPublicPlayers", "maxPrivatePlayers", "openPrivatePlayers", "publicPlayers", "privatePlayers",
     "shouldAdvertise", "allowJoinInProgress", "isDedicated", "usesStats", "allowInvites",
     "usesPresence", "allowJoinViaPresence", "allowJoinViaPresenceFriendsOnly",
@@ -196,6 +196,7 @@ def run_checks(base, port, ctx):
     record = json.loads(raw) if status == 200 else {}
     check("session record returns 200", status == 200, f"status {status}")
     check("session record has the OnlineSessionMcp fields", set(record) == ALL_FIELDS_SESSION, str(sorted(record)))
+    check("session id matches the assigned GUID", record.get("id") == session_id)
     check("session private capacity is zero", record.get("maxPrivatePlayers") == 0 and record.get("openPrivatePlayers") == 0)
     check("session settings use boolean types", all(type(record.get(k)) is bool for k in (
         "shouldAdvertise", "allowJoinInProgress", "isDedicated", "usesStats", "allowInvites",
