@@ -1,0 +1,31 @@
+{
+  "function": "ABuildingSMActor::MulticastPlayFullHealthEffects",
+  "original_address": "0x1427262d0",
+  "decompile_source": "captures/9447beeada4d4a84a09c37cdf6afcdef/0x1427262d0.c",
+  "asm_source": "captures/9447beeada4d4a84a09c37cdf6afcdef/0x1427262d0.asm",
+  "proposal": "work/q27-11100136/MulticastPlayFullHealthEffects.inc",
+  "flag_proof": {
+    "reflection_flags": "0x4084c40",
+    "reflection_source": "inventory_query.py show ABuildingSMActor::MulticastPlayFullHealthEffects (exec_addr 0x1427262d0, create_func 0x142751840, source lea)",
+    "sdk_reference_decode": "Net | Native | Event | NetMulticast | Protected | BlueprintCallable (23.20 SDK ABuildingSMActor.h:353-354)",
+    "generated_header_spec": "UFUNCTION(NetMulticast, Unreliable) void MulticastPlayFullHealthEffects();",
+    "note": "Native Event NetMulticast RPC. The raw 0x4084c40 also carries the FUNC_Exec (0x40) bit and a DefaultValue bit, consistent with a generated RPC exec thunk; the meaningful classification (Native | Event | NetMulticast) matches both the SDK reference and the generated header."
+  },
+  "observations": [
+    "ASM-authoritative body: shared native prologue (counter increment at [rdx+0x20]) then 'mov rax,[rcx]; jmp [rax+0xa60]' — a tail-call to the class virtual at vtable byte offset 0xa60 with no arguments. No other instructions.",
+    "The C decompile confirms the single indirect tail-call: (**(code **)(*param_1 + 0xa60))();",
+    "The generated header ABuildingSMActor.h declares exactly the RPC 'MulticastPlayFullHealthEffects()' followed by its _Implementation virtual 'MulticastPlayFullHealthEffects_Implementation()'. By the canonical UE native-RPC-exec -> _Implementation dispatch, vtable[0xa60] = MulticastPlayFullHealthEffects_Implementation.",
+    "The native RPC thunk (0x1427262d0) is the UFunction->Func entry; it is stored in the class's native-method table (found as data refs at 0x1462427e8/0x14625c7f8/0x146260f38/0x146273728, an alternating code/data descriptor table), not as a C++ vtable slot. The C++ vtable slot it tail-calls is the separate _Implementation virtual."
+  ],
+  "header_declaration": {
+    "present": true,
+    "location": "checkout/porting/native/Source/FortniteGame/Generated/ABuildingSMActor.h lines 666-668",
+    "note": "UFUNCTION(NetMulticast, Unreliable) void MulticastPlayFullHealthEffects(); plus void MulticastPlayFullHealthEffects_Implementation();"
+  },
+  "precedent": "work/q27-11100027/BroadcastOnPullAborted.{inc,evidence.json} — identical native-RPC-exec -> _Implementation tail-call shape, accepted at HIGH confidence.",
+  "confidence": "HIGH",
+  "remaining_questions": [
+    "The exact vtable slot (byte 0xa60) -> _Implementation code-address mapping was not read directly: the C++ vtable for ABuildingSMActor could not be located unambiguously in the runtime image (the native-method descriptor table that holds the RPC thunks is a separate alternating code/data structure, and the CDO name 'Default__ABuildingSMActor' is absent from the image name pool). The mapping rests on the ASM tail-call offset plus the generated header's declaration of MulticastPlayFullHealthEffects_Implementation and the canonical UE dispatch pattern.",
+    "The _Implementation virtual body itself is out of scope for this function (it is the separate manifest member, not the RPC exec)."
+  ]
+}

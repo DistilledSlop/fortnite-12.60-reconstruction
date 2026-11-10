@@ -1,0 +1,8 @@
+{
+ "function": "AFortAIPawn::ForceKillNoDBNO",
+ "status": "blocked",
+ "blocker": "Body fully resolved except death-reason tag name. Original 0x1427a47c0: if (AActor::Role==3 Authority && !bIsDying(0x520 bit8)) { bUsesDBNO=false (0x1344 bit0x20); LastHitBy=nullptr (0x248); ForceKill(tag, nullptr, this) via vtable[0xa80] }. ForceKill contract CONFIRMED by SDK AFortPawn.h:972-973 (FGameplayTag&, AController*&, AActor*&) matching the 4-arg call (this,tag,0,this). UNRESOLVED: DeathReason tag value 0x15f3ffa = singleton DAT_148130770+0x440 (FUN_141ed1800); dense sequential FGameplayTag int table, not decodable without FGameplayTagsManager int->name table. Tried: full decompile/asm (all offsets + ForceKill sig resolved), singleton dump +0x440, name-pool UTF-16 search (bare words Death/DBNO, no full path for 0x15f3ffa). NEXT: locate FGameplayTagsManager TagNameToTag/TagNameList, map 0x15f3ffa->FName, emit body.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100136",
+ "batch_seconds": 1628
+}

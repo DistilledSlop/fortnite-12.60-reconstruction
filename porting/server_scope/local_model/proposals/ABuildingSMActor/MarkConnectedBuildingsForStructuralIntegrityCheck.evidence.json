@@ -1,0 +1,44 @@
+{
+  "function": "ABuildingSMActor::MarkConnectedBuildingsForStructuralIntegrityCheck",
+  "original_address": "0x142756780",
+  "decompile_source": "captures/9447beeada4d4a84a09c37cdf6afcdef/0x142756780.c",
+  "callee_captures": "captures/678363f78c5e4ebdb6b782b509c1a1b1/ (0x141c77490, 0x141c82b90, 0x142cd3770)",
+  "status": "blocked",
+  "resolved": {
+    "guard": "if (ABuildingSMActor::bRegisterWithStructuralGrid && !ABuildingSMActor::bIsForPreviewing)",
+    "field_offsets": {
+      "bRegisterWithStructuralGrid": "byte at offset 0x6ac (1708), bit 0x10 (mask 16) — must be SET (verified via evidence.py field-offset ABuildingSMActor 0x6ac)",
+      "bIsForPreviewing": "byte at offset 0x6a9 (1705), bit 0x4 (mask 4) — must be CLEAR (verified via evidence.py field-offset ABuildingSMActor 0x6a9)"
+    },
+    "body_shape": [
+      "statString = L\"STAT_Fort_BuildingSMActorHandleOutOfHealthStructuralSupport\";",
+      "if (DAT_1482472e4 /* stat toggle */) statString = nullptr;",
+      "owner = (**(code **)(*this + 0x150))(this);   // vtable[0x150], almost certainly AActor::GetOwner()",
+      "result = FUN_141c77490(owner);",
+      "if (result != 0) FUN_141c82b90(result, this);",
+      "if (DAT_1482472e4 && statString) FUN_142cd3770(statString);   // scoped stat log"
+    ],
+    "stat_string": "STAT_Fort_BuildingSMActorHandleOutOfHealthStructuralSupport"
+  },
+  "unresolved_contract": {
+    "callees": {
+      "0x141c77490 (FUN_141c77490)": "owner-based lookup. Takes the GetOwner() result; calls FUN_144640410(_DAT_148351eb8, owner, 1), then reads [result+0x130], compares against a singleton FUN_142927a60() (fields +0x38, +0x30 array), and on match returns FUN_141e9e770(lVar1). Contract/name unresolved.",
+      "0x141c82b90 (FUN_141c82b90)": "the actual core 'mark connected buildings' logic. Uses its own stat string 'STAT_Fort_MarkConnectedBuildingsForStructuralIntegrityCheck', guards on param_2[0x1e]==3 (Role==Authority) and byte@0x3eb, calls vtable[0x9b8](this, outBuf, 0, 0) then FUN_141c7b870(result, flag, vtableResult, &u, &outStr), and does float math (0.1 <= x, FLT_MAX bound). Deep dependencies, contract unresolved.",
+      "0x142cd3770 (FUN_142cd3770)": "stat-logging helper (takes a wchar_t* stat name; early-returns if *param_1==0). Contract/name unresolved."
+    },
+    "vtable_0x150": "vtable byte offset 0x150 (slot 42) invoked with (this) returning a pointer — almost certainly AActor::GetOwner(), but not confirmed against the C++ vtable (see MulticastPlayFullHealthEffects finding that the C++ vtable is not directly readable in the runtime image).",
+    "DAT_1482472e4": "a global stat-logging toggle (char); when nonzero the stat string is suppressed. Identity/unresolved."
+  },
+  "observations": [
+    "The top-level body is a guard + a small number of calls; the semantic core is delegated to FUN_141c82b90 (0x141c82b90), which is itself a substantial function with multiple nested callees and float math.",
+    "The three callees (0x141c77490, 0x141c82b90, 0x142cd3770) are un-named helper functions NOT present in the reflected inventory, so their contracts must be recovered separately before an honest whole-function body can be emitted.",
+    "The guard flags were resolved cleanly via reflected packed-bool words (bRegisterWithStructuralGrid mask 16 @0x6ac; bIsForPreviewing mask 4 @0x6a9)."
+  ],
+  "confidence": "GUARD HIGH / CALLEES UNRESOLVED",
+  "remaining_questions": [
+    "Contracts of FUN_141c77490 (0x141c77490), FUN_141c82b90 (0x141c82b90), FUN_142cd3770 (0x142cd3770).",
+    "Confirmation that vtable[0x150] is AActor::GetOwner().",
+    "Identity of the stat-toggle global DAT_1482472e4."
+  ],
+  "next_step": "Recover FUN_141c82b90 (the core mark-connected-buildings logic) and FUN_141c77490 (the owner-based lookup) as separate proposals under work/dependencies/, confirm vtable[0x150]=GetOwner via the AActor vtable/declaration order, identify DAT_1482472e4 (likely a scoped-stat 'bLogStats' toggle), then emit the whole-function body referencing the named callees."
+}

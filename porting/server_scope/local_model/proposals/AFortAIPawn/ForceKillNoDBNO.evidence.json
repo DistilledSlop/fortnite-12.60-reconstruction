@@ -1,0 +1,37 @@
+{
+  "function": "AFortAIPawn::ForceKillNoDBNO",
+  "original_address": "0x1427a47c0",
+  "decompile_source": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native102-broad/0x1427a47c0.c",
+  "status": "blocked",
+  "resolved_contract": {
+    "guard": "if (AActor::Role == 3 (ROLE_Authority) && !(AFortPawn::bIsDying))",
+    "field_offsets": {
+      "Role": "byte at offset 0xf0 (param_1[0x1e], longlong* scaling 0x1e*8=0xf0) == 3 (ROLE_Authority)",
+      "bIsDying": "byte at offset 0x520 (param_1+0xa4, longlong* scaling 0xa4*8=0x520), bit 8 (mask 8) must be clear",
+      "bUsesDBNO": "u32 at offset 0x1344, bit 0x20 (mask 32) cleared -> bUsesDBNO=false",
+      "LastHitBy": "pointer at offset 0x248 (param_1[0x49], 0x49*8=0x248) set to nullptr",
+      "vtable": "*param_1 (offset 0) = vtable pointer; ForceKill called at vtable byte offset 0xa80"
+    },
+    "forcekill_call": "vtable[0xa80](this, DeathReasonTag, 0, this) == ForceKill(DeathReason, KillerController=nullptr, KillerActor=this)",
+    "forcekill_signature_proof": "SDK AFortPawn.h:972-973: void ForceKill(struct FGameplayTag& DeathReason, class AController*& KillerController, class AActor*& KillerActor); (Final | BlueprintAuthorityOnly | Native | Public | BlueprintCallable) — exactly matches the 4-arg call (this, tag, 0, this)."
+  },
+  "unresolved_contract": {
+    "item": "DeathReason FGameplayTag name",
+    "value": "0x15f3ffa",
+    "source": "singleton DAT_148130770 + 0x440 (FUN_141ed1800() returns &DAT_148130770; decompile reads *(undefined8*)(lVar2 + 0x440))",
+    "why_unresolved": "DAT_148130770 is a dense, sequentially-assigned FGameplayTag int table (neighbors at +0x438/+0x440/+0x448 = 0x15f400d/0x15f3ffa/0x161ba0b). FGameplayTag ints are assigned by registration order, not by a reversible hash, so 0x15f3ffa cannot be decoded to a name without the FGameplayTagsManager int->name table.",
+    "name_pool_check": "UTF-16 name-pool search found bare words 'Death' and 'DBNO' (e.g. 0x145d444a0 'Death', 0x145d440e8 'DBNO', 0x145d9ac08 'DBNO_ExecutionStatus') but no full tag path that maps to 0x15f3ffa."
+  },
+  "observations": [
+    "ASM/decompile-authoritative body: shared native prologue (counter increment at [rdx+0x20]) then a single guarded block. No other logic.",
+    "The guard reads Role (0xf0) and bIsDying (0x520 bit 8); the block clears bUsesDBNO (0x1344 bit 0x20), nulls LastHitBy (0x248), and tail-calls ForceKill via vtable[0xa80] with (this, tag@singleton+0x440, 0, this).",
+    "All field offsets were verified against reflected packed-bool words (bUsesDBNO mask 32 @4932/0x1344; bIsDying mask 8 @1312/0x520) and the AActor::Role==3 authority check.",
+    "The only semantic unknown is the specific death-reason tag name; the call shape, guard, and side effects are fully determined."
+  ],
+  "confidence": "BODY HIGH / TAG NAME UNRESOLVED",
+  "remaining_questions": [
+    "Name of the FGameplayTag with int 0x15f3ffa (singleton DAT_148130770+0x440). Requires the FGameplayTagsManager int->name table.",
+    "Direct confirmation that vtable[0xa80] is the ForceKill virtual (strongly supported by the SDK signature match of the 4-arg call; the C++ vtable was not read directly, consistent with the MulticastPlayFullHealthEffects finding that native UFUNCTIONs occupy C++ vtable slots in this build)."
+  ],
+  "next_step": "Locate the FGameplayTagsManager TagNameToTag/TagNameList in the runtime image and map int 0x15f3ffa to its FName; then emit the body: if (GetLocalRole()==ROLE_Authority && !bIsDying) { bUsesDBNO=false; LastHitBy=nullptr; ForceKill(<named tag>, nullptr, this); }"
+}

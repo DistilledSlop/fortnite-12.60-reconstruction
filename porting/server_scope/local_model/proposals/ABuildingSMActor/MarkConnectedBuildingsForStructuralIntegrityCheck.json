@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingSMActor::MarkConnectedBuildingsForStructuralIntegrityCheck",
+ "status": "blocked",
+ "blocker": "Guard + body shape resolved; callees unresolved. Original 0x142756780: if (bRegisterWithStructuralGrid(0x6ac bit0x10) && !bIsForPreviewing(0x6a9 bit4)) { statStr=L\"STAT_Fort_BuildingSMActorHandleOutOfHealthStructuralSupport\"; if(DAT_1482472e4) statStr=null; owner=vtable[0x150](this) [~GetOwner]; r=FUN_141c77490(owner); if(r) FUN_141c82b90(r,this); if(DAT_1482472e4&&statStr) FUN_142cd3770(statStr); }. RESOLVED: both guard flags via field-offset. UNRESOLVED: FUN_141c77490 (0x141c77490, owner lookup, nested FUN_144640410/FUN_142927a60/FUN_141e9e770), FUN_141c82b90 (0x141c82b90, the CORE mark-connected-buildings logic w/ own stat string + vtable[0x9b8] + FUN_141c7b870 + float math), FUN_142cd3770 (0x142cd3770, stat logger), DAT_1482472e4 (stat toggle), vtable[0x150] GetOwner confirm. Callees are un-named helpers NOT in reflected inventory. Tried: field-offset for both flags (resolved), capture of all 3 callees (all deep/complex). NEXT: recover FUN_141c82b90 + FUN_141c77490 as separate dependency proposals, confirm vtable[0x150]=GetOwner, identify DAT_1482472e4, then emit whole-function body.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100136",
+ "batch_seconds": 1628
+}
