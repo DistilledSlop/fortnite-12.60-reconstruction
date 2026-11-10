@@ -1,0 +1,1098 @@
+{
+ "stats": {
+  "scope_w": 1437.5,
+  "scope_pct": 27.59295808695652,
+  "full_w": 2019.0,
+  "full_pct": 29.57671743437345,
+  "excl_w": 549.0,
+  "excl_pct": 24.03480692167577,
+  "shared_removed": 32.5
+ },
+ "groups": [
+  {
+   "name": "Client harness",
+   "w": 50.0,
+   "pct": 10.0,
+   "leaves": [
+    {
+     "id": "platform.wine_launch",
+     "name": "Wine analysis oracle: original client reaches the login screen",
+     "w": 25.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "platform.eac_removal",
+     "name": "Wine analysis oracle: original client engine start",
+     "w": 5.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "platform.launch_security",
+     "name": "Rebuilt local startup compatibility",
+     "w": 10.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "new",
+     "name": "Redirect harness: TLS/hosts, launcher gate, AppES patch",
+     "w": 10,
+     "pct": 50,
+     "new": true
+    }
+   ]
+  },
+  {
+   "name": "Boot, account & stats",
+   "w": 64.0,
+   "pct": 53.125,
+   "leaves": [
+    {
+     "id": "backend.version_lightswitch",
+     "name": "Version check and lightswitch \u2014 source references",
+     "w": 7.5,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.version_lightswitch.behavior",
+     "name": "Version and lightswitch behavior and protocol",
+     "w": 7.5,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.oauth_account",
+     "name": "OAuth and account routes \u2014 source references",
+     "w": 12.5,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.oauth_account.behavior",
+     "name": "Local username and account behavior",
+     "w": 12.5,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.stats_cloud",
+     "name": "Stats, events, cloud storage and datarouter \u2014 source references",
+     "w": 10.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.stats_cloud.behavior",
+     "name": "Stats, cloud persistence, events and telemetry behavior",
+     "w": 10.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.local_tests",
+     "name": "Local backend implementation test suite",
+     "w": 4.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    }
+   ]
+  },
+  {
+   "name": "Profile, locker & economy",
+   "w": 75.0,
+   "pct": 36.666666666666664,
+   "leaves": [
+    {
+     "id": "backend.game_profile",
+     "name": "Game v2 profile, world and chat routes \u2014 source references",
+     "w": 15.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.game_profile.behavior",
+     "name": "Profile, persistence, social and service behavior",
+     "w": 7.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.progression",
+     "name": "Account progression and persistence parity",
+     "w": 4.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.public_catalog",
+     "name": "Public catalog, payment and asset routes \u2014 source references",
+     "w": 12.5,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.public_catalog.behavior",
+     "name": "Catalog, payment and asset service behavior",
+     "w": 12.5,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "new",
+     "name": "Locker: skins, wraps, emotes, loadouts",
+     "w": 14,
+     "pct": 0,
+     "new": true
+    },
+    {
+     "id": "new",
+     "name": "V-Bucks, item shop & purchases",
+     "w": 10,
+     "pct": 0,
+     "new": true
+    }
+   ]
+  },
+  {
+   "name": "Party, presence & lobby",
+   "w": 68.0,
+   "pct": 26.470588235294116,
+   "leaves": [
+    {
+     "id": "backend.party_xmpp",
+     "name": "Party and XMPP \u2014 source references",
+     "w": 15.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.party_xmpp.behavior",
+     "name": "Party, presence, social and XMPP behavior",
+     "w": 15.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.session_beacon",
+     "name": "Session discovery references",
+     "w": 6.0,
+     "pct": 50.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.session_beacon.implementation",
+     "name": "Session and beacon behavior and integration",
+     "w": 24.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "new",
+     "name": "Lobby state: playlists, ready check, party ticket",
+     "w": 8,
+     "pct": 0,
+     "new": true
+    }
+   ]
+  },
+  {
+   "name": "Matchmaking & server fleet",
+   "w": 50.0,
+   "pct": 43.0,
+   "leaves": [
+    {
+     "id": "backend.matchmaking",
+     "name": "Matchmaking ticket and session routes \u2014 source references",
+     "w": 20.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "backend.matchmaking.behavior",
+     "name": "Matchmaking ticket, websocket and session behavior",
+     "w": 20.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "new",
+     "name": "Allocate a dedicated server per match, key handoff",
+     "w": 10,
+     "pct": 15,
+     "new": true
+    }
+   ]
+  },
+  {
+   "name": "Wire protocol & replication",
+   "w": 194.0,
+   "pct": 27.099484536082475,
+   "leaves": [
+    {
+     "id": "net.version_check",
+     "name": "NetCL and network version override (683914758)",
+     "w": 10.0,
+     "pct": 50.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.magic_header",
+     "name": "MagicHeader 1110 on client and server",
+     "w": 8.0,
+     "pct": 25.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.packet_handlers",
+     "name": "AES and Oodle packet handler configuration",
+     "w": 12.0,
+     "pct": 50.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.encryption_token",
+     "name": "Encryption token delegate and key route",
+     "w": 12.0,
+     "pct": 50.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.native_join",
+     "name": "Native client joins native dedicated server",
+     "w": 20.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.original_join",
+     "name": "Original client joins the reconstructed server",
+     "w": 40.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.replication_layout",
+     "name": "Replicated class layout parity",
+     "w": 30.0,
+     "pct": 1.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.serializers",
+     "name": "Custom serializers and live wire parity",
+     "w": 12.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.relevancy",
+     "name": "Replication relevancy, stability and performance",
+     "w": 8.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.checksum_parity",
+     "name": "Class checksum parity",
+     "w": 20.0,
+     "pct": 66.365,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.replication_graph",
+     "name": "Server replication graph",
+     "w": 10.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "net.full_match_scale",
+     "name": "Full-match scale, performance and stability",
+     "w": 12.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    }
+   ]
+  },
+  {
+   "name": "Server gameplay authority",
+   "w": 674.0,
+   "pct": 18.39787982195846,
+   "leaves": [
+    {
+     "id": "gameplay.framework",
+     "name": "Athena framework \u2014 class declaration coverage",
+     "w": 12.0,
+     "pct": 86.207,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.framework.implementation",
+     "name": "Athena framework \u2014 feature integration and parity",
+     "w": 48.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.weapons",
+     "name": "Weapon reflection headers",
+     "w": 12.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.weapons.implementation",
+     "name": "Weapon behavior and gameplay",
+     "w": 48.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.building",
+     "name": "Building and edit mode \u2014 class declaration coverage",
+     "w": 10.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.building.implementation",
+     "name": "Building and edit mode \u2014 feature integration and parity",
+     "w": 40.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.inventory",
+     "name": "Inventory, items and loot \u2014 class declaration coverage",
+     "w": 9.0,
+     "pct": 50.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.inventory.implementation",
+     "name": "Inventory, items and loot \u2014 feature integration and parity",
+     "w": 36.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.storm",
+     "name": "Storm reflection headers",
+     "w": 3.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.storm.implementation",
+     "name": "Storm behavior and gameplay",
+     "w": 12.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.battle_bus",
+     "name": "Battle bus reflection headers",
+     "w": 5.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.battle_bus.implementation",
+     "name": "Battle bus behavior and gameplay",
+     "w": 20.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.abilities",
+     "name": "Abilities and effects \u2014 class declaration coverage",
+     "w": 6.0,
+     "pct": 50.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.abilities.implementation",
+     "name": "Abilities and effects \u2014 feature integration and parity",
+     "w": 24.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.ai_nav",
+     "name": "AI, spawns and navigation \u2014 class declaration coverage",
+     "w": 6.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.ai_nav.implementation",
+     "name": "AI, spawns and navigation \u2014 feature integration and parity",
+     "w": 24.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.world_volumes",
+     "name": "World managers, POIs and volumes \u2014 class declaration coverage",
+     "w": 6.0,
+     "pct": 91.304,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.world_volumes.implementation",
+     "name": "World managers, POIs and volumes \u2014 feature integration and parity",
+     "w": 24.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.other",
+     "name": "Other classes \u2014 class declaration coverage",
+     "w": 4.0,
+     "pct": 72.857,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.other.implementation",
+     "name": "Other classes \u2014 feature integration and parity",
+     "w": 16.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.unknown_inventory",
+     "name": "Unknown shipped feature inventory and parity",
+     "w": 4.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.end_to_end_parity",
+     "name": "Original gameplay and full match parity verification",
+     "w": 6.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.blueprint_logic",
+     "name": "Blueprint gameplay logic (behaviour, not load)",
+     "w": 35.0,
+     "pct": 1.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.shipped_features",
+     "name": "Vehicles, modes and remaining shipped gameplay",
+     "w": 15.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.authority",
+     "name": "Server authority, match flow and persistence",
+     "w": 10.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.reflection_exact",
+     "name": "FortniteGame reflection declarations (not behavior)",
+     "w": 15.0,
+     "pct": 99.789,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.reflection_exact.implementation",
+     "name": "FortniteGame module behavior and runtime verification",
+     "w": 45.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "gameplay.native_behavior",
+     "name": "Native function bodies ported (behaviour)",
+     "w": 150.0,
+     "pct": 30.964,
+     "new": false,
+     "m": 1.0
+    },
+    {
+     "id": "new",
+     "name": "Loot tables, chests, supply drops",
+     "w": 15,
+     "pct": 0,
+     "new": true
+    },
+    {
+     "id": "new",
+     "name": "Win condition, Victory Royale, return to lobby",
+     "w": 8,
+     "pct": 0,
+     "new": true
+    },
+    {
+     "id": "new",
+     "name": "In-match emote and cosmetic replication",
+     "w": 6,
+     "pct": 0,
+     "new": true
+    }
+   ]
+  },
+  {
+   "name": "Headless server world",
+   "w": 262.5,
+   "pct": 43.456785714285715,
+   "leaves": [
+    {
+     "id": "maps.enter_play",
+     "name": "Maps that enter play in the Linux runtime",
+     "w": 30.0,
+     "pct": 0.054,
+     "new": false,
+     "m": 1
+    },
+    {
+     "id": "maps.apollo_terrain",
+     "name": "Converted terrain tiles",
+     "w": 9.45,
+     "pct": 100.0,
+     "new": false,
+     "m": 0.6
+    },
+    {
+     "id": "maps.apollo_terrain.implementation",
+     "name": "Original terrain materials, missing tiles and runtime parity",
+     "w": 17.55,
+     "pct": 0.0,
+     "new": false,
+     "m": 0.6
+    },
+    {
+     "id": "maps.background",
+     "name": "Background placement coverage",
+     "w": 3.75,
+     "pct": 84.375,
+     "new": false,
+     "m": 0.5
+    },
+    {
+     "id": "maps.background.implementation",
+     "name": "Original background materials and runtime parity",
+     "w": 8.75,
+     "pct": 0.0,
+     "new": false,
+     "m": 0.5
+    },
+    {
+     "id": "maps.streamed_levels",
+     "name": "Apollo streamed levels (87)",
+     "w": 28.0,
+     "pct": 0.0,
+     "new": false,
+     "m": 1
+    },
+    {
+     "id": "maps.pois",
+     "name": "POIs and POI maps",
+     "w": 21.0,
+     "pct": 1.0,
+     "new": false,
+     "m": 0.7
+    },
+    {
+     "id": "assets.pak_index",
+     "name": "Pak index decryption and parse (31 paks)",
+     "w": 10.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1
+    },
+    {
+     "id": "assets.pak_extraction",
+     "name": "Raw pak extraction (all 31 paks)",
+     "w": 15.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1
+    },
+    {
+     "id": "assets.map_headers",
+     "name": "Map header parse (3,694 maps)",
+     "w": 8.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 1
+    },
+    {
+     "id": "assets.package_coverage",
+     "name": "Recovered or converted non-mesh package names (local count)",
+     "w": 25.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 0.5
+    },
+    {
+     "id": "assets.blueprint_load",
+     "name": "Cooked Blueprint packages load",
+     "w": 30.0,
+     "pct": 0.018,
+     "new": false,
+     "m": 1
+    },
+    {
+     "id": "assets.reflection_recovery",
+     "name": "Native reflection recovery from the decrypted exe (names, parents, structs, enums)",
+     "w": 15.0,
+     "pct": 99.856,
+     "new": false,
+     "m": 1
+    },
+    {
+     "id": "assets.landscape",
+     "name": "Landscape weightmaps and streamed components",
+     "w": 15.0,
+     "pct": 15.0,
+     "new": false,
+     "m": 0.6
+    },
+    {
+     "id": "assets.static_meshes",
+     "name": "Static mesh exports or converted packages (local count)",
+     "w": 12.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 0.4
+    },
+    {
+     "id": "assets.skeletal_anim",
+     "name": "Skeletal mesh package conversion (name coverage)",
+     "w": 14.0,
+     "pct": 100.0,
+     "new": false,
+     "m": 0.4
+    }
+   ]
+  }
+ ],
+ "excl": [
+  {
+   "id": "platform.linux_build",
+   "name": "Linux target declarations and local build/stage presence",
+   "w": 20.0,
+   "pct": 100.0
+  },
+  {
+   "id": "platform.rendering",
+   "name": "Rendering backend on Linux (Vulkan)",
+   "w": 20.0,
+   "pct": 30.0
+  },
+  {
+   "id": "platform.accessibility",
+   "name": "Input and control parity",
+   "w": 5.0,
+   "pct": 0.0
+  },
+  {
+   "id": "platform.settings",
+   "name": "Settings parity",
+   "w": 6.0,
+   "pct": 0.0
+  },
+  {
+   "id": "platform.localization",
+   "name": "Localization parity",
+   "w": 5.0,
+   "pct": 0.0
+  },
+  {
+   "id": "platform.accessibility_options",
+   "name": "Accessibility parity",
+   "w": 4.0,
+   "pct": 0.0
+  },
+  {
+   "id": "assets.cinematics",
+   "name": "Cinematics and sequences",
+   "w": 5.0,
+   "pct": 0.0
+  },
+  {
+   "id": "assets.plugins",
+   "name": "Shipped plugins and module integration",
+   "w": 4.0,
+   "pct": 0.0
+  },
+  {
+   "id": "assets.plugin_inventory",
+   "name": "Original project plugin-count metadata",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "assets.other_content",
+   "name": "Other shipped asset types and cooking",
+   "w": 3.0,
+   "pct": 0.0
+  },
+  {
+   "id": "assets.frontend_bundle",
+   "name": "Frontend source mesh bundle export",
+   "w": 2.0,
+   "pct": 100.0
+  },
+  {
+   "id": "assets.animation_sequences",
+   "name": "AnimSequence package conversion",
+   "w": 10.0,
+   "pct": 100.0
+  },
+  {
+   "id": "assets.animation_cosmetics",
+   "name": "Animation graphs, emotes and character assembly",
+   "w": 30.0,
+   "pct": 0.0
+  },
+  {
+   "id": "maps.sky",
+   "name": "Sky, clouds and backdrop",
+   "w": 20.0,
+   "pct": 20.0
+  },
+  {
+   "id": "maps.other_worlds",
+   "name": "Other shipped worlds and modes",
+   "w": 12.0,
+   "pct": 0.0
+  },
+  {
+   "id": "gameplay.engine_system_integration",
+   "name": "Physics, destruction and world-system integration",
+   "w": 20.0,
+   "pct": 0.0
+  },
+  {
+   "id": "gameplay.replay_spectating",
+   "name": "Replay and spectating behavior",
+   "w": 8.0,
+   "pct": 0.0
+  },
+  {
+   "id": "audio.sound_classes",
+   "name": "Sound classes and mixes load",
+   "w": 15.0,
+   "pct": 99.685
+  },
+  {
+   "id": "audio.playback",
+   "name": "Audio playback on the Linux runtime",
+   "w": 20.0,
+   "pct": 0.0
+  },
+  {
+   "id": "audio.original_comparison",
+   "name": "Audio parity and original comparison",
+   "w": 5.0,
+   "pct": 0.0
+  },
+  {
+   "id": "audio.cues_music",
+   "name": "Sound cues, music and ambience",
+   "w": 25.0,
+   "pct": 2.0
+  },
+  {
+   "id": "audio.voice",
+   "name": "Voice chat",
+   "w": 10.0,
+   "pct": 50.0
+  },
+  {
+   "id": "visuals.lighting",
+   "name": "Lighting and shadows",
+   "w": 20.0,
+   "pct": 10.0
+  },
+  {
+   "id": "visuals.postprocess",
+   "name": "Post-process and renderer settings parity",
+   "w": 12.0,
+   "pct": 3.0
+  },
+  {
+   "id": "visuals.original_comparison",
+   "name": "End-to-end original presentation comparison",
+   "w": 8.0,
+   "pct": 0.0
+  },
+  {
+   "id": "visuals.vfx",
+   "name": "Niagara package conversion (name coverage)",
+   "w": 20.0,
+   "pct": 100.0
+  },
+  {
+   "id": "visuals.world_materials_particles",
+   "name": "World materials, textures and particle integration",
+   "w": 40.0,
+   "pct": 0.0
+  },
+  {
+   "id": "ui.commonui_umg",
+   "name": "CommonUI and UMG reflection headers",
+   "w": 6.0,
+   "pct": 34.524
+  },
+  {
+   "id": "ui.commonui_umg.implementation",
+   "name": "CommonUI and UMG behavior and widgets",
+   "w": 26.0,
+   "pct": 0.0
+  },
+  {
+   "id": "ui.commonui_panel_outro_runtime",
+   "name": "CommonUI Panel outro diagnostic runtime",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.commonui_panel_intro_runtime",
+   "name": "CommonUI Panel intro diagnostic runtime",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.commonui_button_internal_runtime",
+   "name": "CommonUI internal button diagnostic runtime",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.commonui_activation_runtime",
+   "name": "CommonUI base activation diagnostic runtime",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.material_original_maps",
+   "name": "Original frontend material map decoding",
+   "w": 2.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.material_shader_translation",
+   "name": "Frontend shader translation and structural validation",
+   "w": 2.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.material_uniforms",
+   "name": "Material uniform expression evaluation",
+   "w": 2.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.material_detached_draw",
+   "name": "Detached Locker shader runtime and draw",
+   "w": 2.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.material_locker_ingress",
+   "name": "Original Locker material actual-owner ingress and draw",
+   "w": 2.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.material_named_ingress",
+   "name": "Verified named material ingress",
+   "w": 6.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.material_frontend_closure",
+   "name": "Known frontend closure material owners",
+   "w": 2.0,
+   "pct": 90.845
+  },
+  {
+   "id": "ui.material_widget_integration",
+   "name": "Frontend root widget material integration",
+   "w": 1.0,
+   "pct": 0.0
+  },
+  {
+   "id": "ui.material_visual_parity",
+   "name": "Original material visual parity",
+   "w": 1.0,
+   "pct": 0.0
+  },
+  {
+   "id": "ui.frontend_lobby",
+   "name": "Frontend menus and lobby flow",
+   "w": 40.0,
+   "pct": 0.0
+  },
+  {
+   "id": "ui.frontend_event_registrations",
+   "name": "Frontend event registrations",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.lifecycle",
+   "name": "Frontend lifecycle and native helpers",
+   "w": 11.0,
+   "pct": 0.0
+  },
+  {
+   "id": "ui.hud",
+   "name": "In-match HUD",
+   "w": 40.0,
+   "pct": 0.0
+  },
+  {
+   "id": "ui.fortniteui_classes",
+   "name": "FortniteUI reflection declarations (not behavior)",
+   "w": 10.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.fortniteui_classes.implementation",
+   "name": "FortniteUI module behavior and runtime verification",
+   "w": 29.0,
+   "pct": 0.0
+  },
+  {
+   "id": "ui.confirmation_runtime",
+   "name": "Confirmation dialogs: runtime reconstruction",
+   "w": 1.0,
+   "pct": 25.0
+  },
+  {
+   "id": "ui.context_source_stage",
+   "name": "Generic context source reconstruction",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.context_runtime_stage",
+   "name": "Generic context diagnostic runtime",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.panel_source_stage",
+   "name": "CommonUI activation base source candidate",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.input_source_stage",
+   "name": "CommonUI input source candidate",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.commonui_button_foundation_runtime",
+   "name": "CommonButton defaults and query \u2014 verified foundation",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.commonui_input_foundation_runtime",
+   "name": "CommonUI input types and accessor \u2014 verified foundation",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.startup_selection_runtime",
+   "name": "Original startup class selections \u2014 verified foundation",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.commonui_binding_data_runtime",
+   "name": "Action-binding data and registry \u2014 verified foundation",
+   "w": 1.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.commonui_button_style_runtime",
+   "name": "CommonButton style, text and sizing \u2014 verified runtime",
+   "w": 2.0,
+   "pct": 100.0
+  },
+  {
+   "id": "ui.commonui_button_click_runtime",
+   "name": "CommonButton base click callbacks \u2014 verified runtime",
+   "w": 1.0,
+   "pct": 100.0
+  }
+ ],
+ "head": "5f1967728f60386b2d066258d868595da9e6d0b4"
+}
