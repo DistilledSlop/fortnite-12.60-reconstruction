@@ -1,0 +1,22 @@
+{
+  "function": "AFortAthenaMutator_PlayerClassSettings::RemoveDataSource",
+  "status": "proposed",
+  "original": "0x1428151e0",
+  "signature": "bool RemoveDataSource(UObject* DataSource)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x1428151e0.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x141b0ad20.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x141b0abb0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142ee3b30.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x14108f3b0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x1407ef240.c"
+  ],
+  "callees": {
+    "0x141b0ad20": "body of this function (helper): key lookup, slot-list RemoveAll, map remove, returns 1 when the key was in the map",
+    "0x142ee3b30": "FWeakObjectPtr(Object) construction",
+    "0x14108f3b0": "TMap<FWeakObjectPtr,uint8>::Find",
+    "0x1407ef240": "TArray<FWeakObjectPtr>::RemoveAll(equal to key)",
+    "0x141b0abb0": "TMap<FWeakObjectPtr,uint8>::Remove (returns 1 when a bucket entry was removed)"
+  },
+  "notes": "Return value follows the decompile: 1 when the key was found in the source->slot map, 0 otherwise (a null source returns 0 before any lookup)."
+}

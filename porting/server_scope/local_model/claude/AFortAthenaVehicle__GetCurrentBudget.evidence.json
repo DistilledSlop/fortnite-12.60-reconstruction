@@ -1,0 +1,17 @@
+{
+  "function": "AFortAthenaVehicle::GetCurrentBudget",
+  "status": "proposed",
+  "original": "0x14283b3c0",
+  "signature": "int32 AFortAthenaVehicle::GetCurrentBudget() const",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1419153c0.c",
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x14283b3c0.c"
+  ],
+  "callees": {
+    "0x14283b3c0": "exec thunk (P_FINISH, calls helper with this in RCX, stores result)",
+    "0x1419153c0": "helper: if flag DAT_1478c24d8 == 0 return 0, else return int32 at this+0x450",
+    "DAT_1478c24d8": "global feature flag (name proposed: GFortVehicleBudgetEnabled)"
+  },
+  "notes": "Member at +0x450 has no reflection name; proposed name CurrentBudget. Global flag name is a proposal.",
+  "confidence": "MEDIUM"
+}

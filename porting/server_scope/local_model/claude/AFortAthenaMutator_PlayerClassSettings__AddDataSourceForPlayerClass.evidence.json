@@ -1,0 +1,33 @@
+{
+  "function": "AFortAthenaMutator_PlayerClassSettings::AddDataSourceForPlayerClass",
+  "status": "proposed",
+  "original": "0x142814e10",
+  "signature": "bool AddDataSourceForPlayerClass(UObject* DataSource, uint8 ClassSlotIndex)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x142814e10.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x141af3ea0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142d6a820.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142aa7490.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142952220.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142ee3b30.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x14108f3b0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x141aed5e0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x141aeda80.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x1407327b0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x1407ef240.c",
+    "captures/b23ff97f818447ddbf05f721751ba0e9/0x142d6a820.c"
+  ],
+  "callees": {
+    "0x142aa7490": "UFortPropertyOverrideProvider::StaticClass (UInterface class)",
+    "0x142952220": "UFortInventoryOverrideProvider::StaticClass (UInterface class)",
+    "0x142d6a820": "UClass::ImplementsInterface(InterfaceClass): walks the class and its supers for the interface",
+    "0x142ee3b30": "FWeakObjectPtr(Object) construction from object index and serial",
+    "0x14108f3b0": "TMap<FWeakObjectPtr,uint8>::Find (hash lookup, returns index or -1)",
+    "0x141aed5e0": "TMap::Add (new key/value into the sparse array and hash bucket)",
+    "0x141aeda80": "ClassSettingsDataMap::FindOrAdd(slot) returning the slot entry (0x141aed910 creates when missing)",
+    "0x1407327b0": "FWeakObjectPtr equality (both-invalid pointers compare equal)",
+    "0x1407ef240": "TArray<FWeakObjectPtr>::RemoveAll(equal to key)",
+    "0x141af3ea0": "body of this function (helper)"
+  },
+  "notes": "Member names are proposed: DataSourceClassSlots is the reflection-less TMap at +0x3c0 (stride 0x14, key FWeakObjectPtr, value byte). ClassSettingsDataMap is reflected at +0x410 (TMap<uint8, entry>, entry stride 0x28, entry DataSources TArray at +0x10). The decompile writes the weak key into a different local than the one passed to Find (merged stack slot); the port uses the single key that the Find and Add calls clearly share."
+}

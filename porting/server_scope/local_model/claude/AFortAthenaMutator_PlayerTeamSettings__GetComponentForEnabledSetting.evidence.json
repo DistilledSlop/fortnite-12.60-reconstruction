@@ -1,0 +1,19 @@
+{
+  "function": "AFortAthenaMutator_PlayerTeamSettings::GetComponentForEnabledSetting",
+  "status": "proposed",
+  "original": "0x14281bbc0",
+  "signature": "UFortPlayerTeamSettingsComponent* GetComponentForEnabledSetting(bool bFallbackToDefaultTeam, FName PropertyName)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x14281bbc0.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x141aee110.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x1408aa900.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x1428165c0.c",
+    "captures/ff80e2f22e604eacbd8336594dedc94e/0x1408aa900.c"
+  ],
+  "callees": {
+    "0x141aee110": "thunk body: current scope (+0x3a0) then default scope (+0x398, only when bFallback) lookup of PropertyName in the scope's name->index map (+0x210); returns the scope when it IsA FortPlayerTeamSettingsComponent",
+    "0x1408aa900": "TMap<FName,int32>::Find-style lookup (returns index or -1)",
+    "0x1428165c0": "UFortPlayerTeamSettingsComponent::StaticClass"
+  },
+  "notes": "Parameter order follows the decompile (PropertyName read first from the FFrame, then the bool). The scope map member at +0x210 is not reflected; CurrentScopeSettings (0x3a0) and DefaultScopeSettings (0x398) are reflected members of AFortAthenaMutator_PlayerSettingsBase. The lookup tests presence of the name, not its value, because the decompile checks the element pointer only."
+}

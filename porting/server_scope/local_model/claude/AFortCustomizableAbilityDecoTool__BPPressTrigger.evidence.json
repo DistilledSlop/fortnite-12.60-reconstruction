@@ -1,0 +1,18 @@
+{
+  "function": "AFortCustomizableAbilityDecoTool::BPPressTrigger",
+  "status": "proposed",
+  "original": "0x1428cdf70",
+  "signature": "void AFortCustomizableAbilityDecoTool::BPPressTrigger(UFortDecoHelper* FortDecoHelper)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428cdf70.c",
+    "/opt/fortnite/local-model-package/captures/842d0f64db014d5bb676cf8d8c96abac/0x14265fed0.c",
+    "/opt/fortnite/local-model-package/captures/cb6a3434bceb40369c846b7b9caa9e53/0x1426b7e40.c"
+  ],
+  "callees": {
+    "0x1428cdf70": "exec thunk (reads FortDecoHelper, calls vtable slot 0xb90)",
+    "0x14265fed0": "vtable 0xb90 target: trigger-press implementation (dep, captured, ported)",
+    "0x1426b7e40": "vtable 0x6e0 target called by impl (captured, ~13.8 KB body not ported)"
+  },
+  "notes": "Residual: the 0x6e0 virtual is a large body captured but not ported.",
+  "confidence": "LOW"
+}

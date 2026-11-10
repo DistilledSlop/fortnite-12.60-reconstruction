@@ -1,0 +1,20 @@
+{
+  "function": "AFortAthenaLowGravZone::OnVehicleEnterZone",
+  "status": "proposed",
+  "original": "0x1427db590",
+  "signature": "void OnVehicleEnterZone(AActor* Vehicle, float GravityMultiplier)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x1427db590.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x1418f37d0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142ec9900.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142b2ca60.c",
+    "captures/b23ff97f818447ddbf05f721751ba0e9/0x142d6a820.c"
+  ],
+  "callees": {
+    "0x1418f37d0": "helper(this, Vehicle, GravityMultiplier): if Vehicle != null, Cast<IFortVehicleInterface>(Vehicle) (0x142ec9900 with static class 0x142b2ca60), then interface vslot 0x6a0(interface, GravityMultiplier)",
+    "0x142ec9900": "UObject::GetInterfaceAddress(InterfaceClass): returns the object (non-scripted class) or the interface subobject pointer, else null",
+    "0x142b2ca60": "UFortVehicleInterface::StaticClass",
+    "0x142d6a820": "UClass::ImplementsInterface helper (used by 0x142ec9900)"
+  },
+  "notes": "Vtable slot 0x6a0 of IFortVehicleInterface resolves to an abstract stub in the interface's primary vtable (0x140693ec0 zeroes its out-struct); the concrete implementation is in the vehicle class. The name SetGravityMultiplier is proposed; the call passes the float argument unchanged."
+}

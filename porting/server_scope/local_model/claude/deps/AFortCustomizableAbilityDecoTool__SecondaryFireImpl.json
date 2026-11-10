@@ -1,0 +1,15 @@
+{
+  "name": "AFortCustomizableAbilityDecoTool__SecondaryFireImpl",
+  "address": "0x14265fec0",
+  "signature": "void AFortCustomizableAbilityDecoTool::SecondaryFireImpl()",
+  "inc_or_decl": "// Native 0x14265fec0 (fully read). Vtable slot 0xb60 of the deco tool. Owner = this+0xb98.\nUDecoOwner* Owner = DecoOwner;                       // +0xb98\nif (Owner == nullptr) { return; }\nif (Owner->A_0x218 != nullptr && Owner->B_0x238 != nullptr && Owner->State_0x234 != 8)\n{\n    if (Owner->Flag_0x235 == 0 && (Owner->State_0x234 == 0 || Owner->State_0x234 == 6))\n    {\n        Owner->Angle_0x370 = FMath::Fmod(Owner->Angle_0x370 + GetWorldDeltaSeconds(), 360.0f);   // 0x43b40000 = 360.0f\n    }\n    else\n    {\n        Owner->Angle_0x358 = FMath::Fmod(Owner->Angle_0x358 + GetWorldDeltaSeconds(), 360.0f);\n    }\n    FVector Aux = FUN_14266ee00(Owner);             // RESIDUAL: captured, ~6.7 KB body not ported\n    FUN_142682ff0(Owner, Aux);                      // RESIDUAL: captured, ~14.7 KB body not ported\n    Owner->PostSpinUpdate(false);                   // Owner vtable slot 0x668; owner class unresolved, so the slot is unnamed\n}\n",
+  "evidence": "/opt/fortnite/local-model-package/captures/842d0f64db014d5bb676cf8d8c96abac/0x14265fec0.c",
+  "callees": {
+    "0x142011200": "GetWorldDeltaSeconds (proposed name)",
+    "0x142bc0d80": "FMath::Fmod (proposed)",
+    "0x14266ee00": "helper: returns FVector used by 0x142682ff0 (captured, residual)",
+    "0x142682ff0": "helper: large spin/placement update (captured, residual)"
+  },
+  "confidence": "LOW",
+  "notes": "LOW: two large helpers (0x14266ee00 about 6.7 KB, 0x142682ff0 about 14.7 KB) are captured but not ported. Owner class for slot 0x668 is unresolved. Do not trust the owner-slot naming."
+}

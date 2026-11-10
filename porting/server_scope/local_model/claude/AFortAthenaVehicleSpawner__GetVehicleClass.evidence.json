@@ -1,0 +1,26 @@
+{
+  "function": "AFortAthenaVehicleSpawner::GetVehicleClass",
+  "status": "proposed",
+  "original": "0x142841fd0",
+  "signature": "UClass* AFortAthenaVehicleSpawner::GetVehicleClass() const",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/25d7535c8e10490cb5edb9aa1b590a49/0x141907b90.c",
+    "/opt/fortnite/local-model-package/captures/25d7535c8e10490cb5edb9aa1b590a49/0x141907d50.c",
+    "/opt/fortnite/local-model-package/captures/25d7535c8e10490cb5edb9aa1b590a49/0x1446acb00.c",
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x142841fd0.c",
+    "/opt/fortnite/local-model-package/captures/8136cb7a2ac54701bd07d3cc85084da4/0x141919180.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x142d68560.c",
+    "/opt/fortnite/local-model-package/captures/cd1d190171ff4ab8bf1268f19698f221/0x142eeab70.c"
+  ],
+  "callees": {
+    "0x142841fd0": "exec thunk (calls helper with this in RCX, stores UClass*)",
+    "0x141919180": "helper: soft item def load (0x141907b90, +0x220), soft class at def+0x818 (0x141907d50), IsChildOf AActor (0x1446acb00)",
+    "0x141907b90": "soft object resolve with load flag (engine TSoftObjectPtr::Get / LoadSynchronous semantics)",
+    "0x141907d50": "soft class resolve into out pointer (engine TSoftClassPtr semantics, adds UClass check)",
+    "0x1446acb00": "AActor::StaticClass (named class getter)",
+    "0x142d68560": "UClass::StaticClass (named class getter, used by class check)",
+    "0x142eeab70": "UObject::StaticClass (named class getter, used by class check)"
+  },
+  "notes": "Soft-object internals treated at engine-API level. The intermediate UClass check inside 0x141907d50 is summarised.",
+  "confidence": "MEDIUM"
+}

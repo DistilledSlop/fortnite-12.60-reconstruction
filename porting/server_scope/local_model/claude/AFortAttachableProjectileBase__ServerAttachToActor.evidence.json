@@ -1,0 +1,18 @@
+{
+  "function": "AFortAttachableProjectileBase::ServerAttachToActor",
+  "status": "proposed",
+  "original": "0x142842120",
+  "signature": "void AFortAttachableProjectileBase::ServerAttachToActor(FHitResult Hit, AActor* AttachToActor, float StickyOffsetFromPhysicsMesh, float StickyOffsetFromBoneCenter, float NarrowPlacementAgainstVelocityThreshold)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x142842120.c",
+    "/opt/fortnite/local-model-package/captures/8136cb7a2ac54701bd07d3cc85084da4/0x1426dedd0.c",
+    "/opt/fortnite/local-model-package/captures/cb6a3434bceb40369c846b7b9caa9e53/0x1426d5640.c"
+  ],
+  "callees": {
+    "0x142842120": "exec thunk (defaults FHitResult with Time=1.0, reads 5 params, calls core)",
+    "0x1426dedd0": "attach core (dep AFortAttachableProjectileBase__AttachToActorImpl, fully ported)",
+    "0x1426d5640": "virtual slot 0x6e8 called at end of core (PostAttach, captured, body residual)"
+  },
+  "notes": "Residual: the virtual tail 0x6e8 (0x1426d5640, about 6 KB) was captured but not ported.",
+  "confidence": "MEDIUM"
+}

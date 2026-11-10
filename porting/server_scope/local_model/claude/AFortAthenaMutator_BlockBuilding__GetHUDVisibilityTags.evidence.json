@@ -1,0 +1,17 @@
+{
+  "function": "AFortAthenaMutator_BlockBuilding::GetHUDVisibilityTags",
+  "status": "proposed",
+  "original": "0x1427f5df0",
+  "signature": "FGameplayTagContainer GetHUDVisibilityTags() const",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x1427f5df0.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x141aad100.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142ee3b30.c"
+  ],
+  "callees": {
+    "0x141aad100": "GetHUDVisibilityTags_Implementation body (virtual slot 0xcb8 of AFortAthenaMutator_BlockBuilding): zeroes the 4-qword FGameplayTagContainer out-param and returns it",
+    "0x1427f5df0": "exec thunk: calls the virtual, copies the result into the return buffer with FGameplayTagContainer_CopyAssign, frees temporaries",
+    "FGameplayTagContainer_CopyAssign": "named engine helper; no further reading needed"
+  },
+  "notes": "Virtual body captured and ported as deps/AFortAthenaMutator_BlockBuilding_GetHUDVisibilityTags_Implementation.json."
+}

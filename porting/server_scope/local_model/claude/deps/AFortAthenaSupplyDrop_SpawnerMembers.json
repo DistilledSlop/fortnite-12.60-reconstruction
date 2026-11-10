@@ -1,0 +1,7 @@
+{
+  "name": "AFortAthenaSupplyDrop helpers: SupplyDropSpawner height fields and FSupplyDropPhaseConfig",
+  "address": "SupplyDropSpawner +0xb98 (float), +0xb9c (float); GameMode +0x12f0 SupplyDropSpawnDataList (array, stride 0x50, count +0x12f8); phase entry stride 0x1a8 at entry +0x178 (count +0x180); phase config ScalableFloats at +0xc8 (min spawn), +0xe8 (max spawn), +0x108 (min speed), +0x128 (max speed)",
+  "signature": "member declarations, not functions",
+  "inc_or_decl": "float SpawnHeightMin; float SpawnHeightMax; // SupplyDropSpawner (proposed names for +0xb98/+0xb9c)",
+  "evidence": "captures/99b6ebc0937941328e17854a1656d9de/0x1419189c0.c, captures/2d64560169ca402387de9d4a88823383/0x141949a30.c, 0x141949b10.c, 0x1419498c0.c. Field names are proposed; SupplyDropSpawnDataList is reflected at GameMode +0x12f0."
+}

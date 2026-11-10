@@ -1,0 +1,7 @@
+{
+  "name": "AFortAthenaLocalGameplayBehavior::FindBehaviorTreeNodeForTask",
+  "address": "0x1449c66c0",
+  "signature": "UBTNode* FindBehaviorTreeNodeForTask(UObject* Task) (proposed name)",
+  "inc_or_decl": "UBTNode* FindBehaviorTreeNodeForTask(UObject* Task);  // declaration only",
+  "evidence": "captures/2d64560169ca402387de9d4a88823383/0x1449c66c0.c: walks the task's tree (+0x48) and matches the node index stored at task +0x50; returns the matching node or null."
+}

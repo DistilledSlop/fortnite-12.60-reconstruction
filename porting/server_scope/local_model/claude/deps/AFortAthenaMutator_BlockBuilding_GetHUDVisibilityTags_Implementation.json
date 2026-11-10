@@ -1,0 +1,7 @@
+{
+  "name": "AFortAthenaMutator_BlockBuilding::GetHUDVisibilityTags_Implementation",
+  "address": "0x141aad100",
+  "signature": "FGameplayTagContainer GetHUDVisibilityTags_Implementation() const",
+  "inc_or_decl": "return FGameplayTagContainer();  // captured body: zero the container (4 qwords) and return it",
+  "evidence": "captures/99b6ebc0937941328e17854a1656d9de/0x141aad100.c (11 lines): *param_2 = 0 for 4 qwords; return param_2."
+}

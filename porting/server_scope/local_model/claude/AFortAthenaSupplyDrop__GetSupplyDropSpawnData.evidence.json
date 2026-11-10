@@ -1,0 +1,28 @@
+{
+  "function": "AFortAthenaSupplyDrop::GetSupplyDropSpawnData",
+  "status": "proposed",
+  "original": "0x142833eb0",
+  "signature": "void GetSupplyDropSpawnData(float& MinSpawnHeight, float& MaxSpawnHeight)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x142833eb0.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x1419189c0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x141949a30.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x1428ee970.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142b90cb0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142ecc620.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x144212e10.c",
+    "captures/9ab58f36f48a4e57968d5218c3662933/0x1419498c0.c",
+    "captures/ff80e2f22e604eacbd8336594dedc94e/0x142ecc620.c",
+    "captures/ff80e2f22e604eacbd8336594dedc94e/0x144212e10.c"
+  ],
+  "callees": {
+    "0x1419189c0": "helper(this, Min&, Max&): GameMode path via 0x141949a30, else first SupplyDropSpawner (0x142b90cb0 class) with +0xb98/+0xb9c heights; fallback 28000 / 32000",
+    "0x141949a30": "GameMode::GetSupplyDropSpawnRange(actor, Min&, Max&): looks up the phase config (0x1419498c0) for GameState GamePhase (+0x1cb0) and class, Min=ScalableFloat(+0xc8) and Max=ScalableFloat(+0xe8); fallback 28000 / 32000",
+    "0x1419498c0": "FindSupplyDropPhaseConfig(GamePhase, Class) over AFortGameModeAthena::SupplyDropSpawnDataList (+0x12f0)",
+    "0x1428ee970": "AFortGameModeAthena::StaticClass",
+    "0x142b90cb0": "SupplyDropSpawner::StaticClass",
+    "0x142ecc620": "object registration check (returns false and logs for null or unregistered objects)",
+    "0x144212e10": "FindAllActorsOfClass(World, Class, TArray&)"
+  },
+  "notes": "The first exec argument is MinSpawnHeight (offset 0), the second is MaxSpawnHeight (offset 4). Spawner field names at +0xb98/+0xb9c are not reflected; SpawnHeightMin and SpawnHeightMax are proposed. The 0x144212e10 body (254 lines) was read only at its entry: it fills the TArray of actors of the class and the port relies only on that contract."
+}

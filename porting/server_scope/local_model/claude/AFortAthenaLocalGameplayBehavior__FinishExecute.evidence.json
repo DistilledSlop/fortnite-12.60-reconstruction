@@ -1,0 +1,38 @@
+{
+  "function": "AFortAthenaLocalGameplayBehavior::FinishExecute",
+  "status": "proposed",
+  "original": "0x1427daf10",
+  "signature": "void FinishExecute()",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x1427daf10.c",
+    "captures/05b575faf6eb4278973f9b67bc1a5fc3/0x1418a0060.c",
+    "captures/05b575faf6eb4278973f9b67bc1a5fc3/0x143f84be0.c",
+    "captures/c3e26f7de9dc493f93de333a898146fe/0x1449c66c0.c",
+    "captures/c3e26f7de9dc493f93de333a898146fe/0x1449cfb30.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x1449c6900.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x144375f90.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x144684d20.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x144380610.c",
+    "captures/c3e26f7de9dc493f93de333a898146fe/0x144375fe0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x143f7a920.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x14463f3c0.c",
+    "captures/c3e26f7de9dc493f93de333a898146fe/0x144640380.c",
+    "captures/c3e26f7de9dc493f93de333a898146fe/0x1443771a0.c"
+  ],
+  "callees": {
+    "0x1418a0060": "task release helper: owner = task->+0x20; if owner IsA BehaviorTreeComponent (static class 0x144a4c4a0) call 0x1449c6900",
+    "0x1449c6900": "wrapper: node = 0x1449c66c0(owner, task); 0x1449cfb30(owner, node, 0). Proposed: UBehaviorTreeComponent::OnTaskFinished(node, Succeeded)",
+    "0x1449c66c0": "finds the BT node matching task->+0x50 index in the task's tree (task->+0x48); proposed name FindBehaviorTreeNodeForTask",
+    "0x1449cfb30": "UBehaviorTreeComponent::OnTaskFinished(node, EBTNodeResult) (node result 0 = Succeeded)",
+    "0x143f84be0": "AActor::SetNetDormancy(ENetDormancy). Writes NetDormancy byte (+0xf1); when value changes it notifies the net driver",
+    "0x144375f90": "UNetDriver::FlushActorDormancy (STAT_NetDriver_FlushActorDormancy); reached from SetNetDormancy when new value < DORM_DormantAll",
+    "0x144684d20": "removes/notifies a network actor on the world net list; reached from SetNetDormancy when new value < DORM_DormantAll",
+    "0x144380610": "net driver dormancy-change notify; calls vslot 0x2c8 then 0x144375fe0",
+    "0x144375fe0": "iterates net drivers, calls each driver vslot 0x338 with the actor",
+    "0x143f7a920": "net-connection/owner resolution helper used by SetNetDormancy guard",
+    "0x14463f3c0": "finds the net driver for world (GEngine lookup by name) used by SetNetDormancy",
+    "0x144640380": "returns world-context list owning net drivers (used by 0x14463f3c0)",
+    "0x1443771a0": "returns a connection/driver handle used by 0x143f7a920"
+  },
+  "notes": "Self-check: every branch of the decompile is ported. Native FName guards in SetNetDormancy (FName_EqualsEName) are pure and dropped. Confidence on helper naming is MEDIUM; semantics of the dormancy path are taken from the captured bodies."
+}

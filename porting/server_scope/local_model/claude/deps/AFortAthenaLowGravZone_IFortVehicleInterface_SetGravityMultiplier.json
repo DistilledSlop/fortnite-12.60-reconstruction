@@ -1,0 +1,7 @@
+{
+  "name": "IFortVehicleInterface::SetGravityMultiplier",
+  "address": "vslot 0x6a0 of the IFortVehicleInterface subobject (not resolved to a concrete address)",
+  "signature": "void SetGravityMultiplier(float GravityMultiplier)",
+  "inc_or_decl": "declaration only: virtual void SetGravityMultiplier(float GravityMultiplier) = 0;  // proposed name; slot 0x6a0 in IFortVehicleInterface",
+  "evidence": "captures/99b6ebc0937941328e17854a1656d9de/0x1418f37d0.c and 0x1418f3820.c dispatch through (*plVar2 + 0x6a0)(plVar2, float). The primary vtable of UFortVehicleInterface has 76 slots and does not contain 0x6a0; the slot lives in a secondary interface vtable. Name is proposed, not confirmed."
+}

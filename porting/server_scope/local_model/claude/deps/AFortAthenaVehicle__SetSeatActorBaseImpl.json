@@ -1,0 +1,14 @@
+{
+  "name": "AFortAthenaVehicle__SetSeatActorBaseImpl",
+  "address": "0x141f99380",
+  "signature": "void AFortAthenaVehicle::SeatComponent::SetSeatActorBase(AActor* InActorBase, int32 SeatIndex)",
+  "inc_or_decl": "// Native 0x141f99380 (fully read). Reached via vtable slot 0x358 of the secondary base at this+0x3b0.\nif (SeatComponent.IsSeatSystemReady())                                  // slot 0x4a8 -> 0x141f88ec0: seats container bReady (+0xb4)\n{\n    FSeatsContainer* Seats = SeatComponent.GetSeatsContainer();         // slot 0x410 -> 0x14084c920: returns +0x740\n    if (SeatIndex < 0 || SeatIndex >= Seats->SeatCount)                 // count at +0xd0\n    {\n        UE_LOG(LogFortVehicle, Warning, TEXT(\"SetActorBase failed from Invalid SeatIndex(%d).\"), SeatIndex);\n    }\n    else\n    {\n        // slot 0x3a0 -> 0x14084c840 (owner vehicle lookup) is called, result discarded, no side effect.\n        Seats = SeatComponent.GetSeatsContainer();\n        FSeatEntry& Entry = Seats->SeatArray[SeatIndex];                // array at +0xc8, element stride 0xe8\n        if (Entry.SeatHandle != nullptr)                                 // pointer at element +0xc8\n        {\n            Entry.SeatHandle->ActorBase = InActorBase;                   // +0xf8\n        }\n    }\n}\n",
+  "evidence": "/opt/fortnite/local-model-package/captures/cd1d190171ff4ab8bf1268f19698f221/0x141f99380.c",
+  "callees": {
+    "0x141f88ec0": "secondary slot 0x4a8 (IsSeatSystemReady) -> calls slot 0x408 = 0x14084c920, returns byte +0xb4",
+    "0x14084c920": "secondary slot 0x410/0x408: returns +0x740",
+    "0x14084c840": "secondary slot 0x3a0: owner vehicle from sub-object, result unused"
+  },
+  "confidence": "MEDIUM",
+  "notes": "Fully read. Seat container and entry names are proposals. Log category name is a placeholder."
+}

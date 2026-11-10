@@ -1,0 +1,16 @@
+{
+  "function": "AFortAthenaSKPushCannon::MultiCastPushCannonLaunchedPlayer",
+  "status": "proposed",
+  "original": "0x1428315e0",
+  "signature": "void MultiCastPushCannonLaunchedPlayer()",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x1428315e0.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x1418f2630.c"
+  ],
+  "callees": {
+    "0x1418f2630": "MultiCastPushCannonLaunchedPlayer_Implementation: builds { int32 -1; bool true } and calls UObject::ProcessEvent (vslot 0x210) on FindFunctionChecked(<FName global 0x148188be8>)",
+    "UObject::FindFunctionChecked": "named engine helper",
+    "UObject::ProcessEvent": "vslot 0x210 of UObject; named engine helper"
+  },
+  "notes": "The FName global 0x148188be8 used for the UFunction name is not resolved statically; see deps/AFortAthenaSKPushCannon_MultiCastPushCannonLaunchedPlayer_Implementation.json."
+}

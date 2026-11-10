@@ -1,0 +1,13 @@
+{
+  "name": "AFortCustomizableAbilityDecoTool__TriggerPressImpl",
+  "address": "0x14265fed0",
+  "signature": "void AFortCustomizableAbilityDecoTool::TriggerPressImpl()",
+  "inc_or_decl": "// Native 0x14265fed0 (fully read). Vtable slot 0xb90 of the deco tool.\nPreTriggerPress();                                  // vtable slot 0x6e0 of the deco tool -> 0x1426b7e40 (RESIDUAL, ~13.8 KB, not ported)\nOnTriggerPressed.Broadcast(this);                   // multicast delegate at +0x240 (helper 0x1406a9dc0)\nbTriggerHeld = true;                                // byte at +0xb88\n",
+  "evidence": "/opt/fortnite/local-model-package/captures/842d0f64db014d5bb676cf8d8c96abac/0x14265fed0.c",
+  "callees": {
+    "0x1426b7e40": "virtual 0x6e0 on deco tool (captured, residual, not ported)",
+    "0x1406a9dc0": "multicast delegate dispatch (engine API)"
+  },
+  "confidence": "MEDIUM",
+  "notes": "Residual: 0x1426b7e40 body. Delegate and bool names are proposals."
+}

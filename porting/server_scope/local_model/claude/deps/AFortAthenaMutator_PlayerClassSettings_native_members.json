@@ -1,0 +1,7 @@
+{
+  "name": "AFortAthenaMutator_PlayerClassSettings: DataSourceClassSlots and FClassSettingsData",
+  "address": "this+0x3c0 (native-only TMap<FWeakObjectPtr,uint8>, stride 0x14: key +0, value +8, hash next +0xc); ClassSettingsDataMap (reflected, +0x410, TMap<uint8,FClassSettingsData>, stride 0x28)",
+  "signature": "member declarations",
+  "inc_or_decl": "TMap<FWeakObjectPtr, uint8> DataSourceClassSlots;  // proposed; source -> class slot\nstruct FClassSettingsData { /* +0x0..+0xf: unknown */ TArray<FWeakObjectPtr> DataSources; /* +0x10 */ };  // proposed element of ClassSettingsDataMap",
+  "evidence": "captures/2d64560169ca402387de9d4a88823383/0x14108f3b0.c (Find), 0x141aed5e0.c (Add), 0x141b0abb0.c (Remove), 0x141aeda80.c (FindOrAdd returns entry+8, list at entry+0x10), 0x1407327b0.c (weak pointer equality), 0x1407ef240.c (RemoveAll). Member name ClassSettingsDataMap is reflected (field-offset 0x410)."
+}

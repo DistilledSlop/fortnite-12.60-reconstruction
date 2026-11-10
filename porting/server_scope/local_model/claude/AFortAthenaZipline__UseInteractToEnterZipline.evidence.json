@@ -1,0 +1,17 @@
+{
+  "function": "AFortAthenaZipline::UseInteractToEnterZipline",
+  "status": "proposed",
+  "original": "0x142842500",
+  "signature": "bool AFortAthenaZipline::UseInteractToEnterZipline() const",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x142842500.c",
+    "/opt/fortnite/local-model-package/captures/8136cb7a2ac54701bd07d3cc85084da4/0x14197b0a0.c"
+  ],
+  "callees": {
+    "0x142842500": "exec thunk (calls helper, stores bool)",
+    "0x14197b0a0": "helper: return global DAT_1478c25b8 == 1 (no arguments, no side effects)",
+    "DAT_1478c25b8": "global int32 flag (name proposed: GZiplineInteractionMode)"
+  },
+  "notes": "Global name is a proposal.",
+  "confidence": "MEDIUM"
+}

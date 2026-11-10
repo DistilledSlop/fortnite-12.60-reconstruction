@@ -1,0 +1,14 @@
+{
+  "name": "AFortAthenaSupplyDrop__RecordTaggedScoreEvents",
+  "address": "0x141a4cf10",
+  "signature": "void AFortAthenaSupplyDrop::RecordTaggedScoreEvents(AFortPlayerStateAthena* PlayerState, const FGameplayTagContainer& Tags)",
+  "inc_or_decl": "// PARTIAL. Contract only: for each playlist score-event entry whose tag pair matches Tags (this+0x410 two arrays), increment the player-state counter for the event type (cases 2,3,4,5,6,8,9,10) and call AFortPlayerStateAthena::UpdateScoreForEvent, then UpdateTotalPlayerScore. Residual: FUN_1419a3380 listener dispatch and its virtual 0x938. Not ported in this pass.",
+  "evidence": "/opt/fortnite/local-model-package/captures/25d7535c8e10490cb5edb9aa1b590a49/0x141a4cf10.c",
+  "callees": {
+    "0x1419a3380": "per-listener dispatch (captured, residual; virtual 0x938 not resolved)",
+    "AFortPlayerStateAthena_UpdateScoreForEvent": "named helper, not ported",
+    "AFortPlayerStateAthena_UpdateTotalPlayerScore": "named helper, not ported"
+  },
+  "confidence": "LOW",
+  "notes": "Residual, not fully ported. Needs the playlist and score-event structs and the listener virtual."
+}

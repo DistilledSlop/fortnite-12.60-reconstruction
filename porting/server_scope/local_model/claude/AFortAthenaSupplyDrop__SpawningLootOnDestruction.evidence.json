@@ -1,0 +1,22 @@
+{
+  "function": "AFortAthenaSupplyDrop::SpawningLootOnDestruction",
+  "status": "proposed",
+  "original": "0x1428351f0",
+  "signature": "void AFortAthenaSupplyDrop::SpawningLootOnDestruction(AController* EventInstigator)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/25d7535c8e10490cb5edb9aa1b590a49/0x141a4cf10.c",
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1428351f0.c",
+    "/opt/fortnite/local-model-package/captures/cd1d190171ff4ab8bf1268f19698f221/0x1419a3380.c"
+  ],
+  "callees": {
+    "0x1428351f0": "exec thunk (reads EventInstigator, calls helper)",
+    "0x141922280": "helper: instigator->PlayerState IsA AFortPlayerStateAthena, then 0x141a4cf10(PlayerState, &StaticGameplayTags)",
+    "0x141a4cf10": "tag-matched score event bookkeeping on player state (dep AFortAthenaSupplyDrop__RecordTaggedScoreEvents; residual)",
+    "0x141a4cf10:0x1419a3380": "per-listener dispatch used by 0x141a4cf10 (captured, body residual)",
+    "AFortPlayerStateAthena_GetPrivateStaticClass": "named engine static class getter",
+    "AFortPlayerStateAthena_UpdateScoreForEvent": "named game helper (not ported here)",
+    "AFortPlayerStateAthena_UpdateTotalPlayerScore": "named game helper (not ported here)"
+  },
+  "notes": "StaticGameplayTags is the ABuildingActor member at offset 0x410 (reflection name). The score-event helper body is residual, see dep.",
+  "confidence": "MEDIUM"
+}

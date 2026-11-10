@@ -1,0 +1,18 @@
+{
+  "function": "AFortAthenaLowGravZone::OnVehicleExitZone",
+  "status": "proposed",
+  "original": "0x1427db660",
+  "signature": "void OnVehicleExitZone(AActor* Vehicle)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x1427db660.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x1418f3820.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142ec9900.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142b2ca60.c"
+  ],
+  "callees": {
+    "0x1418f3820": "helper(this, Vehicle): Cast<IFortVehicleInterface>(Vehicle), then interface vslot 0x6a0(interface, 1.0f)",
+    "0x142ec9900": "UObject::GetInterfaceAddress(InterfaceClass)",
+    "0x142b2ca60": "UFortVehicleInterface::StaticClass"
+  },
+  "notes": "Same dispatch as OnVehicleEnterZone with constant 1.0f. Proposed name for slot 0x6a0 in deps."
+}

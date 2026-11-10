@@ -1,0 +1,20 @@
+{
+  "function": "AFortAthenaSupplyDrop::GroundTrace",
+  "status": "proposed",
+  "original": "0x142834070",
+  "signature": "bool GroundTrace(FVector TraceStart, FVector TraceEnd, FHitResult& OutHit)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x142834070.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x141919b80.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x1440b5c60.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x14406cf40.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142cd49c0.c"
+  ],
+  "callees": {
+    "0x141919b80": "helper(this, Start, End, Hit): builds FCollisionQueryParams with the static FName GroundTrace (0x14406cf40), gets the world (vslot 0x150), then calls 0x1440b5c60 and returns its bool",
+    "0x1440b5c60": "UWorld::RaycastSingle(Hit, Start, End, profile/params): stat markers and the collision profile lookup; returns the hit flag",
+    "0x14406cf40": "FCollisionQueryParams constructor (trace tag, bTraceComplex, ignored actor)",
+    "0x142cd49c0": "FName constructor from a C string (GroundTrace)"
+  },
+  "notes": "The return value comes from RaycastSingle; the decompile of 0x141919b80 leaves the bool in the return register, so the port returns it explicitly. OutHit is zero-initialised with Time = 1.0 (the decompile writes 0x3f800000 into the hit's Time field). Mostly MEDIUM confidence on profile naming."
+}

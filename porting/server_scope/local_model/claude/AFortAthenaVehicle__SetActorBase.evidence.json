@@ -1,0 +1,23 @@
+{
+  "function": "AFortAthenaVehicle::SetActorBase",
+  "status": "proposed",
+  "original": "0x14283d0a0",
+  "signature": "void AFortAthenaVehicle::SetActorBase(int32 SeatIndex, AActor* InActorBase)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x14283d0a0.c",
+    "/opt/fortnite/local-model-package/captures/cb6a3434bceb40369c846b7b9caa9e53/0x14084c840.c",
+    "/opt/fortnite/local-model-package/captures/cb6a3434bceb40369c846b7b9caa9e53/0x14084c920.c",
+    "/opt/fortnite/local-model-package/captures/cb6a3434bceb40369c846b7b9caa9e53/0x141f88ec0.c",
+    "/opt/fortnite/local-model-package/captures/cd1d190171ff4ab8bf1268f19698f221/0x141f99380.c"
+  ],
+  "callees": {
+    "0x14283d0a0": "exec thunk (reads InActorBase then SeatIndex, calls secondary vtable 0x358 with this+0x3b0)",
+    "0x141920610": "vtable 0x358 of secondary base: thunk_FUN_141f99380 (dep AFortAthenaVehicle__SetSeatActorBaseImpl)",
+    "0x141f99380": "seat implementation body (captured, ported as dep)",
+    "0x141f88ec0": "secondary slot 0x4a8: returns SeatsContainer()->bReady (byte at +0xb4)",
+    "0x14084c920": "secondary slot 0x410 (and 0x408): returns SeatComponent+0x740 (seat container)",
+    "0x14084c840": "secondary slot 0x3a0: returns owning vehicle (this-0x3b0) if IsA AActor; result unused by 0x141f99380"
+  },
+  "notes": "Interface base name at +0x3b0 is unresolved; method names are proposals.",
+  "confidence": "MEDIUM"
+}

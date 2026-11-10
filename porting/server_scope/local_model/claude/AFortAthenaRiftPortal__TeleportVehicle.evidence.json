@@ -1,0 +1,21 @@
+{
+  "function": "AFortAthenaRiftPortal::TeleportVehicle",
+  "status": "proposed",
+  "original": "0x142831c30",
+  "signature": "void TeleportVehicle(AActor* Vehicle, FVector TeleportLocation)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x142831c30.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x1418fc3b0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x141a8e150.c",
+    "captures/ff80e2f22e604eacbd8336594dedc94e/0x1428381e0.c",
+    "captures/ff80e2f22e604eacbd8336594dedc94e/0x142839350.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142ee3b30.c"
+  ],
+  "callees": {
+    "0x1418fc3b0": "forwards (this, Vehicle, &TeleportLocation) to 0x141a8e150 with this+0x800 as the unused first argument",
+    "0x141a8e150": "body: vehicle IsA FortAthenaVehicle (static class 0x1428381e0), state/vslot checks, portal-vehicle distance test against radius (vslot 0x560) plus 1, then vehicle vslot 0x7c8 (teleport) and 0x142839350 (UFunction event)",
+    "0x1428381e0": "AFortAthenaVehicle::StaticClass",
+    "0x142839350": "UObject::ProcessEvent(FindFunctionChecked(global FName 0x148189388), &Portal): event notification to the vehicle; FName unresolved statically"
+  },
+  "notes": "Vehicle slots 0x3f8, 0x558, 0x7c8 and the portal slot 0x560 are not named; the port uses proposed names. The vehicle fields read (+0x1e state byte, +0x1d0/+0x1d8 root position) are taken from the decompile. LOW confidence overall."
+}

@@ -1,0 +1,13 @@
+{
+  "function": "AFortAthenaRiftPortal::NotifyTeleportedVehicle",
+  "status": "proposed",
+  "original": "0x142831600",
+  "signature": "void NotifyTeleportedVehicle(AActor* VehicleActor)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x142831600.c"
+  ],
+  "callees": {
+    "vslot0(this+0x800)": "virtual call through the vtable of the embedded object at +0x800; slot 0 takes the vehicle. Target not captured as a standalone body because the embedded class is not identified; proposed name OnVehicleTeleported"
+  },
+  "notes": "The embedded member at +0x800 has no reflected name (field-offset returns none) and its class is unknown. LOW confidence. The same member is used by TeleportVehicle through 0x141a8e150, which passes this+0x800 as an unused first argument."
+}

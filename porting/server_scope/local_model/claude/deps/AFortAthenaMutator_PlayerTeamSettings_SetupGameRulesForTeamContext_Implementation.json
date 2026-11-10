@@ -1,0 +1,7 @@
+{
+  "name": "AFortAthenaMutator_PlayerTeamSettings::SetupGameRulesForTeamContext_Implementation",
+  "address": "vslot 0xcd8 (primary vtable, index 411); resolved target 0x141af2d68 (thunk) -> 0x141af35b0",
+  "signature": "bool SetupGameRulesForTeamContext_Implementation(AActor* Minigame)",
+  "inc_or_decl": "virtual bool SetupGameRulesForTeamContext_Implementation(AActor* Minigame) { return false; }  // LOW: no native body recovered",
+  "evidence": "captures/99b6ebc0937941328e17854a1656d9de/0x141af2d68.c and 0x141af35b0.c. Captured target is a destructor-shaped thunk, not a rules body, so the native fallback is false."
+}

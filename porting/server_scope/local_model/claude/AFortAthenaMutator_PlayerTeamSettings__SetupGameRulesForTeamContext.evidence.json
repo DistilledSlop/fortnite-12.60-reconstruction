@@ -1,0 +1,16 @@
+{
+  "function": "AFortAthenaMutator_PlayerTeamSettings::SetupGameRulesForTeamContext",
+  "status": "proposed",
+  "original": "0x142815310",
+  "signature": "bool SetupGameRulesForTeamContext(AActor* Minigame)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x142815310.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x141af2d68.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x141af35b0.c"
+  ],
+  "callees": {
+    "0x141af2d68": "this-adjusting thunk (this - 0x218) into 0x141af35b0; it is the entry stored at vtable slot 0xcd8",
+    "0x141af35b0": "destructor-shaped body: calls 0x141af1e70 base teardown, frees when bit 0 of the flag is set, returns this. Not a SetupGameRules body"
+  },
+  "notes": "LOW confidence: the vtable-resolved target does not look like a SetupGameRules body, so the native default is false. The .inc calls SetupGameRulesForTeamContext_Implementation, which is declared in deps as a LOW-confidence virtual."
+}

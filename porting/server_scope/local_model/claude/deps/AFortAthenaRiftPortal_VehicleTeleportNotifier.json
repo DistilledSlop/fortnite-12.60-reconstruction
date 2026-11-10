@@ -1,0 +1,7 @@
+{
+  "name": "AFortAthenaRiftPortal::VehicleTeleportNotifier",
+  "address": "this+0x800 (embedded object; no reflected member)",
+  "signature": "embedded object whose vtable slot 0 is void OnVehicleTeleported(AActor* Vehicle) (proposed)",
+  "inc_or_decl": "FVehicleTeleportNotifier VehicleTeleportNotifier;  // native-only embedded member at +0x800, proposed",
+  "evidence": "captures/67db0021db174d4891ebfa82569ce31b/0x142831600.c: (**(code **)**(param_1 + 0x800))((param_1 + 0x800), VehicleActor). Captured 0x141a8e150 passes this+0x800 as an unused argument. Class not identified."
+}

@@ -1,0 +1,25 @@
+{
+  "function": "AFortAthenaVehicle::ServerUsingRiftPortal",
+  "status": "proposed",
+  "original": "0x14283d010",
+  "signature": "void AFortAthenaVehicle::ServerUsingRiftPortal(UObject* RiftPortal)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/1f574874d813496aa02bd3c684830fde/0x142d6a820.c",
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x14283d010.c",
+    "/opt/fortnite/local-model-package/captures/b23ff97f818447ddbf05f721751ba0e9/0x142b2fd80.c",
+    "/opt/fortnite/local-model-package/captures/b23ff97f818447ddbf05f721751ba0e9/0x142b30b20.c",
+    "/opt/fortnite/local-model-package/captures/cd1d190171ff4ab8bf1268f19698f221/0x142e5fb70.c",
+    "/opt/fortnite/local-model-package/captures/cd1d190171ff4ab8bf1268f19698f221/0x142ec9b90.c"
+  ],
+  "callees": {
+    "0x14283d010": "exec thunk (reads RiftPortal, calls vtable slot 0x820)",
+    "0x1419205d0": "vtable 0x820 target body: if RiftPortal && ClassImplements(VehicleTeleportPortal) then helper(RiftPortal, this)",
+    "0x142d6a820": "class implements interface check (walks SuperStruct chain, interface array +0x1f0); target must be an interface and not UInterface",
+    "0x142b2fd80": "UVehicleTeleportPortal::StaticClass (named class getter)",
+    "0x142e5fb70": "UInterface::StaticClass",
+    "0x142b30b20": "FindFunction(FName) then ProcessEvent, else native interface vtable call",
+    "0x142ec9b90": "GetNativeInterfaceAddress: returns obj + PointerOffset for a matching interface entry"
+  },
+  "notes": "Interface event FName (DAT_1481c3410) unresolved; helper fallback path is captured.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,16 @@
+{
+  "function": "AFortAthenaVehicle::GetSpringLengthRatio",
+  "status": "proposed",
+  "original": "0x14283bb70",
+  "signature": "float AFortAthenaVehicle::GetSpringLengthRatio(int32 SpringIdx) const",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x14283bb70.c",
+    "/opt/fortnite/local-model-package/captures/8136cb7a2ac54701bd07d3cc85084da4/0x141918950.c"
+  ],
+  "callees": {
+    "0x14283bb70": "exec thunk (reads SpringIdx, calls helper, stores float)",
+    "0x141918950": "helper: range-check against Springs (count +0x7a0, data +0x798), returns float at element+0xb8"
+  },
+  "notes": "Springs (reflection, offset 0x798) is the TArray; count is at +0x7a0. Element field name is a proposal.",
+  "confidence": "HIGH"
+}

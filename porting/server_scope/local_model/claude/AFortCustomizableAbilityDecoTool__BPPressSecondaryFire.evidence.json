@@ -1,0 +1,20 @@
+{
+  "function": "AFortCustomizableAbilityDecoTool::BPPressSecondaryFire",
+  "status": "proposed",
+  "original": "0x1428cdee0",
+  "signature": "void AFortCustomizableAbilityDecoTool::BPPressSecondaryFire(UFortDecoHelper* FortDecoHelper)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428cdee0.c",
+    "/opt/fortnite/local-model-package/captures/842d0f64db014d5bb676cf8d8c96abac/0x14265fec0.c",
+    "/opt/fortnite/local-model-package/captures/b23ff97f818447ddbf05f721751ba0e9/0x14266ee00.c",
+    "/opt/fortnite/local-model-package/captures/b23ff97f818447ddbf05f721751ba0e9/0x142682ff0.c"
+  ],
+  "callees": {
+    "0x1428cdee0": "exec thunk (reads FortDecoHelper, calls vtable slot 0xb60)",
+    "0x14265fec0": "vtable 0xb60 target: secondary-fire implementation (dep, captured, partially ported)",
+    "0x14266ee00": "helper called by impl (captured, ~6.7 KB body not ported)",
+    "0x142682ff0": "helper called by impl (captured, ~14.7 KB body not ported)"
+  },
+  "notes": "Residual: impl calls two large helpers that are captured but not ported. LOW confidence.",
+  "confidence": "LOW"
+}

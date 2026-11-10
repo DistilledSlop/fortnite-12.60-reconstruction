@@ -1,0 +1,20 @@
+{
+  "function": "AFortAthenaSupplyDrop::GetSupplyDropSpeedData",
+  "status": "proposed",
+  "original": "0x142833f90",
+  "signature": "void GetSupplyDropSpeedData(float& MinSpeed, float& MaxSpeed)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x142833f90.c",
+    "captures/99b6ebc0937941328e17854a1656d9de/0x141918b00.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x141949b10.c",
+    "captures/9ab58f36f48a4e57968d5218c3662933/0x1419498c0.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x1428ee970.c"
+  ],
+  "callees": {
+    "0x141918b00": "helper(this, Min&, Max&): GameMode (World+0x128) IsA FortGameModeAthena then 0x141949b10; fallback 280 / 500",
+    "0x141949b10": "GameMode::GetSupplyDropSpeedRange(actor, Min&, Max&): (1) iterate speed providers and call vslot 0x780 on each until one handles it; (2) else phase config Min=ScalableFloat(+0x108), Max=ScalableFloat(+0x128); fallback 280 / 500",
+    "0x1419498c0": "FindSupplyDropPhaseConfig(GamePhase, Class)",
+    "0x1428ee970": "AFortGameModeAthena::StaticClass"
+  },
+  "notes": "Provider iteration (0x1419b90a0 / 0x1419bb7e0 / 0x1419f3d90) is treated as an engine iterator over registered speed providers; the port keeps the call order and early exit. MEDIUM confidence for the provider contract."
+}

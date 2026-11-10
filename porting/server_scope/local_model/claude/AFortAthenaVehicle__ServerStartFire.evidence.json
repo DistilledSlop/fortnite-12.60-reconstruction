@@ -1,0 +1,17 @@
+{
+  "function": "AFortAthenaVehicle::ServerStartFire",
+  "status": "proposed",
+  "original": "0x14283cf90",
+  "signature": "void AFortAthenaVehicle::ServerStartFire(uint8 FireModeNum)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x14283cf90.c"
+  ],
+  "callees": {
+    "0x14283cf90": "exec thunk (reads FireModeNum byte, calls vtable slot 0x828)",
+    "0x1419205c0": "vtable 0x828 target, thunk to 0x142839090: FindFunctionChecked + ProcessEvent",
+    "0x142839090": "thunked target (ProcessEvent dispatch)",
+    "DAT_148189348": "FName of the Blueprint function (index 0x3236d, name unresolved)"
+  },
+  "notes": "Event name FName is unresolved; ServerStartFireEventName is a placeholder for it.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "AFortAthenaSKPushCannon::MultiCastPushCannonLaunchedPlayer_Implementation",
+  "address": "0x1418f2630 (vslot 0xeb8)",
+  "signature": "void MultiCastPushCannonLaunchedPlayer_Implementation()",
+  "inc_or_decl": "struct FPushCannonLaunchParams { int32 PlayerIndex = -1; bool bLaunched = true; };\nFPushCannonLaunchParams Params;\nProcessEvent(FindFunctionChecked(MultiCastPushCannonLaunchedPlayer_FunctionName), &Params);  // FName resolved from global 0x148188be8",
+  "evidence": "captures/99b6ebc0937941328e17854a1656d9de/0x1418f2630.c: writes -1 (int32) and 1 (bool) into a stack block, FindFunctionChecked(global FName), then ProcessEvent (vslot 0x210). The UFunction name is unresolved statically; the parameter layout is from the decompile."
+}

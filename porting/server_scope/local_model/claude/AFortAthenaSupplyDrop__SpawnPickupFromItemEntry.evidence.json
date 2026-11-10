@@ -1,0 +1,19 @@
+{
+  "function": "AFortAthenaSupplyDrop::SpawnPickupFromItemEntry",
+  "status": "proposed",
+  "original": "0x142834fb0",
+  "signature": "AFortPickup* AFortAthenaSupplyDrop::SpawnPickupFromItemEntry(UFortItemDefinition* ItemDefinition, const FFortItemEntry& InItemEntry, int32 NumberToSpawn, AFortPawn* TriggeringPawn, FVector Position, FVector Direction)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/01ef3df0f433489286259b6bf47b8942/0x140680300.c",
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x142834fb0.c"
+  ],
+  "callees": {
+    "0x142834fb0": "exec thunk (reads 6 params in declaration order, calls core, stores ReturnValue)",
+    "0x140680300": "core: xor eax,eax; ret (returns null, ignores arguments)",
+    "0x142023c10": "FFortItemEntry default constructor (C++ automatic)",
+    "0x1419844f0": "FFortItemEntry destructor (C++ automatic)",
+    "0x145803c70": "stack cookie check (compiler artifact, no port)"
+  },
+  "notes": "Caller-visible result is always null. Parameters are intentionally unused.",
+  "confidence": "HIGH"
+}

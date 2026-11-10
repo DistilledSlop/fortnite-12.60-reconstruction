@@ -1,0 +1,20 @@
+{
+  "function": "AFortAthenaZipline::Initialize",
+  "status": "proposed",
+  "original": "0x142842000",
+  "signature": "void AFortAthenaZipline::Initialize(FVector NewStartPosition, FVector NewEndPosition)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f72550.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x143f72040.c",
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x142842000.c",
+    "/opt/fortnite/local-model-package/captures/8136cb7a2ac54701bd07d3cc85084da4/0x14194dc60.c"
+  ],
+  "callees": {
+    "0x142842000": "exec thunk (reads start then end, calls helper)",
+    "0x14194dc60": "helper: if Role==ROLE_Authority: FlushNetDormancy, copy endpoints to +0x7d0/+0x7dc, bInitialized=1, vtable 0x5e8",
+    "0x143f72040": "AActor::FlushNetDormancy (named by profiling string; body not ported here)",
+    "0x143f72550": "vtable 0x5e8 target, AActor::ForceNetUpdate per header model (body captured, not ported here)"
+  },
+  "notes": "Residual: FlushNetDormancy and ForceNetUpdate bodies are engine-level and were captured but not ported in this pass.",
+  "confidence": "MEDIUM"
+}

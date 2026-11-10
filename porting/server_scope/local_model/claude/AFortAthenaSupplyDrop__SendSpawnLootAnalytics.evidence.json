@@ -1,0 +1,15 @@
+{
+  "function": "AFortAthenaSupplyDrop::SendSpawnLootAnalytics",
+  "status": "proposed",
+  "original": "0x142834990",
+  "signature": "void AFortAthenaSupplyDrop::SendSpawnLootAnalytics(AFortPlayerController* FortPC, TArray<FFortItemEntry> ItemsToSpawn)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x142834990.c"
+  ],
+  "callees": {
+    "0x142834990": "exec thunk (reads FortPC and ItemsToSpawn, calls Stub_Empty, releases temp array)",
+    "Stub_Empty": "engine empty stub (name-based; body not captured)"
+  },
+  "notes": "Array element cleanup in the thunk is C++ automatic destruction of the local TArray, not extra behaviour.",
+  "confidence": "MEDIUM"
+}
