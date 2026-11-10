@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeMoveTool::HandleClearMultiSelectQueuePressed",
+ "status": "blocked",
+ "blocker": "Body is a non-zero-guarded 64-bit increment of [param_2+0x20] then a TAIL-JMP to the AFortCreativeMoveTool vtable slot at byte offset 0xe08 (the real handler). Unresolved: (1) identity of the virtual function at vtable 0xe08; (2) identity/type of param_2 (RDX, no reflected params) and its +0x20 counter field. Vtable lookup blocked: InternalConstructor at 0x1428bbd0 (from GetFortCreativeMoveTool CDO init) sits in an image gap (evidence.py bytes/show: 'outside the original image'). Next: locate the vtable array (global/CDO pointer) and read entry 0xe08; find the input-binding delegate to pin param_2.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100300",
+ "batch_seconds": 696
+}
