@@ -1,0 +1,15 @@
+{
+  "function": "ABuildingGameplayActorPlayerPropAttachment::DoesMeshComponentHaveVisibleMaterial",
+  "status": "proposed",
+  "original": "0x142743d80",
+  "signature": "bool DoesMeshComponentHaveVisibleMaterial(UStaticMeshComponent* StaticMeshComponent)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142743d80.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141bd99e0.c"
+  ],
+  "callees": {
+    "0x141bd99e0": "DoesMeshComponentHaveVisibleMaterial body: loops material slots via GetMaterial (vtable 0x548) and GetNumMaterials (0x6a0), resolves the base material (0x260) and checks blend mode (0x450) below 2"
+  },
+  "notes": "The static mesh guard uses a pointer at +0x420 of the component; treated here as StaticMesh. The blend-mode threshold 2 is BLEND_Translucent in the UE enum. Null base material is treated as visible, matching the decompile's early return.",
+  "confidence": "MEDIUM"
+}

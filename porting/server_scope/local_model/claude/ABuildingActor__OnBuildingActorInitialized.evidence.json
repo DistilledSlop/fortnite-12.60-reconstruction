@@ -4,8 +4,8 @@
   "original": "0x142737b30",
   "signature": "void ABuildingActor::OnBuildingActorInitialized(EFortBuildingInitializationReason::Type InitializationReason, EFortBuildingPersistentState::Type BuildingPersistentState)",
   "captures": [
-    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737b30.c",
-    "porting/generated/native-cap-virtual3/0x141bb0ce0.c"
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737b30.c",
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bb0ce0.c"
   ],
   "callees": {
     "0x141bb0ce0": "native OnBuildingActorInitialized_Implementation: game mode/readiness check, reason 3 (LoadedFromSave) triggers the 0x708 hook, sets the 0x3e0 bit 0x40 (bSavedMetaPropertiesProcessed)",

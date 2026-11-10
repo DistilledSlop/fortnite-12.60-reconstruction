@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingGameplayActorConsumable__MakeEffectContextForConsumable",
+  "address": "0x141604940",
+  "signature": "FGameplayEffectContextHandle MakeEffectContextForConsumable(AActor* EventCauser)",
+  "inc_or_decl": "FGameplayEffectContextHandle MakeEffectContextForConsumable(AActor* EventCauser);",
+  "evidence": "Builds the effect context used by MakeOnConsumeGameplayEffectSpec. Engine-level helper; exact sequence not fully resolved. Captured at captures/6efb1241727e4d638a4125f43c983a91/0x141604940.c."
+}

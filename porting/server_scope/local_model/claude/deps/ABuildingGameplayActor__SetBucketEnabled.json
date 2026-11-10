@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingGameplayActor__SetBucketEnabled",
+  "address": "0x141bea180",
+  "signature": "void SetBucketEnabled(FBuildingGameplayActorAbilityDeliveryBucket& Bucket, ABuildingGameplayActor* Owner, bool bEnabled)",
+  "inc_or_decl": "void SetBucketEnabled(FBuildingGameplayActorAbilityDeliveryBucket& Bucket, ABuildingGameplayActor* Owner, bool bEnabled);",
+  "evidence": "Bucket flag bit 0 (bEnabled) is set to bEnabled. Enabling re-applies the bucket (0x141bd4af0, 0x141bdad90). Disabling frees the proximity effect and persistent ability-set arrays and resets them. Captured at captures/6efb1241727e4d638a4125f43c983a91/0x141bea180.c."
+}

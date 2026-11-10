@@ -1,0 +1,23 @@
+{
+  "function": "ABuildingGameplayActor::SetTouchComponentForAbilityDeliveryInfo",
+  "status": "proposed",
+  "original": "0x142740f70",
+  "signature": "void SetTouchComponentForAbilityDeliveryInfo(UPrimitiveComponent* PrimitiveComponent)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142740f70.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141beb3e0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x142ed2f40.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x142ebe3f0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x141be3360.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x1440ed390.c"
+  ],
+  "callees": {
+    "0x141beb3e0": "ABuildingGameplayActor::SetTouchComponentForAbilityDeliveryInfo body (large decompile; bind/unbind and overlap refresh sequence)",
+    "0x142ed2f40": "delegate RemoveDynamic on a primitive component (bound-flag at +0x3b9 / +0x3ba)",
+    "0x142ebe3f0": "delegate AddDynamic on a primitive component; result ORed into the bound flag",
+    "0x141be3360": "FBuildingGameplayActorAbilityDeliveryInfo::QueueTouchingActorForAbility: appends the actor to DeferredTouchActorsToProcess and schedules a next-tick timer when a touch bucket is enabled; also records the actor on the owning actor's touching set",
+    "0x1440ed390": "GetOverlappingActors on a primitive component"
+  },
+  "notes": "The flag bits used by the decompile at 0x758 (bit 0x2) and the per-touch bound flags at 0x3b9/0x3ba on the primitive component are not named. Confidence MEDIUM for the bind/unbind order and the overlap refresh; the bound-flag names above are inferred. The decompile does not show an early exit on a null PrimitiveComponent other than the initial equality check, so the null path returns after unbinding.",
+  "confidence": "MEDIUM"
+}

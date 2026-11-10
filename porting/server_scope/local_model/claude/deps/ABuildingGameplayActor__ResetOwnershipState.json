@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingGameplayActor__ResetOwnershipState",
+  "address": "virtual slot 0x440 (AActor target 0x143f84e10)",
+  "signature": "void ResetOwnershipState()",
+  "inc_or_decl": "virtual void ResetOwnershipState();",
+  "evidence": "AActor-owned virtual called without arguments before the instigator is re-pointed. Name is a guess; target not captured. LOW."
+}

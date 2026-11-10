@@ -1,0 +1,25 @@
+{
+  "function": "ABuildingGameplayActorConsumable::MakeOnConsumeGameplayEffectSpec",
+  "status": "proposed",
+  "original": "0x142744000",
+  "signature": "FGameplayEffectSpecHandle MakeOnConsumeGameplayEffectSpec(int32 Level, AActor* EventCauser)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142744000.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141be2e10.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x142742960.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x140774520.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x1427430b0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x141ef3af0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x141604940.c"
+  ],
+  "callees": {
+    "0x141be2e10": "MakeOnConsumeGameplayEffectSpec body",
+    "0x141ef3af0": "GetGameStateAbilitySystemComponent helper: world context -> game state -> ability system component (virtual 0x9e8 on the game state)",
+    "0x142742960": "DetermineOnConsumeGameplayEffect: ProcessEvent of the BlueprintNativeEvent, returns TSubclassOf<UGameplayEffect>",
+    "0x140774520": "UGameplayEffect::StaticClass",
+    "0x1427430b0": "PrepareOnConsumeGameplayEffectSpec: ProcessEvent with the FGameplayEffectSpecHandle by reference",
+    "0x141604940": "builds the effect context for the consumable (ability system context and instigator/causer setup)"
+  },
+  "notes": "The helper names GetGameStateAbilitySystemComponent and MakeEffectContextForConsumable are descriptive. Their exact engine calls are only partly resolved (141ef3af0 and 141604940), so confidence is LOW.",
+  "confidence": "LOW"
+}

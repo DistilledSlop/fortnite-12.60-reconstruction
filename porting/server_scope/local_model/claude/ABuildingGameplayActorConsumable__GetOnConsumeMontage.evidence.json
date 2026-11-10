@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingGameplayActorConsumable::GetOnConsumeMontage",
+  "status": "proposed",
+  "original": "0x142743ef0",
+  "signature": "UAnimMontage* GetOnConsumeMontage() const",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142743ef0.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x1427429c0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x141bd9690.c"
+  ],
+  "callees": {
+    "0x1427429c0": "ProcessEvent of DetermineOnConsumeMontage (the UFunction is resolved from a global name) and return value copied out",
+    "0x141bd9690": "DetermineOnConsumeMontage_Implementation native default: returns OnConsumeMontage"
+  },
+  "notes": "The UFunction name is resolved from a global (_DAT_1481767a8). Its pairing with DetermineOnConsumeMontage follows the same pattern as the GameplayEffect class lookup (_DAT_1481767a0 for DetermineOnConsumeGameplayEffect), but is not directly confirmed.",
+  "confidence": "MEDIUM"
+}

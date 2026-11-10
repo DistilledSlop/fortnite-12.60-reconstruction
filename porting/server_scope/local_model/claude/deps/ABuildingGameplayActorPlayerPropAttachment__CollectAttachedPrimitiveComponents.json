@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingGameplayActorPlayerPropAttachment__CollectAttachedPrimitiveComponents",
+  "address": "0x141bdcf00 (not captured)",
+  "signature": "void CollectAttachedPrimitiveComponents(USceneComponent* Child, TArray<UPrimitiveComponent*>& Out)",
+  "inc_or_decl": "void CollectAttachedPrimitiveComponents(USceneComponent* Child, TArray<UPrimitiveComponent*>& Out);",
+  "evidence": "Called from CalcWorldSpaceBounds (0x141bd7a30) for each attached child. Name is a guess; body not captured. LOW."
+}

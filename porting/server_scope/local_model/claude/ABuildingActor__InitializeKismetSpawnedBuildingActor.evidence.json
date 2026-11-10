@@ -4,8 +4,8 @@
   "original": "0x142737640",
   "signature": "void ABuildingActor::InitializeKismetSpawnedBuildingActor(bool bUsePlayerBuildAnimations, AController* SpawningController, ABuildingActor* BuildingOwner)",
   "captures": [
-    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737640.c",
-    "porting/generated/native90-targets/0x141baf090.c"
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737640.c",
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x141baf090.c"
   ],
   "callees": {
     "0x141baf090": "native body: player-id lookup from controller (0xFFFF when absent), then virtual 0x880 (set anim state) and 0x888 (notify)",

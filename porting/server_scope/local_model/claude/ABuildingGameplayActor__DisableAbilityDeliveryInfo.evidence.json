@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingGameplayActor::DisableAbilityDeliveryInfo",
+  "status": "proposed",
+  "original": "0x14273fbc0",
+  "signature": "void DisableAbilityDeliveryInfo(FGameplayTag BucketTag)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14273fbc0.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141bd96a0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x141bea180.c"
+  ],
+  "callees": {
+    "0x141bd96a0": "ABuildingGameplayActor::DisableAbilityDeliveryInfo body",
+    "0x141bea180": "FBuildingGameplayActorAbilityDeliveryBucket::SetEnabled(owner, bool): on disable frees the bucket's effect and persistent ability-set arrays, on enable re-applies them"
+  },
+  "notes": "DeliverableAbilityInfo is the FBuildingGameplayActorAbilityDeliveryInfo embedded at +0x6c8: DeliveryBuckets at +0x0 (TArray, element stride 0x90), ProximityPulseInterval +0x10, ProximityPrePulseTime +0x30, OwningActor +0x58, DeferredTouchActorsToProcess +0x60, timer handles +0x70 (pulse) and +0x78 (pre-pulse) which are not in the generated header. Bucket flag bit layout (bEnabled=bit0, bHasGEsToApplyOnTouch=bit2, bHasGEsToApplyOnPulseTimer=bit4) follows the header declaration order and is confirmed by the decompile checks.",
+  "confidence": "MEDIUM"
+}

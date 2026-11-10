@@ -4,9 +4,9 @@
   "original": "0x142737610",
   "signature": "bool ABuildingActor::HasHealthLeft() const",
   "captures": [
-    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737610.c",
-    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bad840.c",
-    "porting/generated/native104-virtual/0x141b9edb0.c"
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737610.c",
+    "/opt/fortnite/local-model-package/captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bad840.c",
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x141b9edb0.c"
   ],
   "callees": {
     "0x141bad840": "native HasHealthLeft: 0.0 < GetHealth()",

@@ -1,0 +1,18 @@
+{
+  "function": "ABuildingContainer::SetSearchLootTierGroup",
+  "status": "proposed",
+  "original": "0x14273c3f0",
+  "signature": "void SetSearchLootTierGroup(FName InSearchLootTierGroup)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14273c3f0.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141beb120.c"
+  ],
+  "callees": {
+    "0x141beb120": "ABuildingContainer::SetSearchLootTierGroup body (stores FName at +0xba8, gated roll)",
+    "0x141bd52c0": "ShouldRollRandomUpgrade: this->World->GameState is AFortGameStateAthena and its virtual 0xcd8 check passes",
+    "0x141ed8de0": "IsMatchingGamePhase helper (checks the active game phase against a byte, default expected value 2)",
+    "0x141bd5330": "RollRandomUpgrade(bool bRoll): with bRoll=true sets the pending flag, walks PotentialRandomUpgrades, rolls chance with rand(), records ChosenRandomUpgrade and fires OnAuthorityRandomUpgradeApplied; with bRoll=false marks resolved"
+  },
+  "notes": "Flag byte at 0xc4a has bits 0x2 (roll pending) and 0x4 (roll resolved). Reflected names for those bits are not resolved, so helper names are used. SearchLootTierGroup is at +0xba8 (reflected Name).",
+  "confidence": "MEDIUM"
+}

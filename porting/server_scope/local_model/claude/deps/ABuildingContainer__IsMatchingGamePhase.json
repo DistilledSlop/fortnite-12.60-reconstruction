@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingContainer__IsMatchingGamePhase",
+  "address": "0x141ed8de0",
+  "signature": "bool IsMatchingGamePhase() const",
+  "inc_or_decl": "bool IsMatchingGamePhase() const;",
+  "evidence": "Looks up the world context, reads the current game-phase byte and compares it to the expected value (default 2). Captured at captures/6efb1241727e4d638a4125f43c983a91/0x141ed8de0.c. Phase semantics not named."
+}

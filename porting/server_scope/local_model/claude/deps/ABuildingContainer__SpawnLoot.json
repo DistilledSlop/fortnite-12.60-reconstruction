@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingContainer__SpawnLoot",
+  "address": "0x141bec430 (virtual slot 0xee0)",
+  "signature": "virtual bool SpawnLoot(AFortPawn* Pawn, uint8 SpawnSource, bool bArg2, bool bArg3)",
+  "inc_or_decl": "virtual bool SpawnLoot(AFortPawn* Pawn, uint8 SpawnSource, bool bArg2, bool bArg3);  // base returns false and logs",
+  "evidence": "Base stub logs 'ABuildingContainer::SpawnLoot() called on %s (%s)' and returns false (porting/generated/native-cap-virtual1/0x141bec430.c). Call site in BP_SpawnLoot thunk 0x141bd5720 passes (this, Pawn, 4, 0, 0). Argument names are guesses."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__SetOwnerPersistentID",
+  "address": "0x141bc4da0",
+  "signature": "void SetOwnerPersistentID(uint16 PersistentID)",
+  "inc_or_decl": "void SetOwnerPersistentID(uint16 PersistentID);  // writes OwnerPersistentID",
+  "evidence": "Stores a uint16 at ABuildingActor::OwnerPersistentID (+0x350), reflected as Int16. Captured at captures/6efb1241727e4d638a4125f43c983a91/0x141bc4da0.c."
+}

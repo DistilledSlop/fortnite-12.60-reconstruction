@@ -1,0 +1,21 @@
+{
+  "function": "ABuildingGameplayActorPlayerPropAttachment::AttachProp",
+  "status": "proposed",
+  "original": "0x142743b30",
+  "signature": "void AttachProp(AActor* PropActorToAttach)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142743b30.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141bd56a0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x143f69390.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x14234ec60.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x142a75f10.c"
+  ],
+  "callees": {
+    "0x141bd56a0": "ABuildingGameplayActorPlayerPropAttachment::AttachProp body",
+    "0x143f69390": "AActor::AttachToComponent (engine). Packed rule bytes 0x01010102 are passed as FAttachmentTransformRules; the mapping shown in the body is inferred",
+    "0x14234ec60": "AFortPlayerPawn::SetPossessedProp: stores PossessedProp (+0x15e8) and fires OnPossessedProp, failing for pending-kill props",
+    "0x142a75f10": "AFortPlayerPawn::StaticClass"
+  },
+  "notes": "Rule packing: the decompile writes 0x1010102 into a 4-byte rules structure. The SnapToTarget/KeepWorld split is inferred from common UE rule layouts; LOW on that detail, MEDIUM on the overall attach and possess sequence.",
+  "confidence": "MEDIUM"
+}

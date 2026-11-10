@@ -1,0 +1,21 @@
+{
+  "function": "ABuildingGameplayActor::ForceChangeOwnerInstigator",
+  "status": "proposed",
+  "original": "0x14273ffa0",
+  "signature": "void ForceChangeOwnerInstigator(APawn* NewInstigator)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14273ffa0.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141bdc580.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x1407247f0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x1423881c0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x141bc4da0.c"
+  ],
+  "callees": {
+    "0x141bdc580": "ABuildingGameplayActor::ForceChangeOwnerInstigator body",
+    "0x1407247f0": "AActor::Instigator setter (this+0x118 = arg)",
+    "0x1423881c0": "GetPersistentIdForPawn: returns the pawn's PlayerState persistent id (ushort at +0x336 of PlayerState at +0x220), or 0xffff when no PlayerState",
+    "0x141bc4da0": "ABuildingActor::SetOwnerPersistentID (uint16 at +0x350)"
+  },
+  "notes": "Several member and virtual names are inferred from offsets, not from reflection. The Instigator value comes from pawn field +0x248, which is not identified. Virtual slot 0x440 resolves to AActor-owned 0x143f84e10 and slot 0x990 to ABuildingActor 0x141bc50c0; their names are unresolved. Confidence LOW.",
+  "confidence": "LOW"
+}

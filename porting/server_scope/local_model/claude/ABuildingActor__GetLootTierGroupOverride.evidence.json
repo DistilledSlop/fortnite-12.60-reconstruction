@@ -4,8 +4,8 @@
   "original": "0x1427370d0",
   "signature": "FName ABuildingActor::GetLootTierGroupOverride() const",
   "captures": [
-    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427370d0.c",
-    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141ba7040.c"
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427370d0.c",
+    "/opt/fortnite/local-model-package/captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141ba7040.c"
   ],
   "callees": {
     "0x141ba7040": "native body: world override lookup keyed by building class, tag match against tag containers at +0x410 and +0x420, returns the group FName",

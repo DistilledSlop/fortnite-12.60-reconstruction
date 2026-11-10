@@ -24,7 +24,7 @@ Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 
 | Chunks | Status |
 |---|---|
 | 00 | done, reviewed (spot-checked HasHealthLeft against 0x141bad840), 15 recorded proposed |
-| 01, 02 | running (2 workers max at a time) |
-| 02, 03 | stopped almost immediately (too many at once); relaunch from scratch, ignore any partial files in `out/` for these chunks |
+| 01 | done, 15 recorded proposed (confidence mostly LOW/MEDIUM; worker reformatted 13 chunk-00 evidence JSONs, bodies unchanged) |
+| 02, 03 | running (2 workers max at a time) |
 
 Recording a finished chunk: from the package dir `python3 -I work/claude/record_chunk.py NN` (claims or reopens each function as owner `claude-br`, then records proposed; copy in `claude/record_chunk.py`). Worker outputs are mirrored into `claude/` here (`<Class>__<Fn>.inc`, `.evidence.json`, `deps/`), with `claude/WORKER.md` the worker prompt. Chunk 00 helper deps include five not-yet-decompiled virtual targets (0x880, 0x888, 0x708, UpdateHighlightState, IsAthenaSpawnOverrideActive): chunk 00 follow-up item.

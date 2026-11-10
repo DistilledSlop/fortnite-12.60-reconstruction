@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingGameplayActor__SetOwnerTeamIndex",
+  "address": "virtual slot 0x990 (ABuildingActor target 0x141bc50c0)",
+  "signature": "void SetOwnerTeamIndex(uint8 TeamIndex)",
+  "inc_or_decl": "virtual void SetOwnerTeamIndex(uint8 TeamIndex);",
+  "evidence": "ABuildingActor-owned virtual taking one byte. Name and semantics are guesses; target not captured. LOW."
+}

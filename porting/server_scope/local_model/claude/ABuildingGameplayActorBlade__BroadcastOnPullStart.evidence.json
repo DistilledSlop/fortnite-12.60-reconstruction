@@ -1,0 +1,15 @@
+{
+  "function": "ABuildingGameplayActorBlade::BroadcastOnPullStart",
+  "status": "proposed",
+  "original": "0x1427261d0",
+  "signature": "void BroadcastOnPullStart()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x1427261d0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x141bd7180.c"
+  ],
+  "callees": {
+    "0x141bd7180": "virtual _Implementation: ProcessEvent of the OnPullStart BlueprintImplementableEvent (thunk 0x142742f30)"
+  },
+  "notes": "OnPullStart is declared BlueprintImplementableEvent in ABuildingGameplayActorBlade.h.",
+  "confidence": "HIGH"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__SetBeingTranslated",
+  "address": "0x141bc4db0",
+  "signature": "void SetBeingTranslated(bool bValue)",
+  "inc_or_decl": "void SetBeingTranslated(bool bValue);",
+  "evidence": "Sets bit 5 of the flag byte at +0x3e5 to bValue. Bit 5 corresponds to bBeingTranslated in the reflected bool bit list, which is not confirmed by declaration order. LOW."
+}

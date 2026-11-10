@@ -4,8 +4,8 @@
   "original": "0x1427379d0",
   "signature": "ABuildingActor* ABuildingActor::K2_SpawnBuildingActor(UObject* WorldContextObject, TSubclassOf<ABuildingActor> BuildingClass, FTransform Transform)",
   "captures": [
-    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427379d0.c",
-    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bafb20.c"
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427379d0.c",
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bafb20.c"
   ],
   "callees": {
     "0x141bafb20": "native spawn helper: GetWorld check, class-is-ABuildingActor check, spawn params from subsystem (0x141c7c1f0 keyed by location), UWorld spawn (0x1442e6580)",

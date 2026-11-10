@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingContainer__ShouldRollRandomUpgrade",
+  "address": "0x141bd52c0",
+  "signature": "bool ShouldRollRandomUpgrade() const",
+  "inc_or_decl": "bool ShouldRollRandomUpgrade() const;",
+  "evidence": "Returns true when World->GameState is AFortGameStateAthena and the game state's virtual slot 0xcd8 check passes (captures/6efb1241727e4d638a4125f43c983a91/0x141bd52c0.c)."
+}

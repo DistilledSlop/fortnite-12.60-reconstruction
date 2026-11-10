@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingGameplayActor__EnableDeliveryBucket",
+  "address": "0x141bda9a0",
+  "signature": "void EnableDeliveryBucket(FBuildingGameplayActorAbilityDeliveryBucket& Bucket)",
+  "inc_or_decl": "void EnableDeliveryBucket(FBuildingGameplayActorAbilityDeliveryBucket& Bucket);",
+  "evidence": "Enables the bucket for the owning actor, then if the bucket has pulse effects arms the proximity pulse timer (interval = max(0.1, ProximityPulseInterval)) and the pre-pulse timer (warns when PrePulseTime >= interval). Captured at captures/6efb1241727e4d638a4125f43c983a91/0x141bda9a0.c."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingContainer__RollRandomUpgrade",
+  "address": "0x141bd5330",
+  "signature": "void RollRandomUpgrade(bool bRoll)",
+  "inc_or_decl": "void RollRandomUpgrade(bool bRoll);",
+  "evidence": "bRoll=true: sets pending flag, walks PotentialRandomUpgrades, rolls each chance with rand(), records ChosenRandomUpgrade and fires OnAuthorityRandomUpgradeApplied; then marks resolved. bRoll=false: marks resolved only. Captured at captures/6efb1241727e4d638a4125f43c983a91/0x141bd5330.c."
+}

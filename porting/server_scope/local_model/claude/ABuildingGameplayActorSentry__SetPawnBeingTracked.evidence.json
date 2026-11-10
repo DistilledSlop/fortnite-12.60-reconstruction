@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingGameplayActorSentry::SetPawnBeingTracked",
+  "status": "proposed",
+  "original": "0x142744530",
+  "signature": "void SetPawnBeingTracked(AFortPlayerPawn* InPawnBeingTracked)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142744530.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141beaa20.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x141bec9e0.c"
+  ],
+  "callees": {
+    "0x141beaa20": "ABuildingGameplayActorSentry::SetPawnBeingTracked body",
+    "0x141bec9e0": "OnTrackedToAggroDelayElapsed: when PawnBeingTracked is set, moves the sentry to the Aggroed state and plays AggroedGameplayCueTag"
+  },
+  "notes": "Member names: PawnBeingTracked (+0x7b8), CurrentSentryState (+0x7b3), TrackedToAggroDelay (+0x7c0), AggroedGameplayCueTag (+0x828) are reflected. The aggro timer handle at +0x890 is not named in reflection (AggroTimerHandle is a guess). ESentryState::Aggroed is value 3, inferred from the gameplay-cue name.",
+  "confidence": "MEDIUM"
+}

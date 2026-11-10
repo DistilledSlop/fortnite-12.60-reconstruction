@@ -1,0 +1,20 @@
+{
+  "function": "ABuildingGameplayActorPlayerPropAttachment::InitProp",
+  "status": "proposed",
+  "original": "0x142743f80",
+  "signature": "void InitProp(AActor* PropActorToAttach)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142743f80.c",
+    "/opt/fortnite/local-model-package/captures/c008b6bd46cc4ee6abe77be50e8873e4/0x142743f80.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141be1620.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x142732ac0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x142752f80.c"
+  ],
+  "callees": {
+    "0x141be1620": "InitProp body: class gates (ABuildingActor, ABuildingSMActor), clears prop bit, sets a bit, removes attached children (virtual 0xcb0), then SetPossessedProp on the owner",
+    "0x142732ac0": "ABuildingActor::StaticClass",
+    "0x142752f80": "ABuildingSMActor::StaticClass"
+  },
+  "notes": "The bit writes (predicted flag at +0x3e7 bit 0, flag at +0x3e5 bit 5) and the attached-child array (+0xa70/+0xa78) are inferred from the decompile. SetBeingTranslated and AttachedBuildingActors are guessed names. Confidence LOW.",
+  "confidence": "LOW"
+}

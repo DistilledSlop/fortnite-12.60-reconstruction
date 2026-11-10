@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingGameplayActor__QueueTouchingActorForAbility",
+  "address": "0x141be3360",
+  "signature": "void QueueTouchingActorForAbility(FBuildingGameplayActorAbilityDeliveryInfo& Info, AActor* Actor)",
+  "inc_or_decl": "void QueueTouchingActorForAbility(AActor* Actor);  // operates on DeliverableAbilityInfo",
+  "evidence": "When a bucket is enabled with bHasGEsToApplyOnTouch, appends Actor to DeferredTouchActorsToProcess and schedules a next-tick timer. Also records Actor on the owning actor's touch set (0x6a0). Captured at captures/6efb1241727e4d638a4125f43c983a91/0x141be3360.c."
+}

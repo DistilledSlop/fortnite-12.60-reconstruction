@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingGameplayActorConsumable__GetGameStateAbilitySystemComponent",
+  "address": "0x141ef3af0",
+  "signature": "UAbilitySystemComponent* GetGameStateAbilitySystemComponent(UWorld* World)",
+  "inc_or_decl": "UAbilitySystemComponent* GetGameStateAbilitySystemComponent(UWorld* World);",
+  "evidence": "Resolves the world context, reads the game state at +0x130, checks it is a game state class, then calls the game state's virtual 0x9e8 for its ability system component. Captured at captures/6efb1241727e4d638a4125f43c983a91/0x141ef3af0.c."
+}

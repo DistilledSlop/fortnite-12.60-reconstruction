@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingGameplayActor::EnableAbilityDeliveryInfo",
+  "status": "proposed",
+  "original": "0x14273ff20",
+  "signature": "void EnableAbilityDeliveryInfo(FGameplayTag BucketTag)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14273ff20.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141bda910.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x141bda9a0.c"
+  ],
+  "callees": {
+    "0x141bda910": "ABuildingGameplayActor::EnableAbilityDeliveryInfo body",
+    "0x141bda9a0": "EnableDeliveryBucket(bucket): sets the bucket enabled for the owning actor, then starts or restarts the proximity pre-pulse and pulse timers when the bucket has pulse effects"
+  },
+  "notes": "See the struct layout note in ABuildingGameplayActor__DisableAbilityDeliveryInfo.inc evidence.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,16 @@
+{
+  "function": "ABuildingContainer::BP_SpawnLoot",
+  "status": "proposed",
+  "original": "0x14273c1f0",
+  "signature": "bool BP_SpawnLoot(AFortPawn* PlayerPawn)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14273c1f0.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141bd5720.c"
+  ],
+  "callees": {
+    "0x141bd5720": "thunk: virtual call through vtable slot 0xee0 on this (ABuildingContainer::SpawnLoot), passes (this, Pawn, 4, 0, 0)",
+    "0x141bec430": "ABuildingContainer::SpawnLoot base virtual: logs warning, returns false (native-cap-virtual1)"
+  },
+  "notes": "Virtual signature inferred from the 5-argument call site (this, Pawn, 4, 0, 0). Derived SpawnLoot (e.g. AFortAthenaCreativeSupplyDrop 0x1427d8600 -> 0x1418fb480) is the real implementation. Trailing argument semantics unresolved, hence LOW.",
+  "confidence": "LOW"
+}

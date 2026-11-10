@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingGameplayActorPlayerPropAttachment::CalcWorldSpaceBounds",
+  "status": "proposed",
+  "original": "0x142743bb0",
+  "signature": "void CalcWorldSpaceBounds(AActor* PropActor, FVector& Origin, FVector& Extent)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142743bb0.c",
+    "/opt/fortnite/local-model-package/captures/7466d45e7ebb4a65aad30608b9e72078/0x141bd7a30.c"
+  ],
+  "callees": {
+    "0x141bd7a30": "CalcWorldSpaceBounds body. Reads root bounds (+0x1d0/+0x1d8 of RootComponent), iterates RootComponent->AttachChildren (+0xd0/+0xd8), de-duplicates the primitive components found under each child, unions their bounds (decompile tracks a bounding sphere) and writes Origin and Extent",
+    "0x141bdcf00": "collects the primitive components of an attached child (not captured)",
+    "0x1448013f0": "class check (IsA) used when filtering the components"
+  },
+  "notes": "The decompile tracks a sphere radius alongside the box (half-diagonal of the child box). This port uses the box directly, so numeric output may differ slightly. The default values used when there is no root are read from globals and not reproduced. The parameter order (PropActor, then Origin, then Extent) is taken from the bytecode order implied by reflection offsets 0, 8, 20. The inventory index order lists Extent first, so this should be checked against the reflected declaration.",
+  "confidence": "LOW"
+}

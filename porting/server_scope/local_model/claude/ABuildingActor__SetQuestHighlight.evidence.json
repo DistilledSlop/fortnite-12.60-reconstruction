@@ -4,8 +4,8 @@
   "original": "0x1427384e0",
   "signature": "void ABuildingActor::SetQuestHighlight(bool bEnabled)",
   "captures": [
-    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427384e0.c",
-    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bc4dd0.c"
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427384e0.c",
+    "/opt/fortnite/local-model-package/captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bc4dd0.c"
   ],
   "callees": {
     "0x141bc4dd0": "native body: adjusts highlight reason mask at +0x3ee; sets dirty bit (+0x3e9 bit 0x04) when the quest reason is top priority; refreshes via 0x141f611f0/0x141f60110 and 0x141bc1e80",

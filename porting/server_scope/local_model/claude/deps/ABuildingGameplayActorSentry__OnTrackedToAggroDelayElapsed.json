@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingGameplayActorSentry__OnTrackedToAggroDelayElapsed",
+  "address": "0x141bec9e0",
+  "signature": "void OnTrackedToAggroDelayElapsed()",
+  "inc_or_decl": "void OnTrackedToAggroDelayElapsed();",
+  "evidence": "If PawnBeingTracked is set: move CurrentSentryState to Aggroed (value 3) via 0x141beb180, then add AggroedGameplayCueTag via the cue manager (0x1406c4b60). Captured at captures/6efb1241727e4d638a4125f43c983a91/0x141bec9e0.c."
+}

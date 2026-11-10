@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingGameplayActor__GetPersistentIdForPawn",
+  "address": "0x1423881c0",
+  "signature": "uint16 GetPersistentIdForPawn(APawn* Pawn)",
+  "inc_or_decl": "uint16 GetPersistentIdForPawn(APawn* Pawn);",
+  "evidence": "Reads PlayerState at +0x220 of the pawn and returns its uint16 persistent id at +0x336; returns 0xffff when there is no PlayerState. Captured at captures/6efb1241727e4d638a4125f43c983a91/0x1423881c0.c."
+}

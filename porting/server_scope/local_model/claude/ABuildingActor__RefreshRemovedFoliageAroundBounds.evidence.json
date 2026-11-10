@@ -4,10 +4,10 @@
   "original": "0x142737e30",
   "signature": "void ABuildingActor::RefreshRemovedFoliageAroundBounds(bool bUseNonCollidingBounds)",
   "captures": [
-    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737e30.c",
-    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bc24b0.c",
-    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bc8570.c",
-    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bc2c30.c"
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737e30.c",
+    "/opt/fortnite/local-model-package/captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bc24b0.c",
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bc8570.c",
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bc2c30.c"
   ],
   "callees": {
     "0x141bc24b0": "native body: calls virtual 0x988 then 0x980",
