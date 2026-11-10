@@ -1,0 +1,8 @@
+{
+  "name": "ABuildingTrap__GetValidTriggerTargets",
+  "address": "0x141c38340",
+  "signature": "void GetValidTriggerTargets(TArray<AActor*>& OutTargets, bool bForce)",
+  "inc_or_decl": "Collects candidate actors (0x141c3cce0, 0x1415f4550), filters each with 0x141c40c10, then 0x14275a1e0 when the array is non-empty; resets the array when the filter result is false.",
+  "evidence": [],
+  "notes": "Read in full (69 lines)."
+}

@@ -1,0 +1,8 @@
+{
+  "name": "ABuildingTrap__DispatchTrapEventViaOwner",
+  "address": null,
+  "signature": "void DispatchTrapEventViaOwner()",
+  "inc_or_decl": "Owner-side dispatch in the non-authoritative path of TriggerIfAppropriate: calls vtable slot 0x10 on the object at +0x270, then vtable slot 0x620 on the result with the trap id (+0xcc0) and a param struct.",
+  "evidence": [],
+  "notes": "Target types for +0x270 and the slot 0x620 implementation are unresolved in this chunk."
+}

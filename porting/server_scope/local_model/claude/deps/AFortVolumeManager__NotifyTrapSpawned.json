@@ -1,0 +1,8 @@
+{
+  "name": "AFortVolumeManager__NotifyTrapSpawned",
+  "address": "0x141c8cf90",
+  "signature": "void NotifyTrapSpawned(AFortVolumeManager* VolumeManager, ABuildingTrap* Trap)",
+  "inc_or_decl": "If VolumeManager Role (+0xf0) == ROLE_Authority, calls RegisterTrapInVolume(VolumeManager, Trap, FindVolumeForActor(VolumeManager, Trap)).",
+  "evidence": [],
+  "notes": "Read in full (13 lines); 0x141c8cfd0 and 0x141c7c5c0 read in full."
+}

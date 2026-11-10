@@ -1,0 +1,8 @@
+{
+  "name": "AFortAIPawn__FastSharedReplicationHelpers",
+  "address": null,
+  "signature": "Helpers of AFortAIPawn::FastSharedReplication: IsSharedReplicationSuppressed(0x144693a30), SharedRepMovementIsNewer(0x142331fa0), SharedMovementApplyPredicate(0x141a0a860), ApplySharedRepMovement(0x143f85020), GameState class (0x142927a60), BoundMovementComponent class (0x14277e480), UpdateBoundMovementComponentBase(0x141609170), vslot 0xdf8 (0x1422e0420) MarkSharedMovementDirty, vslot 0x420 (0x1422e1ce0) ReceiveSharedMovementUpdate",
+  "inc_or_decl": "See the FastSharedReplication .inc for the call sites.",
+  "evidence": [],
+  "notes": "The helper bodies are owned by separate deps and were not read in this pass; the virtual targets are identified from the vtable map (virtual_slots.py). Each helper needs its own port."
+}

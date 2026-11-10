@@ -1,0 +1,18 @@
+{
+  "function": "ABuildingSMActor::SetMirrored",
+  "status": "proposed",
+  "original": [
+    "0x142758050 (exec thunk)",
+    "0x141c1bf20 (virtual body, vtable slot 0xa90)"
+  ],
+  "signature": "void SetMirrored(bool bIsMirrored)",
+  "captures": [],
+  "callees": {
+    "0x142758050": "exec thunk: reads bIsMirrored and dispatches to the virtual body",
+    "0x141c1bf20": "virtual body ABuildingSMActor::SetMirrored (vtable slot 0xa90); the real behaviour",
+    "0x144123480": "USceneComponent::SetRelativeScale3D (log text \"SetRelativeScale3D : Invalid Scale entered\"); resets NaN/inf to 1",
+    "0x143f7c980": "ABuildingSMActor::RefreshComponentRenderStates (proposed name): walks the building component set and dirties registered components; declared dep",
+    "vslot 0x4e0 on StaticMeshComponent": "engine scale-change notification; the class vtable is not in the vtable map, so the target is unresolved; declared dep"
+  },
+  "notes": "Field names: bMirrored = +0x6a8 mask 4; StaticMeshComponent = +0x768; ReplicatedDrawScale3D = +0x72c (FVector). The original writes the scale components from the mesh at +0x134/+0x13c."
+}

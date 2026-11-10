@@ -1,0 +1,17 @@
+{
+  "function": "ACustomCharacterPartModifier::SetChildParticleComponentsVisible",
+  "status": "proposed",
+  "original": [
+    "0x1427796d0 (exec thunk)",
+    "0x141db8c30 (direct body)"
+  ],
+  "signature": "void SetChildParticleComponentsVisible(bool bVisible)",
+  "captures": [],
+  "callees": {
+    "0x1427796d0": "exec thunk: calls 0x141db8c30",
+    "0x141db8c30": "direct body: same walk as 0x141db8ae0 with FXSystemComponent children and the visibility helper (mode 2)",
+    "0x144124180": "SetVisibility(child, bVisible, mode): same as 0x144121f60 but toggles the bVisible bit (0x20 at +0x14c) and calls vslot 0x450; read in full via a diff against 0x144121f60",
+    "0x1447ae440": "UFXSystemComponent (FXSystemComponent) StaticClass"
+  },
+  "notes": "Mode 2 always propagates to children, so the port passes true. The class name FXSystemComponent is the name used by the static class getter; UFXSystemComponent is the proposed C++ name."
+}

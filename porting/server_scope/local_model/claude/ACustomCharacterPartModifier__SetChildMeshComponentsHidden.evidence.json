@@ -1,0 +1,20 @@
+{
+  "function": "ACustomCharacterPartModifier::SetChildMeshComponentsHidden",
+  "status": "proposed",
+  "original": [
+    "0x142779640 (exec thunk)",
+    "0x141db8ae0 (direct body)"
+  ],
+  "signature": "void SetChildMeshComponentsHidden(bool bHideChildComponents)",
+  "captures": [],
+  "callees": {
+    "0x142779640": "exec thunk: calls 0x141db8ae0",
+    "0x141db8ae0": "direct body: mesh from the part getter (vslot 0x628/0x640/0x1110 chain); collects descendants via 0x144114ee0; hides StaticMeshComponent children whose ComponentTags contain ChildComponentTag (+0x320)",
+    "0x144114ee0": "collect children into TArray: param2=1 calls 0x144108f20 which recurses over all descendants",
+    "0x144108f20": "recursive child collection (descendant walk)",
+    "0x1406d9a30": "TArray reserve helper (array capacity), used by 0x144108f20",
+    "0x144121f60": "SetHiddenInGame(child, bHidden, mode): toggles the bHiddenInGame bit (0x40 at +0x14c) and calls the component hook (vslot 0x458); propagates to children (mode 1 = propagate on change)",
+    "0x1448013f0": "UStaticMeshComponent::StaticClass"
+  },
+  "notes": "ChildComponentTag is FName at +0x320. Mode 1 propagates to children only when the hidden bit changes; the port passes true, which matches that behaviour when the state flips."
+}

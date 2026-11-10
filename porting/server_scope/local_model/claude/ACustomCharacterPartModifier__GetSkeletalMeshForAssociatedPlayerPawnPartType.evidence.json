@@ -1,0 +1,18 @@
+{
+  "function": "ACustomCharacterPartModifier::GetSkeletalMeshForAssociatedPlayerPawnPartType",
+  "status": "proposed",
+  "original": [
+    "0x142779450 (exec thunk)",
+    "0x141da6f00 (direct body)"
+  ],
+  "signature": "USkeletalMeshComponent* GetSkeletalMeshForAssociatedPlayerPawnPartType() const",
+  "captures": [],
+  "callees": {
+    "0x142779450": "exec thunk: direct call to 0x141da6f00 and result copy",
+    "0x141da6f00": "direct body: pawn = FortPlayerPawnPtr (vslot 0x628); if null return; mesh = pawn->vslot 0x1110(part type from vslot 0x640)",
+    "0x141da5180": "vslot 0x628 target: FWeakObjectPtr IsValid/Get on FortPlayerPawnPtr (+0x21c)",
+    "0x1412d96f0": "vslot 0x640 target: returns the PartType byte (+0x328); matches porting/behavior/ACustomCharacterPartModifier/GetCharacterPartType.inc",
+    "0x1423240c0": "vslot 0x1110 target on AFortPlayerPawn: CharacterPartSkeletalMeshComponents[PartType] when PartType < 6, else null (declared dep)"
+  },
+  "notes": "The pawn class is taken as AFortPlayerPawn from the weak pointer class 0x142a74460 (proposed; the name of that class is not in the reflection). AFortPlayerPawnAthena has the same slot target."
+}

@@ -1,0 +1,13 @@
+{
+  "function": "ABuildingWall::IsDoorComponent",
+  "status": "proposed",
+  "original": [
+    "0x142766080"
+  ],
+  "signature": "bool IsDoorComponent(UMeshComponent* MeshComponent) const",
+  "captures": [],
+  "callees": {
+    "0x142766080": "direct body: non-null DoorComponent (+0xc20) equal to MeshComponent"
+  },
+  "notes": "DoorComponent is reflected at +0xc20 (type class 0x1447ffbe0). MeshComponent uses the same class."
+}

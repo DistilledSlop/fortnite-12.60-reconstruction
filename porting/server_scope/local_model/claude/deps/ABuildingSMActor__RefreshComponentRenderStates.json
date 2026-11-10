@@ -1,0 +1,8 @@
+{
+  "name": "ABuildingSMActor__RefreshComponentRenderStates",
+  "address": "0x143f7c980",
+  "signature": "void RefreshComponentRenderStates()",
+  "inc_or_decl": "Walks the building component set (+0x198 set, +0x1a8 bit array) and dirties registered components with 0x1440b73d0; recurses for components of class 0x1446ed6f0.",
+  "evidence": [],
+  "notes": "Read in full (147 lines)."
+}

@@ -1,0 +1,8 @@
+{
+  "name": "AFortVolumeManager__RegisterTrapInVolume",
+  "address": "0x141c8cfd0",
+  "signature": "void RegisterTrapInVolume(AFortVolumeManager* VolumeManager, ABuildingTrap* Trap, AFortVolume* Volume)",
+  "inc_or_decl": "Authority-only: if Volume is non-null and the trap is registered, adds or removes the trap with 0x142068fd0 / 0x142063d20 (volume membership) and 0x141c662c0 / 0x141c90870 checks.",
+  "evidence": [],
+  "notes": "Read in full (52 lines). Helpers 0x142b6ac80, 0x142ee3b30, 0x140782160, 0x141c90870, 0x142068fd0, 0x141c662c0, 0x142063d20 are inside this dep."
+}

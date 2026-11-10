@@ -1,0 +1,8 @@
+{
+  "name": "AFortPlayerPawn__GetCharacterPartSkeletalMeshComponent",
+  "address": "0x1423240c0",
+  "signature": "USkeletalMeshComponent* GetCharacterPartSkeletalMeshComponent(uint8 PartType) const (virtual, vtable slot 0x1110)",
+  "inc_or_decl": "Body: return PartType < 6 ? CharacterPartSkeletalMeshComponents[PartType] : nullptr;",
+  "evidence": [],
+  "notes": "Read in full (10 lines). Class of the weak pointer assumed AFortPlayerPawn."
+}

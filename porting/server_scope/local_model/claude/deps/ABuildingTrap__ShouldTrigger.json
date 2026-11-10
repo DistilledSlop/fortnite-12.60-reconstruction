@@ -1,0 +1,8 @@
+{
+  "name": "ABuildingTrap__ShouldTrigger",
+  "address": "0x141c4dd00",
+  "signature": "bool ShouldTrigger(bool& bOutObstructed, TArray<AActor*>& OutTargets)",
+  "inc_or_decl": "Returns false when no world (logs \"ABuildingTrap::ShouldTrigger ... failed to get world\"); otherwise filters candidates through the BP filter (0x14275a1e0) and per-target checks (0x141c40c10).",
+  "evidence": [],
+  "notes": "Read in full (86 lines). Callees 0x141c3cce0, 0x1415f4550, 0x141c40c10, 0x14275a1e0, 0x142ec9900 are inside this dep and not reproduced here."
+}

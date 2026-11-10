@@ -1,0 +1,8 @@
+{
+  "name": "AFortVolumeManager__GetVolumeManagerForActor",
+  "address": "0x141c74820",
+  "signature": "AFortVolumeManager* GetVolumeManagerForActor(AActor* Actor)",
+  "inc_or_decl": "GetWorldFromContextObject(Actor); GameState (+0x130) must be AFortGameStateAthena; returns GameState->VolumeManager (+0x2108) when valid and not pending kill; returns null otherwise.",
+  "evidence": [],
+  "notes": "Read in full (43 lines); 0x144640410 and 0x141999ba0 read in full."
+}

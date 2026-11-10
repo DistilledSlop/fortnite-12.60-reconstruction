@@ -1,0 +1,19 @@
+{
+  "function": "ABuildingTrap::SpawnedFromItemDefinition",
+  "status": "proposed",
+  "original": [
+    "0x14275e9e0 (exec thunk)",
+    "0x141c4f360 (direct helper)"
+  ],
+  "signature": "void SpawnedFromItemDefinition(UObject* ItemDef, int32 InTrapLevel)",
+  "captures": [],
+  "callees": {
+    "0x14275e9e0": "exec thunk: steps ItemDef and InTrapLevel, then direct call to 0x141c4f360",
+    "0x141c4f360": "helper: TrapData = arg (+0xb90), TrapLevel and OriginalTrapLevel = arg2 (+0xcb0/+0xcb4), then GetVolumeManagerForActor(this) and NotifyTrapSpawned(VM, this) when VM != 0",
+    "0x141c74820": "GetVolumeManagerForActor(Actor): GetWorldFromContextObject, GameState must be AFortGameStateAthena, returns GameState->VolumeManager (+0x2108) when valid",
+    "0x141c8cf90": "NotifyTrapSpawned(VM, Trap): if VM Role == ROLE_Authority, RegisterTrapInVolume(VM, Trap, FindVolumeForActor(VM, Trap))",
+    "0x141c8cfd0": "RegisterTrapInVolume(VM, Trap, Volume): read in full (volume registration/removal)",
+    "0x141c7c5c0": "FindVolumeForActor(VM, Actor): scans VM volume list (+0x278/+0x280) using actor bounds; returns the best volume"
+  },
+  "notes": "Field names: TrapData (+0xb90, Object), TrapLevel (+0xcb0), OriginalTrapLevel (+0xcb4). The ItemDef class is the TrapData class 0x142b1a310. VolumeManager (+0x2108 of AFortGameStateAthena) is named by reflection."
+}

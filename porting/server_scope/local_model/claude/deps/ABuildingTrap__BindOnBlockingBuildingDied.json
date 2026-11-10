@@ -1,0 +1,8 @@
+{
+  "name": "ABuildingTrap__BindOnBlockingBuildingDied",
+  "address": null,
+  "signature": "void BindOnBlockingBuildingDied(AActor* Target)",
+  "inc_or_decl": "First branch of TriggerIfAppropriate: if the target does not already list this trap in its OnBlockingBuildingDied entries (+0x448 array), adds a binding with the function name \"ABuildingTrap::OnBlockingBuildingDied\" and the FName \"OnBlockingBuildingDied\".",
+  "evidence": [],
+  "notes": "Structure from the decompile of 0x141c505a0. Helpers 0x142cd4ab0, 0x142ee3b30, 0x1406bd0b0, 0x140690dd0, 0x142ee6180 are owned by separate deps and were not read in this pass."
+}

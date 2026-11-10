@@ -1,0 +1,8 @@
+{
+  "name": "ABuildingTrap__AttemptRetrigger",
+  "address": "0x141c2fdd0",
+  "signature": "void AttemptRetrigger(float Delay)  (virtual, vtable slot 0xf00)",
+  "inc_or_decl": "If Delay < 0.01 calls TriggerIfAppropriate (vtable slot 0xf50) immediately; otherwise creates a retry timer with callback 0x141c31e70 via 0x1446278d0 and runs it.",
+  "evidence": [],
+  "notes": "Read in full (104 lines)."
+}

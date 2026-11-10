@@ -1,0 +1,8 @@
+{
+  "name": "ABuildingTrap__BlueprintShouldTrigger",
+  "address": "0x14275a120",
+  "signature": "void BlueprintShouldTrigger(const TArray<AActor*>& Targets, bool& bOutAllowed)",
+  "inc_or_decl": "ProcessEvent (vtable slot 0x210) of a UFunction found by a checked FName global (0x148177ff8); the array is passed in and the bool written back.",
+  "evidence": [],
+  "notes": "Read in full (35 lines). The UFunction name is not resolved from the captured data."
+}

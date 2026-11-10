@@ -1,0 +1,19 @@
+{
+  "function": "ACustomCosmeticModifierBase::IsInFrontEnd",
+  "status": "proposed",
+  "original": [
+    "0x14277cfb0 (exec thunk)",
+    "0x141da9b90 (direct body)"
+  ],
+  "signature": "bool IsInFrontEnd() const",
+  "captures": [],
+  "callees": {
+    "0x14277cfb0": "exec thunk: calls 0x141da9b90",
+    "0x141da9b90": "direct body: GetWorld() (vslot 0x150), UWorld::GameState (+0x130) must be non-null and IsA AFortGameStateFrontEnd",
+    "0x143f793a0": "GetWorld override for ACustomCosmeticModifierBase: walks outers to ULevel (0x142eca940), returns OwningWorld (+0xb8); null when pending kill",
+    "0x142eca940": "outer walk: returns the first outer whose class IsA the Level class (0x14477bcd0)",
+    "0x14477bcd0": "ULevel::StaticClass",
+    "0x142926830": "AFortGameStateFrontEnd::StaticClass"
+  },
+  "notes": "The original tests the game state against the static class and returns the result as a bool."
+}

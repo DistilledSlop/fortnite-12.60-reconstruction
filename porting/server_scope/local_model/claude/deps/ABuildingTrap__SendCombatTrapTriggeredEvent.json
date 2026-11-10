@@ -1,0 +1,8 @@
+{
+  "name": "ABuildingTrap__SendCombatTrapTriggeredEvent",
+  "address": "0x1417dcde0",
+  "signature": "void SendCombatTrapTriggeredEvent(AFortPlayerController* PC, ABuildingTrap* Trap)",
+  "inc_or_decl": "Builds the \"Combat.TrapTriggered\" event with AssetName and TemplateId parameters from the trap and sends it through the PC subsystem (vtable slot 0xc8 on PC+0x5a0).",
+  "evidence": [],
+  "notes": "Read in full (160 lines). Parameter order inferred from the caller."
+}

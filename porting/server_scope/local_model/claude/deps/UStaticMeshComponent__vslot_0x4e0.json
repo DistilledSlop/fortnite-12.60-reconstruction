@@ -1,0 +1,8 @@
+{
+  "name": "UStaticMeshComponent__vslot_0x4e0",
+  "address": null,
+  "signature": "virtual void <unresolved>(...) on UStaticMeshComponent, vtable slot 0x4e0",
+  "inc_or_decl": "Scale-change notification used by the SetMirrored body (0x141c1bf20). Called before and after the scale write; its target is not in the vtable map, so the identity is unresolved and the port relies on SetRelativeScale3D for the notification.",
+  "evidence": [],
+  "notes": "The class vtable for UStaticMeshComponent is absent from class-vtables/vtables.json."
+}

@@ -1,0 +1,8 @@
+{
+  "name": "ABuildingTrap__FindOwningPlayerController",
+  "address": "0x141ba8530",
+  "signature": "AFortPlayerController* FindOwningPlayerController() const",
+  "inc_or_decl": "If OwnerPersistentID (+0x350) != -1, scans the list from 0x14468fb70 for an AFortPlayerController (static class 0x142a3d9f0) whose id (0x1423881c0) equals OwnerPersistentID.",
+  "evidence": [],
+  "notes": "Read in full (45 lines). 0x14468fb70 and 0x1423881c0 are not read here; they are inside this dep."
+}

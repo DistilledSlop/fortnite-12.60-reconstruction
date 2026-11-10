@@ -1,0 +1,8 @@
+{
+  "name": "AFortVolumeManager__FindVolumeForActor",
+  "address": "0x141c7c5c0",
+  "signature": "AFortVolume* FindVolumeForActor(AFortVolumeManager* VolumeManager, AActor* Actor)",
+  "inc_or_decl": "Scans VolumeManager volume list (+0x278 array, count +0x280) for the volume containing the actor bounds; falls back to the nearest candidate via 0x141c75610 comparisons; returns null when none.",
+  "evidence": [],
+  "notes": "Read in full (180 lines). Stat scope STAT_Find_Volume is profiling only."
+}

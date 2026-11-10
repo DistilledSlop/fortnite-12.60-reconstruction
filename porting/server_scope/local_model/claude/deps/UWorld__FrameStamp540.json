@@ -1,0 +1,8 @@
+{
+  "name": "UWorld__FrameStamp540",
+  "address": null,
+  "signature": "int32 FrameStamp540  (UWorld, original offset +0x540)",
+  "inc_or_decl": "Unnamed UWorld int read by AddUnreachablePickup (0x1422bd060) and used as the TMap value. No reflected name; name proposed.",
+  "evidence": [],
+  "notes": "Field name unknown in reflection. Address is an offset, not a function."
+}

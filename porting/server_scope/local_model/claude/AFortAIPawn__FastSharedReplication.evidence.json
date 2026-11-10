@@ -1,0 +1,26 @@
+{
+  "function": "AFortAIPawn::FastSharedReplication",
+  "status": "proposed",
+  "original": [
+    "0x1427a4710 (exec thunk)",
+    "0x1422c5910 (virtual body, vtable slot 0xe28)"
+  ],
+  "signature": "void FastSharedReplication(const FSharedRepMovement& SharedRepMovement)",
+  "captures": [],
+  "callees": {
+    "0x1427a4710": "exec thunk: builds a temporary struct (0x1422b7e30) and calls vslot 0xe28",
+    "0x1422b7e30": "FSharedRepMovement initialiser: zeroes the fields and sets defaults (0x3c=0xb, 0x40=-1, 0x31=2)",
+    "0x1422c5910": "virtual body AFortAIPawn::FastSharedReplication (vslot 0xe28): read in full, structure above",
+    "0x150 (GetWorld)": "UObject::GetWorld (slot 0x150, AFortAIPawn -> 0x143f793a0, read in full)",
+    "0x144693a30": "IsSharedReplicationSuppressed(World): returns true to skip the body; declared dep",
+    "0x142331fa0": "SharedRepMovementIsNewer(new, current) on the sequence number (+0x34 vs +0x203c); declared dep",
+    "0x141a0a860": "SharedMovementApplyPredicate(state, rep); declared dep",
+    "0x143f85020": "ApplySharedRepMovement(rep): body that applies the replicated movement; declared dep",
+    "0x142927a60": "AFortGameStateAthena::StaticClass (class check on the game state); declared dep",
+    "0x14277e480": "UBoundMovementComponent::StaticClass (class check); declared dep",
+    "0x141609170": "UpdateBoundMovementComponentBase(component); declared dep",
+    "vslot 0xdf8 (0x1422e0420)": "MarkSharedMovementDirty; target from the vtable map; declared dep",
+    "vslot 0x420 (0x1422e1ce0)": "ReceiveSharedMovementUpdate; target from the vtable map; declared dep"
+  },
+  "notes": "Every name in the body except Role (+0xf0) and the FSharedRepMovement field offsets is proposed. Reflected member names are missing for AFortAIPawn +0x203c, +0x1168..+0x1174, +0x1e90, +0x2008, +0x2040 and the bound movement component fields. The GameState array at +0x6e0 is read with entries whose first field is the actor pointer. Treat as LOW."
+}

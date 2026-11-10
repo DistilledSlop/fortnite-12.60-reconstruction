@@ -1,0 +1,8 @@
+{
+  "name": "AFortAIGoalManager__SetCurrentGoalDiscouragementImpl",
+  "address": "0x141702e20",
+  "signature": "void SetCurrentGoalDiscouragementImpl(AActor* AI)",
+  "inc_or_decl": "Null check, then a STAT_GetComponentsTime scope; resolves two world values (0x14270eb10, 0x1446b3d40); when they match calls 0x1406a90d0, otherwise 0x1406a92e0(AI, ...).",
+  "evidence": [],
+  "notes": "Read in full (53 lines). Helper bodies 0x1406a90d0 and 0x1406a92e0 are not read in this chunk."
+}

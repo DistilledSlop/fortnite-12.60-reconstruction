@@ -1,0 +1,17 @@
+{
+  "function": "AFortAIPawn::AddUnreachablePickup",
+  "status": "proposed",
+  "original": [
+    "0x1427a44b0 (exec thunk)",
+    "0x1422bd060 (direct body)"
+  ],
+  "signature": "void AddUnreachablePickup(AFortPickup* Pickup)",
+  "captures": [],
+  "callees": {
+    "0x1427a44b0": "exec thunk: step Pickup, call 0x1422bd060",
+    "0x1422bd060": "direct body: if Pickup non-null, value = GetWorld() int at +0x540, then TMap emplace into UnreachablePickups (+0x1a70)",
+    "0x1422b3980": "TSet/TMap emplace (hash insert with free-list): used as TMap::Add; the port uses the UE API",
+    "0x150 (GetWorld, vslot)": "UObject::GetWorld; AFortAIPawn slot 0x150 -> 0x143f793a0"
+  },
+  "notes": "UnreachablePickups is reflected at +0x1a70 (kind Map). The UWorld int at +0x540 has no reflected name; declared dep UWorld__FrameStamp540 with a proposed name."
+}

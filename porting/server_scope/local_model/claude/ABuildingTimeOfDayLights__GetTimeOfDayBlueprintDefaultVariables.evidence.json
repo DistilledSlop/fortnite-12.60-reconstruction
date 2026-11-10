@@ -1,0 +1,15 @@
+{
+  "function": "ABuildingTimeOfDayLights::GetTimeOfDayBlueprintDefaultVariables",
+  "status": "proposed",
+  "original": [
+    "0x14275c6e0 (exec thunk)"
+  ],
+  "signature": "void GetTimeOfDayBlueprintDefaultVariables(FBuildingTimeOfDayVariables& OutVariables)",
+  "captures": [],
+  "callees": {
+    "0x14275c6e0": "exec thunk: zero-initialises OutVariables, then the virtual call",
+    "0x1406801c0": "Stub_Empty (vtable slot 0xea8 target for ABuildingTimeOfDayLights): void, returns immediately",
+    "vslot 0xea8 on ABuildingTimeOfDayLights": "resolved to 0x1406801c0 via porting/virtual_slots.py"
+  },
+  "notes": "Out struct type 0x14275b600 has no name in this chunk; the body uses decltype so it compiles for any struct type."
+}

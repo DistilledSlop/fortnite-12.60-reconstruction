@@ -1,0 +1,23 @@
+{
+  "function": "ABuildingTrap::TriggerIfAppropriate",
+  "status": "proposed",
+  "original": [
+    "0x14275eae0 (exec thunk)",
+    "0x141c505a0 (virtual body, vtable slot 0xf50)"
+  ],
+  "signature": "bool TriggerIfAppropriate()",
+  "captures": [],
+  "callees": {
+    "0x14275eae0": "exec thunk: calls vtable slot 0xf50 and stores the bool result",
+    "0x141c505a0": "virtual body ABuildingTrap::TriggerIfAppropriate; read in full (245 lines + asm tail for BL)",
+    "0x141c4dd00": "ShouldTrigger(bObstructed out, Targets out): logs \"ABuildingTrap::ShouldTrigger ... failed to get world\" when no world; runs the filter and the blueprint filter; declared dep",
+    "0x141c38340": "GetValidTriggerTargets(Out, bForce): collects candidate actors and applies the filter; declared dep",
+    "0x14275a120": "BlueprintShouldTrigger(Targets, bOut): ProcessEvent of a blueprint function with a TArray in and bool out; declared dep",
+    "0x141ba8530": "FindOwningPlayerController(): scans controllers for one whose id matches OwnerPersistentID (+0x350) when that is not -1; declared dep",
+    "0x1417dcde0": "SendCombatTrapTriggeredEvent(PC, Trap): sends \"Combat.TrapTriggered\" with AssetName and TemplateId parameters; declared dep",
+    "0x141c2fdd0": "AttemptRetrigger(Delay) (vtable slot 0xf00): if Delay < 0.01 calls TriggerIfAppropriate again immediately; else schedules a retry timer; read in full",
+    "vslot 0x270/0x10 + 0x620 (owner dispatch)": "DispatchTrapEventViaOwner: the owner-side dispatch in the activation path; target not resolved; declared dep",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass (static class getter)"
+  },
+  "notes": "Field names: Role (+0xf0, AActor::Role; ROLE_Authority = 3), OwnerPersistentID (+0x350), ObstructedTargetRecheckInterval (+0xc54). The global _DAT_1481211a0 gates the activation path; its name is not in the reflection, so it is written as bTriggerSuppressed (proposed). Owner-dispatch and delegate-binding helpers are unresolved and declared in deps."
+}

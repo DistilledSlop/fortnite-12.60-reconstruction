@@ -1,0 +1,16 @@
+{
+  "function": "ABuildingTrap::GetActivateTrapGameplayCueTag",
+  "status": "proposed",
+  "original": [
+    "0x14275c090 (exec thunk)",
+    "0x141c38300 (direct helper)"
+  ],
+  "signature": "FGameplayTag GetActivateTrapGameplayCueTag() const",
+  "captures": [],
+  "callees": {
+    "0x14275c090": "exec thunk: direct call to 0x141c38300 then copies the 8-byte tag into the result",
+    "0x141c38300": "helper (see above)",
+    "0x141ed1800": "FFortNativeGameplayTagsRuntime::Get() singleton accessor (static local, init on first use)"
+  },
+  "notes": "Native tag registration string from porting/generator_policies/native_gameplay_tags_runtime/FortNativeGameplayTagsRuntime.cpp. RequestGameplayTag is the source-level equivalent of the registered lookup."
+}

@@ -1,0 +1,17 @@
+{
+  "function": "AFortAIGoalManager::SetCurrentGoalDiscouragement",
+  "status": "proposed",
+  "original": [
+    "0x14279d3f0 (exec thunk)",
+    "0x1416ac190 (direct wrapper)",
+    "0x141702e20 (helper)"
+  ],
+  "signature": "static void SetCurrentGoalDiscouragement(UObject* WorldContext, AActor* AI)",
+  "captures": [],
+  "callees": {
+    "0x14279d3f0": "exec thunk for the static function: steps the two parameters and calls 0x1416ac190",
+    "0x1416ac190": "wrapper: discards the first argument and calls 0x141702e20 with the second",
+    "0x141702e20": "SetCurrentGoalDiscouragementImpl(AI): null check, a STAT_GetComponentsTime scope, world/class checks (0x14270eb10, 0x1446b3d40), then 0x1406a90d0 or 0x1406a92e0 depending on whether the two world values match; declared dep"
+  },
+  "notes": "The first step writes the 8-byte WorldContext at parameter offset 0 and AI at offset 8. The reflection lists AI first, so the mapping is inferred from the offsets and should be checked. The helper body is declared as a dep, not reproduced here."
+}
