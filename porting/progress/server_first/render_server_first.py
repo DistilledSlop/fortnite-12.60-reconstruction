@@ -27,10 +27,10 @@ groups=[g for g in (filt(g) for g in res['groups']) if g]
 
 # ---- Server-function scope for the native-bodies tile -------------------------------------------------------------------
 # The dashboard scores gameplay.native_behavior over all 14,391 reflected functions. This view scores it only over the server
-# functions being recovered: the evidence-based required floor (proven/strong/likely) already ported, plus the unported floor
-# (porting/server_scope/local_model/queue.json) minus the functions cut as probably not battle royale (claude/cut_not_br.json).
-# A function counts as done when it is ported (floor) or has a proposed source body (claude/<Class>__<Function>.inc); proposed
-# bodies are not built or run, which the tile's evidence text says.
+# functions classified proven/strong/likely. Classification uses an approximate
+# content closure; it is not a complete list of what a working server needs.
+# The classifier's manifest-derived source status is not runtime verification.
+# Draft files and name-based scope cuts never count as completed work.
 REPO = os.path.abspath(os.path.join(HERE, '..', '..', '..'))
 SS = os.path.join(REPO, 'porting', 'server_scope')
 LM = os.path.join(SS, 'local_model')
@@ -38,22 +38,21 @@ _rows = [json.loads(l) for l in open(os.path.join(SS, 'functions.jsonl'))]
 _floor_ported = {f"{r['c']}::{r['f']}" for r in _rows if r['v'] == 'required' and r['conf'] in ('proven', 'strong', 'likely') and r['p']}
 _queue = {f"{c}::{f}" for c, f in json.load(open(os.path.join(LM, 'queue.json')))}
 _cut = set(json.load(open(os.path.join(LM, 'claude', 'cut_not_br.json'))))
-_target = _queue - _cut
 def _proposed(fn):
     c, f = fn.split('::')
     return os.path.exists(os.path.join(LM, 'claude', f'{c}__{f}.inc'))
-_prop = {fn for fn in _target if _proposed(fn)}
-_cells = ([('Ported before the recovery (required floor)', fn, True) for fn in sorted(_floor_ported)]
-          + [('Proposed source body (not built or run)', fn, True) for fn in sorted(_prop)]
-          + [('To do', fn, False) for fn in sorted(_target - _prop)])
-_done, _total = len(_floor_ported) + len(_prop), len(_floor_ported) + len(_target)
+_prop = {fn for fn in _queue if _proposed(fn)}
+_cells = ([('Manifest marks source ported (not server-verified)', fn, True) for fn in sorted(_floor_ported)]
+          + [('Draft file; not counted as ported', fn, False) for fn in sorted(_prop)]
+          + [('No draft file in this batch', fn, False) for fn in sorted(_queue - _prop)])
+_done, _total = len(_floor_ported), len(_floor_ported) + len(_queue)
 def _override(n):
     if n['kind'] == 'leaf':
         if n['id'] == 'gameplay.native_behavior':
-            n.update(name='Server native functions ported or proposed', done=_done, total=_total, pct=round(100.0 * _done / _total, 3),
-                     evidence=(f"{len(_floor_ported)} required-floor functions already ported plus {len(_prop)} proposed source bodies, of {_total} server "
-                               f"functions in scope ({len(_target)} being recovered after {len(_cut)} cut as probably not battle royale). Proposed bodies are "
-                               "written source with evidence, not built or run; verified-ported alone is " f"{len(_floor_ported)} of {_total}."))
+            n.update(name='Server native functions — classified source status', done=_done, total=_total, pct=round(100.0 * _done / _total, 3),
+                     evidence=(f"{_done} of {_total} functions classified proven/strong/likely have manifest status ported; "
+                               f"{len(_prop)} of {len(_queue)} remaining functions have draft files, not counted as complete. "
+                               f"{len(_cut)} name-based cuts remain in the denominator. Classification is incomplete and source status does not prove server behavior."))
         return
     for k in n['children']: _override(k)
     n['pct'] = round(sum(k['weight'] * k['pct'] for k in n['children']) / sum(k['weight'] for k in n['children']), 3)
