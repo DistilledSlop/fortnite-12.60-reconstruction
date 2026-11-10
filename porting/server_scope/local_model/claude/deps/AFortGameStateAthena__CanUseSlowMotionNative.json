@@ -1,0 +1,1 @@
+{"name":"AFortGameStateAthena__CanUseSlowMotionNative","address":"0x14198bce0","signature":"bool CanUseSlowMotionNative()","inc_or_decl":"inc:deps/AFortGameStateAthena__CanUseSlowMotionNative.inc","evidence":["/opt/fortnite/local-model-package/captures/3e2c0e56ad034cb4af605f7bbcef1e5a/0x14198bce0.c"],"notes":"Rule virtual slot 0x920 is CanUseSlowMotion (element type unnamed)."}
