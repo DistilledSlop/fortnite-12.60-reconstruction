@@ -1,8 +1,8 @@
 {
  "function": "AFortPawn::RemoveNonReplicatedTagToPawn",
  "status": "blocked",
- "blocker": "Unresolved: comp=*(this+0x4c8) is a non-reflected ACharacter member (identity unknown); comp->vtable[0x10]() getter returning the ASC is unmapped; ASC tag container at plVar2+0x1040 unconfirmed. Structure + ASC notify (OnTagUpdated) + FUN_140744d30 tag add/remove are resolved via the Add mirror (0x142302420).",
+ "blocker": "Original tag-count update 0x140744d30 broadcasts within its per-tag loop; engine RemoveLooseGameplayTag defers delegates until all counts update, changing callback-visible state and reentrancy. Shared faithful tag-count helper required.",
  "model": "llamacpp/qwen3.8-27b",
- "run": "pilot-1",
- "batch_seconds": 3500
+ "run": "terra-1",
+ "batch_seconds": 430
 }

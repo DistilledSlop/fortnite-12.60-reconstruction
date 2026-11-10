@@ -1,0 +1,61 @@
+{
+  "functions": {
+    "AFortGameStateZone::ApplyPlayerAbilityRestriction": {
+      "exec": "0x14292a6b0",
+      "capture": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native100-broad/0x14292a6b0.c",
+      "behavior": "Construct single-tag container, on Role == 3 update counted tag state at +0x780 by +1, copy its explicit container +0x888 to reflected +0x8a8, invoke 0x141ea5f80."
+    },
+    "AFortGameStateZone::RemovePlayerAbilityRestriction": {
+      "exec": "0x14292ca10",
+      "capture": "captures/9696daf82a3545c0a4ceba77fd6334b7/0x14292ca10.c",
+      "behavior": "Construct same tag container, on Role == 3 update state at +0x780 by -1, rebuild parent tags at +0x888 if any update reports a zero transition, copy +0x888 to +0x8a8, invoke 0x141ea5f80."
+    }
+  },
+  "evidence": [
+    {
+      "address": "0x141ebb310",
+      "capture": "captures/68dc183ef9b44a559c5e0a5cb5c2f46e/0x141ebb310.c",
+      "finding": "Constructor initializes singleton +0x788 (param_1 + 0xf1) with Gameplay.Action.RestrictedAbility at line 1457."
+    },
+    {
+      "address": "0x140744d30",
+      "capture": "captures/283a26a3d77046099abd3edd9c817b57/0x140744d30.c",
+      "finding": "Updates explicit counts and hierarchical counts; invokes tag-count delegates and per-tag delegates with transition-sensitive behavior."
+    },
+    {
+      "address": "0x143e8f0b0",
+      "capture": "captures/fb2779bdc98743a1944143f4b31ce55a/0x143e8f0b0.c",
+      "finding": "FGameplayTagContainer_FillParentTags, indicated by stat literal and code."
+    },
+    {
+      "address": "0x141ea5f80",
+      "capture": "captures/283a26a3d77046099abd3edd9c817b57/0x141ea5f80.c",
+      "finding": "Tests restriction tag including parent tags in replicated container then invokes +0x710 if present or +0x728 if absent; these are multicast delegates as indicated by 0x140684de0."
+    },
+    {
+      "address": "0x14292c250",
+      "capture": "captures/fb2779bdc98743a1944143f4b31ce55a/0x14292c250.c",
+      "finding": "OnRep wrapper has same effective logic as 0x141ea5f80."
+    },
+    {
+      "reflection": "AActor.Role +0xf0; AFortGameStateZone.ExplicitGloballyBlockedAbilityTags +0x8a8 with OnRep_ExplicitGloballyBlockedAbilityTags. No reflected fields at +0x710, +0x728, +0x780 or +0x888."
+    }
+  ],
+  "blockers": [
+    "Current generated AFortGameStateZone lacks native counted tag container at +0x780 and two non-reflected multicast delegate members at +0x710 and +0x728. The +0x888 container is embedded within the counted state. Their complete types, public contracts and listener registration sites must be reconstructed to preserve count updates and notification side effects.",
+    "The singleton Gameplay.Action.RestrictedAbility tag initialization and lifetime contract must be integrated faithfully. A direct RequestGameplayTag substitution has not been proved equivalent."
+  ],
+  "next_steps": [
+    "Recover original synchronous UpdateTagMap contract including parent-removal timing, or add a faithful independent container type (ordinary 4.26 engine overloads are not equivalent); inspect all callers/registrations of +0x780.",
+    "Trace AFortGameStateZone constructor/destructor and delegate registration at +0x710/+0x728 to recover field declarations, initialization and listeners.",
+    "Trace native tag manager registration helper 0x143e8b0b0 and game native tag initialization lifecycle before proposing singleton access."
+  ],
+  "verification": "Evidence inspection only; no build or runtime test.",
+  "engine_comparison": {
+    "source": "/opt/fortnite/UnrealEngine/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/GameplayEffectTypes.h:1120 and Private/GameplayEffectTypes.cpp:421",
+    "layout": "FGameplayTagCountContainer member order is three maps, a generic multicast delegate, and ExplicitTags; original helper accesses explicit tag container at state +0x108, explicit count map +0xa0, generic count map +0x50, generic multicast +0xf0, consistent with this type. This is identification evidence, not proof of semantic equivalence.",
+    "critical_difference": "Original 0x140744d30 immediately invokes generic and per-tag delegates while removal postpones FillParentTags until caller returns. Engine container overload UpdateTagCount at header line 1196 queues delegates and executes them after rebuilding parent tags; engine single-tag overload invokes internal helper with bDeferParentTagsOnRemove=false and rebuilds earlier. Neither preserves callback observation ordering.",
+    "broadcast_signature": "0x140684de0 assembly invokes delegate object virtual +0x50 without setting additional parameter registers; supports zero-argument multicast delegates at game state +0x710 and +0x728. Names, registration sites, and lifetime still require trace.",
+    "singleton": "0x141ec98b0 (captures/58b7923baa50440bb41d511014d544af/0x141ec98b0.c) uses manager registration helper 0x143e8b0b0 with a (Native) source string, assigns returned tag to singleton slot; RequestGameplayTag equivalence not established."
+  }
+}

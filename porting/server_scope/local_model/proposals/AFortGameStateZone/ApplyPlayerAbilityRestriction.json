@@ -1,8 +1,8 @@
 {
  "function": "AFortGameStateZone::ApplyPlayerAbilityRestriction",
  "status": "blocked",
- "blocker": "Real body 0x141e8f7b0 is fully decompiled but cannot be expressed as faithful named C++: it depends on an unidentified static global (FUN_141ed1800 -> &DAT_148130770, tag at +0x788) and unreflected native fields this+0x780/0x888/0x8b8/0x710/0x728 plus helper methods FUN_140744d30/FUN_141ea5f80/FUN_140684de0, none of which resolve to names via reflection. Writing raw offsets would be a forbidden memory-layout stand-in.",
+ "blocker": "Non-reflected counted tag state and multicast delegates are missing; their types and listener contracts require recovery, as does integration of the singleton restriction tag.",
  "model": "llamacpp/qwen3.8-27b",
- "run": "11100754",
- "batch_seconds": 1106
+ "run": "terra-1",
+ "batch_seconds": 430
 }

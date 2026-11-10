@@ -1,8 +1,8 @@
 {
  "function": "AFortPawn::LaunchCharacterJump",
  "status": "blocked",
- "blocker": "Unresolved: virtual[0x7c8] (FVector,bool,bool) launch virtual identity unconfirmed (not engine LaunchCharacter due to bool semantics); FUN_1423bd2b0 bXYOverride notify is a deep dep (calls FUN_1424ab210+FUN_1424c21f0, compares _DAT_14815b498); _DAT_148157ed8 event data unknown. Resolved: param order, Controller@0x250, IsA(AFortPlayerController) via FUN_142a3d9f0, bZOverride->bIgnoreNextFallingDamage (0x520|4).",
+ "blocker": "Controller feedback helper 0x1423bd2b0 requires original subsystem lookup, initial-spawn gate and dispatcher; no source-callable equivalent proven.",
  "model": "llamacpp/qwen3.8-27b",
- "run": "pilot-1",
- "batch_seconds": 3500
+ "run": "terra-1",
+ "batch_seconds": 430
 }

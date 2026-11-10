@@ -1,0 +1,15 @@
+{
+  "singleton_getter": "0x141ed1800",
+  "constructor": "0x141ebb310",
+  "constructor_capture": "captures/68dc183ef9b44a559c5e0a5cb5c2f46e/0x141ebb310.c",
+  "registration_helper": "0x141ec98b0",
+  "registration_capture": "captures/58b7923baa50440bb41d511014d544af/0x141ec98b0.c",
+  "finding": "The getter returns a function-local static whose constructor registers literal native gameplay tags; helper writes returned registered tag into the supplied member. Offsets below are bytes, with constructor indexing in eight-byte elements.",
+  "tags": {
+    "0x440": "Gameplay.Effect.InstantDeath.Silent",
+    "0x788": "Gameplay.Action.RestrictedAbility",
+    "0x780": "NPC.Ability.NonAttack.DBNO",
+    "0xc0": "Event.Resurrected"
+  },
+  "remaining": "A source-level singleton integration and registration lifetime equivalent have not been established; lookup substitution must not be assumed equivalent."
+}
