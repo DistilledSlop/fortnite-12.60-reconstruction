@@ -237,6 +237,19 @@ class MatchmakingService:
                              privatePlayers=list(record["privatePlayers"]),
                              attributes=dict(record["attributes"]))
 
+    def join(self, session_id, account_id):
+        """Acknowledge a join for a ticket roster member of an existing session.
+
+        The client sends an empty POST and does not parse a success body. Roster
+        admission and the 204 response are local policies; this does not authenticate
+        the accountId query parameter or prove the game-server connection succeeded.
+        """
+        with self._lock:
+            session = self._sessions.get(session_id)
+            if session is None or account_id not in session["publicPlayers"] + session["privatePlayers"]:
+                return None
+            return 204, None
+
     def session_key(self, account_id, session_id):
         """Answer GET .../matchmaking/account/{acct}/session/{sid}. None if the session is unknown.
 
@@ -261,6 +274,10 @@ class MatchmakingService:
         router.add("GET", r"(?:/fortnite)?/api/matchmaking/session/([^/]+)",
                    lambda req, match: _found(self.session(match.group(1)), match.group(0)),
                    name="matchmaking.session", status="observed")
+        router.add("POST", r"(?:/fortnite)?/api/matchmaking/session/([^/]+)/join",
+                   lambda req, match: _found(self.join(match.group(1), req.query.get("accountId", "")),
+                                             match.group(0)),
+                   name="matchmaking.join", status="observed")
         router.add("GET", r"(?:/fortnite)?/api/game/v2/matchmaking/account/([^/]+)/session/([^/]+)",
                    lambda req, match: _found(self.session_key(match.group(1), match.group(2)), match.group(0)),
                    name="matchmaking.session_key", status="observed")

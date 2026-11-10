@@ -1099,6 +1099,16 @@ class MatchmakingTests(ServiceTestCase):
             self.assertEqual(body["accountId"], account)
             keys.append(body["key"])
         self.assertEqual(keys[0], keys[1], "party members must receive one session encryption key")
+        for account in (LOCAL, other):
+            join_path = f"/api/matchmaking/session/{session_id}/join?accountId={account}"
+            self.assertEqual(jcall(self.base, "POST", join_path), (204, None, b""))
+            self.assertEqual(jcall(self.base, "POST", join_path), (204, None, b""))
+        self.assertError(jcall(self.base, "POST", f"/api/matchmaking/session/{session_id}/join"),
+                         404, Err.NOT_FOUND)
+        self.assertError(jcall(self.base, "POST", f"/api/matchmaking/session/{session_id}/join?accountId={'2' * 32}"),
+                         404, Err.NOT_FOUND)
+        self.assertError(jcall(self.base, "POST", f"/api/matchmaking/session/{'1' * 32}/join?accountId={LOCAL}"),
+                         404, Err.NOT_FOUND)
         self.assertError(jcall(self.base, "GET",
                                f"/api/game/v2/matchmaking/account/{'2' * 32}/session/{session_id}"),
                          404, Err.NOT_FOUND)
