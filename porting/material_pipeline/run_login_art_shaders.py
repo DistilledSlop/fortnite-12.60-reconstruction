@@ -24,11 +24,11 @@ def sibling(name):
     return module
 
 
-def slate_indices(package):
+def slate_indices(package, inventory=INVENTORY):
     numeric = sibling('export_numeric_ingress')
     bundle = numeric.bundle
     stem = package.replace('/', '_')
-    framing = json.loads((INVENTORY / (stem + '.inline-resource.json')).read_bytes())
+    framing = json.loads((inventory / (stem + '.inline-resource.json')).read_bytes())
     raw = (EXTRACTED / (package + '.uexp')).read_bytes()
     payload = bundle.validate_source(raw, framing)
     parsed = bundle.decoder.parse_prefix(payload, framing['names'])
@@ -36,9 +36,12 @@ def slate_indices(package):
         raise ValueError('original archive changed')
     with bundle.library_reader.ShaderArchive(ARCHIVE, layout='fortnite-12.60') as archive:
         bundle.decoder.associate_library(parsed, archive)
-    indices = sorted({r['library_association']['index'] for r in parsed['material_shaders']['records']})
-    if len(indices) != 7:
-        raise ValueError('expected seven distinct Slate shaders')
+    records = parsed['material_shaders']['records']
+    if len(records) != 7:
+        raise ValueError('expected seven Slate shader records')
+    indices = sorted({r['library_association']['index'] for r in records})
+    if not indices or len(indices) > 7:
+        raise ValueError('invalid Slate shader selection')
     return indices
 
 
@@ -46,15 +49,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--package', required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--inventory', type=Path, default=INVENTORY)
     args = parser.parse_args()
     output = args.output.resolve()
     if GENERATED.resolve() not in output.parents or output.exists():
         raise SystemExit('fresh output under generated required')
-    indices = slate_indices(args.package)
+    indices = slate_indices(args.package, args.inventory)
     output.mkdir(parents=True)
     py = [sys.executable, '-I']
     steps = [
-        py + [str(HERE / 'shader_archive.py'), '--archive', str(ARCHIVE), '--max-shaders', '7', '--extract-dir', str(output / 'original'),
+        py + [str(HERE / 'shader_archive.py'), '--archive', str(ARCHIVE), '--max-shaders', str(len(indices)), '--extract-dir', str(output / 'original'),
               '--report', str(output / 'archive.json')] + [x for i in indices for x in ('--shader-index', str(i))],
         py + [str(HERE / 'inspect_d3d_code.py'), '--source-report', str(output / 'archive.json'), '--report', str(output / 'd3d.json')],
         py + [str(HERE / 'translate_mapped_dxbc.py'), '--source-report', str(output / 'archive.json'), '--d3d-report', str(output / 'd3d.json'),
