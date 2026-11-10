@@ -29,7 +29,8 @@ Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 
 | 03, 04 | done, 15 recorded proposed each |
 | 05 | done, 15 recorded proposed |
 | 06 | done, 15 recorded proposed |
-| 07, 08 | running (2 workers max at a time) |
+| 07 | done, 15 recorded proposed |
+| 08, 09 | running (2 workers max at a time); chunks 09-55 use the regenerated BR-core-first order |
 
 Recording a finished chunk: from the package dir `python3 -I work/claude/record_chunk.py NN` (claims or reopens each function as owner `claude-br`, then records proposed; copy in `claude/record_chunk.py`). Worker outputs are mirrored into `claude/` here (`<Class>__<Fn>.inc`, `.evidence.json`, `deps/`), with `claude/WORKER.md` the worker prompt. Chunk 00 helper deps include five not-yet-decompiled virtual targets (0x880, 0x888, 0x708, UpdateHighlightState, IsAthenaSpawnOverrideActive): chunk 00 follow-up item.
 
@@ -50,3 +51,4 @@ Scope note: the target is the 1,110 in queue.json only (user decision). The 3,05
 ## Scope cut (user decision, 2026-11-10: "cut the probably not ones")
 
 280 functions in probably-not-BR classes (Creative, Minigame, Mission, Quest, MiniMap, Niagara/FX, Media, Analytics, MeshNetwork, Outpost, MangData, LockDevice, CaptureItem, Playground, Music, Ostrich/Meatball vehicles, etc.) are cut from the goal; the list is `claude/cut_not_br.json`. Chunks 00-08 (135 functions, already done or launched) are unchanged. Chunks 09-55 were regenerated from the remaining 695, BR-core classes first. New target = 135 + 695 = **830 functions** (was 1,110). Progress is N of 830.
+- Chunk 07: helpers (0x1416a66e0 PlayEmoteInternal, 0x1416a83f0 HandlePerceptionStim, 0x1426f9960 water surface) kept as named deps not ported inline; receivers unresolved (emote tracker pawn+0x4c8, SwitchTeam game-state lookup, aileron-lock component +0x3b0, CheckWater FX/audio); trail-constant globals unnamed. `AFortAthenaCreativeSupplyDrop::SpawnLoot` is in a cut-class (creative) but already ported.
