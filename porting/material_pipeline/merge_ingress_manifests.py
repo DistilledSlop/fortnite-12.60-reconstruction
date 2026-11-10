@@ -38,6 +38,8 @@ def main():
     if not entries or len(entries) > 256:
         parser.error('runtime requires 1 to 256 manifest entries')
     output = json.dumps({'schema': 'fortnite.legacy-material-manifest.v1', 'entries': entries}, indent=2).encode() + b'\n'
+    if len(output) > 4 * 1024 * 1024:
+        parser.error('manifest exceeds the runtime size limit')
     with args.output.open('xb') as out:
         out.write(output)
     print(f'{args.output}: {len(entries)} entries, SHA256 {hashlib.sha256(output).hexdigest()}')
