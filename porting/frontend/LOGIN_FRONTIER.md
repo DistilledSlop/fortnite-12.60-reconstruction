@@ -24,6 +24,23 @@ the recorded crash stack does not reliably identify it. The diagnostic skip
 itself permits missing shader maps, so this run cannot establish that normal
 frontend loading works. The captured stage predates later source changes.
 
+The numeric exporter accepted `SettingsDefaultSlider_M` and produced a bundle
+with seven Slate records backed by six validated translated shaders. To add
+that generated bundle to the existing diagnostic manifest for a future probe:
+
+```sh
+python3 porting/material_pipeline/merge_ingress_manifests.py \
+  --output porting/generated/material_pipeline/frontend-settings-combined.json \
+  porting/generated/material_pipeline/comicbubble-ingress-3/combined-manifest.json \
+  porting/generated/material_pipeline/settings-numeric-discovery-20261110/manifest.json
+FORTNITE_MATERIAL_MANIFEST=porting/generated/material_pipeline/frontend-settings-combined.json \
+  bash porting/frontend/run_frontend_map.sh /Game/Maps/Frontend /tmp/frontend-probe.log /tmp/frontend-probe.png
+```
+
+The merger checks bundle hashes and rejects duplicate owners; the runtime
+still validates resource provenance and compatibility. The merged manifest
+has not been exercised in a client and does not resolve the broader map load.
+
 Probe: `porting/frontend/run_frontend_probe.sh /Game/UI/Foundation/StateLayouts/LoginScreen.LoginScreen_C OUT.log`
 (matched stage `generated/frontend-probes/paper2d-matched-stage-3`, the 2026-11-08 client with the default-on legacy
 field-path and Sequencer v11 readers).
