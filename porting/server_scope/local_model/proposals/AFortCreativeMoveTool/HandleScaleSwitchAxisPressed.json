@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeMoveTool::HandleScaleSwitchAxisPressed",
+ "status": "blocked",
+ "blocker": "Handler body (vtable slot 0xd40=0x142675fa0) is a complex timer-based routine, not the simple flag+RPC family: unresolved early-out guard 0x141ed91f0, main work fn 0x1446278d0 (refs L\"STAT_SetTimer\"), 0x30-byte heap struct construction (vtable swap DAT_1459a9e80->DAT_1459a9ed8, virtual call +0x40), and fields 0xbd0/0xbc8 (empty in reflection). Next: identify the guard predicate, fully decompile 0x1446278d0 (FTimerManager SetTimer contract), and identify the struct type + +0x40 method.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100515",
+ "batch_seconds": 476
+}
