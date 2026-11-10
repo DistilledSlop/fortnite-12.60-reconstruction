@@ -1,8 +1,8 @@
 {
  "function": "AFortPawn::RemoveNonReplicatedTagToPawn",
- "status": "blocked",
- "blocker": "Original tag-count update 0x140744d30 broadcasts within its per-tag loop; engine RemoveLooseGameplayTag defers delegates until all counts update, changing callback-visible state and reentrancy. Shared faithful tag-count helper required.",
+ "status": "proposed",
+ "blocker": null,
  "model": "llamacpp/qwen3.8-27b",
- "run": "terra-1",
- "batch_seconds": 430
+ "run": "claude-1",
+ "batch_seconds": 0
 }

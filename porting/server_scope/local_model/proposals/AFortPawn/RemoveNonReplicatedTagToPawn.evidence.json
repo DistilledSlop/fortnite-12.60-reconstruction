@@ -1,29 +1,18 @@
 {
-  "function": "AFortPawn::RemoveNonReplicatedTagToPawn",
-  "status": "blocked",
-  "addresses": {
-    "exec": "0x142a1f430",
-    "body": "0x1423483e0",
-    "tag_update": "0x140744d30"
-  },
-  "evidence": [
-    "captures/05fdcca221474417af8f8f03a70ff6d8/0x1423483e0.asm",
-    "captures/05fdcca221474417af8f8f03a70ff6d8/0x1423483e0.c",
-    "captures/283a26a3d77046099abd3edd9c817b57/0x140744d30.c",
-    "checkout/porting/native/Source/FortniteGame/Generated/AFortPawn.h",
-    "/opt/fortnite/UnrealEngine/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemComponent.h"
-  ],
-  "analysis": [
-    "Assembly adds 0x4c8 to this then calls interface vtable byte offset 0x10; this is an interface subobject, not a component pointer. AFortPawn derives IFortAbilitySystemInterface and GetAbilitySystemComponent is virtual, preserving derived dispatch.",
-    "If returned ASC is nonnull original calls tag count update at ASC+0x1040 with delta -1 and fourth argument false, then invokes ASC virtual +0x810 with Tag and false only if update returned true.",
-    "Reflection flags 0x4480401: final native protected BlueprintCallable; Tag property flags 0x10000008000182 include const and out/reference. Faithful spelling is const FGameplayTag&; generator may emit FGameplayTag& due to out-before-const decoding.",
-    "Engine RemoveLooseGameplayTag invokes UpdateTagCount whose UpdateTagMap_Internal gathers all delegate broadcasts before executing them. Original 0x140744d30 broadcasts during its per-tag loop; callbacks can observe different parent count maps or re-enter between iterations. The engine helper is not equivalent."
-  ],
-  "verification": "Source and native evidence review only; no build or runtime test.",
-  "blockers": [
-    "Implement or recover the original inline tag count updates and delegate broadcasts, preserving parent count update order and re-entrancy, in a suitable shared tag-count container helper."
-  ],
-  "next_steps": [
-    "Trace original 0x140744d30 and relevant container helper/delegate operations; coordinate a shared compatibility implementation for callers."
-  ]
+ "function": "AFortPawn::RemoveNonReplicatedTagToPawn",
+ "original_address": "0x1423483e0",
+ "reflected_exec": "0x142a1f430",
+ "proposal": "work/claude-1/RemoveNonReplicatedTagToPawn.inc",
+ "evidence": [
+  "captures/05fdcca221474417af8f8f03a70ff6d8/0x1423483e0.asm: LEA RCX,[RAX+0x1040] (GameplayTagCountContainer) then CALL [R9+0x810] (OnTagUpdated)",
+  "captures/283a26a3d77046099abd3edd9c817b57/0x140744d30.c: the update routine is the UE 4.25 UpdateTagMap_Internal (explicit-tag handling, per-parent counts, inline OnAnyTagChange/per-tag delegates)",
+  "Engine AbilitySystemComponent.h:515-521 UpdateTagMap = UpdateTagCount then OnTagUpdated(Tag, CountDelta > 0); :555 RemoveLooseGameplayTag(Tag, Count=1)",
+  "porting/behavior/AFortPawn/AddNonReplicatedTagToPawn.inc uses AddLooseGameplayTag for the Add mirror"
+ ],
+ "resolves_blocker": "terra-1's blocker was the engine's deferred delegate timing in UpdateTagMap_Internal. That is an engine-version difference inside the shared tag-count container and applies identically to the already accepted Add mirror and every other AddLooseGameplayTag/RemoveLooseGameplayTag caller. It is not a per-function contract; the call sequence at this function matches RemoveLooseGameplayTag exactly.",
+ "remaining_concerns": [
+  "Engine at /opt/fortnite/UnrealEngine uses the deferred GatherTagChangeDelegates variant; faithful 12.60 behaviour needs the inline 4.25 UpdateTagMap_Internal in the shared container (original 0x140744d30), tracked once for all callers.",
+  "Declared parameter is const FGameplayTag& (reflection flags 0x10000008000182)."
+ ],
+ "verification": "Source and asm review only; no build or runtime test."
 }
