@@ -1,0 +1,46 @@
+{
+  "class": "AFortMeatballVehicle",
+  "function": "StopDriverCameraShake",
+  "owner": "q27-11100813",
+  "status": "proposed",
+  "exec_addr": "0x1429b23b0",
+  "body_addr": "0x1429b23b0",
+  "proposal": "work/q27-11100813/AFortMeatballVehicle_StopDriverCameraShake.inc",
+  "reflection": {
+    "exec_addr": "0x1429b23b0",
+    "flags": "0x4080401",
+    "params": [],
+    "create_func": "0x1429ad5b0",
+    "source": "lea",
+    "flag_notes": "Native (0x400) + SkipPublic (0x800000) + 0x40000000; zero reflected params."
+  },
+  "exec_entry": {
+    "observation": "Captured decompile at 0x1429b23b0 begins with `*(param_2+0x20) = (param_2+0x20 != 0) + param_2+0x20` then falls through to the real body inline.",
+    "interpretation": "param_2 is the FFrame* of the reflection exec entry; the increment is the FFrame local-var counter boilerplate (identical wrapper pattern to work/q27-11100754 evidence). Not a real object member and not part of the recovered body."
+  },
+  "body": {
+    "decompile": "void FUN_1429b23b0(this, FFrame*) { if (this+0x1070 != 0 && (CamMgr = *(*(this+0x1070)+0x2b0), CamMgr != 0)) { CamMgr->vtable[0x798](CamMgr, this+0x1088, 0); /* StopCameraShake(DriverCameraShake) */ this+0x1088 = 0; /* DriverCameraShake = nullptr */ } }",
+    "steps": [
+      "1. Guard: DrivingPlayerController (0x1070) non-null AND its PlayerCameraManager (PC+0x2b0) non-null.",
+      "2. PlayerCameraManager->StopCameraShake(DriverCameraShake) [UCameraManager vtable 0x798].",
+      "3. DriverCameraShake (0x1088) = nullptr."
+    ],
+    "capture": "captures/08f681cb67c8471487e7115bc7e358db/0x1429b23b0.c"
+  },
+  "identified_contracts": {
+    "this+0x1070": "AFortMeatballVehicle::DrivingPlayerController (reflected, offset 4208=0x1070, APlayerController*).",
+    "this+0x1088": "AFortMeatballVehicle::DriverCameraShake (reflected, offset 4232=0x1088, UCameraShakeBase*).",
+    "PC+0x2b0": "APlayerController::PlayerCameraManager (reflected APlayerController member, offset 688=0x2b0, UCameraManager*).",
+    "UCameraManager vtable[0x798]": "UCameraManager::StopCameraShake(UCameraShakeBase*) - the standard engine stop-shake call; receiver confirmed as PlayerCameraManager, arg is the UCameraShakeBase* being nulled. Same vtable offset as LandShakeEnd (0x1429b2390)."
+  },
+  "unresolved_contracts": [
+    "UCameraManager vtable[0x798] name (StopCameraShake) inferred from receiver type (PlayerCameraManager/UCameraManager), UCameraShakeBase* argument, and the stop-shake context of the function; the vtable array was not read directly (reflection class blocks are extracted structures without in-memory vtables).",
+    "The trailing '0' third argument in the vtable call is treated as Ghidra register noise (StopCameraShake takes a single UCameraShakeBase*)."
+  ],
+  "attempts": [
+    "inventory_query.py show: exec 0x1429b23b0, flags 0x4080401, zero reflected params.",
+    "evidence.py capture 0x1429b23b0 + show (c): full body decompile (FFrame boilerplate + real body).",
+    "evidence.py query member AFortMeatballVehicle: mapped 0x1070/0x1088 to DrivingPlayerController/DriverCameraShake.",
+    "evidence.py query member APlayerController: confirmed 0x2b0 = PlayerCameraManager (offset 688)."
+  ]
+}

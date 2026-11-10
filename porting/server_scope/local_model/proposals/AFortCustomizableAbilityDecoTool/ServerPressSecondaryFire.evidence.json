@@ -1,0 +1,53 @@
+{
+  "class": "AFortCustomizableAbilityDecoTool",
+  "function": "ServerPressSecondaryFire",
+  "owner": "q27-11100710",
+  "status": "proposed",
+  "exec_addr": "0x1428ce460",
+  "reflection": {
+    "exec_addr": "0x1428ce460",
+    "flags": "0x80220cc0",
+    "params": [],
+    "create_func": "0x1428ca970",
+    "source": "lea",
+    "flag_notes": "Net|NetReliable|NetServer|Native|WithValidation Server RPC (zero reflected params)."
+  },
+  "inc_path": "work/q27-11100710/AFortCustomizableAbilityDecoTool_ServerPressSecondaryFire.inc",
+  "body": {
+    "decompile": "void FUN_1428ce460(this, frame) { frame[+0x20] += (frame[+0x20]!=0); /* FFrame::NextLocalVar side-effect */ bool ok = this->vtable[0xb50](); if (!ok) { RPC_ValidateFailed(L\"ServerPressSecondaryFire_Validate\"); return; } this->vtable[0xb58](this); }",
+    "interpretation": "Standard UE WithValidation Server RPC thunk: call <Name>_Validate (vtable 0xb50, bool); on failure invoke RPC_ValidateFailed with the literal <Name>_Validate and return; on success call <Name>_Implementation (vtable 0xb58). The leading frame[+0x20] increment is the FFrame::NextLocalVar side-effect of the reflected exec entry (same pattern as other recovered exec thunks) and is not part of the recovered member body.",
+    "capture": "captures/8f8199b7b80f4758b7c23f19c61de873/0x1428ce460.c"
+  },
+  "contract_resolution": {
+    "validate": {
+      "vtable_offset": "0xb50",
+      "name": "ServerPressSecondaryFire_Validate",
+      "signature": "bool ServerPressSecondaryFire_Validate()",
+      "proof": "RPC_ValidateFailed wide-string literal L\"ServerPressSecondaryFire_Validate\" in the body names the validate function; the call returns a char/bool tested against 0."
+    },
+    "implementation": {
+      "vtable_offset": "0xb58",
+      "name": "ServerPressSecondaryFire_Implementation",
+      "signature": "void ServerPressSecondaryFire_Implementation()",
+      "proof": "Promoted header checkout/porting/native/Source/FortniteGame/Generated/AFortCustomizableAbilityDecoTool.h declares `void ServerPressSecondaryFire_Implementation();` immediately after the UFUNCTION; the vtable slot 0xb58 is consecutive to the validate slot 0xb50, matching the UE <Name>_Validate + <Name>_Implementation pairing."
+    },
+    "adjacency": "validate slot 0xb50 and implementation slot 0xb58 are consecutive (8 bytes apart), consistent with the generated <Name>_Validate/<Name>_Implementation vtable layout."
+  },
+  "generator_discrepancy": "Promoted header emits `UFUNCTION(Server, Reliable) void ServerPressSecondaryFire();` + `void ServerPressSecondaryFire_Implementation();` but omits the `WithValidation` specifier and the `bool ServerPressSecondaryFire_Validate();` declaration. Compare AFortPlayerControllerAthena.h which emits all three (e.g. DestroyCreativePlot) for its WithValidation RPCs. The original RPC is WithValidation (RPC_ValidateFailed literal proves it). Fix: add WithValidation and the _Validate declaration so the body compiles.",
+  "cross_validation": [
+    "Sibling ServerPressTrigger (0x1428ce4b0, flags 0x84220cc0) has the identical structure with vtable slots 0xb80/0xb88 and literal L\"ServerPressTrigger_Validate\".",
+    "Sibling ServerReleaseSecondaryFire (0x1428ce500) / ServerReleaseTrigger (0x1428ce550) are the release counterparts of the same RPC family.",
+    "The native function table for the class (image region ~0x14867f4c0, 12-byte {category, func, next} entries) lists ServerPressSecondaryFire (0x1428ce460) and ServerPressTrigger (0x1428ce4b0) as script-visible natives in order."
+  ],
+  "attempts": [
+    "evidence.py capture + show 0x1428ce460: 3-instruction logical body (validate call, RPC_ValidateFailed guard, implementation call) plus the FFrame::NextLocalVar side-effect.",
+    "inventory_query.py show: flags 0x80220cc0, zero reflected params, create_func 0x1428ca970.",
+    "Confirmed the implementation name from the promoted header AFortCustomizableAbilityDecoTool.h and the .cpp stub `ServerPressSecondaryFire_Implementation() { // Body not recovered }`.",
+    "Confirmed the validate name from the RPC_ValidateFailed wide-string literal in the decompile.",
+    "Located the class native function table (image 0x14867f4c0 region) and confirmed the RPC natives' ordering; determined the C++ vtable is not directly readable from the image (relative/indirect format) so the slot->name mapping relies on the header + literal + UE convention."
+  ],
+  "remaining_concerns": [
+    "The body calls ServerPressSecondaryFire_Validate(), which the current promoted header does not declare (generator discrepancy). The proposal is faithful to the original; the header needs the WithValidation specifier + _Validate declaration to compile.",
+    "The validate slot 0xb50 concrete target was not separately decompiled; its identity as the <Name>_Validate stub rests on the RPC_ValidateFailed literal + consecutive-slot convention (the validate body itself is a separate, not-yet-recovered function in this assignment)."
+  ]
+}

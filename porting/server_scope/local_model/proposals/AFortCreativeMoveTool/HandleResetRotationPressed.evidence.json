@@ -1,0 +1,76 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleResetRotationPressed",
+  "owner": "q27-11100428",
+  "status": "proposed",
+  "exec_addr": "0x142757c30",
+  "reflection": {
+    "exec_addr": "0x142757c30",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc310",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100428/AFortCreativeMoveTool_HandleResetRotationPressed.inc",
+  "body": {
+    "asm": [
+      "142757c30  MOV RAX,qword ptr [RDX + 0x20]",
+      "142757c34  XOR R8D,R8D",
+      "142757c37  TEST RAX,RAX",
+      "142757c3a  SETNZ R8B",
+      "142757c3e  ADD R8,RAX",
+      "142757c41  MOV qword ptr [RDX + 0x20],R8",
+      "142757c45  MOV RAX,qword ptr [RCX]",
+      "142757c48  JMP qword ptr [RAX + 0xd30]"
+    ],
+    "interpretation": "Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame::NextLocalVar): 0 stays 0, non-zero n becomes n+1. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xd30 (entry index 334). No other side effects, no return value. The reflected exec entry is only this frame side-effect plus the virtual dispatch; the real handler body lives in the vtable slot.",
+    "capture": "porting/generated/native103-broad/0x142757c30.asm"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "porting/generated/class-vtables/vtables.json: gpsc 0x1428bae30 -> internal_ctor 0x1428bdaa0 -> ctor 0x14265ac60, primary vptr 0x146204508",
+    "slot": "0xd30",
+    "slot_address": "0x146205238",
+    "slot_target": "0x142675530",
+    "slot_target_asm": [
+      "142675530  MOV RAX,qword ptr [RCX]",
+      "142675533  JMP qword ptr [RAX + 0xd38]"
+    ],
+    "slot_target_meaning": "Slot 0xd30 (0x142675530) is a pure virtual forward: it tail-calls the next vtable slot 0xd38 (0x146205240) = 0x142680df0, which is the reset-rotation body.",
+    "forward_target": {
+      "slot": "0xd38",
+      "slot_address": "0x146205240",
+      "slot_target": "0x142680df0",
+      "meaning": "Reset-rotation body: (a) stores the identity quaternion (global 0x147c31d50 = floats {0,0,0,1}) into TargetRotationOffset (FQuat at 0xf50); (b) if (SelectionProperty (0xf32) - 1 > 1) && (TArray count at 0xe10 > 0) && (array ptr at 0xe08 != 0), it reads the first selected actor (ptr at [0xe08]) and, based on sign-bit comparisons of the actor's rotation floats against the .rodata constants 0x14816c240-0x14816c2ac, either loads the global quaternion at 0x1482184f0 or negates the actor's rotation floats (constants 0x14816c2b0-0x14816c2bc = -1.0) and stores the result into TargetRotationOffset; (c) writes 0 to the two bytes at 0xf44 (bIsRotateClockwisePressed and bIsRotateCounterclockwisePressed); (d) calls the shared RPC helper 0x1428c04b0(this, &TargetRotationOffset, 0, 0) = ServerUpdateRotation; (e) issues a trailing dynamic call 0x1406a9dc0(this+0xd88, &identity_quat) with the 16-byte global 0x147c31d50."
+    }
+  },
+  "field_proofs": [
+    "byte 0xf44 = bIsRotateClockwisePressed (evidence.py field-offset AFortCreativeMoveTool 0xf44 -> bool_bits, mask 1, mov8)",
+    "byte 0xf45 = bIsRotateCounterclockwisePressed (evidence.py field-offset AFortCreativeMoveTool 0xf45 -> bool_bits, mask 1, mov8)",
+    "struct 0xf50 = TargetRotationOffset (evidence.py field-offset AFortCreativeMoveTool 0xf50 -> property, kind Struct, 16-byte FQuat)",
+    "enum 0xf32 = SelectionProperty (evidence.py field-offset AFortCreativeMoveTool 0xf32 -> property, kind Enum, replicated, OnRep_SelectionProperty)"
+  ],
+  "shared_helpers": {
+    "0x1428c04b0": "Shared RPC-issue helper: builds the ServerUpdateRotation param struct {FQuat@0, bool@16, bool@17} and issues ProcessEvent; matches the reflected ServerUpdateRotation(FQuat ClientRotation, bool bNewIsRotateClockwisePressed, bool bNewIsRotateCounterclockwisePressed) at exec 0x1428c5250.",
+    "0x1406a9dc0": "Shared dynamic-call / ProcessEvent helper invoked with (member_ptr, &param_struct)."
+  },
+  "secondary_reference": "23.20 SDK dump AFortCreativeMoveTool.h: HandleResetRotationPressed (Native|Event|Public|BlueprintCallable|BlueprintEvent), no parameters; ServerUpdateRotation(struct FQuat& ClientRotation, bool& bNewIsRotateClockwisePressed, bool& bNewIsRotateCounterclockwisePressed) (Net|NetReliable|NetServer). Offsets differ from 12.60 (class is larger in 23.20) but names and signature agree.",
+  "cross_validation": [
+    "Sibling HandlePullPressed 0x1428c2e20 tail-jumps vtable 0xd70 and HandlePushPressed 0x1428c2e60 tail-jumps 0xd60 (owner q27-11100407); both resolve against the same primary vtable 0x146204508, independently pinning the vtable base.",
+    "The reset-rotation forward target stores the identity quaternion 0x147c31d50 = {0,0,0,1} and clears both rotate-pressed bools before issuing ServerUpdateRotation, a semantic match for 'reset rotation'."
+  ],
+  "remaining_concerns": [
+    "The vtable dispatch is virtual; a derived-class override of the slot-0xd30 function would change behavior. The concrete AFortCreativeMoveTool target is resolved (0x142675530 -> 0x142680df0), but the .inc preserves the virtual dispatch rather than inlining it.",
+    "The forward target 0x142680df0's conditional actor-rotation override reads the first selected actor's rotation floats and compares them against .rodata sign-bit constants (0x14816c240-0x14816c2ac); the exact semantic (which sign pattern selects the 0x1482184f0 global vs the negated-actor path) is not fully resolved, but it does not affect the thunk body proposed here.",
+    "The trailing dynamic call 0x1406a9dc0(this+0xd88, &identity_quat) target member (0xd88) and the exact UFunction it dispatches are not resolved; this is inside the forward target, not the proposed thunk."
+  ],
+  "attempts": [
+    "Decompiled the exec body (evidence.py show 0x142757c30 / native103-broad capture): 8 instructions, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xd30.",
+    "Confirmed via reflection (inventory_query.py show) flags 0xc080c00 and ZERO reflected params, so RDX is the script-frame/Parms pointer of the standard UE native convention, not a named parameter.",
+    "Identified the primary vtable via the constructor chain in porting/generated/class-vtables/vtables.json (0x146204508).",
+    "Read vtable slot 0xd30 (0x146205238) = 0x142675530 (evidence.py bytes) and decompiled it: a pure virtual forward to slot 0xd38.",
+    "Read vtable slot 0xd38 (0x146205240) = 0x142680df0 (evidence.py bytes) and decompiled it: the reset-rotation body (identity quaternion, clear rotate bools, ServerUpdateRotation, trailing dynamic call).",
+    "Resolved field offsets 0xf44/0xf45/0xf50/0xf32 via evidence.py field-offset.",
+    "Cross-validated the vtable base against sibling handlers' tail-jump offsets (0xd70, 0xd60) from owner q27-11100407."
+  ]
+}

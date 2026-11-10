@@ -1,0 +1,82 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleResetScalePressed",
+  "owner": "q27-11100428",
+  "status": "proposed",
+  "exec_addr": "0x1428c2ea0",
+  "reflection": {
+    "exec_addr": "0x1428c2ea0",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc340",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100428/AFortCreativeMoveTool_HandleResetScalePressed.inc",
+  "body": {
+    "asm": [
+      "1428c2ea0  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c2ea4  XOR R8D,R8D",
+      "1428c2ea7  TEST RAX,RAX",
+      "1428c2eaa  SETNZ R8B",
+      "1428c2eae  ADD R8,RAX",
+      "1428c2eb1  MOV qword ptr [RDX + 0x20],R8",
+      "1428c2eb5  MOV RAX,qword ptr [RCX]",
+      "1428c2eb8  JMP qword ptr [RAX + 0xd50]"
+    ],
+    "interpretation": "Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame::NextLocalVar): 0 stays 0, non-zero n becomes n+1. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xd50 (entry index 337). No other side effects, no return value. The reflected exec entry is only this frame side-effect plus the virtual dispatch; the real handler body lives in the vtable slot.",
+    "capture": "captures/7fc650d02e3e404f928aad3dd65bd2ef/0x1428c2ea0.asm"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "porting/generated/class-vtables/vtables.json: gpsc 0x1428bae30 -> internal_ctor 0x1428bdaa0 -> ctor 0x14265ac60, primary vptr 0x146204508",
+    "slot": "0xd50",
+    "slot_address": "0x146205258",
+    "slot_target": "0x142675540",
+    "slot_target_asm": [
+      "142675540  PUSH RBX",
+      "142675542  SUB RSP,0x30",
+      "142675546  MOV RBX,RCX",
+      "142675549  CALL 0x1428c0140",
+      "14267554e  MOVSD XMM0,qword ptr [0x147c31ca0]",
+      "142675556  LEA RCX,[RBX + 0xd78]",
+      "14267555d  MOV EAX,dword ptr [0x147c31ca8]",
+      "142675563  LEA RDX,[RSP + 0x20]",
+      "142675568  MOVSD qword ptr [RSP + 0x20],XMM0",
+      "14267556e  MOV dword ptr [RSP + 0x28],EAX",
+      "142675572  CALL 0x1406a9dc0",
+      "142675577  ADD RSP,0x30",
+      "14267557b  POP RBX",
+      "14267557c  RET"
+    ],
+    "slot_target_meaning": "Reset-scale body: (1) calls the no-arg RPC helper 0x1428c0140(this), which is UObject_FindFunctionChecked(this, FName 0x148191e70) + this->ProcessEvent(func, 0) — a no-parameter Server RPC consistent with the reflected ServerResetScale (exec 0x1428c4900, flags 0x80280cc0 = Net|NetReliable|NetServer, params []); (2) loads the 12-byte global at 0x147c31ca0 = floats {1.0, 1.0, 1.0} (identity scale FVector) into a stack struct; (3) issues the dynamic call 0x1406a9dc0(this + 0xd78, &FVector(1,1,1)) to apply the identity scale locally."
+  },
+  "field_proofs": [
+    "member 0xd78 = unreflected gap member (evidence.py field-offset AFortCreativeMoveTool 0xd78 reports the AFortCreativeMoveTool->AFortWeapon->AActor->UObject chain with no reflected field at that exact offset); it is the target object for the 0x1406a9dc0 dynamic call."
+  ],
+  "shared_helpers": {
+    "0x1428c0140": "No-arg RPC-issue helper: UObject_FindFunctionChecked(this, FName 0x148191e70) then this->ProcessEvent(func, nullptr) via vtable +0x210. Consistent with the no-param ServerResetScale RPC.",
+    "0x1406a9dc0": "Shared dynamic-call / ProcessEvent helper invoked with (member_ptr, &param_struct); here the param struct is a 12-byte FVector(1,1,1)."
+  },
+  "global_constants": {
+    "0x147c31ca0": "12 bytes = floats {1.0, 1.0, 1.0} (identity scale FVector), read by evidence.py bytes."
+  },
+  "secondary_reference": "23.20 SDK dump AFortCreativeMoveTool.h: HandleResetScalePressed (Native|Event|Protected|BlueprintCallable|BlueprintEvent), no parameters; ServerResetScale (Net|NetReliable|Native|Event|Protected|NetServer), no parameters. Offsets differ from 12.60 but names and signature agree.",
+  "cross_validation": [
+    "Sibling HandlePullPressed 0x1428c2e20 tail-jumps vtable 0xd70 and HandlePushPressed 0x1428c2e60 tail-jumps 0xd60 (owner q27-11100407); both resolve against the same primary vtable 0x146204508, independently pinning the vtable base.",
+    "The reset-scale target loads the identity scale FVector(1,1,1) and issues a no-param Server RPC, a semantic match for 'reset scale'."
+  ],
+  "remaining_concerns": [
+    "The vtable dispatch is virtual; a derived-class override of the slot-0xd50 function would change behavior. The concrete AFortCreativeMoveTool target is resolved (0x142675540), but the .inc preserves the virtual dispatch rather than inlining it.",
+    "The FName at 0x148191e70 (used by the no-arg RPC helper 0x1428c0140) is not resolved to a literal name string from a name-pool dump in this workspace. Its identity as 'ServerResetScale' is a strong inference from the exact no-parameter signature match and the 23.20 SDK, not a direct name-pool read.",
+    "The 0x1406a9dc0 dynamic-call target member (this+0xd78) and the exact UFunction it dispatches for the identity-scale application are not resolved; this is inside the slot target, not the proposed thunk."
+  ],
+  "attempts": [
+    "Decompiled the exec body (evidence.py capture 0x1428c2ea0): 8 instructions, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xd50.",
+    "Confirmed via reflection (inventory_query.py show) flags 0xc080c00 and ZERO reflected params, so RDX is the script-frame/Parms pointer of the standard UE native convention, not a named parameter.",
+    "Identified the primary vtable via the constructor chain in porting/generated/class-vtables/vtables.json (0x146204508).",
+    "Read vtable slot 0xd50 (0x146205258) = 0x142675540 (evidence.py bytes) and decompiled it (evidence.py capture): CALL 0x1428c0140, load global 0x147c31ca0, CALL 0x1406a9dc0(this+0xd78, &global).",
+    "Decompiled the no-arg RPC helper 0x1428c0140: FindFunctionChecked(FName 0x148191e70) + ProcessEvent.",
+    "Read the global 0x147c31ca0 = {1.0,1.0,1.0} (evidence.py bytes).",
+    "Cross-validated the vtable base against sibling handlers' tail-jump offsets (0xd70, 0xd60) from owner q27-11100407."
+  ]
+}

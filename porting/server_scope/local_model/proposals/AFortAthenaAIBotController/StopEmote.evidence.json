@@ -1,0 +1,53 @@
+{
+  "class": "AFortAthenaAIBotController",
+  "function": "StopEmote",
+  "status": "blocked",
+  "owner": "q27-11100203",
+  "address": "0x1427c36c0",
+  "native_body_address": "0x1416b03f0",
+  "reflection": {
+    "exec_addr": "0x1427c36c0",
+    "flags": "0x4020405",
+    "params": [],
+    "create_func": "0x1427be730",
+    "return_type": "void",
+    "notes": "Native exec wrapper; tail-thunk increments a counter at [RDX+0x20] then JMPs to 0x1416b03f0."
+  },
+  "captures": [
+    "porting/generated/native103-broad/0x1427c36c0.asm",
+    "porting/generated/native103-broad/0x1427c36c0.c"
+  ],
+  "field_proofs": [
+    { "offset": "0x400", "member": "PlayerBotPawn", "class": "AFortAthenaAIBotController", "kind": "Object", "source": "reflection property index 70" },
+    { "offset": "0x8d0", "member": "LastReplicatedEmoteExecuted", "class": "AFortPawn", "kind": "Object", "replicated": true, "source": "reflection property index 88" },
+    { "offset": "0x9d8", "member": "BotData", "class": "AFortAthenaAIBotController", "kind": "Object", "source": "reflection (context; emote fields are just after it)" }
+  ],
+  "native_fields_inferred": [
+    { "offset": "0x9e8", "role": "current emote reference (Object/pointer, cleared to null)", "reflected": false },
+    { "offset": "0x9e0", "role": "current emote index (int32, sentinel -1; set to 0xffffffff)", "reflected": false }
+  ],
+  "body_structure": "AFortPlayerPawnAthena* Pawn = this->PlayerBotPawn; if (Pawn) { lVar1 = Pawn->CompAt0x4c8->vtable[2](); /* getter */ if (lVar1) { if (this->EmoteRef@0x9e8) { FUN_1406d7fd0(lVar1+0x240, EmoteRef); EmoteRef=nullptr; } if (this->EmoteIndex@0x9e0 != -1) { FUN_140fedb0(lVar1, &EmoteIndex); EmoteIndex=-1; } } Pawn->LastReplicatedEmoteExecuted@0x8d0 = nullptr; Pawn->vtable[348](); }",
+  "callees": [
+    { "address": "0x4c8 (pawn member)", "call": "Pawn->CompAt0x4c8", "role": "native component pointer (non-reflected); its vtable[2]() is a getter returning lVar1", "reflection_name": null, "identified_in_helpers": false },
+    { "address": "0x1406d7fd0", "call": "FUN_1406d7fd0(lVar1+0x240, EmoteRef)", "role": "non-reflected helper; stops/clears an emote at lVar1+0x240 using EmoteRef", "reflection_name": null, "identified_in_helpers": false },
+    { "address": "0x140fedb0", "call": "FUN_140fedb0(lVar1, &EmoteIndex)", "role": "non-reflected helper; clears emote index on lVar1", "reflection_name": null, "identified_in_helpers": false },
+    { "address": "0xdc0 (pawn vtable)", "call": "Pawn->vtable[348]()", "role": "non-reflected virtual method on AFortPlayerPawnAthena", "reflection_name": null, "identified_in_helpers": false }
+  ],
+  "what_i_tried": [
+    "Captured exec thunk 0x1427c36c0 (asm) and read its merged decompile (body 0x1416b03f0).",
+    "Resolved PlayerBotPawn@0x400 (reflection) and pawn LastReplicatedEmoteExecuted@0x8d0 (reflection, replicated).",
+    "Queried pawn offsets 0x4c8 and controller offsets 0x9e0/0x9e8: all non-reflected (native).",
+    "Checked the function index and helpers.json for FUN_1406d7fd0 / FUN_140fedb0: not identified."
+  ],
+  "blockers": [
+    "Pawn component at 0x4c8 is a non-reflected native pointer; its vtable[2]() getter (returns lVar1) is unresolved.",
+    "FUN_1406d7fd0 and FUN_140fedb0 are non-reflected helpers with unresolved contracts.",
+    "Controller emote fields 0x9e8 (ref) and 0x9e0 (index) are non-reflected native fields (names/types unconfirmed).",
+    "Pawn vtable slot 0xdc0 (index 348) is a non-reflected virtual method."
+  ],
+  "concrete_next_step": "Identify the pawn component at offset 0x4c8 (likely the emote/ability component) and its vtable[2]() getter, then resolve FUN_1406d7fd0 / FUN_140fedb0 and the pawn vtable slot 0xdc0 via the Ghidra identification pass. Confirm the controller emote field names/types at 0x9e8/0x9e0. Then splice into the resolved body (PlayerBotPawn@0x400, LastReplicatedEmoteExecuted@0x8d0).",
+  "remaining_concerns": [
+    "Emote reference type (TSubclassOf / UAnimMontage / UFortEmote) unconfirmed.",
+    "lVar1 object type (result of the 0x4c8 component getter) unconfirmed."
+  ]
+}

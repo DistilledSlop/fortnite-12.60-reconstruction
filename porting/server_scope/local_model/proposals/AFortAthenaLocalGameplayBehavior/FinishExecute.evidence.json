@@ -1,0 +1,46 @@
+{
+  "class": "AFortAthenaLocalGameplayBehavior",
+  "function": "FinishExecute",
+  "status": "blocked",
+  "owner": "q27-11100203",
+  "address": "0x1427daf10",
+  "native_body_address": "0x1418c14f0",
+  "reflection": {
+    "exec_addr": "0x1427daf10",
+    "flags": "0x4020401",
+    "params": [],
+    "create_func": "0x1427d9530",
+    "return_type": "void",
+    "notes": "Native (non-RPC) exec wrapper; tail-thunk increments a counter at [RDX+0x20] then JMPs to 0x1418c14f0."
+  },
+  "captures": [
+    "porting/generated/native-cap-tailjmp0/0x1427daf10.asm",
+    "porting/generated/native-cap-tailjmp0/0x1418c14f0.c"
+  ],
+  "field_proofs": [
+    { "offset": "0x220", "member": "CachedTask", "class": "AFortAthenaLocalGameplayBehavior", "kind": "Object", "type_ref": "0x1427d1fc0", "source": "reflection property index 0" },
+    { "offset": "0x5b", "bit": 1, "member": "bReplicates", "class": "AActor", "kind": "bool_bit", "source": "reflection bool_bits mask 1" },
+    { "offset": "0x218", "bit": 1, "member": "bNeedToAwakeDuringExecution", "class": "AFortAthenaLocalGameplayBehavior", "kind": "bool_bit", "source": "reflection bool_bits mask 1" }
+  ],
+  "body_structure": "CachedTask = this->CachedTask; if (CachedTask) { if (bReplicates && bNeedToAwakeDuringExecution) { helper_A(this, 2); CachedTask = this->CachedTask; /* re-read */ } helper_B(CachedTask); } this->CachedTask = nullptr;",
+  "callees": [
+    { "address": "0x143f84be0", "call": "helper_A(this, 2)", "role": "member helper; sets a state byte at this+0xf1 to the enum arg, checks arg<2, does replication/activation work via non-reflected callees 0x143f7a920,0x14463f3c0,0x144380610,0x144684d20,0x144375f90", "reflection_name": null, "identified_in_helpers": false },
+    { "address": "0x1418a0060", "call": "helper_B(CachedTask)", "role": "task helper; reads CachedTask+0x20, does a world/global bounds check via 0x144a4c4a0, then calls 0x1449c6900(CachedTask, member, 0)", "reflection_name": null, "identified_in_helpers": false }
+  ],
+  "what_i_tried": [
+    "Captured exec thunk 0x1427daf10 and real body 0x1418c14f0 via scripts/evidence.py capture.",
+    "Resolved all body field offsets via scripts/evidence.py field-offset (CachedTask, bReplicates, bNeedToAwakeDuringExecution).",
+    "Captured both callees (0x143f84be0, 0x1418a0060) and read their decompiles.",
+    "Searched reflection (native_funcs.json) for method names at the callee addresses: AFortAthenaLocalGameplayBehavior has only FinishExecute/OnAbort/OnExecute reflected; UGameplayBehavior reflected methods do not match the callee addresses.",
+    "Checked porting/ghidra/name_tables/helpers.json: neither callee is an identified helper."
+  ],
+  "blockers": [
+    "helper_A 0x143f84be0(this, 2): non-reflected member helper; its semantic name and the enum meaning of arg 2 are unresolved. Its own callees (0x143f7a920, 0x14463f3c0, 0x144380610, 0x144684d20, 0x144375f90) are also non-reflected.",
+    "helper_B 0x1418a0060(CachedTask): non-reflected task-completion helper; its contract (and 0x1449c6900, 0x144a4c4a0) are unresolved."
+  ],
+  "concrete_next_step": "Identify the two native helpers 0x143f84be0 and 0x1418a0060 (likely UGameplayBehavior/AFortAthenaLocalGameplayBehavior native methods for execution-state transition and task completion). Resolve their contracts via the Ghidra identification pass (their callees 0x14463f3c0 / 0x1449c6900 are the key lookup points), then splice the two calls into the already-resolved body (fields CachedTask@0x220, bReplicates@0x5b.0, bNeedToAwakeDuringExecution@0x218).",
+  "remaining_concerns": [
+    "CachedTask element type 0x1427d1fc0 not resolved in class_ref_map/native_class_index.",
+    "Enum value 2 passed to helper_A is not mapped to a named ELocalGameplayBehavior state."
+  ]
+}

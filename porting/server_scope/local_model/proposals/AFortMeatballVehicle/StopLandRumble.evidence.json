@@ -1,0 +1,45 @@
+{
+  "class": "AFortMeatballVehicle",
+  "function": "StopLandRumble",
+  "owner": "q27-11100826",
+  "status": "proposed",
+  "exec_addr": "0x1429b23d0",
+  "body_addr": "0x1419fcba0",
+  "proposal": "work/q27-11100826/AFortMeatballVehicle_StopLandRumble.inc",
+  "reflection": {
+    "exec_addr": "0x1429b23d0",
+    "flags": "0x4080401",
+    "params": [],
+    "create_func": "0x1429ad5e0",
+    "source": "lea",
+    "flag_notes": "Native (0x400) + SkipPublic (0x800000) + 0x40000000; zero reflected params, no return value."
+  },
+  "exec_entry": {
+    "observation": "Captured asm at 0x1429b23d0 is exactly 7 instructions: MOV RAX,[RDX+0x20]; XOR R8D,R8D; TEST RAX,RAX; SETNZ R8B; ADD R8,RAX; MOV [RDX+0x20],R8; JMP 0x1419fcba0.",
+    "interpretation": "The FFrame+0x20 slot increment is exec-entry boilerplate (same wrapper pattern documented in work/q27-11100813/AFortMeatballVehicle_LandShakeEnd.evidence.json). The real body is the tail-jump target 0x1419fcba0."
+  },
+  "body": {
+    "decompile": "void FUN_1419fcba0(this) { if (this->DrivingPlayerController (0x1070) != 0) { FUN_144483410(PC, 0,0,0,0,0,0, 2, this->LandForceFeedbackHandle (0x10a0)); } }",
+    "steps": [
+      "1. Guard: DrivingPlayerController (0x1070) non-null.",
+      "2. If set: DrivingPlayerController->StopForceFeedback(channel=2, LandForceFeedbackHandle (0x10a0)) [FUN_144483410]."
+    ],
+    "capture": "captures/db7573718a604d6b9aec0269ca7e3a94/0x1419fcba0.c; entry asm: captures/69f37b13e52349c593bc9b444e264b37/0x1429b23d0.asm"
+  },
+  "identified_contracts": {
+    "this+0x1070": "AFortMeatballVehicle::DrivingPlayerController (reflected property, kind Object, offset 4208=0x1070).",
+    "this+0x10a0": "AFortMeatballVehicle::LandForceFeedbackHandle (reflected property, kind UInt64, offset 4256=0x10a0; 8-byte FForceFeedbackHandle).",
+    "FUN_144483410": "APlayerController::StopForceFeedback(int32 Channel, FForceFeedbackHandle Handle). Captured decompile (captures/359273aef3944edf9ee7f617cb407e36/0x144483410.c) confirms: method on the controller maintaining a sorted array of 0x20-byte force-feedback entries at PC+0x358 (data ptr) / +0x360 (Num); Channel==2 branch binary-searches the entry whose leading qword equals the handle and removes it (memmove, Num--, shrink). Caller passes channel=2 and the 8-byte LandForceFeedbackHandle. Cross-checked with work/q27-11100813/AFortMeatballVehicle_LandShakeEnd.evidence.json (same callee, same channel literal)."
+  },
+  "unresolved_contracts": [
+    "StopForceFeedback is a 12.60-internal APlayerController method (not present in the UE4.25 reference engine header); its name/signature follow the workspace convention established by q27-11100813 from the callee's captured behavior (channel literal 2 + 8-byte handle).",
+    "Channel literal 2's enum name is not resolved from the image."
+  ],
+  "attempts": [
+    "inventory_query.py show: exec 0x1429b23d0, flags 0x4080401, zero reflected params.",
+    "evidence.py capture 0x1429b23d0 + show (c/asm): 7-instruction exec entry tail-jumping to 0x1419fcba0.",
+    "evidence.py capture 0x1419fcba0 + show (c): full body decompile.",
+    "evidence.py field-offset AFortMeatballVehicle: 0x1070=DrivingPlayerController (Object), 0x10a0=LandForceFeedbackHandle (UInt64).",
+    "evidence.py capture 0x144483410 + show: confirmed StopForceFeedback remove-by-handle behavior."
+  ]
+}

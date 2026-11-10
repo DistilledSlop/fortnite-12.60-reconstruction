@@ -99,6 +99,9 @@ def harvest(keys, wd, secs, tag):
                     if r: return r
         rec = find(st) or {}
         inc = os.path.join(wd, f + '.inc'); ev = os.path.join(wd, f + '.evidence.json')
+        if rec.get('inc_path') and os.path.exists(os.path.join(PKG, rec['inc_path'])): inc = os.path.join(PKG, rec['inc_path'])
+        evl = [e for e in (rec.get('evidence') or []) if os.path.exists(os.path.join(PKG, e))]
+        if evl: ev = os.path.join(PKG, evl[0])
         if os.path.exists(inc): shutil.copy(inc, os.path.join(d, f + '.inc'))
         if os.path.exists(ev): shutil.copy(ev, os.path.join(d, f + '.evidence.json'))
         if stat in ('proposed', 'blocked') or os.path.exists(inc):

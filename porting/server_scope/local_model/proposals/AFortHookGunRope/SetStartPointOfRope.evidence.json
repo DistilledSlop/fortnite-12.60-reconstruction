@@ -1,0 +1,54 @@
+{
+  "class": "AFortHookGunRope",
+  "function": "SetStartPointOfRope",
+  "owner": "q27-11100813",
+  "status": "proposed",
+  "exec_addr": "0x1429488b0",
+  "body_addr": "0x1429488b0",
+  "proposal": "work/q27-11100813/AFortHookGunRope_SetStartPointOfRope.inc",
+  "reflection": {
+    "exec_addr": "0x1429488b0",
+    "flags": "0x4080401",
+    "params": [],
+    "create_func": "0x142943400",
+    "source": "lea",
+    "flag_notes": "Native (0x400) + SkipPublic (0x800000) + 0x40000000; zero reflected params."
+  },
+  "exec_entry": {
+    "observation": "Captured decompile at 0x1429488b0 begins with `*(param_2+0x20) = (param_2+0x20 != 0) + param_2+0x20` then falls through to the real body inline (Ghidra inlined the tail jump).",
+    "interpretation": "param_2 is the FFrame* of the reflection exec entry; the increment is the FFrame local-var counter boilerplate identical to the wrapper pattern documented in work/q27-11100754/AFortGameStateZone_ApplyPlayerAbilityRestriction.evidence.json (7-instruction exec wrapper: [RDX+0x20] += ([RDX+0x20]!=0); JMP body). It is NOT a real object member and NOT part of the recovered body."
+  },
+  "body": {
+    "decompile": "void FUN_1429488b0(this, FFrame*) { if (this+0x218 == 0) { if (1 < GLogVerbosityVar /* DAT_1481348e0 */) FMsg_Logf_Internal(0, 0, &LogCat /* DAT_1481348e4 */, 2 /*Warning*/, L\"AFortHookGunRope::SetStartPointOfRope: RopeMesh is nullptr, this shouldn't happen.\"); return; } UStaticMeshComponent* wm = this+0x240; if (wm == 0) { log(Warning, \"WeaponMesh is nullptr...\"); return; } if ((this+0x248).u16_0 == 0 && (this+0x248).u16_1 == 0 /* FName == NAME_None */) { log(Warning, \"WeaponMeshSocketName is none...\"); return; } FVector loc; wm->vtable[0x410](wm, &loc, *(FName*)(this+0x248)); this+0x228 = loc; this+0x218->SetWorldLocation(loc /*FUN_144124390*/, false, &stackFHitResult, false); }",
+    "steps": [
+      "1. Guard: RopeMesh (0x218) null -> UE_LOG(Warning, 'RopeMesh is nullptr, this shouldn't happen.') and return.",
+      "2. Guard: WeaponMesh (0x240) null -> UE_LOG(Warning, 'WeaponMesh is nullptr, this shouldn't happen.') and return.",
+      "3. Guard: WeaponMeshSocketName (0x248, FName: two uint32) both zero == NAME_None -> UE_LOG(Warning, 'WeaponMeshSocketName is none, this shouldn't happen.') and return.",
+      "4. loc = WeaponMesh->vtable[0x410](WeaponMeshSocketName) -> 12-byte FVector out-param (GetSocketLocation).",
+      "5. StartLocation (0x228, FVector) = loc.",
+      "6. RopeMesh->FUN_144124390(loc, 0, 0, &stackFHitResult) = USceneComponent::SetWorldLocation(loc, bSweep=false, OutHit=&hit, bTeleport=false)."
+    ],
+    "capture": "captures/08f681cb67c8471487e7115bc7e358db/0x1429488b0.c"
+  },
+  "identified_contracts": {
+    "this+0x218": "AFortHookGunRope::RopeMesh (reflected, offset 536=0x218).",
+    "this+0x228": "AFortHookGunRope::StartLocation (reflected, offset 552=0x228, FVector).",
+    "this+0x240": "AFortHookGunRope::WeaponMesh (reflected, offset 576=0x240).",
+    "this+0x248": "AFortHookGunRope::WeaponMeshSocketName (reflected, offset 584=0x248, FName); both uint32 == 0 is NAME_None.",
+    "vtable[0x410] on WeaponMesh (UStaticMeshComponent/USceneComponent)": "USceneComponent::GetSocketLocation(FName) -> FVector (12-byte out-param; FName arg).",
+    "FUN_144124390": "USceneComponent::SetWorldLocation(const FVector&, bool bSweep, FHitResult* OutHit, bool bTeleport). Captured decompile (captures/65ce5f5ddabf47c7b90c8d2a62422b51/0x144124390.c) confirms: converts world location to parent-relative via parent component vtable[0x408] with SocketName (this+0xc8), clamps against RelativeScale3D (0x128) into 0x1a0/0x1b0 storage, then calls internal FUN_144122860 (SetRelativeLocation path).",
+    "log": "FMsg_Logf_Internal with category &DAT_1481348e4, verbosity 2 (Warning), gated on 1 < DAT_1481348e0 (verbosity level >= 2). Written as UE_LOG(LogFort, Warning, ...) per existing .inc convention."
+  },
+  "unresolved_contracts": [
+    "vtable[0x410] name (GetSocketLocation) is inferred from receiver type (UStaticMeshComponent), 12-byte FVector out-param, and FName argument; the vtable array itself was not read (class blocks in the reflection dump are extracted structures without in-memory vtables).",
+    "GetSocketLocation's ERelativeTransforms second parameter value is not distinguishable in the decompile (only the FName arg is visible); written with the single-arg spelling.",
+    "Log category DAT_1481348e4 not name-resolved; assumed LogFort per project convention."
+  ],
+  "attempts": [
+    "inventory_query.py show: exec 0x1429488b0, flags 0x4080401, zero reflected params.",
+    "evidence.py capture 0x1429488b0 + show (c): full body decompile (FFrame boilerplate + real body).",
+    "evidence.py query member AFortHookGunRope: mapped 0x218/0x228/0x240/0x248 to RopeMesh/StartLocation/WeaponMesh/WeaponMeshSocketName.",
+    "evidence.py capture 0x144124390 + show: confirmed SetWorldLocation behavior (world->relative transform, scale clamp, internal relative-location set).",
+    "evidence.py bytes on class blocks (0x146c35690 USMC, 0x146c04150 APC): blocks are extracted reflection structures; in-memory vtables not directly readable from them."
+  ]
+}

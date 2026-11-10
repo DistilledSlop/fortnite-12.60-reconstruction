@@ -1,0 +1,79 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleRotateClockwisePressed",
+  "owner": "q27-11100428",
+  "status": "proposed",
+  "exec_addr": "0x1428c2ec0",
+  "reflection": {
+    "exec_addr": "0x1428c2ec0",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc370",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100428/AFortCreativeMoveTool_HandleRotateClockwisePressed.inc",
+  "body": {
+    "asm": [
+      "1428c2ec0  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c2ec4  XOR R8D,R8D",
+      "1428c2ec7  TEST RAX,RAX",
+      "1428c2eca  SETNZ R8B",
+      "1428c2ece  ADD R8,RAX",
+      "1428c2ed1  MOV qword ptr [RDX + 0x20],R8",
+      "1428c2ed5  MOV RAX,qword ptr [RCX]",
+      "1428c2ed8  JMP qword ptr [RAX + 0xce0]"
+    ],
+    "interpretation": "Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame::NextLocalVar): 0 stays 0, non-zero n becomes n+1. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xce0 (entry index 316). No other side effects, no return value. The reflected exec entry is only this frame side-effect plus the virtual dispatch; the real handler body lives in the vtable slot.",
+    "capture": "captures/7fc650d02e3e404f928aad3dd65bd2ef/0x1428c2ec0.asm"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "porting/generated/class-vtables/vtables.json: gpsc 0x1428bae30 -> internal_ctor 0x1428bdaa0 -> ctor 0x14265ac60, primary vptr 0x146204508",
+    "slot": "0xce0",
+    "slot_address": "0x1462051e8",
+    "slot_target": "0x142675580",
+    "slot_target_asm_head": [
+      "142675580  PUSH RBX",
+      "142675582  SUB RSP,0x40",
+      "142675586  CMP byte ptr [RCX + 0x1128],0x0",
+      "142675590  MOV byte ptr [RCX + 0xf44],0x1",
+      "1426755a0  MOVZX ECX,byte ptr [RCX + 0xf80]",
+      "1426755a7  MOV EAX,dword ptr [RBX + 0xf78]",
+      "1426755b1  MOV RAX,qword ptr [RBX + 0xf70]"
+    ],
+    "slot_target_meaning": "Rotate-clockwise body (80 instructions): (1) sets bIsRotateClockwisePressed (byte 0xf44) = 1; (2) selects the rotation axis — when the byte at 0x1128 is non-zero it reads the FVector at index (byte 0xf80) of the axis TArray (data ptr 0xf70, count int 0xf78, 12-byte stride), defaulting to the Y/up axis (0,1,0) when the count < 1, else the first array element; (3) scales that axis by the global 0x1478df190 (= 45.0) * 0.5 (a 22.5-degree step) and builds a rotation quaternion via the helper 0x142c5c060(&scaled_axis, &out_quat, 1); (4) multiplies the resulting quaternion into TargetRotationOffset (FQuat at 0xf50..0xf5c) using the standard quaternion-multiplication coefficients (the +/-1.0 constants at 0x14816c2c0-0x14816c2ec) and stores it back; (5) calls the shared RPC helper 0x1428c04b0(this, &TargetRotationOffset, bIsRotateClockwisePressed (0xf44), bIsRotateCounterclockwisePressed (0xf45)) = ServerUpdateRotation."
+  },
+  "field_proofs": [
+    "byte 0xf44 = bIsRotateClockwisePressed (evidence.py field-offset AFortCreativeMoveTool 0xf44 -> bool_bits, mask 1, mov8)",
+    "byte 0xf45 = bIsRotateCounterclockwisePressed (evidence.py field-offset AFortCreativeMoveTool 0xf45 -> bool_bits, mask 1, mov8)",
+    "struct 0xf50 = TargetRotationOffset (evidence.py field-offset AFortCreativeMoveTool 0xf50 -> property, kind Struct, 16-byte FQuat)",
+    "members 0xf70/0xf78/0xf80 = unreflected axis TArray (data ptr / count / index) read by the slot target; 0x1128 = unreflected bool gating the indexed-axis path (evidence.py field-offset reports no reflected field at these exact offsets, chain AFortCreativeMoveTool->AFortWeapon->AActor->UObject)."
+  ],
+  "shared_helpers": {
+    "0x1428c04b0": "Shared RPC-issue helper: builds the ServerUpdateRotation param struct {FQuat@0, bool@16, bool@17} and issues ProcessEvent; matches the reflected ServerUpdateRotation(FQuat ClientRotation, bool bNewIsRotateClockwisePressed, bool bNewIsRotateCounterclockwisePressed) at exec 0x1428c5250.",
+    "0x142c5c060": "Quaternion-construction helper invoked with (&scaled_axis, &out_quat, 1); builds the rotation quaternion for the 22.5-degree step around the selected axis."
+  },
+  "global_constants": {
+    "0x1478df190": "float 45.0 (rotation step); *0.5 = 22.5-degree step, read by evidence.py bytes.",
+    "0x14816c2c0-0x14816c2ec": "the +/-1.0 coefficients of the quaternion-multiplication formula used to fold the step quaternion into TargetRotationOffset, read by evidence.py bytes."
+  },
+  "secondary_reference": "23.20 SDK dump AFortCreativeMoveTool.h: HandleRotateClockwisePressed (Native|Event|Public|BlueprintCallable|BlueprintEvent), no parameters; bIsRotateClockwisePressed member; ServerUpdateRotation(struct FQuat& ClientRotation, bool& bNewIsRotateClockwisePressed, bool& bNewIsRotateCounterclockwisePressed) (Net|NetReliable|NetServer). Offsets differ from 12.60 but names and signature agree.",
+  "cross_validation": [
+    "Sibling HandlePullPressed 0x1428c2e20 tail-jumps vtable 0xd70 and HandlePushPressed 0x1428c2e60 tail-jumps 0xd60 (owner q27-11100407); both resolve against the same primary vtable 0x146204508, independently pinning the vtable base.",
+    "The rotate-clockwise target sets bIsRotateClockwisePressed (0xf44) and issues ServerUpdateRotation with the two rotate-pressed bools, a semantic match for 'rotate clockwise'."
+  ],
+  "remaining_concerns": [
+    "The vtable dispatch is virtual; a derived-class override of the slot-0xce0 function would change behavior. The concrete AFortCreativeMoveTool target is resolved (0x142675580), but the .inc preserves the virtual dispatch rather than inlining it.",
+    "The exact quaternion construction in 0x142c5c060 (&scaled_axis, &out, 1) — i.e. whether the 22.5 is interpreted as degrees through a sin/cos axis-angle formula — is inside the slot target and not fully resolved; it does not affect the proposed thunk body.",
+    "The unreflected axis TArray members (0xf70/0xf78/0xf80), the gating bool (0x1128), and the selection semantics (indexed vs first vs default Y axis) are inside the slot target; they are documented from the decompile but not reflected fields."
+  ],
+  "attempts": [
+    "Decompiled the exec body (evidence.py capture 0x1428c2ec0): 8 instructions, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xce0.",
+    "Confirmed via reflection (inventory_query.py show) flags 0xc080c00 and ZERO reflected params, so RDX is the script-frame/Parms pointer of the standard UE native convention, not a named parameter.",
+    "Identified the primary vtable via the constructor chain in porting/generated/class-vtables/vtables.json (0x146204508).",
+    "Read vtable slot 0xce0 (0x1462051e8) = 0x142675580 (evidence.py bytes) and decompiled it (evidence.py capture): the rotate-clockwise body (set bIsRotateClockwisePressed, select axis, 22.5-degree step quaternion, multiply into TargetRotationOffset, ServerUpdateRotation).",
+    "Resolved field offsets 0xf44/0xf45/0xf50 via evidence.py field-offset; 0xf70/0xf78/0xf80/0x1128 are unreflected gap members.",
+    "Read the rotation-step global 0x1478df190 = 45.0 and the quaternion-mul coefficient constants 0x14816c2c0-0x14816c2ec (evidence.py bytes).",
+    "Cross-validated the vtable base against sibling handlers' tail-jump offsets (0xd70, 0xd60) from owner q27-11100407."
+  ]
+}

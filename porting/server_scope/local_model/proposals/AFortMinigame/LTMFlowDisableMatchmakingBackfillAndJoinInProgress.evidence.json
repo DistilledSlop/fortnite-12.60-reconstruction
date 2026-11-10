@@ -1,0 +1,65 @@
+{
+  "class": "AFortMinigame",
+  "function": "LTMFlowDisableMatchmakingBackfillAndJoinInProgress",
+  "owner": "q27-11100826",
+  "status": "blocked",
+  "exec_addr": "0x1429c3f30",
+  "body_addr": "0x14209acf0",
+  "proposal": null,
+  "reflection": {
+    "exec_addr": "0x1429c3f30",
+    "flags": "0x4020401",
+    "params": [],
+    "create_func": "0x1429b41d0",
+    "source": "lea",
+    "flag_notes": "Native (0x400) + 0x200000 + 0x40000000; zero reflected params, no return value."
+  },
+  "exec_entry": {
+    "observation": "Captured asm at 0x1429c3f30 is exactly 7 instructions: MOV RAX,[RDX+0x20]; XOR R8D,R8D; TEST RAX,RAX; SETNZ R8B; ADD R8,RAX; MOV [RDX+0x20],R8; JMP 0x14209acf0.",
+    "interpretation": "The FFrame+0x20 slot increment is exec-entry boilerplate (same wrapper pattern as the two AFortMeatballVehicle functions in this assignment). The real body is the tail-jump target 0x14209acf0."
+  },
+  "resolved_flow": {
+    "note": "Full body read from captured asm (captures/25b01b1e0a4343879ada11678eff3f29/0x14209acf0.asm). The C decompiler mislabels the float member at 0x760 as 0xec; the asm is authoritative: SUBSS/MOVSS use [RDI+0x760].",
+    "steps": [
+      "1. world = this->vtable[0x150]()  [virtual getter, no args, returns UWorld*]. Guard: world != 0.",
+      "2. f = world->float_at_0x540 - this->float_at_0x9c   (from inlined FUN_143f76150, which re-does the same vtable[0x150] call and returns world+0x540 minus this+0x9c).",
+      "3. if (f - this->float_at_0x760 <= 90.0f) return;   [90.0f constant read from 0x1478c5048 = bytes 00 00 70 42]. Cooldown gate.",
+      "4. state = world->GameState (UWorld member at 0x130, reflected kind Object offset 304). If state != 0 and IsA(state, AFortGameStateAthena) keep it, else state = nullptr.",
+      "5. if (!state->BoolCheck()) return;   [FUN_14199e380(state): reads state+0x1df8 (or state+0x1df0 if 0), calls FUN_141a4a530 on it, returns bool in AL].",
+      "6. gamemode = world->AuthorityGameMode (UWorld member at 0x128, reflected kind Object offset 296), via FUN_141641300(world) which returns world+0x128 only if IsA(world+0x128, AFortGameModeAthena). Guard: non-null.",
+      "7. session = gamemode->member_at_0x270. If session != 0 and IsA(session, AFortGameSessionDedicatedAthena) continue, else return.",
+      "8. session->MethodA()   [FUN_142178c40: if session+0x7e0 (bool) == 0 logs 'MMS - server is not in backfill mode' and returns; else logs 'MMS - stopping backfill connection' and calls FUN_142151040(session, 1)]. Semantics: stop/disable matchmaking backfill.",
+      "9. session->MethodB(true)   [FUN_14216e500(session, 1): reads session+0x280; if arg==1 logs 'All Beacon Requests Paused.' and pauses; if arg==0 logs 'All Beacon Requests Resumed.' and resumes]. Semantics: pause all beacon requests (joins-in-progress).",
+      "10. this->float_at_0x760 = f;   [record the current world-time delta as the last backfill-disable time]."
+    ],
+    "capture": "body asm: captures/25b01b1e0a4343879ada11678eff3f29/0x14209acf0.asm; entry asm: captures/db7573718a604d6b9aec0269ca7e3a94/0x1429c3f30.asm"
+  },
+  "identified_contracts": {
+    "world->0x128": "UWorld::AuthorityGameMode (reflected, kind Object, offset 296=0x128).",
+    "world->0x130": "UWorld::GameState (reflected, kind Object, offset 304=0x130).",
+    "AFortGameStateAthena::StaticClass()": "FUN_14290f690 (GetPrivateStaticClassBody '/Script/FortniteGame','AFortGameStateAthena').",
+    "AFortGameModeAthena::StaticClass()": "FUN_1428ee970 (GetPrivateStaticClassBody '/Script/FortniteGame','FortGameModeAthena').",
+    "AFortGameSessionDedicatedAthena::StaticClass()": "FUN_142909170 (GetPrivateStaticClassBody '/Script/FortniteGame','FortGameSessionDedicatedAthena').",
+    "90.0f": "constant at 0x1478c5048 (bytes 00 00 70 42 01 00 00 00; low 4 bytes = 0x42700000 = 90.0f).",
+    "IsA name pattern": "Both class checks use the binary's name-pool comparison: given class A (the static class) and the object's class B (=obj+0x10), it tests (A->name_len at A+0x38) <= (B->name_len at B+0x38) AND *(B->name_data at B+0x30 + A->name_len*8) == (A+0x30). Semantically an IsA/CastChecked of the object against the static class. The exact pool arithmetic is not reproduced in a proposal."
+  },
+  "unresolved_contracts": [
+    "vtable[0x150] slot identity on AFortMinigame/AGameMode (returns UWorld*; presumed AActor::GetWorld) - the vtable array was not read, so the slot is not confirmed by address.",
+    "world->float_at_0x540 (presumed UWorld::TimeSeconds) - not a reflected UWorld member; name not confirmed.",
+    "this->float_at_0x9c and this->float_at_0x760 on AFortMinigame - private, not reflected; names not confirmed (semantically a start-time and a last-backfill-disable-time in world-time).",
+    "FUN_14199e380 (bool gate on the Athena GameState) - reads state+0x1df8/+0x1df0 then FUN_141a4a530; the member and the semantic (a match-state/phase check) are not confirmed.",
+    "gamemode->member_at_0x270 (presumed AGameMode::GameSession) - not confirmed by reflection.",
+    "session MethodA at FUN_142178c40 (stop backfill) and MethodB at FUN_14216e500 (pause beacon requests) - private C++ methods of AFortGameSessionDedicatedAthena, not reflected natives; exact C++ names not resolvable from the image (semantics are clear from the 'MMS - stopping backfill connection' and 'All Beacon Requests Paused/Resumed' log strings).",
+    "session+0x7e0 (bIsInBackfillMode) and session+0x280 (beacon-request container) - private members, names not confirmed."
+  ],
+  "attempts": [
+    "inventory_query.py show: exec 0x1429c3f30, flags 0x4020401, zero reflected params.",
+    "evidence.py capture 0x1429c3f30 + show (c/asm): 7-instruction exec entry tail-jumping to 0x14209acf0.",
+    "evidence.py capture 0x14209acf0 + show (c AND asm): full body; asm authoritative (corrected the decompiler's 0xec -> 0x760 float offset).",
+    "evidence.py bytes 0x1478c5048: float constant = 90.0f.",
+    "evidence.py capture + show callees: 0x143f76150 (world+0x540 - this+0x9c), 0x14199e380 (state bool gate), 0x141641300 (world->AuthorityGameMode if IsA AFortGameModeAthena), 0x142909170 (AFortGameSessionDedicatedAthena::StaticClass), 0x142178c40 (stop backfill), 0x14216e500 (pause/resume beacon requests), 0x1428ee970 (AFortGameModeAthena::StaticClass).",
+    "evidence.py field-offset UWorld 0x128/0x130: AuthorityGameMode / GameState confirmed.",
+    "evidence.py query class/function: the two session methods are not reflected natives (only LTMFlow... itself matches 'Backfill'), so their C++ names are not in the reflection."
+  ],
+  "next_step": "Read the AFortGameSessionDedicatedAthena vtable (class block 0x1463e3170) to map the fixed addresses 0x142178c40 / 0x14216e500 to their declared C++ method names, and read the AFortMinigame vtable to confirm slot 0x150 = GetWorld and the 0x9c/0x760 float member names; then resolve FUN_14199e380's GameState member (0x1df8/0x1df0) to name the phase gate. With those names confirmed, the body is fully writable as a complete .inc."
+}

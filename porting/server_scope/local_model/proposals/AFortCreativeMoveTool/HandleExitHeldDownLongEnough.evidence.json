@@ -1,0 +1,43 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleExitHeldDownLongEnough",
+  "owner": "q27-11100342",
+  "status": "blocked",
+  "exec_addr": "0x1428c2c80",
+  "reflection": {
+    "exec_addr": "0x1428c2c80",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bbf00",
+    "source": "lea"
+  },
+  "body": {
+    "asm": [
+      "1428c2c80  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c2c84  XOR R8D,R8D",
+      "1428c2c87  TEST RAX,RAX",
+      "1428c2c8a  SETNZ R8B",
+      "1428c2c8e  ADD R8,RAX",
+      "1428c2c91  MOV qword ptr [RDX + 0x20],R8",
+      "1428c2c95  MOV RAX,qword ptr [RCX]",
+      "1428c2c98  JMP qword ptr [RAX + 0xcc8]"
+    ],
+    "interpretation": "Read the 64-bit field at [param_2 + 0x20]; if non-zero add 1 (i.e. field = field + (field != 0), so a non-zero-guarded increment: 0 stays 0, n!=0 becomes n+1); write it back. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xcc8 (index 409). No other side effects, no return value.",
+    "capture": "captures/731d684b3c3e47c2a49eb347bd69a009/0x1428c2c80.asm"
+  },
+  "pattern_note": "Identical shape to every other AFortCreativeMoveTool input handler (e.g. HandleDeletePressed 0x1428c2bc0 -> vtable 0xc80, HandleExitPressed 0x142827840 -> vtable 0xcb8, HandleExitReleased 0x1428c2cc0 -> vtable 0xcc0). All are a non-zero-guarded 64-bit increment of [param_2+0x20] followed by a tail jump to a class vtable slot. The vtable slot holds the real handler body; the reflected exec entry is only the counter side-effect plus the dispatch.",
+  "unresolved_contracts": [
+    "Virtual function identity at AFortCreativeMoveTool vtable byte offset 0xcc8 (index 409) - the real Exit-held-down-long-enough handler body - is not identified.",
+    "Identity of param_2 (RDX): the object whose 64-bit field at +0x20 is the guarded counter. The function has no reflected params, so RDX is a system/hidden argument (the script-frame/Parms pointer of the standard UE native convention, or an explicit object passed by a C++ caller). Its type and the +0x20 field are not established."
+  ],
+  "attempts": [
+    "Decompiled the exec body (evidence.py show 0x1428c2c80 --format c/asm); body is 8 instructions: guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xcc8.",
+    "Confirmed via reflection (inventory_query.py show; native_funcs.json) that the function has flags 0xc080c00 and ZERO reflected params, so RDX is not a named parameter.",
+    "Compared sibling handlers (HandleDeletePressed, HandleExitPressed, HandleExitReleased) to confirm the shared pattern and the per-function vtable byte offsets (0xc80/0xcb8/0xcc0/0xcc8).",
+    "Read the reflected class block at 0x14639bb80 (evidence.py bytes): it is a property-descriptor/reflection table, not the runtime UClass; its 0x147a... pointers resolve to FProperty-like descriptors, not a C++ vtable. No CDO/vtable pointer is exposed there.",
+    "Located a (name-string, exec-function) binding table at 0x1463a5970 (137 entries) containing these three handlers; it is only referenced indirectly (no direct code/data ref found), so it does not by itself reveal the caller's 2nd-arg type.",
+    "Scanned the .rdata code-pointer region (0x145000000-0x147000000) for vtable-length runs of code pointers; many candidate arrays exist (200-600 entries) and none is pinned to AFortCreativeMoveTool without a CDO/vtable anchor.",
+    "Checked sibling owner q27-11100300's evidence for HandleClearMultiSelectQueuePressed / HandleCopyPickupPressed / HandleDropToFloorPressed: all blocked on the identical two contracts, with the same conclusion that the class block is reflection data and the CDO/vtable is not reachable in the static image."
+  ],
+  "next_step": "Locate the AFortCreativeMoveTool C++ vtable array directly (e.g. via the CDO's vtable pointer from a runtime capture, or a global/static pointer to it) and read the entry at byte offset 0xcc8 to get the real handler address, then decompile that target. Separately, find the input-binding/delegate code that invokes these handlers (the code consuming the name->exec table at 0x1463a5970, likely a RIP-relative LEA) to pin down the param_2 type and its +0x20 counter field."
+}

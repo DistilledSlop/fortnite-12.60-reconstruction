@@ -1,0 +1,89 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleRotateSingleCounterclockwiseReleased",
+  "owner": "q27-11100501",
+  "status": "proposed",
+  "exec_addr": "0x142757d10",
+  "reflection": {
+    "exec_addr": "0x142757d10",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc4c0",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100501/AFortCreativeMoveTool_HandleRotateSingleCounterclockwiseReleased.inc",
+  "body": {
+    "asm": [
+      "142757d10  MOV RAX,qword ptr [RDX + 0x20]",
+      "142757d14  XOR R8D,R8D",
+      "142757d17  TEST RAX,RAX",
+      "142757d1a  SETNZ R8B",
+      "142757d1e  ADD R8,RAX",
+      "142757d21  MOV qword ptr [RDX + 0x20],R8",
+      "142757d25  MOV RAX,qword ptr [RCX]",
+      "142757d28  JMP qword ptr [RAX + 0xd18]"
+    ],
+    "interpretation": "Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame*): 0 stays 0, non-zero n becomes n+1. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xd18 (entry index 419). No other side effects, no return value. The reflected exec entry is only this frame side-effect plus the virtual dispatch; the real handler body lives in the vtable slot.",
+    "capture": "porting/generated/native103-broad/0x142757d10.{c,asm,json}"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "Independently re-verified in this run: five known slot/target pairs from sibling proposals (work/q27-11100407 HandlePushPressed 0xd60=0x1426754f0, HandlePullPressed 0xd70=0x1426754b0, and HandlePrecisionModeReleased 0xd80=0x1426753c0, 0xd88=0x1426753d0, plus 0xd90=0x142674df0) all match at 0x146204508+slot via evidence.py bytes (5/5 MATCH). The referenced porting/generated/class-vtables/vtables.json no longer exists in the checkout, so this re-verification replaces it.",
+    "slot": "0xd18",
+    "slot_address": "0x146205220",
+    "slot_target": "0x142675c00",
+    "slot_target_asm": [
+      "142675c00  SUB RSP,0x38",
+      "142675c04  MOVUPS XMM0,xmmword ptr [RCX + 0xf50]",
+      "142675c0b  MOVZX R8D,byte ptr [RCX + 0xf44]",
+      "142675c13  LEA RDX,[RSP + 0x20]",
+      "142675c18  XOR R9D,R9D",
+      "142675c1b  MOV byte ptr [RCX + 0xf45],0x0",
+      "142675c22  MOVAPS xmmword ptr [RSP + 0x20],XMM0",
+      "142675c27  CALL 0x1428c04b0",
+      "142675c2c  ADD RSP,0x38",
+      "142675c30  RET"
+    ],
+    "slot_target_meaning": "Copy TargetRotationOffset (16-byte struct, 0xf50) into a local 16-byte struct; clear bIsRotateCounterclockwisePressed (byte 0xf45) = 0; call shared RPC helper 0x1428c04b0(&local, bIsRotateClockwisePressed byte 0xf44, 0)."
+  },
+  "shared_helper": {
+    "addr": "0x1428c04b0",
+    "asm_summary": "Copies the 16-byte struct (param_2) plus param_3 (byte) and param_4 (byte) onto the stack as param struct {qword@0, qword@8, byte@0x10, byte@0x11}; RDX = FName global 0x148191eb0; RAX = FindFunctionChecked(this, RDX) via 0x142ec7730; then this->ProcessEvent(RAX, &paramstruct) via vtable +0x210. (Decompiled from capture captures/39a649364c10479aaefd3595670bd5a0/0x1428c04b0.c.)",
+    "param_struct": "Struct(16B)@0 (ClientRotation), bool@16, bool@17"
+  },
+  "field_proofs": [
+    "0xf50 = TargetRotationOffset (Struct, kind 0x19, type_refs.struct 0x142eeb6d0, property index 40) via evidence.py field-offset AFortCreativeMoveTool 3920 (bool_bits/property reflection).",
+    "byte 0xf44 = bIsRotateClockwisePressed (reflected bool bit, mask 1, mov8) via evidence.py field-offset AFortCreativeMoveTool 3908.",
+    "byte 0xf45 = bIsRotateCounterclockwisePressed (reflected bool bit, mask 1, mov8) via evidence.py field-offset AFortCreativeMoveTool 3909.",
+    "0xf3c (float) is an unreflected gap between bIsPullPressed (0xf37) and the 0xf44 bools; not touched by this function."
+  ],
+  "rpc_contract": {
+    "name": "ServerUpdateRotation",
+    "exec_addr": "0x1428c5250",
+    "flags": "0x80a80cc0",
+    "flag_names": ["Net", "NetReliable", "NetServer"],
+    "signature": "void ServerUpdateRotation(FQuat ClientRotation, bool bNewIsRotateClockwisePressed, bool bNewIsRotateCounterclockwisePressed)",
+    "param_layout": "Struct(16B)@0 (ClientRotation), bool@16, bool@17 — matches the helper param struct exactly. Faithful declaration order from the asm is (ClientRotation, CW, CCW); the reflection param list order is (bNewIsRotateCounterclockwisePressed, bNewIsRotateClockwisePressed, ClientRotation), a generator decode_params ordering discrepancy (same pattern as the sibling ServerUpdateTractorBeam case, where reflection order (Pull, Push, Float) vs struct (Float@0, Push@4, Pull@5)).",
+    "fname": "0x148191eb0 (resolved by unique (16B struct + 2 bool) signature match among AFortCreativeMoveTool Server* RPCs; adjacent FNames 0x148191ec8/0x148191ed0 resolve the same way to ServerUpdateScalePressed/ServerUpdateTractorBeam)"
+  },
+  "secondary_reference": "23.20 SDK dump AFortCreativeMoveTool.h: HandleRotateSingleCounterclockwiseReleased (Native | Event | Protected | BlueprintCallable | BlueprintEvent); ServerUpdateRotation(ClientRotation, bNewIsRotateClockwisePressed, bNewIsRotateCounterclockwisePressed) (Net|NetReliable|NetServer). The 23.20 class is larger (offsets differ from 12.60) but the function family, flag pattern and RPC signature agree.",
+  "cross_validation": [
+    "Vtable base 0x146204508 re-verified 5/5 against sibling slot pairs (see vtable_resolution.vtable_source).",
+    "Semantic match: releasing the single-CCW rotate key clears bIsRotateCounterclockwisePressed locally and reports (current TargetRotationOffset, CW state, CCW state=false) to the server — consistent with the sibling Push/Pull handlers that set their own bool then report both states via a (..., bool, bool) RPC.",
+    "Sibling q27-11100407 proposals for HandlePushPressed/HandlePullPressed use the identical thunk shape (frame increment + tail vtable dispatch) and the identical shared-helper RPC pattern (FindFunctionChecked + ProcessEvent at vtable +0x210)."
+  ],
+  "remaining_concerns": [
+    "The FName at 0x148191eb0 is not read from a name-pool dump in this workspace; its identity as 'ServerUpdateRotation' is an inference from the unique (16B struct + bool + bool) signature match within the class, the adjacent-FName pattern, and the 23.20 SDK.",
+    "The script-frame field at +0x20 is described as the FFrame* native Parms field (sibling proposals name it NextLocalVar); the exact FFrame member name at +0x20 is not independently proven in this workspace.",
+    "The vtable dispatch is virtual; a derived-class override of the slot-0xd18 function would change behavior. The concrete AFortCreativeMoveTool target is resolved, but the .inc preserves the virtual dispatch rather than inlining it."
+  ],
+  "attempts": [
+    "Decompiled the exec body (evidence.py show 0x142757d10; capture porting/generated/native103-broad/0x142757d10.{c,asm,json}): 8 instructions, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xd18.",
+    "Confirmed via reflection (inventory_query.py show) flags 0xc080c00 and ZERO reflected params, so RDX is the script-frame/Parms pointer of the standard UE native convention, not a named parameter.",
+    "Re-verified the primary vtable 0x146204508 by reading five known sibling slots with evidence.py bytes (5/5 match).",
+    "Read vtable slot 0xd18 (0x146205220) = 0x142675c00 (evidence.py bytes) and decompiled it (evidence.py capture requests.json).",
+    "Decompiled the shared helper 0x1428c04b0: FindFunctionChecked(FName 0x148191eb0) + ProcessEvent with a {16B struct, bool, bool} param struct.",
+    "Resolved fields 0xf44/0xf45/0xf50 via evidence.py field-offset (bIsRotateClockwisePressed, bIsRotateCounterclockwisePressed, TargetRotationOffset).",
+    "Matched the RPC by unique signature against the reflected AFortCreativeMoveTool Server* function list (native_funcs.json): ServerUpdateRotation."
+  ]
+}

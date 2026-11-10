@@ -1,0 +1,53 @@
+{
+  "class": "AFortDecoTool",
+  "function": "OnUnEquip",
+  "owner": "q27-11100731",
+  "status": "blocked",
+  "exec_addr": "0x14283dc50",
+  "reflection": {
+    "exec_addr": "0x14283dc50",
+    "flags": "0x4020401",
+    "params": [],
+    "create_func": "0x1428d2780",
+    "source": "lea"
+  },
+  "inc_path": null,
+  "body": {
+    "asm": [
+      "14283dc50  MOV RAX,qword ptr [RDX + 0x20]",
+      "14283dc54  XOR R8D,R8D",
+      "14283dc57  TEST RAX,RAX",
+      "14283dc5a  SETNZ R8B",
+      "14283dc5e  ADD R8,RAX",
+      "14283dc61  MOV qword ptr [RDX + 0x20],R8",
+      "14283dc65  MOV RAX,qword ptr [RCX]",
+      "14283dc68  JMP qword ptr [RAX + 0x778]"
+    ],
+    "interpretation": "Pure virtual-dispatch thunk. After the FFrame +0x20 guard-increment prologue (no-op for a void function), it loads the vtable pointer from [this] (RCX) and TAIL-CALLS (JMP, not CALL) the C++ virtual function at vtable byte offset 0x778 (entry index 239). The whole behavior lives in that vtable slot; the reflected exec entry is only the frame side-effect plus the virtual dispatch. No parameters, no return value.",
+    "capture": "porting/generated/native89-broad/0x14283dc50.{c,asm,json}"
+  },
+  "vtable_resolution_attempt": {
+    "slot": "0x778",
+    "slot_entry_index": 239,
+    "candidate_vtable": "0x146186240",
+    "candidate_vtable_slots": 286,
+    "candidate_source": "porting/generated/reflection/native_class_index.json (vtable_candidate, path=direct, vtable_status=unverified)",
+    "candidate_slot_0x778_target": "0x1406801e0",
+    "candidate_slot_0x778_stub": "Stub_ReturnFalse (asm: XOR AL,AL; RET) per captures/8d574529b9c442589beb7980ad0871de/0x1406801e0.{c,asm}",
+    "validation": "0x146186240 is a valid AActor-family vtable: 286 consecutive code-pointer slots; its interface entries (first 12 slots) match AActor's vtable 0x1469fec60 at slots 1,2,3,5,6,7,9,10,11 (only class-specific slots 0,4,8 differ). It is longer than AActor's 197-slot vtable, consistent with a more-derived class."
+  },
+  "blocker": "The concrete C++ virtual at AFortDecoTool vtable slot 0x778 is not verified. The only candidate vtable (0x146186240) is flagged vtable_status=unverified in native_class_index.json, and its slot-0x778 target (0x1406801e0 = Stub_ReturnFalse) cannot be confirmed as AFortDecoTool's own override without a verified vtable or a sibling slot/target cross-check. A body built on the unverified candidate risks substituting a base-class stub for a real derived override.",
+  "missing_evidence": [
+    "A verified AFortDecoTool vtable address (vtable_status=verified) or a second independent slot/target pair from a sibling AFortDecoTool proposal to cross-verify 0x146186240.",
+    "The CDO (class default object) of AFortDecoTool, whose [CDO+0] would give the authoritative vtable pointer. The UClass block_va (0x1463b4700) does not appear as a stored Class pointer in either the PE image (checkout/porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe) or the runtime capture (image-125.runtime.bin), so the CDO could not be located to read its vtable."
+  ],
+  "attempts": [
+    "Decompiled 0x14283dc50 (porting/generated/native89-broad/0x14283dc50.{c,asm,json}): 8 instructions, 31 body bytes, pure vtable thunk to slot 0x778.",
+    "Read the vtable candidates from porting/generated/reflection/native_class_index.json: AFortDecoTool=0x146186240 (286 slots, unverified); AActor=0x1469fec60 (197 slots).",
+    "Read candidate slot 0x778 (0x146186240+0x778=0x1461869b8) = 0x1406801e0 and decompiled it: Stub_ReturnFalse.",
+    "Validated 0x146186240 as an AActor-family vtable (286 code slots; interface entries match AActor at 9/12 first slots).",
+    "Attempted to locate the AFortDecoTool CDO by searching both the PE image and the runtime capture for the UClass pointer 0x1463b4700 at object offsets 0x0..0x60 with a valid vtable at [obj+0]: 0 hits in both images.",
+    "Reviewed the prior owner's vtable tooling (work/q27-11100230/find_vtable.py, find_target_vtable.py, find_cdo.py) and the sibling proposal work/q27-11100501 (which resolved its thunk via a since-deleted porting/generated/class-vtables/vtables.json cross-verified against sibling slot pairs)."
+  ],
+  "next_step": "Obtain a verified AFortDecoTool vtable (e.g. regenerate/restore porting/generated/class-vtables/vtables.json, or locate the CDO via the live object graph) and confirm slot 0x778. If it is 0x1406801e0 (Stub_ReturnFalse), the body reduces to the FFrame prologue plus a virtual dispatch to a no-op (return-false) hook; if it is a real override, decompile that target and splice its body. Until the vtable is verified, do not emit a body."
+}

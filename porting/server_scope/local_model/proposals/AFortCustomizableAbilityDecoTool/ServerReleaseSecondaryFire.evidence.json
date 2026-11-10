@@ -1,0 +1,70 @@
+{
+  "class": "AFortCustomizableAbilityDecoTool",
+  "function": "ServerReleaseSecondaryFire",
+  "owner": "q27-11100731",
+  "status": "proposed",
+  "exec_addr": "0x1428ce500",
+  "reflection": {
+    "exec_addr": "0x1428ce500",
+    "flags": "0x80220cc0",
+    "params": [],
+    "create_func": "0x1428ca9d0",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100731/AFortCustomizableAbilityDecoTool_ServerReleaseSecondaryFire.inc",
+  "body": {
+    "asm": [
+      "1428ce500  PUSH RBX",
+      "1428ce502  SUB RSP,0x20",
+      "1428ce506  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428ce50a  XOR R8D,R8D",
+      "1428ce50d  TEST RAX,RAX",
+      "1428ce510  MOV RBX,RCX",
+      "1428ce513  SETNZ R8B",
+      "1428ce517  ADD R8,RAX",
+      "1428ce51a  MOV qword ptr [RDX + 0x20],R8",
+      "1428ce51e  MOV RAX,qword ptr [RCX]",
+      "1428ce521  CALL qword ptr [RAX + 0xb38]",
+      "1428ce527  TEST AL,AL",
+      "1428ce529  JNZ 0x1428ce53c",
+      "1428ce52b  LEA RCX,[0x1463b01c0]",
+      "1428ce532  ADD RSP,0x20",
+      "1428ce536  POP RBX",
+      "1428ce537  JMP 0x142d6e0f0",
+      "1428ce53c  MOV RAX,qword ptr [RBX]",
+      "1428ce53f  MOV RCX,RBX",
+      "1428ce542  ADD RSP,0x20",
+      "1428ce546  POP RBX",
+      "1428ce547  JMP qword ptr [RAX + 0xb40]"
+    ],
+    "interpretation": "Standard UE native server-RPC body. Prologue performs the non-zero-guarded 64-bit increment of the FFrame field at +0x20 (Result): 0 stays 0, non-zero n becomes n+1 (a no-op for this void RPC). Then it virtually CALLs vtable+0xb38 (the bool validation hook ServerReleaseSecondaryFire_Validate). On false it loads the wide string at 0x1463b01c0 (\"ServerReleaseSecondaryFire_Validate\") into RCX and tail-jumps to RPC_ValidateFailed at 0x142d6e0f0. On true it tail-jumps to vtable+0xb40 (the implementation hook ServerReleaseSecondaryFire_Implementation). No parameters are read (reflection params are empty); no return value is produced.",
+    "capture": "captures/078403b6137a48d6a440db6fd38ebad7/0x1428ce500.{c,asm,json}"
+  },
+  "rpc_contract": {
+    "name": "ServerReleaseSecondaryFire",
+    "exec_addr": "0x1428ce500",
+    "flags": "0x80220cc0",
+    "validate_name_proven_by": "wide string L\"ServerReleaseSecondaryFire_Validate\" at 0x1463b01c0, the sole argument to RPC_ValidateFailed (0x142d6e0f0) on the failure path",
+    "validate_vtable_slot": "0xb38",
+    "implementation_vtable_slot": "0xb40",
+    "params": []
+  },
+  "field_proofs": [
+    "FFrame field at +0x20 is the native Result/Parms pointer (standard UE native calling convention; RDX is the FFrame*). The guard-increment matches the sibling thunk pattern used across the project (e.g. work/q27-11100501 AFortCreativeMoveTool handlers).",
+    "RPC_ValidateFailed is the shared engine helper at 0x142d6e0f0 (named by the capture json 'called' entry)."
+  ],
+  "cross_validation": [
+    "Body structure (validate -> RPC_ValidateFailed on false -> implementation) is the canonical UE native server-RPC shape; the only function-specific datum (the validate name) is proven by the embedded wide string, not inferred.",
+    "Reflection flags 0x80220cc0 and empty param list are consistent with a parameterless Net|NetServer RPC."
+  ],
+  "remaining_concerns": [
+    "The validate/implementation hooks are dispatched virtually (vtable 0xb38/0xb40); a derived-class override of either hook would change behavior. The .inc preserves the virtual dispatch (calls the member hooks by name) rather than inlining a concrete target, matching the project convention.",
+    "The concrete vtable targets for slots 0xb38/0xb40 were not independently resolved in this run; they are not needed for the body because the hooks are referenced by their reflected names."
+  ],
+  "attempts": [
+    "Read reflection (inventory_query.py show AFortCustomizableAbilityDecoTool::ServerReleaseSecondaryFire): exec_addr 0x1428ce500, flags 0x80220cc0, no params.",
+    "Captured and decompiled 0x1428ce500 (evidence.py capture; captures/078403b6137a48d6a440db6fd38ebad7/0x1428ce500.{c,asm,json}): 22 instructions, 78 body bytes.",
+    "Identified the failure-path string 0x1463b01c0 = L\"ServerReleaseSecondaryFire_Validate\" and the RPC_ValidateFailed call at 0x142d6e0f0 from the capture json.",
+    "Mapped the two virtual calls to the validate (0xb38) and implementation (0xb40) hooks per the canonical server-RPC shape."
+  ]
+}

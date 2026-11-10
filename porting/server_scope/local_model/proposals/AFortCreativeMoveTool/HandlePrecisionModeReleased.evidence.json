@@ -1,0 +1,57 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandlePrecisionModeReleased",
+  "owner": "q27-11100407",
+  "status": "blocked",
+  "exec_addr": "0x142755b20",
+  "reflection": {
+    "exec_addr": "0x142755b20",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc220",
+    "source": "lea"
+  },
+  "body": {
+    "asm": [
+      "142755b20  MOV RAX,qword ptr [RDX + 0x20]",
+      "142755b24  XOR R8D,R8D",
+      "142755b27  TEST RAX,RAX",
+      "142755b2a  SETNZ R8B",
+      "142755b2e  ADD R8,RAX",
+      "142755b31  MOV qword ptr [RDX + 0x20],R8",
+      "142755b35  MOV RAX,qword ptr [RCX]",
+      "142755b38  JMP qword ptr [RAX + 0xd88]"
+    ],
+    "interpretation": "Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame::NextLocalVar): 0 stays 0, non-zero n becomes n+1. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xd88 (entry index 367). No other side effects, no return value. The reflected exec entry is only this frame side-effect plus the virtual dispatch; the real handler body lives in the vtable slot.",
+    "capture": "captures/8b20e880e3584ce78783c5a4930bca77/0x142755b20.asm"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "porting/generated/class-vtables/vtables.json (resolve_class_vtables.py): gpsc 0x1428bae30 -> internal_ctor 0x1428bdaa0 -> ctor 0x14265ac60, primary vptr 0x146204508",
+    "slot": "0xd88",
+    "slot_address": "0x146205290",
+    "slot_target": "0x1426753d0",
+    "slot_target_asm_summary": "PUSH RBX; SUB RSP,0x20; CALL [RAX+0x150] (GetWorld); TEST/JZ; world-state query via [RAX+0x188]/[RCX+0xc0] or [RAX+0x320]; CALL 0x144621fb0 (predicate on float field 0xbe0); guarded chain: CALL 0x143f76650, CALL 0x142a62c80, array-membership check, CALL 0x1423d3b90, CALL 0x141d7cd40 (with field 0x112c), CALL 0x141d870c0; final virtual CALL [RAX+0xd98]; epilogue."
+  },
+  "unresolved_contracts": [
+    "The concrete handler at 0x1426753d0 (vtable slot 0xd88) is a multi-callee body whose callees are not yet resolved: 0x144621fb0 (world-state predicate), 0x143f76650, 0x142a62c80, 0x1423d3b90, 0x141d7cd40, 0x141d870c0, and the final virtual dispatch at vtable +0xd98. None of these have been identified by name or behavior in this workspace.",
+    "The field at offset 0xbe0 (read as a float, passed to the 0x144621fb0 predicate) and 0x112c (read as a qword, passed to 0x141d7cd40) are not resolved to named members via reflection.",
+    "The world-state query pattern (GetWorld -> [world+0x188] -> [obj+0xc0] or [world+0x320]) is a standard UE pattern but the specific subsystem and its contract are not identified."
+  ],
+  "cross_validation": [
+    "Sibling HandlePrecisionModePressed 0x1428c2e00 tail-jumps vtable 0xd80; resolved slot 0xd80 (0x146205288) = 0x1426753c0 (which itself tail-calls vtable 0xd90).",
+    "Sibling HandleHitTraceRulePressed 0x1428c2d00 tail-jumps vtable 0xd90; resolved slot 0xd90 (0x146205298) = 0x142674df0.",
+    "Push/Pull slot targets 0x1426754f0/0x1426754b0 set bIsPushPressed/bIsPullPressed respectively and issue the (float,bool,bool) tractor-beam RPC — a semantic match that independently pins the vtable base 0x146204508."
+  ],
+  "attempts": [
+    "Decompiled the exec body (evidence.py show 0x142755b20 --format c/asm; capture at porting/generated/native103-broad/0x142755b20.{c,asm,json}): 8 instructions, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xd88.",
+    "Confirmed via reflection (inventory_query.py show) flags 0xc080c00 and ZERO reflected params, so RDX is the script-frame/Parms pointer of the standard UE native convention, not a named parameter.",
+    "Identified the primary vtable via the constructor chain in porting/generated/class-vtables/vtables.json (0x146204508).",
+    "Corrected slot arithmetic: 0xd88 is at 0x146205290 (not 0x146205288 which is 0xd80/PrecisionModePressed).",
+    "Read vtable slot 0xd88 (0x146205290) = 0x1426753d0 (evidence.py bytes) and decompiled it (evidence.py show --format asm): 57-instruction handler with GetWorld, world-state query, 6 unresolved callees, and a final virtual call at +0xd98.",
+    "Cross-validated the vtable base against sibling handlers' tail-jump offsets (0xd80, 0xd90) and the semantic match of Push/Pull targets.",
+    "Compared with prior blocked work (q27-11100356 HandlePrecisionModePressed, q27-11100342 HandleExitPressed): those were blocked on vtable identification; this run pins the vtable and resolves the slot, but the concrete handler's callees remain unresolved."
+  ],
+  "next_step": "Capture and decompile the six callees of 0x1426753d0 (0x144621fb0, 0x143f76650, 0x142a62c80, 0x1423d3b90, 0x141d7cd40, 0x141d870c0) to identify their contracts, and resolve the final virtual dispatch at vtable +0xd98 (slot 0xd98 = 0x1462052a0). Also resolve the float field at 0xbe0 and qword at 0x112c via evidence.py field-offset. Once all callees are identified, the full handler body can be proposed.",
+  "secondary_reference": "23.20 SDK dump AFortCreativeMoveTool.h: HandlePrecisionModeReleased (Native | Event | Protected | BlueprintCallable | BlueprintEvent); HandlePrecisionModePressed (same flags). The 23.20 class is larger (offsets differ from 12.60) but the function family and flags agree."
+}

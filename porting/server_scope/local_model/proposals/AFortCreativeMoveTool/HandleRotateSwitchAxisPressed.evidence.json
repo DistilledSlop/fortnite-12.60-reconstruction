@@ -1,0 +1,57 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleRotateSwitchAxisPressed",
+  "owner": "q27-11100501",
+  "status": "blocked",
+  "exec_addr": "0x142757d30",
+  "reflection": {
+    "exec_addr": "0x142757d30",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc4f0",
+    "source": "lea"
+  },
+  "inc_path": null,
+  "body": {
+    "asm": [
+      "142757d30  MOV RAX,qword ptr [RDX + 0x20]",
+      "142757d34  XOR R8D,R8D",
+      "142757d37  TEST RAX,RAX",
+      "142757d3a  SETNZ R8B",
+      "142757d3e  ADD R8,RAX",
+      "142757d41  MOV qword ptr [RDX + 0x20],R8",
+      "142757d45  MOV RAX,qword ptr [RCX]",
+      "142757d48  JMP qword ptr [RAX + 0xd20]"
+    ],
+    "interpretation": "Same thunk shape as the sibling handlers: non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame*), then TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xd20 (entry index 420) of [this]. The exec body itself is exact; what blocks the proposal is the unresolved behavioral contract of the vtable slot target.",
+    "capture": "porting/generated/native103-broad/0x142757d30.{c,asm,json}"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "Independently re-verified in this run: five known slot/target pairs from sibling proposals (work/q27-11100407: 0xd60=0x1426754f0, 0xd70=0x1426754b0, 0xd80=0x1426753c0, 0xd88=0x1426753d0, plus 0xd90=0x142674df0) all match at 0x146204508+slot via evidence.py bytes (5/5 MATCH).",
+    "slot": "0xd20",
+    "slot_address": "0x146205228",
+    "slot_target": "0x142675c40",
+    "slot_target_summary": "Multi-step handler (captures/9edbb50a4a4048dc952d240540e8b2c6/0x142675c40.c): (1) calls predicate FUN_141ed91f0(); if true, virtually dispatches vtable +0xd28 (slot 0x146205238 = 0x142675530, which itself tail-dispatches vtable +0xd38) and returns; (2) otherwise reads qword [this+0xc40] (param_1[0x178]), allocates a 0x30-byte heap object with FMemory_Realloc, sets vtable DAT_1459a9e80, initializes fields via FUN_142ee3b30(&obj+8, this), stores function pointer &LAB_14265dcc0 at +0x10, zeroes +0x14/+0x18/+0x1c, stores FUN_142bad740() at +0x28, swaps vtable to DAT_1459a9ed8, then virtually calls [obj vtable +0x40](obj, &out); (3) builds a local result block (float -0.5f at one slot, zeroed fields, out pointer) and calls FUN_1446278d0(FUN_140f95ae0(), &this[0xc38], &out, (int)[this+0xc40]); (4) conditionally destroys the out object (vtable +0x10), frees the heap allocation and the 0x30-byte object (vtable +0x38 destructor pattern). No RPC is issued directly by this body."
+  },
+  "unresolved_contracts": [
+    "FUN_141ed91f0 (early-exit predicate): takes a parameter the decompiler lost in the no-arg call site; body is a deep chain (FUN_144640410(_DAT_148351eb8, param, 0) -> [+0x188] -> FUN_1428ea7f0() index/array compare -> FUN_144214d90 -> FUN_14081b480 -> FUN_14081b540 == 2). Not identified by name or behavior.",
+    "The 0x30-byte heap object: vtables DAT_1459a9e80/DAT_1459a9ed8, constructor-ish FUN_142ee3b30, function-pointer field &LAB_14265dcc0, virtual call at +0x40, FUN_142bad740() — class identity unknown (not a reflected UObject size).",
+    "FUN_1446278d0 (world param from FUN_140f95ae0(), &this[0xc38], out pointer, int from [this+0xc40], plus -0.5f float in the local block): large generic utility, contract unknown.",
+    "The virtual dispatch chain on the early-exit path: vtable +0xd28 (0x142675530) -> vtable +0xd38 (slot 0x146205240, not yet read).",
+    "Fields [this+0xc38] (pointer) and [this+0xc40] (qword, low 32 bits used as int) are not resolved to named members via reflection (evidence.py field-offset returns no member for these offsets).",
+    "The expected RPC for this handler is presumably ServerUpdateRotationAxis(AxisIndex: Byte, exec 0x1428c53b0), but no RPC issue (FindFunctionChecked/ProcessEvent) is visible in the resolved body; if it is issued, it happens inside one of the unresolved callees."
+  ],
+  "attempts": [
+    "Decompiled the exec body (evidence.py show 0x142757d30; capture porting/generated/native103-broad/0x142757d30.{c,asm,json}): 8 instructions, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xd20.",
+    "Confirmed via reflection (inventory_query.py show) flags 0xc080c00 and ZERO reflected params.",
+    "Re-verified the primary vtable 0x146204508 by reading five known sibling slots with evidence.py bytes (5/5 match); read slot 0xd20 (0x146205228) = 0x142675c40.",
+    "Decompiled the slot target 0x142675c40 (evidence.py capture): multi-step body with predicate, 0x30-byte temp object with vtable swap, and FUN_1446278d0 call; no direct RPC.",
+    "Decompiled the early-exit predicate FUN_141ed91f0 and the virtual chain first hop 0x142675530 (tail-dispatch to vtable +0xd38); peeked at FUN_1446278d0 (large generic utility) — none resolved to a named contract within the bounded lookup budget.",
+    "Checked reflection for fields at 0xc38/0xc40: no reflected member found (field-offset returns empty results)."
+  ],
+  "next_step": "Identify FUN_141ed91f0 (likely a session/permission predicate; find its other call sites and the meaning of the _DAT_148351eb8 FName), identify the 0x30-byte object class (read vtable DAT_1459a9e80 entries, especially slot +0x40 and the +0x38 destructor, and match against reflected classes), then decompile FUN_1446278d0 to find where (if at all) ServerUpdateRotationAxis (FName near 0x148191ec0) is issued and how [this+0xc38]/[this+0xc40] feed it. Only then can the full handler body be proposed.",
+  "cross_validation": [
+    "Sibling q27-11100428 already proposed the two adjacent rotate handlers (HandleRotateClockwisePressed 0x1428c2ec0, HandleResetRotationPressed 0x142757c30) in the same thunk family; the prior bulk429 disposition marked this function blocked with 'Wrapper tail-dispatches virtual implementation; target unresolved' — this run resolves the slot to 0x142675c40 but the target's callees remain open."
+  ]
+}

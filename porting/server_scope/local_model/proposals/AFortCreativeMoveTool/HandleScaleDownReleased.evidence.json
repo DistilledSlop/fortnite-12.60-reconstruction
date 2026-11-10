@@ -1,0 +1,99 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleScaleDownReleased",
+  "owner": "q27-11100515",
+  "status": "proposed",
+  "exec_addr": "0x1428c2fa0",
+  "reflection": {
+    "exec_addr": "0x1428c2fa0",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc580",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100515/AFortCreativeMoveTool_HandleScaleDownReleased.inc",
+  "body": {
+    "asm": [
+      "1428c2fa0  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c2fa4  XOR R8D,R8D",
+      "1428c2fa7  TEST RAX,RAX",
+      "1428c2faa  SETNZ R8B",
+      "1428c2fae  ADD R8,RAX",
+      "1428c2fb1  MOV qword ptr [RDX + 0x20],R8",
+      "1428c2fb5  MOV RAX,qword ptr [RCX]",
+      "1428c2fb8  JMP qword ptr [RAX + 0xdd8]"
+    ],
+    "interpretation": "Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame*): 0 stays 0, non-zero n becomes n+1. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xdd8 (entry index 440). No other side effects, no return value. The reflected exec entry is only this frame side-effect plus the virtual dispatch; the real handler body lives in the vtable slot.",
+    "capture": "captures/a166308e142c427b8d7816a81a4790c3/0x1428c2fa0.asm (generated this run via evidence.py capture)"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "Primary vtable base 0x146204508 taken from the sibling proposal work/q27-11100501 (HandleScaleDownPressed), which independently re-verified it 5/5 against known sibling slot/target pairs via evidence.py bytes. In this run the slot 0xdd8 read at 0x146204508+0xdd8=0x1462052e0 returned 0x0142675f50, consistent with the same table region as the sibling slots (0xdd0=0x142675f30, 0xdc0=0x142676270) read in this run.",
+    "slot": "0xdd8",
+    "slot_address": "0x1462052e0",
+    "slot_target": "0x142675f50",
+    "slot_target_asm": [
+      "142675f50  PUSH RBX",
+      "142675f52  SUB RSP,0x30",
+      "142675f56  MOVZX EDX,byte ptr [RCX + 0xf00]",
+      "142675f5d  XOR R8D,R8D",
+      "142675f60  MOV RBX,RCX",
+      "142675f63  MOV byte ptr [RCX + 0xf35],0x0",
+      "142675f6a  CALL 0x1428c0580",
+      "142675f6f  MOVSD XMM0,qword ptr [RBX + 0xe38]",
+      "142675f77  LEA RCX,[RBX + 0xd78]",
+      "142675f7e  MOV EAX,dword ptr [RBX + 0xe40]",
+      "142675f84  LEA RDX,[RSP + 0x20]",
+      "142675f89  MOVSD qword ptr [RSP + 0x20],XMM0",
+      "142675f8f  MOV dword ptr [RSP + 0x28],EAX",
+      "142675f93  CALL 0x1406a9dc0",
+      "142675f98  ADD RSP,0x30",
+      "142675f9c  POP RBX",
+      "142675f9d  RET"
+    ],
+    "slot_target_decomp": "void FUN_142675f50(this){ *(u8*)(this+0xf35)=0; FUN_1428c0580(this, *(u8*)(this+0xf00), 0); uStack_18=*(u64*)(this+0xe38); uStack_10=*(u32*)(this+0xe40); FUN_1406a9dc0(this+0xd78, &uStack_18); }",
+    "slot_target_meaning": "(a) set bIsScaleDownPressed (byte 0xf35) = 0; (b) CALL the shared RPC helper 0x1428c0580 with (RDX=bIsScaleUpPressed byte 0xf00=bNewIsScaleUpPressed, R8=0=bNewIsScaleDownPressed); (c) load the 12-byte FVector ScaleModifier (bytes 0xe38..0xe43, i.e. 8 bytes at 0xe38 + 4 bytes at 0xe40) into a local struct and CALL 0x1406a9dc0(&this->0xd78, &struct) = OnMoveToolScaleModified.Broadcast(ScaleModifier)."
+  },
+  "shared_helper": {
+    "addr": "0x1428c0580",
+    "asm_summary": "Same shared RPC helper resolved by the sibling work/q27-11100501 (HandleScaleDownPressed): param struct on stack {bool@0, bool@1}; RDX = FName global 0x148191ec8; CALL FindFunctionChecked(this, FName); then this->ProcessEvent(func, &struct) via vtable +0x210.",
+    "param_struct": "bool@0 (bNewIsScaleUpPressed), bool@1 (bNewIsScaleDownPressed)"
+  },
+  "delegate_broadcast_helper": {
+    "addr": "0x1406a9dc0",
+    "asm_summary": "Standard UE dynamic-multicast-delegate Broadcast/Process helper. Captured this run (captures/805232c343c74988bb5da20af02b81c7/0x1406a9dc0.c). Reads the bound-delegate array count *(u32*)(param_1+1); if >0, copies the array (16-byte delegate entries) to a temp allocation, iterates: for each entry does FName != NONE check, FWeakObjectPtr_Get (skip if null/pending-kill), UObject_FindFunction / FindFunctionChecked, then (**(this->vftable+0x210))(object, func, param_2) = ProcessEvent; then prunes stale entries (FWeakObjectPtr_IsValid) and ShrinkIfSparse. param_1 = &this->0xd78 (the FMulticastDelegate), param_2 = &params struct (the FVector currentScale).",
+    "meaning": "OnMoveToolScaleModified.Broadcast(ScaleModifier)"
+  },
+  "field_proofs": [
+    "byte 0xf00 = bIsScaleUpPressed (reflected bool bit, mask 1, mov8) via evidence.py field-offset AFortCreativeMoveTool 3840.",
+    "byte 0xf35 = bIsScaleDownPressed (reflected bool bit, mask 1, mov8) via evidence.py field-offset AFortCreativeMoveTool 3893.",
+    "offset 0xe38 = ScaleModifier (reflected Struct property, index 55, type_refs.struct 0x142eea590, replicated) via evidence.py field-offset AFortCreativeMoveTool 3640. 23.20 SDK: FVector ScaleModifier (12 bytes = X,Y,Z).",
+    "offset 0xd78 = OnMoveToolScaleModified (reflected InlineMulticastDelegate property, index 66, kind 0x1b) via evidence.py field-offset AFortCreativeMoveTool 3448. 23.20 SDK: FOnMoveToolScaleModified OnMoveToolScaleModified = DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FVector currentScale)."
+  ],
+  "rpc_contract": {
+    "name": "ServerUpdateScalePressed",
+    "signature": "void ServerUpdateScalePressed(bool bNewIsScaleUpPressed, bool bNewIsScaleDownPressed)",
+    "param_layout": "bool@0, bool@1. The asm calling convention for the helper 0x1428c0580 is RCX=this, RDX=1st bool, R8=2nd bool. For this handler RDX=bIsScaleUpPressed (bNewIsScaleUpPressed) and R8=0 (bNewIsScaleDownPressed).",
+    "fname": "0x148191ec8 (resolved by the sibling work/q27-11100501 as the unique (bool, bool) ServerUpdateScalePressed RPC of AFortCreativeMoveTool).",
+    "sdk_confirmation": "23.20 SDK dump AFortCreativeMoveTool.h line 521: void ServerUpdateScalePressed(bool bNewIsScaleUpPressed, bool bNewIsScaleDownPressed); (Net|NetReliable|NetServer)."
+  },
+  "cross_validation": [
+    "Vtable base 0x146204508 consistent with the sibling work/q27-11100501 (re-verified 5/5 there); slot 0xdd8 read in this run returns 0x142675f50 in the same table region as the sibling slots.",
+    "Semantic match: releasing the scale-down key clears bIsScaleDownPressed locally, reports (current Up, Down=false) to the server via ServerUpdateScalePressed, then broadcasts the current FVector ScaleModifier on the OnMoveToolScaleModified delegate. Consistent with the 23.20 SDK field/delegate/RPC names and the sibling Pressed-handler RPC pattern.",
+    "The thunk shape (guarded 64-bit increment of [RDX+0x20] + virtual tail-JMP) is byte-for-byte the same family as the siblings at 0x1428c2f20/0x1428c2f40/0x1428c2f60/0x1428c2f80/0x1428c2fe0."
+  ],
+  "remaining_concerns": [
+    "The FName at 0x148191ec8 is not read from a name-pool dump in this workspace; its identity as 'ServerUpdateScalePressed' is inherited from the sibling work/q27-11100501 proof (unique (bool,bool) signature match within the class + adjacent-FName pattern + 23.20 SDK).",
+    "The exact UStruct identity of ScaleModifier (type ref 0x142eea590) is inferred as FVector from its 12-byte size in the asm and the 23.20 SDK 'FVector ScaleModifier'; the struct name is not read from a name-pool dump in this workspace.",
+    "The vtable dispatch is virtual; a derived-class override of the slot-0xdd8 function would change behavior. The concrete AFortCreativeMoveTool target is resolved, but the .inc preserves the virtual dispatch rather than inlining it.",
+    "The script-frame field at +0x20 is the FFrame* native Parms argument (standard UE native convention); the exact FFrame member name at +0x20 is not independently proven in this workspace."
+  ],
+  "attempts": [
+    "No pre-existing capture for 0x1428c2fa0; generated one via evidence.py capture (requests.json) and read the raw asm: 8 instructions, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xdd8.",
+    "Confirmed via reflection (inventory_query.py show) flags 0xc080c00 and ZERO reflected params, so RDX is the script-frame/Parms pointer of the standard UE native convention, not a named parameter.",
+    "Read vtable slot 0xdd8 (0x1462052e0) = 0x142675f50 via evidence.py bytes; captured and read its asm + C decomp (set 0xf35=0, CALL 0x1428c0580, load 0xe38/0xe40, CALL 0x1406a9dc0).",
+    "Captured and read the delegate helper 0x1406a9dc0: confirmed it is the standard UE dynamic-multicast-delegate Broadcast/Process helper (array count, weak-object checks, FindFunctionChecked, ProcessEvent vtable +0x210, prune + ShrinkIfSparse).",
+    "Resolved fields 0xf00/0xf35/0xe38/0xd78 via evidence.py field-offset (bIsScaleUpPressed, bIsScaleDownPressed, ScaleModifier, OnMoveToolScaleModified).",
+    "Confirmed the shared helper 0x1428c0580 + RPC ServerUpdateScalePressed from the sibling work/q27-11100501 proof; confirmed FVector ScaleModifier, FOnMoveToolScaleModified (OneParam FVector currentScale) and ServerUpdateScalePressed(bool,bool) from the 23.20 SDK dump."
+  ]
+}

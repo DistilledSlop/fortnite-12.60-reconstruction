@@ -1,0 +1,60 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "UnholsterWeapon",
+  "owner": "q27-11100656",
+  "status": "blocked",
+  "exec_addr": "0x1428c5c00",
+  "body_addr": "0x14268a620",
+  "reflection": {
+    "exec_addr": "0x1428c5c00",
+    "flags": "0x4080401",
+    "flag_names": ["Net", "NetServer", "Native"],
+    "params": [],
+    "create_func": "0x1428badc0",
+    "source": "lea"
+  },
+  "structure": {
+    "exec_entry": "0x1428c5c00: FFrame::NextLocalVar guard-increment prologue + tail-JMP to body 0x14268a620 (asm: 1428c5c00 MOV [RDX+0x20]... 1428c5c15 JMP 0x14268a620).",
+    "body_0x14268a620": [
+      "(A) eax = FUN_143f7a920() [global state query; reads a global object via vtable +0x150, FName comparison vs index 0x11a; UNIDENTIFIED].",
+      "(B) if (eax == 1): FUN_142665070(this, 1) [LARGE unidentified callee; operates on [this+0xc60] = reflected AFortCreativeMoveTool::ActiveMovementMode (Object); uses floats; likely the core unholster/holster movement-mode op].",
+      "(C) else: RDI = FUN_143f76650() = [this+0x118 (AActor::Instigator, pawn) + 0x250 (APawn::Controller)] i.e. the instigator pawn's Controller; if (RDI != 0): RAX = FUN_142a3d9f0() = lazy GetPrivateStaticClass of AFortPlayerControllerAthena (pkg /Script/FortniteGame, name 'FortPlayerController', size 0x20c0); CHECK: let P = [Controller+0x10], n = (int32)[RAX+0x38]; pass if (n <= (int32)[P+0x38]) && ( *(P+0x30 + n*8) == RAX+0x30 ) [MEANING UNRESOLVED — see unresolved_contracts]. If pass: FUN_1428bfcd0(this).",
+      "(D) FUN_1428bfcd0(this) = this->ProcessEvent(FindFunctionChecked(this, FName _DAT_148191e18), nullptr) — no-param call by FName; the name-pool literal for _DAT_148191e18 is not resolved in this workspace.",
+      "(E) Repeat of the (C) RDI/check sequence; if pass, byte-copy from Controller (RDI) to this: this+0x1129 (GridSnapIndex, Byte) <- [RDI+0x14ab]; this+0xf80 (RotationAxisIndex, Byte) <- [RDI+0x14ac]; this+0xf81 (SelectedScaleAxis, Enum) <- [RDI+0x14ad]; this+0x1118 (bShouldDestroyPropsWhenPlacing bool bit) <- [RDI+0x14b0]; this+0xf46 (bIsScalingInsteadOfRotating bool bit) <- [RDI+0x14b2]; then broadcast three reflected InlineMulticastDelegates via engine helper 0x1406a9dc0 (ProcessDelegate with one bool/byte arg, UNPROVEN): OnMoveToolRotationAxisChanged (this+0xcb8) with RotationAxisIndex, OnMoveToolScaleAxisChanged (this+0xcc8) with SelectedScaleAxis, OnMoveToolScaleInsteadOfRotateChanged (this+0xd18) with (bIsScalingInsteadOfRotating != 0).",
+      "(F) FUN_143f84060(this, 1): if ([this+0x32] & 2) && !FUN_142ecc600(this, 0x30): FUN_144630410(this+0x28, 1) [UNIDENTIFIED trailing state op]."
+    ]
+  },
+  "field_proofs": [
+    "this+0x118 = AActor::Instigator (reflected, replicated) — evidence.py field-offset AFortCreativeMoveTool 0x118.",
+    "pawn+0x250 = APawn::Controller (reflected, replicated, OnRep_Controller) — evidence.py field-offset AFortPlayerPawnAthena 0x250. Hence RDI = Instigator->Controller.",
+    "this+0xc60 = AFortCreativeMoveTool::ActiveMovementMode (reflected Object) — field-offset 0xc60.",
+    "this+0xcb8 = OnMoveToolRotationAxisChanged, this+0xcc8 = OnMoveToolScaleAxisChanged, this+0xd18 = OnMoveToolScaleInsteadOfRotateChanged (reflected InlineMulticastDelegate) — field-offset.",
+    "this+0xf46 = bIsScalingInsteadOfRotating (reflected bool bit, mask 1), this+0xf80 = RotationAxisIndex (Byte), this+0xf81 = SelectedScaleAxis (Enum), this+0x1118 = bShouldDestroyPropsWhenPlacing (bool bit), this+0x1129 = GridSnapIndex (Byte) — field-offset."
+  ],
+  "unresolved_contracts": [
+    "FUN_143f7a920 (0x143f7a920): global state query gating branch (B) vs (C); returns int, compared == 1. Identity and semantics unknown.",
+    "FUN_142665070 (0x142665070, this, 1): the main unholster operation on [this+0xc60] ActiveMovementMode; large body with floats, not decompiled in full. Core behavior of the function.",
+    "The (C)/(E) gate: P = [Controller+0x10] treated as a struct with data-ptr@+0x30 and count@+0x38, compared against RAX+0x30/RAX+0x38 where RAX = AFortPlayerControllerAthena static class (GetPrivateStaticClassBody, size 0x20c0). Whether RAX is a UClass or a CDO, what the struct at Controller+0x10 is, and what the 'element at index n equals data-ptr' comparison tests, are all unresolved (no UObject layout pin for this engine + no class-field map at 0x30/0x38).",
+    "FName _DAT_148191e18: the no-param ProcessEvent name in FUN_1428bfcd0; name-pool read not available in this workspace (same gap noted in q27-11100407 for 0x148191ed0).",
+    "FUN_1406a9dc0 (engine): presumed multicast-delegate ProcessDelegate(one arg); not proven.",
+    "FUN_143f84060 (0x143f84060, this, 1): trailing ([this+0x32]&2)-gated state op writing a bool near this+0x28; unidentified."
+  ],
+  "attempts": [
+    "inventory_query.py show: exec 0x1428c5c00, flags 0x4080401, no params, no pre-indexed capture.",
+    "Requested Ghidra captures (evidence.py capture): exec entry, all 7 callees, and the tail body 0x14268a620; decompiled each with bounded reads.",
+    "Decompiled exec 0x1428c5c00: prologue + tail-JMP 0x14268a620; decompiled body 0x14268a620 fully (71-line asm read).",
+    "Identified callees: 0x142a3d9f0 = AFortPlayerControllerAthena static-class getter; 0x143f76650 = [x+0x118]->[+0x250] two-step deref (resolved to Instigator->Controller via field-offset 0x118/0x250); 0x1428bfcd0 = ProcessEvent(FindFunctionChecked(FName _DAT_148191e18), null).",
+    "Resolved 9 of 10 touched fields on this via evidence.py field-offset (see field_proofs); the 5th (Controller-side 0x14ab..0x14b2 source fields) are on AFortPlayerControllerAthena and were not individually mapped.",
+    "23.20 SDK dump: 'void UnholsterWeapon(); // (Final | Native | Protected | BlueprintCallable)' — no-param signature confirmed."
+  ],
+  "next_steps": [
+    "Pin this engine's UObject header layout (Name/Outer offsets) from a known decompile, then identify the struct at Controller+0x10 with data@+0x30/count@++0x38 (likely a TArray on AFortPlayerControllerAthena) and the class-side 0x30/0x38 pair; determine whether RAX is a UClass or CDO (inspect 0x1481b0238 contents vs class tables).",
+    "Decompile FUN_142665070 in full (capture exists in requests-unholster-callees batch) and resolve its [this+0xc60] ActiveMovementMode contract — this is the core unholster op.",
+    "Resolve FName _DAT_148191e18 from the name pool (needs a name-pool dump pass, as flagged in q27-11100407) to name the no-param ProcessEvent call.",
+    "Identify FUN_143f7a920 (global vtable +0x150 query) and FUN_143f84060 (trailing [this+0x32]&2-gated op); confirm 0x1406a9dc0 as multicast-delegate ProcessDelegate."
+  ],
+  "captures": [
+    "captures/8dcb59f60f6d413e85729dce211a85d4/0x1428c5c00.c",
+    "captures/73a151a8a8a04c5dbd54b5791c12d3fa/0x14268a620.asm"
+  ]
+}

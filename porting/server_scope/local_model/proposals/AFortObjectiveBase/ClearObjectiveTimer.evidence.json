@@ -1,0 +1,50 @@
+{
+  "class": "AFortObjectiveBase",
+  "function": "ClearObjectiveTimer",
+  "owner": "q27-11100841",
+  "status": "proposed",
+  "exec_addr": "0x142a03f00",
+  "body_addr": "0x142a03f00",
+  "proposal": "work/q27-11100841/AFortObjectiveBase_ClearObjectiveTimer.inc",
+  "reflection": {
+    "exec_addr": "0x142a03f00",
+    "flags": "0x4080405",
+    "params": [],
+    "create_func": "0x142a03030",
+    "source": "lea",
+    "flag_notes": "Native (0x4000000) + protected (0x80000, per the StartPlayingObjective 0x4020404=public / StopObjective 0x4080404=protected bit mapping) + BlueprintCallable|BlueprintAuthorityOnly group; zero reflected params, void return."
+  },
+  "exec_entry": {
+    "observation": "Captured decompile at 0x142a03f00 begins with `*(param_2+0x20) = (param_2+0x20 != 0) + param_2+0x20` (FFrame local-var counter boilerplate), then `lVar2 = *(param_1+0x2b0); if (lVar2==0) return;` and the timer body operating on lVar2.",
+    "interpretation": "param_2 is the reflection FFrame*; the increment is exec-entry boilerplate, not body. param_1+0x2b0 is the reflected TimerComponent Object member."
+  },
+  "body": {
+    "decompile": "void FUN_142a03f00(this, FFrame*) { lVar2 = this->TimerComponent; /* 0x2b0 */ if (!lVar2) return; /* then inline body of ClearMissionTimer on lVar2 */ }",
+    "steps": [
+      "1. Read TimerComponent (reflected Object member, offset 688=0x2b0, type UFortMissionTimerComponent*).",
+      "2. If null, return (no-op).",
+      "3. Otherwise the remainder of the function is byte-identical to UFortMissionTimerComponent::ClearMissionTimer (0x1429ef920) with `this` replaced by the component pointer: clears the timer handles, zeroes TimerData (bTimerIsPaused, time fields, weak target, function name), and re-clears the trailing handle."
+    ],
+    "capture": "porting/generated/native108-broad/0x142a03f00.c (pre-existing); sibling capture captures/a2950d965da64065b38cad379eaeef66/0x1429ef920.c"
+  },
+  "identified_contracts": {
+    "this+0x2b0": "AFortObjectiveBase::TimerComponent (reflected, offset 688=0x2b0, Object, type class 0x1429ee2d0 = UFortMissionTimerComponent).",
+    "UFortMissionTimerComponent::ClearMissionTimer": "Native 0x1429ef920, flags 0x4020405, no params. Its captured decompile is instruction-identical to the ClearObjectiveTimer body after the TimerComponent null-check, which is the evidence that ClearObjectiveTimer delegates to it (compiler inlined the component method).",
+    "component timer data (0xe8..0x150)": "FMissionTimerData TimerData: bTimerIsPaused byte @0xe8, OriginalTimePeriod @0xec, ReplicatedRemainingTime @0xf0, TimeAddedOrRemoved @0xf4, LastTimeAddedOrRemoved @0xf8, ClientRemainingTime @0xfc, FWeakObjectPtr @0x100, FName @0x108, FTimerHandle @0x110; additional handles @0x138/0x140/0x148. (Resolved for completeness; the proposal does not re-implement this logic.)"
+  },
+  "proven_delegation": {
+    "method": "Compared captured decompiles of 0x142a03f00 (ClearObjectiveTimer) and 0x1429ef920 (ClearMissionTimer).",
+    "result": "Identical statement-for-statement: same guard (owner ptr @+0xa0 non-null, netmode==3, FName valid, FWeakObjectPtr_Get non-null, UObject_FindFunction non-null), same FTimerManager lookups, same FTimerManager_InternalClearTimer calls at +0x110/+0x138/+0x140, same TimerData zeroing sequence, same trailing virtual call @+0x5e8. Only difference: ClearObjectiveTimer first loads lVar2=this->TimerComponent and returns early if null, then operates on lVar2."
+  },
+  "attempts": [
+    "inventory_query.py show AFortObjectiveBase::ClearObjectiveTimer: exec 0x142a03f00, flags 0x4080405, no params.",
+    "evidence.py show 0x142a03f00 (c): full body decompile.",
+    "evidence.py field-offset AFortObjectiveBase 0x2b0: TimerComponent (Object, type 0x1429ee2d0).",
+    "evidence.py query member UFortMissionTimerComponent + struct_blocks MissionTimerData: mapped the component timer-data layout.",
+    "evidence.py capture 0x1429ef920 (ClearMissionTimer) + show: proved the objective body is an inlined copy of the component method.",
+    "Cross-checked flag->access/specifier mapping against promoted AFortObjectiveBase functions (StartPlayingObjective/StopObjective) and UFortMissionTimerComponent siblings (AddOrRemoveTime/SetTimerLabelText)."
+  ],
+  "unresolved_contracts": [
+    "The component method UFortMissionTimerComponent::ClearMissionTimer is not yet declared in the isolated checkout header; a declaration was added (public, UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly), void, no params) to make the delegation compilable. Its own body is a separate recovery (not part of this assignment)."
+  ]
+}

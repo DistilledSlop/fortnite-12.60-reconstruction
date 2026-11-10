@@ -1,0 +1,53 @@
+{
+  "class": "AFortMeatballVehicle",
+  "function": "LandShakeEnd",
+  "owner": "q27-11100813",
+  "status": "proposed",
+  "exec_addr": "0x1429b2390",
+  "body_addr": "0x1429b2390",
+  "proposal": "work/q27-11100813/AFortMeatballVehicle_LandShakeEnd.inc",
+  "reflection": {
+    "exec_addr": "0x1429b2390",
+    "flags": "0x4080401",
+    "params": [],
+    "create_func": "0x1429ad490",
+    "source": "lea",
+    "flag_notes": "Native (0x400) + SkipPublic (0x800000) + 0x40000000; zero reflected params."
+  },
+  "exec_entry": {
+    "observation": "Captured decompile at 0x1429b2390 begins with `*(param_2+0x20) = (param_2+0x20 != 0) + param_2+0x20` then falls through to the real body inline.",
+    "interpretation": "param_2 is the FFrame* of the reflection exec entry; the increment is the FFrame local-var counter boilerplate (identical wrapper pattern to work/q27-11100754 evidence). Not a real object member and not part of the recovered body."
+  },
+  "body": {
+    "decompile": "void FUN_1429b2390(this, FFrame*) { if (this+0x1078 != 0 && (PC = this+0x1070, PC != 0)) { CamMgr = *(PC+0x2b0); if (CamMgr != 0) { CamMgr->vtable[0x798](CamMgr, this+0x1078, 0); /* StopCameraShake(LandCameraShake) */ PC = this+0x1070; /* reload */ } this+0x1078 = 0; /* LandCameraShake = nullptr */ if (PC != 0) { FUN_144483410(PC, 0,0,0,0,0,0, 2, *(this+0x10a0)); /* StopForceFeedback(2, LandForceFeedbackHandle) */ } } }",
+    "steps": [
+      "1. Outer guard: LandCameraShake (0x1078) non-null AND DrivingPlayerController (0x1070) non-null.",
+      "2. CamMgr = DrivingPlayerController->PlayerCameraManager (PC+0x2b0, reflected APlayerController::PlayerCameraManager).",
+      "3. If CamMgr non-null: CamMgr->StopCameraShake(LandCameraShake) [UCameraManager vtable 0x798].",
+      "4. LandCameraShake (0x1078) = nullptr.",
+      "5. Native re-reads DrivingPlayerController (defensive; StopCameraShake may touch the controller).",
+      "6. If DrivingPlayerController non-null: DrivingPlayerController->StopForceFeedback(channel=2, LandForceFeedbackHandle (0x10a0)) [FUN_144483410]."
+    ],
+    "capture": "captures/08f681cb67c8471487e7115bc7e358db/0x1429b2390.c"
+  },
+  "identified_contracts": {
+    "this+0x1070": "AFortMeatballVehicle::DrivingPlayerController (reflected, offset 4208=0x1070, APlayerController*).",
+    "this+0x1078": "AFortMeatballVehicle::LandCameraShake (reflected, offset 4216=0x1078, UCameraShakeBase*).",
+    "this+0x10a0": "AFortMeatballVehicle::LandForceFeedbackHandle (reflected, offset 4256=0x10a0, FForceFeedbackHandle, 8 bytes).",
+    "PC+0x2b0": "APlayerController::PlayerCameraManager (reflected APlayerController member, offset 688=0x2b0, UCameraManager*).",
+    "UCameraManager vtable[0x798]": "UCameraManager::StopCameraShake(UCameraShakeBase*) - the standard engine stop-shake call; receiver confirmed as PlayerCameraManager, arg is the UCameraShakeBase* being nulled.",
+    "FUN_144483410": "APlayerController::StopForceFeedback(int32 Channel, FForceFeedbackHandle Handle). Captured decompile (captures/65ce5f5ddabf47c7b90c8d2a62422b51/0x144483410.c) confirms: method on the controller with a TArray of 32-byte force-feedback entries at PC+0x358 (ptr) / +0x360 (Num); binary-searches the entry whose leading qword equals the FForceFeedbackHandle, removes it (memmove + Num-- + shrink FUN_140743570); branches on Channel (param_8) values 0/1/2. Caller passes Channel=2 and the 8-byte LandForceFeedbackHandle."
+  },
+  "unresolved_contracts": [
+    "UCameraManager vtable[0x798] name (StopCameraShake) inferred from receiver type (PlayerCameraManager/UCameraManager), UCameraShakeBase* argument, and the stop-shake context of the function; the vtable array was not read directly (reflection class blocks are extracted structures without in-memory vtables).",
+    "StopForceFeedback channel constant is the literal 2 as passed by the caller; its enum name (a force-feedback channel/priority) is not resolved from the image.",
+    "The trailing '0' third argument in the vtable call is treated as Ghidra register noise (StopCameraShake takes a single UCameraShakeBase*)."
+  ],
+  "attempts": [
+    "inventory_query.py show: exec 0x1429b2390, flags 0x4080401, zero reflected params.",
+    "evidence.py capture 0x1429b2390 + show (c): full body decompile (FFrame boilerplate + real body).",
+    "evidence.py query member AFortMeatballVehicle: mapped 0x1070/0x1078/0x10a0 to DrivingPlayerController/LandCameraShake/LandForceFeedbackHandle.",
+    "evidence.py query member APlayerController: confirmed 0x2b0 = PlayerCameraManager (offset 688).",
+    "evidence.py capture 0x144483410 + show: confirmed StopForceFeedback behavior (32-byte FF entry array, binary search, remove, channel branch)."
+  ]
+}

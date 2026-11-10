@@ -1,0 +1,74 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleScaleSwitchAxisPressed",
+  "owner": "q27-11100515",
+  "status": "blocked",
+  "exec_addr": "0x1428c2fc0",
+  "reflection": {
+    "exec_addr": "0x1428c2fc0",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc5b0",
+    "source": "lea"
+  },
+  "inc_path": null,
+  "body": {
+    "asm": [
+      "1428c2fc0  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c2fc4  XOR R8D,R8D",
+      "1428c2fc7  TEST RAX,RAX",
+      "1428c2fca  SETNZ R8B",
+      "1428c2fce  ADD R8,RAX",
+      "1428c2fd1  MOV qword ptr [RDX + 0x20],R8",
+      "1428c2fd5  MOV RAX,qword ptr [RCX]",
+      "1428c2fd8  JMP qword ptr [RAX + 0xd40]"
+    ],
+    "interpretation": "Same virtual-dispatch thunk family as the sibling scale/rotate handlers: guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xd40. The real handler body is in the vtable slot.",
+    "capture": "captures/a166308e142c427b8d7816a81a4790c3/0x1428c2fc0.asm (generated this run via evidence.py capture)"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "slot": "0xd40",
+    "slot_address": "0x146205248",
+    "slot_target": "0x142675fa0",
+    "slot_target_decomp_summary": "void FUN_142675fa0(this){ if (FUN_141ed91f0(this)) return;  // early-out guard\n  uVar1 = *(u32*)(this+0xbd0);\n  ... build a 0x30-byte heap struct (FMemory_Realloc): *s=&DAT_1459a9e80; FUN_142ee3b30(s+1,this); set s+0x10..0x1c from a 16-byte literal (LAB_14265dccc); s+0x18=uStack_90(=0); s+0x20..0x23=FUN_142bad740(); *s=&DAT_1459a9ed8;\n  (s->vftable[0x40/8])(s, &plStack_88);   // virtual call\n  zero a local (auStack_78); uStack_a0=0xbf800000;\n  FUN_1446278d0(uVar3, this+0xbc8, &plStack_88, uVar1);  // main work (timer-based)\n  ... cleanup/deallocation of plStack_88 and s; }\n  (stack canary at entry/exit: _DAT_1480c4288 ^ auStack_c8)"
+  },
+  "unresolved_contracts": [
+    {
+      "addr": "0x141ed91f0",
+      "role": "early-out guard (returns bool; if true the handler returns immediately)",
+      "status": "unresolved",
+      "note": "Complex predicate: reads a global (_DAT_148351eb8), calls FUN_144640410(g, this, 0) -> object, checks object+0x188 != 0, then FUN_1428ea7f0() -> state, compares *(state+0x38) <= *(obj2+0x38), indexes an array at obj2+0x30 by state+0x38 and requires it == state+0x30, then FUN_144214d90 -> FUN_14081b480 -> FUN_14081b540 and returns (==0x02). Not identified as a named native; the semantic condition (likely a 'can this creative/move-tool act now' game-state/controller check) is not established."
+    },
+    {
+      "addr": "0x1446278d0",
+      "role": "main work function (called with (uVar3, this+0xbc8, &plStack_88, uVar1))",
+      "status": "unresolved",
+      "note": "Large timer-based mechanism. References the wide literal L\"STAT_SetTimer\" (FTimerManager stat scope) and manipulates a timer array (param_1+0x10 count, +0x18 array, +0x28 overflow). Signature (undefined* param_1, ulonglong* param_2, longlong** param_3, float param_4, byte param_5, float param_6). The full contract (which timer it sets, on which object, with what interval/callback) is not established."
+    },
+    {
+      "addr": "0x142675fa0 (struct construction)",
+      "role": "0x30-byte heap struct built via FMemory_Realloc, FUN_142ee3b30(s+1,this) copy, FUN_142bad740(), vtable swap DAT_1459a9e80 -> DAT_1459a9ed8, then virtual call (s->vftable[8])(s,&plStack_88)",
+      "status": "unresolved",
+      "note": "The struct type, the meaning of the DAT_1459a9e80/DAT_1459a9ed8 vtable pointers, and the +0x40 virtual method are not identified."
+    },
+    {
+      "addr": "fields 0xbd0 and 0xbc8",
+      "role": "uVar1=*(u32*)(this+0xbd0) passed as param_4 to FUN_1446278d0; this+0xbc8 passed as param_2",
+      "status": "unresolved",
+      "note": "evidence.py field-offset AFortCreativeMoveTool 3024 (0xbd0) and 3016 (0xbc8) both return EMPTY (no reflected field at these offsets in this class hierarchy)."
+    }
+  ],
+  "secondary_reference": "23.20 SDK dump AFortCreativeMoveTool.h does not expose a HandleScaleSwitchAxisPressed body (native-only); the sibling scale/rotate handlers in the 23.20 class are the simple flag+RPC family, so the extra timer-based logic here is 12.60-specific and not corroborated by the SDK.",
+  "attempts": [
+    "Generated a capture for the reflected thunk 0x1428c2fc0 and read the raw asm: 8-instruction thunk, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xd40 (same family as the resolved siblings).",
+    "Read vtable slot 0xd40 (0x146205248) = 0x142675fa0 via evidence.py bytes; captured and read the full C decompilation (stack canary, ~60 lines).",
+    "Captured and read the early-out guard 0x141ed91f0 (complex multi-callee predicate, not a named native).",
+    "Captured and read the main work function 0x1446278d0 (large timer-based mechanism referencing L\"STAT_SetTimer\").",
+    "Queried fields 0xbd0 (3024) and 0xbc8 (3016) via evidence.py field-offset: both EMPTY."
+  ],
+  "blocker": "Handler body (vtable slot 0xd40 = 0x142675fa0) is not the simple flag+RPC family of the sibling scale/rotate handlers. It is a complex timer-based routine whose early-out guard (0x141ed91f0), main work function (0x1446278d0, references L\"STAT_SetTimer\"), 0x30-byte heap struct construction (vtable swap DAT_1459a9e80->DAT_1459a9ed8, virtual call +0x40), and fields 0xbd0/0xbc8 (unresolved in reflection) are all unresolved. A faithful whole-function body cannot be written without resolving these contracts. Next step: (1) identify the guard 0x141ed91f0 as a named game-state/controller predicate; (2) fully decompile 0x1446278d0 to establish the FTimerManager::SetTimer contract (object, interval, callback, the 0xbf800000/-0.5f constant and 0xbd0/0xbc8 fields); (3) identify the 0x30-byte struct type and its +0x40 virtual method; then map 0xbd0/0xbc8 via a broader field/type search.",
+  "remaining_concerns": [
+    "The vtable dispatch is virtual; a derived-class override of the slot-0xd40 function would change behavior."
+  ]
+}

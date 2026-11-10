@@ -1,0 +1,82 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandlePullPressed",
+  "owner": "q27-11100407",
+  "status": "proposed",
+  "exec_addr": "0x1428c2e20",
+  "reflection": {
+    "exec_addr": "0x1428c2e20",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc250",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100407/AFortCreativeMoveTool_HandlePullPressed.inc",
+  "body": {
+    "asm": [
+      "1428c2e20  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c2e24  XOR R8D,R8D",
+      "1428c2e27  TEST RAX,RAX",
+      "1428c2e2a  SETNZ R8B",
+      "1428c2e2e  ADD R8,RAX",
+      "1428c2e31  MOV qword ptr [RDX + 0x20],R8",
+      "1428c2e35  MOV RAX,qword ptr [RCX]",
+      "1428c2e38  JMP qword ptr [RAX + 0xd70]"
+    ],
+    "interpretation": "Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame::NextLocalVar): 0 stays 0, non-zero n becomes n+1. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xd70 (entry index 365). No other side effects, no return value. The reflected exec entry is only this frame side-effect plus the virtual dispatch; the real handler body lives in the vtable slot.",
+    "capture": "captures/8b20e880e3584ce78783c5a4930bca77/0x1428c2e20.asm"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "porting/generated/class-vtables/vtables.json (resolve_class_vtables.py): gpsc 0x1428bae30 -> internal_ctor 0x1428bdaa0 -> ctor 0x14265ac60, primary vptr 0x146204508",
+    "slot": "0xd70",
+    "slot_address": "0x146205278",
+    "slot_target": "0x1426754b0",
+    "slot_target_asm": [
+      "1426754b0  MOVZX R8D,byte ptr [RCX + 0xf36]",
+      "1426754b8  MOV R9B,0x1",
+      "1426754bb  MOVSS XMM1,dword ptr [RCX + 0xf3c]",
+      "1426754c3  MOV byte ptr [RCX + 0xf37],0x1",
+      "1426754ca  JMP 0x1428c05d0"
+    ],
+    "slot_target_meaning": "Set bIsPullPressed (byte 0xf37) = 1, then tail-call shared helper 0x1428c05d0 with (R8=byte 0xf36 = bIsPushPressed, R9=1, XMM1=float 0xf3c = NativeRecoveredFloat_0xf3c)."
+  },
+  "shared_helper": {
+    "addr": "0x1428c05d0",
+    "asm_summary": "Builds a 6-byte param struct on the stack {float@0 = XMM1, bool@4 = R8B, bool@5 = R9B}; RDX = FName global 0x148191ed0; RAX = FindFunctionChecked(this, RDX) via 0x142ec7730; then this->ProcessEvent(RAX, &paramstruct) via vtable +0x210.",
+    "param_struct": "float@0 (NewTargetTractorBeamOffset), bool@4 (bNewIsPushPressed), bool@5 (bNewIsPullPressed)"
+  },
+  "field_proofs": [
+    "byte 0xf37 = bIsPullPressed (reflected bool bit, evidence.py field-offset AFortCreativeMoveTool 0xf37 -> bool_bits.json)",
+    "byte 0xf36 = bIsPushPressed (reflected bool bit, evidence.py field-offset AFortCreativeMoveTool 0xf36)",
+    "float 0xf3c = NativeRecoveredFloat_0xf3c (unreflected gap; nearest reflected member SelectionProperty at 0xf32); named by existing porting/behavior/cr1_runtime/AFortCreativeMoveTool/ServerUpdateTractorBeam_Implementation.inc which stores NewTargetTractorBeamOffset to [RCX+0xf3c]"
+  ],
+  "rpc_contract": {
+    "name": "ServerUpdateTractorBeam",
+    "exec_addr": "0x1428c5610",
+    "flags": "0x80280cc0",
+    "flag_names": ["Net", "NetReliable", "NetServer"],
+    "signature": "void ServerUpdateTractorBeam(float NewTargetTractorBeamOffset, bool bNewIsPushPressed, bool bNewIsPullPressed)",
+    "param_layout": "Float@0 (offset 0), Bool@4, Bool@5 — matches the shared-helper param struct exactly",
+    "implementation_inc": "porting/behavior/cr1_runtime/AFortCreativeMoveTool/ServerUpdateTractorBeam_Implementation.inc (original body 0x142681e40: NativeRecoveredFloat_0xf3c = NewTargetTractorBeamOffset; bIsPushPressed = bNewIsPushPressed; bIsPullPressed = bNewIsPullPressed;)"
+  },
+  "secondary_reference": "23.20 SDK dump AFortCreativeMoveTool.h: ServerUpdateTractorBeam(float& NewTargetTractorBeamOffset, bool& bNewIsPushPressed, bool& bNewIsPullPressed) (Net|NetReliable|NetServer); HandlePullPressed (Native|Event|Public|BlueprintCallable|BlueprintEvent). Offsets differ from 12.60 (class is smaller in 12.60) but names and signature agree.",
+  "cross_validation": [
+    "Sibling HandleHitTraceRulePressed 0x1428c2d00 tail-jumps vtable 0xd90; resolved slot 0xd90 (0x146205298) = 0x142674df0.",
+    "Sibling HandlePrecisionModePressed 0x1428c2e00 tail-jumps vtable 0xd80; resolved slot 0xd80 (0x146205288) = 0x1426753c0 (which itself tail-calls vtable 0xd90).",
+    "Push/Pull slot targets 0x1426754f0/0x1426754b0 set bIsPushPressed/bIsPullPressed respectively and issue the (float,bool,bool) tractor-beam RPC — a semantic match that independently pins the vtable base 0x146204508."
+  ],
+  "remaining_concerns": [
+    "The FName at 0x148191ed0 (ComparisonIndex 0x3b3c0, DisplayIndex 0x3b3cd) is not resolved to a literal name string from a name-pool dump in this workspace. Its identity as 'ServerUpdateTractorBeam' is a strong inference from the exact (float,bool,bool) signature match, the field-offset match, and the 23.20 SDK, not a direct name-pool read.",
+    "The vtable dispatch is virtual; a derived-class override of the slot-0xd70 function would change behavior. The concrete AFortCreativeMoveTool target is resolved, but the .inc preserves the virtual dispatch rather than inlining it."
+  ],
+  "attempts": [
+    "Decompiled the exec body (evidence.py show 0x1428c2e20 --format c/asm): 8 instructions, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xd70.",
+    "Confirmed via reflection (inventory_query.py show) flags 0xc080c00 and ZERO reflected params, so RDX is the script-frame/Parms pointer of the standard UE native convention, not a named parameter.",
+    "Identified the primary vtable via the constructor chain in porting/generated/class-vtables/vtables.json (0x146204508).",
+    "Read vtable slot 0xd70 (0x146205278) = 0x1426754b0 (evidence.py bytes) and decompiled it (evidence.py show --format asm).",
+    "Decompiled the shared helper 0x1428c05d0: FindFunctionChecked(FName 0x148191ed0) + ProcessEvent with a {float,bool,bool} param struct.",
+    "Resolved field offsets 0xf36/0xf37/0xf3c via evidence.py field-offset and the existing ServerUpdateTractorBeam_Implementation.inc.",
+    "Cross-validated the vtable base against two sibling handlers' tail-jump offsets (0xd90, 0xd80)."
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "ServerHandshakeFromClientForReceivingCutActors",
+  "owner": "q27-11100635",
+  "status": "proposed",
+  "exec_addr": "0x1428c4510",
+  "reflection": {
+    "exec_addr": "0x1428c4510",
+    "flags": "0x80280cc0",
+    "flag_names": ["Net", "NetReliable", "NetServer"],
+    "params": [],
+    "create_func": "0x1428bd560",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100635/AFortCreativeMoveTool_ServerHandshakeFromClientForReceivingCutActors.inc",
+  "body": {
+    "asm": [
+      "1428c4510  PUSH RBX",
+      "1428c4511  SUB RSP,0x20",
+      "1428c4515  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c4519  XOR R8D,R8D",
+      "1428c451c  TEST RAX,RAX",
+      "1428c451f  MOV RBX,RDX",
+      "1428c4522  SETNZ R8B",
+      "1428c4526  ADD R8,RAX",
+      "1428c4529  MOV qword ptr [RDX + 0x20],R8",
+      "1428c452d  MOV RAX,qword ptr [RCX]",
+      "1428c4531  CALL qword ptr [RAX + 0xae0]",
+      "1428c4537  TEST AL,AL",
+      "1428c4539  JNZ short 0x1428c454c",
+      "1428c453b  LEA RCX,[RIP + 0x3ae0ece]   ; wide literal \"ServerHandshakeFromClientForReceivingCutActors_Validate\" @ 0x1463a5410",
+      "1428c4542  ADD RSP,0x20",
+      "1428c4546  POP RBX",
+      "1428c4547  JMP 0x142d6e0f0   ; RPC_ValidateFailed",
+      "1428c454c  MOV RAX,qword ptr [RBX]",
+      "1428c454f  MOV RCX,RBX",
+      "1428c4552  ADD RSP,0x20",
+      "1428c4556  POP RBX",
+      "1428c4557  JMP qword ptr [RAX + 0xae8]"
+    ],
+    "hex_head": "40534883ec20488b42204533c04885c0488bd9410f95c04c03c04c894220488b01ff90e00a0000",
+    "interpretation": "Standard Server-RPC exec wrapper. (1) Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame::NextLocalVar); RBX is saved to RDX (the frame). (2) CALL the per-RPC _Validate thunk at vtable byte offset 0xae0 (index 698); if it returns 0, LEA the wide validate-fail literal into RCX and tail-JMP to RPC_ValidateFailed (0x142d6e0f0), then return. (3) Otherwise restore RSP/RBX and TAIL-CALL (JMP, not CALL) the Server-RPC body at vtable byte offset 0xae8 (index 699), with this (RBX) in RCX. The dispatch is virtual and preserved as such.",
+    "capture": "captures/6c9f7a5abea44e54aba70d7728c6d2fd/0x1428c4510.c"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "porting/generated/class-vtables/vtables.json (resolve_class_vtables.py): gpsc 0x1428bae30 -> internal_ctor 0x1428bdaa0 -> ctor 0x14265ac60, primary vptr 0x146204508",
+    "validate_slot": "0xae0",
+    "validate_slot_address": "0x146204fe8",
+    "validate_slot_target": "0x1406801d0",
+    "validate_target_body": "undefined1 FUN_1406801d0(void) { return 1; }  (trivial no-param validator; always succeeds)",
+    "body_slot": "0xae8",
+    "body_slot_address": "0x146204ff0",
+    "body_slot_target": "0x1426811f0",
+    "body_slot_target_meaning": "The concrete AFortCreativeMoveTool implementation of the ServerHandshakeFromClientForReceivingCutActors Server RPC. The .inc preserves the virtual dispatch (JMP [this+0xae8]) rather than inlining this target, keeping any derived override intact."
+  },
+  "rpc_contract": {
+    "name": "ServerHandshakeFromClientForReceivingCutActors",
+    "flags": "0x80280cc0",
+    "flag_names": ["Net", "NetReliable", "NetServer"],
+    "signature": "void ServerHandshakeFromClientForReceivingCutActors()  (no reflected params)",
+    "validate_fail_string": "ServerHandshakeFromClientForReceivingCutActors_Validate",
+    "validate_fail_string_addr": "0x1463a5410",
+    "rpc_validate_failed_target": "0x142d6e0f0"
+  },
+  "prologue_proof": {
+    "note": "The +0x20 increment prologue is byte-for-byte identical to the known-good ported AFortCreativeMoveTool::OnRep_CreativeQuickbarComponent (0x142a65bc0) and to q27-11100407 HandlePullPressed (0x1428c2e20): the universal FFrame::NextLocalVar guard-increment emitted by the UE native exec wrapper (here with RBX=RDX saved as the frame base for the body dispatch)."
+  },
+  "attempts": [
+    "Decompiled exec entry 0x1428c4510 (evidence.py show): FFrame prologue + CALL [this+0xae0] validate + TEST/JNZ + LEA string + JMP RPC_ValidateFailed + JMP [this+0xae8] body.",
+    "Resolved primary vtable 0x146204508 via ctor chain (gpsc 0x1428bae30 -> ictor 0x1428bdaa0 -> ctor 0x14265ac60).",
+    "Read vtable slots 0xae0 (0x146204fe8 = 0x1406801d0) and 0xae8 (0x146204ff0 = 0x1426811f0) via evidence.py bytes.",
+    "Decompiled validate target 0x1406801d0 (evidence.py show): `return 1;` — always succeeds.",
+    "Computed validate-fail string addr 0x1463a5410 and RPC_ValidateFailed target 0x142d6e0f0 from the LEA/JMP displacements.",
+    "Wrote body-only .inc preserving the prologue + validate + body virtual dispatch (no inlining of the slot targets)."
+  ],
+  "remaining_concerns": [
+    "The concrete body at 0x1426811f0 was not inlined; the .inc dispatches to it virtually. This is intentional and matches the class's established thunk style, so any derived-class override of ServerHandshakeFromClientForReceivingCutActors remains honored at runtime."
+  ]
+}

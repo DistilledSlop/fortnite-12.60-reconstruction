@@ -1,0 +1,44 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandlePrecisionModePressed",
+  "owner": "q27-11100356",
+  "status": "blocked",
+  "exec_addr": "0x1428c2e00",
+  "reflection": {
+    "exec_addr": "0x1428c2e00",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc1f0",
+    "source": "lea"
+  },
+  "body": {
+    "asm": [
+      "1428c2e00  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c2e04  XOR R8D,R8D",
+      "1428c2e07  TEST RAX,RAX",
+      "1428c2e0a  SETNZ R8B",
+      "1428c2e0e  ADD R8,RAX",
+      "1428c2e11  MOV qword ptr [RDX + 0x20],R8",
+      "1428c2e15  MOV RAX,qword ptr [RCX]",
+      "1428c2e18  JMP qword ptr [RAX + 0xd80]"
+    ],
+    "interpretation": "Read the 64-bit field at [param_2 + 0x20]; compute field + (field != 0) and write it back (a non-zero-guarded increment: 0 stays 0, n!=0 becomes n+1). Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xd80 (entry index 432). No other side effects, no return value. The reflected exec entry is only this counter side-effect plus the dispatch; the real handler body lives in the vtable slot.",
+    "capture": "captures/a5184e41aef240aaac2ab07ac8b73764/0x1428c2e00.asm"
+  },
+  "pattern_note": "Identical shape to every other AFortCreativeMoveTool input handler in this family: HandleExitHeldDownLongEnough 0x1428c2c80 -> vtable 0xcc8 (idx 409), HandlePrecisionModePressed 0x1428c2e00 -> vtable 0xd80 (idx 432), HandleHitTraceRulePressed 0x1428c2d00 -> vtable 0xd90 (idx 434), HandleHitTraceRuleHeldDownLongEnough 0x1428c2ce0 -> vtable 0xda0 (idx 436). All are a non-zero-guarded 64-bit increment of [param_2+0x20] followed by a tail JMP to a class vtable slot.",
+  "unresolved_contracts": [
+    "Virtual function identity at AFortCreativeMoveTool vtable byte offset 0xd80 (index 432) - the real PrecisionMode-pressed handler body - is not identified.",
+    "Identity of param_2 (RDX): the object whose 64-bit field at +0x20 is the guarded counter. The function has no reflected params, so RDX is a system/hidden argument (the script-frame/Parms pointer of the standard UE native convention, or an explicit object passed by a C++ caller). Its type and the +0x20 field are not established."
+  ],
+  "attempts": [
+    "Decompiled the exec body (evidence.py show 0x1428c2e00 --format c/asm); body is 8 instructions: guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xd80.",
+    "Confirmed via reflection (inventory_query.py show) that the function has flags 0xc080c00 and ZERO reflected params, so RDX is not a named parameter.",
+    "Compared sibling handlers (HandleExitHeldDownLongEnough, HandleHitTraceRulePressed, HandleHitTraceRuleHeldDownLongEnough) to confirm the shared pattern and per-function vtable byte offsets (0xcc8/0xd80/0xd90/0xda0).",
+    "Read the FClass block at 0x14639bb80 (evidence.py bytes; dump_class.py): +0x00=ctor 0x1428bae30, +0x20=0x14639afb0, +0x48=flags 0x8800a4, +0xd0=base_fn 0x142a02c30. No CDO/vtable pointer is exposed in the block.",
+    "The array at FClass+0x20 (0x14639afb0) is a 378-entry run that is a MIX of code and data pointers (e.g. [1]=0x14639f0f0 data), and the FClass block starts immediately after it (0x14639afb0+0x11c0=0x14639bb80); it is NOT a clean C++ vtable.",
+    "Scanned the whole image for runs of >=369 strict code pointers (code range 0x140001000-0x146000000): 741 candidates. Only THREE are referenced by any qword in the image: 0x146115858 (len 555, ref 0x148114b20), 0x146c6fbc8 (len 570, ref 0x148367f70), 0x146f119d8 (len 513, ref 0x147e96058). These are the only plausible real C++ vtables.",
+    "Spot-checked entry 432 (this function's PrecisionMode handler) of each of the three referenced vtables by decompiling: 0x142323b10 (float math over virtuals 0xb30/0xb38), 0x143f7d470 (one-line call to 0x1446ad360), 0x143d44650 (multi-param dispatcher). None clearly exhibits Creative Move Tool / precision-mode behavior, so none is positively pinned to AFortCreativeMoveTool.",
+    "Located the (name-string, exec-function) binding table at 0x1463a5970; it is referenced only from the class static ctor FUN_1428c0790 via FUN_142d6f540 (native name registration), which does not reveal the caller's 2nd-arg type."
+  ],
+  "next_step": "Pin the AFortCreativeMoveTool C++ vtable among the three referenced candidates (0x146115858 / 0x146c6fbc8 / 0x146f119d8) by finding the class CDO (slot 0 = vtable ptr) or a static/global pointer to the vtable, then read entry 432 (byte offset 0xd80) to get the real handler address and decompile it. Separately, find the input-binding/delegate code that invokes these handlers (the consumer of the name->exec table at 0x1463a5970) to pin down the param_2 (RDX) type and its +0x20 counter field."
+}

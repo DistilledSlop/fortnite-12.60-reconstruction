@@ -1,0 +1,51 @@
+{
+  "function": "AFortCreativeTimerObjective::BroadcastUpdateToHUD",
+  "address": "0x1428ce160",
+  "status": "blocked",
+  "owner": "q27-11100710",
+  "reflection": {
+    "exec_address": "0x1428ce160",
+    "flags": "0x4080401",
+    "params": "none",
+    "class": "AFortCreativeTimerObjective"
+  },
+  "decompile": {
+    "capture": "captures/8f8199b7b80f4758b7c23f19c61de873/0x1428ce160.c",
+    "body": [
+      "if (Volume != nullptr) { Broadcast(FunctionHandles_at_Volume_0x500, this); }"
+    ],
+    "notes": "The leading `(frame[+0x20] += (frame[+0x20] != 0))` in the decompile is the FFrame::NextLocalVar exec side-effect (exec 0x1428ce160 runs under CallState), not part of the recovered body."
+  },
+  "confirmed_facts": {
+    "volume_field": {
+      "name": "Volume",
+      "offset": "0xba8 (decimal 2984)",
+      "kind": "Object",
+      "type_refs_class": "0x142b32780",
+      "type": "AFortVolume*",
+      "proof": "reflection property; 0x142b32780 is AFortVolume's Z_Construct (captures/7171cada.../0x142b32780.c)"
+    },
+    "broadcast_helper": {
+      "address": "0x1406a9dc0",
+      "capture": "captures/615d28d5ac004834b076b074fdb9a0cf/0x1406a9dc0.c",
+      "behavior": "Takes a TArray of 16-byte entries {FWeakObjectPtr (8), FName (4), int32 (4)} (FFunctionHandle-shaped) as first arg and a const void* Param as second. For each entry: skip if name==NAME_None && entry[+0xc]==0, if the weak ptr is null, or if UObject_FindFunction fails; otherwise call obj->ProcessEvent(func, Param) via vtable slot 0x210. Then compacts the array, dropping entries whose weak object is invalid (FWeakObjectPtr_IsValid false on both, fields compared for dedupe)."
+    },
+    "afortvolume_layout_around_0x500": {
+      "StormShields": "offset 0x4f0 (1264), Array",
+      "0x500": "NO reflected field (field-offset query returns empty results at 0x500)",
+      "TimerObjectives": "offset 0x510 (1296), Array"
+    }
+  },
+  "blocker": {
+    "summary": "The AFortVolume member at offset 0x500 (the TArray of FFunctionHandle-shaped entries that BroadcastUpdateToHUD broadcasts through helper 0x1406a9dc0) is not in the 12.60 reflection data: `evidence.py field-offset AFortVolume 0x500` returns no results, and the 23.20 SDK dump (secondary reference only) places a different member (TaskQueue) at 0x500, so it cannot be used to name the 12.60 field.",
+    "missing_evidence": "C++ name (and declared element type) of the AFortVolume field at offset 0x500 in the 12.60 build.",
+    "attempts": [
+      "evidence.py field-offset AFortVolume 0x500 -> no reflected field",
+      "Checked 23.20 SDK AFortVolume.h: offset 0x500 is TaskQueue there (different layout, not 12.60 parity)",
+      "Located reflected neighbors StormShields@0x4f0 and TimerObjectives@0x510; 0x500 sits in the unreflected gap between them",
+      "Fully decompiled the body and the helper 0x1406a9dc0 to pin down the exact data shape and call (ProcessEvent)"
+    ],
+    "next_step": "Resolve the C++ name of the AFortVolume field at 0x500 via AFortVolume field-layout reconstruction (e.g., name-pool/string references in the image near 0x142b32780 Z_Construct data, or other 12.60 callers that write that array), then name the member in the isolated checkout and propose the body: `if (Volume) { Volume-><FieldName>.Broadcast... }` matching helper 0x1406a9dc0."
+  },
+  "confidence_note": "Body structure is fully resolved (guard + single broadcast call through Volume+0x500 with `this` as ProcessEvent param). Only the AFortVolume member name at 0x500 is unresolved; no fake name or layout stand-in is proposed."
+}

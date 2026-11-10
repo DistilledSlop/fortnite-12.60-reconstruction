@@ -1,0 +1,107 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "MulticastRestoreCutActors",
+  "owner": "q27-11100523",
+  "status": "proposed",
+  "exec_addr": "0x142757d50",
+  "reflection": {
+    "exec_addr": "0x142757d50",
+    "flags": "0x84cc0",
+    "params": [],
+    "create_func": "0x1428bc910",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100523/AFortCreativeMoveTool_MulticastRestoreCutActors.inc",
+  "body": {
+    "asm": [
+      "142757d50  MOV RAX,qword ptr [RDX + 0x20]",
+      "142757d54  XOR R8D,R8D",
+      "142757d57  TEST RAX,RAX",
+      "142757d5a  SETNZ R8B",
+      "142757d5e  ADD R8,RAX",
+      "142757d61  MOV qword ptr [RDX + 0x20],R8",
+      "142757d65  MOV RAX,qword ptr [RCX]",
+      "142757d68  JMP qword ptr [RAX + 0xb40]"
+    ],
+    "interpretation": "Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame*): 0 stays 0, non-zero n becomes n+1. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xb40 (entry index 288). No other side effects, no return value. The reflected exec entry is only this frame side-effect plus the virtual dispatch; the real handler body lives in the vtable slot.",
+    "capture": "captures/04b9e2e39b3d4043b7df2f1324bb7217/0x142757d50.asm (generated this run via evidence.py capture)"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "Primary vtable base 0x146204508 taken from the sibling proposal work/q27-11100501 (HandleScaleDownPressed) and work/q27-11100515 (HandleScaleDownReleased), independently re-verified against known sibling slot/target pairs via evidence.py bytes. This run re-read a contiguous block of slots (0xb38..0xdd0) and all targets sit in the same 0x14267xxxx region; slot 0xb48=0x14267b1b0 is the sibling MulticastHideCutActors (adjacent), anchoring the table.",
+    "slot": "0xb40",
+    "slot_address": "0x146205048",
+    "slot_target": "0x14267b260",
+    "slot_target_asm": [
+      "14267b260  MOV qword ptr [RSP + 0x10],RBX",
+      "14267b265  PUSH RSI",
+      "14267b266  SUB RSP,0x80",
+      "14267b26d  MOV RBX,qword ptr [RCX + 0x10a0]",
+      "14267b274  MOVSXD RAX,dword ptr [RCX + 0x10a8]",
+      "14267b27b  LEA RSI,[RAX + RAX*0x2]",
+      "14267b27f  SHL RSI,0x5",
+      "14267b283  ADD RSI,RBX",
+      "14267b286  CMP RBX,RSI",
+      "14267b289  JZ 0x14267b2e1",
+      "14267b2a0  MOV RDI,qword ptr [RBX]",
+      "14267b2a3  MOVAPS XMM0,xmmword ptr [RBX + 0x50]",
+      "14267b2a7  MOVAPS xmmword ptr [RSP + 0x70],XMM0",
+      "14267b2ac  TEST RDI,RDI",
+      "14267b2af  JZ 0x14267b2d0",
+      "14267b2b1  CMP byte ptr [RSP + 0x70],0x0",
+      "14267b2b6  JZ 0x14267b2c2",
+      "14267b2b8  MOV DL,0x1",
+      "14267b2ba  MOV RCX,RDI",
+      "14267b2bd  CALL 0x143f83090",
+      "14267b2c2  MOV RAX,qword ptr [RDI]",
+      "14267b2c5  XOR EDX,EDX",
+      "14267b2c7  MOV RCX,RDI",
+      "14267b2ca  CALL qword ptr [RAX + 0x2f8]",
+      "14267b2d0  ADD RBX,0x60",
+      "14267b2d4  CMP RBX,RSI",
+      "14267b2d7  JNZ 0x14267b2a0",
+      "14267b2e1  MOV RBX,qword ptr [RSP + 0x98]",
+      "14267b2e9  ADD RSP,0x80",
+      "14267b2f0  POP RSI",
+      "14267b2f1  RET"
+    ],
+    "slot_target_decomp": "void FUN_14267b260(this){ T* a=(T*)this->CutActors.data; T* e=a + this->CutActors.count*0x60; for(; a!=e; a+=0x60){ AActor* actor=(AActor*)a[0]; if(actor){ if(((u8*)a)[0x50]!=0) actor->SetActorEnableCollision(true); actor->SetActorHiddenInGame(false); } } }",
+    "slot_target_meaning": "Iterate the replicated TArray CutActors (data ptr byte 0x10a0, count byte 0x10a8, 0x60-byte entries). For each non-null entry: actor = entry+0x00; if the saved-state byte at entry+0x50 is non-zero, call AActor::SetActorEnableCollision(actor, true) [0x143f83090]; then call the virtual AActor::SetActorHiddenInGame(actor, false) [actor->vtable[0x2f8](actor, 0)] = unhide/restore. There is NO authority guard (restore runs on every machine)."
+  },
+  "callees": {
+    "set_actor_enable_collision": {
+      "addr": "0x143f83090",
+      "asm_summary": "AActor::SetActorEnableCollision(bool bEnableCollision). First instruction reads AActor byte 0x5c, shifts right 2 and masks bit 0 to get bActorEnableCollision; if it already equals the argument it returns (no-op). Otherwise it sets byte 0x5c bit 2 to the argument and reapplies collision on the actor's components: it uses the STAT_GetComponentsTime scope (string at 0x1459bfb80), iterates the component array, and calls component->SetCollisionEnabled(...) (virtual 0x380) on each; also updates the root-component collision-enabled state (byte 0x14c / component 0x360/0x10/0x74).",
+      "meaning": "AActor::SetActorEnableCollision(bool). Called here with true (restore re-enables collision for actors that had it enabled when cut)."
+    },
+    "set_actor_hidden_in_game": {
+      "addr": "virtual AActor vtable byte offset 0x2f8",
+      "asm_summary": "Virtual call actor->vtable[0x2f8](actor, 0). In MulticastRestoreCutActors the second argument is 0 (false); in the sibling MulticastHideCutActors (slot 0xb48 = 0x14267b1b0) the same slot is called with 1 (true). The hide/restore pairing identifies it as AActor::SetActorHiddenInGame(bool bHidden).",
+      "meaning": "AActor::SetActorHiddenInGame(false) = unhide = restore the cut actor."
+    }
+  },
+  "field_proofs": [
+    "offset 0x10a0 = CutActors (reflected Struct property, index 23, kind 0x19, type_refs.struct 0x1428c1f10, replicated, rep_notify OnRep_CutActors) via evidence.py field-offset AFortCreativeMoveTool 4256. It is a TArray of 0x60-byte entries; the data pointer is at 0x10a0 and the TArray count at 0x10a8 (no reflection result at 4264, consistent with the TArray count field).",
+    "entry layout from the asm: entry+0x00 = AActor* (8 bytes), entry+0x50 = 16-byte saved-state block whose first byte records whether collision was enabled when the actor was cut (drives the SetActorEnableCollision call).",
+    "The 0x60 (96) byte entry stride is proven by the loop arithmetic: end = data + count*3*32 = data + count*0x60 (LEA RSI,[RAX+RAX*2]; SHL RSI,5; ADD RSI,RBX), and the step is ADD RBX,0x60."
+  ],
+  "cross_validation": [
+    "Vtable base 0x146204508 consistent with the sibling work/q27-11100501 and work/q27-11100515; this run re-read a contiguous block of 8 slots (0xb38..0xdd0) and all targets sit in the same 0x14267xxxx region, with the adjacent slot 0xb48 = 0x14267b1b0 = sibling MulticastHideCutActors.",
+    "Semantic match: MulticastRestoreCutActors un-hides and re-enables collision for every cut actor, the exact inverse of MulticastHideCutActors (slot 0xb48) which hides and disables collision. The two targets are adjacent in the vtable (0x14267b260 / 0x14267b1b0) and are near-mirror images (restore passes SetActorEnableCollision(true)+SetActorHiddenInGame(false); hide passes SetActorEnableCollision(false)+SetActorHiddenInGame(true)), with the only structural difference being the HasAuthority-style virtual guard present only in hide.",
+    "The thunk shape (guarded 64-bit increment of [RDX+0x20] + virtual tail-JMP) is byte-for-byte the same family as the scale handlers at 0x1428c2f20..0x1428c3000."
+  ],
+  "remaining_concerns": [
+    "The exact UStruct identity of the CutActors element (type ref 0x1428c1f10) and its member names (e.g. 'Actor', 'bWasCollisionEnabled') are not read from a name-pool dump in this workspace; the field names in the .inc comments are inferred from the 0x60-byte layout, the 0x50 saved-state byte, and the SetActorEnableCollision/SetActorHiddenInGame pairing. The 23.20 SDK dump does not contain AFortCreativeMoveTool, so no secondary name confirmation is available here.",
+    "vtable[0x2f8] is identified as AActor::SetActorHiddenInGame(bool) from the hide/restore behavioral pairing, not from a name-pool dump; a derived AActor override would not change the contract (it is the standard hide actor virtual).",
+    "The vtable dispatch at the reflected entry is virtual; a derived-class override of the slot-0xb40 function would change behavior. The concrete AFortCreativeMoveTool target is resolved, but the .inc preserves the virtual dispatch rather than inlining it.",
+    "The script-frame field at +0x20 is the FFrame* native Parms argument (standard UE native convention); the exact FFrame member name at +0x20 is not independently proven in this workspace."
+  ],
+  "attempts": [
+    "No pre-existing capture for 0x142757d50; generated one via evidence.py capture (requests.json) and read the raw asm: 8 instructions, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xb40.",
+    "Confirmed via reflection (inventory_query.py show) flags 0x84cc0 (Net|NetReliable|NetMulticast) and ZERO reflected params, so this is a NetMulticast RPC with no params; RDX is the script-frame/Parms pointer of the standard UE native convention.",
+    "Computed slot 0xb40 address (0x146204508+0xb40=0x146205048) and read it via evidence.py bytes = 0x14267b260; captured and read its asm + C decomp (iterate CutActors 0x10a0/0x10a8, 0x60-byte entries; per entry SetActorEnableCollision(true) when entry+0x50 byte set, then virtual vtable[0x2f8](actor,0)).",
+    "Captured and read 0x143f83090: confirmed it is AActor::SetActorEnableCollision(bool) (byte 0x5c bit 2 = bActorEnableCollision, STAT_GetComponentsTime, component iteration + SetCollisionEnabled).",
+    "Resolved field 0x10a0 = CutActors (TArray, replicated, OnRep_CutActors) via evidence.py field-offset AFortCreativeMoveTool 4256; confirmed 0x10a8 is the TArray count (no reflection result).",
+    "Confirmed the table base by re-reading a contiguous block of 8 vtable slots (0xb38..0xdd0), with adjacent slot 0xb48 = sibling MulticastHideCutActors."
+  ]
+}

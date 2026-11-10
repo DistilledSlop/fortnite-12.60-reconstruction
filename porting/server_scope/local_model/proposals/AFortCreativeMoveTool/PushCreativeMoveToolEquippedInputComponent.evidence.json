@@ -1,0 +1,51 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "PushCreativeMoveToolEquippedInputComponent",
+  "owner": "q27-11100635",
+  "status": "proposed",
+  "exec_addr": "0x1428c3e80",
+  "reflection": {
+    "exec_addr": "0x1428c3e80",
+    "flags": "0xc080c00",
+    "flag_names": ["Function", "Native"],
+    "params": [],
+    "create_func": "0x1428bd3a0",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100635/AFortCreativeMoveTool_PushCreativeMoveToolEquippedInputComponent.inc",
+  "body": {
+    "asm": [
+      "1428c3e80  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c3e84  XOR R8D,R8D",
+      "1428c3e87  TEST RAX,RAX",
+      "1428c3e8a  SETNZ R8B",
+      "1428c3e8e  ADD R8,RAX",
+      "1428c3e91  MOV qword ptr [RDX + 0x20],R8",
+      "1428c3e95  MOV RAX,qword ptr [RCX]",
+      "1428c3e98  JMP qword ptr [RAX + 0xc70]"
+    ],
+    "hex": "488b42204533c04885c0410f95c04c03c04c894220488b0148ffa0700c0000cc",
+    "interpretation": "Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame::NextLocalVar): 0 stays 0, non-zero n becomes n+1. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xc70 (entry index 784). No other side effects, no return value. The reflected exec entry is only this frame side-effect plus the virtual dispatch; the real handler body lives in the vtable slot.",
+    "capture": "captures/6c9f7a5abea44e54aba70d7728c6d2fd/0x1428c3e80.c"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "porting/generated/class-vtables/vtables.json (resolve_class_vtables.py): gpsc 0x1428bae30 -> internal_ctor 0x1428bdaa0 -> ctor 0x14265ac60, primary vptr 0x146204508",
+    "slot": "0xc70",
+    "slot_address": "0x146205178",
+    "slot_target": "0x14267f790",
+    "slot_target_meaning": "The concrete AFortCreativeMoveTool implementation of PushCreativeMoveToolEquippedInputComponent. The .inc preserves the virtual dispatch (JMP [this+0xc70]) rather than inlining this target, matching the q27-11100407 HandlePullPressed precedent and keeping any derived override intact."
+  },
+  "prologue_proof": {
+    "note": "The +0x20 increment prologue is byte-for-byte identical to the known-good ported AFortCreativeMoveTool::OnRep_CreativeQuickbarComponent (0x142a65bc0) and to q27-11100407 HandlePullPressed (0x1428c2e20): MOV RAX,[RDX+0x20]; XOR R8D,R8D; TEST RAX,RAX; SETNZ R8B; ADD R8,RAX; MOV [RDX+0x20],R8. This is the universal FFrame::NextLocalVar guard-increment emitted by the UE native exec wrapper."
+  },
+  "attempts": [
+    "Decompiled exec entry 0x1428c3e80 (evidence.py show): prologue + JMP [this+0xc70].",
+    "Resolved primary vtable 0x146204508 via ctor chain (gpsc 0x1428bae30 -> ictor 0x1428bdaa0 -> ctor 0x14265ac60).",
+    "Read vtable slot 0xc70 at 0x146205178 = 0x14267f790 (evidence.py bytes).",
+    "Wrote body-only .inc preserving the prologue + virtual dispatch (no inlining of the slot target)."
+  ],
+  "remaining_concerns": [
+    "The concrete body at 0x14267f790 was not inlined; the .inc dispatches to it virtually. This is intentional and matches the class's established thunk style, so any derived-class override of PushCreativeMoveToolEquippedInputComponent remains honored at runtime."
+  ]
+}

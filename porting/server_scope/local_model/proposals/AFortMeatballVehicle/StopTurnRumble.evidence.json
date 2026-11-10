@@ -1,0 +1,50 @@
+{
+  "class": "AFortMeatballVehicle",
+  "function": "StopTurnRumble",
+  "owner": "q27-11100826",
+  "status": "proposed",
+  "exec_addr": "0x1429b23f0",
+  "body_addr": "0x1419fcf90",
+  "proposal": "work/q27-11100826/AFortMeatballVehicle_StopTurnRumble.inc",
+  "reflection": {
+    "exec_addr": "0x1429b23f0",
+    "flags": "0x4080401",
+    "params": [],
+    "create_func": "0x1429ad610",
+    "source": "lea",
+    "flag_notes": "Native (0x400) + SkipPublic (0x800000) + 0x40000000; zero reflected params, no return value."
+  },
+  "exec_entry": {
+    "observation": "Captured asm at 0x1429b23f0 is exactly 7 instructions: MOV RAX,[RDX+0x20]; XOR R8D,R8D; TEST RAX,RAX; SETNZ R8B; ADD R8,RAX; MOV [RDX+0x20],R8; JMP 0x1419fcf90.",
+    "interpretation": "The FFrame+0x20 slot increment is exec-entry boilerplate (same wrapper pattern documented in work/q27-11100813/AFortMeatballVehicle_LandShakeEnd.evidence.json). The real body is the tail-jump target 0x1419fcf90."
+  },
+  "body": {
+    "decompile": "void FUN_1419fcf90(this) { if (this->bTurnRumbleActive (0x10bf) != 0) { this->TurnRumbleIntensity (0x10a8) = 0; if (this->DrivingPlayerController (0x1070) != 0) { FUN_144483410(PC, 0, 0xbf800000, 0,0,0,0, 2, this->TurnForceFeedbackHandle (0x10b0)); } this->bTurnRumbleActive (0x10bf) = 0; } }",
+    "steps": [
+      "1. Guard: bTurnRumbleActive (0x10bf, bool bit mask 1) set.",
+      "2. TurnRumbleIntensity (0x10a8, Float) = 0 (written as undefined4 zero; the member is reflected as Float).",
+      "3. Guard: DrivingPlayerController (0x1070) non-null.",
+      "4. If set: DrivingPlayerController->StopForceFeedback(channel=2, TurnForceFeedbackHandle (0x10b0)) [FUN_144483410]. The extra 0xbf800000 (-1.0f) argument is unused in the Channel==2 remove branch (only the handle key is read).",
+      "5. bTurnRumbleActive (0x10bf) = false."
+    ],
+    "capture": "captures/25b01b1e0a4343879ada11678eff3f29/0x1419fcf90.c; entry asm: captures/69f37b13e52349c593bc9b444e264b37/0x1429b23f0.asm"
+  },
+  "identified_contracts": {
+    "this+0x1070": "AFortMeatballVehicle::DrivingPlayerController (reflected property, kind Object, offset 4208=0x1070).",
+    "this+0x10a8": "AFortMeatballVehicle::TurnRumbleIntensity (reflected property, kind Float, offset 4264=0x10a8).",
+    "this+0x10b0": "AFortMeatballVehicle::TurnForceFeedbackHandle (reflected property, kind UInt64, offset 4272=0x10b0; 8-byte FForceFeedbackHandle).",
+    "this+0x10bf": "AFortMeatballVehicle::bTurnRumbleActive (reflected bool bit, offset 4287=0x10bf, mask 1).",
+    "FUN_144483410": "APlayerController::StopForceFeedback(int32 Channel, FForceFeedbackHandle Handle). Captured decompile (captures/359273aef3944edf9ee7f617cb407e36/0x144483410.c) confirms the Channel==2 remove-by-handle branch. Same callee and channel literal as StopLandRumble and as work/q27-11100813/AFortMeatballVehicle_LandShakeEnd.evidence.json."
+  },
+  "unresolved_contracts": [
+    "StopForceFeedback is a 12.60-internal APlayerController method (not present in the UE4.25 reference engine header); its name/signature follow the workspace convention established by q27-11100813 from the callee's captured behavior (channel literal 2 + 8-byte handle).",
+    "The 0xbf800000 (-1.0f) second data argument is not consumed by the remove branch; its meaning (an 'intensity' parameter of a wider Start/Stop API) is not resolved from the image."
+  ],
+  "attempts": [
+    "inventory_query.py show: exec 0x1429b23f0, flags 0x4080401, zero reflected params.",
+    "evidence.py capture 0x1429b23f0 + show (c/asm): 7-instruction exec entry tail-jumping to 0x1419fcf90.",
+    "evidence.py capture 0x1419fcf90 + show (c): full body decompile.",
+    "evidence.py field-offset AFortMeatballVehicle: 0x1070=DrivingPlayerController (Object), 0x10a8=TurnRumbleIntensity (Float), 0x10b0=TurnForceFeedbackHandle (UInt64), 0x10bf=bTurnRumbleActive (bool bit mask 1).",
+    "evidence.py capture 0x144483410 + show: confirmed StopForceFeedback remove-by-handle behavior."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "class": "AFortGameStateZone",
+  "function": "RemovePlayerAbilityRestriction",
+  "owner": "q27-11100754",
+  "status": "blocked",
+  "exec_addr": "0x14292ca10",
+  "body_addr": "0x141eaa670",
+  "reflection": {
+    "exec_addr": "0x14292ca10",
+    "flags": "0x4020405",
+    "params": [],
+    "create_func": "0x142925ec0",
+    "source": "lea",
+    "flag_notes": "Private (0x4) + NetMulticast (0x400) + 0x20000 + 0x4000000; zero reflected params. Same flag set as ApplyPlayerAbilityRestriction."
+  },
+  "thunk": {
+    "asm": "0x14292ca10: MOV RAX,[RDX+0x20]; XOR R8D,R8D; TEST RAX,RAX; SETNZ R8B; ADD R8,RAX; MOV [RDX+0x20],R8; JMP 0x141eaa670",
+    "interpretation": "Identical 7-instruction wrapper pattern to ApplyPlayerAbilityRestriction. The [RDX+0x20] += ([RDX+0x20]!=0) is the FFrame::NextLocalVar side-effect of the reflected exec entry (RDX = FFrame*), not part of the member body. Tail JMP 0x141eaa670 is the real member implementation, called with `this` (AFortGameStateZone*) in RDI."
+  },
+  "body": {
+    "decompile": "void FUN_141eaa670(this) { FGameplayTagContainer src; src.Add(*((FGameplayTag*)(GlobalSingleton() + 0x788))); if (this->Role /* +0xf0 */ == 3 /* ROLE_SimulatedProxy */) { byte any = 0; for (i in src) { any |= RestrictTagRemove(this+0x780, src[i], /*delta*/ -1, /*b*/ 1); } if (any) { RebuildContainer(this+0x888); /* 0x143e8f0b0 */ } this->ExplicitGloballyBlockedAbilityTags /* +0x8a8 */ = *(FGameplayTagContainer*)(this+0x888); RefreshRestrictions(this); /* 0x141ea5f80 */ } }",
+    "steps": [
+      "1. lVar = FUN_141ed1800()  ->  same static global &DAT_148130770 as Apply.",
+      "2. FUN_143e8b5c0(&local, lVar+0x788)  ->  append the single FGameplayTag at global+0x788 to a local 1-element container.",
+      "3. FGameplayTagContainer_CopyAssign(local_copy, local).",
+      "4. if (this+0xf0 == 3):  +0xf0 is reflected AActor::Role; 3 == ROLE_SimulatedProxy.",
+      "5.   for each tag: bVar = FUN_140744d30(this+0x780, &tag, -1 /*0xffffffff*/, 1); any |= bVar  ->  tag REMOVE-with-count (delta -1) on the native container at this+0x780; the byte result is OR-accumulated.",
+      "6.   if (any) FUN_143e8f0b0(this+0x888)  ->  a rebuild/clear operation on the native container at this+0x888, only if at least one tag was removed.",
+      "7.   FGameplayTagContainer_CopyAssign(this+0x8a8, this+0x888)  ->  ExplicitGloballyBlockedAbilityTags (reflected, +0x8a8) = copy of native +0x888.",
+      "8.   FUN_141ea5f80(this)  ->  same refresh method as Apply."
+    ],
+    "capture": "captures/9696daf82a3545c0a4ceba77fd6334b7/0x141eaa670.c"
+  },
+  "identified_contracts": {
+    "this+0xf0": "AActor::Role (reflected Byte, offset 240); 3 == ROLE_SimulatedProxy.",
+    "this+0x8a8": "AFortGameStateZone::ExplicitGloballyBlockedAbilityTags (reflected FGameplayTagContainer, replicated).",
+    "FUN_143e8b5c0": "TArray<uint64/FGameplayTag>::Add(const T&).",
+    "relationship_to_apply": "Remove is the exact inverse of Apply: same global tag source, same Role guard, same 0x8a8=0x888 copy, same refresh call. Differences: delta -1 vs +1 in FUN_140744d30, byte-result OR-accumulation, and the conditional FUN_143e8f0b0(this+0x888) rebuild when any tag was removed."
+  },
+  "unresolved_contracts": [
+    "Global singleton: FUN_141ed1800() -> &DAT_148130770 (static, non-UObject), FGameplayTag at +0x788. Unidentified.",
+    "this+0x780: native tag counter container (FUN_140744d30 target). Name unknown.",
+    "this+0x888: native FGameplayTagContainer (source of the 0x8a8 copy; FUN_143e8f0b0 target). Name unknown.",
+    "this+0x8b8 / this+0x710 / this+0x728: native objects used by the shared refresh method FUN_141ea5f80. Names unknown.",
+    "FUN_140744d30: tag add/remove-with-count on 0x780. Name unknown.",
+    "FUN_143e8f0b0: rebuild/clear operation on 0x888 (Remove-only path). Name unknown.",
+    "FUN_141ea5f80: shared refresh method. Name unknown.",
+    "FUN_140684de0: method called on 0x710/0x728 by the refresh method. Name unknown."
+  ],
+  "attempts": [
+    "inventory_query.py show: exec 0x14292ca10, flags 0x4020405, zero params, create_func 0x142925ec0. (No pre-existing capture; captured fresh.)",
+    "evidence.py capture + show 0x14292ca10 (asm): 7-instruction wrapper, FFrame::NextLocalVar + tail JMP 0x141eaa670.",
+    "evidence.py capture + show 0x141eaa670 (c): full real body decompiled (steps above).",
+    "Shared callees 0x141ed1800 / 0x143e8b5c0 / 0x140744d30 / 0x141ea5f80 already decompiled for ApplyPlayerAbilityRestriction.",
+    "evidence.py field-offset AFortGameStateZone: only 0xf0 (Role) and 0x8a8 (ExplicitGloballyBlockedAbilityTags) reflected; 0x780/0x888/0x8b8 native."
+  ],
+  "blocker": "Real body 0x141eaa670 is fully decompiled but cannot be expressed as faithful named C++: it shares the exact unresolved dependency set of ApplyPlayerAbilityRestriction (static global &DAT_148130770 tag at +0x788; native fields this+0x780/0x888/0x8b8/0x710/0x728; helper methods FUN_140744d30/FUN_143e8f0b0/FUN_141ea5f80/FUN_140684de0), none of which resolve to names via reflection. Writing raw offsets would be a forbidden memory-layout stand-in.",
+  "next_step": "Resolve the shared dependency set once and apply to both functions: (a) identify the static global owner of &DAT_148130770 (FGameplayTag at +0x788) via cross-references or the create_func constructors 0x142925ec0/0x142926a80; (b) name the native containers this+0x780/0x888/0x8b8 from constructor stores; (c) decompile FUN_143e8f0b0 (the Remove-only rebuild of 0x888) and FUN_141ea5f80/FUN_140684de0 (refresh). See AFortGameStateZone_ApplyPlayerAbilityRestriction.evidence.json for the parallel analysis."
+}

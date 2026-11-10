@@ -1,0 +1,34 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleRotateCounterclockwisePressed",
+  "exec_addr": "0x1428c2f00",
+  "status": "blocked",
+  "reflection": {
+    "exec_addr": "0x1428c2f00",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc3d0"
+  },
+  "behavior": "Tail-call wrapper. Body increments a reference count stored at params+0x20 (bump only when non-zero: new = (old != 0) + old), then tail-jumps (JMP, not CALL) to a virtual function at vtable byte offset 0xcf0 (entry 338) of `this` (RCX). No other logic, no return value.",
+  "asm_0x1428c2f00": [
+    "MOV RAX, [RDX+0x20]",
+    "XOR R8D, R8D",
+    "TEST RAX, RAX",
+    "SETNZ R8B",
+    "ADD R8, RAX",
+    "MOV [RDX+0x20], R8",
+    "MOV RAX, [RCX]",
+    "JMP [RAX+0xcf0]"
+  ],
+  "capture": "captures/4c6d0b1451c94a48b307835da612ba10/0x1428c2f00.c",
+  "blocker": "The whole body tail-dispatches to a virtual function at vtable offset 0xcf0 (entry 338) of AFortCreativeMoveTool. The target is a C++ virtual member not declared as a UFUNCTION, so it is absent from the reflection-generated header (porting/native/Source/FortniteGame/Generated/AFortCreativeMoveTool.h), and no vtable data for this class exists in the checkout. The real work is in that virtual; writing a body without naming it would be a raw memory-layout stand-in / invented callee.",
+  "tried": [
+    "inventory_query.py show: no params, exec 0x1428c2f00.",
+    "evidence.py capture + show (c) for 0x1428c2f00: confirmed refcount bump at params+0x20 then JMP [vtable+0xcf0].",
+    "Read generated header AFortCreativeMoveTool.h: only virtual is GetLifetimeReplicatedProps; class inherits AFortWeapon; no rotate-handler virtuals declared.",
+    "Codebase precedent: porting/behavior/reflected_bulk429_runtime/dispositions.json records the identical sibling wrappers as blocked with 'Wrapper tail-dispatches virtual implementation; target unresolved.'",
+    "Searched porting/generated/decomp-vtable and vtable_slots_scratch: no AFortCreativeMoveTool vtable data.",
+    "Tried vtable read at 0x146390f60 (lead from prior owner q27-11100230 run.log): slots 0/1 are not code-segment destructors, so not a valid AFortCreativeMoveTool vtable start."
+  ],
+  "next_step": "Resolve the AFortCreativeMoveTool primary vtable (locate the class CDO / scan .rdata for the pointer array referenced by the CDO vtable pointer), then read the function pointer at entry 338 (byte offset 0xcf0) and capture/recover that virtual function. Cross-check with entries 337/339 (0xce8/0xcf8) for the sibling CW/CCW handlers."
+}

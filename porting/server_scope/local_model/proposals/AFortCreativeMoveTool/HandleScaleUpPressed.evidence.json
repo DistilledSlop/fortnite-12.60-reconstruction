@@ -1,0 +1,76 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleScaleUpPressed",
+  "owner": "q27-11100515",
+  "status": "proposed",
+  "exec_addr": "0x1428c2fe0",
+  "reflection": {
+    "exec_addr": "0x1428c2fe0",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bc610",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100515/AFortCreativeMoveTool_HandleScaleUpPressed.inc",
+  "body": {
+    "asm": [
+      "1428c2fe0  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c2fe4  XOR R8D,R8D",
+      "1428c2fe7  TEST RAX,RAX",
+      "1428c2fea  SETNZ R8B",
+      "1428c2fee  ADD R8,RAX",
+      "1428c2ff1  MOV qword ptr [RDX + 0x20],R8",
+      "1428c2ff5  MOV RAX,qword ptr [RCX]",
+      "1428c2ff8  JMP qword ptr [RAX + 0xdc0]"
+    ],
+    "interpretation": "Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame*): 0 stays 0, non-zero n becomes n+1. Then load the vtable pointer from [this] (RCX) and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xdc0 (entry index 432). No other side effects, no return value. The reflected exec entry is only this frame side-effect plus the virtual dispatch; the real handler body lives in the vtable slot.",
+    "capture": "captures/a166308e142c427b8d7816a81a4790c3/0x1428c2fe0.asm (generated this run via evidence.py capture)"
+  },
+  "vtable_resolution": {
+    "primary_vtable": "0x146204508",
+    "vtable_source": "Primary vtable base 0x146204508 taken from the sibling proposal work/q27-11100501 (HandleScaleDownPressed), which independently re-verified it 5/5 against known sibling slot/target pairs via evidence.py bytes. In this run the slot 0xdc0 read at 0x146204508+0xdc0=0x1462052c8 returned 0x0142676270, consistent with the same table region as the sibling slots (0xdd0=0x142675f30, 0xdd8=0x142675f50) read in this run.",
+    "slot": "0xdc0",
+    "slot_address": "0x1462052c8",
+    "slot_target": "0x142676270",
+    "slot_target_asm": [
+      "142676270  MOVZX R8D,byte ptr [RCX + 0xf35]",
+      "142676278  MOV DL,0x1",
+      "14267627a  MOV byte ptr [RCX + 0xf00],0x1",
+      "142676281  JMP 0x1428c0580"
+    ],
+    "slot_target_meaning": "Read bIsScaleDownPressed (byte 0xf35) into R8D, set DL = 1, set bIsScaleUpPressed (byte 0xf00) = 1, then TAIL-CALL the shared RPC helper 0x1428c0580 with (RDX=1=bNewIsScaleUpPressed, R8=bIsScaleDownPressed=bNewIsScaleDownPressed)."
+  },
+  "shared_helper": {
+    "addr": "0x1428c0580",
+    "asm_summary": "Same shared RPC helper resolved by the sibling work/q27-11100501 (HandleScaleDownPressed): param struct on stack {bool@0, bool@1}; RDX = FName global 0x148191ec8; CALL FindFunctionChecked(this, FName); then this->ProcessEvent(func, &struct) via vtable +0x210.",
+    "param_struct": "bool@0 (bNewIsScaleUpPressed), bool@1 (bNewIsScaleDownPressed)"
+  },
+  "field_proofs": [
+    "byte 0xf00 = bIsScaleUpPressed (reflected bool bit, mask 1, mov8) via evidence.py field-offset AFortCreativeMoveTool 3840.",
+    "byte 0xf35 = bIsScaleDownPressed (reflected bool bit, mask 1, mov8) via evidence.py field-offset AFortCreativeMoveTool 3893."
+  ],
+  "rpc_contract": {
+    "name": "ServerUpdateScalePressed",
+    "signature": "void ServerUpdateScalePressed(bool bNewIsScaleUpPressed, bool bNewIsScaleDownPressed)",
+    "param_layout": "bool@0, bool@1. The asm calling convention for the helper 0x1428c0580 is RCX=this, RDX=1st bool, R8=2nd bool. For this handler RDX=1 (bNewIsScaleUpPressed) and R8=bIsScaleDownPressed (bNewIsScaleDownPressed).",
+    "fname": "0x148191ec8 (resolved by the sibling work/q27-11100501 as the unique (bool, bool) ServerUpdateScalePressed RPC of AFortCreativeMoveTool).",
+    "sdk_confirmation": "23.20 SDK dump AFortCreativeMoveTool.h line 521: void ServerUpdateScalePressed(bool bNewIsScaleUpPressed, bool bNewIsScaleDownPressed); (Net|NetReliable|NetServer). The 23.20 class is larger (offsets differ from 12.60) but the function family, flag pattern and RPC signature agree."
+  },
+  "cross_validation": [
+    "Vtable base 0x146204508 consistent with the sibling work/q27-11100501 (re-verified 5/5 there); slot 0xdc0 read in this run returns 0x142676270 in the same table region as the sibling slots.",
+    "Semantic match: pressing the scale-up key sets bIsScaleUpPressed locally and reports (Up=true, current bIsScaleDownPressed) to the server. This is the exact mirror of the sibling HandleScaleDownPressed (sets bIsScaleDownPressed, reports (current Up, Down=true)) and the 23.20 SDK ServerUpdateScalePressed(bNewIsScaleUpPressed, bNewIsScaleDownPressed) ordering.",
+    "The thunk shape (guarded 64-bit increment of [RDX+0x20] + virtual tail-JMP) is byte-for-byte the same family as the siblings at 0x1428c2f20/0x1428c2f40/0x1428c2f60/0x1428c2f80."
+  ],
+  "remaining_concerns": [
+    "The FName at 0x148191ec8 is not read from a name-pool dump in this workspace; its identity as 'ServerUpdateScalePressed' is inherited from the sibling work/q27-11100501 proof (unique (bool,bool) signature match within the class + adjacent-FName pattern + 23.20 SDK).",
+    "The vtable dispatch is virtual; a derived-class override of the slot-0xdc0 function would change behavior. The concrete AFortCreativeMoveTool target is resolved, but the .inc preserves the virtual dispatch rather than inlining it.",
+    "The script-frame field at +0x20 is the FFrame* native Parms argument (standard UE native convention; sibling proposals name the member NextLocalVar); the exact FFrame member name at +0x20 is not independently proven in this workspace."
+  ],
+  "attempts": [
+    "No pre-existing capture for 0x1428c2fe0; generated one via evidence.py capture (requests.json) and read the raw asm: 8 instructions, guarded 64-bit increment of [RDX+0x20] then tail JMP to [RCX]->vtable+0xdc0.",
+    "Confirmed via reflection (inventory_query.py show) flags 0xc080c00 and ZERO reflected params, so RDX is the script-frame/Parms pointer of the standard UE native convention, not a named parameter.",
+    "Read vtable slot 0xdc0 (0x1462052c8) = 0x142676270 via evidence.py bytes; captured and read its asm (4 instructions: read 0xf35, set DL=1, set 0xf00=1, tail JMP 0x1428c0580).",
+    "Resolved fields 0xf00/0xf35 via evidence.py field-offset (bIsScaleUpPressed, bIsScaleDownPressed).",
+    "Confirmed the shared helper 0x1428c0580 and the RPC ServerUpdateScalePressed from the sibling work/q27-11100501 proof and the 23.20 SDK dump."
+  ]
+}

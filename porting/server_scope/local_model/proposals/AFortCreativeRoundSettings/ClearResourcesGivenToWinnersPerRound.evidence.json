@@ -1,0 +1,74 @@
+{
+  "class": "AFortCreativeRoundSettings",
+  "function": "ClearResourcesGivenToWinnersPerRound",
+  "owner": "q27-11100656",
+  "status": "proposed",
+  "exec_addr": "0x1428c8ac0",
+  "reflection": {
+    "exec_addr": "0x1428c8ac0",
+    "flags": "0x4080401",
+    "flag_names": ["Net", "NetServer", "Native"],
+    "params": [],
+    "create_func": "0x1428c6b70",
+    "source": "lea"
+  },
+  "inc_path": "work/q27-11100656/AFortCreativeRoundSettings_ClearResourcesGivenToWinnersPerRound.inc",
+  "body": {
+    "asm": [
+      "1428c8ac0  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c8ac4  XOR R8D,R8D",
+      "1428c8ac7  TEST RAX,RAX",
+      "1428c8aca  SETNZ R8B",
+      "1428c8ace  ADD R8,RAX",
+      "1428c8ad1  MOV qword ptr [RDX + 0x20],R8",
+      "1428c8ad5  JMP 0x141d73560",
+      "141d73560  XOR R8D,R8D",
+      "141d73563  MOV EDX,R8D",
+      "141d73566  CMP dword ptr [RCX + 0xc44],EDX",
+      "141d7356c  JLE 0x141d73591",
+      "141d7356e  LEA RAX,[RCX + 0xc30]",
+      "141d73575  NOP word ptr [RAX + RAX*0x1]",
+      "141d73580  MOV dword ptr [RAX],R8D",
+      "141d73583  LEA RAX,[RAX + 0x4]",
+      "141d73587  INC EDX",
+      "141d73589  CMP EDX,dword ptr [RCX + 0xc44]",
+      "141d7358f  JL 0x141d73580",
+      "141d73591  RET"
+    ],
+    "interpretation": "(1) Non-zero-guarded 64-bit increment of the script-frame field at +0x20 (FFrame::NextLocalVar) — the universal UE native exec prologue. (2) Tail-jump to shared tail 0x141d73560: if N = [this+0xc44] <= 0, skip; else zero int32 entries [this+0xc30 + 4*i] for i in [0, N). No return value, no other side effects. Structurally identical to the sibling ClearResourcesGivenPerRound (0x1428c8aa0) with the array base swapped 0xc14 -> 0xc30.",
+    "capture": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native107-broad/0x1428c8ac0.asm"
+  },
+  "field_proofs": [
+    "0xc30 = ResourcesGivenToWinnersPerRound array, 5 x int32 (0xc30..0xc43): write target of this clear; read by GetResourceGivenToWinnersPerRound 0x141d84dd0 as *(this+0xc30 + e*4) with bound [this+0xc44]; written by SetResourceGivenToWinnersPerRound 0x141d91030 with the same bound.",
+    "0xc44 = int32 entry count for the 0xc30 array: bound in 0x141d84dd0 ('count <= e -> return 0') and 0x141d91030 ('e < count'); ALSO the loop bound of this clear (0x141d73566/0x141d73589) — consistent with its own getter/setter pair. Not reflected (field-offset 0xc44 -> []).",
+    "Array sizing: 0xc44-0xc30 = 0x14 (5 int32s); EFortResourceType has 6 enumerators (Wood..None, values 0..5) so a 5-slot array + shared count field is consistent with index-by-resource-type storage.",
+    "Field unreflected in 12.60 (evidence.py field-offset 0xc30 -> [])."
+  ],
+  "field_declarations": {
+    "note": "Required additions to AFortCreativeRoundSettings (unreflected native fields; not emitted by the reflection generator). Recorded here; header edit pending promotion review. Shared with the ClearResourcesGivenPerRound proposal.",
+    "declarations": [
+      "int32 NativeRecoveredInt32_0xc30[5]; // ResourcesGivenToWinnersPerRound, indexed by EFortResourceType",
+      "int32 NativeRecoveredInt32_0xc44;    // entry count for the 0xc30 array (Get/Set/Clear bound)"
+    ]
+  },
+  "sibling_cross_validation": {
+    "GetResourceGivenToWinnersPerRound": "0x1428c9100 (exec wrapper) -> body 0x141d84dd0: 'if (e<0 || [this+0xc44]<=e) return 0; return [this+0xc30+4*e];'",
+    "SetResourceGivenToWinnersPerRound": "0x1428c9a20 (exec wrapper) -> body 0x141d91030: 'if (0<=e && e<[this+0xc44]) [this+0xc30+4*e] = (amount<0?0:amount);'",
+    "sibling_clear": "ClearResourcesGivenPerRound 0x1428c8aa0: same prologue, tail 0x141d73520 zeroes [this+0xc14..] with the same [this+0xc44] bound."
+  },
+  "sdk_reference": "23.20 SDK dump AFortCreativeRoundSettings.h: 'void ClearResourcesGivenToWinnersPerRound(); // (Final | Native | Protected | BlueprintCallable)' — same no-param signature; sibling Set/GetResourceGivenToWinnersPerRound(EFortResourceType, int) names confirm the array semantics. 23.20 offsets do not apply (fields are unreflected padding there).",
+  "attempts": [
+    "inventory_query.py show: exec 0x1428c8ac0, flags 0x4080401, no params; capture present in native107-broad.",
+    "Read full decompile + asm of 0x1428c8ac0: FFrame prologue + JMP 0x141d73560 (shared tail: zero N int32s at [RCX+0xc30], N=[RCX+0xc44], JLE skip).",
+    "evidence.py field-offset 0xc30/0xc44: unreflected ([]) — same block as the PerRound proposal.",
+    "Decompiled sibling body thunks 0x141d84dd0/0x141d91030 (via exec wrappers 0x1428c9100/0x1428c9a20): pinned array base 0xc30 and count 0xc44.",
+    "evidence.py query enum EFortResourceType: 6 enumerators (Wood=0..None=5) consistent with 5-slot arrays + count.",
+    "23.20 SDK dump confirms function name/signature and the per-resource-type getter/setter family.",
+    "Wrote body-only .inc preserving the prologue and the exact 0xc44-bounded zeroing of the 0xc30 array."
+  ],
+  "remaining_concerns": [
+    "The array/count fields are unreflected; the .inc references NativeRecoveredInt32_0xc30[5]/0xc44 which must be declared in AFortCreativeRoundSettings before the manifest can compile (declarations recorded in field_declarations). No raw-memory stand-in is used.",
+    "If [this+0xc44] could exceed 5 at runtime the original would write past the 5-slot array — the .inc reproduces that exactly (no added cap).",
+    "Initial values of the count fields were not traced (set elsewhere); not needed for this body."
+  ]
+}

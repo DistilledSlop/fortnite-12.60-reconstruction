@@ -1,0 +1,64 @@
+{
+  "class": "AFortAIPawn",
+  "function": "ReviveFromDBNO",
+  "status": "blocked",
+  "owner": "q27-11100203",
+  "address": "0x1427a5800",
+  "native_body_address": "0x1422eab80",
+  "reflection": {
+    "exec_addr": "0x1427a5800",
+    "flags": "0x4020405",
+    "params": [],
+    "create_func": "0x14279f590",
+    "return_type": "void",
+    "notes": "Native exec wrapper; tail-thunk increments a counter at [RDX+0x20] then JMPs to 0x1422eab80."
+  },
+  "captures": [
+    "porting/generated/native102-broad/0x1427a5800.asm",
+    "porting/generated/native102-broad/0x1427a5800.c"
+  ],
+  "body_structure": "DBNO bit = *(this+0x53a) & 2. If NOT set: log 'ReviveFromDBNO called on pawn that is NOT DBNO! Pawn: %s' and return. Else (IS DBNO): idx=*(this+0xc); bounds-check a global 24-byte element array (_DAT_148263a18) -> element; if (element+8 bit 0x1d) NOT set (not pending kill): [if *(this+0x2c8) clear bit24 of *(this+0x18dc)]; this->vtable[328](this,0); clear bit2 of *(this+0x1344); cVar4 = *(this+0x4b0)->vtable[2](...); if (cVar4) { name handling via FUN_141f88460/FUN_141f887c0, FName check, map insert FUN_141bcc800 }; this->vtable[414](); FUN_1416954e0(this); lVar9=*(this+0x250); if (lVar9) { FUN_142792260(); bounds check; if *(lVar9+0x2d8) FUN_144a007f0(); plVar11=FUN_141702e20(lVar9); if(plVar11) plVar11->vtable[125](); FUN_1416578f0(lVar9); }; if (*(this+0xcba)) { delegate-invoke block: FUN_143e8b3b0, FUN_1406fd020, then this->vtable[0x620/8=194] } ; else (pending kill): log 'ReviveFromDBNO called on pawn that is already pending kill! Cannot revive. Pawn: %s'. Final: scope cookie cleanup FUN_145803c70.",
+  "field_proofs": [
+    { "offset": "0x53a", "bit": 2, "role": "is-DBNO flag (bit 1)", "reflected": "unconfirmed" },
+    { "offset": "0xc", "role": "int index into a global 24-byte element array (_DAT_148263a18, capacity guard _DAT_148263a2c)", "reflected": "unconfirmed" },
+    { "offset": "0x2c8", "role": "byte flag gating bit24 clear of 0x18dc", "reflected": "unconfirmed" },
+    { "offset": "0x18dc", "role": "uint state word; bit 24 (0x1000000) cleared", "reflected": "unconfirmed" },
+    { "offset": "0x1344", "role": "uint state word; bit 2 (0x4) cleared", "reflected": "unconfirmed" },
+    { "offset": "0x4b0 (this[0x96])", "role": "pointer whose vtable[2] is a predicate", "reflected": "unconfirmed" },
+    { "offset": "0x250 (this[0x4a])", "role": "pointer; if non-null drives FUN_142792260/FUN_141702e20/FUN_1416578f0 block", "reflected": "unconfirmed" },
+    { "offset": "0xcba (this[0x177])", "role": "pointer (delegate-like); drives a broadcast block", "reflected": "unconfirmed" }
+  ],
+  "callees": [
+    { "address": "0x142ce9f90", "role": "FMsg logf setup (pairs with FMsg_Logf_Internal + FMemory_Free)" },
+    { "address": "0x141ed1800", "role": "global/world accessor (returns a struct used for name/state lookups)" },
+    { "address": "0x141f88460", "role": "name/string helper (input: vtable[42]() result)" },
+    { "address": "0x141f887c0", "role": "name/string helper (follow-up)" },
+    { "address": "0x142ce11c0", "role": "FName helper" },
+    { "address": "0x141bcc800", "role": "map insert (lVar9+0x208, name, &out); increments a count at result+8" },
+    { "address": "0x1416954e0", "role": "pawn helper (this)" },
+    { "address": "0x142792260", "role": "accessor returning a struct with a 0x38 count for a bounds check" },
+    { "address": "0x141702e20", "role": "accessor (lVar9) returning an object whose vtable[125] is called" },
+    { "address": "0x1416578f0", "role": "helper (lVar9)" },
+    { "address": "0x144a007f0", "role": "helper when *(lVar9+0x2d8) != 0" },
+    { "address": "0x143e8b3b0", "role": "delegate/parameter builder (lVar9+0x780, &out)" },
+    { "address": "0x1406fd020", "role": "delegate invoke (this[0x177], &out, 0, 0)" },
+    { "address": "0x145803c70", "role": "scope-cookie cleanup (end of function)" },
+    { "address": "vtable 0xa50/0x150/0xcf8/0x18/0x620", "role": "virtual calls on this / sub-objects" }
+  ],
+  "what_i_tried": [
+    "Captured exec thunk 0x1427a5800 (asm: counter increment + JMP 0x1422eab80) and read the merged 236-line decompile of the real body 0x1422eab80.",
+    "Identified the two log paths (NOT DBNO / already pending kill) and the main revive path gated by *(this+0x53a)&2 and the element+8 bit 0x1d (pending-kill) test.",
+    "Recognized the global 24-byte element array access pattern (_DAT_148263a18 base, _DAT_148263a2c capacity) used by the pawn-index lookup.",
+    "Enumerated ~15 non-reflected callees and the virtual slots; none are in helpers.json or the reflection function index."
+  ],
+  "blockers": [
+    "~15 non-reflected callees with unresolved contracts: 0x141ed1800, 0x141f88460, 0x141f887c0, 0x142ce11c0, 0x141bcc800, 0x1416954e0, 0x142792260, 0x141702e20, 0x1416578f0, 0x144a007f0, 0x143e8b3b0, 0x1406fd020, plus virtual slots 0xa50/0x150/0xcf8/0x18/0x620.",
+    "Global 24-byte element array (_DAT_148263a18) semantics and the element+8 bit 0x1d 'pending kill' flag are not resolved to named state.",
+    "Field identities at 0x53a/0xc/0x2c8/0x18dc/0x1344/0x4b0/0x250/0xcba are not confirmed in reflection."
+  ],
+  "concrete_next_step": "This body needs a multi-pass Ghidra identification: (1) resolve the global 24-byte element array (_DAT_148263a18) and the element+8 bit 0x1d pending-kill flag; (2) identify the name/map helpers (0x141f88460/0x141f887c0/0x142ce11c0/0x141bcc800) which look like a 'add to named set' op; (3) identify the delegate broadcast (0x143e8b3b0/0x1406fd020 over this[0x177]); (4) map the virtual slots 0xa50/0x150/0xcf8. Only then can a faithful whole-function body be spliced.",
+  "remaining_concerns": [
+    "The name/map insert block (FName_EqualsEName, FUN_141bcc800) appears to record the revived pawn into a named collection; the collection and key semantics are unresolved.",
+    "The trailing delegate broadcast (this[0x177]) is a multicast-style invoke whose delegate type is unresolved."
+  ]
+}

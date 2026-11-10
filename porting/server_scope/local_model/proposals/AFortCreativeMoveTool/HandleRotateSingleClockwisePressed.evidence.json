@@ -1,0 +1,43 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleRotateSingleClockwisePressed",
+  "status": "blocked",
+  "exec_addr": "0x1428c2f20",
+  "create_func": "0x1428bc430",
+  "reflection_flags": "0xc080c00",
+  "reflection_params": [],
+  "abi": "MS x64 (Windows PE): this=RCX, 2nd arg=RDX. Confirmed by sibling IsMultiSelecting 0x142678cc0 reading SelectionProperty at [RCX+0xf32].",
+  "disassembly": [
+    "MOV RAX, qword ptr [RDX + 0x20]",
+    "XOR R8D, R8D",
+    "TEST RAX, RAX",
+    "SETNZ R8B",
+    "ADD R8, RAX",
+    "MOV qword ptr [RDX + 0x20], R8",
+    "MOV RAX, qword ptr [RCX]",
+    "JMP qword ptr [RAX + 0xd00]"
+  ],
+  "behavior": "counter=*(u64*)(arg2+0x20); if(counter) counter++; store back. Then tail-call virtual on this (RCX) at vtable byte offset 0xd00.",
+  "evidence": [
+    "captures/9065453f9f464e1f88be8b1b6b43f18c/0x1428c2f20.asm",
+    "captures/9065453f9f464e1f88be8b1b6b43f18c/0x1428c2f20.c",
+    "captures/9065453f9f464e1f88be8b1b6b43f18c/0x1428c2f20.json",
+    "captures/*/0x1428bc430.asm (UFunction lazy initializer -> confirms exec/UFunction)",
+    "captures/*/0x142678cc0.asm (ABI calibration: RCX=this)"
+  ],
+  "class_block": "0x14639bb80 (FClass registration data); base_fn 0x142a02c30; class_noregister_fn 0x1428bae30",
+  "blockers": [
+    "Identity of the virtual function at vtable byte offset 0xd00 on AFortCreativeMoveTool (or a base class) is unresolved. Requires the class vtable (live FClass -> CDO -> vtable pointer).",
+    "Type of the second argument (RDX) and the meaning of its +0x20 qword counter field are unresolved. The counter is an 'armed' counter (0 stays 0; n>=1 -> n+1), implying a companion arming function on a shared input-state object."
+  ],
+  "tried": [
+    "Captured and read all three exec functions (asm+c+json).",
+    "Captured and read the three create_func UFunction initializers.",
+    "Calibrated ABI against sibling IsMultiSelecting (0x142678cc0).",
+    "Queried the class (block 0x14639bb80) and inspected its registration data + candidate CDO pointers (0x14639b880/0x14639d4b8/0x14639d4d0/0x14639afa8/0x14639af98); none is the CDO/vtable (they are name strings, code pointers, or zero)."
+  ],
+  "next_steps": [
+    "Locate the live FClass UObject for AFortCreativeMoveTool and its CDO; read the vtable pointer; map byte offsets 0xd00/0xd08/0xd10 to function names (cross-check with reflection of AFortCreativeMoveTool and base classes AFortWeapon/ACharacter/APawn/AActor).",
+    "Find callers of 0x1428c2f20 (e.g. via a full-project xref or the input/ProcessEvent path) to identify the RDX argument type and the +0x20 counter field."
+  ]
+}

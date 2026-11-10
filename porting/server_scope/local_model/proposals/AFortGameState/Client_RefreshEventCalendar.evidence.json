@@ -1,0 +1,59 @@
+{
+  "class": "AFortGameState",
+  "function": "Client_RefreshEventCalendar",
+  "owner": "q27-11100731",
+  "status": "blocked",
+  "exec_addr": "0x142737dd0",
+  "reflection": {
+    "exec_addr": "0x142737dd0",
+    "flags": "0x84cc0",
+    "params": [],
+    "create_func": "0x142908a70",
+    "source": "lea"
+  },
+  "inc_path": null,
+  "body": {
+    "asm": [
+      "142737dd0  MOV RAX,qword ptr [RDX + 0x20]",
+      "142737dd4  XOR R8D,R8D",
+      "142737dd7  TEST RAX,RAX",
+      "142737dda  SETNZ R8B",
+      "142737dde  ADD R8,RAX",
+      "142737de1  MOV qword ptr [RDX + 0x20],R8",
+      "142737de5  MOV RAX,qword ptr [RCX]",
+      "142737de8  JMP qword ptr [RAX + 0x738]"
+    ],
+    "interpretation": "Pure virtual-dispatch thunk. After the FFrame +0x20 guard-increment prologue (no-op for a void function), it loads the vtable pointer from [this] (RCX) and TAIL-CALLS (JMP, not CALL) the C++ virtual function at vtable byte offset 0x738 (entry index 231). The whole behavior lives in that vtable slot; the reflected exec entry is only the frame side-effect plus the virtual dispatch. No parameters, no return value.",
+    "capture": "porting/generated/native103-broad/0x142737dd0.{c,asm,json}"
+  },
+  "vtable_resolution_attempt": {
+    "slot": "0x738",
+    "slot_entry_index": 231,
+    "candidate_vtable": "0x1459c1798",
+    "candidate_vtable_slots": 86,
+    "candidate_source": "porting/generated/reflection/native_class_index.json (vtable_candidate, path=direct, vtable_status=unverified)",
+    "problem": "The candidate vtable is only 86 slots (688 bytes = 0x2b0), but slot 0x738 is at byte offset 0x738 (1848 bytes, entry index 231). The slot lies 0x488 bytes PAST the end of the candidate vtable, so reading [0x1459c1798+0x738] = 0x14070d5f0 is out-of-bounds and not a real vtable entry. The candidate cannot be the vtable used by this dispatch.",
+    "related_vtables": {
+      "AGameState": "0x1459aba78 (19 slots, unverified)",
+      "AFortGameStateBase": "0x1459c13e8 (76 slots, unverified)",
+      "AFortGameState": "0x1459c1798 (86 slots, unverified)",
+      "AFortGameStateAthena": "0x145a359b8 (787 slots, unique)"
+    },
+    "observation": "The 86-slot candidate's interface-entry pattern (first 12 slots) is shifted relative to AActor's (extra empty stubs at slots 1 and 3), which is inconsistent with a clean AActor-family vtable and further undermines the candidate's validity."
+  },
+  "blocker": "The concrete C++ virtual at AFortGameState vtable slot 0x738 cannot be resolved. The only candidate vtable (0x1459c1798) is 86 slots long, far too short to contain slot 0x738 (entry 231); the authoritative AFortGameState vtable (which must have at least 232 slots) was not found. The class hierarchy candidates in native_class_index.json are all flagged unverified, and the derived AFortGameStateAthena vtable (787 slots) does not directly yield the AFortGameState prefix length.",
+  "missing_evidence": [
+    "The authoritative AFortGameState vtable address (one with >=232 slots). The native_class_index.json candidate (86 slots) is too short and unverified.",
+    "The CDO of AFortGameState, whose [CDO+0] would give the authoritative vtable pointer. The UClass block_va (0x1463e2fd0) does not appear as a stored Class pointer in either the PE image or the runtime capture, so the CDO could not be located.",
+    "The boundary in the AFortGameStateAthena vtable (0x145a359b8, 787 slots) where AFortGameState's inherited slots end and Athena's new virtuals begin, which would pin the AFortGameState vtable length."
+  ],
+  "attempts": [
+    "Decompiled 0x142737dd0 (porting/generated/native103-broad/0x142737dd0.{c,asm,json}): 8 instructions, pure vtable thunk to slot 0x738.",
+    "Read vtable candidates from porting/generated/reflection/native_class_index.json for AFortGameState (0x1459c1798, 86 slots), AGameState (0x1459aba78, 19), AFortGameStateBase (0x1459c13e8, 76), AFortGameStateAthena (0x145a359b8, 787).",
+    "Measured the actual length of candidate 0x1459c1798: 86 consecutive code-pointer slots, confirming slot 0x738 is out-of-bounds for it.",
+    "Compared the candidate's first 12 (interface) slots against AActor's and AFortGameStateAthena's: the pattern is shifted (extra empty stubs at slots 1,3), inconsistent with a clean AActor-family vtable.",
+    "Attempted to locate the AFortGameState CDO by searching both the PE image and the runtime capture for the UClass pointer 0x1463e2fd0 at object offsets 0x0..0x60 with a valid vtable at [obj+0]: 0 hits in both images.",
+    "Reviewed the prior owner's vtable tooling (work/q27-11100230) and the sibling proposal work/q27-11100501 (resolved via a since-deleted class-vtables/vtables.json)."
+  ],
+  "next_step": "Locate the authoritative AFortGameState vtable (>=232 slots) — e.g. restore/regenerate porting/generated/class-vtables/vtables.json, find the CDO via the live object graph, or determine the AFortGameState/Athena vtable prefix boundary — then read slot 0x738 and decompile the target to splice its body. Do not emit a body until the vtable is resolved."
+}

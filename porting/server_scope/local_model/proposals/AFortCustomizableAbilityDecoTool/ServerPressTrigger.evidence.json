@@ -1,0 +1,53 @@
+{
+  "class": "AFortCustomizableAbilityDecoTool",
+  "function": "ServerPressTrigger",
+  "owner": "q27-11100710",
+  "status": "proposed",
+  "exec_addr": "0x1428ce4b0",
+  "reflection": {
+    "exec_addr": "0x1428ce4b0",
+    "flags": "0x84220cc0",
+    "params": [],
+    "create_func": "0x1428ca9a0",
+    "source": "lea",
+    "flag_notes": "Net|NetReliable|NetServer|Native|WithValidation Server RPC (zero reflected params)."
+  },
+  "inc_path": "work/q27-11100710/AFortCustomizableAbilityDecoTool_ServerPressTrigger.inc",
+  "body": {
+    "decompile": "void FUN_1428ce4b0(this, frame) { frame[+0x20] += (frame[+0x20]!=0); /* FFrame::NextLocalVar side-effect */ bool ok = this->vtable[0xb80](); if (!ok) { RPC_ValidateFailed(L\"ServerPressTrigger_Validate\"); return; } this->vtable[0xb88](this); }",
+    "interpretation": "Standard UE WithValidation Server RPC thunk: call <Name>_Validate (vtable 0xb80, bool); on failure invoke RPC_ValidateFailed with the literal <Name>_Validate and return; on success call <Name>_Implementation (vtable 0xb88). The leading frame[+0x20] increment is the FFrame::NextLocalVar side-effect of the reflected exec entry and is not part of the recovered member body.",
+    "capture": "captures/8f8199b7b80f4758b7c23f19c61de873/0x1428ce4b0.c"
+  },
+  "contract_resolution": {
+    "validate": {
+      "vtable_offset": "0xb80",
+      "name": "ServerPressTrigger_Validate",
+      "signature": "bool ServerPressTrigger_Validate()",
+      "proof": "RPC_ValidateFailed wide-string literal L\"ServerPressTrigger_Validate\" in the body names the validate function; the call returns a char/bool tested against 0."
+    },
+    "implementation": {
+      "vtable_offset": "0xb88",
+      "name": "ServerPressTrigger_Implementation",
+      "signature": "void ServerPressTrigger_Implementation()",
+      "proof": "Promoted header checkout/porting/native/Source/FortniteGame/Generated/AFortCustomizableAbilityDecoTool.h declares `void ServerPressTrigger_Implementation();` immediately after the UFUNCTION; the vtable slot 0xb88 is consecutive to the validate slot 0xb80, matching the UE <Name>_Validate + <Name>_Implementation pairing."
+    },
+    "adjacency": "validate slot 0xb80 and implementation slot 0xb88 are consecutive (8 bytes apart), consistent with the generated <Name>_Validate/<Name>_Implementation vtable layout."
+  },
+  "generator_discrepancy": "Promoted header emits `UFUNCTION(Server, Reliable) void ServerPressTrigger();` + `void ServerPressTrigger_Implementation();` but omits the `WithValidation` specifier and the `bool ServerPressTrigger_Validate();` declaration. Compare AFortPlayerControllerAthena.h which emits all three for its WithValidation RPCs. The original RPC is WithValidation (RPC_ValidateFailed literal proves it). Fix: add WithValidation and the _Validate declaration so the body compiles.",
+  "cross_validation": [
+    "Sibling ServerPressSecondaryFire (0x1428ce460, flags 0x80220cc0) has the identical structure with vtable slots 0xb50/0xb58 and literal L\"ServerPressSecondaryFire_Validate\".",
+    "Sibling ServerReleaseTrigger (0x1428ce550) / ServerReleaseSecondaryFire (0x1428ce500) are the release counterparts of the same RPC family.",
+    "The class native function table (image region ~0x14867f4c0) lists ServerPressTrigger (0x1428ce4b0) as a script-visible native."
+  ],
+  "attempts": [
+    "evidence.py capture + show 0x1428ce4b0: 3-instruction logical body (validate call, RPC_ValidateFailed guard, implementation call) plus the FFrame::NextLocalVar side-effect.",
+    "inventory_query.py show: flags 0x84220cc0, zero reflected params, create_func 0x1428ca9a0.",
+    "Confirmed the implementation name from the promoted header AFortCustomizableAbilityDecoTool.h and the .cpp stub `ServerPressTrigger_Implementation() { // Body not recovered }`.",
+    "Confirmed the validate name from the RPC_ValidateFailed wide-string literal in the decompile.",
+    "Cross-validated against the sibling ServerPressSecondaryFire thunk (same structure, slots 0xb50/0xb58)."
+  ],
+  "remaining_concerns": [
+    "The body calls ServerPressTrigger_Validate(), which the current promoted header does not declare (generator discrepancy). The proposal is faithful to the original; the header needs the WithValidation specifier + _Validate declaration to compile.",
+    "The validate slot 0xb80 concrete target was not separately decompiled; its identity as the <Name>_Validate stub rests on the RPC_ValidateFailed literal + consecutive-slot convention (the validate body itself is a separate, not-yet-recovered function in this assignment)."
+  ]
+}

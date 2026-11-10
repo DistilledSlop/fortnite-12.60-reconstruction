@@ -1,0 +1,37 @@
+{
+  "class": "AFortGameplayEffectDeliveryActor",
+  "function": "DoExplosion",
+  "owner": "q27-11100754",
+  "status": "blocked",
+  "exec_addr": "0x1410aabf0",
+  "body_addr": null,
+  "reflection": {
+    "exec_addr": "0x1410aabf0",
+    "flags": "0x4020404",
+    "params": [],
+    "create_func": "0x142903c90",
+    "source": "lea",
+    "flag_notes": "Private (0x4) + NetMulticast (0x400) + 0x20000 + 0x4000000; zero reflected params. Same flag set as sibling Kill (0x1412ec630)."
+  },
+  "thunk": {
+    "asm": "0x1410aabf0: MOV RAX,[RDX+0x20]; XOR R8D,R8D; TEST RAX,RAX; SETNZ R8B; ADD R8,RAX; MOV [RDX+0x20],R8; MOV RAX,[RCX]; JMP [RAX+0x630]",
+    "interpretation": "Reflected exec entry is a wrapper. First the [RDX+0x20] += ([RDX+0x20]!=0) FFrame::NextLocalVar side-effect (RDX = FFrame*), which is NOT part of the member body. Then it loads the actor object from [RCX] (RCX = a pointer to the context object = this) and tail-jumps through its vtable at byte offset 0x630 (vtable slot 0x630/8 = 0x18c). So the UFUNCTION's entire exec is a virtual dispatch to the class's virtual method at vtable+0x630."
+  },
+  "sibling_comparison": {
+    "Kill": "exec 0x1412ec630, flags 0x4020404 (identical). asm: same FFrame::NextLocalVar prologue, then MOV RAX,[RCX]; JMP [RAX+0x650]. Kill is declared in the generated header as `virtual void Kill();`, so vtable+0x650 is the Kill virtual slot. By the identical pattern, DoExplosion's vtable+0x630 is the DoExplosion virtual slot (the real implementation).",
+    "conclusion": "DoExplosion is a virtual UFUNCTION whose exec thunk dispatches to its own virtual slot. The recovered body is the function at vtable+0x630, which is a SEPARATE code address from the thunk."
+  },
+  "generator_discrepancy": "DoExplosion is reflected as a UFUNCTION (native_funcs.json, flags 0x4020404, exec 0x1410aabf0) but is NOT declared in the promoted header checkout/porting/native/Source/FortniteGame/Generated/AFortGameplayEffectDeliveryActor.h. The header declares the other virtuals (Kill, IsBeingKilled, BroadcastExplosion, OnRep_IsBeingKilled) but omits DoExplosion and DoExplosionAtLocation. The header must add `virtual void DoExplosion();` (and DoExplosionAtLocation) for the recovered body to be expressible.",
+  "unresolved_contracts": [
+    "The real DoExplosion body lives at vtable+0x630 of the AFortGameplayEffectDeliveryActor CDO. The CDO/vtable address could not be located: a scan of all 64 pointer-sized fields in the UClass at 0x1463dfa30 (0x300 bytes) found no object whose ClassPrivate (+0x20) equals 0x1463dfa30, and the candidate 'vtables' (0x1463e0a58..0x1463e0ef0) are 0x10-apart small structs, not a real vtable. So the function at vtable+0x630 is unknown."
+  ],
+  "attempts": [
+    "inventory_query.py show: exec 0x1410aabf0, flags 0x4020404, zero params, create_func 0x142903c90. (No pre-existing capture; captured fresh.)",
+    "evidence.py capture + show 0x1410aabf0 (asm): FFrame::NextLocalVar + virtual dispatch JMP [RAX+0x630] where RAX=[RCX].",
+    "Captured + read sibling Kill 0x1412ec630 (asm): identical pattern, dispatch to vtable+0x650; Kill is `virtual void Kill()` in the header, confirming the virtual-slot interpretation.",
+    "Read generated header AFortGameplayEffectDeliveryActor.h: DoExplosion absent (generator discrepancy); Kill/IsBeingKilled/BroadcastExplosion present as virtuals.",
+    "evidence.py bytes on the UClass 0x1463dfa30 (0x300 bytes) and on 60+ candidate object pointers: attempted to locate the CDO by (a) deref to a vtable with code at slots 0x630/0x650 and (b) ClassPrivate(+0x20)==class. No candidate satisfied the ClassPrivate test; the code-slot candidates were 0x10-apart small structs, not a real vtable."
+  ],
+  "blocker": "DoExplosion's exec (0x1410aabf0) is a pure virtual-dispatch thunk: FFrame::NextLocalVar then tail-jump to the actor's vtable+0x630. The real implementation is the function at that vtable slot, but the CDO/vtable of AFortGameplayEffectDeliveryActor could not be located (no object in the UClass pointer range has ClassPrivate==0x1463dfa30; candidate vtables are 0x10-apart structs). Without the vtable+0x630 target address, the body cannot be decompiled or written.",
+  "next_step": "Locate the AFortGameplayEffectDeliveryActor CDO: (a) confirm the UObject ClassPrivate offset in this 12.60 binary (may not be +0x20) by reading a known object, then rescan the UClass 0x1463dfa30 and the object region for the CDO (ClassPrivate == 0x1463dfa30); or (b) find the large vtable directly (a contiguous run of 0x14xxxxxxx code pointers) and read slot 0x630. Then decompile the function at vtable+0x630 and write the body-only .inc. Also note the generator discrepancy: the header must declare `virtual void DoExplosion();`."
+}

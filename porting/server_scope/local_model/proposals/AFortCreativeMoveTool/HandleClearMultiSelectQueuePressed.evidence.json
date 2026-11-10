@@ -1,0 +1,41 @@
+{
+  "class": "AFortCreativeMoveTool",
+  "function": "HandleClearMultiSelectQueuePressed",
+  "owner": "q27-11100300",
+  "status": "blocked",
+  "exec_addr": "0x1428c2b20",
+  "reflection": {
+    "exec_addr": "0x1428c2b20",
+    "flags": "0xc080c00",
+    "params": [],
+    "create_func": "0x1428bbc00",
+    "source": "lea"
+  },
+  "body": {
+    "asm": [
+      "1428c2b20  MOV RAX,qword ptr [RDX + 0x20]",
+      "1428c2b24  XOR R8D,R8D",
+      "1428c2b27  TEST RAX,RAX",
+      "1428c2b2a  SETNZ R8B",
+      "1428c2b2e  ADD R8,RAX",
+      "1428c2b31  MOV qword ptr [RDX + 0x20],R8",
+      "1428c2b35  MOV RAX,qword ptr [RCX]",
+      "1428c2b38  JMP qword ptr [RAX + 0xe08]"
+    ],
+    "interpretation": "Read the 64-bit field at [param_2 + 0x20]; if non-zero add 1 (i.e. counter = counter + (counter != 0)); write back. Then load the vtable pointer from [this] and TAIL-CALL (JMP, not CALL) the virtual function at vtable byte offset 0xe08 (index 449). No other side effects.",
+    "capture": "captures/0c79f2ec8633485da7c7178ca4bef0c1/0x1428c2b20.asm"
+  },
+  "pattern_note": "Identical shape to every other AFortCreativeMoveTool input handler (e.g. HandleDeletePressed 0x1428c2bc0 -> vtable 0xc80, HandleActorSelectedForQueuePressed 0x1428c2ae0 -> vtable 0xdf8). All are a non-zero-guarded 64-bit increment of [param_2+0x20] followed by a tail jump to a class vtable slot. The vtable slot holds the real handler body; the reflected exec entry is only the counter side-effect plus the dispatch.",
+  "unresolved_contracts": [
+    "Virtual function identity at AFortCreativeMoveTool vtable byte offset 0xe08 (the real ClearMultiSelectQueue handler body) is not identified.",
+    "Identity of param_2 (RDX): the object whose 64-bit field at +0x20 is the guarded counter. The function has no reflected params, so RDX is a system/hidden argument (input-event or script frame). Its type and the +0x20 field are not established."
+  ],
+  "attempts": [
+    "Decompiled the exec body (evidence.py show 0x1428c2b20 --format c/asm).",
+    "Compared sibling handlers (HandleDeletePressed, HandleActorSelectedForQueuePressed) to confirm the shared pattern and per-function vtable offsets.",
+    "Read the reflected class block at 0x14639bb80 (evidence.py bytes) to find function-name/exec pairs; it is a reflection table, not the raw UClass, and does not expose the CDO/vtable.",
+    "Followed GetFortCreativeMoveTool (0x1428bafa0) -> CDO lazy-init FUN_142ec43b0(&DAT_148192788, &PTR_FUN_147a216d0); the constructor pointer at 0x147a216d0 is 0x1428bbd0.",
+    "Attempted to decompile/read the InternalConstructor at 0x1428bbd0 to reach the vtable; the original image has a gap there (evidence.py bytes/show report 'address is outside the original image' for 0x1428bbd0..0x1428bbd8, while 0x1428c2b20 reads fine)."
+  ],
+  "next_step": "Locate the AFortCreativeMoveTool vtable array directly (e.g. a global/static pointer to it, or the CDO's vtable pointer from a runtime capture) and read the entry at byte offset 0xe08 to get the real handler address, then decompile that target. Separately, find the input-binding/delegate code that invokes these handlers to pin down the param_2 type and its +0x20 counter field."
+}
