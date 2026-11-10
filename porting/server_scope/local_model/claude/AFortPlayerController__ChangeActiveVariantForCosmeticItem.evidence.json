@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerController::ChangeActiveVariantForCosmeticItem",
+  "status": "proposed",
+  "original": "0x142a43700",
+  "signature": "void AFortPlayerController::ChangeActiveVariantForCosmeticItem(FName ItemTemplateToChange, FStruct8 VariantChannelToChange, FStruct8 DesiredActiveVariant, AFortPawn* PreviewPawn)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a43700.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x14236ed00.c",
+    "/opt/fortnite/local-model-package/captures/8a282a7c21bc4f2c8f60485ae9ad2f01/0x142a85850.c"
+  ],
+  "callees": {
+    "vslot 0x1ba0 on AFortPlayerController -> 0x14236ed00": "reflected name ChangeActiveVariantForCosmeticItem (virt_name). Base body ported in deps AFortPlayerController__ChangeActiveVariantForCosmeticItemNative (status ported-with-gap)",
+    "0x142ce9f90": "log name helper (71 lines, captured, not read); GetNameSafe used in the port",
+    "0x142a85850": "FortPlayerState::StaticClass (engine style, named)",
+    "vslot 0x750 on AFortPlayerState": "unnamed, target not read"
+  },
+  "notes": "Thunk read order: ItemTemplateToChange (offset 0, Name), VariantChannelToChange (offset 8, 8-byte struct 0x143e9a2a0), DesiredActiveVariant (offset 16, 8-byte struct 0x143e9a2a0), PreviewPawn (offset 24). The two structs are 8 bytes each per the inventory offsets; their type names were not recovered, so they are shown as FStruct8. Confidence HIGH for dispatch, MEDIUM for base body."
+}

@@ -1,0 +1,25 @@
+{
+  "function": "AFortPawn::SpawnCameraLensEffect",
+  "status": "proposed",
+  "original": "0x142a20700",
+  "signature": "UObject* AFortPawn::SpawnCameraLensEffect(UClass* LensEffectEmitterClass)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a20700.c",
+    "/opt/fortnite/local-model-package/captures/d6287ca51bf64565ac6139e91064eda0/0x142351740.c",
+    "/opt/fortnite/local-model-package/captures/3871ac0df23544e68b91c291a50345d9/0x142321a70.c",
+    "/opt/fortnite/local-model-package/captures/3871ac0df23544e68b91c291a50345d9/0x142a3d9f0.c",
+    "/opt/fortnite/local-model-package/captures/3871ac0df23544e68b91c291a50345d9/0x142a35cb0.c",
+    "/opt/fortnite/local-model-package/captures/8a282a7c21bc4f2c8f60485ae9ad2f01/0x14468fb70.c"
+  ],
+  "callees": {
+    "0x142351740": "native body, ported inline",
+    "0x142321a70": "FindPlayerControllerForPawn, ported in deps AFortPawn__FindPlayerControllerForPawn",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass (engine style, named)",
+    "0x142a35cb0": "AFortPlayerCameraBase::StaticClass (engine style, named)",
+    "0x14468fb70": "iterator init: writes World+0x1c8 as the array and index 0",
+    "vslot 0x770 on AFortPlayerCameraBase": "NOT PORTED: the lens-effect spawn (target not read)",
+    "vslot 0x150 on AActor": "GetWorld",
+    "vslot 0x698 / 0x6a8 on controller": "GetPawn and an unnamed bool predicate (used in deps)"
+  },
+  "notes": "Field names: controller+0x2b0 = APlayerController::PlayerCameraManager (reflected). Return type UObject* follows the reflected ReturnValue. Gap: the actual spawn is in the virtual at slot 0x770, which was not read, so the spawn behaviour itself is not ported. Confidence MEDIUM."
+}

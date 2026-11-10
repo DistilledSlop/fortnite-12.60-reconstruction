@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerController::BP_FindExistingItemForDefinition",
+  "status": "proposed",
+  "original": "0x142a43440",
+  "signature": "UFortItem* AFortPlayerController::BP_FindExistingItemForDefinition(UFortItemDefinition* ItemDefinition, bool bInStorageVault)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a43440.c",
+    "/opt/fortnite/local-model-package/captures/66ccad09c30e4055b59c6535415cfa30/0x14236b710.c",
+    "/opt/fortnite/local-model-package/captures/66ccad09c30e4055b59c6535415cfa30/0x14236b710.asm"
+  ],
+  "callees": {
+    "0x14236b710": "forwarder: ADD RCX,0x598; MOV RAX,[RCX]; JMP [RAX+0xa0]. Ported as a call through InventoryInterface",
+    "vslot 0xa0 on the +0x598 interface": "NativeFindExistingItemForDefinition, unnamed; see deps AFortPlayerController__InventoryInterface (declared)"
+  },
+  "notes": "Thunk read order: ItemDefinition then bInStorageVault. The decompile of the forwarder shows no arguments (tail jump), confirmed in the asm. Confidence HIGH."
+}

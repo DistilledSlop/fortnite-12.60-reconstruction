@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerController::FixupInteractionWidgetsOnUnzoom",
+  "status": "proposed",
+  "original": "0x142a46a40",
+  "signature": "void AFortPlayerController::FixupInteractionWidgetsOnUnzoom()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a46a40.c"
+  ],
+  "callees": {
+    "vslot 0x50 on UObject -> 0x1406801e0": "NativeIsInvocationTargetValid, base returns false (xor al,al; ret); see deps UObject__NativeIsInvocationTargetValid",
+    "FMulticastDelegateBase_CompactInvocationList": "engine helper (named), called with the list at component+0xc0 and false",
+    "FFrame helpers": "none (no thunk, no parameters)"
+  },
+  "notes": "Field facts: AFortPlayerController+0x2010 = InteractionComponent (reflected, UFortControllerComponent_Interaction). Inside the component: +0xc0 TArray of 16-byte entries {UObject* Object, FName FunctionName}, +0xc8 Num, +0xd4 re-entrancy counter, +0x180 blocker pointer (name not recovered). Entry is invalid when FunctionName index is 0 or Object is null, or when slot 0x50 says false. The decompile's FUN_142a46a40 is not a thunk, so the port is a direct body. Confidence HIGH."
+}

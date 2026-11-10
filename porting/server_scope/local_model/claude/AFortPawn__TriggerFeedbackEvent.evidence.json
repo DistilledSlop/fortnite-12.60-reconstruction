@@ -1,0 +1,18 @@
+{
+  "function": "AFortPawn::TriggerFeedbackEvent",
+  "status": "proposed",
+  "original": "0x142a20f00",
+  "signature": "void AFortPawn::TriggerFeedbackEvent(FName EventName, AFortPawn* InstigatorPawn, AFortPawn* Recipient, float OverriddenDelay)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/418a7c38d20148f79ed519eb17b04264/0x142a20f00.c",
+    "/opt/fortnite/local-model-package/captures/8bbaa032f7a44e2dabeee0d41cfe9f87/0x142356fc0.c",
+    "/opt/fortnite/local-model-package/captures/3871ac0df23544e68b91c291a50345d9/0x1424ab210.c",
+    "/opt/fortnite/local-model-package/captures/6de4f9616ae94c69a97d7789b2071d3a/0x1424c21f0.c"
+  ],
+  "callees": {
+    "0x142356fc0": "native body: builds the request struct and calls the playback function",
+    "0x1424ab210": "GetFeedbackManagerForGameState, ported in deps",
+    "0x1424c21f0": "PlayFeedbackEvent, top-level flow read, helpers not read; see deps UFortFeedbackManager__PlayFeedbackEvent (status described)"
+  },
+  "notes": "Two captures exist for 0x142a20f00 (418a7c38... and 5174f6b6... ); the 418a7c38 one was used. FFrame read order: EventName, InstigatorPawn, Recipient, OverriddenDelay. Request struct layout is inferred (zero, EventName, 0x50000 flag word). Parameter types for InstigatorPawn and Recipient are both class 0x142a16b50, typed AFortPawn here (class getter not resolved). Confidence MEDIUM. Gap: playback internals not ported."
+}

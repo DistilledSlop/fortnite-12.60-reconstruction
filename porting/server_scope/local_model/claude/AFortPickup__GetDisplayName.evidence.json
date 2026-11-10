@@ -1,0 +1,18 @@
+{
+  "function": "AFortPickup::GetDisplayName",
+  "status": "proposed",
+  "original": "0x142a2a700",
+  "signature": "FText AFortPickup::GetDisplayName()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a2a700.c",
+    "/opt/fortnite/local-model-package/captures/3d272ef009014839a70dc2926a306dde/0x14202ca00.c",
+    "/opt/fortnite/local-model-package/captures/0d0fa43526e841f985be4f110aeccb08/0x1407c2c80.c"
+  ],
+  "callees": {
+    "0x14202ca00": "helper, read in full: if +0x2a8 object exists call its vslot 0x2e0 with the out text; else copy the static empty text",
+    "0x1407c2c80": "static empty FText (ctor 0x142c0c150 with 0), ported as FText::GetEmpty",
+    "vslot 0x2e0 on the +0x2a8 object": "unnamed; target not resolved (AFortPickup vtable slot 0x2e0 is EnableInput, but that is a different object)",
+    "0x142a2a700 FFrame helpers": "engine FFrame reads, not needed"
+  },
+  "notes": "The thunk body (0x142a2a700) returns the FText by swapping into the return slot and releasing a shared reference, which is the same effect as returning Result. Gap: the +0x2a8 object's type and the slot-0x2e0 body are unknown. Confidence MEDIUM."
+}

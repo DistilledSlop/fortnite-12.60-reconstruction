@@ -25,7 +25,7 @@ if (Role == ROLE_Authority) // byte +0xf0 == 3
         if (AFortPlayerController* OwnerPC = Cast<AFortPlayerController>(ItemOwner->Controller))
         {
             OnTossCompleteNotify();                 // 0x142038060 (deps, partly read)
-            NotifyControllerOfToss(OwnerPC, 0);     // 0x1423bd380 (deps, not read; the 2nd argument is _DAT_14813b798)
+            NotifyControllerOfToss(OwnerPC, DAT_14813b798); // 0x1423bd380 (deps, not read); DAT_14813b798 is a global whose value is not resolved
         }
     }
 

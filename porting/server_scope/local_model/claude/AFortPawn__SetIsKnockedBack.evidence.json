@@ -1,0 +1,16 @@
+{
+  "function": "AFortPawn::SetIsKnockedBack",
+  "status": "proposed",
+  "original": "0x142a20030",
+  "signature": "void AFortPawn::SetIsKnockedBack(bool bKnockback)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a20030.c",
+    "/opt/fortnite/local-model-package/captures/cb0b5851ac0b49a680aa24778c504095/0x14234dac0.c"
+  ],
+  "callees": {
+    "0x14234dac0": "native body: clears and sets bit 6 of byte +0xa4, then vslot 0x9f0",
+    "vslot 0x9f0 on AFortPawn": "OnRep_IsKnockedBack (header name); resolves to STUB 0x1406801c0 (ret 0, empty) in the base class",
+    "0x1406801c0": "shared empty stub, see deps AFortPawn__OnRep_IsKnockedBack"
+  },
+  "notes": "Header: uint8 bIsKnockedback : 1 with UPROPERTY(ReplicatedUsing=OnRep_IsKnockedBack). No STRIPPED stub (0x140680300) is used by this body. Confidence HIGH."
+}

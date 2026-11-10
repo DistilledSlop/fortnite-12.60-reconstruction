@@ -1,0 +1,19 @@
+{
+  "function": "AFortPickup::BlueprintSetPickupTarget",
+  "status": "proposed",
+  "original": "0x142a2a600",
+  "signature": "void AFortPickup::BlueprintSetPickupTarget(AFortPawn* PickupTarget, bool bPlayPickupSound)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a2a600.c",
+    "/opt/fortnite/local-model-package/captures/a90afa832c1048e7839a628f6ecc66ba/0x1420279f0.c",
+    "/opt/fortnite/local-model-package/captures/0d0fa43526e841f985be4f110aeccb08/0x14203e6d0.c",
+    "/opt/fortnite/local-model-package/captures/0d0fa43526e841f985be4f110aeccb08/0x14202dc10.c"
+  ],
+  "callees": {
+    "0x1420279f0": "native body: null check, random dir, speed, then virtual slot 0x640",
+    "0x14203e6d0": "RandomUnitVector, ported in deps AFortPickup__RandomUnitVector",
+    "0x14202dc10": "GetRandomScatterSpeed, partly read, described in deps AFortPickup__RandomScatterSpeed",
+    "vslot 0x640 on AFortPickup -> 0x142038d10": "SetPickupTargetNative, 334-line body NOT PORTED (only the header lines read); see deps AFortPickup__SetPickupTargetNative"
+  },
+  "notes": "FFrame read order: PickupTarget (offset 0), bPlayPickupSound (offset 8 bit). The thunk's scatter direction is generated before the speed, matching the native call order. The dispatched body is the real behaviour, so this function is only partly ported. Confidence MEDIUM."
+}

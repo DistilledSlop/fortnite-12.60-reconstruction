@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerController::AddInventoryItemWithAnimation",
+  "status": "proposed",
+  "original": "0x142a430a0",
+  "signature": "void AFortPlayerController::AddInventoryItemWithAnimation(FFortItemEntry& ItemDescription)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a430a0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142368610.c"
+  ],
+  "callees": {
+    "vslot 0x1b20 on AFortPlayerController -> 0x142368610": "reflected name AddInventoryItemWithAnimation (virt_name). Base body logs only; see deps AFortPlayerController__AddInventoryItemWithAnimationNative (ported)",
+    "0x1419844f0": "FFortItemEntry temporary destructor (not relevant to the by-ref path)",
+    "0x142023c10": "FFortItemEntry temporary default constructor"
+  },
+  "notes": "The by-reference parameter is read into a temporary; when the caller bound an out-address the thunk forwards that address instead, so the .inc passes the reference straight through. Confidence HIGH."
+}

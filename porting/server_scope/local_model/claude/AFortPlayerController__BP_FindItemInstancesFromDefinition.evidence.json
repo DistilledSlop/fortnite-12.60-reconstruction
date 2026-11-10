@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::BP_FindItemInstancesFromDefinition",
+  "status": "proposed",
+  "original": "0x142a43510",
+  "signature": "void AFortPlayerController::BP_FindItemInstancesFromDefinition(UFortItemDefinition* ItemDefinition, TArray<UFortItem*>& ItemArray)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a43510.c",
+    "/opt/fortnite/local-model-package/captures/66ccad09c30e4055b59c6535415cfa30/0x14236b730.c"
+  ],
+  "callees": {
+    "0x14236b730": "forwarder body, read in full: clears the output count, calls vslot 0xa8 on the +0x598 interface with a temp array, appends each element, frees the temp",
+    "0x1406d9a30": "TArray reset helper (engine style, named Empty)",
+    "TArray8_ResizeGrow": "engine TArray growth (named)",
+    "vslot 0xa8 on the +0x598 interface": "NativeFindItemInstancesForDefinition, unnamed; see deps AFortPlayerController__InventoryInterface (declared)"
+  },
+  "notes": "Thunk: an unbound out array is backed by a temporary that is freed afterwards. The .inc writes the reference directly. Confidence HIGH."
+}

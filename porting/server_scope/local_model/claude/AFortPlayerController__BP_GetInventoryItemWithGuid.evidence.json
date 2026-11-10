@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::BP_GetInventoryItemWithGuid",
+  "status": "proposed",
+  "original": "0x142a43600",
+  "signature": "UFortItem* AFortPlayerController::BP_GetInventoryItemWithGuid(FGuid ItemGuid)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a43600.c",
+    "/opt/fortnite/local-model-package/captures/66ccad09c30e4055b59c6535415cfa30/0x14236b810.c",
+    "/opt/fortnite/local-model-package/captures/66ccad09c30e4055b59c6535415cfa30/0x14236b810.asm",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/behavior/AFortQuickBars/SwapItems.inc"
+  ],
+  "callees": {
+    "0x14236b810": "forwarder: copies the 16-byte FGuid, calls vslot 0xb0 on the +0x598 interface",
+    "vslot 0xb0 on the +0x598 interface": "NativeFindItemByGuid (native 0x142380fd0, see porting/behavior/AFortPlayerController/NativeFindItemByGuid.inc)"
+  },
+  "notes": "The porting/behavior SwapItems.inc note (PC+0x598 vtbl +0xb0(&Guid)) agrees with the slot-0xb0 meaning used here. Confidence HIGH."
+}

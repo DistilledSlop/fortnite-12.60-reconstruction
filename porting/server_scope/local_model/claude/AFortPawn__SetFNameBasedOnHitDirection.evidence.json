@@ -1,0 +1,19 @@
+{
+  "function": "AFortPawn::SetFNameBasedOnHitDirection",
+  "status": "proposed",
+  "original": "0x142a1f9d0",
+  "signature": "void AFortPawn::SetFNameBasedOnHitDirection(FVector HitDirection, FName& NameResult, FName NameFront, FName NameBack, FName NameLeft, FName NameRight)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a1f9d0.c",
+    "/opt/fortnite/local-model-package/captures/47cadfde178240a7b0bdcb8218ffa061/0x14234c7b0.c",
+    "/opt/fortnite/local-model-package/captures/3871ac0df23544e68b91c291a50345d9/0x142c521d0.c",
+    "/opt/fortnite/local-model-package/captures/47cadfde178240a7b0bdcb8218ffa061/0x14234c7b0.asm"
+  ],
+  "callees": {
+    "0x14234c7b0": "native body, ported inline in the .inc",
+    "0x142c521d0": "angle helper (yaw from Forward/Right and direction, pitch discarded by caller), ported inline",
+    "0x142a1f9d0 FFrame_Step / FFrame_StepExplicitProperty": "engine FFrame helpers, not ported (parameter reads)",
+    "RootComponent (+0x130) ComponentToWorld quat (+0x1c0)": "read in the native body; identity quat (0,0,0,1) when null (constant at 0x1459a3bf0)"
+  },
+  "notes": "Read order (FFrame): HitDirection (offset 0), NameResult (out ref, offset 12), NameFront (20), NameBack (28), NameLeft (36), NameRight (44). The native helper receives HitDirection in RDX (verified in asm). Selection: |yaw| <= 45 -> Front; 45 < |yaw| < 120 -> Right if yaw > 0 else Left; |yaw| >= 120 -> Back. Angle helper defaults: degenerate direction becomes the zero vector (constants 0x148218630..38 are all 0.0). Confidence HIGH on logic, MEDIUM on the quat-to-axis mapping (verified by hand against the matrix terms)."
+}

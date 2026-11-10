@@ -1,0 +1,8 @@
+{
+  "name": "AFortPickup__DisplayNameProvider",
+  "address": "0x142a2a700",
+  "signature": "member: UObject* DisplayNameProvider (AFortPickup+0x2a8, not in the headers)",
+  "inc_or_decl": "// Object at AFortPickup+0x2a8, null by default. Virtual slot 0x2e0 writes FText into a provided out-parameter (second argument 0).\n// Target of slot 0x2e0 is unresolved (the vtable lookup for AFortPickup reports AActor::EnableInput, which is a different object).",
+  "evidence": "captures/5174f6b6e7d3437db3f64d2450854202/0x142a2a700.c and captures/3d272ef009014839a70dc2926a306dde/0x14202ca00.c (helper, 26 lines, read in full).",
+  "status": "declared"
+}

@@ -1,0 +1,20 @@
+{
+  "function": "AFortPlayerController::AddInventoryItemWithAlterationBasedOnLootLevel",
+  "status": "proposed",
+  "original": "0x142a42fd0",
+  "signature": "void AFortPlayerController::AddInventoryItemWithAlterationBasedOnLootLevel(FFortItemEntry ItemDescription)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a42fd0.c",
+    "/opt/fortnite/local-model-package/captures/285bae9ff4954eb1a64f93256bf670eb/0x1420237c0.c",
+    "/opt/fortnite/local-model-package/captures/285bae9ff4954eb1a64f93256bf670eb/0x142023c10.c",
+    "/opt/fortnite/local-model-package/captures/285bae9ff4954eb1a64f93256bf670eb/0x1419844f0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native126-dispatch-bulk/0x142368600.c"
+  ],
+  "callees": {
+    "0x1420237c0": "copy wrapper: default-construct then assign (ported as a C++ copy)",
+    "0x142023c10": "FFortItemEntry default constructor",
+    "0x1419844f0": "FFortItemEntry destructor",
+    "vslot 0x1b28 on AFortPlayerController -> 0x142368600": "base body is empty (only destroys its by-value argument); see deps AFortPlayerController__AddInventoryItemWithAlterationBasedOnLootLevelNative"
+  },
+  "notes": "The thunk passes a copy by value to the virtual, so the .inc copies first. Slot 0x1b28 has no reflected name in the header model (virt_name returns none). Confidence HIGH."
+}

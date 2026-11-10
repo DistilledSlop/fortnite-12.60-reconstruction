@@ -1,0 +1,20 @@
+{
+  "function": "AFortPickup::GetItemEntry",
+  "status": "proposed",
+  "original": "0x142a2ab30",
+  "signature": "FFortItemEntry AFortPickup::GetItemEntry(int32 ItemIndex)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a2ab30.c",
+    "/opt/fortnite/local-model-package/captures/3d272ef009014839a70dc2926a306dde/0x14202ecb0.c",
+    "/opt/fortnite/local-model-package/captures/3d272ef009014839a70dc2926a306dde/0x142025400.c",
+    "/opt/fortnite/local-model-package/captures/285bae9ff4954eb1a64f93256bf670eb/0x142023c10.c",
+    "/opt/fortnite/local-model-package/captures/285bae9ff4954eb1a64f93256bf670eb/0x1419844f0.c"
+  ],
+  "callees": {
+    "0x14202ecb0": "index lookup, read in full (ported inline)",
+    "0x142025400": "FFortItemEntry copy-assignment (engine struct copy, expressed as C++ assignment)",
+    "0x142023c10": "FFortItemEntry default constructor (static empty entry)",
+    "0x1419844f0": "FFortItemEntry destructor (implicit in C++)"
+  },
+  "notes": "Layout facts: +0x290 = PrimaryPickupItemEntry (reflected), +0x3e0 = MultiItemPickupEntries (reflected, TArray stride 0x150), +0x3e8 = its Num. The empty fallback is a function-local static that is initialised on first use (TLS guard in 0x14202ecb0). Confidence HIGH."
+}

@@ -1,0 +1,27 @@
+{
+  "function": "AFortPickup::TossPickup",
+  "status": "proposed",
+  "original": "0x142a2bad0",
+  "signature": "void AFortPickup::TossPickup(FVector FinalLocation, AFortPawn* ItemOwner, int32 OverrideMaxStackCount, bool bToss, bool bShouldCombinePickupsWhenTossCompletes, EFortPickupSourceTypeFlag InPickupSourceTypeFlags, EFortPickupSpawnSource InPickupSpawnSource)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a2bad0.c",
+    "/opt/fortnite/local-model-package/captures/7ede57ca0c8f4c6a9fabed62fdc121c0/0x14203cda0.c",
+    "/opt/fortnite/local-model-package/captures/0d0fa43526e841f985be4f110aeccb08/0x143f7abb0.c",
+    "/opt/fortnite/local-model-package/captures/0d0fa43526e841f985be4f110aeccb08/0x143f72040.c",
+    "/opt/fortnite/local-model-package/captures/0d0fa43526e841f985be4f110aeccb08/0x143f84be0.c",
+    "/opt/fortnite/local-model-package/captures/0d0fa43526e841f985be4f110aeccb08/0x142038060.c",
+    "/opt/fortnite/local-model-package/captures/0d0fa43526e841f985be4f110aeccb08/0x1423bd380.c",
+    "/opt/fortnite/local-model-package/captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f72550.c"
+  ],
+  "callees": {
+    "0x14203cda0": "native body, ported inline in the .inc",
+    "0x143f7abb0": "IsFlag33Set (byte +0x33 != 0), ported in deps AFortPickup__IsFlag33Set",
+    "0x143f72040": "AActor::FlushNetDormancy (engine, named; read in full, not ported)",
+    "0x143f84be0": "AActor::SetNetDormancy(ENetDormancy) (engine, named; read in full, not ported)",
+    "vslot 0x720 on AFortPickup -> 0x142029370": "TossPickupNative, 107-line body NOT PORTED (not read); see deps AFortPickup__TossPickupNative",
+    "0x142038060": "OnTossCompleteNotify, read in full, deeper helpers not read; described in deps",
+    "0x1423bd380": "NotifyControllerOfToss, captured but not read; described in deps",
+    "vslot 0x5e8 on AActor -> 0x143f72550": "AActor::ForceNetUpdate (engine, named by the header model)"
+  },
+  "notes": "Verified against the decompile: role byte +0xf0 == 3 gates the whole body; bCombinePickupsWhenTossCompletes is at +0x49c; PickupSourceTypeFlags is OR-ed into +0x450; PickupSpawnSource is stored at +0x451. The controller check uses APawn::Controller (+0x250 on the pawn). The second argument of 0x1423bd380 is the global _DAT_14813b798 (value not resolved). Confidence MEDIUM: the native body is ported but two virtual/native helpers that carry most of the toss behaviour are not."
+}
