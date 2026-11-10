@@ -1,0 +1,8 @@
+{
+ "function": "AFortObjectiveBase::ClearObjectiveTimer",
+ "status": "proposed",
+ "blocker": null,
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100841",
+ "batch_seconds": 0
+}
