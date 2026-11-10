@@ -42,3 +42,5 @@ One-shot finish for a chunk (record + mirror + commit): from the package dir `wo
 - Chunk 02: `BlueprintModifyIncomingDamage` receivers (virtual 0x1ae0, instigator controller) unresolved; large helpers 0x141befa00, 0x14409cc80, 0x1407babb0 read partially.
 - Chunk 03: collision slots 0x800/0x810 names mismatched (AdjustCollisionOfStaticMesh, LockDevice), `MinigameStateChanged` slot 0xf08 (124 lines) partly traced.
 - Chunk 05: `ABuildingTrap::TriggerIfAppropriate` and `AFortAIPawn::FastSharedReplication` LOW (helpers behind their deps unread, member names proposed); `SetCurrentGoalDiscouragement` parameter order inferred; StaticMeshComponent slot 0x4e0 target unknown (SetMirrored).
+
+Scope note: the target is the 1,110 in queue.json only (user decision). The 3,057 unresolved and the 7,222 ceiling of porting/server_scope are out of scope for this goal.
