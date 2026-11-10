@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerPawn::GetCurrentWeaponContext (vfunc 0x150)",
+  "address": "0x143f793a0",
+  "signature": "UObject* GetCurrentWeaponContext()",
+  "inc_or_decl": "if ((this->Flags8 & 0x10) == 0) {                     // *(this+8) bit 4 clear\n    if (UObject* Owner = this->Field20) {                         // this+0x20\n        if ((Owner->Flags8 & 0x8000) == 0) {\n            UObject* Info = GetObjectInfoByIndex(Owner->Index);     // GUObjectArray item lookup (index at +0xc)\n            if ((Info->Flags8 & 0x10000000) == 0) {                 // not pending kill\n                FName Key = GetDefaultKey();                        // FUN_14477bcd0\n                if (UObject* Ctx = GetLoadoutContext(this, Key)) {  // FUN_142eca940\n                    return Ctx->Field0xB8;\n                }\n            }\n        }\n    }\n}\nreturn nullptr;",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/a4277ecc35ce4b3fbb6aba55271fdec8/0x143f793a0.c"
+    ],
+    "notes": "Read in full (36 lines). Returns the loadout context (0xb8) of the pawn's current key. Callers read +0x540 from the result, so the return type is an object with that member. The semantic name is a proposal (LOW for the name, HIGH for the control flow)."
+  }
+}

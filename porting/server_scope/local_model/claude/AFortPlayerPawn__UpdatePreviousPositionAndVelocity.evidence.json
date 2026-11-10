@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerPawn::UpdatePreviousPositionAndVelocity",
+  "status": "proposed",
+  "original": "0x142a81000",
+  "signature": "void UpdatePreviousPositionAndVelocity(float DeltaSeconds, const FVector& OldLocation, const FVector& OldVelocity)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a81000.c",
+    "/opt/fortnite/local-model-package/captures/63626597dfad4422bd446f02794bc989/0x14235bd20.c"
+  ],
+  "callees": {
+    "0x14235bd20": "UpdatePreviousPositionAndVelocityInternal (ported: deps/AFortPlayerPawn__UpdatePreviousPositionAndVelocity__UpdatePreviousPositionAndVelocityInternal.json)",
+    "vfunc 0x1008": "resolves to 0x1406801c0 (STUB, shared no-op stub, not ported)"
+  },
+  "notes": "Thunk reads DeltaSeconds (Float), OldLocation, OldVelocity in that order (reflection is OldVelocity, OldLocation, DeltaSeconds). DeltaSeconds is not used by the native body. Confidence HIGH."
+}

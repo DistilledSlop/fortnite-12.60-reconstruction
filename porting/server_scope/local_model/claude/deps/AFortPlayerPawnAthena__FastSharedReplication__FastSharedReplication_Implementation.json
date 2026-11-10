@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerPawnAthena::FastSharedReplication_Implementation",
+  "address": "0x141a113f0",
+  "signature": "void FastSharedReplication_Implementation(const FSharedRepMovement& SharedRepMovement)",
+  "inc_or_decl": "if (IsSomethingCheckFailed(GetCurrentWeaponContext())) { return; }   // FUN_144693a30 on the 0x150 context; native cVar7 == 0\nif (GetSkipFlag() != 1) { return; }                                      // this+0xe8 byte (gap 0x8+0xe8) must be 1\nif (!CompareCurrentRepValue(SharedRepMovement.Field34, this->CurrentQuickChatIcon->Field94)) { return; }   // FUN_142331fa0\nthis->Field308 = SharedRepMovement.Field34;\nthis->CurrentQuickChatIcon->Field94 = SharedRepMovement.Field34;\nif (this->PackedFlag310 != SharedRepMovement.Flag47) {\n    this->PackedFlag310 = SharedRepMovement.Flag47;\n    OwnerMovementComponent()->Flags |= 0x80; OwnerMovementComponent()->Flags |= 0x40;   // +0x38b bits 0x80 and 0x40\n}\nthis->RemoteViewData32 = SharedRepMovement.Field40;\nif (this->AccelerationPack != SharedRepMovement.Field44 || this->AccelerationZPack != SharedRepMovement.Byte46) {\n    this->AccelerationPack = SharedRepMovement.Field44;\n    this->AccelerationZPack = SharedRepMovement.Byte46;\n    UpdateAccelerationPack(this);                                      // FUN_142339240\n}\nif (CompareRepVectorAndUpdate(this->CurrentQuickChatIcon + 0x60, SharedRepMovement)) {   // FUN_141a0a860\n    auto* Ctx = GetRemoteViewStruct(this);                              // FUN_14070f0d0\n    *Ctx = SharedRepMovement.Vec0;                                      // 0x10 bytes (position, FVector4-like)\n    Ctx->Vec1 = SharedRepMovement.Vec1;                                 // 0x10 bytes\n    Ctx->Vec2 = SharedRepMovement.Vec2;                                 // 0x0c bytes at +0x20 (float triplet)\n    ...\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/d4df2a439e054a95a4755396520f9d38/0x141a113f0.c"
+    ],
+    "notes": "Read in full (124 lines). Each helper name below the top-level control is depth-2/3 and not read: FUN_144693a30, FUN_142331fa0, FUN_142339240, FUN_141a0a860, FUN_14070f0d0, FUN_14233c8a0, FUN_14233c9a0. Virtuals 0x420, 0xad8, 0xae0, 0x780, 0x12d8, 0x12d0, 0x1448 are not class-resolved. The structure of the 0x47..0x54 byte fields of FSharedRepMovement is taken from the offsets (MEDIUM). The tail of the body (remaining field copies, 0x1448 call) is summarised here and is complete in the native source, not reproduced."
+  }
+}

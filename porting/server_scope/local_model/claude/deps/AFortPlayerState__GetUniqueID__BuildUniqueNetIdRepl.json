@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerState::BuildUniqueNetIdRepl",
+  "address": "0x142419ef0",
+  "signature": "FUniqueNetIdRepl BuildUniqueNetIdRepl(const AFortPlayerState* PS)",
+  "inc_or_decl": "FUniqueNetIdRepl Result;\nResult.Vtable = FUniqueNetIdRepl_VTable;\nResult.Owner = PS->Controller;               // this+0x250 (Controller / owning object, stored at param_2+0x8)\nUObject* Id = PS->UniqueNetIdObject;         // this+0x258 (param_2+0x10), with a reference add (+1 on the refcount at +0x8)\nResult.Id = Id;\nResult.Vtable = FUniqueNetIdRepl_VTable_Final;\nResult.Extra0 = 0; Result.Extra1 = 0;        // +0x18 and +0x20 are zeroed\nreturn Result;",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x142419ef0.c"
+    ],
+    "notes": "Read in full (15 lines). Offsets +0x250 (Controller) and +0x258 (UniqueNetId object) are read from the state; the state's +0x258 is typed as a pointer with an intrusive refcount at +0x8. Vtable symbols are the two engine FUniqueNetIdRepl vtables (PTR_FUN_145a95878 then PTR_FUN_145a95888)."
+  }
+}

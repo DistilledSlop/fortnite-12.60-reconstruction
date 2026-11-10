@@ -1,0 +1,12 @@
+{
+  "name": "UFortAbilitySystemComponent::CopyReplicatedMontageInfo",
+  "address": "0x1406daaf0",
+  "signature": "void CopyReplicatedMontageInfo(UAbilitySystemComponent* Asc, const FRepAnimMontageInfo& Info)",
+  "inc_or_decl": "Asc->ReplicatedMontageInfo = Info;   // 0x38 bytes at ASC+0x728..+0x758 (eight qword copies in native order)",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/83c0d0ea7282449cad45ccf69bd8c8c4/0x1406daaf0.c"
+    ],
+    "notes": "Read in full (19 lines). The copy is 0x38 bytes: qwords 0..6 at +0x728 .. +0x758 (seven qwords). Member name ReplicatedMontageInfo is a proposal (MEDIUM)."
+  }
+}

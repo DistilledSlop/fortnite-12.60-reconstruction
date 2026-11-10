@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerState::ServerChangeActiveVariantForCosmeticItem_Implementation",
+  "address": "0x1424276e0",
+  "signature": "void ServerChangeActiveVariantForCosmeticItem_Implementation(FName ItemTemplateToChange, FName VariantChannelToChange, FGameplayTag DesiredActiveVariant, AFortPawn* PreviewPawn)",
+  "inc_or_decl": "// Forwarder: tail-calls virtual slot 0x750 on this with the same arguments (the native body is a single indirect jump).\nChangeActiveVariantForCosmeticItem(ItemTemplateToChange, VariantChannelToChange, DesiredActiveVariant, PreviewPawn);   // body: AFortPlayerState__ChangeActiveVariantForCosmeticItem.inc",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x1424276e0.c"
+    ],
+    "notes": "Read in full (10 lines). Virtual 0x750 on AFortPlayerState resolves to 0x14240c7c0 (vtable 0x14614b3c0, slot 234), owner AFortPlayerState."
+  }
+}

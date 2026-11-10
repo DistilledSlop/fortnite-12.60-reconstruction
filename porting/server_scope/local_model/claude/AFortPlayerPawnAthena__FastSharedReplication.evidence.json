@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerPawnAthena::FastSharedReplication",
+  "status": "proposed",
+  "original": "0x142a832c0",
+  "signature": "void FastSharedReplication(const FSharedRepMovement& SharedRepMovement)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a832c0.c",
+    "/opt/fortnite/local-model-package/captures/1bb410764f364f22b828594e1cc7b4a6/0x141a0a440.c",
+    "/opt/fortnite/local-model-package/captures/dd0687c3845145368a3ef8862c17b027/0x1441dda30.c",
+    "/opt/fortnite/local-model-package/captures/d4df2a439e054a95a4755396520f9d38/0x141a113f0.c"
+  ],
+  "callees": {
+    "0x141a0a440": "FSharedRepMovement default constructor (ported: deps/AFortPlayerPawnAthena__FastSharedReplication__ConstructSharedRepMovement.json)",
+    "0x1441dda30": "base init used by the constructor (read in full, included in the constructor dep)",
+    "0x141a113f0": "FastSharedReplication_Implementation (ported in dep; the tail of the body is summarised, see dep notes)",
+    "vfunc 0x1410": "resolves to 0x141a113f0 (Athena-own slot; the AFortPlayerPawn map does not cover slots above 0x13f0)"
+  },
+  "notes": "The thunk default-constructs the struct and then reads the parameter into it. Virtual dispatch uses the Athena-only slot 0x1410. Confidence HIGH for the dispatch; MEDIUM for the body's tail."
+}

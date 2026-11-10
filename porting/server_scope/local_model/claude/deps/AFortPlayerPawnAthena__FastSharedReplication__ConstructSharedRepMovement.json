@@ -1,0 +1,13 @@
+{
+  "name": "FSharedRepMovement::FSharedRepMovement (default constructor)",
+  "address": "0x141a0a440",
+  "signature": "FSharedRepMovement* FSharedRepMovement(FSharedRepMovement* this)",
+  "inc_or_decl": "FSharedRepMovementBase_Init(this);      // FUN_1441dda30: clears 0x30-byte base (flag byte +0x30 & 0xfc, pointers/counters to 0)\nthis->Byte31 = 2;                                  // *(this+0x31) = 2\nthis->Qword34 = 0;\nthis->Qword3C = 0;\nthis->Qword44 = 0;\nthis->Qword4C = 0;\nthis->Byte54 = 0;",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/1bb410764f364f22b828594e1cc7b4a6/0x141a0a440.c",
+      "/opt/fortnite/local-model-package/captures/dd0687c3845145368a3ef8862c17b027/0x1441dda30.c"
+    ],
+    "notes": "Read in full. FUN_1441dda30 (base init, depth-2) read in full: clears six qwords, a byte at +0x30 (low 2 bits), and two bytes at +0x31/+0x33. Field names are unnamed in the native struct; offsets are as listed."
+  }
+}

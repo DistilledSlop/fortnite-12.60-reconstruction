@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerPawnAthena::OnRep_ReplayRepAnimMontageInfo",
+  "status": "proposed",
+  "original": "0x142a83890",
+  "signature": "void OnRep_ReplayRepAnimMontageInfo()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a83890.c",
+    "/opt/fortnite/local-model-package/captures/83c0d0ea7282449cad45ccf69bd8c8c4/0x14277e480.c",
+    "/opt/fortnite/local-model-package/captures/83c0d0ea7282449cad45ccf69bd8c8c4/0x1406daaf0.c"
+  ],
+  "callees": {
+    "0x14277e480": "static class getter UFortAbilitySystemComponent (dep: ...__GetFortAbilitySystemComponentClass.json)",
+    "0x1406daaf0": "copies the 0x38-byte montage info into the ASC (dep: ...__CopyReplicatedMontageInfoToASC.json)",
+    "vfunc 0x7d8 on ASC": "OnRep_ReplicatedAnimMontage (class not resolved, name is a proposal)"
+  },
+  "notes": "Struct copies: RepAnimMontageInfo copy is 0x38 bytes (8 qword/dword copies in the decompile). The landing pair copy writes ASC+0x14a8..+0x14c8. Confidence HIGH for control flow; MEDIUM for the ASC offsets (unnamed)."
+}

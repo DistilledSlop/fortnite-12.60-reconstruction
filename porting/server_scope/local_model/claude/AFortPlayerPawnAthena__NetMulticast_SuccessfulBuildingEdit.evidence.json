@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerPawnAthena::NetMulticast_SuccessfulBuildingEdit",
+  "status": "proposed",
+  "original": "0x142a837f0",
+  "signature": "void NetMulticast_SuccessfulBuildingEdit()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a837f0.c",
+    "/opt/fortnite/local-model-package/captures/d4df2a439e054a95a4755396520f9d38/0x141a1af30.c"
+  ],
+  "callees": {
+    "vfunc 0x13f8": "NetMulticast_SuccessfulBuildingEdit_Implementation (target 0x141a1af30, ported in dep)",
+    "vfunc 0x150": "GetCurrentWeaponContext (see MeleeCombatActivated dep)",
+    "vfunc 0x6b0": "IsMeleeCombatAllowed (see MeleeCombatActivated dep)",
+    "0x141ef2890": "find building edit record (depth-2, not read)",
+    "0x142a82520": "successful-edit feedback (depth-2, not read)"
+  },
+  "notes": "The exec thunk is a pure jump to the multicast implementation (WARNING in decompile: indirect jump treated as call). No reflected parameters. Confidence HIGH for dispatch; MEDIUM for the implementation's named helpers."
+}

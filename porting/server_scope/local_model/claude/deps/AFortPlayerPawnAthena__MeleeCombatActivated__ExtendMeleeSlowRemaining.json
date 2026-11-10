@@ -1,0 +1,12 @@
+{
+  "name": "UFortMeleeSlowMotionComponent::ExtendMeleeSlowRemaining",
+  "address": "0x1419bfa40",
+  "signature": "void ExtendMeleeSlowRemaining(float NewRemaining)",
+  "inc_or_decl": "if (NewRemaining <= MeleeSlowRemaining) {         // native: if (param <= *(this+0x1e5c)) param = *(this+0x1e5c)\n    NewRemaining = MeleeSlowRemaining;\n}\nMeleeSlowRemaining = NewRemaining;   // *(float*)(this+0x1e5c) = max(current, requested)",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/071191b218c2490b86365d9fe2dd9cfd/0x1419bfa40.c"
+    ],
+    "notes": "Read in full (11 lines). Keeps the larger of the stored and requested value (NaN comparison follows the native branch: a NaN request is not greater, so it is replaced by the stored value)."
+  }
+}

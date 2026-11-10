@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerPawnAthena::SetFallInstigatorInternal",
+  "address": "0x141a24940",
+  "signature": "void SetFallInstigatorInternal(UObject* NewFallInstigator, const FGameplayTagContainer& NewFallingDamageTags)",
+  "inc_or_decl": "FallInstigator = NewFallInstigator;                               // this+0x2f0 (param_1[0x5be])\nFGameplayTagContainer_CopyAssign(FallingDamageTags, NewFallingDamageTags);   // this+0x2f8 (param_1[0x5bf])\nUObject* Ctx = GetCurrentWeaponContext();                    // vfunc 0x150\nAController* Ctrl = Controller;                             // this+0x250\nif (Ctx != nullptr && Ctrl != nullptr && Ctrl->IsA(AFortPlayerController::StaticClass())) {   // FUN_142a3d9f0\n    AFortPlayerController* Instigator = nullptr;\n    if (FallInstigator != nullptr && FallInstigator->IsA(AFortPlayerController::StaticClass())) {\n        Instigator = FallInstigator;\n    }\n    Ctrl->LastFallInstigator = Instigator;                  // *(ctrl+0x808) = instigator (or null)\n    Ctrl->LastFallInstigatorValue = Ctx->Field540;          // *(uint*)(ctrl+0x810) = ctx+0x540\n}\n// Temporary tag-container storage of the parameter is released by the native cleanup (FMemory_Free on both arrays).",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/f76a287780a049f181e03e706a28f988/0x141a24940.c"
+    ],
+    "notes": "Read in full (43 lines). Member names: 0x2f0 = FallInstigator (inferred), 0x2f8 = FallingDamageTags (inferred). The FGameplayTagContainer copy is the engine helper FGameplayTagContainer_CopyAssign (named, not re-implemented). Controller-side fields +0x808 and +0x810 are unnamed."
+  }
+}

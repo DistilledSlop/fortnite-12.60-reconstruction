@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerPawnAthena::ServerSetInteractingItem",
+  "status": "proposed",
+  "original": "0x142a83990",
+  "signature": "void ServerSetInteractingItem(bool bClearInteraction, UObject* InteractingItem)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a83990.c",
+    "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x141a231e0.c",
+    "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x142d6e0f0.c"
+  ],
+  "callees": {
+    "vfunc 0x1418": "ServerSetInteractingItem_Validate -> STUB 0x1406801d0 (always true; dep: ...__ServerSetInteractingItem_Validate.json)",
+    "0x142d6e0f0": "RPC_ValidateFailed (named engine helper; stores the reason string)",
+    "vfunc 0x1420": "ServerSetInteractingItem_Implementation -> 0x141a231e0 (ported: deps/AFortPlayerPawnAthena__ServerSetInteractingItem__ServerSetInteractingItem_Implementation.json)",
+    "0x142741b60": "static class BuildingGameplayActorLockOnConsumable",
+    "0x143f72040": "RefreshInteractionState (ported: deps/AFortPlayerPawnAthena__ServerSetInteractingItem__RefreshInteractionState.json)",
+    "0x142ee3b30": "timer delegate constructor (depth-2)",
+    "0x142bad740": "unique counter increment (depth-2)",
+    "0x141be85a0": "timer callback that clears +0x818 and refreshes (depth-2)"
+  },
+  "notes": "Parameter reflection order is bClearInteraction then InteractingItem; the thunk reads InteractingItem first and calls the implementation as (InteractingItem, bClearInteraction). Validate is a STUB (always passes), so RPC_ValidateFailed is not reached. The implementation is the substantive body (ported). Confidence MEDIUM because the ItemInteractionActor store is reconstructed."
+}

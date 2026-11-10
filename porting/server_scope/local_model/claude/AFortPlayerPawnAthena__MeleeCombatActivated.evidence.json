@@ -1,0 +1,20 @@
+{
+  "function": "AFortPlayerPawnAthena::MeleeCombatActivated",
+  "status": "proposed",
+  "original": "0x142a837b0",
+  "signature": "void MeleeCombatActivated()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a837b0.c",
+    "/opt/fortnite/local-model-package/captures/071191b218c2490b86365d9fe2dd9cfd/0x1419bfa40.c",
+    "/opt/fortnite/local-model-package/captures/a4277ecc35ce4b3fbb6aba55271fdec8/0x143f793a0.c",
+    "/opt/fortnite/local-model-package/captures/a4277ecc35ce4b3fbb6aba55271fdec8/0x144430060.c",
+    "/opt/fortnite/local-model-package/captures/d4df2a439e054a95a4755396520f9d38/0x141a19b40.c"
+  ],
+  "callees": {
+    "vfunc 0x6b0": "IsMeleeCombatAllowed (target 0x144430060, ported: deps/AFortPlayerPawnAthena__MeleeCombatActivated__IsMeleeCombatAllowed.json)",
+    "0x1419bfa40": "ExtendMeleeSlowRemaining (ported: deps/AFortPlayerPawnAthena__MeleeCombatActivated__ExtendMeleeSlowRemaining.json)",
+    "vfunc 0x150": "GetCurrentWeaponContext (target 0x143f793a0, ported: deps/AFortPlayerPawnAthena__MeleeCombatActivated__GetCurrentWeaponContext.json)",
+    "0x141a19b40": "captured as the Athena-level sibling of this function (the thunk's targets include it); equivalent logic, used as a cross-check, not a separate callee"
+  },
+  "notes": "The exec thunk has no parameters and consumes no RPC. Note: the parameter-less thunk does not write a result. The native write to the weapon's +0xa40 field is an unnamed cached value. MeleeCombatSlowDuration is read from this+0x2e2c (the Athena thunk reads it from the same offset). Confidence HIGH."
+}

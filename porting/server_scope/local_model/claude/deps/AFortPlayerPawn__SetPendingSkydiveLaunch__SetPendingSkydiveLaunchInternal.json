@@ -1,0 +1,19 @@
+{
+  "name": "AFortPlayerPawn::SetPendingSkydiveLaunchInternal",
+  "address": "0x14234e8b0",
+  "signature": "void SetPendingSkydiveLaunchInternal(bool bPending)",
+  "inc_or_decl": "// flag byte this+0x10e7: bit 0x10 = pending skydive launch, bit 0x04 = launch in progress\nSetSkydiveFlagBit(0x10, bPending);\nif (!bPending) { return; }\nif (USkydiveInterface* Iface = GetSkydiveInterfaceObject()) {   // vfunc 0x10 on member at this+0x4c8\n    FSkydiveLaunchParams Params;\n    Params.Pawn = this; Params.Instigator = this; Params.Count = 1;   // stack struct (0x4c..0x50 region)\n    FSkydiveTuningEntry Tuning = UseAlternateTuning() ? GetSkydiveTuning()->Entry1A8 : GetSkydiveTuning()->Entry1A0;  // bit 0x04 selects +0x1a8 else +0x1a0\n    Iface->StartSkydiveLaunch(Tuning, Params);   // vfunc 0x620, receives (iface, tuning, &params)\n}\nSetSkydiveFlagBit(0x04, false);                 // byte &= 0xfb (launch no longer in progress)\nif (APlayerState* PS = PlayerState) {          // this+0x238\n    if (PS->IsA(AFortPlayerStateZone::StaticClass())) {   // FUN_142a92a00 (static class); IsA = class-chain walk\n        SetZoneFlagBit1(PS, true);   // FUN_1424293c0(PS,1): byte +0xd00 bit 0x02\n        SetZoneFlagBit2(PS, true);   // FUN_1424293d0(PS,1): byte +0xd00 bit 0x04\n    }\n}\nif (Controller != nullptr && GetSkydiveStateId(this) != 1) {   // Controller = this+0x250; FUN_143f7a920\n    if (UFortControllerComponent_SkydiveFeedback* FB = Controller->FindComponentByClass(UFortControllerComponent_SkydiveFeedback::StaticClass())) {   // vfunc 0x610; static class FUN_14289ee70\n        SetSkydiveFeedbackState(FB, 3);    // FUN_1418bfe90(FB, 3)\n    }\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/372c8168129740e194f3c00c3a2a35aa/0x14234e8b0.c",
+      "/opt/fortnite/local-model-package/captures/fc7f6c2a51f24a49b80250ce2220086a/0x141ed1800.c",
+      "/opt/fortnite/local-model-package/captures/25929479b06144c58c3a210e91f334eb/0x142a92a00.c",
+      "/opt/fortnite/local-model-package/captures/25929479b06144c58c3a210e91f334eb/0x1424293c0.c",
+      "/opt/fortnite/local-model-package/captures/25929479b06144c58c3a210e91f334eb/0x1424293d0.c",
+      "/opt/fortnite/local-model-package/captures/25929479b06144c58c3a210e91f334eb/0x143f7a920.c",
+      "/opt/fortnite/local-model-package/captures/25929479b06144c58c3a210e91f334eb/0x14289ee70.c",
+      "/opt/fortnite/local-model-package/captures/25929479b06144c58c3a210e91f334eb/0x1418bfe90.c"
+    ],
+    "notes": "Member offsets resolved: 0x10e7 bIsInSlipperyMovement byte (flag word reused), 0x238 PlayerState, 0x250 Controller. 0x4c8 member: opaque object with getter slot 0x10 (class not resolved). Virtual 0x620 on that object not class-resolved. FUN_143f7a920 returns a state id compared to 1 (depth-2, read). Log/feedback helpers are depth-2 and ported in SetSkydiveFeedbackState dep."
+  }
+}

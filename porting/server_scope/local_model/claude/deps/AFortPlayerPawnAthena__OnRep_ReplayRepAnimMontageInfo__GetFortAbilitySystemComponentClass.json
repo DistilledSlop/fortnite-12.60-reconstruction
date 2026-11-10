@@ -1,0 +1,12 @@
+{
+  "name": "UFortAbilitySystemComponent::StaticClass",
+  "address": "0x14277e480",
+  "signature": "UClass* UFortAbilitySystemComponent::StaticClass()",
+  "inc_or_decl": "// Lazy-initialised static UClass accessor for /Script/FortniteGame.FortAbilitySystemComponent (size 0x1608).\nreturn UFortAbilitySystemComponent::StaticClass();   // GetPrivateStaticClassBody(...) on first use, cached in a global",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/83c0d0ea7282449cad45ccf69bd8c8c4/0x14277e480.c"
+    ],
+    "notes": "Read in full. Engine-generated static-class getter; treated as a named engine helper."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "FUniqueNetIdRepl::operator= (copy-and-swap, native 0x140d7c4c0)",
+  "address": "0x140d7c4c0",
+  "signature": "FUniqueNetIdRepl& CopyAssign(FUniqueNetIdRepl& Dest, const FUniqueNetIdRepl& Src)",
+  "inc_or_decl": "// copy-and-swap: take a reference on Src.Id, swap the two (ptr,count) pairs, then release the temp (refcount to zero frees)\nUObject* Old = Dest.Id; Dest.Id = Src.Id; Src.Id = Old; Dest.Id.AddRef(); Dest.Repl = Src.Repl;\nFUniqueNetIdReplBase_Assign(Dest.Base + 0x18, Src.Base + 0x18);     // FUN_140899420 on the +0x18 sub-object\nreturn Dest;",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/c4b0f54ea1f8492aa59dd7ec47b1e067/0x140d7c4c0.c"
+    ],
+    "notes": "Read in full (39 lines). The FUN_140899420 sub-object assign is depth-2 (not read); it is named here. The release of the old pointer uses the intrusive-refcount pattern (decrement at +0x8 then virtual destroy at slot 0). MEDIUM confidence for the exact member names."
+  }
+}

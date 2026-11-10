@@ -1,0 +1,27 @@
+{
+  "function": "AFortPlayerPawn::SetPendingSkydiveLaunch",
+  "status": "proposed",
+  "original": "0x142a80590",
+  "signature": "void SetPendingSkydiveLaunch(bool bPending)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a80590.c",
+    "/opt/fortnite/local-model-package/captures/372c8168129740e194f3c00c3a2a35aa/0x14234e8b0.c",
+    "/opt/fortnite/local-model-package/captures/fc7f6c2a51f24a49b80250ce2220086a/0x141ed1800.c",
+    "/opt/fortnite/local-model-package/captures/25929479b06144c58c3a210e91f334eb/0x1418bfe90.c"
+  ],
+  "callees": {
+    "0x14234e8b0": "SetPendingSkydiveLaunchInternal (native body, ported: deps/AFortPlayerPawn__SetPendingSkydiveLaunch__SetPendingSkydiveLaunchInternal.json)",
+    "0x141ed1800": "singleton accessor for the skydive tuning struct (lazy init, global at 0x148130770)",
+    "0x142a92a00": "static class FortPlayerStateZone",
+    "0x1424293c0": "set byte +0xd00 bit 0x02 (PlayerStateZone flag)",
+    "0x1424293d0": "set byte +0xd00 bit 0x04",
+    "0x143f7a920": "returns a skydive state id compared to 1 (depth-2, read)",
+    "0x14289ee70": "static class FortControllerComponent_SkydiveFeedback",
+    "0x1418bfe90": "SetSkydiveFeedbackState (ported: deps/AFortPlayerPawn__SetPendingSkydiveLaunch__SetSkydiveFeedbackState.json)",
+    "vfunc 0x10 @ this+0x4c8": "getter for skydive interface object (class not resolved)",
+    "vfunc 0x620": "StartSkydiveLaunch on the interface object (class not resolved)",
+    "vfunc 0x610": "FindComponentByClass on the controller (class not resolved)",
+    "STACK_CHECK 0x145803c70": "stack cookie check (ignored)"
+  },
+  "notes": "Thunk has one Bool parameter and forwards it unchanged. The native body is complete (all branches read). Confidence HIGH for the thunk; MEDIUM for the depth-2 names; the interface object and its vtable slots are unresolved by class."
+}

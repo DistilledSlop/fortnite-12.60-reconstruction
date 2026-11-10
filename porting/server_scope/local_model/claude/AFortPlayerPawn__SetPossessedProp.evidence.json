@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerPawn::SetPossessedProp",
+  "status": "proposed",
+  "original": "0x142a806a0",
+  "signature": "void SetPossessedProp(AActor* InPossessedProp)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x14234ec60.c",
+    "/opt/fortnite/local-model-package/captures/ce4b305d17ec49659617a0c764d81320/0x14234ec60.c"
+  ],
+  "callees": {
+    "0x14234ec60": "SetPossessedPropInternal (ported: deps/AFortPlayerPawn__SetPossessedProp__SetPossessedPropInternal.json)",
+    "0x140aae720": "delegate broadcast OnPossessedPropChanged (depth-3, named only)",
+    "FMsg_Logf_Internal": "engine log (named helper)"
+  },
+  "notes": "Parameter read order: single Object parameter, forwarded unchanged. Authority gate is this+0xf0 == 3 (ROLE_Authority). Native body complete for all branches."
+}

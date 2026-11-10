@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerPawnAthena::NetMulticast_SuccessfulBuildingEdit_Implementation",
+  "address": "0x141a1af30",
+  "signature": "void NetMulticast_SuccessfulBuildingEdit_Implementation()",
+  "inc_or_decl": "UObject* Ctx = GetCurrentWeaponContext();                 // vfunc 0x150 (0x143f793a0)\nUObject* Edit = FindActiveBuildingEdit(Ctx, 1, false);                  // FUN_141ef2890(ctx, 1, 0)\nif (Edit != nullptr) {\n    if (!IsMeleeCombatAllowed()) {                                      // vfunc 0x6b0 (0x144430060)\n        AFortPlayerPawnAthena* EditPawn = Edit->GetOwningPawn();        // vfunc 0x698\n        if (EditPawn != this) {\n            uint8 A = Edit->...GetEditKindA();                           // vfunc 0x28 on this+0x4a0 object\n            uint8 B = Edit->...GetEditKindB();                           // vfunc 0x28 on Edit+0x590\n            if (ComputeBuildingEditResult(A, B) == 2) {                 // FUN_141ef7200\n                PlaySuccessfulBuildingEditFeedback(this);               // FUN_142a82520\n            }\n        }\n    }\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/d4df2a439e054a95a4755396520f9d38/0x141a1af30.c"
+    ],
+    "notes": "Read in full (33 lines). Depth-2 names (FUN_141ef2890, FUN_141ef7200, FUN_142a82520) not read. The two vfunc 0x28 slots and 0x698 are not class-resolved. The accessor name GetEditKind is a proposal."
+  }
+}

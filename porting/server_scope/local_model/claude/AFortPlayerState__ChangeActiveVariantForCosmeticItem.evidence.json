@@ -1,0 +1,22 @@
+{
+  "function": "AFortPlayerState::ChangeActiveVariantForCosmeticItem",
+  "status": "proposed",
+  "original": "0x142a88690",
+  "signature": "void ChangeActiveVariantForCosmeticItem(AFortPawn* PreviewPawn, FGameplayTag DesiredActiveVariant, FName VariantChannelToChange, FName ItemTemplateToChange)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a88690.c",
+    "/opt/fortnite/local-model-package/captures/a4277ecc35ce4b3fbb6aba55271fdec8/0x14240c7c0.c"
+  ],
+  "callees": {
+    "vfunc 0x750": "real body 0x14240c7c0 (the .inc contains the port; dep: ...ChangeActiveVariantForCosmeticItem_Implementation.json points at it)",
+    "0x142ec9900": "loadout entry lookup for the current key (depth-2, not read)",
+    "0x1428a71a0": "loadout key provider (depth-2, not read)",
+    "0x141d42070": "find cosmetic item for template in snapshot (depth-2, not read)",
+    "0x141d507d0": "find variant channel object (depth-2, not read)",
+    "0x14234e0f0": "apply snapshot to pawn (depth-2, not read)",
+    "0x142407c60": "refresh pawn cosmetics (depth-2, not read)",
+    "0x142323510": "pawn-side owner search (depth-2, not read)",
+    "0x141ed1800": "settings singleton (special channel pair +0x1978/+0x197c)"
+  },
+  "notes": "The exec thunk forwards all four reads to virtual 0x750. The real body (471 lines) was read in full and ported to statements. Confidence LOW overall: the body's stack noise is heavy and several depth-2 helpers (0x142ec9900, 0x141d42070, 0x141d507d0, 0x14234e0f0, 0x142407c60) were not read in full; their roles are inferred from call-site use. These are the open items for review."
+}

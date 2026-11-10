@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerControllerAthena::GetUnableToPerformMessage (vfunc 0x18d8)",
+  "address": "0x1419d9c20",
+  "signature": "FFailedMessage* GetUnableToPerformMessage(FFailedMessage* Out, const FFailedReason& FailedReason)",
+  "inc_or_decl": "auto* Table = GetUnableToPerformTable();          // FUN_141a777c0 singleton; table at +0x4a0, count at +0x4a8, 7-qword entries\nfor (auto& Entry : Table->Entries) {                      // entries are 0x38 bytes\n    if (!Entry.Tags.IsEmpty()) {\n        bool bMatch = false;\n        for (FName Tag : Entry.Tags) {\n            if (FailedReason.Tags.Contains(Tag) || (FailedReason.ParentTags.Contains(Tag))) { ... }\n        }\n        if (!bMatch) break;   // native break on the first entry whose tags do not all match\n    }\n    Out->Text = Entry.Text;   // +0x20 / +0x28 copied into Out\n    Out->Reference = Entry.Reference;\n    Out->Id = Entry.Id;       // +0x30\n    return Out;\n}\nreturn ParentClassUnableToPerformMessage(Out, FailedReason);   // FUN_142386740 (base class implementation)",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/f048265eff0c4f689ebf1a8ef799772c/0x1419d9c20.c"
+    ],
+    "notes": "Controller class assumed AFortPlayerControllerAthena (LOW-MEDIUM): the pawn-side vfunc lookup gave a GC helper, so the Controller class was not proven from its vtable. The tag-matching loop is a reconstruction of the native pointer walk; exact tag-container semantics are depth-3 (not read). Structure of FFailedMessage inferred from the 0x20-byte return copy."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "FUniqueNetIdRepl::operator== (native 0x140d7c5a0)",
+  "address": "0x140d7c5a0",
+  "signature": "bool UniqueNetIdsEqual(const FUniqueNetIdRepl& A, const FUniqueNetIdRepl& B)",
+  "inc_or_decl": "bool aValid = (A.Ptr != nullptr) && A.Ptr->IsValid();     // vfunc 0x28 on the id object\nbool bValid = (B.Ptr != nullptr) && B.Ptr->IsValid();\nif (aValid != bValid) { return false; }\nif (!aValid) { return true; }                                 // both invalid counts as equal\nreturn A.Ptr->Equals(B.Ptr);                                  // vfunc 0 on A's id object with B's id object",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/db5f54f69d0446218db6502bc50bd614/0x140d7c5a0.c"
+    ],
+    "notes": "Read in full (25 lines). The Ptr member is the pointer at +0x8 of the repl struct. IsValid is vfunc 0x28 and Equals is vfunc 0 on the id class. Id class not named; the operation is symmetric in valid/invalid handling."
+  }
+}

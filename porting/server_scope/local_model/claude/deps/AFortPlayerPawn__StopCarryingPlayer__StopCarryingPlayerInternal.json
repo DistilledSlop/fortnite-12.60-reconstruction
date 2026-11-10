@@ -1,0 +1,18 @@
+{
+  "name": "AFortPlayerPawn::StopCarryingPlayerInternal",
+  "address": "0x1423535a0",
+  "signature": "void StopCarryingPlayerInternal(bool bFromAbilityCancel)",
+  "inc_or_decl": "// this+0x1f58 = DBNO carry record; record+0x1f48 = carrier back-pointer; record+0x1f50 = carry state byte; this+0x1f88 = bRequestedThrowCarriedPlayer\nUDBNOCarryRecord* Record = DBNOHoistee;\nif (Record == nullptr || Record->Carrier != this) {\n    bRequestedThrowCarriedPlayer = false;\n    return;\n}\nRecord->Carrier = nullptr;\nint32 Mode = (Role == 2 && bRequestedThrowCarriedPlayer) ? 3 : 2;   // role byte this+0xf0 == 2 and throw requested\nRecord->CarryState = Mode;\nCompleteCarryTransition(Record, this, Mode);   // FUN_142336990 (dep: AFortPlayerPawn__StopCarryingPlayer__CompleteCarryTransition.json)\nAController* Ctrl = Controller;                // this+0x250\nDBNOHoistee = nullptr;                         // this+0x1f58 = 0 (cleared before the controller check)\nif (Ctrl != nullptr && Ctrl->IsA(AFortPlayerControllerGameplay::StaticClass())) {   // FUN_142a62c80\n    bool bHasRecord = (DBNOHoistee != nullptr);    // evaluated after the clear, so false here\n    BroadcastCarryStateChanged(Ctrl->CarryDelegate, bHasRecord);   // FUN_1406a9dc0(this+0x2470 delegate): ProcessEvent (vfunc 0x210) on each bound function, pruning stale bindings\n}\nif (Role == 3 && !bFromAbilityCancel) {        // role byte this+0xf0 == 3 (ROLE_Authority)\n    if (UAbilitySystemComponent* ASC = GetCarryTagTarget()) {   // vfunc 0x10 on member at this+0x4c8\n        FGameplayTagContainer Tags;\n        Tags.Add(GetCarrySettings()->CarryTag0 /* +0x15b8 */);    // FUN_143e8b3b0 with FUN_141ed1800() singleton\n        Tags.Add(GetCarrySettings()->CarryTag1 /* +0x15c0 */);\n        ApplyGameplayTagsFiltered(ASC, Tags, nullptr, nullptr);   // FUN_1406fd020(ASC, &Tags, 0, 0); walks tag-filtered entries, calls vfunc 0x7b8 on each match\n    }\n}\nbRequestedThrowCarriedPlayer = false;",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/ebc5a28f3a5e438d90b9387defaf9e07/0x1423535a0.c",
+      "/opt/fortnite/local-model-package/captures/fc7f6c2a51f24a49b80250ce2220086a/0x142336990.c",
+      "/opt/fortnite/local-model-package/captures/fc7f6c2a51f24a49b80250ce2220086a/0x142a62c80.c",
+      "/opt/fortnite/local-model-package/captures/fc7f6c2a51f24a49b80250ce2220086a/0x1406a9dc0.c",
+      "/opt/fortnite/local-model-package/captures/fc7f6c2a51f24a49b80250ce2220086a/0x1406fd020.c",
+      "/opt/fortnite/local-model-package/captures/fc7f6c2a51f24a49b80250ce2220086a/0x143e8b3b0.c",
+      "/opt/fortnite/local-model-package/captures/fc7f6c2a51f24a49b80250ce2220086a/0x141ed1800.c"
+    ],
+    "notes": "Corrected on re-read: FUN_1406a9dc0 is a delegate broadcast (ProcessEvent vfunc 0x210 per bound entry, with stale-entry pruning), not a record removal. The role-3 branch applies two settings tags (+0x15b8, +0x15c0) through FUN_1406fd020. Record offsets 0x1f58/0x1f48/0x1f50/0x1f88 are confirmed by the pawn reads. Record field names are inferred (MEDIUM). Virtual 0x7b8 target 0x14233f330 was captured but its body is not ported here (depth-3 from this path)."
+  }
+}

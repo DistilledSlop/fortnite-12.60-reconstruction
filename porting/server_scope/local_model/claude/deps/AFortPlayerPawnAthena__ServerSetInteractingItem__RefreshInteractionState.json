@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerPawnAthena::RefreshInteractionState",
+  "address": "0x143f72040",
+  "signature": "void RefreshInteractionState(UObject* Item)",
+  "inc_or_decl": "if (Item->Name == 0 || Item->Field_EC != 0) { /* name compare 0x11a is logged only */ }\nint32 State = GetInteractionStateId(this);             // FUN_143f7a920\nif (State != 3 && this->NetDormancy > 1 && !IsNetDormancyBlocked()) {   // FUN_14162c790\n    if (this->NetDormancy == 4) { this->NetDormancy = 2; }\n    if ((this->bFlushOnItem & 1) && (Ctx = GetCurrentWeaponContext()) != nullptr) {\n        AddItemToNetDormancy(Ctx, this);                   // FUN_144684d20\n        UObject* Mgr = GetNetDormancyManager(this);        // FUN_143f76f10\n        if (Mgr != nullptr) {\n            ApplyDormancy(Mgr, this, 0);                    // FUN_144375f90\n            UObject* Other = Ctx->Owner_F0;\n            if (Other != nullptr && Other != Mgr) { ApplyDormancy(Other, this, NetDormancy == 4); }\n        }\n    }\n    if (LogFlushNetDormancy && pwStackX_8 != nullptr) { ReportNetDormancyFlush(); }   // FUN_142cd3770 when the log flag is set\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/9ece3bd288444e2f8afe801ece586097/0x143f72040.c"
+    ],
+    "notes": "Read in full (45 lines). Depth-2 helpers FUN_14162c790, FUN_144684d20, FUN_143f76f10, FUN_144375f90 are named only. The log string 'NET_AActor_FlushNetDormancy' is the flush label. The dormancy field at +0xf1 (NetDormancy) is confirmed by reflection."
+  }
+}

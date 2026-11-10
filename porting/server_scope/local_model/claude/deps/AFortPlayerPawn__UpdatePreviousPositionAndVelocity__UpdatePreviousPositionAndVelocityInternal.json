@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerPawn::UpdatePreviousPositionAndVelocityInternal",
+  "address": "0x14235bd20",
+  "signature": "void UpdatePreviousPositionAndVelocityInternal(float DeltaSeconds, const FVector& OldLocation, const FVector& OldVelocity)",
+  "inc_or_decl": "PreviousPosition = OldLocation;     // *(this+0x1168) = x,y (8 bytes) ; *(int*)(this+0x1170) = z\nPreviousVelocity = OldVelocity;     // *(this+0x1174) = x,y (8 bytes) ; *(this+0x117c) = z (4 bytes)\nOnPreviousPositionVelocityUpdated(); // vfunc 0x1008 -> 0x1406801c0 (STUB, no-op shared stub)",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/63626597dfad4422bd446f02794bc989/0x14235bd20.c"
+    ],
+    "notes": "Read in full (21 lines). The DeltaSeconds parameter is passed into the native body as param_2 but is never read. Member names: PreviousVelocity confirmed at +0x1174 by reflection; PreviousPosition at +0x1168 is inferred from the function name (MEDIUM). The vfunc 0x1008 target 0x1406801c0 is one of the shared stubs (STUB)."
+  }
+}

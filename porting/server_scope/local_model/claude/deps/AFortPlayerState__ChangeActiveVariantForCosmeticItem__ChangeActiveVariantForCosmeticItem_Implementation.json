@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerState::ChangeActiveVariantForCosmeticItem (real body, virtual 0x750)",
+  "address": "0x14240c7c0",
+  "signature": "void ChangeActiveVariantForCosmeticItem_Implementation(FName ItemTemplateToChange, FName VariantChannelToChange, FGameplayTag DesiredActiveVariant)",
+  "inc_or_decl": "// Full port is AFortPlayerState__ChangeActiveVariantForCosmeticItem.inc (this native body is the exec thunk's virtual target).",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/a4277ecc35ce4b3fbb6aba55271fdec8/0x14240c7c0.c"
+    ],
+    "notes": "Read in full in three chunks (471 lines after noise filtering). Confidence LOW on the internal branch plumbing: many stack-only temporaries are compiler noise; the step order and the three log messages are verified against the native. Depth-2 helpers not read here: FUN_142ec9900, FUN_1428a71a0, FUN_141d42070, FUN_141d507d0, FUN_1409f3ee0, FUN_1407f1e50, FUN_14234e0f0, FUN_142407c60, FUN_142323510."
+  }
+}

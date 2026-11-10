@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerPawnAthena::SetFallInstigator",
+  "status": "proposed",
+  "original": "0x142a83da0",
+  "signature": "void SetFallInstigator(const FGameplayTagContainer& NewFallingDamageTags, UObject* NewFallInstigator)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a83da0.c",
+    "/opt/fortnite/local-model-package/captures/f76a287780a049f181e03e706a28f988/0x141a24940.c",
+    "/opt/fortnite/local-model-package/captures/3beeafc584c84cefbc0febfef09b35e8/0x142a3d9f0.c"
+  ],
+  "callees": {
+    "0x141a24940": "SetFallInstigatorInternal (ported: deps/AFortPlayerPawnAthena__SetFallInstigator__SetFallInstigatorInternal.json)",
+    "FGameplayTagContainer_CopyAssign": "engine helper (named)",
+    "0x142a3d9f0": "static class FortPlayerController"
+  },
+  "notes": "Reflection order is NewFallingDamageTags (0) then NewFallInstigator (1); the thunk reads the instigator first and the tag container second, then forwards (this, instigator, copy-of-tags). Confidence HIGH."
+}

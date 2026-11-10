@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerState::ServerChangeActiveVariantForCosmeticItem",
+  "status": "proposed",
+  "original": "0x142a89960",
+  "signature": "void ServerChangeActiveVariantForCosmeticItem(AFortPawn* PreviewPawn, FGameplayTag DesiredActiveVariant, FName VariantChannelToChange, FName ItemTemplateToChange)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a89960.c",
+    "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x1424276e0.c",
+    "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x1406801d0.c"
+  ],
+  "callees": {
+    "vfunc 0x6f8": "ServerChangeActiveVariantForCosmeticItem_Validate -> STUB 0x1406801d0 (always true; dep: ...__Validate.json)",
+    "0x142d6e0f0": "RPC_ValidateFailed (named engine helper; not reached)",
+    "vfunc 0x700": "ServerChangeActiveVariantForCosmeticItem_Implementation -> forwarder 0x1424276e0 (dep: ...__Implementation.json)",
+    "vfunc 0x750 (via forwarder)": "ChangeActiveVariantForCosmeticItem real body 0x14240c7c0 (see the ChangeActiveVariant .inc)"
+  },
+  "notes": "Thunk reads ItemTemplateToChange first, then VariantChannelToChange, DesiredActiveVariant and PreviewPawn, then dispatches (this, item, channel, desired, pawn). The validate stub makes the failure branch unreachable. Confidence HIGH for dispatch."
+}

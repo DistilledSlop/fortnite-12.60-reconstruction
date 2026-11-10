@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerPawn::SetPossessedPropInternal",
+  "address": "0x14234ec60",
+  "signature": "void SetPossessedPropInternal(AActor* InPossessedProp)",
+  "inc_or_decl": "if (GetRole() == ROLE_Authority) {                         // this+0xf0 == 3\n    if (InPossessedProp != nullptr) {\n        if (InPossessedProp->IsPendingKillOrDestroyed() || (InPossessedProp->Flags5C & 8)) {   // object flags 0x30000000 at GUObjectArray item, or bit 8 at +0x5c\n            if (LogVerbosity > 2) {\n                LogWarning(\"Setting Possessed Prop failed with prop %s, which are either marked as pending kill or being destroyed\", InPossessedProp->GetName());\n            }\n            InPossessedProp = nullptr;\n        }\n    }\n    AActor* OldProp = PossessedProp;               // this+0x15e8\n    BroadcastPossessedPropChanged(this, InPossessedProp, OldProp);   // FUN_140aae720(&delegate, this, new, old)\n    PossessedProp = InPossessedProp;               // *(this+0x15e8) = param\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/ce4b305d17ec49659617a0c764d81320/0x14234ec60.c"
+    ],
+    "notes": "Native body verified against 0x14234ec60 decompile. The delegate broadcast FUN_140aae720 is not read beyond its name (depth-3 engine delegate). Log text reproduced verbatim from the native format string."
+  }
+}

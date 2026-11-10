@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerPawnAthena::IsMeleeCombatAllowed (vfunc 0x6b0)",
+  "address": "0x144430060",
+  "signature": "bool IsMeleeCombatAllowed()",
+  "inc_or_decl": "if (Controller != nullptr) {                         // this+0x250\n    if (Controller->IsSomethingAllowed()) {                  // vfunc 0x6a8 on the controller\n        return true;\n    }\n}\nreturn false;",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/a4277ecc35ce4b3fbb6aba55271fdec8/0x144430060.c"
+    ],
+    "notes": "Read in full (15 lines). The 0x6a8 controller slot is not class-resolved (the Controller class is MEDIUM confidence). The name IsMeleeCombatAllowed is a proposal from the call site."
+  }
+}

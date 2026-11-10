@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerPawn::StopCarryingPlayer",
+  "status": "proposed",
+  "original": "0x142a80cb0",
+  "signature": "void StopCarryingPlayer(bool bFromAbilityCancel)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a80cb0.c",
+    "/opt/fortnite/local-model-package/captures/ebc5a28f3a5e438d90b9387defaf9e07/0x1423535a0.c",
+    "/opt/fortnite/local-model-package/captures/fc7f6c2a51f24a49b80250ce2220086a/0x142336990.c"
+  ],
+  "callees": {
+    "0x1423535a0": "StopCarryingPlayerInternal (ported: deps/AFortPlayerPawn__StopCarryingPlayer__StopCarryingPlayerInternal.json)",
+    "0x142336990": "CompleteCarryTransition (PARTIAL port: deps/AFortPlayerPawn__StopCarryingPlayer__CompleteCarryTransition.json)",
+    "0x142a62c80": "static class FortPlayerControllerGameplay",
+    "0x1406a9dc0": "delegate broadcast with stale pruning (depth-2, read; named in dep)",
+    "0x1406fd020": "tag-filtered delegate walk calling vfunc 0x7b8 (depth-2, read; named in dep)",
+    "0x143e8b3b0": "add gameplay tag to container (depth-2, read)",
+    "0x141ed1800": "settings singleton",
+    "vfunc 0x10 @ this+0x4c8": "ability/tag target getter (class not resolved)",
+    "vfunc 0x7b8": "resolved target 0x14233f330 (captured, not ported in this chunk)"
+  },
+  "notes": "Thunk has one Bool. The internal function's main branch is ported. CompleteCarryTransition (0x142336990) is only partially ported (summarised call sequence, see its dep). Confidence MEDIUM."
+}

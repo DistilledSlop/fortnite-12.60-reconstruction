@@ -1,0 +1,26 @@
+{
+  "function": "AFortPlayerPawn::UnableToPerformAction",
+  "status": "proposed",
+  "original": "0x142a80ed0",
+  "signature": "void UnableToPerformAction(const FFailedReason& FailedReason, bool bPlayMontage)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a80ed0.c",
+    "/opt/fortnite/local-model-package/captures/f66b3c21848641db9ee658acba5be26a/0x142358750.c",
+    "/opt/fortnite/local-model-package/captures/3beeafc584c84cefbc0febfef09b35e8/0x142a3d9f0.c",
+    "/opt/fortnite/local-model-package/captures/4a26ffff8a99445f98fbecc2f3b0f13f/0x1423bd2b0.c",
+    "/opt/fortnite/local-model-package/captures/4a26ffff8a99445f98fbecc2f3b0f13f/0x14070c910.c",
+    "/opt/fortnite/local-model-package/captures/4a26ffff8a99445f98fbecc2f3b0f13f/0x144224d90.c",
+    "/opt/fortnite/local-model-package/captures/4a26ffff8a99445f98fbecc2f3b0f13f/0x142a773e0.c",
+    "/opt/fortnite/local-model-package/captures/f048265eff0c4f689ebf1a8ef799772c/0x1419d9c20.c"
+  ],
+  "callees": {
+    "0x142358750": "UnableToPerformActionInternal (ported: deps/AFortPlayerPawn__UnableToPerformAction__UnableToPerformActionInternal.json)",
+    "0x142a3d9f0": "static class FortPlayerController",
+    "0x1423bd2b0": "broadcast gate (pawn flag 0x658 bit 8) then event call",
+    "0x14070c910": "returns a cached object from +0x768 gated by a class check (depth-2)",
+    "0x144224d90": "montage-play builder (depth-2, read in full; gated by anim singleton vfunc 0x388)",
+    "0x142a773e0": "ProcessEvent-style call with no args on the controller",
+    "vfunc 0x18d8 on Controller": "resolved (Athena guess) to 0x1419d9c20 (ported: deps/AFortPlayerPawn__UnableToPerformAction__ControllerUnableToPerformMessage.json)"
+  },
+  "notes": "Thunk reads bPlayMontage first, then FailedReason (reflection order is FailedReason, bPlayMontage). The main path (controller gate, message lookup, broadcast, optional montage, finish call) is ported. The Controller class for vfunc 0x18d8 is MEDIUM confidence. Functions called by 0x144224d90 at depth 3 are named only."
+}

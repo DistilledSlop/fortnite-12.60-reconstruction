@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerState::ServerChangeActiveVariantForCosmeticItem_Validate",
+  "address": "0x1406801d0",
+  "signature": "bool ServerChangeActiveVariantForCosmeticItem_Validate(FName ItemTemplateToChange, FName VariantChannelToChange, FGameplayTag DesiredActiveVariant, AFortPawn* PreviewPawn)",
+  "inc_or_decl": "return true;   // Stub_ReturnTrue (STUB): shared tiny stub 0x1406801d0",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x1406801d0.c"
+    ],
+    "notes": "STUB. Virtual slot 0x6f8 on AFortPlayerState resolves to 0x1406801d0 (vtable 0x14614b3c0, slot 223). RPC_ValidateFailed is never reached for this RPC."
+  }
+}

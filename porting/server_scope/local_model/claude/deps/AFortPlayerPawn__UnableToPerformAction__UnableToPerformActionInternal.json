@@ -1,0 +1,17 @@
+{
+  "name": "AFortPlayerPawn::UnableToPerformActionInternal",
+  "address": "0x142358750",
+  "signature": "void UnableToPerformActionInternal(bool bPlayMontage, const FFailedReason& FailedReason)",
+  "inc_or_decl": "AController* Ctrl = Controller;                       // this+0x250\nif (Ctrl == nullptr) { return; }\nif (!Ctrl->IsA(AFortPlayerControllerAthena::StaticClass())) { return; }   // FUN_142a3d9f0 (FortPlayerController static class) IsA check, native uses class-index compare\nMessage Msg = Ctrl->GetUnableToPerformMessage(FailedReason);     // vfunc 0x18d8 on the controller -> 0x1419d9c20 (dep: ...ControllerUnableToPerformMessage.json)\nDelegateNotifyUnableToPerform(Ctrl, bPlayMontage, Msg);          // FUN_1423bd2b0 pattern (pawn->controller broadcast gate on 0x658 flag bit 8)\nif (bPlayMontage) {\n    Ctrl->CurrentActionMontageIndex = GetActionMontageIndex(Ctrl);   // FUN_1423bd2b0 + FUN_144224d90 (montage play, depth-2)\n    PlayUnableToPerformMontage(Ctrl, Msg);                          // FUN_144224d90: plays the montage when the anim component and pawn are valid\n}\nFinishUnableToPerform(Ctrl);                                       // FUN_142a773e0: UFunction call on the controller with no args (vfunc 0x210)",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/f66b3c21848641db9ee658acba5be26a/0x142358750.c",
+      "/opt/fortnite/local-model-package/captures/3beeafc584c84cefbc0febfef09b35e8/0x142a3d9f0.c",
+      "/opt/fortnite/local-model-package/captures/4a26ffff8a99445f98fbecc2f3b0f13f/0x1423bd2b0.c",
+      "/opt/fortnite/local-model-package/captures/4a26ffff8a99445f98fbecc2f3b0f13f/0x14070c910.c",
+      "/opt/fortnite/local-model-package/captures/4a26ffff8a99445f98fbecc2f3b0f13f/0x144224d90.c",
+      "/opt/fortnite/local-model-package/captures/4a26ffff8a99445f98fbecc2f3b0f13f/0x142a773e0.c"
+    ],
+    "notes": "The 0x142358750 native read in full. Its branch that was not clear from the first read is the bPlayMontage path: 0x144224d90 (depth-2) is a montage-play builder gated by the anim-state check 0x388 on the anim singleton. Controller-side slot 0x18d8 class was not provable (AFortPlayerControllerAthena chosen: its vtable entry 0x1419d9c20 decompiles to a message lookup); MEDIUM confidence on the Controller class. Message-lookup struct field names are unnamed. The delegate broadcast FUN_1423bd2b0 is depth-2 and is only partly ported (the gate on pawn flag 0x658 bit 8 and the event call)."
+  }
+}

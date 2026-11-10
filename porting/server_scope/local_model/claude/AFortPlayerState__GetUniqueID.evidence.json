@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerState::GetUniqueID",
+  "status": "proposed",
+  "original": "0x142a89170",
+  "signature": "FUniqueNetIdRepl GetUniqueID()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a89170.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x142419ef0.c",
+    "/opt/fortnite/local-model-package/captures/c4b0f54ea1f8492aa59dd7ec47b1e067/0x140d7c4c0.c"
+  ],
+  "callees": {
+    "0x142419ef0": "BuildUniqueNetIdRepl (ported: deps/AFortPlayerState__GetUniqueID__BuildUniqueNetIdRepl.json)",
+    "0x140d7c4c0": "FUniqueNetIdRepl copy-and-swap assign (ported: deps/AFortPlayerState__GetUniqueID__UniqueNetIdReplCopyAssign.json)",
+    "0x140899420": "sub-object assign (depth-2, named only)"
+  },
+  "notes": "Return-only. The thunk's P_FINISH handling is ignored. Confidence HIGH for the build-then-copy pattern; MEDIUM for the member names at +0x250 and +0x258."
+}

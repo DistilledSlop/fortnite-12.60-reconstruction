@@ -1,0 +1,12 @@
+{
+  "name": "AFortPlayerPawnAthena::ServerSetInteractingItem_Validate",
+  "address": "0x1406801d0",
+  "signature": "bool ServerSetInteractingItem_Validate(UObject* InteractingItem, bool bClearInteraction)",
+  "inc_or_decl": "return true;   // Stub_ReturnTrue (STUB): shared tiny stub 0x1406801d0 'mov al,1; ret'",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x1406801d0.c"
+    ],
+    "notes": "STUB. The validate slot (0x1418 on AFortPlayerPawnAthena) resolves to the shared Stub_ReturnTrue body (7-line decompile, returns true). RPC_ValidateFailed (0x142d6e0f0, read in full) is therefore never reached for this RPC."
+  }
+}
