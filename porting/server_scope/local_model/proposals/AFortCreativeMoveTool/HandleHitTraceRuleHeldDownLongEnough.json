@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeMoveTool::HandleHitTraceRuleHeldDownLongEnough",
+ "status": "blocked",
+ "blocker": "Tail-called handler at AFortCreativeMoveTool C++ vtable byte offset 0xda0 (idx 436) unidentified (vtable not pinned among candidates 0x146115858/0x146c6fbc8/0x146f119d8); param_2 (RDX) object type and its +0x20 guarded-counter field not established (no reflected params).",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100356",
+ "batch_seconds": 668
+}
