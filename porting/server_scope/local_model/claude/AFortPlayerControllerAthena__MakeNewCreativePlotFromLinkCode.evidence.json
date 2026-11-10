@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerControllerAthena::MakeNewCreativePlotFromLinkCode",
+  "status": "proposed",
+  "original": "0x142a59310",
+  "signature": "void MakeNewCreativePlotFromLinkCode(const FString& LinkCode, const FString& Locale, const FString& Title)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a59310.c",
+    "captures/93f52a372be549a49e15e5933b5936b2/0x1419dec70.c"
+  ],
+  "callees": {
+    "0x140f6b550": "MakeNewCreativePlotFromLinkCode_Validate (folded body, already ported)",
+    "0x1419dec70": "MakeNewCreativePlotFromLinkCode_Implementation (vtable +0x2700; NOT PORTED here, 353 decompile lines)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "Three FString params read in the order LinkCode, Locale, Title.",
+  "class": "AFortPlayerControllerAthena"
+}

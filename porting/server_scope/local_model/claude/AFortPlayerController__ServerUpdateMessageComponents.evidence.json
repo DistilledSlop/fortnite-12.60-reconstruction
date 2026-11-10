@@ -1,0 +1,20 @@
+{
+  "function": "AFortPlayerController::ServerUpdateMessageComponents",
+  "status": "proposed",
+  "original": "0x142a4e7b0",
+  "signature": "void ServerUpdateMessageComponents(const TArray<UObject*>& ModifiedComponents, const TArray<FGameplayTagContainer>& NewChannelIds)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a4e7b0.c",
+    "captures/93f52a372be549a49e15e5933b5936b2/0x1423ae240.c",
+    "captures/93f52a372be549a49e15e5933b5936b2/0x1423ae010.c"
+  ],
+  "callees": {
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)",
+    "0x1423ae240": "ServerUpdateMessageComponents_Validate (vtable +0x13f0; dep written)",
+    "0x1423ae010": "ServerUpdateMessageComponents_Implementation (vtable +0x13f8; dep written)",
+    "RPC_ValidateFailed": "engine: logs validate failure with the _Validate name"
+  },
+  "notes": "Thunk reads both params from the FFrame, calls the validate through vtable +0x13f0, then the implementation through vtable +0x13f8 (both bodies are deps in deps/).",
+  "class": "AFortPlayerController"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "NativeCanPlayerCreateInCurrentVolume",
+  "address": "0x1419c3880",
+  "signature": "bool NativeCanPlayerCreateInCurrentVolume(AFortVolume*& OutVolume)",
+  "owner": "AFortPlayerControllerAthena",
+  "confidence": "LOW",
+  "inc_or_decl": "// CONFIDENCE: LOW - resolution and gating read in full; the component check helper is unnamed. Original 0x1419c3880.\nAFortVolumeManager* Manager = AFortVolumeManager::NativeResolveVolumeManager(this);\nAFortVolume* Volume = Manager ? Manager->NativeFindPlayerVolume(PlayerState) : nullptr;\nOutVolume = Volume;\nif (Volume)\n{\n    UWorld* World = GetWorld();\n    AFortGameStateAthena* GameState = (World && World->GameState && World->GameState->IsA(AFortGameStateAthena::StaticClass()))\n        ? Cast<AFortGameStateAthena>(World->GameState) : nullptr;\n    if (GameState && NativeGameStateAllowsVolumeBypass(GameState))   // FUN_14199e2c0 + FUN_141a4a300, unnamed\n    {\n        return true;\n    }\n    UFortLevelSaveComponent* SaveComp = Volume->NativeFindComponent(UFortLevelSaveComponent::StaticClass());   // vtable +0x610, unnamed\n    if (SaveComp)\n    {\n        const FString PlayerKey = NativeGetPlayerVolumeKey(this);   // FUN_14237f3d0, unnamed\n        return NativeVolumeCompAllowsPlayer(SaveComp, PlayerKey);   // FUN_141eeab20, unnamed\n    }\n}\nreturn true;\n",
+  "evidence": {
+    "captures": [
+      "captures/85fda140e902477ba14db529556fc81d/0x1419c3880.c"
+    ],
+    "callees": {
+      "0x141c74820": "AFortVolumeManager::NativeResolveVolumeManager (ported)",
+      "0x141c7d420": "AFortVolumeManager::NativeFindPlayerVolume (ported)",
+      "0x143f793a0": "AActor::GetWorld (vtable +0x150, HIGH)",
+      "0x14297b320": "UFortLevelSaveComponent::StaticClass (engine)",
+      "0x14199e2c0": "NativeGameStateAllowsVolumeBypass (unnamed; reads GameState +0x1df8/+0x1df0 and calls FUN_141a4a300)",
+      "0x14237f3d0": "NativeGetPlayerVolumeKey (unnamed)",
+      "0x141eeab20": "NativeVolumeCompAllowsPlayer (unnamed)"
+    },
+    "notes": "The decompile keeps the first resolved volume even when the component checks fail; the final fallthrough returns true."
+  }
+}

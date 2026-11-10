@@ -1,0 +1,17 @@
+{
+  "name": "NativeIsPlayerInAVolumeTheyCanCreateIn",
+  "address": "0x1419dd950",
+  "signature": "bool NativeIsPlayerInAVolumeTheyCanCreateIn()",
+  "owner": "AFortPlayerControllerAthena",
+  "confidence": "MEDIUM",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM - thin wrapper over NativeCanPlayerCreateInCurrentVolume. Original 0x1419dd950.\nAFortVolume* Volume = nullptr;\nconst bool bCanCreate = NativeCanPlayerCreateInCurrentVolume(Volume);\nreturn bCanCreate && Volume != nullptr;\n",
+  "evidence": {
+    "captures": [
+      "captures/85fda140e902477ba14db529556fc81d/0x1419dd950.c"
+    ],
+    "callees": {
+      "0x1419c3880": "NativeCanPlayerCreateInCurrentVolume (dep)"
+    },
+    "notes": "Controller context is passed through the register the thunk leaves untouched."
+  }
+}

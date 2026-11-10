@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerControllerAthena::DuplicateCreativePlot",
+  "status": "proposed",
+  "original": "0x142a58490",
+  "signature": "void DuplicateCreativePlot(const FString& IslandId, const FString& Locale, const FString& Title)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a58490.c",
+    "captures/93f52a372be549a49e15e5933b5936b2/0x1419cdd40.c"
+  ],
+  "callees": {
+    "0x140f6b550": "DuplicateCreativePlot_Validate (folded body, already ported)",
+    "0x1419cdd40": "DuplicateCreativePlot_Implementation (vtable +0x26b0; NOT PORTED here, 596 decompile lines, manifest skipped)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "Thunk reads three FStrings; the decompile's order is IslandId, Locale, Title (matches the manifest's validate signature).",
+  "class": "AFortPlayerControllerAthena"
+}

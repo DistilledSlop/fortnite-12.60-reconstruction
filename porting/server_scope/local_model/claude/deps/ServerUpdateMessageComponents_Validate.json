@@ -1,0 +1,19 @@
+{
+  "name": "ServerUpdateMessageComponents_Validate",
+  "address": "0x1423ae240",
+  "signature": "bool ServerUpdateMessageComponents_Validate(const TArray<UObject*>& ModifiedComponents, const TArray<FGameplayTagContainer>& NewChannelIds)",
+  "owner": "AFortPlayerController",
+  "confidence": "MEDIUM",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM - gate and count comparison read in full; global settings helper unnamed. Original 0x1423ae240.\nUWorld* World = GetWorld();\nAFortGameStateAthena* GameState = (World && World->GameState && World->GameState->IsA(AFortGameStateAthena::StaticClass()))\n    ? Cast<AFortGameStateAthena>(World->GameState) : nullptr;\nif (NativeGetNetChannelSettings()->bChannelsEnabled && GameState && NativeGameStateSupportsChannels(GameState))   // FUN_141ed2350 (+0xc9), FUN_14199e3c0, unnamed\n{\n    return ModifiedComponents.Num() == NewChannelIds.Num();\n}\nreturn false;\n",
+  "evidence": {
+    "captures": [
+      "captures/93f52a372be549a49e15e5933b5936b2/0x1423ae240.c"
+    ],
+    "callees": {
+      "0x143f793a0": "AActor::GetWorld (vtable +0x150, HIGH)",
+      "0x141ed2350": "NativeGetNetChannelSettings (unnamed; flag at +0xc9)",
+      "0x14199e3c0": "NativeGameStateSupportsChannels (unnamed)"
+    },
+    "notes": "Parameter order follows the thunk's FFrame read order (ModifiedComponents first)."
+  }
+}

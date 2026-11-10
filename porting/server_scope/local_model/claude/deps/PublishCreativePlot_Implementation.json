@@ -1,0 +1,15 @@
+{
+  "name": "PublishCreativePlot_Implementation",
+  "address": "0x1419ec120",
+  "signature": "void PublishCreativePlot_Implementation(AFortVolume* VolumeToPublish, const FCreativePublishOptions& MyPublishOptions)",
+  "owner": "AFortPlayerControllerAthena",
+  "confidence": "HIGH",
+  "inc_or_decl": "// CONFIDENCE: HIGH that the body has no publish effect - Original 0x1419ec120.\n// The body only releases the struct copy (options strings and arrays) handed in by the thunk. No other effect.\n",
+  "evidence": {
+    "captures": [
+      "captures/93f52a372be549a49e15e5933b5936b2/0x1419ec120.c"
+    ],
+    "callees": {},
+    "notes": "Empty body: the only work is destruction of the by-value FCreativePublishOptions copy."
+  }
+}

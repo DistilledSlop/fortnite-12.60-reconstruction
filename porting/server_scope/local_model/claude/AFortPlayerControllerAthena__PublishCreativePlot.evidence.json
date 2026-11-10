@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerControllerAthena::PublishCreativePlot",
+  "status": "proposed",
+  "original": "0x142a59b30",
+  "signature": "void PublishCreativePlot(AFortVolume* VolumeToPublish, const FCreativePublishOptions& MyPublishOptions)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a59b30.c",
+    "captures/93f52a372be549a49e15e5933b5936b2/0x1419ec130.c",
+    "captures/93f52a372be549a49e15e5933b5936b2/0x1419ec120.c"
+  ],
+  "callees": {
+    "0x1419ec130": "PublishCreativePlot_Validate (dep written, LOW; helper calls unnamed)",
+    "0x1419ec120": "PublishCreativePlot_Implementation (dep written; body only destroys the options copy, no publish effect)",
+    "0x140690ac0": "TArray reserve helper used for the struct copies (C++ copy semantics)",
+    "0x140690a50": "TArray reserve helper for the nested array copy (C++ copy semantics)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "Signature order follows the thunk read order and the implementation's own use of the parameters (struct at param_3). The manifest's validate/impl signatures list the options first, which conflicts with this order; the thunk and impl bodies agree on volume-first.",
+  "class": "AFortPlayerControllerAthena"
+}

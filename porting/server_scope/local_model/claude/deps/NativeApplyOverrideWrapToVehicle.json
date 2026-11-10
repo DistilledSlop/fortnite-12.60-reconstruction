@@ -1,0 +1,21 @@
+{
+  "name": "NativeApplyOverrideWrapToVehicle",
+  "address": "0x1419bfa60",
+  "signature": "void NativeApplyOverrideWrapToVehicle(const TSoftObjectPtr<UObject>& ItemWrap)",
+  "owner": "AFortPlayerControllerAthena",
+  "confidence": "LOW",
+  "inc_or_decl": "// CONFIDENCE: LOW - pawn gate and ordering read in full; vehicle vfuncs and the event dispatch are unnamed. Original 0x1419bfa60.\nif (Pawn && Pawn->IsA(AFortPlayerPawn::StaticClass()))\n{\n    AFortVehicle* Vehicle = Pawn->NativeGetVehicleForWrap();   // vtable +0x1088 on the pawn, unnamed\n    if (Vehicle)\n    {\n        Vehicle->NativeApplyItemWrap(ItemWrap);                // vtable +0x5d0 on the vehicle, unnamed\n        NativeReleaseVehicleWrapRef(Vehicle);                  // FUN_141f8b8e0, unnamed\n    }\n}\nNativeRaiseOverrideWrapChanged(this, ItemWrap);                // FUN_142a53d90: ProcessEvent of a Blueprint event by FName\n",
+  "evidence": {
+    "captures": [
+      "captures/85fda140e902477ba14db529556fc81d/0x1419bfa60.c"
+    ],
+    "callees": {
+      "0x142a75f10": "AFortPlayerPawn::StaticClass (engine)",
+      "0x1423256c0": "AFortPlayerPawn vtable +0x1088 target (unnamed)",
+      "0x144435570": "vehicle vtable +0x5d0 target (unnamed)",
+      "0x141f8b8e0": "NativeReleaseVehicleWrapRef (unnamed; uses vtable +0x5e0 and +0x5d8 and FWeakObjectPtr_Get)",
+      "0x142a53d90": "NativeRaiseOverrideWrapChanged (ProcessEvent of FindFunctionChecked(event name))"
+    },
+    "notes": "Pawn is AController::Pawn (+0x248). Vehicle and event helpers are not fully read; the .inc names them as proposed helpers."
+  }
+}

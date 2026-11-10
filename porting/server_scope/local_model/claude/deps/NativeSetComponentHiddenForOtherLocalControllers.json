@@ -1,0 +1,21 @@
+{
+  "name": "NativeSetComponentHiddenForOtherLocalControllers",
+  "address": "0x1423af010",
+  "signature": "bool NativeSetComponentHiddenForOtherLocalControllers(USceneComponent* SceneComp, bool bNewHidden, bool bPropagateToChildren)",
+  "owner": "APlayerController",
+  "confidence": "MEDIUM",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM - iteration and self/local-peer inversion read in full. Original 0x1423af010.\nbool bResult = false;\nconst bool bThisIsLocal = IsLocalController();\nUWorld* World = GetWorld();\nif (World)\n{\n    for (int32 Index = 0; Index < World->PlayerControllerList.Num(); ++Index)\n    {\n        APlayerController* Other = World->PlayerControllerList[Index].Get();\n        if (!Other || !Other->IsA(AFortPlayerController::StaticClass()))\n        {\n            continue;\n        }\n        if (Other == this || (bThisIsLocal && Other->IsLocalController()))\n        {\n            // Self and local peers get the inverted flag.\n            bResult |= Other->NativeSetComponentHiddenForController(SceneComp, !bNewHidden, bPropagateToChildren);\n        }\n        else\n        {\n            bResult |= Other->NativeSetComponentHiddenForController(SceneComp, bNewHidden, bPropagateToChildren);\n        }\n    }\n}\nreturn bResult;\n",
+  "evidence": {
+    "captures": [
+      "captures/85fda140e902477ba14db529556fc81d/0x1423af010.c"
+    ],
+    "callees": {
+      "0x143f793a0": "AActor::GetWorld (vtable +0x150, HIGH from vtable_lookup)",
+      "0x1444803e0": "APlayerController::IsLocalController (vtable +0x698, MEDIUM from vtable_lookup)",
+      "0x14468fb70": "TArray iterator init over World+0x1c8 (engine)",
+      "0x142a3d9f0": "AFortPlayerController::StaticClass (engine)",
+      "0x1423aec80": "NativeSetComponentHiddenForController (dep)"
+    },
+    "notes": "World+0x1c8 is the controller list (type TArray<TWeakObjectPtr<APlayerController>>). The world-list field name is not in the reflection dump, so PlayerControllerList is a proposed name."
+  }
+}

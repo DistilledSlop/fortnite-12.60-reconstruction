@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerControllerAthena::ApplyOverrideWrapToVehicle",
+  "status": "proposed",
+  "original": "0x142a561f0",
+  "signature": "void ApplyOverrideWrapToVehicle(const TSoftObjectPtr<UObject>& ItemWrap)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a561f0.c",
+    "captures/85fda140e902477ba14db529556fc81d/0x1419bfa60.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x142a75f10.c",
+    "captures/42e5fe1b88aa4f0ca1fcccd530cdbc57/0x142a53d90.c"
+  ],
+  "callees": {
+    "0x1419bfa60": "NativeApplyOverrideWrapToVehicle (dep written, body ported; vehicle vfuncs unnamed)",
+    "0x142a75f10": "AFortPlayerPawn::StaticClass (engine-style static class getter)",
+    "0x142a53d90": "ProcessEvent of the controller's wrap-changed Blueprint event (partly unnamed)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "Out-of-thunk: the controller's Pawn gets the wrap applied through a vehicle vfunc, then the controller raises its event.",
+  "class": "AFortPlayerControllerAthena"
+}

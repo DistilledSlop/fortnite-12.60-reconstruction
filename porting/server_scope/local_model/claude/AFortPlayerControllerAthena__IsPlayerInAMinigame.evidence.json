@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::IsPlayerInAMinigame",
+  "status": "proposed",
+  "original": "0x142a58f30",
+  "signature": "bool IsPlayerInAMinigame()",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a58f30.c",
+    "captures/85fda140e902477ba14db529556fc81d/0x1419dd8b0.c"
+  ],
+  "callees": {
+    "0x1419dd8b0": "NativeIsPlayerInAMinigame (dep written, body ported)"
+  },
+  "notes": "No FFrame parameters; the controller arrives as the thunk context.",
+  "class": "AFortPlayerControllerAthena"
+}

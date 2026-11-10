@@ -1,0 +1,15 @@
+{
+  "name": "RestoreCreativePlot_Implementation",
+  "address": "0x1419ef2a0",
+  "signature": "void RestoreCreativePlot_Implementation(const FString& IslandId)",
+  "owner": "AFortPlayerControllerAthena",
+  "confidence": "NONE",
+  "inc_or_decl": "DECLARATION ONLY (body not ported in this chunk)",
+  "evidence": {
+    "captures": [
+      "captures/93f52a372be549a49e15e5933b5936b2/0x1419ef2a0.c"
+    ],
+    "callees": {},
+    "notes": "DECLARATION ONLY: body NOT PORTED in this chunk (556 decompile lines; manifest status skipped). The owning thunk dispatches to it by name. Captured at captures/*/0x1419ef2a0.c."
+  }
+}

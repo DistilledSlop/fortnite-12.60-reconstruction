@@ -1,0 +1,21 @@
+{
+  "name": "NativeStartReadyCheck",
+  "address": "0x1423b8db0",
+  "signature": "bool NativeStartReadyCheck(const FText& QueryText, const FText& YesText, const FText& NoText, float PercentageToPass)",
+  "owner": "AFortPlayerController",
+  "confidence": "LOW",
+  "inc_or_decl": "// CONFIDENCE: LOW - gating and loops read in full; several field names and two sub-helpers are unresolved. Original 0x1423b8db0.\n// Gate: the controller's Role must be ROLE_Authority (byte +0xf0 = AActor::Role), and the world time must have passed the ready-check delay.\nUWorld* World = GetWorld();\nif (Role == ROLE_Authority && World && ReadyCheckStartTime <= World->TimeSeconds - ReadyCheckDelay)\n{\n    ReadyCheckPercentage = PercentageToPass;   // proposed name for +0x69c\n    // Pass 1: every controller (in the world list) that is an AFortPlayerController and has an Athena PlayerState gets its ready flag cleared.\n    for (APlayerController* Peer : World->PlayerControllerList)\n    {\n        AFortPlayerController* FortPeer = Cast<AFortPlayerController>(Peer);\n        if (FortPeer && FortPeer->PlayerState && FortPeer->PlayerState->IsA(AFortPlayerStateAthena::StaticClass()))\n        {\n            NativeSetPlayerStateReadyToStart(FortPeer->PlayerState, false);   // FUN_14242a0a0, unnamed\n        }\n    }\n    // Pass 2: stamp every Fort controller with the world time and send the prompt.\n    for (APlayerController* Peer : World->PlayerControllerList)\n    {\n        AFortPlayerController* FortPeer = Cast<AFortPlayerController>(Peer);\n        if (FortPeer)\n        {\n            FortPeer->ReadyCheckStampTime = World->TimeSeconds;   // proposed name for the int field at +0x4c8\n            FortPeer->ReadyCheckStampFlag = 0;                    // proposed name for +0x4d0\n            NativeSendReadyCheckPrompt(FortPeer, QueryText, YesText, NoText);   // FUN_142a3c6a0, unnamed\n        }\n    }\n    return true;\n}\nreturn false;\n",
+  "evidence": {
+    "captures": [
+      "captures/85fda140e902477ba14db529556fc81d/0x1423b8db0.c"
+    ],
+    "callees": {
+      "0x142a3d9f0": "AFortPlayerController::StaticClass (engine)",
+      "0x142a85850": "AFortPlayerStateAthena::StaticClass (engine)",
+      "0x14242a0a0": "NativeSetPlayerStateReadyToStart (unnamed, not ported)",
+      "0x142a3c6a0": "NativeSendReadyCheckPrompt (unnamed, not ported)",
+      "0x142c0c240": "FText default ctor / copy (engine)"
+    },
+    "notes": "Field offsets 0x694 (start time), 0x69c (percentage), 0x6ac (delay), 0x4c8 and 0x4d0 are not in the reflection dump for AFortPlayerController, so the names are proposed. The 0x4c8/0x4d0 writes use a 0x28-byte UObject stride assumption from the decompile, which is LOW."
+  }
+}

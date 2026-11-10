@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::IsPlayerInAVolumeTheyCanCreateIn",
+  "status": "proposed",
+  "original": "0x142a58f60",
+  "signature": "bool IsPlayerInAVolumeTheyCanCreateIn()",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a58f60.c",
+    "captures/85fda140e902477ba14db529556fc81d/0x1419dd950.c"
+  ],
+  "callees": {
+    "0x1419dd950": "NativeIsPlayerInAVolumeTheyCanCreateIn (dep written, body ported)"
+  },
+  "notes": "No FFrame parameters.",
+  "class": "AFortPlayerControllerAthena"
+}

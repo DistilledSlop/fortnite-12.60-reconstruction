@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerControllerAthena::CanPlayerCreateInCurrentVolume",
+  "status": "proposed",
+  "original": "0x142a56360",
+  "signature": "bool CanPlayerCreateInCurrentVolume(AFortVolume*& OutCurrentVolume)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a56360.c",
+    "captures/85fda140e902477ba14db529556fc81d/0x1419c3880.c"
+  ],
+  "callees": {
+    "0x1419c3880": "NativeCanPlayerCreateInCurrentVolume (dep written, body ported; two helpers unnamed)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "The out-parameter address comes from MostRecentPropertyAddress when present, otherwise the local slot; the helper always writes the volume through it.",
+  "class": "AFortPlayerControllerAthena"
+}

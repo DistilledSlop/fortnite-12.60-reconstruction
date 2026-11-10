@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::SetCompHiddenOtherLocalControllersOnly",
+  "status": "proposed",
+  "original": "0x142a4f140",
+  "signature": "bool SetCompHiddenOtherLocalControllersOnly(USceneComponent* SceneComp, bool bNewHiddenGame, bool bPropagateToChildren)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a4f140.c",
+    "captures/85fda140e902477ba14db529556fc81d/0x1423af010.c"
+  ],
+  "callees": {
+    "0x1423af010": "NativeSetComponentHiddenForOtherLocalControllers (dep written, body ported)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "Same read order and shape as SetCompHiddenControllerOnly.",
+  "class": "AFortPlayerController"
+}

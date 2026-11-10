@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::StartReadyCheck",
+  "status": "proposed",
+  "original": "0x142a4f7a0",
+  "signature": "bool StartReadyCheck(const FText& QueryText, const FText& YesText, const FText& NoText, float PercentageToPass)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a4f7a0.c",
+    "captures/85fda140e902477ba14db529556fc81d/0x1423b8db0.c",
+    "captures/3e2c0e56ad034cb4af605f7bbcef1e5a/0x142c0c240.c"
+  ],
+  "callees": {
+    "0x1423b8db0": "NativeStartReadyCheck (dep written, body ported; sub-helpers partly unnamed)",
+    "0x142c0c240": "FText default construction (copies FText::GetEmpty() via 0x1407c2c80, bumps shared ref count)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "Thunk builds three FText locals and one float, then returns the helper result through Result.",
+  "class": "AFortPlayerController"
+}

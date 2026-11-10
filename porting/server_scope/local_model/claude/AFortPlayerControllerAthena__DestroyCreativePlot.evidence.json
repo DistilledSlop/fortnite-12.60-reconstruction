@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerControllerAthena::DestroyCreativePlot",
+  "status": "proposed",
+  "original": "0x142a583d0",
+  "signature": "void DestroyCreativePlot(const FString& IslandId)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a583d0.c",
+    "captures/93f52a372be549a49e15e5933b5936b2/0x1419ca250.c"
+  ],
+  "callees": {
+    "0x140f6b550": "DestroyCreativePlot_Validate (folded body, already ported)",
+    "0x1419ca250": "DestroyCreativePlot_Implementation (vtable +0x26e8; NOT PORTED here, 367 decompile lines, manifest skipped)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "Implementation body left for its own inventory entry; the thunk dispatch is complete.",
+  "class": "AFortPlayerControllerAthena"
+}

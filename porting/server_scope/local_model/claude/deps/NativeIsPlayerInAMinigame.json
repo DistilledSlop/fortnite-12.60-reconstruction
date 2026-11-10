@@ -1,0 +1,20 @@
+{
+  "name": "NativeIsPlayerInAMinigame",
+  "address": "0x1419dd8b0",
+  "signature": "bool NativeIsPlayerInAMinigame()",
+  "owner": "AFortPlayerControllerAthena",
+  "confidence": "MEDIUM",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM - chain read in full; the minigame member test is partly unnamed. Original 0x1419dd8b0.\nAFortPlayerStateAthena* PS = Cast<AFortPlayerStateAthena>(PlayerState);\nif (!PS)\n{\n    return false;\n}\nAFortVolumeManager* Manager = AFortVolumeManager::NativeResolveVolumeManager(this);\nAFortVolume* Volume = Manager ? Manager->NativeFindPlayerVolume(PS) : nullptr;\nAFortMinigame* Minigame = Volume ? UFortMinigameVolumeComponent::NativeResolveMinigameFromVolume(Volume) : nullptr;\nif (Minigame && Minigame->CurrentState != EMinigameState::None)\n{\n    return NativeMinigameContainsPlayer(Minigame, PS, false);   // FUN_14209a3d0, partly unnamed\n}\nreturn false;\n",
+  "evidence": {
+    "captures": [
+      "captures/85fda140e902477ba14db529556fc81d/0x1419dd8b0.c"
+    ],
+    "callees": {
+      "0x141c74820": "AFortVolumeManager::NativeResolveVolumeManager (ported)",
+      "0x141c7d420": "AFortVolumeManager::NativeFindPlayerVolume (ported)",
+      "0x141c795a0": "UFortMinigameVolumeComponent::NativeResolveMinigameFromVolume (ported)",
+      "0x14209a3d0": "NativeMinigameContainsPlayer (partly read: checks two member sets; FUN_1420997a0 and FUN_14208d7e0 unnamed)"
+    },
+    "notes": "Minigame byte at +0x870 is AFortMinigame::CurrentState (reflection enum); the != 0 test is a LOW-MEDIUM mapping."
+  }
+}

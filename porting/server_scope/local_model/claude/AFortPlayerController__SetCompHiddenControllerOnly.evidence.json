@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::SetCompHiddenControllerOnly",
+  "status": "proposed",
+  "original": "0x142a4f030",
+  "signature": "bool SetCompHiddenControllerOnly(USceneComponent* SceneComp, bool bNewHiddenGame, bool bPropagateToChildren)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a4f030.c",
+    "captures/85fda140e902477ba14db529556fc81d/0x1423aec80.c"
+  ],
+  "callees": {
+    "0x1423aec80": "NativeSetComponentHiddenForController (dep written, body ported)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "Return value is the helper's bool (the decompile types the helper as void, but the thunk stores its result into Result, and the helper's last-path AL is the return).",
+  "class": "AFortPlayerController"
+}

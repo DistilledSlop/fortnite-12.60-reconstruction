@@ -1,0 +1,21 @@
+{
+  "name": "NativeSetComponentHiddenForController",
+  "address": "0x1423aec80",
+  "signature": "bool NativeSetComponentHiddenForController(USceneComponent* SceneComp, bool bNewHidden, bool bPropagateToChildren)",
+  "owner": "APlayerController",
+  "confidence": "MEDIUM",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM - add/remove and recursion semantics read in full; return flag LOW. Original 0x1423aec80.\n// Owner list: HiddenPrimitiveComponents (APlayerController, +0x2f8). Weak-pointer equality and creation are engine helpers.\nbool bChanged = false;\nif (SceneComp)\n{\n    if (SceneComp->IsA(UPrimitiveComponent::StaticClass()))\n    {\n        const FWeakObjectPtr WeakComp(SceneComp);\n        if (!bNewHidden)\n        {\n            // Remove every entry equal to WeakComp (order of the rest is kept).\n            const int32 OldNum = HiddenPrimitiveComponents.Num();\n            HiddenPrimitiveComponents.RemoveAll([&](const FWeakObjectPtr& Entry) { return Entry == WeakComp; });\n            bChanged = HiddenPrimitiveComponents.Num() != OldNum;\n        }\n        else if (!HiddenPrimitiveComponents.Contains(WeakComp))\n        {\n            HiddenPrimitiveComponents.Add(WeakComp);\n            bChanged = true;\n        }\n    }\n    if (bPropagateToChildren)\n    {\n        // Explicit stack walk over AttachChildren, same visiting order as the decompile (push children, pop from the back, recurse).\n        TArray<USceneComponent*> Stack = SceneComp->AttachChildren;\n        while (Stack.Num() > 0)\n        {\n            USceneComponent* Child = Stack.Pop();\n            if (Child)\n            {\n                Stack.Append(Child->AttachChildren);\n                NativeSetComponentHiddenForController(Child, bNewHidden, true);\n            }\n        }\n    }\n}\nreturn bChanged;\n",
+  "evidence": {
+    "captures": [
+      "captures/85fda140e902477ba14db529556fc81d/0x1423aec80.c"
+    ],
+    "callees": {
+      "0x142ee3b30": "MakeWeakObjectPtr(USceneComponent) (engine FWeakObjectPtr ctor)",
+      "0x1407327b0": "NativeWeakObjectPtrEquivalent1407327b0 (ported in manifest)",
+      "0x1447c8590": "UPrimitiveComponent::StaticClass (engine)",
+      "0x141a22dd0": "TArray reserve helper (engine)",
+      "0x145803c70": "security cookie check (engine, no semantics)"
+    },
+    "notes": "The decompile types the return as void but the thunk and the other-controllers helper both consume a flag; LOW on the exact flag meaning. Recursion keeps the same controller."
+  }
+}

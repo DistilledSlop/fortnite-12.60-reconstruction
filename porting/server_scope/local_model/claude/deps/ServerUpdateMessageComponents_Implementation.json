@@ -1,0 +1,22 @@
+{
+  "name": "ServerUpdateMessageComponents_Implementation",
+  "address": "0x1423ae010",
+  "signature": "void ServerUpdateMessageComponents_Implementation(const TArray<UObject*>& ModifiedComponents, const TArray<FGameplayTagContainer>& NewChannelIds)",
+  "owner": "AFortPlayerController",
+  "confidence": "MEDIUM",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM - loops and gating read in full; the volume-manager notification argument is not visible in the decompile. Original 0x1423ae010.\nUWorld* World = GetWorld();\nAFortGameStateAthena* GameState = (World && World->GameState && World->GameState->IsA(AFortGameStateAthena::StaticClass()))\n    ? Cast<AFortGameStateAthena>(World->GameState) : nullptr;\nif (NativeGetNetChannelSettings()->bChannelsEnabled && GameState && NativeGameStateSupportsChannels(GameState)\n    && ModifiedComponents.Num() == NewChannelIds.Num())\n{\n    TArray<uintptr_t> UniqueChannels;\n    for (int32 Index = 0; Index < ModifiedComponents.Num(); ++Index)\n    {\n        UObject* Comp = ModifiedComponents[Index];\n        FGameplayTagContainer Tags = NewChannelIds[Index];   // copied per entry in the decompile; not otherwise used\n        if (Comp)\n        {\n            const uintptr_t ChannelKey = Comp->NativeChannelKey();   // *(Comp + 0xa0), unnamed\n            if (!UniqueChannels.Contains(ChannelKey))\n            {\n                UniqueChannels.Add(ChannelKey);\n            }\n        }\n    }\n    AFortVolumeManager* Manager = AFortVolumeManager::NativeResolveVolumeManager(this);\n    if (Manager)\n    {\n        for (uintptr_t Key : UniqueChannels)\n        {\n            if (Key != 0)\n            {\n                Manager->NativeNotifyChannelChanged(Key);   // FUN_141c8cf90; argument not visible in the decompile\n            }\n        }\n    }\n}\n",
+  "evidence": {
+    "captures": [
+      "captures/93f52a372be549a49e15e5933b5936b2/0x1423ae010.c"
+    ],
+    "callees": {
+      "0x143f793a0": "AActor::GetWorld (vtable +0x150, HIGH)",
+      "0x141ed2350": "NativeGetNetChannelSettings (unnamed)",
+      "0x14199e3c0": "NativeGameStateSupportsChannels (unnamed)",
+      "0x141c74820": "AFortVolumeManager::NativeResolveVolumeManager (ported)",
+      "0x141c8cf90": "NativeNotifyChannelChanged (unnamed; decompile shows only the manager argument)",
+      "0x1406801c0": "STRIPPED-style stub call (empty void stub, Stub_Empty) on the copy path"
+    },
+    "notes": "Unique-key list is built in first-seen order with add-if-absent semantics."
+  }
+}

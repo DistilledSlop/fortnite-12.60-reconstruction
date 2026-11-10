@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerControllerAthena::MakeNewCreativePlot",
+  "status": "proposed",
+  "original": "0x142a591b0",
+  "signature": "void MakeNewCreativePlot(UFortCreativeRealEstatePlotItemDefinition* PlotType, const FString& Locale, const FString& Title)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a591b0.c",
+    "captures/93f52a372be549a49e15e5933b5936b2/0x1419df280.c"
+  ],
+  "callees": {
+    "0x14097cd20": "MakeNewCreativePlot_Validate (ported)",
+    "0x1419df280": "MakeNewCreativePlot_Implementation (vtable +0x2710; NOT PORTED here, 325 decompile lines, manifest skipped)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "Decompile uses decimal 10000 for the implementation slot, which is vtable offset 0x2710.",
+  "class": "AFortPlayerControllerAthena"
+}

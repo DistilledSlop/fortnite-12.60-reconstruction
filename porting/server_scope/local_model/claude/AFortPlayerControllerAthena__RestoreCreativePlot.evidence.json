@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerControllerAthena::RestoreCreativePlot",
+  "status": "proposed",
+  "original": "0x142a5a1f0",
+  "signature": "void RestoreCreativePlot(const FString& IslandId)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a5a1f0.c",
+    "captures/93f52a372be549a49e15e5933b5936b2/0x1419ef2a0.c"
+  ],
+  "callees": {
+    "0x140f6b550": "RestoreCreativePlot_Validate (folded body, already ported)",
+    "0x1419ef2a0": "RestoreCreativePlot_Implementation (vtable +0x26c8; NOT PORTED here, 556 decompile lines, manifest skipped)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "Implementation body left for its own inventory entry.",
+  "class": "AFortPlayerControllerAthena"
+}

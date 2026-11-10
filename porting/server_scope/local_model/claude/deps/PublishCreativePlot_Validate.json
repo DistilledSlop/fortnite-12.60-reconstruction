@@ -1,0 +1,20 @@
+{
+  "name": "PublishCreativePlot_Validate",
+  "address": "0x1419ec130",
+  "signature": "bool PublishCreativePlot_Validate(AFortVolume* VolumeToPublish, const FCreativePublishOptions& MyPublishOptions)",
+  "owner": "AFortPlayerControllerAthena",
+  "confidence": "LOW",
+  "inc_or_decl": "// CONFIDENCE: LOW - null-volume branch and normalise/validate sequence read in full; four helpers unnamed. Original 0x1419ec130.\n// Parameter order follows the thunk; the decompile's own names are swapped relative to this order.\nif (!VolumeToPublish)\n{\n    NativeReleasePublishScratch(MyPublishOptions);        // FUN_1419bb5c0, unnamed\n    return false;\n}\nNativeNormalisePublishTags(MyPublishOptions);             // FUN_1419d9d90 + FUN_140a1aad0, unnamed\nconst bool bOk = NativeValidatePublishOptions(MyPublishOptions);   // FUN_1419ddfd0, unnamed\nNativeReleasePublishScratch(MyPublishOptions);\nreturn bOk;\n",
+  "evidence": {
+    "captures": [
+      "captures/93f52a372be549a49e15e5933b5936b2/0x1419ec130.c"
+    ],
+    "callees": {
+      "0x1419bb5c0": "NativeReleasePublishScratch (unnamed)",
+      "0x1419d9d90": "NativeNormalisePublishTags part 1 (unnamed)",
+      "0x140a1aad0": "NativeNormalisePublishTags part 2 (assign; unnamed)",
+      "0x1419ddfd0": "NativeValidatePublishOptions (unnamed)"
+    },
+    "notes": "Decompile names the first object parameter MyPublishOptions and the second VolumeToPublish; the body use (null-check on the first argument, struct field at +0x30 on the second) matches the thunk order used here. Helper bodies not ported."
+  }
+}

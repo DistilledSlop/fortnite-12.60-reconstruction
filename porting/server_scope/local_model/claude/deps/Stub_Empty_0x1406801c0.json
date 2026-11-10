@@ -1,0 +1,15 @@
+{
+  "name": "Stub_Empty_0x1406801c0",
+  "address": "0x1406801c0",
+  "signature": "void Stub_Empty()",
+  "owner": "(shared)",
+  "confidence": "HIGH",
+  "inc_or_decl": "// Shared empty void stub: RET 0. Used by TossSpecificItem and some _Implementation bodies. No effect.\n",
+  "evidence": {
+    "captures": [
+      "captures/3243d11c505d4e91a9de21df6da797c4/0x1406801c0.c"
+    ],
+    "callees": {},
+    "notes": "Different from the 0x140680300 xor/ret stub. Ported as an empty void."
+  }
+}

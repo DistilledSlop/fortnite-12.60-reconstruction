@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::TossSpecificItem",
+  "status": "proposed",
+  "original": "0x142a4fc30",
+  "signature": "void TossSpecificItem(const FItemTossOverride& TossOverrideData, UFortItemDefinition* DropItemDef)",
+  "captures": [
+    "captures/4706cb98ae524141b4007699d9cc0809/0x142a4fc30.c",
+    "captures/3243d11c505d4e91a9de21df6da797c4/0x1406801c0.c"
+  ],
+  "callees": {
+    "0x1406801c0": "STRIPPED: shared empty void stub (RET 0). Body is effectively empty.",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "STRIPPED: the body bottoms out in the shared empty stub 0x1406801c0, not the 0x140680300 xor/ret stub. No gameplay effect.",
+  "class": "AFortPlayerController"
+}
