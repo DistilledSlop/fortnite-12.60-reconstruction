@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerPawn::MulticastUpdateVehicleInputStateReliable_Implementation",
+  "status": "proposed",
+  "original": "0x142334ea0",
+  "signature": "void MulticastUpdateVehicleInputStateReliable_Implementation(FFortAthenaVehicleInputStateReliable ReliableInput)",
+  "captures": [
+    "captures/bdb85da394a341c9a5fa97521d39200f/0x142334ea0.c",
+    "captures/838ef9d206d3435f879f4665c602f59b/0x1419297f0.c",
+    "captures/838ef9d206d3435f879f4665c602f59b/0x1428381e0.c"
+  ],
+  "callees": {
+    "0x1428381e0": "AFortAthenaVehicle::StaticClass (read in full)",
+    "0x1419297f0": "byte copy with bit-merge; net effect is *dst = *src (read in full)",
+    "vtable 0x850 on the vehicle": "AFortAthenaVehicle entry is 0x1406801c0 = shared ret STUB; dep AFortPlayerPawn__MulticastUpdateVehicleInputStateReliable__ApplyVehicleInputStateReliable.json"
+  },
+  "notes": "Autonomous proxies (Role == 2) skip the update. Struct field names: InputBits is the struct's first byte (NativeRecovered tail). The write to this+CrouchMeshOffset+4 is kept as NativeRecoveredByte_CrouchMeshOffset4 because its field identity is unresolved."
+}

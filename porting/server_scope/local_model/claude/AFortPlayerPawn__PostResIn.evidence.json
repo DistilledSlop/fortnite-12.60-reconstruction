@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerPawn::PostResIn",
+  "status": "proposed",
+  "original": "0x142a7e380",
+  "signature": "void PostResIn()",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7e380.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x14277c110.c"
+  ],
+  "callees": {
+    "0x14277c110": "PartModifier->ProcessEvent(FindFunctionChecked(FName), nullptr) (read in full, 17 lines)",
+    "UObject_FindFunctionChecked": "engine helper (named)",
+    "ProcessEvent (slot 0x210)": "engine virtual (named)"
+  },
+  "notes": "The FName constant at data 0x14817bcd8 is unresolved (LOW). Loop covers the six CharacterPartModifiers slots."
+}

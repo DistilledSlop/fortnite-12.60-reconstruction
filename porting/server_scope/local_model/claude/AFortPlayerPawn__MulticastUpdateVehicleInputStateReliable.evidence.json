@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerPawn::MulticastUpdateVehicleInputStateReliable",
+  "status": "proposed",
+  "original": "0x142a7d770",
+  "signature": "void MulticastUpdateVehicleInputStateReliable(FFortAthenaVehicleInputStateReliable ReliableInput)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7d770.c",
+    "captures/bdb85da394a341c9a5fa97521d39200f/0x142334ea0.c",
+    "captures/838ef9d206d3435f879f4665c602f59b/0x1419297f0.c"
+  ],
+  "callees": {
+    "0x141909530": "zero-initialises the input local (read in full: writes 0 to the first byte)",
+    "vtable 0xfb0 (0x142334ea0)": "_Implementation, ported in AFortPlayerPawn__MulticastUpdateVehicleInputStateReliable_Implementation.inc"
+  },
+  "notes": "Multicast RPC exec: reads the struct and dispatches to the implementation."
+}

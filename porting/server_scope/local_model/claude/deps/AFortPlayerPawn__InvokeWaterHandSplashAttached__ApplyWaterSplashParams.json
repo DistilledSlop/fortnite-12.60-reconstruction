@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerPawn::ApplyWaterSplashParams",
+  "address": "0x14234bc90",
+  "signature": "void ApplyWaterSplashParams(AFortPlayerPawn* Pawn, const FWaterSplashData& WaterData, UNiagaraComponent* Splash)",
+  "inc_or_decl": "void ApplyWaterSplashParams(const FWaterSplashData& WaterData, UNiagaraComponent* Splash);  // private helper of AFortPlayerPawn",
+  "evidence": "captures/817cbc8ad50947efa77524e59b619c5d/0x14234bc90.c read in full. Resolves the pawn's current water body (GetWorld, FUN_1446939a0 mode check, FUN_1414fa9e0, FUN_14460d300, FUN_1414eff30), then pushes five FVector Niagara parameters taken from WaterData at +0x5c, +0x68, +0x38, +0x20, +0x44, and resets three named parameters (cb0, cb8, cc0). Parameter FName constants are data (unresolved) so they are kept as NativeRecovered names."
+}

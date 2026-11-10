@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerPawn::GetGender",
+  "status": "proposed",
+  "original": "0x142a7c1a0",
+  "signature": "void GetGender(bool& IsFemale, bool& IsMale)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7c1a0.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x14231c0e0.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x141ee5f70.c"
+  ],
+  "callees": {
+    "0x14231c0e0": "helper: writes IsFemale = (gender == 1) and IsMale = (gender == 2) from the same lookup (read in full; inlined)",
+    "0x141ee5f70": "UFortKismetLibrary::AttemptGetPlayerStateForPawn (read in full)",
+    "FFrame_Step / FFrame_StepExplicitProperty": "engine FFrame helpers (named)"
+  },
+  "notes": "Reflected params are IsFemale (index 0) and IsMale (index 1), both bool out params. Thunk read order writes the first output to IsFemale. The exec's temp-buffer and MostRecentPropertyAddress handling is parameter plumbing only."
+}

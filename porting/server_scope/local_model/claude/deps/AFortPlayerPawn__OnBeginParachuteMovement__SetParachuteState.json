@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerPawn::UpdateParachuteStateFromMovement",
+  "address": "0x14235bbf0",
+  "signature": "void UpdateParachuteStateFromMovement()",
+  "inc_or_decl": "void UpdateParachuteStateFromMovement();  // private; calls virtual slot 0x9a0 (SetParachuteMode) with 4, 5, 1, 3 or 0 (see notes)",
+  "evidence": "captures/f35fb07aaad14312899b7c0ec2308ee4/0x14235bbf0.c read in full (70 lines). Mode choice: 4 when the glider-like component at +0x177 reports its condition (vt 0x18); else 5 when CharacterMovement->MovementMode == 5; else 1 when pawn+0x1062 bit 4 is set; else (bit 0 clear, or the DAT_1478de49c check fails) 5 when MOVE_Custom with custom mode 12 and the owning-state check passes, else 0; else 3. Helpers read: 0x14232cb50 not read (LOW)."
+}

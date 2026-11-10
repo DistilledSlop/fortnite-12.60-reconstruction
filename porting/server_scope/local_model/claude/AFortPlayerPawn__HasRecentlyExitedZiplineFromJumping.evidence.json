@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerPawn::HasRecentlyExitedZiplineFromJumping",
+  "status": "proposed",
+  "original": "0x142a7ccb0",
+  "signature": "bool HasRecentlyExitedZiplineFromJumping()",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7ccb0.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x14232ca60.c"
+  ],
+  "callees": {
+    "0x14232ca60": "the body itself (read in full, 19 lines): zipline exit time at +0x260 (-1 means none), FScalableFloat buffer at +0x269, world TimeSeconds at GetWorld()+0x540",
+    "FScalableFloat_GetValueAtLevel": "engine helper (named)",
+    "GetWorld (vtable 0x150)": "AActor::GetWorld, ported name in header model (HIGH)",
+    "FMath::Abs": "engine helper"
+  },
+  "notes": "Exec returns a bool. Field names at +0x260 and +0x269 are NativeRecovered; UWorld TimeSeconds at +0x540 is a MEDIUM reading of the offset."
+}

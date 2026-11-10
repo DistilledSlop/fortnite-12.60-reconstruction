@@ -1,0 +1,7 @@
+{
+  "name": "UFortKismetLibrary::AttemptGetPlayerStateForPawn",
+  "address": "0x141ee5f70",
+  "signature": "static AFortPlayerStateAthena* AttemptGetPlayerStateForPawn(AFortPlayerPawn* Pawn)",
+  "inc_or_decl": "static AFortPlayerStateAthena* AttemptGetPlayerStateForPawn(AFortPlayerPawn* Pawn);  // returns null when Pawn is null or no PlayerState resolves",
+  "evidence": "captures/817cbc8ad50947efa77524e59b619c5d/0x141ee5f70.c (read in full). Name from porting/behavior/BLOCKING_CALLEES.md and rd2_runtime/dispositions.json. Logic: returns cached pawn+0x238 if still valid in the outer chain; else resolves pawn+0x26a0 weak controller via FUN_141a07cb0; else, when IsInVehicle (0x1423318f0), asks the vehicle interface (slot 0x1088 result, slot 0x3b0) for the driver's PlayerState."
+}

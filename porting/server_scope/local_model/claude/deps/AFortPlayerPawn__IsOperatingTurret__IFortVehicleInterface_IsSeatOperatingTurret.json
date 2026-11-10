@@ -1,0 +1,7 @@
+{
+  "name": "IFortVehicleInterface::IsSeatOperatingTurret",
+  "address": "vtable slot 0x560 of the UFortVehicleInterface implementation returned by GetInterfaceAddress (call site in 0x142331940)",
+  "signature": "bool IsSeatOperatingTurret(uint8 SeatIndex)",
+  "inc_or_decl": "bool IsSeatOperatingTurret(uint8 SeatIndex) const;  // LOW confidence name",
+  "evidence": "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x142331940.c and 0x142ec9900.c (GetInterfaceAddress, read in full) and 0x142b2ca60.c (UFortVehicleInterface::StaticClass, read in full)."
+}

@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerPawn::IsOperatingTurret",
+  "status": "proposed",
+  "original": "0x142a7d350",
+  "signature": "bool IsOperatingTurret()",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7d350.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x142331940.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x142ec9900.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x142b2ca60.c"
+  ],
+  "callees": {
+    "0x142331940": "helper (read in full, 23 lines)",
+    "0x142ec9900": "AActor::GetInterfaceAddress(UClass*) (read in full, 50 lines; returns this + stored offset when the class implements the interface)",
+    "0x142b2ca60": "UFortVehicleInterface::StaticClass (read in full)",
+    "vtable 0x560 on interface": "IsSeatOperatingTurret (LOW name; dep AFortPlayerPawn__IsOperatingTurret__IFortVehicleInterface_IsSeatOperatingTurret.json)"
+  },
+  "notes": "Reads VehicleStateLocal.Vehicle at pawn+0x1578 (ported as VehicleStateLocal.Vehicle)."
+}

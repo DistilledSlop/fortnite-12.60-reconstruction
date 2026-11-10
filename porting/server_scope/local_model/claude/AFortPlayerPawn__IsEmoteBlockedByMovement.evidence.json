@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerPawn::IsEmoteBlockedByMovement",
+  "status": "proposed",
+  "original": "0x142a7d140",
+  "signature": "bool IsEmoteBlockedByMovement()",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7d140.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x142331230.c"
+  ],
+  "callees": {
+    "0x142331230": "helper (read in full, 41 lines): movement block, vehicle seat block, MOVE_Custom/SurfaceSwimming block",
+    "vtable 0x548 on CharacterMovement": "returns bool, blocks emotes while moving (LOW name; target not captured)",
+    "vtable 0x2b8 on vehicle interface": "IsSeatEmoteAllowed (LOW name; dep AFortPlayerPawn__IsEmoteBlockedByMovement__IFortVehicleInterface_IsSeatEmoteAllowed.json)",
+    "vtable 0x1088 on this": "GetVehicleInterface (ported)"
+  },
+  "notes": "CharacterMovement is read without a null check in the original; the .inc guards it and says so. MOVE_Custom = 6 and SurfaceSwimming = 10 (EFortCustomMovement header, verified)."
+}

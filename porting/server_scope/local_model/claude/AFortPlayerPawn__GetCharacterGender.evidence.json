@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerPawn::GetCharacterGender",
+  "status": "proposed",
+  "original": "0x142a7bd90",
+  "signature": "Byte GetCharacterGender() (reflected ReturnValue enum type ref 0x142b241d0)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7bd90.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x14231a050.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x141ee5f70.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x142b2ca60.c"
+  ],
+  "callees": {
+    "0x14231a050": "helper: gender byte lookup (PlayerState +0x5d8, else Hero-gated HACK_CustomPRIComponent +0x1828, else pawn byte +0x1161); inlined in the .inc",
+    "0x141ee5f70": "UFortKismetLibrary::AttemptGetPlayerStateForPawn (read in full; dep AFortPlayerPawn__GetCharacterGender__AttemptGetPlayerStateForPawn.json)",
+    "0x142b2ca60": "UFortVehicleInterface::StaticClass (read in full; not used by this body)",
+    "FFrame_Step / FFrame_StepExplicitProperty": "engine FFrame helpers (named, no reading needed); parameter stepping only"
+  },
+  "notes": "Exec has no parameters; the only output is the returned enum. Gender source resolution is the same as GetGender and ServerChooseGender_Implementation. Field names at +0x1161, +0x5d8 and +0x28 are NativeRecovered (no reflected member). Enum name is not verified (comment in .inc)."
+}

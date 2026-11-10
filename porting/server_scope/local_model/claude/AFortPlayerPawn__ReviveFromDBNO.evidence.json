@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerPawn::ReviveFromDBNO",
+  "status": "proposed",
+  "original": "0x142a7e790",
+  "signature": "void ReviveFromDBNO(AController* EventInstigator)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7e790.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x142a77460.c"
+  ],
+  "callees": {
+    "0x142a77460": "FindFunctionChecked(this, FName @0x1481b4a98) then ProcessEvent(this, func, &EventInstigator) (read in full, 17 lines)",
+    "thunk_FUN_142a77460": "thunk to 0x142a77460"
+  },
+  "notes": "Event FName is data at 0x1481b4a98 (unresolved, LOW). The native body is only the event dispatch; it does not modify pawn state itself. ManualReviveFromDBNO is a separate ported function."
+}

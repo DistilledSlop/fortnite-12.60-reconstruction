@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerPawn::RemoveAbilityAITarget",
+  "status": "proposed",
+  "original": "0x142a7e440",
+  "signature": "void RemoveAbilityAITarget(AActor* InTarget)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7e440.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x142347a60.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x142cd4ab0.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x1406d80a0.c"
+  ],
+  "callees": {
+    "0x142347a60": "body (read in full, 37 lines)",
+    "0x142cd4ab0": "FName construction from a wide string (read in full; calls 0x142cd4630 and 0x142ce4890, not read)",
+    "0x1406d80a0": "delegate binding removal for (object, FName) (read in full, 45 lines; calls 0x142ee6180 and 0x1406bd0b0, not read)",
+    "wcsstr / memmove": "CRT, named"
+  },
+  "notes": "Only the authority (Role 3) removes an AI target. The FName is \"AITargetDied\" (text after the last \"::\" of the literal). The OnDied delegate is InlineMulticastDelegate at +0x928 on the target."
+}

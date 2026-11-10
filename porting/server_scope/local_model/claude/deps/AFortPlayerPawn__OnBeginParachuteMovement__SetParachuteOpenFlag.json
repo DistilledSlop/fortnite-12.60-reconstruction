@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerPawn::SetParachuteOpenFlag",
+  "address": "0x14234d3e0",
+  "signature": "void SetParachuteOpenFlag(bool bOpen)",
+  "inc_or_decl": "void SetParachuteOpenFlag(bool bOpen);  // private; flag bits live at this+0x10e8 (bit 5 and bit 6)",
+  "evidence": "captures/f35fb07aaad14312899b7c0ec2308ee4/0x14234d3e0.c read in full (109 lines). Authority (Role 3): sets bits 5 and 6 to bOpen, then calls virtual slot 0x5e8 (not captured). Non-authority: if bit 6 differs, sets it to bOpen and arms a 0.25 s FTimerManager timer (0x1446278d0, handle at this+0x44a*8) whose callback (0x142349b10, read) sets bit 6 to the inverse of bOpen. Helpers read: 0x142349b10, 0x140f95ae0, 0x142bad740, 0x142ee3b30, 0x1446278d0, 0x145803c70."
+}

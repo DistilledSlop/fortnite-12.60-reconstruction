@@ -1,0 +1,7 @@
+{
+  "name": "FNiagaraWorldManager::ShouldCullWaterSplash",
+  "address": "0x1409a07e0",
+  "signature": "bool ShouldCullWaterSplash(FNiagaraWorldManager* WorldMgr, void* SystemInstance, const FVector& Location)",
+  "inc_or_decl": "bool ShouldCullWaterSplash(FNiagaraWorldManager* WorldMgr, void* SystemInstance, const FVector& Location);  // true means skip spawning the splash; LOW confidence on name",
+  "evidence": "captures/817cbc8ad50947efa77524e59b619c5d/0x1409a07e0.c read in full. Computes the squared distance from Location to the world-manager's point list (+0x3f0, count +0x458) and compares against SystemInstance settings (+0x400 flags, +0x404 range, +0x408 threshold); returns 1 when the far-culling flags apply, otherwise returns (factor <= 0)."
+}

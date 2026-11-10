@@ -1,0 +1,7 @@
+{
+  "name": "IFortVehicleInterface::IsDriverSeat",
+  "address": "vtable slot 0x568 of the interface returned by NativeGetVehicleInterface163 (call target not captured; call site in 0x142331180)",
+  "signature": "bool IsDriverSeat(uint8 SeatIndex)",
+  "inc_or_decl": "bool IsDriverSeat(uint8 SeatIndex) const;  // vehicle interface virtual; name is LOW confidence (behaviour: seat-index query used by IsDrivingVehicle)",
+  "evidence": "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x142331180.c read in full (16 lines). Interface vtable not resolvable by vtable_lookup (IFortVehicleInterface has no primary vtable)."
+}

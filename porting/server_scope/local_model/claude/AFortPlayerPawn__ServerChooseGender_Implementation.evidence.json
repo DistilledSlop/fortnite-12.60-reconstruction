@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerPawn::ServerChooseGender_Implementation",
+  "status": "proposed",
+  "original": "0x14234a0f0",
+  "signature": "void ServerChooseGender_Implementation(EFortCharacterGender Gender)",
+  "captures": [
+    "captures/bdb85da394a341c9a5fa97521d39200f/0x14234a0f0.c",
+    "captures/838ef9d206d3435f879f4665c602f59b/0x141da28f0.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x141ee5f70.c",
+    "captures/838ef9d206d3435f879f4665c602f59b/0x1428381e0.c"
+  ],
+  "callees": {
+    "0x141ee5f70": "UFortKismetLibrary::AttemptGetPlayerStateForPawn (read in full)",
+    "0x141da28f0": "gender store through the target's +0x28 pointer; gender 3 = random 1 or 2 from rand() bit 0 (read in full, 15 lines; inlined)",
+    "rand": "CRT"
+  },
+  "notes": "Implementation is authority-side. Returns early when there is no PlayerState and Hero is null."
+}

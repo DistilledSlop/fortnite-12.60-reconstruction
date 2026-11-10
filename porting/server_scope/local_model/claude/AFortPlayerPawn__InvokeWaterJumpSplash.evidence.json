@@ -1,0 +1,29 @@
+{
+  "function": "AFortPlayerPawn::InvokeWaterJumpSplash",
+  "status": "proposed",
+  "original": "0x142a7cf40",
+  "signature": "void InvokeWaterJumpSplash(FVector SplashPosition, float SplashScale)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7cf40.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x142330d30.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x144124910.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x144122ff0.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x1441218e0.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x144123480.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x14234bc90.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x1409a07e0.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x140994050.c"
+  ],
+  "callees": {
+    "0x142330d30": "body (read in full, 64 lines)",
+    "0x144124910": "UpdateSplashLocation: direct 0x144122ff0 when comp+0xc0 is null, else 0x1441246a0 (read in full)",
+    "0x1441218e0": "splash component flag setter (read in full, 11 lines; calls 0x140841270, not read)",
+    "0x144123480": "SetRelativeScale3D with NaN reset (read in full)",
+    "0x14234bc90": "ApplyWaterSplashParams (read in full)",
+    "0x1409a07e0": "ShouldCullWaterSplash (read in full)",
+    "0x140994050": "FNiagaraWorldManager::Get (read in full)",
+    "vtable 0x870 on Niagara": "SetVariableFloat(FName, float), LOW name; two FName data constants at 0x148158cf0 and 0x148158cf8",
+    "vtable 0x268 on Niagara": "Activate(bReset=true) (LOW name)"
+  },
+  "notes": "Thunk read order: SplashPosition (FVector, index 1) first, then SplashScale (float, index 0). The 0.1 scale path multiplies SplashScale by 10 for the second parameter."
+}

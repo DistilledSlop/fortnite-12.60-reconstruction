@@ -1,0 +1,7 @@
+{
+  "name": "IFortVehicleInterface::IsSeatEmoteAllowed",
+  "address": "vtable slot 0x2b8 of the vehicle interface (call site in 0x142331230)",
+  "signature": "bool IsSeatEmoteAllowed(uint8 SeatIndex)",
+  "inc_or_decl": "bool IsSeatEmoteAllowed(uint8 SeatIndex) const;  // LOW confidence name; returning false blocks emotes from that seat",
+  "evidence": "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x142331230.c read in full. Virtual target not captured; semantics taken from the caller (cVar2==0 forces blocked)."
+}

@@ -1,0 +1,33 @@
+{
+  "function": "AFortPlayerPawn::InvokeWaterHandSplashAttached",
+  "status": "proposed",
+  "original": "0x142a7ce80",
+  "signature": "void InvokeWaterHandSplashAttached(FName AttachSocketName, USceneComponent* AttachParent)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7ce80.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x142330b00.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x144122ff0.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x14234bc90.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x1409a07e0.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x140994050.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x144693810.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x140978c70.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x142ec9d30.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x144123480.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x1441218e0.c"
+  ],
+  "callees": {
+    "0x142330b00": "body (read in full, 62 lines)",
+    "0x144693810": "UWorld::GetNetMode (read in full; 3 = client)",
+    "0x140978c70": "cached int CVar; returns DAT (init from a second DAT when -1), asm verified",
+    "0x140994050": "FNiagaraWorldManager::Get (read in full; log string names it)",
+    "0x1409a07e0": "ShouldCullWaterSplash (read in full; dep AFortPlayerPawn__InvokeWaterHandSplashAttached__ShouldCullWaterSplash.json)",
+    "0x144122ff0": "UNiagaraComponent::SetSplashTransform (read in full; dep ...__SetSplashTransform.json)",
+    "0x14234bc90": "ApplyWaterSplashParams (read in full; dep ...__ApplyWaterSplashParams.json)",
+    "0x142ec9d30": "object path name for logging (read in full; used only in the error log)",
+    "vtable 0x890 on Niagara": "GetNiagaraSystemInstance (LOW name, not captured)",
+    "vtable 0x8a0 on Niagara": "AttachTo(parent, socket, ...) (LOW name, not captured)",
+    "vtable 0x268 on Niagara": "Activate(bReset) (LOW name, not captured)"
+  },
+  "notes": "Thunk read order: AttachParent (object, index 1) then AttachSocketName (index 0). Hand splash skips the jump-scale path. SplashDefaultPosition and SplashDefaultNormal are data constants at 0x148218630..0x148218648 (values not decoded, LOW). Niagara parameter FNames not resolved."
+}

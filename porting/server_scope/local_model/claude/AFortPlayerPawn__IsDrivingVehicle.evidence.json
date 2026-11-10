@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerPawn::IsDrivingVehicle",
+  "status": "proposed",
+  "original": "0x142a7d110",
+  "signature": "bool IsDrivingVehicle()",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7d110.c",
+    "captures/c3ad2e4968b9490eb088cd8c8e94f387/0x142331180.c"
+  ],
+  "callees": {
+    "0x142331180": "helper (read in full): GetVehicleInterface(); null gives false, otherwise tail-calls the interface's driver-seat query with VehicleStateLocal.SeatIndex",
+    "0x1088 on this": "GetVehicleInterface = NativeGetVehicleInterface163 (ported, header model)",
+    "vtable 0x568 on interface": "IsDriverSeat (LOW name; dep AFortPlayerPawn__IsDrivingVehicle__IFortVehicleInterface_IsDriverSeat.json)"
+  },
+  "notes": "Helper 0x142331180 is typed void in the decompile; its result is the tail-called vtable result, and a null interface leaves the return register at 0."
+}

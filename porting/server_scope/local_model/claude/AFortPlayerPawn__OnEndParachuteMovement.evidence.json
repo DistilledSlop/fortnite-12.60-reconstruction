@@ -1,0 +1,26 @@
+{
+  "function": "AFortPlayerPawn::OnEndParachuteMovement",
+  "status": "proposed",
+  "original": "0x142a7da20",
+  "signature": "void OnEndParachuteMovement()",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7da20.c",
+    "captures/bdb85da394a341c9a5fa97521d39200f/0x1423376f0.c",
+    "captures/f35fb07aaad14312899b7c0ec2308ee4/0x142332fe0.c",
+    "captures/f35fb07aaad14312899b7c0ec2308ee4/0x141a1c3c0.c",
+    "captures/f35fb07aaad14312899b7c0ec2308ee4/0x140744d30.c",
+    "captures/f35fb07aaad14312899b7c0ec2308ee4/0x141ed1800.c"
+  ],
+  "callees": {
+    "0x1423376f0": "virtual target of exec (slot 0xe48); body ported here (54 lines, read in full)",
+    "0x14235bbf0": "UpdateParachuteStateFromMovement (read in full)",
+    "0x1420edbc0": "CacheParachuteFallSpeedFromPawn (read in full)",
+    "0x142332fe0": "SetParachuteCosmeticsAsync(false) (read in full)",
+    "0x141a1c3c0": "DisableParachuteCosmetics (read in full)",
+    "0x142353760": "ClearParachuteTimer (read in full)",
+    "0x141ed1800": "GetFortGlobals (read in full)",
+    "0x140744d30": "FGameplayTagCountContainer::UpdateTagCount (read in full)",
+    "vtable 0xb90, 0xcf0, 0x810, 0x528, 0x2268, 0x1208 on this or sub-objects": "LOW names, targets not captured"
+  },
+  "notes": "The original returns early after the controller virtual call; the .inc keeps the same ending. FortGlobals tuning field at +0x6a0 and tag at +0x1f70 are NativeRecovered."
+}

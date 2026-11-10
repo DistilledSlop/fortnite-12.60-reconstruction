@@ -1,0 +1,7 @@
+{
+  "name": "AActor::ApplyVehicleInputStateReliable",
+  "address": "vtable slot 0x850; AFortAthenaVehicle entry = 0x1406801c0 (STUB, shared ret)",
+  "signature": "void ApplyVehicleInputStateReliable(const FFortAthenaVehicleInputStateReliable& Input)",
+  "inc_or_decl": "virtual void ApplyVehicleInputStateReliable(const FFortAthenaVehicleInputStateReliable& Input);  // LOW name; base no-op on AFortAthenaVehicle",
+  "evidence": "vtable_lookup.py AFortAthenaVehicle 0x850 -> target 0x1406801c0, the shared ret stub (STUB). Caller 0x142334ea0 read in full (29 lines). Derived vehicle classes may override; not checked."
+}

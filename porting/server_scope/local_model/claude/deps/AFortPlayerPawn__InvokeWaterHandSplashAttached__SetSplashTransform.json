@@ -1,0 +1,7 @@
+{
+  "name": "UNiagaraComponent::SetSplashTransform",
+  "address": "0x144122ff0",
+  "signature": "void SetSplashTransform(UNiagaraComponent* Splash, const FVector* Position, const FVector* Normal, bool bA, bool bB, bool bC)",
+  "inc_or_decl": "void SetSplashTransform(const FVector& Position, const FVector& Normal, bool bA, bool bB, bool bC);  // LOW-MEDIUM confidence name",
+  "evidence": "captures/817cbc8ad50947efa77524e59b619c5d/0x144122ff0.c read in full (142 lines). Caches Position at +0x11c and Normal at +0x1b0; when either changed it snaps the position to a grid of 0.0001 units (FUN_144122860 applies the update, not read) and skips the update when nothing moved."
+}
