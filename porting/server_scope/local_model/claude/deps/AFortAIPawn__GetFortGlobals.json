@@ -1,0 +1,1 @@
+{"name":"GetFortGlobals","address":"0x141ed1800","signature":"FFortGlobals* GetFortGlobals()","inc_or_decl":"decl","evidence":["/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x141ed1800.c"],"notes":"Returns the static FFortGlobals singleton (lazy init on first use)."}
