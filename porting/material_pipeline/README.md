@@ -434,3 +434,13 @@ loose contracts for each of 70 vertex occurrences. Both maps passed in the
 Linux client; altered Material and vertex allocations were rejected. This is
 layout and contract preparation only, with no shader attachment or draw. See
 `material_pipeline/evidence/maps_terrain_material_runtime/material-vf-layout-checkpoint.json`.
+
+`inspect_frontend_texture_candidates.py` triages texture-bearing frontend owners without
+exporting bundles or translating shaders. Give it `--inventory <summary.json>` and,
+optionally, repeated `--owner <exact-object-path>` arguments. It checks the inventory
+against original asset bytes, validates resource framing, freshly parses the original
+shader map, and reports each owner's resource owner, texture expressions, serialized
+instance overrides, and texture imports. Imports are candidates, not proof of a
+slot-to-asset binding; successful inspection is not runtime support. Per-owner parse
+failures are reported explicitly. For example, the texture inventory identifies one 2D
+texture expression and a back-arrow texture import for `M_CornerBackArrow`.
