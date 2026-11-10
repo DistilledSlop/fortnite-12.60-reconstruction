@@ -97,20 +97,20 @@ Scope: a read-only copy of the shipping exe image from our own Wine run. The pro
 | 24.65 s | 7.12 | full read: `.text` (first) median ~6.6, second `.text` median 7.997; decode 2.9% `(bad)` lines, 305/400 functions clean |
 | 32.51 s | 6.77 | **accepted**: all verified checks pass |
 
-The decryption finishes between about 25 and 32 s after process start. The first full attempt at 25 s was still partly encrypted. An earlier run, launched before the `.pdata` check existed, retried every 8 s from 40 to 104 s. Its first `.text` median stayed at 6.697, and its arbitrary-offset slice check reported about 6.7% `(bad)` lines throughout. Those numbers are from that earlier run and were not measured in the accepted one.
+The sampled checks began passing between about 25 and 32 s after process start; they did not establish that decryption had finished. The first full attempt at 25 s was still partly encrypted. An earlier run, launched before the `.pdata` check existed, retried every 8 s from 40 to 104 s. Its first `.text` median stayed at 6.697, and its arbitrary-offset slice check reported about 6.7% `(bad)` lines throughout. Those numbers are from that earlier run and were not measured in the accepted one.
 
 ### Verification numbers (accepted dump) [observed]
 
 - **Dump file.** `porting/generated/dump/FortniteClient-Win64-Shipping.runtime.bin`, 165,991,936 bytes, sha256 `604900985a724144b6e0fc6e033b0cef2adb74a295a65a4fe01aceebb52df93d`. Metadata is in `porting/generated/dump/dump.json`. Both are git-ignored.
 - **`.text` (RVA 0x1000, 93,301,760 bytes).** 88 windows of 1 MiB. Entropy min 5.958, median 6.515, max 6.72. Zero windows at or above 7.5. Share of sampled bytes equal to the disk file: 0.5%.
-- **`.text` (RVA 0x8D2C000, 17,962,496 bytes).** 17 windows. Entropy min 5.457, median 6.734, max 7.998. Five windows at or above 7.5, covering RVA 0x942C000 to 0x9A2C000 (about 5 MiB). Those bytes are identical to the disk file, and the disk file's entropy there is also 7.997. The process never changed them, and no `.pdata` entry covers them, so they are not decoded function code. Share equal to disk for the whole section: 60.0%.
+- **`.text` (RVA 0x8D2C000, 17,962,496 bytes).** 17 windows. Entropy min 5.457, median 6.734, max 7.998. Five windows at or above 7.5, covering RVA 0x942C000 to 0x9A2C000 (about 5 MiB). Those bytes are identical to the disk file, and the disk file's entropy there is also 7.997. They had not changed by this snapshot, and no `.pdata` entry covers them. A later capture shows that some do become code, so absence of `.pdata` coverage is not evidence that the region is not executable. Share equal to disk for the whole section: 60.0%.
 - **Decode.** `.pdata` has 432,866 functions starting in code. 400 sampled: 400 of 400 decode with no `(bad)` line, 22,120 instructions, 0 `(bad)`. The first attempt at 25 s decoded 305 of 400 clean (2.9% `(bad)` lines), which is the partial-decryption state.
 - **Other sections, share equal to disk (64-byte stride).** `.rdata` 0.9997, `.data` 1.0, `.pdata` 0.9999, `_RDATA` 0.9972, `.rsrc` 0.9957, `.reloc` 0.9999. Read-only and data sections are unchanged, as expected.
 - **Unreadable pages.** 0.
 
 ### Caveats [inferred unless marked]
 
-1. The dump is one snapshot at 32.5 s, before login. Code that the client decrypts later (login, lobby, gameplay) may be absent or still encrypted. Check each function you need with the `.pdata` decode check before relying on it. The five 1 MiB windows noted above are a known unknown.
+1. This dump is one snapshot at 32.5 s, before login. A later original-client capture at 60.96 s (with the in-memory AppES diagnostic patch) found changed bytes and decodable instructions at `0x1495a4a24` and `0x14998573a`; see the [current wiki scope page](https://github.com/DistilledSlop/fortnite-12.60-reconstruction/wiki/Server-First-Scope-Mockup). Code that the client decrypts later (login, lobby, gameplay) may be absent or still encrypted. Check each function you need with the `.pdata` decode check before relying on it. The five 1 MiB windows noted above are a known unknown.
 2. The entropy and decode checks sample; they do not cover every function. A clean sample is good evidence, not proof for every function.
 3. `.data` is runtime state from this run. It is not the disk file, and it does not carry the original initial values.
 4. The per-section share in `dump.json` used to collide on the name `.text`. It is keyed by name and address from this point on. The numbers above were recomputed from the dump with the same 64-byte stride.
