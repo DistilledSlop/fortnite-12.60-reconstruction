@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume",
+  "status": "proposed",
+  "original": "0x142a5d630",
+  "signature": "void TellServer_ClientReceivedPlaysetDataForVolume(FFortPlaysetStreamingData PlaysetData, UObject* Volume)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5d630.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/eb08998e857d4136a6bcf2104c63a3e4/0x1419fd510.c",
+    "/opt/fortnite/local-model-package/captures/dd937556d0ea4a14a43860d6a59c8393/0x142b86500.c",
+    "/opt/fortnite/local-model-package/captures/dd937556d0ea4a14a43860d6a59c8393/0x143f74cc0.c",
+    "/opt/fortnite/local-model-package/captures/dd937556d0ea4a14a43860d6a59c8393/0x1424255f0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate, virtual 0x2330). STUB",
+    "0x1419fd510": "Implementation (virtual 0x2338), inlined",
+    "0x142b86500": "PlaysetLevelStreamComponent::StaticClass (lazy init, read in full)",
+    "0x143f74cc0": "virtual 0x610 wrapper on the object (find component). Read in full",
+    "0x1424255f0": "RegisteringClientData on the playset stream component (log: RegisteringClientData for: controller). First 40 lines read"
+  },
+  "notes": "Parameter labels in the decompiled implementation are swapped relative to the thunk. Port follows the thunk order and the data flow.",
+  "confidence": "LOW"
+}

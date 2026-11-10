@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerPlaySquadQuickChatMessage",
+  "status": "proposed",
+  "original": "0x142a5b8e0",
+  "signature": "void ServerPlaySquadQuickChatMessage(FUniqueNetIdRepl SenderID, FAthenaQuickChatActiveEntry ChatEntry)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5b8e0.c",
+    "/opt/fortnite/local-model-package/captures/6c9df4f856c8496e9368e95ea442bd68/0x1419f2180.c",
+    "/opt/fortnite/local-model-package/captures/18a76c313b234245acaedacfb2ab8926/0x1419f2120.c",
+    "/opt/fortnite/local-model-package/captures/11dff1bf942f429ca6017d4cb421d5f6/0x142ee3b30.c"
+  ],
+  "callees": {
+    "0x1419f2180": "Validate (virtual 0x27e0 on controller): returns ChatEntry +0x8 != 0 and releases its copy",
+    "0x1419f2120": "Implementation (virtual 0x27e8): releases its ChatEntry copy only",
+    "0x142ee3b30": "Struct default initialiser (called on SenderID and ChatEntry in the thunk). Not read in this pass",
+    "FFrame_Step / FFrame_StepExplicitProperty": "engine parameter read",
+    "RPC_ValidateFailed": "engine: logs RPC validation failure"
+  },
+  "notes": "Thunk reads SenderID then ChatEntry. The Validate and Implementation copies are destroyed by the callees. Field_0x8 of AthenaQuickChatActiveEntry is unnamed. No gameplay effect of the implementation exists in this build.",
+  "confidence": "MEDIUM"
+}

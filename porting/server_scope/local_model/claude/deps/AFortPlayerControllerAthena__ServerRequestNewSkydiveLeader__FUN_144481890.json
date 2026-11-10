@@ -1,0 +1,7 @@
+{
+  "name": "FUN_144481890",
+  "address": "0x144481890",
+  "signature": "bool FUN_144481890(AFortPlayerControllerAthena* Controller, uint8* OutIndex)",
+  "inc_or_decl": "Squad index helper. Writes controller+0x3cc into OutIndex, then searches a squad array for the leader pointer at +0x0. Partially read.",
+  "evidence": "/opt/fortnite/local-model-package/captures/2bdc823f458840e0992165e7c1101dec/0x144481890.c"
+}

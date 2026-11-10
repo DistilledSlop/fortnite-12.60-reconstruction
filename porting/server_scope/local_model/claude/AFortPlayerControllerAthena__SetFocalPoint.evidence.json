@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerControllerAthena::SetFocalPoint",
+  "status": "proposed",
+  "original": "0x142a5d040",
+  "signature": "void SetFocalPoint(AActor* InFocalPoint, FVector InFocalPointOffset, float InFocalPointFOV)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5d040.c",
+    "/opt/fortnite/local-model-package/captures/5867bff1af5c41588535a76fd522c913/0x1419f3e70.c",
+    "/opt/fortnite/local-model-package/captures/35bd70f4ab194897ade8c764d265ca66/0x142ce9f90.c"
+  ],
+  "callees": {
+    "0x1419f3e70": "SetFocalPoint implementation (FUN_1419f3e70), inlined",
+    "0x142ce9f90": "object name to FString (GetNameForLog)",
+    "FMsg_Logf_Internal": "engine log"
+  },
+  "notes": "Parameters in thunk read order: focal point, offset, FOV. Argument order in the log is inferred.",
+  "confidence": "MEDIUM"
+}

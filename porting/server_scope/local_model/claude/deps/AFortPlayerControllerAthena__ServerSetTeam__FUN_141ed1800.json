@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141ed1800",
+  "address": "0x141ed1800",
+  "signature": "UFortGameplayTagSettings* FUN_141ed1800()",
+  "inc_or_decl": "Thread-local gameplay tag settings accessor. Read in full.",
+  "evidence": "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x141ed1800.c"
+}

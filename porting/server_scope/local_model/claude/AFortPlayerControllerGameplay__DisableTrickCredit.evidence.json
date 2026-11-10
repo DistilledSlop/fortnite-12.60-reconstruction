@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerGameplay::DisableTrickCredit",
+  "status": "proposed",
+  "original": "0x142a64ec0",
+  "signature": "void DisableTrickCredit(float Duration)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a64ec0.c",
+    "/opt/fortnite/local-model-package/captures/0f16f17439da4f1fab100ad80dc52641/0x1423cf4e0.c"
+  ],
+  "callees": {
+    "0x1423cf4e0": "DisableTrickCredit body (FUN_1423cf4e0), inlined. Read in full",
+    "0x150 (GetWorld)": "AActor::GetWorld, virtual slot 0x150 (0x143f793a0)"
+  },
+  "notes": "Read in full. Field names at +0x22fd, +0x460, +0x540 are unresolved or proposed.",
+  "confidence": "HIGH"
+}

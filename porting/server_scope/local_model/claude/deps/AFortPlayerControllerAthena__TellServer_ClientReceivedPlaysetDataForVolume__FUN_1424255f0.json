@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1424255f0",
+  "address": "0x1424255f0",
+  "signature": "void FUN_1424255f0(UPlaysetLevelStreamComponent* Comp, AFortPlayerControllerAthena* Controller, const FVolumeKey* Key)",
+  "inc_or_decl": "Client data registration. Partially read; the compare helper FUN_142cda540 was not followed.",
+  "evidence": "/opt/fortnite/local-model-package/captures/dd937556d0ea4a14a43860d6a59c8393/0x1424255f0.c"
+}

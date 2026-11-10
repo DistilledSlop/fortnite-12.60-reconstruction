@@ -1,0 +1,30 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerSetTeam",
+  "status": "proposed",
+  "original": "0x142a5c480",
+  "signature": "void ServerSetTeam(uint8 InTeam)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5c480.c",
+    "/opt/fortnite/local-model-package/captures/e3127d5304a54f648133167e264df2f9/0x1419f2740.c",
+    "/opt/fortnite/local-model-package/captures/e3127d5304a54f648133167e264df2f9/0x1419f2540.c",
+    "/opt/fortnite/local-model-package/captures/77fc7530e48b491bb4dfd8b612a9f341/0x141991c10.c",
+    "/opt/fortnite/local-model-package/captures/2d64560169ca402387de9d4a88823383/0x1428ee970.c",
+    "/opt/fortnite/local-model-package/captures/2c87a1e9f94f466b976233be1a0a0c38/0x142a85850.c",
+    "/opt/fortnite/local-model-package/captures/5906160cad9948e8994c39b7b8e3aaa2/0x143e8b3b0.c",
+    "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x141ed1800.c"
+  ],
+  "callees": {
+    "0x1419f2740": "Validate (virtual 0x2478): returns bit 2 of byte +0x9fc of FUN_141991c10(this, true)",
+    "0x1419f2540": "Implementation (virtual 0x2480), inlined",
+    "0x141991c10": "GetAthenaTeamSettings(this, bCreateFallback): reads GameState (World+0x130) +0x1df8 then +0x1df0 when the game state is AFortGameStateAthena; otherwise a global default object (+0x130) when the flag is set. Read in full",
+    "0x1428ee970": "AFortGameModeAthena::StaticClass (lazy init, read in full)",
+    "0x142a85850": "AFortPlayerState::StaticClass (lazy init, read in full)",
+    "0x143e8b3b0": "FGameplayTagContainer::AddTag, with a GameplayTag struct argument. Read in part",
+    "0x141ed1800": "Gameplay tag settings singleton accessor (thread-local), read in full",
+    "0x14194f5e0": "GameMode virtual 0x9e0: can-join-team check (name unresolved). Not read",
+    "0x141935140": "GameMode virtual 0xb28: accept team change (name unresolved). Not read",
+    "pawn virtual 0xa78": "apply team gameplay tags to the pawn (name unresolved). Not read"
+  },
+  "notes": "Validate and implementation read. The GameMode and pawn virtual slots were not resolved to bodies. Their slots are recorded in the .inc.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_14447f7e0",
+  "address": "0x14447f7e0",
+  "signature": "AFortPlayerStateAthena* FUN_14447f7e0(AFortPlayerControllerAthena* Controller, int)",
+  "inc_or_decl": "Next-leader candidate lookup. Partially read.",
+  "evidence": "/opt/fortnite/local-model-package/captures/3afb215d87b14df88bb47d23430f1ab4/0x14447f7e0.c"
+}

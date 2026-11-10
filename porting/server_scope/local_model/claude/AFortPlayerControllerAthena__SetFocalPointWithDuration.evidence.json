@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerControllerAthena::SetFocalPointWithDuration",
+  "status": "proposed",
+  "original": "0x142a5d160",
+  "signature": "void SetFocalPointWithDuration(AActor* InFocalPoint, FVector InFocalPointOffset, float InFocalPointFOV, float InDuration)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5d160.c",
+    "/opt/fortnite/local-model-package/captures/4981e7abab0c4eec8dc022fd15eca88b/0x1419f3fa0.c",
+    "/opt/fortnite/local-model-package/captures/35bd70f4ab194897ade8c764d265ca66/0x142ce9f90.c"
+  ],
+  "callees": {
+    "0x1419f3fa0": "SetFocalPointWithDuration implementation (FUN_1419f3fa0), inlined",
+    "0x142ce9f90": "object name to FString (GetNameForLog)",
+    "FMsg_Logf_Internal": "engine log"
+  },
+  "notes": "Read order: focal point, offset, FOV, duration.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_140683960",
+  "address": "0x140683960",
+  "signature": "FString& FUN_140683960(FString* Dst, const FString* Src)",
+  "inc_or_decl": "FString copy-assign. Read in full.",
+  "evidence": "/opt/fortnite/local-model-package/captures/1afbf1b8606b4c2f9f44da2b07ba2d4a/0x140683960.c"
+}

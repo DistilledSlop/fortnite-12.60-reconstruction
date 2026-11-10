@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141104100",
+  "address": "0x141104100",
+  "signature": "bool FUN_141104100(AActor* Owner)",
+  "inc_or_decl": "Read-only check on Owner->+0xd8 +0xf8. No side effects.",
+  "evidence": "/opt/fortnite/local-model-package/captures/bf204978906c4300a38e37c898fb4285/0x141104100.c"
+}

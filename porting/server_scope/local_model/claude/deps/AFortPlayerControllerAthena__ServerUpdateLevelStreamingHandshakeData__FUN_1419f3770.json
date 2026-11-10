@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f3770",
+  "address": "0x1419f3770",
+  "signature": "void FUN_1419f3770(AFortPlayerControllerAthena* Controller, bool bState)",
+  "inc_or_decl": "Handshake implementation. Read in full.",
+  "evidence": "/opt/fortnite/local-model-package/captures/02ef023f032a4fe09b3a94646ad53927/0x1419f3770.c"
+}

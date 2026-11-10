@@ -1,0 +1,7 @@
+{
+  "name": "FUN_143e8b3b0",
+  "address": "0x143e8b3b0",
+  "signature": "void FUN_143e8b3b0(FGameplayTagContainer* Container, const FGameplayTag* Tag)",
+  "inc_or_decl": "AddTag (stat FGameplayTagContainer_AddTag). Read in part; the tag must not be NAME_None.",
+  "evidence": "/opt/fortnite/local-model-package/captures/5906160cad9948e8994c39b7b8e3aaa2/0x143e8b3b0.c"
+}

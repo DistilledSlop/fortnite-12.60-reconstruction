@@ -1,0 +1,25 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerThankBusDriver",
+  "status": "proposed",
+  "original": "0x142a5cbd0",
+  "signature": "void ServerThankBusDriver()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5cbd0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/18feb1fd71414586b7a8f4042c335963/0x1419f3650.c",
+    "/opt/fortnite/local-model-package/captures/36687dc6d9144ed99cdc715bcb38d568/0x141a5b620.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native88-quest-caller/0x1423850c0.c",
+    "/opt/fortnite/local-model-package/captures/5906160cad9948e8994c39b7b8e3aaa2/0x143e8b3b0.c",
+    "/opt/fortnite/local-model-package/captures/36687dc6d9144ed99cdc715bcb38d568/0x14244f820.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate, virtual 0x27c8). STUB",
+    "0x1419f3650": "Implementation (virtual 0x27d0), inlined",
+    "0x141a5b620": "PlayerState +0xfdd bit 0 setter (read in full)",
+    "0x1423850c0": "controller virtual 0x1bd0: returns quest manager sub-object (+0x118/+0x120 of the object at controller+0x19e8). Read in full",
+    "0x143e8b3b0": "FGameplayTagContainer::AddTag (read in part)",
+    "0x14244f820": "bus driver handler (7 arguments at the call site). Only a 4-argument view was decompiled; body read in full but argument count not recovered"
+  },
+  "notes": "Confidence LOW because the bus driver handler's real argument list and outputs are not recovered.",
+  "confidence": "LOW"
+}

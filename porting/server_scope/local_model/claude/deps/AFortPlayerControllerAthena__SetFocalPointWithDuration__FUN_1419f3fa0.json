@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f3fa0",
+  "address": "0x1419f3fa0",
+  "signature": "void FUN_1419f3fa0(AFortPlayerControllerAthena* Controller, AActor* FocalPoint, const FVector* Offset, float FOV, float Duration)",
+  "inc_or_decl": "Focal point setter with duration. Read in full.",
+  "evidence": "/opt/fortnite/local-model-package/captures/4981e7abab0c4eec8dc022fd15eca88b/0x1419f3fa0.c"
+}

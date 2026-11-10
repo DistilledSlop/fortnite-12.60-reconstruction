@@ -1,0 +1,7 @@
+{
+  "name": "FUN_143f74cc0",
+  "address": "0x143f74cc0",
+  "signature": "void FUN_143f74cc0(UObject* Obj)",
+  "inc_or_decl": "Virtual 0x610 wrapper. Read in full.",
+  "evidence": "/opt/fortnite/local-model-package/captures/dd937556d0ea4a14a43860d6a59c8393/0x143f74cc0.c"
+}

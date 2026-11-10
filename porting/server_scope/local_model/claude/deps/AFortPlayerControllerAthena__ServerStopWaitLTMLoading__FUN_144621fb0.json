@@ -1,0 +1,7 @@
+{
+  "name": "FUN_144621fb0",
+  "address": "0x144621fb0",
+  "signature": "bool FUN_144621fb0(FTimerManager* Manager, const FTimerHandle* Handle)",
+  "inc_or_decl": "Timer handle validity check. Name is inferred. Body not fully read.",
+  "evidence": "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x144621fb0.c"
+}

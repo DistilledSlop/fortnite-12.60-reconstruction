@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1423cf4e0",
+  "address": "0x1423cf4e0",
+  "signature": "void FUN_1423cf4e0(AFortPlayerControllerGameplay* Controller, float Duration)",
+  "inc_or_decl": "Clears the flag at +0x22fd. When Duration > 0 sets the end time at +0x460 to Duration + World->TimeSeconds (+0x540). Read in full.",
+  "evidence": "/opt/fortnite/local-model-package/captures/0f16f17439da4f1fab100ad80dc52641/0x1423cf4e0.c"
+}

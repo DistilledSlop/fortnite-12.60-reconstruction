@@ -1,0 +1,27 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerSetUseSolaris",
+  "status": "proposed",
+  "original": "0x142a5c530",
+  "signature": "void ServerSetUseSolaris(bool bShouldUse)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5c530.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/89b1151e355844ffb855531159c2e9ae/0x1419f27c0.c",
+    "/opt/fortnite/local-model-package/captures/77fc7530e48b491bb4dfd8b612a9f341/0x141991c10.c",
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x141ed2350.c",
+    "/opt/fortnite/local-model-package/captures/77fc7530e48b491bb4dfd8b612a9f341/0x141c7c460.c",
+    "/opt/fortnite/local-model-package/captures/77fc7530e48b491bb4dfd8b612a9f341/0x1429d6a00.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native111-virtual-targets/0x1419d5f00.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate, virtual 0x2628). STUB",
+    "0x1419f27c0": "Implementation (virtual 0x2630), inlined",
+    "0x141991c10": "GetAthenaTeamSettings (see ServerSetTeam)",
+    "0x141ed2350": "GetFortEngine: engine getter, flag +0xc9 read (see ServerClearItemList evidence)",
+    "0x141c7c460": "GetCreativePlotForVolume: resolves the plot for a volume, then calls virtual 0x610. Read in part",
+    "0x1429d6a00": "ProcessEvent with bool argument on a UFunction (name constant at DAT_1481a5370 unresolved)",
+    "0x1419d5f00": "controller virtual 0x14d8: creative volume for the controller (not read)"
+  },
+  "notes": "Only the gate chain and the event dispatch are recorded.",
+  "confidence": "MEDIUM"
+}

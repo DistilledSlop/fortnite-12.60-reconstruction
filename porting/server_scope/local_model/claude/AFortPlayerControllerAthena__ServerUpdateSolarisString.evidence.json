@@ -1,0 +1,29 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerUpdateSolarisString",
+  "status": "proposed",
+  "original": "0x142a5cea0",
+  "signature": "void ServerUpdateSolarisString(FString SolString)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5cea0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/9b794735f36d44a18a68ec2af5b18797/0x1419f3790.c",
+    "/opt/fortnite/local-model-package/captures/77fc7530e48b491bb4dfd8b612a9f341/0x141991c10.c",
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x141ed2350.c",
+    "/opt/fortnite/local-model-package/captures/77fc7530e48b491bb4dfd8b612a9f341/0x141c7c460.c",
+    "/opt/fortnite/local-model-package/captures/1afbf1b8606b4c2f9f44da2b07ba2d4a/0x140683960.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x141c74820.c",
+    "/opt/fortnite/local-model-package/captures/3243d11c505d4e91a9de21df6da797c4/0x141c8cf90.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate, virtual 0x2618). STUB",
+    "0x1419f3790": "Implementation (virtual 0x2620), inlined",
+    "0x141991c10": "GetAthenaTeamSettings (read in full)",
+    "0x141ed2350": "GetFortEngine (read in full at the level of the flag read)",
+    "0x141c7c460": "GetCreativePlotForVolume (see SetUseSolaris)",
+    "0x140683960": "FString copy assignment (read in full)",
+    "0x141c74820": "GetAthenaStateForPlot: returns the Athena game state for the object's world when the object is live. Read in full; returned sub-object not followed",
+    "0x141c8cf90": "NotifyPlotSolarisStringChanged: when the state owner has Role ROLE_Authority, calls FUN_141c8cfd0 with FUN_141c7c5c0(plot). Partially read"
+  },
+  "notes": "The plot string field at +0x2f0 is unnamed.",
+  "confidence": "MEDIUM"
+}

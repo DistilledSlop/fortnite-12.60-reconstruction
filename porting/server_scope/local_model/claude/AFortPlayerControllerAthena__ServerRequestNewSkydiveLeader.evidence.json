@@ -1,0 +1,25 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerRequestNewSkydiveLeader",
+  "status": "proposed",
+  "original": "0x142a5bb60",
+  "signature": "void ServerRequestNewSkydiveLeader()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5bb60.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/353200a1ec9049e89619cff786b4b3c8/0x1419f21f0.c",
+    "/opt/fortnite/local-model-package/captures/3afb215d87b14df88bb47d23430f1ab4/0x14447fc60.c",
+    "/opt/fortnite/local-model-package/captures/2bdc823f458840e0992165e7c1101dec/0x144481890.c",
+    "/opt/fortnite/local-model-package/captures/3afb215d87b14df88bb47d23430f1ab4/0x14447f7e0.c",
+    "/opt/fortnite/local-model-package/captures/1a89ce93ff2346ea8525cd60f19e19ba/0x1419e89a0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate, virtual 0x2818). STUB",
+    "0x1419f21f0": "Implementation (virtual 0x2820), inlined",
+    "0x14447fc60": "Skydive squad size (returns 0 when no squad or when the request is invalid). Body read in part",
+    "0x144481890": "TryGetSquadIndex: writes this controller's squad index byte at +0x3cc and reports whether the squad has at least two members. Body read in part",
+    "0x14447f7e0": "GetNextSquadPlayerState: returns the squad member PlayerState chosen as next leader, or null. Body read in part",
+    "0x1419e89a0": "RefreshSkydiveLeader: walks a 16-byte listener list at +0x2ba4 / +0x572 with a lock counter and calls listener virtual 0x50 (same pattern as the level-streaming handshake)"
+  },
+  "notes": "Implementation read in full. Helper bodies FUN_14447fc60, FUN_144481890, FUN_14447f7e0, FUN_1419e89a0 were read in part only and their own callees were not followed.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141c74820",
+  "address": "0x141c74820",
+  "signature": "UObject* FUN_141c74820(UObject* Obj)",
+  "inc_or_decl": "Athena state lookup described above. Read in full.",
+  "evidence": "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x141c74820.c"
+}

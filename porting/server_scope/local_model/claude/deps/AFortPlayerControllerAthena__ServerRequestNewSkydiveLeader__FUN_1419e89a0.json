@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419e89a0",
+  "address": "0x1419e89a0",
+  "signature": "void FUN_1419e89a0(AFortPlayerControllerAthena* Controller)",
+  "inc_or_decl": "Skydive leader replication refresh. Walks a listener list (+0x2ba4 lock, +0x572/+0x573 list), calls virtual 0x50 on each listener, then compacts the list when any listener is not ready.",
+  "evidence": "/opt/fortnite/local-model-package/captures/1a89ce93ff2346ea8525cd60f19e19ba/0x1419e89a0.c"
+}

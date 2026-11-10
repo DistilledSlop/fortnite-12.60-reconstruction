@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141a596b0",
+  "address": "0x141a596b0",
+  "signature": "void FUN_141a596b0(AFortPlayerStateAthena* PS, bool bValue)",
+  "inc_or_decl": "PlayerState+0xfdd bit 1 = bValue. Read in full.",
+  "evidence": "/opt/fortnite/local-model-package/captures/abbe3f55cf014ebca57acc7e6b9600c6/0x141a596b0.c"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_14447fc60",
+  "address": "0x14447fc60",
+  "signature": "int FUN_14447fc60(AFortPlayerControllerAthena* Controller)",
+  "inc_or_decl": "Skydive squad size. Calls FUN_144481890; reads the squad list at controller+0x3a8 when not null; logs when no list. Partially read.",
+  "evidence": "/opt/fortnite/local-model-package/captures/3afb215d87b14df88bb47d23430f1ab4/0x14447fc60.c"
+}

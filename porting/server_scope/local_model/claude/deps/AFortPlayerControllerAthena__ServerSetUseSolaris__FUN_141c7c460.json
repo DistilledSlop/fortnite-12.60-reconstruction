@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141c7c460",
+  "address": "0x141c7c460",
+  "signature": "UObject* FUN_141c7c460(UObject* Volume)",
+  "inc_or_decl": "Plot lookup. Returns the plot for a volume when the volume is inside the Athena game state; then calls virtual 0x610 with the creative data. Read in part.",
+  "evidence": "/opt/fortnite/local-model-package/captures/77fc7530e48b491bb4dfd8b612a9f341/0x141c7c460.c"
+}

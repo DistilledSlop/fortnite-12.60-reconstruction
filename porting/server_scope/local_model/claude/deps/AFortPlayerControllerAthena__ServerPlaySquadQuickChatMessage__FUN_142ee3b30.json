@@ -1,0 +1,7 @@
+{
+  "name": "FUN_142ee3b30",
+  "address": "0x142ee3b30",
+  "signature": "void FUN_142ee3b30(struct* Out, int Zero)",
+  "inc_or_decl": "Default initialiser of a struct copy. Only its call sites are used here; body not read in this pass.",
+  "evidence": "/opt/fortnite/local-model-package/captures/11dff1bf942f429ca6017d4cb421d5f6/0x142ee3b30.c"
+}

@@ -1,0 +1,20 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerStopWaitLTMLoading",
+  "status": "proposed",
+  "original": "0x142a5ca80",
+  "signature": "void ServerStopWaitLTMLoading()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5ca80.c",
+    "/opt/fortnite/local-model-package/captures/af12e9d547bd4ab094b49a3e60025c51/0x1419c83c0.c",
+    "/opt/fortnite/local-model-package/captures/35bd70f4ab194897ade8c764d265ca66/0x142ce9f90.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x144621fb0.c"
+  ],
+  "callees": {
+    "0x1419c83c0": "Implementation (virtual 0x2790 target); the thunk calls it directly, inlined",
+    "0x142ce9f90": "object name to FString (GetNameForLog). Read in full at the helper level",
+    "0x144621fb0": "timer handle live-check (name inferred from porting dir NativeIsLiveEntryHandle144621fb0; body not fully read)",
+    "0x1419c83c0 callees": "FTimerManager_InternalClearTimer (named engine helper)"
+  },
+  "notes": "The log arguments beyond the player name are not recovered by the decompile. Timer manager selection is LOW.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141991c10",
+  "address": "0x141991c10",
+  "signature": "AFortTeamSettings* FUN_141991c10(AFortPlayerControllerAthena* Controller, bool bFallback)",
+  "inc_or_decl": "Team settings accessor described above. Read in full.",
+  "evidence": "/opt/fortnite/local-model-package/captures/77fc7530e48b491bb4dfd8b612a9f341/0x141991c10.c"
+}

@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerControllerAthena::UpdateUGCRestrictedForVolume",
+  "status": "proposed",
+  "original": "0x142a5dd50",
+  "signature": "void UpdateUGCRestrictedForVolume(UObject* Volume, bool bRestricted)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5dd50.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/03357a362e2f47adaf03339af12b37c7/0x141a06860.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x141c74820.c",
+    "/opt/fortnite/local-model-package/captures/b194dedcc5c14640b619ba487043429b/0x141c94380.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate, virtual 0x2868). STUB",
+    "0x141a06860": "Implementation (virtual 0x2870), inlined",
+    "0x141c74820": "GetAthenaStateForPlot (read in full)",
+    "0x141c94380": "appends {Volume, bRestricted} to the plot restriction list at +0x558 (read in full)"
+  },
+  "notes": "Argument mapping uncertain (decompile swap). LOW confidence.",
+  "confidence": "LOW"
+}

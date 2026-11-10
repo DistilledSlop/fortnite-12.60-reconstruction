@@ -1,0 +1,7 @@
+{
+  "name": "FUN_14244f820",
+  "address": "0x14244f820",
+  "signature": "void FUN_14244f820(UObject* Target, AFortPlayerControllerAthena* Controller, FGameplayTagContainer* Tags, FBusDriverResult* A, FBusDriverResult* B, bool* OutFlag, bool bFlag)",
+  "inc_or_decl": "Bus driver handler. Calls FUN_142442c50 and FUN_143e8c1b0 and frees temporaries. The visible decompile does not write OutFlag, so the caller's out flag may stay false. Argument recovery is incomplete.",
+  "evidence": "/opt/fortnite/local-model-package/captures/36687dc6d9144ed99cdc715bcb38d568/0x14244f820.c"
+}

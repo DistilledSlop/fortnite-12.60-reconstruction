@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419b9230",
+  "address": "0x1419b9230",
+  "signature": "FLevelUpRecord* FUN_1419b9230(FLevelUpRecord* Out, AFortPlayerControllerAthena* Controller, const FGameplayTag* Tag, int32 Level)",
+  "inc_or_decl": "Level-up record builder. Read only in part; its result is discarded by the caller. Follow-up read recommended before relying on the absence of side effects.",
+  "evidence": "/opt/fortnite/local-model-package/captures/bf204978906c4300a38e37c898fb4285/0x1419b9230.c"
+}

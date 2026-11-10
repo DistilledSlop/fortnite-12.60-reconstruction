@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1429d6a00",
+  "address": "0x1429d6a00",
+  "signature": "void FUN_1429d6a00(UObject* Obj, bool bValue)",
+  "inc_or_decl": "ProcessEvent(FindFunctionChecked(name), &bValue). Read in full.",
+  "evidence": "/opt/fortnite/local-model-package/captures/77fc7530e48b491bb4dfd8b612a9f341/0x1429d6a00.c"
+}

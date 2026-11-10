@@ -1,0 +1,25 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerThankBusDriverCheck",
+  "status": "proposed",
+  "original": "0x142a5cc20",
+  "signature": "void ServerThankBusDriverCheck()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5cc20.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/1ee09e6135a14e8cb16e119d988e4963/0x1419f3510.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native88-quest-caller/0x1423850c0.c",
+    "/opt/fortnite/local-model-package/captures/36687dc6d9144ed99cdc715bcb38d568/0x14244f820.c",
+    "/opt/fortnite/local-model-package/captures/abbe3f55cf014ebca57acc7e6b9600c6/0x141a596b0.c",
+    "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x141ed1800.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate, virtual 0x27b8). STUB",
+    "0x1419f3510": "Implementation (virtual 0x27c0), inlined",
+    "0x1423850c0": "controller virtual 0x1bd0 (see ServerThankBusDriver)",
+    "0x14244f820": "bus driver handler (see ServerThankBusDriver)",
+    "0x141a596b0": "PlayerState +0xfdd bit 1 setter (read in full)",
+    "0x141ed1800": "gameplay tag settings accessor (read in full)"
+  },
+  "notes": "The out flag from FUN_14244f820 is read by the body. Its write is not visible in the decompile, so LOW confidence.",
+  "confidence": "LOW"
+}

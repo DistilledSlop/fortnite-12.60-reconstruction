@@ -1,0 +1,27 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerSimulateLevelUp",
+  "status": "proposed",
+  "original": "0x142a5c5f0",
+  "signature": "void ServerSimulateLevelUp(int32 ClientSimulatedLevel)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5c5f0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/5f00608d26614a3f9bcbcade30cbb8c1/0x1419f2840.c",
+    "/opt/fortnite/local-model-package/captures/bf204978906c4300a38e37c898fb4285/0x141104100.c",
+    "/opt/fortnite/local-model-package/captures/bf204978906c4300a38e37c898fb4285/0x141a5b580.c",
+    "/opt/fortnite/local-model-package/captures/bf204978906c4300a38e37c898fb4285/0x142a8b070.c",
+    "/opt/fortnite/local-model-package/captures/bf204978906c4300a38e37c898fb4285/0x1419b9230.c",
+    "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x141ed1800.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate, virtual 0x2318). STUB",
+    "0x1419f2840": "Implementation (virtual 0x2320), inlined",
+    "0x141104100": "profile read-only query; result discarded by the caller, omitted",
+    "0x141a5b580": "PlayerState +0xe78 int setter (read in full)",
+    "0x142a8b070": "ProcessEvent with int argument (name constant at DAT_1481b6808 unresolved; read in full)",
+    "0x1419b9230": "BuildLevelUpRecord: constructs a record from controller, tag and level. Read in part (first 60 lines); side effects not established",
+    "0x141ed1800": "gameplay tag settings accessor (read in full)"
+  },
+  "notes": "LOW confidence on the level-up record tail. The PlayerState part is fully read.",
+  "confidence": "MEDIUM"
+}

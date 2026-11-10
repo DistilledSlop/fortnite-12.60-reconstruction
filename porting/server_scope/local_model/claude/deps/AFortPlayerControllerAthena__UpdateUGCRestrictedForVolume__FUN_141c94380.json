@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141c94380",
+  "address": "0x141c94380",
+  "signature": "void FUN_141c94380(UObject* Plot, UObject* Volume, bool bRestricted)",
+  "inc_or_decl": "Appends a 9-byte restriction record to the plot list at +0x558 through FUN_1406a9dc0. Read in full. The decompiled call passes the arguments in an unclear order; mapping Volume to the key and bRestricted to the flag is inferred.",
+  "evidence": "/opt/fortnite/local-model-package/captures/b194dedcc5c14640b619ba487043429b/0x141c94380.c"
+}

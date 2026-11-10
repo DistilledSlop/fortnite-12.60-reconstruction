@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerUpdateLevelStreamingHandshakeData",
+  "status": "proposed",
+  "original": "0x142a5cde0",
+  "signature": "void ServerUpdateLevelStreamingHandshakeData(bool bClientLevelStreamingState)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5cde0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/02ef023f032a4fe09b3a94646ad53927/0x1419f3770.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate, virtual 0x2768). STUB",
+    "0x1419f3770": "Implementation (virtual 0x2770): FUN_1419f3770, inlined. Read in full",
+    "listener virtual 0x50": "IsHandshakeReady (name unresolved). Not read"
+  },
+  "notes": "The thunk passes the bool; the implementation returns early when Role is not ROLE_Authority (3).",
+  "confidence": "MEDIUM"
+}

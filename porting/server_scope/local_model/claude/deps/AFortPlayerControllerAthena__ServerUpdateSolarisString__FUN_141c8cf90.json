@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141c8cf90",
+  "address": "0x141c8cf90",
+  "signature": "void FUN_141c8cf90(UObject* State, UObject* Plot)",
+  "inc_or_decl": "Role-gated notify. Partially read.",
+  "evidence": "/opt/fortnite/local-model-package/captures/3243d11c505d4e91a9de21df6da797c4/0x141c8cf90.c"
+}
