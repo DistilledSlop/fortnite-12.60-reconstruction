@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__GetAbilitySystemComponentForAttributeSet",
+  "address": "0x14070f1a0",
+  "signature": "UAbilitySystemComponent* ABuildingActor::GetAbilitySystemComponentForAttributeSet(UFortBuildingActorSet* AttributeSet)",
+  "inc_or_decl": "// Resolves the ability system component that owns the attribute set (outer chain lookup by class, unnamed helpers 0x142ec9900).",
+  "evidence": "captures/6fd9248f6a3441c7a3805d4b042d5389/0x14070f1a0.c"
+}

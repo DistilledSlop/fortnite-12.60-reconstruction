@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingActor::BlueprintDie",
+  "status": "proposed",
+  "original": "0x142736450",
+  "signature": "void ABuildingActor::BlueprintDie(FFortDeathReason DeathReason, AController* Killer, AActor* DamageCauser)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142736450.c",
+    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141b92410.c",
+    "porting/generated/native-cap-virtual1/0x141b94c30.c"
+  ],
+  "callees": {
+    "0x141b92410": "thunk: tail-jumps to virtual slot 0x860 (native Die)",
+    "0x141b94c30": "native Die implementation (virtual slot 0x860); see deps ABuildingActor__NativeDie"
+  },
+  "notes": "Parameter order recovered from reflection offsets (DeathReason 0, Killer 8, DamageCauser 16). Native event payload argument is null on this path.",
+  "confidence": "MEDIUM"
+}

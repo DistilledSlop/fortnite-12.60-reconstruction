@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__IsAthenaSpawnOverrideActive",
+  "address": "0x14199e430",
+  "signature": "bool IsAthenaSpawnOverrideActive(AFortGameStateAthena* GameState)",
+  "inc_or_decl": "// Predicate: 0x14199e430 || 0x14199e380 on the game state. Both unnamed; combined here.",
+  "evidence": "not captured in this chunk (decompile pending)"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__GetHealth",
+  "address": "0x141b9edb0",
+  "signature": "float ABuildingActor::GetHealth() const",
+  "inc_or_decl": "if (BuildingAttributeSet == nullptr) { return GetMaxHealth(); }  // virtual 0x7b0\nreturn BuildingAttributeSet->Health.GetCurrentValue();",
+  "evidence": "porting/generated/native104-virtual/0x141b9edb0.c"
+}

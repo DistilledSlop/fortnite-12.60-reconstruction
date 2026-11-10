@@ -1,0 +1,16 @@
+{
+  "function": "ABuildingActor::SetCustomState",
+  "status": "proposed",
+  "original": "0x1427381a0",
+  "signature": "void ABuildingActor::SetCustomState(const FString& NewState)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427381a0.c",
+    "porting/generated/native104-virtual/0x141bc49a0.c"
+  ],
+  "callees": {
+    "0x141bc49a0": "native body: clears CustomState (+0x518) then calls 0x142733f90, frees the transient string buffer",
+    "0x142733f90": "change notification after the state write (unnamed; treated as OnRep_CustomState)"
+  },
+  "notes": "The 0x142733f90 identity is inferred, not confirmed; the body uses the existing header hook OnRep_CustomState.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingActor::HasHealthLeft",
+  "status": "proposed",
+  "original": "0x142737610",
+  "signature": "bool ABuildingActor::HasHealthLeft() const",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737610.c",
+    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bad840.c",
+    "porting/generated/native104-virtual/0x141b9edb0.c"
+  ],
+  "callees": {
+    "0x141bad840": "native HasHealthLeft: 0.0 < GetHealth()",
+    "0x141b9edb0": "GetHealth (virtual 0x7a8): reads Health from BuildingAttributeSet; falls back to GetMaxHealth (virtual 0x7b0) when the set is missing"
+  },
+  "notes": "Existing ported body Native_141bad840.inc is the same logic.",
+  "confidence": "HIGH"
+}

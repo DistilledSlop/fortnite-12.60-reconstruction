@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__RefreshRemovedFoliageInBounds",
+  "address": "0x141bc2c30",
+  "signature": "void ABuildingActor::RefreshRemovedFoliageInBounds(bool bUseNonCollidingBounds)",
+  "inc_or_decl": "// Virtual slot 0x980. Unions the bounds of OverridePrimitivesToExcludeFoliage (or the actor bounds when the list is empty) and forwards the box to the foliage subsystem (0x141f967e0). Partially decompiled; the bounds-union loop is in the capture.",
+  "evidence": "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bc2c30.c"
+}

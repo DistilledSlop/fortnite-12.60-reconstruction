@@ -1,0 +1,16 @@
+{
+  "function": "ABuildingActor::Resave",
+  "status": "proposed",
+  "original": "0x142737ee0",
+  "signature": "void ABuildingActor::Resave()",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737ee0.c",
+    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141c8cc80.c"
+  ],
+  "callees": {
+    "0x141c8cc80": "returns the static multicast delegate invocation list at DAT_1478c3468 (unnamed)",
+    "0x141c8cc80+0x50": "per-listener Execute(this) via virtual slot 0x50 (listener return value only decides compaction)"
+  },
+  "notes": "The delegate's semantic name (BuildingResaveDelegate) is proposed; no name in the binary or headers. Return value of listeners is used only to decide removal, so the body uses a plain Broadcast.",
+  "confidence": "LOW"
+}

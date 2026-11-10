@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__OnBuildingLoadedFromSave",
+  "address": "0x141b91b80",
+  "signature": "void ABuildingActor::OnBuildingLoadedFromSave()",
+  "inc_or_decl": "// Virtual slot 0x708; called when InitializationReason == LoadedFromSave (3). Target 0x141b91b80 not yet decompiled.",
+  "evidence": "not captured in this chunk (decompile pending)"
+}

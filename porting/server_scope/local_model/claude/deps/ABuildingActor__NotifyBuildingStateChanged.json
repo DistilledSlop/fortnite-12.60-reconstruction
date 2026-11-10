@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__NotifyBuildingStateChanged",
+  "address": "0x141bbf1e0",
+  "signature": "void ABuildingActor::NotifyBuildingStateChanged(EBuildingAnimationState State)",
+  "inc_or_decl": "// Virtual slot 0x888; called after SetBuildingAnimationState. Target 0x141bbf1e0 not yet decompiled.",
+  "evidence": "not captured in this chunk (decompile pending)"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__UpdateCullDistance",
+  "address": "0x141bc90d0",
+  "signature": "void ABuildingActor::UpdateCullDistance()",
+  "inc_or_decl": "SCOPE_CYCLE_COUNTER(STAT_Fort_BuildingActorUpdateCullDistance);\n// Server/client split: 0x143f7a920 == 1 selects 0x141bc9800 (guarded by bit 0x02 of +0x3e9) else 0x141bc9140.",
+  "evidence": "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bc90d0.c"
+}

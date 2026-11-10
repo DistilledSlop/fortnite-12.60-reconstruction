@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__UnregisterFromDayPhaseChange",
+  "address": "0x141bc5220",
+  "signature": "void ABuildingActor::UnregisterFromDayPhaseChange()",
+  "inc_or_decl": "// Removes this actor from the day-phase subsystem delegate list at subsystem+0xd98 (matching the OnDayPhaseChanged function by name), then clears bRegisteredForDayPhaseChange.",
+  "evidence": "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bc5220.c"
+}

@@ -1,0 +1,18 @@
+{
+  "function": "ABuildingActor::InitializeKismetSpawnedBuildingActor",
+  "status": "proposed",
+  "original": "0x142737640",
+  "signature": "void ABuildingActor::InitializeKismetSpawnedBuildingActor(bool bUsePlayerBuildAnimations, AController* SpawningController, ABuildingActor* BuildingOwner)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737640.c",
+    "porting/generated/native90-targets/0x141baf090.c"
+  ],
+  "callees": {
+    "0x141baf090": "native body: player-id lookup from controller (0xFFFF when absent), then virtual 0x880 (set anim state) and 0x888 (notify)",
+    "0x1423881c0": "GetPlayerIdForController (unnamed; returns uint16 player id)",
+    "0x880": "SetBuildingAnimationState-equivalent virtual (target 0x141bae840, unnamed)",
+    "0x888": "NotifyBuildingStateChanged-equivalent virtual (target 0x141bbf1e0, unnamed)"
+  },
+  "notes": "Native target does not use BuildingOwner beyond forwarding it; the body keeps the forwarding. The enum names EBuildingAnimationState are proposed, not from the binary.",
+  "confidence": "MEDIUM"
+}

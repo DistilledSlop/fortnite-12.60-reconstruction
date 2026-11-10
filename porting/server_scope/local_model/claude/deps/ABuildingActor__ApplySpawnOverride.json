@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__ApplySpawnOverride",
+  "address": "0x141c7c1f0",
+  "signature": "void ABuildingActor::ApplySpawnOverride(FActorSpawnParameters& SpawnParameters, UFortBuildingSpawnSubsystem* Subsystem, FVector Location)",
+  "inc_or_decl": "// Writes spawn override data for Location from the subsystem into SpawnParameters (called only when the Athena spawn override is active). Layout unrecovered.",
+  "evidence": "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141c7c1f0.c"
+}

@@ -1,0 +1,18 @@
+{
+  "function": "ABuildingActor::OnBuildingActorInitialized",
+  "status": "proposed",
+  "original": "0x142737b30",
+  "signature": "void ABuildingActor::OnBuildingActorInitialized(EFortBuildingInitializationReason::Type InitializationReason, EFortBuildingPersistentState::Type BuildingPersistentState)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737b30.c",
+    "porting/generated/native-cap-virtual3/0x141bb0ce0.c"
+  ],
+  "callees": {
+    "0x141bb0ce0": "native OnBuildingActorInitialized_Implementation: game mode/readiness check, reason 3 (LoadedFromSave) triggers the 0x708 hook, sets the 0x3e0 bit 0x40 (bSavedMetaPropertiesProcessed)",
+    "0x1428ea8f0": "AFortGameModeAthena StaticClass (unnamed; assumed)",
+    "0x708": "loaded-from-save hook (target 0x141b91b80, unnamed; see deps ABuildingActor__OnBuildingLoadedFromSave)",
+    "0x9b0": "game mode readiness check (unnamed virtual)"
+  },
+  "notes": "Reason 3 is LoadedFromSave (from the EFortBuildingInitializationReason enum header). The readiness predicate and the game-mode class name are assumed from decompile shape.",
+  "confidence": "MEDIUM"
+}

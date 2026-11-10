@@ -1,0 +1,25 @@
+{
+  "function": "ABuildingActor::ForceBuildingHealth",
+  "status": "proposed",
+  "original": "0x142736690",
+  "signature": "void ABuildingActor::ForceBuildingHealth(float NewHealth)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142736690.c",
+    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141b990d0.c",
+    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141b9b750.c",
+    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141916570.c",
+    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141ba74f0.c",
+    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x14070f1a0.c",
+    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x1406da850.c"
+  ],
+  "callees": {
+    "0x141b990d0": "native body: Role check, lazy attribute-set creation, MaxHealth then Health write",
+    "0x141b9b750": "GetBuildingAttributeSet: returns BuildingAttributeSet (+0x318), creating it if missing",
+    "0x141916570": "static FGameplayAttribute for 'Health' (lazily cached)",
+    "0x141ba74f0": "static FGameplayAttribute for 'MaxHealth' (lazily cached)",
+    "0x14070f1a0": "GetAbilitySystemComponentForAttributeSet: owner's ability system component lookup (may return null)",
+    "0x1406da850": "UAbilitySystemComponent::SetNumericAttributeBase equivalent: writes base value and marks attribute dirty"
+  },
+  "notes": "The FGameplayAttribute statics mirror the native lazily cached lookups. Assumes BuildingAttributeSet holds Health/MaxHealth UPROPERTYs (confirmed by the native FindField by name).",
+  "confidence": "HIGH"
+}

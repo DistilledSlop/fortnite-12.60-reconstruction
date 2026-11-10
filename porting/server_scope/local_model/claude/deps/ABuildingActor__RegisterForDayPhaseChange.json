@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__RegisterForDayPhaseChange",
+  "address": "0x141bc2a90",
+  "signature": "void ABuildingActor::RegisterForDayPhaseChange()",
+  "inc_or_decl": "// Binds OnDayPhaseChanged on the day-phase subsystem and sets bRegisteredForDayPhaseChange. Not yet decompiled in this chunk.",
+  "evidence": "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bc2a90.c"
+}

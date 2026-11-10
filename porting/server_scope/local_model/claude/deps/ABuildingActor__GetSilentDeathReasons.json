@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__GetSilentDeathReasons",
+  "address": "0x141ed1800",
+  "signature": "const FFortDeathReason& GetSilentDeathReason(bool bPropagate)",
+  "inc_or_decl": "// Death-reason table singleton: +0x440 is the silent reason, +0x468 the propagated silent reason (per decompile of 0x141bc5d60). Names proposed.",
+  "evidence": "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141ed1800.c"
+}

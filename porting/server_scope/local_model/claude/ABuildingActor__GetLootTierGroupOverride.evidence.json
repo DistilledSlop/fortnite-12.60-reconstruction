@@ -1,0 +1,18 @@
+{
+  "function": "ABuildingActor::GetLootTierGroupOverride",
+  "status": "proposed",
+  "original": "0x1427370d0",
+  "signature": "FName ABuildingActor::GetLootTierGroupOverride() const",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427370d0.c",
+    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141ba7040.c"
+  ],
+  "callees": {
+    "0x141ba7040": "native body: world override lookup keyed by building class, tag match against tag containers at +0x410 and +0x420, returns the group FName",
+    "0x141c74820": "world loot-override subsystem accessor (unnamed)",
+    "0x141c7ca90": "override query (unnamed): fills array of matching override entries",
+    "0x142adf3a0": "static class used for IsChildOf check on override entries (unnamed)"
+  },
+  "notes": "Second tag container at +0x420 was not named; the body here only checks StaticGameplayTags (+0x410). Native also checks the second list. Downgrade to LOW because both the subsystem API and the entry struct names are inferred.",
+  "confidence": "LOW"
+}

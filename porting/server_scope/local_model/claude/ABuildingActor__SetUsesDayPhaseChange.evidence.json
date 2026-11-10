@@ -1,0 +1,18 @@
+{
+  "function": "ABuildingActor::SetUsesDayPhaseChange",
+  "status": "proposed",
+  "original": "0x142738680",
+  "signature": "void ABuildingActor::SetUsesDayPhaseChange(bool bUseDayPhase)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142738680.c",
+    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bc5220.c",
+    "porting/behavior/ABuildingActor/NativeUsesDayPhaseChange.inc"
+  ],
+  "callees": {
+    "0x141bc5220": "native body: writes bUsesDayPhaseChange (bit 0x80 of +0x3e5), registers via 0x141bc2a90 or unbinds OnDayPhaseChanged from the subsystem list at +0xd98 and clears bRegisteredForDayPhaseChange",
+    "0x141bc2a90": "RegisterForDayPhaseChange (unnamed)",
+    "0x938": "NativeUsesDayPhaseChange virtual (ported as ABuildingActor::NativeUsesDayPhaseChange)"
+  },
+  "notes": "bDayPhaseRegistrationPending is the unnamed low bit of +0x3e5 (decompile checks it on the enable path). The original sign-extended changed-check would unregister on a same-value call when already true; this body does not reproduce that.",
+  "confidence": "MEDIUM"
+}

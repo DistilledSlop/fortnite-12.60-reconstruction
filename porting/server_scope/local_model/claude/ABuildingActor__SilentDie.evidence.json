@@ -1,0 +1,16 @@
+{
+  "function": "ABuildingActor::SilentDie",
+  "status": "proposed",
+  "original": "0x142738880",
+  "signature": "void ABuildingActor::SilentDie(bool bPropagateSilentDeath)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142738880.c",
+    "porting/generated/native104-virtual/0x141bc5d60.c"
+  ],
+  "callees": {
+    "0x141bc5d60": "native body: when not bDestroyed, selects silent-death tag at +0x468 (propagate) or +0x440 from the death-reason table singleton (0x141ed1800) and calls virtual 0x860",
+    "0x141ed1800": "death-reason table singleton accessor (unnamed)"
+  },
+  "notes": "Silent-reason getters are proposed names for the singleton's +0x440 and +0x468 entries.",
+  "confidence": "MEDIUM"
+}

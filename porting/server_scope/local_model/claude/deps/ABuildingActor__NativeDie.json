@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__NativeDie",
+  "address": "0x141b94c30",
+  "signature": "void ABuildingActor::NativeDie(FFortDeathReason DeathReason, AController* Killer, AActor* DamageCauser, FBuildingDeathEventData* EventPayload)",
+  "inc_or_decl": "// Native Die (virtual slot 0x860). Body summary, not yet an .inc:\n// if (Role != ROLE_Authority) return;\n// if (DeathReason matches an ignored list in the death-reason table) { FinishDeath(); return; }\n// bInstantDeath = true;\n// if (EventPayload == nullptr) { build death event from Killer/DamageCauser and dispatch it } else { use EventPayload }\n// FinishDeath();  // virtual 0x848 (target 0x141bac110)",
+  "evidence": "porting/generated/native-cap-virtual1/0x141b94c30.c"
+}

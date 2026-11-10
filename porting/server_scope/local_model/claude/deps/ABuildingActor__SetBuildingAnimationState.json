@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__SetBuildingAnimationState",
+  "address": "0x141bae840",
+  "signature": "void ABuildingActor::SetBuildingAnimationState(EBuildingAnimationState State, uint16 PlayerId, AActor* BuildingOwner)",
+  "inc_or_decl": "// Virtual slot 0x880 (decompile: called with (state, playerId, owner, 0, 0) or (state)). Target 0x141bae840 not yet decompiled; enum/param names proposed.",
+  "evidence": "not captured in this chunk (decompile pending)"
+}

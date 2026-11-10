@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingActor::SetBRDrawDistances",
+  "status": "proposed",
+  "original": "0x142737f00",
+  "signature": "void ABuildingActor::SetBRDrawDistances(float NewBRMinDrawDistance, float NewBRMaxDrawDistance)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142737f00.c",
+    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bc47c0.c",
+    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bc90d0.c"
+  ],
+  "callees": {
+    "0x141bc47c0": "native body: writes BRMinDrawDistance (+0x478) and BRMaxDrawDistance (+0x47c), then virtual 0x8b0",
+    "0x141bc90d0": "UpdateCullDistance (virtual 0x8b0): stat-scoped; server path 0x141bc9800, otherwise 0x141bc9140 (names unverified)"
+  },
+  "notes": "Parameter order: reflection declares NewBRMinDrawDistance first (offset 0), NewBRMaxDrawDistance second (offset 4).",
+  "confidence": "HIGH"
+}

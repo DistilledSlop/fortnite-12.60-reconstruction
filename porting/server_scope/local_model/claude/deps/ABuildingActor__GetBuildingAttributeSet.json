@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__GetBuildingAttributeSet",
+  "address": "0x141b9b750",
+  "signature": "UFortBuildingActorSet* ABuildingActor::GetBuildingAttributeSet()",
+  "inc_or_decl": "if (BuildingAttributeSet == nullptr) { // lazy creation path: role/settings checks, then the attribute-set init helper 0x141b94070(this, 1) }\nreturn BuildingAttributeSet;",
+  "evidence": "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141b9b750.c"
+}

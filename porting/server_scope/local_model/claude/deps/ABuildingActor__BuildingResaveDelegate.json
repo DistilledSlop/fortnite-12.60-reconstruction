@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__BuildingResaveDelegate",
+  "address": "0x1478c3468",
+  "signature": "static FMulticastDelegate<void(ABuildingActor*)> ABuildingActor::BuildingResaveDelegate",
+  "inc_or_decl": "// Process-wide multicast delegate returned by 0x141c8cc80. Name proposed; no binary name found.",
+  "evidence": "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141c8cc80.c"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__GetPlayerIdForController",
+  "address": "0x1423881c0",
+  "signature": "uint16 ABuildingActor::GetPlayerIdForController(AController* Controller)",
+  "inc_or_decl": "// Unnamed helper; returns the player id used by building placement, 0xFFFF when absent (caller applies the fallback).",
+  "evidence": "captures/6efb1241727e4d638a4125f43c983a91/0x1423881c0.c"
+}

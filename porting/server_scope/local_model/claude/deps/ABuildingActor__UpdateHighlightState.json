@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__UpdateHighlightState",
+  "address": "0x141bc1e80",
+  "signature": "void ABuildingActor::UpdateHighlightState()",
+  "inc_or_decl": "// Refreshes the building's highlight from the highlight component found via 0x141f611f0 / 0x141f60110. Unnamed helper.",
+  "evidence": "not captured in this chunk (decompile pending)"
+}

@@ -1,0 +1,18 @@
+{
+  "function": "ABuildingActor::K2_SpawnBuildingActor",
+  "status": "proposed",
+  "original": "0x1427379d0",
+  "signature": "ABuildingActor* ABuildingActor::K2_SpawnBuildingActor(UObject* WorldContextObject, TSubclassOf<ABuildingActor> BuildingClass, FTransform Transform)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427379d0.c",
+    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bafb20.c"
+  ],
+  "callees": {
+    "0x141bafb20": "native spawn helper: GetWorld check, class-is-ABuildingActor check, spawn params from subsystem (0x141c7c1f0 keyed by location), UWorld spawn (0x1442e6580)",
+    "0x142732ac0": "ABuildingActor::StaticClass",
+    "0x141c7c1f0": "spawn-override lookup keyed by location (unnamed); see deps ABuildingActor__ApplySpawnOverride",
+    "0x1442e6580": "UWorld::SpawnActor equivalent (unnamed)"
+  },
+  "notes": "The game-state predicate combines two unnamed helpers (0x14199e430 and 0x14199e380); the body names them generically. Spawn-param struct layout is not recovered, so ApplySpawnOverride is proposed.",
+  "confidence": "MEDIUM"
+}

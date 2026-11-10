@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingActor__RemoveFoliageForBuilding",
+  "address": "0x141bc8570",
+  "signature": "void ABuildingActor::RemoveFoliageForBuilding()",
+  "inc_or_decl": "if (!bDestroyFoliageWhenPlaced || IsRunningOnClientOnly()) { return; }  // 0x143f7a920 != 1 test, unnamed\nif (UFoliageSubsystem* Subsystem = GetFoliageSubsystem(GetWorld())) { Subsystem->RemoveFoliageForBuilding(this); }  // 0x141f9f2c0",
+  "evidence": "captures/6fd9248f6a3441c7a3805d4b042d5389/0x141bc8570.c"
+}

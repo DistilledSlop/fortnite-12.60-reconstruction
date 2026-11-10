@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingActor::SetHealth",
+  "status": "proposed",
+  "original": "0x142738290",
+  "signature": "void ABuildingActor::SetHealth(float NewHealth)",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142738290.c",
+    "captures/fe7610466bc24dc6a5ef862b9b18d96d/0x141bc4a90.c"
+  ],
+  "callees": {
+    "0x141bc4a90": "native body: GetBuildingAttributeSet, Health attribute, ASC lookup, SetNumericAttributeBase equivalent (0x1406da850)",
+    "0x141b9b750": "GetBuildingAttributeSet",
+    "0x14070f1a0": "GetAbilitySystemComponentForAttributeSet"
+  },
+  "notes": "Unlike ForceBuildingHealth, no authority check and no MaxHealth write.",
+  "confidence": "HIGH"
+}
