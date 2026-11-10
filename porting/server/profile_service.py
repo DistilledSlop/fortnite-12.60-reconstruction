@@ -39,7 +39,8 @@ from pathlib import Path
 from typing import Callable
 
 from api_common import ApiError, Err
-from catalog import SEASON12_PASS_OFFER, get_offer
+from catalog import SEASON12_LEVEL_OFFER, SEASON12_PASS_OFFER, get_offer
+from season12_rewards import FREE as SEASON12_FREE, PAID as SEASON12_PAID
 from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, WRAP_SLOT_COUNT, MTX_PLATFORMS, PROFILE_IDS,
                               SLOT_CATEGORIES, build, empty_slots)
 
@@ -290,11 +291,56 @@ def _debit_local_currency(ctx, price):
     core.set_item_quantity(wallet_id, balance - price)
 
 
+def _grant_season12_rewards(ctx, athena, rewards, price):
+    """Validate the full grant before committing any debit or profile changes."""
+    owned = {item["templateId"].casefold() for item in athena.profile["items"].values()}
+    pending = []
+    seen = set()
+    credit = 0
+    allowed = {prefix.casefold() for prefix in CATEGORY_BY_PREFIX} | {
+        "challengebundleschedule", "rewardeventgraphpurchasetoken", "bannertoken",
+        "cosmeticvarianttoken", "token"}
+    for template, amount in rewards:
+        if not isinstance(template, str) or ":" not in template or isinstance(amount, bool) or not isinstance(amount, int) or amount < 1:
+            raise _invalid("Invalid Season 12 reward.")
+        prefix, name = template.split(":", 1)
+        if not name:
+            raise _invalid("Invalid Season 12 reward.")
+        if template.casefold() == "currency:mtxgiveaway":
+            credit += amount
+            continue
+        if prefix.casefold() not in allowed or amount != 1:
+            raise _invalid("Unsupported Season 12 reward.")
+        key = template.casefold()
+        if key in seen:
+            raise _invalid("Duplicate Season 12 reward in schedule.")
+        seen.add(key)
+        if key not in owned:
+            pending.append(template)
+    _debit_local_currency(ctx, price)
+    if credit:
+        core = ctx.tx("common_core")
+        wallet = next(item_id for item_id, item in core.profile["items"].items()
+                      if item["templateId"].casefold() == "currency:mtxgiveaway")
+        core.set_item_quantity(wallet, core.item(wallet)["quantity"] + credit)
+    loot = []
+    for template in pending:
+        item_id = ctx.service._new_item_id("item", athena.profile)
+        prefix = template.split(":", 1)[0].casefold()
+        attrs = ({"item_seen": False, "favorite": False, "variants": []}
+                 if prefix in {p.casefold() for p in CATEGORY_BY_PREFIX} else {"item_seen": False})
+        athena.add_item(item_id, template, attrs)
+        loot.append({"itemType": template, "itemGuid": item_id, "quantity": 1,
+                     "attributes": attrs, "itemProfile": "athena"})
+    if loot:
+        ctx.notifications.append({"type": "CatalogPurchase", "primary": True, "lootResult": {"tierGroupName": "", "items": loot}})
+
+
 @command("PurchaseCatalogEntry", ("common_core",), "observed",
          "offerId, purchaseQuantity, currency, currencySubType and expectedTotalPrice (inferred).")
 def _purchase_catalog_entry(ctx):
     offer_id = ctx.str_field("offerId")
-    ctx.int_field("purchaseQuantity", minimum=1, maximum=1)
+    quantity = ctx.int_field("purchaseQuantity", minimum=1, maximum=99)
     currency = ctx.str_field("currency")
     subtype = ctx.str_field("currencySubType", allow_empty=True)
     expected = ctx.int_field("expectedTotalPrice")
@@ -307,19 +353,43 @@ def _purchase_catalog_entry(ctx):
     if currency != "MtxCurrency" or subtype != "" or len(matching) != 1:
         raise _invalid("Unsupported offer currency.")
     price = matching[0].get("finalPrice")
-    if isinstance(price, bool) or not isinstance(price, int) or price < 0 or price != expected:
+    if isinstance(price, bool) or not isinstance(price, int) or price < 0 or price * quantity != expected:
         raise _invalid("Offer price does not match expectedTotalPrice.")
 
-    if offer_id == SEASON12_PASS_OFFER:
-        # The ID and profile field are recovered; their pairing and the 950
-        # price are local assumptions, not an observed purchase transaction.
+    if offer_id in (SEASON12_PASS_OFFER, SEASON12_LEVEL_OFFER):
         athena = ctx.tx("athena")
         stats = athena.profile["stats"]["attributes"]
-        if stats.get("season_num") != 12 or stats.get("book_purchased") is not False:
-            raise _invalid("Season 12 Battle Pass is unavailable or already purchased.")
-        _debit_local_currency(ctx, price)
-        athena.set_stat("book_purchased", True)
+        level = stats.get("book_level")
+        purchased = stats.get("book_purchased")
+        if (stats.get("season_num") != 12 or isinstance(level, bool)
+                or not isinstance(level, int) or not 1 <= level <= 100
+                or not isinstance(purchased, bool)):
+            raise _invalid("Season 12 progression is unavailable.")
+        if offer_id == SEASON12_PASS_OFFER:
+            if purchased or quantity != 1:
+                raise _invalid("Season 12 Battle Pass is unavailable or already purchased.")
+            rewards = [reward for n in range(1, level + 1) for reward in SEASON12_PAID.get(n, ())]
+            new_level = level
+        else:
+            new_level = level + quantity
+            if new_level > 100:
+                raise _invalid("Season 12 level purchase exceeds level 100.")
+            rewards = [reward for n in range(level + 1, new_level + 1)
+                       for schedule in ((SEASON12_FREE, SEASON12_PAID) if purchased else (SEASON12_FREE,))
+                       for reward in schedule.get(n, ())]
+        _grant_season12_rewards(ctx, athena, rewards, price * quantity)
+        if offer_id == SEASON12_PASS_OFFER:
+            athena.set_stat("book_purchased", True)
+        else:
+            athena.set_stat("book_level", new_level)
+            # Season 12 uses a shared XP curve for season and book levels.
+            current_level = stats.get("level")
+            if isinstance(current_level, int) and not isinstance(current_level, bool) and current_level < new_level:
+                athena.set_stat("level", new_level)
         return
+
+    if quantity != 1:
+        raise _invalid("Cosmetic offers require a quantity of one.")
 
     grants = offer.get("itemGrants", [])
     if not isinstance(grants, list) or not grants:
@@ -354,7 +424,7 @@ def _purchase_catalog_entry(ctx):
                      "attributes": attributes, "itemProfile": "athena"})
     # CatalogPurchaseNotification and McpLootResult fields are reflected;
     # the type discriminator is inferred from a client string.
-    ctx.notifications.append({"type": "CatalogPurchase", "lootResult": {
+    ctx.notifications.append({"type": "CatalogPurchase", "primary": True, "lootResult": {
         "tierGroupName": "", "items": loot}})
 
 @command("ClientQuestLogin", ("athena",), "observed", "no body. Once per UTC day: advances the daily login counter.")
@@ -648,6 +718,21 @@ class ProfileService:
                                "VALUES (?, ?, ?)", rows)
         for profile_id, tx in txs.items():
             self._profiles[(account_id, profile_id)] = copy.deepcopy(tx.profile)
+
+    def repair_season12_level_one(self, account_id):
+        """Restore missing level-one rewards; call while the server is stopped."""
+        ctx = CommandContext(self, account_id, "athena", {})
+        athena = ctx.tx("athena")
+        stats = athena.profile["stats"]["attributes"]
+        if stats.get("season_num") != 12 or stats.get("book_purchased") is not True:
+            raise _invalid("Account does not own the Season 12 Battle Pass.")
+        rewards = SEASON12_PAID[1]
+        if any(t.casefold().startswith("currency:") for t, _ in rewards):
+            raise _invalid("Unexpected currency in level-one repair.")
+        _grant_season12_rewards(ctx, athena, rewards, 0)
+        if athena.changed:
+            self._store(account_id, {"athena": athena})
+        return len(athena.changes)
 
     def grant_item(self, account_id, profile_id, template_id, attributes=None):
         """Add an owned item without a client command. Used by tests and by future grant paths."""

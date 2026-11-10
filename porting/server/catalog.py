@@ -6,6 +6,7 @@ their mapping to the pass and bundle, and prices, are local assumptions.
 from copy import deepcopy
 
 SEASON12_PASS_OFFER = "89DED540434B169187E1D6A5C2086AA2"
+SEASON12_LEVEL_OFFER = "350050574100C333CB9ACA8D1CEF9BF6"
 
 
 def _offer(offer_id, template, price, section, position):
@@ -35,6 +36,8 @@ _STOREFRONTS = [
     ]},
     {"name": "BRSeason12", "catalogEntries": [
         {**_offer(SEASON12_PASS_OFFER, "Season 12 Battle Pass", 950, "BattlePass", 0),
+         "categories": [], "itemGrants": []},
+        {**_offer(SEASON12_LEVEL_OFFER, "Season 12 level", 150, "BattlePass", 1),
          "categories": [], "itemGrants": []},
     ]},
 ]

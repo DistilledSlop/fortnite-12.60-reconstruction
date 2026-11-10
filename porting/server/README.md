@@ -257,9 +257,16 @@ rejected rather than selecting a different account. This is a local policy, not 
 The local catalog contains sample cosmetic offers and local prices. PurchaseCatalogEntry
 checks the catalog price and owned items, deducts the local balance, and grants the
 cosmetic to the Athena profile in one transaction. Catalog entries, purchase payload,
-and response semantics are partly inferred. A real-client cosmetic purchase has
-been observed; the Battle Pass path is experimental. This is virtual local currency;
-no payment provider is connected and real-money purchases are not implemented.
+and response semantics are partly inferred. Original-client cosmetic and Battle
+Pass purchases have been observed. Season 12 pass purchases and level skips grant
+reached rewards from the cooked season schedule; challenge activation and style
+token application are not implemented. Level skips still require client verification.
+This is virtual local currency; no payment provider is connected and real-money
+purchases are not implemented.
+
+For a profile that purchased the pass before reward grants were implemented, stop
+the backend and run `python3 porting/server/repair_season12.py /path/to/state ACCOUNT_ID`.
+The repair adds missing level-one rewards without replacing owned items.
 
 With the server stopped, credit an account in its persistent state directory:
 
