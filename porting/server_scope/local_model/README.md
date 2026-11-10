@@ -28,7 +28,8 @@ Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 
 | 02 | done, 15 recorded proposed (some bodies LOW: unresolved receivers, partial helper reads, raw-offset comments to clean in a later review pass) |
 | 03, 04 | done, 15 recorded proposed each |
 | 05 | done, 15 recorded proposed |
-| 06, 07 | running (2 workers max at a time) |
+| 06 | done, 15 recorded proposed |
+| 07, 08 | running (2 workers max at a time) |
 
 Recording a finished chunk: from the package dir `python3 -I work/claude/record_chunk.py NN` (claims or reopens each function as owner `claude-br`, then records proposed; copy in `claude/record_chunk.py`). Worker outputs are mirrored into `claude/` here (`<Class>__<Fn>.inc`, `.evidence.json`, `deps/`), with `claude/WORKER.md` the worker prompt. Chunk 00 helper deps include five not-yet-decompiled virtual targets (0x880, 0x888, 0x708, UpdateHighlightState, IsAthenaSpawnOverrideActive): chunk 00 follow-up item.
 
@@ -44,3 +45,4 @@ One-shot finish for a chunk (record + mirror + commit): from the package dir `wo
 - Chunk 05: `ABuildingTrap::TriggerIfAppropriate` and `AFortAIPawn::FastSharedReplication` LOW (helpers behind their deps unread, member names proposed); `SetCurrentGoalDiscouragement` parameter order inferred; StaticMeshComponent slot 0x4e0 target unknown (SetMirrored).
 
 Scope note: the target is the 1,110 in queue.json only (user decision). The 3,057 unresolved and the 7,222 ceiling of porting/server_scope are out of scope for this goal.
+- Chunk 06: `AFortAIPawn::NetMulticast_BatchedDamageCues` implementation 0x1422de590 only described in deps (port it); `PlayAdditiveHitReactsNative` montage helpers 0x143fd6e10/0x143fd6b30 read partially; `ReviveFromDBNO` LOW; `AbilitySpawnDeco` LOW (0x1426b5370 unexpanded); placeholder member names (AIFlags1344, ProtectedFlags520); capsule slot 0x800 target and predicate 0x1444aa6b0 unconfirmed.
