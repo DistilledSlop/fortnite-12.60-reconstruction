@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeMoveTool::HandleScaleUpReleased",
+ "status": "proposed",
+ "blocker": null,
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100523",
+ "batch_seconds": 669
+}
