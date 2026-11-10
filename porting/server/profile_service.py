@@ -39,7 +39,7 @@ from pathlib import Path
 from typing import Callable
 
 from api_common import ApiError, Err
-from catalog import SEASON12_LEVEL_OFFER, SEASON12_PASS_OFFER, get_offer
+from catalog import LOCAL_CREDIT_OFFER, SEASON12_LEVEL_OFFER, SEASON12_PASS_OFFER, get_offer
 from season12_rewards import FREE as SEASON12_FREE, PAID as SEASON12_PAID
 from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, WRAP_SLOT_COUNT, MTX_PLATFORMS, PROFILE_IDS,
                               SLOT_CATEGORIES, build, empty_slots)
@@ -355,6 +355,23 @@ def _purchase_catalog_entry(ctx):
     price = matching[0].get("finalPrice")
     if isinstance(price, bool) or not isinstance(price, int) or price < 0 or price * quantity != expected:
         raise _invalid("Offer price does not match expectedTotalPrice.")
+
+    if offer_id == LOCAL_CREDIT_OFFER:
+        grants = offer.get("itemGrants")
+        if (quantity != 1 or price != 0 or grants != [
+                {"templateId": "Currency:MtxGiveaway", "quantity": 1000}]):
+            raise _invalid("Invalid local credit offer.")
+        core = ctx.tx("common_core")
+        wallets = [(item_id, item) for item_id, item in core.profile["items"].items()
+                   if item["templateId"].casefold() == "currency:mtxgiveaway"]
+        if len(wallets) != 1:
+            raise _invalid("Local currency balance is unavailable.")
+        wallet_id, wallet = wallets[0]
+        balance = wallet.get("quantity")
+        if isinstance(balance, bool) or not isinstance(balance, int) or balance < 0:
+            raise _invalid("Local currency balance is invalid.")
+        core.set_item_quantity(wallet_id, balance + 1000)
+        return
 
     if offer_id in (SEASON12_PASS_OFFER, SEASON12_LEVEL_OFFER):
         athena = ctx.tx("athena")

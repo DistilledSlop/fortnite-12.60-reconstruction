@@ -5,6 +5,7 @@ their mapping to the pass and bundle, and prices, are local assumptions.
 """
 from copy import deepcopy
 
+LOCAL_CREDIT_OFFER = "local-free-credits"
 SEASON12_PASS_OFFER = "89DED540434B169187E1D6A5C2086AA2"
 SEASON12_LEVEL_OFFER = "350050574100C333CB9ACA8D1CEF9BF6"
 
@@ -33,6 +34,14 @@ _STOREFRONTS = [
     {"name": "BRDailyStorefront", "catalogEntries": [
         _offer("local-floss", "AthenaDance:eid_floss", 500, "Daily", 0),
         _offer("local-arctic-camo", "AthenaItemWrap:wrap_001_arcticcamo", 300, "Daily", 1),
+    ]},
+    {"name": "CurrencyStorefront", "catalogEntries": [
+        {**_offer(LOCAL_CREDIT_OFFER, "Currency:MtxGiveaway", 0, "Currency", 0),
+         "devName": "Local free test credits", "title": "Free local test V-Bucks",
+         "description": "Local test credits; no real-money purchase.",
+         "displayAssetPath": "/Game/Catalog/DisplayAssets/DA_MtxPack1000.DA_MtxPack1000",
+         "metaInfo": [{"key": "MtxQuantity", "value": "1000"}, {"key": "MtxBonus", "value": "0"}, {"key": "IconSize", "value": "Small"}],
+         "itemGrants": [{"templateId": "Currency:MtxGiveaway", "quantity": 1000}], "refundable": False},
     ]},
     {"name": "BRSeason12", "catalogEntries": [
         {**_offer(SEASON12_PASS_OFFER, "Season 12 Battle Pass", 950, "BattlePass", 0),
