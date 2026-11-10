@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__TrySetDifficultyIncreaseRewardTier",
+  "address": "0x141eaec30",
+  "signature": "bool AFortGameStateZone::TrySetDifficultyIncreaseRewardTier(int32 InTier)",
+  "inc_or_decl": "deps/AFortGameStateZone__TrySetDifficultyIncreaseRewardTier.inc",
+  "evidence": "deps/AFortGameStateZone__TrySetDifficultyIncreaseRewardTier.evidence.json"
+}

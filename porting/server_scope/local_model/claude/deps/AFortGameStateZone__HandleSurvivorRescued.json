@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__HandleSurvivorRescued",
+  "address": "0x141ea3fe0",
+  "signature": "void AFortGameStateZone::HandleSurvivorRescued(UObject* Rescuer, const FString& SurvivorName)",
+  "inc_or_decl": "deps/AFortGameStateZone__HandleSurvivorRescued.inc",
+  "evidence": "deps/AFortGameStateZone__HandleSurvivorRescued.evidence.json"
+}

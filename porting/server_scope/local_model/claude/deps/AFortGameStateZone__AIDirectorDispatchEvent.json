@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__AIDirectorDispatchEvent",
+  "address": "0x1416570e0",
+  "signature": "void AFortGameStateZone::AIDirectorDispatchEvent(UObject* AIDirector, const FAIDirectorEvent& Event)",
+  "inc_or_decl": "deps/AFortGameStateZone__AIDirectorDispatchEvent.inc",
+  "evidence": "deps/AFortGameStateZone__AIDirectorDispatchEvent.evidence.json"
+}

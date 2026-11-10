@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__OnWaveEncounterStarted_Implementation",
+  "address": "0x141ea72e0",
+  "signature": "void AFortGameStateZone::OnWaveEncounterStarted_Implementation(const FFortWaveData& WaveData, const FText& LevelText, int32 Level, const FText& WaveText, int32 WaveNum)",
+  "inc_or_decl": "deps/AFortGameStateZone__OnWaveEncounterStarted_Implementation.inc",
+  "evidence": "deps/AFortGameStateZone__OnWaveEncounterStarted_Implementation.evidence.json"
+}

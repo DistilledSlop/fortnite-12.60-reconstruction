@@ -1,0 +1,21 @@
+{
+  "function": "AFortGameStateZone::ServerFireAIDirectorEvent",
+  "status": "proposed",
+  "original": "0x14292cd20",
+  "signature": "void AFortGameStateZone::ServerFireAIDirectorEvent(EAIDirectorEvent Event, UObject* EventSource, UObject* EventTarget, float EventMultiplier)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292cd20.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x142d6e0f0.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x141eae750.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x1416570e0.c"
+  ],
+  "callees": {
+    "0x142d6e0f0": "RPC_ValidateFailed (dep AFortGameStateZone__RPC_ValidateFailed)",
+    "0x1406801d0": "Stub_ReturnTrue (validate returns true; dep AFortGameStateZone__ServerFireAIDirectorEvent_Validate)",
+    "0x141eae750": "ServerFireAIDirectorEvent_Implementation (dep AFortGameStateZone__ServerFireAIDirectorEvent_Implementation)",
+    "0x1416570e0": "AIDirectorDispatchEvent (dep AFortGameStateZone__AIDirectorDispatchEvent, via the implementation)"
+  },
+  "notes": "Read order (Event byte, Source, Target, Multiplier float) matches the declaration offsets 0, 8, 16, 24. Validate is always true in this build, so the failure branch is unreachable but ported.",
+  "confidence": "HIGH"
+}

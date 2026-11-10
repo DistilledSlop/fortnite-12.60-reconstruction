@@ -1,0 +1,11 @@
+{
+  "function": "AFortHookGunRope::SetWeaponMesh",
+  "status": "proposed",
+  "original": "0x142948990",
+  "signature": "void AFortHookGunRope::SetWeaponMesh(USkeletalMeshComponentBudgeted* NewValue)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142948990.c"
+  ],
+  "callees": {},
+  "notes": "Exec thunk: one FFrame read, then a plain store to the member at 0x240 (WeaponMesh per AFortHookGunRope.h). Inventory reflection: one Object parameter at offset 0, class 0x1409e4f80."
+}

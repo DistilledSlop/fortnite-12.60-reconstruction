@@ -1,0 +1,17 @@
+{
+  "function": "AFortGameStateZone::OnWaveEncounterStarted_Implementation",
+  "status": "proposed",
+  "original": "0x141ea72e0",
+  "signature": "void OnWaveEncounterStarted_Implementation(const FFortWaveData&, const FText&, int32, const FText&, int32)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x141ea72e0.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x142c0c240.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x14079d060.c"
+  ],
+  "callees": {
+    "0x142c0c240": "FText default construction (engine)",
+    "0x14079d060": "FText copy-assign (engine)"
+  },
+  "notes": "Parameter block order LevelText, Level, WaveText, WaveNum is confirmed by the thunk (0x14292c470) read order and the call arguments. Blueprint event name is the proposed FName.",
+  "confidence": "MEDIUM"
+}

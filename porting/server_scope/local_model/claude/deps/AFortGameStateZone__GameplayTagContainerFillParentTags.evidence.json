@@ -1,0 +1,15 @@
+{
+  "function": "AFortGameStateZone::GameplayTagContainerFillParentTags",
+  "status": "proposed",
+  "original": "0x143e8f0b0",
+  "signature": "void FGameplayTagContainer::FillParentTags(FGameplayTagContainer&)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x143e8f0b0.c"
+  ],
+  "callees": {
+    "0x141837200": "tag node lookup (engine)",
+    "0x1406a8440": "AddUnique (engine)"
+  },
+  "notes": "The decompile wraps the pass in STAT_FGameplayTagContainer_FillParentTags profiling; not ported.",
+  "confidence": "MEDIUM"
+}

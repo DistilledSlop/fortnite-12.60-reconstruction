@@ -1,0 +1,17 @@
+{
+  "function": "AFortGameStateZone::HandleSurvivorRescued",
+  "status": "proposed",
+  "original": "0x141ea3fe0",
+  "signature": "void HandleSurvivorRescued(UObject*, const FString&)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141ea3fe0.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x141811c50.c"
+  ],
+  "callees": {
+    "0x141811c50": "SendSurvivorRescuedTelemetry (dep AFortGameStateZone__SendSurvivorRescuedTelemetry)",
+    "0x142cd3770": "stat scope end for STAT_Inv1PerfHook_GSZ_RNS (engine profiling helper, not read in full)",
+    "0x1406a9dc0": "TArray<int32>::Add on PendingRescueCounterIds (engine helper, call site read, body not read in full)"
+  },
+  "notes": "Member names: +0xe24 NumSurvivorsRescued (reflection). +0xe28/+0xe30 = TArray<int32> data/num, name not recovered (PendingRescueCounterIds is a proposed name). The perf-hook begin/end is gated by DAT_1482472e4 and is profiling only.",
+  "confidence": "MEDIUM"
+}

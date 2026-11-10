@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__ResetGameplayModifierDirtyBits",
+  "address": "0x14072a990",
+  "signature": "void ResetGameplayModifierDirtyBits(FActiveGameplayModifierList& List)",
+  "inc_or_decl": "deps/AFortGameStateZone__ResetGameplayModifierDirtyBits.inc",
+  "evidence": "deps/AFortGameStateZone__ResetGameplayModifierDirtyBits.evidence.json"
+}

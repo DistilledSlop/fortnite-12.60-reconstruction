@@ -1,0 +1,17 @@
+{
+  "function": "AFortGameStateZone::RegisterGameplayModifier_Implementation",
+  "status": "proposed",
+  "original": "0x141ea8c40",
+  "signature": "FGameplayModifierHandle RegisterGameplayModifier_Implementation(UObject*, int32)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141ea8c40.c",
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x141e8d570.c",
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x1406ba850.c"
+  ],
+  "callees": {
+    "0x141e8d570": "AddGameplayModifierEntry (dep AFortGameStateZone__AddGameplayModifierEntry)",
+    "0x1406ba850": "SetAndCompact of the bound-listener list (read in full; behaves like a compact of invalid listeners)"
+  },
+  "notes": "The decompile of 0x141e8d570 is declared void but the caller reads the handle from the out buffer; treated as an out parameter.",
+  "confidence": "MEDIUM"
+}

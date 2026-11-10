@@ -1,0 +1,2 @@
+// dep AFortGameStateZone__ServerFireAIDirectorEventBatch_Validate original 0x1406801d0
+return true;

@@ -1,0 +1,15 @@
+{
+  "function": "AFortGameStateZone::ServerSubmitGameplayVote",
+  "status": "proposed",
+  "original": "0x14292cf60",
+  "signature": "void AFortGameStateZone::ServerSubmitGameplayVote(EVoteType VoteType, int32 VoteDecision, const FUniqueNetIdRepl& PlayerNetId)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292cf60.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x1406801c0.c"
+  ],
+  "callees": {
+    "0x1406801c0": "Stub_Empty (empty function)"
+  },
+  "notes": "Declaration order matches the reflection offsets (VoteType 0, VoteDecision 4, PlayerNetId 8). Empty body.",
+  "confidence": "HIGH"
+}

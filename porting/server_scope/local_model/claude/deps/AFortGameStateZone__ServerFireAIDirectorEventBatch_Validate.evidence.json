@@ -1,0 +1,12 @@
+{
+  "function": "AFortGameStateZone::ServerFireAIDirectorEventBatch_Validate",
+  "status": "proposed",
+  "original": "0x1406801d0",
+  "signature": "bool ServerFireAIDirectorEventBatch_Validate(...)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x1406801d0.c"
+  ],
+  "callees": {},
+  "notes": "Vtable slot +0x948 resolves to Stub_ReturnTrue (0x1406801d0).",
+  "confidence": "HIGH"
+}

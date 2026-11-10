@@ -1,0 +1,19 @@
+{
+  "function": "AFortGameStateZone::SetMissionRewardOverrideTag",
+  "status": "proposed",
+  "original": "0x14292d330",
+  "signature": "void AFortGameStateZone::SetMissionRewardOverrideTag(const FText& MissionRewardOverrideTag)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292d330.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141eb0570.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x142c0c240.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x143f7a920.c"
+  ],
+  "callees": {
+    "0x141eb0570": "SetMissionRewardOverrideTag_Internal (dep AFortGameStateZone__SetMissionRewardOverrideTag_Internal)",
+    "0x142c0c240": "FText default construction (engine)",
+    "0x143f7a920": "ResolveMissionRewardLootLevelOverride (dep AFortGameStateZone__ResolveMissionRewardLootLevelOverride)"
+  },
+  "notes": "The FText argument is not stored in the native code. Confidence LOW, the same caveat as SetMissionRewardLootLevelOverride.",
+  "confidence": "LOW"
+}

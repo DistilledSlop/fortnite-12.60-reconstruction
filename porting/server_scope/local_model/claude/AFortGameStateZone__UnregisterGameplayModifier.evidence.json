@@ -1,0 +1,15 @@
+{
+  "function": "AFortGameStateZone::UnregisterGameplayModifier",
+  "status": "proposed",
+  "original": "0x14292d730",
+  "signature": "void AFortGameStateZone::UnregisterGameplayModifier(FGameplayModifierHandle InHandleToUnregister)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292d730.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141eb5700.c"
+  ],
+  "callees": {
+    "0x141eb5700": "UnregisterGameplayModifier_Internal (dep AFortGameStateZone__UnregisterGameplayModifier_Internal)"
+  },
+  "notes": "The handle is read through MostRecentPropertyAddress when the frame gives a reference; the port treats it as a value.",
+  "confidence": "MEDIUM"
+}

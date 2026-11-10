@@ -1,0 +1,16 @@
+{
+  "function": "AFortGameStateZone::DeactivateGameplayModifierEntry",
+  "status": "proposed",
+  "original": "0x141eb2b40",
+  "signature": "void DeactivateGameplayModifierEntry(FActiveGameplayModifier&, UObject*)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x141eb2b40.c"
+  ],
+  "callees": {
+    "0x14070f100": "weak object resolve of a listener slot (engine helper)",
+    "0x140687d00": "bit-array iterator advance (engine helper)",
+    "0x141da4330": "sparse set reset (engine helper)"
+  },
+  "notes": "PARTIAL: only the first listener set is ported. The second set (+0x88) and cleanup, which make up the rest of this 7775-byte function, were not read. Needs a follow-up read.",
+  "confidence": "LOW"
+}

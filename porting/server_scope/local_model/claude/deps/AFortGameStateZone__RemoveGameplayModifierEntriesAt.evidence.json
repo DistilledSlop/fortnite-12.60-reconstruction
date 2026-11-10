@@ -1,0 +1,14 @@
+{
+  "function": "AFortGameStateZone::RemoveGameplayModifierEntriesAt",
+  "status": "proposed",
+  "original": "0x141ea9700",
+  "signature": "void RemoveGameplayModifierEntriesAt(TArray<FActiveGameplayModifier>&, int32, int32, bool)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x141ea9700.c"
+  ],
+  "callees": {
+    "0x141eab210": "shrink after removal (not read in full)"
+  },
+  "notes": "Reset of each removed element's arrays is approximated by Reset(). Shrink helper not read.",
+  "confidence": "MEDIUM"
+}

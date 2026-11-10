@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameplayEffectDeliveryActor__AddAdditionalExplodeEffectContainerInternal",
+  "address": "0x14268eb50",
+  "signature": "void AFortGameplayEffectDeliveryActor::AddAdditionalExplodeEffectContainerInternal(const FExplodeEffectContainer& ExplodeContainer)",
+  "inc_or_decl": "deps/AFortGameplayEffectDeliveryActor__AddAdditionalExplodeEffectContainerInternal.inc",
+  "evidence": "deps/AFortGameplayEffectDeliveryActor__AddAdditionalExplodeEffectContainerInternal.evidence.json"
+}

@@ -1,0 +1,19 @@
+{
+  "function": "AFortGameStateZone::SetMissionRewardLootLevelOverride",
+  "status": "proposed",
+  "original": "0x14292d2b0",
+  "signature": "void AFortGameStateZone::SetMissionRewardLootLevelOverride(int32 LootLevel)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292d2b0.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141eb0560.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x143f7a920.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x1443771a0.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x14463f3c0.c"
+  ],
+  "callees": {
+    "0x141eb0560": "thunk alias of 0x143f7a920 (dep AFortGameStateZone__ResolveMissionRewardLootLevelOverride)",
+    "0x143f7a920": "ResolveMissionRewardLootLevelOverride (dep AFortGameStateZone__ResolveMissionRewardLootLevelOverride)"
+  },
+  "notes": "The loot-level argument is dropped by the native code. Confidence is LOW because the setter name suggests a store that the native body does not perform. Needs review against the Blueprint caller.",
+  "confidence": "LOW"
+}

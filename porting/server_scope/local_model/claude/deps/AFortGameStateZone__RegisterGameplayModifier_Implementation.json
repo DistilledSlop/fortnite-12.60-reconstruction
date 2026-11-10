@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__RegisterGameplayModifier_Implementation",
+  "address": "0x141ea8c40",
+  "signature": "FGameplayModifierHandle AFortGameStateZone::RegisterGameplayModifier_Implementation(UObject* Modifier, int32 Expiration)",
+  "inc_or_decl": "deps/AFortGameStateZone__RegisterGameplayModifier_Implementation.inc",
+  "evidence": "deps/AFortGameStateZone__RegisterGameplayModifier_Implementation.evidence.json"
+}

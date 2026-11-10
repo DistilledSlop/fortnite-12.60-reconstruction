@@ -1,0 +1,17 @@
+{
+  "function": "AFortGameStateZone::RegisterGameplayModifier",
+  "status": "proposed",
+  "original": "0x14292c940",
+  "signature": "FGameplayModifierHandle AFortGameStateZone::RegisterGameplayModifier(UObject* InModifierToRegister, int32 Expiration)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292c940.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141ea8c40.c"
+  ],
+  "callees": {
+    "0x141ea8c40": "RegisterGameplayModifier_Implementation (dep AFortGameStateZone__RegisterGameplayModifier_Implementation)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)"
+  },
+  "notes": "The out handle is 4 bytes (copied with *param_3 = *puVar2 in the thunk).",
+  "confidence": "MEDIUM"
+}

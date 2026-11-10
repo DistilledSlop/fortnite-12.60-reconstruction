@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__ServerFireAIDirectorEvent_Validate",
+  "address": "0x1406801d0",
+  "signature": "bool AFortGameStateZone::ServerFireAIDirectorEvent_Validate(EAIDirectorEvent Event, UObject* Source, UObject* Target, float Multiplier)",
+  "inc_or_decl": "deps/AFortGameStateZone__ServerFireAIDirectorEvent_Validate.inc",
+  "evidence": "deps/AFortGameStateZone__ServerFireAIDirectorEvent_Validate.evidence.json"
+}

@@ -1,0 +1,21 @@
+{
+  "function": "AFortGameStateZone::UnregisterGameplayModifier_Internal",
+  "status": "proposed",
+  "original": "0x141eb5700",
+  "signature": "void UnregisterGameplayModifier_Internal(FGameplayModifierHandle)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141eb5700.c",
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x141eb2b40.c",
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x141ea9700.c",
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x14072a990.c",
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x1406ba850.c"
+  ],
+  "callees": {
+    "0x141eb2b40": "DeactivateGameplayModifierEntry (dep AFortGameStateZone__DeactivateGameplayModifierEntry)",
+    "0x141ea9700": "Entries.RemoveAt(index, count, bAllowShrink) (read in full)",
+    "0x14072a990": "ResetGameplayModifierDirtyBits (read in full)",
+    "0x1406ba850": "SetAndCompact of the bound-listener list (read in full)"
+  },
+  "notes": "The entry scan computes an index from the byte offset; this port uses a plain index. The loop breaks after the first matching handle, as in the decompile.",
+  "confidence": "MEDIUM"
+}

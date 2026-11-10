@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__ServerFireAIDirectorEventBatch_Validate",
+  "address": "0x1406801d0",
+  "signature": "bool AFortGameStateZone::ServerFireAIDirectorEventBatch_Validate(const TArray<FAIDirectorEvent>& Payload)",
+  "inc_or_decl": "deps/AFortGameStateZone__ServerFireAIDirectorEventBatch_Validate.inc",
+  "evidence": "deps/AFortGameStateZone__ServerFireAIDirectorEventBatch_Validate.evidence.json"
+}

@@ -1,0 +1,20 @@
+{
+  "function": "AFortGameStateZone::AddGameplayModifierEntry",
+  "status": "proposed",
+  "original": "0x141e8d570",
+  "signature": "void AddGameplayModifierEntry(FActiveGameplayModifierList&, FGameplayModifierHandle&, UObject*, UObject*, int32)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x141e8d570.c",
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x14072a990.c"
+  ],
+  "callees": {
+    "0x141e8b2a0": "entry default init (not read in full)",
+    "0x141ea1410": "entry field set from Owner/Modifier (not read in full)",
+    "0x14072c520": "TArray grow (engine)",
+    "0x141e99170": "container reset (not read in full)",
+    "0x1408a5b50": "container reset (not read in full)",
+    "0x14072a990": "ResetDirtyBits on the list (read in full, see AFortGameStateZone__ResetGameplayModifierDirtyBits)"
+  },
+  "notes": "Field names beyond +0x18 (handle) and the counters are inferred. Four helpers in the entry path were called but not read in full, so the entry reset details are approximate.",
+  "confidence": "LOW"
+}

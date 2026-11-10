@@ -1,0 +1,12 @@
+{
+  "function": "AFortGameStateZone::RPC_ValidateFailed",
+  "status": "proposed",
+  "original": "0x142d6e0f0",
+  "signature": "void RPC_ValidateFailed(const TCHAR*)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x142d6e0f0.c"
+  ],
+  "callees": {},
+  "notes": "Stores the failed-RPC reason in the global; the decompile shows nothing else.",
+  "confidence": "HIGH"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__SendSurvivorRescuedTelemetry",
+  "address": "0x141811c50",
+  "signature": "void AFortGameStateZone::SendSurvivorRescuedTelemetry(UObject* Rescuer, const FString& SurvivorName)",
+  "inc_or_decl": "deps/AFortGameStateZone__SendSurvivorRescuedTelemetry.inc",
+  "evidence": "deps/AFortGameStateZone__SendSurvivorRescuedTelemetry.evidence.json"
+}

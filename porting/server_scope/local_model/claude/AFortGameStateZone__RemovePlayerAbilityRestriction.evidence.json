@@ -1,0 +1,23 @@
+{
+  "function": "AFortGameStateZone::RemovePlayerAbilityRestriction",
+  "status": "proposed",
+  "original": "0x14292ca10",
+  "signature": "void AFortGameStateZone::RemovePlayerAbilityRestriction()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292ca10.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x143e8b5c0.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x140744d30.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x143e8f0b0.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141ea5f80.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141ed1800.c"
+  ],
+  "callees": {
+    "0x141ed1800": "GetFortGlobals (dep AFortAIPawn__GetFortGlobals)",
+    "0x143e8b5c0": "FGameplayTagContainer::FromTag with parents (dep AFortGameStateZone__GameplayTagContainerFromTag)",
+    "0x140744d30": "UpdateTagCount (dep AFortGameplayTagCountContainer__UpdateTagCount)",
+    "0x143e8f0b0": "FillParentTags (dep AFortGameStateZone__GameplayTagContainerFillParentTags)",
+    "0x141ea5f80": "UpdateGlobalAbilityRestrictionState (dep AFortGameStateZone__UpdateGlobalAbilityRestrictionState)"
+  },
+  "notes": "Role is the byte at +0xf0, which reflection names AActor::Role; the value 3 is ROLE_Authority. The +0x780/+0x888/+0x8a8 names come from the reflection record (+0x8a8 = ExplicitGloballyBlockedAbilityTags); +0x780 and +0x888 are proposed names. The tag-container copy at the start runs regardless of role, and the removal branch runs only on the authority.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,12 @@
+{
+  "function": "AFortGameStateZone::ResetGameplayModifierDirtyBits",
+  "status": "proposed",
+  "original": "0x14072a990",
+  "signature": "void ResetGameplayModifierDirtyBits(FActiveGameplayModifierList&)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x14072a990.c"
+  ],
+  "callees": {},
+  "notes": "Field names are inferred from offsets (+0x8, +0x34, +0x0c, +0x28, +0x30, +0x40, +0x48). The memset of 0xff uses the second mask only when its count is positive.",
+  "confidence": "MEDIUM"
+}

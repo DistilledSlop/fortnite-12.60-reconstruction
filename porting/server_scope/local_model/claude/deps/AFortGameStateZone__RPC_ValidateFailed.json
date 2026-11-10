@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__RPC_ValidateFailed",
+  "address": "0x142d6e0f0",
+  "signature": "void RPC_ValidateFailed(const TCHAR* Reason)",
+  "inc_or_decl": "deps/AFortGameStateZone__RPC_ValidateFailed.inc",
+  "evidence": "deps/AFortGameStateZone__RPC_ValidateFailed.evidence.json"
+}

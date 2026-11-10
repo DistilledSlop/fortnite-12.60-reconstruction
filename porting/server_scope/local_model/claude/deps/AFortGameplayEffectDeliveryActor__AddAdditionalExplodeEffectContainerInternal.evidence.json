@@ -1,0 +1,15 @@
+{
+  "function": "AFortGameplayEffectDeliveryActor::AddAdditionalExplodeEffectContainerInternal",
+  "status": "proposed",
+  "original": "0x14268eb50",
+  "signature": "void AddAdditionalExplodeEffectContainerInternal(const FExplodeEffectContainer&)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x14268eb50.c"
+  ],
+  "callees": {
+    "0x140a671f0": "TArray grow (engine)",
+    "0x141614350": "element copy-assign (engine)"
+  },
+  "notes": "Field names for the three sub-arrays of FExplodeEffectContainer (+0x8, +0x50, +0x60) are not recovered; Entries0..2 are placeholders.",
+  "confidence": "MEDIUM"
+}

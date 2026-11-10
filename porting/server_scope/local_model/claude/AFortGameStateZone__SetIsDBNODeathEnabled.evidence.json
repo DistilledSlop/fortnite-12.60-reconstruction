@@ -1,0 +1,12 @@
+{
+  "function": "AFortGameStateZone::SetIsDBNODeathEnabled",
+  "status": "proposed",
+  "original": "0x14292d230",
+  "signature": "void AFortGameStateZone::SetIsDBNODeathEnabled(bool NewValue)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292d230.c"
+  ],
+  "callees": {},
+  "notes": "The bool is read into an int slot; only the low byte is written by the frame read, so the store is an != 0 test. No calls.",
+  "confidence": "HIGH"
+}

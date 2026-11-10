@@ -1,0 +1,15 @@
+{
+  "function": "AFortGameStateZone::AIDirectorDispatchEvent",
+  "status": "proposed",
+  "original": "0x1416570e0",
+  "signature": "void AIDirectorDispatchEvent(UObject*, const FAIDirectorEvent&)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x1416570e0.c",
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x1416b7770.c"
+  ],
+  "callees": {
+    "0x1416b7770": "not read; not needed for dispatch itself"
+  },
+  "notes": "Listener record: weak object @0, FName @8, raw match key @0x10, MatchKind byte @0x18. The decompile's delivery condition for kind 2 is source or target, kind 1 source, kind 0 target. The loop index advances after removal, so the element that shifts into the removed slot is skipped, as in the decompile. Owner class name is not recovered.",
+  "confidence": "LOW"
+}

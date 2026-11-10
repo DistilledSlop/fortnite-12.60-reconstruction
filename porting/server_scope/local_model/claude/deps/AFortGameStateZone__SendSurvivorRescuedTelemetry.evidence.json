@@ -1,0 +1,18 @@
+{
+  "function": "AFortGameStateZone::SendSurvivorRescuedTelemetry",
+  "status": "proposed",
+  "original": "0x141811c50",
+  "signature": "void SendSurvivorRescuedTelemetry(UObject* Rescuer, const FString& SurvivorName)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x141811c50.c"
+  ],
+  "callees": {
+    "0x142cd4ab0": "stat name build from a static string (engine helper, not read in full)",
+    "0x14249ee10": "stat counter lookup on Rescuer+0x1a40 (engine helper, not read in full)",
+    "0x1424b3430": "counter add of 1.0 (engine helper, not read in full)",
+    "0x142cd3770": "stat scope end (engine helper)",
+    "0x140682ce0": "FString copy of SurvivorName into the attribute (engine helper)"
+  },
+  "notes": "Event name L\"Survivor.Rescued\" and attribute key L\"SurvivorName\" are read from the decompile string literals. Virtual slots: Rescuer->+0x5a0 vtable +0x28 returns {provider, shared ref}; provider vtable +0x58 records the event. Analytics and stat helpers are classified as engine plumbing and only their call sites were read.",
+  "confidence": "LOW"
+}

@@ -1,0 +1,11 @@
+{
+  "function": "AFortHookGunRope::SetOwningProjectileMesh",
+  "status": "proposed",
+  "original": "0x142948830",
+  "signature": "void AFortHookGunRope::SetOwningProjectileMesh(UStaticMeshComponent* NewValue)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142948830.c"
+  ],
+  "callees": {},
+  "notes": "Exec thunk: a single FFrame read into a local, then a plain store to the member at 0x250 (OwningProjectileMesh per AFortHookGunRope.h). No virtual or direct calls. Inventory reflection: one Object parameter at offset 0, class 0x1447ffbe0."
+}

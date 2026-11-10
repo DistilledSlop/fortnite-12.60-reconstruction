@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__GameplayTagContainerFillParentTags",
+  "address": "0x143e8f0b0",
+  "signature": "void FGameplayTagContainer::FillParentTags(FGameplayTagContainer& Container)",
+  "inc_or_decl": "deps/AFortGameStateZone__GameplayTagContainerFillParentTags.inc",
+  "evidence": "deps/AFortGameStateZone__GameplayTagContainerFillParentTags.evidence.json"
+}

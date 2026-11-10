@@ -1,0 +1,18 @@
+{
+  "function": "AFortHookGunRope::SetStartPointOfRope",
+  "status": "proposed",
+  "original": "0x1429488b0",
+  "signature": "void AFortHookGunRope::SetStartPointOfRope()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x1429488b0.c",
+    "/opt/fortnite/local-model-package/captures/08f681cb67c8471487e7115bc7e358db/0x1429488b0.c",
+    "/opt/fortnite/local-model-package/captures/bb5e6a0d86184352ba49b431ecae17bf/0x1441167b0.c",
+    "/opt/fortnite/local-model-package/captures/65ce5f5ddabf47c7b90c8d2a62422b51/0x144124390.c"
+  ],
+  "callees": {
+    "0x1441167b0": "virtual slot 0x410 on the mesh (USceneComponent::GetSocketLocation(FName)); calls virtual 0x408 (GetSocketTransform) and returns the translation of the resulting transform",
+    "0x144124390": "USceneComponent::SetWorldLocation(const FVector&, bool bSweep, FHitResult*, ETeleportType); called with bSweep=false, Hit=nullptr, Teleport=None",
+    "FMsg_Logf_Internal": "engine log, gated by category verbosity"
+  },
+  "notes": "Native body. Three guard branches each log and return; the success path reads the weapon socket location into StartLocation (raw 0x228/0x230) and moves RopeMesh there. The header model names slot 0x410 DetachFromParent with LOW confidence, but the captured body is GetSocketLocation. Log category name is a placeholder (LogFortniteGame)."
+}

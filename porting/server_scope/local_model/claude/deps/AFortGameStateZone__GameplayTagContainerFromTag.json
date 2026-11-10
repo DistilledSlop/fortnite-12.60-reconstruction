@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__GameplayTagContainerFromTag",
+  "address": "0x143e8b5c0",
+  "signature": "void FGameplayTagContainer::FromTag(FGameplayTagContainer& Container, FGameplayTag Tag)",
+  "inc_or_decl": "deps/AFortGameStateZone__GameplayTagContainerFromTag.inc",
+  "evidence": "deps/AFortGameStateZone__GameplayTagContainerFromTag.evidence.json"
+}

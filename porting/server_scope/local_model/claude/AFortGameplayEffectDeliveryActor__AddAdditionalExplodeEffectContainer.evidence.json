@@ -1,0 +1,16 @@
+{
+  "function": "AFortGameplayEffectDeliveryActor::AddAdditionalExplodeEffectContainer",
+  "status": "proposed",
+  "original": "0x1429060f0",
+  "signature": "void AFortGameplayEffectDeliveryActor::AddAdditionalExplodeEffectContainer(const FExplodeEffectContainer& ExplodeContainer)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x1429060f0.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x14268eb50.c"
+  ],
+  "callees": {
+    "0x14268eb50": "AddAdditionalExplodeEffectContainerInternal (dep AFortGameplayEffectDeliveryActor__AddAdditionalExplodeEffectContainerInternal)",
+    "0x142bee710": "FMemory_Free (engine cleanup)"
+  },
+  "notes": "The cleanup loops destroy the temporary's sub-arrays, which is what the C++ destructor does. The Entries0..2 sub-array names are placeholders.",
+  "confidence": "MEDIUM"
+}

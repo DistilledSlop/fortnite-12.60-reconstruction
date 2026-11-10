@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__ResolveMissionRewardLootLevelOverride",
+  "address": "0x143f7a920",
+  "signature": "int32 AFortGameStateZone::ResolveMissionRewardLootLevelOverride()",
+  "inc_or_decl": "deps/AFortGameStateZone__ResolveMissionRewardLootLevelOverride.inc",
+  "evidence": "deps/AFortGameStateZone__ResolveMissionRewardLootLevelOverride.evidence.json"
+}

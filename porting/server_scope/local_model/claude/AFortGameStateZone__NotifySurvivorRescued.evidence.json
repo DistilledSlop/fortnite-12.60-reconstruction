@@ -1,0 +1,18 @@
+{
+  "function": "AFortGameStateZone::NotifySurvivorRescued",
+  "status": "proposed",
+  "original": "0x14292bf70",
+  "signature": "void AFortGameStateZone::NotifySurvivorRescued(UObject* Rescuer, const FString& SurvivorName)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292bf70.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141ea3fe0.c"
+  ],
+  "callees": {
+    "0x141ea3fe0": "HandleSurvivorRescued (dep AFortGameStateZone__HandleSurvivorRescued)",
+    "0x142ed9cf0": "FFrame_Step (engine)",
+    "0x142ed9d20": "FFrame_StepExplicitProperty (engine)",
+    "0x142bee710": "FMemory_Free (engine)"
+  },
+  "notes": "Declared parameter order follows the thunk read order (Rescuer first, SurvivorName second), which matches the offsets 0 and 8 in the reflection record.",
+  "confidence": "MEDIUM"
+}

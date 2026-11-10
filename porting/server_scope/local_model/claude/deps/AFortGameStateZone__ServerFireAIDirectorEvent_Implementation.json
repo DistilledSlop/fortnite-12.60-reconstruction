@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__ServerFireAIDirectorEvent_Implementation",
+  "address": "0x141eae750",
+  "signature": "void AFortGameStateZone::ServerFireAIDirectorEvent_Implementation(EAIDirectorEvent Event, UObject* Source, UObject* Target, float Multiplier)",
+  "inc_or_decl": "deps/AFortGameStateZone__ServerFireAIDirectorEvent_Implementation.inc",
+  "evidence": "deps/AFortGameStateZone__ServerFireAIDirectorEvent_Implementation.evidence.json"
+}

@@ -1,0 +1,15 @@
+{
+  "function": "AFortGameStateZone::ServerBeginGameplayVote",
+  "status": "proposed",
+  "original": "0x14292ca30",
+  "signature": "void AFortGameStateZone::ServerBeginGameplayVote(EVoteType VoteType, const FUniqueNetIdRepl& PlayerNetId, const FGameplayVoteConfig& VoteConfig)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292ca30.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x1406801c0.c"
+  ],
+  "callees": {
+    "0x1406801c0": "Stub_Empty (empty function, returns void)"
+  },
+  "notes": "No body beyond the parameter reads. Empty body is the native behaviour in this build.",
+  "confidence": "HIGH"
+}

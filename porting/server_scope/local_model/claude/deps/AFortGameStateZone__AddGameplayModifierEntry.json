@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__AddGameplayModifierEntry",
+  "address": "0x141e8d570",
+  "signature": "void AFortGameStateZone::AddGameplayModifierEntry(FActiveGameplayModifierList& List, FGameplayModifierHandle& OutHandle, UObject* Owner, UObject* Modifier, int32 Expiration)",
+  "inc_or_decl": "deps/AFortGameStateZone__AddGameplayModifierEntry.inc",
+  "evidence": "deps/AFortGameStateZone__AddGameplayModifierEntry.evidence.json"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__ServerFireAIDirectorEventBatch_Implementation",
+  "address": "0x141eae6f0",
+  "signature": "void AFortGameStateZone::ServerFireAIDirectorEventBatch_Implementation(const TArray<FAIDirectorEvent>& Payload)",
+  "inc_or_decl": "deps/AFortGameStateZone__ServerFireAIDirectorEventBatch_Implementation.inc",
+  "evidence": "deps/AFortGameStateZone__ServerFireAIDirectorEventBatch_Implementation.evidence.json"
+}

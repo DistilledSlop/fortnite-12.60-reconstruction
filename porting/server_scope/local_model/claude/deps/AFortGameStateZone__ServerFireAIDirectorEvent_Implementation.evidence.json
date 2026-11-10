@@ -1,0 +1,15 @@
+{
+  "function": "AFortGameStateZone::ServerFireAIDirectorEvent_Implementation",
+  "status": "proposed",
+  "original": "0x141eae750",
+  "signature": "void ServerFireAIDirectorEvent_Implementation(EAIDirectorEvent, UObject*, UObject*, float)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x141eae750.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x1416570e0.c"
+  ],
+  "callees": {
+    "0x1416570e0": "AIDirectorDispatchEvent (dep AFortGameStateZone__AIDirectorDispatchEvent)"
+  },
+  "notes": "The event record is 0x20 bytes: Type @0 (byte), Source @8, Target @0x10, Multiplier @0x18 (float). Member name for +0xcd8 is proposed as AIDirector.",
+  "confidence": "MEDIUM"
+}

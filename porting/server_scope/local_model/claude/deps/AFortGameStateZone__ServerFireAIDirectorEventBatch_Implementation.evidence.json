@@ -1,0 +1,15 @@
+{
+  "function": "AFortGameStateZone::ServerFireAIDirectorEventBatch_Implementation",
+  "status": "proposed",
+  "original": "0x141eae6f0",
+  "signature": "void ServerFireAIDirectorEventBatch_Implementation(const TArray<FAIDirectorEvent>&)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x141eae6f0.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x1416570e0.c"
+  ],
+  "callees": {
+    "0x1416570e0": "AIDirectorDispatchEvent (dep AFortGameStateZone__AIDirectorDispatchEvent)"
+  },
+  "notes": "Array element stride 0x20 (read from the loop).",
+  "confidence": "MEDIUM"
+}

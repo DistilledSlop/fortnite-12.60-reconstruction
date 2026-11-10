@@ -1,0 +1,15 @@
+{
+  "function": "AFortGameStateZone::GameplayTagContainerFromTag",
+  "status": "proposed",
+  "original": "0x143e8b5c0",
+  "signature": "void FGameplayTagContainer::FromTag(FGameplayTagContainer&, FGameplayTag)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x143e8b5c0.c"
+  ],
+  "callees": {
+    "0x141837200": "tag node lookup (engine, not read in full)",
+    "0x1406a8440": "AddUnique into ParentTags (engine, not read in full)"
+  },
+  "notes": "Node index -1 means the tag is not registered; the decompile then adds nothing.",
+  "confidence": "MEDIUM"
+}

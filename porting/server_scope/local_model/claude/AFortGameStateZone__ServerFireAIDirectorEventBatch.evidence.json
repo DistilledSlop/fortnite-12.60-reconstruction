@@ -1,0 +1,21 @@
+{
+  "function": "AFortGameStateZone::ServerFireAIDirectorEventBatch",
+  "status": "proposed",
+  "original": "0x14292cea0",
+  "signature": "void AFortGameStateZone::ServerFireAIDirectorEventBatch(const TArray<FAIDirectorEvent>& Payload)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292cea0.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x142d6e0f0.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x141eae6f0.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x1416570e0.c"
+  ],
+  "callees": {
+    "0x142d6e0f0": "RPC_ValidateFailed (dep AFortGameStateZone__RPC_ValidateFailed)",
+    "0x1406801d0": "Stub_ReturnTrue (dep AFortGameStateZone__ServerFireAIDirectorEventBatch_Validate)",
+    "0x141eae6f0": "ServerFireAIDirectorEventBatch_Implementation (dep AFortGameStateZone__ServerFireAIDirectorEventBatch_Implementation)",
+    "0x142bee710": "FMemory_Free of the payload temporary (engine)"
+  },
+  "notes": "Validate always returns true in this build, so the failure branch is unreachable but ported.",
+  "confidence": "HIGH"
+}

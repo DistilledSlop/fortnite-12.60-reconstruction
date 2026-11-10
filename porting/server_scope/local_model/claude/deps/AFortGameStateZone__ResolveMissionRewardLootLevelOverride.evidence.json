@@ -1,0 +1,19 @@
+{
+  "function": "AFortGameStateZone::ResolveMissionRewardLootLevelOverride",
+  "status": "proposed",
+  "original": "0x143f7a920",
+  "signature": "undefined8 ResolveMissionRewardLootLevelOverride()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x143f7a920.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141eb0560.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x1443771a0.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x14463f3c0.c"
+  ],
+  "callees": {
+    "0x1443771a0": "ClassifyLootLevelSource: returns 3 when vcall +0x368 is false, otherwise 1 or 2 from DAT_148247286 (read in full)",
+    "0x14463f3c0": "registry lookup by (object, key) (read in full, returns entry or 0; registry getter 0x144640380 not read)",
+    "0x141eb0560": "thunk alias of this function (same body)"
+  },
+  "notes": "Callers (SetMissionRewardLootLevelOverride and SetMissionRewardOverrideTag) discard the return value and the loot-level argument. Meaning is unverified: the setter names suggest a store, but the native code only resolves the source.",
+  "confidence": "LOW"
+}

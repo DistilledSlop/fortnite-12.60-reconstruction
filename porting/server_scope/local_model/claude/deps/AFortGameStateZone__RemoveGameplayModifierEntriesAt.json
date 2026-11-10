@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__RemoveGameplayModifierEntriesAt",
+  "address": "0x141ea9700",
+  "signature": "void RemoveGameplayModifierEntriesAt(TArray<FActiveGameplayModifier>& Entries, int32 Index, int32 Count, bool bAllowShrink)",
+  "inc_or_decl": "deps/AFortGameStateZone__RemoveGameplayModifierEntriesAt.inc",
+  "evidence": "deps/AFortGameStateZone__RemoveGameplayModifierEntriesAt.evidence.json"
+}

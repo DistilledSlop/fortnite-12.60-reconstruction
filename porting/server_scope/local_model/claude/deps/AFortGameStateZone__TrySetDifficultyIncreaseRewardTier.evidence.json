@@ -1,0 +1,17 @@
+{
+  "function": "AFortGameStateZone::TrySetDifficultyIncreaseRewardTier",
+  "status": "proposed",
+  "original": "0x141eaec30",
+  "signature": "bool TrySetDifficultyIncreaseRewardTier(int32)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141eaec30.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x141e88ca0.c",
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x1416b7770.c"
+  ],
+  "callees": {
+    "0x141e88ca0": "FDataTableRowHandle::GetRow wrapper (read in full)",
+    "0x1416b7770": "GetRow core (engine, not read in full)"
+  },
+  "notes": "Row field +0x68 is treated as NumDifficultyIncreaseTiers (name proposed). The context string comes from a static initialised once in the decompile.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,21 @@
+{
+  "function": "AFortGameStateZone::OnWaveEncounterStarted",
+  "status": "proposed",
+  "original": "0x14292c470",
+  "signature": "void AFortGameStateZone::OnWaveEncounterStarted(const FFortWaveData& WaveData, const FText& LevelText, int32 Level, const FText& WaveText, int32 WaveNum)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292c470.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x141ea72e0.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141683f60.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x142c0c240.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x14069a550.c"
+  ],
+  "callees": {
+    "0x141683f60": "FFortWaveData default constructor (all fields zeroed or set to INDEX_NONE/empty; the struct is larger than the decompile's 24-byte local, and the port uses the implicit default constructor)",
+    "0x142c0c240": "FText default construction (engine)",
+    "0x14069a550": "TArray destructor of the 64-byte local (never populated in this thunk, so it is a no-op here)",
+    "0x141ea72e0": "OnWaveEncounterStarted_Implementation (dep AFortGameStateZone__OnWaveEncounterStarted_Implementation)"
+  },
+  "notes": "Argument order in the vtable call (WaveData, LevelText, Level, WaveText, WaveNum) matches the declaration. The 10 freed locals in the thunk are never assigned, so their frees are no-ops.",
+  "confidence": "HIGH"
+}

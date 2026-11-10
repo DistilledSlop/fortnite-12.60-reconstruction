@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameStateZone__UnregisterGameplayModifier_Internal",
+  "address": "0x141eb5700",
+  "signature": "void AFortGameStateZone::UnregisterGameplayModifier_Internal(FGameplayModifierHandle Handle)",
+  "inc_or_decl": "deps/AFortGameStateZone__UnregisterGameplayModifier_Internal.inc",
+  "evidence": "deps/AFortGameStateZone__UnregisterGameplayModifier_Internal.evidence.json"
+}

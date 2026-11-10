@@ -1,0 +1,19 @@
+{
+  "function": "AFortGameStateZone::SetDifficultyIncreaseRewardTier",
+  "status": "proposed",
+  "original": "0x14292d1a0",
+  "signature": "bool AFortGameStateZone::SetDifficultyIncreaseRewardTier(int32 InDifficultyIncreaseTier)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x14292d1a0.c",
+    "/opt/fortnite/local-model-package/captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x141eaec30.c",
+    "/opt/fortnite/local-model-package/captures/9d30e0d6869d4f129948330751a20495/0x141e88ca0.c",
+    "/opt/fortnite/local-model-package/captures/2920547f751c4f25bc4cc56d61e38f36/0x1416b7770.c"
+  ],
+  "callees": {
+    "0x141eaec30": "TrySetDifficultyIncreaseRewardTier (dep AFortGameStateZone__TrySetDifficultyIncreaseRewardTier)",
+    "0x141e88ca0": "FDataTableRowHandle::GetRow wrapper (read in full; wraps 0x1416b7770 when the table is set)",
+    "0x1416b7770": "FDataTableRow lookup core (engine, not read in full)"
+  },
+  "notes": "Return value is a bool written through param_3 (*param_3 = uVar1).",
+  "confidence": "MEDIUM"
+}
