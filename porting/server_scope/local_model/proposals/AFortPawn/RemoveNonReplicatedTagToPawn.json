@@ -2,7 +2,6 @@
  "function": "AFortPawn::RemoveNonReplicatedTagToPawn",
  "status": "proposed",
  "blocker": null,
- "model": "llamacpp/qwen3.8-27b",
- "run": "claude-1",
- "batch_seconds": 0
+ "model": "claude-sonnet-5-5 (primary agent, with terra-1 findings)",
+ "run": "claude-1"
 }
