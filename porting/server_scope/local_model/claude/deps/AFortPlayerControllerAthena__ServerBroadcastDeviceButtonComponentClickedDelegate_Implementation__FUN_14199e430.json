@@ -1,0 +1,7 @@
+{
+  "name": "FUN_14199e430",
+  "address": "0x14199e430",
+  "signature": "undefined1 FUN_14199e430(longlong param_1)",
+  "inc_or_decl": "game-state gate: FUN_141a49590 / FUN_141a4b0d0 over two managers at +0x1df8/+0x1df0",
+  "evidence": "AFortPlayerControllerAthena::ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation"
+}

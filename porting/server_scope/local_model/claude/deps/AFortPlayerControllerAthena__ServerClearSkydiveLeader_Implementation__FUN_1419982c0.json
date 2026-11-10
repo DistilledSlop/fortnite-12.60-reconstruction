@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419982c0",
+  "address": "0x1419982c0",
+  "signature": "undefined * FUN_1419982c0(longlong param_1,byte param_2)",
+  "inc_or_decl": "returns candidate TArray of TWeakObjectPtr (depth-1 read only)",
+  "evidence": "AFortPlayerControllerAthena::ServerClearSkydiveLeader_Implementation"
+}

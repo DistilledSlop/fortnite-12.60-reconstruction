@@ -1,0 +1,13 @@
+{
+  "function": "AFortPlayerControllerAthena::SendClientPhysicsBallStateToServer_Validate",
+  "status": "proposed",
+  "original": "0x1406801d0",
+  "signature": "bool _Validate(UObject* PhysicsObject, float ClientPing, FStruct ClientBallState)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue"
+  },
+  "notes": "Vtable slot 0x22d8 target. Shared stub."
+}

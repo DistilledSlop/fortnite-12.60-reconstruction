@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerBroadcastDeviceButtonComponentClickedDelegate",
+  "status": "proposed",
+  "original": "0x142a5abf0",
+  "signature": "void ServerBroadcastDeviceButtonComponentClickedDelegate(UObject* DeviceButtonComponent)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5abf0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (vslot 0x27f8)",
+    "0x1419f10b0": "ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation (vslot 0x2800)",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk."
+}

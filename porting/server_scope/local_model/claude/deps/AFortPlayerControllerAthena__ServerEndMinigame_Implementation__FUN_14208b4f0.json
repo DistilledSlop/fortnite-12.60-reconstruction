@@ -1,0 +1,7 @@
+{
+  "name": "FUN_14208b4f0",
+  "address": "0x14208b4f0",
+  "signature": "void FUN_14208b4f0(longlong *param_1,code *param_2,char param_3)",
+  "inc_or_decl": "minigame end/leave notification (not read)",
+  "evidence": "AFortPlayerControllerAthena::ServerEndMinigame_Implementation"
+}

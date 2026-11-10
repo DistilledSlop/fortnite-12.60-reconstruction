@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerClientIsReadyToRespawn_Implementation",
+  "status": "proposed",
+  "original": "0x1419f1380",
+  "signature": "void _Implementation()",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual3/0x1419f1380.c",
+    "/opt/fortnite/local-model-package/captures/ad7166b967114cf6b144f7cea8350bbf/0x141a59620.c"
+  ],
+  "callees": {
+    "AFortPlayerStateAthena_GetPrivateStaticClass": "named static class getter",
+    "0x141a59620": "writes bool at +0xd31 of the player state (name not resolved)"
+  },
+  "notes": "HIGH for control flow; the +0xd31 field name is a placeholder (SetReadyToRespawnFlag)."
+}

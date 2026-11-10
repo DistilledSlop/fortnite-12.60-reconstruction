@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerAddToCachedPurchased",
+  "status": "proposed",
+  "original": "0x142a5a860",
+  "signature": "void ServerAddToCachedPurchased(int32 Count, UObject* ItemDefinition)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5a860.c"
+  ],
+  "callees": {
+    "0x1419f0d80": "ServerAddToCachedPurchased_Validate (vslot 0x2460)",
+    "0x1419f0c30": "ServerAddToCachedPurchased_Implementation (vslot 0x2468)",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk. Validate is a real check (not a stub)."
+}

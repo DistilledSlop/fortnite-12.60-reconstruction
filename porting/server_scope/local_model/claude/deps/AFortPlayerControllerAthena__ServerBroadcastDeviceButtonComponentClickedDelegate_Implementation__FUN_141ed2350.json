@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141ed2350",
+  "address": "0x141ed2350",
+  "signature": "longlong FUN_141ed2350(void)",
+  "inc_or_decl": "GetFortEngine(): validated FortEngine accessor, fatal log on wrong class",
+  "evidence": "AFortPlayerControllerAthena::ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation"
+}

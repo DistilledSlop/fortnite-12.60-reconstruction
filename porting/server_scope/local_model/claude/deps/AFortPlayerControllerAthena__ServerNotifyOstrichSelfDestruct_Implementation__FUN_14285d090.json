@@ -1,0 +1,7 @@
+{
+  "name": "FUN_14285d090",
+  "address": "0x14285d090",
+  "signature": "longlong FUN_14285d090(void)",
+  "inc_or_decl": "AFortCharacterVehicle_Ostrich::StaticClass() (cached /Script/FortniteGame.FortCharacterVehicle_Ostrich)",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyOstrichSelfDestruct_Implementation"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_142316c40",
+  "address": "0x142316c40",
+  "signature": "longlong FUN_142316c40(longlong param_1,int *param_2)",
+  "inc_or_decl": "pawn item array search at +0x598/+0x5a0 by 4-int GUID",
+  "evidence": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Implementation"
+}

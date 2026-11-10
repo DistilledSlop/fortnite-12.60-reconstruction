@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141c8cf90",
+  "address": "0x141c8cf90",
+  "signature": "void FUN_141c8cf90(longlong param_1,undefined8 param_2)",
+  "inc_or_decl": "forwards click when the handler's flag at +0xf0 == 3 (FUN_141c8cfd0 not read)",
+  "evidence": "AFortPlayerControllerAthena::ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation"
+}

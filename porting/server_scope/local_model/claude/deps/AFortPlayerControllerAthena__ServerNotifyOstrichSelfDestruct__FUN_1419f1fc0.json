@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f1fc0",
+  "address": "0x1419f1fc0",
+  "signature": "",
+  "inc_or_decl": "ServerNotifyOstrichSelfDestruct_Implementation (vslot 0x23f0)",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyOstrichSelfDestruct"
+}

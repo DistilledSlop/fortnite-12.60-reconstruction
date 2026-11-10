@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141c74820",
+  "address": "0x141c74820",
+  "signature": "longlong FUN_141c74820(longlong param_1)",
+  "inc_or_decl": "controller to device-handler lookup (depth-1 read only)",
+  "evidence": "AFortPlayerControllerAthena::ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f13d0",
+  "address": "0x1419f13d0",
+  "signature": "",
+  "inc_or_decl": "ServerDBNOReviveInterrupted_Implementation (vslot 0x2568)",
+  "evidence": "AFortPlayerControllerAthena::ServerDBNOReviveInterrupted"
+}

@@ -1,0 +1,22 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerClearSkydiveLeader_Implementation",
+  "status": "proposed",
+  "original": "0x1419f1170",
+  "signature": "void _Implementation()",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual3/0x1419f1170.c",
+    "/opt/fortnite/local-model-package/captures/1a89ce93ff2346ea8525cd60f19e19ba/0x1419982c0.c",
+    "/opt/fortnite/local-model-package/captures/1a89ce93ff2346ea8525cd60f19e19ba/0x1419e89a0.c"
+  ],
+  "callees": {
+    "GetFortGameStateAthena": "named accessor",
+    "AFortPlayerStateAthena_GetPrivateStaticClass": "named static class getter",
+    "0x1419982c0": "returns candidate TArray of TWeakObjectPtr (depth-1 read only)",
+    "FWeakObjectPtr_Get": "named weak pointer getter",
+    "TArray8_ResizeGrow": "named TArray growth helper",
+    "AFortPlayerControllerAthena_StaticClass": "named static class getter",
+    "0x1419e89a0": "skydive leader notification (depth-1 read only)",
+    "FMemory_Free": "named"
+  },
+  "notes": "MEDIUM for control flow. The leader record layout (pointer at +0, flag at +8) and field names are placeholders. Two early exits in the decompile are preserved (goto to the common tail)."
+}

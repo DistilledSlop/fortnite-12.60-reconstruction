@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141952090",
+  "address": "0x141952090",
+  "signature": "void FUN_141952090(longlong param_1)",
+  "inc_or_decl": "applies shield overcharge (reads vslot 0x5a8 on pawn+0x3098; FUN_14249ee10 and FUN_1424b3430 not read)",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Implementation"
+}

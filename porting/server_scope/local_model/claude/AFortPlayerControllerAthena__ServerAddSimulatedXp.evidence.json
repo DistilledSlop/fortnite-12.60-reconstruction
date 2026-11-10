@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerAddSimulatedXp",
+  "status": "proposed",
+  "original": "0x142a5a6e0",
+  "signature": "void ServerAddSimulatedXp(FGameplayTag MetaData, FText Source, float XpAmmount)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5a6e0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate)",
+    "0x1419f0bc0": "ServerAddSimulatedXp_Implementation (vslot 0x2310)",
+    "FUN_142c0c240": "FText default init for Source (thunk-local)",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk. Read order is XpAmmount, Source, MetaData (reverse of inventory). Validate passes in all cases."
+}

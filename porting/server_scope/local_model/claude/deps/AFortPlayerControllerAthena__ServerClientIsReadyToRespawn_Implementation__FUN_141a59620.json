@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141a59620",
+  "address": "0x141a59620",
+  "signature": "void FUN_141a59620(longlong param_1,undefined1 param_2)",
+  "inc_or_decl": "writes bool at +0xd31 of the player state (name not resolved)",
+  "evidence": "AFortPlayerControllerAthena::ServerClientIsReadyToRespawn_Implementation"
+}

@@ -1,0 +1,26 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerDBNOReviveStarted_Implementation",
+  "status": "proposed",
+  "original": "0x1419f1600",
+  "signature": "void _Implementation(UObject* DBNOPawn)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1419f1600.c",
+    "/opt/fortnite/local-model-package/captures/216dec00cd7d470897a6729b1ec33d86/0x140744d30.c",
+    "/opt/fortnite/local-model-package/captures/442990021eee4d42aececde9e3187914/0x141a4bb60.c",
+    "/opt/fortnite/local-model-package/captures/442990021eee4d42aececde9e3187914/0x141ef6bc0.c",
+    "/opt/fortnite/local-model-package/captures/442990021eee4d42aececde9e3187914/0x1406b5460.c",
+    "/opt/fortnite/local-model-package/captures/442990021eee4d42aececde9e3187914/0x141a24720.c",
+    "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x141ed1800.c"
+  ],
+  "callees": {
+    "DBNOPawn vfunc +0x1e": "GetReviverController (placeholder)",
+    "0x140744d30": "revive list add (depth-1 read only)",
+    "0x141a4bb60": "sets player revive state (value 4)",
+    "0x141ef6bc0": "current time (depth-1 read only)",
+    "0x1406b5460": "starts revive event (depth-1 read only)",
+    "0x141a24720": "pawn revive presentation refresh (not read)",
+    "0x141ed1800": "TLS singleton accessor for global revive descriptors (+0x518, +0x1520)",
+    "UFortRuntimeOptions_GetDefault": "named accessor, +0x837 bool"
+  },
+  "notes": "LOW. Revive timer field and descriptor names are placeholders; the timer write address is unresolved in this pass."
+}

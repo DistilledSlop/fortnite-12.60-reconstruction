@@ -1,0 +1,7 @@
+{
+  "name": "FUN_14237f3d0",
+  "address": "0x14237f3d0",
+  "signature": "undefined8 * FUN_14237f3d0(longlong param_1,undefined8 *param_2)",
+  "inc_or_decl": "builds plot-load request context from this+0x290 component or this+0x220 player state (depth-1 read only)",
+  "evidence": "AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic_Implementation"
+}

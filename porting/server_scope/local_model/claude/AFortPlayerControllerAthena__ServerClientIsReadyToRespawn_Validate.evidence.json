@@ -1,0 +1,13 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerClientIsReadyToRespawn_Validate",
+  "status": "proposed",
+  "original": "0x1406801d0",
+  "signature": "bool _Validate()",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue"
+  },
+  "notes": "Vtable target is the shared Stub_ReturnTrue. "
+}

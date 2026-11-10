@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f1380",
+  "address": "0x1419f1380",
+  "signature": "",
+  "inc_or_decl": "ServerClientIsReadyToRespawn_Implementation (vslot 0x27a8)",
+  "evidence": "AFortPlayerControllerAthena::ServerClientIsReadyToRespawn"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141a777c0",
+  "address": "0x141a777c0",
+  "signature": "void FUN_141a777c0(void)",
+  "inc_or_decl": "FUN_141a777c0: calls FUN_141df62a0 (validated UFortAssetManager getter) then FUN_141df75b0 (not read)",
+  "evidence": "AFortPlayerControllerAthena::ServerAddToCachedPurchased_Validate"
+}

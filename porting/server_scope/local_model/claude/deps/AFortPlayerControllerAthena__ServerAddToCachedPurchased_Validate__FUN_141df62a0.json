@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141df62a0",
+  "address": "0x141df62a0",
+  "signature": "longlong FUN_141df62a0(void)",
+  "inc_or_decl": "FUN_141df62a0: returns the UFortAssetManager (fatal log on wrong class)",
+  "evidence": "AFortPlayerControllerAthena::ServerAddToCachedPurchased_Validate"
+}

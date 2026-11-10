@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141ed1800",
+  "address": "0x141ed1800",
+  "signature": "undefined * FUN_141ed1800(void)",
+  "inc_or_decl": "TLS singleton accessor for global revive descriptors (+0x518, +0x1520)",
+  "evidence": "AFortPlayerControllerAthena::ServerDBNOReviveStarted_Implementation"
+}

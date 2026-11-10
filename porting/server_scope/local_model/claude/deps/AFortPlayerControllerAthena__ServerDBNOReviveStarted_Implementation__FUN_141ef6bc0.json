@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141ef6bc0",
+  "address": "0x141ef6bc0",
+  "signature": "undefined8 FUN_141ef6bc0(longlong param_1)",
+  "inc_or_decl": "current time (depth-1 read only)",
+  "evidence": "AFortPlayerControllerAthena::ServerDBNOReviveStarted_Implementation"
+}

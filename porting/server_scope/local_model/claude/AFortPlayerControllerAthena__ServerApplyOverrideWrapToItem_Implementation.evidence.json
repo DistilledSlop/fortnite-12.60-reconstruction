@@ -1,0 +1,25 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Implementation",
+  "status": "proposed",
+  "original": "0x1419f0ea0",
+  "signature": "void _Implementation(FGuid GUID, FSoftObjectPtr ItemWrap)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1419f0ea0.c",
+    "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x142038a40.c",
+    "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x142316c40.c",
+    "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x1419b6cd0.c"
+  ],
+  "callees": {
+    "0x141ed1800": "TLS singleton accessor (global gameplay data at +0x19f0)",
+    "0x142cd4ab0": "builds an FGameplayTag from a literal (Weapon.Meta.DoNotApplyWraps)",
+    "0x143e96810": "tag handle creation from the tag (FUN_143e96870 not read)",
+    "0x140d8f4d0": "returns item+0xe0 (sub-object)",
+    "0x142038a40": "stores wrap pointer at +0xc8 and copies a 16-byte block at +0xd8 (FUN_142ebd9e0)",
+    "0x1419b6cd0": "returns controller pawn at this+0x248 if it IsA AFortPlayerPawn",
+    "0x142316c40": "pawn item array search at +0x598/+0x5a0 by 4-int GUID",
+    "0x140682ce0": "copy-construct a 2-byte-per-char string (wide string copy)",
+    "0x142ebd9e0": "move-assign of a TArray-like block (frees old storage)",
+    "0x1426b3510": "applies wrap record to the found pawn item (FUN_1426bb860 and FUN_143f7a920 not read)"
+  },
+  "notes": "LOW. Control flow follows the decompile. The GUID / ItemWrap field roles are from the thunk ABI; the depth-1 helpers were read, depth-2 (FUN_143f7a920, FUN_1426bb860, FUN_143e96870) not ported. Placeholder names are marked in the body."
+}

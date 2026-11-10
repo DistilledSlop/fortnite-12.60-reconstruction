@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerAddToCachedPurchased_Implementation",
+  "status": "proposed",
+  "original": "0x1419f0c30",
+  "signature": "void _Implementation(UObject* ItemDefinition, int32 Count)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1419f0c30.c",
+    "/opt/fortnite/local-model-package/captures/9e8b2cb6fb274715b76de822461483a5/0x142c40540.c"
+  ],
+  "callees": {
+    "0x140690dd0": "FUN_140690dd0: TArray grow (16-byte elements, growth 3/8 then QuantizeSize)",
+    "0x142c40540": "FUN_142c40540: calls vslot 0x10 on the item to produce a name string",
+    "FMsg_Logf_Internal": "engine log emitter; category DAT_1459a4e4 (name not resolved), verbosity 3",
+    "vslot 0x268": "ItemDefinition method (placeholder name)"
+  },
+  "notes": "MEDIUM. Element layout: int32 Count at +0, UObject* at +8. Log category name is a placeholder."
+}

@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication_Implementation",
+  "status": "proposed",
+  "original": "0x1419f1fb0",
+  "signature": "void _Implementation()",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual3/0x1419f1fb0.c",
+    "/opt/fortnite/local-model-package/captures/628a52e09d19441f87d1fbe31076ef26/0x1417af520.c"
+  ],
+  "callees": {
+    "0x1417af520": "body of this implementation (FUN_1417af520)",
+    "0x14176cd10": "builds event attributes (depth-1 not read)",
+    "0x145803a44 / 0x1458038a4 / 0x1458039e4": "TLS one-shot init helpers (named as init guard)",
+    "vslot 0x28 (on component +0x5a0)": "GetTelemetrySinkAndContext (placeholder)",
+    "vslot 0xc8 (on sink)": "SendEvent (placeholder)"
+  },
+  "notes": "MEDIUM for flow; the inline TLS init and ref counting follow the decompile. The 0x3b and 0x76 literal-length arguments are not reproduced exactly (the key string is ported as text)."
+}

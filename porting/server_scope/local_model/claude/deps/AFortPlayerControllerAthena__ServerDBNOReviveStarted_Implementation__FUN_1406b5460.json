@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1406b5460",
+  "address": "0x1406b5460",
+  "signature": "void FUN_1406b5460(longlong *param_1)",
+  "inc_or_decl": "starts revive event (depth-1 read only)",
+  "evidence": "AFortPlayerControllerAthena::ServerDBNOReviveStarted_Implementation"
+}

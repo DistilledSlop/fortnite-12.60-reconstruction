@@ -1,0 +1,7 @@
+{
+  "name": "FUN_140d8f4d0",
+  "address": "0x140d8f4d0",
+  "signature": "longlong FUN_140d8f4d0(longlong param_1)",
+  "inc_or_decl": "returns item+0xe0 (sub-object)",
+  "evidence": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Implementation"
+}

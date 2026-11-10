@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerDBNOReviveInterrupted",
+  "status": "proposed",
+  "original": "0x142a5af60",
+  "signature": "void ServerDBNOReviveInterrupted(UObject* DBNOPawn)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5af60.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (vslot 0x2560)",
+    "0x1419f13d0": "ServerDBNOReviveInterrupted_Implementation (vslot 0x2568)",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk."
+}

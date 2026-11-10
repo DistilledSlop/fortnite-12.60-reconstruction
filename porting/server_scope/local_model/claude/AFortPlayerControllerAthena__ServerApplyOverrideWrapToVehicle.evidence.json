@@ -1,0 +1,13 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToVehicle",
+  "status": "proposed",
+  "original": "0x142a5aa80",
+  "signature": "void ServerApplyOverrideWrapToVehicle(FSoftObjectPtr ItemWrap)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5aa80.c"
+  ],
+  "callees": {
+    "0x1419f1040": "ServerApplyOverrideWrapToVehicle_Implementation (vslot 0x2588)"
+  },
+  "notes": "Thunk without a validate step (no RPC_ValidateFailed branch in the binary)."
+}

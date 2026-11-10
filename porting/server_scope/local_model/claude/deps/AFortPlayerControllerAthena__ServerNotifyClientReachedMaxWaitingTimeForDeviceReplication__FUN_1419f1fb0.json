@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f1fb0",
+  "address": "0x1419f1fb0",
+  "signature": "",
+  "inc_or_decl": "ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication_Implementation (vslot 0x2300)",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication"
+}

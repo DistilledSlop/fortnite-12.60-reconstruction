@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141a074e0",
+  "address": "0x141a074e0",
+  "signature": "undefined1 FUN_141a074e0(undefined8 param_1)",
+  "inc_or_decl": "FUN_141a074e0: player gate (FUN_141991c10 result flags +0x9fc bit 0, PlayerState +0xc9)",
+  "evidence": "AFortPlayerControllerAthena::ServerAddToCachedPurchased_Validate"
+}

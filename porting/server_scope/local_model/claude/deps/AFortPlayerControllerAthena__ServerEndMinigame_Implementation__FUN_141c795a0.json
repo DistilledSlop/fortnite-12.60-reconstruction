@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141c795a0",
+  "address": "0x141c795a0",
+  "signature": "undefined8 FUN_141c795a0(longlong *param_1)",
+  "inc_or_decl": "manager accessor (depth-1 read only; called without arguments in this decompile)",
+  "evidence": "AFortPlayerControllerAthena::ServerEndMinigame_Implementation"
+}

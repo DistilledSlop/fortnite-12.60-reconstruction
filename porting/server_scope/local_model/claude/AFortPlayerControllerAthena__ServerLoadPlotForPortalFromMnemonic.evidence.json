@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic",
+  "status": "proposed",
+  "original": "0x142a5b6d0",
+  "signature": "void ServerLoadPlotForPortalFromMnemonic(FString Mnemonic, UObject* Portal)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5b6d0.c"
+  ],
+  "callees": {
+    "0x1419f1ed0": "ServerLoadPlotForPortalFromMnemonic_Validate (vslot 0x23b8)",
+    "0x1419f1dd0": "ServerLoadPlotForPortalFromMnemonic_Implementation (vslot 0x23c0)",
+    "FMemory_Free": "named",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "LOW. The argument order between the thunk and the header is not fully resolved (see the thunk comment). The thunk's FString release follows the decompile."
+}

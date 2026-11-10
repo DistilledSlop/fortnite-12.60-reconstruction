@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419e89a0",
+  "address": "0x1419e89a0",
+  "signature": "void FUN_1419e89a0(longlong *param_1)",
+  "inc_or_decl": "skydive leader notification (depth-1 read only)",
+  "evidence": "AFortPlayerControllerAthena::ServerClearSkydiveLeader_Implementation"
+}

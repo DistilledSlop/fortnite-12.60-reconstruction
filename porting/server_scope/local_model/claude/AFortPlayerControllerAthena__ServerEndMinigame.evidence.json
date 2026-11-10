@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerEndMinigame",
+  "status": "proposed",
+  "original": "0x142a5b240",
+  "signature": "void ServerEndMinigame(bool bAbandon)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5b240.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (vslot 0x2410)",
+    "0x1419f1ad0": "ServerEndMinigame_Implementation (vslot 0x2418)",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk. Note this thunk does not return early on validate failure; it simply skips the implementation."
+}

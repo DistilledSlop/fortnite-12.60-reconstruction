@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f1ad0",
+  "address": "0x1419f1ad0",
+  "signature": "",
+  "inc_or_decl": "ServerEndMinigame_Implementation (vslot 0x2418)",
+  "evidence": "AFortPlayerControllerAthena::ServerEndMinigame"
+}

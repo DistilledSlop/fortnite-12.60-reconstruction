@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f1dd0",
+  "address": "0x1419f1dd0",
+  "signature": "",
+  "inc_or_decl": "ServerLoadPlotForPortalFromMnemonic_Implementation (vslot 0x23c0)",
+  "evidence": "AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic"
+}

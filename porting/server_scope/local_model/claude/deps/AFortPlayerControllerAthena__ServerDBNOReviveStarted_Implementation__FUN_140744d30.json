@@ -1,0 +1,7 @@
+{
+  "name": "FUN_140744d30",
+  "address": "0x140744d30",
+  "signature": "ulonglong FUN_140744d30(longlong *param_1,ulonglong *param_2,int param_3,undefined1 param_4)",
+  "inc_or_decl": "revive list add (depth-1 read only)",
+  "evidence": "AFortPlayerControllerAthena::ServerDBNOReviveStarted_Implementation"
+}

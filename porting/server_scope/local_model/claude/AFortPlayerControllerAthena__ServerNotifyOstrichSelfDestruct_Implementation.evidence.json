@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerNotifyOstrichSelfDestruct_Implementation",
+  "status": "proposed",
+  "original": "0x1419f1fc0",
+  "signature": "void _Implementation()",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual3/0x1419f1fc0.c",
+    "/opt/fortnite/local-model-package/captures/781712b4164345b7bb5860d9cbd546e5/0x142a82010.c",
+    "/opt/fortnite/local-model-package/captures/92fa4303039a4e7b83293cf0f3b86562/0x14285d090.c",
+    "/opt/fortnite/local-model-package/captures/92fa4303039a4e7b83293cf0f3b86562/0x142325510.c"
+  ],
+  "callees": {
+    "0x142a82010": "AFortPlayerPawnAthena::StaticClass() (cached /Script/FortniteGame.FortPlayerPawnAthena)",
+    "0x14285d090": "AFortCharacterVehicle_Ostrich::StaticClass() (cached /Script/FortniteGame.FortCharacterVehicle_Ostrich)",
+    "0x142325510": "returns pawn+0x1578 (the pawn's Ostrich reference)",
+    "0x1419729a0": "Ostrich self-destruct (mode 0 or 1; not read)"
+  },
+  "notes": "MEDIUM. Pawn is this+0x248; the two-mode split follows the decompile."
+}

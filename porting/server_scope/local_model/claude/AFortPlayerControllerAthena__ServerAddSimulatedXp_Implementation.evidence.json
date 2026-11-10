@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerAddSimulatedXp_Implementation",
+  "status": "proposed",
+  "original": "0x1419f0bc0",
+  "signature": "void _Implementation(float XpAmmount, FText Source, FGameplayTag MetaData)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1419f0bc0.c",
+    "/opt/fortnite/local-model-package/captures/e89b3362306146b6b733de60723617f5/0x1417256f0.asm",
+    "/opt/fortnite/local-model-package/captures/e89b3362306146b6b733de60723617f5/0x1417256f0.c"
+  ],
+  "callees": {
+    "0x1423850c0": "NativeGetQuestManager1423850c0(Mode) (vslot 0x1bd0, existing port)",
+    "0x1417256f0": "release of shared reference at arg3+8 (args 1 and 2 unused)",
+    "vslot 0x1bd0": "NativeGetQuestManager1423850c0"
+  },
+  "notes": "Header names in the decompile order params as (MetaData, Source, XpAmmount), but the ABI from the thunk and the XMM1 use show (XpAmmount, Source, MetaData). Body is reproduced as observed; the XP grant appears absent in the binary."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419c3880",
+  "address": "0x1419c3880",
+  "signature": "undefined1 FUN_1419c3880(longlong *param_1,longlong *param_2)",
+  "inc_or_decl": "controller minigame lookup (FUN_141c74820 and FUN_141c7d420 inside; out-param = minigame)",
+  "evidence": "AFortPlayerControllerAthena::ServerEndMinigame_Implementation"
+}

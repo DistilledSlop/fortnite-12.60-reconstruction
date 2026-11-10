@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419d1360",
+  "address": "0x1419d1360",
+  "signature": "int * FUN_1419d1360(longlong *param_1,int *param_2,int *param_3)",
+  "inc_or_decl": "FUN_1419d1360: hash lookup returning entry index or -1 (element size 0x1c, next index at +0x14)",
+  "evidence": "AFortPlayerControllerAthena::ServerAddToCachedPurchased_Validate"
+}

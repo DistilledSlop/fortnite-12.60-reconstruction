@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerClientIsReadyToRespawn",
+  "status": "proposed",
+  "original": "0x142a5ad50",
+  "signature": "void ServerClientIsReadyToRespawn()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5ad50.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (vslot 0x27a0)",
+    "0x1419f1380": "ServerClientIsReadyToRespawn_Implementation (vslot 0x27a8)",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk."
+}

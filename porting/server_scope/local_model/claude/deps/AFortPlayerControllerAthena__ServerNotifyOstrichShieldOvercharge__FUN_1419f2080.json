@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f2080",
+  "address": "0x1419f2080",
+  "signature": "",
+  "inc_or_decl": "ServerNotifyOstrichShieldOvercharge_Implementation (vslot 0x2400)",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge"
+}

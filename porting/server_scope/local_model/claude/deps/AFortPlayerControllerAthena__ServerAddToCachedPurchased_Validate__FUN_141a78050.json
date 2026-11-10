@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141a78050",
+  "address": "0x141a78050",
+  "signature": "longlong FUN_141a78050(longlong param_1)",
+  "inc_or_decl": "FUN_141a78050: returns manager+0x2f8 table, rebuilding entries when counters at +0x300/+0x32c differ (FUN_1417525d0, FUN_141a65540, FUN_141a62e20 not read)",
+  "evidence": "AFortPlayerControllerAthena::ServerAddToCachedPurchased_Validate"
+}

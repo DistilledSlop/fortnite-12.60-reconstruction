@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1417af520",
+  "address": "0x1417af520",
+  "signature": "void FUN_1417af520(longlong param_1)",
+  "inc_or_decl": "body of this implementation (FUN_1417af520)",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication_Implementation"
+}

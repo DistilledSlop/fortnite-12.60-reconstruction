@@ -1,0 +1,27 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerDBNOReviveInterrupted_Implementation",
+  "status": "proposed",
+  "original": "0x1419f13d0",
+  "signature": "void _Implementation(UObject* DBNOPawn)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1419f13d0.c",
+    "/opt/fortnite/local-model-package/captures/7f8033a90f5f4bf4ba391f3b4c138a75/0x141a0e630.c",
+    "/opt/fortnite/local-model-package/captures/7f8033a90f5f4bf4ba391f3b4c138a75/0x141a3d480.c",
+    "/opt/fortnite/local-model-package/captures/442990021eee4d42aececde9e3187914/0x1428ea7f0.c",
+    "/opt/fortnite/local-model-package/captures/442990021eee4d42aececde9e3187914/0x1444ac7a0.c",
+    "/opt/fortnite/local-model-package/captures/442990021eee4d42aececde9e3187914/0x142bafb80.c",
+    "/opt/fortnite/local-model-package/captures/442990021eee4d42aececde9e3187914/0x141e4f8a0.c"
+  ],
+  "callees": {
+    "0x141a0e630": "revive finish (depth-1 read only)",
+    "0x141a3d480": "sets player revive state (value 4)",
+    "UFortRuntimeOptions_GetDefault": "named accessor, +0x837 bool",
+    "0x150 (GetWorld)": "GetWorld, then +0x188 (mode)",
+    "0x1428ea7f0": "class accessor (not read)",
+    "0x1444ac7a0": "name extraction from player state (not read)",
+    "0x142bafb80": "formats a wide string (log)",
+    "0x141e4f8a0": "emits the formatted event (not read)",
+    "AFortPlayerStateAthena_GetPrivateStaticClass": "named static class getter"
+  },
+  "notes": "LOW. Telemetry string and class checks reproduced; several helpers not read beyond their names."
+}

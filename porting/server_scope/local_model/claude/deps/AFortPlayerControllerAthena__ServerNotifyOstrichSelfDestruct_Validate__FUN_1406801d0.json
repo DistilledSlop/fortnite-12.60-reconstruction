@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1406801d0",
+  "address": "0x1406801d0",
+  "signature": "bool Stub_ReturnTrue(void)",
+  "inc_or_decl": "Stub_ReturnTrue",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyOstrichSelfDestruct_Validate"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_140690dd0",
+  "address": "0x140690dd0",
+  "signature": "void FUN_140690dd0(undefined8 *param_1)",
+  "inc_or_decl": "FUN_140690dd0: TArray grow (16-byte elements, growth 3/8 then QuantizeSize)",
+  "evidence": "AFortPlayerControllerAthena::ServerAddToCachedPurchased_Implementation"
+}

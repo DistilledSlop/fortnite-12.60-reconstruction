@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419b6cd0",
+  "address": "0x1419b6cd0",
+  "signature": "longlong FUN_1419b6cd0(longlong param_1)",
+  "inc_or_decl": "returns controller pawn at this+0x248 if it IsA AFortPlayerPawn",
+  "evidence": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Implementation"
+}

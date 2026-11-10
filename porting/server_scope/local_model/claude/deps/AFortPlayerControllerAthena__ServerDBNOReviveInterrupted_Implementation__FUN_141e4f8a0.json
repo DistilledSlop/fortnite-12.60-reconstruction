@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141e4f8a0",
+  "address": "0x141e4f8a0",
+  "signature": "void FUN_141e4f8a0(longlong param_1)",
+  "inc_or_decl": "emits the formatted event (not read)",
+  "evidence": "AFortPlayerControllerAthena::ServerDBNOReviveInterrupted_Implementation"
+}

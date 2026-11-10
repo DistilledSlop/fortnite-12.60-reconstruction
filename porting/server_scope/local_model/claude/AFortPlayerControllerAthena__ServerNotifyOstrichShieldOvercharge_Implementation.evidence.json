@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Implementation",
+  "status": "proposed",
+  "original": "0x1419f2080",
+  "signature": "void _Implementation()",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual3/0x1419f2080.c",
+    "/opt/fortnite/local-model-package/captures/92fa4303039a4e7b83293cf0f3b86562/0x141f08e90.c",
+    "/opt/fortnite/local-model-package/captures/92fa4303039a4e7b83293cf0f3b86562/0x141952090.c",
+    "/opt/fortnite/local-model-package/captures/92fa4303039a4e7b83293cf0f3b86562/0x142860150.c"
+  ],
+  "callees": {
+    "0x142a82010": "AFortPlayerPawnAthena::StaticClass()",
+    "0x14285d090": "AFortCharacterVehicle_Ostrich::StaticClass()",
+    "0x142325510": "pawn+0x1578 Ostrich reference",
+    "0x141f08e90": "shield gate (depth-1 read only; reads this and the Ostrich +0x3510 value)",
+    "0x141952090": "applies shield overcharge (reads vslot 0x5a8 on pawn+0x3098; FUN_14249ee10 and FUN_1424b3430 not read)",
+    "0x142860150": "Ostrich BP event: UObject_FindFunctionChecked then ProcessEvent (vslot 0x210)"
+  },
+  "notes": "MEDIUM. Control flow matches the decompile. The gate and overcharge helpers are depth-one."
+}

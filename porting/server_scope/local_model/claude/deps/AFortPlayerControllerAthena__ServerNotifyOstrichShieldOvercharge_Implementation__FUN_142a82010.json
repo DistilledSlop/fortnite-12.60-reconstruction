@@ -1,0 +1,7 @@
+{
+  "name": "FUN_142a82010",
+  "address": "0x142a82010",
+  "signature": "longlong FUN_142a82010(void)",
+  "inc_or_decl": "AFortPlayerPawnAthena::StaticClass()",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Implementation"
+}

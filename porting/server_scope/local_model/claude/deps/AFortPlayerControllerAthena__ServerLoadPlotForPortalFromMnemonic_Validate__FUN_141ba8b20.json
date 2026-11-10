@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141ba8b20",
+  "address": "0x141ba8b20",
+  "signature": "longlong FUN_141ba8b20(longlong *param_1)",
+  "inc_or_decl": "returns the GameState-array PlayerState whose PlayerId (+0x336) equals this controller's id (+0x350); null when id is -1",
+  "evidence": "AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic_Validate"
+}

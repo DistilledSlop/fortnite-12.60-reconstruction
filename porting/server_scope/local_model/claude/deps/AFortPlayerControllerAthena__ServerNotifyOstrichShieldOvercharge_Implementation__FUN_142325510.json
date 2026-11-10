@@ -1,0 +1,7 @@
+{
+  "name": "FUN_142325510",
+  "address": "0x142325510",
+  "signature": "undefined8 FUN_142325510(longlong param_1)",
+  "inc_or_decl": "pawn+0x1578 Ostrich reference",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Implementation"
+}

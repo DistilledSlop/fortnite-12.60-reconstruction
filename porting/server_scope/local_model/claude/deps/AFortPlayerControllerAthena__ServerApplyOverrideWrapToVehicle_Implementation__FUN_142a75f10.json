@@ -1,0 +1,7 @@
+{
+  "name": "FUN_142a75f10",
+  "address": "0x142a75f10",
+  "signature": "longlong FUN_142a75f10(void)",
+  "inc_or_decl": "AFortPlayerPawn::StaticClass() (cached /Script/FortniteGame.FortPlayerPawn)",
+  "evidence": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToVehicle_Implementation"
+}

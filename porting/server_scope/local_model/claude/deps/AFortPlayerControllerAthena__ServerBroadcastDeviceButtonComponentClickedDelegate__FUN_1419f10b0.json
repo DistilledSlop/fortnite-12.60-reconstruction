@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f10b0",
+  "address": "0x1419f10b0",
+  "signature": "",
+  "inc_or_decl": "ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation (vslot 0x2800)",
+  "evidence": "AFortPlayerControllerAthena::ServerBroadcastDeviceButtonComponentClickedDelegate"
+}

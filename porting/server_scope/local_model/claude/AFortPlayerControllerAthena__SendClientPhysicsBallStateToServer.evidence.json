@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerControllerAthena::SendClientPhysicsBallStateToServer",
+  "status": "proposed",
+  "original": "0x142a5a2b0",
+  "signature": "void SendClientPhysicsBallStateToServer(FStruct ClientBallState, float ClientPing, UObject* PhysicsObject)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5a2b0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (shared stub, returns true)",
+    "0x1406801c0": "Stub_Empty (shared bare-return stub)",
+    "vslot 0x22d8": "_Validate",
+    "vslot 0x22e0": "_Implementation",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk. Validate and Implementation are shared stubs. Struct type for ClientBallState is 0x142b83940 (not named here). Param names from inventory."
+}

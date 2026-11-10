@@ -1,0 +1,7 @@
+{
+  "name": "FUN_142bafb80",
+  "address": "0x142bafb80",
+  "signature": "void FUN_142bafb80(undefined8 *param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)",
+  "inc_or_decl": "formats a wide string (log)",
+  "evidence": "AFortPlayerControllerAthena::ServerDBNOReviveInterrupted_Implementation"
+}

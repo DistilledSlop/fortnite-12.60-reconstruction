@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1423850c0",
+  "address": "0x1423850c0",
+  "signature": "",
+  "inc_or_decl": "NativeGetQuestManager1423850c0(Mode) (vslot 0x1bd0, existing port)",
+  "evidence": "AFortPlayerControllerAthena::ServerAddSimulatedXp_Implementation"
+}

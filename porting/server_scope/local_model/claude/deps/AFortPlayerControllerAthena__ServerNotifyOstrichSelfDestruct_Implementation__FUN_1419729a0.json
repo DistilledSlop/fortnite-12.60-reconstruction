@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419729a0",
+  "address": "0x1419729a0",
+  "signature": "void FUN_1419729a0(longlong *param_1,int param_2)",
+  "inc_or_decl": "Ostrich self-destruct (mode 0 or 1; not read)",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyOstrichSelfDestruct_Implementation"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1423256c0",
+  "address": "0x1423256c0",
+  "signature": "",
+  "inc_or_decl": "NativeGetVehicleInterface163 (vslot 0x1088, existing port)",
+  "evidence": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToVehicle_Implementation"
+}

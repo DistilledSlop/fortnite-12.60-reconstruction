@@ -1,0 +1,7 @@
+{
+  "name": "FUN_142c40540",
+  "address": "0x142c40540",
+  "signature": "void FUN_142c40540(undefined8 *param_1)",
+  "inc_or_decl": "FUN_142c40540: calls vslot 0x10 on the item to produce a name string",
+  "evidence": "AFortPlayerControllerAthena::ServerAddToCachedPurchased_Implementation"
+}

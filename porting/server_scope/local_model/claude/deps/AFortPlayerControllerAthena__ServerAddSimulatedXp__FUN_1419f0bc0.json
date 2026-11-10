@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f0bc0",
+  "address": "0x1419f0bc0",
+  "signature": "",
+  "inc_or_decl": "ServerAddSimulatedXp_Implementation (vslot 0x2310)",
+  "evidence": "AFortPlayerControllerAthena::ServerAddSimulatedXp"
+}

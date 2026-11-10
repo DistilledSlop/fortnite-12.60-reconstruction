@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f0ea0",
+  "address": "0x1419f0ea0",
+  "signature": "",
+  "inc_or_decl": "ServerApplyOverrideWrapToItem_Implementation (vslot 0x2598)",
+  "evidence": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem"
+}

@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem",
+  "status": "proposed",
+  "original": "0x142a5a960",
+  "signature": "void ServerApplyOverrideWrapToItem(FSoftObjectPtr ItemWrap, FGuid GUID)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5a960.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (vslot 0x2590)",
+    "0x1419f0ea0": "ServerApplyOverrideWrapToItem_Implementation (vslot 0x2598)",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk. Argument order follows the thunk ABI (GUID first). The decompiled Implementation header lists the parameters in the reverse order; the body semantics are consistent with GUID first."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1418c6640",
+  "address": "0x1418c6640",
+  "signature": "undefined8 FUN_1418c6640(longlong param_1)",
+  "inc_or_decl": "returns this+0x828 (PlotManager placeholder)",
+  "evidence": "AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic_Validate"
+}

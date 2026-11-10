@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerNotifyOstrichSelfDestruct",
+  "status": "proposed",
+  "original": "0x142a5b840",
+  "signature": "void ServerNotifyOstrichSelfDestruct()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5b840.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (vslot 0x23e8)",
+    "0x1419f1fc0": "ServerNotifyOstrichSelfDestruct_Implementation (vslot 0x23f0)",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk."
+}

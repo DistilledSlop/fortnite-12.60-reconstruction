@@ -1,0 +1,13 @@
+{
+  "function": "AFortPlayerControllerAthena::SendClientPhysicsBallStateToServer_Implementation",
+  "status": "proposed",
+  "original": "0x1406801c0",
+  "signature": "void _Implementation(UObject* PhysicsObject, float ClientPing, FStruct ClientBallState)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native437-callees/0x1406801c0.c"
+  ],
+  "callees": {
+    "0x1406801c0": "Stub_Empty"
+  },
+  "notes": "Vtable slot 0x22e0 target. Shared stub; empty body."
+}

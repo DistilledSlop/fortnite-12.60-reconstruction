@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f1170",
+  "address": "0x1419f1170",
+  "signature": "",
+  "inc_or_decl": "ServerClearSkydiveLeader_Implementation (vslot 0x2830)",
+  "evidence": "AFortPlayerControllerAthena::ServerClearSkydiveLeader"
+}

@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic_Validate",
+  "status": "proposed",
+  "original": "0x1419f1ed0",
+  "signature": "bool _Validate(FString* Mnemonic, UObject* Portal)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1419f1ed0.c",
+    "/opt/fortnite/local-model-package/captures/5c73ca4533d74c8a92c9548127f603a5/0x1418c6640.c",
+    "/opt/fortnite/local-model-package/captures/5c73ca4533d74c8a92c9548127f603a5/0x141ba8b20.c",
+    "/opt/fortnite/local-model-package/captures/2c87a1e9f94f466b976233be1a0a0c38/0x142a85850.c"
+  ],
+  "callees": {
+    "0x1418c6640": "returns this+0x828 (PlotManager placeholder)",
+    "0x141ba8b20": "returns the GameState-array PlayerState whose PlayerId (+0x336) equals this controller's id (+0x350); null when id is -1",
+    "0x142a85850": "AFortPlayerState::StaticClass() (cached /Script/FortniteGame.FortPlayerState)"
+  },
+  "notes": "MEDIUM. The first-argument-is-this reading is from the helper bodies. The Mnemonic/Portal ABI order is unresolved (see the thunk comment)."
+}

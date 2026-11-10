@@ -1,0 +1,7 @@
+{
+  "name": "FUN_142860150",
+  "address": "0x142860150",
+  "signature": "void FUN_142860150(UObject *param_1)",
+  "inc_or_decl": "Ostrich BP event: UObject_FindFunctionChecked then ProcessEvent (vslot 0x210)",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Implementation"
+}

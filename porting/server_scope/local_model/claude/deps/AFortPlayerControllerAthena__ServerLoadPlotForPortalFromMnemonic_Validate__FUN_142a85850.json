@@ -1,0 +1,7 @@
+{
+  "name": "FUN_142a85850",
+  "address": "0x142a85850",
+  "signature": "longlong FUN_142a85850(void)",
+  "inc_or_decl": "AFortPlayerState::StaticClass() (cached /Script/FortniteGame.FortPlayerState)",
+  "evidence": "AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic_Validate"
+}

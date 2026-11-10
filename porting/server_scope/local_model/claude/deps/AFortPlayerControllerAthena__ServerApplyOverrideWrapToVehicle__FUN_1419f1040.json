@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f1040",
+  "address": "0x1419f1040",
+  "signature": "",
+  "inc_or_decl": "ServerApplyOverrideWrapToVehicle_Implementation (vslot 0x2588)",
+  "evidence": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToVehicle"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141a0e630",
+  "address": "0x141a0e630",
+  "signature": "void FUN_141a0e630(longlong *param_1)",
+  "inc_or_decl": "revive finish (depth-1 read only)",
+  "evidence": "AFortPlayerControllerAthena::ServerDBNOReviveInterrupted_Implementation"
+}

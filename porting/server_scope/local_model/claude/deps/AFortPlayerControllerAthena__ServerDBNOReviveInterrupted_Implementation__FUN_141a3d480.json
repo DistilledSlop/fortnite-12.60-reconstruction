@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141a3d480",
+  "address": "0x141a3d480",
+  "signature": "void FUN_141a3d480(longlong param_1,undefined1 param_2)",
+  "inc_or_decl": "sets player revive state (value 4)",
+  "evidence": "AFortPlayerControllerAthena::ServerDBNOReviveInterrupted_Implementation"
+}

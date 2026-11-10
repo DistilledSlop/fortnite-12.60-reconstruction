@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication",
+  "status": "proposed",
+  "original": "0x142a5b7f0",
+  "signature": "void ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5b7f0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (vslot 0x22f8)",
+    "0x1419f1fb0": "ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication_Implementation (vslot 0x2300)",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk."
+}

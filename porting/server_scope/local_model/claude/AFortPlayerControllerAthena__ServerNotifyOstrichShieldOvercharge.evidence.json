@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge",
+  "status": "proposed",
+  "original": "0x142a5b890",
+  "signature": "void ServerNotifyOstrichShieldOvercharge()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a5b890.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (vslot 0x23f8)",
+    "0x1419f2080": "ServerNotifyOstrichShieldOvercharge_Implementation (vslot 0x2400)",
+    "RPC_ValidateFailed": "engine RPC failure reporter"
+  },
+  "notes": "Thunk."
+}

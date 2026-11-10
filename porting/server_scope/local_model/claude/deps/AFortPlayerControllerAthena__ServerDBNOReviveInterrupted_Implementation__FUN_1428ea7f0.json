@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1428ea7f0",
+  "address": "0x1428ea7f0",
+  "signature": "longlong FUN_1428ea7f0(void)",
+  "inc_or_decl": "class accessor (not read)",
+  "evidence": "AFortPlayerControllerAthena::ServerDBNOReviveInterrupted_Implementation"
+}

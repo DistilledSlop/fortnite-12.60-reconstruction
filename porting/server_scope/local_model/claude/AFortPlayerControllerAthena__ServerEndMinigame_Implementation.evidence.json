@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerEndMinigame_Implementation",
+  "status": "proposed",
+  "original": "0x1419f1ad0",
+  "signature": "void _Implementation(bool bAbandon)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1419f1ad0.c",
+    "/opt/fortnite/local-model-package/captures/4bfdc5b186f740b7aec719e1c5fea660/0x1419c3880.c",
+    "/opt/fortnite/local-model-package/captures/4bfdc5b186f740b7aec719e1c5fea660/0x141c795a0.c",
+    "/opt/fortnite/local-model-package/captures/4bfdc5b186f740b7aec719e1c5fea660/0x14208b4f0.c"
+  ],
+  "callees": {
+    "0x1419c3880": "controller minigame lookup (FUN_141c74820 and FUN_141c7d420 inside; out-param = minigame)",
+    "0x141c795a0": "manager accessor (depth-1 read only; called without arguments in this decompile)",
+    "0x14208b4f0": "minigame end/leave notification (not read)",
+    "GUObjectArray pending-kill check": "inline: object item flags bit 29 (PendingKill)"
+  },
+  "notes": "LOW. The pending-kill check is inline in the decompile (FUObjectArray lookup) and is written as IsPendingKill. Argument of Helper_141c795a0 is not established."
+}

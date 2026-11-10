@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1406801c0",
+  "address": "0x1406801c0",
+  "signature": "void Stub_Empty(void)",
+  "inc_or_decl": "Stub_Empty (shared bare-return stub)",
+  "evidence": "AFortPlayerControllerAthena::SendClientPhysicsBallStateToServer"
+}

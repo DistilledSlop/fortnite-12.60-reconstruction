@@ -1,0 +1,7 @@
+{
+  "name": "FUN_1419f0d80",
+  "address": "0x1419f0d80",
+  "signature": "",
+  "inc_or_decl": "ServerAddToCachedPurchased_Validate (vslot 0x2460)",
+  "evidence": "AFortPlayerControllerAthena::ServerAddToCachedPurchased"
+}

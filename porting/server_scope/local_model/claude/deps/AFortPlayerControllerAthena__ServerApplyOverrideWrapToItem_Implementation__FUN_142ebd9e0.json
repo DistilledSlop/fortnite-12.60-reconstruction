@@ -1,0 +1,7 @@
+{
+  "name": "FUN_142ebd9e0",
+  "address": "0x142ebd9e0",
+  "signature": "undefined8 * FUN_142ebd9e0(undefined8 *param_1,undefined8 *param_2)",
+  "inc_or_decl": "move-assign of a TArray-like block (frees old storage)",
+  "evidence": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Implementation"
+}

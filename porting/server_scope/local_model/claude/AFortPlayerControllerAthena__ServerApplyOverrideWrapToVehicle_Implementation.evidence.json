@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerControllerAthena::ServerApplyOverrideWrapToVehicle_Implementation",
+  "status": "proposed",
+  "original": "0x1419f1040",
+  "signature": "void _Implementation(FSoftObjectPtr ItemWrap)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1419f1040.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x142a75f10.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native174-correct-byte-slots/0x1423256c0.c"
+  ],
+  "callees": {
+    "0x142a75f10": "AFortPlayerPawn::StaticClass() (cached /Script/FortniteGame.FortPlayerPawn)",
+    "0x1423256c0": "NativeGetVehicleInterface163 (vslot 0x1088, existing port)",
+    "vslot 0x5d0 (on IFortVehicleInterface)": "apply wrap on the vehicle (name not resolved)"
+  },
+  "notes": "MEDIUM. The pawn is read from this+0x248 (AController::Pawn). The vslot 0x5d0 target class is not resolved."
+}

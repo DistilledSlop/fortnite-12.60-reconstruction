@@ -1,0 +1,7 @@
+{
+  "name": "FUN_141f08e90",
+  "address": "0x141f08e90",
+  "signature": "undefined8 FUN_141f08e90(int param_1,longlong param_2)",
+  "inc_or_decl": "shield gate (depth-1 read only; reads this and the Ostrich +0x3510 value)",
+  "evidence": "AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Implementation"
+}
