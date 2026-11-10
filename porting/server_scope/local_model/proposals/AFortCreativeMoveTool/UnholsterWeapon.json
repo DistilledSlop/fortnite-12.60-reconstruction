@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeMoveTool::UnholsterWeapon",
+ "status": "blocked",
+ "blocker": "Exec 0x1428c5c00 = FFrame prologue + tail-JMP body 0x14268a620. Unresolved: (1) FUN_142665070(this,1) \u2014 core unholster op on [this+0xc60] ActiveMovementMode; (2) gate comparing struct P=[Instigator->Controller+0x10] (data@+0x30,count@+0x38) vs AFortPlayerControllerAthena static-class +0x30/+0x38 \u2014 meaning unknown (UObject layout/class fields not pinned); (3) FName _DAT_148191e18 (no-param ProcessEvent in 0x1428bfcd0) not in name pool; (4) FUN_143f7a920 global query, FUN_143f84060 trailing op, 0x1406a9dc0 delegate helper unproven. Next: pin UObject layout + struct at Controller+0x10, decompile 0x142665070 fully, name-pool read for _DAT_148191e18.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100656",
+ "batch_seconds": 831
+}
