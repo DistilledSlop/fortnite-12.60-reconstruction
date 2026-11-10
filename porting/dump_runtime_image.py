@@ -6,15 +6,22 @@ process, and never touches the exe on disk. Needs root under ptrace_scope=1, so 
 sudo -n. Polls until the executable sections look decrypted, then writes the whole image in
 virtual layout (SizeOfImage bytes from the image base) and a JSON record next to it.
 
-Decrypted means: median 1 MiB-window entropy of each executable section is at or below
---max-entropy, the unreadable pages in those sections are zero, and objdump
-(-b binary -m i386:x86-64) decodes the sampled slices with at most --max-bad '(bad)' lines.
+The existing whole-image heuristic checks median 1 MiB-window entropy of executable sections
+against --max-entropy and the objdump sampled-instruction bad fraction against --max-bad.
+It does not establish that each individual code region is decrypted or readable.
 If verification fails, polling continues, so a later attempt can still succeed.
 
 Usage:
   sudo -n python3 -I porting/dump_runtime_image.py [--out DIR] [--timeout S] [--interval S]
 Output (ignored by git): DIR/FortniteClient-Win64-Shipping.runtime.bin and DIR/dump.json.
 Convert to a loadable PE with porting/dump_to_pe.py.
+
+To wait for selected locations to change relative to an earlier raw virtual-layout dump:
+  --compare-dump EARLIER.runtime.bin --changed-va 0x1495a4a24 --changed-va 0x14998573a
+Each address compares 16 bytes by default; --compare-width changes that width. Every range
+must differ by at least one byte. Use a baseline from the same build and image base. Changed
+bytes do not prove decryption or valid code. With comparison enabled, any unreadable page
+prevents acceptance.
 """
 import argparse
 import bisect
@@ -269,6 +276,22 @@ def compare_with_disk(img, pe):
     return out
 
 
+def changed_ranges(img, baseline, addresses, width):
+    """Compare image-layout byte ranges, returning a report without storing their contents."""
+    if len(img) != len(baseline):
+        raise ValueError("baseline and captured image sizes differ")
+    checks = []
+    for address in addresses:
+        offset = address - IMAGE_BASE
+        if offset < 0 or offset + width > len(img):
+            raise ValueError(f"range at {address:#x} is outside the image")
+        changed = sum(a != b for a, b in zip(img[offset:offset + width],
+                                             baseline[offset:offset + width]))
+        checks.append({"address": hex(address), "size": width,
+                       "changed_bytes": changed, "changed": changed > 0})
+    return checks
+
+
 def chown_to_invoker(path):
     uid = os.environ.get("SUDO_UID")
     gid = os.environ.get("SUDO_GID")
@@ -283,7 +306,29 @@ def main():
     ap.add_argument("--interval", type=float, default=0.05, help="seconds between polls")
     ap.add_argument("--max-entropy", type=float, default=6.8)
     ap.add_argument("--max-bad", type=float, default=0.05)
+    ap.add_argument("--compare-dump", help="earlier raw virtual-layout runtime .bin")
+    ap.add_argument("--changed-va", action="append", default=[], type=lambda v: int(v, 0),
+                    help="absolute VA whose range must differ from the earlier dump; repeatable")
+    ap.add_argument("--compare-width", type=int, default=16,
+                    help="bytes compared at each VA (default: 16)")
     args = ap.parse_args()
+    if bool(args.compare_dump) != bool(args.changed_va):
+        ap.error("--compare-dump and at least one --changed-va must be used together")
+    if args.compare_width <= 0:
+        ap.error("--compare-width must be positive")
+    baseline = None
+    baseline_hash = None
+    if args.compare_dump:
+        try:
+            with open(args.compare_dump, "rb") as stream:
+                baseline = stream.read()
+            baseline_pe = parse_pe(baseline)
+            if len(baseline) != baseline_pe["size_of_image"]:
+                raise ValueError("baseline must be a complete raw virtual-layout image")
+            changed_ranges(baseline, baseline, args.changed_va, args.compare_width)
+        except (OSError, ValueError, struct.error, IndexError) as exc:
+            ap.error(f"invalid comparison dump or address: {exc}")
+        baseline_hash = hashlib.sha256(baseline).hexdigest()
 
     os.makedirs(args.out, exist_ok=True)
     chown_to_invoker(args.out)
@@ -320,6 +365,21 @@ def main():
             size = pe_head["size_of_image"]
             img, bad_pages = read_at(fd, IMAGE_BASE, size)
             pe = parse_pe(img)
+            comparison = None
+            if baseline is not None:
+                try:
+                    checks = changed_ranges(img, baseline, args.changed_va, args.compare_width)
+                except ValueError as exc:
+                    print(f"comparison failed: {exc}", file=sys.stderr)
+                    return 2
+                comparison = {"baseline_file": os.path.abspath(args.compare_dump),
+                              "baseline_sha256": baseline_hash, "checks": checks,
+                              "all_changed": all(check["changed"] for check in checks),
+                              "note": "Changed bytes do not prove decryption or valid code."}
+                if bad_pages or not comparison["all_changed"]:
+                    print(f"comparison pending: unreadable_pages={bad_pages}, checks={checks}", flush=True)
+                    time.sleep(args.interval)
+                    continue
             with tempfile.TemporaryDirectory(dir=args.out) as scratch:
                 passed, report = verify(img, pe, scratch, args.max_entropy, args.max_bad)
             print(f"verify: {report['verdict']} code_median_entropy={report['code_median_entropy']}", flush=True)
@@ -352,6 +412,7 @@ def main():
                 "max_entropy": args.max_entropy,
                 "max_bad": args.max_bad,
                 "verification": report,
+                "address_comparison": comparison,
                 "same_as_disk_sample_share": compare_with_disk(img, pe),
                 "poll_trace": trace[-200:],
                 "file": DUMP_NAME,
