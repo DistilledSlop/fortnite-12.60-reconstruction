@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::ServerUpdateGameDescriptionData",
+  "status": "proposed",
+  "original": "0x142a4e290",
+  "signature": "void ServerUpdateGameDescriptionData(AActor* DataTarget, FText GameName, TArray<FText> GameDescriptionText)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142a4e290.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ad5a0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ad4a0.c"
+  ],
+  "callees": {
+    "0x1423ad5a0": "non-default validate body; see ServerUpdateGameDescriptionData_Validate.inc",
+    "0x1423ad4a0": "Implementation virtual target; see ServerUpdateGameDescriptionData_Implementation.inc",
+    "RPC_ValidateFailed": "engine: reports a failed RPC validation (named engine helper, not ported)"
+  },
+  "notes": "Generated RPC wrapper: read parameters from the frame, call Validate, report on failure, otherwise call the implementation. Read order: object (offset 0), FText GameName (offset 8), FText array (offset 32)."
+}

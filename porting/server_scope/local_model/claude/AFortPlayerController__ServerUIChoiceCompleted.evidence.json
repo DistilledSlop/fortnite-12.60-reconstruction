@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::ServerUIChoiceCompleted",
+  "status": "proposed",
+  "original": "0x142a4dff0",
+  "signature": "void ServerUIChoiceCompleted(int32 ChosenItem, int32 MenuIdentifier)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142a4dff0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/callee_probe/item_queries_2/0x1406801d0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ad150.c"
+  ],
+  "callees": {
+    "0x1406801d0": "shared validate stub 0x1406801d0 (mov al,1; ret), returns true; see ServerUIChoiceCompleted_Validate.inc",
+    "0x1423ad150": "Implementation virtual target; see ServerUIChoiceCompleted_Implementation.inc",
+    "RPC_ValidateFailed": "engine: reports a failed RPC validation (named engine helper, not ported)"
+  },
+  "notes": "Generated RPC wrapper: read parameters from the frame, call Validate, report on failure, otherwise call the implementation. Read order: int at offset 0 (ChosenItem), then int at offset 4 (MenuIdentifier). Inventory lists them in reverse; offsets decide the order (MEDIUM)."
+}

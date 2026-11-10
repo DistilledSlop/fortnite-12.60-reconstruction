@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::ServerSpawnMark",
+  "status": "proposed",
+  "original": "0x142a4d9b0",
+  "signature": "void ServerSpawnMark(AActor* ActorToAttachTo, FVector AttachOffset, FText PreapprovedText)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142a4d9b0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/callee_probe/item_queries_2/0x1406801d0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423acc40.c"
+  ],
+  "callees": {
+    "0x1406801d0": "shared validate stub 0x1406801d0 (mov al,1; ret), returns true; see ServerSpawnMark_Validate.inc",
+    "0x1423acc40": "Implementation virtual target; see ServerSpawnMark_Implementation.inc",
+    "RPC_ValidateFailed": "engine: reports a failed RPC validation (named engine helper, not ported)"
+  },
+  "notes": "Generated RPC wrapper: read parameters from the frame, call Validate, report on failure, otherwise call the implementation. Read order: object (offset 0), FVector (offset 8, 12 bytes), FText (offset 24)."
+}

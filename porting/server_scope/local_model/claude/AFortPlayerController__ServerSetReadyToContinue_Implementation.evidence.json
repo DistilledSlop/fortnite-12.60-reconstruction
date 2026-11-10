@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerController::ServerSetReadyToContinue_Implementation",
+  "status": "proposed",
+  "original": "0x1423acae0",
+  "signature": "void ServerSetReadyToContinue_Implementation(bool bTryStartTimer, uint8 RequestedState, bool bReady)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423acae0.c"
+  ],
+  "callees": {
+    "0x142a3f860": "ProcessEvent-forward helper (name proposed: NativeForwardReadyToContinue): sends the call to the server, captured",
+    "0x142a85850": "AFortPlayerState::StaticClass (named)",
+    "0x1428ea8f0": "AFortGameMode::StaticClass (named)",
+    "0x14242a0b0": "NativeSetReadyToContinue (name proposed) on the player state, not ported",
+    "0x141e61f60": "NativeCountReadyPlayers (name proposed), not ported",
+    "0x1424a1280": "NativeStartReadyTimer (name proposed), not ported"
+  },
+  "notes": "Bit 1 (0x2) and bit 3 (0x8) of the player-state flags at +0x330 gate the second branch. The original calls SetReadyToContinue in both branches; the port keeps the call before the checks (same effect for the flags read). Required-count virtual (GameMode +0x6a0) name proposed."
+}

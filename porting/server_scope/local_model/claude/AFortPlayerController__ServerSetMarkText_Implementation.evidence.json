@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::ServerSetMarkText_Implementation",
+  "status": "proposed",
+  "original": "0x1423ac7a0",
+  "signature": "void ServerSetMarkText_Implementation(AActor* MarkActor, FString MarkText)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ac7a0.c"
+  ],
+  "callees": {
+    "0x142a92a00": "AFortPlayerStateZone::StaticClass (named via the class getter body)",
+    "0x1406a7e80": "NativeIsMarkOwnedBy(MarkActor owner slot, PlayerStateZone) (name proposed): owner-slot comparison",
+    "0x143f6c200": "NativeReleaseMark(actor, flag, flag) (name proposed): clears or removes a mark",
+    "0x142ec9d30": "GetName helper for log output",
+    "0x1444ac7a0": "NativeGetClientName (name proposed): display name of the client"
+  },
+  "notes": "Member offsets: MarkActor owner slot +0x218, MarkText +0x220, bHasCustomText +0x248 (names proposed). Log level gate omitted."
+}

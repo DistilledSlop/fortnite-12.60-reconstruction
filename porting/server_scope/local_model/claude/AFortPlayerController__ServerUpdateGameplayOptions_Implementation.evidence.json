@@ -1,0 +1,26 @@
+{
+  "function": "AFortPlayerController::ServerUpdateGameplayOptions_Implementation",
+  "status": "proposed",
+  "original": "0x1423ad610",
+  "signature": "void ServerUpdateGameplayOptions_Implementation(TArray<FString> UserOptionsKeys, TArray<FString> UserOptionsValues)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ad610.c"
+  ],
+  "callees": {
+    "0x1423a0aa0": "NativeCanPlayerEditGameplayOptions (name proposed), not ported",
+    "0x141c74820": "NativeGetGameplayOptionsManager (name proposed) on the controller, not ported",
+    "0x141c7c5c0": "NativeFindGameplayOptionsEntry(manager, pawn) (name proposed), not ported",
+    "0x141c795a0": "NativeGetGameplayOptionsState(entry) (name proposed), not ported",
+    "0x141641350": "UWorld::GetGameState (named by its use)",
+    "0x141b48ba0": "NativeGetPawnOptions(pawn) (name proposed): returns the pawn-options object whose PlaylistName is at +0xd8, not ported",
+    "0x141991cc0": "GetCurrentPlaylistAthena(GameState) (existing name in the port notes)",
+    "0x141f4f710": "NativeGetValidOptionsForPlaylist (name proposed), not ported",
+    "0x141f487c0": "NativeApplyOptions on playlist (name proposed), not ported",
+    "0x1411ad090": "NativeNotifyOptionsChanged on playlist (name proposed), not ported",
+    "0x141b38ed0": "NativeNotifyOptionsChanged on game state / owner (name proposed), not ported",
+    "0x141790820": "NativeRecordPlayerOptions (name proposed), not ported",
+    "0x1419f4c30": "NativeApplyOptions on pawn options (name proposed), not ported",
+    "0x142ce9f90": "GetNameSafe for log output"
+  },
+  "notes": "Large body. The set difference over the option maps is reduced to a count comparison and a per-key scan. Playlist and pawn-options member names are proposed. Confidence LOW for the branch structure of the playlist path."
+}

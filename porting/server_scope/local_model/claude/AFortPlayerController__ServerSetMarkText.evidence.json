@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::ServerSetMarkText",
+  "status": "proposed",
+  "original": "0x142a4d4e0",
+  "signature": "void ServerSetMarkText(AActor* MarkActor, FString MarkText)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142a4d4e0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/callee_probe/item_queries_2/0x1406801d0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ac7a0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "shared validate stub 0x1406801d0 (mov al,1; ret), returns true; see ServerSetMarkText_Validate.inc",
+    "0x1423ac7a0": "Implementation virtual target; see ServerSetMarkText_Implementation.inc",
+    "RPC_ValidateFailed": "engine: reports a failed RPC validation (named engine helper, not ported)"
+  },
+  "notes": "Generated RPC wrapper: read parameters from the frame, call Validate, report on failure, otherwise call the implementation. Read order: MarkActor (object, offset 0), then MarkText (FString, offset 8)."
+}

@@ -1,0 +1,14 @@
+{
+  "function": "AFortPlayerController::ServerSetInventoryStateValue_Implementation",
+  "status": "proposed",
+  "original": "0x1423ac760",
+  "signature": "void ServerSetInventoryStateValue_Implementation(FGuid ItemGuid, FInventoryStateValue StateValue)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ac760.c"
+  ],
+  "callees": {
+    "0x142a3f620": "ProcessEventByName (name proposed): UObject::FindFunctionChecked(FName) then ProcessEvent with (ItemGuid, StateValue); FName global at 0x1481af270 is unresolved",
+    "0x142023d80": "struct initializer: zeroes a 16-byte value and sets a byte at +0xc (captured)"
+  },
+  "notes": "The decompile shows the struct copies in the forward call; the body above names the two parameters directly. Role is the byte at AActor::Role (+0xf0), 3 = ROLE_Authority."
+}

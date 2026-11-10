@@ -1,0 +1,13 @@
+{
+  "function": "AFortPlayerController::ServerTouchActiveTime_Implementation",
+  "status": "proposed",
+  "original": "0x1423ad120",
+  "signature": "void ServerTouchActiveTime_Implementation()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a6de3ad88052409fb2089d6ca57e44fc/0x1423ad120.c"
+  ],
+  "callees": {
+    "0x1423bcef0": "NativeRecordActivityTimestamp (virtual slot 0x15b8 on AFortPlayerController): records the current time as last activity via GetWorld()->TimeSeconds (captured, MEDIUM; not ported)"
+  },
+  "notes": "Flag at controller +0x771 is cleared (name proposed)."
+}

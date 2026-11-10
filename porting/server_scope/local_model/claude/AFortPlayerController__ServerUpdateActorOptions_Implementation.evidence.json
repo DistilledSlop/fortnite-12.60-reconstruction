@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::ServerUpdateActorOptions_Implementation",
+  "status": "proposed",
+  "original": "0x1423ad260",
+  "signature": "void ServerUpdateActorOptions_Implementation(AActor* OptionsTarget, TArray<FString> OptionsKeys, TArray<FString> OptionsValues)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ad260.c"
+  ],
+  "callees": {
+    "0x14278b930": "NativeEnsureOptionsTargetReady (name proposed): precondition helper on the target, result unused, not ported",
+    "0x143f709a0": "AActor virtual slot 0x610 (owner AActor): returns the options component (name proposed), not ported",
+    "0x140a06520": "TMap::Add (engine helper)",
+    "0x141e102b0": "NativeSetOptions (name proposed) on the options component, not ported",
+    "0x142ce9f90": "GetNameSafe for log output"
+  },
+  "notes": "Mismatch check happens before the component lookup. The null-target path logs without a name (MEDIUM)."
+}

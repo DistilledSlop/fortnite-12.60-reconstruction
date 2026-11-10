@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::ServerUpdateItemListOptions",
+  "status": "proposed",
+  "original": "0x142a4e5d0",
+  "signature": "void ServerUpdateItemListOptions(UObject* ItemContainerComponent, int32 ItemIndex, TArray<FString> OptionsKeys, TArray<FString> OptionsValues)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142a4e5d0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/callee_probe/item_queries_2/0x1406801d0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423add90.c"
+  ],
+  "callees": {
+    "0x1406801d0": "shared validate stub 0x1406801d0 (mov al,1; ret), returns true; see ServerUpdateItemListOptions_Validate.inc",
+    "0x1423add90": "Implementation virtual target; see ServerUpdateItemListOptions_Implementation.inc",
+    "RPC_ValidateFailed": "engine: reports a failed RPC validation (named engine helper, not ported)"
+  },
+  "notes": "Generated RPC wrapper: read parameters from the frame, call Validate, report on failure, otherwise call the implementation. Read order: object (offset 0), int (offset 8), keys array (offset 16), values array (offset 32)."
+}

@@ -1,0 +1,13 @@
+{
+  "function": "AFortPlayerController::ServerUIChoiceCompleted_Validate",
+  "status": "proposed",
+  "original": "0x1406801d0",
+  "signature": "bool ServerUIChoiceCompleted_Validate(int32 ChosenItem, int32 MenuIdentifier)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/callee_probe/item_queries_2/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "shared validate stub: returns true"
+  },
+  "notes": "Default validate for ServerUIChoiceCompleted. Vtable slot resolves to the shared stub, so the body is a constant true."
+}

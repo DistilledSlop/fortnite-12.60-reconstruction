@@ -1,0 +1,13 @@
+{
+  "function": "AFortPlayerController::ServerUpdateActorOptions_Validate",
+  "status": "proposed",
+  "original": "0x1423ad490",
+  "signature": "bool ServerUpdateActorOptions_Validate(AActor* OptionsTarget, TArray<FString> OptionsKeys, TArray<FString> OptionsValues)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ad490.c"
+  ],
+  "callees": {
+    "0x1423ad490": "validate body (8 lines)"
+  },
+  "notes": "Compares Num of the keys and values arrays (2nd and 3rd parameters)."
+}

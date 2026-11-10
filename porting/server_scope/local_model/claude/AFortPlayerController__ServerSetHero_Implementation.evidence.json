@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerController::ServerSetHero_Implementation",
+  "status": "proposed",
+  "original": "0x1423ac4d0",
+  "signature": "void ServerSetHero_Implementation(FString NewHeroID)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ac4d0.c"
+  ],
+  "callees": {
+    "0x14237ca50": "NativeFindHeroByID(FString): resolves a hero ID through the controller hero resolver (member at controller +0x1af8); returns a hero object or null (MEDIUM, body not ported)",
+    "0x142939040": "UFortHero::StaticClass (named: FortHero class getter)",
+    "0x140f95ae0": "GetWorldTimerManager(): timer manager of the controller world (name proposed)",
+    "0x144621fb0": "FTimerManager::IsTimerActive (name proposed): returns non-null when the handle is live",
+    "0x1423bdd50": "NativeApplyHero(controller, hero, bForce, bLoadout) (name proposed; applies the hero, not ported)",
+    "0x140680160": "FString::Empty (engine helper)",
+    "0x140683960": "FString assignment (engine helper)",
+    "0x142ee3b30": "TWeakObjectPtr assignment (engine helper)",
+    "0x1446278d0": "FTimerManager::SetTimer (name proposed): handle, delegate, rate, loop",
+    "0x142bad740": "retry delegate payload (unresolved; replaced by CreateUObject in the port)",
+    "0x142ce9f90": "object name helper for log output (engine-side)"
+  },
+  "notes": "Timer delay 0x3dcccccd is 0.1f. Retry target and the 0x1a10..0x1a20 members (PendingHeroID, HeroRetryTimerHandle) are proposed names."
+}

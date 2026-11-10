@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerController::ServerTeamChatRoomReady_Implementation",
+  "status": "proposed",
+  "original": "0x1423ad070",
+  "signature": "void ServerTeamChatRoomReady_Implementation(FString ChatRoomId)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ad070.c"
+  ],
+  "callees": {
+    "0x150 (AActor virtual, 0x143f793a0)": "GetWorld() (name proposed)",
+    "0x1428ea8f0": "AFortGameMode::StaticClass (named)",
+    "0x141e80b80": "NativeHandleTeamChatRoomReady (name proposed), not ported"
+  },
+  "notes": "Log gate uses the controller log verbosity; the decompile reads the verbosity global, so the level-gate check is omitted. Game mode is UWorld::AuthorityGameMode (+0x128, MEDIUM)."
+}

@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerController::ServerSetInventoryStateValue",
+  "status": "proposed",
+  "original": "0x142a4d3a0",
+  "signature": "void ServerSetInventoryStateValue(FGuid ItemGuid, FInventoryStateValue StateValue)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142a4d3a0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/callee_probe/item_queries_2/0x1406801d0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ac760.c"
+  ],
+  "callees": {
+    "0x1406801d0": "shared validate stub 0x1406801d0 (mov al,1; ret), returns true; see ServerSetInventoryStateValue_Validate.inc",
+    "0x1423ac760": "Implementation virtual target; see ServerSetInventoryStateValue_Implementation.inc",
+    "RPC_ValidateFailed": "engine: reports a failed RPC validation (named engine helper, not ported)"
+  },
+  "notes": "Generated RPC wrapper: read parameters from the frame, call Validate, report on failure, otherwise call the implementation. Read order: ItemGuid (offset 0), then StateValue (offset 16). Struct type names unresolved; both are 16-byte values."
+}

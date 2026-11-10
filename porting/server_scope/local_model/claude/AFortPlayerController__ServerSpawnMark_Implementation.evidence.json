@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerController::ServerSpawnMark_Implementation",
+  "status": "proposed",
+  "original": "0x1423acc40",
+  "signature": "void ServerSpawnMark_Implementation(AActor* ActorToAttachTo, FVector AttachOffset, FText PreapprovedText)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423acc40.c"
+  ],
+  "callees": {
+    "0x142a92a00": "AFortPlayerStateZone::StaticClass (named)",
+    "0x143f6c200": "NativeReleaseMark (name proposed), not ported",
+    "0x142c2e440": "FText IsEmpty (engine helper): nonzero when the text is empty",
+    "0x1442e74f0": "UWorld::SpawnActor (name proposed), not ported",
+    "0x141f3ec80": "FinishSpawning (name proposed), not ported",
+    "0x14072c6c0": "TArray shrink helper (engine)",
+    "0x142ee3b30": "TWeakObjectPtr assignment (engine helper)",
+    "0x142c0c240": "FText default constructor (empty text): copies the empty-text singleton and retains it (captured)",
+    "0x142985ae0": "AFortMarkActor::StaticClass (confirmed from the class getter body, captured)"
+  },
+  "notes": "Mark list member at +0xed0 with count at +0xed8 and capacity at +0xedc (names proposed). Spawn location is the root location plus offset; the root-location field (+0x1d0) is read as the component location (MEDIUM)."
+}

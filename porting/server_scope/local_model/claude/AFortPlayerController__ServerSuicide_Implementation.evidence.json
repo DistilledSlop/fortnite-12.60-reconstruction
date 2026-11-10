@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerController::ServerSuicide_Implementation",
+  "status": "proposed",
+  "original": "0x1423acfe0",
+  "signature": "void ServerSuicide_Implementation()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a6de3ad88052409fb2089d6ca57e44fc/0x1423acfe0.c"
+  ],
+  "callees": {
+    "0x150 (AActor virtual, 0x143f793a0)": "GetWorld() (name proposed)",
+    "0x143f7a920": "NativeIsSuicideGracePeriodActive (name proposed): nonzero means the grace period applies, not ported",
+    "0x142a75f10": "AFortPlayerPawn::StaticClass (named via the class getter body)",
+    "0x142353af0": "AFortPlayerPawn::NativeSuicide (pawn virtual at slot 0xb50 of AFortPlayerPawn; name proposed), not ported"
+  },
+  "notes": "Pawn member at controller +0x248 (AController::Pawn). World TimeSeconds at +0x540 on UWorld. Pawn float at +0x9c is unnamed."
+}

@@ -1,0 +1,14 @@
+{
+  "function": "AFortPlayerController::ServerTriggerGenericObjectiveEvent_Implementation",
+  "status": "proposed",
+  "original": "0x1423ad140",
+  "signature": "void ServerTriggerGenericObjectiveEvent_Implementation(UObject* Objective)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ad140.c"
+  ],
+  "callees": {
+    "0x1481abb20": "FName constant for the objective event function (unresolved)",
+    "UObject::FindFunctionChecked": "engine helper (named)"
+  },
+  "notes": "The ProcessEvent call is the vtable entry at slot 0x210 (engine ProcessEvent). FName constant is unresolved."
+}

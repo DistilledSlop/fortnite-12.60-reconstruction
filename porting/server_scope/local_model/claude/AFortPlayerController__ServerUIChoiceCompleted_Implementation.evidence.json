@@ -1,0 +1,13 @@
+{
+  "function": "AFortPlayerController::ServerUIChoiceCompleted_Implementation",
+  "status": "proposed",
+  "original": "0x1423ad150",
+  "signature": "void ServerUIChoiceCompleted_Implementation(int32 ChosenItem, int32 MenuIdentifier)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ad150.c"
+  ],
+  "callees": {
+    "0x1406a9dc0": "FScopeLock on the controller member at +0xbb8 (engine helper)"
+  },
+  "notes": "Invocation list at +0xc00, count at +0xc08, counter at +0xc14 (names proposed). Lock and compaction are inside the delegate Broadcast."
+}

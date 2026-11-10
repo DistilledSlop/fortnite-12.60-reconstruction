@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerController::ServerUpdateGameDescriptionData_Implementation",
+  "status": "proposed",
+  "original": "0x1423ad4a0",
+  "signature": "void ServerUpdateGameDescriptionData_Implementation(AActor* DataTarget, FText GameName, TArray<FText> GameDescriptionText)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423ad4a0.c"
+  ],
+  "callees": {
+    "0x1429d4b10": "AFortMinigameSettingsBuilding::StaticClass (named via the log text)",
+    "0x142706480": "NativeApplyGameDescription (name proposed), not ported",
+    "0x142ce9f90": "GetNameSafe for log output"
+  },
+  "notes": "Parameter order from the thunk: DataTarget, GameName (FText), GameDescriptionText (FText array)."
+}

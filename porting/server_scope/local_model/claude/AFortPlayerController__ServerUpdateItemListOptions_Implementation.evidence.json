@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerController::ServerUpdateItemListOptions_Implementation",
+  "status": "proposed",
+  "original": "0x1423add90",
+  "signature": "void ServerUpdateItemListOptions_Implementation(UObject* ItemContainerComponent, int32 ItemIndex, TArray<FString> OptionsKeys, TArray<FString> OptionsValues)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1423add90.c"
+  ],
+  "callees": {
+    "0x141ed2350": "NativeGetItemOptionsSettings (name proposed): settings object, flag at +0xc9 (MEDIUM)",
+    "0x14199e3c0": "NativeCanEditItemOptions(GameState) (name proposed), not ported",
+    "0x142087550": "NativeCanPlayerEditItemListComponent(component, controller) (name proposed), not ported",
+    "0x140a06520": "TMap::Add (engine helper)",
+    "0x142ce9f90": "GetNameSafe for log output",
+    "0x420 (component virtual)": "NativeSetItemOptions(Options, ItemIndex) on the item container component (name proposed), not ported"
+  },
+  "notes": "Item container component is the thunk's first parameter (offset 0), ItemIndex is the int at offset 8. Settings flag at +0xc9 is read as enable (MEDIUM)."
+}
