@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerController::ModifyStat",
+  "status": "proposed",
+  "original": "0x142a48a40",
+  "signature": "void ModifyStat(FName StatName, int32 Amount, uint8 ModType, bool bForceStatSave)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a48a40.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x142395320.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142a3f020.c"
+  ],
+  "callees": {
+    "0x142395320": "Tail wrapper: forwards to 0x142a3f020",
+    "0x142a3f020": "ProcessEvent wrapper: FindFunctionChecked(FName 0x1481af1c0), then ProcessEvent with a 16-byte param block (Name, int32, byte, bool)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Declaration order is the reverse of the inventory list (StatName, Amount, ModType, bForceStatSave). Event FName 0x1481af1c0 is not resolved to a string."
+}

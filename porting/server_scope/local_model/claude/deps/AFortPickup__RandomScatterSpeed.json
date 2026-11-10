@@ -1,0 +1,8 @@
+{
+  "name": "AFortPickup__RandomScatterSpeed",
+  "address": "0x14202dc10",
+  "signature": "float GetRandomScatterSpeed()",
+  "inc_or_decl": "// NOT PORTED (partially read). Branch 1 (this+0x4b0 byte == 0): world helpers 0x141e5b2a0 and 0x141bf4080 (not read),\n// then 0x14416a230 yields two floats (range min/max), a global at +0x60 supplies a scale, and rand() picks a value:\n// return (Max - Min) * (rand01 * (Scale - 1) + 1). Branch 2 (flag set or lookup failed): return the float at this+0x4ac.",
+  "evidence": "captures/0d0fa43526e841f985be4f110aeccb08/0x14202dc10.c. Helpers 0x141e5b2a0, 0x141bf4080, 0x14416a230 were not captured or read.",
+  "status": "described"
+}

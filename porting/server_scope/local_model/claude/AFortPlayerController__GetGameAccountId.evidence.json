@@ -1,0 +1,20 @@
+{
+  "function": "AFortPlayerController::GetGameAccountId",
+  "status": "proposed",
+  "original": "0x142a47360",
+  "signature": "FUniqueNetIdRepl GetGameAccountId()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a47360.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x14237f3d0.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x140d7c4c0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142989f60.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14237f580.c"
+  ],
+  "callees": {
+    "0x14237f3d0": "Helper: returns the FUniqueNetIdRepl of Player (local player) or PlayerState->UniqueId",
+    "0x140d7c4c0": "FUniqueNetIdRepl copy-assign into the return slot",
+    "0x14237f580": "Local-player account id, 280 lines. NOT ported; described only at call site (see deps AFortPlayerController__Helper_0x14237f580).",
+    "0x142989f60": "UFortLocalPlayer StaticClass"
+  },
+  "notes": "CONFIDENCE MEDIUM. Local-player branch depends on the unported helper 0x14237f580. PlayerState branch is fully ported."
+}

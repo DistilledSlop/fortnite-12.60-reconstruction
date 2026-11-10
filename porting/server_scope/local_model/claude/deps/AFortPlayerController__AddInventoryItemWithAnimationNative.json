@@ -1,0 +1,8 @@
+{
+  "name": "AFortPlayerController__AddInventoryItemWithAnimationNative",
+  "address": "0x142368610",
+  "signature": "void AddInventoryItemWithAnimationNative(FFortItemEntry& ItemDescription)",
+  "inc_or_decl": "// Base virtual body (vslot 0x1b20 target). Subclasses override with the server path.\nif (LogFortPlayerController.IsEnabled(ELogVerbosity::Display))\n{\n    UE_LOG(LogFortPlayerController, Display, TEXT(\"AddInventoryItemWithAnimation was NOT called from server!\"));\n}",
+  "evidence": "porting/generated/native134-virtual-bulk/0x142368610.c (13 lines, read in full). The log is FMsg_Logf_Internal with verbosity 3 and category DAT_1481348e4, gated on DAT_1481348e0 > 2.",
+  "status": "ported"
+}

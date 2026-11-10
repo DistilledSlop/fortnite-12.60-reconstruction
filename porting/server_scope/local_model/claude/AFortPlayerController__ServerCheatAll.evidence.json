@@ -1,0 +1,31 @@
+{
+  "function": "AFortPlayerController::ServerCheatAll",
+  "status": "proposed",
+  "original": "0x142a4a590",
+  "signature": "void ServerCheatAll(FString Msg)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4a590.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x1423aa300.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x140894360.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x143f76730.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x1413064f0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14480eb00.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14468e190.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x1447ba4b0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14469a960.c"
+  ],
+  "callees": {
+    "0x1423aa300": "Implementation (virtual slot 0xe18), 247 lines",
+    "0x140894360": "Actor iterator / anchor lookup (63 lines)",
+    "0x143f76730": "Candidate accessor (calls 0x14477bcd0 and 0x142eca940, not captured)",
+    "0x1413064f0": "Owner accessor, returns +0xB8",
+    "0x14480eb00": "WorldSettings StaticClass",
+    "0x14468e190": "TArray element accessor (0x78 stride)",
+    "0x1447ba4b0": "ProcessEvent with FString completion parameter",
+    "0x14469a960": "Iterator state cleanup (38 lines)",
+    "slot 0xc20 on candidate": "cheat execution (unnamed, 0x144478490 on the class)",
+    "Stub_ReturnFalse": "stub predicate",
+    "0x1406801d0": "Stub_ReturnTrue (validate, slot 0xe10)"
+  },
+  "notes": "CONFIDENCE LOW. Validate and dispatch are ported. The candidate filter, the anchor selection and the cheat execution are only partly decoded (see the .inc). Treat as LOW."
+}

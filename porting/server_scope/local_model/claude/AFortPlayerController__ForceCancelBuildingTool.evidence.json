@@ -1,0 +1,14 @@
+{
+  "function": "AFortPlayerController::ForceCancelBuildingTool",
+  "status": "proposed",
+  "original": "0x142a46a60",
+  "signature": "void ForceCancelBuildingTool()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a46a60.c"
+  ],
+  "callees": {
+    "0x143f7fc50": "UObject::ProcessEvent (virtual slot 0x210)",
+    "FindFunctionChecked": "UObject_FindFunctionChecked (named engine helper)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Role is AActor::Role at 0xF0 (decompile reads param_1[6] with UObject stride 0x28). FName at 0x1481aef78 is not resolved to a string."
+}

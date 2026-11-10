@@ -1,0 +1,8 @@
+{
+  "name": "AFortPawn__FindPlayerControllerForPawn",
+  "address": "0x142321a70",
+  "signature": "UObject* FindPlayerControllerForPawn(AFortPawn* Pawn)",
+  "inc_or_decl": "UObject* Found = nullptr;\nif (UWorld* World = Pawn->GetWorld()) // vslot 0x150 (AActor::GetWorld)\n{\n    for (TWeakObjectPtr<UObject> WeakController : World->PlayerControllerList) // World+0x1c8 array, iterated in index order\n    {\n        UObject* Candidate = WeakController.Get();\n        if (Candidate && Candidate->NativeIsControllerActive() /* vslot 0x6a8, unnamed bool predicate */ && Candidate->NativeGetPawn() /* vslot 0x698 */ == Pawn)\n        {\n            Found = Candidate;\n            break;\n        }\n    }\n}\nreturn Found;",
+  "evidence": "captures/3871ac0df23544e68b91c291a50345d9/0x142321a70.c; captures/8a282a7c21bc4f2c8f60485ae9ad2f01/0x14468fb70.c (iterator init writes World+0x1c8 as the array, index 0). Loop returns the first entry where the vslot 0x6a8 predicate is true and vslot 0x698 (GetPawn) equals the pawn. Vtable slots 0x6a8/0x698 are unnamed; the names above are descriptive.",
+  "status": "ported"
+}

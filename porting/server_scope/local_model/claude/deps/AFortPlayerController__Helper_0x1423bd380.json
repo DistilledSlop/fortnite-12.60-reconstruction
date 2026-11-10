@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x1423bd380",
+  "address": "0x1423bd380",
+  "signature": "UObject* SendUIFeedbackToController(AFortPlayerController*, FName EventName)",
+  "inc_or_decl": "PARTIAL. Structure read: branch on virtual slot 0x6a8; when not taken, net-mode check then 0x142a3ca80; when taken, world-source (0x141ed2b30 / 0x141a777c0 / 0x141a7c880 / 0x1424e1120 / 0x141a661e0) then 0x1424ab0d0 and 0x1423825e0, then 0x144230ed0 or 0x1440cb990 and slot 0x520. Callees not ported.",
+  "evidence": "captures/1f993c5afb8b4421a88624ed0851d433/0x1423bd380.c"
+}

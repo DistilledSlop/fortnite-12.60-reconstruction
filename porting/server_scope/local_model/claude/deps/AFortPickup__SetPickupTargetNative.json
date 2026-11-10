@@ -1,0 +1,8 @@
+{
+  "name": "AFortPickup__SetPickupTargetNative",
+  "address": "0x142038d10",
+  "signature": "void SetPickupTargetNative(AFortPawn* PickupTarget, float ScatterSpeed, FVector ScatterDir, bool bPlayPickupSound)",
+  "inc_or_decl": "// NOT PORTED. Virtual slot 0x640 on AFortPickup; target 0x142038d10 is the 334-line body.\n// Checks: state byte +0xf0 == ROLE_Authority and bool +0xf1 == 0 (returns otherwise). A null target calls vslot 0x18 on the object at +0x148 (unread).\n// The rest (per-entry loop over MultiItemPickupEntries at +0x3e0, controller and replication work, FName/FVector stack frames, FMemory_Free cleanup) is unread.",
+  "evidence": "porting/generated/native-cap-virtual1/0x142038d10.c (cached decompile, 334 lines; read only the first 60 lines).",
+  "status": "described"
+}

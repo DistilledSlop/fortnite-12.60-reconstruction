@@ -1,0 +1,8 @@
+{
+  "name": "AFortPawn__OnRep_IsKnockedBack",
+  "address": "0x1406801c0",
+  "signature": "void OnRep_IsKnockedBack()",
+  "inc_or_decl": "// Shared empty stub (ret 0). The AFortPawn vtable slot 0x9f0 resolves here, so the base body does nothing.",
+  "evidence": "porting/generated/native437-callees/0x1406801c0.c (Stub_Empty). Image bytes are c2 00 00 (ret 0). Slot 318 on AFortPawn. This address is the shared stub list entry, not 0x140680300 (the STRIPPED xor/ret stub).",
+  "status": "stub"
+}

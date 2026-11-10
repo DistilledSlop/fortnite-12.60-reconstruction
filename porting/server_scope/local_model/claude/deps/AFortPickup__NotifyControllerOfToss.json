@@ -1,0 +1,8 @@
+{
+  "name": "AFortPickup__NotifyControllerOfToss",
+  "address": "0x1423bd380",
+  "signature": "void NotifyControllerOfToss(AFortPlayerController* OwnerPC, int32 Arg)",
+  "inc_or_decl": "// NOT PORTED. Called from TossPickup when the pawn's controller is an AFortPlayerController. Body (70 lines) was captured but not read.",
+  "evidence": "captures/0d0fa43526e841f985be4f110aeccb08/0x1423bd380.c (captured, not read). The second argument in TossPickup is the global _DAT_14813b798 (value not resolved).",
+  "status": "described"
+}

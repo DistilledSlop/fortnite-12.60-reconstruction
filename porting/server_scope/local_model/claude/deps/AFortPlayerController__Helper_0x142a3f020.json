@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x142a3f020",
+  "address": "0x142a3f020",
+  "signature": "void ProcessEventWithBlock(UObject* Self, FName EventName, FName Name, int32 Amount, uint8 Byte, bool Flag)",
+  "inc_or_decl": "UFunction* Fn = FindFunctionChecked(EventName); FParamBlock Blk{Name, Amount, Byte, Flag}; ProcessEvent(Fn, &Blk);",
+  "evidence": "captures/1f993c5afb8b4421a88624ed0851d433/0x142a3f020.c"
+}

@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerController::ResetInputRotationScale",
+  "status": "proposed",
+  "original": "0x142a49c60",
+  "signature": "void ResetInputRotationScale()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a49c60.c"
+  ],
+  "callees": {
+    "UObject::ClassPrivate (offset 0x10)": "GetClass()",
+    "UClass ClassDefaultObject (offset 0x130)": "CDO read",
+    "UClass virtual slot 0x390": "force-init of the default object (unnamed)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Class default object at UClass +0x130 is an inferred layout, consistent with the reads. The slot 0x390 call is not named."
+}

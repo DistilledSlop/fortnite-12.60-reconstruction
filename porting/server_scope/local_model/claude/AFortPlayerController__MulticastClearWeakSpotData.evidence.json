@@ -1,0 +1,22 @@
+{
+  "function": "AFortPlayerController::MulticastClearWeakSpotData",
+  "status": "proposed",
+  "original": "0x142a48b90",
+  "signature": "void MulticastClearWeakSpotData(UObject* ParentBuilding)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a48b90.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x142395330.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142ee3b30.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142370520.c"
+  ],
+  "callees": {
+    "0x142395330": "Multicast body (virtual slot 0x11c0): builds key, calls sweep",
+    "0x142ee3b30": "Object key from object (InternalIndex, serial); null gives (-1,0)",
+    "0x142370520": "Sweep of ActiveWeakSpots: removes invalid or matching entries",
+    "0x142ec00d0": "serial number accessor (not captured)",
+    "0x140f6d100": "key-match test (not captured)",
+    "0x1423a8bd0": "removal hook (not captured)",
+    "0x14072c800": "array element destroy (not captured)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Only the 0x142370520 sweep is read at the top level. Its three helpers are not captured."
+}

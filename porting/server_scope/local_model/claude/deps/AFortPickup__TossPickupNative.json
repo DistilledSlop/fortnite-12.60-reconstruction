@@ -1,0 +1,8 @@
+{
+  "name": "AFortPickup__TossPickupNative",
+  "address": "0x142029370",
+  "signature": "void TossPickupNative(FVector FinalLocation, AFortPawn* ItemOwner, int32 OverrideMaxStackCount, bool bToss)",
+  "inc_or_decl": "// NOT PORTED. Virtual slot 0x720 on AFortPickup; target 0x142029370 (107-line cached decompile, not read).",
+  "evidence": "porting/generated/native-cap-virtual1/0x142029370.c (not read).",
+  "status": "described"
+}

@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerController::ServerAnnouncementStoppedOnClient",
+  "status": "proposed",
+  "original": "0x142a4a060",
+  "signature": "void ServerAnnouncementStoppedOnClient(FStruct AnnouncementID)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4a060.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x1423aa2a0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14186f5b0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14187f4e0.c"
+  ],
+  "callees": {
+    "0x1423aa2a0": "Implementation (virtual slot 0x1290): gets the world subsystem and forwards",
+    "0x14186f5b0": "Announcement subsystem lookup (GameInstance subsystem at +0x130 after IsA check)",
+    "0x14187f4e0": "Announcement stop handling (85 lines). Read, but callees 0x141872540, 0x14186e680, 0x1407ef240, 0x14187f780, 0x14072c6c0, 0x14186f270 are not ported.",
+    "0x1406801d0": "Stub_ReturnTrue (validate, slot 0x1288)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Validate is a stub that returns true. The subsystem chain is fully read at the top level."
+}

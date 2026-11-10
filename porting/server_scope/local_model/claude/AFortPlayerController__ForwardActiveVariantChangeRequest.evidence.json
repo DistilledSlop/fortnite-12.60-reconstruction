@@ -1,0 +1,20 @@
+{
+  "function": "AFortPlayerController::ForwardActiveVariantChangeRequest",
+  "status": "proposed",
+  "original": "0x142a46cd0",
+  "signature": "void ForwardActiveVariantChangeRequest(FName ItemTemplateToChange, FStruct VariantChannelToChange, FStruct DesiredActiveVariant, UObject* PreviewPawn)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a46cd0.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x14237bc60.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (validate, virtual slots 0xfb8 and 0x1288 family)",
+    "0x14237bc60": "Implementation forward thunk (virtual slot 0xfc0), tail-jumps through slot 0x1ba0",
+    "0x14236ed00": "ChangeActiveVariantForCosmeticItem body (slot 0x1ba0). Separate function, ported by its own chunk; called here by name, not re-ported.",
+    "RPC_ValidateFailed": "named engine helper",
+    "FFrame_Step": "named engine helper",
+    "FFrame_StepExplicitProperty": "named engine helper"
+  },
+  "notes": "CONFIDENCE HIGH. Parameter declaration order is the reverse of the inventory list. Confirmed by the thunk read order (Name, struct, struct, object) and by property offsets 0/8/16/24."
+}

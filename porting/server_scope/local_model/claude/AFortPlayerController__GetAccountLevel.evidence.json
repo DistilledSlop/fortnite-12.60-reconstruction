@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerController::GetAccountLevel",
+  "status": "proposed",
+  "original": "0x142a46f70",
+  "signature": "int32 GetAccountLevel()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a46f70.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x14237cc60.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x1410ff2d0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142cf2280.c"
+  ],
+  "callees": {
+    "0x14237cc60": "Helper: reads the Level field of MainMcpProfile JSON as a number",
+    "0x1410ff2d0": "Profile sub-object (+0xd8) virtual slot 0x40, tail-forwarded (JSON field lookup)",
+    "0x142cf2280": "JSON value AsNumber: TryGetNumber via slot 0x50; on mismatch logs \"Json Value of type %s used as a %s\" and returns 0"
+  },
+  "notes": "CONFIDENCE MEDIUM. Key DAT_148164eb8 is not resolved to a string."
+}

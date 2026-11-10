@@ -1,0 +1,8 @@
+{
+  "name": "AFortPickup__IsFlag33Set",
+  "address": "0x143f7abb0",
+  "signature": "bool IsFlag33Set() const",
+  "inc_or_decl": "return *(uint8*)(this + 0x33) != 0; // AActor byte +0x33; no reflected name recovered",
+  "evidence": "captures/0d0fa43526e841f985be4f110aeccb08/0x143f7abb0.c (7 lines, read in full).",
+  "status": "ported"
+}

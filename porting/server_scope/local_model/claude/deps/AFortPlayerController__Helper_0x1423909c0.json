@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x1423909c0",
+  "address": "0x1423909c0",
+  "signature": "bool IsUsingTouchInternal(AFortPlayerController*)",
+  "inc_or_decl": "if (Role == ROLE_Authority) return false; if (World && (World->UnknownFlags_11D & 0x20)) return false; UPlayer* P = Cast<UUnnamed_144786700>(Player); if (!P) return false; auto* Touch = FindSubobjectOfClass_0x14081b480(P); return Touch && Touch->InputType_0x79 == 2;",
+  "evidence": "captures/d7188626514e4fa8a54060dd5ab2bfc4/0x1423909c0.c"
+}

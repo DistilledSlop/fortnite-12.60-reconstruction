@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x1423908a0",
+  "address": "0x1423908a0",
+  "signature": "uint8 IsUsingFirstPersonFlags(AFortPlayerController*)",
+  "inc_or_decl": "uint8 F = UnknownFlags_B20; if (MyFortPawn && MyFortPawn->CurrentWeapon && MyFortPawn->CurrentWeapon->IsA(AFortWeaponRanged::StaticClass()) && (W->UnknownFlags_BD4 & 0x20) && (MyFortPawn->UnknownFlags_1062 & 0x10)) F |= 1; return F;",
+  "evidence": "captures/d7188626514e4fa8a54060dd5ab2bfc4/0x1423908a0.c"
+}

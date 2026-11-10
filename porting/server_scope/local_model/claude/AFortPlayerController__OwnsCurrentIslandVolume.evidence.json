@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerController::OwnsCurrentIslandVolume",
+  "status": "proposed",
+  "original": "0x142a49550",
+  "signature": "bool OwnsCurrentIslandVolume()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a49550.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x1423a0aa0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14297b320.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x141c74820.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x141c7c5c0.c"
+  ],
+  "callees": {
+    "0x1423a0aa0": "Helper: island and level-save lookup for the Pawn, then compares ids",
+    "0x141c74820": "Island lookup for the Pawn (43 lines, not ported)",
+    "0x141c7c5c0": "Island volume for the Pawn (180 lines, not ported)",
+    "0x14297b320": "FortLevelSaveComponent StaticClass",
+    "0x14237f3d0": "GetGameAccountId (ported)",
+    "slot 0x610 on island volume": "find component (unnamed)",
+    "slot 0x28 and slot 0x0 on id objects": "validity and equality (unnamed)"
+  },
+  "notes": "CONFIDENCE LOW. Only the top-level decision is ported. 0x141c74820 and 0x141c7c5c0 are unread."
+}

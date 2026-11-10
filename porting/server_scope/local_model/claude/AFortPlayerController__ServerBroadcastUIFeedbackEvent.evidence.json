@@ -1,0 +1,25 @@
+{
+  "function": "AFortPlayerController::ServerBroadcastUIFeedbackEvent",
+  "status": "proposed",
+  "original": "0x142a4a410",
+  "signature": "void ServerBroadcastUIFeedbackEvent(FName EventName)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a4a410.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x14236d0e0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x143f7a920.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142a3e640.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14468fb70.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142a3d9f0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x1423bd380.c"
+  ],
+  "callees": {
+    "0x14236d0e0": "Implementation (virtual slot 0x1210): client local dispatch, or fan-out to player controllers",
+    "0x143f7a920": "Net mode accessor (returns 3 for client, NM_Client)",
+    "0x142a3e640": "ProcessEvent with a bare FName parameter",
+    "0x14468fb70": "World player-controller list accessor (World +0x1c8)",
+    "0x142a3d9f0": "AFortPlayerController StaticClass",
+    "0x1423bd380": "Per-controller send (70 lines). Partly ported in deps; callees 0x142a3ca80, 0x141ed2b30, 0x141a777c0, 0x141a7c880, 0x1424e1120, 0x141a661e0, 0x1424ab0d0, 0x1423825e0, 0x144230ed0, 0x1440cb990 not ported.",
+    "0x1406801d0": "Stub_ReturnTrue (validate, slot 0x1208)"
+  },
+  "notes": "CONFIDENCE MEDIUM. The per-controller send helper is LOW. The server fan-out and the client local dispatch are fully read."
+}

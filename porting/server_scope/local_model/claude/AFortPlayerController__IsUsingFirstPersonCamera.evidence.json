@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerController::IsUsingFirstPersonCamera",
+  "status": "proposed",
+  "original": "0x142a48490",
+  "signature": "bool IsUsingFirstPersonCamera()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a48490.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x1423908a0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142b4dac0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x1426e7770.c"
+  ],
+  "callees": {
+    "0x1423908a0": "Helper: flag byte at +0xB20, OR bit 0 when current ranged weapon flag (+0xBD4 bit 0x20) and pawn flag (+0x1062 bit 0x10) hold",
+    "0x142b4dac0": "FortWeaponRanged StaticClass",
+    "0x1426e7770": "Reads weapon +0xBD4 bit 0x20 (returns as bool)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Return is the flag byte (decompile stores a byte); the port returns the byte value and sets bit 0 on the conditional."
+}

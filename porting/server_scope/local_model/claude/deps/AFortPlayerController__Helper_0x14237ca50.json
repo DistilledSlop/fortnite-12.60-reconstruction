@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x14237ca50",
+  "address": "0x14237ca50",
+  "signature": "UObject* FindAccountItemById(AFortPlayerController*, FString Id)",
+  "inc_or_decl": "if (!MainMcpProfile) return nullptr; UObject* Rec = ProfileFind(MainMcpProfile, Id); if (!Rec) return nullptr; UObject* Item = Rec->AccountItem_0x88; return (Item && Item->IsA(UFortAccountItem::StaticClass())) ? Item : nullptr;",
+  "evidence": "captures/d7188626514e4fa8a54060dd5ab2bfc4/0x14237ca50.c"
+}

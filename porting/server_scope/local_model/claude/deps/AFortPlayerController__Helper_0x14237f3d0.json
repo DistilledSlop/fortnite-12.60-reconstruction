@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x14237f3d0",
+  "address": "0x14237f3d0",
+  "signature": "FUniqueNetIdRepl GetGameAccountIdInternal(AFortPlayerController*)",
+  "inc_or_decl": "if (Player && Player->IsA(UFortLocalPlayer::StaticClass())) return LocalPlayerAccountId_0x14237f580(Player); if (PlayerState) return PlayerState->UniqueId; return FUniqueNetIdRepl();",
+  "evidence": "captures/d7188626514e4fa8a54060dd5ab2bfc4/0x14237f3d0.c"
+}

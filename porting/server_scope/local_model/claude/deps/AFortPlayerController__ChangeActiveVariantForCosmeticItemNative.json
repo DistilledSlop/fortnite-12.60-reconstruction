@@ -1,0 +1,8 @@
+{
+  "name": "AFortPlayerController__ChangeActiveVariantForCosmeticItemNative",
+  "address": "0x14236ed00",
+  "signature": "void ChangeActiveVariantForCosmeticItemNative(FName ItemTemplateToChange, FStruct8 VariantChannelToChange, FStruct8 DesiredActiveVariant, AFortPawn* PreviewPawn)",
+  "inc_or_decl": "if (PreviewPawn && LogFortPlayerController.IsEnabled(ELogVerbosity::Display))\n{\n    UE_LOG(LogFortPlayerController, Display, TEXT(\"Calling ChangeActiveVariantForCosmeticItem with valid pawn %s, which will not be used.\"), *GetNameSafe(PreviewPawn));\n}\nAFortPlayerState* PlayerState = Cast<AFortPlayerState>(this->PlayerState); // +0x220 (AController::PlayerState)\nif (PlayerState)\n{\n    PlayerState->NativeChangeActiveVariantForCosmeticItem(ItemTemplateToChange, VariantChannelToChange, DesiredActiveVariant, PreviewPawn); // vslot 0x750, unnamed\n}",
+  "evidence": "porting/generated/native134-virtual-bulk/0x14236ed00.c (31 lines, read in full). Log helper 0x142ce9f90 (71 lines) formats the pawn name; it was captured but not read, so GetNameSafe stands in for it. Class check uses FortPlayerState::StaticClass (0x142a85850). Slot 0x750 target not read.",
+  "status": "ported-with-gap"
+}

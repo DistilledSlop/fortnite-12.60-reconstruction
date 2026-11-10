@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerController::OpenChoiceUI",
+  "status": "proposed",
+  "original": "0x142a492a0",
+  "signature": "void OpenChoiceUI(FChoiceData ChoiceData)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a492a0.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x1423a0880.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x142361ec0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142a3bee0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142366cd0.c",
+    "/opt/fortnite/local-model-package/captures/b97f38ebe68c4728a79304d43fa614e0/0x142c0c240.c"
+  ],
+  "callees": {
+    "0x1423a0880": "Copy helper for ChoiceData, then calls 0x142a3bee0",
+    "0x142a3bee0": "Event dispatch: copies leading fields and an array, then ProcessEvent (FName 0x1481aefb8)",
+    "0x142361ec0": "TArray copy-construct",
+    "0x142366cd0": "TArray destruct",
+    "0x142c0c240": "Struct init helper",
+    "0x14079d060": "string copy (not captured)"
+  },
+  "notes": "CONFIDENCE LOW. Event parameter block layout is only partly mapped, so the port passes a copy of ChoiceData. Treat as LOW until the block layout is confirmed."
+}

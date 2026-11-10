@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x142cf2280",
+  "address": "0x142cf2280",
+  "signature": "double JsonValueAsNumber(FJsonValue*)",
+  "inc_or_decl": "double Out = 0; if (Value->TryGetNumber(Out)) return Out; /* mismatch: debug-log \"Json Value of type %s used as a Number\" */ return 0;",
+  "evidence": "captures/1f993c5afb8b4421a88624ed0851d433/0x142cf2280.c (log text and mismatch path fully read; the slot 0x50 call argument 0 is not named)"
+}

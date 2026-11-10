@@ -1,0 +1,8 @@
+{
+  "name": "UFortFeedbackManager__PlayFeedbackEvent",
+  "address": "0x1424c21f0",
+  "signature": "void PlayFeedbackEvent(FFortFeedbackRequest Request, AFortPawn* InstigatorPawn, AFortPawn* Recipient, float OverriddenDelay, bool bArg6, bool bArg7)",
+  "inc_or_decl": "// PARTLY PORTED (top-level flow only). The function is 150 lines and every helper below was NOT read.\n// Branch A (FUN_1424ab180 returns null): needs InstigatorPawn; uses vslot 0xc70 on the pawn to get a sub-object,\n//   0x1424aaf90 to find an entry, 0x1407096c0 for a cooldown slot (stride 0x14), 0x14231f230 for a time value,\n//   vslot 0x150 (GetWorld) and GameState+0x540 as the current time. The request is refused when the cooldown or the time window is not met.\n//   Otherwise it calls 0x1424b6f30 with a stack packet {Instigator, Recipient, Request, Delay clamped to >= 0, bArg6, entry}.\n// Branch B (manager present): picks the Instigator or Recipient depending on the role byte (this+0x2c of the entry), checks cooldowns,\n//   rolls rand() against a probability at entry+0x18, and fires via 0x1424b6f30 with delay defaulting to entry+0x30.\n//   When the role byte at this+0xf0 == 3 and the Recipient is set and the request tag matches one of six FName pairs, it calls 0x1423524a0.\n// Helpers not read: 0x1424b20c0, 0x1424b6f30, 0x1424aaf90, 0x1424ab180, 0x1407096c0, 0x14231f230, 0x1423524a0.",
+  "evidence": "captures/6de4f9616ae94c69a97d7789b2071d3a/0x1424c21f0.c (150 lines, read in full). Field names are offsets only; no reflected names recovered.",
+  "status": "described"
+}

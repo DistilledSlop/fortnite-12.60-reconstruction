@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerController::IsUsingTouch",
+  "status": "proposed",
+  "original": "0x142a48520",
+  "signature": "bool IsUsingTouch()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a48520.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x1423909c0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14447ee40.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14081b480.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14081b540.c"
+  ],
+  "callees": {
+    "0x1423909c0": "Helper: touch test",
+    "0x14447ee40": "Player cast to class 0x144786700 (class unnamed)",
+    "0x14081b480": "Finds the sub-object of class 0x14081de90 under the player (+0xd8 map)",
+    "0x14081b540": "Reads sub-object +0x79 (input type byte)",
+    "0x143f793a0": "AActor::GetWorld (virtual slot 0x150, header model MEDIUM)"
+  },
+  "notes": "CONFIDENCE MEDIUM. Only the non-authority branch does work; authority returns false."
+}

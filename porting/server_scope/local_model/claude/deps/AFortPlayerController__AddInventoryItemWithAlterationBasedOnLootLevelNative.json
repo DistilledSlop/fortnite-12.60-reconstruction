@@ -1,0 +1,8 @@
+{
+  "name": "AFortPlayerController__AddInventoryItemWithAlterationBasedOnLootLevelNative",
+  "address": "0x142368600",
+  "signature": "void AddInventoryItemWithAlterationBasedOnLootLevelNative(FFortItemEntry ItemDescription)",
+  "inc_or_decl": "// Base virtual body is empty. The by-value FFortItemEntry argument is destroyed on return, which is the only work it does.\n// Destruction releases the entry's arrays and strings (see FFortItemEntry destructor 0x1419844f0).",
+  "evidence": "porting/generated/native126-dispatch-bulk/0x142368600.c (70 lines, read in full). Its body is the same member-by-member teardown as the FFortItemEntry destructor 0x1419844f0.",
+  "status": "ported"
+}

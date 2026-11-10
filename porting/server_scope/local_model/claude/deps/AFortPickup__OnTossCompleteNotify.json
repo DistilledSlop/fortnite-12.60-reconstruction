@@ -1,0 +1,8 @@
+{
+  "name": "AFortPickup__OnTossCompleteNotify",
+  "address": "0x142038060",
+  "signature": "void OnTossCompleteNotify()",
+  "inc_or_decl": "// PARTLY READ, NOT PORTED. Returns early when (this+0x400 or this+0x3f0) is null, or when the role byte +0xf0 == 3 (authority).\n// Otherwise: reads this+0x408/0x410 and the sub-objects at this+0x2a8 and this+0x3f0; then a vslot 0x10 call on the object at plVar1[6]\n// with the pickup's fields +0x440/+0x448 and a vslot 0x2a8 call, with two null-or-Stub_Empty branches (both call Stub_Empty), and FMemory_Free cleanup.\n// Engine helpers 0x142b4a5d0, 0x142a174f0, 0x1426994c0 were not read.",
+  "evidence": "captures/0d0fa43526e841f985be4f110aeccb08/0x142038060.c (73 lines, read in full; deeper helpers not read).",
+  "status": "described"
+}

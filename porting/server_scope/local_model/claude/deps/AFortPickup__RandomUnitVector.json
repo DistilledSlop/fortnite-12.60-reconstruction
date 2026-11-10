@@ -1,0 +1,8 @@
+{
+  "name": "AFortPickup__RandomUnitVector",
+  "address": "0x14203e6d0",
+  "signature": "FVector RandomUnitVector()",
+  "inc_or_decl": "FVector V;\nfloat LenSq = 0.f;\ndo\n{\n    do\n    {\n        V.X = 2.f * (float)rand() / 32767.f - 1.f;\n        V.Y = 2.f * (float)rand() / 32767.f - 1.f;\n        V.Z = 2.f * (float)rand() / 32767.f - 1.f;\n        LenSq = V.SizeSquared();\n    } while (LenSq > 1.f);\n} while (LenSq < 0.0001f);\nV /= FMath::Sqrt(LenSq);\nreturn V;",
+  "evidence": "captures/0d0fa43526e841f985be4f110aeccb08/0x14203e6d0.c. Rejection sampling in the unit ball (reject length^2 > 1 or < 0.0001), then normalise. Constant 3.051851e-05 is 2/32767 applied to rand(). rand() calls go X, Y, Z in that order.",
+  "status": "ported"
+}

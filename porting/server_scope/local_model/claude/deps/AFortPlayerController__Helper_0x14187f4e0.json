@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x14187f4e0",
+  "address": "0x14187f4e0",
+  "signature": "void AnnouncementStopped(UObject* Subsystem, FStruct AnnouncementID, AFortPlayerController* Controller)",
+  "inc_or_decl": "PARTIAL. Read in full (85 lines). Callees 0x141872540, 0x14186e680, 0x1407ef240, 0x14187f780, 0x14072c6c0, 0x14186f270 not ported.",
+  "evidence": "captures/1f993c5afb8b4421a88624ed0851d433/0x14187f4e0.c"
+}

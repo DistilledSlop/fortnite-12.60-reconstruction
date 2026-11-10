@@ -1,0 +1,8 @@
+{
+  "name": "AFortPawn__GetFeedbackManagerForGameState",
+  "address": "0x1424ab210",
+  "signature": "UFortFeedbackManager* GetFeedbackManagerForGameState(AActor* Context)",
+  "inc_or_decl": "if (!Context) return nullptr;\nUWorld* World = Context->GetWorld(); // vslot 0x150\nif (!World || !World->GameState) return nullptr; // World+0x130\nif (!World->GameState->GetClass()->IsChildOf(AFortGameStateZone::StaticClass())) return nullptr;\nreturn World->GameState->FeedbackManager; // GameState+0x3a8",
+  "evidence": "captures/3871ac0df23544e68b91c291a50345d9/0x1424ab210.c (22 lines, read in full). AFortGameStateZone::StaticClass is 0x142927a60 (FortGameStateZone). FeedbackManager name is inferred from the offset.",
+  "status": "ported"
+}

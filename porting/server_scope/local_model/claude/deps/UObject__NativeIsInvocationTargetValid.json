@@ -1,0 +1,8 @@
+{
+  "name": "UObject__NativeIsInvocationTargetValid",
+  "address": "0x1406801e0",
+  "signature": "bool NativeIsInvocationTargetValid() const",
+  "inc_or_decl": "return false; // base UObject body: shared stub (xor al,al; ret). Subclasses that override slot 0x50 decide validity.",
+  "evidence": "porting/behavior/vtable_lookup.py --class UObject --slot 0x50 -> slot 10, target 0x1406801e0. Image bytes 32 c0 c3 (xor al,al; ret). Name is descriptive; the slot itself is unnamed.",
+  "status": "stub"
+}

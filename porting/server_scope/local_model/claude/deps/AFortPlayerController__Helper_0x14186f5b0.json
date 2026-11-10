@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x14186f5b0",
+  "address": "0x14186f5b0",
+  "signature": "UObject* GetAnnouncementSubsystem(UWorld*)",
+  "inc_or_decl": "Use the GameInstance subsystem lookup 0x144640410 (not captured) and the IsA check on class 0x142908ec0 (not captured); then forward to vtable slot 0x7b8. PARTIAL.",
+  "evidence": "captures/1f993c5afb8b4421a88624ed0851d433/0x14186f5b0.c"
+}

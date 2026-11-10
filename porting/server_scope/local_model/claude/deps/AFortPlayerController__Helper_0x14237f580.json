@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x14237f580",
+  "address": "0x14237f580",
+  "signature": "FUniqueNetIdRepl LocalPlayerAccountId(UFortLocalPlayer*)",
+  "inc_or_decl": "NOT PORTED. 280-line body (captures/1f993c5afb8b4421a88624ed0851d433/0x14237f580.c) needs a full read and port in a separate task.",
+  "evidence": "captures/1f993c5afb8b4421a88624ed0851d433/0x14237f580.c"
+}

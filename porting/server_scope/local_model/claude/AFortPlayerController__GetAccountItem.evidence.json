@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerController::GetAccountItem",
+  "status": "proposed",
+  "original": "0x142a46e80",
+  "signature": "UObject* GetAccountItem(FString Id)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a46e80.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x14237ca50.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x1410fe060.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14278d210.c",
+    "/opt/fortnite/local-model-package/captures/989928f743c943369fe8695c40e66957/0x140690ac0.c"
+  ],
+  "callees": {
+    "0x14237ca50": "Helper: MainMcpProfile lookup by Id, returns Record->+0x88 when it is a UFortAccountItem",
+    "0x1410fe060": "Profile sub-object (+0xd8) virtual slot 0x38, tail-forwarded; arguments not recoverable from decompile",
+    "0x14278d210": "UFortAccountItem StaticClass (named helper pattern)",
+    "0x140690ac0": "TArray allocate used for the Id copy",
+    "FMemory_Free": "named engine helper"
+  },
+  "notes": "CONFIDENCE MEDIUM. Record+0x88 is an unreflected offset; name left as AccountItem_0x88. The virtual forwarded to by 0x1410fe060 is unnamed, so the lookup mechanism is MEDIUM at best."
+}

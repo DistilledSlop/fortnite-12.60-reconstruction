@@ -1,0 +1,7 @@
+{
+  "name": "Helper_0x142370520",
+  "address": "0x142370520",
+  "signature": "void SweepActiveWeakSpots(AFortPlayerController*, ObjectKey)",
+  "inc_or_decl": "PARTIAL. Loop logic ported in MulticastClearWeakSpotData.inc. Helpers 0x140f6d100, 0x1423a8bd0, 0x14072c800 are not captured.",
+  "evidence": "captures/1f993c5afb8b4421a88624ed0851d433/0x142370520.c"
+}

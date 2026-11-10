@@ -1,0 +1,8 @@
+{
+  "name": "AFortPlayerController__InventoryInterface",
+  "address": "0x142380fd0",
+  "signature": "member: InventoryInterface (AFortPlayerController+0x598, interface subobject)",
+  "inc_or_decl": "// Interface subobject at +0x598 (the forwarders add 0x598 to the controller and call through it).\n// Vtable slots used: 0xa0 NativeFindExistingItemForDefinition(UFortItemDefinition*, bool) -> UFortItem*\n//                    0xa8 NativeFindItemInstancesForDefinition(UFortItemDefinition*, TArray<UFortItem*>&)\n//                    0xb0 NativeFindItemByGuid(const FGuid&) -> UFortItem*  (native 0x142380fd0, see NativeFindItemByGuid.inc)\n// Slots 0xa0 and 0xa8 are unnamed in headers; the names are descriptive.",
+  "evidence": "captures/66ccad09c30e4055b59c6535415cfa30/0x14236b710.asm, 0x14236b730.asm, 0x14236b810.asm (disassembly: ADD RCX,0x598 then vtable call). porting/behavior/AFortPlayerController/NativeFindItemByGuid.inc (receiver note). Slots 0xa0 and 0xa8 targets were not read.",
+  "status": "declared"
+}
