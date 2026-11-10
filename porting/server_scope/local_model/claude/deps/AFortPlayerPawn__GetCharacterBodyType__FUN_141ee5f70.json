@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerPawn__GetCharacterBodyType__FUN_141ee5f70",
+  "address": "0x141ee5f70",
+  "signature": "APlayerState* GetFortPlayerStateForPawn(AFortPlayerPawn* Pawn)",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM. Read in full (37 lines). Callees FUN_142a85850 (AFortPlayerState::StaticClass), FUN_141a07cb0 (unread), FUN_1423318f0 (unread), vslot 0x1088 and 0x3b0 (unread).\nif (Pawn == nullptr)\n{\n\treturn nullptr;\n}\nif (Pawn->PlayerState != nullptr && IsA<AFortPlayerState>(Pawn->PlayerState))   // pawn +0x238\n{\n\treturn Pawn->PlayerState;\n}\nAFortPlayerState* Result = nullptr;\nbool bHasRemotePawn = Pawn->ControlledRCPawn.IsValid();   // weak at +0x26a0\nif (!bHasRemotePawn || Pawn->ControlledRCPawn.Get() == nullptr || (Result = GetPlayerStateForRemotePawn(Pawn->ControlledRCPawn.Get())) == nullptr)\n{\n\tif (IsRidingVehicleQuery(Pawn))   // FUN_1423318f0\n\t{\n\t\tUObject* SeatOwner = Pawn->GetSeatOwnerObject();   // vslot 0x1088\n\t\tif (SeatOwner != nullptr)\n\t\t{\n\t\t\tResult = SeatOwner->GetPlayerStateForSeatPawn(Pawn);   // vslot 0x3b0\n\t\t}\n\t}\n}\nreturn Result;\n",
+  "evidence": "captures/da513f20462649839dc9b698a432d3fa/0x141ee5f70.c"
+}

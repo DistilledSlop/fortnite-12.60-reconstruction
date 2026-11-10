@@ -1,0 +1,30 @@
+{
+  "function": "AFortPlayerPawn::ApplyWrapToSaveTheWorldHoverboard",
+  "status": "proposed",
+  "original": "0x142a7add0",
+  "signature": "void ApplyWrapToSaveTheWorldHoverboard()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7add0.c",
+    "/opt/fortnite/local-model-package/captures/da513f20462649839dc9b698a432d3fa/0x142323510.c",
+    "/opt/fortnite/local-model-package/captures/da513f20462649839dc9b698a432d3fa/0x140a003b0.c",
+    "/opt/fortnite/local-model-package/captures/da513f20462649839dc9b698a432d3fa/0x141d4abb0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142a3d9f0.c",
+    "/opt/fortnite/local-model-package/captures/da513f20462649839dc9b698a432d3fa/0x141d50e00.c",
+    "/opt/fortnite/local-model-package/captures/da513f20462649839dc9b698a432d3fa/0x1407f2320.c",
+    "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x140682ce0.c"
+  ],
+  "callees": {
+    "0x142323510": "GetPawnCosmeticLoadout (read in full)",
+    "0x140a003b0": "FCosmeticLoadout copy-assign (read in full)",
+    "0x141d4abb0": "Loadout.GetItemAt (read in full)",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass (named)",
+    "0x141d50e00": "FindEntriesForItem (read in full)",
+    "0x1407f2320": "TArray reserve for 0x48-byte entries (read in full)",
+    "0x140682ce0": "FString copy (read in full)",
+    "0x141d85c80": "ResolveHoverboardWrapItem (captured, NOT read)",
+    "0x144335300": "ApplyWrapToMesh (captured, NOT read)",
+    "0x142ce9f90": "log helper (captured, NOT read)",
+    "0x142cd3770": "STAT scope (instrumentation; omitted)"
+  },
+  "notes": "LOW CONFIDENCE. The port is depth one on the main body. FUN_141d85c80 and FUN_144335300 are captured and not read, so the wrap selection and mesh-apply behaviour are not ported. The STAT scope is omitted as perf-only."
+}

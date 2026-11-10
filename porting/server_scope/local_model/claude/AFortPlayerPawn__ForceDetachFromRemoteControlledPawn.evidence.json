@@ -1,0 +1,22 @@
+{
+  "function": "AFortPlayerPawn::ForceDetachFromRemoteControlledPawn",
+  "status": "proposed",
+  "original": "0x142a7b880",
+  "signature": "void ForceDetachFromRemoteControlledPawn()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7b880.c",
+    "/opt/fortnite/local-model-package/captures/7ea9a220d86d41f8a35ceaf7a8173114/0x14243a470.c"
+  ],
+  "callees": {
+    "0x14243a470": "detach helper, inlined (read in full)",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass (named)",
+    "0x5e8 vslot": "OnDetachBegin - unnamed, not read",
+    "0x14234bec0": "unnamed, not read",
+    "0x14234b560": "unnamed, not read",
+    "0x14416eac0": "ReassignController, unnamed, not read",
+    "0x1423318f0": "IsRidingVehicle query, unnamed, not read",
+    "0x142331180": "seat-flag query, unnamed, not read",
+    "0x5c0 vslot": "seat-state update, unnamed, not read"
+  },
+  "notes": "Depth: FUN_14243a470 read in full. Its callees are captured and not read. Names for the weak fields (+0x30a4, +0x30ac) and seat index (+0x1110) are inferred. MEDIUM."
+}

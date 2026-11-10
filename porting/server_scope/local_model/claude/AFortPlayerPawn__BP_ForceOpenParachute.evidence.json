@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerPawn::BP_ForceOpenParachute",
+  "status": "proposed",
+  "original": "0x142a7aea0",
+  "signature": "void BP_ForceOpenParachute()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7aea0.c",
+    "/opt/fortnite/local-model-package/captures/678363f78c5e4ebdb6b782b509c1a1b1/0x142cd3770.c"
+  ],
+  "callees": {
+    "0x142306ff0": "ApplyParachuteOpenState (vslot 0x1228, read in full, see deps)",
+    "0x14233e6e0": "ProcessParachuteOpen (vslot 0x1330, read in full, see deps)",
+    "0x142cd3770": "STAT scope end (instrumentation; omitted)"
+  },
+  "notes": "Depth: the two virtual targets were read at depth one (captures cached in porting/generated). Their own callees were not read. CONFIDENCE MEDIUM."
+}

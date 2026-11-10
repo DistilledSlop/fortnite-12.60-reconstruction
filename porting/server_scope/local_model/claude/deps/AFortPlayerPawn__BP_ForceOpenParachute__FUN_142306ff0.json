@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerPawn__BP_ForceOpenParachute__FUN_142306ff0",
+  "address": "0x142306ff0",
+  "signature": "void AFortPlayerPawn::ApplyParachuteOpenState(bool bFromBus, bool bExcludeLaunchPadSkydive)",
+  "inc_or_decl": "// STATUS: read in full at depth one (132 lines). Body NOT ported here (depth-two callees not read).\n// Flag writes (byte at pawn offset 0x10e7 = bitfield 4327): bLocalIsSkydiving = true; bIsSkydivingFromBus = bFromBus; bIsParachuteForcedOpen = false; bPendingSkydiveLaunch = false.\n// Byte 0x10e5 is set when Role == 3. Field 0x3f8 is set to 2 when not equal to 1. Param bExcludeLaunchPadSkydive triggers FUN_1406a9dc0 on a pawn sub-object.\n// Callees not read: FUN_1428dbef0, FUN_1447bb440, FUN_14447ee40, FUN_1442f92d0, FUN_141e80200, FUN_142a92a00, FUN_1424293c0, FUN_143f7a920, FUN_14289ee70, FUN_1418bfe90, FUN_142a6ee20, FUN_1406a9dc0, FUN_141ed1800, FUN_14235bbf0.\n// Virtual slots used: 0xdb0 (bool query), 0x610, 0x2190, 0xcd8/0xce8 (bool pair), 0x1208, 0x590 (SetMovementMode).\n",
+  "evidence": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual3/0x142306ff0.c"
+}

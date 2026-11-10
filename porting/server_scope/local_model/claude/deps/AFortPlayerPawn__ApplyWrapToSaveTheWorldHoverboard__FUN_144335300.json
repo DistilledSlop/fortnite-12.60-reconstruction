@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerPawn__ApplyWrapToSaveTheWorldHoverboard__FUN_144335300",
+  "address": "0x144335300",
+  "signature": "void ApplyWrapToMesh(UObject* WrapComponent, UObject* SourceComponent, bool bFlag)",
+  "inc_or_decl": "// STATUS: NOT read (407 lines). Captured at captures/da513f20462649839dc9b698a432d3fa/0x144335300.c. Body NOT ported. The ApplyWrap body calls it with (new component, old child component, true).\n",
+  "evidence": "captures/da513f20462649839dc9b698a432d3fa/0x144335300.c"
+}

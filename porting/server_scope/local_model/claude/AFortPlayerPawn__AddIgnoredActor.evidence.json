@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerPawn::AddIgnoredActor",
+  "status": "proposed",
+  "original": "0x142a7ace0",
+  "signature": "void AddIgnoredActor(AActor* InActorToIgnore, float InIgnoreDuration) [thunk read order: actor, then duration]",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a7ace0.c",
+    "/opt/fortnite/local-model-package/captures/4dea1c9b9f9244939a814d8f3cd4bfa2/0x142302250.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x142347f20.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x1440f4040.c"
+  ],
+  "callees": {
+    "0x142302250": "helper body inlined (read in full)",
+    "0x142347f20": "RefreshIgnoredActors (read in full; see deps)",
+    "0x1440f4040": "IgnoreComponent SetIgnoredActor (read in full): compacts null entries, AddUnique on add, remove on false",
+    "0x140690dd0": "TArray grow (read in full)",
+    "0x144621fb0": "timer-manager query (captured, not read)",
+    "0x1446278d0": "timer set (captured, not read)"
+  },
+  "notes": "Depth: FUN_142302250, FUN_142347f20 and FUN_1440f4040 read in full. FUN_144621fb0, FTimerManager_InternalClearTimer and FUN_1446278d0 not read. CONFIDENCE MEDIUM."
+}

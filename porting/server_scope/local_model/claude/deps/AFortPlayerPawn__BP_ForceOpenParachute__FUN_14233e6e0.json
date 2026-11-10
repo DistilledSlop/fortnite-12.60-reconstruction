@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerPawn__BP_ForceOpenParachute__FUN_14233e6e0",
+  "address": "0x14233e6e0",
+  "signature": "void AFortPlayerPawn::ProcessParachuteOpen(bool bFromInput)",
+  "inc_or_decl": "// STATUS: read in full at depth one (185 lines). Body NOT ported here (depth-two callees not read).\n// Callees not read: FUN_143f7a920, FUN_14289ee70, FUN_14199ce60, FUN_142a76c10, FUN_141ed1800, FUN_140744d30, FUN_145803c70 (stack check); virtual slots 0x150, 0x610, 0x1328, 0x6a8, 0x1d10, 0x620, 0x810, 0xcd8/0xce8.\n// Contains a path that calls SetMovementMode (slot 0x590) with mode 6 and custom mode 3, 4 or 5, and a path that updates the game-state element at param_1[0x177].\n",
+  "evidence": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x14233e6e0.c"
+}

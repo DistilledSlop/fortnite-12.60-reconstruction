@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerZone::ServerSubmitGameplayVote",
+  "status": "proposed",
+  "original": "0x142a71150",
+  "signature": "void ServerSubmitGameplayVote(EVoteType VoteType, int32 VoteDecision) [thunk read order]",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a71150.c",
+    "/opt/fortnite/local-model-package/captures/d5ab7571e59b46b292eba32a99e654e5/0x1423e9be0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB: _Validate (vslot 0x20c0) returns true",
+    "0x1423e9be0": "_Implementation (vslot 0x20c8), ported separately"
+  },
+  "notes": "Exec thunk ported. Inventory's UnderlyingType param is not read by the thunk. _Validate is STUB."
+}

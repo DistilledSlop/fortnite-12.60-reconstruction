@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerPawn::GetCharacterBodyType",
+  "status": "proposed",
+  "original": "0x142a7bcd0",
+  "signature": "uint8 GetCharacterBodyType()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7bcd0.c",
+    "/opt/fortnite/local-model-package/captures/dcc736e51fb54d23a072dec1fe63306e/0x142319f60.c",
+    "/opt/fortnite/local-model-package/captures/096e43d2e6564f4c86cf20bade24643a/0x141ee5f70.c"
+  ],
+  "callees": {
+    "0x142319f60": "body ported (read in full)",
+    "0x141ee5f70": "GetFortPlayerStateForPawn (read in full; see deps)",
+    "0x142a85850": "AFortPlayerState::StaticClass (named)"
+  },
+  "notes": "All branches ported. Member names for PlayerState+0x5d8 and +0x30 are not recovered."
+}

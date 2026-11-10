@@ -1,0 +1,31 @@
+{
+  "function": "AFortPlayerControllerZone::ServerVoiceChatRequestJoinToken_Implementation",
+  "status": "proposed",
+  "original": "0x1423e9d60",
+  "signature": "void ServerVoiceChatRequestJoinToken_Implementation(FString ChannelName)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/bde786e05f5242fa940c2fd929fb7571/0x1423e9d60.c",
+    "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x142cd4ab0.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x140f67c80.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x140d12af0.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x142419ef0.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x142bad740.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x140b7ee30.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x141eae290.c",
+    "/opt/fortnite/local-model-package/captures/11dff1bf942f429ca6017d4cb421d5f6/0x142ee3b30.c",
+    "/opt/fortnite/local-model-package/captures/2c87a1e9f94f466b976233be1a0a0c38/0x142a85850.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142a3d9f0.c"
+  ],
+  "callees": {
+    "0x142cd4ab0": "FName ctor from string (unrecovered name, captured, not read)",
+    "0x140f67c80": "GetSubsystemForName (captured, not read)",
+    "0x140d12af0": "GetVoiceChatQueryResult (captured, not read)",
+    "0x142419ef0": "BuildVoteRequestContext (read in full)",
+    "0x142bad740": "unrecovered helper, captured, not read",
+    "0x140b7ee30": "SubmitVoiceChatJoinRequest (captured, not read) - see deps",
+    "0x141eae290": "FallbackVoiceChatJoin (captured, not read)",
+    "0x142ee3b30": "FWeakObjectPtr set (read in full)",
+    "0x142a85850": "AFortPlayerState::StaticClass (named)"
+  },
+  "notes": "LOW CONFIDENCE. Depth-two not reached for FUN_140b7ee30, FUN_141eae290, FUN_142bad740 and FUN_140d12af0. Their effects are described in the .inc only. The social-ban-query path can be ported further from these captures."
+}

@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerPawn::DestroyBalloonRope",
+  "status": "proposed",
+  "original": "0x142a7b400",
+  "signature": "void DestroyBalloonRope()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7b400.c",
+    "/opt/fortnite/local-model-package/captures/0c063a366e76429da68c6cf4a5f4fe8b/0x140aae720.c",
+    "/opt/fortnite/local-model-package/captures/8210b758d929409b8cbbe3c9ce240902/0x143f6c200.c"
+  ],
+  "callees": {
+    "0x140aae720": "multicast delegate broadcast (read in full)",
+    "0x143f6c200": "DestroyActorChecked: UWorld::DestroyActor (read in full)",
+    "0x2f8 on BalloonRope": "DetachAndRelease(true) - unnamed slot, not read"
+  },
+  "notes": "All branches ported. Slot 0x2f8 target not read."
+}

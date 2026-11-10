@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerPawn__ApplyWrapToSaveTheWorldHoverboard__FUN_141d85c80",
+  "address": "0x141d85c80",
+  "signature": "UObject* ResolveHoverboardWrapItem(UCosmeticItem* Item, int32 Index, TArray<FCosmeticSlotEntry>& Matches, AFortPlayerController* PC)",
+  "inc_or_decl": "// STATUS: NOT read (166 lines). Captured at captures/da513f20462649839dc9b698a432d3fa/0x141d85c80.c. Body NOT ported.\n",
+  "evidence": "captures/da513f20462649839dc9b698a432d3fa/0x141d85c80.c"
+}

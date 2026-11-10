@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerControllerZone__ServerVoiceChatRequestJoinToken__FUN_140b7ee30",
+  "address": "0x140b7ee30",
+  "signature": "void SubmitVoiceChatJoinRequest(UObject* QuerySubsystem, uint64 UniqueId, FVoiceChatJoinRequest* Request)",
+  "inc_or_decl": "// STATUS: NOT read. Captured. Called with (QuerySubsystem, PlayerState's unique id at context+8, &Request, 1). Body NOT ported.\n",
+  "evidence": "captures/*/0x140b7ee30.c"
+}

@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerPawn::GetBaseAimPitchQuantized",
+  "status": "proposed",
+  "original": "0x142a7bca0",
+  "signature": "float GetBaseAimPitchQuantized()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7bca0.c",
+    "/opt/fortnite/local-model-package/captures/a07ef25a9e7146a9946d3e2dec97791c/0x142319870.c",
+    "/opt/fortnite/local-model-package/captures/b23ff97f818447ddbf05f721751ba0e9/0x142bc0d80.c"
+  ],
+  "callees": {
+    "0x142319870": "body ported (read in full)",
+    "0x1423198d0": "base aim rotation getter (slot 0x6d8; read in full)",
+    "0x142bc0d80": "float fmod (read in full; see deps)"
+  },
+  "notes": "All branches ported. The header-model name for slot 0x6d8 is IsBotControlled, which conflicts with its behaviour (returns an FRotator). The ported name is GetBaseAimRotation, LOW on the name only."
+}

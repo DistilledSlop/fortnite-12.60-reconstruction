@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerPawn__GetBaseAimPitchQuantized__FUN_142bc0d80",
+  "address": "0x142bc0d80",
+  "signature": "float FMath::Fmod(float Value, float Divisor)",
+  "inc_or_decl": "// CONFIDENCE: HIGH for the normal path. Read in full (26 lines). |Divisor| <= 1e-8 returns 0.\n// Result is the truncated remainder Value - trunc(Value / Divisor) * Divisor, clamped to [-|Divisor|, |Divisor|].\nfloat FMath_Fmod(float Value, float Divisor)\n{\n\tif (FMath::Abs(Divisor) <= 1e-8f) return 0.0f;\n\tfloat Quot = Value / Divisor;\n\tif (FMath::Abs(Quot) < 8388608.0f) Quot = static_cast<float>(static_cast<int32>(Quot));\n\tfloat Prod = Quot * Divisor;\n\tif (FMath::Abs(Value) < FMath::Abs(Prod)) Prod = Value;\n\tconst float Rem = Value - Prod;\n\tif (-FMath::Abs(Divisor) <= Rem) return FMath::Min(Rem, FMath::Abs(Divisor));\n\treturn -FMath::Abs(Divisor);\n}\n",
+  "evidence": "captures/a07ef25a9e7146a9946d3e2dec97791c/0x142bc0d80.c"
+}

@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerControllerZone::ServerSubmitGameplayVote_Implementation",
+  "status": "proposed",
+  "original": "0x1423e9be0",
+  "signature": "void ServerSubmitGameplayVote_Implementation(EVoteType VoteType, int32 VoteDecision) [VoteType/VoteDecision unused]",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/d5ab7571e59b46b292eba32a99e654e5/0x1423e9be0.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x142419ef0.c",
+    "/opt/fortnite/local-model-package/captures/2c87a1e9f94f466b976233be1a0a0c38/0x1428ea8f0.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x142927a60.c",
+    "/opt/fortnite/local-model-package/captures/2c87a1e9f94f466b976233be1a0a0c38/0x142a85850.c"
+  ],
+  "callees": {
+    "0x142419ef0": "BuildVoteRequestContext: builds context object referencing PS+0x250 and PS+0x258 (read in full)",
+    "0x1428ea8f0": "AFortGameMode::StaticClass (named)",
+    "0x142927a60": "AFortGameStateZone::StaticClass (named)",
+    "0x142a85850": "AFortPlayerState::StaticClass (named)",
+    "Stub_Empty": "STUB: shared no-op stub (exact address not confirmed from the decompile)"
+  },
+  "notes": "The decompile never reads VoteType or VoteDecision. Stub_Empty stands in for the submit, so the vote has no visible effect in this build. CONFIDENCE MEDIUM because Stub_Empty's identity is inferred from its name in the decompile."
+}

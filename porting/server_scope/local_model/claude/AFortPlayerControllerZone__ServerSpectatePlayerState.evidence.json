@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerControllerZone::ServerSpectatePlayerState",
+  "status": "proposed",
+  "original": "0x142a71050",
+  "signature": "void ServerSpectatePlayerState(AFortPlayerStateZone* PlayerToSpectate, bool bAllowStateChange) [thunk read order]",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a71050.c",
+    "/opt/fortnite/local-model-package/captures/5bbd05c09d0944f6a121c60cb7c608c9/0x1423e98c0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB: _Validate (vslot 0x2158) returns true",
+    "0x1423e98c0": "_Implementation (vslot 0x2160); ported separately"
+  },
+  "notes": "Exec thunk ported. _Validate is STUB (always true). Implementation ported in AFortPlayerControllerZone__ServerSpectatePlayerState_Implementation.inc. Unrecovered names: vslot 0x840 query, FName at _DAT_1481b4540."
+}

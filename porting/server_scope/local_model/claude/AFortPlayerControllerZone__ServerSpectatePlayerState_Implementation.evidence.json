@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerControllerZone::ServerSpectatePlayerState_Implementation",
+  "status": "proposed",
+  "original": "0x1423e98c0",
+  "signature": "void ServerSpectatePlayerState_Implementation(AFortPlayerStateZone* PlayerToSpectate, bool bAllowStateChange)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5bbd05c09d0944f6a121c60cb7c608c9/0x1423e98c0.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x1419b6d20.c",
+    "/opt/fortnite/local-model-package/captures/e92b32fa92da4bce8d1d893faeee2b75/0x142a6f480.c",
+    "/opt/fortnite/local-model-package/captures/1a1e74d2466348a5b7f65d7e633ed32d/0x142a75f10.c"
+  ],
+  "callees": {
+    "0x1419b6d20": "GetFortPlayerPawnOf: returns obj+0x278 when it is an AFortPlayerPawn (read in full)",
+    "0x142a6f480": "CallBlueprintEvent: ProcessEvent of FindFunctionChecked(name) with {arg, bool} (read in full)",
+    "0x142a75f10": "AFortPlayerPawn::StaticClass (named from GetPrivateStaticClassBody)",
+    "vslot 0x840 on PlayerToSpectate": "unnamed bool query, not read"
+  },
+  "notes": "Depth: FUN_1419b6d20, FUN_142a6f480 and FUN_142a75f10 read in full. Vslot 0x840 target not read. Name of the BP event (_DAT_1481b4540) not recovered."
+}

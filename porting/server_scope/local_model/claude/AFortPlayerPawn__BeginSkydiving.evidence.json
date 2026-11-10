@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerPawn::BeginSkydiving",
+  "status": "proposed",
+  "original": "0x142a7aee0",
+  "signature": "void BeginSkydiving(bool bFromBus)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7aee0.c",
+    "/opt/fortnite/local-model-package/captures/eb5642631b5d4f6baa0f0f8c93aca6cf/0x140c31764.c"
+  ],
+  "callees": {
+    "0x140c31764": "thunk: FUN_1495a4a24(param_1, param_2, 0)",
+    "0x1495a4a24": "UNRESOLVED: not a decodable function body (OR.LOCK into unresolved base, RETF). See deps."
+  },
+  "notes": "LOW CONFIDENCE. The effect of the callee is not recovered. The body keeps the call as BeginSkydivingInternal(bFromBus)."
+}

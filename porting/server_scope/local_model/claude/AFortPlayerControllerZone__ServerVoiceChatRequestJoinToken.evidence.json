@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerZone::ServerVoiceChatRequestJoinToken",
+  "status": "proposed",
+  "original": "0x142a71250",
+  "signature": "void ServerVoiceChatRequestJoinToken(FString ChannelName) [thunk]",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a71250.c",
+    "/opt/fortnite/local-model-package/captures/bde786e05f5242fa940c2fd929fb7571/0x1423e9d60.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB: _Validate (vslot 0x2088) returns true",
+    "0x1423e9d60": "_Implementation (vslot 0x2090), ported separately",
+    "0x1406801d0 (validate)": "STUB: _Validate targets return true"
+  },
+  "notes": "Exec thunk ported. ChannelName freed after the call. _Validate is STUB."
+}

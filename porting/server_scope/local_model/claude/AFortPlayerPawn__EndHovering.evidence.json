@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerPawn::EndHovering",
+  "status": "proposed",
+  "original": "0x142a7b5d0",
+  "signature": "void EndHovering()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7b5d0.c",
+    "/opt/fortnite/local-model-package/captures/216eea8398564ef5b2187f881f1f5253/0x1429f5d30.c"
+  ],
+  "callees": {
+    "0x1429f5d30": "UFortMovementComp_Character::StaticClass (named, read in full)",
+    "0x590 (CharacterMovement vslot)": "SetMovementMode(MOVE_Falling) - name inferred (LOW)"
+  },
+  "notes": "All branches ported. VehicleStateLocal.Vehicle is inferred from the first qword of VehicleStateLocal."
+}

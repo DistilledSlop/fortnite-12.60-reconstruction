@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerPawn::CancelJumpAbility",
+  "status": "proposed",
+  "original": "0x142a7b160",
+  "signature": "void CancelJumpAbility()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7b160.c",
+    "/opt/fortnite/local-model-package/captures/36976703ee014d61806fdee6d1c9d81f/0x140708a10.c"
+  ],
+  "callees": {
+    "0x140708a10": "FindAbilitySpecFromHandle (read in full)",
+    "0x142cd3770": "STAT scope (instrumentation, omitted)",
+    "0x1406801e0": "ShouldCreateRenderState slot on movement component (header model); not used by this function",
+    "0x2c8 on ability object": "EndAbility/CancelAbility - name inferred from arguments, not read"
+  },
+  "notes": "The handle offset (5104) and the ASC vslot 0x10 are not named. The ability call's argument list is inferred from the decompile. MEDIUM."
+}

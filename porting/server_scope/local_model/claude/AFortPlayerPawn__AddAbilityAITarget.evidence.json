@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerPawn::AddAbilityAITarget",
+  "status": "proposed",
+  "original": "0x142a7aba0",
+  "signature": "void AddAbilityAITarget(AActor* InTarget) [thunk]",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a7aba0.c",
+    "/opt/fortnite/local-model-package/captures/913f6b9248d94d569e9073becc891c6a/0x142301b90.c"
+  ],
+  "callees": {
+    "0x142301b90": "helper body inlined (read in full)",
+    "0x14085a990": "TArray AddUnique on AbilityAITargets (read in full)",
+    "0x142ee6180": "FWeakObjectPtr Get (read in full)",
+    "0x142ee3b30": "FWeakObjectPtr set (read in full)",
+    "0x1406bd0b0": "RemoveStaleAITargetDiedListeners (read in full)",
+    "0x140690dd0": "TArray grow for 16-byte entries (read in full)",
+    "0x142cd4ab0": "FName from string (captured, not read)",
+    "0x140682ce0": "FString copy (read in full)"
+  },
+  "notes": "Depth: FUN_142301b90 read in full, plus its direct callees. The FName and UObject_FindFunction helpers are engine helpers. The weak-pointer reset argument on FUN_142ee3b30 is lost in the decompile, so SelfWeak is taken to be the pawn. CONFIDENCE MEDIUM."
+}
