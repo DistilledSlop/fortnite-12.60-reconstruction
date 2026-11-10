@@ -1,0 +1,8 @@
+{
+ "function": "AFortPawn::SetFNameBasedOnHitDirection",
+ "status": "proposed",
+ "blocker": null,
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "pilot-1",
+ "batch_seconds": 3500
+}

@@ -1,0 +1,34 @@
+{
+  "function": "AFortPawn::LaunchCharacterJump",
+  "status": "blocked",
+  "original_address": "0x142a1ce40 (thunk) -> 0x142332c40 (body)",
+  "decompile_source": "/opt/fortnite/local-model-package/captures/05fdcca221474417af8f8f03a70ff6d8/0x142332c40.c",
+  "param_order": {
+    "note": "FFrame read order (authoritative from thunk 0x142a1ce40): LaunchVelocity, bPlayFeedbackEvent, bIgnoreFallDamage, bZOverride, bXYOverride. C++ signature: void LaunchCharacterJump(FVector LaunchVelocity, bool bPlayFeedbackEvent, bool bIgnoreFallDamage, bool bZOverride, bool bXYOverride). The 23.20 SDK param order differs and is NOT authoritative for 12.60.",
+    "reflection_index_order": ["bPlayFeedbackEvent", "bIgnoreFallDamage", "bZOverride", "bXYOverride", "LaunchVelocity"]
+  },
+  "resolved_contracts": [
+    "Controller = *(this+0x250) (APawn::Controller, AController*). body: lVar1 = param_1[0x4a] = *(this+0x250).",
+    "bXYOverride branch: if (bXYOverride && Controller) { if (Controller IsA AFortPlayerController) FUN_1423bd2b0(Controller, _DAT_148157ed8, this, 0, 0xbf800000); }. The IsA check is the standard UClass::IsChildOf pattern: FUN_142a3d9f0() returns the AFortPlayerController UClass* (_DAT_1481b0238); the body compares the Controller's class super-chain against it.",
+    "bZOverride branch: if (bZOverride) *(byte*)(this+0x520) |= 4; i.e. set bIgnoreNextFallingDamage (bool_bits offset 1312, mask 4).",
+    "Final call: virtual[0x7c8](this, &LaunchVelocity, bPlayFeedbackEvent, bIgnoreFallDamage) — a (FVector, bool, bool) pawn virtual (the launch call). The velocity is passed by value on the stack (uStack_18 = X,Y; uStack_10 = Z)."
+  ],
+  "unresolved_contracts": [
+    "virtual[0x7c8]: the (FVector, bool, bool) pawn virtual that performs the launch. The engine ACharacter::LaunchCharacter is (FVector, bXYOverride, bZOverride); the bools here are bPlayFeedbackEvent/bIgnoreFallDamage, a semantic mismatch, so this is a Fortnite-specific launch virtual whose identity is unconfirmed (AFortPawn has no reflected plain LaunchCharacter in 12.60).",
+    "FUN_1423bd2b0 (0x1423bd2b0): the bXYOverride notification. It calls FUN_1424ab210() (a global getter), checks Controller+0x658 bit 0x8 OR (param_2 == _DAT_14815b498/_DAT_14815b49c), then calls FUN_1424c21f0(global, &struct, pawn, 0, 0xbf800000, 1, 1). Related to TriggerFeedbackEvent (create 0x142a16080; sig (FName EventName, AFortPawn* InstigatorPawn, AFortPawn* Recipient, float OverriddenDelay)) but not directly identical. Unresolved.",
+    "_DAT_148157ed8: the data pointer passed as param_2 to FUN_1423bd2b0 (likely an event name / signature / function-pointer table). Unresolved."
+  ],
+  "attempts": [
+    "Confirmed the thunk param order and the body's use of each param (Controller, bZOverride flag, IsA check, virtual launch call).",
+    "Identified bZOverride target as bIgnoreNextFallingDamage (bool_bits 0x520 mask 4) via evidence.py field-offset.",
+    "Confirmed FUN_142a3d9f0() returns the AFortPlayerController UClass* (_DAT_1481b0238), fixing the IsA target.",
+    "Read FUN_1423bd2b0 (0x1423bd2b0): it is a deep notification calling FUN_1424ab210 + FUN_1424c21f0 with a data comparison; did not fully resolve.",
+    "Checked 23.20 SDK dump: LaunchCharacterJump param order differs from 12.60 (not authoritative); AFortPawn has no plain LaunchCharacter override, only LaunchCharacterJump."
+  ],
+  "next_steps": [
+    "Resolve virtual[0x7c8]: locate the AFortPawn/ACharacter vtable slot at byte offset 0x7c8 and confirm the (FVector, bool, bool) launch virtual (likely a Fortnite launch/movement entry) and its exact bool semantics.",
+    "Resolve FUN_1423bd2b0: follow FUN_1424ab210 (global getter) and FUN_1424c21f0 (dispatch) to name the bXYOverride notification (candidate: a TriggerFeedbackEvent-style call with EventName=_DAT_148157ed8).",
+    "Identify _DAT_148157ed8 (event name / signature) and the _DAT_14815b498/_DAT_14815b49c comparison constants.",
+    "Then emit the body: Controller IsA AFortPlayerController gate -> resolved notify; bZOverride -> bIgnoreNextFallingDamage=true; resolved launch virtual(LaunchVelocity, bPlayFeedbackEvent, bIgnoreFallDamage)."
+  ]
+}

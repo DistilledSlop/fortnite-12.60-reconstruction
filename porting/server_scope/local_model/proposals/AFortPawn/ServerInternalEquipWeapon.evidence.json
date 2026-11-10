@@ -1,0 +1,21 @@
+{
+  "function": "AFortPawn::ServerInternalEquipWeapon",
+  "original_address": "0x142a1f670",
+  "decompile_source": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142a1f670.c",
+  "proposal": "work/q27-pilot-1/ServerInternalEquipWeapon.inc",
+  "observations": [
+    "The native thunk reads a single Object parameter from the FFrame at reflection offset 0 (AFortWeapon*, param class 0x142b3de80).",
+    "It then calls the virtual at vtable slot 0x8e8 with (this, Weap) and branches on the returned bool.",
+    "On true it calls the virtual at vtable slot 0x8f0 with (this, Weap); on false it calls RPC_ValidateFailed with the literal name string \"ServerInternalEquipWeapon_Validate\".",
+    "This is the exact generated shape of a UFUNCTION(Server, Reliable, WithValidation) dispatch: _Validate gate -> _Implementation call, with the canonical RPC_ValidateFailed fallback."
+  ],
+  "header_declaration": {
+    "present": true,
+    "location": "checkout generated AFortPawn.h lines 1012-1015",
+    "note": "UFUNCTION(Server, Reliable, WithValidation) void ServerInternalEquipWeapon(AFortWeapon* Weap); plus ServerInternalEquipWeapon_Implementation and ServerInternalEquipWeapon_Validate."
+  },
+  "confidence": "HIGH",
+  "remaining_questions": [
+    "The _Validate/_Implementation virtuals are provided by the generated header/manifest; the proposal only supplies the dispatch body."
+  ]
+}

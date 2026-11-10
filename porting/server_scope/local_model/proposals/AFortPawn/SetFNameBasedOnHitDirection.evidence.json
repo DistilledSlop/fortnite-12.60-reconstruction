@@ -1,0 +1,18 @@
+{
+  "function": "AFortPawn::SetFNameBasedOnHitDirection",
+  "original_address": "0x142a1f9d0 (thunk) -> 0x14234c7b0 (body)",
+  "decompile_source": "/opt/fortnite/local-model-package/captures/05fdcca221474417af8f8f03a70ff6d8/0x14234c7b0.c",
+  "angle_helper": "/opt/fortnite/local-model-package/captures/216dec00cd7d470897a6729b1ec33d86/0x142c521d0.c",
+  "proposal": "work/q27-pilot-1/SetFNameBasedOnHitDirection.inc",
+  "observations": [
+    "The body reads the RootComponent (AActor::RootComponent at +0x130) rotation quaternion (+0x1c0) and converts it to the actor forward vector; when RootComponent is null the forward defaults to identity (GetActorForwardVector semantics).",
+    "It normalizes HitDirection and calls the generic signed-angle helper FUN_142c521d0(forward, hitDir, up, out). The helper computes magnitude via acos of the clamped dot and a second value via asin (unused by this caller); out[0] is the signed angle in radians, out[1] the asin value.",
+    "out[0] is multiplied by 57.295776 (= 180/PI) to degrees; the sign is derived from the up axis (cross-product sign), i.e. the standard UE4 signed-angle idiom. Representation of the helper as FMath::Acos + up-axis cross sign is an idiom-level equivalence, not a byte-for-byte match of the helper (MEDIUM confidence).",
+    "Classification on |degrees|: <= 45 -> NameFront; >= 120 -> NameLeft; 45 < |deg| < 120 -> NameRight when signed deg > 0 else NameLeft. NameBack is a parameter that is never written (red herring in the original)."
+  ],
+  "confidence": "MEDIUM",
+  "remaining_questions": [
+    "The signed-angle helper FUN_142c521d0 is represented with the standard UE4 idiom (acos magnitude + up-axis cross sign); a byte-for-byte re-derivation of its exact sign rule was not performed.",
+    "NameBack is accepted but unused in the original; the proposal mirrors that."
+  ]
+}

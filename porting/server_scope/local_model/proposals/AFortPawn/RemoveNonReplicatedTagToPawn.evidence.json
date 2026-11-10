@@ -1,0 +1,38 @@
+{
+  "function": "AFortPawn::RemoveNonReplicatedTagToPawn",
+  "status": "blocked",
+  "original_address": "0x142a1f430 (thunk) -> 0x1423483e0 (body)",
+  "mirror_add": "AFortPawn::AddNonReplicatedTagToPawn thunk 0x142a1aea0 -> body 0x142302420",
+  "decompile_source": "/opt/fortnite/local-model-package/captures/05fdcca221474417af8f8f03a70ff6d8/0x1423483e0.c",
+  "asm_source": "/opt/fortnite/local-model-package/captures/05fdcca221474417af8f8f03a70ff6d8/0x1423483e0.asm",
+  "param": {
+    "name": "Tag",
+    "struct": "0x143e9a2a0",
+    "note": "FGameplayTag (8 bytes = FName), reflection offset 0"
+  },
+  "resolved_contracts": [
+    "Body shape (ASM-authoritative): comp = *(this+0x4c8); plVar2 = comp->vtable[0x10](); if (plVar2) { bOk = FUN_140744d30(plVar2+0x1040, Tag, 0xffffffff); if (bOk) plVar2->vtable[0x810](plVar2, Tag, 0); }",
+    "The C decompile mislabels the container offset as +0x208; the ASM (LEA RCX,[RAX+0x1040]) is authoritative: the tag container is at plVar2+0x1040.",
+    "plVar2 is the AbilitySystemComponent. Its virtual at vtable offset 0x810 matches UAbilitySystemComponent::OnTagUpdated(const FGameplayTag& Tag, bool TagExists) (AbilitySystemComponent.h:1549). The 3rd arg is the added/removed flag: 1 in the Add mirror, 0 here.",
+    "FUN_140744d30(container, Tag, N) is the FGameplayTagContainer add/remove-with-source op: N=1 adds the tag (Add mirror), N=0xffffffff removes it from all sources (here). It returns bool (true when the tag count changed / was present).",
+    "Add/Remove are exact mirrors differing only in N (1 vs 0xffffffff) and the notify flag (1 vs 0)."
+  ],
+  "unresolved_contracts": [
+    "comp = *(this+0x4c8): the member at AFortPawn offset 0x4c8 (1224). It is NOT a reflected property: evidence.py field-offset AFortPawn/ACharacter/APawn/AActor 0x4c8 returns no results, and ACharacter's last reflected property in the 12.60 reflection is RepRootMotion at 0x410. So 0x4c8 is a non-reflected ACharacter (or gap) member. Its identity is unknown.",
+    "comp->vtable[0x10]() : the getter on comp that returns the ASC. The MSVC/UE4 vtable slot at byte offset 0x10 could not be mapped to a named virtual (UObject's first real virtual is GetDetailedInfoInternal, which returns a FString, not a component). The getter's identity is unknown.",
+    "plVar2+0x1040 : the specific FGameplayTagContainer member of the ASC at offset 0x1040 (4160). Which ASC container this is (e.g. a local/non-replicated tag set) is unconfirmed."
+  ],
+  "attempts": [
+    "Compared against the mirror AddNonReplicatedTagToPawn (thunk 0x142a1aea0, body 0x142302420) to confirm the shared structure and the add/remove semantics of FUN_140744d30 and the vtable[0x810] notify.",
+    "Queried reflection field offsets across AFortPawn/ACharacter/APawn/AActor for 0x4c8 and the 0x400-0x530 range: no reflected member present.",
+    "Dumped ACharacter's reflected property layout (12.60): last reflected prop is RepRootMotion at 0x410; nothing at 0x4c8.",
+    "Matched the vtable[0x810] notify to UAbilitySystemComponent::OnTagUpdated (FGameplayTag, bool) in the engine source, fixing plVar2 = ASC.",
+    "Checked the 23.20 SDK dump ACharacter layout: offsets differ from 12.60 (RepRootMotion 0x550 vs 0x410), so it does not identify the 12.60 0x4c8 member."
+  ],
+  "next_steps": [
+    "Locate the ACharacter non-reflected member at 12.60 offset 0x4c8 (e.g. by finding a constructor/PostInitializeComponents that stores a component pointer there, or by reading the vtable pointer value at runtime and matching it to a known component class).",
+    "Resolve the comp->vtable[0x10] getter: once comp's class is known, map vtable byte offset 0x10 to the named virtual that returns the ASC (likely an IAbilitySystemInterface::GetAbilitySystemComponent-style accessor).",
+    "Identify the ASC FGameplayTagContainer at +0x1040 (cross-reference the ASC member layout / the Add mirror's container usage) to name the non-replicated tag storage.",
+    "Then emit the body: get comp, get ASC via the resolved accessor, RemoveGameplayTag/RemoveTag from the resolved container (all sources), and on success call ASC->OnTagUpdated(Tag, false)."
+  ]
+}
