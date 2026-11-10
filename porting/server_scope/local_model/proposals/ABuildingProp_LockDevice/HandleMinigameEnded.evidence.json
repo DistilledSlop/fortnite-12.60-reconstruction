@@ -1,0 +1,59 @@
+{
+  "class": "ABuildingProp_LockDevice",
+  "function": "HandleMinigameEnded",
+  "exec_addr": "0x14274ff60",
+  "status": "blocked",
+  "owner": "q27-11100057",
+  "decompile_source": "captures (evidence.py show 0x14274ff60); decompile at checkout references /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native107-broad/0x14274ff60.c",
+  "decompile_summary": {
+    "param_1": "ABuildingProp_LockDevice* this",
+    "param_2": "FFrame* (no reflected params; native const function)",
+    "body": [
+      "FFrame::Code = (Code != 0) + Code;   // advance FFrame::Code (native dispatch convention; FFrame.Code is at +0x20 per FFRAME_FIELDS in runtime/toolchain/porting/ghidra/improve_decompile.py)",
+      "UStaticMeshComponent* SMC = *(this + 0x768);",
+      "*(uint8*)(this + 0xb98) = 0;          // native bool member (not reflected) = false",
+      "if (SMC == null) return;",
+      "SMC->vtable[0x800/8](SMC, 0xe, *(uint32*)(this + 0xbd0));   // virtual call, args: 0xe and a u32 native field"
+    ]
+  },
+  "field_proofs": [
+    {
+      "offset": "0x768",
+      "decimal": 1896,
+      "member": "ABuildingSMActor::StaticMeshComponent",
+      "kind": "Object",
+      "type_class_ref": "0x1447ffbe0",
+      "source": "scripts/evidence.py field-offset ABuildingProp_LockDevice 0x768",
+      "note": "UStaticMeshComponent* (via ABuildingSMActor in the parent chain ABuildingProp_LockDevice -> ABuildingProp -> ABuildingTimeOfDayLights -> ABuildingAutoNav -> ABuildingSMActor -> ...)"
+    },
+    {
+      "offset": "0xb98",
+      "decimal": 2968,
+      "member": null,
+      "source": "scripts/evidence.py field-offset ABuildingProp_LockDevice 0xb98 -> results: []",
+      "note": "No reflected property; native-only bool. Written 0 here, 1 in HandleMinigameStarted. Likely a bMinigameActive-style flag."
+    },
+    {
+      "offset": "0xbd0",
+      "decimal": 3024,
+      "member": null,
+      "source": "scripts/evidence.py field-offset ABuildingProp_LockDevice 0xbd0 -> results: []",
+      "note": "No reflected property; native-only u32, passed as the second argument of the virtual call."
+    }
+  ],
+  "blockers": [
+    {
+      "contract": "Virtual function at UStaticMeshComponent vtable byte-offset 0x800 (slot index 256)",
+      "address": "0x14274ff60 (call site)",
+      "missing_evidence": "The UStaticMeshComponent primary vtable address is not verified. reflection/native_class_index.json lists UStaticMeshComponent / USceneComponent / UPrimitiveComponent / UActorComponent all as vtable_status=unverified (vtable_addr=null). Without the vtable base, slot 256 cannot be mapped to a UE 4.25 component virtual.",
+      "what_i_tried": [
+        "Scanned the runtime image (image-125.runtime.bin, base 0x140000000) for runs of >=240 consecutive code pointers to enumerate candidate vtables (660 candidates in the 240-420 entry range).",
+        "Grouped candidates by the (vtable[0], vtable[1]) destructor pair; the dominant pair (0x1406961d0, 0x1406801e0) had 164 tables, but run-detection produces false positives (large dispatch tables, misaligned starts) so the UStaticMeshComponent table could not be isolated.",
+        "Checked reflection/native_class_index.json for a verified UStaticMeshComponent vtable: status=unverified."
+      ],
+      "next_step": "Resolve the UStaticMeshComponent primary vtable via the constructor rule documented in checkout/porting/binary_analysis.md section 'Vtables from the constructors' (GetPrivateStaticClass -> InternalConstructor<UStaticMeshComponent> -> the constructor's primary vptr store `*this = &DAT_...`), then read byte offset 0x800 of that table. The Started call is (0xe) and the Ended call is (0xe, u32 at this+0xbd0), consistent with a UPrimitiveComponent-style virtual of shape (uint8/bool, [optional uint32]) such as SetSimulatePhysics(bool bSimulate, bool bResetVelocity=true); the 0xbd0 value is the explicit second argument on the Ended path."
+    }
+  ],
+  "confidence": "blocked",
+  "notes": "Body is otherwise fully determined except the one virtual call. The 0xb98 bool, 0x768 StaticMeshComponent and 0xbd0 u32 are confirmed by decompile; only the vtable slot identity is open. Cross-reference: sibling HandleMinigameStateChanged thunk at 0x14274ffa0 dispatches to FUN_141c0c310 (not part of this assignment)."
+}

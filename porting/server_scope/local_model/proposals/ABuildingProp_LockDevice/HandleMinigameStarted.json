@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingProp_LockDevice::HandleMinigameStarted",
+ "status": "blocked",
+ "blocker": "UStaticMeshComponent vtable byte-offset 0x800 (slot 256) identity unresolved; vtable unverified in reflection/native_class_index.json (vtable_addr=null). Next: resolve vtable via constructor vptr-store rule (checkout/porting/binary_analysis.md 'Vtables from the constructors'), then read slot 256.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100057",
+ "batch_seconds": 1409
+}

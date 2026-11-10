@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingProp_CreaturePlacer::UpdateCreatureVisuals",
+ "status": "blocked",
+ "blocker": "Async-load request object type (0x30 bytes; vtables DAT_1459a9e80/DAT_1459a9ed8) and its start vcall at vtable +0x40 unresolved; temp array element type ({u64, 16-byte string}) unproven; native fields 0xbe0/0xbe8/0xc00/0xc48/0xc58/0xc88/0xc90 unreflected. Next: resolve request type via constructor vptr-store rule (read +0x40 slot), identify FUN_140682ce0 16-byte copy type and FUN_1445f2070 registration call.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100057",
+ "batch_seconds": 1409
+}

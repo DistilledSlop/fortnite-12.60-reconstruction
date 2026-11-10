@@ -1,0 +1,133 @@
+{
+  "class": "ABuildingProp_CreaturePlacer",
+  "function": "UpdateCreatureVisuals",
+  "exec_addr": "0x14274c0d0",
+  "status": "blocked",
+  "owner": "q27-11100057",
+  "decompile_source": "captures (evidence.py show 0x14274c0d0); decompile at /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native107-broad/0x14274c0d0.c (full body read, lines 1-160)",
+  "decompile_summary": {
+    "param_1": "ABuildingProp_CreaturePlacer* this",
+    "param_2": "FFrame* (no reflected params; native const function)",
+    "body": [
+      "FFrame::Code = (Code != 0) + Code;   // advance FFrame::Code (native dispatch convention; FFrame.Code at +0x20 per FFRAME_FIELDS)",
+      "for (i = 0; i < *(int*)(this + 0xbe8); i++) {",
+      "  entry = *(this + 0xbe0) + i * 0x78;   // 0x78-byte creature-visual entries",
+      "  if (FUN_142ebdc30(entry + 0x10, this + 0xc00)   // item-definition equality: (u32,u32) compare + string compare via FUN_142bcf780",
+      "      && ((*(u32*)(entry+0x10) != 0) || (*(u32*)(entry+0x14) != 0))",
+      "      && ((*(u32*)(entry+0x38) != 0) || (*(u32*)(entry+0x3c) != 0))",
+      "      && ((*(u32*)(entry+0x60) != 0) || (*(u32*)(entry+0x64) != 0))) {",
+      "    // build a 3-element temp array; each element is 24 bytes = { u64 id, 16-byte string copied by FUN_140682ce0 }:",
+      "    //   (entry+0x10, entry+0x18), (entry+0x38, entry+0x40), (entry+0x60, entry+0x68)",
+      "    *(u8*)(this + 0xc58) = 0;   // bVisualsLoading-style flag cleared before request",
+      "    // allocate 0x30-byte async request object (FMemory_Realloc):",
+      "    //   +0x00 vtable = DAT_1459a9e80 (initial)",
+      "    //   +0x08 TWeakObjectPtr(this) via FUN_142ee3b30 (reads UObject index at obj+0xc, serial via FUN_142ec00d0)",
+      "    //   +0x10 callback = FUN_141c0b3e0 (HandleAsyncLoadVisualsComplete, 8-byte static function pointer)",
+      "    //   +0x18, +0x1c = 0, 0",
+      "    //   +0x28 id = FUN_142bad740() (atomic increment of global 0x147c306f0)",
+      "    //   vtable then swapped to DAT_1459a9ed8",
+      "    FUN_141df62a0();   // GetAssetManager (GEngine+0x2a8, UFortAssetManager class check; logs 'Invalid AssetManager class used, must be UFortAssetManager')",
+      "    // build wide-string/FName array with L\"RequestAsyncLoad ArrayDelegate\" (31 chars)",
+      "    (**(code **)(*request + 0x40))(request, &local);   // virtual 'start' on the request object",
+      "    lVar9 = FUN_144017270();   // decompiles to an assert-only stub (logs 'Cannot use AssetManager if no AssetManagerClassName is defined!'); caller uses its return value +0x178",
+      "    // FUN_1445f2070(lVar9 + 0x178, names, &callback, &local, 0,0,0, &pendingArr) returns a new array,",
+      "    // swapped into this+0xc88/0xc90 (TArray of pending request objects); old element refcount-decremented",
+      "  }",
+      "}"
+    ]
+  },
+  "callee_identifications": [
+    {
+      "address": "0x141c0b3e0",
+      "identity": "ABuildingProp_CreaturePlacer::HandleAsyncLoadVisualsComplete (completion callback stored in the request object at +0x10)",
+      "evidence": "evidence.py show 0x141c0b3e0: body logs L\"ABuildingProp_CreaturePlacer::HandleAsyncLoadVisualsComplete : Failed to load assets for the selected creature visuals.\" when *(this+0xc88) array is empty; on success reads *plVar3 (this+0xc88 element), FUN_1445eaa10(...), FUN_141c11f10(this, ...), sets *(this+0xc58)=1, FUN_1406a9dc0(this+0xc48, 0), FUN_1445f0570(*plVar3)"
+    },
+    {
+      "address": "0x142bad740",
+      "identity": "atomic id counter (global 0x147c306f0, increment-with-wraparound to >=1)",
+      "evidence": "evidence.py show 0x142bad740: LOCK/UNLOCK increment of _DAT_147c306f0, re-increments if result wraps to 0"
+    },
+    {
+      "address": "0x142ee3b30",
+      "identity": "TWeakObjectPtr<T> constructor (from UObject*)",
+      "evidence": "evidence.py show 0x142ee3b30: null -> {0xffffffff, 0}; else copies *(u32*)(obj+0xc) (UObject::InternalIndex) and calls FUN_142ec00d0(&DAT_148263810) for the serial number"
+    },
+    {
+      "address": "0x141df62a0",
+      "identity": "GetAssetManager (GEngine->AssetManager at +0x2a8 with UFortAssetManager check)",
+      "evidence": "evidence.py show 0x141df62a0: reads _DAT_148351eb8 (GEngine) + 0x2a8, verifies class via FUN_1427ba7e0() name chain; logs L\"Invalid AssetManager class used, must be UFortAssetManager\" on mismatch"
+    },
+    {
+      "address": "0x144017270",
+      "identity": "AssetManager-defined assertion stub (UNRESOLVED as a value-returning getter)",
+      "evidence": "evidence.py show 0x144017270: decompiles to an assert-only body (logs L\"Cannot use AssetManager if no AssetManagerClassName is defined!\") with void return; the caller uses lVar9 + 0x178 from its return value, so the decompile is incomplete for this path"
+    },
+    {
+      "address": "0x142ebdc30",
+      "identity": "item-definition equality predicate",
+      "evidence": "evidence.py show 0x142ebdc30: compares two (u32,u32) pairs (param[0], param[1]) then string-compares the +0x18 slot via FUN_142bcf780 with empty-string fallback to DAT_1459a4b30"
+    }
+  ],
+  "field_proofs": [
+    {
+      "offset": "0xbe0",
+      "member": null,
+      "source": "scripts/evidence.py field-offset ABuildingProp_CreaturePlacer 0xbe0 -> results: []",
+      "note": "No reflected property; pointer to the creature-visual entry array (0x78-byte stride)."
+    },
+    {
+      "offset": "0xbe8",
+      "member": null,
+      "source": "scripts/evidence.py field-offset ABuildingProp_CreaturePlacer 0xbe8 -> results: []",
+      "note": "No reflected property; entry count (int)."
+    },
+    {
+      "offset": "0xc00",
+      "member": null,
+      "source": "scripts/evidence.py field-offset ABuildingProp_CreaturePlacer 0xc00 -> results: []",
+      "note": "No reflected property; target item definition used in the equality predicate; shape {u32,u32,16-byte string} matching entry+0x10."
+    },
+    {
+      "offset": "0xc48",
+      "member": null,
+      "source": "scripts/evidence.py field-offset ABuildingProp_CreaturePlacer 0xc48 -> results: []",
+      "note": "No reflected property; not touched by UpdateCreatureVisuals itself, but the completion handler FUN_141c0b3e0 calls FUN_1406a9dc0(this+0xc48, 0) after a successful load (likely a pending delegate/timer slot)."
+    },
+    {
+      "offset": "0xc58",
+      "member": null,
+      "source": "scripts/evidence.py field-offset ABuildingProp_CreaturePlacer 0xc58 -> results: []",
+      "note": "No reflected property; native bool: cleared here before the async request, set to 1 in the completion handler. Likely a bVisualsLoaded/bVisualsLoading flag."
+    },
+    {
+      "offset": "0xc88/0xc90",
+      "member": null,
+      "source": "scripts/evidence.py field-offset ABuildingProp_CreaturePlacer 0xc88 -> results: []",
+      "note": "No reflected property; TArray of pending async request objects (swap-in here; read by the completion handler at +0xc88, refcount at +0xc90)."
+    }
+  ],
+  "blockers": [
+    {
+      "contract": "Type of the 0x30-byte async-load request object and its virtual 'start' method at vtable +0x40",
+      "address": "0x14274c0d0 (alloc + vcall site); vtables DAT_1459a9e80 / DAT_1459a9ed8",
+      "missing_evidence": "The 0x30-byte heap object {vtable, TWeakObjectPtr(this), callback=HandleAsyncLoadVisualsComplete, 2x u32, id} is a Fortnite async-load request whose class/type name is not in reflection, and the vtable slot at +0x40 (the start method) cannot be mapped without the vtable base. The registration call FUN_1445f2070(manager+0x178, names, callback, local, 0,0,0, &pendingArray) is likewise unidentifiable, and the value-returning semantics of FUN_144017270 (used as lVar9+0x178) are unresolved in the decompile.",
+      "what_i_tried": [
+        "Read the full decompile (160 lines) and traced the object layout: +0x00 vtable, +0x08 TWeakObjectPtr ctor (0x142ee3b30 pattern), +0x10 8-byte callback, +0x18/+0x1c zeros, +0x28 atomic id.",
+        "Identified the completion callback 0x141c0b3e0 by its log string (HandleAsyncLoadVisualsComplete) and used it to cross-check the +0xc88/0xc90 pending-array and +0xc58/+0xc48 fields.",
+        "Confirmed the asset-manager getters 0x141df62a0 / 0x144017270 by their log strings; the second one decompiles to an assert-only stub, so the +0x178 sub-object access remains unproven."
+      ],
+      "next_step": "Resolve the request object's type via the constructor vptr-store rule (checkout/porting/binary_analysis.md section 'Vtables from the constructors'): identify the constructor that stores DAT_1459a9e80 as the initial vptr (search image code for the immediate), then read the +0x40 slot of that vtable to name the start method, and cross-reference FUN_1445f2070's first argument (manager + 0x178) against UFortAssetManager's reflected field layout. Then re-derive the body: loop + entry filter + request construction are fully determined; only the request type name and the start-call spelling are open."
+    },
+    {
+      "contract": "Element type of the 3-element temp array ({u64, 16-byte string}) and the 16-byte string type",
+      "address": "0x14274c0d0 (array build site); copy fn 0x140682ce0",
+      "missing_evidence": "Each array element is 24 bytes: an u64 (entry+0x10/0x38/0x60) plus a 16-byte value copied by FUN_140682ce0 from entry+0x18/0x40/0x68. The 16-byte string type (FName-like pair, FText handle, or custom) is not proven; the entry struct is native-only (no reflected fields at 0xbe0/0xbe8/0xc00).",
+      "what_i_tried": [
+        "Inferred the 0x78-byte entry layout from the decompile: {+0x00 8-byte pad, +0x10 u32,u32, +0x18 16-byte str, +0x38 u32,u32, +0x40 16-byte str, +0x60 u32,u32, +0x68 16-byte str}."
+      ],
+      "next_step": "Identify FUN_140682ce0 (16-byte copy) and the array element struct by cross-referencing the completion handler's use of the loaded entries (FUN_141c11f10 at 0x141c11f10, called with the loaded assets), then spell the temp array with the resolved element type."
+    }
+  ],
+  "confidence": "blocked",
+  "notes": "The loop, entry filter predicate, flag writes (0xc58), request-object field layout, id counter, asset-manager getters and pending-array swap are all determined by the decompile; the two open contracts are the async request object type (vtables DAT_1459a9e80/DAT_1459a9ed8, start vcall at +0x40) and the 16-byte string/element type. All native field offsets (0xbe0/0xbe8/0xc00/0xc48/0xc58/0xc88/0xc90) are unreflected."
+}
