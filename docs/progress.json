@@ -33,7 +33,7 @@
    "id": "m3",
    "text": "The client matchmakes to the reconstructed UE dedicated server",
    "done": false,
-   "evidence": "The diagnostic original client obtained a ticket, connected over a loopback plaintext websocket, processed queue and ready-check messages, and received a session assignment. The diagnostic client now accepts the session, retrieves its key, and completes the backend join request. It sends UDP to the dedicated server, which currently rejects the initial handshake; an encrypted game-world join remains unverified. Native empty-map joining has only been demonstrated with the rebuilt client; no end-to-end rebuilt-client matchmaking is recorded (porting/MATCHMAKING_PROBE.md)."
+   "evidence": "The diagnostic original client obtained a ticket, connected over a loopback plaintext websocket, processed queue and ready-check messages, and received a session assignment. The diagnostic client now accepts the session, retrieves its key, and completes the backend join request. With an experimental server patch, the dedicated server sends a challenge and acknowledges the client response, but the connection then loops on restart-handshake requests; an encrypted game-world join remains unverified. Native empty-map joining has only been demonstrated with the rebuilt client; no end-to-end rebuilt-client matchmaking is recorded (porting/MATCHMAKING_PROBE.md)."
   },
   {
    "id": "m4",
