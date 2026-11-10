@@ -1,0 +1,21 @@
+{
+  "function": "AFortPlayerPawn::ServerUpdateVehicleInputStateUnreliable",
+  "original": "0x142a7fbb0 (thunk), impl 0x14234ad30",
+  "signature": "void ServerUpdateVehicleInputStateUnreliable(float Timestamp, FortAthenaVehicleInputStateUnreliable ReliableInput)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7fbb0.c",
+    "captures/4aa6afd8369b4e2c978e34e1f1925524/0x14234ad30.c",
+    "captures/4aa6afd8369b4e2c978e34e1f1925524/0x141909580.c",
+    "captures/ffae67341a834cdb9010c4f067a963e8/0x14192a490.c",
+    "captures/ffae67341a834cdb9010c4f067a963e8/0x142a755c0.c"
+  ],
+  "callees": {
+    "0x14234ad30": "impl (read; asm shows XMM6 passed as Timestamp)",
+    "0x14192a490": "copy 0x28-byte struct skipping dwords 4 and 8 (read)",
+    "0x142a755c0": "ProcessEvent wrapper with FName DAT_1481b4958 and a 4-byte payload (read)",
+    "0x141909580": "zero-init 0x28-byte struct (read)",
+    "0x1406801d0": "STUB (MOV AL,1; RET): validate vcall 0xfc8"
+  },
+  "notes": "The copy destination at this+0x1194 is an unnamed region before VehicleInputStateUnreliable (+0x11c0); it is named CrouchSnapshotBlock_0x1194 as a proposal (LOW). FName DAT_1481b4958 unresolved.",
+  "status": "proposed"
+}

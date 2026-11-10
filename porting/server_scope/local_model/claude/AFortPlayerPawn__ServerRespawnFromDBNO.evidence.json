@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerPawn::ServerRespawnFromDBNO",
+  "status": "proposed",
+  "original": "0x142a7f510 (thunk), impl 0x14234a990",
+  "signature": "void ServerRespawnFromDBNO()",
+  "captures": [
+    "captures/e064241e2fb54f639a65e569d45a082e/0x14234a990.c",
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7f510.c"
+  ],
+  "callees": {
+    "0x14234a990": "impl (read)",
+    "0x1406801d0": "STUB (MOV AL,1; RET): validate",
+    "0x1406801e0": "STUB (XOR AL,AL; RET): Athena override of vcall 0x11e0 (CanRespawnFromDBNO), returns false",
+    "vcall 0x11e0": "CanRespawnFromDBNO (unnamed, proposed name); base AFortPlayerPawn target 0x14230c2f0 not read",
+    "vcall 0x1260": "RespawnFromDBNOInternal (unnamed); Athena target 0x141a15fb0 not read"
+  },
+  "notes": "Because the Athena 0x11e0 slot is a return-false stub, RPC impl on AFortPlayerPawnAthena returns immediately. The vcall targets 0x14230c2f0 and 0x141a15fb0 were not read."
+}

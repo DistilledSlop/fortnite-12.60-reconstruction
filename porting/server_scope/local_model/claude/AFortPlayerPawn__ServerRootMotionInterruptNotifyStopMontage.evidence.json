@@ -1,0 +1,20 @@
+{
+  "function": "AFortPlayerPawn::ServerRootMotionInterruptNotifyStopMontage",
+  "original": "0x142a7f620 (thunk), impl 0x14234a9c0",
+  "signature": "void ServerRootMotionInterruptNotifyStopMontage(UAnimMontage* MontageToStop)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7f620.c",
+    "captures/772000b8c10c4547a8f7fdf0cc01f04c/0x14234a9c0.c",
+    "captures/35039d6c9edc400db2315bd2e33baf53/0x142a774a0.c",
+    "captures/35039d6c9edc400db2315bd2e33baf53/0x143fd79c0.c"
+  ],
+  "callees": {
+    "0x14234a9c0": "impl (read in full; decompile name FUN_14234a9c0)",
+    "0x142a774a0": "ProcessEvent with FName DAT_1481b4aa0 and one object param (read)",
+    "0x143fd79c0": "AnimInstance root-motion interrupt handler (read 55 lines, not ported to depth two)",
+    "0x1406801d0": "STUB (MOV AL,1; RET): validate vcall 0xe58",
+    "vcall 0x6b0 on this": "IsLocallyControlled-style (unnamed; Athena target 0x144430060)"
+  },
+  "notes": "Montage field offset 0xe8 read as int32 (montage id), LOW. Mesh is this+0x278 and AnimInstance is mesh+0x630.",
+  "status": "proposed"
+}

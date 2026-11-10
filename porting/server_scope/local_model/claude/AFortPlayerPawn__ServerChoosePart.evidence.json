@@ -1,0 +1,32 @@
+{
+  "function": "AFortPlayerPawn::ServerChoosePart",
+  "original": "0x142a7e8c0 (thunk), validate 0x14234a270, impl 0x14234a150",
+  "signature": "void ServerChoosePart(uint8 Part, UObject* ChosenCharacterPart)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7e8c0.c",
+    "captures/9578fdeb9d2a4924a15bb6bb86fdde4f/0x14234a150.c",
+    "captures/9578fdeb9d2a4924a15bb6bb86fdde4f/0x14234a270.c",
+    "captures/096e43d2e6564f4c86cf20bade24643a/0x141ee5f70.c",
+    "captures/d5c52a53ef1b4fe6a5cc846f723f697a/0x141db8ac0.c",
+    "captures/d5c52a53ef1b4fe6a5cc846f723f697a/0x142346450.c",
+    "captures/d5c52a53ef1b4fe6a5cc846f723f697a/0x14232dfc0.c",
+    "captures/d5c52a53ef1b4fe6a5cc846f723f697a/0x142a767c0.c",
+    "captures/d5c52a53ef1b4fe6a5cc846f723f697a/0x141db5c70.c"
+  ],
+  "callees": {
+    "0x14234a150": "impl ported inline in the .inc (decompile param names are swapped vs thunk read order)",
+    "0x14234a270": "validate: return Part < 6 (matches porting/behavior ServerChoosePart_Validate.inc)",
+    "0x141ee5f70": "UFortKismetLibrary::AttemptGetPlayerStateForPawn (named by porting thunk table); read",
+    "0x141db8ac0": "array store into customization component (read)",
+    "0x142346450": "ReinitializeCharacterPart: dep file AFortPlayerPawn__ServerChoosePart__ReinitializeCharacterPart.json (LOW)",
+    "0x14232dfc0": "InitializeCharacterCharms (read in full, calls partly unread)",
+    "0x142a767c0": "ProcessEvent with FName DAT_1481b4998 and no params (read)",
+    "0x141db5c70": "uint16 reset (read)",
+    "0x1406801d0": "not used by this RPC (validate is 0x14234a270)",
+    "vcall 0x1250 on this": "GetCharacterPartArray(0) (unnamed; Athena and pawn targets differ, 0x141a12930 / 0x14231a1c0 not read)",
+    "vcall 0x11f0 on this": "RefreshCharacterPartSlot (unnamed; Athena target 0x14232c260 not read)",
+    "vcall 0x1088 / 0x3b0 (inside 0x142346450)": "not read"
+  },
+  "notes": "Thunk read order is Part then ChosenCharacterPart, the reverse of the reflection list; the .inc follows the thunk order. Depth-2 for 0x142346450 is partly unread (see its dep evidence).",
+  "status": "proposed"
+}

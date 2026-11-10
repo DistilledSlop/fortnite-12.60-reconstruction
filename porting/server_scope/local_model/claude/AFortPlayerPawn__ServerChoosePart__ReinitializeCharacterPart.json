@@ -1,0 +1,47 @@
+{
+  "name": "AFortPlayerPawn__ServerChoosePart__ReinitializeCharacterPart",
+  "address": "0x142346450",
+  "signature": "void ReinitializeCharacterPart(int32 Part)",
+  "inc_or_decl": "// Helper AFortPlayerPawn::ReinitializeCharacterPart(int32 Part) (FUN_142346450), 238 lines read in full. CONFIDENCE: LOW for the first-part fallback search and the branch that picks the master-pose path; control flow otherwise MEDIUM.\nUObject* CurrentPart = nullptr;\nif (TArray<UObject*>* Parts = GetCharacterPartArray(0))   // vcall 0x1250\n{\n\tCurrentPart = (*Parts)[Part];\n}\nelse if (LogVerbosity > 1)\n{\n\t// Log: null character parts list when initializing part.\n}\nUObject* NewPart = CurrentPart;\nconst bool bNeedsFallbackSearch = Part < 2;   // head/body slots search for a usable replacement when the current one is missing or ineligible\nbool bChosenFromFallback = false;\nif (bNeedsFallbackSearch && (!CurrentPart || IsFallbackEligibleCharacterPart(CurrentPart)))   // FUN_141d710d0 and field checks at +0x140/+0x144\n{\n\tNewPart = FindFallbackCharacterPart(Part);   // FUN_141d46180 + FUN_141d48de0 scan of part-type byte +0x32 (scan not fully verified)\n\tbChosenFromFallback = true;\n\tNativeRecovered_0x1104 = true;   // *(bool*)(this+0x1104)\n\tif (LogVerbosity > 1 && !NewPart)\n\t{\n\t\t// Log: failed to find mesh for character part, using default part.\n\t}\n}\nif (!NewPart)\n{\n\tUSkeletalMeshComponent* PartComp = CharacterPartSkeletalMeshComponents[Part];\n\tif (PartComp && PartComp->NativeRecovered_0x84 & 1)\n\t{\n\t\tPartComp->vcall_0x8a8(nullptr, 1);   // SetSkeletalMesh(null) style clear (unnamed)\n\t\tPartComp->NativeRecovered_0x144121b70(nullptr);\n\t\tPartComp->NativeRecovered_0x1440e76c0();\n\t\tPartComp->NativeRecovered_0x1440d4a00();   // detach / clear\n\t}\n\tif (!bNeedsFallbackSearch || LogVerbosity < 2)\n\t{\n\t\treturn;\n\t}\n\t// Log: NULL character part found when reinitialising the part.\n\treturn;\n}\nUObject* PartMeshAsset = GetPartSkeletalMeshAsset(NewPart, 1);   // FUN_141d26fd0 (mesh asset at part+0x130)\nif (PartMeshAsset)\n{\n\tUSkeletalMeshComponent* PartComp = CharacterPartSkeletalMeshComponents[Part];\n\tif (!(PartComp->NativeRecovered_0x84 & 1))\n\t{\n\t\tPartComp->NativeRecovered_0x1440c2bb0();   // FUN_1440c2bb0, makes the component usable\n\t}\n\tif (!PartUsesMasterPose(NewPart, Part))   // FUN_141d922b0\n\t{\n\t\tPartComp->NativeRecovered_0x14414e9c0(nullptr, nullptr);   // FUN_14414e9c0 clear master pose\n\t\tAttachToComponent(PartComp, Mesh);   // FUN_14461ae50(lVar1+0x30, Mesh(+0x278), Mesh+0x30)\n\t\tif (PartComp && IsOfType(PartComp, USkeletalMeshComponent::StaticClass()))   // FUN_1409e4e60\n\t\t{\n\t\t\tRegisterPartComponentWithOwner(PartComp);   // FUN_1409e3b20 + vcall 0x10\n\t\t}\n\t}\n\telse\n\t{\n\t\tPartComp->NativeRecovered_0x14414e9c0(Mesh, nullptr);   // master-pose path (FUN_14414e9c0 with Mesh)\n\t}\n\tPartComp->SetSkeletalMeshAsset(PartMeshAsset, /*bReinitPose=*/true);   // vcall 0x8a8\n\tPartComp->NativeRecovered_0x144517e00();   // FUN_144517e00 refresh\n\tApplyCharacterPartMaterials(Part);   // FUN_1423460a0\n\tRefreshCharacterPartState();   // FUN_142305850\n\tRefreshCharacterPartVisibility();   // FUN_142305e80\n\tApplyCharacterPartSockets(NewPart, PartComp);   // FUN_14232ead0\n\tOnCharacterPartReinitialized(Part);   // vcall 0x1270\n\treturn;\n}\nif (!IsNoMeshCharacterPart(NewPart))   // FUN_141d710d0\n{\n\t// Log: NULL skeletal mesh found when reinitialising a part that requires a mesh.\n\treturn;\n}\nUSkeletalMeshComponent* PartComp = CharacterPartSkeletalMeshComponents[Part];\nif (PartComp && PartComp->NativeRecovered_0x84 & 1)\n{\n\tPartComp->vcall_0x8a8(nullptr, 1);\n\tPartComp->NativeRecovered_0x144121b70(nullptr);\n\tPartComp->NativeRecovered_0x1440e76c0();\n\tPartComp->NativeRecovered_0x1440d4a00();\n}\n",
+  "evidence": {
+    "function": "AFortPlayerPawn::ReinitializeCharacterPart",
+    "status": "proposed",
+    "original": "0x142346450 (helper of 0x14234a150)",
+    "signature": "void ReinitializeCharacterPart(int32 Part)",
+    "captures": [
+      "captures/d5c52a53ef1b4fe6a5cc846f723f697a/0x142346450.c",
+      "captures/d5c52a53ef1b4fe6a5cc846f723f697a/0x14232dfc0.c",
+      "captures/d5c52a53ef1b4fe6a5cc846f723f697a/0x141db8ac0.c",
+      "captures/d5c52a53ef1b4fe6a5cc846f723f697a/0x142a767c0.c",
+      "captures/d5c52a53ef1b4fe6a5cc846f723f697a/0x141db5c70.c"
+    ],
+    "callees": {
+      "0x142346450": "this helper (read in full)",
+      "0x14232dfc0": "InitializeCharacterCharms (read in full; calls vcall 0x1258, 0x1200 and FUN_142abf870, FUN_1442bcd20, FUN_141a07cb0 not read)",
+      "0x141db8ac0": "array store *(this->+0x38)[index] = value (read)",
+      "0x142a767c0": "ProcessEvent with FName DAT_1481b4998 and no params (read)",
+      "0x141db5c70": "uint16 reset at +0x58 (read)",
+      "0x141d46180": "unread; part-list source",
+      "0x141d48de0": "unread; list copy",
+      "0x141d710d0": "unread; fallback-eligibility predicate",
+      "0x141d26fd0": "unread; part mesh asset getter",
+      "0x141d922b0": "unread; master-pose predicate",
+      "0x1440c2bb0": "unread",
+      "0x14414e9c0": "unread; master-pose set/clear",
+      "0x14461ae50": "unread; AttachToComponent-style",
+      "0x1409e4e60": "unread; class getter",
+      "0x1409e3b20": "unread; manager lookup",
+      "0x144517e00": "unread",
+      "0x1423460a0": "unread",
+      "0x142305850": "unread",
+      "0x142305e80": "unread",
+      "0x14232ead0": "unread",
+      "0x142ce9f90": "FName to FString formatter used only in log branches (engine-style)",
+      "0x142bc7780": "FString append in log branches (engine-style)",
+      "0x140680160": "FString reserve (engine-style)",
+      "0x1406800e0": "FString grow (engine-style)",
+      "0x142cd4d80": "engine-style name table access (log path)"
+    },
+    "notes": "Depth-2 partially read: the leaves listed as unread (0x141d46180, 0x141d48de0, 0x141d710d0, 0x141d26fd0, 0x141d922b0, 0x1440c2bb0, 0x14414e9c0, 0x14461ae50, 0x1409e4e60, 0x1409e3b20, 0x144517e00, 0x1423460a0, 0x142305850, 0x142305e80, 0x14232ead0) were not captured/read. This helper is therefore ported at depth one with LOW confidence on the fallback search."
+  }
+}

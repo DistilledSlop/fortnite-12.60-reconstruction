@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerPawn::ServerEquipLastWeaponOrGadget",
+  "status": "proposed",
+  "original": "0x142a7ecc0 (thunk), impl 0x14234a320",
+  "signature": "void ServerEquipLastWeaponOrGadget(bool bForce)",
+  "captures": [
+    "captures/31eb674fdeb54989adf26f3d7502ac7d/0x14234a320.c",
+    "captures/d0e61ad1553a479fb198f8b56190780a/0x142314d70.c",
+    "captures/1f993c5afb8b4421a88624ed0851d433/0x142a3d9f0.c"
+  ],
+  "callees": {
+    "0x14234a320": "impl (read; asm checked for argument registers)",
+    "0x142314d70": "EquipLastWeaponOrGadgetInternal(bForce): walks TempWeaponsStack (pawn+0x2110) against controller class 0x142a3d9f0, checks pawn+0x1688..0x1694 slots, then vcall 0x1b10 on a weapon/equip interface (read to depth 1; 0x14230dbb0, 0x142b4a5d0, 0x1428e9db0 and vcalls 0x468/0x1000/0xa0/0xb0/0x1b10 not read)",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass (GetPrivateStaticClassBody FortPlayerController) (engine-style, named)",
+    "0x1406801d0": "STUB (MOV AL,1; RET): validate for this RPC",
+    "vcall 0xbc0": "AFortPawn::EquipBestWeapon (named via base-class vtable)"
+  },
+  "notes": "Validate is the return-true stub so the RPC always executes its impl. Depth-2 of 0x142314d70 not fully read."
+}

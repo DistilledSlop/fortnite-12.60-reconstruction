@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerPawn::ServerHoistDBNOPlayer",
+  "original": "0x142a7f2f0 (thunk), impl 0x14234a360",
+  "signature": "void ServerHoistDBNOPlayer(AFortPlayerPawn* InDBNOHoistee)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7f2f0.c",
+    "captures/6090df5ee1ba4a3cbeec4dece1ecc813/0x14234a360.c",
+    "captures/22033a5b021a42f2ad535da05b81ad8a/0x142336990.c",
+    "captures/1f993c5afb8b4421a88624ed0851d433/0x142a3d9f0.c",
+    "captures/22033a5b021a42f2ad535da05b81ad8a/0x142a85850.c"
+  ],
+  "callees": {
+    "0x14234a360": "impl (read in full)",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass (GetPrivateStaticClassBody FortPlayerController) (named)",
+    "0x142a85850": "AFortPlayerState::StaticClass (named)",
+    "0x142336990": "DBNO hoist-state reset (406 lines; read only in part; NOT depth-two ported)",
+    "vcall 0x11c8 on hoistee": "CanBeHoistedBy(controller) (unnamed; Athena target 0x141a0d4f0)",
+    "vcall 0x5e8 on hoistee": "refresh replicated state (unnamed; target 0x143f72550 shared with other pawn code)",
+    "vcall 0x28 on embedded +0x4a8": "team index getter (unnamed)"
+  },
+  "notes": "The .inc ports the impl fully. Team and location stat writes use recovered offsets (+0x952, +0x954, +0x964). 0x142336990 is the main unfinished depth-two item.",
+  "status": "proposed"
+}

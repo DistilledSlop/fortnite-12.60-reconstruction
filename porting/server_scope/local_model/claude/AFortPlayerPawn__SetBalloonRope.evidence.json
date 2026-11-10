@@ -1,0 +1,15 @@
+{
+  "function": "AFortPlayerPawn::SetBalloonRope",
+  "status": "proposed",
+  "original": "0x142a7fe40 (thunk), impl 0x14234b520",
+  "signature": "void SetBalloonRope(AActor* InBalloonRope)",
+  "captures": [
+    "captures/ae96b4f4bdd647189bbe791131361557/0x14234b520.c",
+    "captures/0c063a366e76429da68c6cf4a5f4fe8b/0x140aae720.c"
+  ],
+  "callees": {
+    "0x14234b520": "impl: broadcast then store BalloonRope (read)",
+    "0x140aae720": "FMulticastScriptDelegate::Broadcast-style invocation loop with lock counter at +0x14 and compaction on null entries (read; engine behaviour)"
+  },
+  "notes": "Global delegate DAT_1478de5a8 has no reflected name; OnBalloonRopeChanged is a proposed name (MEDIUM). Pawn offset 0x15d0 resolves to member BalloonRope."
+}

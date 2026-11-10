@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerPawn::SetHomeActor",
+  "status": "proposed",
+  "original": "0x142a800f0 (thunk), impl 0x14234d380",
+  "signature": "void SetHomeActor(AActor* NewActor)",
+  "captures": [
+    "captures/d6e04c30c6184f9f9feefaa19ded433e/0x14234d380.c",
+    "captures/500fb0d7eda7407db6a8e3bfaf1c01ec/0x142429b60.c",
+    "captures/1f993c5afb8b4421a88624ed0851d433/0x142a85850.c"
+  ],
+  "callees": {
+    "0x14234d380": "impl: IsA(PlayerState, AFortPlayerState) then setter (read)",
+    "0x142a85850": "AFortPlayerState::StaticClass (GetPrivateStaticClassBody, size 0x9b8) (engine-style, named)",
+    "0x142429b60": "AFortPlayerState home-actor setter: swaps HomeActor (PlayerState+0x8a8), calls vcall 0x5e8 and 0x7c8 (read to depth 1)",
+    "0x142942d20": "unread; class/actor query used by setter",
+    "0x142d6a820": "unread; IsA-style check used by setter",
+    "0x142a75f10": "unread; class getter used by setter (PawnPrivate class check)",
+    "0x142944930": "unread; unregister of old HomeActor (depth 2 not read)",
+    "0x142944870": "unread; register of new HomeActor (depth 2 not read)",
+    "0x143f7a920": "unread; net/authority check gating vcall 0x7c8"
+  },
+  "notes": "Depth-2 not fully read for the setter's helpers 0x142944930/0x142944870/0x142942d20/0x142d6a820/0x142a75f10/0x143f7a920; the .inc ports the impl and the setter call only."
+}

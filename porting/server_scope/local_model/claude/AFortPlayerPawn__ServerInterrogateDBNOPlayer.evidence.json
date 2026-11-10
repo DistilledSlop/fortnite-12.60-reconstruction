@@ -1,0 +1,18 @@
+{
+  "function": "AFortPlayerPawn::ServerInterrogateDBNOPlayer",
+  "original": "0x142a7f380 (thunk), impl 0x14234a380",
+  "signature": "void ServerInterrogateDBNOPlayer(AFortPlayerPawn* InDBNOHoistee)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7f380.c",
+    "captures/49b501983c7046989fe8f17d2672cb03/0x14234a380.c",
+    "captures/44a5fae31c8444cdba9090ab0dd641d9/0x14232d220.c"
+  ],
+  "callees": {
+    "0x14234a380": "impl (read)",
+    "0x14232d220": "begin DBNO hoist or interrogate: records hoister/hoistee links, bInterrogating byte, team counters, then 0x142336990 and vcall 0x5e8 (read)",
+    "AFortPlayerControllerAthena_StaticClass": "engine-style named static class getter",
+    "Stub_Empty": "empty decompiler-named stub; address not resolved in capture (LOW)"
+  },
+  "notes": "Depth-two for 0x142336990 is not read; see Hoist evidence.",
+  "status": "proposed"
+}

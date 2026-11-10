@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerPawn::ServerPlayUnableToPerformActionMontage",
+  "status": "proposed",
+  "original": "0x142a7f4a0 (thunk), impl 0x14234a910",
+  "signature": "void ServerPlayUnableToPerformActionMontage()",
+  "captures": [
+    "captures/3a52d960f42144f381491cc350b7afa6/0x14234a910.c",
+    "captures/3a52d960f42144f381491cc350b7afa6/0x14234a910.asm",
+    "captures/db7c5fd11d254bc294c6d348b2a014f2/0x14070c910.c",
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7f4a0.c"
+  ],
+  "callees": {
+    "0x14234a910": "impl; registers checked in asm: CurrentWeapon=[this+0x588], UnableToPerformActionMontage=[this+0x1420], weapon override +0xb10, ASC=[this+0xbb8]",
+    "0x14070c910": "blocking-ability query on the ASC (read to depth 1; reads weak ptr at +0x3e8, FWeakObjectPtr_Get, FUN_144114bd0 and FUN_143fd69c0 not read)",
+    "0x1406801d0": "STUB (MOV AL,1; RET): validate",
+    "vcall 0x7b8": "PlayAnimMontage(Montage, 1.0f, None) (unnamed slot; Athena target 0x14233f330 not read)"
+  },
+  "notes": "The vcall at 0x7b8 receives (this, montage, 1.0f, 0). Depth-2 of 0x14070c910 partially read."
+}

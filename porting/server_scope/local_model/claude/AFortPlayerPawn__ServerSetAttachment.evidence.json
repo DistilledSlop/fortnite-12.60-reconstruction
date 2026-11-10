@@ -1,0 +1,24 @@
+{
+  "function": "AFortPlayerPawn::ServerSetAttachment",
+  "original": "0x142a7f950 (thunk), impl 0x14234a9e0",
+  "signature": "void ServerSetAttachment(FRepFortMeshAttachment Attachment)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7f950.c",
+    "captures/bc88a577122949e784b9f0f1ad11acc9/0x14234a9e0.c",
+    "captures/f140cc73c1284e6d807e3542589cdb61/0x142359070.c",
+    "captures/f140cc73c1284e6d807e3542589cdb61/0x142a775e0.c",
+    "captures/f140cc73c1284e6d807e3542589cdb61/0x1440d4a00.c",
+    "captures/35bd70f4ab194897ade8c764d265ca66/0x142ce9f90.c"
+  ],
+  "callees": {
+    "0x14234a9e0": "impl (read in full)",
+    "0x142359070": "apply attachment to pawn (123 lines; read in part, not depth-two ported)",
+    "0x142a775e0": "ProcessEvent with FName DAT_1481b4ac0 and a 16-byte struct (read)",
+    "0x1440d4a00": "detach attachment component (46 lines; read in part)",
+    "0x142ce9f90": "FName-to-FString (engine-style, used in log branches)",
+    "0x140680300": "not used",
+    "vcall 0x6b0 on this": "IsLocallyControlled-style (unnamed)"
+  },
+  "notes": "Validate vcall 0xe28 resolves to the return-true stub 0x1406801d0. The 16-byte FRepFortMeshAttachment layout is not named in the reflection; fields are referenced as NativeRecovered_0x0 in the .inc. Depth-two for 0x142359070 and 0x1440d4a00 is partial.",
+  "status": "proposed"
+}

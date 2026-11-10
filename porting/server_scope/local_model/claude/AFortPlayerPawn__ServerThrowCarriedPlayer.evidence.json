@@ -1,0 +1,20 @@
+{
+  "function": "AFortPlayerPawn::ServerThrowCarriedPlayer",
+  "status": "proposed",
+  "original": "0x142a46140 (thunk), impl 0x14234ac80",
+  "signature": "void ServerThrowCarriedPlayer()",
+  "captures": [
+    "captures/5174f6b6e7d3437db3f64d2450854202/0x142a46140.c",
+    "captures/c3eb24c4c9df410e8f1573df618eb33b/0x14234ac80.c",
+    "captures/08140e47ad19496ebe15b7f549570d71/0x141ed1800.c",
+    "captures/4bd154d7f2e147ffad64c6535ccb7d54/0x143e8b3b0.c",
+    "captures/71d662f779a34cc8ad65228ef795f2ce/0x140731570.c"
+  ],
+  "callees": {
+    "0x14234ac80": "impl (read)",
+    "0x141ed1800": "native gameplay-tag singleton (throw tag at +0x15c8)",
+    "0x143e8b3b0": "FGameplayTagContainer::AddTag",
+    "0x140731570": "tag-container apply to ASC (read to depth 1)"
+  },
+  "notes": "Mirror of ServerDropCarriedPlayer; the tag offset differs (+0x15c8 vs +0x15d0). Depth-2 as for drop. Corrected: the condition is ability-provider->GetAbilitySystemComponent() != null (not a carried-player check); provider at this+0x4c8."
+}

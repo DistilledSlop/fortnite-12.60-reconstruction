@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerPawn::ServerDropCarriedPlayer",
+  "status": "proposed",
+  "original": "0x142a45510 (thunk), impl 0x14234a290",
+  "signature": "void ServerDropCarriedPlayer()",
+  "captures": [
+    "captures/5174f6b6e7d3437db3f64d2450854202/0x142a45510.c",
+    "captures/8f7e18234a06485f8d7c864e0f0bf30e/0x14234a290.c",
+    "captures/08140e47ad19496ebe15b7f549570d71/0x141ed1800.c",
+    "captures/4bd154d7f2e147ffad64c6535ccb7d54/0x143e8b3b0.c",
+    "captures/71d662f779a34cc8ad65228ef795f2ce/0x140731570.c"
+  ],
+  "callees": {
+    "0x14234a290": "impl (read)",
+    "0x141ed1800": "native gameplay-tag singleton accessor (TLS lazy init at DAT_148130770); proposed NativeGameplayTags(); drop tag at +0x15d0 (read)",
+    "0x143e8b3b0": "FGameplayTagContainer::AddTag (named by STAT_FGameplayTagContainer_AddTag string) (read)",
+    "0x140731570": "applies a tag container to the ASC: iterates tags via 0x14070af70 and calls 0x140731610 per tag, ORs results (read; 0x14070af70 and 0x140731610 not read)",
+    "0x140680300": "STUB (xor eax,eax; ret) is not called here",
+    "vcall 0x10 on this+0x4c8": "embedded carry-state object getter (unnamed; proposed GetCarriedPlayer / GetAbilitySystemComponent)",
+    "FMemory_Free": "engine; container cleanup"
+  },
+  "notes": "Field this+0x4c8 has no reflected member name; proposed name CarryState. Depth-2 for 0x14070af70 and 0x140731610 not read. Corrected: the condition is ability-provider->GetAbilitySystemComponent() != null (not a carried-player check); provider at this+0x4c8."
+}

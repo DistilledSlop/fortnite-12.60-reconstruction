@@ -1,0 +1,43 @@
+{
+  "function": "AFortPlayerPawn::ServerOnExitVehicle",
+  "original": "0x142a7f410 (thunk), impl 0x14234a5e0",
+  "signature": "AActor* ServerOnExitVehicle(EFortExitForceBehavior ExitForceBehavior)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7f410.c",
+    "captures/e8eb292c85394db7a490ee39a7d9b3a0/0x14234a5e0.c",
+    "captures/e8eb292c85394db7a490ee39a7d9b3a0/0x14234a5e0.asm",
+    "captures/2d64560169ca402387de9d4a88823383/0x142b2ca60.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x142ec9900.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x142c5d000.c",
+    "captures/5892f1880b19457fbac48f3a7dbbf9fd/0x143f83570.c",
+    "captures/5892f1880b19457fbac48f3a7dbbf9fd/0x1420dcab0.c",
+    "captures/5892f1880b19457fbac48f3a7dbbf9fd/0x144124090.c",
+    "captures/5892f1880b19457fbac48f3a7dbbf9fd/0x1406d8500.c",
+    "captures/9f7e68d203a34bb596d8ef33fc1fffb0/0x142c54b70.c",
+    "captures/9d8c68b13d6e4101a0f72e3c25a75a46/0x143e8a690.c",
+    "captures/9f7e68d203a34bb596d8ef33fc1fffb0/0x142bee710.c",
+    "captures/1f993c5afb8b4421a88624ed0851d433/0x145803c70.c"
+  ],
+  "callees": {
+    "0x14234a5e0": "impl (read); asm used to verify register args of helper calls",
+    "0x142b2ca60": "UFortVehicleInterface::StaticClass (GetPrivateStaticClassBody FortVehicleInterface) (named)",
+    "0x142ec9900": "UObject::GetInterfaceAddress-style lookup of an interface class on the vehicle object (read; matches porting GetVehicleUInterface.inc)",
+    "0x142c5d000": "FQuat::Rotator (STAT_MathConvertQuatToRotator string) (read)",
+    "0x143f83570": "exit-location search using RootComponent (+0x130) and sweep helper 0x14411b9f0 (not read); zeroes output when no root (read to depth 1)",
+    "0x1420dcab0": "CharacterMovement SetMovementMode(MOVE_Falling) via vcall 0x590 (read)",
+    "0x144124090": "sets bit 3 of +0x14c on the capsule (read; bool argument not verified)",
+    "0x1406d8500": "ASC remove tag container via vcall 0x598 check and vcall 0x630 (read to depth 1; 0x140718ec0 and 0x1406ae420 not read)",
+    "0x143e8b3b0": "FGameplayTagContainer::AddTag (read earlier)",
+    "0x143e8a690": "FGameplayTagContainer::CopyAssign (read)",
+    "0x142c54b70": "FMsg_Logf_Internal (engine log; read header)",
+    "0x142bee710": "FMemory_Free (engine)",
+    "0x141ed1800": "native gameplay tag singleton (read earlier)",
+    "0x145803c70": "stack-cookie check (engine; not ported)",
+    "vcall 0x68 on vehicle interface": "TryExitVehicle(pawn, out transform, behavior) (name from log text)",
+    "vcall 0x118 on vehicle interface": "GetDrivingMovementComponent-style (unnamed)",
+    "vcall 0x758 on this": "ClearExitVehicleOverride (unnamed; Athena target 0x144088240 not read)",
+    "vcall 0x10 on embedded +0x4c8": "ability provider GetAbilitySystemComponent (named by convention)"
+  },
+  "notes": "Impl is typed void but the thunk stores RAX as ReturnValue; that value is not set by the impl (LOW). Re-entrancy guard is byte this+0x1610 bit 0x4. Several helper argument registers were verified in asm; the bool for 0x144124090 was not verified.",
+  "status": "proposed"
+}

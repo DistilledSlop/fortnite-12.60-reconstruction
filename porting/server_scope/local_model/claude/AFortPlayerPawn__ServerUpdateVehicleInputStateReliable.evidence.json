@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerPawn::ServerUpdateVehicleInputStateReliable",
+  "original": "0x142a7fb00 (thunk), impl 0x14234ad20 (tail into 0x142a76100)",
+  "signature": "void ServerUpdateVehicleInputStateReliable(FortAthenaVehicleInputStateReliable ReliableInput)",
+  "captures": [
+    "captures/13799d83931e48b19e2b5ccf2a1528b5/0x142a7fb00.c",
+    "captures/6b526730149347f898f5eba418b42cc1/0x14234ad20.c",
+    "captures/dc0fec6ebbf3425786d2624d0d7e7891/0x142a76100.c",
+    "captures/6b526730149347f898f5eba418b42cc1/0x141909530.c"
+  ],
+  "callees": {
+    "0x14234ad20": "impl (tail-thunk into 0x142a76100) (read)",
+    "0x142a76100": "zero-init 1-byte payload, FindFunctionChecked(DAT_1481b4970), ProcessEvent (read)",
+    "0x141909530": "zero-init a byte (read)",
+    "0x1406801d0": "STUB (MOV AL,1; RET): validate vcall 0xfb8"
+  },
+  "notes": "The UFunction FName DAT_1481b4970 is unresolved, so the event name is not known. Payload struct type is proposed.",
+  "status": "proposed"
+}
