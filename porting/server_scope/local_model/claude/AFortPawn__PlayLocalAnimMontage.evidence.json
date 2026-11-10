@@ -1,0 +1,16 @@
+{
+  "function": "AFortPawn::PlayLocalAnimMontage",
+  "status": "proposed",
+  "original": "0x142a1ef80",
+  "signature": "float AFortPawn::PlayLocalAnimMontage(UAnimMontage* NewAnimMontage, float InPlayRate, FName StartSectionName, bool bNoBlend)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1ef80.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x142341760.c", "captures/9d55004ddd4544529a982151985c2043/0x144114bd0.c", "captures/9d55004ddd4544529a982151985c2043/0x143fd6e10.c", "captures/9d55004ddd4544529a982151985c2043/0x143fd6b30.c", "captures/9d55004ddd4544529a982151985c2043/0x143fca900.c", "captures/9d55004ddd4544529a982151985c2043/0x143fa3a20.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x143fd56e0.c"],
+  "callees": {
+    "0x142341760": "AFortPawn__PlayLocalAnimMontageImpl (ported, MEDIUM)",
+    "0x144114bd0": "USkeletalMeshComponent::GetAnimInstance (+0x630, named by role)",
+    "0x143fd6e10": "UAnimInstance::Montage_Play (239 lines, return value used, NOT PORTED)",
+    "0x143fd6b30": "Montage_JumpToSection (ported as call; callee 0x143fd56e0 NOT PORTED)",
+    "0x143fca900": "GetActiveMontageInstance (ported as call)",
+    "0x143fa3a20": "FAlphaBlend::SetAlpha (ported as call)"
+  },
+  "notes": "Thunk fully ported. Read order: NewAnimMontage, InPlayRate, StartSectionName, bNoBlend. Montage_Play (0x143fd6e10) is the largest unported callee, so the montage path is MEDIUM."
+}

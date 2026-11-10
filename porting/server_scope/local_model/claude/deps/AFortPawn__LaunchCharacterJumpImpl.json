@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__LaunchCharacterJumpImpl",
+  "address": "0x142332c40",
+  "signature": "void AFortPawn::LaunchCharacterJumpImpl(FVector LaunchVelocity, bool bXYOverride, bool bZOverride, bool bIgnoreFallDamage, bool bPlayFeedbackEvent)",
+  "inc_or_decl": "if (bPlayFeedbackEvent && Controller != nullptr) {   // Controller is APawn::Controller (+0x250)\n    if (Controller->IsA(AFortPlayerController::StaticClass())) {   // FUN_142a3d9f0\n        PlayCharacterFeedbackEvent(Controller, <global FName _DAT_14815b498>, this, 0, -1.0f);   // FUN_1423bd2b0 (MEDIUM; body 25 lines ported as this call, its callees FUN_1424ab210/FUN_1424c21f0 not ported)\n    }\n}\nif (bIgnoreFallDamage) {\n    bIgnoreFallDamageFlag = true;   // flag byte at +0x520, mask 0x04\n}\nLaunchCharacter(LaunchVelocity, bXYOverride, bZOverride);   // virtual slot 0x7c8 (ACharacter::LaunchCharacter)",
+  "evidence": "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x142332c40.c; captures/9d55004ddd4544529a982151985c2043/0x142a3d9f0.c; captures/9d55004ddd4544529a982151985c2043/0x1423bd2b0.c; captures/a8d37eec0bc44249b64a618f728fe705/0x1424ab210.c; captures/a8d37eec0bc44249b64a618f728fe705/0x1424c21f0.c"
+}

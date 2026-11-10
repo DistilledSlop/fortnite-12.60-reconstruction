@@ -1,0 +1,16 @@
+{
+  "function": "AFortPawn::GetLocalViewingPlayerController",
+  "status": "proposed",
+  "original": "0x142a1c320",
+  "signature": "APlayerController* AFortPawn::GetLocalViewingPlayerController()",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1c320.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x142321a70.c", "captures/9d55004ddd4544529a982151985c2043/0x14468fb70.c", "captures/9d55004ddd4544529a982151985c2043/0x14233f130.c"],
+  "callees": {
+    "0x142321a70": "AFortPawn__FindLocalViewingPlayerController (ported, MEDIUM)",
+    "0x14468fb70": "TArray view init (named by role)",
+    "FWeakObjectPtr_Get": "engine (named)",
+    "slot 0x150": "owner-of-player-list getter (unnamed)",
+    "slot 0x6a8": "IsLocalPlayerController (unnamed)",
+    "slot 0x698": "GetPawnForViewing (unnamed)"
+  },
+  "notes": "Thunk ported. The helper decompile dropped the implicit this from its call, so the pawn is passed as the implicit receiver. Virtual slots 0x150, 0x698 and 0x6a8 are not named by reflection."
+}

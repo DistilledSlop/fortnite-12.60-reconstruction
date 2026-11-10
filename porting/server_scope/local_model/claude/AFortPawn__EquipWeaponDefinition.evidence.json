@@ -1,0 +1,18 @@
+{
+  "function": "AFortPawn::EquipWeaponDefinition",
+  "status": "proposed",
+  "original": "0x142a1b6d0",
+  "signature": "AFortWeapon* AFortPawn::EquipWeaponDefinition(UFortWeaponItemDefinition* WeaponData, FGuid ItemEntryGuid)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1b6d0.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x1423150b0.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x142314fe0.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x1423800b0.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x142672c10.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x142b43730.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x144680860.c"],
+  "callees": {
+    "0x1423150b0": "AFortPawn__EquipWeaponDefinitionImpl (PARTIAL)",
+    "0x142314fe0": "ApplyWeaponEquipState (not ported)",
+    "0x1423800b0": "harvesting-tool definition lookup (not ported)",
+    "0x142672c10": "item lookup on +0x740 (ported as lookup)",
+    "0x142b43730": "AFortWeapon::StaticClass (named)",
+    "0x1442e6580": "UFortWeaponItemDefinition::CreateWeaponInstance (not ported)",
+    "0x142ebd9e0 / 0x140682ce0 / 0x140726fc0 / 0x144211f60": "TArray and struct copies (named as copies)",
+    "0x142a3d9f0": "not used by this thunk"
+  },
+  "notes": "Thunk fully ported. The impl body is PARTIAL. The decompile has no explicit return statement, so the return value is an inference (MEDIUM). Reading the entire 241-line impl needs a follow-up pass."
+}

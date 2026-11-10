@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__PawnStopFire_Implementation",
+  "address": "0x14233f130",
+  "signature": "void AFortPawn::PawnStopFire_Implementation(uint8 FireModeNum)",
+  "inc_or_decl": "// FireModeNum is not read by this body (the decompile takes only the pawn).\n// flag byte at +0x522 &= 0xAF: clears mask 0x50 (bPrimaryInputQueued and the queued-fire bit)\nbPrimaryInputQueued = false;\nbFireQueued = false;\nbool bBlocked = CanFireNow(true, false);   // virtual slot 0xd08 (unnamed)\nif (!bBlocked && Weapon != nullptr) {\n    if (IsWeaponUsable()) {   // virtual slot 0x6b0 (unnamed)\n        Weapon->StopFire();   // virtual slot 0x6d8 on the weapon (unnamed)\n    }\n}",
+  "evidence": "captures/9d55004ddd4544529a982151985c2043/0x14233f130.c"
+}

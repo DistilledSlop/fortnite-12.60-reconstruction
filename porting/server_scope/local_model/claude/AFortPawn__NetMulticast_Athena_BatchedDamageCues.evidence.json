@@ -1,0 +1,14 @@
+{
+  "function": "AFortPawn::NetMulticast_Athena_BatchedDamageCues",
+  "status": "proposed",
+  "original": "0x142a1d0a0",
+  "signature": "void AFortPawn::NetMulticast_Athena_BatchedDamageCues(FAthenaBatchedDamageGameplayCues_NonShared NonSharedData, FAthenaBatchedDamageGameplayCues_Shared SharedData)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1d0a0.c", "captures/9d55004ddd4544529a982151985c2043/0x142334fc0.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x143f7a920.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x142345360.c"],
+  "callees": {
+    "slot 0x8c8": "NetMulticast_Athena_BatchedDamageCues_Implementation (dep, PARTIAL)",
+    "0x142334fc0": "NetMulticast impl (PARTIAL: dispatcher 0x142345360 not ported)",
+    "0x143f7a920": "role/status getter (ported as call)",
+    "0x142345360": "batched damage cue dispatcher, 379 lines (NOT PORTED)"
+  },
+  "notes": "Parameter order: the reflection list is [NonSharedData, SharedData] and the thunk reads NonSharedData first, which matches the impl argument order. This function does not follow the reversed-list pattern seen elsewhere. Thunk fully ported (copies two struct params by value and dispatches the virtual). The implementation body and dispatcher 0x142345360 are not fully ported. The dispatcher is the main gap in this chunk."
+}

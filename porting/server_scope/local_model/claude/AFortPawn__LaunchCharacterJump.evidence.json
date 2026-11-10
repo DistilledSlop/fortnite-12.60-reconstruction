@@ -1,0 +1,14 @@
+{
+  "function": "AFortPawn::LaunchCharacterJump",
+  "status": "proposed",
+  "original": "0x142a1ce40",
+  "signature": "void AFortPawn::LaunchCharacterJump(FVector LaunchVelocity, bool bXYOverride, bool bZOverride, bool bIgnoreFallDamage, bool bPlayFeedbackEvent)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1ce40.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x142332c40.c", "captures/9d55004ddd4544529a982151985c2043/0x142a3d9f0.c", "captures/9d55004ddd4544529a982151985c2043/0x1423bd2b0.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x1424ab210.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x1424c21f0.c"],
+  "callees": {
+    "0x142332c40": "AFortPawn__LaunchCharacterJumpImpl (ported)",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass (named)",
+    "0x1423bd2b0": "PlayCharacterFeedbackEvent (ported as call; callees 0x1424ab210, 0x1424c21f0 PARTIAL)",
+    "slot 0x7c8": "ACharacter::LaunchCharacter (unnamed slot here)"
+  },
+  "notes": "Thunk fully ported. Read order resolved as LaunchVelocity, bXYOverride, bZOverride, bIgnoreFallDamage, bPlayFeedbackEvent, which matches the impl argument use."
+}

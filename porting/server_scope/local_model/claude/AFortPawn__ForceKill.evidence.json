@@ -1,0 +1,17 @@
+{
+  "function": "AFortPawn::ForceKill",
+  "status": "proposed",
+  "original": "0x142a1b7b0",
+  "signature": "void AFortPawn::ForceKill(FGameplayTag DeathReason, AController* KillerController, AActor* KillerActor)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1b7b0.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x1423178a0.c", "captures/9d55004ddd4544529a982151985c2043/0x141ed1800.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x143e8b3b0.c"],
+  "callees": {
+    "0x1423178a0": "AFortPawn__ForceKillImpl (ported, MEDIUM)",
+    "0x141ed1800": "default-tag singleton accessor (named by role)",
+    "0x143e8b3b0": "FName to FGameplayTagContainer (described)",
+    "FName_EqualsEName": "engine (named)",
+    "FGameplayTagContainer_CopyAssign": "engine (named)",
+    "FMemory_Free": "engine (named)",
+    "slot 0xa78": "NativeDie virtual (unnamed in reflection)"
+  },
+  "notes": "Thunk ported. Parameter order was resolved from the callee and its use: DeathReason is read first, then KillerController, then KillerActor. The reflection list is reversed. Virtual slot 0xa78 is unnamed."
+}

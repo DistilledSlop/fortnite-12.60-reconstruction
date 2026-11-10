@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__NetMulticast_Athena_BatchedDamageCues_Implementation",
+  "address": "0x142334fc0",
+  "signature": "void AFortPlayerPawnAthena::NetMulticast_Athena_BatchedDamageCues_Implementation(FAthenaBatchedDamageGameplayCues_NonShared NonSharedData, FAthenaBatchedDamageGameplayCues_Shared SharedData)",
+  "inc_or_decl": "// PARTIAL: the cue dispatcher FUN_142345360 (379 lines) is NOT ported. Its inputs are built here exactly as in the decompile.\nif (GetRemoteRoleOrCue() == 1) { return; }   // FUN_143f7a920 (30 lines, returns a derived status; compared against 1)\nFBatchedNonShared Local = NonSharedData;   // copies the five sub-blocks ([0] through [4]) by value\nFBatchedShared LocalShared = SharedData;\nDispatchBatchedDamageCues(this, Local, LocalShared);   // FUN_142345360, unported\nif (SharedData.Next != 0 && SharedData.Next != SharedData.Head) {\n    SharedData.Head = SharedData.Next;\n    LocalShared = SharedData;\n    NonSharedData.Pending = NonSharedData.Extra;   // copies [4] into [1] (two qwords)\n    Local = NonSharedData;\n    DispatchBatchedDamageCues(this, Local, LocalShared);   // unported\n}",
+  "evidence": "captures/9d55004ddd4544529a982151985c2043/0x142334fc0.c; captures/a8d37eec0bc44249b64a618f728fe705/0x143f7a920.c; captures/a8d37eec0bc44249b64a618f728fe705/0x142345360.c"
+}

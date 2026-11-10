@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__PlayLocalAnimMontageImpl",
+  "address": "0x142341760",
+  "signature": "float AFortPawn::PlayLocalAnimMontageImpl(UAnimMontage* NewAnimMontage, float InPlayRate, FName StartSectionName, bool bNoBlend)",
+  "inc_or_decl": "UAnimInstance* AnimInstance = nullptr;\nif (Mesh != nullptr) {          // +0x278\n    AnimInstance = Mesh->GetAnimInstance();   // FUN_144114bd0 returns mesh+0x630\n}\nif (NewAnimMontage == nullptr || AnimInstance == nullptr) { return 0.0f; }\nfloat Length = AnimInstance->Montage_Play(NewAnimMontage, InPlayRate, /*ReturnType*/ 0, /*StartTime*/ 0.0f, /*bStopAllMontages*/ true);   // FUN_143fd6e10\nif (Length <= 0.0f) { return 0.0f; }\nif (StartSectionName != NAME_None) {\n    AnimInstance->Montage_JumpToSection(StartSectionName, NewAnimMontage);   // FUN_143fd6b30 (MEDIUM, 48 lines; its FUN_143fd56e0 callee not ported)\n}\nif (bNoBlend) {\n    FAnimMontageInstance* Instance = AnimInstance->GetActiveMontageInstance(NewAnimMontage);   // FUN_143fca900\n    if (Instance != nullptr) {\n        Instance->BlendAlpha.SetAlpha(1.0f);   // FUN_143fa3a20 on +0x130 (MEDIUM)\n    }\n}\nreturn Length;",
+  "evidence": "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x142341760.c; captures/9d55004ddd4544529a982151985c2043/0x144114bd0.c; captures/9d55004ddd4544529a982151985c2043/0x143fd6e10.c; captures/9d55004ddd4544529a982151985c2043/0x143fd6b30.c; captures/9d55004ddd4544529a982151985c2043/0x143fca900.c; captures/9d55004ddd4544529a982151985c2043/0x143fa3a20.c"
+}

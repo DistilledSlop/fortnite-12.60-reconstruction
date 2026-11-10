@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__ServerInternalEquipWeapon_Implementation",
+  "address": "0x14230e590",
+  "signature": "void AFortPawn::ServerInternalEquipWeapon_Implementation(AFortWeapon* Weap)",
+  "inc_or_decl": "// The weapon argument is not used. This body forwards to another virtual with no arguments.\n// That slot (+0xc58 on AFortPawn) is unnamed in reflection and is NOT resolved here.\nUnresolved_Virtual_0xc58();",
+  "evidence": "captures/9d55004ddd4544529a982151985c2043/0x14230e590.c; work/claude/out/AFortPawn__ServerInternalEquipWeapon.inc"
+}

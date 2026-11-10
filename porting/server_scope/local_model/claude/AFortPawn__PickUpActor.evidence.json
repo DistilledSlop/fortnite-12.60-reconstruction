@@ -1,0 +1,16 @@
+{
+  "function": "AFortPawn::PickUpActor",
+  "status": "proposed",
+  "original": "0x142a1ee20",
+  "signature": "bool AFortPawn::PickUpActor(AActor* PickupTarget, UFortItemDefinition* PlacementDecoItemDefinition)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1ee20.c", "captures/9d55004ddd4544529a982151985c2043/0x14233f230.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x142672c10.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x142b43730.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x1428d44f0.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x1423150b0.c"],
+  "callees": {
+    "slot 0xbd0": "PickUpActor_Implementation (dep, PARTIAL)",
+    "0x14233f230": "PickUpActor_Implementation body (PARTIAL)",
+    "0x1423150b0": "AFortPawn__EquipWeaponDefinitionImpl (PARTIAL)",
+    "0x142672c10": "item lookup (ported)",
+    "0x142b43730": "AFortWeapon::StaticClass (named)",
+    "0x1428d44f0": "AFortDecoTool::StaticClass (named)"
+  },
+  "notes": "Thunk fully ported. Read order: PickupTarget first, then PlacementDecoItemDefinition. The implementation uses the second value as WeaponData, which conflicts with the reflected name. Please confirm the parameter naming. The implementation is PARTIAL, with unnamed slots 0xae8 and 0xaf0 not resolved."
+}

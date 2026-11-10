@@ -1,0 +1,16 @@
+{
+  "function": "AFortPawn::SetCallout",
+  "status": "proposed",
+  "original": "0x142a1f880",
+  "signature": "void AFortPawn::SetCallout(FGameplayTag CalloutTagToSet, float Duration)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1f880.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x14234b600.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x142347e90.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x14231a690.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x1446278d0.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x142ee3b30.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x142bad740.c"],
+  "callees": {
+    "0x14234b600": "AFortPawn__SetCalloutImpl (ported, MEDIUM)",
+    "0x142347e90": "AFortPawn__OnCalloutTimerExpired (ported)",
+    "0x14231a690": "FindCalloutIndex (ported as call)",
+    "0x1446278d0": "FTimerManager::SetTimer (242 lines, NOT PORTED)",
+    "0x142ee3b30": "FWeakObjectPtr construct (named by role)",
+    "0x142bad740": "delegate helper (not ported)"
+  },
+  "notes": "Thunk fully ported. Read order: CalloutTagToSet first, then Duration. Parameter order in the reflection list is reversed. The timer delegate construction (0x1446278d0 and the functor object) is PARTIAL."
+}

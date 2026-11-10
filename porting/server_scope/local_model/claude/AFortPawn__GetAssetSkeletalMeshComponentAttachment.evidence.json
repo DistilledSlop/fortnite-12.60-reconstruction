@@ -1,0 +1,15 @@
+{
+  "function": "AFortPawn::GetAssetSkeletalMeshComponentAttachment",
+  "status": "proposed",
+  "original": "0x142a1be50",
+  "signature": "UObject* AFortPawn::GetAssetSkeletalMeshComponentAttachment(FName SocketName)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1be50.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x1423192c0.c", "captures/9d55004ddd4544529a982151985c2043/0x1423191e0.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x140696410.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x1422fb7b0.c"],
+  "callees": {
+    "0x1423192c0": "AFortPawn__GetAssetSkeletalMeshComponentAttachmentImpl (ported)",
+    "0x1423191e0": "AFortPawn__GetOrCreateAttachmentRecord (ported)",
+    "0x140696410": "TMap find index (named by role)",
+    "0x1422fb7b0": "TMap add (named by role)",
+    "0x141384ca0": "FMemory Malloc (named by role)"
+  },
+  "notes": "Thunk ported. The 0x1423192c0 decompile is declared void with no parameters. Arguments were recovered from the thunk call site and from the callee (this, SocketName)."
+}

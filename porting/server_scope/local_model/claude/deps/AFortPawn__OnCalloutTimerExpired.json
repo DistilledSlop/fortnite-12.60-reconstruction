@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__OnCalloutTimerExpired",
+  "address": "0x142347e90",
+  "signature": "void AFortPawn::OnCalloutTimerExpired()",
+  "inc_or_decl": "if (Role != ROLE_Authority) { return; }\nCalloutTag = FGameplayTag();   // +0xc58 cleared\nUObject* Owner = GetWorldOwnerForPlayerList();   // slot 0x150\nif (Owner != nullptr) {\n    UTimerManager* TimerManager = (Owner->TimerOwner != nullptr) ? Owner->TimerOwner->TimerManager : Owner->TimerManagerDirect;\n    if (TimerManager->FindTimerEntry(CalloutTimerHandle) != nullptr) {   // FUN_144621fb0\n        TimerManager->InternalClearTimer(CalloutTimerHandle);\n    }\n    CalloutTimerHandle = FTimerHandle();\n}",
+  "evidence": "captures/a8d37eec0bc44249b64a618f728fe705/0x142347e90.c; captures/9d55004ddd4544529a982151985c2043/0x144621fb0.c"
+}

@@ -1,0 +1,16 @@
+{
+  "function": "AFortPawn::DoFatalDamage",
+  "status": "proposed",
+  "original": "0x142a1b500",
+  "signature": "void AFortPawn::DoFatalDamage(UAbilitySystemComponent* KillerAbilitySystemComponent)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1b500.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x142312070.c", "captures/9d55004ddd4544529a982151985c2043/0x1415e2c30.c", "captures/9d55004ddd4544529a982151985c2043/0x1406b7f10.c", "captures/9d55004ddd4544529a982151985c2043/0x140774520.c", "captures/9d55004ddd4544529a982151985c2043/0x141e5b2a0.c"],
+  "callees": {
+    "0x142312070": "AFortPawn__ApplyFatalDamageEffect (ported)",
+    "FFrame_Step / FFrame_StepExplicitProperty": "engine script-frame reads (named)",
+    "0x141e5b2a0": "asset-manager damage data cache (described in dep)",
+    "0x1415e2c30": "weak/soft object resolve (PARTIAL, not ported)",
+    "0x140774520": "UGameplayEffect::StaticClass (named)",
+    "0x1406b7f10": "ApplyGameplayEffectSpec (PARTIAL, not ported)"
+  },
+  "notes": "Thunk fully ported. The helper body is ported at branch level; the two engine-level sub-helpers 0x1415e2c30 and 0x1406b7f10 are not fully ported."
+}

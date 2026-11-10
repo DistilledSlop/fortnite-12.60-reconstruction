@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__ServerInternalEquipWeapon_Validate",
+  "address": "0x1406801d0",
+  "signature": "bool AFortPawn::ServerInternalEquipWeapon_Validate(AFortWeapon* Weap)",
+  "inc_or_decl": "// Shared Stub_ReturnTrue body (not the shared xor-eax stub at 0x140680300). Always passes validation.\nreturn true;",
+  "evidence": "captures/9d55004ddd4544529a982151985c2043/0x1406801d0.c"
+}

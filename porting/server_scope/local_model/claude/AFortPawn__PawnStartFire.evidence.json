@@ -1,0 +1,14 @@
+{
+  "function": "AFortPawn::PawnStartFire",
+  "status": "proposed",
+  "original": "0x142a1ed20",
+  "signature": "void AFortPawn::PawnStartFire(uint8 FireModeNum)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1ed20.c", "captures/9d55004ddd4544529a982151985c2043/0x14233ed20.c", "captures/a8d37eec0bc44249b64a618f728fe705/0x142b4dac0.c", "captures/9d55004ddd4544529a982151985c2043/0x141ed1800.c"],
+  "callees": {
+    "slot 0x650": "PawnStartFire_Implementation (dep, PARTIAL)",
+    "0x14233ed20": "PawnStartFire_Implementation body (PARTIAL)",
+    "0x142b4dac0": "AFortWeaponRanged::StaticClass (named)",
+    "0x141ed1800": "default singleton accessor (named by role)"
+  },
+  "notes": "Thunk fully ported. Virtual slot 0x650 maps to 0x14233ed20 (vtable_lookup). The implementation is PARTIAL, with unnamed slots 0xce8, 0xcf0, 0xd08, 0x6b0, 0x6d0 and the array walk around +0xbb8 not ported."
+}

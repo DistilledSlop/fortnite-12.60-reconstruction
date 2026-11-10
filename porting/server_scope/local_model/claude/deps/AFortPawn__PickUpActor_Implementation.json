@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__PickUpActor_Implementation",
+  "address": "0x14233f230",
+  "signature": "bool AFortPawn::PickUpActor_Implementation(AActor* PickupTarget, UFortItemDefinition* PlacementDecoItemDefinition)",
+  "inc_or_decl": "// PARTIAL: the two sub-calls on the equipped tool (slots 0xae8, 0xaf0) are named by role only; FUN_142672c10 is ported as a lookup.\n// Note: the decompile passes the second argument to EquipWeaponDefinition as WeaponData, so the reflected name PlacementDecoItemDefinition looks misleading.\nif (PlacementDecoItemDefinition == nullptr) { return false; }\nAActor* Candidate = FirstItemOf(PlacementDecoItemDefinition);   // FUN_142672c10 -> FUN_142659660 on +0x740 (PARTIAL)\nif (Candidate == nullptr || !Candidate->IsA(AFortWeapon::StaticClass())) { return false; }   // FUN_142b43730\nAFortWeapon* Equipped = EquipWeaponDefinitionImpl(PlacementDecoItemDefinition, kInvalidItemEntryGuid);   // FUN_1423150b0, constant guid at 0x1478de6a0\nif (Equipped != nullptr && Equipped->IsA(AFortDecoTool::StaticClass())) {   // FUN_1428d44f0\n    Equipped->SetPlacementDecoItemDefinition(PlacementDecoItemDefinition, true);   // slot 0xae8 (unnamed)\n    Equipped->SetPickupTarget(PickupTarget);                                   // slot 0xaf0 (unnamed)\n    return true;\n}\nreturn false;",
+  "evidence": "captures/9d55004ddd4544529a982151985c2043/0x14233f230.c; captures/a8d37eec0bc44249b64a618f728fe705/0x142672c10.c; captures/a8d37eec0bc44249b64a618f728fe705/0x142b43730.c; captures/a8d37eec0bc44249b64a618f728fe705/0x1428d44f0.c"
+}

@@ -1,0 +1,12 @@
+{
+  "function": "AFortPawn::PawnStopFire",
+  "status": "proposed",
+  "original": "0x142a1eda0",
+  "signature": "void AFortPawn::PawnStopFire(uint8 FireModeNum)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1eda0.c", "captures/9d55004ddd4544529a982151985c2043/0x14233f130.c"],
+  "callees": {
+    "slot 0xb68": "PawnStopFire_Implementation (dep, ported in full)",
+    "0x14233f130": "PawnStopFire_Implementation body (ported)"
+  },
+  "notes": "Thunk and implementation fully ported. The implementation takes only the pawn; FireModeNum is unused. Slots 0xd08, 0x6b0 and 0x6d8 are unnamed."
+}

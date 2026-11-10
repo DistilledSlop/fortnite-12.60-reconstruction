@@ -1,0 +1,13 @@
+{
+  "function": "AFortPawn::ServerInternalEquipWeapon",
+  "status": "proposed",
+  "original": "0x142a1f670",
+  "signature": "void AFortPawn::ServerInternalEquipWeapon(AFortWeapon* Weap)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1f670.c", "captures/9d55004ddd4544529a982151985c2043/0x1406801d0.c", "captures/9d55004ddd4544529a982151985c2043/0x14230e590.c"],
+  "callees": {
+    "slot 0x8e8": "ServerInternalEquipWeapon_Validate = 0x1406801d0 (Stub_ReturnTrue; not the shared 0x140680300 stub)",
+    "slot 0x8f0": "ServerInternalEquipWeapon_Implementation = 0x14230e590 (forwards to unnamed slot 0xc58)",
+    "RPC_ValidateFailed": "engine (named)"
+  },
+  "notes": "Thunk fully ported. The validate-fail branch is reachable only through the stub, which always returns true. The implementation forwards to slot 0xc58, which is unnamed and unresolved (see dep)."
+}

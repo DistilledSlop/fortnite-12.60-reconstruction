@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__RemoveCalloutImpl",
+  "address": "0x142347cf0",
+  "signature": "void AFortPawn::RemoveCalloutImpl(FGameplayTag CalloutTagToRemove)",
+  "inc_or_decl": "if (Role != ROLE_Authority) { return; }\nif (CalloutTag != CalloutTagToRemove) { return; }   // CalloutTag at +0xc58 (name + number)\nCalloutTag = FGameplayTag();   // cleared\nUObject* Owner = GetWorldOwnerForPlayerList();   // virtual slot 0x150\nif (Owner != nullptr) {\n    UTimerManager* TimerManager = (Owner->TimerOwner != nullptr) ? Owner->TimerOwner->TimerManager /*+0xc0*/ : Owner->TimerManagerDirect /*+0x320*/;\n    if (TimerManager->FindTimerEntry(CalloutTimerHandle) != nullptr) {   // FUN_144621fb0\n        TimerManager->InternalClearTimer(CalloutTimerHandle);   // FTimerManager_InternalClearTimer\n    }\n    CalloutTimerHandle = FTimerHandle();   // +0xc78 cleared\n}",
+  "evidence": "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x142347cf0.c; captures/9d55004ddd4544529a982151985c2043/0x144621fb0.c"
+}

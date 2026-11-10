@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__GetOrCreateAttachmentRecord",
+  "address": "0x1423191e0",
+  "signature": "AttachmentRecord* AFortPawn::GetOrCreateAttachmentRecord(FName SocketName)",
+  "inc_or_decl": "// Map lives at this+0x640 (TMap<FName, AttachmentRecord*>).\nint32 Index = AttachmentRecords.FindIndex(SocketName);   // FUN_140696410\nif (Index != -1) {\n    AttachmentRecord* Existing = AttachmentRecords.ValueAt(Index);\n    return Existing;\n}\nAttachmentRecord* Record = Malloc(0x30);   // FUN_141384ca0; a null allocation leaves Record null\nif (Record != nullptr) {\n    Record->SocketName = SocketName;   // +0x00\n    Record->Attachment = nullptr;      // +0x20\n    Record->Flags = 1;                 // +0x18 (uint16)\n    Record->Reserved0 = 0;\n    Record->Reserved1 = 0;\n    Record->Reserved2 = 0;\n}\nAttachmentRecords.Add(SocketName, Record);   // FUN_1422fb7b0\nreturn Record;",
+  "evidence": "captures/9d55004ddd4544529a982151985c2043/0x1423191e0.c; captures/a8d37eec0bc44249b64a618f728fe705/0x140696410.c; captures/a8d37eec0bc44249b64a618f728fe705/0x1422fb7b0.c"
+}

@@ -1,0 +1,14 @@
+{
+  "function": "AFortPawn::RemoveNonReplicatedTagToPawn",
+  "status": "proposed",
+  "original": "0x142a1f430",
+  "signature": "void AFortPawn::RemoveNonReplicatedTagToPawn(FGameplayTag Tag)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1f430.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x1423483e0.c", "captures/9d55004ddd4544529a982151985c2043/0x140744d30.c"],
+  "callees": {
+    "0x1423483e0": "AFortPawn__RemoveNonReplicatedTagImpl (ported, MEDIUM)",
+    "0x140744d30": "non-replicated tag container contains (205 lines, NOT PORTED; used as bool)",
+    "slot 0x10 on +0x4c8": "GetAbilitySystemComponent (unnamed here)",
+    "slot 0x810": "RemoveLooseGameplayTag (unnamed)"
+  },
+  "notes": "Thunk fully ported. The contains check (0x140744d30) is taken as a black-box predicate."
+}

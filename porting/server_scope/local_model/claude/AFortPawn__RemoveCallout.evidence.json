@@ -1,0 +1,13 @@
+{
+  "function": "AFortPawn::RemoveCallout",
+  "status": "proposed",
+  "original": "0x142a1f3a0",
+  "signature": "void AFortPawn::RemoveCallout(FGameplayTag CalloutTagToRemove)",
+  "captures": ["captures/5174f6b6e7d3437db3f64d2450854202/0x142a1f3a0.c", "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x142347cf0.c", "captures/9d55004ddd4544529a982151985c2043/0x144621fb0.c"],
+  "callees": {
+    "0x142347cf0": "AFortPawn__RemoveCalloutImpl (ported)",
+    "0x144621fb0": "FTimerManager::FindTimerEntry (ported as call)",
+    "FTimerManager_InternalClearTimer": "engine (named)"
+  },
+  "notes": "Thunk fully ported. The by-reference property check is preserved as a comment."
+}

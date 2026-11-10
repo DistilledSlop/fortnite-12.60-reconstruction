@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__ForceKillImpl",
+  "address": "0x1423178a0",
+  "signature": "void AFortPawn::ForceKillImpl(FGameplayTag DeathReason, AController* KillerController, AActor* KillerActor)",
+  "inc_or_decl": "if (Role != ROLE_Authority) { return; }\nif (IsBeingKilled()) { return; }   // flag byte at +0x520, mask 0x08 (not named by reflection)\nif (KillerController != nullptr) {\n    LastHitBy = nullptr;   // +0x248\n}\nFGameplayTag Tag = DeathReason;\nif (DeathReason.TagName == NAME_None && DeathReason.Number == 0) {\n    Tag = GetDefaultDeathReasonTag();   // FUN_141ed1800() + 0x410 global default\n}\nFGameplayTagContainer DeathTags = MakeContainerFromTag(Tag);   // FUN_143e8b3b0 + FGameplayTagContainer_CopyAssign\nNativeDie(DeathTags, KillerController, KillerActor);   // virtual slot 0xa78 (unnamed by reflection, MEDIUM)",
+  "evidence": "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x1423178a0.c; captures/9d55004ddd4544529a982151985c2043/0x141ed1800.c; captures/a8d37eec0bc44249b64a618f728fe705/0x143e8b3b0.c"
+}

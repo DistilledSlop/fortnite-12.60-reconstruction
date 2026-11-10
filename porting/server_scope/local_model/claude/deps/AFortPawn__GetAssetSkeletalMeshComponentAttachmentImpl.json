@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__GetAssetSkeletalMeshComponentAttachmentImpl",
+  "address": "0x1423192c0",
+  "signature": "UObject* AFortPawn::GetAssetSkeletalMeshComponentAttachmentImpl(FName SocketName)",
+  "inc_or_decl": "AttachmentRecord* Record = GetOrCreateAttachmentRecord(SocketName);   // FUN_1423191e0, the decompile dropped the arguments\nif (Record == nullptr) { return nullptr; }\nreturn Record->Attachment;   // +0x20",
+  "evidence": "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x1423192c0.c; captures/9d55004ddd4544529a982151985c2043/0x1423191e0.c; captures/a8d37eec0bc44249b64a618f728fe705/0x140696410.c; captures/a8d37eec0bc44249b64a618f728fe705/0x1422fb7b0.c; captures/a8d37eec0bc44249b64a618f728fe705/0x141384ca0.c"
+}

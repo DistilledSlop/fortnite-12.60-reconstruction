@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__FindLocalViewingPlayerController",
+  "address": "0x142321a70",
+  "signature": "APlayerController* AFortPawn::FindLocalViewingPlayerController()",
+  "inc_or_decl": "UObject* Owner = GetWorldOwnerForPlayerList();   // virtual slot 0x150 on this\nif (Owner == nullptr) { return nullptr; }\nfor (int32 i = 0; i < Owner->PlayerControllerList.Num(); ++i) {   // list at Owner+0x1c8 (FUN_14468fb70 view init)\n    APlayerController* PC = FWeakObjectPtr_Get(Owner->PlayerControllerList[i]);\n    if (PC != nullptr && PC->IsLocalPlayerController()) {   // slot 0x6a8\n        if (PC->GetPawnForViewing() == this) {               // slot 0x698\n            return PC;\n        }\n    }\n}\nreturn nullptr;",
+  "evidence": "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x142321a70.c; captures/a8d37eec0bc44249b64a618f728fe705/0x14468fb70.c; captures/9d55004ddd4544529a982151985c2043/0x14468fb70.c"
+}

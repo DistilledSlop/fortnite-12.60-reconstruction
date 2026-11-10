@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__RemoveNonReplicatedTagImpl",
+  "address": "0x1423483e0",
+  "signature": "void AFortPawn::RemoveNonReplicatedTagImpl(FGameplayTag Tag)",
+  "inc_or_decl": "UAbilitySystemComponent* ASC = GetAbilitySystemComponent();   // member +0x4c8, slot 0x10\nif (ASC != nullptr) {\n    if (ASC->NonReplicatedTags.Contains(Tag)) {   // FUN_140744d30 on ASC+0x208 (MEDIUM, 205 lines not ported)\n        ASC->RemoveLooseGameplayTag(Tag, 0);   // virtual slot 0x810\n    }\n}",
+  "evidence": "captures/a4d82fe27a1649e1bd8f43e07a5d80e8/0x1423483e0.c; captures/9d55004ddd4544529a982151985c2043/0x140744d30.c"
+}
