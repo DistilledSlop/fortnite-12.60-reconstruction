@@ -44,7 +44,7 @@ if [[ -z "${FN_NETNS_INNER:-}" ]]; then
         printf 'Wine is still using prefix %s. Close its Wine applications and stop its wineserver before retrying.\n' "$wineprefix" >&2
         exit 1
     fi
-    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -64,6 +64,7 @@ state_args=()
 [[ -z "${FN_STATE_DIR:-}" ]] || state_args=(--state-dir "$FN_STATE_DIR")
 python3 "$porting_dir/server/probe_server.py" --port 443 --stub "${state_args[@]}" \
     --tls-cert "$generated/tls/cert.pem" --tls-key "$generated/tls/key.pem" \
+    --local-matchmaking-ws-port 0 \
     > "$generated/probe-server.out" 2>&1 &
 server=$!
 patcher=

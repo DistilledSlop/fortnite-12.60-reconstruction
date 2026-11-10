@@ -192,7 +192,11 @@ def main():
     parser.add_argument("--ephemeral", action="store_true",
                         help="with --stub: keep account, profile and user-file state in memory")
     parser.add_argument("--matchmaking-ws-origin", help="with --stub: advertised ws:// or wss:// origin")
+    parser.add_argument("--local-matchmaking-ws-port", type=int,
+                        help="with --stub: serve an additional plaintext WebSocket listener on loopback (0 chooses a port)")
     args = parser.parse_args()
+    if args.local_matchmaking_ws_port is not None and (not args.stub or args.matchmaking_ws_origin):
+        parser.error("--local-matchmaking-ws-port requires --stub and no --matchmaking-ws-origin")
     args.record.parent.mkdir(parents=True, exist_ok=True)
     routes = load_fixtures(args.fixtures)
     stub = None
@@ -215,6 +219,13 @@ def main():
         # The default local HTTP server must advertise its own reachable socket,
         # including the actual port when the caller requested port zero.
         stub.DEFAULT.matchmaking.websocket_origin = f"ws://127.0.0.1:{server.server_port}"
+    ws_server = None
+    if args.local_matchmaking_ws_port is not None:
+        ws_server = ThreadingHTTPServer(("127.0.0.1", args.local_matchmaking_ws_port),
+                                        make_handler(routes, args.record, stub))
+        stub.DEFAULT.matchmaking.websocket_origin = f"ws://127.0.0.1:{ws_server.server_port}"
+        threading.Thread(target=ws_server.serve_forever, daemon=True).start()
+        print(f"Local matchmaking WebSocket on 127.0.0.1:{ws_server.server_port}", flush=True)
     if args.tls_cert:
         import ssl
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
@@ -227,6 +238,9 @@ def main():
         pass
     finally:
         server.server_close()
+        if ws_server is not None:
+            ws_server.shutdown()
+            ws_server.server_close()
         if state_lock is not None:
             state_lock.close()
 

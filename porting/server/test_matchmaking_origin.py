@@ -42,6 +42,34 @@ class MatchmakingOriginTests(unittest.TestCase):
                 process.terminate()
                 process.communicate(timeout=10)
 
+    def test_additional_loopback_listener_shares_ticket_state(self):
+        port = ws.free_port()
+        with tempfile.TemporaryDirectory() as directory:
+            command = [sys.executable, "-I", str(Path(__file__).with_name("probe_server.py")),
+                       "--stub", "--ephemeral", "--port", str(port), "--local-matchmaking-ws-port", "0",
+                       "--record", str(Path(directory) / "requests")]
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            try:
+                self.assertIn("Local matchmaking WebSocket", process.stdout.readline())
+                self.assertIn("Listening", process.stdout.readline())
+                status, ticket, _ = jcall(f"http://127.0.0.1:{port}", "GET",
+                                          f"/fortnite/api/game/v2/matchmakingservice/ticket/player/{LOCAL}")
+                self.assertEqual(status, 200)
+                url = urllib.parse.urlsplit(ticket["serviceUrl"])
+                self.assertEqual((url.scheme, url.hostname), ("ws", "127.0.0.1"))
+                self.assertNotEqual(url.port, port)
+                sock, stream, status_line, accepted = ws.ws_open(url.port, url.path, None)
+                try:
+                    self.assertTrue(status_line.startswith("HTTP/1.1 101") and accepted)
+                    opcode, payload = ws.ws_recv(stream)
+                    self.assertEqual((opcode, json.loads(payload)["name"]), (1, "StatusUpdate"))
+                finally:
+                    stream.close()
+                    sock.close()
+            finally:
+                process.terminate()
+                process.communicate(timeout=10)
+
     def test_invalid_origin_is_rejected(self):
         for origin in ("https://example.com", "ws://example.com/path", "ws://user@example.com", "ws://host:99999"):
             with self.subTest(origin=origin), self.assertRaises(ValueError):
