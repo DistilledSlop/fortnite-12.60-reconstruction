@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingMusicSequencer::ResetHitActors",
+ "status": "blocked",
+ "blocker": "Container at this+0xd08 (88 bytes: TArray-like header + two inline/heap int32 arrays + compacted/pointer fields) has no reflected fields in the empty ABuildingMusicSequencer header; exact container type and the two arrays' hit-actor semantics unresolved, and callee 0x1406911b0 unidentified. Real body 0x141c1acd0.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100042",
+ "batch_seconds": 881
+}

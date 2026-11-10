@@ -1,0 +1,36 @@
+{
+  "function": "ABuildingMusicSequencer::ResetHitActors",
+  "status": "blocked",
+  "original_address": "0x14274be90 (7-instruction thunk) -> 0x141c1acd0 (real body)",
+  "decompile_source": "captures/ed85d238dc64434194365efb1a49ab33/0x141c1acd0.c (real body); thunk asm: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native107-broad/0x14274be90.asm",
+  "asm_source": "captures/ed85d238dc64434194365efb1a49ab33/0x141c1acd0.asm",
+  "flag_proof": {
+    "reflection_flags": "0x4080401",
+    "decoded": "FUNC_Native | FUNC_Final | FUNC_BlueprintCallable | FUNC_HasOutParms",
+    "note": "Native, final, BlueprintCallable, no reflected params. FUNC_HasOutParms (0x80000) is set with zero reflected params (generator discrepancy to document)."
+  },
+  "resolved_contracts": [
+    "0x14274be90 is a thunk: shared native prologue (flag touch at [rdx+0x20]) then 'jmp 0x141c1acd0'. The real body is at 0x141c1acd0.",
+    "The real body operates on a single 88-byte struct rooted at this+0xd08 (asm: 'LEA RDI,[RCX+0xd08]'). Sub-offsets relative to 0xd08 (absolute in parens): +0x00 Data (0xd08), +0x08 Count (0xd10), +0x0c Max (0xd14), +0x10..+0x1f inline buffer A (0xd18-0xd27), +0x20 heap ptr A (0xd28), +0x28 count A (0xd30), +0x2c (0xd34), +0x30 set-to-0xffffffff (0xd38), +0x34 'compacted' set-to-0 (0xd3c), +0x38..+0x47 inline buffer B (0xd40-0xd47), +0x48 heap ptr B (0xd48), +0x48 count B (0xd50), +0x50 pointer set-to-0 (0xd58).",
+    "Body logic (asm-confirmed): [this+0xd58]=0; if (Count[0xd10] != Compacted[0xd3c]) { Count=0; if (Max[0xd14] < 0) call 0x1406911b0(this+0xd08, 0); [0xd38]=-1; Compacted=0; memset(dataA, 0, roundUp32(countA)*4) where dataA = heapA[0xd28] if nonzero else inline[0xd18]; countA[0xd30]=0; if (countB[0xd50] > 0) memset(dataB, 0xffffffff, countB*4) where dataB = heapB[0xd48] if nonzero else inline[0xd40]; }",
+    "0x1458092f9 (both memset calls) is the engine memset; the zero-fill of array A and the -1-fill of array B are 32-bit element arrays."
+  ],
+  "unresolved_contracts": [
+    "The ABuildingMusicSequencer generated header (checkout/porting/native/Source/FortniteGame/Generated/ABuildingMusicSequencer.h) is EMPTY: no reflected UPROPERTYs. So none of the struct fields at 0xd08-0xd5f are named, and there is no reflected member to anchor the body to. 'field-offset ABuildingMusicSequencer 0xd10/0xd58' returns no results.",
+    "The container at 0xd08 is not a standard single UE type. It is a custom 88-byte struct combining a TArray-like header (Data/Count/Max at 0xd08-0xd17), two 32-bit element arrays each with a 16-byte inline buffer + heap pointer + count (A at 0xd18-0xd34, B at 0xd40-0xd54), plus a -1 field at 0xd38, a 'compacted' field at 0xd3c, and a pointer at 0xd58. The exact C++ type (e.g. a pair of TArray<int32, TInlineAllocator<4>>, or a bespoke FHitActors struct) is not established, and the semantic meaning of the two int32 arrays for a music sequencer's 'hit actors' is not known.",
+    "0x1406911b0 (called as 0x1406911b0(this+0xd08, 0) when Max[0xd14] < 0) is unidentified; it appears to be a reset/cleanup of the container when Max is negative."
+  ],
+  "attempts": [
+    "Read the thunk asm (0x14274be90.asm): confirmed it is a 7-instruction thunk jumping to 0x141c1acd0.",
+    "Captured and read the real body 0x141c1acd0 (.c and .asm): mapped every sub-offset of the 88-byte struct at this+0xd08 and the two memset operations (0x1458092f9).",
+    "Read the generated header ABuildingMusicSequencer.h: it is empty (no reflected fields), so there is no named member to express the body against.",
+    "Ran 'evidence.py field-offset ABuildingMusicSequencer 0xd10' and 0xd58: no reflected field resolves at those offsets.",
+    "Inspected the parent headers ABuildingTrapFloor.h and ABuildingTrap.h: they contain unrelated fields (AppliedAlterations, AlterationAbilitySetHandles, etc.) and do not name a hit-actor container at 0xd08.",
+    "Decoded the function flags 0x4080401 (Native|Final|BlueprintCallable|HasOutParms)."
+  ],
+  "next_steps": [
+    "Identify the container type at this+0xd08 by cross-referencing the other ABuildingMusicSequencer native functions (e.g. the hit-actor registration/spawn functions) that read/write the same offsets 0xd08-0xd5f, to establish whether it is a pair of TArray<int32> (or TInlineAllocator<4>) members or a bespoke struct, and what the two int32 arrays represent.",
+    "Identify the callee 0x1406911b0 (container reset when Max < 0).",
+    "Once the container type and the two arrays' semantics are known, declare the required member_field entries in ABuildingMusicSequencer and emit the body (zero array A, -1-fill array B, reset the header/compacted/pointer fields)."
+  ]
+}

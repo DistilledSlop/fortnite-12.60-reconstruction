@@ -1,0 +1,42 @@
+{
+  "function": "ABuildingProp_CaptureItemSpawner::UnregisterSpecialActor",
+  "status": "blocked",
+  "original_address": "0x14274c0b0 (7-instruction thunk) -> 0x141c215d0 (real body)",
+  "decompile_source": "captures/bbf0361ff1c74c46bb192a0258124989/0x141c215d0.c (real body); thunk asm: captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x14274c0b0.asm",
+  "asm_source": "captures/bbf0361ff1c74c46bb192a0258124989/0x141c215d0.asm",
+  "flag_proof": {
+    "reflection_flags": "0x4080405",
+    "decoded": "FUNC_Native | FUNC_Final | FUNC_BlueprintCallable | FUNC_HasOutParms | FUNC_HasOptionalParms",
+    "note": "Native, final, BlueprintCallable, no reflected params. (HasOutParms/HasOptionalParms set with zero reflected params - generator discrepancy to document.)"
+  },
+  "resolved_contracts": [
+    "0x14274c0b0 is a thunk: shared native prologue (flag touch at [rdx+0x20]) then 'jmp 0x141c215d0'. The real body is at 0x141c215d0.",
+    "Byte at this+0xf0 == 3 is AActor::Role (field-offset ABuildingProp_CaptureItemSpawner 0xf0 -> AActor::Role, Byte, replicated, offset 240). Value 3 is ROLE_Authority, so the guard is 'if (Role == ROLE_Authority)'.",
+    "SpecialActorID is the reflected FName at this+0xba8 (asm: 'MOV ECX,[RCX+0xba8]' passed to 0x142cd8ed0 = FName compare vs NAME_None; the second word at 0xbac is the FName Number). The inner guard is 'if (SpecialActorID.Number != 0 || SpecialActorID != NAME_None)'.",
+    "The vtable call at byte offset 0x150 ('CALL [RAX+0x150]') returns a UWorld (the result is fed to the game-state helper below); this is AActor::GetWorld().",
+    "0x141641350 is a GetFortGameStateAthena-style helper: it reads [param_1 + 0x130] (the world's authoritative game state pointer) and returns it only if its class is AFortGameStateAthena (class compare via AFortGameStateAthena_StaticClass), else 0.",
+    "AFortGameStateAthena::SpecialActorData is the reflected Object at offset 0x1200 (field-offset AFortGameStateAthena 0x1200 -> SpecialActorData, Object, replicated). Its type class pointer 0x142adf390 maps (class_ref_map.json) to block_va 0x146523a40 = AFortSpecialActorReplicationInfo. So GS+0x1200 is AFortGameStateAthena::SpecialActorData (AFortSpecialActorReplicationInfo*).",
+    "0x141f6b0c0 is the unregister method on AFortSpecialActorReplicationInfo: it iterates SpecialActorRepList.SpecialActorList (TArray<FSpecialActorRepData>, data at this+0x320, count at this+0x328, element FSpecialActorRepData with SpecialActorID at element offset 0xc), finds the entry whose SpecialActorID matches, then calls 0x1406ba850(&DAT_1478c2790, i*0x230 + data), 0x141f6b2c0(&SpecialActorRepList, i, 1, 1), 0x14072a990(&SpecialActorRepList), increments a counter at this+0x26c (wrapping -1 to 0), sets this+0x310 = -1, and returns."
+  ],
+  "unresolved_contracts": [
+    "The dependency method AFortSpecialActorReplicationInfo::UnregisterSpecialActor (0x141f6b0c0) is NOT in the generated tree: the header (checkout/porting/native/Source/FortniteGame/Generated/AFortSpecialActorReplicationInfo.h) declares only SpecialActorRepList (FSpecialActorRepDataArray), SpecialActorStats (TArray<FSpecialActorStatData>) and GetLifetimeReplicatedProps. Its name is not in reflection (calling it by name would be a guess, which AGENTS.md forbids), and its body is itself a separate unrecovered function.",
+    "Within 0x141f6b0c0, three callees are unidentified: 0x1406ba850 (per-entry destroy/log, takes &DAT_1478c2790 and a pointer), 0x141f6b2c0 (FastArray-style remove-at-index on the SpecialActorRepList), and 0x14072a990 (post-remove operation on the SpecialActorRepList).",
+    "The two AFortSpecialActorReplicationInfo fields updated by 0x141f6b0c0 are not named: the counter at this+0x26c (int32, ++ with -1->0 wrap) and the value set to -1 at this+0x310 (8 bytes). field-offset for these offsets was not resolved to a reflected member.",
+    "GetWorld (vtable 0x150) and 0x141641350 (GetFortGameStateAthena, reading UWorld+0x130) are inferred from shape; the exact UWorld field at +0x130 (authoritative game state) was not independently confirmed against the engine UWorld layout.",
+    "The decompile of 0x141f6b0c0 shows a loop stride of 0x8c (140) but the per-entry log call uses stride 0x230 (560) = sizeof(FSpecialActorRepData); the 0x8c is a Ghidra misread of the real 0x230 element stride (needs asm confirmation before any body is written)."
+  ],
+  "attempts": [
+    "Read the thunk asm (0x14274c0b0.asm): confirmed it jumps to 0x141c215d0.",
+    "Captured and read the real body 0x141c215d0 (.c and .asm): corrected the decompile offsets (byte 0xf0 not 0xf8; SpecialActorID at 0xba8 not 0xcb8) and mapped the full control flow (Role guard, name guard, GetWorld, game-state helper, SpecialActorData->unregister, SpecialActorID=NAME_None).",
+    "Captured and read 0x141f6b0c0 (.c): identified it as the unregister method iterating SpecialActorRepList.SpecialActorList by SpecialActorID.",
+    "Read 0x141641350 (.c): identified it as a GetFortGameStateAthena-style helper (reads +0x130, class-compares to AFortGameStateAthena).",
+    "Ran field-offset ABuildingProp_CaptureItemSpawner 0xf0 -> AActor::Role; field-offset AFortGameStateAthena 0x1200 -> SpecialActorData (AFortSpecialActorReplicationInfo).",
+    "Mapped the SpecialActorData type class pointer 0x142adf390 to AFortSpecialActorReplicationInfo via class_ref_map.json.",
+    "Read the generated headers AFortSpecialActorReplicationInfo.h, FSpecialActorRepDataArray.h (TArray<FSpecialActorRepData> at offset 264) and FSpecialActorRepData.h (SpecialActorID at offset 12, size 560): confirmed the data/count/element layout matches 0x141f6b0c0's accesses (array at this+0x320/0x328, SpecialActorID at element+0xc), but the class has no UnregisterSpecialActor method declared."
+  ],
+  "next_steps": [
+    "Recover AFortSpecialActorReplicationInfo::UnregisterSpecialActor (0x141f6b0c0) as a helper entry: confirm the 0x230 element stride from the asm, identify the three callees (0x1406ba850 destroy/log, 0x141f6b2c0 FastArray remove-at-index, 0x14072a990 post-remove), and name the two fields at this+0x26c (counter) and this+0x310 (set to -1).",
+    "Confirm vtable 0x150 = AActor::GetWorld and 0x141641350 = GetFortGameStateAthena (UWorld+0x130 authoritative game state) against the engine UWorld layout.",
+    "Once the helper is in the tree, emit ABuildingProp_CaptureItemSpawner::UnregisterSpecialActor's body: 'if (Role == ROLE_Authority) { if (SpecialActorID != NAME_None) { if (AFortGameStateAthena* GS = GetFortGameStateAthena(GetWorld())) { if (GS->SpecialActorData) { GS->SpecialActorData->UnregisterSpecialActor(SpecialActorID); SpecialActorID = NAME_None; } } } }'."
+  ]
+}

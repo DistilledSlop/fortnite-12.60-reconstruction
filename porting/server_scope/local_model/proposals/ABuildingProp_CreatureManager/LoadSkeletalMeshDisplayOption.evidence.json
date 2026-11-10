@@ -1,0 +1,37 @@
+{
+  "function": "ABuildingProp_CreatureManager::LoadSkeletalMeshDisplayOption",
+  "status": "blocked",
+  "original_address": "0x14274b310",
+  "decompile_source": "captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x14274b310.c",
+  "asm_source": "captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x14274b310.asm",
+  "flag_proof": {
+    "reflection_flags": "0x4020401",
+    "decoded": "FUNC_Native | FUNC_BlueprintCallable | FUNC_HasOutParms",
+    "note": "Native, BlueprintCallable, no reflected params."
+  },
+  "resolved_contracts": [
+    "The body is gated on 'if ([this+0xbb8] != 0 || [this+0xbbc] != 0)' (two int32 fields; the decompile prints the first as decimal 3000 == 0xbb8).",
+    "It builds a 1-element array on the stack (iStack_50=1) via 0x140690c30(&arr,0), stores [this+0xbb8] as element 0 and copies from this+0xbc0 via 0x140682ce0 (a soft-object/class pointer copy).",
+    "It allocates a 0x30-byte delegate object with FMemory_Realloc(null,0x30,0); sets its ops vtable to &DAT_1459a9e80 then &DAT_1459a9ed8, binds it to 'this' via 0x142ee3b30(Original+1, param_1), stores a function pointer 0x141c0b240 at Original+2/0x14, and a value from 0x142bad740() at Original[5].",
+    "It builds an FString (uStack_68) via 0x140680160(&s,0x1f) and sets it to the wide literal L\"RequestAsyncLoad ArrayDelegate\" (0x142bc7780, length 0x3e) - the async-load tag string.",
+    "It invokes the delegate ((**(code**)(*Original+0x40))(Original,&uStack_48)) and then calls 0x1445f2070(0x144017270()+0x178, auStack_28, &arr, &result, 0,0,0, &tagString) - the async-load / soft-object-array load dispatcher.",
+    "It stores the resulting weak/strong object pointer into this+0xc20/this+0xc28 with full reference-count transfer (the 'if ([this+0xc20] != puVar6) { move; release old; }' block) - a TWeakObjectPtr/FWeakObjectPtr-style slot.",
+    "It cleans up: releases the delegate (vtable+0x38 then FMemory_Realloc/Free), frees the array elements (stride 3 qwords) and the array."
+  ],
+  "unresolved_contracts": [
+    "Eleven callees are unidentified and central to the behavior: 0x140690c30 (array init), 0x140682ce0 (element copy), 0x141c0b240 (bound function pointer), 0x142ee3b30 (delegate bind), 0x142bad740 (value source), 0x141df62a0 (scope/alloc), 0x140680160 (FString init), 0x1406800e0 (FString shrink), 0x142bc7780 (FString set-wide-literal), 0x144017270 (global/manager getter), and 0x1445f2070 (the async-load/soft-array dispatcher).",
+    "The ABuildingProp_CreatureManager fields touched are not reflected/named: the int32 pair at this+0xbb8/this+0xbbc (the guard), the data at this+0xbc0 (source soft-class pointer), and the object-pointer slot at this+0xc20/this+0xc28 (weak/strong ptr with refcount). The generated header ABuildingProp_CreatureManager.h has no UPROPERTY at these offsets (its reflected members are AITypeOptions, SelectedAIType, the SelectedOverride*/Damage/Environmental/Movement floats and tags, and CreatureInfoComponent).",
+    "The exact async-load contract (what 0x1445f2070 loads - a TSoftClassPtr array of AFortAIPawn display options - and how the delegate 0x141c0b240 consumes the result) is not established; the wide literal 'RequestAsyncLoad ArrayDelegate' names the delegate but not the load target type or completion semantics.",
+    "The delegate ops vtable pointers &DAT_1459a9e80 / &DAT_1459a9ed8 (a TDelegate/FScriptDelegate ops pair) are not mapped to a named delegate type."
+  ],
+  "attempts": [
+    "Read the full decompile 0x14274b310.c (135 lines): identified the overall shape - guard on two int32 fields, build a 1-element soft-class array, create a 0x30-byte bound delegate, set the 'RequestAsyncLoad ArrayDelegate' FString tag, invoke the delegate, call the async-load dispatcher 0x1445f2070, and store the result into a refcounted object-pointer slot at this+0xc20/0xc28 with full cleanup.",
+    "Read the generated header ABuildingProp_CreatureManager.h: the reflected members (AITypeOptions TArray<TSoftClassPtr<AFortAIPawn>>, SelectedAIType, the override floats/tags, CreatureInfoComponent) do not cover the native fields at 0xbb8/0xbbc/0xbc0/0xc20/0xc28, so the body's field accesses are not named.",
+    "Assessed the callee set: eleven distinct FUN_* callees plus two data-section delegate ops vtables, far beyond a few-lookup resolution budget; the async-load dispatcher (0x1445f2070) and the bound function (0x141c0b240) are the two load-bearing unknowns."
+  ],
+  "next_steps": [
+    "Identify the async-load dispatcher 0x1445f2070 and the global/manager getter 0x144017270 (likely a TSoftObjectPtr/asset-registry async load of a class array), and the bound delegate function 0x141c0b240 (the completion handler that stores the loaded display-option class).",
+    "Name the native ABuildingProp_CreatureManager fields at 0xbb8/0xbbc (guard int32s), 0xbc0 (source soft-class pointer), and 0xc20/0xc28 (the refcounted loaded-object slot) by cross-referencing the related creature-manager functions that write them.",
+    "Map the delegate ops vtables &DAT_1459a9e80/&DAT_1459a9ed8 to the delegate type, then emit the body: guard, build the 1-element array, create+bind the 'RequestAsyncLoad ArrayDelegate', issue the async load, and store the result into the 0xc20 slot."
+  ]
+}

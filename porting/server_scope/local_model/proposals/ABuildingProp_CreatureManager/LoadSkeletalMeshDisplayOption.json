@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingProp_CreatureManager::LoadSkeletalMeshDisplayOption",
+ "status": "blocked",
+ "blocker": "Body is a complex async soft-class-array load: guard on int32 fields 0xbb8/0xbbc, build 1-element array from 0xbc0, create+bind a 0x30-byte 'RequestAsyncLoad ArrayDelegate' (bound fn 0x141c0b240), invoke it, call async-load dispatcher 0x1445f2070 (getter 0x144017270), store result into refcounted slot 0xc20/0xc28. Eleven callees unidentified (0x140690c30/0x140682ce0/0x141c0b240/0x142ee3b30/0x142bad740/0x141df62a0/0x140680160/0x1406800e0/0x142bc7780/0x144017270/0x1445f2070); native fields 0xbb8/0xbbc/0xbc0/0xc20/0xc28 not reflected in the header. Real body 0x14274b310.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100042",
+ "batch_seconds": 881
+}

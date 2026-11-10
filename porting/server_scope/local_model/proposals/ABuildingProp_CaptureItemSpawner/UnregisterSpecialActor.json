@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingProp_CaptureItemSpawner::UnregisterSpecialActor",
+ "status": "blocked",
+ "blocker": "Outer body resolved (Role==ROLE_Authority guard at 0xf0, SpecialActorID FName at 0xba8, GetWorld vtable 0x150, GetFortGameStateAthena 0x141641350, AFortGameStateAthena::SpecialActorData=AFortSpecialActorReplicationInfo at 0x1200) but the dependency method AFortSpecialActorReplicationInfo::UnregisterSpecialActor (0x141f6b0c0) is not in the generated tree: name not in reflection, body unrecovered (3 unidentified callees 0x1406ba850/0x141f6b2c0/0x14072a990 + fields at 0x26c/0x310). Real body 0x141c215d0.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100042",
+ "batch_seconds": 881
+}
