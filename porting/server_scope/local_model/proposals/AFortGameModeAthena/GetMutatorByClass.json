@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameModeAthena::GetMutatorByClass",
+ "status": "blocked",
+ "blocker": "Context provider dispatch and original volume selector 0x141c7c5c0 lack complete recovered implementations.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-br-01",
+ "batch_seconds": 958
+}

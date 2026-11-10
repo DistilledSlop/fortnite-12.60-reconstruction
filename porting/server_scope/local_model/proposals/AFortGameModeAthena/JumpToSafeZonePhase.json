@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameModeAthena::JumpToSafeZonePhase",
+ "status": "blocked",
+ "blocker": "Unimplemented StartAircraftPhase and safe-zone transition helpers; unresolved iterator and dynamic override contracts and unreflected fields.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-br-01",
+ "batch_seconds": 958
+}

@@ -1,0 +1,21 @@
+{
+  "native": "0x141952190",
+  "exec": "0x1428f04c0",
+  "capture": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/decomp_batches/run-20261031T223842Z-b000/_adhoc/0x141952190__141952190.c",
+  "additional_captures": [
+    "captures/8be8441e11944a53ae5ba9ed162d99e9/0x141990ec0.c",
+    "captures/8be8441e11944a53ae5ba9ed162d99e9/0x141971930.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native150-large-helpers/0x141971aa0.c"
+  ],
+  "findings": [
+    "Iterates weak world player controllers, filtering to matching aircraft; may invoke mode virtual +0x778 or kick with localized reason after service predicate. After iteration increments unreflected mode +0xd90 and compares Aircrafts.Num(); playlist +0x8c0 values 1 or 2 call 0x141971aa0(false), otherwise 0x141971930(false,true).",
+    "0x141990ec0 is GetAircraftIndexFromTeam: player-state interface virtual +0x28 gets team, subtract playlist byte +0xc8 in mode +0x14a0 == 1, and validates against game phase and array count; invalid input returns zero and may log.",
+    "0x141971930 checks game state, safe zone config and skip bit, playlist phase gating and sets a time value before invoking 0x141971aa0 if requested. The latter is a substantial safe-zone transition, not a stub."
+  ],
+  "blockers": [
+    "Exact interface at player state +0x318 and its polymorphic team method, controller load-state provider 0x141695900, mode virtual +0x778, and service 0x140fc7960 need source contracts including overrides.",
+    "0x141971aa0 and 0x141971930 safe-zone transitions need complete source reconstruction with side effects and field identities; no raw-offset approximation is safe."
+  ],
+  "next_step": "Resolve class and virtual slots using original vtables/callers and reflected members; reconstruct 0x141971aa0 and 0x141971930 across their dependent calls, then reconstruct full exit handler.",
+  "verification": "Static inspection only; no build or runtime tests."
+}

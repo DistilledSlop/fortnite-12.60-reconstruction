@@ -1,0 +1,21 @@
+{
+  "exec": "0x1428f05c0",
+  "body": "0x141952900",
+  "captures": [
+    "captures/fa46180bdc51406eacd7479251a620e6/0x1428f05c0.c",
+    "checkout/porting/generated/gamemode-broad69/0x141952900.c",
+    "captures/9baa4b62ac0744c0971f5606a2ac1b0a/0x141936b50.c",
+    "captures/58895e7c33014e36965f325dd2861833/0x14198e1b0.c",
+    "captures/9baa4b62ac0744c0971f5606a2ac1b0a/0x144627d90.c",
+    "captures/6ef36e1146d04150b67a0ea6afbcf692/0x141940c00.c",
+    "captures/c878fe0b9bbb4c708ae43de47af52a70/0x1421745e0.c"
+  ],
+  "findings": [
+    "World and FortGameSession must exist; virtual +0x6a0 matches AGameMode::GetNumPlayers and +0x6b8 matches HasMatchStarted by body comparison with UE 4.25. It clears and resets timer handles at +0xb90,+0xdc0,+0xba0, invokes EndMatch when HasMatchEnded is false (+0x818 and +0x828), and schedules weak callback 0x141936b50 via SetTimerForNextTick. Callback invokes shared 0x1419602e0.",
+    "AFortGameModeAthena EndMatch override +0x828 resolves to 0x14198e1b0, 235-line capture; the dynamic contract must be preserved.",
+    "Restart delegate vtable 0x145e062a0 +0x48 targets 0x141940c00: it dynamically invokes FortGameSession virtual +0x6b8 if present and returns false. AFortGameSessionDedicatedAthena target 0x1421745e0 is a full restart implementation; base target 0x1421742d0 dispatches another virtual."
+  ],
+  "blockers": [
+    "Recover session Restart dynamic virtual declaration and dedicated/base override contracts, restart helper global delay setting and mode +0xc58 dynamic contract; orphan path also needs named timer handles. Trace session 0x1421745e0 callees and original timer writes."
+  ]
+}

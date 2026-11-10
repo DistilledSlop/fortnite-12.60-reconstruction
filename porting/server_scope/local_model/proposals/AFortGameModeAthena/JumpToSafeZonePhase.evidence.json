@@ -1,0 +1,47 @@
+{
+  "function": "AFortGameModeAthena::JumpToSafeZonePhase",
+  "status": "blocked",
+  "exec": "0x1428f0420",
+  "body": "0x141950090",
+  "source": "checkout/porting/generated/decomp_improved/AFortGameModeAthena/JumpToSafeZonePhase.c",
+  "prior_partial": "checkout/porting/behavior/gamemode_broad69_runtime/inline_rough.cpp",
+  "reflection_flags": "0x4020403",
+  "facts": [
+    "Casts game state and accepts unsigned byte GamePhase minus 2 less than 3. Phase 2 writes result of 0x14193af00 to game mode +0xd78 and calls 0x14196b640(this,1); phase 3 walks state entries from count at +0x1ee8 backwards using 0x141990d90 and invokes 0x143f6c200(entry,0,1).",
+    "0x14196b640 is StartAircraftPhase per native diagnostic strings; 608-line capture includes spawning aircraft, delegate registration, and further behavior.",
+    "After 0x141971930(this,0,1), enumerates weak player controllers; excludes controllers with Pawn and certain player states +0x12ec; calls 0x14470a4e0, virtual +0x778, then traverses dynamic mutator-like iterator, calling virtual +0x728.",
+    "0x1419bb7e0 takes the iterator pointer and clears current virtual +0x6b8 before freeing both arrays; cannot omit cleanup."
+  ],
+  "blockers": [
+    "Original types/field identities and source declarations for +0xd78, state +0x1ee8, and player state +0x12ec remain unresolved.",
+    "StartAircraftPhase 0x14196b640, safe-zone helper 0x141971930, 0x14470a4e0 and virtual slots +0x778/+0x728 require complete contracts and original override resolution; iterator constructor/advance/destructor 0x1419b90a0/0x1419f3d90/0x1419bb7e0 is not implemented."
+  ],
+  "next_steps": [
+    "Trace StartAircraftPhase and helper callees against original wrappers and reflection, recover state fields and dynamic virtual slots, then implement iterator including lifecycle and each helper before drafting whole body."
+  ],
+  "capture_dir": "captures/781712b4164345b7bb5860d9cbd546e5/",
+  "verification": "Original capture and reflection inspection only; no build or runtime verification.",
+  "class_resolution": {
+    "0x142a82010": "AFortPlayerPawnAthena",
+    "0x142a8ae70": "AFortPlayerStateAthena"
+  },
+  "reflected_fields": {
+    "AFortGameStateAthena+0x1cb0": "GamePhase, enum",
+    "AFortGameModeAthena+0xfe0": "SafeZonePhase, int32",
+    "AFortGameModeAthena+0xfe8": "SafeZoneIndicator",
+    "AController+0x220": "PlayerState",
+    "AController+0x248": "Pawn",
+    "UFortPlaylistAthena+0x8c1": "bWarmUpInStorm, byte load; reflection mask 1",
+    "AFortPlayerPawn+0x1220": "bIsInAnyStorm mask 1, bIsInsideSafeZone mask 2"
+  },
+  "mutator_iterator_findings": {
+    "constructor": "0x1419b90a0",
+    "advance": "0x1419f3d90",
+    "advance_owner": "0x1419f3bf0",
+    "current_class": "AFortAthenaMutator, static class 0x1427dc340",
+    "optional_context": "UFortMutatorContext, static class 0x1429f87b0",
+    "active_filter": "0x1420e5530 tests AFortGameplayMutator bMutatorActiveInternal or bMutatorActive; see work/dependencies/terra-br-safe-zone/IsMutatorActive.inc",
+    "notes": "Advance clears previous mutator context via virtual byte offset 0x6b8 and sets context for next valid entry; owner advancement resolves an interface or component and copies its mutator array. Virtual contracts remain unresolved.",
+    "capture": "captures/a927ea33acb94a61bf1ac7bce476aaeb/0x1419f3bf0.c"
+  }
+}

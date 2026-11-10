@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameModeAthena::EnableGameplayMutator",
+ "status": "blocked",
+ "blocker": "Setter 0x1420ee180 calls virtual activation/deactivation hooks +0x658/+0x660; signatures and derived implementations remain unresolved.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-br-01",
+ "batch_seconds": 958
+}

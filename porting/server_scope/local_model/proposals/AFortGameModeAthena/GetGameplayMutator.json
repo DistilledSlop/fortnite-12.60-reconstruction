@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameModeAthena::GetGameplayMutator",
+ "status": "proposed",
+ "blocker": null,
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-br-01",
+ "batch_seconds": 958
+}

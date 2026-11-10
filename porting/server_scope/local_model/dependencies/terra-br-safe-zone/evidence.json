@@ -1,0 +1,49 @@
+{
+  "dependencies": [
+    {
+      "name": "AFortPlayerPawn::SetIsInAnyStorm (working name)",
+      "address": "0x14234d960",
+      "signature": "void SetIsInAnyStorm(bool bNewIsInAnyStorm)",
+      "inc": "SetIsInAnyStorm.inc",
+      "evidence": [
+        "captures/781712b4164345b7bb5860d9cbd546e5/0x14234d960.c",
+        "captures/0c5402ab485d4edeae528a5af94d21dd/0x14233c4e0.c",
+        "checkout/porting/generated/decomp_improved/AFortPlayerPawn/OnRep_IsInAnyStorm.c"
+      ],
+      "proof": "Role +0xf0 is reflected AActor Role and enum authority is 3. AFortPlayerPawn +0x1220 bit 1 is bIsInAnyStorm. Original target 0x14233c4e0 matches reflected OnRep_IsInAnyStorm exec body. Caller passes normalized boolean.",
+      "limitations": [
+        "Working name and bool signature inferred from call and field, not reflected.",
+        "OnRep_IsInAnyStorm is currently a source stub; this proposal alone does not implement its effects."
+      ]
+    },
+    {
+      "name": "AFortSafeZoneIndicator::IsPointInsideIndicator (working name)",
+      "address": "0x141a4a920",
+      "signature": "bool IsPointInsideIndicator(const FVector& Position) const",
+      "inc": "IsPointInsideIndicator.inc",
+      "evidence": [
+        "captures/0c5402ab485d4edeae528a5af94d21dd/0x141a4a920.c",
+        "captures/0c5402ab485d4edeae528a5af94d21dd/0x141a4a920.asm"
+      ],
+      "proof": "Reflected +0x39c Radius, +0x3a0 SafeZoneMesh. Assembly loads component world translation +0x1d0, subtracts position, computes Y squared plus X squared and returns radius squared >= sum (including unordered false). GetComponentLocation returns world transform translation in engine source. No null guard in original.",
+      "limitations": [
+        "Working name, const signature inferred; field-offset proof for component transform +0x1d0 requires independent layout verification before integration."
+      ]
+    },
+    {
+      "name": "AFortGameplayMutator::IsMutatorActive (working name)",
+      "address": "0x1420e5530",
+      "signature": "bool IsMutatorActive() const",
+      "inc": "IsMutatorActive.inc",
+      "evidence": [
+        "captures/a927ea33acb94a61bf1ac7bce476aaeb/0x1420e5530.c",
+        "captures/781712b4164345b7bb5860d9cbd546e5/0x1419f3d90.c"
+      ],
+      "proof": "Reflection identifies AFortGameplayMutator +0x248 mask 1 bMutatorActiveInternal and +0x220 mask 1 bMutatorActive; original ORs the two tests in this order. The iterator 0x1419f3d90 calls it when its active-only byte is set.",
+      "limitations": [
+        "Name, declaring class and constness are inferred; identify any matching native declaration before integration."
+      ]
+    }
+  ],
+  "verification": "Evidence and source inspection; no compilation or runtime validation."
+}

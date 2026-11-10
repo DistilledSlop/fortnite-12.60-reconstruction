@@ -1,0 +1,15 @@
+{
+  "shared_helper": "0x1419602e0",
+  "weak_next_tick_callback": "0x141936b50",
+  "ticker": "0x142c976d0",
+  "random_delay_global": "0x1478c25c8",
+  "virtual_slots": {
+    "0x6a0": "GetNumPlayers (UE body match)",
+    "0x6b8": "HasMatchStarted (UE body match)",
+    "0x818": "HasMatchEnded (UE body match)",
+    "0x828": "EndMatch; Athena override 0x14198e1b0",
+    "0xc58": "unresolved; Athena target 0x141eb41a0"
+  },
+  "remaining": "Recover restart virtual signatures and implementations, random delay global, and mode +0xc58 dynamic implementations; preserve Athena EndMatch override.",
+  "ticker_callback": "0x141940c00 invokes FortGameSession virtual +0x6b8 and returns false; AFortGameSessionDedicatedAthena target 0x1421745e0 executes restart, AFortGameSession target 0x1421742d0 forwards to virtual +0x7f8"
+}

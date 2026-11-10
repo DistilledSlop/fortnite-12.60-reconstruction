@@ -1,0 +1,14 @@
+{
+  "function": "AFortGameModeAthena::HandleAllPlaylistLevelsVisible",
+  "signature": "void HandleAllPlaylistLevelsVisible()",
+  "status": "proposed",
+  "original": "0x1428f03e0",
+  "capture": "captures/fa46180bdc51406eacd7479251a620e6/0x1428f03e0.c",
+  "dependency_proposal": "work/dependencies/playlist_visibility.json",
+  "control_flow": "GetWorld; obtain World GameState and cast to Athena; remove this from native no-argument all-levels-visible delegate; retain volume manager; short-circuit startup, creative predicate, loading count, then clear startup bit. Preserve evaluation order.",
+  "delegate_identification": "0x14290d870 broadcasts state+0x610 once all additional levels are shown; 0x140690620 removes matching owner delegate instances and compacts, including during broadcast. Proposed field name is descriptive.",
+  "risks": [
+    "Requires integration of shared native delegate, shared loading counter and proposed accessors; no checkout changes or build performed.",
+    "GetWorld and UWorld::GetGameState must retain original direct world state semantics; validate in target UE integration."
+  ]
+}

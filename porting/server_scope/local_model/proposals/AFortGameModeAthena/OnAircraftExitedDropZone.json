@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameModeAthena::OnAircraftExitedDropZone",
+ "status": "blocked",
+ "blocker": "Unresolved aircraft index interface, controller and service virtual contracts and complete safe-zone transition helpers 0x141971aa0/0x141971930; see evidence for captures and next steps.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-br-01",
+ "batch_seconds": 958
+}

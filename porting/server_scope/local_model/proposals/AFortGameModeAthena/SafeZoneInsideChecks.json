@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameModeAthena::SafeZoneInsideChecks",
+ "status": "blocked",
+ "blocker": "Unresolved actor iteration and dynamic shape/mutator contracts; 0x1419622e0 timer and pawn side effects lack implementation.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-br-01",
+ "batch_seconds": 958
+}

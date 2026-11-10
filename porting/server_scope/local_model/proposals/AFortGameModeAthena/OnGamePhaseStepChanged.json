@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameModeAthena::OnGamePhaseStepChanged",
+ "status": "blocked",
+ "blocker": "Spawn helper 0x141967e60, controller virtual +0x14d8 and quest aggregate contract remain unresolved; see evidence for captures and next steps.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-br-01",
+ "batch_seconds": 958
+}

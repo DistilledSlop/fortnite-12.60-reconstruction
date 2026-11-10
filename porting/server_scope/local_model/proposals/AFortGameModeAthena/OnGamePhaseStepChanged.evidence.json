@@ -1,0 +1,20 @@
+{
+  "native": "0x141953840",
+  "exec": "0x1428f0670",
+  "capture": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/gamemode-broad69/0x141953840.c",
+  "additional_captures": [
+    "captures/8be8441e11944a53ae5ba9ed162d99e9/0x141967e60.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native105-impl/0x142442c50.c"
+  ],
+  "findings": [
+    "Interface object must cast to Athena game state. Iterate SpawnActorDataList (+0x1378, stride 0x20); for source +0x48 == 1 and phase step 7, compare current mode GameState SafeZonePhase byte +0x1eb9 converted to float with scalable float at source +0x50, then call 0x141967e60 on entry.",
+    "For phase step 7 or 8 store interface game state virtual +0x630 float result in unreflected mode +0xa38; on 7 iterate AlivePlayers and virtual +0x1bd0 with argument 2, then call quest helper 0x142442c50 and player virtual +0x14d8.",
+    "The Athena +0x1bd0 selector is already present as virtual NativeGetQuestManager1423850c0 (quest_dispatch89_runtime); +0x14d8 and call ABI remain unproven. 0x142442c50 handles gameplay-tag containers."
+  ],
+  "blockers": [
+    "The full spawn helper 0x141967e60 is large, creates or manipulates actors and depends on multiple unresolved contracts.",
+    "Player virtual +0x14d8 arguments and semantics, quest helper aggregate outputs and mode +0xa38 source member require original disassembly and dynamic implementer resolution."
+  ],
+  "next_step": "Resolve spawn data type and 0x141967e60 helper; disassemble call sites and controller hierarchy for virtual +0x14d8 and helper aggregate types, then port complete callback.",
+  "verification": "Static inspection only; no build or runtime tests."
+}

@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameModeAthena::OnEndGameKickPlayers",
+ "status": "blocked",
+ "blocker": "Recover session Restart virtual and dedicated override, restart delay configuration and mode virtual +0xc58 contract.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "terra-br-01",
+ "batch_seconds": 958
+}

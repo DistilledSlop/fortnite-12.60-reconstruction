@@ -1,0 +1,20 @@
+{
+  "exec": "0x1428f0650",
+  "body": "0x141952db0",
+  "captures": [
+    "captures/fa46180bdc51406eacd7479251a620e6/0x1428f0650.c",
+    "captures/2bdc823f458840e0992165e7c1101dec/0x141952db0.asm",
+    "captures/2bdc823f458840e0992165e7c1101dec/0x144481890.c",
+    "captures/9baa4b62ac0744c0971f5606a2ac1b0a/0x1419602e0.c",
+    "captures/6ef36e1146d04150b67a0ea6afbcf692/0x141940c00.c",
+    "captures/c878fe0b9bbb4c708ae43de47af52a70/0x1421745e0.c"
+  ],
+  "findings": [
+    "FortGameSession at +0x3d8 gates the body; world player-controller weak iterator filters AFortPlayerControllerAthena. Assembly proves each controller is passed to both predicate 0x144481860 and event 0x142a3bcb0. Predicate matches UE APlayerController::IsPrimaryPlayer and event is ClientEndGameKick (name requires event mapping verification).",
+    "After iteration calls restart helper 0x1419602e0. This calls virtual +0xc58 and schedules a weak-bound delegate on ticker 0x142c976d0, with randomized delay from 5 to max(5, global 0x1478c25c8).",
+    "Restart delegate vtable 0x145e062a0 +0x48 targets 0x141940c00: it dynamically invokes FortGameSession virtual +0x6b8 if present and returns false. AFortGameSessionDedicatedAthena target 0x1421745e0 is a full restart implementation; base target 0x1421742d0 dispatches another virtual."
+  ],
+  "blockers": [
+    "Recover session Restart dynamic virtual declaration and dedicated/base override contracts, restart helper global delay setting and mode +0xc58 dynamic contract; orphan path also needs named timer handles. Trace session 0x1421745e0 callees and original timer writes."
+  ]
+}
