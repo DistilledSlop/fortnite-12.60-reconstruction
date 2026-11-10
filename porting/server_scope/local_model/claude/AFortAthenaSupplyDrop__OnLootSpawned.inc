@@ -12,7 +12,7 @@ if (World == nullptr)
 {
     return;
 }
-AFortGameStateAthena* GameState = GetFortGameStateAthena(World);
+AFortGameStateAthena* GameState = Cast<AFortGameStateAthena>(World->GameState);
 if (GameState == nullptr || GameState->SpecialActorRegistry == nullptr)
 {
     return;
