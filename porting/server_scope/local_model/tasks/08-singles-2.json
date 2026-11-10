@@ -1,0 +1,14 @@
+{
+ "owner": "terra-9",
+ "functions": [
+  "ABuildingSMActor::CancelAutoBuild",
+  "ABuildingSMActor::MarkConnectedBuildingsForStructuralIntegrityCheck",
+  "AFortAthenaAIBotController::StopEmote",
+  "AFortAthenaLocalGameplayBehavior::FinishExecute",
+  "AFortAthenaMutator_DadBro::StartNextSafeZonePhase",
+  "AFortCreativeTimerObjective::BroadcastUpdateToHUD",
+  "AFortDecoTool::OnUnEquip"
+ ],
+ "brief": "Cluster: assorted functions a small local model could not finish. Each blocker is in /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/server_scope/local_model/proposals/<Class>/<Fn>.json with its evidence beside it; treat those as leads. Resolve the named gaps (non-reflected members, containers, helpers, virtuals) yourself and finish each function.",
+ "effort": "medium"
+}

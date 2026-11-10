@@ -1,0 +1,9 @@
+{
+ "owner": "terra-5",
+ "functions": [
+  "AFortGameStateZone::ApplyPlayerAbilityRestriction",
+  "AFortGameStateZone::RemovePlayerAbilityRestriction"
+ ],
+ "brief": "Cluster: counted gameplay-tag state on AFortGameStateZone. Established: the original update routine 0x140744d30 is the UE 4.25 FGameplayTagCountContainer::UpdateTagMap_Internal (explicit tags with the 'not explicitly in the container' warning, per-parent counts, and OnAnyTagChange plus per-tag delegates broadcast INLINE inside the loop); the engine in /opt/fortnite/UnrealEngine is the later variant that gathers delegates first, so a faithful inline container or compatibility helper is needed. Apply/RemovePlayerAbilityRestriction (0x14292a6b0, 0x14292ca10) use a counted tag container at this+0x780 (explicit container at +0x888, replicated copy at reflected +0x8a8 ExplicitGloballyBlockedAbilityTags), two non-reflected multicast delegates at +0x710 and +0x728, the singleton tag Gameplay.Action.RestrictedAbility (constructor 0x141ebb310 line 1457, member +0x788), and 0x141ea5f80 which tests the tag and fires +0x710 or +0x728. See work/terra-1/zone_restrictions_evidence.json and work/dependencies/native-gameplay-tags/evidence.json.\nGoal: declare the missing members and delegates faithfully, provide the inline tag-count container helper, then finish both functions.",
+ "effort": "medium"
+}

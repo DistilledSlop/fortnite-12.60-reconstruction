@@ -1,0 +1,14 @@
+{
+ "owner": "terra-8",
+ "functions": [
+  "ABuildingActor::Resave",
+  "ABuildingMusicSequencer::ResetHitActors",
+  "ABuildingProp_CaptureItemSpawner::UnregisterSpecialActor",
+  "ABuildingProp_CreatureManager::LoadSkeletalMeshDisplayOption",
+  "ABuildingProp_CreaturePlacer::UpdateCreatureVisuals",
+  "ABuildingProp_LockDevice::HandleMinigameEnded",
+  "ABuildingProp_LockDevice::HandleMinigameStarted"
+ ],
+ "brief": "Cluster: assorted functions a small local model could not finish. Each blocker is in /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/server_scope/local_model/proposals/<Class>/<Fn>.json with its evidence beside it; treat those as leads. Resolve the named gaps (non-reflected members, containers, helpers, virtuals) yourself and finish each function.",
+ "effort": "medium"
+}

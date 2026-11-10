@@ -116,15 +116,17 @@ def harvest(keys, wd, secs, tag):
             sh(PROG + ['release', '--owner', OWNER + '-' + tag, '--function', k, '--reason', 'run ended before this function was recorded'])
     return saved
 
-def commit(saved, tag):
+def commit(saved, tag, trailer=''):
     if not saved: return
-    sh(['git', 'add', 'porting/server_scope/local_model/proposals'], cwd=REPO)
+    paths = ['porting/server_scope/local_model/proposals', 'porting/server_scope/local_model/dependencies']
+    paths = [x for x in paths if os.path.exists(os.path.join(REPO, x))]
+    sh(['git', 'add'] + paths, cwd=REPO)
     msg = (f"Save local-model proposals for {len(saved)} server-required functions ({tag})\n\n"
            "Unverified body proposals and blocker records produced by the local model; not yet promoted.\n\n"
-           "Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>\n")
+           "Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>\n" + trailer)
     env = dict(os.environ, GIT_AUTHOR_NAME='Claude Sonnet 5.5', GIT_AUTHOR_EMAIL='noreply@anthropic.com',
                GIT_COMMITTER_NAME='Claude Sonnet 5.5', GIT_COMMITTER_EMAIL='noreply@anthropic.com')
-    r = sh(['git', 'commit', '-m', msg, '--', 'porting/server_scope/local_model/proposals'], cwd=REPO, env=env)
+    r = sh(['git', 'commit', '-m', msg, '--'] + paths, cwd=REPO, env=env)
     if r.returncode == 0:
         sh(['git', 'pull', '--rebase', '--autostash', 'origin', 'main'], cwd=REPO)
         sh(['git', 'push', 'origin', 'main'], cwd=REPO)

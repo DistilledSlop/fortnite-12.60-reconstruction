@@ -1,0 +1,26 @@
+{
+ "owner": "terra-7",
+ "functions": [
+  "AFortCreativeMoveTool::HandleClearMultiSelectQueuePressed",
+  "AFortCreativeMoveTool::HandleCopyPickupPressed",
+  "AFortCreativeMoveTool::HandleDropToFloorPressed",
+  "AFortCreativeMoveTool::HandleExitHeldDownLongEnough",
+  "AFortCreativeMoveTool::HandleExitPressed",
+  "AFortCreativeMoveTool::HandleExitReleased",
+  "AFortCreativeMoveTool::HandleHitTraceRuleHeldDownLongEnough",
+  "AFortCreativeMoveTool::HandleHitTraceRulePressed",
+  "AFortCreativeMoveTool::HandlePrecisionModePressed",
+  "AFortCreativeMoveTool::HandlePrecisionModeReleased",
+  "AFortCreativeMoveTool::HandleRotateClockwiseReleased",
+  "AFortCreativeMoveTool::HandleRotateCounterclockwisePressed",
+  "AFortCreativeMoveTool::HandleRotateCounterclockwiseReleased",
+  "AFortCreativeMoveTool::HandleRotateSingleClockwisePressed",
+  "AFortCreativeMoveTool::HandleRotateSingleClockwiseReleased",
+  "AFortCreativeMoveTool::HandleRotateSingleCounterclockwisePressed",
+  "AFortCreativeMoveTool::HandleRotateSwitchAxisPressed",
+  "AFortCreativeMoveTool::HandleScaleSwitchAxisPressed",
+  "AFortCreativeMoveTool::UnholsterWeapon"
+ ],
+ "brief": "Cluster: AFortCreativeMoveTool handlers. A small local model recorded these as blocked; the blocker text is in /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/server_scope/local_model/proposals/AFortCreativeMoveTool/<Fn>.json. They are the sibling handlers of the 06 task (press/release/held-down input handlers, rotate/scale/precision toggles, UnholsterWeapon); recover the shared members, virtual targets and helpers once and reuse them across the functions.",
+ "effort": "medium"
+}

@@ -1,0 +1,25 @@
+{
+ "owner": "terra-6",
+ "functions": [
+  "AFortCreativeMoveTool::HandlePullPressed",
+  "AFortCreativeMoveTool::HandlePushPressed",
+  "AFortCreativeMoveTool::HandleResetRotationPressed",
+  "AFortCreativeMoveTool::HandleResetScalePressed",
+  "AFortCreativeMoveTool::HandleRotateClockwisePressed",
+  "AFortCreativeMoveTool::HandleRotateSingleCounterclockwiseReleased",
+  "AFortCreativeMoveTool::HandleScaleDownPressed",
+  "AFortCreativeMoveTool::HandleScaleDownReleased",
+  "AFortCreativeMoveTool::HandleScaleUpPressed",
+  "AFortCreativeMoveTool::HandleScaleUpReleased",
+  "AFortCreativeMoveTool::MulticastHideCutActors",
+  "AFortCreativeMoveTool::MulticastRestoreCutActors",
+  "AFortCreativeMoveTool::PushCreativeMoveToolEquippedInputComponent",
+  "AFortCreativeMoveTool::ServerHandshakeFromClientForReceivingCutActors",
+  "AFortCreativeMoveTool::ServerResetScale",
+  "AFortCreativeRoundSettings::ClearResourcesGivenPerRound",
+  "AFortCreativeRoundSettings::ClearResourcesGivenToWinnersPerRound",
+  "AFortCustomizableAbilityDecoTool::ServerReleaseSecondaryFire"
+ ],
+ "brief": "Cluster: AFortCreativeMoveTool, AFortCreativeRoundSettings and AFortCustomizableAbilityDecoTool. A small local model recorded these as proposed but wrote the exec prologue and a vtable-slot tail call as raw pointer arithmetic, which AGENTS.md forbids, so the bodies are unusable and must be redone. Most are thin: the exec entry is the shared prologue followed by a tail call to a class virtual (for example HandlePullPressed 0x1428c2e20 -> slot 0xd70 = 0x1426754b0, which sets bIsPullPressed and issues the Server RPC ServerUpdateTractorBeam via helper 0x1428c05d0). Resolve each slot to its real target with porting/virtual_slots.py and the old model's evidence, identify the member or RPC it implements, and write the source-level body or the declared virtual it should call. Previous bodies are in /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/server_scope/local_model/proposals/<Class>/<Fn>.inc.",
+ "effort": "medium"
+}

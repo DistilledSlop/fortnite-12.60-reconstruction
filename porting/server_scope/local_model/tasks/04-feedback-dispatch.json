@@ -1,0 +1,9 @@
+{
+ "owner": "terra-4",
+ "functions": [
+  "AFortPawn::LaunchCharacterJump",
+  "AFortPawn::TriggerFeedbackEvent"
+ ],
+ "brief": "Cluster: the pawn/controller feedback-event dispatcher. Established: LaunchCharacterJump (0x142a1ce40, body 0x142332c40) reads (FVector LaunchVelocity, bXYOverride, bZOverride, bIgnoreFallDamage, bPlayFeedbackEvent); if bPlayFeedbackEvent and the controller is an AFortPlayerController it calls helper 0x1423bd2b0(controller, FName event from global 0x148157ed8 (initializer 0x14031e260, literal LaunchInAir), this, nullptr, -1.0f); if bIgnoreFallDamage it sets bIgnoreNextFallingDamage (this+0x520 mask 4); then it calls the virtual ACharacter::LaunchCharacter (+0x7c8). Helper 0x1423bd2b0: feedback = 0x1424ab210(controller) where that is Cast<UFortGameInstance>(Obj->GetWorld()->GameInstance)->member at +0x3a8 (non-reflected); dispatches only if controller bHasInitiallySpawned (+0x658 mask 8) or the event equals the FName in global 0x14815b498; calls dispatcher 0x1424c21f0(feedback, request{0, event, 0x50000}, instigator, recipient, delay, 1, 1), 150 lines with a TMap lookup and cooldown timing. AFortPawn::TriggerFeedbackEvent (0x142356fc0) calls the same dispatcher without the gate; whether the two are equivalent is unproven.\nGoal: recover the feedback subsystem class and member at UFortGameInstance+0x3a8, the lookup, the dispatcher and what it needs as real declarations and bodies; then finish LaunchCharacterJump and TriggerFeedbackEvent.",
+ "effort": "medium"
+}
