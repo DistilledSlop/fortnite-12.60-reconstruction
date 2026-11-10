@@ -1,0 +1,16 @@
+{
+ "owner": "terra-br-01",
+ "functions": [
+  "AFortGameModeAthena::JumpToSafeZonePhase",
+  "AFortGameModeAthena::OnGamePhaseStepChanged",
+  "AFortGameModeAthena::SafeZoneInsideChecks",
+  "AFortGameModeAthena::OnEndGameKickPlayers",
+  "AFortGameModeAthena::OnCheckForOrphanedServer",
+  "AFortGameModeAthena::OnAircraftExitedDropZone",
+  "AFortGameModeAthena::HandleAllPlaylistLevelsVisible",
+  "AFortGameModeAthena::EnableGameplayMutator",
+  "AFortGameModeAthena::GetGameplayMutator",
+  "AFortGameModeAthena::GetMutatorByClass"
+ ],
+ "brief": "Goal: recover each whole function so a dedicated server for the original 12.60 client can run battle royale (lobby to bus to storm to win). Go as deep as it takes: follow callees, identify and name helpers, members and virtual slots, recover and propose dependencies yourself, and keep going until each function has a complete, faithful body. Unnamed callees and unreflected members are things for you to resolve from the decompile and captures, not reasons to stop; blocked is an absolute last resort. Hints from the earlier inventory (porting/server_authority_inventory.md, partial, may be wrong): JumpToSafeZonePhase exec 0x1428f0420 tail-jumps to 0x141950090; OnGamePhaseStepChanged body 0x141953840; OnAircraftExitedDropZone body 0x141952190 (OnAircraftEnteredDropZone 0x1419520f0 and OnAircraftFlightEnded 0x141952500 are sibling non-reflected game-mode members: port them as dependencies); SafeZoneInsideChecks decompile exists in the generated decomp_improved tree. Also find which GameState members (SafeZonePhase, GamePhase, GamePhaseStep) the game mode writes and who advances them."
+}
