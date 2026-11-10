@@ -5,6 +5,7 @@ Inputs (read-only): content refs from scan_content_refs.py, engine_parents.json 
 porting/generated/reflection/{native_funcs,class_checksums}.json, progress/native_functions_inscope.json,
 behavior/MANIFEST.json. Output: server_scope.json (summary) and functions.jsonl (one row per function).
 Usage: python3 -I classify.py REFS.jsonl ENGINE_PARENTS.json OUT_DIR [--edges EDGES.json] [--no-prune]
+With --data-refs (from data_refs.py) undetermined functions that nothing references become N5/N6.
 With --edges (from callgraph.py) functions directly called, through helpers, from a required body become R5.
 """
 import collections, json, os, sys
@@ -147,6 +148,36 @@ if '--edges' in sys.argv:
         if len(names) == 1:   # shared stubs serve many functions and prove nothing about one of them
             reach5.update(names)
 
+bp_any = collections.defaultdict(set)   # functions called from Blueprint bytecode anywhere in the game
+for r in P.values():
+    for mod, cls, fn in r['nat']:
+        bp_any[cls].add(fn)
+refs_checked = {}
+if '--edges' in sys.argv and '--data-refs' in sys.argv:
+    data_refs = {int(k, 16): v for k, v in json.load(open(sys.argv[sys.argv.index('--data-refs') + 1])).items()}
+    own = collections.defaultdict(lambda: ([], set()))   # (cls, fn) -> (addresses, own thunk)
+    for r in thunks:
+        k = (r['cls'], r['fn'])
+        addrs = [int(r['thunk'], 16)] + [int(y, 16) for y in (r.get('real_bodies') or []) if isinstance(y, str)]
+        own[k][0].extend(addrs); own[k][1].add(int(r['thunk'], 16))
+    callers = collections.defaultdict(set)
+    for a, b in edges:
+        callers[b].add(a)
+    for k, (addrs, th) in own.items():
+        native_caller = any(c not in th for a in set(addrs) for c in callers.get(a, ()))
+        in_data = any(data_refs.get(a, 0) >= (2 if a in th else 1) for a in set(addrs))
+        shared = any(len(body.get(a, ())) > 1 for a in set(addrs) if a not in th)
+        refs_checked[k] = (native_caller, in_data, shared)
+
+EVENT_PREFIXES = ('On', 'Handle', 'Notify', 'Event', 'Callback', 'Trigger', 'Received')
+
+
+def plain(fn, flags):
+    """A function a native caller would call directly. Events and delegate handlers are reached by name through
+    ProcessEvent, which leaves no reference to the body, so they are never judged unreferenced."""
+    return bool(flags & FLAG['BlueprintCallable']) and not (flags & FLAG['BlueprintEvent']) and not fn.startswith(EVENT_PREFIXES)
+
+
 rows, tally = [], collections.Counter()
 for cls, fns in inscope.items():
     co = client_only_class(cls)
@@ -174,12 +205,20 @@ for cls, fns in inscope.items():
             tier, why = 'L2', 'Multicast on a class the server instantiates: runs on the server when it calls it'
         elif (cls, fn) in reach5:
             tier, why = 'R5', 'directly called, through helpers, from the body of a required function'
+        elif (cls, fn) in refs_checked and not refs_checked[(cls, fn)][0] and not refs_checked[(cls, fn)][1] \
+                and not refs_checked[(cls, fn)][2] and not (flags & (FLAG['NetServer'] | FLAG['NetMulticast'])) and plain(fn, flags) \
+                and fn not in bp_any.get(cls[1:], set()):
+            tier, why = 'P1', 'nothing references it: no Blueprint calls it, no native caller, no vtable or data pointer (inlined calls would be invisible)'
+        elif (cls, fn) in refs_checked and not refs_checked[(cls, fn)][0] and not refs_checked[(cls, fn)][1] \
+                and not refs_checked[(cls, fn)][2] and not (flags & (FLAG['NetServer'] | FLAG['NetMulticast'])) and plain(fn, flags):
+            tier, why = 'P2', 'only Blueprints the server does not load call it; no native caller or pointer (inlined calls would be invisible)'
         elif inst:
             tier, why = 'U1', 'class instantiated by server content; no direct evidence for this function'
         else:
             tier, why = 'U2', 'class not referenced by any server-closure content'
         tally[tier] += 1
-        rows.append(dict(c=cls, f=fn, t=tier, p=(cls, fn) in ported, fl=sorted(fl)))
+        rc = refs_checked.get((cls, fn))
+        rows.append(dict(c=cls, f=fn, t=tier, p=(cls, fn) in ported, fl=sorted(fl), **({'nc': rc[0], 'dp': rc[1], 'sh': rc[2]} if rc else {})))
 
 os.makedirs(out_dir, exist_ok=True)
 with open(os.path.join(out_dir, 'functions.jsonl'), 'w') as w:

@@ -16,8 +16,12 @@ dedicated server for the unmodified original client needs it. Read-only analysis
 | N2 | Not required | `Client` RPC: the body runs on the owning client; the server only sends |
 | N3 | Not required | Declared `BlueprintCosmetic`: not run on dedicated servers |
 | N4 | Not required | `OnRep_*` RepNotify, unless server code calls it directly (those become R5) |
+| P1 | Probably not required | A plain callable function that no Blueprint anywhere calls, no native code calls, and no vtable or data table points to |
+| P2 | Probably not required | As P1, but called only from Blueprints the server does not load |
 | U1 | Undetermined | Class is instantiated by server content, but nothing shows this function is used |
 | U2 | Undetermined | No server-closure content references the class. It may still be spawned from native code |
+
+P1 and P2 are weaker than N1-N4. Calls inlined by the compiler leave no reference, so absence of a reference is evidence, not proof. Events and delegate handlers (`BlueprintEvent`, names starting `On`, `Handle`, `Notify`, `Event`, `Callback`, `Trigger`, `Received`) are never judged unreferenced, because ProcessEvent reaches them by name.
 
 Undetermined means undetermined, not unneeded. Static analysis cannot close it: most dispatch in this binary is virtual
 or goes through `ProcessEvent`, so the direct-call graph adds only dozens of functions (R5). The definitive method is
@@ -30,7 +34,8 @@ python3 -I porting/server_scope/scan_content_refs.py /mnt/vibrato/fortnite-extra
 python3 -I porting/server_scope/engine_parents.py /opt/fortnite/UnrealEngine engine_parents.json
 objdump -d -M intel --no-show-raw-insn porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe > full.asm
 python3 -I porting/server_scope/callgraph.py porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe edges.json full.asm extra.json
-python3 -I porting/server_scope/classify.py refs.jsonl engine_parents.json porting/server_scope --edges edges.json
+python3 -I porting/server_scope/data_refs.py porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe porting/generated/thunk-table/final3.json data_refs.json
+python3 -I porting/server_scope/classify.py refs.jsonl engine_parents.json porting/server_scope --edges edges.json --data-refs data_refs.json
 ```
 
 `extra.json` is the list of thunk and body addresses from `generated/thunk-table/final3.json`. Outputs:
@@ -43,4 +48,5 @@ function: class, name, tier, ported, UFunction flags).
 - Pruning rules (`PRUNE_PATHS`) drop effects, sound, HUD and UI packages from the closure; `--no-prune` changes R1 by about 30.
 - `.pdata` end addresses in the dump are unreliable, so a function extends to the next function start.
 - R5 ignores shared stubs (one body serving several functions) and helpers called from 300 or more places.
+- Tried and rejected: counting callers of each class's `StaticClass()`. Live and dead classes overlap too much (about a third of known-live classes look unreferenced), so it was not used.
 - Native-only spawns (no content reference) are invisible to the content evidence and land in U2.
