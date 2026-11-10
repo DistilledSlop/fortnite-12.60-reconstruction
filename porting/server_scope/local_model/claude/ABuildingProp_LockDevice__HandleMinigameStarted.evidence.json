@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingProp_LockDevice::HandleMinigameStarted",
+  "status": "proposed",
+  "original": "0x14274ff80",
+  "signature": "void ABuildingProp_LockDevice::HandleMinigameStarted()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x14274ff80.c",
+    "/opt/fortnite/local-model-package/captures/c1270b40197649e4ad20672b602c0ed7/0x1444b6c20.c",
+    "/opt/fortnite/local-model-package/captures/4e2dd9c864d240bca332afd2e22cff82/0x144438b00.c"
+  ],
+  "callees": {
+    "0x1444b6c20": "UStaticMeshComponent virtual slot 0x800 target (see HandleMinigameEnded, LOW call-shape name)",
+    "0x144438b00": "predicate used by 0x1444b6c20"
+  },
+  "notes": "Same StaticMeshComponent (+0x768) and flag (+0xB98) as HandleMinigameEnded. The Started path passes only the channel, so the response uses the virtual's default.",
+  "confidence": "MEDIUM"
+}

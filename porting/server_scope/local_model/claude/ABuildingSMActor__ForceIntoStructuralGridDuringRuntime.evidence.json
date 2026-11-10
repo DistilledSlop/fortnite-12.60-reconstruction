@@ -1,0 +1,15 @@
+{
+  "function": "ABuildingSMActor::ForceIntoStructuralGridDuringRuntime",
+  "status": "proposed",
+  "original": "0x142725810",
+  "signature": "void ABuildingSMActor::ForceIntoStructuralGridDuringRuntime()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142725810.c",
+    "/opt/fortnite/local-model-package/captures/cb24826448ae472baa5a36e8d04d7bc6/0x141c05a50.c"
+  ],
+  "callees": {
+    "0x141c05a50": "native ForceIntoStructuralGridDuringRuntime (virtual slot 0xa58, owner ABuildingAutoNav, 123 lines). Sets the already-forced guard bit (0x6AC & 0x10) on entry, then registers the actor with the structural grid through the grid object at this+0xA50 (virtual 0xcb8) unless the actor is being edited"
+  },
+  "notes": "Exec thunk takes no parameters and forwards to the native virtual slot 0xa58. Only the guard and the grid registration call were traced in the 123-line native (LOW on the registration condition).",
+  "confidence": "MEDIUM"
+}

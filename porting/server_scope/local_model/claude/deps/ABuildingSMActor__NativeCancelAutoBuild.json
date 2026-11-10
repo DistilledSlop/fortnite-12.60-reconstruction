@@ -1,0 +1,11 @@
+{
+  "name": "ABuildingSMActor__NativeCancelAutoBuild",
+  "address": "0x141c00890",
+  "signature": "void ABuildingSMActor::NativeCancelAutoBuild()",
+  "inc_or_decl": "if (Role != ROLE_Authority) return; if (NetDormancy > DORM_Awake) FlushNetDormancy(); if (bAutoBuildInProgress) AutoBuildStep(0.0f);  // FlushNetDormancy = 0x143f72040, AutoBuildStep = slot 0xd90 -> 0x141c1b910 (LOW)",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/cb24826448ae472baa5a36e8d04d7bc6/0x141c00890.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x143f72040.c",
+    "/opt/fortnite/local-model-package/captures/ac6b1e5223d64265886eb6e0e31025cf/0x141c1b910.c"
+  ]
+}

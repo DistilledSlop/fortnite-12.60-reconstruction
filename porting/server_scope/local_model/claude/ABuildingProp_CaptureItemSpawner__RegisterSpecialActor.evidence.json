@@ -1,0 +1,38 @@
+{
+  "function": "ABuildingProp_CaptureItemSpawner::RegisterSpecialActor",
+  "status": "proposed",
+  "original": "0x14274bd20",
+  "signature": "void ABuildingProp_CaptureItemSpawner::RegisterSpecialActor(UObject* ItemDefinition)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14274bd20.c",
+    "/opt/fortnite/local-model-package/captures/547f13f8abf24622bd9830a15ad99fbe/0x141c18510.c",
+    "/opt/fortnite/local-model-package/captures/547f13f8abf24622bd9830a15ad99fbe/0x141641350.c",
+    "/opt/fortnite/local-model-package/captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f793a0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x142bafb80.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x142cd4ab0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x142ce9f90.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x141f573e0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x141f540c0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x14079cdf0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x1418e1bf0.c"
+  ],
+  "callees": {
+    "0x141c18510": "direct helper (called from the exec thunk, no virtual dispatch). Registration logic this body re-implements: authority/none checks, key build, record fill, registry add, store of the key",
+    "0x141641350": "GetFortGameStateAthena(World): returns world->GameState when it is an AFortGameStateAthena (class index check against AFortGameStateAthena_StaticClass), else null",
+    "0x143f793a0": "AActor::GetWorld, reached through virtual slot 0x150 on this (resolved to AActor::GetWorld via vtable_lookup, header name MEDIUM)",
+    "0x142bafb80": "FString::Printf-style formatter for the \"%s_%s\" key",
+    "0x142cd4ab0": "FName construction from a string; third argument 1 selects add-if-missing",
+    "0x142ce9f90": "FName-to-FString conversion for the item and actor names",
+    "0x141f573e0": "registry Add: returns the new entry index, or -1 when rejected (duplicate or None key)",
+    "0x141f540c0": "registry record constructor, run before fields are filled",
+    "0x14079cdf0": "copy of an item-definition array-like member into the record",
+    "0x1418e1bf0": "registry record destructor, releases the record's string and array members",
+    "FFrame_Step": "named engine helper: reads one bytecode parameter from the FFrame",
+    "FFrame_StepExplicitProperty": "named engine helper: reads one explicit property from the FFrame",
+    "FName_EqualsEName": "named engine helper: compares an FName index with an EName value",
+    "FMemory_Free": "named engine helper: frees heap memory",
+    "FMemory_Realloc": "named engine helper: allocates or reallocates heap memory"
+  },
+  "notes": "Exec thunk reads one object parameter (ItemDefinition, reflection offset 0). Registry is GameState+0x1200; record fields at ItemDefinition+0x440 (FName), +0x450, +0x4d8/+0x4dc, +0x4e0, +0x568/+0x56c are copied into the record but their member names are unresolved, so the record lines use placeholder names. Actor name is this->NamePrivate. Registry Add result compared with -1 as in the helper. Key format order (item first, then actor) follows the format arguments.",
+  "confidence": "MEDIUM"
+}

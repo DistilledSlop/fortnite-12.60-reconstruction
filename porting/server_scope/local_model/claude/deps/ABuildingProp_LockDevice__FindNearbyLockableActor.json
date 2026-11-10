@@ -1,0 +1,14 @@
+{
+  "name": "ABuildingProp_LockDevice__FindNearbyLockableActor",
+  "address": "0x141c05680",
+  "signature": "UObject* ABuildingProp_LockDevice::FindNearbyLockableActor()",
+  "inc_or_decl": "UWorld* World = GetWorld(); if (!World || !RootComponent) return nullptr; origin = RootComponent location; overlap = BoxOverlap(World, origin, extent) (0x1440d2440); for each candidate: if class implements LockableInterface (0x142d6a820 with 0x142b70a10) and candidate check (0x142b73930) passes, return candidate. Return nullptr otherwise. Extent and candidate check LOW.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/547f13f8abf24622bd9830a15ad99fbe/0x141c05680.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x142b70a10.c",
+    "/opt/fortnite/local-model-package/captures/1f574874d813496aa02bd3c684830fde/0x142d6a820.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x1440d2440.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x142b73930.c",
+    "/opt/fortnite/local-model-package/captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f793a0.c"
+  ]
+}

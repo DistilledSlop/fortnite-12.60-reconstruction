@@ -1,0 +1,10 @@
+{
+  "name": "ABuildingProp_CreaturePlacer__SoftObjectPathsEqual",
+  "address": "0x142ebdc30",
+  "signature": "bool ABuildingProp_CreaturePlacer::SoftObjectPathsEqual(const FSoftObjectPath& A, const FSoftObjectPath& B)",
+  "inc_or_decl": "Returns true when the FName parts are equal and the path strings compare equal (0x142bcf780). Captured and read.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/465bbf18db03476c92db52d72e5df711/0x142ebdc30.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x142bcf780.c"
+  ]
+}

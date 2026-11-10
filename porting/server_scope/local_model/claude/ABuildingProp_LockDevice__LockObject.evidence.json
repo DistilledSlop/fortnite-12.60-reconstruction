@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingProp_LockDevice::LockObject",
+  "status": "proposed",
+  "original": "0x1427502a0",
+  "signature": "void ABuildingProp_LockDevice::LockObject(UObject* ControllerInstigator)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427502a0.c",
+    "/opt/fortnite/local-model-package/captures/425061137ca14ff1a2fdbdb069422c84/0x1406801c0.c"
+  ],
+  "callees": {
+    "0x1406801c0": "Stub_Empty: bare-return no-op that virtual slot 0xec0 resolves to on ABuildingProp_LockDevice (captured and read: body is return only)",
+    "FFrame_Step": "named engine helper: reads one bytecode parameter from the FFrame",
+    "FFrame_StepExplicitProperty": "named engine helper: reads one explicit property from the FFrame"
+  },
+  "notes": "Thunk reads one object parameter (ControllerInstigator, reflection offset 0) and calls the virtual slot 0xec0 with it. The slot resolves to Stub_Empty.",
+  "confidence": "HIGH"
+}

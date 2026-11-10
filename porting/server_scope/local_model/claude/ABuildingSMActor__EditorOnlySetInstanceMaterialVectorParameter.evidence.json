@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingSMActor::EditorOnlySetInstanceMaterialVectorParameter",
+  "status": "proposed",
+  "original": "0x142755e00",
+  "signature": "void ABuildingSMActor::EditorOnlySetInstanceMaterialVectorParameter(const FLinearColor& Value, FName ParamName)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142755e00.c",
+    "/opt/fortnite/local-model-package/captures/425061137ca14ff1a2fdbdb069422c84/0x1406801c0.c"
+  ],
+  "callees": {
+    "0x1406801c0": "Stub_Empty: bare-return no-op that the thunk calls after reading both parameters (captured and read: body is return only)",
+    "FFrame_Step": "named engine helper: reads one bytecode parameter from the FFrame",
+    "FFrame_StepExplicitProperty": "named engine helper: reads one explicit property from the FFrame"
+  },
+  "notes": "Reflection: Value (struct, index 0, offset 8; struct type ref 0x142eeb4c0) and ParamName (FName, index 1, offset 0). The thunk reads the struct first and the name second, then copies both into temporaries before Stub_Empty. The editor-only material parameter write is not performed in this build.",
+  "confidence": "HIGH"
+}

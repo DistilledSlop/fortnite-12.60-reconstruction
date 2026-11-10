@@ -1,0 +1,20 @@
+{
+  "function": "ABuildingProp_CaptureItemSpawner::SendCaptureItemFeedbackEvent",
+  "status": "proposed",
+  "original": "0x14274beb0",
+  "signature": "void ABuildingProp_CaptureItemSpawner::SendCaptureItemFeedbackEvent(int32 Quantity, UObject* ItemDefinition, const FCaptureItemFeedbackEventParams& EventParams)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14274beb0.c",
+    "/opt/fortnite/local-model-package/captures/425061137ca14ff1a2fdbdb069422c84/0x1406801c0.c"
+  ],
+  "callees": {
+    "0x1406801c0": "Stub_Empty: bare-return no-op that the event dispatch calls at its end (captured and read: body is only return)",
+    "FFrame_Step": "named engine helper: reads one bytecode parameter from the FFrame",
+    "FFrame_StepExplicitProperty": "named engine helper: reads one explicit property from the FFrame",
+    "FName_EqualsEName": "named engine helper: compares an FName index with an EName value",
+    "FMemory_Free": "named engine helper: frees heap memory",
+    "FMemory_Realloc": "named engine helper: allocates or reallocates heap memory"
+  },
+  "notes": "Exec thunk reads Quantity (int), ItemDefinition (object) and EventParams (struct) in declaration order, matching reflection indices 0..2. The EventParams struct type (reflection type ref 0x142906090) is not resolved to a name. Temporary struct and array locals are destroyed by the thunk without side effects.",
+  "confidence": "HIGH"
+}

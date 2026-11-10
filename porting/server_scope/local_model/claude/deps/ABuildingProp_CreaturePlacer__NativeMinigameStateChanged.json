@@ -1,0 +1,9 @@
+{
+  "name": "ABuildingProp_CreaturePlacer__NativeMinigameStateChanged",
+  "address": "0x141c10360",
+  "signature": "void ABuildingProp_CreaturePlacer::NativeMinigameStateChanged(UObject* Minigame, uint8 NewMinigameState)",
+  "inc_or_decl": "LOW. Native body of the virtual MinigameStateChanged (slot 0xf08). 124-line decompile: copies a gameplay tag container for the new state, updates the placer's creature state and frees temporaries. Only the head was traced.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/cb24826448ae472baa5a36e8d04d7bc6/0x141c10360.c"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "ABuildingProp_CreatureManager__HandleAsyncLoadComplete",
+  "address": "0x141c0b240",
+  "signature": "void ABuildingProp_CreatureManager::HandleAsyncLoadComplete()",
+  "inc_or_decl": "Delegate target for LoadSkeletalMeshDisplayOption. If the handle is missing, logs 'Failed to load assets for skeletal mesh display'. Otherwise reads the loaded objects, finds the first one of the expected class with a valid CDO, and applies the display overrides (0x14274a3a0 calls the Blueprint event). Then releases the handle. MEDIUM.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/547f13f8abf24622bd9830a15ad99fbe/0x141c0b240.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x1445eaa10.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x14274a3a0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x1445f0570.c"
+  ]
+}

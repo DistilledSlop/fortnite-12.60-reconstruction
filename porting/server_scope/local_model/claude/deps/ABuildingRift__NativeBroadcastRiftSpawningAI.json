@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingRift__NativeBroadcastRiftSpawningAI",
+  "address": "0x141bfe900",
+  "signature": "void ABuildingRift::NativeBroadcastRiftSpawningAI()",
+  "inc_or_decl": "UWorld* World = GetWorld(); if (RiftLightningDirector = GetRiftDirector(World)) RiftLightningDirector->OnSpawnAtRift(this); CallBlueprintEvent(this, BroadcastRiftSpawningAI);  // helpers 0x1417057f0, 0x14170ab10, 0x14274f250",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/cb24826448ae472baa5a36e8d04d7bc6/0x141bfe900.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x1417057f0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x14170ab10.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x14274f250.c",
+    "/opt/fortnite/local-model-package/captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f793a0.c"
+  ]
+}

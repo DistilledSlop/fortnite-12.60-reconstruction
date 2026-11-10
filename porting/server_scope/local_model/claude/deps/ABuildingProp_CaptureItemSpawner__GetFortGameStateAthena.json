@@ -1,0 +1,9 @@
+{
+  "name": "ABuildingProp_CaptureItemSpawner__GetFortGameStateAthena",
+  "address": "0x141641350",
+  "signature": "AFortGameStateAthena* ABuildingProp_CaptureItemSpawner::GetFortGameStateAthena(UWorld* World)",
+  "inc_or_decl": "Returns World->GameState (offset 0x130) when that object's class index is at or above AFortGameStateAthena_StaticClass's index and the class chain matches; else nullptr. Captured and read.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/547f13f8abf24622bd9830a15ad99fbe/0x141641350.c"
+  ]
+}

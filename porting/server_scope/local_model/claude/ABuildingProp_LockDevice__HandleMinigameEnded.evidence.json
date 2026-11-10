@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingProp_LockDevice::HandleMinigameEnded",
+  "status": "proposed",
+  "original": "0x14274ff60",
+  "signature": "void ABuildingProp_LockDevice::HandleMinigameEnded()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x14274ff60.c",
+    "/opt/fortnite/local-model-package/captures/c1270b40197649e4ad20672b602c0ed7/0x1444b6c20.c",
+    "/opt/fortnite/local-model-package/captures/4e2dd9c864d240bca332afd2e22cff82/0x144438b00.c"
+  ],
+  "callees": {
+    "0x1444b6c20": "UStaticMeshComponent virtual slot 0x800 target (captured, 16 lines): checks predicate 0x144438b00 on this+0x2A8 and calls slot 0x818(this, true). The channel arguments are not read by this target, so the call-shape name is LOW confidence",
+    "0x144438b00": "predicate used by 0x1444b6c20 (captured, 21 lines)"
+  },
+  "notes": "StaticMeshComponent is the object at +0x768 (reflection: ABuildingSMActor.StaticMeshComponent). The flag at +0xB98 is unnamed in the dump; bMinigameActive is proposed. SavedCollisionResponse is the int at +0xBD0, unnamed in the dump. The thunk's 3-argument virtual call matches the Ended path only.",
+  "confidence": "MEDIUM"
+}

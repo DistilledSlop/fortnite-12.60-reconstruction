@@ -1,0 +1,9 @@
+{
+  "name": "ABuildingSMActor__NativeForceIntoStructuralGridDuringRuntime",
+  "address": "0x141c05a50",
+  "signature": "void ABuildingSMActor::NativeForceIntoStructuralGridDuringRuntime()",
+  "inc_or_decl": "if (bForcedIntoGridThisRuntime) return; bForcedIntoGridThisRuntime = true; if (not being edited) StructuralGrid->RegisterActor(this) (grid object at +0xA50, virtual 0xcb8). LOW on the registration condition; 123-line native, guard and grid call traced.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/cb24826448ae472baa5a36e8d04d7bc6/0x141c05a50.c"
+  ]
+}

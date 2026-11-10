@@ -1,0 +1,23 @@
+{
+  "function": "ABuildingRift::BroadcastRiftSpawningAI",
+  "status": "proposed",
+  "original": "0x14274fd50",
+  "signature": "void ABuildingRift::BroadcastRiftSpawningAI()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x14274fd50.c",
+    "/opt/fortnite/local-model-package/captures/cb24826448ae472baa5a36e8d04d7bc6/0x141bfe900.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x1417057f0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x14170ab10.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x14274f250.c",
+    "/opt/fortnite/local-model-package/captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f793a0.c"
+  ],
+  "callees": {
+    "0x141bfe900": "native BroadcastRiftSpawningAI (virtual slot 0xa00 on ABuildingRift, owner ABuildingRift). Body: GetWorld, rift director lookup (0x1417057f0), OnSpawnAtRift (0x14170ab10), BP event call (0x14274f250)",
+    "0x1417057f0": "rift director lookup from the world (captured, 20 lines; returns the lightning/rift director or null)",
+    "0x14170ab10": "director OnSpawnAtRift(rift): validates the rift, then spawns lightning strikes with a per-frame effect cap (captured, 129 lines; head and logs read)",
+    "0x14274f250": "calls the Blueprint event on the rift through UObject_FindFunctionChecked (captured, 17 lines)",
+    "0x143f793a0": "AActor::GetWorld via virtual slot 0x150 (captured)"
+  },
+  "notes": "Exec thunk takes no parameters and forwards to the native virtual slot 0xa00. The body is recorded in the dependency file.",
+  "confidence": "MEDIUM"
+}

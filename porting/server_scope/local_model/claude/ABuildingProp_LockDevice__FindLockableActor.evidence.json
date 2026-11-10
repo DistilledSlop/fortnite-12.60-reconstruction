@@ -1,0 +1,27 @@
+{
+  "function": "ABuildingProp_LockDevice::FindLockableActor",
+  "status": "proposed",
+  "original": "0x14274fe20",
+  "signature": "UObject* ABuildingProp_LockDevice::FindLockableActor()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14274fe20.c",
+    "/opt/fortnite/local-model-package/captures/547f13f8abf24622bd9830a15ad99fbe/0x141c05680.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x142b70a10.c",
+    "/opt/fortnite/local-model-package/captures/1f574874d813496aa02bd3c684830fde/0x142d6a820.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x1440d2440.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x142b73930.c",
+    "/opt/fortnite/local-model-package/captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f793a0.c"
+  ],
+  "callees": {
+    "0x141c05680": "direct helper FindNearbyLockableActor (this is the implicit argument). Gets the world via slot 0x150, reads the root component location, runs an overlap query, and returns the first candidate that implements LockableInterface and passes the candidate check",
+    "0x142b70a10": "StaticClass of /Script/FortniteGame.LockableInterface (captured, 15 lines)",
+    "0x142d6a820": "class implements-interface check: walks the class's interface table for the target interface (captured, 30 lines)",
+    "0x1440d2440": "overlap query helper (captured, 38 lines): tests a box/sphere against candidate actors; uses a 0.0001 tolerance check on the extent",
+    "0x142b73930": "calls a Blueprint UFunction on the candidate (looked up with UObject_FindFunction) and collects the result; used as the candidate check (LOW)",
+    "0x143f793a0": "AActor::GetWorld via virtual slot 0x150 (captured)",
+    "FWeakObjectPtr_Get": "named engine helper: resolves a weak object pointer",
+    "UObject_FindFunction": "named engine helper: FindFunction on a UObject"
+  },
+  "notes": "Member at +0x130 is AActor.RootComponent (its location read at component offsets 0x1D0/0x1D8). +0xBD4 is an int input to the query (name unresolved). The candidate check helper and the query extent are LOW confidence; the interface test and the return path are as in the helper.",
+  "confidence": "MEDIUM"
+}

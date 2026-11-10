@@ -1,0 +1,29 @@
+{
+  "function": "ABuildingProp_CreatureManager::AdjustCollisionOfStaticMesh",
+  "status": "proposed",
+  "original": "0x14274a920",
+  "signature": "void ABuildingProp_CreatureManager::AdjustCollisionOfStaticMesh(UStaticMeshComponent* Mesh, bool bIgnore)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14274a920.c",
+    "/opt/fortnite/local-model-package/captures/547f13f8abf24622bd9830a15ad99fbe/0x141bfbc10.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x144471420.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x1444889d0.c",
+    "/opt/fortnite/local-model-package/captures/fbdb812676e540feb360a56111af0099/0x1440eca40.c",
+    "/opt/fortnite/local-model-package/captures/fbdb812676e540feb360a56111af0099/0x1444b6c60.c",
+    "/opt/fortnite/local-model-package/captures/4e2dd9c864d240bca332afd2e22cff82/0x144438b60.c",
+    "/opt/fortnite/local-model-package/captures/4e2dd9c864d240bca332afd2e22cff82/0x144438b00.c",
+    "/opt/fortnite/local-model-package/captures/c1270b40197649e4ad20672b602c0ed7/0x1444b6c20.c"
+  ],
+  "callees": {
+    "0x141bfbc10": "direct helper (exec calls it with this, bool, mesh). Builds the FCollisionResponseContainer (ignore list or class-default restore) and applies it through the mesh virtual at slot 0x810. Logic inlined here",
+    "0x144471420": "FCollisionResponseContainer default constructor (writes the default container constants)",
+    "0x1444889d0": "FCollisionResponseContainer::SetResponse(channel, response): channel must be below 0x20; stores the byte and returns 1 when it changed",
+    "0x1440eca40": "UPrimitiveComponent virtual slot 0x578 target (GetCollisionResponseToChannel base): writes 0 to the out parameter and returns 0 (ECR_Ignore); the restore branch uses this result",
+    "0x1444b6c60": "UPrimitiveComponent virtual slot 0x810 target: checks predicate 0x144438b60 on this+0x2A8 and, when true, calls slot 0x818(this, true). It does not read the container argument, so the final apply is LOW confidence",
+    "0x144438b60": "predicate used by 0x1444b6c60 (captured, 39 lines)",
+    "0x144438b00": "predicate used by 0x1444b6c20 (captured, 21 lines); listed for completeness",
+    "0x1444b6c20": "UStaticMeshComponent virtual slot 0x800 target (captured): checks predicate 0x144438b00 and calls slot 0x818(this, true); not called from this function"
+  },
+  "notes": "Reflection: Mesh (index 0, offset 8, object), bIgnore (index 1, bool). Thunk read order: bool, then Mesh. The helper's bool parameter is the second argument and the mesh the third. The restore branch uses the class default object reached through the class at this+0x10 with member slot 0x130 (default object); its vtable target 0x1440eca40 returns Ignore, so the restore is only as good as that base implementation. The apply call's target does not consume the container, so the final apply step is LOW confidence.",
+  "confidence": "LOW"
+}

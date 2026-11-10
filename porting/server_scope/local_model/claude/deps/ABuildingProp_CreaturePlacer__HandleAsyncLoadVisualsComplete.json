@@ -1,0 +1,13 @@
+{
+  "name": "ABuildingProp_CreaturePlacer__HandleAsyncLoadVisualsComplete",
+  "address": "0x141c0b3e0",
+  "signature": "void ABuildingProp_CreaturePlacer::HandleAsyncLoadVisualsComplete()",
+  "inc_or_decl": "Delegate target for UpdateCreatureVisuals. If the handle is missing, logs 'Failed to load assets for the selected creature visuals'. Otherwise gathers loaded objects, applies them (0x141c11f10), sets bCreatureVisualsDoneLoading = true, clears OnCreatureVisualsLoadComplete (0x1406a9dc0) and releases the handle. MEDIUM.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/465bbf18db03476c92db52d72e5df711/0x141c0b3e0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x1445eaa10.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x141c11f10.c",
+    "/opt/fortnite/local-model-package/captures/44d47592926e48b394ba11a5e200418f/0x1406a9dc0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x1445f0570.c"
+  ]
+}

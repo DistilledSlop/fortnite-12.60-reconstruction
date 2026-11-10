@@ -1,0 +1,28 @@
+{
+  "function": "ABuildingProp_CaptureItemSpawner::UnregisterSpecialActor",
+  "status": "proposed",
+  "original": "0x14274c0b0",
+  "signature": "void ABuildingProp_CaptureItemSpawner::UnregisterSpecialActor()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x14274c0b0.c",
+    "/opt/fortnite/local-model-package/captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f793a0.c",
+    "/opt/fortnite/local-model-package/captures/547f13f8abf24622bd9830a15ad99fbe/0x141641350.c",
+    "/opt/fortnite/local-model-package/captures/547f13f8abf24622bd9830a15ad99fbe/0x141f6b0c0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x141f6b2c0.c",
+    "/opt/fortnite/local-model-package/captures/acf2353c73cb433885862c85f7253f0d/0x14072a990.c"
+  ],
+  "callees": {
+    "0x143f793a0": "AActor::GetWorld via virtual slot 0x150 on this (see RegisterSpecialActor)",
+    "0x141641350": "GetFortGameStateAthena(World) (see RegisterSpecialActor)",
+    "0x141f6b0c0": "registry RemoveByKey: scans entries (stride 0x230, 64-bit key at +0xc), removes the match, bumps the revision counter at +0x26c (wraps to 0 at -1) and sets +0x310 to -1",
+    "0x141f6b2c0": "registry entry removal helper used by RemoveByKey (destroys the entry and compacts the array)",
+    "0x14072a990": "helper called by RemoveByKey on the registry +0x218 member (captured, body 33 lines; not traced further)",
+    "FFrame_Step": "named engine helper: reads one bytecode parameter from the FFrame",
+    "FFrame_StepExplicitProperty": "named engine helper: reads one explicit property from the FFrame",
+    "FName_EqualsEName": "named engine helper: compares an FName index with an EName value",
+    "FMemory_Free": "named engine helper: frees heap memory",
+    "FMemory_Realloc": "named engine helper: allocates or reallocates heap memory"
+  },
+  "notes": "Role byte is AActor.Role at 0xF0 (ROLE_Authority = 3). The guard fires when the FName at 0xBA8 (SpecialActorID) is not NAME_None. The registry clear and the id reset both happen only when the GameState registry exists, as in the thunk.",
+  "confidence": "MEDIUM"
+}
