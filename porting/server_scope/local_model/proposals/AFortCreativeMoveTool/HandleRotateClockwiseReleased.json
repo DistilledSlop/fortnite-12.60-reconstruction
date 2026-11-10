@@ -1,0 +1,8 @@
+{
+ "function": "AFortCreativeMoveTool::HandleRotateClockwiseReleased",
+ "status": "blocked",
+ "blocker": "Tail-call wrapper: body bumps refcount at params+0x20 then JMP to virtual at vtable offset 0xce8 (entry 337). Virtual target not in generated header (not a UFUNCTION) and no vtable data for AFortCreativeMoveTool in checkout. Next: resolve the class primary vtable (CDO / .rdata pointer array) and recover the function at entry 337.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100445",
+ "batch_seconds": 355
+}
