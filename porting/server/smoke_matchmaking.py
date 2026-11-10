@@ -202,7 +202,7 @@ def run_checks(base, port, ctx):
         "shouldAdvertise", "allowJoinInProgress", "isDedicated", "usesStats", "allowInvites",
         "usesPresence", "allowJoinViaPresence", "allowJoinViaPresenceFriendsOnly")))
     check("beacon port uses integer attribute suffix", type(record.get("attributes", {}).get("BeaconPort_i")) is int)
-    check("session buildUniqueId is 683914758", record.get("buildUniqueId") == "683914758")
+    check("session buildUniqueId is the compatible changelist", record.get("buildUniqueId") == "12896485")
     check("session ownerId is the ticket account", record.get("ownerId") == ACCOUNT)
     status, _ = http(base, ctx, "GET", "/fortnite/api/matchmaking/session/" + "0" * 32)
     check("unknown session returns 404", status == 404, f"status {status}")

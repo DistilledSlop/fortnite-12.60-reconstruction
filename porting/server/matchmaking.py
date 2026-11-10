@@ -30,9 +30,9 @@ from api_common import ApiError, Err
 MATCHMAKING_HOST = "fortnite-public-service-prod11.ol.epicgames.com"
 # [guess] Path prefix of the websocket; the ticket id is appended.
 MATCHMAKING_WS_PATH = "/fortnite/api/game/v2/matchmakingservice/ws"
-# [given] Value from the task brief, which matches the network checksum in section 3.
-# The name buildUniqueId is [observed] in the binary.
-BUILD_UNIQUE_ID = "683914758"
+# [observed] The client build-ID reader falls back to its network compatible
+# changelist (0xc4c8e5), not its network version checksum.
+BUILD_UNIQUE_ID = "12896485"
 # [guess] Dedicated server address and ports. smoke_join.sh serves UDP 7777 in the same namespace.
 SESSION_SERVER_ADDRESS = "127.0.0.1"
 SESSION_SERVER_PORT = 7777

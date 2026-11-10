@@ -378,7 +378,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   cloud storage field names. `porting/generated/DefaultEngine.ini` has the MCP URL
   templates and the `ServiceName="party"` setting. The earlier login capture in
   `porting/server_surface.md` has the pre-login route list.
-- **Given in the task:** `buildUniqueId` = `683914758`, and the session record field names.
+- **Observed in the client:** the default `buildUniqueId` is the compatible changelist `12896485`; the network checksum `683914758` is a separate value. Session record fields are partly inferred.
 - **Guessed, unverified:**
   - The HTTP methods of the party and presence routes, the request body shapes, the
     response shapes beyond the observed field names, and the nesting of party objects.

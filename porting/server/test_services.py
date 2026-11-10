@@ -1044,7 +1044,7 @@ class MatchmakingTests(ServiceTestCase):
         self.assertTrue(all(m["matchId"] == play["matchId"] for m in statuses))
         session_id = play["sessionId"]
         status, record, _ = jcall(self.base, "GET", f"/fortnite/api/matchmaking/session/{session_id}")
-        self.assertEqual((status, record["buildUniqueId"], record["ownerId"]), (200, "683914758", account))
+        self.assertEqual((status, record["buildUniqueId"], record["ownerId"]), (200, "12896485", account))
         self.assertEqual(record["ownerName"], "LocalPlayer")
         status, key, _ = jcall(self.base, "GET",
                                f"/fortnite/api/game/v2/matchmaking/account/{account}/session/{session_id}")
