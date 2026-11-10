@@ -33,7 +33,7 @@
    "id": "m3",
    "text": "The client matchmakes to the reconstructed UE dedicated server",
    "done": false,
-   "evidence": "The diagnostic original client obtained a ticket, connected over a loopback plaintext websocket, processed queue and ready-check messages, and received a session assignment. Session lookup initially failed to parse; commit 685bf19d supplies missing settings, and a retest no longer logged those parser errors but still failed to find the session. An encrypted match join remains unverified. Native empty-map joining has only been demonstrated with the rebuilt client; no end-to-end rebuilt-client matchmaking is recorded (porting/MATCHMAKING_PROBE.md)."
+   "evidence": "The diagnostic original client obtained a ticket, connected over a loopback plaintext websocket, processed queue and ready-check messages, and received a session assignment. The client now accepts the session and retrieves its encryption key after fixes to session settings, session ID and build ID. Its session join request returned 404; a game-server connection and encrypted match join remain unverified. Native empty-map joining has only been demonstrated with the rebuilt client; no end-to-end rebuilt-client matchmaking is recorded (porting/MATCHMAKING_PROBE.md)."
   },
   {
    "id": "m4",

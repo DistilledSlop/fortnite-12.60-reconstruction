@@ -14,3 +14,9 @@ client reported `Unable to read session settings!` and a missing
 server. The dedicated server and backend shared a temporary test key, but the
 client did not reach the encryption handshake. This is a diagnostic test, not a
 verified match or a playable Battle Royale server.
+
+A later run supplied the assigned session ID and the client's compatible
+changelist (12896485) as the session build ID. The client then accepted the
+session, fetched its encryption key, and posted to the session's `/join`
+endpoint. That route returned 404, so no game-server connection was attempted.
+The network checksum 683914758 is a different value from the matchmaking build ID.
