@@ -19,8 +19,9 @@ Body-only `.inc` (C++ statements, `// CONFIDENCE:` and original addresses), an `
 
 ## Haiku worker waves (2026-11-10)
 
-Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 chunks of 15 functions: `work/claude/chunks/NN.json` in the package, instructions in `work/claude/WORKER.md`, outputs in `work/claude/out/<Class>__<Fn>.{inc,evidence.json}` (+ `out/deps/`). Workers only write files; the orchestrator reviews and bulk-records proposals with `inventory_progress.py` (workers must not touch the state file) and commits. Wave 1 = chunks 00-03 (pilot, check quality before launching more). Track which chunks are launched/reviewed/recorded here:
+Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 chunks of 15 functions: `work/claude/chunks/NN.json` in the package, instructions in `work/claude/WORKER.md`, outputs in `work/claude/out/<Class>__<Fn>.{inc,evidence.json}` (+ `out/deps/`). Workers only write files; the orchestrator reviews and bulk-records proposals with `inventory_progress.py` (workers must not touch the state file) and commits. **At most TWO Haiku workers at a time (user rule).** Wave 1 = chunks 00-01 (pilot, check quality before launching more). Track which chunks are launched/reviewed/recorded here:
 
 | Chunks | Status |
 |---|---|
-| 00-03 | launched, awaiting review |
+| 00, 01 | running (2 workers max at a time) |
+| 02, 03 | stopped almost immediately (too many at once); relaunch from scratch, ignore any partial files in `out/` for these chunks |
