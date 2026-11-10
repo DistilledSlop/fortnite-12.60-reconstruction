@@ -220,12 +220,24 @@ for cls, fns in inscope.items():
         rc = refs_checked.get((cls, fn))
         rows.append(dict(c=cls, f=fn, t=tier, p=(cls, fn) in ported, fl=sorted(fl), **({'nc': rc[0], 'dp': rc[1], 'sh': rc[2]} if rc else {})))
 
+# Every function gets a verdict and a confidence. Unresolved functions default to required: nothing shows a server
+# can do without them, and the cost of a wrongly dropped function is a broken match.
+VERDICT = {'R1': ('required', 'proven'), 'R2': ('required', 'proven'), 'R5': ('required', 'strong'),
+           'L1': ('required', 'likely'), 'L2': ('required', 'likely'),
+           'N1': ('not_required', 'proven'), 'N2': ('not_required', 'proven'), 'N3': ('not_required', 'proven'),
+           'N4': ('not_required', 'strong'), 'P1': ('not_required', 'probable'), 'P2': ('not_required', 'probable'),
+           'U1': ('required', 'unresolved'), 'U2': ('required', 'unresolved')}
+for r in rows:
+    r['v'], r['conf'] = VERDICT[r['t']]
 os.makedirs(out_dir, exist_ok=True)
 with open(os.path.join(out_dir, 'functions.jsonl'), 'w') as w:
     for r in rows:
         w.write(json.dumps(r, separators=(',', ':')) + '\n')
 summ = dict(prune=PRUNE, closure_packages=len(seen), pruned_edges=pruned, total=len(rows),
             tiers={t: dict(n=tally[t], ported=sum(1 for r in rows if r['t'] == t and r['p'])) for t in sorted(tally)},
+            verdicts={v: dict(n=sum(1 for r in rows if r['v'] == v), ported=sum(1 for r in rows if r['v'] == v and r['p']),
+                              by_confidence={c: sum(1 for r in rows if r['v'] == v and r['conf'] == c) for c in sorted({r['conf'] for r in rows if r['v'] == v})})
+                      for v in ('required', 'not_required')},
             server_classes=len(server_classes & set(inscope)), inscope_classes=len(inscope))
 json.dump(summ, open(os.path.join(out_dir, 'server_scope%s.json' % ('' if PRUNE else '_noprune'), ), 'w'), indent=1)
 print(json.dumps(summ, indent=1))

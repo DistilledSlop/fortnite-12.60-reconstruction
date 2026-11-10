@@ -27,6 +27,19 @@ Undetermined means undetermined, not unneeded. Static analysis cannot close it: 
 or goes through `ProcessEvent`, so the direct-call graph adds only dozens of functions (R5). The definitive method is
 runtime coverage: log every UFunction the reconstructed server executes while the original client plays a match.
 
+## Verdict
+
+`functions.jsonl` gives every function a verdict (`v`) and a confidence (`conf`):
+
+| Verdict | Functions | Ported | Confidence |
+|---|---:|---:|---|
+| required | 7,222 | 3,055 | proven 1,244, strong 57, likely 380, unresolved 5,541 |
+| not required | 7,169 | 1,345 | proven 4,228, strong 845, probable 2,096 |
+
+Unresolved functions default to required: nothing shows a server can do without them, and a wrongly dropped function
+breaks a match while a wrongly kept one only costs effort. The 1,681 required or likely functions are the floor, and the
+7,222 are the ceiling.
+
 ## Reproduce
 
 ```sh

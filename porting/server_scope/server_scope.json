@@ -57,6 +57,27 @@
    "ported": 1342
   }
  },
+ "verdicts": {
+  "required": {
+   "n": 7222,
+   "ported": 3055,
+   "by_confidence": {
+    "likely": 380,
+    "proven": 1244,
+    "strong": 57,
+    "unresolved": 5541
+   }
+  },
+  "not_required": {
+   "n": 7169,
+   "ported": 1345,
+   "by_confidence": {
+    "probable": 2096,
+    "proven": 4228,
+    "strong": 845
+   }
+  }
+ },
  "server_classes": 405,
  "inscope_classes": 1931
 }
