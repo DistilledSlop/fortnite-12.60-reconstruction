@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameplayEffectDeliveryActor__DoExplosionImpl",
+  "address": "0x142697a90",
+  "signature": "void AFortGameplayEffectDeliveryActor::DoExplosionImpl()",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM. Native body (49-line capture, read in full).\n// Source: ExplosionTemplate (raw this+0x130) + 0x1c0 when set, else the default block DAT_1482184f0 (0x30-byte transform-shaped block, same layout as DoExplosionAtLocationImpl).\nconst FExplosionTransform* Src = (ExplosionTemplate != nullptr) ? ExplosionTemplate->ExplosionBlock : &DefaultExplosionBlock;\nFExplosionTransform Spec = *Src;\nint32 Channel = Src->ChannelDword;               // dword at source +0x20\nif (bExplosionUsesDefaultBlock)                  // raw this+0x3e0 bit 0x80\n{\n    Spec = DefaultExplosionBlockCopy;            // DAT_147c31d50..DAT_147c31d5c\n    Channel = DefaultExplosionChannel;           // _DAT_147c31d50\n}\nExplodeWithSpec(Channel, Spec);                  // vslot 0x640 (0x142697b90)",
+  "evidence": "porting/generated/native-cap-virtual3/0x142697a90.c"
+}

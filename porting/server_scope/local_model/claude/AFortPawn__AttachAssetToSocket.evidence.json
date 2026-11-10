@@ -1,0 +1,23 @@
+{
+  "function": "AFortPawn::AttachAssetToSocket",
+  "status": "proposed",
+  "original": "0x142a1b310",
+  "signature": "void AFortPawn::AttachAssetToSocket(FAttachmentAsset InAttachment)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a1b310.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/pawn-broad73/0x142305f70.c"
+  ],
+  "callees": {
+    "0x142305f70": "native body, ported in deps AFortPawn__AttachAssetToSocketImpl",
+    "0x1423191e0": "FindOrAddAttachmentRecord(SocketName) in the per-pawn TMap at +0x640 (deps AFortPawn__AttachmentRecordFindOrAdd)",
+    "0x142358e40": "ApplyAttachmentRecord: spawns/updates the socket-attached mesh components (deps AFortPawn__ApplyAttachmentRecord)",
+    "0x1441439b0": "USkeletalMeshComponent::GetSocketByName (engine-level; behaviour inspected, not ported in full)",
+    "0x143f7a920": "resolves the owner state used by the attach gate (LOW, name unknown)",
+    "0x1426985f0": "returns true when either of the two attachment-owner counters at +0x3f0/+0x3f4 is non-zero (LOW name)",
+    "0x142690300": "attachment-changed notification to the delegate target at +0x588 (LOW, engine-internal, not ported in full)",
+    "0x14410a300": "USceneComponent::AttachToComponent (engine-level, not ported in full)",
+    "0x144437a90": "component registration/activation state setter (engine-level, not ported in full)",
+    "FMsg_Logf_Internal": "engine log, gated by category verbosity > 2"
+  },
+  "notes": "The struct is 26 bytes at least: SocketName (FName, 0), SkeletalMesh (+8), StaticMesh (+0x10), bFlag18 (+0x18), bFlag19 (+0x19). The record stored by FindOrAdd is 0x30 bytes. Confidence is MEDIUM for the field names and the attach gate, LOW for the engine-internal notification path."
+}

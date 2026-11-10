@@ -1,0 +1,17 @@
+{
+  "function": "AFortGameplayEffectDeliveryActor::DoExplosion",
+  "status": "proposed",
+  "original": "0x1410aabf0",
+  "signature": "void AFortGameplayEffectDeliveryActor::DoExplosion()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/6d6081b5b6074377975753a1de3ec9c0/0x1410aabf0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual3/0x142697a90.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual1/0x142697b90.c"
+  ],
+  "callees": {
+    "vslot 0x630 (0x142697a90)": "DoExplosionImpl; ported in deps AFortGameplayEffectDeliveryActor__DoExplosionImpl",
+    "vslot 0x640 (0x142697b90)": "ExplodeWithSpec(channel, spec); summarised in deps AFortGameplayEffectDeliveryActor__ExplodeWithSpec",
+    "vslot 0x658 (0x1426a5ae0)": "IsExplosionBroadcastBlocked (returns bit0 of raw 0x3e0)"
+  },
+  "notes": "The exec thunk itself is a single virtual dispatch. Confidence is LOW because the downstream explosion pipeline (0x142697b90 and the effect-container apply helpers FUN_1426ada80, FUN_143f76650, FUN_142395320 and the stat/profiling wrappers) is summarised rather than fully ported; the summary is in the deps file."
+}

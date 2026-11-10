@@ -1,0 +1,7 @@
+{
+  "name": "AFortOctopusVehicle__ServerSetTowhookAttachState_Implementation",
+  "address": "0x1419f2760",
+  "signature": "void AFortOctopusVehicle::ServerSetTowhookAttachState_Implementation(const FNetTowhookAttachState& InTowhookAttachState)",
+  "inc_or_decl": "// CONFIDENCE: HIGH (body), MEDIUM (name of the weak snapshot member).\n// Snapshot the incoming state into a weak-referenced copy (FUN_141b5b190 = FNetTowhookAttachState copy with Component as FWeakObjectPtr), then store the verbatim copy.\nTowhookAttachStateWeakCopy = FNetTowhookAttachState::MakeWeak(InTowhookAttachState);  // raw this+0x1170..0x118f\nReplicatedAttachState = InTowhookAttachState;                                          // raw this+0x1150..0x116f (header member)",
+  "evidence": "porting/generated/native134-virtual-bulk/0x1419f2760.c; porting/generated/native107-impl/0x141b5b190.c"
+}

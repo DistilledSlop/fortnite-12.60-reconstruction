@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameplayEffectDeliveryActor__SetInstigatorImpl",
+  "address": "0x1426932a0",
+  "signature": "void AActor::SetInstigatorImpl(AActor* NewInstigator)",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM. Native body (shared AActor path; the two listener arrays are not named).\nif (Role != ROLE_Authority) return;\nInstigator = NewInstigator;                      // FUN_1407247f0: raw this+0x118 (AActor::Instigator)\nfor (const auto& Entry : InstigatorListenersA)   // raw this+0x288 (TArray, 16-byte entries), count raw 0x290\n{\n    if (Entry.Owner == nullptr) continue;\n    TSharedPtr<IInstigatorListener> Handler = Entry.Owner->Handler;   // raw +0x280 (object) / +0x288 (shared-reference controller), copied with a refcount bump\n    if (Handler.IsValid()) Handler->OnInstigatorChanged(NewInstigator, this);   // vslot 0x10\n}\nfor (const auto& Entry : InstigatorListenersB)   // raw this+0x348, count raw 0x350; same walk\n{\n    if (Entry.Owner == nullptr) continue;\n    TSharedPtr<IInstigatorListener> Handler = Entry.Owner->Handler;\n    if (Handler.IsValid()) Handler->OnInstigatorChanged(NewInstigator, this);\n}",
+  "evidence": "captures/bf95a45649cb4abc81f65d1e3d79dc64/0x1426932a0.c; captures/bf95a45649cb4abc81f65d1e3d79dc64/0x1426932a0.asm (call at 0x1407247f0 uses rcx=this, rdx=value); captures/6efb1241727e4d638a4125f43c983a91/0x1407247f0.c"
+}

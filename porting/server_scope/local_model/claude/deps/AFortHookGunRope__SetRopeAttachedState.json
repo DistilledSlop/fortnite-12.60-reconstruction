@@ -1,0 +1,7 @@
+{
+  "name": "AFortHookGunRope__SetRopeAttachedState",
+  "address": "0x143f84060",
+  "signature": "void AFortHookGunRope::SetRopeAttachedState(bool bAttached)",
+  "inc_or_decl": "// CONFIDENCE: LOW (the target object at this+0x28 is not named). Original gates on the actor flag byte at 0x32 bit 0x2, then on FUN_142ecc600(this, 0x30) which walks the +0x20 chain testing flags 0x30.\nif (!(ActorFlags32 & 0x2)) return;\nif (!ObjectChainHasFlags(this, 0x30))         // FUN_142ecc600, returns true when any object on the +0x20 chain has the flag mask\n    SetSubobjectEnabled(this + 0x28, bAttached);   // FUN_144630410: stores bool at subobject+0xb; when the owner has flag 1 and the value changes, calls FUN_14462c250 / FUN_14461b1b0 notify and resets a float to -1.0 at +0x24",
+  "evidence": "captures/c62bf762b0d346f1afce54f23053d9d0/0x143f84060.c; captures/6fd9248f6a3441c7a3805d4b042d5389/0x142ecc600.c; porting/generated/native98-impl/0x144630410.c"
+}

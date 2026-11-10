@@ -1,0 +1,16 @@
+{
+  "function": "AFortGameplayEffectDeliveryActor::SetCollisionComponent",
+  "status": "proposed",
+  "original": "0x142907b50",
+  "signature": "void AFortGameplayEffectDeliveryActor::SetCollisionComponent(UPrimitiveComponent* NewCollisionComponent)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142907b50.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native228-fresh-callees/0x1426b2280.c"
+  ],
+  "callees": {
+    "0x1426b2280": "native body, ported in deps AFortGameplayEffectDeliveryActor__SetCollisionComponentImpl",
+    "vslot 0x658 (0x1426a5ae0)": "IsExplosionBroadcastBlocked (returns bit0 of raw 0x3e0)",
+    "wcsstr / FName lookups": "resolve the delegate function names OnComponentTouch, OnComponentOverlap, OnComponentEndOverlap, OnComponentHit, OnComponentBeginOverlap, OnComponentEndOverlap from literal strings"
+  },
+  "notes": "Thunk only. Single object parameter."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameplayEffectDeliveryActor__DoExplosionAtLocationImpl",
+  "address": "0x142697b10",
+  "signature": "void AFortGameplayEffectDeliveryActor::DoExplosionAtLocationImpl(const FVector& ExplosionLocation)",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM. Native body (37-line capture, read in full).\n// Source: ExplosionTemplate (raw this+0x130) + 0x1c0 when set, else the default block DAT_1482184f0. The 0x30-byte block is a transform-shaped struct (rotation at +0, translation at +0x10, scale at +0x20).\nconst FExplosionTransform* Src = (ExplosionTemplate != nullptr) ? ExplosionTemplate->ExplosionBlock : &DefaultExplosionBlock;\nFExplosionTransform Spec = *Src;                 // qwords at +0 and +8, dwords at +0x20..+0x2c\nSpec.Translation = ExplosionLocation;             // overwrites +0x10..+0x1b; +0x1c..+0x1f zeroed\nExplodeWithSpec(Src->ChannelDword, Spec);        // vslot 0x640; the first argument is the dword at source +0x20 as in the original",
+  "evidence": "porting/generated/native134-virtual-bulk/0x142697b10.c; porting/generated/native-cap-virtual1/0x142697b90.c"
+}

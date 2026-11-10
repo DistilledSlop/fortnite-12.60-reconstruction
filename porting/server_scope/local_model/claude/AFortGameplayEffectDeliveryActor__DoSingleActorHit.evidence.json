@@ -1,0 +1,18 @@
+{
+  "function": "AFortGameplayEffectDeliveryActor::DoSingleActorHit",
+  "status": "proposed",
+  "original": "0x1429066e0",
+  "signature": "void AFortGameplayEffectDeliveryActor::DoSingleActorHit(bool bBroadcastHit, const FHitResult& Hit)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1429066e0.asm",
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x1429066e0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142697d40.c"
+  ],
+  "callees": {
+    "vslot 0x648 (0x142697d40)": "DoSingleActorHitImpl (deps AFortGameplayEffectDeliveryActor__DoSingleActorHitImpl, summarised)",
+    "vslot 0x6a0 (0x142904550)": "BroadcastExplosion-style multicast dispatch taking (TArray<AActor*>, TArray<FHitResult>); the impl passes one element each",
+    "vslot 0x5b8": "apply-effect entry on the ability component (LOW, not ported)",
+    "FWeakObjectPtr_IsValid / FWeakObjectPtr_Get": "engine helpers"
+  },
+  "notes": "Thunk reads the struct before the bool, matching ascending raw offsets (Hit at 0, bBroadcastHit after). The inventory order is reversed relative to read order. Confidence LOW because the 436-line impl is ported as a structured summary (see deps), not line-for-line."
+}

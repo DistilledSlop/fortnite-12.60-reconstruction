@@ -1,0 +1,18 @@
+{
+  "function": "AFortGameplayMutator::SetMutatorActive",
+  "status": "proposed",
+  "original": "0x14290dbf0",
+  "signature": "void AFortGameplayMutator::SetMutatorActive(bool bEnable)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native225-fresh-bulk/0x14290dbf0.asm",
+    "/opt/fortnite/local-model-package/captures/3befa0b3ea5647f098cc9c903b7bba1d/0x1420ee180.c",
+    "/opt/fortnite/local-model-package/captures/05b575faf6eb4278973f9b67bc1a5fc3/0x143f84be0.c"
+  ],
+  "callees": {
+    "0x1420ee180": "native body, ported in deps AFortGameplayMutator__SetMutatorActiveImpl",
+    "0x143f84be0": "actor state-change notifier (summarised in deps AFortGameplayMutator__NotifyStateChanged)",
+    "vslot 0x5e8 (0x143f72550)": "ForceNetUpdate (AActor)",
+    "vslot 0x658 / 0x660 (0x1406801c0)": "OnMutatorActivated / OnMutatorDeactivated hooks; 0x1406801c0 is Stub_Empty"
+  },
+  "notes": "Thunk reads one bool bitfield and forwards it. The native body is fully ported. The state-change notifier 0x143f84be0 is summarised: its internal helpers (0x144684d20 and friends) were not read in full."
+}

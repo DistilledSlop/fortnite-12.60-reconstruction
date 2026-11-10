@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameplayMutator__NotifyStateChanged",
+  "address": "0x143f84be0",
+  "signature": "void AActor::NotifyStateChanged(int32 State)",
+  "inc_or_decl": "// CONFIDENCE: LOW. Partial summary of a 53-line native body (read in full; helper 0x144684d20 not read).\nbool NameIsNone = FName_EqualsEName(NameField1D8, 0);\nif (NameIsNone == false || FieldEC != 0) FName_EqualsEName(NameField1D8, 0x11A);   // name compare, result unused in the original\nif (GetStateKind(this) == 3 || (RawFlags5C & 8)) return;                       // FUN_143f7a920\nobj = ObjectFromKey(... this->GetVirtual150(), NameField1D8);                  // FUN_14463f3c0 (keyed lookup)\nif (obj == nullptr) return;\noldState = RawByteF1;  RawByteF1 = State;\nif (oldState != State) OnStateNotify(obj, this);                              // FUN_144380610 (vtable 0x2c8 on obj's +0x6e0 component)\nif (State < 2) { FUN_144684d20(this_or_owner, this); FUN_144375f90(obj, this, 0); ... }   // helper 0x144684d20 not ported",
+  "evidence": "captures/05b575faf6eb4278973f9b67bc1a5fc3/0x143f84be0.c; captures/f7d1ce500f4b4fa2a65e65f3a64ef67c/0x143f7a920.c; captures/9d30e0d6869d4f129948330751a20495/0x14463f3c0.c; captures/2d64560169ca402387de9d4a88823383/0x144380610.c; captures/2d64560169ca402387de9d4a88823383/0x144375f90.c"
+}

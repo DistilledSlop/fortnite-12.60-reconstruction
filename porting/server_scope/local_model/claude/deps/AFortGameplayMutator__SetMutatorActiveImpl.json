@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameplayMutator__SetMutatorActiveImpl",
+  "address": "0x1420ee180",
+  "signature": "void AFortGameplayMutator::SetMutatorActiveImpl(bool bEnable)",
+  "inc_or_decl": "// CONFIDENCE: HIGH (control flow), MEDIUM (notifier body). Native body, 29-line capture, read in full.\nconst uint8 NewValue = bEnable ? 1 : 0;\nif ((FlagWord248 & 1) == NewValue) return;   // raw this+0x248 bit 0 = bMutatorActive (header)\nForceNetUpdate();                              // vslot 0x5e8\nFlagWord220 = (FlagWord220 & ~1) | NewValue;  // raw this+0x220 bit 0 = bMutatorActiveInternal (replicated)\nFlagWord248 = (FlagWord248 & ~1) | NewValue;  // raw this+0x248 bit 0 = bMutatorActive\nif (bEnable)\n{\n    if (NotifyOnStateChange224) NotifyStateChanged(this, 1);   // raw this+0x224 byte; FUN_143f84be0 with state 1\n    OnMutatorActivated();                                       // vslot 0x658 (Stub_Empty for this class)\n}\nelse\n{\n    if (NotifyOnStateChange224) NotifyStateChanged(this, 2);   // state 2\n    OnMutatorDeactivated();                                     // vslot 0x660 (Stub_Empty for this class)\n}",
+  "evidence": "captures/3befa0b3ea5647f098cc9c903b7bba1d/0x1420ee180.c; captures/05b575faf6eb4278973f9b67bc1a5fc3/0x143f84be0.c; porting/generated/native437-callees/0x1406801c0.c"
+}

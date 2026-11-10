@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__DetachAssetFromSocketImpl",
+  "address": "0x142310b50",
+  "signature": "void AFortPawn::DetachAssetFromSocketImpl(FName SocketName)",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM. Native body.\nFAttachmentRecord* Record = FindOrAddAttachmentRecord(SocketName);   // FUN_1423191e0\nif (Record == nullptr) return;\nRecord->SkeletalMesh = nullptr;   // raw +8\nRecord->StaticMesh   = nullptr;   // raw +0x10\nApplyAttachmentRecord(Record);    // FUN_142358e40: clears the mesh assets on the attached components",
+  "evidence": "porting/generated/decomp_batches/run-20261031T224205Z-b003/_adhoc/0x142310b50__142310b50.c; captures/f4590d5f484b4d3ba6ca651b7da271c1/0x1423191e0.c; captures/f4590d5f484b4d3ba6ca651b7da271c1/0x142358e40.c"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "AFortOctopusVehicle__ServerSetTowhookAttachState_Validate",
+  "address": "0x1406801d0",
+  "signature": "bool AFortOctopusVehicle::ServerSetTowhookAttachState_Validate(const FNetTowhookAttachState& InTowhookAttachState)",
+  "inc_or_decl": "// Validate stub: returns true unconditionally.\nreturn true;",
+  "evidence": "porting/generated/native-cap-virtual/0x1406801d0.c"
+}

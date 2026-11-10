@@ -1,0 +1,7 @@
+{
+  "name": "AFortGameplayEffectDeliveryActor__ExplodeWithSpec",
+  "address": "0x142697b90",
+  "signature": "void AFortGameplayEffectDeliveryActor::ExplodeWithSpec(int32 Channel, const FExplosionSpec* Spec)",
+  "inc_or_decl": "// CONFIDENCE: LOW (summary). Native body, 57 lines in the capture, read in full.\nif (IsDestroyed()) return;                              // vslot 0x658 (IsExplosionBroadcastBlocked) must be false\nif (((RawFlags5C & 0x60) != 0x40) || (ExplodeReentrancyFlags534 & 1)) return;   // Role/flag gate; reentrancy guard raw 0x534 bit 0\nExplodeReentrancyFlags534 |= 1;\n// stat scope: \"STAT_FortGameEffectDeliverActor_DoExplosion\" (profiling, may be compiled out)\nUFortGameplayEffectModule* Module = GetModule(GetWorld());  // FUN_141c77490 / FUN_141c91940 / FUN_141c91e20 bracket the module update\nApplyEffectContainerToTargets(this->ExplodeTargets, Spec);   // FUN_1426ada80 for the base spec (raw this+0x60) and each entry of the additional array (raw 0x778, stride 0xb8)\nif (GetAuthorityComponent() != nullptr) ExplosiveWeapons_Count->Increment(1);   // FUN_143f76650 / FUN_142395320 (ExplosiveWeapons_Count stat)\nif (bKillOnExplode) OnExplosionCompleted();   // vslot 0x650, raw bool at this+0x5f\nExplodeReentrancyFlags534 &= ~1;",
+  "evidence": "porting/generated/native-cap-virtual1/0x142697b90.c"
+}

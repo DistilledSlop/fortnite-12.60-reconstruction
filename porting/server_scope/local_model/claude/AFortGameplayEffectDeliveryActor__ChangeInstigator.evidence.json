@@ -1,0 +1,16 @@
+{
+  "function": "AFortGameplayEffectDeliveryActor::ChangeInstigator",
+  "status": "proposed",
+  "original": "0x1429065d0",
+  "signature": "void AFortGameplayEffectDeliveryActor::ChangeInstigator(AActor* NewInstigator)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x1429065d0.c",
+    "/opt/fortnite/local-model-package/captures/bf95a45649cb4abc81f65d1e3d79dc64/0x1426932a0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x1407247f0.c"
+  ],
+  "callees": {
+    "0x1426932a0": "native body, ported in deps AFortGameplayEffectDeliveryActor__SetInstigatorImpl",
+    "0x1407247f0": "stores the instigator into the actor Instigator slot (raw 0x118); called with (this, value) from the native body"
+  },
+  "notes": "Thunk only. Single parameter, one FFrame read. Inventory reflection lists one Object parameter (class 0x1447ada70) at offset 0."
+}

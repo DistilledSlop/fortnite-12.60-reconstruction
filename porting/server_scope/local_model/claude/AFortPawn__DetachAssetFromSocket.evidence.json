@@ -1,0 +1,18 @@
+{
+  "function": "AFortPawn::DetachAssetFromSocket",
+  "status": "proposed",
+  "original": "0x142a1b480",
+  "signature": "void AFortPawn::DetachAssetFromSocket(FName SocketName)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a1b480.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/decomp_batches/run-20261031T224205Z-b003/_adhoc/0x142310b50__142310b50.c",
+    "/opt/fortnite/local-model-package/captures/f4590d5f484b4d3ba6ca651b7da271c1/0x1423191e0.c",
+    "/opt/fortnite/local-model-package/captures/f4590d5f484b4d3ba6ca651b7da271c1/0x142358e40.c"
+  ],
+  "callees": {
+    "0x142310b50": "native body, ported in deps AFortPawn__DetachAssetFromSocketImpl",
+    "0x1423191e0": "FindOrAddAttachmentRecord (deps AFortPawn__AttachmentRecordFindOrAdd)",
+    "0x142358e40": "ApplyAttachmentRecord (deps AFortPawn__ApplyAttachmentRecord)"
+  },
+  "notes": "Thunk reads one FName (8 bytes) and calls the native body with (this, SocketName). The native body is short and fully ported in deps."
+}

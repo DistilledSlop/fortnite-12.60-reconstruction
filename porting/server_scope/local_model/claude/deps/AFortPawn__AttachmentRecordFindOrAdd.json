@@ -1,0 +1,7 @@
+{
+  "name": "AFortPawn__AttachmentRecordFindOrAdd",
+  "address": "0x1423191e0",
+  "signature": "FAttachmentRecord* AFortPawn::FindOrAddAttachmentRecord(FName SocketName)",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM. Map: AttachmentRecords (TMap<FName, FAttachmentRecord*>) at this+0x640.\nif (AttachmentRecords.Contains(SocketName)) return AttachmentRecords[SocketName];\nFAttachmentRecord* Record = new FAttachmentRecord();   // 0x30 bytes, zeroed\nRecord->SocketName = SocketName;\nRecord->bFlag18 = true;                              // initial value is 1 (byte 0x18), byte 0x19 is 0\nAttachmentRecords.Add(SocketName, Record);            // FUN_1422fb7b0\nreturn Record;",
+  "evidence": "captures/f4590d5f484b4d3ba6ca651b7da271c1/0x1423191e0.c; FUN_140696410 (map find, not ported in full)"
+}

@@ -1,0 +1,23 @@
+{
+  "function": "AFortGameplayEffectDeliveryActor::SetIgnoreInstigatorCollision",
+  "status": "proposed",
+  "original": "0x142907bd0",
+  "signature": "void AFortGameplayEffectDeliveryActor::SetIgnoreInstigatorCollision(bool bShouldIgnore)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native228-fresh-callees/0x142907bd0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native228-fresh-callees/0x1426b30f0.c"
+  ],
+  "callees": {
+    "0x1426b30f0": "native body, summarised in deps AFortGameplayEffectDeliveryActor__SetIgnoreInstigatorCollisionImpl",
+    "vslot 0x658 (0x1426a5ae0)": "IsExplosionBroadcastBlocked (bit0 of raw 0x3e0)",
+    "0x141125940": "instigator-collision actor resolver (not ported; returns the Actor whose collision is ignored)",
+    "0x140726fc0": "TArray add/remove helper on the collision component ignore list at raw +0x278 (LOW name)",
+    "0x144430eb0 / 0x144430e50": "Ignore-actor add/remove on the collision component (LOW name)",
+    "0x142a75f10": "team/ownership class getter used by the vehicle-occupant check (LOW name)",
+    "0x142325510": "vehicle occupant lookup (LOW name)",
+    "0x143f73650": "ignore-list apply helper (LOW name)",
+    "0x1406d9a30": "TArray free/reset helper",
+    "memmove / memcpy": "C runtime"
+  },
+  "notes": "Thunk is one FFrame read (bool) and one forward. Confidence LOW for the native body because the ignore-list bookkeeping (TArray compaction and the vehicle-occupant branch) is summarised, not fully ported."
+}

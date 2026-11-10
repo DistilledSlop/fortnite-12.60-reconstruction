@@ -1,0 +1,20 @@
+{
+  "function": "AFortPawn::ApplyKnockback",
+  "status": "proposed",
+  "original": "0x142a1b200",
+  "signature": "void AFortPawn::ApplyKnockback(FVector ImpulseDir, float KnockbackZAngle, float KnockbackMagnitude)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a1b200.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/pawn-broad73/0x1423055b0.c"
+  ],
+  "callees": {
+    "0x1423055b0": "native body, ported in deps AFortPawn__ApplyKnockbackImpl",
+    "vslot 0x150 on AActor": "GetWorld (header model name, HIGH)",
+    "vslot 0x628 on ACharacter": "GetMovementComponent (header model name, MEDIUM)",
+    "vslot 0x5e8 on AActor": "ForceNetUpdate",
+    "0x142927a60": "UFortGameStateZone::StaticClass (engine-style class getter)",
+    "0x1429f5d30": "UFortMovementComp_Character::StaticClass (engine-style class getter)",
+    "cosf/sinf": "C math"
+  },
+  "notes": "Inventory order is reversed relative to read order (inventory index 2 = KnockbackMagnitude at offset 0). Confirmed from the thunk read order and the helper call (this, Magnitude, ZAngle, &Dir)."
+}

@@ -1,0 +1,16 @@
+{
+  "function": "AFortGameplayEffectDeliveryActor::DoExplosionAtLocation",
+  "status": "proposed",
+  "original": "0x142906650",
+  "signature": "void AFortGameplayEffectDeliveryActor::DoExplosionAtLocation(const FVector& ExplosionLocation)",
+  "captures": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142906650.asm",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x142697b10.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual1/0x142697b90.c"
+  ],
+  "callees": {
+    "vslot 0x638 (0x142697b10)": "DoExplosionAtLocationImpl (deps AFortGameplayEffectDeliveryActor__DoExplosionAtLocationImpl)",
+    "vslot 0x640 (0x142697b90)": "ExplodeWithSpec (deps AFortGameplayEffectDeliveryActor__ExplodeWithSpec)"
+  },
+  "notes": "Thunk reads one struct (FVector, 12 bytes) and makes one virtual call with the struct address. The result is written nowhere; no return value."
+}

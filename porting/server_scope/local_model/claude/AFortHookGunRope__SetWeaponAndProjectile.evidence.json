@@ -1,0 +1,24 @@
+{
+  "function": "AFortHookGunRope::SetWeaponAndProjectile",
+  "status": "proposed",
+  "original": "0x1429488d0",
+  "signature": "void AFortHookGunRope::SetWeaponAndProjectile(AActor* InWeapon, AActor* InProjectile)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x1429488d0.c",
+    "/opt/fortnite/local-model-package/captures/bcd2c3e5823f41c6974e079dcdf31b47/0x142ee3b30.c",
+    "/opt/fortnite/local-model-package/captures/c62bf762b0d346f1afce54f23053d9d0/0x143f84060.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native240-fresh-callees/0x1419afad0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native108-impl/0x1419af3a0.c"
+  ],
+  "callees": {
+    "0x1419afad0": "native body, ported in deps AFortHookGunRope__ApplyWeaponAndProjectile",
+    "0x1419af3a0": "rope geometry update (UpdateRopeEndpoints), ported in deps AFortHookGunRope__UpdateRopeEndpoints",
+    "0x143f84060": "flag-gated state toggle, ported in deps AFortHookGunRope__SetRopeAttachedState",
+    "0x142ee3b30": "TWeakObjectPtr assignment from an object pointer (engine)",
+    "0x1409e4e60": "USkeletalMeshComponentBudgeted::StaticClass (engine)",
+    "0x1448013f0": "UStaticMeshComponent::StaticClass (engine)",
+    "vslot 0x610 on AActor": "FindComponentByClass (header model name, MEDIUM)",
+    "vslot 0x5e8 on AActor": "ForceNetUpdate (header model name)"
+  },
+  "notes": "Thunk only. The inventory lists InProjectile first, but the raw offsets (InWeapon 0, InProjectile 8) and the thunk read order both put InWeapon first; the native call passes (this, InWeapon, InProjectile)."
+}

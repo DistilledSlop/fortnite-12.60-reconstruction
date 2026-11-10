@@ -1,0 +1,19 @@
+{
+  "function": "AFortOctopusVehicle::ServerSetTowhookAttachState",
+  "status": "proposed",
+  "original": "0x142a09490",
+  "signature": "void AFortOctopusVehicle::ServerSetTowhookAttachState(const FNetTowhookAttachState& InTowhookAttachState)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/5174f6b6e7d3437db3f64d2450854202/0x142a09490.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1419f2760.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native107-impl/0x141b5b190.c"
+  ],
+  "callees": {
+    "vslot 0xeb8 (0x1406801d0)": "ServerSetTowhookAttachState_Validate; body is Stub_ReturnTrue (always true)",
+    "vslot 0xec0 (0x1419f2760)": "ServerSetTowhookAttachState_Implementation; stores the state (see deps)",
+    "RPC_ValidateFailed": "engine RPC validation failure reporter (named engine helper)",
+    "0x141b5b190": "FNetTowhookAttachState copy: Component into a weak pointer, other fields verbatim"
+  },
+  "notes": "Struct layout is 32 bytes (Component at 0, LocalLocation at 8, LocalNormal at 20), matching FNetTowhookAttachState.h. Validate never fails in the shipped binary, so the RPC_ValidateFailed branch is dead in practice but is kept. Inventory reflection: one Struct parameter at offset 0 (struct 0x142b18b30). Flags 0x80220cc0 (RPC server)."
+}
