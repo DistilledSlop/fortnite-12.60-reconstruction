@@ -1,0 +1,53 @@
+{
+ "reviewed_by": "Claude Sonnet 5.5 (pattern scan plus spot checks against decompiles)",
+ "verified_against_decompile": [
+  "AFortPawn::ServerInternalEquipWeapon",
+  "AFortHookGunRope::SetStartPointOfRope (log strings present in the capture)"
+ ],
+ "blocked_count": 42,
+ "categories": {
+  "source_like": [
+   "ABuildingGameplayActorBlade::BroadcastOnPullAborted",
+   "ABuildingGameplayActorBlade::BroadcastOnPullStart",
+   "ABuildingRift::BroadcastRiftSpawningAI",
+   "ABuildingSMActor::ForceIntoStructuralGridDuringRuntime",
+   "ABuildingSMActor::MulticastPlayFullHealthEffects",
+   "AFortAthenaSKPushCannon::MultiCastPushCannonLaunchedPlayer",
+   "AFortCustomizableAbilityDecoTool::ServerPressSecondaryFire",
+   "AFortCustomizableAbilityDecoTool::ServerPressTrigger",
+   "AFortHookGunRope::SetStartPointOfRope",
+   "AFortMeatballVehicle::LandShakeEnd",
+   "AFortMeatballVehicle::StopDriverCameraShake",
+   "AFortMeatballVehicle::StopLandRumble",
+   "AFortMeatballVehicle::StopTurnRumble",
+   "AFortObjectiveBase::ClearObjectiveTimer",
+   "AFortObjectiveBase::PauseObjectiveTimer",
+   "AFortPawn::ServerInternalEquipWeapon",
+   "AFortPawn::SetFNameBasedOnHitDirection"
+  ],
+  "raw_memory_needs_rework": [
+   "AFortCreativeMoveTool::HandlePullPressed",
+   "AFortCreativeMoveTool::HandlePushPressed",
+   "AFortCreativeMoveTool::HandleResetRotationPressed",
+   "AFortCreativeMoveTool::HandleResetScalePressed",
+   "AFortCreativeMoveTool::HandleRotateClockwisePressed",
+   "AFortCreativeMoveTool::HandleRotateSingleCounterclockwiseReleased",
+   "AFortCreativeMoveTool::HandleScaleDownPressed",
+   "AFortCreativeMoveTool::HandleScaleDownReleased",
+   "AFortCreativeMoveTool::HandleScaleUpPressed",
+   "AFortCreativeMoveTool::HandleScaleUpReleased",
+   "AFortCreativeMoveTool::MulticastHideCutActors",
+   "AFortCreativeMoveTool::MulticastRestoreCutActors",
+   "AFortCreativeMoveTool::PushCreativeMoveToolEquippedInputComponent",
+   "AFortCreativeMoveTool::ServerHandshakeFromClientForReceivingCutActors",
+   "AFortCreativeMoveTool::ServerResetScale",
+   "AFortCreativeRoundSettings::ClearResourcesGivenPerRound",
+   "AFortCreativeRoundSettings::ClearResourcesGivenToWinnersPerRound",
+   "AFortCustomizableAbilityDecoTool::ServerReleaseSecondaryFire"
+  ],
+  "empty_body": [
+   "AFortAthenaSupplyDrop::OnLootSpawned",
+   "AFortCreativeMoveTool::PopCreativeMoveToolEquippedInputComponent"
+  ]
+ }
+}
