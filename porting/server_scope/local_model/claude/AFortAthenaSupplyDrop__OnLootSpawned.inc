@@ -1,5 +1,20 @@
-// CONFIDENCE: LOW. Original exec thunk 0x1428347d0 advances the bytecode cursor then enters
-// 0x14191d000 -> 0x14998573a -> 0x148ec417a / 0x1490beeb2 / 0x14923284d.
-// A later runtime capture reveals decodable, scattered instructions and a register-saving
-// gateway. Its ultimate destination and side effects remain unresolved. This empty draft
-// is a placeholder and does not establish either a no-op or Blueprint-only behavior.
+// CONFIDENCE: LOW. Proposed lift of candidate 0x1419237d0 reached from exec thunk
+// 0x1428347d0 through the protected gateway. Emulation confirms receiver preservation
+// for sampled direct and no-module-match paths; no live supply-drop invocation observed.
+// Registry accessor and method names are descriptive placeholders, as in the related
+// CaptureItemSpawner draft. The original body does not clear SpecialActorID.
+if (Role != ROLE_Authority || SpecialActorID.IsNone())
+{
+    return;
+}
+UWorld* World = GetWorld();
+if (World == nullptr)
+{
+    return;
+}
+AFortGameStateAthena* GameState = GetFortGameStateAthena(World);
+if (GameState == nullptr || GameState->SpecialActorRegistry == nullptr)
+{
+    return;
+}
+GameState->SpecialActorRegistry->RemoveByKey(SpecialActorID);
