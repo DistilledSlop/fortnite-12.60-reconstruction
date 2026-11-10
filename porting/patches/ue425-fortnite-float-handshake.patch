@@ -1,0 +1,163 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/PacketHandlers/StatelessConnectHandlerComponent.cpp b/Engine/Source/Runtime/Engine/Private/PacketHandlers/StatelessConnectHandlerComponent.cpp
+index 93f12f3bc..a505ef963 100644
+--- a/Engine/Source/Runtime/Engine/Private/PacketHandlers/StatelessConnectHandlerComponent.cpp
++++ b/Engine/Source/Runtime/Engine/Private/PacketHandlers/StatelessConnectHandlerComponent.cpp
+@@ -5,6 +5,8 @@
+ #include "Serialization/MemoryWriter.h"
+ #include "EngineStats.h"
+ #include "Misc/SecureHash.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ #include "Engine/NetConnection.h"
+ #include "Net/Core/Misc/PacketAudit.h"
+ 
+@@ -176,6 +178,8 @@ DEFINE_LOG_CATEGORY(LogHandshake);
+  */
+ 
+ #define HANDSHAKE_PACKET_SIZE_BITS				227
++#define FORTNITE_HANDSHAKE_PACKET_SIZE_BITS		195
++#define FORTNITE_RESTART_RESPONSE_SIZE_BITS		355
+ #define RESTART_HANDSHAKE_PACKET_SIZE_BITS		2
+ #define RESTART_RESPONSE_SIZE_BITS				387
+ 
+@@ -388,14 +392,24 @@ void StatelessConnectHandlerComponent::NotifyHandshakeBegin()
+ 	}
+ }
+ 
++bool StatelessConnectHandlerComponent::UseFortniteHandshake() const
++{
++	return Handler != nullptr && Handler->Mode == Handler::Mode::Server &&
++		FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
++}
++
+ void StatelessConnectHandlerComponent::SendConnectChallenge(TSharedPtr<const FInternetAddr> ClientAddress)
+ {
+ 	if (Driver != nullptr)
+ 	{
+-		FBitWriter ChallengePacket(GetAdjustedSizeBits(HANDSHAKE_PACKET_SIZE_BITS) + 1 /* Termination bit */);
++		FBitWriter ChallengePacket(GetAdjustedSizeBits(UseFortniteHandshake() ? FORTNITE_HANDSHAKE_PACKET_SIZE_BITS : HANDSHAKE_PACKET_SIZE_BITS) + 1 /* Termination bit */);
+ 		uint8 bHandshakePacket = 1;
+ 		uint8 bRestartHandshake = 0; // Ignored clientside
+ 		double Timestamp = Driver->GetElapsedTime();
++		if (UseFortniteHandshake())
++		{
++			Timestamp = static_cast<float>(Timestamp);
++		}
+ 		uint8 Cookie[COOKIE_BYTE_SIZE];
+ 
+ 		GenerateCookie(ClientAddress, ActiveSecret, Timestamp, Cookie);
+@@ -409,7 +423,15 @@ void StatelessConnectHandlerComponent::SendConnectChallenge(TSharedPtr<const FIn
+ 		ChallengePacket.WriteBit(bRestartHandshake);
+ 		ChallengePacket.WriteBit(ActiveSecret);
+ 
+-		ChallengePacket << Timestamp;
++		if (UseFortniteHandshake())
++		{
++			float WireTimestamp = static_cast<float>(Timestamp);
++			ChallengePacket << WireTimestamp;
++		}
++		else
++		{
++			ChallengePacket << Timestamp;
++		}
+ 		ChallengePacket.Serialize(Cookie, UE_ARRAY_COUNT(Cookie));
+ 
+ #if !UE_BUILD_SHIPPING
+@@ -557,7 +579,7 @@ void StatelessConnectHandlerComponent::SendChallengeAck(TSharedPtr<const FIntern
+ {
+ 	if (Driver != nullptr)
+ 	{
+-		FBitWriter AckPacket(GetAdjustedSizeBits(HANDSHAKE_PACKET_SIZE_BITS) + 1 /* Termination bit */);
++		FBitWriter AckPacket(GetAdjustedSizeBits(UseFortniteHandshake() ? FORTNITE_HANDSHAKE_PACKET_SIZE_BITS : HANDSHAKE_PACKET_SIZE_BITS) + 1 /* Termination bit */);
+ 		uint8 bHandshakePacket = 1;
+ 		uint8 bRestartHandshake = 0; // Ignored clientside
+ 		double Timestamp  = -1.0;
+@@ -571,7 +593,15 @@ void StatelessConnectHandlerComponent::SendChallengeAck(TSharedPtr<const FIntern
+ 		AckPacket.WriteBit(bRestartHandshake);
+ 		AckPacket.WriteBit(bHandshakePacket);	// ActiveSecret
+ 
+-		AckPacket << Timestamp;
++		if (UseFortniteHandshake())
++		{
++			float WireTimestamp = static_cast<float>(Timestamp);
++			AckPacket << WireTimestamp;
++		}
++		else
++		{
++			AckPacket << Timestamp;
++		}
+ 		AckPacket.Serialize(InCookie, COOKIE_BYTE_SIZE);
+ 
+ #if !UE_BUILD_SHIPPING
+@@ -691,12 +721,14 @@ void StatelessConnectHandlerComponent::SendRestartHandshakeRequest(const TShared
+ void StatelessConnectHandlerComponent::CapHandshakePacket(FBitWriter& HandshakePacket)
+ {
+ 	uint32 NumBits = HandshakePacket.GetNumBits() - GetAdjustedSizeBits(0);
++	const uint32 NormalSize = UseFortniteHandshake() ? FORTNITE_HANDSHAKE_PACKET_SIZE_BITS : HANDSHAKE_PACKET_SIZE_BITS;
++	const uint32 RestartSize = UseFortniteHandshake() ? FORTNITE_RESTART_RESPONSE_SIZE_BITS : RESTART_RESPONSE_SIZE_BITS;
+ 
+ #if RESTART_HANDSHAKE_DIAGNOSTICS
+-	check(NumBits == HANDSHAKE_PACKET_SIZE_BITS || NumBits == RESTART_HANDSHAKE_PACKET_SIZE_BITS || NumBits == RESTART_RESPONSE_SIZE_BITS
++	check(NumBits == NormalSize || NumBits == RESTART_HANDSHAKE_PACKET_SIZE_BITS || NumBits == RestartSize
+ 			|| NumBits == RESTART_RESPONSE_DIAGNOSTICS_SIZE_BITS);
+ #else
+-	check(NumBits == HANDSHAKE_PACKET_SIZE_BITS || NumBits == RESTART_HANDSHAKE_PACKET_SIZE_BITS || NumBits == RESTART_RESPONSE_SIZE_BITS);
++	check(NumBits == NormalSize || NumBits == RESTART_HANDSHAKE_PACKET_SIZE_BITS || NumBits == RestartSize);
+ #endif
+ 
+ 	FPacketAudit::AddStage(TEXT("PostPacketHandler"), HandshakePacket);
+@@ -988,8 +1020,10 @@ void StatelessConnectHandlerComponent::IncomingConnectionless(const TSharedPtr<c
+ 					// NOTE: Allow CookieDelta to be 0.0, as it is possible for a server to send a challenge and receive a response,
+ 					//			during the same tick
+ 					bool bChallengeSuccess = false;
+-					const double CookieDelta = Driver->GetElapsedTime() - Timestamp;
+-					const double SecretDelta = Timestamp - LastSecretUpdateTimestamp;
++					const double CurrentTime = UseFortniteHandshake() ? static_cast<float>(Driver->GetElapsedTime()) : Driver->GetElapsedTime();
++					const double SecretTime = UseFortniteHandshake() ? static_cast<float>(LastSecretUpdateTimestamp) : LastSecretUpdateTimestamp;
++					const double CookieDelta = CurrentTime - Timestamp;
++					const double SecretDelta = Timestamp - SecretTime;
+ 					const bool bValidCookieLifetime = CookieDelta >= 0.0 && (MAX_COOKIE_LIFETIME - CookieDelta) > 0.0;
+ 					const bool bValidSecretIdTimestamp = (SecretId == ActiveSecret) ? (SecretDelta >= 0.0) : (SecretDelta <= 0.0);
+ 
+@@ -1082,8 +1116,8 @@ bool StatelessConnectHandlerComponent::ParseHandshakePacket(FBitReader& Packet,
+ {
+ 	bool bValidPacket = false;
+ 	uint32 BitsLeft = Packet.GetBitsLeft();
+-	bool bHandshakePacketSize = BitsLeft == (HANDSHAKE_PACKET_SIZE_BITS - 1);
+-	bool bRestartResponsePacketSize = BitsLeft == (RESTART_RESPONSE_SIZE_BITS - 1);
++	bool bHandshakePacketSize = BitsLeft == ((UseFortniteHandshake() ? FORTNITE_HANDSHAKE_PACKET_SIZE_BITS : HANDSHAKE_PACKET_SIZE_BITS) - 1);
++	bool bRestartResponsePacketSize = BitsLeft == ((UseFortniteHandshake() ? FORTNITE_RESTART_RESPONSE_SIZE_BITS : RESTART_RESPONSE_SIZE_BITS) - 1);
+ 	bool bRestartResponseDiagnosticsPacketSize = false
+ #if RESTART_HANDSHAKE_DIAGNOSTICS
+ 			|| BitsLeft == (RESTART_RESPONSE_DIAGNOSTICS_SIZE_BITS - 1)
+@@ -1096,7 +1130,16 @@ bool StatelessConnectHandlerComponent::ParseHandshakePacket(FBitReader& Packet,
+ 		bOutRestartHandshake = !!Packet.ReadBit();
+ 		OutSecretId = Packet.ReadBit();
+ 
+-		Packet << OutTimestamp;
++		if (UseFortniteHandshake())
++		{
++			float WireTimestamp = 0.0f;
++			Packet << WireTimestamp;
++			OutTimestamp = WireTimestamp;
++		}
++		else
++		{
++			Packet << OutTimestamp;
++		}
+ 
+ 		Packet.Serialize(OutCookie, COOKIE_BYTE_SIZE);
+ 
+diff --git a/Engine/Source/Runtime/Engine/Public/PacketHandlers/StatelessConnectHandlerComponent.h b/Engine/Source/Runtime/Engine/Public/PacketHandlers/StatelessConnectHandlerComponent.h
+index b1ad1d54c..23eacda69 100644
+--- a/Engine/Source/Runtime/Engine/Public/PacketHandlers/StatelessConnectHandlerComponent.h
++++ b/Engine/Source/Runtime/Engine/Public/PacketHandlers/StatelessConnectHandlerComponent.h
+@@ -96,6 +96,8 @@ private:
+ 	 *
+ 	 * @param HandshakePacket	The handshake packet to be aligned.
+ 	 */
++	bool UseFortniteHandshake() const;
++
+ 	void CapHandshakePacket(FBitWriter& HandshakePacket);
+ 
+ public:

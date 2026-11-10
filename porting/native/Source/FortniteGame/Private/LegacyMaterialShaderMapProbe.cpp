@@ -3789,6 +3789,7 @@ static bool CheckLegacyOwnerExpectations(const UMaterialInstance* Instance, cons
 #endif
 
 
+#if PLATFORM_LINUX && !UE_SERVER
 // The ingress handlers verify original textures by path inside UMaterial::PostLoad. A synchronous load there nests
 // inside async loading (RecursionNotAllowed) whenever the texture is not already resident, so every texture named by a
 // pinned bundle is loaded once at provider registration, outside any async load.
@@ -3826,6 +3827,8 @@ static void PreloadLegacyIngressTextures()
     }
     UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: preloaded %d of %d pinned textures"),Loaded,Paths.Num());
 }
+
+#endif
 
 void RegisterLegacyOriginalMaterialProvider()
 {
