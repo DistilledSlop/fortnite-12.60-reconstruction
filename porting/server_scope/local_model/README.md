@@ -51,7 +51,7 @@ Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 
 | 26 | done, 15 recorded proposed (PlayerPawn DBNO/vehicle/part RPCs; helpers partial) |
 | 27 | done (15 proposed) |
 | 28 | done (15 proposed) |
-| 29, 30 | running (2 workers max at a time); chunks 22-53 are the regenerated remainder |
+| 29, 30 | STOPPED by user request (2026-11-10) before any output was recorded; rerun from scratch. Partial files, if any, are only in local-model-package/work/claude/out/ and were not recorded or mirrored | (2 workers max at a time); chunks 22-53 are the regenerated remainder |
 
 Recording a finished chunk: from the package dir `python3 -I work/claude/record_chunk.py NN` (claims or reopens each function as owner `claude-br`, then records proposed; copy in `claude/record_chunk.py`). Worker outputs are mirrored into `claude/` here (`<Class>__<Fn>.inc`, `.evidence.json`, `deps/`), with `claude/WORKER.md` the worker prompt. Chunk 00 helper deps include five not-yet-decompiled virtual targets (0x880, 0x888, 0x708, UpdateHighlightState, IsAthenaSpawnOverrideActive): chunk 00 follow-up item.
 
