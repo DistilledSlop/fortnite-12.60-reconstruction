@@ -12,13 +12,13 @@
       "id": "m2",
       "text": "The client joins a lobby on the reconstructed server",
       "done": false,
-      "evidence": "Native client/server direct joins pass, including an Athena pawn and network checksum 683914758. The last full regression reports 4,617 of 4,617 generated classes matching the offline checksum model; this does not establish runtime wire parity or a rebuilt-client lobby (native_classes_status.md)."
+      "evidence": "The original client with local TLS and AppES diagnostic patches signs in and reaches the lobby against the local backend. Native rebuilt client/server direct joins also pass, including an Athena pawn and network checksum 683914758; this does not establish a rebuilt-client lobby or runtime wire parity (porting/ORIGINAL_CLIENT.md; native_classes_status.md)."
     },
     {
       "id": "m3",
       "text": "The client matchmakes to the reconstructed UE dedicated server",
       "done": false,
-      "evidence": "Ticket, websocket, session and key routes exist; 71 backend tests passed in the last full regression and 72 pass after party-roster session-key handling. The client response parser has been located and session-key and websocket responses corrected; response shapes and admission policy remain partly inferred, and no rebuilt-client end-to-end matchmaking run is recorded (server/EVIDENCE.md)."
+      "evidence": "The diagnostic original client obtained a ticket, connected over a loopback plaintext websocket, processed queue and ready-check messages, and received a session assignment. Session lookup initially failed to parse; commit 685bf19d supplies missing settings, and a retest no longer logged those parser errors but still failed to find the session. An encrypted match join remains unverified. Native empty-map joining has only been demonstrated with the rebuilt client; no end-to-end rebuilt-client matchmaking is recorded (porting/MATCHMAKING_PROBE.md)."
     },
     {
       "id": "m4",
@@ -1095,7 +1095,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending. Original profile-initializer dispatch, borrowed string lifetime and support-field ownership are traced. Three explicit-state timer-context helpers are now promoted as source, with native build/runtime checks pending; group ownership integration remains unfinished. The original login parent directly selects its existing credentials child. Original StartSignIn executes a native delegate bound by UFortLoginInteractions to its credentials handler, which initiates UOnlineAccountCommon::AutoLogin through the original account object. The Fortnite account login virtual method now resolves through its reflected constructor and vtable to common StartLogin and a weak-object next-tick callback. The callback and ContinueLoggingIn state progression are identified, including conditional waiting-room ordering; waiting-room completion and the next conditional identity login are now traced, and typed login-step append/insert source kernels preserve original order, duplicates and delegate cloning. All 33 registry state names now have direct original literal-initializer receipts. Live registration, runtime account identity, callback execution and local completion remain unresolved; the success broadcast has prerequisites before and after it. The username selection callback still ends at selection. A selected-account adapter now creates an owned FUserOnlineAccount snapshot with a matching caller-provided ID, display name, blank email and actual selected access token. Source interfaces and recovered attribute consumers are reviewed, while native build/runtime, identity-provider wiring, token sufficiency and original account completion remain unfinished. Game-service URL fields and constructor defaults are recovered, and object creation is identified as a multicast broadcast rather than manager registration. The URL precondition checks SSL domain pinning and https/wss, requests process exit on failure, then continues assembly if the exit request returns. Configuration section/key mappings and state fields are recovered, but discovery/override precedence and the deployed game-service endpoint remain open. Paired AuthClient/AuthSecret overrides and append-only three-string configuration records now have native helpers. Original code establishes Client-then-Key comparisons with ASCII-only case folding; a duplicate preserves the existing secret and incoming record. The explicit command-line overload now uses Engine FParse::Value after bounded recovery of the original getter and fixed-key parser behavior. The current-command-line overload now uses the independently recovered FCommandLine::Get accessor separately for each attempted lookup. Manager wiring remains open; build and runtime checks are pending. A further original configuration branch requests exit only when its post-append collection remains empty; the successful paired override branch bypasses that guard. Embedded values are excluded from evidence. Full callback precedence, MCP manager integration, frontend loading and online login remain unfinished or unverified. The remaining effort estimate needs review."
+          "rationale": "The original client with local TLS and AppES diagnostic patches signs in and reaches the lobby using the local backend. This verifies a diagnostic local flow, not production account security or rebuilt-client login. The local service selects persistent accounts by username without passwords, entitlement checks or anti-cheat. HTTP tests cover account selection and restart persistence; unknown exchange codes are rejected instead of silently choosing another account. An exclusive state-directory lock prevents concurrent backend processes from owning the same persistent state. The original sign-in widget now has a generated username-only adaptation backed by token selection and a validated Athena profile snapshot. A focused HTTP test covers distinct persistent lockers. These native changes are build pending. Original profile-initializer dispatch, borrowed string lifetime and support-field ownership are traced. Three explicit-state timer-context helpers are now promoted as source, with native build/runtime checks pending; group ownership integration remains unfinished. The original login parent directly selects its existing credentials child. Original StartSignIn executes a native delegate bound by UFortLoginInteractions to its credentials handler, which initiates UOnlineAccountCommon::AutoLogin through the original account object. The Fortnite account login virtual method now resolves through its reflected constructor and vtable to common StartLogin and a weak-object next-tick callback. The callback and ContinueLoggingIn state progression are identified, including conditional waiting-room ordering; waiting-room completion and the next conditional identity login are now traced, and typed login-step append/insert source kernels preserve original order, duplicates and delegate cloning. All 33 registry state names now have direct original literal-initializer receipts. Live registration, runtime account identity, callback execution and local completion remain unresolved; the success broadcast has prerequisites before and after it. The username selection callback still ends at selection. A selected-account adapter now creates an owned FUserOnlineAccount snapshot with a matching caller-provided ID, display name, blank email and actual selected access token. Source interfaces and recovered attribute consumers are reviewed, while native build/runtime, identity-provider wiring, token sufficiency and original account completion remain unfinished. Game-service URL fields and constructor defaults are recovered, and object creation is identified as a multicast broadcast rather than manager registration. The URL precondition checks SSL domain pinning and https/wss, requests process exit on failure, then continues assembly if the exit request returns. Configuration section/key mappings and state fields are recovered, but discovery/override precedence and the deployed game-service endpoint remain open. Paired AuthClient/AuthSecret overrides and append-only three-string configuration records now have native helpers. Original code establishes Client-then-Key comparisons with ASCII-only case folding; a duplicate preserves the existing secret and incoming record. The explicit command-line overload now uses Engine FParse::Value after bounded recovery of the original getter and fixed-key parser behavior. The current-command-line overload now uses the independently recovered FCommandLine::Get accessor separately for each attempted lookup. Manager wiring remains open; build and runtime checks are pending. A further original configuration branch requests exit only when its post-append collection remains empty; the successful paired override branch bypasses that guard. Embedded values are excluded from evidence. Full callback precedence, MCP manager integration, frontend loading and online login remain unfinished or unverified. The remaining effort estimate needs review."
         },
         {
           "id": "backend.matchmaking",
@@ -1108,7 +1108,7 @@
             ],
             "stub_credit": 1.0
           },
-          "rationale": "Route literals measure only references, including tests and documentation. Websocket envelope, Play and ReadyCheck have local tests; original-client end-to-end matchmaking and protocol parity remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "The diagnostic original client obtained a ticket and received a session assignment through the loopback plaintext websocket. Session parsing failed in that run; the settings fix in commit 685bf19d awaits original-client verification. Route literals measure only references, including tests and documentation. Websocket envelope, Play and ReadyCheck have local tests; original-client end-to-end matchmaking and protocol parity remain unverified. See porting/server/EVIDENCE.md."
         },
         {
           "id": "backend.matchmaking.behavior",
@@ -1118,7 +1118,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Local matchmaking advertises its loopback websocket by default and can return the configured native server encryption key. HTTP/WebSocket tests pass; an encrypted matchmaking-to-game join and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "The diagnostic original client processed queue and ready-check messages and received a session assignment via loopback plaintext websocket. The subsequent session lookup failed to parse; the fix in commit 685bf19d awaits original-client verification. Encrypted original-client match joining remains unverified (porting/MATCHMAKING_PROBE.md). Local matchmaking advertises its loopback websocket by default and can return the configured native server encryption key. HTTP/WebSocket tests pass; an encrypted matchmaking-to-game join and complete protocol behavior remain unverified. See porting/server/EVIDENCE.md."
         },
         {
           "id": "backend.game_profile",
@@ -1145,7 +1145,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation, locker changes and active-loadout consistency after copying; the original copy semantics remain unverified. Profile snapshots and committed transactions now detach mutable caller data so locker state cannot silently diverge from saved revisions; focused ownership and restart tests pass. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Cosmetic variant changes remain unimplemented and are rejected. Game client login and profile integration and full protocol behavior remain unverified."
+          "rationale": "The diagnostic original client used local account, profile and locker flows; local shop purchases persisted items and balance. The local backend persists profiles and user cloud files across restarts, and HTTP tests cover account isolation, locker changes and active-loadout consistency after copying; the original copy semantics remain unverified. Profile snapshots and committed transactions now detach mutable caller data so locker state cannot silently diverge from saved revisions; focused ownership and restart tests pass. A mismatched MCP client revision receives a full profile snapshot under a local recovery policy; exact server behavior is unobserved. Cosmetic variant changes remain unimplemented and are rejected. Rebuilt-client login and profile integration and full protocol behavior remain unverified."
         },
         {
           "id": "backend.progression",
@@ -1155,7 +1155,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Local account and profile state now persists across service restarts; original progression behavior and gameplay integration remain unverified. Do not allocate native reconstruction effort twice."
+          "rationale": "The diagnostic original client purchased the local Battle Pass and level 2, with rewards and balance changes persisted. Gameplay integration and full progression parity remain unverified. Do not allocate native reconstruction effort twice (porting/PURCHASE_PROBE.md)."
         },
         {
           "id": "backend.local_tests",
@@ -1183,7 +1183,7 @@
             ],
             "stub_credit": 1.0
           },
-          "rationale": "Store, asset, lookup and payment routes. No real catalog behaviour is reproduced."
+          "rationale": "Route literals count references only; they do not establish served routes or protocol parity. Local shop and virtual-currency purchases were exercised in the diagnostic original client (porting/PURCHASE_PROBE.md)."
         },
         {
           "id": "backend.public_catalog.behavior",
@@ -1193,7 +1193,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "The diagnostic original client purchased local shop items, the Battle Pass, a level and a free repeatable local-currency pack; purchases and selected rewards persisted. These are local test transactions, with no payment provider or real money. Full catalog and service parity remain unverified (porting/PURCHASE_PROBE.md)."
         },
         {
           "id": "backend.party_xmpp",
