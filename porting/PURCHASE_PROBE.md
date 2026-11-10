@@ -13,3 +13,13 @@ empty reward presentation before returning to the offer. A notification based
 on reflected structures is under investigation. Screenshots are in the ignored
 `porting/generated/wine-investigation/20261109-purchase/` directory.
 The catalog and wallet use local virtual currency and do not process payments.
+
+A subsequent run reopened the same account with the 1,501 balance and Floss
+marked owned. Arctic Camo was purchased for 300 and added to the profile; its
+reward presentation was still blank even with a `CatalogPurchase` notification
+constructed from reflected fields. In the same run the client opened the Season
+12 Battle Pass purchase screen and purchased the 950 V-Bucks offer: the client
+reported success, the balance became 251, and `book_purchased` persisted as
+true. The UI showed the level-one rewards as unlocked, but the first version of
+the backend did not grant their inventory items; level purchases also stalled
+because their catalog offers were absent. These gaps require follow-up.
