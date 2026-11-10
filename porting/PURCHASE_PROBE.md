@@ -29,5 +29,12 @@ rewards to the existing test account, the client purchased level 2 for 150.
 The request returned 200, the client reported success and advanced its reward
 screen, the balance fell from 251 to 101, and the profile gained the level-2
 `AthenaDance:EID_CallMe` emote. The first-level Maya and Agent Peely items were
-present after the repair. A fresh pass purchase with reward grants and the
-purchase-presentation behavior still require client verification.
+present after the repair. At that point, a fresh pass purchase and purchase presentation still needed
+verification; both were checked in the subsequent run below.
+
+A fresh account subsequently purchased Arctic Camo from the shop. Adding
+`primary: true` to the CatalogPurchase notification made the client display
+the acquired item with Claim and Equip controls. The same account purchased
+the pass for 950: the client reported success, the balance became 750 after
+the earlier 300-V-Bucks wrap purchase, and the profile gained both Maya and
+Agent Peely as part of the purchase.
