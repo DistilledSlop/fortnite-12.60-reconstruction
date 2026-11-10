@@ -1,4 +1,4 @@
-// CONFIDENCE: MEDIUM. Original addresses: exec 0x142a7d7f0 dispatches via vtable slot 0xe50 to native body 0x142335930 (228 lines, read in full). Helpers read to depth two. LOW items: glider/FX internals, virtual slots 0x1208, 0x1330, 0x520, 0x530, 0x538, 0x6b0, 0x2260, and one STRIPPED helper (0x140c31764 -> 0x1495a4a24, treated as no-op).
+// CONFIDENCE: LOW. Original addresses: exec 0x142a7d7f0 dispatches via vtable slot 0xe50 to native body 0x142335930 (228 lines, read in full). Helpers read to depth two. LOW items: glider/FX internals, virtual slots 0x1208, 0x1330, 0x520, 0x530, 0x538, 0x6b0, 0x2260, and the omitted 0x140c31764 -> 0x1495a4a24 dispatch, which is not a no-op.
 // Shorthand: Role is pawn+0xf0; CharacterMovement is pawn+0x280; pawn+0x10e7 holds the suppress bits, pawn+0x10e8 the parachute open/forced bits.
 bParachuteMovementActive = true;                       // pawn+0x10e6 := 1
 NativeRecoveredInt_0x3f8 = 1;                          // pawn+0x3f8 := 1
@@ -6,7 +6,7 @@ if (!(NativeRecoveredByte_0x10e7 & 1))
 {
     if (Role == ROLE_Authority)
     {
-        // 0x140c31764 -> 0x1495a4a24: ORs an argument into a global bitfield with 0; no effect on this pawn (STRIPPED: no-op here).
+        // MISSING: 0x140c31764 -> 0x1495a4a24 calls the skydiving virtual dispatch; the previous no-op assumption was incorrect.
         UWorld* World = GetWorld();
         // 0x140f95ae0: timer manager is World+0x188 ->+0xc0 when that owner exists, else World+0x800 (read in full).
         FTimerManager& TimerManager = GetWorldTimerManager(World);

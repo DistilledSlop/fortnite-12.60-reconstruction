@@ -66,7 +66,7 @@
     "0x140744d30": "FGameplayTagCountContainer::UpdateTagCount (read in full, 205 lines)",
     "0x1406c7d70": "owned-object search by outer (read in full)",
     "0x141ed1800": "GetFortGlobals lazy singleton (read in full)",
-    "0x1495a4a24": "STRIPPED: ORs into a global bitfield; no effect here",
+    "0x1495a4a24": "Recovered dispatcher invokes vtable slot 0x1228; the previous no-op claim was incorrect. The proposed body omits this call.",
     "0x140c31764": "thunk into 0x1495a4a24",
     "0x142931260": "UFortGliderPackSet::StaticClass (read in full)",
     "0x142a92a00": "AFortPlayerStateZone::StaticClass (read in full)",
@@ -74,5 +74,5 @@
     "0x1446939a0": "bool helper on a state byte (read in full)",
     "0x142bfb0f0": "GMalloc allocation wrapper (read in full)"
   },
-  "notes": "Port covers every branch of 0x142335930. Unresolved virtual slots (0x1208, 0x1330, 0x520, 0x530, 0x538, 0x6b0, 0x2260, 0x10 on the provider) are LOW. Remaining L3 callees (0x141f07990, 0x14234b140, 0x140762680, 0x142e722c0, 0x14232cb50, 0x1406f7140) are named by use only."
+  "notes": "LOW CONFIDENCE: the proposed body omits the skydiving dispatch. Unresolved virtual slots (0x1208, 0x1330, 0x520, 0x530, 0x538, 0x6b0, 0x2260, 0x10 on the provider) are LOW. Remaining L3 callees (0x141f07990, 0x14234b140, 0x140762680, 0x142e722c0, 0x14232cb50, 0x1406f7140) are named by use only."
 }

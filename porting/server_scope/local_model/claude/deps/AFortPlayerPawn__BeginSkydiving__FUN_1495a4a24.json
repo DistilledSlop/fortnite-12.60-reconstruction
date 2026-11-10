@@ -1,7 +1,7 @@
 {
   "name": "AFortPlayerPawn__BeginSkydiving__FUN_1495a4a24",
   "address": "0x1495a4a24",
-  "signature": "unresolved (called as FUN_1495a4a24(param_1, param_2, 0) from FUN_140c31764)",
-  "inc_or_decl": "// STATUS: UNRESOLVED. Captures show only: PUSH RDI; OR.LOCK dword ptr [RSI + 0x3202e1dd],ECX; RETF. This does not decode as a usable function body.\n// The effect is not recovered. The ported AFortPlayerPawn::BeginSkydiving body calls BeginSkydivingInternal(bFromBus) and keeps this as a LOW confidence gap.\n",
-  "evidence": "captures/eb5642631b5d4f6baa0f0f8c93aca6cf/0x140c31764.c (caller); captures/*/0x1495a4a24.asm (callee)"
+  "signature": "dispatcher called as (pawn, requested byte), invokes vtable slot 0x1228 with calculated change byte",
+  "inc_or_decl": "// PARTIAL: later runtime image reveals a virtual dispatch, not a no-op. Athena implementation updates skydiving flags and conditionally broadcasts an event; helper effects remain unresolved. No implementation has been integrated or verified.",
+  "evidence": "porting/generated/protected-analysis-20261110/skydiving/README.md and blocks.txt (local generated evidence); earlier captures were premature"
 }
