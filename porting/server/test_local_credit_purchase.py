@@ -16,7 +16,9 @@ class LocalCreditPurchaseTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             service = Backend(state_dir=directory).profiles
             for expected in (1000, 2000):
-                service.run("account", "common_core", "PurchaseCatalogEntry", BODY)
+                response = service.run("account", "common_core", "PurchaseCatalogEntry", BODY)
+                self.assertTrue(response["notifications"][0]["primary"])
+                self.assertEqual(response["notifications"][0]["lootResult"]["items"][0]["quantity"], 1000)
                 core = service.profile("account", "common_core")
                 self.assertEqual(next(iter(core["items"].values()))["quantity"], expected)
             self.assertEqual(core, Backend(state_dir=directory).profiles.profile("account", "common_core"))

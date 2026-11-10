@@ -38,3 +38,9 @@ the acquired item with Claim and Equip controls. The same account purchased
 the pass for 950: the client reported success, the balance became 750 after
 the earlier 300-V-Bucks wrap purchase, and the profile gained both Maya and
 Agent Peely as part of the purchase.
+
+The local V-Bucks storefront was tested in the original client with a free,
+repeatable 1,000-V-Bucks pack. A purchase increased the displayed balance from
+750 to 1,750; after restarting the client, another purchase succeeded and showed
+an acquired 1,000 V-Bucks reward with a Claim button. The pack adds local test
+currency only and does not use a payment provider.

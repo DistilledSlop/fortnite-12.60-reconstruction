@@ -260,9 +260,10 @@ cosmetic to the Athena profile in one transaction. Catalog entries, purchase pay
 and response semantics are partly inferred. Original-client cosmetic and Battle
 Pass purchases have been observed. Season 12 pass purchases and level skips grant
 reached rewards from the cooked season schedule; challenge activation and style
-token application are not implemented. Level skips still require client verification.
-This is virtual local currency; no payment provider is connected and real-money
-purchases are not implemented.
+token application are not implemented. A level skip has also been verified in the
+original client. The V-Bucks storefront offers a repeatable free pack of 1,000
+local test V-Bucks. No payment provider is connected and real-money purchases
+are not implemented.
 
 For a profile that purchased the pass before reward grants were implemented, stop
 the backend and run `python3 porting/server/repair_season12.py /path/to/state ACCOUNT_ID`.

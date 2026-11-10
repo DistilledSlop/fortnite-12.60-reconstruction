@@ -371,6 +371,10 @@ def _purchase_catalog_entry(ctx):
         if isinstance(balance, bool) or not isinstance(balance, int) or balance < 0:
             raise _invalid("Local currency balance is invalid.")
         core.set_item_quantity(wallet_id, balance + 1000)
+        ctx.notifications.append({"type": "CatalogPurchase", "primary": True, "lootResult": {
+            "tierGroupName": "", "items": [{"itemType": "Currency:MtxGiveaway",
+                "itemGuid": wallet_id, "quantity": 1000,
+                "attributes": wallet.get("attributes", {}), "itemProfile": "common_core"}]}})
         return
 
     if offer_id in (SEASON12_PASS_OFFER, SEASON12_LEVEL_OFFER):
