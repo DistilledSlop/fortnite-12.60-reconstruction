@@ -47,7 +47,8 @@ Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 
 | 22 | done, 15 recorded proposed (BR skydive/team/bus-driver RPCs; helpers depth one) |
 | 23 | done, 15 recorded proposed (ghost mode, vehicle, vote/spectate RPCs; depth-2 partial) |
 | 24 | done, 15 recorded proposed (ControllerZone vote/spectate RPCs, PlayerPawn hover/skydive) |
-| 25, 26 | running (2 workers max at a time); chunks 22-53 are the regenerated remainder |
+| 25 | done, 15 recorded proposed (PlayerPawn gender, parachute, vehicle input; plus 2 extra _Implementation bodies) |
+| 26, 27 | running (2 workers max at a time); chunks 22-53 are the regenerated remainder |
 
 Recording a finished chunk: from the package dir `python3 -I work/claude/record_chunk.py NN` (claims or reopens each function as owner `claude-br`, then records proposed; copy in `claude/record_chunk.py`). Worker outputs are mirrored into `claude/` here (`<Class>__<Fn>.inc`, `.evidence.json`, `deps/`), with `claude/WORKER.md` the worker prompt. Chunk 00 helper deps include five not-yet-decompiled virtual targets (0x880, 0x888, 0x708, UpdateHighlightState, IsAthenaSpawnOverrideActive): chunk 00 follow-up item.
 
@@ -95,3 +96,4 @@ Scope note: the target is the 1,110 in queue.json only (user decision). The 3,05
 ## PACKED CODE: second .text section (finding, 2026-11-10)
 
 The runtime dump has a SECOND `.text` section at `0x148d2c000` (size `0x1121600`, to `0x149e4d600`), after `.reloc`. Calls into it do not decode (e.g. `0x1495a4a24` disassembles as `PUSH RDI; OR.LOCK [RSI+0x3202e1dd],ECX; RETF`, which is garbage, so the bytes are encrypted/virtualized or not yet decrypted in the dump). Across all 1,098 captured thunks only three functions reference it, but two are battle-royale critical: `AFortAthenaSupplyDrop::OnLootSpawned` (chain `0x14191d000 -> 0x14998573a -> 0x14923284d`) and `AFortPlayerPawn::BeginSkydiving` (`FUN_1495a4a24`); the third is `0x140c31764`. These bodies cannot be recovered from the current dump; options: take a runtime dump after the code has executed (Wine run that reaches the call), or reimplement from game semantics. Workers are told to record such callees as PACKED.
+- Chunk 25: `OnBeginParachuteMovement` (full 228-line body of 0x142335930) treats the packed chain `0x140c31764 -> 0x1495a4a24` as a no-op (PACKED, see section above); Niagara and glider internals LOW; `PostResIn` and `ReviveFromDBNO` event FNames unresolved; `IsEmoteBlockedByMovement` adds a CharacterMovement null guard the original lacks.
