@@ -1,0 +1,38 @@
+{
+  "function": "ABuildingActor::Resave",
+  "status": "blocked",
+  "original_address": "0x142737ee0 (7-instruction thunk) -> 0x141bc3120 (shared multicast-broadcast body)",
+  "decompile_source": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native103-broad/0x142737ee0.c (follows the jmp to 0x141bc3120)",
+  "asm_source": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native103-broad/0x142737ee0.asm",
+  "flag_proof": {
+    "reflection_flags": "0x4080401",
+    "decoded": "FUNC_Native | FUNC_Final | FUNC_BlueprintCallable | FUNC_HasOutParms",
+    "note": "Native, final, BlueprintCallable. FUNC_HasOutParms (0x80000) is set but reflection lists zero params — a generator discrepancy to document; the broadcast itself passes the actor as the (implicit) first delegate parameter."
+  },
+  "resolved_contracts": [
+    "0x142737ee0 is a thunk: shared native prologue (flag touch at [rdx+0x20]) then 'jmp 0x141bc3120'. No direct calls in the thunk (capture .json: called=[], thunk=false, 7 instructions).",
+    "0x141bc3120 is a multicast-delegate broadcast body (FMulticastDelegateBase::ProcessMulticastDelegate shape): it obtains the invocation list from a getter, increments a re-entrancy counter at list+0x14, iterates the bound entries (each 0x10 bytes, count at list+0x8), calls ProcessDelegate at bound-object vtable+0x50 with the actor as the argument, decrements the counter, and calls FMulticastDelegateBase_CompactInvocationList(list,false) when any entry was invalid/empty.",
+    "The broadcast passes the actor (param_1 / This) as the delegate argument: cVar3 = (**(code **)(*plVar1 + 0x50))(plVar1, param_1).",
+    "The delegate getter region (0x14205cc60-0x14205cc8f) is a dispatcher: 'lea rax,[rsi+0x340]; lea rcx,[rsi+0x2b0]; cmove rax,rcx; ... lea rbp,[rsi+0x340]' — it selects between base+0x340 and base+0x2b0 based on a preceding ZF condition, where the base is in rsi."
+  ],
+  "unresolved_contracts": [
+    "Which ABuildingActor delegate property is broadcast. The getter computes base+0x340 (or base+0x2b0), but (a) the base register (rsi) is not visibly loaded with the actor in 0x141bc3120 under the Windows x64 ABI (rsi is a scratch register; the actor arrives in rcx), and (b) the runtime image data section is encrypted (e.g. the CDO global at 0x1481768b8 reads as 0x794d0e3046e0, not a pointer), so offsets 0x340/0x2b0 cannot be mapped to a named property by memory read.",
+    "None of ABuildingActor's named multicast delegates cleanly matches a single-actor-parameter signature: FBuildingDamagedSignature (8 params), FBuildingActorOnInteract (ABuildingActor*, AFortPawn*), FBuildingHealthChanged (0 params), FActorHealthChanged (AActor*, float). So the broadcast target is not one of the obvious named delegates without the offset->property mapping.",
+    "The exact getter entry/ABI: the bytes at 0x14205cc80 begin mid-dispatcher ('jz'), so the true function entry (with the ZF-setting test) is a few bytes earlier and was not captured as a labeled function."
+  ],
+  "attempts": [
+    "Read the Resave decompile + asm: confirmed it is a thunk to the shared body 0x141bc3120.",
+    "Read the 0x141bc3120 decompile + asm: confirmed the multicast-broadcast shape and the getter call (real target 0x14205cc80, not Ghidra's mislabeled FUN_141c8cc80).",
+    "Read getter bytes 0x14205cc60-0x14205cc95: identified the base+0x340 / base+0x2b0 dispatcher and that the base is in rsi.",
+    "Enumerated ABuildingActor's delegate properties and their signatures from the generated header (ABuildingActor.h + FBuildingDamagedSignature.h / FBuildingActorOnInteract.h / FBuildingHealthChanged.h / FActorHealthChanged.h); none matches a single-actor-parameter multicast cleanly.",
+    "Tried 'evidence.py field-offset ABuildingActor 0x340' (832): no reflected field resolved at that offset.",
+    "Attempted to read the CDO / vtable data to map offsets: data section is encrypted in image-125.runtime.bin, so this path is unavailable.",
+    "Decoded Resave function flags 0x4080401 (Native|Final|BlueprintCallable|HasOutParms)."
+  ],
+  "next_steps": [
+    "Resolve the base-register contract: re-decompile 0x141bc3120 with the Windows x64 ABI explicitly and confirm whether the actor (rcx) is moved to rsi before the getter call (the current decompile may have dropped it), so base = the ABuildingActor instance.",
+    "Map offset 0x340 (and 0x2b0) to a named ABuildingActor delegate property by walking the full reflected property layout (UObject + AActor + ABuildingActor sizes) from a non-encrypted reflection offset table, since field-offset returned nothing for 0x340 alone.",
+    "Confirm the selected delegate's parameter signature (first param = the actor) to name it, then emit the body as '<DelegateName>.Broadcast(this)'.",
+    "Document the FUNC_HasOutParms-with-no-params generator discrepancy for Resave separately."
+  ]
+}

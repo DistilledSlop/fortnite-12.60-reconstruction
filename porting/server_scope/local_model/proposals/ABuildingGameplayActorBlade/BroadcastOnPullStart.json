@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingGameplayActorBlade::BroadcastOnPullStart",
+ "status": "proposed",
+ "blocker": null,
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100027",
+ "batch_seconds": 843
+}

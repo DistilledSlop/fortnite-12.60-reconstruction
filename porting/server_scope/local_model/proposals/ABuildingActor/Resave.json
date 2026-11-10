@@ -1,0 +1,8 @@
+{
+ "function": "ABuildingActor::Resave",
+ "status": "blocked",
+ "blocker": "Cannot identify which ABuildingActor multicast delegate is broadcast: the thunk (0x142737ee0) jumps to shared broadcast body 0x141bc3120 whose getter (0x14205cc60-0x14205cc8f) selects base+0x340/base+0x2b0 with base in rsi, but the base-register contract is unconfirmed under the x64 ABI and the encrypted data section prevents mapping offset 0x340 to a named property; no named delegate cleanly matches a single-actor-param signature. Next: confirm base=actor in 0x141bc3120 and map 0x340 via full reflected property layout.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100027",
+ "batch_seconds": 843
+}

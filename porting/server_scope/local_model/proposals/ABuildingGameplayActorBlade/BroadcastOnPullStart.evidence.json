@@ -1,0 +1,28 @@
+{
+  "function": "ABuildingGameplayActorBlade::BroadcastOnPullStart",
+  "original_address": "0x1427261d0",
+  "decompile_source": "captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x1427261d0.c",
+  "asm_source": "captures/69d216f1f5fb4333b1a8d5cd83cb4996/0x1427261d0.asm",
+  "proposal": "work/q27-11100027/BroadcastOnPullStart.inc",
+  "flag_proof": {
+    "reflection_flags": "0x4024cc0",
+    "decoded": "FUNC_Net | FUNC_NetReliable | FUNC_NetMulticast | FUNC_Native | FUNC_Event | FUNC_Public | FUNC_BlueprintCallable",
+    "note": "NetMulticast Reliable native RPC, matching the generated header UFUNCTION(NetMulticast, Reliable)."
+  },
+  "observations": [
+    "ASM-authoritative body: shared native prologue (flag touch at [rdx+0x20]) then 'mov rax,[rcx]; jmp [rax+0xa98]' — a tail-call to the class virtual at vtable byte offset 0xa98 with no arguments.",
+    "The C decompile confirms the single indirect call: (**(code **)(*param_1 + 0xa98))();",
+    "The generated header ABuildingGameplayActorBlade.h declares exactly two non-UFUNCTION virtuals: BroadcastOnPullAborted_Implementation() and BroadcastOnPullStart_Implementation(). The two adjacent vtable slots 0xa90 (Aborted) and 0xa98 (Start) map to them in declaration order, so 0xa98 = BroadcastOnPullStart_Implementation.",
+    "This is the canonical UE dispatch for a native NetMulticast RPC whose exec body forwards to the _Implementation virtual."
+  ],
+  "header_declaration": {
+    "present": true,
+    "location": "checkout porting/native/Source/FortniteGame/Generated/ABuildingGameplayActorBlade.h lines 21-23",
+    "note": "UFUNCTION(NetMulticast, Reliable) void BroadcastOnPullStart(); plus void BroadcastOnPullStart_Implementation();"
+  },
+  "confidence": "HIGH",
+  "remaining_questions": [
+    "The vtable slot -> _Implementation mapping is inferred from declaration order of the class's only two non-UFUNCTION virtuals (adjacent slots 0xa90/0xa98); the data section is encrypted in the runtime image so the vtable entry pointer could not be read directly to confirm the exact code address.",
+    "The _Implementation virtual body itself is out of scope for this function (it is the separate native/manifest member, not the RPC exec)."
+  ]
+}
