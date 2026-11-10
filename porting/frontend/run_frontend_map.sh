@@ -6,6 +6,22 @@
 # GDB_SCRIPT=file.gdb runs the probe under gdb (use 'handle SIGTRAP nostop noprint nopass', 'handle SIGSEGV stop', 'bt').
 # Native/engine fixes for unversioned 12.60 packages (field paths, Sequencer v11) are on by default.
 set -u
+if [ "$#" -lt 3 ]; then
+  echo "usage: $0 MAP OUT.log SHOT.png [SECONDS] [extra engine args]" >&2
+  exit 2
+fi
+MAP=$1
+O=$(realpath -m -- "$2")
+PNG=$(realpath -m -- "$3")
+shift 3
+SECS=90
+if [ "$#" -gt 0 ] && [[ $1 =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+  SECS=$1
+  shift
+fi
+if [ -n "${GDB_SCRIPT:-}" ]; then
+  GDB_SCRIPT=$(realpath -m -- "$GDB_SCRIPT")
+fi
 R=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting
 G=$R/generated; M=$G/material_pipeline
 # Bundles whose hashes are compiled into LegacyMaterialShaderMapProbe.cpp (root-replay copies match the pins).
@@ -13,12 +29,12 @@ B="$M/locker-ingress-bundle.json,$M/gradient-panel-ingress-bundle.json,$M/power-
 CM=$M/comicbubble-ingress-3/combined-manifest.json
 SHA=$(sha256sum "$CM" | cut -d' ' -f1)
 cd "$G/frontend-probes/paper2d-matched-stage-3/LinuxNoEditor/FortniteLinux/Binaries/Linux" || exit 2
-MAP="$1"; O="$2"; PNG="$3"; SECS="${4:-90}"; shift 4 2>/dev/null || shift $#
-FB=$(mktemp -d)
+FB=$(mktemp -d) || exit 2
+trap 'rm -rf -- "$FB" "$FB.snap.py"' EXIT
 ulimit -c 0
-RUN=./FortniteLinux.nov8
-[ -n "${GDB_SCRIPT:-}" ] && RUN="gdb -q -batch -x $GDB_SCRIPT --args ./FortniteLinux.nov8"
-timeout "$SECS" xvfb-run -a -s "-screen 0 1280x720x24 -fbdir $FB" $RUN "$MAP" -vulkan -windowed -ResX=1280 -ResY=720 -nosound -unattended \
+RUN=(./FortniteLinux.nov8)
+[ -n "${GDB_SCRIPT:-}" ] && RUN=(gdb -q -batch -x "$GDB_SCRIPT" --args ./FortniteLinux.nov8)
+timeout "$SECS" xvfb-run -a -s "-screen 0 1280x720x24 -fbdir $FB" "${RUN[@]}" "$MAP" -vulkan -windowed -ResX=1280 -ResY=720 -nosound -unattended \
   -FortniteLegacyMaterialIngress="$B" -log \
   -FortniteLegacyMaterialManifest="$CM" -FortniteLegacyMaterialManifestSHA256="$SHA" "$@" > "$O" 2>&1 &
 PID=$!
@@ -38,6 +54,8 @@ if f:
 PY
 # snapshot every 5 s while the client is alive; the last good frame is kept at $PNG
 while kill -0 $PID 2>/dev/null; do sleep 5; python3 "$FB.snap.py" "$FB" "$PNG"; done
-wait $PID; echo rc=$?
-rm -rf "$FB" "$FB.snap.py"
+wait "$PID"
+rc=$?
+echo "rc=$rc"
 grep -a -n "Fatal error\|Signal 11\|Assertion failed" "$O" | head -3 | cut -c1-250
+exit "$rc"
