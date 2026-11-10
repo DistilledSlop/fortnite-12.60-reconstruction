@@ -1,0 +1,22 @@
+{
+  "function": "ABuildingGameplayActorSpawnMachine::SetSpawnMachineState",
+  "status": "proposed",
+  "original": "0x142744630",
+  "signature": "void ABuildingGameplayActorSpawnMachine::SetSpawnMachineState(EFortSpawnMachineState NewState)",
+  "captures": [
+    "captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f72550.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x142742ff0.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x143f72040.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142744630.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141beb220.c"
+  ],
+  "callees": {
+    "0x141beb220": "native body of this function",
+    "0x143f72040": "AActor::FlushNetDormancy (debug string NET_AActor_FlushNetDormancy); called before the state is stored",
+    "0x142742ff0": "OnRep_SpawnMachineState via ProcessEvent",
+    "0x143f72550": "virtual slot 0x5e8 target (UpdateNetDormancyState): when role is Authority and the dormancy byte is above awake, flushes dormancy and notifies the owning replication list",
+    "vtable 0x5e8 on this": "resolved by virtual_slots.py for ABuildingGameplayActorSpawnMachine to 0x143f72550"
+  },
+  "notes": "Role is the reflected Role property at +0xf0 (value 3 = ROLE_Authority). UpdateNetDormancyState is my name for the 0x5e8 target, which only refreshes dormancy.",
+  "confidence": "HIGH"
+}

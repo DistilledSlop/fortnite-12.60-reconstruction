@@ -1,0 +1,34 @@
+{
+  "function": "ABuildingItemCollectorActor::ServerSpawnItem",
+  "status": "proposed",
+  "original": "0x142747b90",
+  "signature": "void ABuildingItemCollectorActor::ServerSpawnItem(FFortItemEntry OutputItem)",
+  "captures": [
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x14199e3c0.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x142025400.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x142c5d000.c",
+    "captures/2bdc823f458840e0992165e7c1101dec/0x141a4a6f0.c",
+    "captures/5beaac7287b64ac38c84805119ec0b83/0x145803c70.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142747b90.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x1419844f0.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141be9b10.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141be9bc0.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x1420237c0.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x142023c10.c"
+  ],
+  "callees": {
+    "0x141be9bc0": "virtual slot 0xa60 target (ServerSpawnItem_Validate): destroys its by-value argument and returns true, so validation always passes",
+    "0x141be9b10": "virtual slot 0xa68 target (ServerSpawnItem_Implementation), see deps/ABuildingItemCollectorActor__ServerSpawnItem_Implementation.json",
+    "0x142023c10": "default constructor of the 336-byte item entry (FFortItemEntry), used for the FFrame parameter and the copies",
+    "0x1420237c0": "copy construction: default init then 0x142025400 assignment",
+    "0x142025400": "FFortItemEntry copy assignment (field by field, nested containers via their own assign helpers)",
+    "0x1419844f0": "FFortItemEntry destructor (frees the nested arrays and containers)",
+    "0x145803c70": "stack cookie check (compiler security check, no program behaviour)",
+    "0x14199e3c0": "GameState feature check used by the implementation (returns a bool from the game state sub-object)",
+    "0x141a4a6f0": "helper behind 0x14199e3c0; reads the game-state settings and returns a bool",
+    "0x142c5d000": "FQuat::Rotator (STAT_MathConvertQuatToRotator), used by the implementation for the spawn rotation",
+    "RPC_ValidateFailed": "named engine helper, raises the RPC validation failure for the named function"
+  },
+  "notes": "The payload size (336 bytes) and the struct name FFortItemEntry are my best reading of the native layout; the struct name is not confirmed by reflection.",
+  "confidence": "HIGH"
+}

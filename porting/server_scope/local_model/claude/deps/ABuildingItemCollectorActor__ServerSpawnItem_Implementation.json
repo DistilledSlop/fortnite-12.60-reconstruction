@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingItemCollectorActor__ServerSpawnItem_Implementation",
+  "address": "0x141be9b10",
+  "signature": "void ABuildingItemCollectorActor::ServerSpawnItem_Implementation(FFortItemEntry OutputItem)",
+  "inc_or_decl": "// CONFIDENCE: LOW. Server-side item spawn gate. Runs only while the game state passes the spawn feature check.\nUWorld* World = GetWorld();\nAGameStateBase* GameState = World ? World->GameState : nullptr;\nif (AFortGameStateAthena* AthenaState = Cast<AFortGameStateAthena>(GameState))\n{\n    if (IsSpawnFeatureEnabled(AthenaState))            // native 0x14199e3c0\n    {\n        // Virtual hook 0x14d8 on ControllingPlayer is not called here: its receiver class was not recovered, so its notification side effect is not ported.\n        if (bHasSpawnQuat)                              // bool at +0x8e0\n        {\n            const FQuat SpawnQuat(SpawnQuatX, SpawnQuatY, SpawnQuatZ, SpawnQuatW);   // floats at +0x8b0..+0x8bc\n            const FRotator SpawnRotation = SpawnQuat.Rotator();                       // native 0x142c5d000; result not consumed on the shipped path\n        }\n    }\n}\n// OutputItem is destroyed when the implementation returns.\n",
+  "evidence": "captures/fcbf982e56154745b5a40dc69fd4a376/0x141be9b10.c"
+}

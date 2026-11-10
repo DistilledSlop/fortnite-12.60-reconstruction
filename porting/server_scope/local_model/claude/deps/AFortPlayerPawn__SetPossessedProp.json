@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerPawn__SetPossessedProp",
+  "address": "0x14234ec60",
+  "signature": "void SetPossessedProp(ABuildingGameplayActorPlayerPropAttachment* Prop)",
+  "inc_or_decl": "void SetPossessedProp(ABuildingGameplayActorPlayerPropAttachment* Prop);",
+  "evidence": "Stores PossessedProp (+0x15e8 in the pawn) through a setter (0x140aae720) that fires OnPossessedProp. Logs and clears the prop when it is pending kill or being destroyed. Captured at captures/6efb1241727e4d638a4125f43c983a91/0x14234ec60.c."
+}

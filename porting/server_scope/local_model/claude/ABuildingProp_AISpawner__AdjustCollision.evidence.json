@@ -1,0 +1,22 @@
+{
+  "function": "ABuildingProp_AISpawner::AdjustCollision",
+  "status": "proposed",
+  "original": "0x14274a920",
+  "signature": "void ABuildingProp_AISpawner::AdjustCollision(UPrimitiveComponent* Collision, bool bIgnore)",
+  "captures": [
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x144471420.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x1444889d0.c",
+    "captures/547f13f8abf24622bd9830a15ad99fbe/0x141bfbc10.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14274a920.c"
+  ],
+  "callees": {
+    "0x141bfbc10": "native body of this function (AdjustCollision / AdjustCollisionOfStaticMesh)",
+    "0x144471420": "FCollisionResponseContainer default initializer (four 8-byte words from constant data)",
+    "0x1444889d0": "sets one channel of the response container if the index is below 32 and the value differs, returns whether it changed",
+    "vtable 0x578 on the owner root": "UPrimitiveComponent::GetCollisionResponseToChannel (named UE API)",
+    "vtable 0x810 on the collision component": "UPrimitiveComponent::SetCollisionResponseContainer (named UE API)",
+    "vtable 0x390 on the owner actor": "called only when RootComponent is null; the native target is not class-resolved and this port skips it (the copy is then skipped too)"
+  },
+  "notes": "The owner object at +0x10 is an actor (its RootComponent is at +0x130 by reflection). The 0x390 pre-call and the third argument of the 2-argument ignore calls are the open points.",
+  "confidence": "MEDIUM"
+}

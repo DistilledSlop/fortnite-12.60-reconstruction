@@ -1,0 +1,27 @@
+{
+  "function": "ABuildingItemCollectorActor::SetItemCollectorState",
+  "status": "proposed",
+  "original": "0x142747ca0",
+  "signature": "void ABuildingItemCollectorActor::SetItemCollectorState(EFortItemCollectorState NewState)",
+  "captures": [
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141bcc640.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141bdd430.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141bdf3f0.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141bdf6a0.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141befa00.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x1427460a0.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142747ca0.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141bea830.c"
+  ],
+  "callees": {
+    "0x141bea830": "native body of this function",
+    "0x141bdf6a0": "FindPlayerItemValue(player, item, column): finds the (item) record for the player and returns column 0 (+0xc), 1 (+0x8) or 2 (+0x10), or -1",
+    "0x141bdf3f0": "PlayerItemRecords(player): returns the record array (data at +0x10, count at +0x18, 24-byte records) for a player key, or null",
+    "0x141bdd430": "GetDepositGoal: row override from ItemCollectorHandle, else OverrideGoal (+0x7f0) with bUseInstanceLootValueOverrides, else the item collection scalable float at StartingGoalLevel; returns -1 when nothing matches",
+    "0x141bcc640": "FindItemCollection(item): linear search of ItemCollections (+0x800, count +0x808, 0x108-byte entries) for the item key",
+    "0x1427460a0": "OnItemCollectorStateChanged via ProcessEvent with the state byte as its parameter",
+    "0x141befa00": "RefreshItemCollector: post-change refresh of the collector (506-line native body; read through its first 26 lines, its effect is treated as a refresh)"
+  },
+  "notes": "GetDepositGoal is decompiled with only the player argument; the item key is taken from ActiveInputItem (MEDIUM). The BP event name at DAT_148176c48 is not recovered, so the call is named by its role. RefreshItemCollector is a placeholder name.",
+  "confidence": "MEDIUM"
+}

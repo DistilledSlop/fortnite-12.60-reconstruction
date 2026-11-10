@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingMusicSequencer::ResetHitActors",
+  "status": "proposed",
+  "original": "0x14274be90",
+  "signature": "void ABuildingMusicSequencer::ResetHitActors()",
+  "captures": [
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14274be90.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x1406911b0.c"
+  ],
+  "callees": {
+    "0x1406911b0": "TArray-style resize for 16-byte elements: capacity quantized, realloc to size*16 (used here with size 0)",
+    "FMemory_QuantizeSize": "named engine helper",
+    "FMemory_Realloc": "named engine helper"
+  },
+  "notes": "The bitfield and index array members have no reflected names; the inline-versus-heap pattern (pointer nonnull selects heap) is inferred from the native code. Confidence is LOW because the record-structure names are my own.",
+  "confidence": "LOW"
+}

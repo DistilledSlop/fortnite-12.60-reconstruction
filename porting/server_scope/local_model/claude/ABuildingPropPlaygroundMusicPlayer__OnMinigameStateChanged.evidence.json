@@ -1,0 +1,15 @@
+{
+  "function": "ABuildingPropPlaygroundMusicPlayer::OnMinigameStateChanged",
+  "status": "proposed",
+  "original": "0x142750370",
+  "signature": "void ABuildingPropPlaygroundMusicPlayer::OnMinigameStateChanged(EMinigameState NewMinigameState, UObject* Minigame)",
+  "captures": [
+    "captures/01ef3df0f433489286259b6bf47b8942/0x140680300.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142750370.c"
+  ],
+  "callees": {
+    "0x140680300": "Stub_Empty: returns 0 and does nothing; the exec thunk calls it as its whole body"
+  },
+  "notes": "Empty by design of the shipped native body.",
+  "confidence": "HIGH"
+}

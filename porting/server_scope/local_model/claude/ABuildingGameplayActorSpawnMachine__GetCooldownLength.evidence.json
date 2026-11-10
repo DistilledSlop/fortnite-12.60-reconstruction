@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingGameplayActorSpawnMachine::GetCooldownLength",
+  "status": "proposed",
+  "original": "0x142743e10",
+  "signature": "float ABuildingGameplayActorSpawnMachine::GetCooldownLength()",
+  "captures": [
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x14070fdf0.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142743e10.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141bdd290.c"
+  ],
+  "callees": {
+    "0x141bdd290": "native body of this function (exec calls it with the object)",
+    "0x14070fdf0": "wrapper: FScalableFloat_GetValueAtLevel(this+0x800, 0.0, NULL), so the level is 0 and no context string is used"
+  },
+  "notes": "The exec thunk increments its P_FINISH word (decompile artifact, dropped). The member at +0x800 is the reflected CooldownLengthRow.",
+  "confidence": "HIGH"
+}

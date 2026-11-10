@@ -1,0 +1,23 @@
+{
+  "function": "ABuildingProp_CaptureItemSpawner::CanTakeFlag",
+  "status": "proposed",
+  "original": "0x14274adc0",
+  "signature": "bool ABuildingProp_CaptureItemSpawner::CanTakeFlag(APawn* InteractingPawn)",
+  "captures": [
+    "captures/1f574874d813496aa02bd3c684830fde/0x1419b90a0.c",
+    "captures/1f574874d813496aa02bd3c684830fde/0x1419bb7e0.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141989960.c",
+    "captures/77eea7390b6340419173e63d468f894d/0x1419f3d90.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14274adc0.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141c005c0.c"
+  ],
+  "callees": {
+    "0x141c005c0": "native body of this function",
+    "0x141989960": "CanPawnTakeFlag(gamestate, pawn): walks the game state permission entries (iterator 0x1419b90a0 / 0x1419f3d90, destructor 0x1419bb7e0); returns true when the walk completes; the per-entry virtual 0x9e0 is not class-resolved",
+    "0x1419b90a0": "iterator setup used by 0x141989960 (captured and read)",
+    "0x1419bb7e0": "iterator teardown used by 0x141989960 (captured and read)",
+    "0x1419f3d90": "iterator advance used by 0x141989960 (captured and read)"
+  },
+  "notes": "The per-entry permission virtual (0x9e0) is the open point; the port keeps the gate and the cast and delegates the walk to CanPawnTakeFlag.",
+  "confidence": "MEDIUM"
+}

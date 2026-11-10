@@ -1,0 +1,21 @@
+{
+  "function": "ABuildingGameplayActorSentry::SetSentryState",
+  "status": "proposed",
+  "original": "0x1427445b0",
+  "signature": "void ABuildingGameplayActorSentry::SetSentryState(EFortSentryState InSentryState)",
+  "captures": [
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x1427428d0.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x144621fb0.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427445b0.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141beb180.c"
+  ],
+  "callees": {
+    "0x141beb180": "native body of this function (exec thunk 0x1427445b0 forwards the byte argument to it)",
+    "0x144621fb0": "FTimerManager::FindTimer(FTimerHandle*): returns the timer entry for a valid handle or null",
+    "0x1427428d0": "OnRep_CurrentSentryState via UObject::ProcessEvent (FindFunctionChecked on an FName, then ProcessEvent with null params); reflection rep_notify confirms the name",
+    "FTimerManager_InternalClearTimer": "named engine helper (FTimerManager::ClearTimer)",
+    "vtable 0x150 on this": "UObject::GetWorld (identified by use: the result is a UWorld, and the other bodies read UWorld+0x130 as the GameState)"
+  },
+  "notes": "The timer handle at +0x888 has no reflected member name. The World->GetTimerManager() selection mirrors the native branch on world+0x188.",
+  "confidence": "HIGH"
+}

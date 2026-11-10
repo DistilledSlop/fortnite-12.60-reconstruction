@@ -1,0 +1,27 @@
+{
+  "function": "ABuildingPropBigHealth::SetBigHealth",
+  "status": "proposed",
+  "original": "0x1427509e0",
+  "signature": "void ABuildingPropBigHealth::SetBigHealth(int64 NewHealth)",
+  "captures": [
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x14070cc00.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141916570.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141b9b7c0.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141bc4d60.c",
+    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x1406da850.c",
+    "captures/6fd9248f6a3441c7a3805d4b042d5389/0x14070f1a0.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427509e0.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141c1b670.c"
+  ],
+  "callees": {
+    "0x141c1b670": "native body of this function",
+    "0x141b9b7c0": "GetBuildingAttributeSet: returns the attribute set pointer at +0x318",
+    "0x14070cc00": "reads an int at +0xc of the argument, used on the attribute set to get the max",
+    "0x141916570": "builds the cached Health FGameplayAttribute from UFortBuildingActorSet::StaticClass()->FindPropertyByName(\"Health\")",
+    "0x141bc4d60": "SetHealthAttributeBase helper: GetAbilitySystemComponentForAttributeSet then SetNumericAttributeBase, null-checked",
+    "0x14070f1a0": "GetAbilitySystemComponentForAttributeSet: returns the ability system component for the set owner",
+    "0x1406da850": "UAbilitySystemComponent::SetNumericAttributeBase: writes the base value and marks the attribute dirty"
+  },
+  "notes": "The max reads int +0xc at the attribute set offset 0x30 (my name MaxHealth). The same write path is used by the existing ABuildingActor::SetHealth port.",
+  "confidence": "MEDIUM"
+}

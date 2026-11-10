@@ -1,0 +1,19 @@
+{
+  "function": "ABuildingItemCollectorActor::GetOverrideRarity",
+  "status": "proposed",
+  "original": "0x1427474c0",
+  "signature": "bool ABuildingItemCollectorActor::GetOverrideRarity(EFortRarity& Rarity)",
+  "captures": [
+    "captures/1f574874d813496aa02bd3c684830fde/0x141bcc8c0.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141bccb80.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x1427474c0.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141bdec10.c"
+  ],
+  "callees": {
+    "0x141bdec10": "real body (virtual slot 0xa58 of ABuildingItemCollectorActor); the exec thunk only forwards the out pointer",
+    "0x141bccb80": "FDataTableRowHandle::GetRow(ContextString): returns the row for the handle, logs when no DataTable is set",
+    "0x141bcc8c0": "inner row lookup used by GetRow (DataTable present path; logs the failure message for missing rows)"
+  },
+  "notes": "The row struct and the int at row+0x1c are not named in the reflection data. The Rarity out param is OutParm (property flags 0x100 set).",
+  "confidence": "MEDIUM"
+}

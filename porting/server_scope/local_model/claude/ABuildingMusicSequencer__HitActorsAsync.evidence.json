@@ -1,0 +1,43 @@
+{
+  "function": "ABuildingMusicSequencer::HitActorsAsync",
+  "status": "proposed",
+  "original": "0x14274b1b0",
+  "signature": "void ABuildingMusicSequencer::HitActorsAsync(FBoxSphereBounds Bounds, FTransform Transform)",
+  "captures": [
+    "captures/11dff1bf942f429ca6017d4cb421d5f6/0x142ee3b30.c",
+    "captures/1f574874d813496aa02bd3c684830fde/0x14077ea60.c",
+    "captures/1f574874d813496aa02bd3c684830fde/0x142748e60.c",
+    "captures/1f574874d813496aa02bd3c684830fde/0x142749ff0.c",
+    "captures/1f574874d813496aa02bd3c684830fde/0x142d6a820.c",
+    "captures/1f574874d813496aa02bd3c684830fde/0x14407cf10.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141c13280.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x142bad740.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x142cd49c0.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x14406cf40.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x14409cc80.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x1458039e4.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x145803a44.c",
+    "captures/5beaac7287b64ac38c84805119ec0b83/0x145803c70.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14274b1b0.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141c0cfa0.c"
+  ],
+  "callees": {
+    "0x141c0cfa0": "native body of this function (exec forwards Transform and Bounds)",
+    "0x14409cc80": "async overlap query start (world, delegate, centre, rotation, extent, query params, channel params); returns a handle written to +0xd58",
+    "0x141c13280": "overlap callback (lambda body): accepts only the current handle (+0xd58), walks the result list, records each new actor and notifies those that implement the sequencer interface",
+    "0x14406cf40": "FCollisionQueryParams construction (tag name, defaults); read through its first 26 lines",
+    "0x142ee3b30": "builds an actor id (index + serial) from an actor pointer, or the invalid id for null",
+    "0x142bad740": "monotonic id generator (skips zero), used by the query setup",
+    "0x142cd49c0": "FName from a C string (used for the MusicSequencerHitActors stat name)",
+    "0x145803a44": "static-init guard begin (first-use stat registration)",
+    "0x1458039e4": "static-init guard end",
+    "0x14407cf10": "resolves an actor id to an object (returns null when stale)",
+    "0x14077ea60": "adds an actor id to the hit set (+0xd08), returns whether it was new",
+    "0x142748e60": "UClass of FortMusicSequencerInterface (GetPrivateStaticClassBody)",
+    "0x142d6a820": "ImplementsInterface(object, interface class): walks the implemented-interface list (+0x1f0)",
+    "0x142749ff0": "notifies a hit actor: ProcessEvent of the interface event when the class has it, else the interface call",
+    "0x145803c70": "stack cookie check (no behaviour)"
+  },
+  "notes": "The overlap query returns a handle that is stored at +0xd58 (param_1[0x1ab]). MusicSequencerHitChannels and the query channel values are the static parameters DAT_1483274e0..f8 and are not named. The lambda object is heap-allocated by the native code; the port uses a capturing lambda.",
+  "confidence": "MEDIUM"
+}

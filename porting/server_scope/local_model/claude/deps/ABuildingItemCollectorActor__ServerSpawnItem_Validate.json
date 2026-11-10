@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingItemCollectorActor__ServerSpawnItem_Validate",
+  "address": "0x141be9bc0",
+  "signature": "bool ABuildingItemCollectorActor::ServerSpawnItem_Validate(FFortItemEntry OutputItem)",
+  "inc_or_decl": "// Validation always passes. The by-value copy is destroyed on return.\nreturn true;\n",
+  "evidence": "captures/fcbf982e56154745b5a40dc69fd4a376/0x141be9bc0.c"
+}

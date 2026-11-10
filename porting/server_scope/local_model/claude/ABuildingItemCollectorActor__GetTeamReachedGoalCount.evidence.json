@@ -1,0 +1,17 @@
+{
+  "function": "ABuildingItemCollectorActor::GetTeamReachedGoalCount",
+  "status": "proposed",
+  "original": "0x142747570",
+  "signature": "int32 ABuildingItemCollectorActor::GetTeamReachedGoalCount(uint8 InTeam)",
+  "captures": [
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x141bdc280.c",
+    "captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142747570.c",
+    "captures/fcbf982e56154745b5a40dc69fd4a376/0x141bdf360.c"
+  ],
+  "callees": {
+    "0x141bdf360": "native body of this function",
+    "0x141bdc280": "BuildItemGoalTable(InTeam): starts from TrackedInteractionData (+0x930) and otherwise builds one entry per ItemCollections row {Item, Count=0, Goal=ScalableFloat at StartingGoalLevel}; the 84-line function was read through its first 40 lines, the table layout is confirmed by the lookup loop"
+  },
+  "notes": "The decompiled non-authority loop never changes its result, so the port returns -1 directly. InTeam is passed through to the table builder.",
+  "confidence": "MEDIUM"
+}

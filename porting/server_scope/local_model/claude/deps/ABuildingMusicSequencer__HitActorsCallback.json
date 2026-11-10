@@ -1,0 +1,7 @@
+{
+  "name": "ABuildingMusicSequencer__HitActorsCallback",
+  "address": "0x141c13280",
+  "signature": "void ABuildingMusicSequencer::OnHitActorsResult(FHitActorsHandle Handle, const FOverlapResults& Results)",
+  "inc_or_decl": "// CONFIDENCE: MEDIUM. Accept only the current query handle, then notify each newly hit actor that implements the sequencer interface.\nif (HitActorsQueryHandle != Handle)\n{\n    return;\n}\nfor (const FOverlapResult& Result : Results)\n{\n    AActor* Actor = ResolveActorId(Result.ActorId);      // native 0x14407cf10\n    if (Actor == nullptr)\n    {\n        continue;\n    }\n    const FActorId ActorId = MakeActorId(Actor);          // native 0x142ee3b30\n    bool bAlreadyHit = false;\n    AddHitActor(ActorId, bAlreadyHit);                     // native 0x14077ea60\n    if (!bAlreadyHit && Actor->GetClass()->ImplementsInterface(UFortMusicSequencerInterface::StaticClass()))   // 0x142d6a820\n    {\n        NotifyHitActor(Actor);                             // native 0x142749ff0\n    }\n}\n",
+  "evidence": "captures/fcbf982e56154745b5a40dc69fd4a376/0x141c13280.c"
+}
