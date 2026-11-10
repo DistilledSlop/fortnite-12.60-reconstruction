@@ -73,7 +73,7 @@ def run_batch(batch, np0, tag):
             + "Use the existing porting/behavior/*.inc files of other functions of the same class in the checkout as style references. Do not touch the main checkout.\n\n"
             "When a function is finished, record it with scripts/inventory_progress.py record (status proposed). When you cannot finish one because a contract is unresolved, "
             "record it as blocked with the address, the missing evidence, what you tried and a concrete next step. Never invent callees or returns. "
-            "Keep your context small: never print a whole decompile or asm file, use sed -n ranges or head/tail with a few hundred lines at most, and record each function the moment it is finished instead of at the end. Stop after all are recorded. Finish with one line: proposed count, blocked count.\n")
+            "Never write raw pointer arithmetic, Stack/FFrame offsets, or vtable-slot casts in a body: if the exec entry is only the shared prologue plus a tail-call to a virtual, write the named _Implementation call (the declaration is in the generated header), and if the target cannot be named from evidence, record the function blocked instead. Keep your context small: never print a whole decompile or asm file, use sed -n ranges or head/tail with a few hundred lines at most, and record each function the moment it is finished instead of at the end. Stop after all are recorded. Finish with one line: proposed count, blocked count.\n")
     open(os.path.join(wd, 'ASSIGNMENT.txt'), 'w').write(text)
     env = dict(os.environ, OPENCODE_CONFIG_CONTENT=open(CFG).read())
     t0 = time.time()
@@ -102,10 +102,14 @@ def harvest(keys, wd, secs, tag):
         if rec.get('inc_path') and os.path.exists(os.path.join(PKG, rec['inc_path'])): inc = os.path.join(PKG, rec['inc_path'])
         evl = [e for e in (rec.get('evidence') or []) if os.path.exists(os.path.join(PKG, e))]
         if evl: ev = os.path.join(PKG, evl[0])
-        if os.path.exists(inc): shutil.copy(inc, os.path.join(d, f + '.inc'))
+        rejected = False
+        if os.path.exists(inc):
+            body = '\n'.join(l for l in open(inc).read().splitlines() if l.strip() and not l.strip().startswith('//'))
+            rejected = bool(re.search(r'\(uint8\*\)|\(\*\(void|\bStack\b|reinterpret_cast', body))
+            shutil.copy(inc, os.path.join(d, f + ('.inc.rejected' if rejected else '.inc')))
         if os.path.exists(ev): shutil.copy(ev, os.path.join(d, f + '.evidence.json'))
         if stat in ('proposed', 'blocked') or os.path.exists(inc):
-            json.dump({'function': k, 'status': stat, 'blocker': rec.get('blocker'), 'model': MODEL, 'run': tag,
+            json.dump({'function': k, 'status': 'rejected_raw_memory' if rejected else stat, 'blocker': rec.get('blocker'), 'model': MODEL, 'run': tag,
                        'batch_seconds': round(secs)}, open(os.path.join(d, f + '.json'), 'w'), indent=1)
             saved.append(k)
         elif stat == 'claimed':
