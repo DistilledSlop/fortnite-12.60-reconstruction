@@ -1,0 +1,7 @@
+{
+  "name": "DeactivateTrailEmitters",
+  "address": "0x14439eed0",
+  "signature": "void DeactivateTrailEmitters(UParticleSystemComponent* Trail)",
+  "inc_or_decl": "void DeactivateTrailEmitters(UParticleSystemComponent* Trail);",
+  "evidence": "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x14439eed0.c"
+}

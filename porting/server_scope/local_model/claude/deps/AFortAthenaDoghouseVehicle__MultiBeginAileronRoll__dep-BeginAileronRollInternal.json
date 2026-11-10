@@ -1,0 +1,7 @@
+{
+  "name": "BeginAileronRollInternal",
+  "address": "0x1418f2250",
+  "signature": "void BeginAileronRollInternal(EAileronRollDirection Direction)",
+  "inc_or_decl": "void BeginAileronRollInternal(EAileronRollDirection Direction);",
+  "evidence": "/opt/fortnite/local-model-package/captures/4a75db4c23fe4ca5bd1a34df77995da6/0x1418f2250.c"
+}

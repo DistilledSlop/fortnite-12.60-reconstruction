@@ -1,0 +1,25 @@
+{
+  "function": "AFortAthenaAIBotController::StopEmote",
+  "status": "proposed",
+  "original": "0x1427c36c0",
+  "signature": "void AFortAthenaAIBotController::StopEmote()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427c36c0.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1406d7fd0.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1406fedb0.c",
+    "/opt/fortnite/local-model-package/captures/902fdf3ef789462a831f33112d03f9ea/0x14233caa0.c"
+  ],
+  "callees": {
+    "0x1406d7fd0": "FMulticastDelegate remove-by-owner on the emote tracker delegate at +0x240",
+    "0x1406fedb0": "emote tracker: remove tracked source id (int32 at this+0x9e0)",
+    "0x14233caa0": "AFortPawn vtable slot 0xdc0 (resolved): refresh emote transform after LastReplicatedEmoteExecuted is cleared"
+  },
+  "notes": "Pawn at +0x400 (PlayerBotPawn), guard on it. Emote tracker is the object returned by vtable slot 0x10 on the sub-object at pawn+0x4c8; that class is not resolved, so the call is described as dispatch. The +0x4c8 sub-object has no named field.",
+  "confidence": "MEDIUM",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__StopEmote__dep-FMulticastDelegate_RemoveByOwner.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__StopEmote__dep-RemoveTrackedSourceId.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__StopEmote__dep-NativeGetEmoteTracker.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__StopEmote__dep-RefreshEmoteTransform.json"
+  ]
+}

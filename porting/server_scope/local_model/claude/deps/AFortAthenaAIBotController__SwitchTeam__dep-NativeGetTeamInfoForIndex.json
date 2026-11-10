@@ -1,0 +1,7 @@
+{
+  "name": "NativeGetTeamInfoForIndex",
+  "address": "dynamic (vtable slot 0xb10 on the game-state object)",
+  "signature": "UObject* NativeGetTeamInfoForIndex(uint8 TeamIndex)",
+  "inc_or_decl": "UObject* NativeGetTeamInfoForIndex(uint8 TeamIndex);  // vtable slot 0xb10 on the game-state object; receiver class not resolved",
+  "evidence": null
+}

@@ -1,0 +1,7 @@
+{
+  "name": "GetVehicleMovementStateBlock",
+  "address": "0x14084be00",
+  "signature": "uint8* GetVehicleMovementStateBlock()",
+  "inc_or_decl": "uint8* GetVehicleMovementStateBlock();  // AFortAthenaVehicle vtable slot 0xb08 (resolved to 0x14084be00)",
+  "evidence": "/opt/fortnite/local-model-package/captures/2fd5ec8f7b72402984139609ef8c5470/0x14084be00.c"
+}

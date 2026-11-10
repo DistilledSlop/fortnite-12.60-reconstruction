@@ -1,0 +1,7 @@
+{
+  "name": "NativeGetEmoteTracker",
+  "address": "dynamic (vtable slot 0x10 on PlayerBotPawn+0x4c8)",
+  "signature": "UObject* NativeGetEmoteTracker()",
+  "inc_or_decl": "UObject* NativeGetEmoteTracker();  // vtable slot 0x10 on the sub-object at PlayerBotPawn+0x4c8; receiver class not resolved",
+  "evidence": null
+}

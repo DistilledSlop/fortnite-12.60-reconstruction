@@ -1,0 +1,20 @@
+{
+  "function": "AFortAthenaGoatVehicle::IsEBraking",
+  "status": "proposed",
+  "original": "0x1427db430",
+  "signature": "bool AFortAthenaGoatVehicle::IsEBraking()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427db430.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1418f12e0.c",
+    "/opt/fortnite/local-model-package/captures/2fd5ec8f7b72402984139609ef8c5470/0x14084be00.c"
+  ],
+  "callees": {
+    "0x1418f12e0": "native body (inlined): bit 1 of the byte at +0x28 of the movement state block",
+    "0x14084be00": "AFortAthenaVehicle vtable slot 0xb08 (resolved): returns the movement state block pointer"
+  },
+  "notes": "Helper 0x14084be00 reads the component at +0x3b0 and picks a state block at +0x1194 or +0x500/default.",
+  "confidence": "MEDIUM",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaGoatVehicle__IsEBraking__dep-GetVehicleMovementStateBlock.json"
+  ]
+}

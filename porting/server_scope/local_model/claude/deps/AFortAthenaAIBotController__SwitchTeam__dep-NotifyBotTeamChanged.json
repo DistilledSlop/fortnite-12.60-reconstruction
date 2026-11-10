@@ -1,0 +1,7 @@
+{
+  "name": "NotifyBotTeamChanged",
+  "address": "0x144a26400",
+  "signature": "void NotifyBotTeamChanged()",
+  "inc_or_decl": "void NotifyBotTeamChanged();  // on the controller, passes this to 0x144a26400",
+  "evidence": "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x144a26400.c"
+}

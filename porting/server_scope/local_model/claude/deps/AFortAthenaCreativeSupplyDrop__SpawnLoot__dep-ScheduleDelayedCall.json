@@ -1,0 +1,7 @@
+{
+  "name": "ScheduleDelayedCall",
+  "address": "0x141d70b60",
+  "signature": "void ScheduleDelayedCall(AFortAthenaCreativeSupplyDrop* Owner, FSupplyDropSpawnCallback* Callback)",
+  "inc_or_decl": "void ScheduleDelayedCall(AFortAthenaCreativeSupplyDrop* Owner, FSupplyDropSpawnCallback* Callback);",
+  "evidence": "/opt/fortnite/local-model-package/captures/4a75db4c23fe4ca5bd1a34df77995da6/0x141d70b60.c"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "ResolveWorldItemDefinition",
+  "address": "0x141f88f00",
+  "signature": "UFortWorldItemDefinition* ResolveWorldItemDefinition(const FSupplyDropSpawnEntry& Entry)",
+  "inc_or_decl": "UFortWorldItemDefinition* ResolveWorldItemDefinition(const FSupplyDropSpawnEntry& Entry);",
+  "evidence": "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x141f88f00.c"
+}

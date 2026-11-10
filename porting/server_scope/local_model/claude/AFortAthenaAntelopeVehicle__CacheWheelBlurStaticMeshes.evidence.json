@@ -1,0 +1,19 @@
+{
+  "function": "AFortAthenaAntelopeVehicle::CacheWheelBlurStaticMeshes",
+  "status": "proposed",
+  "original": "0x1427cf900",
+  "signature": "void AFortAthenaAntelopeVehicle::CacheWheelBlurStaticMeshes(UStaticMeshComponent* InBL, UStaticMeshComponent* InBR, UStaticMeshComponent* InFL, UStaticMeshComponent* InFR)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427cf900.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1418bc3e0.c",
+    "/opt/fortnite/local-model-package/captures/2fd5ec8f7b72402984139609ef8c5470/0x144140f50.c",
+    "/opt/fortnite/local-model-package/captures/2fd5ec8f7b72402984139609ef8c5470/0x1440e4ca0.c"
+  ],
+  "callees": {
+    "0x1418bc3e0": "native body (inlined): stores the four wheel meshes and creates the FR and BL MIDs",
+    "0x144140f50": "UStaticMeshComponent::GetMaterial (vtable slot 0x548)",
+    "0x1440e4ca0": "UPrimitiveComponent::CreateDynamicMaterialInstance (vtable slot 0x570)"
+  },
+  "notes": "Declaration order is InBL, InBR, InFL, InFR (reverse of the reflection list). This is confirmed by WheelBlur_FR at +0x1120 matching the last argument and the ascending parameter offsets.",
+  "confidence": "MEDIUM"
+}

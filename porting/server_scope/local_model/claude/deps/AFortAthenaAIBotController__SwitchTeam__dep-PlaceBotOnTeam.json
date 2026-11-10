@@ -1,0 +1,7 @@
+{
+  "name": "PlaceBotOnTeam",
+  "address": "0x141958ac0",
+  "signature": "void PlaceBotOnTeam(UObject* GameStateLike, AFortPlayerStateAthena* PlayerState, UObject* TeamInfo, uint8 SquadId)",
+  "inc_or_decl": "void PlaceBotOnTeam(UObject* GameStateLike, AFortPlayerStateAthena* PlayerState, UObject* TeamInfo, uint8 SquadId);",
+  "evidence": "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x141958ac0.c"
+}

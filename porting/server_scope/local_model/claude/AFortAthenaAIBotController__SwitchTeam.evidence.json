@@ -1,0 +1,33 @@
+{
+  "function": "AFortAthenaAIBotController::SwitchTeam",
+  "status": "proposed",
+  "original": "0x1427c36e0",
+  "signature": "void AFortAthenaAIBotController::SwitchTeam(uint8 TeamIndex)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427c36e0.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1416b0620.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x141641300.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x141958ac0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x144a26400.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x141a5b5e0.c",
+    "/opt/fortnite/local-model-package/captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f793a0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x142af1340.c"
+  ],
+  "callees": {
+    "0x1416b0620": "native SwitchTeam body (inlined)",
+    "0x141641300": "GetWorldGameStateForTeams: world+0x128 when its class matches",
+    "0x141958ac0": "PlaceBotOnTeam (game-state team placement, vtable slot 0xb40 inside)",
+    "0x144a26400": "NotifyBotTeamChanged (PerceptionComponent present branch)",
+    "0x141a5b5e0": "setter: PlayerState+0xe60 byte",
+    "0x143f793a0": "AActor::GetWorld (vtable slot 0x150 on the controller, resolved to this target)",
+    "0x142af1340": "FortTeamInfoAthena static class getter"
+  },
+  "notes": "Team lookup on the game-state object uses vtable slot 0xb10 with the team index; that class is not resolved, so it is shown as dispatch. PlayerState/PerceptionComponent are the named AController and AAIController members at +0x220 and +0x2e0.",
+  "confidence": "MEDIUM",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__SwitchTeam__dep-GetWorldGameStateForTeams.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__SwitchTeam__dep-PlaceBotOnTeam.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__SwitchTeam__dep-NotifyBotTeamChanged.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__SwitchTeam__dep-NativeGetTeamInfoForIndex.json"
+  ]
+}

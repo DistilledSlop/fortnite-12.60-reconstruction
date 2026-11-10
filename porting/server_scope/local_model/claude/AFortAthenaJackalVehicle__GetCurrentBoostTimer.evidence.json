@@ -1,0 +1,30 @@
+{
+  "function": "AFortAthenaJackalVehicle::GetCurrentBoostTimer",
+  "status": "proposed",
+  "original": "0x1427daf90",
+  "signature": "FFortRechargingActionTimer AFortAthenaJackalVehicle::GetCurrentBoostTimer()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427daf90.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1426fe870.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1426f4e60.c",
+    "/opt/fortnite/local-model-package/captures/a91876c9923548ad8846e9f4a2106b32/0x141b5af50.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x145803a44.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x1458039e4.c",
+    "/opt/fortnite/local-model-package/captures/a91876c9923548ad8846e9f4a2106b32/0x1458038a4.c",
+    "/opt/fortnite/local-model-package/captures/a91876c9923548ad8846e9f4a2106b32/0x145887980.c"
+  ],
+  "callees": {
+    "0x1426fe870": "native body (inlined): BoostTimers element at CurrentBoostTimerIndex or a static default",
+    "0x1426f4e60": "struct copy-assign for the returned FFortRechargingActionTimer",
+    "0x141b5af50": "NativeInitBoostTimerDefaults141b5af50: default constructor, used for the static default",
+    "0x145803a44": "static-init guard acquire (replaced by C++ function-local static)",
+    "0x1458039e4": "static-init guard release (replaced by C++ function-local static)",
+    "0x1458038a4": "atexit registration (replaced by C++ function-local static)",
+    "0x145887980": "destructors for the static default members (replaced by C++ function-local static)"
+  },
+  "notes": "Array at +0xf50 (data) and +0xf58 (count); index at +0xfa0. Element stride 0xd8. Default args are (0.1, 0.1, 0.1, 1.0, 1.0, 0, 0).",
+  "confidence": "HIGH",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaJackalVehicle__GetCurrentBoostTimer__dep-NativeInitBoostTimerDefaults141b5af50.json"
+  ]
+}

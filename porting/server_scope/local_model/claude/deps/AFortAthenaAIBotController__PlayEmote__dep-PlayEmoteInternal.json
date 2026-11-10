@@ -1,0 +1,7 @@
+{
+  "name": "PlayEmoteInternal",
+  "address": "0x1416a66e0",
+  "signature": "void AFortAthenaAIBotController::PlayEmoteInternal(const FPrimaryAssetId& EmotePrimaryAssetId)",
+  "inc_or_decl": "void PlayEmoteInternal(const FPrimaryAssetId& EmotePrimaryAssetId);",
+  "evidence": "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1416a66e0.c"
+}

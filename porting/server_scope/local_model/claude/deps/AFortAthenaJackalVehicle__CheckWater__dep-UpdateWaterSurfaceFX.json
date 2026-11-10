@@ -1,0 +1,7 @@
+{
+  "name": "UpdateWaterSurfaceFX",
+  "address": "0x1426f9960",
+  "signature": "void UpdateWaterSurfaceFX(float WaterLocationZ, UObject* WaterFX, UObject* WaterAudio)",
+  "inc_or_decl": "void UpdateWaterSurfaceFX(float WaterLocationZ, UObject* WaterFX, UObject* WaterAudio);",
+  "evidence": "/opt/fortnite/local-model-package/captures/4a75db4c23fe4ca5bd1a34df77995da6/0x1426f9960.c"
+}

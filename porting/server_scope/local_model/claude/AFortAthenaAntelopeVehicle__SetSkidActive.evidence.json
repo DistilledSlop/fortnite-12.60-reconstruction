@@ -1,0 +1,30 @@
+{
+  "function": "AFortAthenaAntelopeVehicle::SetSkidActive",
+  "status": "proposed",
+  "original": "0x1427cfe80",
+  "signature": "void AFortAthenaAntelopeVehicle::SetSkidActive(bool bActive)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427cfe80.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1418d3920.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1419153c0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x14439eed0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x144398e20.c",
+    "/opt/fortnite/local-model-package/captures/2fd5ec8f7b72402984139609ef8c5470/0x144397690.c",
+    "/opt/fortnite/local-model-package/captures/2fd5ec8f7b72402984139609ef8c5470/0x14439d410.c"
+  ],
+  "callees": {
+    "0x1418d3920": "native body (inlined): skid trail on/off with quality gate",
+    "0x1419153c0": "GetVisualQualityLevel: returns this+0x450 when the global flag is set, else 0",
+    "0x14439eed0": "DeactivateTrailEmitters: per-emitter deactivation then the base teardown",
+    "0x144398e20": "ActivateTrailEmitters: per-emitter activation with the config value at +0x53c",
+    "0x144397690": "UParticleSystemComponent::ActivateSystem (vtable slot 0x268)",
+    "0x14439d410": "UParticleSystemComponent::DeactivateSystem (vtable slot 0x270)"
+  },
+  "notes": "Trail constants DAT_14810f328/f330 (left) and DAT_14810f338/f340 (right) are unnamed globals passed through unchanged. Flag bit 0 of +0x1158 is the cached state.",
+  "confidence": "MEDIUM",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAntelopeVehicle__SetSkidActive__dep-GetVisualQualityLevel.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAntelopeVehicle__SetSkidActive__dep-DeactivateTrailEmitters.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAntelopeVehicle__SetSkidActive__dep-ActivateTrailEmitters.json"
+  ]
+}

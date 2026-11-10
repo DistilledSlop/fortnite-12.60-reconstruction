@@ -1,0 +1,7 @@
+{
+  "name": "FMulticastDelegate_RemoveByOwner",
+  "address": "0x1406d7fd0",
+  "signature": "bool FMulticastDelegate_RemoveByOwner(FMulticastDelegate* Delegate, UObject* Owner)",
+  "inc_or_decl": "bool FMulticastDelegate_RemoveByOwner(FMulticastScriptDelegate& Delegate, UObject* Owner);",
+  "evidence": "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1406d7fd0.c"
+}

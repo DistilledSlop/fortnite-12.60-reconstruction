@@ -1,0 +1,18 @@
+{
+  "function": "AFortAthenaAIBotController::QueueStim",
+  "status": "proposed",
+  "original": "0x1427c3410",
+  "signature": "void AFortAthenaAIBotController::QueueStim(AActor* SourceActor, FVector SourceLocation, FVector SourceDirection, uint8 NewStimType, float StimStrength, FName StimTag)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x1427c3410.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1416a83f0.c"
+  ],
+  "callees": {
+    "0x1416a83f0": "perception stimulus handler (OnPerceptionSensed path); called as HandlePerceptionStim"
+  },
+  "notes": "Reads: SourceActor (8B), SourceLocation (struct ref), SourceDirection (struct ref), NewStimType (byte), StimStrength (float bits), StimTag (FName). The impl's 7-argument call matches this order. Reflection order is reverse of declaration; offsets ascend in declaration order.",
+  "confidence": "MEDIUM",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__QueueStim__dep-HandlePerceptionStim.json"
+  ]
+}

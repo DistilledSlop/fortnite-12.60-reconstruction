@@ -1,0 +1,7 @@
+{
+  "name": "RefreshEmoteTransform",
+  "address": "0x14233caa0",
+  "signature": "void RefreshEmoteTransform()",
+  "inc_or_decl": "void RefreshEmoteTransform();  // AFortPawn vtable slot 0xdc0 (resolved to 0x14233caa0): recomputes the emote attach transform when LastReplicatedEmoteExecuted is set",
+  "evidence": "/opt/fortnite/local-model-package/captures/902fdf3ef789462a831f33112d03f9ea/0x14233caa0.c"
+}

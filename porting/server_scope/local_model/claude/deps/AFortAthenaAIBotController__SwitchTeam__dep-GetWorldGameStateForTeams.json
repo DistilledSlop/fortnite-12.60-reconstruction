@@ -1,0 +1,7 @@
+{
+  "name": "GetWorldGameStateForTeams",
+  "address": "0x141641300",
+  "signature": "UObject* GetWorldGameStateForTeams(UWorld* World)",
+  "inc_or_decl": "UObject* GetWorldGameStateForTeams(UWorld* World);",
+  "evidence": "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x141641300.c"
+}

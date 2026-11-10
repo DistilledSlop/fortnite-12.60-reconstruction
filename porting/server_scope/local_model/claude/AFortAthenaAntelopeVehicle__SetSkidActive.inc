@@ -22,12 +22,12 @@ if (bWantActive != ((NativeRecoveredByte_0x1158 & 1) != 0))
         if (PSC_TrailLeft)
         {
             PSC_TrailLeft->ActivateSystem(false);
-            ActivateTrailEmitters(PSC_TrailLeft, NativeRecoveredFloat_0x1158_Arg0, NativeRecoveredFloat_0x1158_Arg1, 0, FortAntelopeVehicleConfigs->NativeRecoveredInt32_0x53c);
+            ActivateTrailEmitters(PSC_TrailLeft, DAT_14810f328, DAT_14810f330, 0, FortAntelopeVehicleConfigs->NativeRecoveredInt32_0x53c);
         }
         if (PSC_TrailRight)
         {
             PSC_TrailRight->ActivateSystem(false);
-            ActivateTrailEmitters(PSC_TrailRight, NativeRecoveredFloat_0x1158_Arg0, NativeRecoveredFloat_0x1158_Arg1, 0, FortAntelopeVehicleConfigs->NativeRecoveredInt32_0x53c);
+            ActivateTrailEmitters(PSC_TrailRight, DAT_14810f338, DAT_14810f340, 0, FortAntelopeVehicleConfigs->NativeRecoveredInt32_0x53c);
         }
     }
 

@@ -1,0 +1,7 @@
+{
+  "name": "NativeIsAileronRollLocked",
+  "address": "dynamic (vtable slot 0x558 on the component at this+0x3b0)",
+  "signature": "bool NativeIsAileronRollLocked()",
+  "inc_or_decl": "bool NativeIsAileronRollLocked();  // vtable slot 0x558 on the component at this+0x3b0; receiver class not resolved",
+  "evidence": null
+}

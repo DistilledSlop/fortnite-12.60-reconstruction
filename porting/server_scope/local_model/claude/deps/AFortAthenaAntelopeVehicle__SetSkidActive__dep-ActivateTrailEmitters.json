@@ -1,0 +1,7 @@
+{
+  "name": "ActivateTrailEmitters",
+  "address": "0x144398e20",
+  "signature": "void ActivateTrailEmitters(UParticleSystemComponent* Trail, const void* ColorA, const void* ColorB, bool bReset, int32 Quality)",
+  "inc_or_decl": "void ActivateTrailEmitters(UParticleSystemComponent* Trail, const void* ColorA, const void* ColorB, bool bReset, int32 Quality);",
+  "evidence": "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x144398e20.c"
+}

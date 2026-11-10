@@ -1,0 +1,21 @@
+{
+  "function": "AFortAthenaDoghouseVehicle::MultiBeginAileronRoll",
+  "status": "proposed",
+  "original": "0x1427d8180",
+  "signature": "void AFortAthenaDoghouseVehicle::MultiBeginAileronRoll(EAileronRollDirection Direction)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427d8180.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1418f25f0.c",
+    "/opt/fortnite/local-model-package/captures/4a75db4c23fe4ca5bd1a34df77995da6/0x1418f2250.c"
+  ],
+  "callees": {
+    "0x1418f25f0": "virtual implementation (vtable slot 0xeb8), inlined as the lock check",
+    "0x1418f2250": "BeginAileronRollInternal: sets the roll direction state and the roll rate"
+  },
+  "notes": "Lock check reads vtable slot 0x558 on the component at +0x3b0. That component's class is not resolved, so it stays as dispatch.",
+  "confidence": "MEDIUM",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaDoghouseVehicle__MultiBeginAileronRoll__dep-BeginAileronRollInternal.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaDoghouseVehicle__MultiBeginAileronRoll__dep-NativeIsAileronRollLocked.json"
+  ]
+}

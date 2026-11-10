@@ -1,0 +1,7 @@
+{
+  "name": "NativeInitBoostTimerDefaults141b5af50",
+  "address": "0x141b5af50",
+  "signature": "uint8* NativeInitBoostTimerDefaults141b5af50(uint8* Self, float, float, float, float, float, float, float)",
+  "inc_or_decl": "static uint8* NativeInitBoostTimerDefaults141b5af50(uint8* Self, float FloatArg2, float FloatArg3, float FloatArg4, float FloatArg5, float FloatArg6, float FloatArg7, float FloatArg8);  // already declared in AFortAthenaJackalVehicle.h",
+  "evidence": "/opt/fortnite/local-model-package/captures/a91876c9923548ad8846e9f4a2106b32/0x141b5af50.c"
+}

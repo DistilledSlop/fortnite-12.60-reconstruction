@@ -1,0 +1,7 @@
+{
+  "name": "RemoveTrackedSourceId",
+  "address": "0x1406fedb0",
+  "signature": "void RemoveTrackedSourceId(int32 SourceId)",
+  "inc_or_decl": "void RemoveTrackedSourceId(int32 SourceId);  // on the emote tracker sub-object",
+  "evidence": "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1406fedb0.c"
+}

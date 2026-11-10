@@ -1,0 +1,30 @@
+{
+  "function": "AFortAthenaGoatVehicle::SetSkidActive",
+  "status": "proposed",
+  "original": "0x1427db700",
+  "signature": "void AFortAthenaGoatVehicle::SetSkidActive(bool bActive)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427db700.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1418f7b40.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1419153c0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x14439eed0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x144398e20.c",
+    "/opt/fortnite/local-model-package/captures/2fd5ec8f7b72402984139609ef8c5470/0x144397690.c",
+    "/opt/fortnite/local-model-package/captures/2fd5ec8f7b72402984139609ef8c5470/0x14439d410.c"
+  ],
+  "callees": {
+    "0x1418f7b40": "native body (inlined): goat skid trail on/off with quality gate",
+    "0x1419153c0": "GetVisualQualityLevel",
+    "0x14439eed0": "DeactivateTrailEmitters",
+    "0x144398e20": "ActivateTrailEmitters",
+    "0x144397690": "UParticleSystemComponent::ActivateSystem (vtable slot 0x268)",
+    "0x14439d410": "UParticleSystemComponent::DeactivateSystem (vtable slot 0x270)"
+  },
+  "notes": "Goat constants DAT_1481100f0/f8 (left) and DAT_148110100/108 (right) are unnamed globals passed through unchanged. Config at +0x1118 with the value at +0x56c.",
+  "confidence": "MEDIUM",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaGoatVehicle__SetSkidActive__dep-GetVisualQualityLevel.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaGoatVehicle__SetSkidActive__dep-DeactivateTrailEmitters.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaGoatVehicle__SetSkidActive__dep-ActivateTrailEmitters.json"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "function": "AFortAthenaAIBotController::OnLaunched",
+  "status": "proposed",
+  "original": "0x1427c2860",
+  "signature": "void AFortAthenaAIBotController::OnLaunched(FVector LaunchVelocity, bool bXYOverride, bool bZOverride)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x1427c2860.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1416a2bc0.c"
+  ],
+  "callees": {
+    "0x1416a2bc0": "native launch broadcast body, inlined into the .inc (multicast list +0x980, handler vtable slot 0x50 dispatch)"
+  },
+  "notes": "Thunk reads LaunchVelocity (12 bytes) then two bools in declaration order. Reflection list is reverse of declaration order. Handler dispatch on slot 0x50 is dynamic (bound objects), so no single target is captured for it.",
+  "confidence": "MEDIUM",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__OnLaunched__dep-NativeOnLaunchedHandler.json"
+  ]
+}

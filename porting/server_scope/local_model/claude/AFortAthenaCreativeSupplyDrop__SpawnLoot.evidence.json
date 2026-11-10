@@ -1,0 +1,29 @@
+{
+  "function": "AFortAthenaCreativeSupplyDrop::SpawnLoot",
+  "status": "proposed",
+  "original": "0x1427d8600",
+  "signature": "void AFortAthenaCreativeSupplyDrop::SpawnLoot(UObject* Pawn)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427d8600.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1418fb480.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x141f88f00.c",
+    "/opt/fortnite/local-model-package/captures/4a75db4c23fe4ca5bd1a34df77995da6/0x142b5be40.c",
+    "/opt/fortnite/local-model-package/captures/4a75db4c23fe4ca5bd1a34df77995da6/0x142bfb0f0.c",
+    "/opt/fortnite/local-model-package/captures/4a75db4c23fe4ca5bd1a34df77995da6/0x141d70b60.c",
+    "/opt/fortnite/local-model-package/captures/4a75db4c23fe4ca5bd1a34df77995da6/0x1418e5b30.c"
+  ],
+  "callees": {
+    "0x1418fb480": "native body (inlined): per-entry item resolution and delayed spawn queueing",
+    "0x141f88f00": "ResolveWorldItemDefinition: resolves the item definition for a spawn entry",
+    "0x142b5be40": "UFortWorldItemDefinition static class getter",
+    "0x142bfb0f0": "operator new (0x38 bytes) via GMalloc",
+    "0x141d70b60": "ScheduleDelayedCall: queues a callback on the supply drop timer list",
+    "0x1418e5b30": "spawn callback body bound to the scheduled delegate"
+  },
+  "notes": "The random unit-sphere sample is consumed for RNG parity but its vector is never used. Callback object layout beyond the fields listed in the .inc is not recovered. Confidence LOW because the callback type is only partly identified.",
+  "confidence": "LOW",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaCreativeSupplyDrop__SpawnLoot__dep-ResolveWorldItemDefinition.json",
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaCreativeSupplyDrop__SpawnLoot__dep-ScheduleDelayedCall.json"
+  ]
+}

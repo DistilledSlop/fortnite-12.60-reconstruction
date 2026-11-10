@@ -1,0 +1,17 @@
+{
+  "function": "AFortAthenaAntelopeVehicle::CacheBoostSM",
+  "status": "proposed",
+  "original": "0x1427cf6f0",
+  "signature": "void AFortAthenaAntelopeVehicle::CacheBoostSM(UStaticMeshComponent* InBoost)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427cf6f0.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1418bc370.c",
+    "/opt/fortnite/local-model-package/captures/2fd5ec8f7b72402984139609ef8c5470/0x1440e4ca0.c"
+  ],
+  "callees": {
+    "0x1418bc370": "native body (inlined): CreateDynamicMaterialInstance on the boost component, cached in BoostMeterMID",
+    "0x1440e4ca0": "UPrimitiveComponent::CreateDynamicMaterialInstance (vtable slot 0x570 of UStaticMeshComponent)"
+  },
+  "notes": "Only the boost mesh's element 0 is used, with no source material and no name.",
+  "confidence": "HIGH"
+}

@@ -1,0 +1,18 @@
+{
+  "function": "AFortAthenaJackalVehicle::CheckWater",
+  "status": "proposed",
+  "original": "0x1427dade0",
+  "signature": "void AFortAthenaJackalVehicle::CheckWater(float WaterLocationZ, UObject* WaterFX, UObject* WaterAudio)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427dade0.c",
+    "/opt/fortnite/local-model-package/captures/4a75db4c23fe4ca5bd1a34df77995da6/0x1426f9960.c"
+  ],
+  "callees": {
+    "0x1426f9960": "native body kept as direct helper (UpdateWaterSurfaceFX): wave normal, FX orientation, audio volume"
+  },
+  "notes": "Body is SIMD-heavy (rsqrt, rcp, minps/maxps). Helper virtuals (slot 0x2f0 on this, slot 0x878 on this and on the FX object, and the static audio helper 0x1440cc390) belong to the helper port.",
+  "confidence": "LOW",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaJackalVehicle__CheckWater__dep-UpdateWaterSurfaceFX.json"
+  ]
+}

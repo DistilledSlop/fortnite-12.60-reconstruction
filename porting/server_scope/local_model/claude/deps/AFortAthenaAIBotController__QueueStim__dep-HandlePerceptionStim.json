@@ -1,0 +1,7 @@
+{
+  "name": "HandlePerceptionStim",
+  "address": "0x1416a83f0",
+  "signature": "void AFortAthenaAIBotController::HandlePerceptionStim(AActor* SourceActor, FVector SourceLocation, FVector SourceDirection, uint8 NewStimType, float StimStrength, FName StimTag)",
+  "inc_or_decl": "void HandlePerceptionStim(AActor* SourceActor, const FVector& SourceLocation, const FVector& SourceDirection, uint8 NewStimType, float StimStrength, FName StimTag);",
+  "evidence": "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1416a83f0.c"
+}

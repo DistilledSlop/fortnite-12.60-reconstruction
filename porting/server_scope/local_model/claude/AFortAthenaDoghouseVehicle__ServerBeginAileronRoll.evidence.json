@@ -1,0 +1,17 @@
+{
+  "function": "AFortAthenaDoghouseVehicle::ServerBeginAileronRoll",
+  "status": "proposed",
+  "original": "0x1427d83e0",
+  "signature": "void AFortAthenaDoghouseVehicle::ServerBeginAileronRoll(EAileronRollDirection Direction)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427d83e0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1418f71d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "ServerBeginAileronRoll_Validate (vtable slot 0xec0): always returns true",
+    "0x1418f71d0": "ServerBeginAileronRoll_Implementation (vtable slot 0xec8): Blueprint event dispatch through ProcessEvent"
+  },
+  "notes": "The RPC_ValidateFailed string literal is L\"ServerBeginAileronRoll_Validate\".",
+  "confidence": "HIGH"
+}

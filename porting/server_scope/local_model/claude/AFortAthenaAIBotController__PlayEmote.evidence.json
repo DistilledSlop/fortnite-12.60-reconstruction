@@ -1,0 +1,18 @@
+{
+  "function": "AFortAthenaAIBotController::PlayEmote",
+  "status": "proposed",
+  "original": "0x1427c3370",
+  "signature": "void AFortAthenaAIBotController::PlayEmote(FPrimaryAssetId EmotePrimaryAssetId)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x1427c3370.c",
+    "/opt/fortnite/local-model-package/captures/764e5c7d60e94a7ea33b2b97f4cdc864/0x1416a66e0.c"
+  ],
+  "callees": {
+    "0x1416a66e0": "native PlayEmote body: asset validity check, world asset lookup, apply emote, log on failed load (called as PlayEmoteInternal)"
+  },
+  "notes": "Thunk is a single direct call. Body helpers of 0x1416a66e0 (0x1416a68a0, 0x141df62a0, 0x14271b700, 0x142ce9f90, 0x142bafb80) belong to the helper port, not this exec.",
+  "confidence": "MEDIUM",
+  "deps": [
+    "/opt/fortnite/local-model-package/work/claude/out/deps/AFortAthenaAIBotController__PlayEmote__dep-PlayEmoteInternal.json"
+  ]
+}

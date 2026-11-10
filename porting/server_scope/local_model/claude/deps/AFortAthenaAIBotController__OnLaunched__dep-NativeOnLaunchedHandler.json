@@ -1,0 +1,7 @@
+{
+  "name": "NativeOnLaunchedHandler",
+  "address": "dynamic (vtable slot 0x50 on each bound handler)",
+  "signature": "bool NativeOnLaunchedHandler(APawn* Pawn, const FVector& LaunchVelocity, bool bXYOverride, bool bZOverride)",
+  "inc_or_decl": "bool NativeOnLaunchedHandler(APawn* Pawn, const FVector& LaunchVelocity, bool bXYOverride, bool bZOverride);  // dispatched through vtable slot 0x50 of each bound handler; target depends on the bound object",
+  "evidence": null
+}

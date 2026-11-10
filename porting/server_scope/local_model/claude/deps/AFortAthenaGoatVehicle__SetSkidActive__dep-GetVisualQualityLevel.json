@@ -1,0 +1,7 @@
+{
+  "name": "GetVisualQualityLevel",
+  "address": "0x1419153c0",
+  "signature": "int32 GetVisualQualityLevel() const",
+  "inc_or_decl": "int32 GetVisualQualityLevel() const;  // returns this+0x450 when the global quality flag is set, else 0",
+  "evidence": "/opt/fortnite/local-model-package/captures/59a29640912d4e99935c110549488187/0x1419153c0.c"
+}
