@@ -1,0 +1,8 @@
+{
+ "function": "AFortGameState::Client_RefreshEventCalendar",
+ "status": "blocked",
+ "blocker": "Pure vtable thunk to slot 0x738 (entry 231); candidate vtable 0x1459c1798 is only 86 slots (0x2b0 bytes), so slot 0x738 is 0x488 bytes past its end (out-of-bounds) and the authoritative AFortGameState vtable (>=232 slots) is unresolved; all hierarchy candidates unverified; CDO not locatable (UClass ptr 0x1463e2fd0 absent from PE + runtime images). Next: resolve the real vtable via class-vtables/vtables.json, CDO, or the Athena(787)/AFortGameState prefix boundary, then decompile slot 0x738.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100731",
+ "batch_seconds": 1348
+}

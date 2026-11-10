@@ -1,0 +1,8 @@
+{
+ "function": "AFortDecoTool::OnUnEquip",
+ "status": "blocked",
+ "blocker": "Pure vtable thunk to slot 0x778 (entry 239); candidate vtable 0x146186240 is vtable_status=unverified and its slot target 0x1406801e0 (Stub_ReturnFalse) is unconfirmed as AFortDecoTool's own override; CDO not locatable (UClass ptr 0x1463b4700 absent from PE + runtime images). Next: verify vtable via class-vtables/vtables.json or CDO, then decompile slot target.",
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100731",
+ "batch_seconds": 1348
+}

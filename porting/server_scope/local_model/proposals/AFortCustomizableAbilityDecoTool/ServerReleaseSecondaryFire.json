@@ -1,0 +1,8 @@
+{
+ "function": "AFortCustomizableAbilityDecoTool::ServerReleaseSecondaryFire",
+ "status": "proposed",
+ "blocker": null,
+ "model": "llamacpp/qwen3.8-27b",
+ "run": "11100731",
+ "batch_seconds": 1348
+}
