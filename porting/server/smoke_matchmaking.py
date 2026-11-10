@@ -37,7 +37,10 @@ DEFAULT_RECORD = HERE.parents[0] / "generated" / "smoke-matchmaking-requests.jso
 ACCOUNT = "00000000000000000000000000000001"
 ALL_FIELDS_SESSION = {
     "ownerId", "ownerName", "serverName", "serverAddress", "serverPort", "maxPublicPlayers",
-    "openPublicPlayers", "publicPlayers", "privatePlayers", "attributes", "buildUniqueId", "started",
+    "openPublicPlayers", "maxPrivatePlayers", "openPrivatePlayers", "publicPlayers", "privatePlayers",
+    "shouldAdvertise", "allowJoinInProgress", "isDedicated", "usesStats", "allowInvites",
+    "usesPresence", "allowJoinViaPresence", "allowJoinViaPresenceFriendsOnly",
+    "attributes", "buildUniqueId", "started",
 }
 STATUS_FIELDS = {"state", "totalPlayers", "connectedPlayers", "queuedPlayers", "estimatedWaitSec",
                  "ticketId", "matchId"}
@@ -193,6 +196,11 @@ def run_checks(base, port, ctx):
     record = json.loads(raw) if status == 200 else {}
     check("session record returns 200", status == 200, f"status {status}")
     check("session record has the OnlineSessionMcp fields", set(record) == ALL_FIELDS_SESSION, str(sorted(record)))
+    check("session private capacity is zero", record.get("maxPrivatePlayers") == 0 and record.get("openPrivatePlayers") == 0)
+    check("session settings use boolean types", all(type(record.get(k)) is bool for k in (
+        "shouldAdvertise", "allowJoinInProgress", "isDedicated", "usesStats", "allowInvites",
+        "usesPresence", "allowJoinViaPresence", "allowJoinViaPresenceFriendsOnly")))
+    check("beacon port uses integer attribute suffix", type(record.get("attributes", {}).get("BeaconPort_i")) is int)
     check("session buildUniqueId is 683914758", record.get("buildUniqueId") == "683914758")
     check("session ownerId is the ticket account", record.get("ownerId") == ACCOUNT)
     status, _ = http(base, ctx, "GET", "/fortnite/api/matchmaking/session/" + "0" * 32)

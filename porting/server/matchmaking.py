@@ -124,9 +124,19 @@ class MatchmakingService:
             "serverPort": SESSION_SERVER_PORT,  # [guess]
             "maxPublicPlayers": 100,  # [guess]
             "openPublicPlayers": 100 - len(players),  # [guess] available public slots
+            "maxPrivatePlayers": 0,  # [observed] numeric session setting; value [guess]
+            "openPrivatePlayers": 0,  # [observed] numeric session field; value [guess]
+            "shouldAdvertise": True,  # [observed] boolean settings; values [guess]
+            "allowJoinInProgress": True,
+            "isDedicated": True,
+            "usesStats": False,
+            "allowInvites": False,
+            "usesPresence": False,
+            "allowJoinViaPresence": False,
+            "allowJoinViaPresenceFriendsOnly": False,
             "publicPlayers": players,  # [guess] ticket party members
             "privatePlayers": [],  # [guess]
-            "attributes": {"BeaconPort": SESSION_BEACON_PORT},  # [observed] name "BeaconPort"; value [guess]
+            "attributes": {"BeaconPort_i": SESSION_BEACON_PORT},  # [observed] integer suffix; value [guess]
             "buildUniqueId": BUILD_UNIQUE_ID,  # [observed] name; value [given]
             "started": False,  # [guess]
         }
