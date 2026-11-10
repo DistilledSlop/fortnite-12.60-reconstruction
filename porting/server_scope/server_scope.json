@@ -1,0 +1,54 @@
+{
+ "prune": true,
+ "closure_packages": 29026,
+ "pruned_edges": 13056,
+ "total": 14391,
+ "tiers": {
+  "L1": {
+   "n": 312,
+   "ported": 91
+  },
+  "L2": {
+   "n": 68,
+   "ported": 19
+  },
+  "N1": {
+   "n": 3931,
+   "ported": 959
+  },
+  "N2": {
+   "n": 167,
+   "ported": 29
+  },
+  "N3": {
+   "n": 130,
+   "ported": 23
+  },
+  "N4": {
+   "n": 845,
+   "ported": 133
+  },
+  "R1": {
+   "n": 932,
+   "ported": 321
+  },
+  "R2": {
+   "n": 312,
+   "ported": 139
+  },
+  "R5": {
+   "n": 57,
+   "ported": 1
+  },
+  "U1": {
+   "n": 3302,
+   "ported": 1208
+  },
+  "U2": {
+   "n": 4335,
+   "ported": 1477
+  }
+ },
+ "server_classes": 405,
+ "inscope_classes": 1931
+}
