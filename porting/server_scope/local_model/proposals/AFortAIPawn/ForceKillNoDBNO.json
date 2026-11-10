@@ -1,8 +1,7 @@
 {
  "function": "AFortAIPawn::ForceKillNoDBNO",
- "status": "blocked",
- "blocker": "Primary slot 0xa80 is 0x142310c30, but its virtual declaration and derived overrides and nested slot 0xa78 contract are unresolved.",
- "model": "llamacpp/qwen3.8-27b",
- "run": "terra-1",
- "batch_seconds": 430
+ "status": "proposed",
+ "blocker": null,
+ "model": "claude-sonnet-5-5 (primary agent, with terra-1 findings)",
+ "run": "claude-1"
 }

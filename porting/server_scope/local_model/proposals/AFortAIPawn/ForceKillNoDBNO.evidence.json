@@ -1,31 +1,20 @@
 {
-  "function": "AFortAIPawn::ForceKillNoDBNO",
-  "status": "blocked",
-  "exec_address": "0x1427a47c0",
-  "evidence": [
-    "porting/generated/native102-broad/0x1427a47c0.c",
-    "porting/generated/native102-broad/0x1427a47c0.asm",
-    "checkout/porting/behavior/native_gameplay_tags_runtime/FortNativeGameplayTagsRegistration.inc",
-    "captures/c30135c7885240959c8f34d4dde19dd1/0x142a1b7b0.c",
-    "captures/ebb2665e04dc47248a69fcd77958a8a5/0x1423178a0.c",
-    "work/q27-11100136/ForceKillNoDBNO.evidence.json",
-    "captures/1484705499914423a96f3442d4ab2542/0x1427a1790.c",
-    "captures/98dd815013f24eba9477b8e5dbdcd9ea/0x1427a0060.c",
-    "captures/38ca245ef3d04c62a842deb51b3b6f02/0x1422b6090.c",
-    "captures/7b87353e13b04f90a4c2f8feb50ef839/0x142310c30.c",
-    "captures/7b87353e13b04f90a4c2f8feb50ef839/0x142310ce0.c",
-    "porting/generated/native102-broad/0x142a1ce20.c"
-  ],
-  "resolved": {
-    "guard": "Role == ROLE_Authority (offset 0xf0, value 3) and !bIsDying (0x520 mask 8).",
-    "side_effects": "Clear bUsesDBNO (0x1344 mask 0x20), set LastHitBy (0x248) null, then dispatch virtual byte offset 0xa80 with tag, null, this. Field and bool identity confirmed by scripts/evidence.py field-offset AFortAIPawn.",
-    "tag": "FFortNativeGameplayTags singleton 0x141ed1800 + 0x440 is Gameplay.Effect.InstantDeath.Silent; constructor 0x141ebb310 registration at 0x141ebf64c; captured constructor and existing registration.",
-    "vtable": "Class registration 0x1427a1790 -> constructor thunk 0x1427a0060 -> constructor 0x1422b6090 writes primary vtable 0x146107540. Original bytes at 0x146107fc0 (+0xa80) point to 0x142310c30; preceding +0xa78 points to 0x142310ce0. 0x142310c30 constructs a single-tag container and dispatches it virtually to +0xa78 with the remaining arguments; unlike 0x1423178a0 it has no guard or empty-tag fallback. A scan for the two adjacent target addresses found seven candidate vtable starts, but does not establish complete derived-class coverage.",
-    "additional_callsite": "AFortPawn::KillDisconnectedPawn exec 0x142a1ce20 builds a tag container and dispatches slot +0xa78 with null controller and actor, corroborating 0x142310c30 forwarding shape. Bounded AFortPawn reflection inventory and checkout source search found no directly named declaration or wrapper for +0xa80 or +0xa78."
-  },
-  "blockers": [
-    "Virtual slot +0xa80 is identified for AFortAIPawn as 0x142310c30 but its source-level declaration and derived override coverage are not established. Its dynamic call to +0xa78 also requires the native callable contract; directly substituting AFortPawn::ForceKill (0x1423178a0) is incorrect due to additional fallback/guard and loss of +0xa80 dispatch."
-  ],
-  "next_step": "Recover the source-level virtual declarations for +0xa80 and +0xa78 and enumerate vtables of all AFortAIPawn-derived classes to establish their override targets; implement those contracts before emitting the complete body.",
-  "verification": "Original captures and reflection inspected; no build or runtime test performed."
+ "function": "AFortAIPawn::ForceKillNoDBNO",
+ "original_address": "0x1427a47c0",
+ "proposal": "work/claude-1/ForceKillNoDBNO.inc",
+ "evidence": [
+  "porting/generated/native102-broad/0x1427a47c0.c (full body, 12 lines)",
+  "scripts/evidence.py field-offset AFortAIPawn 0x248 -> APawn::LastHitBy; 0x1344 mask 0x20 -> AFortAIPawn::bUsesDBNO; 0x520 mask 8 -> AFortPawn::bIsDying; AActor Role at 0xf0 value 3 = ROLE_Authority",
+  "FFortNativeGameplayTags singleton 0x141ed1800 + 0x440 = Gameplay.Effect.InstantDeath.Silent (terra-1 evidence; ctor 0x141ebb310 registration 0x141ebf64c); convention FFortNativeGameplayTagsRuntime::Get().GetTagAtOriginalOffset(off) as in behavior/UFortQuestItemDefinition/CanPartyAssist.inc",
+  "porting/virtual_slots.py virt_target: AFortPawn vtable +0xa78 = 0x142310ce0, +0xa80 = 0x142310c30, inherited unchanged by AFortAIPawn and AFortPlayerPawn; AFortPlayerPawnAthena overrides both (0x141a0fe40, 0x141a0fe30); neither slot has a reflected name",
+  "captures/7b87353e13b04f90a4c2f8feb50ef839/0x142310c30.c: (this, FGameplayTag by value, controller, actor) builds a one-tag container and forwards to +0xa78 with no guard and no fallback tag",
+  "porting/generated/native.../0x1423178a0 (AFortPawn::ForceKill body): same forwarding with the Role/bIsDying guard, clears LastHitBy when a controller is supplied, and substitutes tag +0x410 when the tag is empty"
+ ],
+ "resolves_blocker": "The +0xa80 virtual is declared on AFortPawn, not AFortAIPawn, with signature (FGameplayTag, AController*, AActor*) and an unguarded forwarding body; the project rebuilds the client from source so the slot number only has to match through the declared override relationships, not as a byte offset. Declaration and body are proposed in work/dependencies/pawn-kill-virtuals.",
+ "remaining_concerns": [
+  "KillWithDeathTag and the +0xa78 virtual are my names; the original names are unrecoverable (no reflection). signature_status stays proposed.",
+  "The +0xa78 implementation (0x142310ce0, ~120 decompiled lines) and the AFortPlayerPawnAthena overrides are still to be recovered; ForceKillNoDBNO is correct only once they exist.",
+  "Whether AActor::Role needs the accessor GetLocalRole() or HasAuthority() in the checkout's UE: GetLocalRole() == ROLE_Authority is the faithful form."
+ ],
+ "verification": "Decompile and header review only; no build or runtime test."
 }

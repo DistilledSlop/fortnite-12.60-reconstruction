@@ -1,0 +1,21 @@
+{
+ "title": "AFortPawn native kill virtuals at original vtable +0xa78 and +0xa80",
+ "entries": [
+  {
+   "class": "AFortPawn", "function": "KillWithDeathTags", "kind": "helper", "virtual": true, "access": "public",
+   "signature": "void KillWithDeathTags(const FGameplayTagContainer& DeathTags, AController* KillerController, AActor* KillerActor)",
+   "signature_status": "proposed", "original_slot": "0xa78", "address": "0x142310ce0", "status": "needs_body",
+   "overrides": {"AFortPlayerPawnAthena": "0x141a0fe40"},
+   "notes": "Real kill routine: Role==Authority && !bIsDying guard, ability-system lookup via the 0x4c8 interface, effect handling, calls the virtual at +0xa40, tag checks against native tags +0x430/+0x440/+0x448, FUN_141bc3b40, then FUN_1406c4b60. Needs its own recovery; ForceKill (0x1423178a0) builds a one-tag container and calls it."
+  },
+  {
+   "class": "AFortPawn", "function": "KillWithDeathTag", "kind": "helper", "virtual": true, "access": "public",
+   "signature": "void KillWithDeathTag(FGameplayTag DeathTag, AController* KillerController, AActor* KillerActor)",
+   "signature_status": "proposed", "original_slot": "0xa80", "address": "0x142310c30", "status": "ported_below",
+   "overrides": {"AFortPlayerPawnAthena": "0x141a0fe30"},
+   "body": "FGameplayTagContainer Tags; Tags.AddTag(DeathTag); KillWithDeathTags(Tags, KillerController, KillerActor);"
+  }
+ ],
+ "evidence": ["porting/virtual_slots.py virt_target for AFortPawn/AFortAIPawn/AFortPlayerPawn/AFortPlayerPawnAthena at 0xa78 and 0xa80", "captures/7b87353e13b04f90a4c2f8feb50ef839/0x142310c30.c and 0x142310ce0.c"],
+ "verification": "Analysis only; no build or runtime test."
+}
