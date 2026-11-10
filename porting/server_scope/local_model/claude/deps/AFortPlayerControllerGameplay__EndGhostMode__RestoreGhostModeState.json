@@ -1,0 +1,24 @@
+{
+  "name": "RestoreGhostModeState",
+  "address": "0x1423cbe80",
+  "signature": "void AFortPlayerControllerGameplay::RestoreGhostModeState()",
+  "inc_or_decl": "if (!GhostModeRepData.bInGhostMode) return;\n// Attempt the restore; returns true when the item/inventory state is fully resolved.\nif (TryRestoreGhostItemState())   // 0x142057010 / 0x142070440 / 0x140708a10 chain, depth 2 partial\n{\n    return;\n}\n// Not yet resolvable: re-arm the same function on a 0.1 s timer (self-retry).\nScheduleGhostRetry(0.1f, &AFortPlayerControllerGameplay::RestoreGhostModeState);   // 0x1446278d0, delay 0x3dcccccd",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/c5c84bf6172f4839920c874ca9262d10/0x1423cbe80.c",
+      "/opt/fortnite/local-model-package/captures/5f3cc37b6fcb4019873c7f3e831de148/0x142057010.c",
+      "/opt/fortnite/local-model-package/captures/5f3cc37b6fcb4019873c7f3e831de148/0x142070440.c",
+      "/opt/fortnite/local-model-package/captures/5f3cc37b6fcb4019873c7f3e831de148/0x140708a10.c",
+      "/opt/fortnite/local-model-package/captures/5f3cc37b6fcb4019873c7f3e831de148/0x142059e40.c"
+    ],
+    "callees": {
+      "0x142057010": "ability/inventory slot resolve (captured, not read in full)",
+      "0x142070440": "large inventory operation, 569 lines (captured, not read in full)",
+      "0x140708a10": "FindAbilitySpecFromHandle (read, returns spec pointer from array at +0x500 matching handle)",
+      "0x142059e40": "FocusedSlot lookup across hands 0..2 with vcall +0x648 (read in full)",
+      "0x1446278d0": "timer schedule (depth 2, not read)",
+      "0x142bad740": "delegate payload helper (depth 2, not read)"
+    }
+  },
+  "notes": "LOW. Entry guard and the self-retry timer are read in full. The restore body (the 0x142057010 / 0x142070440 chain) is only partially ported: the 569-line 0x142070440 helper is captured but not read in full, so TryRestoreGhostItemState is a named stub in the dep and must be completed before promotion."
+}

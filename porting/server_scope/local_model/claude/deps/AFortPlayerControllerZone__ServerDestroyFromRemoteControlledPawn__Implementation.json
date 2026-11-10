@@ -1,0 +1,17 @@
+{
+  "name": "ServerDestroyFromRemoteControlledPawn_Implementation",
+  "address": "0x1423e92c0",
+  "signature": "void AFortPlayerControllerZone::ServerDestroyFromRemoteControlledPawn_Implementation()",
+  "inc_or_decl": "AActor* Remote = nullptr;\nif (AActor* Candidate = Pawn; Candidate != nullptr && Candidate->IsA(AFortRemoteControlledPawnClass_0x142abf870()))   // controller +0x248\n{\n    Remote = Candidate;\n}\nif (Role == ROLE_Authority && Remote != nullptr && Remote->RemoteControlHoldFlag_0x3098 == false)\n{\n    if (CanDestroyRemoteControlledPawn(Remote))   // 0x1424370d0\n    {\n        DestroyRemoteControlledPawn(Remote);   // 0x142451640\n    }\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/747ed1fecaa84163a9f6c47f3ba478e2/0x1423e92c0.c"
+    ],
+    "callees": {
+      "0x142abf870": "remote-controlled pawn class getter (named by role, not read)",
+      "0x1424370d0": "CanDestroyRemoteControlledPawn: bool predicate (captured, not read in full)",
+      "0x142451640": "DestroyRemoteControlledPawn (captured, not read in full)"
+    }
+  },
+  "notes": "MEDIUM. Full body of this implementation read at depth 1. The byte at +0x3098 on the pawn is a flag without a resolved reflected name. The two depth-2 helpers are captured but not read, so the predicate and destroy semantics are only named."
+}

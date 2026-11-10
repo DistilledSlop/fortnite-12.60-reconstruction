@@ -1,0 +1,31 @@
+{
+  "function": "AFortPlayerControllerGameplay::IsAllowedToFly",
+  "status": "proposed",
+  "original": "0x142a65560",
+  "signature": "bool AFortPlayerControllerGameplay::IsAllowedToFly()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a65560.c",
+    "/opt/fortnite/local-model-package/captures/8de282dfd4e544a3b85189f7102757f6/0x1423d8ab0.c",
+    "/opt/fortnite/local-model-package/captures/92a1d2ca3c0c4fe1be1368238d1b6917/0x1423318f0.c",
+    "/opt/fortnite/local-model-package/captures/92a1d2ca3c0c4fe1be1368238d1b6917/0x14199e430.c",
+    "/opt/fortnite/local-model-package/captures/92a1d2ca3c0c4fe1be1368238d1b6917/0x14199e2c0.c",
+    "/opt/fortnite/local-model-package/captures/92a1d2ca3c0c4fe1be1368238d1b6917/0x1419dd8b0.c",
+    "/opt/fortnite/local-model-package/captures/92a1d2ca3c0c4fe1be1368238d1b6917/0x143e8c1b0.c",
+    "/opt/fortnite/local-model-package/captures/92a1d2ca3c0c4fe1be1368238d1b6917/0x141ed1800.c",
+    "/opt/fortnite/local-model-package/captures/92a1d2ca3c0c4fe1be1368238d1b6917/0x142b4a5d0.c",
+    "/opt/fortnite/local-model-package/captures/92a1d2ca3c0c4fe1be1368238d1b6917/0x1419bb7e0.c"
+  ],
+  "callees": {
+    "0x1423d8ab0": "IsAllowedToFlyImpl (dep file, LOW)",
+    "0x1423318f0": "bool: Owner->+0x1578 != 0 (read in full)",
+    "0x14199e430": "bool: GameState-side predicate, checks +0x1df8/+0x1df0 via 0x141a49590 / 0x141a4b0d0 (read in full, depth 2 not read)",
+    "0x14199e2c0": "void: calls 0x141a4a300 on the same member (read in full)",
+    "0x1419dd8b0": "bool: Athena PlayerState blocking check via 0x141c74820 / 0x141c7d420 / 0x141c795a0 / 0x14209a3d0 (read in full, depth 2 partial)",
+    "0x143e8c1b0": "FGameplayTagContainer::AppendTags (read in full)",
+    "0x141ed1800": "GetGameplayTagTable singleton (read in full, returns global tag table)",
+    "0x142b4a5d0": "FortWeaponItemDefinition::StaticClass() (named getter)",
+    "0x1419bb7e0": "TArray cleanup for a tag/candidate array (read in full)",
+    "0x1419b90a0/0x1419f3d90/0x1419c3880/0x142b5be40": "captured, not read in full"
+  },
+  "notes": "Thunk is a direct pass-through to the 143-line implementation. Confidence LOW on IsAllowedToFlyImpl: the decision tree is recovered, but the candidate-array helpers (0x1419b90a0, 0x1419f3d90, 0x1419c3880) and the 0x142070440-class helpers are not read in full, and 0x14199e2c0 has a decompiler artifact (void result compared as char) that was resolved by reading it as a side-effect call."
+}

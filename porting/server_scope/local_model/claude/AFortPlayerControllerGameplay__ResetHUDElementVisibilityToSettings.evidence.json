@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerControllerGameplay::ResetHUDElementVisibilityToSettings",
+  "status": "proposed",
+  "original": "0x142a66660",
+  "signature": "void AFortPlayerControllerGameplay::ResetHUDElementVisibilityToSettings(FGameplayTagContainer HUDElementTags)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a66660.c",
+    "/opt/fortnite/local-model-package/captures/d0748a76cc3d45d3b99de20aa7b0333b/0x1423e5c70.c"
+  ],
+  "callees": {
+    "0x1423e5c70": "body ported inline in the .inc (read in full, 85 lines)",
+    "0x142cd4ab0": "FName from literal L\"UserSettings\" (depth 2, not read)",
+    "0x142ce11c0": "hash probe for the key (depth 2, not read)",
+    "0x140b57340": "map find-or-add probe (depth 2, not read)",
+    "0x1420b3720": "map insert (depth 2, not read)",
+    "0x14237e580": "HUD owner getter (depth 2, not read; null-checked in the original)",
+    "0x143e96610": "tag value copy (depth 2, not read)",
+    "0x141e27160": "tag-override predicate (depth 2, not read)",
+    "0x143e8b3b0": "tag append (depth 2, not read)",
+    "0x1423da170": "apply HUD visibility changes (depth 2, not read)"
+  },
+  "notes": "Thunk and impl read in full at depth 1. Depth-2 helpers for FName, map and tag-container operations are captured by call only; the map/tag member names at controller +0x24e0 and +0x2514 are not resolved in reflection, so HUDVisibilityMap is a proposed name. Confidence MEDIUM for the control flow, LOW for the map member naming."
+}

@@ -1,0 +1,20 @@
+{
+  "name": "ServerSendPartyJoinInfoToPlayer_Implementation",
+  "address": "0x1423e9710",
+  "signature": "void AFortPlayerControllerZone::ServerSendPartyJoinInfoToPlayer_Implementation(const FUniqueNetIdRepl& RecipientId, const FString& JoinInfoStr)",
+  "inc_or_decl": "if (LogVerbosity_0x1480e5128 > 5)\n{\n    UE_LOG(LogParty, Log, TEXT(\"Forwarding request to join old party %s %s\"), *RecipientId.ToString(), *JoinInfoStr);   // 0x140b35480, 0x142b... FMsg_Logf_Internal\n}\nif (RecipientId.UniqueNetId == nullptr || !RecipientId.UniqueNetId->IsValid())   // vcall +0x28\n{\n    return;\n}\nTArray<TWeakObjectPtr<APlayerState>> PlayerArray = GetWorld()->GameState->PlayerArray;   // 0x14468fb70 with vcall +0x150\nfor (int32 Index = 0; Index < PlayerArray.Num(); ++Index)\n{\n    APlayerState* Candidate = PlayerArray[Index].Get();   // 0x1406a7ed0 / FWeakObjectPtr_Get\n    if (Candidate == nullptr || !Candidate->IsA(AFortPlayerStateZone::StaticClass_0x142a6ee20()))\n    {\n        continue;\n    }\n    if (Candidate->PartyOwner_0x68 == nullptr)   // NamePrivate pointer slot at +0x68\n    {\n        continue;\n    }\n    UObject* PartyHolder = Candidate->PartyOwner_0x68;\n    UFortPartyMember* Member = PartyHolder->Member_0x250;   // +0x250\n    if (Member == nullptr || !Member->IsValid())   // vcall +0x28\n    {\n        continue;\n    }\n    if (MatchesRecipient(PartyHolder->UniqueId_0x248, RecipientId))   // 0x140d7c5a0\n    {\n        Candidate->ForwardPartyJoinInfo(JoinInfoStr);   // vcall +0x21c0\n        return;\n    }\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/7cd476408e584bed82d398cf72ce182e/0x1423e9710.c"
+    ],
+    "callees": {
+      "0x140b35480": "FName/log helper for the log string (depth 2, not read)",
+      "0x14468fb70": "GameState PlayerArray copy (depth 2, not read)",
+      "0x1406a7ed0": "weak pointer Get (depth 2 helper, named)",
+      "0x142a6ee20": "AFortPlayerStateZone class getter (depth 2, not read)",
+      "0x140d7c5a0": "recipient unique-id match (depth 2, captured, not read)",
+      "0x142b... ": "log formatting helper (depth 2, not read)"
+    }
+  },
+  "notes": "MEDIUM. The control flow is read in full. The party-member pointer chain (+0x68, +0x248, +0x250) is recovered by offset only and is not resolved to reflected names, so the member names are proposed. The ForwardPartyJoinInfo vcall target (slot +0x21c0) is named by slot."
+}

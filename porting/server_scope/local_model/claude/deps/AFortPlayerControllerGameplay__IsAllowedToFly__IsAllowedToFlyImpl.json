@@ -1,0 +1,22 @@
+{
+  "name": "IsAllowedToFlyImpl",
+  "address": "0x1423d8ab0",
+  "signature": "bool AFortPlayerControllerGameplay::IsAllowedToFlyImpl()",
+  "inc_or_decl": "// Decision order as recovered from the body. Returns false as soon as a blocking condition holds.\nif (UAbilityOwner* Owner = GetAbilityOwner())   // vcall +0x14d8 on this\n{\n    if (UAbilityComponent* Asc = Owner->GetAbilityComponentForTags())   // vcall +0x4c8 then +0x10\n    {\n        FGameplayTagContainer Tags;   // 0x143e8c1b0 AppendTags, source is the ability component's loose tags\n        if (Tags.HasTag(GetGameplayTagTable()->FlightBlockingTag))   // FName at +0x7a8/+0x7ac\n        {\n            return false;\n        }\n    }\n    if (Owner->IsDrivingVehicle_0x1578())   // 0x1423318f0: Owner +0x1578 != 0\n    {\n        return false;\n    }\n}\n// Athena branch: a controller of class AFortPlayerControllerAthena inside an Athena game state.\nAFortGameStateAthena* GameState = GetWorld()->GameState_0x130;   // vcall +0x150 then +0x130\nif (IsA(this, AFortPlayerControllerAthena::StaticClass()) && GameState != nullptr && IsFlightPolicyActive(GameState) /* 0x14199e430 */)\n{\n    AFortPawn* Pawn = nullptr;\n    if (FlightPolicyCheck(this, &Pawn) /* 0x1419c3880 */ && Pawn != nullptr && !Pawn->FlightDisabledFlag_0x2d8)\n    {\n        if (!HasFlightBlockingPlayerState(this) /* 0x1419dd8b0 */)\n        {\n            return true;\n        }\n    }\n}\n// Weapon grant path: any owned weapon item definition carrying the flight tag allows flight.\nfor (UFortWorldItem* Item : WorldInventory->Items_0x390)   // WorldInventory at +0x1738\n{\n    UFortItemDefinition* Def = Item->GetItemDefinition();   // vcall +0x1000\n    if (Def != nullptr && Def->IsA(UFortWeaponItemDefinition::StaticClass()) && Def->HasGameplayTag(GetGameplayTagTable()->FlightGrantTag /* +0xba0 */))\n    {\n        return true;\n    }\n}\n// Candidate pass: build the pawn-side candidate list and ask each candidate (vcall +0xb50) whether it allows flight.\nTArray<...> Candidates;   // 0x1419b90a0 (pawn at +0x248, owner, mode 1)\nfor (auto* Candidate : Candidates)\n{\n    bool bAllowed = false;\n    if (Candidate->AllowsFlight(&bAllowed) /* vcall +0xb50 */ && bAllowed)\n    {\n        return true;\n    }\n}\nreturn false;",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/8de282dfd4e544a3b85189f7102757f6/0x1423d8ab0.c"
+    ],
+    "callees": {
+      "0x1423318f0": "Owner +0x1578 != 0 (read in full)",
+      "0x14199e430": "GameState predicate (read in full; depends on 0x141a49590/0x141a4b0d0, not read)",
+      "0x1419dd8b0": "Athena PlayerState blocking predicate (read in full, depth 2 partial: 0x141c74820/0x141c7d420/0x141c795a0/0x14209a3d0 not read)",
+      "0x1419b90a0": "builds candidate list (captured, not read in full)",
+      "0x1419f3d90": "TArray growth (captured, not read in full)",
+      "0x1419c3880": "flight policy check (captured, 62 lines, not read in full)",
+      "0x142b4a5d0": "FortWeaponItemDefinition::StaticClass (named getter)",
+      "0x1419bb7e0": "array cleanup (read in full)"
+    }
+  },
+  "notes": "LOW. Overall decision order is recovered with confidence, but names for the candidate list and the flight-policy predicate are proposed only. Not promotable until 0x1419c3880, 0x1419b90a0 and 0x1419dd8b0 are read to depth 2."
+}

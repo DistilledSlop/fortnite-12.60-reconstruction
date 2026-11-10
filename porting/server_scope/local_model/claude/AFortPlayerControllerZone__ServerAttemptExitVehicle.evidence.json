@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerZone::ServerAttemptExitVehicle",
+  "status": "proposed",
+  "original": "0x142a70820",
+  "signature": "void AFortPlayerControllerZone::ServerAttemptExitVehicle()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a70820.c",
+    "/opt/fortnite/local-model-package/captures/3effdc69fb1e462d8562afc70a128b5b/0x1423e8730.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB (Stub_ReturnTrue) for the Validate slot +0x20f0",
+    "0x1423e8730": "ServerAttemptExitVehicle_Implementation (dep file, read in full at depth 1, LOW for the deep helpers)"
+  },
+  "notes": "Thunk fully read. Validate is STUB. Confidence HIGH for the dispatch; the Implementation body carries the real behaviour and is LOW/MEDIUM."
+}

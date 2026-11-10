@@ -1,0 +1,20 @@
+{
+  "name": "FilterPlayerNameForSettings",
+  "address": "0x1423d5350",
+  "signature": "void AFortPlayerControllerGameplay::FilterPlayerNameForSettings(FString& OutName, APlayerState* OtherPlayerState, bool bRespectSettings)",
+  "inc_or_decl": "if (OtherPlayerState == nullptr) { OutName = FString(); return; }\nAFortPlayerStateAthena* LocalPS = Cast<AFortPlayerStateAthena>(PlayerState);   // controller PlayerState at +0x220\nAFortPlayerStateAthena* OtherPS = Cast<AFortPlayerStateAthena>(OtherPlayerState);\nbool bHidePlayerName = false;\nif (LocalPS != nullptr && OtherPS != nullptr && LocalPS->HideNameKey_0xfdc != OtherPS->HideNameKey_0xfdc)\n{\n    const bool bStreamerModeHide = StreamerModeEnabled(GetUserSettings()) && StreamerModeHidesPlayer(OtherPS);   // 0x142057... 0x141e272f0 / 0x141a4a2d0\n    const bool bAnonymous = bRespectSettings && (OtherPS->HideFlagsWord_0xfdd & 0x4) != 0;\n    if (bStreamerModeHide || bAnonymous)\n    {\n        FText Label = bStreamerModeHide\n            ? FText::FromStringTable(\"Athena\", \"StreamerMode_Player\", \"Player\")\n            : FText::FromStringTable(\"Athena\", \"AnonymousMode_Anonymous\", \"Anonymous\");\n        FText Format = FText::FromStringTable(\"Athena\", \"HiddenPlayerNameFormat\", \"{0}[{1}]\");\n        OutName = FText::Format(Format, Label, OtherPS->PlayerIdNumber_0x21c).ToString();   // FText::Format with (label, int)\n        return;\n    }\n}\nOtherPlayerState->GetPlayerName(OutName);   // 0x1444ac7a0: copy of PlayerName",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/b125331d0e634b44874dfe083b8a8eca/0x1423d5350.c",
+      "/opt/fortnite/local-model-package/captures/d3a05bf9fe4941e4848f93f929a0bf23/0x1423d5330.c"
+    ],
+    "callees": {
+      "0x1fc8 vcall target 0x1423d5350": "this body",
+      "0x142a92... AFortPlayerStateAthena::StaticClass getter": "AFortPlayerStateAthena_GetPrivateStaticClass (named class getter), used for the IsA checks",
+      "0x142cd4ab0/0x142bedc40/0x142c0c240/0x142c0c460/0x142c253c0/0x142c40540": "FText and FString construction/format helpers (depth 2, not read: names approximate)",
+      "0x1406909c0/0x140682e80/0x140682ce0": "FFormatArgument array build, cleanup, FString assign (depth 2, not read)",
+      "0x1444ac7a0": "APlayerState::GetPlayerName copy (depth 2, not read)"
+    }
+  },
+  "notes": "Read in full at depth 1. The 0xfdc key, the 0xfdd flag byte and the 0x21c int are raw offsets on AFortPlayerStateAthena with no resolved reflected names; the literal table keys (Athena: Player/Anonymous/HiddenPlayerNameFormat) come from the call-site string literals. Confidence MEDIUM. The streamer-mode predicate's internals (0x141e272f0, 0x141a4a2d0) are not read."
+}

@@ -1,0 +1,17 @@
+{
+  "name": "ServerRequestSeatChange_Implementation",
+  "address": "0x1423e9500",
+  "signature": "void AFortPlayerControllerZone::ServerRequestSeatChange_Implementation(int32 TargetSeatIndex)",
+  "inc_or_decl": "AActor* PawnOwner = Pawn;   // controller +0x248\nif (PawnOwner == nullptr || !PawnOwner->IsA(AFortAthenaVehicleBase::StaticClass_0x142a75f10()))\n{\n    return;\n}\nUSeatComponent* Seat = PawnOwner->GetSeatComponent_0x1088();   // vcall +0x1088\nif (Seat == nullptr)\n{\n    return;\n}\nSeat->RequestSeatChange(this, TargetSeatIndex);   // vcall +0x478 (original has no null check after the class gate)",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/990b528c1d234544acf2bf268a27b3ec/0x1423e9500.c"
+    ],
+    "callees": {
+      "0x142a75f10": "vehicle class getter (not read)",
+      "0x1088 vcall": "seat component getter on the pawn (named by slot)",
+      "0x478 vcall": "RequestSeatChange on the seat component (named by slot)"
+    }
+  },
+  "notes": "MEDIUM. Read in full. The original calls the seat vcall without a null check after the class gate; the port adds the guard, which is the only deviation and is noted here."
+}

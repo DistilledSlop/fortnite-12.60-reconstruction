@@ -1,0 +1,22 @@
+{
+  "name": "UpdateGhostItemState",
+  "address": "0x1423cbb50",
+  "signature": "void AFortPlayerControllerGameplay::UpdateGhostItemState(UFortItemDefinition* GhostItemDef)",
+  "inc_or_decl": "if (GhostModeRepData.bInGhostMode) return;\nUObject* Owner = InventoryOwnerInterface;   // interface at +0x598\nif (InventoryOwnerInterface->GetItemAtGuid_Probe() == nullptr)   // vcall +0xa0, result is the lookup for the ghost item\n{\n    AFortPlayerState* PS = Cast<AFortPlayerState>(PlayerState);\n    if (PS != nullptr)\n    {\n        if (Role == ROLE_Authority)\n        {\n            ForceNetUpdate();\n            PS->ForceNetUpdate();\n            ApplyCustomizationToCharacter(PS, this, /*param_1[0xdc]*/ CustomizationTarget);   // 0x142408830\n        }\n        else\n        {\n            UInventory* Inv = InventoryOwnerInterface->GetInventory();\n            if (Inv != nullptr)\n            {\n                Inv->SetGhostItemState(GhostItemDef, true);   // vcall +0x628 on the inventory\n            }\n            Inv = InventoryOwnerInterface->GetInventory();\n            if (Inv != nullptr)\n            {\n                if (UItem* Item = Inv->GetItemInSlot_0648(0, PreviousFocusedSlot))   // vcall +0x648\n                {\n                    EquipGhostItem(Item);   // 0x142a3bcf0 with the item from vcall +0x468\n                }\n            }\n            ResetPlayerStateGhostLinks(PS);   // 0x14242d4e0\n            PS->OnGhostStateRefreshed(true, CustomizationTarget);   // vcall +0x758\n        }\n    }\n}\nelse\n{\n    // Interface path: arm a 0.1 s retry timer that re-enters RestoreGhostModeState (0x1423cbe80) until the item resolves.\n    ScheduleGhostRetry(0.1f);   // 0x1446278d0 with delay 0x3dcccccd\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/c5c84bf6172f4839920c874ca9262d10/0x1423cbb50.c"
+    ],
+    "callees": {
+      "0x142408830": "ApplyCustomizationToCharacter-like on PlayerState (read, depth 2 partially; logs 'Applying character customization')",
+      "0x142bad740": "delegate payload helper (depth 2, not read)",
+      "0x140f95ae0": "GetWorld timer manager helper (depth 2, not read)",
+      "0x1446278d0": "SetTimer-style schedule (depth 2, not read): called with delay 0.1 (0x3dcccccd)",
+      "0x142ee3b30": "weak-pointer copy helper (depth 2, not read)",
+      "0x142a3bcf0": "equip helper (depth 2, not read)",
+      "0x14242d4e0": "player-state ghost-link reset (depth 2, not read)",
+      "0x142b5be40": "UFortWorldItemDefinition::StaticClass() (named getter)"
+    }
+  },
+  "notes": "LOW/MEDIUM. The control flow of the main branches is read; the item lookup at vcall +0xa0 and the vcall slots on the inventory interface are named by slot, not by reflected name. Depth-2 helpers 0x142bad740, 0x140f95ae0, 0x1446278d0, 0x142ee3b30, 0x142a3bcf0, 0x14242d4e0 are captured but their bodies are not ported here; this is the open depth-2 work for EndGhostMode."
+}

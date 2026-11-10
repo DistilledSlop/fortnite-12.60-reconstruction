@@ -1,0 +1,23 @@
+{
+  "function": "AFortPlayerControllerGameplay::EndGhostMode",
+  "status": "proposed",
+  "original": "0x142a64fc0",
+  "signature": "void AFortPlayerControllerGameplay::EndGhostMode()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/c5c84bf6172f4839920c874ca9262d10/0x1423cbb50.c",
+    "/opt/fortnite/local-model-package/captures/c5c84bf6172f4839920c874ca9262d10/0x1423cbe80.c",
+    "/opt/fortnite/local-model-package/captures/c5c84bf6172f4839920c874ca9262d10/0x141efa660.c",
+    "/opt/fortnite/local-model-package/captures/3fb0c17941d9454eba154b51f34935b4/0x1423e0070.c",
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a64fc0.c"
+  ],
+  "callees": {
+    "0x141efa660": "UnregisterGhostItemRef(ItemDef): returns 0 on every path, no side effect (dep file)",
+    "0x1423e0070": "UpdateGhostModeState(): shared tail, body is identical to the EndGhostMode tail (dep file)",
+    "0x1423cbb50": "UpdateGhostItemState(ItemDef): reached through UpdateGhostModeState, MEDIUM/LOW (dep file, depth-2 partial)",
+    "0x1423cbe80": "RestoreGhostModeState(): retry timer, reached through UpdateGhostModeState, LOW (dep file, depth-2 partial)",
+    "0x142a85850": "AFortPlayerState::StaticClass() (named, no further read)",
+    "0x150 vcall": "AActor::GetWorld (named, header model)",
+    "0x5e8 vcall": "AActor::ForceNetUpdate (named)"
+  },
+  "notes": "Thunk body read fully. The Role==2 branch in the original is dead behind the Role==3 entry check and is not ported. TimeExitedGhostMode uses a raw UWorld+0x540 read that has no resolved member name. The 0x1423cbb50 and 0x1423cbe80 bodies were read in full at depth 1; their depth-2 callees (0x142408830, 0x142bad740, 0x140f95ae0, 0x1446278d0, 0x142a3bcf0, 0x14242d4e0, 0x142b5be40, 0x142057010, 0x142070440) are captured but only partly ported (see dep files)."
+}

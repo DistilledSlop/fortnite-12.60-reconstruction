@@ -1,0 +1,18 @@
+{
+  "name": "ServerBeginGameplayVote_Implementation",
+  "address": "0x1423e8db0",
+  "signature": "void AFortPlayerControllerZone::ServerBeginGameplayVote_Implementation(EVoteType VoteType, FVoteConfig VoteConfig)",
+  "inc_or_decl": "// VoteType and VoteConfig are not referenced by the recovered body; the body is the same as ServerEndGameplayVote_Implementation.\nif (AFortGameStateZone* GameState = GetWorld_0x150()->GameState_0x128; IsA(GameState, AFortGameStateZone::StaticClass_0x1428ea8f0()))\n{\n    if (VoteManager_0x278 VoteManager = GameState->VoteManager; VoteManager != nullptr && IsA(VoteManager, AFortVoteManagerClass_0x142927a60()))\n    {\n        if (APlayerState* PlayerState = this->PlayerState_0x220; PlayerState != nullptr && IsA(PlayerState, AFortPlayerState::StaticClass_0x142a85850()))\n        {\n            FVoteRequest Request;\n            VoteManager->ForwardVoteRequest(PlayerState, Request);   // 0x142419ef0\n        }\n    }\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/1f6891eca81247e096331fd0acc14fe0/0x1423e8db0.c"
+    ],
+    "callees": {
+      "0x1428ea8f0": "AFortGameStateZone class getter (not read)",
+      "0x142927a60": "vote manager class getter (not read)",
+      "0x142a85850": "AFortPlayerState::StaticClass (named)",
+      "0x142419ef0": "vote forwarding helper (captured, not read in full)"
+    }
+  },
+  "notes": "LOW. Identical recovered structure to 0x1423e93b0. Neither argument is used by the decompile. Both bodies may be simplified by the decompiler; a read of 0x142419ef0 is required before promotion."
+}

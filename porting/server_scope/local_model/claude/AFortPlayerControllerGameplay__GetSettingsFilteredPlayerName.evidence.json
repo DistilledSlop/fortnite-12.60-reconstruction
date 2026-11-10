@@ -1,0 +1,19 @@
+{
+  "function": "AFortPlayerControllerGameplay::GetSettingsFilteredPlayerName",
+  "status": "proposed",
+  "original": "0x142a65070",
+  "signature": "FString AFortPlayerControllerGameplay::GetSettingsFilteredPlayerName(APlayerState* OtherPlayerState)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a65070.c",
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a65070.asm",
+    "/opt/fortnite/local-model-package/captures/d3a05bf9fe4941e4848f93f929a0bf23/0x1423d5330.c",
+    "/opt/fortnite/local-model-package/captures/b125331d0e634b44874dfe083b8a8eca/0x1423d5350.c"
+  ],
+  "callees": {
+    "0x1423d5330": "pass-through wrapper: calls the 0x1fc8 virtual with (this, out, other, true) and returns the out pointer; read in full (asm confirms R9B=1 and RAX=RDX)",
+    "0x1423d5350": "FilterPlayerNameForSettings(out, OtherPlayerState, bRespectSettings): read in full, dep file",
+    "0x142bee710": "FString free (no further read)",
+    "0x142ed9cf0": "FFrame step helper (engine, no further read)"
+  },
+  "notes": "Decompiler output of the thunk alone suggested an uninitialised temporary; the asm shows the temporary is passed as the out argument to 0x1423d5330, which forwards it to the virtual filter. The FFrame-read path (CMP [RDX+0x20]) is the standard explicit-property step and is not ported."
+}

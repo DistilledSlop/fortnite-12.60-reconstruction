@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerZone::ServerDestroyFromRemoteControlledPawn",
+  "status": "proposed",
+  "original": "0x142a709b0",
+  "signature": "void AFortPlayerControllerZone::ServerDestroyFromRemoteControlledPawn()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a709b0.c",
+    "/opt/fortnite/local-model-package/captures/747ed1fecaa84163a9f6c47f3ba478e2/0x1423e92c0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB (Stub_ReturnTrue) for the Validate slot +0x2030",
+    "0x1423e92c0": "ServerDestroyFromRemoteControlledPawn_Implementation (dep file, read in full)"
+  },
+  "notes": "Thunk fully read. Validate is STUB. The implementation is short and read in full at depth 1; its helpers 0x1424370d0 and 0x142451640 are captured (see the dep file)."
+}

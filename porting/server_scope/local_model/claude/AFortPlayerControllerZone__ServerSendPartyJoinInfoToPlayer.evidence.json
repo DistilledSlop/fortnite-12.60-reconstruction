@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerZone::ServerSendPartyJoinInfoToPlayer",
+  "status": "proposed",
+  "original": "0x142a70ce0",
+  "signature": "void AFortPlayerControllerZone::ServerSendPartyJoinInfoToPlayer(FString JoinInfoStr, FUniqueNetIdRepl RecipientId)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a70ce0.c",
+    "/opt/fortnite/local-model-package/captures/7cd476408e584bed82d398cf72ce182e/0x1423e9710.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB (Stub_ReturnTrue) for the Validate slot +0x20e0",
+    "0x1423e9710": "ServerSendPartyJoinInfoToPlayer_Implementation (dep file, read in full)"
+  },
+  "notes": "Thunk fully read, including the shared-ref and FString cleanup at the end, which the port omits as ownership boilerplate. Validate is STUB. Read order is RecipientId then JoinInfoStr (reverse of reflection)."
+}

@@ -1,0 +1,17 @@
+{
+  "function": "AFortPlayerControllerZone::ServerDetachFromRemoteControlledPawn",
+  "status": "proposed",
+  "original": "0x142a70a00",
+  "signature": "void AFortPlayerControllerZone::ServerDetachFromRemoteControlledPawn()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a70a00.c",
+    "/opt/fortnite/local-model-package/captures/4fac9fb5a62d4d55a06f32e73e97a443/0x1423e9340.c",
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a70a00.asm"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB (Stub_ReturnTrue) for the Validate slot +0x2040",
+    "0x1423e9340": "ServerDetachFromRemoteControlledPawn_Implementation (dep file, read in full)",
+    "0x14243a470": "DetachRemoteControlledPawn (captured, not read in full)"
+  },
+  "notes": "Thunk fully read. Validate is STUB. Implementation read in full at depth 1; the detach helper 0x14243a470 is captured but not read in full."
+}

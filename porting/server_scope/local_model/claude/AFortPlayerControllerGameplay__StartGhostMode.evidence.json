@@ -1,0 +1,25 @@
+{
+  "function": "AFortPlayerControllerGameplay::StartGhostMode",
+  "status": "proposed",
+  "original": "0x142a67450",
+  "signature": "void AFortPlayerControllerGameplay::StartGhostMode(UObject* ItemProvidingGhostMode)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a67450.c",
+    "/opt/fortnite/local-model-package/captures/653fb087b54e4d94a57baac4d528bd5c/0x1423f2ef0.c",
+    "/opt/fortnite/local-model-package/captures/3fb0c17941d9454eba154b51f34935b4/0x142ec9900.c",
+    "/opt/fortnite/local-model-package/captures/3fb0c17941d9454eba154b51f34935b4/0x1423e0070.c",
+    "/opt/fortnite/local-model-package/captures/3fb0c17941d9454eba154b51f34935b4/0x142952540.c",
+    "/opt/fortnite/local-model-package/captures/3fb0c17941d9454eba154b51f34935b4/0x142a82010.c"
+  ],
+  "callees": {
+    "0x1423f2ef0": "body of the thunk, ported inline in the .inc",
+    "0x141efa660": "UnregisterGhostItemRef, no-op in this build (dep file of EndGhostMode)",
+    "0x142952540": "UFortInventoryOwnerInterface::StaticClass() (named static-class getter)",
+    "0x142ec9900": "UObject::GetInterfaceAddress(UClass*) (read in full; result unused in this call)",
+    "0x140680300": "Stub_Empty (shared stub, no effect)",
+    "0x1423e0070": "UpdateGhostModeState() (dep file of EndGhostMode)",
+    "0x142a82010": "AFortPlayerPawnAthena::StaticClass() (named static-class getter)",
+    "0x5e8 vcall": "AActor::ForceNetUpdate (named)"
+  },
+  "notes": "The thunk only reads the object parameter; the full body from 0x1423f2ef0 is ported inline. The pawn flag byte at +0x53a is not resolved to a reflected member, so its bit 2 is written by mask. GetInterfaceAddress result is ignored in the original, which is preserved as a discarded call."
+}

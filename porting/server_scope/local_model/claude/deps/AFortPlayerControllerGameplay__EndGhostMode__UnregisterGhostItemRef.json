@@ -1,0 +1,13 @@
+{
+  "name": "UnregisterGhostItemRef",
+  "address": "0x141efa660",
+  "signature": "int32 UnregisterGhostItemRef(AActor* Owner, UObject* ItemDef, int32 Count, bool bForce)",
+  "inc_or_decl": "// No effect in this build: the original returns 0 on every path.\n(void)Owner; (void)ItemDef; (void)Count; (void)bForce;\nreturn 0;",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/c5c84bf6172f4839920c874ca9262d10/0x141efa660.c"
+    ],
+    "callees": {},
+    "notes": "Read in full (10-line decompile). Both branches return 0 and no memory is written. Reported as STUB-equivalent for the port: a real ghost-item unregister is not present in this binary's body."
+  }
+}

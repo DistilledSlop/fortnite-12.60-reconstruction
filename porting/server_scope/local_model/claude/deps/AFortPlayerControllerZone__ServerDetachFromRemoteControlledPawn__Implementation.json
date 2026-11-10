@@ -1,0 +1,16 @@
+{
+  "name": "ServerDetachFromRemoteControlledPawn_Implementation",
+  "address": "0x1423e9340",
+  "signature": "void AFortPlayerControllerZone::ServerDetachFromRemoteControlledPawn_Implementation()",
+  "inc_or_decl": "AActor* Remote = Pawn;   // controller +0x248\nif (Remote != nullptr && Remote->IsA(AFortRemoteControlledPawnClass_0x142abf870()) && Role == ROLE_Authority && Remote->RemoteControlHoldFlag_0x3098 == false)\n{\n    DetachRemoteControlledPawn(Remote);   // 0x14243a470\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/4fac9fb5a62d4d55a06f32e73e97a443/0x1423e9340.c"
+    ],
+    "callees": {
+      "0x142abf870": "remote-controlled pawn class getter (named by role)",
+      "0x14243a470": "DetachRemoteControlledPawn (captured, not read in full)"
+    }
+  },
+  "notes": "MEDIUM. Read in full at depth 1. The class-gate on the pawn is a plain IsA check, the 0x3098 flag is unresolved, and the detach helper's body is not read."
+}

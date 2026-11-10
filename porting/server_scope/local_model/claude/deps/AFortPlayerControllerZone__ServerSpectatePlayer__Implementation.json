@@ -1,0 +1,23 @@
+{
+  "name": "ServerSpectatePlayer_Implementation",
+  "address": "0x1423e9920",
+  "signature": "void AFortPlayerControllerZone::ServerSpectatePlayer_Implementation(APlayerState* NewPlayerToSpectate, bool bAllowStateChange)",
+  "inc_or_decl": "// Gate: unless the state change is allowed, only proceed while the controller is in its spectating state.\nif (!bAllowStateChange && !(StateName == NAME_Spectating_0x142))\n{\n    return;\n}\nAPlayerState* OwnPlayerState = PlayerState_0x220;\nif (OwnPlayerState == nullptr || !OwnPlayerState->IsA(AFortPlayerStateZone::StaticClass_0x142a92a00()))\n{\n    return;\n}\nif (NewPlayerToSpectate == nullptr)\n{\n    return;\n}\nAPawn* SpectateTargetPawn = NewPlayerToSpectate->Pawn_0x248;   // 0x142a92a00 gate, vcall +0x1088 path\nif (SpectateTargetPawn == nullptr || !SpectateTargetPawn->IsSpectatable_0x1423318f0())\n{\n    NewPlayerToSpectate = ResolveSpectateTarget(this);   // 0x142325510\n}\nif (UFortRuntimeOptions::GetDefault()->bEnableSpectateTransitions)   // 0x142409780 path when enabled\n{\n    ApplySpectateTransition(OwnPlayerState, NewPlayerToSpectate);   // 0x142409780\n}\nNotifySpectateStateChanged(NAME_Spectating_0x142);   // 0x1447ba3f0 / 0x1447bac20 (state FNames, 0x658 and 0xd10 vcalls)\nSetSpectateTarget(NewPlayerToSpectate);   // vcall +0xd10\nUObject* WorldObject = GetWorld();   // vcall +0x150\nif (WorldObject != nullptr)\n{\n    if (UFortSpectateManager* Mgr = GetSpectateManager_0x141907d00(GetWorld()); Mgr != nullptr && Mgr->FollowTarget_0x308 != nullptr)\n    {\n        SetSpectateFollowTarget(Mgr->FollowTarget_0x308, this);   // 0x141a3d190\n    }\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/74e50cc06c1b4db695d111848a774702/0x1423e9920.c"
+    ],
+    "callees": {
+      "0x142a92a00": "AFortPlayerStateZone-class getter (not read)",
+      "0x142a75f10": "class getter (not read)",
+      "0x1423318f0": "Owner +0x1578 != 0 (read in full in the IsAllowedToFly captures)",
+      "0x142325510": "spectate target resolve (captured, not read in full)",
+      "0x142409780": "spectate transition (captured, not read in full)",
+      "0x1447ba3f0": "state FName event (captured, not read in full)",
+      "0x1447bac20": "state FName event (captured, not read in full)",
+      "0x141907d00": "spectate manager getter (captured, not read in full)",
+      "0x141a3d190": "set follow target (captured, not read in full)"
+    }
+  },
+  "notes": "LOW. The 124-line body is recovered at the gate, target, transition and notify level; the state-name FNames, the Runtime Options flag, and the vcall slots 0x658/0xd10/0x150 are named by slot and call site only. Depth-2 helpers are captured but not read, so this is not promotable."
+}

@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerZone::ServerEndGameplayVote",
+  "status": "proposed",
+  "original": "0x142a70a50",
+  "signature": "void AFortPlayerControllerZone::ServerEndGameplayVote(EVoteType VoteType)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a70a50.c",
+    "/opt/fortnite/local-model-package/captures/4036c41a36074455ad859c66069938b2/0x1423e93b0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB (Stub_ReturnTrue) for the Validate slot +0x20b0",
+    "0x1423e93b0": "ServerEndGameplayVote_Implementation (dep file; the decompile does not reference VoteType)"
+  },
+  "notes": "Thunk fully read. Validate is STUB. The Implementation body is the same shape as ServerBeginGameplayVote_Implementation (0x1423e8db0) and does not use its VoteType argument in the decompile; that is recorded as LOW rather than invented into the port."
+}

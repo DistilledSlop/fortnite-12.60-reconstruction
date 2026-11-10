@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerZone::ServerSpectatePlayer",
+  "status": "proposed",
+  "original": "0x142a70f50",
+  "signature": "void AFortPlayerControllerZone::ServerSpectatePlayer(bool bAllowStateChange, APlayerState* NewPlayerToSpectate)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a70f50.c",
+    "/opt/fortnite/local-model-package/captures/74e50cc06c1b4db695d111848a774702/0x1423e9920.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB (Stub_ReturnTrue) for the Validate slot +0x2148",
+    "0x1423e9920": "ServerSpectatePlayer_Implementation (dep file, LOW)"
+  },
+  "notes": "Thunk fully read. Validate is STUB. Read order is NewPlayerToSpectate then bAllowStateChange (reverse of reflection), matching the Implementation's (param_2, param_3) use. The reflected parameter name bAllowStateChange is kept."
+}

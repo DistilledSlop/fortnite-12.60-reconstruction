@@ -1,0 +1,19 @@
+{
+  "name": "UpdateGhostModeState",
+  "address": "0x1423e0070",
+  "signature": "void AFortPlayerControllerGameplay::UpdateGhostModeState()",
+  "inc_or_decl": "if (Role == ROLE_Authority && !GhostModeRepData.bInGhostMode) { UpdateGhostItemState(GhostModeRepData.GhostModeItemDef); }\nUInventory* Inventory = InventoryOwnerInterface->GetInventory();   // interface at +0x598, vcall +0x50\nif (Role == ROLE_AutonomousProxy && Inventory != nullptr)\n{\n    if (!GhostModeRepData.bInGhostMode)\n    {\n        UpdateGhostItemState(GhostModeRepData.GhostModeItemDef);\n    }\n    else\n    {\n        PreviousFocusedSlot = FocusedSlotIndex(Inventory, EHand::Primary);   // 0x142059ed0 with hand 0\n        RestoreGhostModeState();\n    }\n}\nAFortPlayerState* PS = Cast<AFortPlayerState>(PlayerState);   // controller PlayerState at +0x220\nif (Role == ROLE_Authority && PS != nullptr)\n{\n    PS->bInGhostMode = GhostModeRepData.bInGhostMode;   // 0x142429c90 writes byte +0x998\n}\nOnGhostModeChanged.Broadcast(this, GhostModeRepData.bInGhostMode);   // 0x1406a9dc0 (ProcessMulticastDelegate)",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/3fb0c17941d9454eba154b51f34935b4/0x1423e0070.c"
+    ],
+    "callees": {
+      "0x1423cbb50": "UpdateGhostItemState (dep)",
+      "0x1423cbe80": "RestoreGhostModeState (dep)",
+      "0x142059ed0": "FocusedSlotIndex(Inventory, hand): returns the focused slot at inventory +0x220 for hand 0",
+      "0x142429c90": "AFortPlayerState::bInGhostMode setter (byte store +0x998)",
+      "0x1406a9dc0": "TMulticastScriptDelegate::ProcessMulticastDelegate (named engine helper, read in full in the EndGhostMode captures)"
+    }
+  },
+  "notes": "Read in full. The interface vcall at +0x50 is evaluated before the PlayerState test, matching the original order. Confidence HIGH for the control flow, MEDIUM for the member names on PlayerState."
+}

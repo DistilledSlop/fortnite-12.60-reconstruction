@@ -1,0 +1,11 @@
+{
+  "function": "AFortPlayerControllerPvE::ResetPlayerDeathReportForForcePlayerRestart",
+  "status": "proposed",
+  "original": "0x142a6c270",
+  "signature": "void AFortPlayerControllerPvE::ResetPlayerDeathReportForForcePlayerRestart()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a6c270.c"
+  ],
+  "callees": {},
+  "notes": "Direct body, no callees. Raw offsets: 0x2818 is AFortPlayerControllerZone::PlayerDeathReport (FortPlayerDeathReport, size 120, ServerTimeForRespawn at +0, ServerTimeForResurrect at +4). 0x2850 = PlayerDeathReport+0x38, a flags word whose bit 1 is cleared; the reflection has bDroppedBackpack as a bitfield with no resolved bit, so the flags word is left as an explicitly unresolved name in the .inc. Confidence MEDIUM for that reason."
+}

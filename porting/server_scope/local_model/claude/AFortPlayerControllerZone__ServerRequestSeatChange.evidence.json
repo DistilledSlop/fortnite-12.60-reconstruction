@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerZone::ServerRequestSeatChange",
+  "status": "proposed",
+  "original": "0x142a70b20",
+  "signature": "void AFortPlayerControllerZone::ServerRequestSeatChange(int32 TargetSeatIndex)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a70b20.c",
+    "/opt/fortnite/local-model-package/captures/990b528c1d234544acf2bf268a27b3ec/0x1423e9500.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB (Stub_ReturnTrue) for the Validate slot +0x2050",
+    "0x1423e9500": "ServerRequestSeatChange_Implementation (dep file, read in full)"
+  },
+  "notes": "Thunk fully read. Validate is STUB. The implementation is read in full at depth 1; the seat-component vcall slots are named by slot."
+}

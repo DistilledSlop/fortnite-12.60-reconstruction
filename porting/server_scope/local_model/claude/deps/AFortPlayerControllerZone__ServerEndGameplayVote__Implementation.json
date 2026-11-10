@@ -1,0 +1,18 @@
+{
+  "name": "ServerEndGameplayVote_Implementation",
+  "address": "0x1423e93b0",
+  "signature": "void AFortPlayerControllerZone::ServerEndGameplayVote_Implementation(EVoteType VoteType)",
+  "inc_or_decl": "// VoteType is not referenced by the recovered body (decompile shows no use of the second argument).\nif (AFortGameStateZone* GameState = GetWorld_0x150()->GameState_0x128; IsA(GameState, AFortGameStateZone::StaticClass_0x1428ea8f0()))\n{\n    if (VoteManager_0x278 VoteManager = GameState->VoteManager; VoteManager != nullptr && IsA(VoteManager, AFortVoteManagerClass_0x142927a60()))\n    {\n        if (APlayerState* PlayerState = this->PlayerState_0x220; PlayerState != nullptr && IsA(PlayerState, AFortPlayerState::StaticClass_0x142a85850()))\n        {\n            FVoteRequest Request;   // default-constructed out value, filled by the vote manager\n            VoteManager->ForwardVoteRequest(PlayerState, Request);   // 0x142419ef0\n        }\n    }\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/4036c41a36074455ad859c66069938b2/0x1423e93b0.c"
+    ],
+    "callees": {
+      "0x1428ea8f0": "AFortGameStateZone class getter (not read)",
+      "0x142927a60": "vote manager class getter (not read)",
+      "0x142a85850": "AFortPlayerState::StaticClass (named, read in the EndGhostMode captures)",
+      "0x142419ef0": "vote forwarding helper (captured, not read in full)"
+    }
+  },
+  "notes": "LOW. The GameState/VoteManager/PlayerState gating is read in full. The VoteType argument is not used in the recovered body, so the port keeps the signature without using the argument. The Begin implementation (0x1423e8db0) has the same recovered structure."
+}

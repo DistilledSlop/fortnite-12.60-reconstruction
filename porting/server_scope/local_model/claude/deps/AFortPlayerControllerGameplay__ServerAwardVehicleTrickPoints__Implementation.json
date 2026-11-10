@@ -1,0 +1,24 @@
+{
+  "name": "ServerAwardVehicleTrickPoints_Implementation",
+  "address": "0x1423e8a30",
+  "signature": "void AFortPlayerControllerGameplay::ServerAwardVehicleTrickPoints_Implementation(int32 InPoints, int32 InAirTimeX1000)",
+  "inc_or_decl": "if (StatManager != nullptr)\n{\n    if (FFortStat* Points = StatManager->FindStat(FName(\"VehicleTrickPoints\", 1), 5))   // 0x142cd4ab0, 0x14249ee10\n    {\n        Points->Add(static_cast<double>(InPoints), 2);   // 0x1424b3430\n    }\n    if (FFortStat* AirTime = StatManager->FindStat(FName(\"VehicleAirTime\", 1), 5))\n    {\n        AirTime->Add(static_cast<float>(InAirTimeX1000) * 0.001f, 2);\n    }\n}\nFGameplayTagContainer OwnedTags;\nif (IFortTagProvider* Provider = GetInterfaceAddress(this, IFortTagProvider::StaticClass()))   // 0x142ec9900 with 0x143e98d10\n{\n    Provider->GetOwnedTags(OwnedTags);   // vcall +0x10\n}\nTWeakObjectPtr<UObject> Holder = ReadWeakPtr(+0x488);   // weak pointer at controller +0x488, 0x1406a7ed0\nif (UObject* HolderObj = Holder.Get(); HolderObj != nullptr && HolderObj->IsA(UFortTagSourceClass_0x1428381e0))\n{\n    HolderObj->GetOwnedTags(OwnedTags);   // vcall +0x10 on the holder's tag interface\n}\nif (IFortEventEmitter* Emitter = GetTrickEventEmitter(2))   // vcall +0x1bd0(2)\n{\n    FTagAppendSet Scratch;   // 0x142442c50 scratch set, cleared at scope exit\n    Emitter->ClearTrickScratch(Scratch);\n}\nif (IFortEventEmitter* Emitter = GetTrickEventEmitter2(2))   // vcall +0x1be0(2)\n{\n    FTagAppendSet Scratch;   // 0x141ba9e70\n    FGameplayTagContainer EventTags = FGameplayTagContainer(Tag_Vehicle_TrickEvent /* 0x141ed1800 +0x1f00 */);\n    Emitter->SendTrickEvent(0x4a, this, OwnedTags, Scratch, InPoints);   // 0x1420a3b00, event 0x4a\n    Emitter->SendTrickEvent(0x21, this, OwnedTags, Scratch, static_cast<int32>(static_cast<float>(InAirTimeX1000) * 0.001f));   // event 0x21\n}",
+  "evidence": {
+    "captures": [
+      "/opt/fortnite/local-model-package/captures/4e437680a579423a99130d925ae26a33/0x1423e8a30.c"
+    ],
+    "callees": {
+      "0x142cd4ab0": "FName from literal (depth 2, not read)",
+      "0x14249ee10": "StatManager stat lookup (depth 2, not read)",
+      "0x1424b3430": "stat add (depth 2, not read)",
+      "0x143e98d10": "interface class getter (depth 2, not read)",
+      "0x142ec9900": "GetInterfaceAddress (read in full in the StartGhostMode captures)",
+      "0x1406a7ed0": "weak pointer validity (depth 2, not read)",
+      "0x1428381e0": "class getter for the holder check (depth 2, not read)",
+      "0x142442c50": "scratch clear (depth 2, not read)",
+      "0x141ba9e70": "scratch fill (depth 2, not read)",
+      "0x1420a3b00": "gameplay event send (depth 2, not read)"
+    }
+  },
+  "notes": "LOW/MEDIUM. Stat names and the 0x4a / 0x21 event ids are read from the call sites. The emitter, holder and tag-provider interface names are proposed; the vcall slots 0x1bd0/0x1be0 are named by slot. Depth-2 helpers are captured but not read in full. The original body also has stack-cookie and temp-free boilerplate, which is omitted."
+}

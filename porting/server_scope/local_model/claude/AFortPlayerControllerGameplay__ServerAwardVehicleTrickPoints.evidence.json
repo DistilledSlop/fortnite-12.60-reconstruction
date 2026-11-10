@@ -1,0 +1,20 @@
+{
+  "function": "AFortPlayerControllerGameplay::ServerAwardVehicleTrickPoints",
+  "status": "proposed",
+  "original": "0x142a667a0",
+  "signature": "void AFortPlayerControllerGameplay::ServerAwardVehicleTrickPoints(int32 InPoints, int32 InAirTimeX1000)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a667a0.c",
+    "/opt/fortnite/local-model-package/captures/4e437680a579423a99130d925ae26a33/0x1423e8a30.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB (Stub_ReturnTrue, returns true): Validate slot 0x1f48",
+    "0x1423e8a30": "ServerAwardVehicleTrickPoints_Implementation (dep file, read in full, MEDIUM/LOW)",
+    "0x142cd4ab0": "FName from literal (depth 2, not read)",
+    "0x14249ee10": "StatManager find stat by name and kind (depth 2, not read)",
+    "0x1424b3430": "stat add (depth 2, not read)",
+    "0x1420a3b00": "gameplay event send (depth 2, not read)"
+  },
+  "notes": "Thunk is fully read. Validate is STUB. The argument order was reconciled from the thunk reads: the Implementation body applies InPoints to the VehicleTrickPoints stat and InAirTimeX1000 * 0.001 to VehicleAirTime. The Validate stub means the failure branch never runs."
+}

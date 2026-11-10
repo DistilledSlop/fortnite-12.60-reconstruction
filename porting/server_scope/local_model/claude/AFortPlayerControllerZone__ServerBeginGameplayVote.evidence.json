@@ -1,0 +1,16 @@
+{
+  "function": "AFortPlayerControllerZone::ServerBeginGameplayVote",
+  "status": "proposed",
+  "original": "0x142a70870",
+  "signature": "void AFortPlayerControllerZone::ServerBeginGameplayVote(EVoteType VoteType, FVoteConfig VoteConfig)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/4706cb98ae524141b4007699d9cc0809/0x142a70870.c",
+    "/opt/fortnite/local-model-package/captures/1f6891eca81247e096331fd0acc14fe0/0x1423e8db0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ],
+  "callees": {
+    "0x1406801d0": "STUB (Stub_ReturnTrue) for the Validate slot +0x20d0",
+    "0x1423e8db0": "ServerBeginGameplayVote_Implementation (dep file, LOW)"
+  },
+  "notes": "Thunk fully read, including the default-value pre-fill of the struct. Validate is STUB. Read order (VoteType, then VoteConfig) is the thunk order and is reversed from the reflection list, as the worker notes require."
+}
