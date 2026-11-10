@@ -1,0 +1,29 @@
+{
+  "function": "AFortCreativeMoveTool::PopCreativeMoveToolEquippedInputComponent",
+  "original_address": "0x1428c3e60",
+  "decompile_source": "captures/6c9f7a5abea44e54aba70d7728c6d2fd/0x1428c3e60.c",
+  "asm_source": "captures/6c9f7a5abea44e54aba70d7728c6d2fd/0x1428c3e60.asm",
+  "proposal": "work/q27-11100535/PopCreativeMoveToolEquippedInputComponent.inc",
+  "flag_proof": {
+    "reflection_flags": "0xc080c00",
+    "reflection_source": "lea",
+    "note": "Non-RPC native function (no Server/Client/Multicast net bits; the decompile has no RPC validate/impl dispatch, only a plain virtual call). Not declared in the generated header."
+  },
+  "observations": [
+    "ASM-authoritative body (captures .../0x1428c3e60.asm): shared native prologue (flag touch at [rdx+0x20]) then 'mov rax,[rcx]; call [rax+0xc78]' — a single virtual call to vtable byte offset 0xc78 with no arguments, then return.",
+    "The C decompile confirms the single indirect call: (**(code **)(*param_1 + 0xc78))();",
+    "The vtable candidate 0x1461de5c0 (native_class_index.json: vtable_status 'unverified', vtable_candidate_shared_by_classes 3, 90 slots) has slot 0xc78 = 0x1406801c0.",
+    "0x1406801c0 is the documented shared bare-return stub (porting/behavior/README.md third pass: 15 empty bodies are exec thunks to this `ret`; _shared/validate_return_true.inc documents the sibling 0x1406801d0). It is `ret` only, so the virtual target has no side effects.",
+    "The function name (Pop...InputComponent) and the empty virtual target are consistent with a no-op pop in this build."
+  ],
+  "header_declaration": {
+    "present": false,
+    "location": "checkout porting/native/Source/FortniteGame/Generated/AFortCreativeMoveTool.h",
+    "note": "PopCreativeMoveToolEquippedInputComponent is absent from the generated header; a declaration would be required for the splice."
+  },
+  "confidence": "MEDIUM",
+  "remaining_questions": [
+    "The vtable candidate 0x1461de5c0 is unverified (shared by 3 classes, no in-image xrefs found), so the slot 0xc78 -> 0x1406801c0 binding is a candidate, not a proven binding.",
+    "The adjacent slot 0xc70 (PushCreativeMoveToolEquippedInputComponent's virtual) resolves to 0x142563ba0, a delete/destructor wrapper, which is a red flag for vtable alignment in this region; this lowers confidence in the 0xc78 assignment even though the target is the well-documented bare-return stub."
+  ]
+}
