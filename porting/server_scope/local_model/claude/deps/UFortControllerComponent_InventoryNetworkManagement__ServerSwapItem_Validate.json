@@ -1,0 +1,7 @@
+{
+  "name": "UFortControllerComponent_InventoryNetworkManagement__ServerSwapItem_Validate",
+  "address": "0x1406801d0",
+  "signature": "bool ServerSwapItem_Validate(...)",
+  "inc_or_decl": "Virtual slot 0x440 of UFortControllerComponent_InventoryNetworkManagement. Stub returns true, so no server-side validation.",
+  "evidence": "porting/generated/native-cap-virtual/0x1406801d0.c: Stub_ReturnTrue."
+}

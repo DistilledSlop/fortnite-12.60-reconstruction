@@ -1,0 +1,12 @@
+{
+  "function": "UBuildingStructuralSupportSystem::StartActorRemovalBatch",
+  "status": "proposed",
+  "original": "0x14275eaa0",
+  "signature": "void UBuildingStructuralSupportSystem::StartActorRemovalBatch()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275eaa0.c"
+  ],
+  "callees": {},
+  "notes": "The thunk body is the whole function: one guarded increment of the depth at this+0x28. Global name and member name are proposed.",
+  "confidence": "MEDIUM"
+}

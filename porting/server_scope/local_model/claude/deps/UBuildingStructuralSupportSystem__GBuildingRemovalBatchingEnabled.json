@@ -1,0 +1,7 @@
+{
+  "name": "UBuildingStructuralSupportSystem__GBuildingRemovalBatchingEnabled",
+  "address": "0x1478c33c0 (global)",
+  "signature": "bool GBuildingRemovalBatchingEnabled",
+  "inc_or_decl": "extern bool GBuildingRemovalBatchingEnabled;",
+  "evidence": "Global DAT_1478c33c0 gates both Start and Stop. Name proposed; value not recovered."
+}

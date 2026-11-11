@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__MakeFortEffectContextImpl",
+  "address": "0x141604940",
+  "signature": "FGameplayEffectContextHandle* MakeFortEffectContextImpl(UFortAbilitySystemComponent* ASC, FGameplayEffectContextHandle* Out, UObject* SourceObject, UObject* EffectCauser, UObject* DamageSource)",
+  "inc_or_decl": "Allocates a context via UAbilitySystemGlobals::AllocGameplayEffectContext (vfunc 0x270 of the module), adds the instigator (AvatarActor, or OwnerActor when EffectCauser is null) via vfunc 0x10, sets the damage source (cast to IFortDamageSource) when given, sets the source object via vfunc 0x48 when given. Returns Out. The level argument is not consumed.",
+  "evidence": "Capture 6efb1241727e4d638a4125f43c983a91/0x141604940.c."
+}

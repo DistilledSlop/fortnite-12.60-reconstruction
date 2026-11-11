@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__BP_FortApplyGameplayEffectToTargetImpl",
+  "address": "0x1415ec3f0",
+  "signature": "FActiveGameplayEffectHandle BPApplyImpl(...)",
+  "inc_or_decl": "Null-checks TargetOfEffect and GameplayEffectClass (IsChildOf UGameplayEffect), creates the effect context on first use (same steps as MakeFortEffectContext), resolves the GE class default object and calls the base ApplyGameplayEffectToTarget (helper 0x1406b7f10).",
+  "evidence": "Capture d5cb54b7a0564fad969d23cac6fc88a3/0x1415ec3f0 (binary name in captures list). Read in part."
+}

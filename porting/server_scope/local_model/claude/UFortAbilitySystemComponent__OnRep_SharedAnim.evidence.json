@@ -1,0 +1,19 @@
+{
+  "function": "UFortAbilitySystemComponent::OnRep_SharedAnim",
+  "status": "proposed",
+  "original": "0x142781830",
+  "signature": "void UFortAbilitySystemComponent::OnRep_SharedAnim()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x142781830.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x14160c6f0.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x140718890.c",
+    "/opt/fortnite/local-model-package/captures/1484705499914423a96f3442d4ab2542/0x1427a1790.c"
+  ],
+  "callees": {
+    "0x14160c6f0": "ApplySharedAnim(SharedAnim): applies the replicated payload (421-line helper, partly recovered; delegates and montage/anim calls).",
+    "0x140718890": "liveness check on the actor-info avatar (weak pointer then virtual 0x6a8).",
+    "0x1427a1790": "AFortAIPawn::StaticClass."
+  },
+  "notes": "Member names (SharedAnim at this+0x14d8, AnimatedPawn at this+0xa0, AnimStateFlags at pawn+0x1340, AnimComponent at pawn+0x7a8) are proposed. The state-to-flags switch is recovered exactly; the blend call and its predicate are MEDIUM. The 0x14160c6f0 helper is not fully recovered.",
+  "confidence": "MEDIUM"
+}

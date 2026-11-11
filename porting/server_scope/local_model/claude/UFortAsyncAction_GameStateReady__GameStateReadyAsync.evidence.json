@@ -1,0 +1,18 @@
+{
+  "function": "UFortAsyncAction_GameStateReady::GameStateReadyAsync",
+  "status": "proposed",
+  "original": "0x1427bca80",
+  "signature": "UFortAsyncAction_GameStateReady* UFortAsyncAction_GameStateReady::GameStateReadyAsync(UObject* WorldContextObject)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x1427bca80.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x14186ec90.c",
+    "/opt/fortnite/local-model-package/captures/b05277d5018c4c6a8645214e9d3bc4df/0x144640410.c"
+  ],
+  "callees": {
+    "0x14186ec90": "helper body: world lookup (0x144640410 on GEngine), NewObject of the action class (0x1427ba150), weak world-context assignment (0x142ee3b30 at +0x8), then virtual 0x270 call with the world. Returns the action.",
+    "0x144640410": "GEngine->GetWorldFromContextObject (not captured).",
+    "0x1427ba150": "UFortAsyncAction_GameStateReady::StaticClass (not captured)."
+  },
+  "notes": "Return value is the action object, or null when no world. The exact virtual 0x270 target name is proposed. The default NewObject outer is assumed to be the transient package.",
+  "confidence": "MEDIUM"
+}

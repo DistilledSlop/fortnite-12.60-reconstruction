@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__NetMulticast_RefreshActiveGameplayEffectCueEvents_Implementation",
+  "address": "0x141605950",
+  "signature": "void NetMulticast_RefreshActiveGameplayEffectCueEvents_Implementation()",
+  "inc_or_decl": "Virtual slot 0x818 of UFortAbilitySystemComponent. Walks the ActiveGameplayEffects container (this+0x838) and, for each active, non-inhibited effect with a valid spec, re-invokes its gameplay cue events (helper 0x1406ce200 with mode 1).",
+  "evidence": "porting/generated/native-cap-virtual/0x141605950.c (154 lines). Read in part; spec-validity check is MEDIUM."
+}

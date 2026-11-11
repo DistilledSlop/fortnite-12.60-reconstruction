@@ -1,0 +1,21 @@
+{
+  "function": "UBuildingStructuralSupportSystem::K2_GetLogicalBuildingActors",
+  "status": "proposed",
+  "original": "0x14275dc40",
+  "signature": "void UBuildingStructuralSupportSystem::K2_GetLogicalBuildingActors(TArray<UObject*>& LogicalBuildingActors, int32 LogicalIdx)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275dc40.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x141c828e0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x142752f80.c",
+    "/opt/fortnite/local-model-package/captures/dac69345c97344eca763c350a046fc0e/0x1406d9a30.c",
+    "/opt/fortnite/local-model-package/captures/a4e53635d44341648bf23fbf8b6d1d8d/0x140687d00.c"
+  ],
+  "callees": {
+    "0x141c828e0": "body: Reset out array; bounds-check LogicalIdx against group Num; iterate the group sparse set (set bits only), keep entries whose class IsChildOf BuildingSMActor (static class 0x142752f80).",
+    "0x142752f80": "ABuildingSMActor::StaticClass (named engine helper pattern).",
+    "0x1406d9a30": "TArray Empty/Reset helper.",
+    "0x140687d00": "TBitArray iterator advance (set-bit iteration)."
+  },
+  "notes": "Member names LogicalBuildingGroups and BuildingActors are proposed (see deps). Iteration over set bits of a TSparseArray is the same as range-for.",
+  "confidence": "HIGH"
+}

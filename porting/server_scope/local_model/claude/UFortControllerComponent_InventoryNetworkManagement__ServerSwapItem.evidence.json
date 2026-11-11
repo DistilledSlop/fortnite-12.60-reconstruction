@@ -1,0 +1,21 @@
+{
+  "function": "UFortControllerComponent_InventoryNetworkManagement::ServerSwapItem",
+  "status": "proposed",
+  "original": "0x1428a62d0",
+  "signature": "void UFortControllerComponent_InventoryNetworkManagement::ServerSwapItem(UObject* SourceOwner, UObject* TargetOwner, const FGuid& ItemGuid, int32 Count)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1428a62d0.c",
+    "/opt/fortnite/local-model-package/captures/d7188626514e4fa8a54060dd5ab2bfc4/0x1406801d0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual3/0x141d15ae0.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x14201e8f0.c",
+    "/opt/fortnite/local-model-package/captures/b3ef40cd9521472a80b770de4bb6203c/0x1428a4810.c"
+  ],
+  "callees": {
+    "0x1406801d0": "ServerSwapItem_Validate (slot 0x440): stub returning true, so validation always passes.",
+    "0x141d15ae0": "ServerSwapItem_Implementation (slot 0x448): casts both owners to inventory-owner interfaces and calls the swap helper 0x14201e8f0 with the item guid and count.",
+    "0x14201e8f0": "swap helper: checks both owners, resolves the owning inventory side from the first owner, and forwards to 0x1428a4810 (inventory swap, not recovered).",
+    "0x1428a4810": "inventory swap backend (not recovered)."
+  },
+  "notes": "Parameter order in the thunk is SourceOwner, TargetOwner, ItemGuid, Count, matching the header. The validate stub is always true.",
+  "confidence": "HIGH"
+}

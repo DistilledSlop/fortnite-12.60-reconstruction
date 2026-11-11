@@ -1,0 +1,31 @@
+{
+  "function": "UFortAbilityTask_SpawnProjectileAndWait::FinishSpawningActor",
+  "status": "proposed",
+  "original": "0x142789000",
+  "signature": "void UFortAbilityTask_SpawnProjectileAndWait::FinishSpawningActor(AActor* SpawnedActor, UGameplayAbility* OwningAbility)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x142789000.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x141625fd0.c",
+    "/opt/fortnite/local-model-package/captures/934d85e01709430c835489ee29456f97/0x142c5c060.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x143f71060.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x142c620f0.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x1426df7d0.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x1426df650.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x142aaab30.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x14161f450.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x142aa44e0.c"
+  ],
+  "callees": {
+    "0x141625fd0": "body: FinishSpawning with the spawn transform, SpawnedProj assignment, velocity and gravity setup, requester notification, record append; ensure on null or being-destroyed actor.",
+    "0x142c5c060": "FRotator to quaternion conversion.",
+    "0x143f71060": "AActor::FinishSpawning(Transform) (699 lines, not read in full).",
+    "0x142c620f0": "FRotator to quaternion for the spawn direction (SpawnDirection +0x108).",
+    "0x1426df7d0": "projectile initialise-in-direction (163 lines, not read in full).",
+    "0x1426df650": "projectile gravity scale setter (sets the gravity field only in state 3 and when no override applies).",
+    "0x142aaab30": "projectile requester notification (ProcessEvent plus interface call).",
+    "0x14161f450": "TArray Add for the spawn-record array at this+0x80.",
+    "0x142aa44e0": "AFortProjectileBase::StaticClass (used for cast checks)."
+  },
+  "notes": "The ordering is taken from the decompile: FinishSpawning runs before the validity test. Names of the projectile helper functions are proposed. SpawnedProj is a TWeakObjectPtr at +0xe0.",
+  "confidence": "MEDIUM"
+}

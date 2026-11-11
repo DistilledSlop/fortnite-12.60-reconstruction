@@ -1,0 +1,7 @@
+{
+  "name": "UBuildingStructuralSupportSystem__LogicalBuildingGroups",
+  "address": "0x118 (count 0x120)",
+  "signature": "TArray<FLogicalBuildingGroup> LogicalBuildingGroups",
+  "inc_or_decl": "TArray<FLogicalBuildingGroup> LogicalBuildingGroups;  // stride 0xa8; Num at +0x120. Each group: BuildingActors = TSparseArray<FWeakObjectPtr> at +0x0 (data ptr +0x0, allocation bit flags +0x10/+0x20, NumBits +0x28)",
+  "evidence": "Helper 0x141c828e0 indexes param_1+0x118 with stride 0xa8, bounds-checks against param_1+0x120. Member name is proposed; the generated header does not list it."
+}

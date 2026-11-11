@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilityTask_SpawnProjectileAndWait__BindSpawnedProjectileEvents",
+  "address": "0x141614350-adjacent (inline in 0x14161ed10)",
+  "signature": "void BindSpawnedProjectileEvents(AFortProjectileBase* Projectile, UFortAbilityTask_SpawnProjectileAndWait* Task)",
+  "inc_or_decl": "Binds the projectile event delegates (Created/Touched/Bounced/Stopped/Exploded/Destroyed) to Task handlers: AddDynamic handlers 0x141630fa0 and 0x1416311d0 on projectile members +0x700 and +0x718, multicast handlers 0x1416312b0 and 0x141631100 on the projectile delegate lists +0x420 and +0x438, and OnProjectileDestroyed by name.",
+  "evidence": "Inline section of helper 0x14161ed10 (lines 100-180 of its decompile). Name proposed."
+}

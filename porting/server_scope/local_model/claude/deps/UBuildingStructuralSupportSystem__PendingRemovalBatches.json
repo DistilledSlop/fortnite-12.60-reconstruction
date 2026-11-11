@@ -1,0 +1,7 @@
+{
+  "name": "UBuildingStructuralSupportSystem__PendingRemovalBatches",
+  "address": "0x30",
+  "signature": "TArray<FBuildingRemovalBatch> PendingRemovalBatches",
+  "inc_or_decl": "TArray<FBuildingRemovalBatch> PendingRemovalBatches;  // stride 0x60; QueuedActors = TSparseArray<FWeakObjectPtr> at +0x8",
+  "evidence": "Stop (0x14275eac0) reads *(this+0x30) with stride 0x60 and copies the group queue from +0x8 via helper 0x140769940. Names proposed."
+}

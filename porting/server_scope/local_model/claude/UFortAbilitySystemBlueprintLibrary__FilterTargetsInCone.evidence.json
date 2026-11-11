@@ -1,0 +1,19 @@
+{
+  "function": "UFortAbilitySystemBlueprintLibrary::FilterTargetsInCone",
+  "status": "proposed",
+  "original": "0x142780de0",
+  "signature": "TArray<UObject*> UFortAbilitySystemBlueprintLibrary::FilterTargetsInCone(UObject* SourceActor, const TArray<UObject*>& ActorsToCheck, const FVector& ConeStart, const FVector& ConeEnd, float ConeRadius, const FGameplayTagContainer& ExcludeFromObstructionTags, bool bShouldCheckLos)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x142780de0.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x141df2a70.c",
+    "/opt/fortnite/local-model-package/captures/b05277d5018c4c6a8645214e9d3bc4df/0x144640410.c"
+  ],
+  "callees": {
+    "0x141df2a70": "body: world lookup from SourceActor (GEngine 0x144640410), cone math from ConeStart/ConeEnd/ConeRadius (sin/cos via asin/cos, sqrt, rsqrt normalise with 1e-8 threshold), per-candidate root location, distance and angle tests, optional LOS line trace (0x1440b59b0) with tag filter (0x143e98d10).",
+    "0x144640410": "GEngine->GetWorldFromContextObject (not captured).",
+    "0x1440b59b0": "line trace multi (not captured).",
+    "0x143e98d10": "gameplay tag container test used to exclude obstruction hits (not captured)."
+  },
+  "notes": "The cone uses ConeStart as apex and ConeEnd for axis and length. The LOS trace channel is not recovered (ECC_Visibility assumed). The tag predicate is HasAnyTag on ExcludeFromObstructionTags. Obstruction is a blocking hit whose actor lacks an excluded tag.",
+  "confidence": "MEDIUM"
+}

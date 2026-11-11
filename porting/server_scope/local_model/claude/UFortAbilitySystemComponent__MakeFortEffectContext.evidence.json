@@ -1,0 +1,23 @@
+{
+  "function": "UFortAbilitySystemComponent::MakeFortEffectContext",
+  "status": "proposed",
+  "original": "0x142781640",
+  "signature": "FGameplayEffectContextHandle UFortAbilitySystemComponent::MakeFortEffectContext(int32 GameplayEffectLevel, UObject* DamageSource, UObject* EffectCauser, UObject* SourceObject)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x142781640.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x141604940.c",
+    "/opt/fortnite/local-model-package/captures/dac69345c97344eca763c350a046fc0e/0x1406c6ef0.c",
+    "/opt/fortnite/local-model-package/captures/dac69345c97344eca763c350a046fc0e/0x1406ab0b0.c",
+    "/opt/fortnite/local-model-package/captures/5a64df63418246c38c8affa41e7c20d0/0x14160d0f0.c",
+    "/opt/fortnite/local-model-package/captures/5a64df63418246c38c8affa41e7c20d0/0x1428cead0.c"
+  ],
+  "callees": {
+    "0x141604940": "body: allocates the context handle through the ability module (vfunc 0x270), AddInstigator (vfunc 0x10) with causer defaulting to the owner actor, SetDamageSource via 0x14160d0f0 when given, SetSourceObject (vfunc 0x48) when given. Returns the handle. Level is not used.",
+    "0x1406c6ef0": "IGameplayAbilitiesModule access (STAT_IGameplayAbilitiesModule_Get scope).",
+    "0x1406ab0b0": "FGameplayEffectContextHandle assignment helper.",
+    "0x14160d0f0": "SetDamageSource helper (cast to damage-source interface done by caller).",
+    "0x1428cead0": "damage-source interface class accessor (not captured)."
+  },
+  "notes": "Argument mapping: thunk reads (SourceObject, EffectCauser, DamageSource, Level) and passes them to the helper in that order, which ignores Level (no param_6 use in 0x141604940). The reflection order in the header is GameplayEffectLevel, DamageSource, EffectCauser, SourceObject.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,26 @@
+{
+  "function": "UFortAbilityTask_SpawnProjectileAndWait::BeginSpawningActor",
+  "status": "proposed",
+  "original": "0x142788de0",
+  "signature": "bool UFortAbilityTask_SpawnProjectileAndWait::BeginSpawningActor(UObject* OwningAbility, TSubclassOf<AFortProjectileBase> Class, AActor*& SpawnedActor)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x142788de0.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x14161ed10.c",
+    "/opt/fortnite/local-model-package/captures/934d85e01709430c835489ee29456f97/0x142c5c060.c",
+    "/opt/fortnite/local-model-package/captures/b05277d5018c4c6a8645214e9d3bc4df/0x144640410.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x142aa44e0.c",
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x1442e6580.c",
+    "/opt/fortnite/local-model-package/captures/5f3cc37b6fcb4019873c7f3e831de148/0x142bad740.c"
+  ],
+  "callees": {
+    "0x14161ed10": "helper body: ability gate, world lookup from OwningAbility, class IsChildOf FortProjectileBase, transform from SpawnLocation (+0xf0) and SpawnRotation (+0xfc), SpawnActorDeferred, class check on the result, store to out parameter, bind projectile event delegates.",
+    "0x142c5c060": "FRotator to quaternion conversion (SpawnRotation.Quaternion()).",
+    "0x140718920": "activation gate on Ability+0x380 (not named).",
+    "0x144640410": "GEngine->GetWorldFromContextObject.",
+    "0x142aa44e0": "AFortProjectileBase::StaticClass.",
+    "0x1442e6580": "UWorld::SpawnActorDeferred core (634 lines, not read in full).",
+    "0x142bad740": "delegate binding helper inside the bind section."
+  },
+  "notes": "The result is stored through SpawnedActor, not returned. The exact spawn-parameter fields and the activation gate are not recovered. The event bindings are described in deps (BindSpawnedProjectileEvents). Member offsets: Ability +0x68, ProjectileClass +0xe8, SpawnLocation +0xf0, SpawnRotation +0xfc.",
+  "confidence": "MEDIUM"
+}

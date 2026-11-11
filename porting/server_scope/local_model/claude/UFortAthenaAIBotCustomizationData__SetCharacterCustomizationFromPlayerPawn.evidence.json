@@ -1,0 +1,19 @@
+{
+  "function": "UFortAthenaAIBotCustomizationData::SetCharacterCustomizationFromPlayerPawn",
+  "status": "proposed",
+  "original": "0x1427c6190",
+  "signature": "void UFortAthenaAIBotCustomizationData::SetCharacterCustomizationFromPlayerPawn(AFortPlayerPawn* InFortPawn)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/67db0021db174d4891ebfa82569ce31b/0x1427c6190.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x1418802e0.c",
+    "/opt/fortnite/local-model-package/captures/934d85e01709430c835489ee29456f97/0x142323510.c",
+    "/opt/fortnite/local-model-package/captures/da513f20462649839dc9b698a432d3fa/0x140a003b0.c"
+  ],
+  "callees": {
+    "0x1418802e0": "helper body: if pawn non-null, takes the pawn cosmetic loadout via 0x142323510 and copy-assigns it into this+0x78 -> +0x28 via 0x140a003b0.",
+    "0x142323510": "GetPawnCosmeticLoadout accessor: returns pawn+0x1918 and logs if called before init.",
+    "0x140a003b0": "copy-assignment for the cosmetic loadout struct (93 lines; copies arrays and fields)."
+  },
+  "notes": "CustomizationState is the pointer at +0x78; the loadout sits at +0x28 inside it. Names proposed. The loadout struct is not named in the generated headers.",
+  "confidence": "MEDIUM"
+}

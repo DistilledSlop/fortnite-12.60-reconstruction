@@ -1,0 +1,21 @@
+{
+  "function": "UFortAbilitySystemComponent::BP_FortApplyGameplayEffectToTarget",
+  "status": "proposed",
+  "original": "0x1427807f0",
+  "signature": "FActiveGameplayEffectHandle UFortAbilitySystemComponent::BP_FortApplyGameplayEffectToTarget(TSubclassOf<UGameplayEffect> GameplayEffectClass, AActor* TargetOfEffect, float Level, UObject* OptionalSourceObject, UObject* OptionalEffectCauser, UObject* OptionalDamageSource, FGameplayEffectContextHandle EffectContext)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x1427807f0.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x1415ec3f0.c",
+    "/opt/fortnite/local-model-package/captures/9d55004ddd4544529a982151985c2043/0x1406b7f10.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x140774520.c",
+    "/opt/fortnite/local-model-package/captures/dac69345c97344eca763c350a046fc0e/0x1406c6ef0.c"
+  ],
+  "callees": {
+    "0x1415ec3f0": "helper: null checks with warnings, context creation on empty handle (AddInstigator vfunc 0x10 with AvatarActor, owner fallback when EffectCauser null; SetDamageSource; SetSourceObject vfunc 0x48), GE class default object (cached at class +0x130), then base apply 0x1406b7f10.",
+    "0x1406b7f10": "base UAbilitySystemComponent::ApplyGameplayEffectToTarget (not captured).",
+    "0x140774520": "class IsChildOf(UGameplayEffect) check.",
+    "0x1406c6ef0": "module access; vfunc 0x270 = AllocGameplayEffectContext."
+  },
+  "notes": "The parameter list follows the reflection data (OptionalSourceObject/OptionalEffectCauser/OptionalDamageSource order). The helper passes TargetOfEffect through without a cast. The context is only built when the handle is empty; the context-creation ordering (causer, damage source, source object) is MEDIUM.",
+  "confidence": "MEDIUM"
+}

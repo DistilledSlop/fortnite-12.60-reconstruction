@@ -1,0 +1,17 @@
+{
+  "function": "UFortAbilitySystemBlueprintLibrary::GetFortAbilitySystemComponent",
+  "status": "proposed",
+  "original": "0x1427813d0",
+  "signature": "UFortAbilitySystemComponent* UFortAbilitySystemBlueprintLibrary::GetFortAbilitySystemComponent(AActor* Actor)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x1427813d0.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x141df7430.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x1415fa910.c"
+  ],
+  "callees": {
+    "0x141df7430": "thin wrapper: calls helper 0x1415fa910 with warn flag 0.",
+    "0x1415fa910": "GetFortAbilitySystemComponentFromActor(Actor, bWarn): interface cast via 0x142ec9900 with class 0x142782360, then virtual slot 0x20 (NativeGetFortAbilitySystemComponent). Returns 0 for non-implementers when bWarn is false."
+  },
+  "notes": "Interface virtual NativeGetFortAbilitySystemComponent is declared in UFortAbilitySystemInterface.h.",
+  "confidence": "HIGH"
+}

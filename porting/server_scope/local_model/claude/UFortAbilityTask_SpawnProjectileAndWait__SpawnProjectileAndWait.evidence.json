@@ -1,0 +1,20 @@
+{
+  "function": "UFortAbilityTask_SpawnProjectileAndWait::SpawnProjectileAndWait",
+  "status": "proposed",
+  "original": "0x14278a730",
+  "signature": "UFortAbilityTask_SpawnProjectileAndWait* UFortAbilityTask_SpawnProjectileAndWait::SpawnProjectileAndWait(UGameplayAbility* OwningAbility, TSubclassOf<AFortProjectileBase> Class, AActor* RequestedBy, FVector SpawnLocation, FRotator SpawnRotation, FRotator SpawnDirection, float InitialSpeed, const FFortGameplayEffectContainerSpec& EffectContainerSpecToApplyOnHit, const FFortGameplayEffectContainerSpec& EffectContainerSpecToApplyOnExplode, float GravityScale, AActor* HomingTarget, bool bAllowProjectileSpawnWhenDBNO, bool bAllowProjectileSpawnWhenDead)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14278a730.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x141639ff0.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x141614350.c"
+  ],
+  "callees": {
+    "0x141639ff0": "factory body: logs the request (actor, projectile class), NewObject of the task class on the transient package, InitTask on the owning ability, fills the spawn fields at +0xe8/+0xf0/+0xfc/+0x108/+0x114, stores the specs and flags, and returns the task.",
+    "0x141614350": "effect container spec copy (88 lines, not read in full).",
+    "0x1427862d0": "UFortAbilityTask_SpawnProjectileAndWait::StaticClass (not captured).",
+    "0x142e80820": "transient package accessor (not captured).",
+    "0x144858e40": "InitTask on the ability task component (not captured)."
+  },
+  "notes": "The reflection order matches the header. Two specs are copied, but which one maps to Hit and which to Explode is not verified (exec reads them in the reverse order). The Homing and bool fields are MEDIUM.",
+  "confidence": "MEDIUM"
+}

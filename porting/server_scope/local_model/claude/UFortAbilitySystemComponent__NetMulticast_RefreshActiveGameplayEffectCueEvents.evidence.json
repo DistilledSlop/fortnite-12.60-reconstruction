@@ -1,0 +1,17 @@
+{
+  "function": "UFortAbilitySystemComponent::NetMulticast_RefreshActiveGameplayEffectCueEvents",
+  "status": "proposed",
+  "original": "0x142781810",
+  "signature": "void UFortAbilitySystemComponent::NetMulticast_RefreshActiveGameplayEffectCueEvents()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x142781810.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x141605950.c",
+    "/opt/fortnite/local-model-package/captures/9294c818a4624bbbb17931fb835a915f/0x1406ce200.c"
+  ],
+  "callees": {
+    "0x141605950": "NetMulticast_RefreshActiveGameplayEffectCueEvents_Implementation (virtual 0x818): walks ActiveGameplayEffects (this+0x838), skips inhibited entries and entries without a valid spec, and calls the cue re-invocation helper 0x1406ce200 for the rest.",
+    "0x1406ce200": "gameplay cue invoke helper (cue refresh; mode 1)."
+  },
+  "notes": "The exec is a thunk around a virtual call; the body is the Implementation call. The Implementation loop is read in part (MEDIUM); its validity predicate on each entry is inferred from flags at +0x2d4 and +0x18/+0x30.",
+  "confidence": "HIGH"
+}

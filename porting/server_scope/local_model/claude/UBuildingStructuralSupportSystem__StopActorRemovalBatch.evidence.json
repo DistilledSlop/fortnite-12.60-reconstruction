@@ -1,0 +1,29 @@
+{
+  "function": "UBuildingStructuralSupportSystem::StopActorRemovalBatch",
+  "status": "proposed",
+  "original": "0x14275eac0",
+  "signature": "void UBuildingStructuralSupportSystem::StopActorRemovalBatch()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275eac0.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x141c65050.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x141c89630.c",
+    "/opt/fortnite/local-model-package/captures/d5cb54b7a0564fad969d23cac6fc88a3/0x140769940.c",
+    "/opt/fortnite/local-model-package/captures/934d85e01709430c835489ee29456f97/0x140782160.c",
+    "/opt/fortnite/local-model-package/captures/a4e53635d44341648bf23fbf8b6d1d8d/0x140687d00.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x140690310.c",
+    "/opt/fortnite/local-model-package/captures/fcbf982e56154745b5a40dc69fd4a376/0x1406911b0.c",
+    "/opt/fortnite/local-model-package/captures/ffea0e5bbd354094b445a49953abc423/0x142cd3770.c"
+  ],
+  "callees": {
+    "0x141c65050": "GatherDependentBuildingIndices(group queue, logical index, out int32 list): collects the group building indices that depend on the removed one.",
+    "0x141c89630": "RemoveBuildingFromLogicalBuilding(logical index, building index, removed set): removes one building from its group and updates support state; the body is 916 lines and is not fully recovered.",
+    "0x140769940": "sparse-set copy-construct helper (copy of group queue).",
+    "0x140782160": "TSet Find helper (returns index or -1).",
+    "0x140687d00": "TBitArray iterator advance.",
+    "0x140690310": "TSparseArray/TSet Empty helper (cleanup).",
+    "0x1406911b0": "TBitArray Empty helper (cleanup).",
+    "0x142cd3770": "stat scope end (cycle counter)."
+  },
+  "notes": "The batch loop over dirty groups, per-building removed-set de-duplication and dependent gather are recovered; exact dependent rule and the 916-line removal helper are not. Member and helper names proposed. Instigator for removals comes from this+0x80 (BatchedRemovalInstigator in header) inside the helper.",
+  "confidence": "LOW"
+}

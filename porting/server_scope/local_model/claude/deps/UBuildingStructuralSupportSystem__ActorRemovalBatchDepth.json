@@ -1,0 +1,7 @@
+{
+  "name": "UBuildingStructuralSupportSystem__ActorRemovalBatchDepth",
+  "address": "0x28",
+  "signature": "int32 ActorRemovalBatchDepth",
+  "inc_or_decl": "int32 ActorRemovalBatchDepth = 0;",
+  "evidence": "Start (0x14275eaa0) increments and Stop (0x14275eac0) decrements it, only when the batching global is set. Name proposed."
+}

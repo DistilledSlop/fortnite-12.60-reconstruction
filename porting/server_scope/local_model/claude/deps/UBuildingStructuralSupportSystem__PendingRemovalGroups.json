@@ -1,0 +1,7 @@
+{
+  "name": "UBuildingStructuralSupportSystem__PendingRemovalGroups",
+  "address": "0x40 (NumBits 0x58)",
+  "signature": "TBitArray<> PendingRemovalGroups",
+  "inc_or_decl": "TBitArray<> PendingRemovalGroups;  // bit set = logical group has queued removals",
+  "evidence": "Stop iterates the set bits of this+0x40 (NumBits at +0x58) as group indices. Name proposed."
+}
