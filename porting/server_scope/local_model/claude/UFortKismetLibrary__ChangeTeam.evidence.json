@@ -1,0 +1,16 @@
+{
+  "function": "UFortKismetLibrary::ChangeTeam",
+  "status": "proposed",
+  "original": "0x142967a50",
+  "signature": "void UFortKismetLibrary::ChangeTeam(AActor* PlayerToSwitch, AActor* Instigator, uint8 NewTeam, const FGameplayTagContainer& ChangeTeamTags)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142967a50.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x141ee8420.c"
+  ],
+  "callees": {
+    "0x141ee8420": "frees the temporary FGameplayTagContainer storage and returns; no team or actor state is touched",
+    "0x142c0c240": "not used here (text copy helper seen in other exec wrappers)"
+  },
+  "notes": "Body verified from the wrapper and helper decompile only (no assembly read for 0x141ee8420). If a later pass finds a team-change path elsewhere, this stays a no-op for 12.60 as shipped.",
+  "confidence": "MEDIUM"
+}

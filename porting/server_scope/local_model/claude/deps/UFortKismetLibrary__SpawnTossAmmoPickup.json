@@ -1,0 +1,7 @@
+{
+  "name": "UFortKismetLibrary::SpawnTossAmmoPickup",
+  "address": "0x141f87780",
+  "signature": "AFortPickup* SpawnTossAmmoPickup(TSubclassOf<AFortPickup> PickupClass, UWorld* World, UFortWeaponItemDefinition* WeaponItemDefinition, const FGameplayTagContainer& SourceTags, const FVector& Location, uint8 SourceTypeFlag, uint8 SpawnSource)",
+  "inc_or_decl": "AFortPickup* SpawnTossAmmoPickup(TSubclassOf<AFortPickup> PickupClass, UWorld* World, UFortWeaponItemDefinition* WeaponItemDefinition, const FGameplayTagContainer& SourceTags, const FVector& Location, uint8 SourceTypeFlag, uint8 SpawnSource);",
+  "evidence": "Read: class gate on the weapon's ammo definition (0x1427ac330), spawn core (0x141f85500, unread), set location (0x14203cda0, unread)."
+}

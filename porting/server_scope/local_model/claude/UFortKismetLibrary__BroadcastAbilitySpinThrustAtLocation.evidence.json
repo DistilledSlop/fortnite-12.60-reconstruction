@@ -1,0 +1,17 @@
+{
+  "function": "UFortKismetLibrary::BroadcastAbilitySpinThrustAtLocation",
+  "status": "proposed",
+  "original": "0x142967160",
+  "signature": "void UFortKismetLibrary::BroadcastAbilitySpinThrustAtLocation(UObject* WorldContextObject, UObject* InSound, AActor* Instigator, const FRotator& Position, float Radius, FName Tag)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142967160.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x141ee7bb0.c",
+    "/opt/fortnite/local-model-package/captures/38d11f67a79c4fb8aaff074c69737dea/0x1428381e0.c"
+  ],
+  "callees": {
+    "0x141ee7bb0": "native body: same gate as impact; Position degrees -> radians (x0.017453292) as (Pitch, Yaw, Roll); receiver virtual 0x600(vector, false, tag)",
+    "0x1428381e0": "AFortAthenaVehicle::StaticClass (IsA gate)"
+  },
+  "notes": "Position struct type reference resolves to 0x142eea590 (rotator-shaped: three floats in Pitch, Yaw, Roll order by the native conversion).",
+  "confidence": "LOW"
+}

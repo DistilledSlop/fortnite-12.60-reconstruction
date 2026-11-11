@@ -1,0 +1,7 @@
+{
+  "name": "UFortKismetLibrary::VehicleImpactReceiver",
+  "address": "0x141ee7af0",
+  "signature": "UFortVehicleImpactReceiver* AFortAthenaVehicle::GetImpactReceiver()",
+  "inc_or_decl": "// Receiver is the object returned by the instigator's virtual at slot 0x7a8 (unnamed). Receives BroadcastAbilityImpactAtLocation (slot 0x5f0: vector, bool, tag) and BroadcastAbilitySpinThrustAtLocation (slot 0x600: vector, bool, tag).",
+  "evidence": "Slots read from 0x141ee7af0 and 0x141ee7bb0 decompiles. Names are proposed; slot targets not identified."
+}

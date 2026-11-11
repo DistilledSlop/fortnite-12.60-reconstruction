@@ -1,0 +1,7 @@
+{
+  "name": "UFortKismetLibrary::LineOfSightQuery",
+  "address": "0x141ee3010",
+  "signature": "bool LineOfSightQuery(const FVector& From, const FVector& To, const FCollisionQueryParams& Params, bool bTargetIsPawn)",
+  "inc_or_decl": "bool LineOfSightQuery(const FVector& From, const FVector& To, const FCollisionQueryParams& Params, bool bTargetIsPawn);",
+  "evidence": "Partially read: walks a 0x8c-stride hit array of weak object pointers, class-checks each hit, returns 1 when the walk completes without a blocking hit. Caller treats nonzero as visible. Verify before relying on exact hit semantics."
+}

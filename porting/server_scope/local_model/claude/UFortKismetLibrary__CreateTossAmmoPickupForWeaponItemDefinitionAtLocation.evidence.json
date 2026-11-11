@@ -1,0 +1,28 @@
+{
+  "function": "UFortKismetLibrary::CreateTossAmmoPickupForWeaponItemDefinitionAtLocation",
+  "status": "proposed",
+  "original": "0x1429686a0",
+  "signature": "void UFortKismetLibrary::CreateTossAmmoPickupForWeaponItemDefinitionAtLocation(UObject* WorldContextObject, UFortWeaponItemDefinition* WeaponItemDefinition, const FGameplayTagContainer& SourceTags, FVector Location, uint8 SourceTypeFlag, uint8 SpawnSource)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x1429686a0.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x141eea600.c",
+    "/opt/fortnite/local-model-package/captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c",
+    "/opt/fortnite/local-model-package/captures/26b81baf4de34151b0a92a349ef2c7fd/0x141a777c0.c",
+    "/opt/fortnite/local-model-package/captures/38d11f67a79c4fb8aaff074c69737dea/0x141a79670.c",
+    "/opt/fortnite/local-model-package/captures/38d11f67a79c4fb8aaff074c69737dea/0x141f87780.c",
+    "/opt/fortnite/local-model-package/captures/7ede57ca0c8f4c6a9fabed62fdc121c0/0x14203cda0.c",
+    "/opt/fortnite/local-model-package/captures/655d1bcc765d417b876f11035a642159/0x1427ac330.c"
+  ],
+  "callees": {
+    "0x1429686a0": "native exec: six frame reads (two enums are bytes), calls 0x141eea600 with them",
+    "0x141eea600": "native body: world lookup, weapon check, asset manager class, spawn via 0x141f87780",
+    "0x141a777c0": "UFortAssetManager getter (validated; named by another worker)",
+    "0x141a79670": "returns the toss-ammo pickup class from the asset manager (8-line getter, not otherwise read)",
+    "0x141f87780": "spawn: weapon item-definition virtual (vslot 0x4e8) for the ammo definition, IsA gate (0x1427ac330), spawn core 0x141f85500, then sets the location 0x14203cda0 from the Location argument",
+    "0x141f85500": "spawn core for the pickup (unread)",
+    "0x14203cda0": "set-location for the spawned pickup (unread)",
+    "0x1427ac330": "class gate for the ammo definition (name from a static class getter, not read)"
+  },
+  "notes": "SpawnTossAmmoPickup and GetTossAmmoPickupClass are proposed names. The enum types are proposed as EFortPickupSourceTypeFlag and EFortPickupSpawnSource, not read from the binary.",
+  "confidence": "MEDIUM"
+}

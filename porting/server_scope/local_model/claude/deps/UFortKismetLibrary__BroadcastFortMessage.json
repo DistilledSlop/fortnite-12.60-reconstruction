@@ -1,0 +1,7 @@
+{
+  "name": "UFortKismetLibrary::BroadcastFortMessage",
+  "address": "0x141881700",
+  "signature": "UObject* BroadcastFortMessage(UObject* WorldContextObject, const FFortBroadcastMessage& Message)",
+  "inc_or_decl": "UObject* BroadcastFortMessage(UObject* WorldContextObject, const FFortBroadcastMessage& Message);",
+  "evidence": "Partially read: resolves a messaging subsystem (0x14186f5b0), builds a UI message for the channel (0x1442e6580), copies the message fields and queues it. Returns the created message object or null."
+}

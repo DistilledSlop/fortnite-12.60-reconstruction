@@ -1,0 +1,27 @@
+{
+  "function": "UFortKismetLibrary::ApplyGlobalEnvironmentGameplayEffectToActor",
+  "status": "proposed",
+  "original": "0x142966ab0",
+  "signature": "FActiveGameplayEffectHandle UFortKismetLibrary::ApplyGlobalEnvironmentGameplayEffectToActor(AActor* EffectTargetActor, TSubclassOf<UGameplayEffect> GameplayEffect, int32 GameplayEffectLevel, const FGameplayTagContainer& AdditionalContextTags)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142966ab0.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x141ee5840.c",
+    "/opt/fortnite/local-model-package/captures/28c4386e3e444583ad530fdc7452bb79/0x141ef3af0.c",
+    "/opt/fortnite/local-model-package/captures/28c4386e3e444583ad530fdc7452bb79/0x142ec9900.c",
+    "/opt/fortnite/local-model-package/captures/28c4386e3e444583ad530fdc7452bb79/0x140756aa0.c",
+    "/opt/fortnite/local-model-package/captures/38d11f67a79c4fb8aaff074c69737dea/0x14161dd60.c",
+    "/opt/fortnite/local-model-package/captures/57f310e07bfd4042a6249c243be7a837/0x14162cef0.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x140774520.c"
+  ],
+  "callees": {
+    "0x141ee5840": "ApplyGlobalEnvironmentGameplayEffectToActor native dispatch (game state ASC via target world, target ASC, handle out)",
+    "0x141ef3af0": "GetGameStateAbilitySystemComponent(object): world from object, game state, its ASC (vslot 0x9e8); existing dep",
+    "0x142ec9900": "target ASC lookup by class (FindComponentByClass<UAbilitySystemComponent>); other workers list it as an outer-chain/class lookup",
+    "0x140756aa0": "UAbilitySystemComponent::StaticClass (class argument to 0x142ec9900)",
+    "0x14161dd60": "apply to target: checks target ASC and GE class, builds spec, applies spec to target ASC (vslot 0x5b0)",
+    "0x14162cef0": "spec factory: MakeOutgoingSpec-like (vslot 0x5d0) on the owner ASC, then appends the context tags to the spec's dynamic tags",
+    "0x140774520": "assumed UGameplayEffect::StaticClass (class gate)"
+  },
+  "notes": "Spec and apply steps are written with the UE API names that match the native vslot behaviour (MakeOutgoingSpec, ApplyGameplayEffectSpecToTarget). The exact vslot targets are unnamed. The native target-side virtual (0x10 on the target ASC) feeds the apply target; it is treated as the target ASC here.",
+  "confidence": "MEDIUM"
+}

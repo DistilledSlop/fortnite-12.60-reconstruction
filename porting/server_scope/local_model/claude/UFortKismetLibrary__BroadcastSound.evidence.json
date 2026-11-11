@@ -1,0 +1,24 @@
+{
+  "function": "UFortKismetLibrary::BroadcastSound",
+  "status": "proposed",
+  "original": "0x142967640",
+  "signature": "void UFortKismetLibrary::BroadcastSound(UObject* WorldContextObject, USoundBase* InSound, float VolumeMultiplier, float PitchMultiplier)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142967640.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x141ee7f70.c",
+    "/opt/fortnite/local-model-package/captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x14468fb70.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142a3d9f0.c",
+    "/opt/fortnite/local-model-package/captures/57f310e07bfd4042a6249c243be7a837/0x142a3d8d0.c"
+  ],
+  "callees": {
+    "0x141ee7f70": "native body: world lookup, Athena disable with log, loop over world controllers, class gate AFortPlayerController, call 0x142a3d8d0(controller, sound, volume, pitch)",
+    "0x144640410": "GetWorldFromContextObject (GEngine world-from-object, mode 1)",
+    "0x14468fb70": "returns a view of the world's controller array at world+0x1c8",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass",
+    "0x142a3d8d0": "ProcessEvent on the controller with a UFunction (name from a global, not read): passes sound, volume, pitch",
+    "0x14290f690": "AFortGameStateAthena::StaticClass (named in other worker output)"
+  },
+  "notes": "PlaySoundOnController is the proposed name for the UFunction call. Its UFunction name is not read from the binary. The Athena warning text is verbatim.",
+  "confidence": "MEDIUM"
+}

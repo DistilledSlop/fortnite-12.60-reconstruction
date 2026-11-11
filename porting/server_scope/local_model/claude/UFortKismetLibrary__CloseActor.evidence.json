@@ -1,0 +1,21 @@
+{
+  "function": "UFortKismetLibrary::CloseActor",
+  "status": "proposed",
+  "original": "0x142967f40",
+  "signature": "bool UFortKismetLibrary::CloseActor(AActor* OpenableInterfaceActor, AController* OptionalControllerInstigator)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142967f40.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x141ee8de0.c",
+    "/opt/fortnite/local-model-package/captures/38d11f67a79c4fb8aaff074c69737dea/0x142b78be0.c",
+    "/opt/fortnite/local-model-package/captures/1f574874d813496aa02bd3c684830fde/0x142d6a820.c",
+    "/opt/fortnite/local-model-package/captures/38d11f67a79c4fb8aaff074c69737dea/0x142b7c430.c"
+  ],
+  "callees": {
+    "0x141ee8de0": "native body: non-null and class implements check, then the close dispatch, returns 1 on dispatch",
+    "0x142b78be0": "IOpenableInterface::StaticClass (named via GetPrivateStaticClassBody)",
+    "0x142d6a820": "ClassImplementsInterface: walks the class chain's interface array (+0x1f0)",
+    "0x142b7c430": "close dispatch: finds the UFunction on the object (name from a global, presumably Close) and calls ProcessEvent with the instigator; otherwise calls the interface's close through its vtable"
+  },
+  "notes": "The binary's dispatch prefers a UFunction; Execute_Close is the source-level equivalent. Return is true after dispatch, regardless of whether the target closed.",
+  "confidence": "MEDIUM"
+}

@@ -1,0 +1,16 @@
+{
+  "function": "UFortKismetLibrary::DropInstancedLootAtLocation",
+  "status": "proposed",
+  "original": "0x142969820",
+  "signature": "TArray<AActor*> UFortKismetLibrary::DropInstancedLootAtLocation(UObject* WorldContextObject, FName LootTierGroup, const TArray<AActor*>& RelevantPlayers, FVector DropLocation, bool bAllowCombining, uint8 SourceTypeFlag)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142969820.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x140738030.c"
+  ],
+  "callees": {
+    "0x140738030": "zero-initialises the output TArray; the callee ignores its arguments",
+    "0x142bee710": "FMemory_Free (temporary cleanup in the exec)"
+  },
+  "notes": "Verified by the exec's asm call list (call at 0x142969a00 to 0x140738030 is the only non-frame, non-free call).",
+  "confidence": "HIGH"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "UFortKismetLibrary::GetWorldFromContextObject",
+  "address": "0x144640410",
+  "signature": "UWorld* GetWorldFromContextObject(UObject* WorldContextObject)",
+  "inc_or_decl": "UWorld* GetWorldFromContextObject(const UObject* WorldContextObject);",
+  "evidence": "GEngine world-from-object resolver (engine object at _DAT_148351eb8, mode 1). Used by most UFortKismetLibrary exec helpers (0x141ef3af0, 0x141ee7f70, 0x141eea600). Captured: captures/*/0x144640410.c."
+}

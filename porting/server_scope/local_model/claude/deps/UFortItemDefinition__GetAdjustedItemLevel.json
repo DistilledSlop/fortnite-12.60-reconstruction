@@ -1,0 +1,7 @@
+{
+  "name": "UFortItemDefinition::GetAdjustedItemLevel",
+  "address": "0x2d8",
+  "signature": "int32 GetAdjustedItemLevel(int32 Level)",
+  "inc_or_decl": "int32 GetAdjustedItemLevel(int32 Level) const; // virtual slot 0x2d8 on UFortItemDefinition",
+  "evidence": "Virtual slot 0x2d8 called from the FFortItemEntry constructor (0x1420237f0) with the clamped level; the return value replaces the stored level. Slot owner class not identified; name is proposed."
+}

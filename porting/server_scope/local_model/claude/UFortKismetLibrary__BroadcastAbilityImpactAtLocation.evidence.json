@@ -1,0 +1,17 @@
+{
+  "function": "UFortKismetLibrary::BroadcastAbilityImpactAtLocation",
+  "status": "proposed",
+  "original": "0x142966f60",
+  "signature": "void UFortKismetLibrary::BroadcastAbilityImpactAtLocation(UObject* WorldContextObject, UObject* InSound, AActor* Instigator, const FVector& Position, float Radius, FName Tag, bool bSubtractLocalNoise)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142966f60.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x141ee7af0.c",
+    "/opt/fortnite/local-model-package/captures/38d11f67a79c4fb8aaff074c69737dea/0x1428381e0.c"
+  ],
+  "callees": {
+    "0x141ee7af0": "native body: IsA(AFortAthenaVehicle) gate on Instigator, radius gate [750,800], receiver virtual 0x7a8 then 0x5f0(position, bool, tag)",
+    "0x1428381e0": "AFortAthenaVehicle::StaticClass (IsA gate)"
+  },
+  "notes": "The radius window [750, 800] is verbatim from the binary; its design purpose is not recorded in the binary. Position is a plain vector here (not converted).",
+  "confidence": "LOW"
+}

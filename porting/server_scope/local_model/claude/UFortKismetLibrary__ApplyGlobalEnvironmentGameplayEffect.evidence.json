@@ -1,0 +1,21 @@
+{
+  "function": "UFortKismetLibrary::ApplyGlobalEnvironmentGameplayEffect",
+  "status": "proposed",
+  "original": "0x142966930",
+  "signature": "void UFortKismetLibrary::ApplyGlobalEnvironmentGameplayEffect(UObject* WorldContextObject, TSubclassOf<UGameplayEffect> GameplayEffect, int32 GameplayEffectLevel, const FGameplayTagContainer& AdditionalContextTags)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142966930.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x141ee57e0.c",
+    "/opt/fortnite/local-model-package/captures/28c4386e3e444583ad530fdc7452bb79/0x141ef3af0.c",
+    "/opt/fortnite/local-model-package/captures/38d11f67a79c4fb8aaff074c69737dea/0x14161dc00.c",
+    "/opt/fortnite/local-model-package/captures/6efb1241727e4d638a4125f43c983a91/0x140774520.c"
+  ],
+  "callees": {
+    "0x141ee57e0": "ApplyGlobalEnvironmentGameplayEffect native dispatch: game state ASC lookup, then apply to self; level and tags dropped",
+    "0x141ef3af0": "GetGameStateAbilitySystemComponent(WorldContextObject); existing dep ABuildingGameplayActorConsumable__GetGameStateAbilitySystemComponent",
+    "0x14161dc00": "apply to self: checks the class is a UGameplayEffect child, uses the class default object (CDO) and applies it to the ASC; takes only 2 meaningful args",
+    "0x140774520": "assumed UGameplayEffect::StaticClass (class gate; not named in this chunk)"
+  },
+  "notes": "Level 1.0 is the UE default level; the native apply helper passes no level. Self-apply path ignores AdditionalContextTags in the binary.",
+  "confidence": "MEDIUM"
+}

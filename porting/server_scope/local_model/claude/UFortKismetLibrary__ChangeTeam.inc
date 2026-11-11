@@ -1,0 +1,2 @@
+// CONFIDENCE: MEDIUM. Empty body. The native exec reads PlayerToSwitch, Instigator, NewTeam and ChangeTeamTags from the frame, copies the tags into a temporary container, and calls 0x141ee8420. That routine only frees the temporary tag arrays, so this build performs no team change. The arguments are intentionally unused.
+// Original address: 0x142967a50 (exec). Native helper: 0x141ee8420 (frees temporary storage only; no game effect).

@@ -1,0 +1,17 @@
+{
+  "function": "UFortKismetLibrary::AttemptGetPlayerStateForPawn",
+  "status": "proposed",
+  "original": "0x142966e10",
+  "signature": "APlayerState* UFortKismetLibrary::AttemptGetPlayerStateForPawn(AFortPawn* FortPawn)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142966e10.c",
+    "/opt/fortnite/local-model-package/captures/096e43d2e6564f4c86cf20bade24643a/0x141ee5f70.c",
+    "/opt/fortnite/local-model-package/captures/22033a5b021a42f2ad535da05b81ad8a/0x142a85850.c"
+  ],
+  "callees": {
+    "0x141ee5f70": "GetFortPlayerStateForPawn(AFortPawn*): existing dep; returns APlayerState*, nullptr for null pawn",
+    "0x142a85850": "AFortPlayerState::StaticClass (used inside 0x141ee5f70)"
+  },
+  "notes": "Exec wrapper only reads one object argument and writes the result; the body is the existing shared lookup.",
+  "confidence": "MEDIUM"
+}

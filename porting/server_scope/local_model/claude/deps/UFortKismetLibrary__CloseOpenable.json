@@ -1,0 +1,7 @@
+{
+  "name": "UFortKismetLibrary::CloseOpenable",
+  "address": "0x142b7c430",
+  "signature": "void CloseOpenable(UObject* Openable, AController* Instigator)",
+  "inc_or_decl": "void CloseOpenable(UObject* Openable, AController* Instigator); // dispatch behind IOpenableInterface::Execute_Close",
+  "evidence": "Read: finds a UFunction on the object by a global name (presumably Close) and ProcessEvents it with the instigator; otherwise calls the interface's close via vtable on the object's interface pointer (0x142ec9b90, unread)."
+}

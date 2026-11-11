@@ -1,0 +1,7 @@
+{
+  "name": "UFortAssetManager::GetTossAmmoPickupClass",
+  "address": "0x141a79670",
+  "signature": "TSubclassOf<AFortPickup> GetTossAmmoPickupClass()",
+  "inc_or_decl": "TSubclassOf<AFortPickup> GetTossAmmoPickupClass() const;",
+  "evidence": "8-line getter on the asset manager singleton (0x141a777c0). Not otherwise read; class-type inferred from its use as the spawn class in 0x141f87780."
+}

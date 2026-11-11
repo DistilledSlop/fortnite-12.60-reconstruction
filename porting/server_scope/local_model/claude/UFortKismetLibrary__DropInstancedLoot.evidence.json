@@ -1,0 +1,16 @@
+{
+  "function": "UFortKismetLibrary::DropInstancedLoot",
+  "status": "proposed",
+  "original": "0x142969640",
+  "signature": "TArray<AActor*> UFortKismetLibrary::DropInstancedLoot(AActor* PawnContext, FName LootTierGroup, const TArray<AActor*>& RelevantPlayers, bool bAllowCombining)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142969640.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x140738030.c"
+  ],
+  "callees": {
+    "0x140738030": "zero-initialises the output TArray (asm: two qword stores to the return buffer); the five-argument call in the exec is a mis-typed call site, the callee ignores its arguments",
+    "0x142bee710": "FMemory_Free (temporary cleanup in the exec)"
+  },
+  "notes": "Verified by the exec's asm call list (only one call to 0x140738030, no other side effects). The element type of the returned array is not in the inventory, so AActor* is used.",
+  "confidence": "HIGH"
+}

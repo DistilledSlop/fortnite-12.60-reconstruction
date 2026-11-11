@@ -1,0 +1,19 @@
+{
+  "function": "UFortKismetLibrary::BroadcastMessage",
+  "status": "proposed",
+  "original": "0x142967320",
+  "signature": "void UFortKismetLibrary::BroadcastMessage(UObject* WorldContextObject, const FText& Message)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142967320.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x141ee7cc0.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x142c0c240.c",
+    "/opt/fortnite/local-model-package/captures/57f310e07bfd4042a6249c243be7a837/0x141881700.c"
+  ],
+  "callees": {
+    "0x141ee7cc0": "native message build: fixed constants (32.0, 32.0, 6.0, priority 3), FText copy, then dispatch to 0x141881700",
+    "0x142c0c240": "FText shared-reference copy (ref-count increment)",
+    "0x141881700": "dispatch: resolves the messaging subsystem (0x14186f5b0), creates the UI message for the channel, and queues it; returns the message object (unnamed)"
+  },
+  "notes": "FFortBroadcastMessage and its field names are proposed. The message channel is 0 in the binary.",
+  "confidence": "LOW"
+}

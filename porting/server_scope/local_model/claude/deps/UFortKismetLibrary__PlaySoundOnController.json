@@ -1,0 +1,7 @@
+{
+  "name": "UFortKismetLibrary::PlaySoundOnController",
+  "address": "0x142a3d8d0",
+  "signature": "void PlaySoundOnController(USoundBase* Sound, float Volume, float Pitch)",
+  "inc_or_decl": "void PlaySoundOnController(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier);",
+  "evidence": "ProcessEvent (vslot 0x210) on the controller with a UFunction looked up through a global name. Companion 0x142a3d920 takes (Sound, FVector Location, Volume, Pitch) and is used as PlaySoundAtLocationOnController. UFunction names not read."
+}

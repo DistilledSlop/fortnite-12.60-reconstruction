@@ -1,0 +1,24 @@
+{
+  "function": "UFortKismetLibrary::CheckLineOfSightToActor",
+  "status": "proposed",
+  "original": "0x142967c90",
+  "signature": "bool UFortKismetLibrary::CheckLineOfSightToActor(const FVector& SourcePos, AActor* Target, AActor* Source)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/86852e92f0c84cbe8e45a8662999ee41/0x142967c90.c",
+    "/opt/fortnite/local-model-package/captures/0d086943f81e47f39b2b415164a01a38/0x141ee8580.c",
+    "/opt/fortnite/local-model-package/captures/57f310e07bfd4042a6249c243be7a837/0x141ee3010.c",
+    "/opt/fortnite/local-model-package/captures/1a1e74d2466348a5b7f65d7e633ed32d/0x142a75f10.c",
+    "/opt/fortnite/local-model-package/captures/57f310e07bfd4042a6249c243be7a837/0x1447c8590.c",
+    "/opt/fortnite/local-model-package/captures/2109b09a0c394aeb87acc6c7608881fd/0x14406cf40.c"
+  ],
+  "callees": {
+    "0x141ee8580": "native body: root component via vslot 0x150 on Target, pawn gate, trace params with Source ignored, query to root location then to bounds origin (UPrimitiveComponent gate), returns the OR",
+    "0x141ee3010": "scene query helper: walks a 0x8c-stride result array with weak-pointer hits and class checks; returns nonzero when no blocking hit is found (inferred from callers; read partially, not fully traced)",
+    "0x142a75f10": "AFortPlayerPawn::StaticClass",
+    "0x1447c8590": "UPrimitiveComponent::StaticClass",
+    "0x14406cf40": "trace params constructor (named by the debug-stat string CheckLineOfSightToActor)",
+    "0x14406fa00": "trace params AddIgnoredActor"
+  },
+  "notes": "The query helper 0x141ee3010 was read partially. Its return-value meaning (nonzero = clear) is inferred from the caller's branch. The fallback point uses FBoxSphereBounds Origin (native reads +0x100..+0x108). LineOfSightQuery is the proposed name; see deps/UFortKismetLibrary__LineOfSightQuery.json.",
+  "confidence": "LOW"
+}
