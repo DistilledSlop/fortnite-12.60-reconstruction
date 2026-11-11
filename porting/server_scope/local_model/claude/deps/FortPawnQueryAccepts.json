@@ -1,0 +1,7 @@
+{
+  "name": "FortPawnQueryAccepts",
+  "address": "0x141ef1630 (inline filter; same in 0x141ef2aa0)",
+  "signature": "bool FortPawnQueryAccepts(const AFortPawn* Pawn, const UObject* Anchor, uint32 Flags)",
+  "inc_or_decl": "decl",
+  "evidence": "Flag bit0 (5 & 1): pending-kill skip (covered by TActorIterator). Flag bit2 (5 & 4): when the pawn is dead/downed (byte +500 bit 0x20 or byte +0x1f5 bit 0x40) and the controller/owner test passes, skip. Anchor test: owner accessor 0x1413064f0 (+0xb8) must equal the anchor, else WorldSettings fallback (0x14480eb00). Flag bit1 is always false (stub 0x1406801e0). Partly decoded."
+}

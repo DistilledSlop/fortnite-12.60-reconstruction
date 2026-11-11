@@ -1,0 +1,21 @@
+{
+  "function": "UFortKismetLibrary::GetIsPlayingReplay",
+  "status": "proposed",
+  "original": "0x14296e2a0",
+  "signature": "static bool UFortKismetLibrary::GetIsPlayingReplay(const UObject* WorldContextObject)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296e2a0.c",
+    "captures/7c0bf6fd8e16471f935e4939e333e3a6/0x141ef4690.c",
+    "captures/131a0c4e515e4755bc677ba05cfda952/0x144693a30.c",
+    "captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c"
+  ],
+  "callees": {
+    "0x141ef4690": "FUN_141ef4690: IsPlayingReplay body via context GetWorld (virtual 0x150)",
+    "0x144693a30": "FUN_144693a30: UWorld::IsPlayingReplay body (demo net driver)",
+    "0x144640410": "UEngine::GetWorldFromContextObject",
+    "0x14296e2a0": "exec thunk (ported body)"
+  },
+  "deps": [],
+  "notes": "Virtual slot 0x150 on the context object is treated as GetWorld. UWorld::IsPlayingReplay body is 0x144693a30 (demo net driver present and playing)."
+}

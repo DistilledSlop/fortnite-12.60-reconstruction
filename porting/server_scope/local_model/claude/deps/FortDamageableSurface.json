@@ -1,0 +1,7 @@
+{
+  "name": "FortDamageableSurface",
+  "address": "0x1428c9e00 (IFortDamageableActorInterface::StaticClass); interface cast 0x142ec9900; vfunc 0x10 on the interface",
+  "signature": "uint8 IFortDamageableActorInterface::GetDamageableSurfaceType() const (proposed)",
+  "inc_or_decl": "decl",
+  "evidence": "The native interface call at vtable slot +0x10 returns a pointer to a byte, copied as the surface value. Name proposed."
+}

@@ -1,0 +1,25 @@
+{
+  "function": "UFortKismetLibrary::GetLootLevel",
+  "status": "proposed",
+  "original": "0x14296e620",
+  "signature": "static int32 UFortKismetLibrary::GetLootLevel(const UObject* WorldContextObject)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296e620.c",
+    "captures/7c0bf6fd8e16471f935e4939e333e3a6/0x141ef4e30.c",
+    "captures/5906160cad9948e8994c39b7b8e3aaa2/0x141f88460.c",
+    "captures/7ee491e971854f5fbf73dffe98247267/0x141f881f0.c",
+    "captures/b05277d5018c4c6a8645214e9d3bc4df/0x142908ec0.c",
+    "captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c"
+  ],
+  "callees": {
+    "0x141ef4e30": "FUN_141ef4e30: loot level wrapper",
+    "0x141f88460": "FUN_141f88460: game state WorldManager (+0x3d0)",
+    "0x141f881f0": "FUN_141f881f0: manager world game state WorldLevel (+0x2f4)",
+    "0x142908ec0": "AFortGameState::StaticClass",
+    "0x144640410": "UEngine::GetWorldFromContextObject",
+    "0x14296e620": "exec thunk (ported body)"
+  },
+  "deps": [],
+  "notes": "Returns WorldLevel (+0x2f4 on AFortGameState) of the world reached through GameState.WorldManager (+0x3d0). Null links return 0, as in the native."
+}

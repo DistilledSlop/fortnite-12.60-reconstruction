@@ -1,0 +1,7 @@
+{
+  "name": "FortEffectContext",
+  "address": "0x1415f4460 (effect context lookup), 0x144116570 (location writer), 0x1427595a0 (ABuildingTrap::StaticClass)",
+  "signature": "const FFortEffectContext* GetFortEffectContext(const FGameplayEffectContextHandle& Handle); struct FFortImpulseTrace { FVector Start; FVector End; }; FFortEffectContext::GetImpulseTrace() (vfunc 0x70); float KnockbackMagnitude (+0x74); float KnockbackZAngle (+0x78)",
+  "inc_or_decl": "decl",
+  "evidence": "Handle shared-ref copy is taken by the native. Trace vfunc 0x70 returns the start and end vectors at +0x40 and +0x4c of its result. Names are proposed."
+}

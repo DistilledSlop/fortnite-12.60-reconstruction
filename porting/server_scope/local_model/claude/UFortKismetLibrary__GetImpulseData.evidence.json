@@ -1,0 +1,26 @@
+{
+  "function": "UFortKismetLibrary::GetImpulseData",
+  "status": "proposed",
+  "original": "0x14296e030",
+  "signature": "static void UFortKismetLibrary::GetImpulseData(const FGameplayEffectContextHandle& EffectContext, FVector& ImpulseDirection, float& KnockbackMagnitude, float& KnockbackZAngle)",
+  "confidence": "LOW",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296e030.c",
+    "captures/7c0bf6fd8e16471f935e4939e333e3a6/0x141ef4220.c",
+    "captures/131a0c4e515e4755bc677ba05cfda952/0x1415f4460.c",
+    "captures/131a0c4e515e4755bc677ba05cfda952/0x144116570.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142ec9900.c"
+  ],
+  "callees": {
+    "0x141ef4220": "FUN_141ef4220: impulse direction, magnitude and Z angle body",
+    "0x1415f4460": "FUN_1415f4460: Fort effect context lookup (unnamed)",
+    "0x144116570": "FUN_144116570: component location writer (unnamed, scene component)",
+    "0x1427595a0": "ABuildingTrap::StaticClass",
+    "0x142ec9900": "interface cast (GetInterfaceAddress-like)",
+    "0x14296e030": "exec thunk (ported body)"
+  },
+  "deps": [
+    "FortEffectContext"
+  ],
+  "notes": "LOW. Effect-context lookup (0x1415f4460), trace vfunc 0x70 and the instigator vfunc 0x20 are unnamed. ImpulseDirection override applies when the instigator IsA ABuildingTrap (0x1427595a0). Outputs are not written when no context resolves."
+}

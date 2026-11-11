@@ -1,0 +1,7 @@
+{
+  "name": "UFortHeldObjectComponent__HeldObject",
+  "address": "UFortHeldObjectComponent +0xa0",
+  "signature": "AActor* UFortHeldObjectComponent::HeldObject (unreflected member)",
+  "inc_or_decl": "decl",
+  "evidence": "Returned as the held object by the attached-actor walk. Reflection has no member at this offset; name proposed. Reflected siblings: OwningPawn (weak, +0x1c0), HeldObjectState (EHeldObjectState, +0x1bd)."
+}

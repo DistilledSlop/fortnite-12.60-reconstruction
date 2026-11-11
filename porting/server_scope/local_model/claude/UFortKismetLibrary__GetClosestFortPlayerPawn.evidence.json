@@ -1,0 +1,36 @@
+{
+  "function": "UFortKismetLibrary::GetClosestFortPlayerPawn",
+  "status": "proposed",
+  "original": "0x14296c830",
+  "signature": "static AFortPlayerPawn* UFortKismetLibrary::GetClosestFortPlayerPawn(const UObject* WorldContextObject, const FVector& Position)",
+  "confidence": "LOW",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296c830.c",
+    "captures/7c0bf6fd8e16471f935e4939e333e3a6/0x141ef1630.c",
+    "captures/131a0c4e515e4755bc677ba05cfda952/0x141ed2350.c",
+    "captures/131a0c4e515e4755bc677ba05cfda952/0x1419b7160.c",
+    "captures/1f993c5afb8b4421a88624ed0851d433/0x1413064f0.c",
+    "captures/1f993c5afb8b4421a88624ed0851d433/0x143f76730.c",
+    "captures/131a0c4e515e4755bc677ba05cfda952/0x142331080.c",
+    "captures/1a1e74d2466348a5b7f65d7e633ed32d/0x142a75f10.c",
+    "captures/1f993c5afb8b4421a88624ed0851d433/0x14480eb00.c",
+    "captures/1f993c5afb8b4421a88624ed0851d433/0x14468e190.c"
+  ],
+  "callees": {
+    "0x141ef1630": "FUN_141ef1630: query body (closest pawn over AFortPlayerPawn set)",
+    "0x141ed2350": "FUN_141ed2350: global surface settings object (float +0x2cc)",
+    "0x1419b7160": "FUN_1419b7160: pawn query builder (class, flags, anchor out)",
+    "0x1413064f0": "FUN_1413064f0: owner accessor (+0xb8)",
+    "0x143f76730": "FUN_143f76730: candidate accessor (calls 0x14477bcd0, 0x142eca940)",
+    "0x142331080": "FUN_142331080: pawn unavailable test (virtual 0xb28, flag byte +0xa4 bit 8)",
+    "0x142a75f10": "AFortPlayerPawn::StaticClass",
+    "0x14480eb00": "AWorldSettings::StaticClass",
+    "0x14468e190": "TArray element accessor (0x78 stride)",
+    "0x14296c830": "exec thunk (ported body)"
+  },
+  "deps": [
+    "FortPawnQueryAccepts",
+    "FortPawnQueryAnchor"
+  ],
+  "notes": "Query body fully read. Candidate filter (FortPawnQueryAccepts) only partly decoded: bit0 pending-kill is covered by TActorIterator; bit2 dead/downed test and the owner/anchor test (owner accessor +0xb8) are not fully reconstructed."
+}

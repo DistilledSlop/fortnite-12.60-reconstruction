@@ -1,0 +1,7 @@
+{
+  "name": "FortPhysicalSurfaceLevelRemap",
+  "address": "0x141ecd440, global settings 0x141ed2350, keys at 0x148121cc8/0x148121ccc",
+  "signature": "UFortSurfaceSettings* GetFortSurfaceSettings(); enum EFortPhysicalSurface : uint8; Hit.SurfaceDistance (proposed, FHitResult +0x24); Hit.SurfaceKeyA / SurfaceKeyB (proposed, FHitResult +0x7c/+0x80); FortSurfaceRemapKeys::KeyA/KeyB (globals)",
+  "inc_or_decl": "decl",
+  "evidence": "Settings float +0x2cc is compared with <= the Hit scalar to force 0x17 when surface is not 8. Remap: 1/14 -> 14, 2/15 -> 15, 3/16 -> 16, else 12, only when the key pair matches the globals. Hit field identities are unverified."
+}

@@ -1,0 +1,25 @@
+{
+  "function": "UFortKismetLibrary::GetHeldObjectAttachedToPlayer",
+  "status": "proposed",
+  "original": "0x14296dc90",
+  "signature": "static AActor* UFortKismetLibrary::GetHeldObjectAttachedToPlayer(AFortPlayerPawn* FortPawn)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296dc90.c",
+    "captures/7c0bf6fd8e16471f935e4939e333e3a6/0x141ef3b70.c",
+    "captures/7ee491e971854f5fbf73dffe98247267/0x1429356c0.c",
+    "captures/f4590d5f484b4d3ba6ca651b7da271c1/0x143f73650.c",
+    "captures/25d7535c8e10490cb5edb9aa1b590a49/0x1446acb00.c"
+  ],
+  "callees": {
+    "0x141ef3b70": "FUN_141ef3b70: attached held object (component +0xa0)",
+    "0x1429356c0": "UFortHeldObjectComponent::StaticClass",
+    "0x143f73650": "AActor::GetAttachedActors body",
+    "0x1446acb00": "AActor::StaticClass",
+    "0x14296dc90": "exec thunk (ported body)"
+  },
+  "deps": [
+    "UFortHeldObjectComponent__HeldObject"
+  ],
+  "notes": "Attached-actor walk uses UFortHeldObjectComponent at class 0x1429356c0. Held object field at component +0xa0 is unreflected (dep)."
+}

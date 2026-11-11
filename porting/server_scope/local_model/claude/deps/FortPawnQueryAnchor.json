@@ -1,0 +1,7 @@
+{
+  "name": "FortPawnQueryAnchor",
+  "address": "0x1419b7160 (closest, class 0x142a75f10) and 0x140894360 (range, class 0x142a174f0)",
+  "signature": "UObject* FortPawnQueryAnchor(UWorld* World, UClass* PawnClass, uint32 Flags)",
+  "inc_or_decl": "decl",
+  "evidence": "Builds the query state and returns the anchor object used by FortPawnQueryAccepts. The two natives differ in the anchor source; this dep is a single proposed name for both. Anchor selection not fully decoded."
+}

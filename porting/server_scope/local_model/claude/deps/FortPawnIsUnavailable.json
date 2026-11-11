@@ -1,0 +1,7 @@
+{
+  "name": "FortPawnIsUnavailable",
+  "address": "0x142331080",
+  "signature": "bool FortPawnIsUnavailable(const AFortPawn* Pawn)",
+  "inc_or_decl": "decl",
+  "evidence": "Calls a virtual (slot 0xb28) that yields a float and tests it against 0; also tests flag byte +0xa4 bit 8. Raw Ghidra output marked the signature unresolved. Meaning (unavailable/dying) is a guess."
+}

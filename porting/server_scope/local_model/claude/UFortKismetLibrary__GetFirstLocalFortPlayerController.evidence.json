@@ -1,0 +1,23 @@
+{
+  "function": "UFortKismetLibrary::GetFirstLocalFortPlayerController",
+  "status": "proposed",
+  "original": "0x14296d400",
+  "signature": "static AFortPlayerController* UFortKismetLibrary::GetFirstLocalFortPlayerController(const UObject* WorldContextObject, bool bIncludeNonSpectators, bool bIncludeSpectators)",
+  "confidence": "HIGH",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296d400.c",
+    "captures/7c0bf6fd8e16471f935e4939e333e3a6/0x141ef2890.c",
+    "captures/1f993c5afb8b4421a88624ed0851d433/0x142a3d9f0.c",
+    "captures/f1525dbcfdd043988e43f5c567df3835/0x142a69680.c",
+    "captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c"
+  ],
+  "callees": {
+    "0x141ef2890": "FUN_141ef2890: first local controller body (world controller list +0x1c8)",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass",
+    "0x142a69680": "AFortPlayerControllerSpectating::StaticClass",
+    "0x144640410": "UEngine::GetWorldFromContextObject",
+    "0x14296d400": "exec thunk (ported body)"
+  },
+  "deps": [],
+  "notes": "Parameter order follows the bytecode read order (WCO, bIncludeNonSpectators, bIncludeSpectators). Reflection lists parameters in reverse declaration order; checked against three other exec thunks."
+}
