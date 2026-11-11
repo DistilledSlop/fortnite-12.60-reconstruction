@@ -1,0 +1,9 @@
+{
+  "name": "AFortGameStateAthena__CurrentPlaylist",
+  "address": "0x1419967f0",
+  "signature": "UFortPlaylistAthena* CurrentPlaylist  // +0x1df8 (fallback +0x1df0 as CurrentPlaylistFallback)",
+  "inc_or_decl": "// Proposed names; the playlist's PlaylistUIData (+0x6f8, TLazyObjectPtr) is named by reflection.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x1419967f0.c"
+  ]
+}

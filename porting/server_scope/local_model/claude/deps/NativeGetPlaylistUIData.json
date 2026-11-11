@@ -1,0 +1,9 @@
+{
+  "name": "NativeGetPlaylistUIData",
+  "address": "0x1419967f0",
+  "signature": "UFortPlaylistUIInfo* NativeGetPlaylistUIData(AFortGameStateAthena* GameState)",
+  "inc_or_decl": "UFortPlaylistAthena* Playlist = GameState->CurrentPlaylist;  // +0x1df8 (proposed)\nif (Playlist == nullptr) { Playlist = GameState->CurrentPlaylistFallback; }  // +0x1df0 (proposed)\nif (Playlist == nullptr) { return nullptr; }\nreturn Playlist->PlaylistUIData.LoadSynchronous();  // TLazyObjectPtr at +0x6f8, forced load",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x1419967f0.c"
+  ]
+}

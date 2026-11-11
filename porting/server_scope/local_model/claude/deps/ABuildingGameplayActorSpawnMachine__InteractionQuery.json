@@ -1,0 +1,9 @@
+{
+  "name": "ABuildingGameplayActorSpawnMachine__InteractionQuery",
+  "address": "0x141b53390",
+  "signature": "FInteractionQuery InteractionQuery  // sub-object at +0x218; slot +0x20 = CanInteract(const FResurrectionInteractionContext&) -> bool",
+  "inc_or_decl": "// Proposed name. Concrete class of the sub-object is not resolved; the Begin implementation calls its slot 0x20 with the context and proceeds only on true.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/e6d55e25570e440d90e4a8caefc96558/0x141b53390.c"
+  ]
+}

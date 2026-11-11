@@ -1,0 +1,20 @@
+{
+  "function": "AFortWeaponRanged::IsUsingScopeOrFirstPersonCamera",
+  "status": "proposed",
+  "original": "0x142b4fc40",
+  "signature": "bool AFortWeaponRanged::IsUsingScopeOrFirstPersonCamera()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b4fc40.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x1426d29b0.c",
+    "/opt/fortnite/local-model-package/captures/3871ac0df23544e68b91c291a50345d9/0x142321a70.c",
+    "/opt/fortnite/local-model-package/captures/c4b0f54ea1f8492aa59dd7ec47b1e067/0x1423908a0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142a3d9f0.c"
+  ],
+  "callees": {
+    "0x1426d29b0": "body: pawn->FindLocalViewingPlayerController, IsA AFortPlayerController, local-controller check (vslot 0x6a8), then first-person flags OR (bIsTargeting && bUseScopeTargeting)",
+    "0x142321a70": "AFortPawn::FindLocalViewingPlayerController (existing dep)",
+    "0x1423908a0": "IsUsingFirstPersonFlags (existing dep Helper_0x1423908a0)",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass (named)"
+  },
+  "notes": "The scope branch of this predicate does not require a viewing controller beyond the local check that the native performs."
+}

@@ -1,0 +1,20 @@
+{
+  "function": "UBuildingStructuralSupportSystem::K2_GetBuildingActorsInGridCell",
+  "status": "proposed",
+  "original": "0x14275d760",
+  "signature": "bool UBuildingStructuralSupportSystem::K2_GetBuildingActorsInGridCell(FVector WorldLocation, FBuildingGridCellFilter Filter, FBuildingGridCellActors& OutActorsInGridCell)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275d760.c",
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275d760.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x141c75940.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141c78270.c",
+    "/opt/fortnite/local-model-package/captures/6269809739044f948e084aa3a0637616/0x141c757a0.c"
+  ],
+  "callees": {
+    "0x14275d760": "exec wrapper: WorldLocation (FVector), Filter (4 bools), OutActorsInGridCell (three arrays)",
+    "0x141c75940": "body: clears the out struct, maps location to a cell, then collects; returns the collect result",
+    "0x141c78270": "NativeWorldLocationToGridCell (dep written)",
+    "0x141c757a0": "NativeCollectGridCellActors (dep written)"
+  },
+  "notes": "Supersedes the earlier LOW dep for 0x141c75940 (its five-parameter signature did not match the native); the native's four-parameter form is recorded in the NativeCollectGridCellActors dep."
+}

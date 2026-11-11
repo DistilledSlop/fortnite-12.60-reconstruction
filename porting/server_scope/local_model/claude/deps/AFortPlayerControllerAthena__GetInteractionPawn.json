@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerControllerAthena__GetInteractionPawn",
+  "address": "0x1419d5f00",
+  "signature": "APawn* AFortPlayerControllerAthena::GetInteractionPawn()  // vtable slot 0x14d8",
+  "inc_or_decl": "return MyFortPawn;  // native returns *(this + 0x6e0)",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/8927806807874372b850e23b4ee20098/0x1419d5f00.c"
+  ]
+}

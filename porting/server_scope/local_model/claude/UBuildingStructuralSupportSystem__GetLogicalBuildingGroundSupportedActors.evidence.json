@@ -1,0 +1,18 @@
+{
+  "function": "UBuildingStructuralSupportSystem::GetLogicalBuildingGroundSupportedActors",
+  "status": "proposed",
+  "original": "0x14275c550",
+  "signature": "void UBuildingStructuralSupportSystem::GetLogicalBuildingGroundSupportedActors(int32 LogicalIndex, TArray<UObject*>& LogicalBuildingGroundSupportedActors)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275c550.c",
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275c550.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x141c78cf0.c",
+    "/opt/fortnite/local-model-package/captures/01ef3df0f433489286259b6bf47b8942/0x142752f80.c"
+  ],
+  "callees": {
+    "0x14275c550": "exec wrapper: reads LogicalIndex, clears the out array, calls the collector",
+    "0x141c78cf0": "collector: range-checks the logical index against the building count (+0x120), walks set bits of the building's support mask (TBitArray), resolves each 16-byte cell entry's weak actor, keeps ABuildingSMActor instances",
+    "0x142752f80": "ABuildingSMActor::StaticClass (named)"
+  },
+  "notes": "Element order follows ascending support-mask bit index, as in the native."
+}

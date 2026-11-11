@@ -1,0 +1,9 @@
+{
+  "name": "NativeInterruptResurrectionInteraction",
+  "address": "0x141bef340",
+  "signature": "void NativeInterruptResurrectionInteraction(ABuildingGameplayActorSpawnMachine* SpawnMachine, AFortPlayerControllerAthena* Controller)",
+  "inc_or_decl": "// Declaration only; the native (209 lines) interrupts the resurrection interaction for Controller on SpawnMachine.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141bef340.c"
+  ]
+}

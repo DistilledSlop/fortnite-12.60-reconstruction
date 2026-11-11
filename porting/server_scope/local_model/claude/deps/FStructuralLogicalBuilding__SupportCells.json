@@ -1,0 +1,9 @@
+{
+  "name": "FStructuralLogicalBuilding__SupportCells",
+  "address": "0x141c78cf0",
+  "signature": "TArray<FStructuralSupportCell> SupportCells (+0x50, 16-byte entries led by TWeakObjectPtr<AActor>); TBitArray GroundSupportMask (+0x60, NumBits at +0x78)",
+  "inc_or_decl": "// Proposed names; the 0xa8-byte logical building element holds these at the listed offsets.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x141c78cf0.c"
+  ]
+}

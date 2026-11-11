@@ -1,0 +1,16 @@
+{
+  "function": "UBuildingStructuralSupportSystem::GetFloorActor",
+  "status": "proposed",
+  "original": "0x14275c3a0",
+  "signature": "UObject* UBuildingStructuralSupportSystem::GetFloorActor(FIntVector GridIndices, EStructuralFloorPosition FloorPosition)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275c3a0.c",
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275c3a0.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x141c77b40.c"
+  ],
+  "callees": {
+    "0x14275c3a0": "exec wrapper: reads GridIndices (FIntVector) and FloorPosition (EStructuralFloorPosition: Top=0, Bottom=1)",
+    "0x141c77b40": "NativeGetFloorActor (dep written); the native's layer argument 0 is Z+1 and 1 is Z, applied here"
+  },
+  "notes": "Returns null for an out-of-range cell or a missing or pending-kill actor."
+}

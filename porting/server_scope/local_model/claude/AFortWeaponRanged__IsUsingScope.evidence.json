@@ -1,0 +1,20 @@
+{
+  "function": "AFortWeaponRanged::IsUsingScope",
+  "status": "proposed",
+  "original": "0x142b4fc10",
+  "signature": "bool AFortWeaponRanged::IsUsingScope()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b4fc10.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x1426d2930.c",
+    "/opt/fortnite/local-model-package/captures/b97f38ebe68c4728a79304d43fa614e0/0x141125940.c",
+    "/opt/fortnite/local-model-package/captures/b23ff97f818447ddbf05f721751ba0e9/0x142a174f0.c",
+    "/opt/fortnite/local-model-package/captures/3871ac0df23544e68b91c291a50345d9/0x142321a70.c"
+  ],
+  "callees": {
+    "0x1426d2930": "body: Instigator must be AFortPawn; requires bIsTargeting (AFortWeapon +0x871 bit 1) and bUseScopeTargeting (+0xbd4 mask 0x10); then pawn->FindLocalViewingPlayerController() != null",
+    "0x141125940": "Instigator getter (+0x118)",
+    "0x142a174f0": "AFortPawn::StaticClass (named)",
+    "0x142321a70": "AFortPawn::FindLocalViewingPlayerController (existing dep AFortPawn__FindLocalViewingPlayerController)"
+  },
+  "notes": "Returns true only when the scope is being used and a local viewer exists for the instigator pawn."
+}

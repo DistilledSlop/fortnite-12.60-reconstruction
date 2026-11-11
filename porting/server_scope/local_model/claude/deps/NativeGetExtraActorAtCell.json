@@ -1,0 +1,9 @@
+{
+  "name": "NativeGetExtraActorAtCell",
+  "address": "0x141c76e40",
+  "signature": "UObject* NativeGetExtraActorAtCell(const FIntVector& Cell)",
+  "inc_or_decl": "// Native: lookup via FUN_141c712b0 into the extra table at +0x178 (0x1c-byte entries, weak actor at +0xc); returns the valid actor or null.\nconst FExtraCellEntry* Entry = ExtraActorsByCell.FindByKey(Cell);\nAActor* Actor = Entry ? Entry->Actor.Get() : nullptr;\nreturn IsValid(Actor) ? Actor : nullptr;",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141c76e40.c"
+  ]
+}

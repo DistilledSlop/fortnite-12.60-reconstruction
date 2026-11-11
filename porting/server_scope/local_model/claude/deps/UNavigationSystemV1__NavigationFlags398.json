@@ -1,0 +1,9 @@
+{
+  "name": "UNavigationSystemV1__NavigationFlags398",
+  "address": "0x141737a80",
+  "signature": "uint8 NavigationFlags398  // byte at +0x398; bit 0x4 = initial navigation lock",
+  "inc_or_decl": "// Proposed name for the flag set at +0x398 on the UNavigationSystemV1 instance. bit 0x4 is read by IsInitialNavigationLockActive.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x141737a80.c"
+  ]
+}

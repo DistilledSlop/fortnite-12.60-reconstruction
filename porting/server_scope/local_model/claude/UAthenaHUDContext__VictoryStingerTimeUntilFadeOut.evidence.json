@@ -1,0 +1,16 @@
+{
+  "function": "UAthenaHUDContext::VictoryStingerTimeUntilFadeOut",
+  "status": "proposed",
+  "original": "0x1451a0930",
+  "signature": "float UAthenaHUDContext::VictoryStingerTimeUntilFadeOut()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x1451a0930.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x144cb4d20.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x1419967f0.c"
+  ],
+  "callees": {
+    "0x144cb4d20": "body: same chain as GetVictoryStinger; returns UIInfo+0x6c (StingerFadesToAudioMusicAfter) or -1.0f",
+    "0x1419967f0": "NativeGetPlaylistUIData (dep written)"
+  },
+  "notes": "Returns -1.0f when no UI info is available."
+}

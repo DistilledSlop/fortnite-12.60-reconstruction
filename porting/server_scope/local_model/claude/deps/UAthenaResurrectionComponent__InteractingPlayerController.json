@@ -1,0 +1,10 @@
+{
+  "name": "UAthenaResurrectionComponent__InteractingPlayerController",
+  "address": "0x14272b8c0",
+  "signature": "AFortPlayerControllerAthena* InteractingPlayerController  // member at +0xa0",
+  "inc_or_decl": "// Member (proposed name). The resurrection component's implementations read it at +0xa0 as the controller running the interaction.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/e6d55e25570e440d90e4a8caefc96558/0x141b53390.c",
+    "/opt/fortnite/local-model-package/captures/e6d55e25570e440d90e4a8caefc96558/0x141b53420.c"
+  ]
+}

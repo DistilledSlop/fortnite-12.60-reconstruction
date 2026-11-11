@@ -1,0 +1,9 @@
+{
+  "name": "NativeWorldLocationToGridCell",
+  "address": "0x141c78270",
+  "signature": "bool NativeWorldLocationToGridCell(const FVector& WorldLocation, FIntVector& OutCell)",
+  "inc_or_decl": "const float Tol = 0.0001f;\nif (WorldLocation.X < GridBoundsMin.X - Tol || WorldLocation.X > GridBoundsMax.X + Tol) { return false; }\nif (WorldLocation.Y < GridBoundsMin.Y - Tol || WorldLocation.Y > GridBoundsMax.Y + Tol) { return false; }\nif (WorldLocation.Z < GridBoundsMin.Z - Tol || WorldLocation.Z > GridBoundsMax.Z + Tol) { return false; }\nOutCell.X = FMath::FloorToInt((WorldLocation.X - GridOrigin.X) / 512.f + 0.5f);  // XY cell size 512\nOutCell.Y = FMath::FloorToInt((WorldLocation.Y - GridOrigin.Y) / 512.f + 0.5f);\nOutCell.Z = FMath::FloorToInt((WorldLocation.Z - GridOrigin.Z) / 384.f + 0.5f);  // Z cell size 384\nreturn true;",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141c78270.c"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "function": "AFortWeaponRanged::ServerSetMuzzleTraceNearWall",
+  "status": "proposed",
+  "original": "0x142b4fcf0",
+  "signature": "void AFortWeaponRanged::ServerSetMuzzleTraceNearWall(bool bIsNearWall)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b4fcf0.c",
+    "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/0ddf9d9007df420cbfb2dd4517dc3b69/0x143f72550.c",
+    "/opt/fortnite/local-model-package/captures/b97f38ebe68c4728a79304d43fa614e0/0x141125940.c",
+    "/opt/fortnite/local-model-package/captures/b23ff97f818447ddbf05f721751ba0e9/0x142a174f0.c"
+  ],
+  "callees": {
+    "0x1426df570": "implementation: Instigator must be AFortPawn; sets bIsMuzzleTraceNearWall (bit 0x8000 of +0xbd4) to the parameter; then FlushNetDormancy on the pawn and on the weapon (vslot 0x5e8)",
+    "0x1406801d0": "validate target = Stub_ReturnTrue",
+    "0x143f72550": "AActor vslot 0x5e8 = FlushNetDormancy (NET_AActor_FlushNetDormancy)",
+    "0x141125940": "Instigator getter (+0x118)",
+    "0x142a174f0": "AFortPawn::StaticClass (named)"
+  },
+  "notes": "Validation always succeeds in this build."
+}

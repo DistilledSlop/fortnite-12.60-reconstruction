@@ -1,0 +1,13 @@
+{
+  "name": "UBuildingStructuralSupportSystem__GridStorage",
+  "address": "0x141c77b40",
+  "signature": "FIntVector GridSize (+0x368); FVector GridOrigin (+0x378); FVector GridBoundsMin (+0x384); FVector GridBoundsMax (+0x390); TArray<FStructuralLogicalBuilding> LogicalBuildings (+0x118, stride 0xa8, count +0x120); TMap FloorActorsByCell (+0x268); TMap WallActorsByCellX (+0x1c8); TMap WallActorsByCellY (+0x218); TArray ExtraActorsByCell (+0x178, stride 0x1c)",
+  "inc_or_decl": "// Proposed member names for the structural grid. Cell size is 512 in X and Y and 384 in Z (from the native scale constants).",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x141c77b40.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141c78270.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x141c78cf0.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x141c7d9e0.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141c76e40.c"
+  ]
+}

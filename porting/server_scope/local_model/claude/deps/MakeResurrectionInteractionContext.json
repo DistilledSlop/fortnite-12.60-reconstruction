@@ -1,0 +1,9 @@
+{
+  "name": "MakeResurrectionInteractionContext",
+  "address": "0x141ee0a80",
+  "signature": "FResurrectionInteractionContext MakeResurrectionInteractionContext(APawn* Pawn, AFortPlayerControllerAthena* Controller, uint8 Type)",
+  "inc_or_decl": "FResurrectionInteractionContext Ctx;\nCtx.Type = Type;\nCtx.Controller = Controller;   // weak pointer at +0xc\nCtx.Pawn = Pawn;               // weak pointer at +0x14\n// Index fields (+0x1c, +0x24) are -1 and count fields (+0x20, +0x28) are 0; the remaining defaults are copied from the global at 0x148218630.\nreturn Ctx;",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141ee0a80.c"
+  ]
+}

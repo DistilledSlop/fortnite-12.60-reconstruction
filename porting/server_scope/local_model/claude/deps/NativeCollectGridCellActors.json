@@ -1,0 +1,13 @@
+{
+  "name": "NativeCollectGridCellActors",
+  "address": "0x141c757a0",
+  "signature": "bool NativeCollectGridCellActors(const FIntVector& Cell, const FBuildingGridCellFilter& Filter, FBuildingGridCellActors& Out)",
+  "inc_or_decl": "if (Cell.X <= GridSize.X && Cell.Y <= GridSize.Y && Cell.Z <= GridSize.Z)\n{\n    if (Filter.bWalls)\n    {\n        for (EStructuralWallPosition Side : {Left, Right, Front, Back})\n        {\n            if (AActor* Wall = NativeGetWallActor(Cell, Side)) { Out.Walls.Add({Wall, Cell, Side}); }  // 0x18-byte entries (native 0x141c81c00)\n        }\n    }\n    if (Filter.bFloors)\n    {\n        if (Filter.bIncludeTopFloor)\n        {\n            FIntVector Above = Cell; Above.Z += 1;\n            if (AActor* Top = NativeGetFloorActor(Above)) { Out.Floors.Add({Top, Cell, EStructuralFloorPosition::Top}); }\n        }\n        if (AActor* Bottom = NativeGetFloorActor(Cell)) { Out.Floors.Add({Bottom, Cell, EStructuralFloorPosition::Bottom}); }  // native 0x141c81b50\n    }\n    if (Filter.bExtras)\n    {\n        if (AActor* Extra = NativeGetExtraActorAtCell(Cell)) { Out.Extras.Add({Extra, Cell}); }  // 0x14-byte entries (native 0x141c81ac0)\n    }\n}\nreturn Out.Walls.Num() > 0 || Out.Floors.Num() > 0 || Out.Extras.Num() > 0;",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/6269809739044f948e084aa3a0637616/0x141c757a0.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141c81c00.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141c81b50.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141c81ac0.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141c6f5a0.c"
+  ]
+}

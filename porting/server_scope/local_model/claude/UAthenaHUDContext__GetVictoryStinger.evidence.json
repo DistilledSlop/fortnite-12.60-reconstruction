@@ -1,0 +1,18 @@
+{
+  "function": "UAthenaHUDContext::GetVictoryStinger",
+  "status": "proposed",
+  "original": "0x14519de60",
+  "signature": "UObject* UAthenaHUDContext::GetVictoryStinger()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x14519de60.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x144c8fcf0.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x1419967f0.c",
+    "/opt/fortnite/local-model-package/captures/7f1952986d1641ddaf068d6be820727c/0x14197ccd0.c"
+  ],
+  "callees": {
+    "0x144c8fcf0": "body: GetWorld, World->GameState (+0x130), IsA AFortGameStateAthena, playlist UI data, returns UIInfo->VictoryStinger (+0x48) or null",
+    "0x1419967f0": "NativeGetPlaylistUIData (proposed name; dep written)",
+    "0x14197ccd0": "TLazyObjectPtr::Get with forced load (PlaylistUIData at +0x6f8)"
+  },
+  "notes": "Null world, null game state or null UI info all return null."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "APlayerController__IsLocalPlayerController",
+  "address": "0x14238f050",
+  "signature": "bool IsLocalPlayerController()  // vtable slot 0x6a8 on AFortPlayerController",
+  "inc_or_decl": "// Thunk target 0x1444816f0 resolves through the cached local flag at +0x54c and the net-mode checks; returns true for local controllers.",
+  "evidence": []
+}

@@ -1,0 +1,18 @@
+{
+  "function": "UBuildingStructuralSupportSystem::GetWallActor",
+  "status": "proposed",
+  "original": "0x14275c910",
+  "signature": "UObject* UBuildingStructuralSupportSystem::GetWallActor(FIntVector GridIndices, EStructuralWallPosition WallPosition)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275c910.c",
+    "/opt/fortnite/local-model-package/captures/a1af586513d34254a090366c1f3f8382/0x14275c910.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x141c7d9e0.c",
+    "/opt/fortnite/local-model-package/captures/6269809739044f948e084aa3a0637616/0x141c7db30.c"
+  ],
+  "callees": {
+    "0x14275c910": "exec wrapper: reads GridIndices (FIntVector) and WallPosition (EStructuralWallPosition: Left=0, Right=1, Front=2, Back=3)",
+    "0x141c7d9e0": "NativeGetWallActor (dep written): bounds check, slot index from FUN_141c7db30, table lookup (Left/Right in WallActorsByCellX, Front/Back in WallActorsByCellY), validity check",
+    "0x141c7db30": "wall slot index for (cell, side) (described in NativeGetWallActor dep)"
+  },
+  "notes": "Body is a direct call; the side-to-slot mapping lives in the NativeGetWallActor dep."
+}

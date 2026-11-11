@@ -1,0 +1,22 @@
+{
+  "function": "UAthenaResurrectionComponent::ServerOnBeginResurrectionInteraction",
+  "status": "proposed",
+  "original": "0x14272b8c0",
+  "signature": "void UAthenaResurrectionComponent::ServerOnBeginResurrectionInteraction(UObject* SpawnMachine)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14272b8c0.c",
+    "/opt/fortnite/local-model-package/captures/e6d55e25570e440d90e4a8caefc96558/0x141b53390.c",
+    "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/8927806807874372b850e23b4ee20098/0x1419d5f00.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141ee0a80.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141beee60.c"
+  ],
+  "callees": {
+    "0x141b53390": "implementation: InteractingPlayerController (+0xa0) must be AFortPlayerControllerAthena; builds context (type 2) from controller->GetInteractionPawn(); CanInteract on SpawnMachine+0x218 (vslot 0x20); then BeginResurrectionInteraction",
+    "0x1406801d0": "validate = Stub_ReturnTrue",
+    "0x1419d5f00": "AFortPlayerControllerAthena vslot 0x14d8 = GetInteractionPawn (returns MyFortPawn)",
+    "0x141ee0a80": "MakeResurrectionInteractionContext (dep written)",
+    "0x141beee60": "NativeBeginResurrectionInteraction (declaration dep written)"
+  },
+  "notes": "The Begin path only starts when the spawn machine's interaction query accepts the context."
+}

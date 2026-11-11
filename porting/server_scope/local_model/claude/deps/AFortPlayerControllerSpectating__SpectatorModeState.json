@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerControllerSpectating__SpectatorModeState",
+  "address": "0x1423cb760",
+  "signature": "uint8 SpectatorModeState  // member at +0x2670",
+  "inc_or_decl": "// Proposed name. Value 2 gates UseScopeTargeting (FUN_1423cb760 returns SpectatorModeState == 2).",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/f1525dbcfdd043988e43f5c567df3835/0x1423cb760.c"
+  ]
+}

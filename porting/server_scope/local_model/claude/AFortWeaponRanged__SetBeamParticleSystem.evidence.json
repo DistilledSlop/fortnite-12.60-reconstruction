@@ -1,0 +1,16 @@
+{
+  "function": "AFortWeaponRanged::SetBeamParticleSystem",
+  "status": "proposed",
+  "original": "0x142b4fe80",
+  "signature": "UParticleSystem* AFortWeaponRanged::SetBeamParticleSystem(UParticleSystem* InputBeamParticleSystem)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b4fe80.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x140696130.c",
+    "/opt/fortnite/local-model-package/captures/08140e47ad19496ebe15b7f549570d71/0x142ebd9e0.c"
+  ],
+  "callees": {
+    "0x140696130": "copy-assign of the Niagara asset struct (BeamNiagaraSystemAsset) from a default-constructed temporary",
+    "0x142ebd9e0": "TArray-style move-assign helper used by the struct copy path (frees old storage)"
+  },
+  "notes": "Resets the Niagara instance and asset before storing the new beam system; returns the input."
+}

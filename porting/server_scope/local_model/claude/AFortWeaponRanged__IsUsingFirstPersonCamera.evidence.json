@@ -1,0 +1,25 @@
+{
+  "function": "AFortWeaponRanged::IsUsingFirstPersonCamera",
+  "status": "proposed",
+  "original": "0x142b4fbe0",
+  "signature": "bool AFortWeaponRanged::IsUsingFirstPersonCamera()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b4fbe0.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x1426d28d0.c",
+    "/opt/fortnite/local-model-package/captures/44d47592926e48b394ba11a5e200418f/0x143f76650.c",
+    "/opt/fortnite/local-model-package/captures/b97f38ebe68c4728a79304d43fa614e0/0x141125940.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x142a3d9f0.c",
+    "/opt/fortnite/local-model-package/captures/c4b0f54ea1f8492aa59dd7ec47b1e067/0x1423908a0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x1426e7770.c"
+  ],
+  "callees": {
+    "0x1426d28d0": "body: Instigator->Controller, IsA AFortPlayerController, IsLocalPlayerController (vslot 0x6a8), IsUsingFirstPersonFlags",
+    "0x143f76650": "Instigator->Controller (APawn::Controller at +0x250; returns 0 when Instigator is null)",
+    "0x141125940": "Instigator getter (AActor::Instigator at +0x118)",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass (named static class)",
+    "0x1423908a0": "IsUsingFirstPersonFlags(AFortPlayerController*) (existing dep Helper_0x1423908a0)",
+    "0x1426e7770": "bUseFirstPersonTargeting bit (weapon +0xbd4 mask 0x20), read inside the flags helper",
+    "0x14238f050": "AFortPlayerController vslot 0x6a8 = IsLocalPlayerController (thunk to 0x1444816f0)"
+  },
+  "notes": "Native ignores the weapon's own state; the result depends only on the instigator's controller and its first-person flags."
+}

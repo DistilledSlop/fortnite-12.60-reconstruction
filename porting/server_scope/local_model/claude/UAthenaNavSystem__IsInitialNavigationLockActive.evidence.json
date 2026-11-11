@@ -1,0 +1,18 @@
+{
+  "function": "UAthenaNavSystem::IsInitialNavigationLockActive",
+  "status": "proposed",
+  "original": "0x142725f50",
+  "signature": "bool UAthenaNavSystem::IsInitialNavigationLockActive(UObject* WorldContextObject)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x142725f50.c",
+    "/opt/fortnite/local-model-package/captures/51a5fc900a07408ba40c5db802f76991/0x141737a80.c",
+    "/opt/fortnite/local-model-package/captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c",
+    "/opt/fortnite/local-model-package/captures/f1525dbcfdd043988e43f5c567df3835/0x14492cc30.c"
+  ],
+  "callees": {
+    "0x141737a80": "body: GetWorldFromContextObject, World->NavigationSystem (+0x120), IsA UNavigationSystemV1, flag bit 0x4 at +0x398",
+    "0x144640410": "UEngine::GetWorldFromContextObject (named engine helper, mode 0 = ReturnNull)",
+    "0x14492cc30": "UNavigationSystemV1::StaticClass (named)"
+  },
+  "notes": "Flag name NavigationFlags398 is proposed (dep UNavigationSystemV1__NavigationFlags398)."
+}

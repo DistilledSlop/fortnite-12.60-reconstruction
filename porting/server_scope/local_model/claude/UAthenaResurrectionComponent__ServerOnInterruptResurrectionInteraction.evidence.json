@@ -1,0 +1,18 @@
+{
+  "function": "UAthenaResurrectionComponent::ServerOnInterruptResurrectionInteraction",
+  "status": "proposed",
+  "original": "0x14272b980",
+  "signature": "void UAthenaResurrectionComponent::ServerOnInterruptResurrectionInteraction(UObject* SpawnMachine)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/7c7e07e5217c499e963e0a19a1d4e53e/0x14272b980.c",
+    "/opt/fortnite/local-model-package/captures/e6d55e25570e440d90e4a8caefc96558/0x141b53420.c",
+    "/opt/fortnite/local-model-package/captures/4920edbd6c9145d1bf010b6040563ef9/0x1406801d0.c",
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141bef340.c"
+  ],
+  "callees": {
+    "0x141b53420": "implementation: InteractingPlayerController (+0xa0) must be AFortPlayerControllerAthena and SpawnMachine non-null; then InterruptResurrectionInteraction",
+    "0x1406801d0": "validate = Stub_ReturnTrue",
+    "0x141bef340": "NativeInterruptResurrectionInteraction (declaration dep written)"
+  },
+  "notes": "Interrupt has no context query, unlike Begin."
+}

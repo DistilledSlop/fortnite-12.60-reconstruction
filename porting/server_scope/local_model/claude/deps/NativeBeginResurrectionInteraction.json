@@ -1,0 +1,9 @@
+{
+  "name": "NativeBeginResurrectionInteraction",
+  "address": "0x141beee60",
+  "signature": "void NativeBeginResurrectionInteraction(ABuildingGameplayActorSpawnMachine* SpawnMachine, AFortPlayerControllerAthena* Controller)",
+  "inc_or_decl": "// Declaration only; the native (267 lines) starts the resurrection interaction for Controller on SpawnMachine.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/0ae56bebe30e498f91f66bd3b80342e1/0x141beee60.c"
+  ]
+}
