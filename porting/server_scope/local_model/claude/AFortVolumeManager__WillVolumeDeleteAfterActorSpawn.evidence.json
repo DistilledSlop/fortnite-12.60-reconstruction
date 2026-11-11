@@ -1,0 +1,19 @@
+{
+  "function": "AFortVolumeManager::WillVolumeDeleteAfterActorSpawn",
+  "status": "proposed",
+  "original": "0x142b3db10",
+  "signature": "bool WillVolumeDeleteAfterActorSpawn(AFortVolume* Volume)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b3db10.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x141c94e70.c"
+  ],
+  "callees": {
+    "0x141c94e70": "predicate: true only for a volume with ULevelSaveComponent and without UFortMinigameVolumeComponent, UPlaysetLevelStreamComponent, UFortLevelSaveComponent",
+    "0x1429da540": "UFortMinigameVolumeComponent::StaticClass",
+    "0x142b86500": "UPlaysetLevelStreamComponent::StaticClass",
+    "0x14297b320": "UFortLevelSaveComponent::StaticClass",
+    "0x142b6ac80": "ULevelSaveComponent::StaticClass",
+    "0x1429da540_virtual_0x610": "AActor::FindComponentByClass (vtable slot 0x610, header-model name)"
+  },
+  "notes": "Logic is fully read (26 lines). The virtual slot name FindComponentByClass comes from porting/behavior/vtable_lookup.py (MEDIUM). Return is a conjunction of four component lookups, so the function is HIGH for logic."
+}

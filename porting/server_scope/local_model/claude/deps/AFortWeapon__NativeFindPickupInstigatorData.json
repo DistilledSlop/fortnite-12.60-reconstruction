@@ -1,0 +1,10 @@
+{
+  "name": "AFortWeapon__NativeFindPickupInstigatorData",
+  "address": "0x14269e130",
+  "signature": "bool NativeFindPickupInstigatorData(const FGuid& ItemEntryGuid, int32& OutHandle, FFortPickupInstigatorData& OutData)",
+  "inc_or_decl": "Finds the instigator registry entry for ItemEntryGuid (+0x8c0) on the authoritative owner, writes its handle, and fetches the data by handle via 0x141f34dd0.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x14269e130.c"
+  ],
+  "notes": "Body read (67 lines). Entry type 13 and registry vtable slot 0xb0 are unnamed."
+}

@@ -1,0 +1,17 @@
+{
+  "function": "AFortWeapon::GetWeaponMeshes",
+  "status": "proposed",
+  "original": "0x142b471b0",
+  "signature": "void GetWeaponMeshes(TArray<UObject*>& WeaponMeshes)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b471b0.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x1426a1500.c"
+  ],
+  "callees": {
+    "0x1426a1500": "reads bHasCachedAdditionalMeshes (+0x825). If unset: resets AllWeaponMeshes (+0x7a0), resolves a world via 0x1409e4e60 and 0x1446b3d40, collects meshes (0x140860090) or no-op (0x14085fd60), sets the cache flag; then copies AllWeaponMeshes to the output",
+    "0x140860090": "NativeCollectAdditionalWeaponMeshes (proposed)",
+    "0x14085fd60": "no-op branch when the world check matches",
+    "0x1409e4f80": "element class of the output array (not resolved; UObject* placeholder)"
+  },
+  "notes": "Output element type is a placeholder (class 0x1409e4f80 not resolved). Cache flag and array member names come from the field-offset lookup. The world-check branch is only partly understood."
+}

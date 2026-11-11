@@ -1,0 +1,10 @@
+{
+  "name": "AFortWeapon__NativeGetSmallPreviewImage",
+  "address": "vtable slot 0x318 on WeaponData",
+  "signature": "TSoftObjectPtr<UTexture2D> NativeGetSmallPreviewImage() const",
+  "inc_or_decl": "Returns the weapon data's small preview soft image.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x1426a0ce0.c"
+  ],
+  "notes": "Target function address not resolved; name is proposed."
+}

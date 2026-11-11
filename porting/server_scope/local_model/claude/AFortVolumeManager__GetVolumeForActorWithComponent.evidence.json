@@ -1,0 +1,16 @@
+{
+  "function": "AFortVolumeManager::GetVolumeForActorWithComponent",
+  "status": "proposed",
+  "original": "0x142b3bc60",
+  "signature": "AFortVolume* GetVolumeForActorWithComponent(AActor* Actor, TSubclassOf<UActorComponent> ComponentType, TArray<UActorComponent*>& OutComponents, bool bUseActorBounds)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b3bc60.c",
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x141c7ca90.c"
+  ],
+  "callees": {
+    "0x141c7ca90": "NativeFindVolumeWithComponent (proposed): selects the volume for Actor (actor bounds when bUseActorBounds), gathers ComponentType components from candidate volumes into OutComponents, returns the volume. Uses STAT_Find_Volume_WithComponent.",
+    "0x141c7d520": "volume candidate collector called by 0x141c7ca90 (not read in full)",
+    "0x142b6ac80": "ULevelSaveComponent::StaticClass (not used here)"
+  },
+  "notes": "Thunk declared order (from FFrame step order): Actor, ComponentType (UClass*), OutComponents (array ref), bUseActorBounds. The inventory reflection dump lists these in reverse, which the thunk step order confirms. Native body not fully read; the inner component-collection loop was only sampled, so the proposed helper carries the detail."
+}

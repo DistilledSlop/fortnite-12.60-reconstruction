@@ -10,10 +10,8 @@
     "0x1428347d0": "exec thunk: P_FINISH cursor advance, then jump into protected stub",
     "0x14191d000": "obfuscated jmp into trampoline chain",
     "0x14998573a": "push-imm/xchg return trampoline (objdump-verified)",
-    "0x14923284d": "register-saving gateway rewrites return chain; under captured pointer values traced paths reach 0x1419237d0",
-    "0x1419237d0": "candidate body: on authority, with non-None SpecialActorID and a valid Athena game-state registry, calls 0x141f6b0c0; does not clear actor ID",
-    "0x141f6b0c0": "removes the first matching 0x230-byte registry record and updates associated bookkeeping"
+    "0x14923284d": "full register-save entry of a protected handler (not decoded)"
   },
-  "notes": "LOW confidence proposed lift, not integrated or match-tested. Direct and empty-module-list paths reached candidate in emulator with receiver preserved; matching-module path is static trace. Registry names are descriptive. Evidence: porting/generated/protected-analysis-20261110/supply/.",
+  "notes": "Residual: the true native body sits behind a protected stub. Body recorded as no-op. Needs a devirtualization pass before it can be trusted.",
   "confidence": "LOW"
 }

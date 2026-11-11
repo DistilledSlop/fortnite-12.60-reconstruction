@@ -1,0 +1,10 @@
+{
+  "name": "AFortWeapon__AddAmmo",
+  "address": "0x1426a71e0 (vtable slot 0x7f0 on AFortWeapon)",
+  "signature": "void AddAmmo(int32 Delta)",
+  "inc_or_decl": "Adds Delta to the ammo counter at +0x8b8, clamps it to [0, FUN_14269b000()], and updates the derived counter at +0x8dc.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x1426a5f40.c"
+  ],
+  "notes": "Read only partly (first ~25 lines). Clamp source 0x14269b000 is unnamed."
+}

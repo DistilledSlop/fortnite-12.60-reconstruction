@@ -1,0 +1,10 @@
+{
+  "name": "AFortVolumeManager__NativeResaveActorWithVolume",
+  "address": "0x141c8cfd0",
+  "signature": "void NativeResaveActorWithVolume(AActor* Actor, AFortVolume* Volume)",
+  "inc_or_decl": "Authority-only resave of Actor into Volume: uses the actor's ULevelSaveComponent (0x142b6ac80), the volume's membership set (+0x318), and helpers 0x141c90870, 0x142068fd0, 0x142063d20, 0x141c662c0.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/3250d3c3d16a477e8dc79ebf830c08af/0x141c8cfd0.c"
+  ],
+  "notes": "Same address as deps/AFortVolumeManager__RegisterTrapInVolume.json, which uses the name RegisterTrapInVolume(VolumeManager, Trap, Volume). Parameter order here follows the thunk and the 0x141c8cf90 caller. Integrator to reconcile the name."
+}

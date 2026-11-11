@@ -1,0 +1,10 @@
+{
+  "name": "AFortVolumeManager__NativeFindVolumeWithComponent",
+  "address": "0x141c7ca90",
+  "signature": "AFortVolume* NativeFindVolumeWithComponent(AActor* Actor, TSubclassOf<UActorComponent> ComponentType, TArray<UActorComponent*>& OutComponents, bool bUseActorBounds)",
+  "inc_or_decl": "Reads volume candidates (0x141c7d520), collects matching components into OutComponents, returns the volume. Stat scope STAT_Find_Volume_WithComponent.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/6fd9248f6a3441c7a3805d4b042d5389/0x141c7ca90.c"
+  ],
+  "notes": "Partially read (first ~70 lines). Inner component loop not fully traced; treat as MEDIUM."
+}

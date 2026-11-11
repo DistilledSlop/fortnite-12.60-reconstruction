@@ -1,0 +1,8 @@
+{
+  "name": "AFortWeapon__NativeApplyItemWrapToActor",
+  "address": "0x141d0f5f0",
+  "signature": "void NativeApplyItemWrapToActor(AActor* Actor, const FSoftObjectPath& OverrideItemWrap, const TArray<FFortOverrideWrapEntry>& Entries)",
+  "inc_or_decl": "Applies override wrap entries to Actor. Called from AttemptApplyOverrideWrapToActor with the weapon's OverrideItemWrap at +0x3e0.",
+  "evidence": [],
+  "notes": "Only the call position is known; the body was not read."
+}

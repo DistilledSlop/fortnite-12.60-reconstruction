@@ -9,7 +9,7 @@
   ],
   "callees": {
     "0x140c31764": "thunk: FUN_1495a4a24(param_1, param_2, 0)",
-    "0x1495a4a24": "Recovered dispatcher invokes vtable slot 0x1228 with a change flag; Athena target updates skydiving state. Further helper effects remain unresolved."
+    "0x1495a4a24": "UNRESOLVED: not a decodable function body (OR.LOCK into unresolved base, RETF). See deps."
   },
-  "notes": "LOW CONFIDENCE. The proposed BeginSkydivingInternal call and its dependencies have not been integrated or verified. Later original-client capture evidence is in porting/generated/protected-analysis-20261110/skydiving/."
+  "notes": "LOW CONFIDENCE. The effect of the callee is not recovered. The body keeps the call as BeginSkydivingInternal(bFromBus)."
 }

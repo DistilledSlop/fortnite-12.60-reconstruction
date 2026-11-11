@@ -1,0 +1,8 @@
+{
+  "name": "AFortVolumeManager__NativeRegisterVolume",
+  "address": "0x141c5ec90",
+  "signature": "void NativeRegisterVolume(AFortVolume* Volume)",
+  "inc_or_decl": "Appends a volume to the manager's VolumeObjects (+0x278, count +0x280).",
+  "evidence": [],
+  "notes": "Inferred from SpawnVolume call order and VolumeObjects offsets."
+}

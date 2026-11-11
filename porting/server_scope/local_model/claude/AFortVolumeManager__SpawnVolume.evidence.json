@@ -1,0 +1,23 @@
+{
+  "function": "AFortVolumeManager::SpawnVolume",
+  "status": "proposed",
+  "original": "0x142b3d710",
+  "signature": "AFortVolume* SpawnVolume(TSubclassOf<AFortVolume> VolumeActor, UObject* Playset, const FVector& Location, const FRotator& Rotation)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b3d710.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x141c91780.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x141c94dc0.c"
+  ],
+  "callees": {
+    "0x141c91780": "SpawnVolume native: Authority-only; GetWorld; validity check 0x141c94dc0; class must be AFortVolume-derived (0x142b32e10 = AFortVolume::StaticClass); SpawnActor with deferred construction; sets playset; FinishSpawning; registers in VolumeObjects",
+    "0x141c94dc0": "NativeCanSpawnVolume (proposed): playset/location/rotation validity check",
+    "0x142b32e10": "AFortVolume::StaticClass",
+    "0x142c5c060": "FRotator to FQuat conversion (Rotation.Quaternion)",
+    "0x144680860": "FActorSpawnParameters default initialisation",
+    "0x1442e6580": "UWorld::SpawnActor (class, transform, params)",
+    "0x141c8f380": "NativeInitVolumePlayset (proposed): applies Playset to the spawned volume",
+    "0x144211f60": "AActor::FinishSpawning(FTransform)",
+    "0x141c5ec90": "NativeRegisterVolume (proposed): appends the new volume to VolumeObjects"
+  },
+  "notes": "Return value is recovered from the decompile tail (the native's return is implicit); the thunk stores it into the ReturnValue slot. Confidence is MEDIUM because the playset validity helper and the playset applier were only inferred from their call positions. Declared order from thunk step order: VolumeActor, Playset, Location, Rotation (matches offsets 0, 8, 16, 28). SpawnParameters.OverrideLevel reads the manager's own +0xe0 member in the native, mapped here to GetLevel()."
+}

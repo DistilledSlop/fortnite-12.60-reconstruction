@@ -1,0 +1,8 @@
+{
+  "name": "AFortWeapon__NativeUsesAmmoCounter",
+  "address": "0x142698590 (vtable slot 0x820 on AFortWeapon)",
+  "signature": "bool NativeUsesAmmoCounter() const",
+  "inc_or_decl": "Virtual on AFortWeapon. Returns false when the weapon does not track an ammo counter, which makes HasInfiniteAmmo true.",
+  "evidence": [],
+  "notes": "Target read only via vtable_lookup; body not read."
+}

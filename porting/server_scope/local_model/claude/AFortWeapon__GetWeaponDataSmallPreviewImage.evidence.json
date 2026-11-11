@@ -1,0 +1,17 @@
+{
+  "function": "AFortWeapon::GetWeaponDataSmallPreviewImage",
+  "status": "proposed",
+  "original": "0x142b47010",
+  "signature": "TSoftObjectPtr<UTexture2D> GetWeaponDataSmallPreviewImage()",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b47010.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x1426a0ce0.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x140696130.c"
+  ],
+  "callees": {
+    "0x1426a0ce0": "reads WeaponData; if set, forwards to WeaponData vtable slot 0x318 (proposed NativeGetSmallPreviewImage) writing the output; else logs and zeroes the soft pointer",
+    "0x140696130": "soft-object copy (copy-assign of the returned TSoftObjectPtr to the thunk result)",
+    "0x144803bd0": "return type class (not resolved; UTexture2D assumed)"
+  },
+  "notes": "Return type is a soft object pointer; element class 0x144803bd0 was not resolved and UTexture2D is an assumption. The helper name for vtable slot 0x318 is proposed only."
+}

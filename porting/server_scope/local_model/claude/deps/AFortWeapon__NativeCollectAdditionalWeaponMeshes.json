@@ -1,0 +1,10 @@
+{
+  "name": "AFortWeapon__NativeCollectAdditionalWeaponMeshes",
+  "address": "0x140860090",
+  "signature": "void NativeCollectAdditionalWeaponMeshes(TArray<UObject*>& OutMeshes)",
+  "inc_or_decl": "Collects the additional weapon meshes into the cache array; the native uses the 0x14085fd60 no-op branch when the world check matches.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x1426a1500.c"
+  ],
+  "notes": "Element class 0x1409e4f80 not resolved."
+}

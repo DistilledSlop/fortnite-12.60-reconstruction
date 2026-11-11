@@ -1,0 +1,16 @@
+{
+  "function": "AFortWeapon::K2_ConsumeAmmo",
+  "status": "proposed",
+  "original": "0x142b47580",
+  "signature": "void K2_ConsumeAmmo(int32 Quantity)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b47580.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x1426a5f40.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x1426a71e0.c"
+  ],
+  "callees": {
+    "0x1426a5f40": "forwards -Quantity to vtable slot 0x7f0 of the weapon",
+    "0x1426a71e0": "AddAmmo (proposed name): adds delta to the ammo counter (+0x8b8, index 0x11b), clamps to [0, max] from 0x14269b000, and updates the derived counter at +0x8dc"
+  },
+  "notes": "The thunk passes its own Quantity value negated. The member names for the ammo counter are inferred from the 0x1426a71e0 layout and not verified."
+}

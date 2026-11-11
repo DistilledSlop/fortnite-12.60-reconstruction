@@ -1,0 +1,15 @@
+{
+  "function": "AFortVolumeManager::GetVolumesForLocation",
+  "status": "proposed",
+  "original": "0x142b3c2f0",
+  "signature": "bool GetVolumesForLocation(const FVector& Location, TArray<AFortVolume*>& Volumes)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b3c2f0.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x141c7d8a0.c"
+  ],
+  "callees": {
+    "0x141c7d8a0": "array form of NativeFindVolumeAtLocation: resets Volumes, appends every registered volume whose containment test passes, no duplicates, returns count>0. The containment callee 0x141c82210 is assumed to be AFortVolume::NativeContainsLocation (same test as NativeFindVolumeAtLocation); not separately confirmed.",
+    "0x141c82210": "volume containment test for an FVector (presumed NativeContainsLocation)"
+  },
+  "notes": "Declared order: Location (struct), Volumes (array ref). The native's loop is an iterate-and-append with an index-based dedupe equivalent to AddUnique. Reset matches the native zeroing of the array count before the loop."
+}

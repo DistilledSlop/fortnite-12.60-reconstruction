@@ -1,0 +1,8 @@
+{
+  "name": "AFortVolumeManager__NativeInitVolumePlayset",
+  "address": "0x141c8f380",
+  "signature": "void NativeInitVolumePlayset(AFortVolume* Volume, UObject* Playset)",
+  "inc_or_decl": "Applies a playset to a freshly spawned volume before FinishSpawning.",
+  "evidence": [],
+  "notes": "Name inferred from SpawnVolume call order. Other deps reference it only by address."
+}

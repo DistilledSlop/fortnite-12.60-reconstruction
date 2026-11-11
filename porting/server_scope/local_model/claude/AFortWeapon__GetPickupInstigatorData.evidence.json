@@ -1,0 +1,17 @@
+{
+  "function": "AFortWeapon::GetPickupInstigatorData",
+  "status": "proposed",
+  "original": "0x142b46500",
+  "signature": "bool GetPickupInstigatorData(int32 InstigatorHandle, FFortPickupInstigatorData& InstigatorData)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b46500.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x14269e130.c"
+  ],
+  "callees": {
+    "0x14269e130": "native body (67 lines, read): Authority gate; owner registry lookup via 0x1426a07c0 and 0x142a3d9f0 class check; looks up the item instance via vtable slot 0xb0 with ItemEntryGuid (+0x8c0); picks the entry of type 13 from the instigator array and writes its handle; fetches data via 0x141f34dd0. Proposed helper NativeFindPickupInstigatorData",
+    "0x1426a07c0": "owner-side registry accessor (not read)",
+    "0x142a3d9f0": "class getter used for IsA check (not read)",
+    "0x141f34dd0": "fetch instigator data by handle (not read)"
+  },
+  "notes": "Thunk order: InstigatorHandle (int32, output ref), then InstigatorData (struct, output ref). The inventory dump lists them reversed. The entry-type value 13 and the registry slot 0xb0 are not named, so LOW confidence. The native writes the handle only on success."
+}

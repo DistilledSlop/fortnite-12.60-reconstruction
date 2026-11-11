@@ -1,0 +1,10 @@
+{
+  "name": "AFortWeapon__NativeGetInfiniteAmmoProvider",
+  "address": "0x14269c8f0",
+  "signature": "IFortInfiniteAmmoProvider* NativeGetInfiniteAmmoProvider()",
+  "inc_or_decl": "Returns the inventory-owner infinite-ammo interface subobject (lVar + 0x598) when the owner class matches, else a registry-based fallback through 0x141125940.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x14269c8f0.c"
+  ],
+  "notes": "Interface type name is proposed. Read in full (short function)."
+}

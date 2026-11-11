@@ -1,0 +1,14 @@
+{
+  "function": "AFortVolumeManager::GetVolumeForActor",
+  "status": "proposed",
+  "original": "0x142b3bbd0",
+  "signature": "AFortVolume* GetVolumeForActor(AActor* Actor)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b3bbd0.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x141c7c5c0.c"
+  ],
+  "callees": {
+    "0x141c7c5c0": "NativeFindActorVolume: volume whose membership or bounds contain Actor; already ported at porting/behavior/AFortVolumeManager/NativeFindActorVolume.inc"
+  },
+  "notes": "Thin wrapper. Thunk reads Actor from the FFrame and returns the native result. The native's VolumeObjects.Num()==0 and null-actor guards are in the existing port."
+}

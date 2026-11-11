@@ -1,0 +1,17 @@
+{
+  "function": "AFortWeapon::HasInfiniteAmmo",
+  "status": "proposed",
+  "original": "0x142b472e0",
+  "signature": "bool HasInfiniteAmmo() const",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b472e0.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x1426a24a0.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x14269c8f0.c"
+  ],
+  "callees": {
+    "0x1426a24a0": "returns true if the weapon does not use an ammo counter (vtable slot 0x820) or the provider's slot 0x60 says infinite for WeaponData (+0x350)",
+    "0x14269c8f0": "NativeGetInfiniteAmmoProvider (proposed): returns the inventory-owner interface subobject, or null",
+    "0x142698590": "NativeUsesAmmoCounter (proposed, vtable slot 0x820 target)"
+  },
+  "notes": "Logic is clear, but the provider interface name and its slot 0x60 method are unnamed. Ammo-counter slot name is proposed. Documented in HANDOFF.md as needing an exact interface contract."
+}

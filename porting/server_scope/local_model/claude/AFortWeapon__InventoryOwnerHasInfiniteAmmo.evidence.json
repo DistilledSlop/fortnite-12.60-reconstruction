@@ -1,0 +1,15 @@
+{
+  "function": "AFortWeapon::InventoryOwnerHasInfiniteAmmo",
+  "status": "proposed",
+  "original": "0x142b47310",
+  "signature": "bool InventoryOwnerHasInfiniteAmmo() const",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b47310.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x1426a58f0.c"
+  ],
+  "callees": {
+    "0x1426a58f0": "gets the provider via 0x14269c8f0 and tail-calls its slot 0x60 with WeaponData (+0x350); returns that bool. Null provider returns no value in the native; false is used here",
+    "0x14269c8f0": "NativeGetInfiniteAmmoProvider (proposed)"
+  },
+  "notes": "The native's null path returns no defined value; false is chosen as the safe default. Interface method name is proposed."
+}

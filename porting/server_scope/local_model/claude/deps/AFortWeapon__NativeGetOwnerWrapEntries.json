@@ -1,0 +1,10 @@
+{
+  "name": "AFortWeapon__NativeGetOwnerWrapEntries",
+  "address": "0x142323510 / 0x142a75f10 (helpers)",
+  "signature": "TArray<FFortOverrideWrapEntry> NativeGetOwnerWrapEntries() const",
+  "inc_or_decl": "Gets the owning pawn's wrap component (class check against AFortPlayerPawn 0x142a75f10) and copies its entry array (+0x48, count +0x50).",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x142690600.c"
+  ],
+  "notes": "Element struct layout is partly inferred (tag container, int array, 0x48 stride)."
+}

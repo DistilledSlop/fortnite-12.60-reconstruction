@@ -1,0 +1,14 @@
+{
+  "function": "AFortWeapon::GetWeaponDataGameplayTags",
+  "status": "proposed",
+  "original": "0x142b46e30",
+  "signature": "void GetWeaponDataGameplayTags(FGameplayTagContainer& GameplayTags)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b46e30.c",
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x1426a0a70.c"
+  ],
+  "callees": {
+    "0x1426a0a70": "reads WeaponData (+0x350); if set, calls the subobject at +0x30 via vtable slot 0x10 (index 2), which matches GetOwnedGameplayTags; output pointer passes through in the out register; otherwise logs 'Invalid WeaponData in GetWeaponDataGameplayTags'"
+  },
+  "notes": "The out pointer is not visible in the decompile, but it passes through untouched to the virtual call. Slot-index argument is an inference from the interface layout, not a confirmed name."
+}

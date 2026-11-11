@@ -1,0 +1,10 @@
+{
+  "name": "AFortVolumeManager__NativeCanSpawnVolume",
+  "address": "0x141c94dc0",
+  "signature": "bool NativeCanSpawnVolume(UObject* Playset, const FVector& Location, const FRotator& Rotation)",
+  "inc_or_decl": "Playset/transform validity check used before SpawnVolume.",
+  "evidence": [
+    "/opt/fortnite/local-model-package/captures/f99103012f674272ae039c87fbf6d230/0x141c94dc0.c"
+  ],
+  "notes": "Not read in this chunk; the name and signature are inferred from call position in 0x141c91780."
+}

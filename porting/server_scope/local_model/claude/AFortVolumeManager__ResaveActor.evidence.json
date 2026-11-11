@@ -1,0 +1,16 @@
+{
+  "function": "AFortVolumeManager::ResaveActor",
+  "status": "proposed",
+  "original": "0x142b3d0d0",
+  "signature": "void ResaveActor(AActor* Actor)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b3d0d0.c",
+    "/opt/fortnite/local-model-package/captures/a98b261af94e4e1688e2624d3181870f/0x141c8cf90.c",
+    "/opt/fortnite/local-model-package/captures/1f993c5afb8b4421a88624ed0851d433/0x141c7c5c0.c"
+  ],
+  "callees": {
+    "0x141c8cf90": "ResaveActor native: Authority-only (Role byte at +0xf0 == 3); resolves the actor's volume with 0x141c7c5c0 and calls the resave native 0x141c8cfd0",
+    "0x141c7c5c0": "NativeFindActorVolume"
+  },
+  "notes": "The native's call to 0x141c7c5c0 shows no arguments in the decompile; the Actor argument is inferred from the thunk and from the matching GetVolumeForActor thunk. Role==ROLE_Authority (3) is the only gate."
+}

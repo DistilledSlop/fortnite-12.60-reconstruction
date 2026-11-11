@@ -1,0 +1,18 @@
+{
+  "function": "AFortVolumeManager::ResaveActorWithVolume",
+  "status": "proposed",
+  "original": "0x142b3d150",
+  "signature": "void ResaveActorWithVolume(AActor* Actor, AFortVolume* Volume)",
+  "captures": [
+    "/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b3d150.c",
+    "/opt/fortnite/local-model-package/captures/3250d3c3d16a477e8dc79ebf830c08af/0x141c8cfd0.c"
+  ],
+  "callees": {
+    "0x141c8cfd0": "shared resave/membership native (proposed NativeResaveActorWithVolume): Authority-only, requires a non-null volume; updates volume membership for Actor using the actor's ULevelSaveComponent (0x142b6ac80) and the volume's membership set (+0x318), then calls the helpers listed in deps",
+    "0x142b6ac80": "ULevelSaveComponent::StaticClass",
+    "0x141c90870": "membership predicate on Actor (see RegisterTrapInVolume dep)",
+    "0x142068fd0": "add-to-volume helper (see RegisterTrapInVolume dep)",
+    "0x142063d20": "update-in-volume helper (see RegisterTrapInVolume dep)"
+  },
+  "notes": "Naming conflict to reconcile: deps/AFortVolumeManager__RegisterTrapInVolume.json labels the same address RegisterTrapInVolume(VolumeManager, Trap, Volume). Parameter order (Actor first, Volume second) is confirmed by the thunk step order and by the 0x141c8cf90 caller. Integrator should choose one name."
+}
