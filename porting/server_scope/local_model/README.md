@@ -51,7 +51,13 @@ Claude (orchestrator) runs Haiku subagents (Agent tool, `model: haiku`) over 74 
 | 26 | done, 15 recorded proposed (PlayerPawn DBNO/vehicle/part RPCs; helpers partial) |
 | 27 | done (15 proposed) |
 | 28 | done (15 proposed) |
-| 29, 30 | STOPPED by user request (2026-11-10) before any output was recorded; rerun from scratch. Partial files, if any, are only in local-model-package/work/claude/out/ and were not recorded or mirrored | (2 workers max at a time); chunks 22-53 are the regenerated remainder |
+| 29 | done, 15 recorded proposed (SafeZoneIndicator, TimeOfDayManager, VolumeManager, RemoteControlledPawn; one stale terra claim released) |
+| 30 | done, 15 recorded proposed (VolumeManager, Weapon getters/ammo; ResaveActorWithVolume name conflicts with RegisterTrapInVolume dep at 0x141c8cfd0) |
+| 31 | done, 15 recorded proposed (Weapon reload/visibility, WeaponRanged; bool param order follows FFrame read order) |
+| 32 | done, 15 recorded proposed (WeaponRanged scope/camera, AthenaHUDContext, resurrection RPCs, StructuralSupportSystem getters) |
+| 33 | done, 15 recorded proposed (StructuralSupportSystem batching, FortAbilitySystem library/component, SpawnProjectileAndWait) |
+| 34 | done, 15 recorded proposed (ability library: swap items, effect containers, trajectory spline, tracked actors) |
+| 35, 36 | running (2026-11-10) |
 
 Recording a finished chunk: from the package dir `python3 -I work/claude/record_chunk.py NN` (claims or reopens each function as owner `claude-br`, then records proposed; copy in `claude/record_chunk.py`). Worker outputs are mirrored into `claude/` here (`<Class>__<Fn>.inc`, `.evidence.json`, `deps/`), with `claude/WORKER.md` the worker prompt. Chunk 00 helper deps include five not-yet-decompiled virtual targets (0x880, 0x888, 0x708, UpdateHighlightState, IsAthenaSpawnOverrideActive): chunk 00 follow-up item.
 
