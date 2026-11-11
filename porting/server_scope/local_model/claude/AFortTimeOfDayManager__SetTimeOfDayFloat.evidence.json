@@ -1,0 +1,13 @@
+{
+  "function": "AFortTimeOfDayManager::SetTimeOfDayFloat",
+  "status": "proposed",
+  "original": "0x142b0ffa0",
+  "signature": "void AFortTimeOfDayManager::SetTimeOfDayFloat(float TimeOfDayInHours)",
+  "captures": ["/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b0ffa0.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141f6eda0.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141f798b0.c"],
+  "callees": {
+    "0x141f6eda0": "SetTimeOfDayInternal body (captured and read in full)",
+    "0x141f798b0": "ApplyTimeOfDayChange (unnamed, not ported; called with 0.0)"
+  },
+  "notes": "Thunk calls the internal directly. Time of day +0x220 and replicated copy +0x224 are both set. Log is VeryVerbose.",
+  "confidence": "HIGH"
+}

@@ -1,0 +1,1 @@
+{"name":"AFortSpaghettiVehicle__ServerSetTowhookAttachState_Validate","address":"0x1406801d0","signature":"bool ServerSetTowhookAttachState_Validate(const FNetTowhookAttachState& InTowhookAttachState)","inc_or_decl":"return true; // engine stub (Stub_ReturnTrue); validation always passes","evidence":"captures/4920edbd6c9145d1bf010b6040563ef9/0x1406801d0.c"}

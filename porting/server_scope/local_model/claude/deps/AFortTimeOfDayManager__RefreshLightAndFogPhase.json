@@ -1,0 +1,1 @@
+{"name":"AFortTimeOfDayManager__RefreshLightAndFogPhase","address":"0x141f5c190","signature":"void RefreshLightAndFogPhase(uint8 DayPhase)","inc_or_decl":"// Phase overload of the light-and-fog phase helper (called from the add and remove multicasts). Body not ported in chunk 29.","evidence":"porting/generated/native134-virtual-bulk/0x141f579e0.c"}

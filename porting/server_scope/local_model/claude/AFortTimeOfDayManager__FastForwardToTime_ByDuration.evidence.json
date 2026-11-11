@@ -1,0 +1,13 @@
+{
+  "function": "AFortTimeOfDayManager::FastForwardToTime_ByDuration",
+  "status": "proposed",
+  "original": "0x142b0ec60",
+  "signature": "void AFortTimeOfDayManager::FastForwardToTime_ByDuration(float RestoreSpeed, float FastForwardDuration, float FastForwardTimeOfDay)",
+  "captures": ["/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b0ec60.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141f5d0c0.c"],
+  "callees": {
+    "0x141f5d0c0": "FastForwardToTime_OverTime body: speed from hours to advance, duration and default speed; calls the internal fast-forward",
+    "0x141f5d050": "internal fast-forward (see FastForwardToTime)"
+  },
+  "notes": "Decompile drops the restore argument at the call, but the compiler passes the fourth float through unchanged, so RestoreSpeed is forwarded. Speed = hours * 3600 / (duration * DefaultTimeOfDaySpeed).",
+  "confidence": "MEDIUM"
+}

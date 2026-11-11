@@ -1,0 +1,1 @@
+{"name":"NativeFindVolumeForPlayerState","address":"0x141c7d420","signature":"AFortVolume* NativeFindVolumeForPlayerState(AFortVolumeManager* VolumeManager, UObject* PlayerState)","inc_or_decl":"// Resolves the volume for a player-state context (LOW). Body not ported in chunk 29.","evidence":"captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141f611f0.c"}

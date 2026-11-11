@@ -1,0 +1,16 @@
+{
+  "function": "AFortVolumeManager::CanCreatePlayset",
+  "status": "proposed",
+  "original": "0x142b3b0c0",
+  "signature": "bool AFortVolumeManager::CanCreatePlayset(UObject* NewPlayset, const FRotator& PlaysetRotation, const FVector& StartLocation, AActor* Thrower)",
+  "captures": ["/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b3b0c0.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141c67270.c"],
+  "callees": {
+    "0x141c67270": "CanCreatePlayset body: volume manager and checks, controller creation gate, volume match, playset bounds, verbose logs",
+    "0x141c74820": "GetVolumeManagerForActor (reference name)",
+    "0x141c7cde0": "FindVolumeForLocation (unnamed)",
+    "0x1419c3880": "NativeCanPlayerCreateInCurrentVolume (reference name; out volume is the thrower volume)",
+    "0x141c94dc0": "NativeCanSpawnVolume (reference name)"
+  },
+  "notes": "Reflection order is NewPlayset, PlaysetRotation, StartLocation, Thrower. Thunk reads the thrower first. The decompile drops the context argument of 0x141c74820, so the manager is resolved from the thrower here (LOW). Dep NativeCanPlayerCreateInCurrentVolume declares one out-parameter, while the caller also reads the controller; the port reads the controller at Thrower->Controller (+0x250) in the caller.",
+  "confidence": "LOW"
+}

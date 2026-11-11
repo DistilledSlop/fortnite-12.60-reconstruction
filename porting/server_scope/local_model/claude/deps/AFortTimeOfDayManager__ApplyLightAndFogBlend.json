@@ -1,0 +1,1 @@
+{"name":"AFortTimeOfDayManager__ApplyLightAndFogBlend","address":"0x141f5a070","signature":"void ApplyLightAndFogBlend(float BlendProgress)","inc_or_decl":"// Applies the blend value to the light-and-fog state. Body not ported in chunk 29.","evidence":"porting/generated/native134-virtual-bulk/0x141f579e0.c"}

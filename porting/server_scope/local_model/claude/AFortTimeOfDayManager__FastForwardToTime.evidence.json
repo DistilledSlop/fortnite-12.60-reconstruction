@@ -1,0 +1,13 @@
+{
+  "function": "AFortTimeOfDayManager::FastForwardToTime",
+  "status": "proposed",
+  "original": "0x142b0eb50",
+  "signature": "void AFortTimeOfDayManager::FastForwardToTime(float RestoreSpeed, float FastForwardSpeed, float FastForwardTimeOfDay)",
+  "captures": ["/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b0eb50.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141f5d050.c"],
+  "callees": {
+    "0x141f5d050": "internal fast-forward (inlined into the port): target, restore scale, forward flag, speed",
+    "0x141f6f180": "SetTimeOfDaySpeedInternal(DefaultTimeOfDaySpeed * speed)"
+  },
+  "notes": "Thunk reads FastForwardTimeOfDay first, then FastForwardSpeed, then RestoreSpeed (reverse of declaration order, as in the reference SetupRemoteControlPawn port). Members: DefaultTimeOfDaySpeed +0x230, TimeOfDaySpeed +0x238, TimeOfDay +0x220, FastForwardTargetTimeOfDay +0xdf0, FastForwardRestoreSpeedScale +0xdf4, bFastForwardTowardLaterTime +0xdf8 (last two names proposed).",
+  "confidence": "MEDIUM"
+}

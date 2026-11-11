@@ -1,0 +1,1 @@
+{"name":"AFortTimeOfDayManager__GetDayPhaseSettingsBaseClass","address":"0x1428cfa30","signature":"UClass* GetDayPhaseSettingsBaseClass()","inc_or_decl":"// Static class getter for the day-phase settings base class (name unresolved). Body not ported in chunk 29.","evidence":"porting/generated/native134-virtual-bulk/0x141f579e0.c"}

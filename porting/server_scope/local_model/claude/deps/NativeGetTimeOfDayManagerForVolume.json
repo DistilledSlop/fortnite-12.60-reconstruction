@@ -1,0 +1,1 @@
+{"name":"NativeGetTimeOfDayManagerForVolume","address":"0x141f9f270","signature":"AFortTimeOfDayManager* NativeGetTimeOfDayManagerForVolume(AFortVolume* Volume)","inc_or_decl":"// Returns the time-of-day manager that belongs to a volume (LOW). Body not ported in chunk 29.","evidence":"captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141f611f0.c"}

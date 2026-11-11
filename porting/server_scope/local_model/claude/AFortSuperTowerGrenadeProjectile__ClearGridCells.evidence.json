@@ -1,0 +1,17 @@
+{
+  "function": "AFortSuperTowerGrenadeProjectile::ClearGridCells",
+  "status": "proposed",
+  "original": "0x142aeeff0",
+  "signature": "void AFortSuperTowerGrenadeProjectile::ClearGridCells(float AngleDeg, const FVector& BaseDestination, bool bDestroyFloorsQuickly, const TArray<FVector>& GridCellsToClear)",
+  "captures": ["/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142aeeff0.c", "/opt/fortnite/local-model-package/captures/322c6d0ba2224ff28b7a8f5909853edc/0x141a71c60.c"],
+  "callees": {
+    "0x141a71c60": "ClearGridCells body (direct call from the thunk): grid lookup, batch begin, per-cell rotate and offset, DestroyActorsInGridCellLocation, batch end",
+    "0x141c77490": "GetStructuralGridForWorld(World) (reference name)",
+    "0x141c91940": "structural-grid update begin (name proposed)",
+    "0x141c91e20": "structural-grid update end (name proposed)",
+    "0x140692270": "vector rotate (rotation axis is (0,0,1) per the stack constants)",
+    "0x141a74b30": "DestroyActorsInGridCellLocation body"
+  },
+  "notes": "GridCellsToClear is a TArray of 12-byte FVector (stride 0xc). The grid is typed UStructuralGrid here; the reflection calls the third argument of the next function BuildingStructuralSupportSystem. Loop runs only when the array count is positive.",
+  "confidence": "MEDIUM"
+}

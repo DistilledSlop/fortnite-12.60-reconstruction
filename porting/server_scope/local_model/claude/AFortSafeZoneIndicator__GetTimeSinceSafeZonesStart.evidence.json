@@ -1,0 +1,14 @@
+{
+  "function": "AFortSafeZoneIndicator::GetTimeSinceSafeZonesStart",
+  "status": "proposed",
+  "original": "0x142ad2780",
+  "signature": "float AFortSafeZoneIndicator::GetTimeSinceSafeZonesStart()",
+  "captures": ["/opt/fortnite/local-model-package/captures/13799d83931e48b19e2b5ccf2a1528b5/0x142ad2780.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141a48f40.c"],
+  "callees": {
+    "0x141a48f40": "GetTimeSinceSafeZonesStart helper: GetWorld, GameState (+0x130), IsA AFortGameStateAthena, ServerWorldTime (vtable 0x630) minus SafeZonesStartTime (+0x12e0)",
+    "vtable 0x150": "AActor::GetWorld",
+    "vtable 0x630": "GameState::GetServerWorldTimeSeconds (inferred)"
+  },
+  "notes": "Field SafeZonesStartTime at AFortGameStateAthena +0x12e0 confirmed by field-offset. Exec thunk writes the float to the output pointer.",
+  "confidence": "HIGH"
+}

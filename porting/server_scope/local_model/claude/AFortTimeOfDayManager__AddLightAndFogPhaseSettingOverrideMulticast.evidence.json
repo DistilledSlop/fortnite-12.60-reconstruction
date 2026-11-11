@@ -1,0 +1,17 @@
+{
+  "function": "AFortTimeOfDayManager::AddLightAndFogPhaseSettingOverrideMulticast",
+  "status": "proposed",
+  "original": "0x142b0e220",
+  "signature": "void AFortTimeOfDayManager::AddLightAndFogPhaseSettingOverrideMulticast(float BlendInLength, TSubclassOf<UObject> DayPhaseInfoOverride, uint8 DayPhase)",
+  "captures": ["/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b0e220.c", "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x141f579e0.c"],
+  "callees": {
+    "0x141f579e0": "multicast body (vtable 0x630): clear phase, class check, NewObject, copy phase settings handle, refresh, blend in when current",
+    "0x141f5c190": "RefreshLightAndFogPhase(DayPhase) (unnamed)",
+    "0x1428cfa30": "day-phase settings base class (unnamed)",
+    "0x142ed7360": "StaticConstructObject (not ported)",
+    "0x141f77a60": "RefreshLightAndFogPhaseSettings (unnamed)",
+    "0x141f5a070": "ApplyLightAndFogBlend (unnamed)"
+  },
+  "notes": "Override array is +0xb70 (LightAndFogPhaseSettingOverrides), current phase byte is +0x228 (CurrentDayNightPhase). Blend flags are bits in +0xb90 (bit 0 blend-in, bit 1 blend-out per the Add and Remove pairing), pending phase byte +0xb94, blend length float +0xb98. Blend progress member name at +0xb9c is unresolved.",
+  "confidence": "MEDIUM"
+}

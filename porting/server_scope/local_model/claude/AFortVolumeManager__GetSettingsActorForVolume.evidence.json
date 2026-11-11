@@ -1,0 +1,14 @@
+{
+  "function": "AFortVolumeManager::GetSettingsActorForVolume",
+  "status": "proposed",
+  "original": "0x142b3bb50",
+  "signature": "AActor* AFortVolumeManager::GetSettingsActorForVolume(AActor* ContextVolume)",
+  "captures": ["/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b3bb50.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141c7c4e0.c"],
+  "callees": {
+    "0x141c7c4e0": "body: minigame component lookup on the volume, returns component +0xb0",
+    "0x1429da540": "UFortMinigameVolumeComponent::StaticClass (reference name)",
+    "vtable 0x610": "FindComponentByClass (inferred)"
+  },
+  "notes": "Thin wrapper; no volume resolution.",
+  "confidence": "HIGH"
+}

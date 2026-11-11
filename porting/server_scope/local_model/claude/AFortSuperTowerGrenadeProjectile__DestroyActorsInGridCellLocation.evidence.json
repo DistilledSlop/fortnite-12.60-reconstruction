@@ -1,0 +1,14 @@
+{
+  "function": "AFortSuperTowerGrenadeProjectile::DestroyActorsInGridCellLocation",
+  "status": "proposed",
+  "original": "0x142aef190",
+  "signature": "void AFortSuperTowerGrenadeProjectile::DestroyActorsInGridCellLocation(bool bDestroyFloorsQuickly, const FVector& CellLocation, UBuildingStructuralSupportSystem* BuildingStructuralSupportSystem)",
+  "captures": ["/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142aef190.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141a74b30.c"],
+  "callees": {
+    "0x141a74b30": "DestroyActorsInGridCellLocation body: cell query, building actors into BuildingActorsToDestroy (+0x868) and BuildingActorsToIgnore (+0x878), floors and extras by bDestroyFloorsQuickly",
+    "0x141c75940": "NativeQueryGridCellActors (inferred output mapping, LOW)",
+    "0x143f6c200": "DestroyActorChecked(actor, bNetForce=false, bShouldModifyLevel=true) (reference name)"
+  },
+  "notes": "Reflection order is bDestroyFloorsQuickly, CellLocation, BuildingStructuralSupportSystem and the thunk reads them in that order. BuildingActorsToDestroy is +0x868 and BuildingActorsToIgnore is +0x878 (names from reflection). The third list uses a 0x14-byte element in the decompile; the port treats it like the floor list. Quick-destroy test uses an object-flag bit 0x10000 (named HasQuickDestroyFlag, LOW).",
+  "confidence": "MEDIUM"
+}

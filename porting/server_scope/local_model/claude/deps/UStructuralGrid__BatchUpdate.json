@@ -1,0 +1,1 @@
+{"name":"UStructuralGrid__BatchUpdate","address":"0x141c91940 / 0x141c91e20","signature":"void BeginBatchUpdate() / void EndBatchUpdate()","inc_or_decl":"// Begin and end of a structural-grid update scope used by ClearGridCells (names proposed, LOW). Bodies not ported in chunk 29.","evidence":"captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141a71c60.c"}

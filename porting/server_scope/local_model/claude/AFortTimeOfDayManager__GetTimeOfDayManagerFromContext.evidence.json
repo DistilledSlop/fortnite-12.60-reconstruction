@@ -1,0 +1,21 @@
+{
+  "function": "AFortTimeOfDayManager::GetTimeOfDayManagerFromContext",
+  "status": "proposed",
+  "original": "0x142b0f290",
+  "signature": "AFortTimeOfDayManager* GetTimeOfDayManagerFromContext(UObject* WorldContextObject)",
+  "captures": ["/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b0f290.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141f611f0.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141ef3ab0.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141c74820.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141c7c5c0.c"],
+  "callees": {
+    "0x141f611f0": "body: game-state base check, volume manager, volume for actor or player state, time-of-day manager of the volume",
+    "0x141ef3ab0": "world game state from context (world +0x130)",
+    "0x141c74820": "GetVolumeManagerForActor (reference name)",
+    "0x141c7c5c0": "FindVolumeForActor(VolumeManager, Actor) (reference name)",
+    "0x141c7d420": "player-state volume (LOW)",
+    "0x141f9f270": "time-of-day manager of a volume (LOW)",
+    "0x144640410": "GetWorldFromContextObject (reference name)",
+    "0x1429234b0": "AFortGameStateBase::StaticClass",
+    "0x1446acb00": "AActor::StaticClass (sibling reference)",
+    "0x142a85850": "AFortPlayerState::StaticClass (reference)"
+  },
+  "notes": "Exec thunk writes the result through param_3. Confidence LOW because the time-of-day lookup from a volume (0x141f9f270) and the player-state resolver are not read.",
+  "confidence": "LOW"
+}

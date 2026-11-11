@@ -1,0 +1,1 @@
+{"name":"AFortTimeOfDayManager__FinishLightAndFogBlend","address":"0x141f5c190","signature":"void FinishLightAndFogBlend()","inc_or_decl":"// No-phase overload of the same helper (0x141f5c190); completes the pending blend. Body not ported in chunk 29.","evidence":"porting/generated/native134-virtual-bulk/0x141f6bc30.c"}

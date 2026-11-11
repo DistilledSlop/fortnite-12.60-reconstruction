@@ -1,0 +1,1 @@
+{"name":"AFortTimeOfDayManager__ApplyTimeOfDayChange","address":"0x141f798b0","signature":"bool ApplyTimeOfDayChange(float DeltaTime)","inc_or_decl":"// Applies a time-of-day change to the day-night state (called by SetTimeOfDayInternal with 0). Body not ported in chunk 29 (large decompile).","evidence":"captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141f798b0.c"}

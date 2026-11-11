@@ -1,0 +1,17 @@
+{
+  "function": "AFortVolumeManager::GetSettingsActor",
+  "status": "proposed",
+  "original": "0x142b3bad0",
+  "signature": "AActor* AFortVolumeManager::GetSettingsActor(AActor* ContextActor)",
+  "captures": ["/opt/fortnite/local-model-package/captures/0d71786315864fc9967f412c2843d452/0x142b3bad0.c", "/opt/fortnite/local-model-package/captures/fed94b97db4e4f1eb975a46dd6d0bc59/0x141c7c460.c"],
+  "callees": {
+    "0x141c7c460": "GetSettingsActor body: volume-or-resolve, minigame component lookup, settings actor at +0xb0",
+    "0x142b32e10": "AFortVolume::StaticClass",
+    "0x141c74820": "GetVolumeManagerForActor (reference name)",
+    "0x141c7c5c0": "FindVolumeForActor (reference name)",
+    "0x1429da540": "UFortMinigameVolumeComponent::StaticClass (reference name)",
+    "vtable 0x610": "FindComponentByClass (inferred)"
+  },
+  "notes": "Settings actor offset +0xb0 on the minigame volume component; the name SettingsActor is proposed (field lookup did not resolve).",
+  "confidence": "MEDIUM"
+}
