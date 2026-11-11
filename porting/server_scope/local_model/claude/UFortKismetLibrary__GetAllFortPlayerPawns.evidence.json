@@ -1,0 +1,20 @@
+{
+  "function": "UFortKismetLibrary::GetAllFortPlayerPawns",
+  "status": "proposed",
+  "original": "0x14296bf00",
+  "signature": "void GetAllFortPlayerPawns(const UObject* WorldContextObject, TArray<AFortPlayerPawn*>& OutFortPlayerPawns)",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296bf00.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141eefff0.c",
+    "captures/1a1e74d2466348a5b7f65d7e633ed32d/0x142a75f10.c",
+    "captures/94ac71630b5a435b96334c26d5e9de43/0x1419b7160.c",
+    "captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c"
+  ],
+  "callees": {
+    "0x141eefff0": "helper: resets the output and fills it from a filtered actor iterator over AFortPlayerPawn (filter flags 5)",
+    "0x142a75f10": "AFortPlayerPawn::StaticClass",
+    "0x1419b7160": "filtered actor iterator setup (engine-side helper)",
+    "0x144640410": "UEngine::GetWorldFromContextObject (engine)"
+  },
+  "notes": "Filter flags 5 decode: bit 0 skips actors whose native flag is set (treated here as pending kill), bit 2 applies a controller/ownership test that is not fully decoded; IsPlayerControlled is the closest engine check. LOW confidence on the exact pawn filter."
+}

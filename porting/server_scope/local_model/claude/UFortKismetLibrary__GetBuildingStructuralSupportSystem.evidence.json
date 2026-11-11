@@ -1,0 +1,22 @@
+{
+  "function": "UFortKismetLibrary::GetBuildingStructuralSupportSystem",
+  "status": "proposed",
+  "original": "0x14296c480",
+  "signature": "UBuildingStructuralSupportSystem* GetBuildingStructuralSupportSystem(const UObject* WorldContextObject)",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296c480.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141ef0ec0.c",
+    "captures/520929c2a3b34526a83378cd2455a24f/0x141c77490.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x142927a60.c",
+    "captures/94ac71630b5a435b96334c26d5e9de43/0x141e9e770.c",
+    "captures/14532fceabad41bbbe11b64cff2c0f6a/0x142759290.c"
+  ],
+  "callees": {
+    "0x141ef0ec0": "helper: calls 0x141c77490 and stores the result",
+    "0x141c77490": "helper: world game state must be an AFortGameStateZone; returns its StructuralSupportSystem (offset 0xb60)",
+    "0x142927a60": "AFortGameStateZone::StaticClass",
+    "0x141e9e770": "AFortGameStateZone::StructuralSupportSystem read (offset 0xb60)",
+    "0x142759290": "BuildingStructuralSupportSystem class reference"
+  },
+  "notes": "Member StructuralSupportSystem at AFortGameStateZone+0xb60 is confirmed by the reflection field-offset lookup."
+}

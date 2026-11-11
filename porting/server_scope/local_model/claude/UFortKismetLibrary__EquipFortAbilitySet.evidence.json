@@ -1,0 +1,18 @@
+{
+  "function": "UFortKismetLibrary::EquipFortAbilitySet",
+  "status": "proposed",
+  "original": "0x14296a090",
+  "signature": "FFortAbilitySetHandle EquipFortAbilitySet(TScriptInterface<IFortAbilitySystemInterface> AbilitySystemInterfaceActor, UFortAbilitySet* AbilitySet, UObject* OverrideSourceObject)",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x14296a090.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141eec730.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x1415e7170.c",
+    "captures/520929c2a3b34526a83378cd2455a24f/0x1415f3960.c"
+  ],
+  "callees": {
+    "0x141eec730": "helper: empty handle unless interface object, interface pointer and ability set are present; calls 0x1415f3960 and moves the result",
+    "0x1415e7170": "FFortAbilitySetHandle move-assign (weak object ptr, TArray members)",
+    "0x1415f3960": "UFortAbilitySet give-to-ability-system: resolves ASC via interface slot 0x10, grants abilities/effects into a handle; proposed name UFortAbilitySet::GiveToAbilitySystem"
+  },
+  "notes": "GiveToAbilitySystem is not declared in the generated headers; declaration is in deps/UFortAbilitySet__GiveToAbilitySystem.json. Native passes two extra args (nullptr, true) that are not decoded."
+}

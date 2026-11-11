@@ -1,0 +1,14 @@
+{
+  "function": "UFortKismetLibrary::GetClosestActorFromArray",
+  "status": "proposed",
+  "original": "0x14296c740",
+  "signature": "AActor* GetClosestActorFromArray(const TArray<AActor*>& ArrayOfActors, AActor* Actor)",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296c740.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141ef10f0.c"
+  ],
+  "callees": {
+    "0x141ef10f0": "helper: returns the array element nearest to Actor by squared root-component distance; first minimum wins; null when empty"
+  },
+  "notes": "The native loop is unrolled by four; its semantics are the plain loop above. Location reads are the component location fields at 0x1d0..0x1d8 of the root component."
+}

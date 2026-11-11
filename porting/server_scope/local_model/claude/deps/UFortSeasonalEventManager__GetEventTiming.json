@@ -1,0 +1,10 @@
+{
+  "name": "UFortSeasonalEventManager::GetEventTiming",
+  "address": "0x14224fd60",
+  "signature": "bool GetEventTiming(FName EventName, FTimespan& OutTimeSinceBegin, FTimespan& OutTimeUntilEnd) const",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "captures/520929c2a3b34526a83378cd2455a24f/0x14224fd60.c"
+  ],
+  "notes": "Returns true and writes since/until ticks when the event is found; leaves outputs untouched otherwise. Name proposed; class is FortSeasonalEventManager (0x142ad3d30) reached through UFortGameInstance::SeasonalEventManager (offset 0x7a0)."
+}

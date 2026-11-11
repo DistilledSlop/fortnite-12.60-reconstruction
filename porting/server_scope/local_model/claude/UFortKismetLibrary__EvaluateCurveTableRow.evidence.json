@@ -1,0 +1,16 @@
+{
+  "function": "UFortKismetLibrary::EvaluateCurveTableRow",
+  "status": "proposed",
+  "original": "0x14296a330",
+  "signature": "bool EvaluateCurveTableRow(const FCurveTableRowHandle& CurveTableRowHandle, float InXY, float& OutXY, const FString& ContextString)",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x14296a330.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141eeca00.c",
+    "captures/520929c2a3b34526a83378cd2455a24f/0x144165480.c"
+  ],
+  "callees": {
+    "0x141eeca00": "thunk to 0x144165480",
+    "0x144165480": "FCurveTableRowHandle::Eval (engine): finds the row in the curve table and evaluates it at InXY"
+  },
+  "notes": "Eval is the engine FCurveTableRowHandle member (STAT_CurveTableRowHandleEval). Native logs 'No CurveTable for row' on a missing table."
+}

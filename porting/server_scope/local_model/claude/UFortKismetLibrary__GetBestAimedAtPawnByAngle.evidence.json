@@ -1,0 +1,22 @@
+{
+  "function": "UFortKismetLibrary::GetBestAimedAtPawnByAngle",
+  "status": "proposed",
+  "original": "0x14296c1a0",
+  "signature": "AFortPawn* GetBestAimedAtPawnByAngle(AFortPlayerPawn* SourcePawn, FVector DestOffsetVec, float MaxAngleInDegree, float Range, bool bTargetAIPawns, ETeamAffiliationRequirement TeamAffiliationRequirement)",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296c1a0.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141ef07b0.c",
+    "captures/7c0bf6fd8e16471f935e4939e333e3a6/0x141ef2aa0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142a174f0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142c620f0.c"
+  ],
+  "callees": {
+    "0x141ef07b0": "helper: aim assist from the source controller's view point; candidate filtering and best-score selection",
+    "0x141ef34a0": "candidate collection for player pawns (range query, native)",
+    "0x141ef2aa0": "candidate collection for AI pawns (range query, native)",
+    "0x141ee8820": "candidate validity test (team affiliation, native)",
+    "0x142a174f0": "AFortPawn::StaticClass",
+    "0x142c620f0": "rotator to forward vector (native)"
+  },
+  "notes": "Several native helpers are unnamed: candidate collection (0x141ef34a0/0x141ef2aa0), validity test (0x141ee8820) and the view-point call (vtable 0x5f8 on the controller). The team test uses a method name that is a proposal (IsValidAimTargetForTeamAffiliation); the enum values are not decoded. Confidence is MEDIUM for the angle and range logic and LOW for the team filter."
+}

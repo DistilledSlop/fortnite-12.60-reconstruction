@@ -1,0 +1,20 @@
+{
+  "function": "UFortKismetLibrary::GetActorTeam",
+  "status": "proposed",
+  "original": "0x14296bb30",
+  "signature": "uint8 GetActorTeam(AActor* Actor)",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x14296bb30.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141eefb60.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142ec9900.c",
+    "captures/520929c2a3b34526a83378cd2455a24f/0x142af0810.c",
+    "captures/b97f38ebe68c4728a79304d43fa614e0/0x141125940.c"
+  ],
+  "callees": {
+    "0x141eefb60": "helper: team byte of the actor's team interface, else of its instigator; 0 when neither implements it",
+    "0x142ec9900": "UObject::GetInterfaceAddress (engine)",
+    "0x142af0810": "IFortTeamActorInterface class getter",
+    "0x141125940": "AActor::Instigator read (offset 0x118)"
+  },
+  "notes": "Same team-interface mapping as GetActorPvPTeamIndex (slot 0x28 is MEDIUM)."
+}

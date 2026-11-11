@@ -1,0 +1,14 @@
+{
+  "function": "UFortKismetLibrary::GetAmmoItemDefinitionsFromInventoryWeapons",
+  "status": "proposed",
+  "original": "0x14296bfe0",
+  "signature": "TArray<FStruct> GetAmmoItemDefinitionsFromInventoryWeapons(AFortPlayerController* Controller)",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296bfe0.c",
+    "captures/0d086943f81e47f39b2b415164a01a38/0x140738030.c"
+  ],
+  "callees": {
+    "0x140738030": "TArray default constructor (zeroes the array; the controller argument is never read)"
+  },
+  "notes": "Machine behaviour is an empty array. No inventory walk exists in the native body."
+}

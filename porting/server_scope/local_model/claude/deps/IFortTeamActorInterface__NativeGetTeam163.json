@@ -1,0 +1,11 @@
+{
+  "name": "IFortTeamActorInterface::NativeGetTeam163",
+  "address": "vtable slot 0x28 of the IFortTeamActorInterface vtable (target not in the vtable map)",
+  "signature": "uint8 NativeGetTeam163()",
+  "inc_or_decl": "evidence",
+  "evidence": [
+    "porting/native/Source/FortniteGame/Generated/UFortTeamActorInterface.h",
+    "captures/520929c2a3b34526a83378cd2455a24f/0x142af0810.c"
+  ],
+  "notes": "Declaration exists in the generated header. Assignment of slot 0x28 to this method is MEDIUM: the team native helpers read slot 0x28 and this is the only uint8 team accessor on the interface."
+}

@@ -1,0 +1,14 @@
+{
+  "function": "UFortKismetLibrary::EqualEqual_UniqueNetIdReplUniqueNetIdRepl",
+  "status": "proposed",
+  "original": "0x142969ef0",
+  "signature": "bool EqualEqual_UniqueNetIdReplUniqueNetIdRepl(const FUniqueNetIdRepl& A, const FUniqueNetIdRepl& B)",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x142969ef0.c",
+    "captures/db5f54f69d0446218db6502bc50bd614/0x140d7c5a0.c"
+  ],
+  "callees": {
+    "0x140d7c5a0": "thunk body: FUniqueNetIdRepl equality (validity on both sides, then the id's own compare)"
+  },
+  "notes": "Thunk returns 1 when both are invalid. Parameter order (A then B) from stepping order in the exec thunk."
+}

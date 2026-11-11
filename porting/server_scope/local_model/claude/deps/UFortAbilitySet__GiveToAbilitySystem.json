@@ -1,0 +1,11 @@
+{
+  "name": "UFortAbilitySet::GiveToAbilitySystem",
+  "address": "0x1415f3960",
+  "signature": "FFortAbilitySetHandle GiveToAbilitySystem(IFortAbilitySystemInterface* AbilitySystemInterface, UObject* OverrideSourceObject)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "captures/520929c2a3b34526a83378cd2455a24f/0x1415f3960.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141eec730.c"
+  ],
+  "notes": "Not in generated headers (UFortAbilitySet.h has no API). Resolves the ASC through the interface (vtable slot 0x10). Two trailing native args (nullptr, true) are not decoded. Name proposed."
+}

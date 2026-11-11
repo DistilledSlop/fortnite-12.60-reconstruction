@@ -1,0 +1,18 @@
+{
+  "function": "UFortKismetLibrary::FindGroundLocationAt",
+  "status": "proposed",
+  "original": "0x14296af10",
+  "signature": "FVector FindGroundLocationAt(UWorld* World, AActor* IgnoreActor, FVector InLocation, float TraceStartZ, float TraceEndZ, FName TraceName)",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x14296af10.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141eede00.c",
+    "captures/2d64560169ca402387de9d4a88823383/0x1440b5c60.c",
+    "captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c"
+  ],
+  "callees": {
+    "0x141eede00": "helper: default result is InLocation; on Athena-style game states with a MapInfo runs one line trace in the column at InLocation between TraceStartZ and TraceEndZ",
+    "0x1440b5c60": "UWorld line trace single by profile (engine); profile name passed through the TraceName argument (proposed UWorld::LineTraceSingleByProfile)",
+    "0x144640410": "UEngine::GetWorldFromContextObject (engine)"
+  },
+  "notes": "The trace tag FName 'FindGroundLocationAt' is a static name in the native code. The TraceName argument reaches the trace call as the profile; the native 4-argument call in the capture hides the rest of the argument list, so the profile mapping is MEDIUM. Ignore-actor insertion is inferred from the stored IgnoreActor value."
+}

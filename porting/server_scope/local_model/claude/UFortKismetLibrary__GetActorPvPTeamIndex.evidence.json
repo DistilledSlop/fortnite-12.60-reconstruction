@@ -1,0 +1,20 @@
+{
+  "function": "UFortKismetLibrary::GetActorPvPTeamIndex",
+  "status": "proposed",
+  "original": "0x14296ba60",
+  "signature": "bool GetActorPvPTeamIndex(AActor* Actor, uint8& TeamIndex)",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x14296ba60.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141eefae0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142ec9900.c",
+    "captures/520929c2a3b34526a83378cd2455a24f/0x142af0810.c",
+    "captures/b97f38ebe68c4728a79304d43fa614e0/0x141125940.c"
+  ],
+  "callees": {
+    "0x141eefae0": "helper: reads the team byte from the actor's team interface (or its instigator); values >= 3 are PvP teams (index = value - 3)",
+    "0x142ec9900": "UObject::GetInterfaceAddress (engine)",
+    "0x142af0810": "IFortTeamActorInterface class getter (UFortTeamActorInterface)",
+    "0x141125940": "AActor::Instigator read (offset 0x118)"
+  },
+  "notes": "Team byte read through IFortTeamActorInterface::NativeGetTeam163 (vtable slot 0x28); the slot-to-method match is MEDIUM because the interface vtable is not in the vtable map. The instigator fallback is AActor::Instigator at 0x118."
+}

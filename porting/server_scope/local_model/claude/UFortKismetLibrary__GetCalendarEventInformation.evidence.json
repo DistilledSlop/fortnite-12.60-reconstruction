@@ -1,0 +1,24 @@
+{
+  "function": "UFortKismetLibrary::GetCalendarEventInformation",
+  "status": "proposed",
+  "original": "0x14296c540",
+  "signature": "void GetCalendarEventInformation(const UObject* WorldContextObject, const FString& EventName, bool& bIsEventActive, FTimespan& TimeSinceBegin, FTimespan& TimeUntilEnd, float& TimeSpanRatio)",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296c540.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141ef0ee0.c",
+    "captures/520929c2a3b34526a83378cd2455a24f/0x141e5b2c0.c",
+    "captures/520929c2a3b34526a83378cd2455a24f/0x141bd9690.c",
+    "captures/520929c2a3b34526a83378cd2455a24f/0x14224fd60.c",
+    "captures/442990021eee4d42aececde9e3187914/0x1428ea7f0.c",
+    "captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c"
+  ],
+  "callees": {
+    "0x141ef0ee0": "helper: zeroes all outputs, reads the seasonal event manager from the game instance, fills times and ratio when the event is found",
+    "0x141e5b2c0": "helper: UFortGameInstance from world context (OwningGameInstance at 0x188, class-checked)",
+    "0x141bd9690": "UFortGameInstance::SeasonalEventManager read (offset 0x7a0)",
+    "0x14224fd60": "SeasonalEventManager event lookup by name: returns since/until ticks when found (proposed name GetEventTiming)",
+    "0x1428ea7f0": "UFortGameInstance::StaticClass",
+    "0x144640410": "UEngine::GetWorldFromContextObject (engine)"
+  },
+  "notes": "The native code also logs when called without a game instance, without an event manager, or before the initial calendar refresh; the log lines are omitted. GetEventTiming is a proposed name, declared in deps/UFortSeasonalEventManager__GetEventTiming.json. The event-name lookup ticks are read from the helper's out params."
+}

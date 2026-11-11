@@ -1,0 +1,18 @@
+{
+  "function": "UFortKismetLibrary::FortShippingLog",
+  "status": "proposed",
+  "original": "0x14296b950",
+  "signature": "void FortShippingLog(const UObject* WorldContextObject, const FString& InString, bool bLogAsWarning)",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x14296b950.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141eef630.c",
+    "captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c",
+    "captures/817cbc8ad50947efa77524e59b619c5d/0x144693810.c"
+  ],
+  "callees": {
+    "0x141eef630": "helper: formats the text (net-role/PIE tag, optional source prefix) and writes it to the log at Warning (3) or Log (5) verbosity",
+    "0x144640410": "UEngine::GetWorldFromContextObject (engine)",
+    "0x144693810": "PIE instance index of the world (native, only used on client worlds)"
+  },
+  "notes": "Log category and PIE index source are MEDIUM: the native uses a Kismet-family category and a world-derived PIE index. Verbosity values 3 (Warning) and 5 (Log) are decoded from the native code."
+}

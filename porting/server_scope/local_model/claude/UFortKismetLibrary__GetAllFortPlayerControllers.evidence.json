@@ -1,0 +1,20 @@
+{
+  "function": "UFortKismetLibrary::GetAllFortPlayerControllers",
+  "status": "proposed",
+  "original": "0x14296bdb0",
+  "signature": "TArray<AFortPlayerController*> GetAllFortPlayerControllers(const UObject* WorldContextObject, bool bIncludeNonSpectators, bool bIncludeSpectators)",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x14296bdb0.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141eefea0.c",
+    "captures/3250d3c3d16a477e8dc79ebf830c08af/0x144640410.c",
+    "captures/1f993c5afb8b4421a88624ed0851d433/0x142a3d9f0.c",
+    "captures/f1525dbcfdd043988e43f5c567df3835/0x142a69680.c"
+  ],
+  "callees": {
+    "0x141eefea0": "helper: walks the world's player controllers; keeps AFortPlayerController instances, split into FortPlayerControllerSpectating and the rest by the two bool gates",
+    "0x144640410": "UEngine::GetWorldFromContextObject (engine)",
+    "0x142a3d9f0": "AFortPlayerController::StaticClass",
+    "0x142a69680": "FortPlayerControllerSpectating::StaticClass"
+  },
+  "notes": "Gate order: the native helper receives (world, non-spectator gate, spectator gate). The inventory lists the parameters in reverse declaration order, so the first Bool in bytecode order is bIncludeNonSpectators. The iterator is the engine player-controller list (UWorld::GetPlayerControllerIterator is an equivalent API)."
+}

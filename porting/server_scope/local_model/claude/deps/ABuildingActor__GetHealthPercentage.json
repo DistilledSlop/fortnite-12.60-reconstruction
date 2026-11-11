@@ -1,0 +1,10 @@
+{
+  "name": "ABuildingActor::GetHealthPercentage",
+  "address": "0x141b9ef10 (ABuildingActor vtable slot 0x7d0)",
+  "signature": "float GetHealthPercentage() const",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "porting/generated/native111-virtual-targets/0x141b9ef10.c"
+  ],
+  "notes": "Body is GetHealth()/GetMaxHealth() clamped to [0,1], 0 when max <= 0. Accessor names inferred from vtable slots 0x7a8 and 0x7b0; not present in the generated ABuildingActor header."
+}

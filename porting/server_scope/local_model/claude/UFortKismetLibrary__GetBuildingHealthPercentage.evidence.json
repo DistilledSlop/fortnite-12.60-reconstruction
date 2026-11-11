@@ -1,0 +1,16 @@
+{
+  "function": "UFortKismetLibrary::GetBuildingHealthPercentage",
+  "status": "proposed",
+  "original": "0x14296c3f0",
+  "signature": "float GetBuildingHealthPercentage(ABuildingActor* BuildingActor)",
+  "captures": [
+    "captures/f743ee8e344c47ed96c4064629ec1654/0x14296c3f0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native111-virtual-targets/0x141b9ef10.c",
+    "captures/6834584c101f4a5ca6016c7d177ed95f/0x141ef0ea0.c"
+  ],
+  "callees": {
+    "0x141ef0ea0": "helper: calls the building's health-percentage virtual (ABuildingActor vtable slot 0x7d0)",
+    "0x141b9ef10": "ABuildingActor health percentage: current/max health clamped to [0,1]; 0 when max health is not positive (vtable slot 0x7d0, read from vtable_lookup)"
+  },
+  "notes": "The accessor name GetHealthPercentage is inferred from the slot body (it reads GetMaxHealth at vtable 0x7b0 and GetHealth at 0x7a8); those names are not in the generated ABuildingActor header. Declaration is in deps/ABuildingActor__GetHealthPercentage.json."
+}
