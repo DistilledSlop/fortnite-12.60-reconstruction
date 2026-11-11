@@ -65,6 +65,7 @@ A gate is passed only when the **vanilla client** shows it in a recorded run. A 
 
 Older docs and the old wiki page describe the server as "1,110 functions left" (later 830, 802). Do not plan from that number. Reasons, all checked on 2026-11-11:
 
+0. **Update 2026-11-11 (after reading the binary):** far more original server code is in the client than assumed. See `server_systems/D-server-code-in-client-findings.md`. 2,536 functions carry their own `Class::Function` name in a log string (`server_scope/string_names.json`), including the Athena game mode's phase, team, spawn and win-condition functions and the dedicated game session. Names in `engine_trace/needed_engine_driven.json` are shifted and must not be trusted; its addresses are valid.
 1. **It only counts reflected UFUNCTIONs.** `server_scope/functions.jsonl` has 14,391 rows, all `UFUNCTION`s. The server's real control flow is in ordinary C++ virtuals that are not reflected. `engine_trace/needed_engine_driven.json` lists **59 override bodies on five core Athena classes that the engine called during one join** (`PreLogin`, `Login`, `PostLogin`, `InitGame`, `InitGameState`, `StartMatch`, `HandleMatchHasStarted`, `SpawnDefaultPawnFor`, `OnPossess`, `PreReplication`, ...). **None is ported, and none is in the 1,110.** `AFortGameModeAthena` has only 9 functions in the whole "high evidence" set.
 2. **"Ported" is mostly wrappers.** Of 5,684 manifest entries marked ported, 3,808 are `exec` thunks and 626 are member fields. An exec thunk only unpacks Blueprint arguments. It is not behaviour.
 3. **Some server logic is not in the client at all.** Epic strips server-only code from the shipping client. 104 captured functions bottom out in the shared null stub `0x140680300`. A "port" of those is an empty shell (section 6.3).
@@ -136,6 +137,9 @@ Repo root: `/opt/fortnite/FortniteClient-12.60-CL-13477524` (branch `main`, remo
 | `generated/decomp*`, `generated/class-vtables/` | Earlier decompiles and vtable maps |
 | `virtual_slots.py`, `behavior/vtable_lookup.py` | Resolve a vtable slot to a function |
 | `engine_trace/` | Which engine virtuals a join calls on the Athena classes (the 59) |
+| `tools/` | `strx.py` (string → code references), `nameidx.py` (name index), `vt.py` (vtable slots), `strs_near.py`. See `tools/README.md` |
+| `server_scope/string_names.json` | 2,536 functions named by their own log strings. Look here first |
+| `server_systems/` | Findings and system cards (`A-wire-findings.md`, `D-server-code-in-client-findings.md`) |
 | `server_scope/` | Static "does a server need it" classification of UFUNCTIONs |
 | `server_scope/local_model/` | Draft bodies (`claude/*.inc`), per-chunk notes (README), cut list |
 | `/opt/fortnite/local-model-package/` | Capture tool and state: `scripts/evidence.py capture`, `captures/<hash>/<addr>.{c,asm,json}`, `scripts/inventory_progress.py` |
@@ -251,7 +255,7 @@ Two sources of holes:
 | `0x1406801e0` | `xor al,al; ret` | returns false |
 | `0x1406801d0` | `mov al,1; ret` | returns true (shared `_Validate` for most Server RPCs) |
 
-Confirmed or suspected stripped so far: pickup spawn in `AFortAthenaSupplyDrop::SpawnPickupFromItemEntry`, `ServerCreateBuildingActor`, `ServerCreateBuildingAndSpawnDeco` spawn, `TossSpecificItem`, `ServerCraftSchematic`, `ServerAddSimulatedXp`, `ServerSubmitGameplayVote`, `ServerPlaySquadQuickChatMessage`, `ServerRespawnFromDBNO` on Athena. The full list has **not** been swept (WP D0).
+**Correction:** `ServerCreateBuildingActor_Implementation` (0x14236d1a0) and `ABuildingContainer::SpawnLoot` (0x141bec150) are real bodies that reach `UWorld::SpawnActor`; the earlier "stripped" note for building placement was wrong. Every other "stripped" label below is unverified until re-checked with the rule in the findings file (look up the name index, resolve the Athena override, capture the `_Implementation`). Suspected stripped so far: pickup spawn in `AFortAthenaSupplyDrop::SpawnPickupFromItemEntry`, `ServerCreateBuildingAndSpawnDeco` spawn, `TossSpecificItem`, `ServerCraftSchematic`, `ServerAddSimulatedXp`, `ServerSubmitGameplayVote`, `ServerPlaySquadQuickChatMessage`, `ServerRespawnFromDBNO` on Athena. The full list has **not** been swept (WP D0).
 
 **Protected code.** Second `.text` at `0x148d2c000`–`0x149e4d600`. Readable in the later image; uses scattered blocks and stack-based jumps. Seven entries partly recovered (skydiving dispatch, supply-drop registry cleanup, weapon traces, vehicle collision, two player-state/controller paths). Details: wiki page, `generated/protected-analysis-20261110/`.
 
@@ -286,6 +290,8 @@ For each stripped behaviour, answer these in a short "system card" (template in 
 Order of work: **A (wire) first and alone on the critical path.** B can start as soon as A1 is done. C and D0 can run in parallel with A because they need no vanilla client. D1+ can be written before G6 but cannot be verified until then. E is independent.
 
 ### Phase A: get the vanilla client into the world
+
+> **A1/A2 status 2026-11-11:** the static half is done. `server_systems/A-wire-findings.md` shows the client's handshake, packet header, sequence init, Oodle-off behaviour and control messages (Hello, Login, Join) all match stock 4.25 apart from the float timestamp, which the patch covers. No further wire patch is indicated. What remains of A1 is one logged run and the decision tree in section 6 of that file. Steps 3 to 5 below are already answered there.
 
 #### WP A1: finish the UDP stateless handshake (G3) [S, owns: `patches/ue425-fortnite-float-handshake.patch`, engine `StatelessConnectHandlerComponent.*`, `MATCHMAKING_PROBE.md`]
 
@@ -386,15 +392,15 @@ Each system is one WP family. For each, the first task is always the **system ca
 | WP | System | Server must do | Main bucket | Known leads |
 |---|---|---|---|---|
 | D1 | Login and spawn pipeline | `PreLogin`, `Login`, `PostLogin`, player state setup, team assignment, default pawn class, spawn on warmup island, possess, cosmetic loadout from profile | R | The 59 bodies in `engine_trace/needed_engine_driven.json`; `ServerSetTeam` draft |
-| D2 | Match state and game phases | Warmup countdown, start match, phase and step changes (`OnGamePhaseStepChanged` 0x141953840), end of match, replicated `GamePhase` and timers on `AFortGameStateAthena` | R + D | Draft bodies for chunks 10, 11 (GameMode/GameState); playlist data (C3) |
+| D2 | Match state and game phases | `InitGame` 0x14194cd90, `HandleMatchHasStarted` 0x14194bb50, `StartWarmupPhase` 0x141972c30, `UpdateWarmupPhase` 0x14197a400, `StartAircraftPhase` 0x14196b7ca, `StartSafeZonesPhase` 0x141971aa0, `StartEndGamePhase` 0x14196cb95, `HandleMatchHasEnded` 0x14194b750; replicated `GamePhase` and timers on `AFortGameStateAthena` | R + D | Findings file; draft bodies for chunks 10, 11; playlist data (C3) |
 | D3 | Battle bus, jump, skydive, glider | Spawn aircraft, fly path, drop zone events, `ServerAttemptAircraftJump`-type RPCs, skydiving state, auto-deploy, landing | R + X (protected skydiving path) | `OnAircraft*` bodies; protected `0x1495a4a24`; chunk 22, 24, 25 drafts |
 | D4 | Inventory and quickbar | World inventory actor, item list fast-array replication, quickbar slots, grant pickaxe and building pieces at spawn, equip (`ServerExecuteInventoryItem`), drop, stack, ammo | R for containers, X for grant/drop | Chunk 15 drafts (pickup, inventory interface slots 0xa0/0xa8); `TossSpecificItem` is stripped |
 | D5 | Ability system | Grant default ability sets, attribute sets (health, shield, movement), activate abilities from client, apply gameplay effects, gameplay cues | D (Blueprint GAs/GEs) + R + public GAS source | Chunks 33, 34 drafts (ability library); `UFortAbilitySystemComponent` |
 | D6 | Weapons and damage | Fire validation, hit processing, projectiles, reload, ammo, damage calc, falloff, headshots | R + X (two protected weapon traces) | Chunks 30 to 32 drafts; protected `0x14941fa9a`, `0x1496f7856` |
-| D7 | Health, DBNO, elimination, spectating, victory | Apply damage to health/shield, down state, death, kill feed (`ClientReportKill`), placement, spectate, win condition, `WinningPlayerState` | R + X | No server writer attributed yet (`server_authority_inventory.md` section 5) |
+| D7 | Health, DBNO, elimination, spectating, victory | Apply damage to health/shield, down state, death, kill feed (`ClientReportKill`), placement, spectate, win condition, `WinningPlayerState` | R | `CheckWinConditionLastManStanding` 0x141937590, `GrantVictory*`, `GrantLoss*`, `OnFortPlayerPawnAthenaDied` binding at 0x1419e4f50 |
 | D8 | Harvesting and resources | Pickaxe hits on building actors, damage, resource grant, weak points | R + X | `ABuildingSMActor` drafts (chunk 04) |
-| D9 | Building and editing | Place piece (`ServerCreateBuildingActor`, **stripped**), costs, structural support, edit, repair, destroy | X + R (`UBuildingStructuralSupportSystem`) | Chunk 17, 32, 33 notes |
-| D10 | Loot | Floor loot, chests, ammo boxes, supply drops, llamas, pickup spawn (**stripped**), loot table rolls | X + D | Loot tables (C3); supply-drop drafts chunk 09 |
+| D9 | Building and editing | Place piece (`ServerCreateBuildingActor_Implementation` 0x14236d1a0, real body), costs (`UFortGameData::GetBuildingCost`), structural support, edit, repair, destroy | R | Findings file section 2; chunk 32, 33 notes |
+| D10 | Loot | Floor loot, chests (`ABuildingContainer::SpawnLoot` 0x141bec150, real body), ammo boxes, supply drops, llamas, pickup spawn (supply-drop path unverified), loot table rolls, `GetLootChanceMultiplier` / `GetLootCountMultiplier` | R + D, X only where re-check confirms | Loot tables (C3); supply-drop drafts chunk 09 |
 | D11 | Storm | Phases from data, shrink, damage ticks, storm-camping | R + D | Hand decode `work/dependencies/claude-br/storm-and-phase-findings.json` in the package |
 | D12 | Vehicles, water, ziplines | Boats, helicopter, swimming, seats | R + X (protected vehicle collision) | Chunk 09, 23, 26 drafts |
 | D13 | Season 12 AI | Henchmen, bosses, vaults, keycards, ID scanners, shakedown, phone booths | R + D | `UFortServerBotManagerAthena`, behaviour trees in paks |
