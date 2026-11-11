@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__FindOrAddTrackedActorEntriesByGroup",
+  "address": "0x1415e2600",
+  "signature": "TArray<FFortTrackedActorEntry>* UFortAbilitySystemComponent::FindOrAddTrackedActorEntriesByGroup(FGameplayTag Group)",
+  "inc_or_decl": "// Find-or-add keyed by the tag FName; falls back to the add path at 0x1415e2400. MEDIUM.\nTArray<FFortTrackedActorEntry>* FindOrAddTrackedActorEntriesByGroup(FGameplayTag Group);",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415e2600.c"
+}

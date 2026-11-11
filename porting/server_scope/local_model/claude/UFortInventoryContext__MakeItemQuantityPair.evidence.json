@@ -1,0 +1,25 @@
+{
+  "function": "UFortInventoryContext::MakeItemQuantityPair",
+  "status": "proposed",
+  "original": "0x145262c20",
+  "signature": "FFortItemQuantityPair UFortInventoryContext::MakeItemQuantityPair(int32 ItemQuantity, UFortItemDefinition* ItemDefinition)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/08140e47ad19496ebe15b7f549570d71/0x142ebd9e0.c",
+    "captures/0d71786315864fc9967f412c2843d452/0x145262c20.c",
+    "captures/11dff1bf942f429ca6017d4cb421d5f6/0x142ee3b30.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142ec00d0.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x141f7ce30.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x142ebd0a0.c"
+  ],
+  "callees": {
+    "0x145262c20": "exec body (ported here)",
+    "0x142ebd0a0": "FPrimaryAssetId value construction from a definition (engine helper)",
+    "0x142ee3b30": "primary asset id from definition: type from definition field +0xc, name from a static table; null gives -1 type",
+    "0x141f7ce30": "pair construction: writes Quantity at +0x10 of the pair",
+    "0x142ebd9e0": "move-assign of the id holder (engine)",
+    "0x142ec00d0": "static name table lookup used in the id build (engine)"
+  },
+  "deps": [],
+  "notes": "Result struct FFortItemQuantityPair (FPrimaryAssetId ItemPrimaryAssetId; int32 Quantity) from the port headers; its size (20 bytes) matches the writes in the native. A lock-protected global counter read in the native has no visible effect on the returned pair and is not reproduced."
+}

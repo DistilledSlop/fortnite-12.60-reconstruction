@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__GetOwningFortPawn",
+  "address": "0x1415f7dd0",
+  "signature": "AFortPawn* UFortGameplayAbility::GetOwningFortPawn() const",
+  "inc_or_decl": "// Resolves the owning pawn from the tracking context (weak pointer at +0x380 then +0x10), class-checked as AFortPawn (class getter 0x142a174f0). Returns nullptr when unset.\nAFortPawn* GetOwningFortPawn() const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415f7dd0.c"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__GetAvatarActor",
+  "address": "0x141ee4ab0",
+  "signature": "AActor* UFortAbilitySystemComponent::GetAvatarActor() const",
+  "inc_or_decl": "// Avatar actor through the virtual at slot 0x1bf0 (native call). Returns nullptr when unset. LOW on slot identity.\nAActor* GetAvatarActor() const;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x141ee4ab0.c"
+}

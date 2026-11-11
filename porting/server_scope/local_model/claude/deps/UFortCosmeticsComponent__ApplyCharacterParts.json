@@ -1,0 +1,7 @@
+{
+  "name": "UFortCosmeticsComponent__ApplyCharacterParts",
+  "address": "0x141d9ef80",
+  "signature": "bool UFortCosmeticsComponent::ApplyCharacterParts(UObject* WorldContextObject, const FGameplayAbilityActorInfo& ActorInfo, AActor* Avatar, const TArray<UCustomCharacterPart*>& CharacterParts, bool bFlagA, bool bFlagB)",
+  "inc_or_decl": "// Applies the character part set to Avatar and returns whether the application succeeded. LOW: 283-line body only partially read; argument order taken from the caller.\nbool ApplyCharacterParts(UObject* WorldContextObject, const FGameplayAbilityActorInfo& ActorInfo, AActor* Avatar, const TArray<UCustomCharacterPart*>& CharacterParts, bool bFlagA, bool bFlagB);",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x141d9ef80.c"
+}

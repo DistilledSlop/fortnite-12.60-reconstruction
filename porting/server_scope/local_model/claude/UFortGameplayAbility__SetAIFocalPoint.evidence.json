@@ -1,0 +1,23 @@
+{
+  "function": "UFortGameplayAbility::SetAIFocalPoint",
+  "status": "proposed",
+  "original": "0x1428f9470",
+  "signature": "void UFortGameplayAbility::SetAIFocalPoint(bool bUseAttackingPriority, FVector FocalPoint, AActor* FocusTarget)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f9470.c",
+    "captures/1484705499914423a96f3442d4ab2542/0x1427a1790.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1422ebe50.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x14160c400.c"
+  ],
+  "callees": {
+    "0x14160c400": "core: owning pawn must be AFortAIPawn, then ApplyAIFocusToPawn (dep SetAIFocalPointInternal)",
+    "0x1422ebe50": "ApplyAIFocusToPawn (dep)",
+    "0x1427a1790": "AFortAIPawn static class getter"
+  },
+  "deps": [
+    "UFortGameplayAbility__SetAIFocalPointInternal",
+    "UFortGameplayAbility__ApplyAIFocusToPawn"
+  ],
+  "notes": "Wrapper reads FocusTarget, FocalPoint, bool in that order from the script stack; the port keeps the reflection order in the signature. The priority values 4/5 are kept in the dep description, not in this body."
+}

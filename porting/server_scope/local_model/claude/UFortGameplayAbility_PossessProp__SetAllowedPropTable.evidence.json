@@ -1,0 +1,26 @@
+{
+  "function": "UFortGameplayAbility_PossessProp::SetAllowedPropTable",
+  "status": "proposed",
+  "original": "0x1428fe8e0",
+  "signature": "void UFortGameplayAbility_PossessProp::SetAllowedPropTable(UDataTable* InAllowedPropTable)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x140690fd0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x140696cf0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x14069ea30.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x141612450.c",
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x1428fe8e0.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x141638dc0.c"
+  ],
+  "callees": {
+    "0x141638dc0": "core (ported here)",
+    "0x141612450": "UDataTable::GetAllRows with the context string (engine API)",
+    "0x140690fd0": "TArray SetNum / resize helper (engine)",
+    "0x14069ea30": "TArray grow helper (engine)",
+    "0x140696cf0": "TSoftClassPtr copy-assign (engine)"
+  },
+  "deps": [
+    "UFortGameplayAbility_PossessProp__AllowedPropClasses"
+  ],
+  "notes": "Element of AllowedPropClasses is a TSoftClassPtr<ABuildingActor> copied from row +8 (row struct FAllowedPropTableRow is proposed; its declaration is not in the port headers). The native equality check also keeps the old list when the new table is null."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__GetProjectileTimeToTarget",
+  "address": "0x1415fc980",
+  "signature": "float UFortGameplayAbility::GetProjectileTimeToTarget(const FVector& From, const FVector& To) const",
+  "inc_or_decl": "// Returns planar distance / (speed * cos(LaunchAngleDegrees)). Returns 0 when projectile data is missing. MEDIUM on the formula, which is read directly from the decompile.\nfloat GetProjectileTimeToTarget(const FVector& From, const FVector& To) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415fc980.c"
+}

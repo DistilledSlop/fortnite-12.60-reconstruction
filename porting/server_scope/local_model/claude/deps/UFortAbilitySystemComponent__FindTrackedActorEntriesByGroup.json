@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__FindTrackedActorEntriesByGroup",
+  "address": "0x141600470",
+  "signature": "const TArray<FFortTrackedActorEntry>* UFortAbilitySystemComponent::FindTrackedActorEntriesByGroup(FGameplayTag Group) const",
+  "inc_or_decl": "// Inline hash lookup keyed by the tag FName (ComparisonIndex and Number) in map fields +0x8a..+0x8c. Returns nullptr when absent. MEDIUM.\nconst TArray<FFortTrackedActorEntry>* FindTrackedActorEntriesByGroup(FGameplayTag Group) const;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x141600470.c"
+}

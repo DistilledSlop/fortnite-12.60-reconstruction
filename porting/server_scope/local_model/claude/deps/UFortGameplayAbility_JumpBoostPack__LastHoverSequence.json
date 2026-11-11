@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility_JumpBoostPack__LastHoverSequence",
+  "address": "offset 0xa48",
+  "signature": "int32 LastHoverSequence",
+  "inc_or_decl": "// Written on leaving the Hovering state from the avatar sequence number. Name proposed.\nint32 LastHoverSequence;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x14162a180.c"
+}

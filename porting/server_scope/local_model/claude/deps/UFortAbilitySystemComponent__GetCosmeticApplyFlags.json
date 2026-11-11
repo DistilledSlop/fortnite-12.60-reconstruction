@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__GetCosmeticApplyFlags",
+  "address": "0x142390780",
+  "signature": "void UFortAbilitySystemComponent::GetCosmeticApplyFlags(bool& bOutFlagA, bool& bOutFlagB) const",
+  "inc_or_decl": "// Both outputs cleared first; flagA set from the ASC cached state (+0x1888, bit 2 test on its +0x388 word) and flagB set when the secondary state (+0x18b0) has bit 2 set. LOW on names.\nvoid GetCosmeticApplyFlags(bool& bOutFlagA, bool& bOutFlagB) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x142390780.c"
+}

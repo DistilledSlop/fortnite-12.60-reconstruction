@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__ProjectileLaunchAngleDegrees",
+  "address": "offset 0x8b4",
+  "signature": "float ProjectileLaunchAngleDegrees",
+  "inc_or_decl": "// Launch angle in degrees; zero selects the level shot path. Name proposed.\nfloat ProjectileLaunchAngleDegrees;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x1415fc430.c"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerState__CosmeticsComponent",
+  "address": "offset 0x5d8",
+  "signature": "UFortCosmeticsComponent* CosmeticsComponent",
+  "inc_or_decl": "// Cosmetics component used by ApplyCharacterCosmetics. Name and type proposed.\nUFortCosmeticsComponent* CosmeticsComponent;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x141ee4ab0.c"
+}

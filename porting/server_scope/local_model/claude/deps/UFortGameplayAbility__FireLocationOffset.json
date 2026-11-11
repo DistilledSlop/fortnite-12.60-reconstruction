@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__FireLocationOffset",
+  "address": "offset 0x874",
+  "signature": "FVector FireLocationOffset",
+  "inc_or_decl": "// Offset from the owning pawn to the fire point, rotated by the pawn rotation in GetFireLocation. Name proposed.\nFVector FireLocationOffset;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x1415fa300.c"
+}

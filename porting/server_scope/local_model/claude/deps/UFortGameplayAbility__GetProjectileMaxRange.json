@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__GetProjectileMaxRange",
+  "address": "0x1415facd0",
+  "signature": "float UFortGameplayAbility::GetProjectileMaxRange(int32 Index) const",
+  "inc_or_decl": "// Returns 0 when all range fields of the projectile data are zero, otherwise the max range field (+0x48). LOW: not read beyond call sites.\nfloat GetProjectileMaxRange(int32 Index) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415facd0.c"
+}

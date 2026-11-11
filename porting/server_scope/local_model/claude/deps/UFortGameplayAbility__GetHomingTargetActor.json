@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__GetHomingTargetActor",
+  "address": "0x1415f7790",
+  "signature": "AActor* UFortGameplayAbility::GetHomingTargetActor() const",
+  "inc_or_decl": "// Returns the cached homing target when the cache is valid (count at +0x910, weak pointer at +0x908 then +0x6c). Otherwise resolves one through the owning pawn component chain (+0x2d8 then +0xb8) with a class-checked lookup (0x1449ca7d0). Lookup internals LOW.\nAActor* GetHomingTargetActor() const;",
+  "evidence": "captures/163a6ed54218462c9f686038b57601f0/0x1415f7790.c"
+}

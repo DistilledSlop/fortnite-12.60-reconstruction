@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__ProjectileMovementComponent",
+  "address": "offset 0x830",
+  "signature": "UObject* ProjectileMovementComponent",
+  "inc_or_decl": "// Projectile movement data object; null means no projectile data. Name proposed; type not recovered.\nUObject* ProjectileMovementComponent;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415fc350.c"
+}

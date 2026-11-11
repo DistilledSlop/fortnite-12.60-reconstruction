@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__FindTrackedActorEntriesById",
+  "address": "0x141600340",
+  "signature": "const TArray<FFortTrackedActorEntry>* UFortAbilitySystemComponent::FindTrackedActorEntriesById(int32 TrackingId) const",
+  "inc_or_decl": "// Inline hash lookup of an int32 key in the ASC tracking map (fields +0x88..+0x8a, entries 0x20 bytes, value array at entry +8). Returns nullptr when absent. MEDIUM.\nconst TArray<FFortTrackedActorEntry>* FindTrackedActorEntriesById(int32 TrackingId) const;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x141600340.c"
+}

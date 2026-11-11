@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility_JumpBoostPack__GetJetpackComponent",
+  "address": "0x1406c7d70",
+  "signature": "UFortJetpackComponent* APawn::FindComponentByClass<UFortJetpackComponent>() const",
+  "inc_or_decl": "// Component lookup on the owner by the jetpack class (class getter 0x14295ebe0). Returns nullptr when absent. MEDIUM.\nUFortJetpackComponent* FindComponentByClass<UFortJetpackComponent>() const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1406c7d70.c"
+}

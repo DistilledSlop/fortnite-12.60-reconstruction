@@ -1,0 +1,37 @@
+{
+  "function": "UFortGameplayAbility_JumpBoostPack::HandleCurrentStateChanged",
+  "status": "proposed",
+  "original": "0x1428fe320",
+  "signature": "void UFortGameplayAbility_JumpBoostPack::HandleCurrentStateChanged(EJumpBoostPackState InPreviousState)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/08140e47ad19496ebe15b7f549570d71/0x142cd4ab0.c",
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428fe320.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x14070cc00.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1406b8620.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1406c7d70.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1416286a0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x14295ebe0.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x14162a180.c",
+    "captures/f35fb07aaad14312899b7c0ec2308ee4/0x1406ebb90.c"
+  ],
+  "callees": {
+    "0x14162a180": "core (ported here)",
+    "0x1406c7d70": "FindComponentByClass for the jetpack class (dep)",
+    "0x14295ebe0": "jetpack component class getter",
+    "0x14070cc00": "GetFuelDrainRate (dep)",
+    "0x1406b8620": "ModifyFuelTagValue (dep), native passes Fuel tag, 0, -cost",
+    "0x1416286a0": "cached Fuel tag, ported as RequestGameplayTag(\"Fuel\")",
+    "0x142cd4ab0": "FName(\"Fuel\") construction",
+    "0x1406ebb90": "FGameplayTag copy into the call"
+  },
+  "deps": [
+    "UFortGameplayAbility_JumpBoostPack__GetJetpackOwner",
+    "UFortGameplayAbility_JumpBoostPack__GetJetpackComponent",
+    "UFortJetpackComponent__GetFuelDrainRate",
+    "APawn__ModifyFuelTagValue",
+    "UFortGameplayAbility_JumpBoostPack__GetAvatarSequenceNumber",
+    "UFortGameplayAbility_JumpBoostPack__LastHoverSequence"
+  ],
+  "notes": "Native state gate reads CurrentState (member at 0xa39) equal to 1 (Boost) and the previous state argument equal to 2 (Hovering) from the EJumpBoostPackState enum in the port headers. Fuel delta is -GetFuelDrainRate with a single call; the ported GetJetpackOwner is the weak pointer at tracking context +0x20, which is LOW."
+}

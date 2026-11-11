@@ -1,0 +1,15 @@
+{
+  "function": "UFortKismetLibrary::AddRegenItemToInventoryOwner",
+  "status": "proposed",
+  "original": "0x1429659a0",
+  "signature": "static void UFortKismetLibrary::AddRegenItemToInventoryOwner(bool bResetRegenCooldown, bool bNotifyPlayer, int32 NumberToGive, UFortItemDefinition* RegenItemDefinition, TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner)",
+  "confidence": "HIGH",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x1429659a0.c"
+  ],
+  "callees": {
+    "Stub_Empty": "no-op stub called at the end of the native body"
+  },
+  "deps": [],
+  "notes": "Interface type name for InventoryOwner is not recovered (reflection gives only the interface class address 0x142952530); the signature uses a placeholder interface name."
+}

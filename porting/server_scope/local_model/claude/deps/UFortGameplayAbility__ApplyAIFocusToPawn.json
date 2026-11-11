@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__ApplyAIFocusToPawn",
+  "address": "0x1422ebe50",
+  "signature": "void UFortGameplayAbility::ApplyAIFocusToPawn(AFortAIPawn* Pawn, AActor* FocusTarget, const FVector& FocalPoint, bool bUseAttackingPriority)",
+  "inc_or_decl": "// Uses the pawn's AI controller (member at +0x250). With a FocusTarget it calls SetFocus(FocusTarget); without one it calls SetFocalPoint(FocalPoint, priority), where priority is 5 when bUseAttackingPriority and 4 otherwise (EAIFocusPriority names not recovered). Logs and returns when there is no controller. MEDIUM.\nvoid ApplyAIFocusToPawn(AFortAIPawn* Pawn, AActor* FocusTarget, const FVector& FocalPoint, bool bUseAttackingPriority);",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1422ebe50.c"
+}

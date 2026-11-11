@@ -1,0 +1,27 @@
+{
+  "function": "UFortGameplayAbility::GetTrackedActors",
+  "status": "proposed",
+  "original": "0x1428f8990",
+  "signature": "TArray<AActor*> UFortGameplayAbility::GetTrackedActors() const",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f8990.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1406ceaa0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1416002a0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x14277e480.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x141600340.c"
+  ],
+  "callees": {
+    "0x141600340": "core lookup by TrackingId (ported here)",
+    "0x1406ceaa0": "IsValid on UObject flags (engine helper)",
+    "0x1416002a0": "CollectValidTrackedActors (dep)",
+    "0x14277e480": "UFortAbilitySystemComponent static class getter"
+  },
+  "deps": [
+    "UFortGameplayAbility__GetTrackingAbilitySystemComponent",
+    "UFortAbilitySystemComponent__FindTrackedActorEntriesById",
+    "UFortAbilitySystemComponent__CollectValidTrackedActors",
+    "UFortGameplayAbility__TrackingId"
+  ],
+  "notes": "Output is a TArray of AActor* built from weak pointers. Native returns an empty array in every miss path."
+}

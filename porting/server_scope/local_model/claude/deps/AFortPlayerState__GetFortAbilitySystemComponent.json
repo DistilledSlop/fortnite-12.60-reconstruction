@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerState__GetFortAbilitySystemComponent",
+  "address": "0x142414c60",
+  "signature": "UFortAbilitySystemComponent* AFortPlayerState::GetFortAbilitySystemComponent() const",
+  "inc_or_decl": "// Returns the ASC member at +0xe0 after a class check against UFortAbilitySystemComponent (class getter 0x142a3d9f0), or nullptr. MEDIUM.\nUFortAbilitySystemComponent* GetFortAbilitySystemComponent() const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x142414c60.c"
+}

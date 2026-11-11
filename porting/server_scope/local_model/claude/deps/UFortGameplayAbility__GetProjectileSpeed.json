@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__GetProjectileSpeed",
+  "address": "0x1415fc350",
+  "signature": "float UFortGameplayAbility::GetProjectileSpeed(int32 Index) const",
+  "inc_or_decl": "// Reads the projectile speed for Index from projectile data at +0x830 (class-checked via 0x142aa44e0, value via 0x1426cc270). Returns -1.0f (0xbf800000) when projectile data is unavailable.\nfloat GetProjectileSpeed(int32 Index) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415fc350.c"
+}

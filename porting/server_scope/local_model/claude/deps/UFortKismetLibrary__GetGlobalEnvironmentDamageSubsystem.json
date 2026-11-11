@@ -1,0 +1,7 @@
+{
+  "name": "UFortKismetLibrary__GetGlobalEnvironmentDamageSubsystem",
+  "address": "0x141ef3af0",
+  "signature": "UFortEnvironmentDamageSubsystem* UFortKismetLibrary::GetGlobalEnvironmentDamageSubsystem()",
+  "inc_or_decl": "// Returns the environment damage subsystem holder from the global world singleton (0x144640410), class-checked (0x142927a60). Returns nullptr when absent. LOW on the subsystem type name.\nUFortEnvironmentDamageSubsystem* GetGlobalEnvironmentDamageSubsystem();",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x141ef3af0.c"
+}

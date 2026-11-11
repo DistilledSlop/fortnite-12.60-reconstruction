@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__TrackActorInGroupInternal",
+  "address": "0x1416109f0",
+  "signature": "void UFortGameplayAbility::TrackActorInGroupInternal(AActor* ActorToTrack, FGameplayTag GroupTag)",
+  "inc_or_decl": "// No-op unless ActorToTrack, the ASC and GroupTag are valid. Find-or-adds the group for the tag and calls AddTrackedActorToGroup. MEDIUM.\nvoid TrackActorInGroupInternal(AActor* ActorToTrack, FGameplayTag GroupTag);",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x1416109f0.c"
+}

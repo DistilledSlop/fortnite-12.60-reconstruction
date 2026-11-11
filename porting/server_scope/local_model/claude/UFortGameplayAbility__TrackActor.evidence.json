@@ -1,0 +1,22 @@
+{
+  "function": "UFortGameplayAbility::TrackActor",
+  "status": "proposed",
+  "original": "0x1428f9630",
+  "signature": "void UFortGameplayAbility::TrackActor(AActor* ActorToTrack)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f9630.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1415e2140.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x141610790.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x1416108c0.c"
+  ],
+  "callees": {
+    "0x1416108c0": "core: find-or-add group for TrackingId then AddTrackedActorToGroup (dep TrackActorInternal)",
+    "0x1415e2140": "FindOrAddTrackedActorEntriesById (dep)",
+    "0x141610790": "AddTrackedActorToGroup (dep)"
+  },
+  "deps": [
+    "UFortGameplayAbility__TrackActorInternal"
+  ],
+  "notes": "Wrapper reads one object argument and calls the core with (this, actor). No-op semantics for null actors come from the core."
+}

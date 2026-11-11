@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility_PossessProp__AllowedPropClasses",
+  "address": "offset 0xa70",
+  "signature": "TArray<TSoftClassPtr<ABuildingActor>> AllowedPropClasses",
+  "inc_or_decl": "// Rebuilt from the AllowedPropTable rows; read by GetAllowedPropClassByIndex. Element stride 0x28.\nTArray<TSoftClassPtr<ABuildingActor>> AllowedPropClasses;",
+  "evidence": "captures/86852e92f0c84cbe8e45a8662999ee41/0x1428fe8e0.c"
+}

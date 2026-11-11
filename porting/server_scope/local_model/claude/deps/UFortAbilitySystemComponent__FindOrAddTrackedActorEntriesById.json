@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__FindOrAddTrackedActorEntriesById",
+  "address": "0x1415e2140",
+  "signature": "TArray<FFortTrackedActorEntry>* UFortAbilitySystemComponent::FindOrAddTrackedActorEntriesById(int32 TrackingId)",
+  "inc_or_decl": "// Find-or-add of an int32 key in the ASC tracking map; used when first tracking an actor under a TrackingId. MEDIUM.\nTArray<FFortTrackedActorEntry>* FindOrAddTrackedActorEntriesById(int32 TrackingId);",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415e2140.c"
+}

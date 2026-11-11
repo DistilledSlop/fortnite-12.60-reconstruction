@@ -1,0 +1,26 @@
+{
+  "function": "UFortGameplayAbility::GetTrackedGroupedActors",
+  "status": "proposed",
+  "original": "0x1428f8a10",
+  "signature": "TArray<AActor*> UFortGameplayAbility::GetTrackedGroupedActors(FGameplayTag GroupTag) const",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f8a10.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1416002a0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142ce11c0.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x141600340.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x141600470.c"
+  ],
+  "callees": {
+    "0x141600470": "core lookup by group tag (ported here)",
+    "0x1416002a0": "CollectValidTrackedActors (dep)",
+    "0x142ce11c0": "FName hash helper for the tag key",
+    "0x141600340": "same tracking-context pattern as GetTrackedActors"
+  },
+  "deps": [
+    "UFortGameplayAbility__GetTrackingAbilitySystemComponent",
+    "UFortAbilitySystemComponent__FindTrackedActorEntriesByGroup",
+    "UFortAbilitySystemComponent__CollectValidTrackedActors"
+  ],
+  "notes": "Native rejects tags where the FName is None and Number is zero, which is GroupTag.IsValid(). Same miss semantics as GetTrackedActors."
+}

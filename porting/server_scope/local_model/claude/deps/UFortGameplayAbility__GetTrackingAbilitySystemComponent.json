@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__GetTrackingAbilitySystemComponent",
+  "address": "0x141600340",
+  "signature": "UFortAbilitySystemComponent* UFortGameplayAbility::GetTrackingAbilitySystemComponent() const",
+  "inc_or_decl": "// Inline pattern shared by the tracking getters (0x141600340, 0x141600470, 0x1416108c0, 0x1416109f0, 0x14160c400): weak pointer at tracking context +0x380 then +0x20, IsValid check (0x1406ceaa0), class check against UFortAbilitySystemComponent (0x14277e480).\nUFortAbilitySystemComponent* GetTrackingAbilitySystemComponent() const;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x141600340.c"
+}

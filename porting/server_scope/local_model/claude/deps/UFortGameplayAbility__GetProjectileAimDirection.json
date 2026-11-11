@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__GetProjectileAimDirection",
+  "address": "0x1415fa4b0",
+  "signature": "FVector UFortGameplayAbility::GetProjectileAimDirection(bool bUseStoredAimFlag, bool bApplyInaccuracy) const",
+  "inc_or_decl": "// Direction toward the homing target, or a fallback from the owning pawn cached transform (+0x1c0 rotation, +0x1d0 location) when no target. Caller passes the stored 0x8b1 flag as the first argument. LOW: only the first 40 lines were read; the third native argument is a constant 0 at the call site and is dropped.\nFVector GetProjectileAimDirection(bool bUseStoredAimFlag, bool bApplyInaccuracy) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415fa4b0.c"
+}

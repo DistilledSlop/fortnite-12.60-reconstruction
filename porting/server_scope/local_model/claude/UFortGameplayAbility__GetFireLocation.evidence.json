@@ -1,0 +1,27 @@
+{
+  "function": "UFortGameplayAbility::GetFireLocation",
+  "status": "proposed",
+  "original": "0x1428f84c0",
+  "signature": "FVector UFortGameplayAbility::GetFireLocation() const",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f84c0.c",
+    "captures/2109b09a0c394aeb87acc6c7608881fd/0x142c5d000.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1415f7dd0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142a174f0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142c5ccf0.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x1415fa300.c"
+  ],
+  "callees": {
+    "0x1415fa300": "core fire location: owner pawn cached transform (+0x180..+0x1d8 cache) plus FireLocationOffset rotated by the pawn rotation (0x142c5ccf0)",
+    "0x1415f7dd0": "GetOwningFortPawn (dep)",
+    "0x142a174f0": "AFortPawn static class getter",
+    "0x142c5ccf0": "rotate vector by quaternion-derived matrix (w=0), named engine math",
+    "0x142c5d000": "quaternion/rotator cache conversion, engine math"
+  },
+  "deps": [
+    "UFortGameplayAbility__GetOwningFortPawn",
+    "UFortGameplayAbility__FireLocationOffset"
+  ],
+  "notes": "Native reads a cached copy of the pawn transform and refreshes the cache when it differs from the live actor transform; the port uses the live transform, which is the same value in steady state. The pawn class check is folded into GetOwningFortPawn."
+}

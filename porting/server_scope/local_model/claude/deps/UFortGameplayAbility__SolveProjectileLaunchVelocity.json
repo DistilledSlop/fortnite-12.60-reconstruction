@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__SolveProjectileLaunchVelocity",
+  "address": "0x14160ffd0",
+  "signature": "FVector UFortGameplayAbility::SolveProjectileLaunchVelocity(const FVector& Origin, const FVector& Aim, float Speed, float LaunchAngleDegrees, float& OutGravity) const",
+  "inc_or_decl": "// Ballistic solve for arc shots: returns the launch velocity that reaches Aim from Origin at the given speed and launch angle, and writes the gravity used. LOW: 168-line body not read; signature taken from the call site in 0x1415fc430.\nFVector SolveProjectileLaunchVelocity(const FVector& Origin, const FVector& Aim, float Speed, float LaunchAngleDegrees, float& OutGravity) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x14160ffd0.c"
+}

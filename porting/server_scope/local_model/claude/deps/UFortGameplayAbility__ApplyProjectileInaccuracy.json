@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__ApplyProjectileInaccuracy",
+  "address": "0x1415e9aa0",
+  "signature": "FVector UFortGameplayAbility::ApplyProjectileInaccuracy(const FVector& Origin, const FVector& AimLocation) const",
+  "inc_or_decl": "// Scales an inaccuracy factor from distance and the ability range fields (+0x8c0..+0x8e0), then jitters the aim with rand(). Returns AimLocation unchanged when the jitter result is at or below 0.1. Structure MEDIUM, constants LOW.\nFVector ApplyProjectileInaccuracy(const FVector& Origin, const FVector& AimLocation) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415e9aa0.c"
+}

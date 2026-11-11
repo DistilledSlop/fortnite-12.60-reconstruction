@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility_JumpBoostPack__GetJetpackOwner",
+  "address": "0x14162a180",
+  "signature": "APawn* UFortGameplayAbility_JumpBoostPack::GetJetpackOwner() const",
+  "inc_or_decl": "// Weak pointer at tracking context +0x380 then +0x20, IsValid. Same layout family as the ability tracking context. LOW on which pawn type is stored.\nAPawn* GetJetpackOwner() const;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x14162a180.c"
+}

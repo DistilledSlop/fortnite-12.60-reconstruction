@@ -1,0 +1,7 @@
+{
+  "name": "UFortEnvironmentDamageSubsystem__ApplyEnvironmentDamage",
+  "address": "0x14161d980",
+  "signature": "void UFortEnvironmentDamageSubsystem::ApplyEnvironmentDamage(IAbilitySystemInterface* Target, float Damage, const FGameplayTagContainer& Tags, TSubclassOf<UGameplayEffect> GEClass)",
+  "inc_or_decl": "// Returns early when Target is null or Damage <= 0 or the target ASC is missing or pending kill. Falls back to the subsystem default GE class when GEClass is null, creates the outgoing GE spec (0x14162cef0), sets the SetByCaller magnitude for the environment damage tag (0x140730440), and applies it to the target ASC. MEDIUM on flow, LOW on the default-class source.\nvoid ApplyEnvironmentDamage(IAbilitySystemInterface* Target, float Damage, const FGameplayTagContainer& Tags, TSubclassOf<UGameplayEffect> GEClass);",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x14161d980.c"
+}

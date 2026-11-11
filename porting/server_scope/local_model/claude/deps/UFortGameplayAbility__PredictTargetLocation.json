@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__PredictTargetLocation",
+  "address": "0x142322e60",
+  "signature": "FVector UFortGameplayAbility::PredictTargetLocation(AActor* Target, float Time) const",
+  "inc_or_decl": "// Target location plus target velocity * Time (virtual slot 0x2f0 gives velocity, slot 0x600 gives location). MEDIUM.\nFVector PredictTargetLocation(AActor* Target, float Time) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x142322e60.c"
+}

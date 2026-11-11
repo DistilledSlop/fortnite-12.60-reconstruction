@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__MakeActorInfo",
+  "address": "0x14237f3d0",
+  "signature": "FGameplayAbilityActorInfo UFortAbilitySystemComponent::MakeActorInfo() const",
+  "inc_or_decl": "// Builds the actor info struct for the ASC from its owner (+0x290 chain) and avatar fields (+0x220). LOW.\nFGameplayAbilityActorInfo MakeActorInfo() const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x14237f3d0.c"
+}

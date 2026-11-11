@@ -1,0 +1,25 @@
+{
+  "function": "UFortGameplayAbility_JumpBoostPack::SetCurrentState",
+  "status": "proposed",
+  "original": "0x1428fe960",
+  "signature": "void UFortGameplayAbility_JumpBoostPack::SetCurrentState(EJumpBoostPackState InState)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x140718920.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1428fc730.c",
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x1428fe960.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x14162a180.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x141639000.c"
+  ],
+  "callees": {
+    "0x141639000": "core (ported here)",
+    "0x140718920": "HasAuthorityForJetpack (dep)",
+    "0x1428fc730": "OnCurrentStateChanged blueprint event, declared in the generated header",
+    "0x14162a180": "HandleCurrentStateChanged (ported in this chunk)"
+  },
+  "deps": [
+    "UFortGameplayAbility_JumpBoostPack__HasAuthorityForJetpack",
+    "UFortGameplayAbility_JumpBoostPack__GetJetpackOwner"
+  ],
+  "notes": "Mirrors the core's branch: no owner or not authoritative falls through to the event, while an authoritative owner writes ServerCurrentState (member at 0xa38) and only fires the event when CurrentState changes. The header generated for this class already declares CurrentState and ServerCurrentState."
+}

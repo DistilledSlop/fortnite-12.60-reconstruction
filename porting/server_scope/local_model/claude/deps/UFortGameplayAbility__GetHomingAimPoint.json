@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__GetHomingAimPoint",
+  "address": "0x1415f96b0",
+  "signature": "void UFortGameplayAbility::GetHomingAimPoint(const FVector& Origin, AActor* Target, FVector& OutAimPoint) const",
+  "inc_or_decl": "// Writes the aim location for Target as seen from Origin, using the target cached transform (component at +0x130 of the target). Native has extra flags fixed to constants by the caller (lead on, velocity on). LOW: body only partially read.\nvoid GetHomingAimPoint(const FVector& Origin, AActor* Target, FVector& OutAimPoint) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415f96b0.c"
+}

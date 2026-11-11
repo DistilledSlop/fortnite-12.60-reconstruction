@@ -1,0 +1,24 @@
+{
+  "function": "UFortKismetLibrary::AddScoringEvent",
+  "status": "proposed",
+  "original": "0x142965b30",
+  "signature": "static void UFortKismetLibrary::AddScoringEvent(FGameplayTagContainer TargetTags, AController* Controller)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/25d7535c8e10490cb5edb9aa1b590a49/0x141a4cf10.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142a174f0.c",
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x142965b30.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x141ee4910.c"
+  ],
+  "callees": {
+    "0x142965b30": "exec body (ported here)",
+    "0x141ee4910": "controller player state dispatch (role 3 = authority, class check AFortPlayerStateAthena)",
+    "0x141a4cf10": "ProcessScoringEvent (dep)",
+    "0x142a174f0": "class getter pattern (engine)",
+    "FGameplayTagContainer copy and FMemory_Free": "engine helpers, not reproduced in the port"
+  },
+  "deps": [
+    "AFortPlayerStateAthena__ProcessScoringEvent"
+  ],
+  "notes": "The native checks the authority role (value 3) and the Athena class getter before forwarding. The port keeps the same gate order via the cast and role check; the native copies the tag container first, which the port does not need."
+}

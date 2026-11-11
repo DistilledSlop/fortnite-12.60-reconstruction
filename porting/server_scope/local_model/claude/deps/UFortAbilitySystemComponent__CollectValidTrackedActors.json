@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__CollectValidTrackedActors",
+  "address": "0x1416002a0",
+  "signature": "TArray<AActor*> UFortAbilitySystemComponent::CollectValidTrackedActors(const TArray<FFortTrackedActorEntry>& Entries) const",
+  "inc_or_decl": "// Copies the weak actor from each entry whose liveness predicate (0x141603dd0, not read) is true into the output array. MEDIUM on the copy loop, LOW on the predicate.\nTArray<AActor*> CollectValidTrackedActors(const TArray<FFortTrackedActorEntry>& Entries) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1416002a0.c"
+}

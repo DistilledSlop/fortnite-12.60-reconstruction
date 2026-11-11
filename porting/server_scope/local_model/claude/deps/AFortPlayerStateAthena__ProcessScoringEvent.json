@@ -1,0 +1,7 @@
+{
+  "name": "AFortPlayerStateAthena__ProcessScoringEvent",
+  "address": "0x141a4cf10",
+  "signature": "void AFortPlayerStateAthena::ProcessScoringEvent(const FGameplayTagContainer& TargetTags)",
+  "inc_or_decl": "// Checks the game state and current playlist scoring table, matches TargetTags against the table entries (inventory of tags in the player state), updates the score through AFortPlayerStateAthena_UpdateScoreForEvent and records stats. MEDIUM on flow, LOW on the stat hooks.\nvoid ProcessScoringEvent(const FGameplayTagContainer& TargetTags);",
+  "evidence": "captures/25d7535c8e10490cb5edb9aa1b590a49/0x141a4cf10.c"
+}

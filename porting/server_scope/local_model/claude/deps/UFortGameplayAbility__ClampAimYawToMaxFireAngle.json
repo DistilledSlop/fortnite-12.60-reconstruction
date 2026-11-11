@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__ClampAimYawToMaxFireAngle",
+  "address": "0x1415eebc0",
+  "signature": "FRotator UFortGameplayAbility::ClampAimYawToMaxFireAngle(const FRotator& Desired, const FRotator& Reference) const",
+  "inc_or_decl": "// Wraps the yaw difference to [-180, 180] and, when its magnitude exceeds MaxYawAngleToFire, places the result at Reference yaw +/- MaxYawAngleToFire. Pitch and roll come from Desired.\nFRotator ClampAimYawToMaxFireAngle(const FRotator& Desired, const FRotator& Reference) const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415eebc0.c"
+}

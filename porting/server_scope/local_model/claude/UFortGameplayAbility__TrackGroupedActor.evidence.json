@@ -1,0 +1,22 @@
+{
+  "function": "UFortGameplayAbility::TrackGroupedActor",
+  "status": "proposed",
+  "original": "0x1428f96b0",
+  "signature": "void UFortGameplayAbility::TrackGroupedActor(FGameplayTag GroupTag, AActor* ActorToTrack)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f96b0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x1415e2600.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x141610790.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x1416109f0.c"
+  ],
+  "callees": {
+    "0x1416109f0": "core: tag validity, find-or-add group by tag, AddTrackedActorToGroup (dep TrackActorInGroupInternal)",
+    "0x1415e2600": "FindOrAddTrackedActorEntriesByGroup (dep)",
+    "0x141610790": "AddTrackedActorToGroup (dep)"
+  },
+  "deps": [
+    "UFortGameplayAbility__TrackActorInGroupInternal"
+  ],
+  "notes": "Bytecode reads the actor first and the tag second; the port keeps the reflection order (GroupTag, ActorToTrack) in the signature and passes them to the internal in native order."
+}

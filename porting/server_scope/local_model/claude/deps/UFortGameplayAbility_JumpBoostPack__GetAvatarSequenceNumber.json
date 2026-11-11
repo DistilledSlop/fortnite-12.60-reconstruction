@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility_JumpBoostPack__GetAvatarSequenceNumber",
+  "address": "0x14162a180",
+  "signature": "int32 UFortGameplayAbility_JumpBoostPack::GetAvatarSequenceNumber() const",
+  "inc_or_decl": "// Gets the avatar actor through the virtual at slot 0x150, then reads the int32 at +0x540. Field name not recovered. LOW.\nint32 GetAvatarSequenceNumber() const;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x14162a180.c"
+}

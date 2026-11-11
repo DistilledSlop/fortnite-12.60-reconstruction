@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__MaxYawAngleToFire",
+  "address": "offset 0x8b8",
+  "signature": "float MaxYawAngleToFire",
+  "inc_or_decl": "// Maximum yaw deviation from the pawn facing for fire direction clamp. Name proposed.\nfloat MaxYawAngleToFire;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1415eebc0.c"
+}

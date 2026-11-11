@@ -1,0 +1,28 @@
+{
+  "function": "UFortKismetLibrary::ApplyGlobalEnvironmentDamageToActor",
+  "status": "proposed",
+  "original": "0x1429667b0",
+  "signature": "static void UFortKismetLibrary::ApplyGlobalEnvironmentDamageToActor(TSubclassOf<UGameplayEffect> EnvironmentDamageGE, FGameplayTagContainer AdditionalContextTags, float EnvironmentDamage, AActor* DamageTargetActor)",
+  "confidence": "MEDIUM",
+  "captures": [
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x140756aa0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x14161d980.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x141ef3af0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142ec9900.c",
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x1429667b0.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x141ee5740.c"
+  ],
+  "callees": {
+    "0x1429667b0": "exec body (ported here)",
+    "0x141ee5740": "core: target check, subsystem lookup, interface lookup, then environment damage apply",
+    "0x141ef3af0": "GetGlobalEnvironmentDamageSubsystem (dep)",
+    "0x140756aa0": "IAbilitySystemInterface static class getter (engine)",
+    "0x142ec9900": "interface cast helper: class implements interface (engine)",
+    "0x14161d980": "ApplyEnvironmentDamage (dep)"
+  },
+  "deps": [
+    "UFortKismetLibrary__GetGlobalEnvironmentDamageSubsystem",
+    "UFortEnvironmentDamageSubsystem__ApplyEnvironmentDamage"
+  ],
+  "notes": "Reflection order (EnvironmentDamageGE, AdditionalContextTags, EnvironmentDamage, DamageTargetActor) is kept in the signature; the native reads (target, float, tags, class) in offset order. The native passes a null interface through to the subsystem, and the port does the same."
+}

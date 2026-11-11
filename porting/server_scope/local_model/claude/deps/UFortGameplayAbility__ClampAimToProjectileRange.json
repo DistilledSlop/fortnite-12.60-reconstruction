@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__ClampAimToProjectileRange",
+  "address": "0x1415fc430",
+  "signature": "FVector UFortGameplayAbility::ClampAimToProjectileRange(const FVector& Origin, const FVector& Aim) const",
+  "inc_or_decl": "// Inline block inside 0x1415fc430 on the lead path: when projectile range data is non-zero and the aim is farther than the range, the aim is pulled back along the origin-to-aim direction. LOW (inline, reconstructed from arithmetic).\nFVector ClampAimToProjectileRange(const FVector& Origin, const FVector& Aim) const;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x1415fc430.c"
+}

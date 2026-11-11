@@ -1,0 +1,7 @@
+{
+  "name": "UFortJetpackComponent__GetFuelDrainRate",
+  "address": "0x14070cc00",
+  "signature": "float UFortJetpackComponent::GetFuelDrainRate() const",
+  "inc_or_decl": "// Reads a float at +0x184 of the jetpack component (native reads the field through the +0x178 sub-object). Field identity MEDIUM, name LOW.\nfloat GetFuelDrainRate() const;",
+  "evidence": "captures/2109b09a0c394aeb87acc6c7608881fd/0x14070cc00.c"
+}

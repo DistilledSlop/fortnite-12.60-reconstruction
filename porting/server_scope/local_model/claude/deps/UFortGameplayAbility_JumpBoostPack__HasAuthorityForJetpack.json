@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility_JumpBoostPack__HasAuthorityForJetpack",
+  "address": "0x140718920",
+  "signature": "bool UFortGameplayAbility_JumpBoostPack::HasAuthorityForJetpack() const",
+  "inc_or_decl": "// Authority check used by SetCurrentState to decide whether ServerCurrentState is written. LOW: body not read beyond its first 40 lines (likely HasAuthority on the owner).\nbool HasAuthorityForJetpack() const;",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x140718920.c"
+}

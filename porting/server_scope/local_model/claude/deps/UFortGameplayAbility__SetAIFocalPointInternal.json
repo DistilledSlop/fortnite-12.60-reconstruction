@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__SetAIFocalPointInternal",
+  "address": "0x14160c400",
+  "signature": "void UFortGameplayAbility::SetAIFocalPointInternal(AActor* FocusTarget, const FVector& FocalPoint, bool bUseAttackingPriority)",
+  "inc_or_decl": "// Requires the owning pawn to be an AFortAIPawn (class getter 0x1427a1790), then forwards to ApplyAIFocusToPawn. MEDIUM.\nvoid SetAIFocalPointInternal(AActor* FocusTarget, const FVector& FocalPoint, bool bUseAttackingPriority);",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x14160c400.c"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "UFortAbilitySystemComponent__AddTrackedActorToGroup",
+  "address": "0x141610790",
+  "signature": "void UFortAbilitySystemComponent::AddTrackedActorToGroup(TArray<FFortTrackedActorEntry>& Group, AActor* Actor, const UFortGameplayAbility* Ability)",
+  "inc_or_decl": "// Grows the group to Ability->ActorTrackingSettings.MaximumTrackedActors evaluated at the ability level (0x1406c71b0). Evicts the previous actor in the first slot (0x1415efe00), stamps the slot with the current serial (ASC field +0x540) and the new actor, then re-orders with 0x1415e4740. MEDIUM.\nvoid AddTrackedActorToGroup(TArray<FFortTrackedActorEntry>& Group, AActor* Actor, const UFortGameplayAbility* Ability);",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x141610790.c"
+}

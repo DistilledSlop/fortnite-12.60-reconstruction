@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__bUseMaxYawAngleToFire",
+  "address": "offset 0x8bc",
+  "signature": "bool bUseMaxYawAngleToFire",
+  "inc_or_decl": "// Gates the yaw clamp in GetProjectileInitialValues. Name proposed.\nbool bUseMaxYawAngleToFire;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x1415fc430.c"
+}

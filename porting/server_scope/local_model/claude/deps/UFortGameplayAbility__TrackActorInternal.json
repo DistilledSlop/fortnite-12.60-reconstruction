@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__TrackActorInternal",
+  "address": "0x1416108c0",
+  "signature": "void UFortGameplayAbility::TrackActorInternal(AActor* ActorToTrack)",
+  "inc_or_decl": "// No-op unless ActorToTrack, the ASC and TrackingId (not -1) are valid. Find-or-adds the group for TrackingId and calls AddTrackedActorToGroup. MEDIUM.\nvoid TrackActorInternal(AActor* ActorToTrack);",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x1416108c0.c"
+}

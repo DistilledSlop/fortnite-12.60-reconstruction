@@ -1,0 +1,32 @@
+{
+  "function": "UFortKismetLibrary::ApplyCharacterCosmetics",
+  "status": "proposed",
+  "original": "0x142965ca0",
+  "signature": "static void UFortKismetLibrary::ApplyCharacterCosmetics(bool& bSuccess, AFortPlayerState* PlayerState, const TArray<UCustomCharacterPart*>& CharacterParts, UObject* WorldContextObject)",
+  "confidence": "LOW",
+  "captures": [
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x141d9ef80.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x14237f3d0.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142390780.c",
+    "captures/28c4386e3e444583ad530fdc7452bb79/0x142414c60.c",
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x142965ca0.c",
+    "captures/d5066f13c8e54d10a0abed45f8090963/0x141ee4ab0.c"
+  ],
+  "callees": {
+    "0x142965ca0": "exec body (ported here)",
+    "0x141ee4ab0": "core: authority + parts gate, ASC and avatar lookup, then ApplyCharacterParts (inline here)",
+    "0x142414c60": "GetFortAbilitySystemComponent (dep)",
+    "0x142390780": "GetCosmeticApplyFlags (dep)",
+    "0x14237f3d0": "MakeActorInfo (dep)",
+    "0x141d9ef80": "ApplyCharacterParts (dep), returns success"
+  },
+  "deps": [
+    "AFortPlayerState__GetFortAbilitySystemComponent",
+    "UFortAbilitySystemComponent__GetAvatarActor",
+    "UFortAbilitySystemComponent__GetCosmeticApplyFlags",
+    "UFortAbilitySystemComponent__MakeActorInfo",
+    "UFortCosmeticsComponent__ApplyCharacterParts",
+    "AFortPlayerState__CosmeticsComponent"
+  ],
+  "notes": "Parameter order from the native reads (world context, parts array, player state, out bool) matches reflection offsets 0, 8, 24. The cosmetics component name, the flag helper and the actor-info builder are LOW; the ApplyCharacterParts body was only partially read."
+}

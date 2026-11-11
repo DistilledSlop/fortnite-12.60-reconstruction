@@ -1,0 +1,7 @@
+{
+  "name": "UFortGameplayAbility__TrackingId",
+  "address": "offset 0x388",
+  "signature": "int32 TrackingId",
+  "inc_or_decl": "// Tracking key used to index the ASC tracking map. Name proposed; offset 0x388 confirmed by all tracking getters.\nint32 TrackingId;",
+  "evidence": "captures/d5066f13c8e54d10a0abed45f8090963/0x141600340.c"
+}

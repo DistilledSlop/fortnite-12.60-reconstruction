@@ -1,0 +1,7 @@
+{
+  "name": "APawn__ModifyFuelTagValue",
+  "address": "0x1406b8620",
+  "signature": "void APawn::ModifyFuelTagValue(FGameplayTag Tag, float Delta)",
+  "inc_or_decl": "// Applies Delta to the fuel tag value on the pawn (native caller passes (pawn, Fuel tag, 0, -cost)). LOW: callee body only partially read.\nvoid ModifyFuelTagValue(FGameplayTag Tag, float Delta);",
+  "evidence": "captures/28c4386e3e444583ad530fdc7452bb79/0x1406b8620.c"
+}
