@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_SetSceneComponentHiddenForOtherWeapons",
+  "address": "0x1423af010",
+  "signature": "bool SetSceneComponentHiddenForOtherWeapons(AFortWeapon* Source, USceneComponent* SceneComp, bool bPropagateToChildren, bool bHidden)",
+  "inc_or_decl": "// Native 0x1423af010. Source weapon and weapons with the same owning controller get !bPropagateToChildren; others get bPropagateToChildren.\nbool bAny = false;\nAController* SourceController = Source->GetOwningController();\nfor (AFortWeapon* Weapon : GetAllWeaponActors(Source->GetWorld()))\n{\n    const bool bSameOwner = (Weapon == Source) || (SourceController && Weapon->GetOwningController() == SourceController);\n    const bool bPropagate = bSameOwner ? !bPropagateToChildren : bPropagateToChildren;\n    if (SetSceneComponentHiddenInGameInternal(Weapon, SceneComp, bPropagate, bHidden))\n    {\n        bAny = true;\n    }\n}\nreturn bAny;",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1423af010.c"
+  ]
+}

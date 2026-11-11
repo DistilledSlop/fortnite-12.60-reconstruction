@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_PlayChargeStartFX",
+  "address": "0x1406b5480",
+  "signature": "void PlayChargeStartFX()",
+  "inc_or_decl": "// DECL ONLY (LOW). Native 0x1406b5480 called from BeginWeaponCharge with the charge FX data (+0x270 of the charge component's data). Not captured.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426b5df0.c"
+  ]
+}

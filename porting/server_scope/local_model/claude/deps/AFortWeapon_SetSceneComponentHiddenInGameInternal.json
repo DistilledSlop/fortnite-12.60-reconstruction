@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_SetSceneComponentHiddenInGameInternal",
+  "address": "0x1423aec80",
+  "signature": "bool SetSceneComponentHiddenInGameInternal(AActor* Actor, USceneComponent* SceneComp, bool bPropagateToChildren, bool bHidden)",
+  "inc_or_decl": "// DECL ONLY (LOW). Native 0x1423aec80, 160 lines: walks the actor's scene components and applies hidden state, optionally to children. Body not ported.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1423aec80.c"
+  ]
+}

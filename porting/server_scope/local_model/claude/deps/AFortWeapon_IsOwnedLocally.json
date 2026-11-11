@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_IsOwnedLocally",
+  "address": "thunk_FUN_141ed8de0",
+  "signature": "bool IsOwnedLocally()",
+  "inc_or_decl": "// DECL ONLY (LOW). Local-ownership test used by GetADSTransitionInTime and the charge code. Name is a proposal.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426c9f70.c"
+  ]
+}

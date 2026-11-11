@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_ServerResetShotReport_Implementation",
+  "address": "0x1426b0cc0",
+  "signature": "void ServerResetShotReport_Implementation()",
+  "inc_or_decl": "// Native 0x1426b0cc0 (vtable +0x640). Clears the shot log and resets the current index.\nShotLogFlags.Empty(0);\nCurrentShotLogIndex = INDEX_NONE;",
+  "evidence": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual4/0x1426b0cc0.c"
+  ]
+}

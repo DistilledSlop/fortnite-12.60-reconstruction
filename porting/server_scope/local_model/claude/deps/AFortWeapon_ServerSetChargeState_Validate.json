@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_ServerSetChargeState_Validate",
+  "address": "0x1406801d0",
+  "signature": "bool ServerSetChargeState_Validate(uint8 NewState)",
+  "inc_or_decl": "return true;  // AFortWeapon vtable +0x650 -> Stub_ReturnTrue (0x1406801d0)",
+  "evidence": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ]
+}

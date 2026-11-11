@@ -1,0 +1,10 @@
+{
+  "name": "AFortWeapon_SetSceneComponentHiddenForOtherLocalControllers",
+  "address": "0x1426b2f60",
+  "signature": "bool SetSceneComponentHiddenForOtherLocalControllers(USceneComponent* SceneComp, bool bPropagateToChildren, bool bHidden)",
+  "inc_or_decl": "// Native 0x1426b2f60. Requires an owning player controller and a counterpart weapon from 0x1426a07c0.\nAFortPlayerController* OwnerController = Cast<AFortPlayerController>(GetOwner());\nif (!OwnerController)\n{\n    return false;\n}\nAFortWeapon* Counterpart = GetOwnerCurrentWeapon();   // 0x1426a07c0 (name LOW)\nif (!Counterpart)\n{\n    return false;\n}\nreturn SetSceneComponentHiddenForOtherWeapons(Counterpart, SceneComp, bPropagateToChildren, bHidden);",
+  "evidence": [
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426b2f60.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426a07c0.c"
+  ]
+}

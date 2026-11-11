@@ -1,0 +1,10 @@
+{
+  "name": "AFortWeapon_SetSceneComponentHiddenForOwningController",
+  "address": "0x1426b2e20",
+  "signature": "bool SetSceneComponentHiddenForOwningController(USceneComponent* SceneComp, bool bPropagateToChildren, bool bHidden)",
+  "inc_or_decl": "// Native 0x1426b2e20. Applies to every AFortWeapon in the world owned by this weapon's owning player controller.\nbool bResult = false;\nAFortPlayerController* OwnerController = Cast<AFortPlayerController>(GetOwner());\nif (!OwnerController)\n{\n    return bResult;\n}\nfor (AFortWeapon* Weapon : GetAllWeaponActors(GetWorld()))\n{\n    if (Weapon->HasWeaponStats() && Weapon->GetOwningController() == OwnerController)\n    {\n        bResult = SetSceneComponentHiddenInGameInternal(Weapon, SceneComp, bPropagateToChildren, bHidden);\n    }\n}\nreturn bResult;",
+  "evidence": [
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426b2e20.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1423aec80.c"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "function": "AFortWeaponRanged::GetADSTransitionInTime",
+  "status": "proposed",
+  "original": "0x142b4f480",
+  "signature": "float GetADSTransitionInTime()",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b4f480.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426c9f70.c"
+  ],
+  "callees": {
+    "0x1426c9f70": "Gate (0x14269e3e0); owned-locally branch returns WeaponData ADS transition float (+0x240) or 0; remote branch reads owner-held replicated value (decl only).",
+    "thunk_FUN_141ed8de0": "IsOwnedLocally test (LOW name).",
+    "vtable +0x6b0": "GetWeaponData (ported, see porting/behavior/AFortWeapon/GetWeaponData.inc)."
+  },
+  "notes": "Owned-locally branch is MEDIUM-HIGH (field offset exact, name unresolved). Remote branch and gate are LOW."
+}

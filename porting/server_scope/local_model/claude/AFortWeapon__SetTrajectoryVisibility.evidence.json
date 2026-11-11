@@ -1,0 +1,14 @@
+{
+  "function": "AFortWeapon::SetTrajectoryVisibility",
+  "status": "proposed",
+  "original": "0x142b48a00",
+  "signature": "void SetTrajectoryVisibility(bool bNewVisible)",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b48a00.c",
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426b3990.c"
+  ],
+  "callees": {
+    "0x1426b3990": "Trajectory core: stores inverted flag bTrajectoryHidden (+0xb80), then syncs the AttachedTrajectoryIndicator (+0x914) hidden state."
+  },
+  "notes": "Full body read. The indicator-visibility test reads a UObject-typed flag through pointer arithmetic in the decompile; mapped to IsHidden() at MEDIUM."
+}

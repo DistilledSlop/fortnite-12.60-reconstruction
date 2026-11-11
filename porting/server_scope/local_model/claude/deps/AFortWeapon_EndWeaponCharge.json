@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_EndWeaponCharge",
+  "address": "0x142698da0",
+  "signature": "void EndWeaponCharge()",
+  "inc_or_decl": "// LOW. Native 0x142698da0: owner charge component; when WeaponState==3 and FX data valid, stop charge FX (0x1406d88f0).\n// Then if owner is local or WeaponState==3, sets bit 0x40 in the flags word at +0x900 (name unresolved).\nif (AFortPlayerController* OwnerController = Cast<AFortPlayerController>(GetOwner()))\n{\n    if (UObject* ChargeComponent = OwnerController->GetChargeComponentForWeapon())\n    {\n        if (WeaponState == 3 && IsValid(ChargeComponent))\n        {\n            StopChargeFX();   // 0x1406d88f0 (not named)\n        }\n    }\n    if (OwnerController->IsLocalController() || WeaponState == 3)\n    {\n        ChargeFlags |= 0x40;   // +0x900, name unresolved\n    }\n}",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x142698da0.c"
+  ]
+}

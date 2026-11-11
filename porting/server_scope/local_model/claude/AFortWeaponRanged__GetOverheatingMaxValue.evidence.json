@@ -1,0 +1,20 @@
+{
+  "function": "AFortWeaponRanged::GetOverheatingMaxValue",
+  "status": "proposed",
+  "original": "0x142b4f7d0",
+  "signature": "float GetOverheatingMaxValue()",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b4f7d0.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426cbcd0.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1406c7d70.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1406a8e40.c",
+    "captures/08140e47ad19496ebe15b7f549570d71/0x142cd4ab0.c"
+  ],
+  "callees": {
+    "0x1426ced60": "Owner ability component -> FortWeaponAttrSet lookup (0x1406c7d70) -> static FGameplayAttribute 'WeaponOverheatMaxMultiplier' (0x1406a8e40, FName 0x142cd4ab0) -> attribute value with default WeaponData+0x2a4 (0x1426cbcd0). Returns 1.0f when the attribute set is missing.",
+    "0x1406c7d70": "FindAttributeSetOfClass (LOW name).",
+    "0x1406a8e40": "FindAttributeByName (LOW name).",
+    "0x142cd4ab0": "FName construction from wide literal."
+  },
+  "notes": "Attribute name, the 1.0f fallback and the default source (WeaponData +0x2a4) are exact; the accessor 0x1426cbcd0 and the attribute-set helpers are LOW names."
+}

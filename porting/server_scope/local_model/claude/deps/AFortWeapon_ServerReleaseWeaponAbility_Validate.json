@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_ServerReleaseWeaponAbility_Validate",
+  "address": "0x1406801d0",
+  "signature": "bool ServerReleaseWeaponAbility_Validate(FGameplayAbilitySpecHandle SpecHandle)",
+  "inc_or_decl": "return true;  // AFortWeapon vtable +0x628 -> Stub_ReturnTrue (0x1406801d0); subclasses may override",
+  "evidence": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c"
+  ]
+}

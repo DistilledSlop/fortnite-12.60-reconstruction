@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_GetOverheatAttributeValueOrDefault",
+  "address": "0x1426cbcd0",
+  "signature": "float GetWeaponAttributeValueOrDefault(const FGameplayAttribute& Attribute, float DefaultValue)",
+  "inc_or_decl": "// DECL ONLY (LOW). Native 0x1426cbcd0 (141 lines): reads the attribute's current value from the owner's ability set, falling back to DefaultValue.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426cbcd0.c"
+  ]
+}

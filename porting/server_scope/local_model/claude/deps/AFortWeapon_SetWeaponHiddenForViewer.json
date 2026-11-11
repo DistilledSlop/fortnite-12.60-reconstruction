@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_SetWeaponHiddenForViewer",
+  "address": "0x1423ae360",
+  "signature": "void SetWeaponHiddenForViewer(AActor* Viewer, bool bAddToList)",
+  "inc_or_decl": "// Native 0x1423ae360: bAddToList -> AddUnique to the per-viewer list (+0x2e8); otherwise removes Viewer entries from it (compaction).",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1423ae360.c"
+  ]
+}

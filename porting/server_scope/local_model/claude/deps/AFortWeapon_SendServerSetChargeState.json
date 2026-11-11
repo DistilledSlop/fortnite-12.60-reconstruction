@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_SendServerSetChargeState",
+  "address": "0x142b44310",
+  "signature": "void SendServerSetChargeState(uint8 NewState)",
+  "inc_or_decl": "// DECL ONLY (LOW). Native 0x142b44310: client-to-server send of the charge state (the replicated RPC path). Not captured; name is a proposal.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426b21a0.c"
+  ]
+}

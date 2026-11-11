@@ -1,0 +1,18 @@
+{
+  "function": "AFortWeapon::SetHiddenInGameOtherLocalControllersOnly",
+  "status": "proposed",
+  "original": "0x142b48490",
+  "signature": "bool SetHiddenInGameOtherLocalControllersOnly(USceneComponent* SceneComp, bool bPropagateToChildren, bool bNewHidden)",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b48490.c",
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426b2f60.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1423af010.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426a07c0.c"
+  ],
+  "callees": {
+    "0x1426b2f60": "SetSceneComponentHiddenForOtherLocalControllers: needs owning controller and counterpart weapon (0x1426a07c0), then 0x1423af010 walk (dep ..._SetSceneComponentHiddenForOtherLocalControllers).",
+    "0x1423af010": "SetSceneComponentHiddenForOtherWeapons: source and same-owner weapons get !bPropagate, others get bPropagate; returns OR of results.",
+    "0x1426a07c0": "GetOwnerCurrentWeapon (LOW name)."
+  },
+  "notes": "Parameter order as in SetHiddenInGameControllerOnly. Walk semantics for 0x1423af010 are MEDIUM; 0x1426a07c0 helper name is LOW."
+}

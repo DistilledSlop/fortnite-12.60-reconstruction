@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeaponRanged_GetRemoteADSTransitionInTime",
+  "address": "0x1426c9f70 (remote branch)",
+  "signature": "float GetRemoteADSTransitionInTime()",
+  "inc_or_decl": "// DECL ONLY (LOW). Remote-owner branch of 0x1426c9f70: value from the owner's replicated weapon-stat holder (class gate 0x142856e60). Not fully named.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426c9f70.c"
+  ]
+}

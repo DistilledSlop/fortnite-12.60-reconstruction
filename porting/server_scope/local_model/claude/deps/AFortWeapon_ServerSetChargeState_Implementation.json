@@ -1,0 +1,11 @@
+{
+  "name": "AFortWeapon_ServerSetChargeState_Implementation",
+  "address": "0x1426b0d00",
+  "signature": "void ServerSetChargeState_Implementation(uint8 NewState)",
+  "inc_or_decl": "// Native 0x1426b0d00 (vtable +0x658).\nconst uint8 CurrentChargeState = static_cast<uint8>(ChargeStatusPack & 0xFF);   // ChargeStatusPack +0x904, low byte\nif (NewState != CurrentChargeState)\n{\n    if (CurrentChargeState == 0)\n    {\n        if (NewState == 1)\n        {\n            BeginWeaponCharge();      // 0x1426b5df0\n        }\n    }\n    else if (NewState == 4)\n    {\n        EndWeaponCharge();            // 0x142698da0\n    }\n    SetChargeStatusInternal(NewState);   // 0x1426b21a0\n}",
+  "evidence": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1426b0d00.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426b21a0.c",
+    "captures/c23dcac8a684482d9bcfeacaa6e63d5e/0x1426933f0.c"
+  ]
+}

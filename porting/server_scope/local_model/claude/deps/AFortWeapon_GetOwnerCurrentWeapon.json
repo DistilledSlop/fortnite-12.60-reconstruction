@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_GetOwnerCurrentWeapon",
+  "address": "0x1426a07c0",
+  "signature": "AFortWeapon* GetOwnerCurrentWeapon()",
+  "inc_or_decl": "// DECL ONLY (LOW). Native 0x1426a07c0: returns the AFortWeapon counterpart held by this weapon's owner (IsA AFortWeapon checked by callers). Name is a proposal.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426a07c0.c"
+  ]
+}

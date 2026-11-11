@@ -1,0 +1,13 @@
+{
+  "function": "AFortWeaponRanged::DeactivateBeamFX",
+  "status": "proposed",
+  "original": "0x142b4f280",
+  "signature": "void DeactivateBeamFX()",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b4f280.c"
+  ],
+  "callees": {
+    "BeamPSC vtable +0x270 (0x14439d410 on UParticleSystemComponent)": "Deactivate the beam particle system. Slot taken as UParticleSystemComponent::DeactivateSystem (not name-confirmed)."
+  },
+  "notes": "Null guard and virtual dispatch on BeamPSC (+0xe78, member name BeamPSC resolved). The slot-to-name mapping is MEDIUM."
+}

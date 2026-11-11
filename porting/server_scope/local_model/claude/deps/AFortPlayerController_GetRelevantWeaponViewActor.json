@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController_GetRelevantWeaponViewActor",
+  "address": "vtable +0x1120 on controller",
+  "signature": "AActor* GetRelevantWeaponViewActor(bool bUnused)",
+  "inc_or_decl": "// DECL ONLY (LOW). Controller virtual +0x1120, called with 0. Returns the actor used as the weapon view target (name proposal).",
+  "evidence": [
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426b3b20.c"
+  ]
+}

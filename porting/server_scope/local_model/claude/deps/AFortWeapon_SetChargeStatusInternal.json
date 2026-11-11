@@ -1,0 +1,10 @@
+{
+  "name": "AFortWeapon_SetChargeStatusInternal",
+  "address": "0x1426b21a0",
+  "signature": "void SetChargeStatusInternal(uint8 NewState)",
+  "inc_or_decl": "// Native 0x1426b21a0. ChargeStatusPackShadow is the +0x906 copy of the replicated pack (name LOW).\nconst uint8 OldState = static_cast<uint8>(ChargeStatusPackShadow & 0xFF);\nif (OldState == NewState)\n{\n    return;\n}\n// Bump the counter byte (+0x907) and store the new state in the low byte.\nChargeStatusPackShadow = static_cast<uint16>((((ChargeStatusPackShadow >> 8) & 0xFF) + 1) << 8 | NewState);\nOnChargeStateChangedInternal(OldState, NewState);   // 0x1426933f0\nif (AFortPlayerController* OwnerController = Cast<AFortPlayerController>(GetOwner()))\n{\n    if (OwnerController->IsLocalController() && WeaponState != 3)\n    {\n        SendServerSetChargeState(NewState);   // 0x142b44310 client->server send (not ported)\n    }\n}\nChargeStatusPack = ChargeStatusPackShadow;\nOnRep_ChargeStatusPack();   // vtable +0x5e8",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426b21a0.c",
+    "captures/c23dcac8a684482d9bcfeacaa6e63d5e/0x1426933f0.c"
+  ]
+}

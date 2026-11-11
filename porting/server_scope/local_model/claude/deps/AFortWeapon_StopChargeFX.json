@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_StopChargeFX",
+  "address": "0x1406d88f0",
+  "signature": "void StopChargeFX()",
+  "inc_or_decl": "// DECL ONLY (LOW). Native 0x1406d88f0 called from EndWeaponCharge with the charge FX data (+0x270). Not captured.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x142698da0.c"
+  ]
+}

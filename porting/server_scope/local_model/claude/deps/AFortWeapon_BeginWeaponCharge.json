@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_BeginWeaponCharge",
+  "address": "0x1426b5df0",
+  "signature": "void BeginWeaponCharge()",
+  "inc_or_decl": "// LOW. Native 0x1426b5df0: gets owner charge component, when WeaponState==3 plays charge-start FX (0x1406b5480),\n// then marks charging started and moves charge state to 1.\nif (AFortPlayerController* OwnerController = Cast<AFortPlayerController>(GetOwner()))\n{\n    if (WeaponState == 3 && OwnerController->GetChargeComponentForWeapon())\n    {\n        PlayChargeStartFX();   // 0x1406b5480 (not named)\n    }\n    if (OwnerController->IsLocalController() || WeaponState == 3)\n    {\n        bChargeStarted = true;     // byte +0x28a\n        SetChargeStatusInternal(1);\n    }\n}",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426b5df0.c"
+  ]
+}

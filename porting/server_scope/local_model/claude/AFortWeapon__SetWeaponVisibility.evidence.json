@@ -1,0 +1,19 @@
+{
+  "function": "AFortWeapon::SetWeaponVisibility",
+  "status": "proposed",
+  "original": "0x142b48c60",
+  "signature": "void SetWeaponVisibility(bool bForceUpdate, bool bDesiredVisibility)",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b48c60.c",
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426b3b20.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1419f38a0.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x142b44250.c"
+  ],
+  "callees": {
+    "0x1426b3b20": "SetWeaponVisibilityInternal: hide/notify on change or force, owner view-actor update, then trajectory sync.",
+    "0x142b44250": "NotifyVisibilityChanged BP event (bVisible, bControllerOnly=false).",
+    "0x1419f38a0": "SetActorVisibilityInternal applied to the owner view actor.",
+    "0x1426b3990": "SetTrajectoryVisibility (inlined as the exec call)."
+  },
+  "notes": "Bool order: the FFrame read order gives the first bool as bDesiredVisibility and the second as bForceUpdate (the body only makes sense that way). The reflection list is [bForceUpdate, bDesiredVisibility]. Conflict noted; body follows the read order. Owner-view actor is LOW-MEDIUM."
+}

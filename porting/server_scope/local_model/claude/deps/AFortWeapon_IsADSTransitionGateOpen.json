@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_IsADSTransitionGateOpen",
+  "address": "0x14269e3e0",
+  "signature": "bool IsADSTransitionGateOpen()",
+  "inc_or_decl": "// DECL ONLY (LOW). Native 0x14269e3e0 gate for the ADS-transition read (returns non-null when enabled).",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426c9f70.c"
+  ]
+}

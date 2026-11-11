@@ -1,0 +1,13 @@
+{
+  "function": "AFortWeapon::WeaponDataIsValid",
+  "status": "proposed",
+  "original": "0x142b49030",
+  "signature": "bool WeaponDataIsValid()",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b49030.c"
+  ],
+  "callees": {
+    "GUObjectArray item (+8 bit 0x20000000)": "IsValid-style test: non-null WeaponData whose object item is not pending kill. Inlined as IsValid(WeaponData)."
+  },
+  "notes": "The decompile checks the object's array-index slot and flags bit 29 (PendingKill style). Mapped to UE IsValid. Reads only the decompile; no further callees."
+}

@@ -1,0 +1,17 @@
+{
+  "function": "AFortWeapon::ServerReleaseWeaponAbility",
+  "status": "proposed",
+  "original": "0x142b48150",
+  "signature": "void ServerReleaseWeaponAbility(FGameplayAbilitySpecHandle SpecHandle)",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b48150.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1426b0cb0.c"
+  ],
+  "callees": {
+    "0x1406801d0 (vtable +0x628)": "Stub_ReturnTrue; AFortWeapon validate always passes (dep ..._Validate).",
+    "0x1426b0cb0 (vtable +0x630)": "thunk for 0x1426aec00; release ability spec via owner ASC (dep ..._Implementation).",
+    "RPC_ValidateFailed": "engine helper; logs the failed validate name."
+  },
+  "notes": "Exec-side RPC dispatch is exact. The implementation body is a dep at MEDIUM confidence (ASC spec release and local-controller notify names are proposals)."
+}

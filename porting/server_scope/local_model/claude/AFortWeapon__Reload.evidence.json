@@ -1,0 +1,14 @@
+{
+  "function": "AFortWeapon::Reload",
+  "status": "proposed",
+  "original": "0x14290d910",
+  "signature": "void Reload()",
+  "captures": [
+    "captures/86852e92f0c84cbe8e45a8662999ee41/0x14290d910.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual4/0x1426aecd0.c"
+  ],
+  "callees": {
+    "0x1426aecd0 (vtable +0x838)": "Reload_Implementation: native reload body; gated by vtable +0x790, owner-controller checks, ammo helper 0x140731610, timer/refresh helpers 0x1426a5af0/0x1426a5ab0, 0x142698da0 charge end. Not ported (dep AFortWeapon_Reload_Implementation)."
+  },
+  "notes": "Exec is a pure virtual dispatch; the overridable body is a separate dep. The 0x1426aecd0 helpers are only partly named."
+}

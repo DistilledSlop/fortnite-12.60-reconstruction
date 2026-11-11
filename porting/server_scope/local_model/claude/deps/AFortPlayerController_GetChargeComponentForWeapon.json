@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController_GetChargeComponentForWeapon",
+  "address": "controller +0x4c8 -> vtable +0x10",
+  "signature": "UObject* GetChargeComponentForWeapon()",
+  "inc_or_decl": "// DECL ONLY (MEDIUM). Same owner-controller component path as GetAbilitySystemComponentForWeapon (native 0x142698da0 / 0x1426b5df0 read it at +0x4c8, vtable +0x10).",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x142698da0.c"
+  ]
+}

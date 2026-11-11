@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_GetAllWeaponActors",
+  "address": "0x14468fb70 (world list)",
+  "signature": "TArray<AFortWeapon*> GetAllWeaponActors(UWorld* World)",
+  "inc_or_decl": "// DECL ONLY (LOW). Native fills a weak-pointer list of world actors of class AFortWeapon (class check via 0x142a3d9f0). Returns valid, non-null weapons.",
+  "evidence": [
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426b2e20.c"
+  ]
+}

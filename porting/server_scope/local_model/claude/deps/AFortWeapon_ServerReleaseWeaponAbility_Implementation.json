@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_ServerReleaseWeaponAbility_Implementation",
+  "address": "0x1426b0cb0 -> 0x1426aec00",
+  "signature": "void ServerReleaseWeaponAbility_Implementation(FGameplayAbilitySpecHandle SpecHandle)",
+  "inc_or_decl": "// Native thunk 0x1426b0cb0 -> 0x1426aec00 (vtable +0x630). Owner must be a player controller.\nAFortPlayerController* OwnerController = Cast<AFortPlayerController>(GetOwner());\nUAbilitySystemComponent* ASC = OwnerController ? OwnerController->GetAbilitySystemComponentForWeapon() : nullptr;\nif (ASC && SpecHandle.IsValid())\n{\n    if (FGameplayAbilitySpec* Spec = ASC->FindAbilitySpecFromHandle(SpecHandle))\n    {\n        ASC->AbilitySpecInputReleased(*Spec);   // ASC vtable +0x7a0 (name MEDIUM)\n    }\n}\nif (WeaponState < 3 && OwnerController && OwnerController->IsLocalController())   // WeaponState at +0xf0, IsLocalController = controller vtable +0x6b0 (MEDIUM)\n{\n    NotifyWeaponAbilityReleased(SpecHandle);   // BP event dispatched on the weapon (0x142b442d0)\n}",
+  "evidence": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1426b0cb0.c"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "function": "AFortWeapon::SetHiddenInGameControllerOnly",
+  "status": "proposed",
+  "original": "0x142b48380",
+  "signature": "bool SetHiddenInGameControllerOnly(USceneComponent* SceneComp, bool bPropagateToChildren, bool bNewHidden)",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b48380.c",
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426b2e20.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1423aec80.c"
+  ],
+  "callees": {
+    "0x1426b2e20": "SetSceneComponentHiddenForOwningController: applies to weapons whose owning controller matches (dep AFortWeapon_SetSceneComponentHiddenForOwningController).",
+    "0x1423aec80": "SetSceneComponentHiddenInGameInternal: 160-line scene-component walker, DECL ONLY (LOW)."
+  },
+  "notes": "Parameter order follows the FFrame read order (SceneComp, bPropagateToChildren, bNewHidden). The reflection list orders them differently (bPropagateToChildren, bNewHidden, SceneComp)."
+}

@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_OnChargeStateChangedInternal",
+  "address": "0x1426933f0",
+  "signature": "void OnChargeStateChangedInternal(uint8 OldState, uint8 NewState)",
+  "inc_or_decl": "// LOW. Native 0x1426933f0: NewState 1 -> (on OldState==0) FUN_142b44150, then FUN_142b43a50(weapon); NewState 4 -> FUN_142b43a10(); NewState 2 -> owner-controller path (0x142a174f0 check).",
+  "evidence": [
+    "captures/c23dcac8a684482d9bcfeacaa6e63d5e/0x1426933f0.c"
+  ]
+}

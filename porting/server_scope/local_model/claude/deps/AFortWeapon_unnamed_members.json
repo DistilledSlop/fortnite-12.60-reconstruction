@@ -1,0 +1,11 @@
+{
+  "name": "AFortWeapon_unnamed_members",
+  "address": "offsets on AFortWeapon / AActor",
+  "signature": "(members)",
+  "inc_or_decl": "// Member names NOT resolved by evidence.py field-offset; proposed names used in the .inc bodies:\n//   AFortWeapon +0xf0  byte  WeaponState            (values 0..3; 3 = charged)\n//   AFortWeapon +0x906 int16 ChargeStatusPackShadow (copy of ChargeStatusPack; low byte state, high byte counter)\n//   AFortWeapon +0x900 uint32 ChargeFlags           (bit 0x40 set on charge end)\n//   AFortWeapon +0x28a bool  bChargeStarted\n//   AFortWeapon +0xb80 bool  bTrajectoryHidden      (stored inverted visibility)\n//   AActor      +0x240 ptr   VisibilityComponent    (used by SetActorVisibilityInternal)\n//   WeaponData  +0x240 float ADSTransitionInTime; +0x2a4 float OverheatMaxDefault (see own deps)",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426b21a0.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426b5df0.c",
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426b3990.c"
+  ]
+}

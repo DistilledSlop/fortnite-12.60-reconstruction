@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_NotifyWeaponAbilityReleased",
+  "address": "0x142b442d0",
+  "signature": "void NotifyWeaponAbilityReleased(FGameplayAbilitySpecHandle SpecHandle)",
+  "inc_or_decl": "// BP event: native calls ProcessEvent on the UFunction found by FName 0x1481c3fb8 with an int32 (the spec handle). Event name not resolved.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x142b442d0.c"
+  ]
+}

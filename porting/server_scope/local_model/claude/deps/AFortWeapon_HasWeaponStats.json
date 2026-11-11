@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_HasWeaponStats",
+  "address": "vtable +0x6a8 on AFortWeapon -> 0x140696570",
+  "signature": "bool HasWeaponStats()",
+  "inc_or_decl": "return NativeGetWeaponStats() != nullptr;   // vtable +0x6a8 is NativeGetWeaponStats (ported, see porting/behavior/AFortWeapon/NativeGetWeaponStats.inc)",
+  "evidence": [
+    "captures/c23dcac8a684482d9bcfeacaa6e63d5e/0x14269b800.c"
+  ]
+}

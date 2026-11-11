@@ -1,0 +1,9 @@
+{
+  "name": "AFortPlayerController_GetAbilitySystemComponentForWeapon",
+  "address": "controller +0x4c8 -> vtable +0x10",
+  "signature": "UAbilitySystemComponent* GetAbilitySystemComponentForWeapon()",
+  "inc_or_decl": "// DECL ONLY (MEDIUM). Owner controller component at +0x4c8, vtable +0x10 (used by 0x1426aec00, 0x1426ced60, 0x142698da0, 0x14269b4b0).",
+  "evidence": [
+    "captures/c23dcac8a684482d9bcfeacaa6e63d5e/0x14269b4b0.c"
+  ]
+}

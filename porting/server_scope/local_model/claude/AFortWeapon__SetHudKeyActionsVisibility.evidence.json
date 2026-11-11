@@ -1,0 +1,13 @@
+{
+  "function": "AFortWeapon::SetHudKeyActionsVisibility",
+  "status": "proposed",
+  "original": "0x142b48660",
+  "signature": "void SetHudKeyActionsVisibility(const TArray<FIndexVisibility>& IndexVisibilityArray)",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b48660.c"
+  ],
+  "callees": {
+    "0x1426b3070": "Inlined: for each (index, visible) pair, bounds-check against HudKeyActionData and write bIsVisible on change; then broadcast OnWeaponHudKeyActionUpdated once if anything changed."
+  },
+  "notes": "Full body of 0x1426b3070 read. Element member name bIsVisible and struct name FIndexVisibility are MEDIUM proposals (element bool at +0x28, stride 0x30)."
+}

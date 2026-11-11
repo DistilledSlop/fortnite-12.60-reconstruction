@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_GetOwningController",
+  "address": "vtable +0x698 on AFortWeapon -> 0x14269b4b0 family",
+  "signature": "AFortPlayerController* GetOwningController()",
+  "inc_or_decl": "// DECL ONLY (MEDIUM name). Weapon virtual +0x698. Returns the owning controller used to test weapon ownership.",
+  "evidence": [
+    "captures/c23dcac8a684482d9bcfeacaa6e63d5e/0x14269b4b0.c"
+  ]
+}

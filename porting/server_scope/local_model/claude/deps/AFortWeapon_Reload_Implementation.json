@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_Reload_Implementation",
+  "address": "0x1426aecd0",
+  "signature": "void Reload_Implementation()",
+  "inc_or_decl": "virtual void Reload_Implementation();  // body NOT ported. Native 0x1426aecd0 (virtual +0x838 target). Decompile cached at /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual4/0x1426aecd0.c",
+  "evidence": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual4/0x1426aecd0.c"
+  ]
+}

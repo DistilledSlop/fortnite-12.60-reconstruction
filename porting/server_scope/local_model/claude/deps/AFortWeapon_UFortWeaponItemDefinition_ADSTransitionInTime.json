@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_UFortWeaponItemDefinition_ADSTransitionInTime",
+  "address": "WeaponData +0x240 (float)",
+  "signature": "float ADSTransitionInTime",
+  "inc_or_decl": "// Field (float) at UFortWeaponItemDefinition +0x240. Member name not resolved by evidence.py field-offset; proposed name.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426c9f70.c"
+  ]
+}

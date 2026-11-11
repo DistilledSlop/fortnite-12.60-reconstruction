@@ -1,0 +1,22 @@
+{
+  "function": "AFortWeapon::ServerSetChargeState",
+  "status": "proposed",
+  "original": "0x142b48250",
+  "signature": "void ServerSetChargeState(uint8 NewState)",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b48250.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native-cap-virtual/0x1406801d0.c",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/native134-virtual-bulk/0x1426b0d00.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426b21a0.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1426b5df0.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x142698da0.c"
+  ],
+  "callees": {
+    "0x1406801d0 (vtable +0x650)": "Stub_ReturnTrue validate.",
+    "0x1426b0d00 (vtable +0x658)": "charge-state implementation: begin/end charge hooks on 0->1 and 4, then SetChargeStatusInternal (dep ..._Implementation).",
+    "0x1426b21a0": "SetChargeStatusInternal: packs counter+state, notifies, sends client RPC when local, copies pack, OnRep.",
+    "0x1426b5df0": "BeginWeaponCharge (LOW).",
+    "0x142698da0": "EndWeaponCharge (LOW)."
+  },
+  "notes": "Dispatch is exact; the state-machine branches (0->1 begin, 4 end) are exact; the begin/end side-effect bodies are LOW."
+}

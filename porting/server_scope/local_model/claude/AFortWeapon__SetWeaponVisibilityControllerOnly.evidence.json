@@ -1,0 +1,19 @@
+{
+  "function": "AFortWeapon::SetWeaponVisibilityControllerOnly",
+  "status": "proposed",
+  "original": "0x142b48d30",
+  "signature": "void SetWeaponVisibilityControllerOnly(bool bForceUpdate, bool bDesiredVisibility)",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b48d30.c",
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426b3bd0.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x14238e8a0.c",
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1423ae360.c"
+  ],
+  "callees": {
+    "0x1426b3bd0": "SetWeaponVisibilityControllerOnlyInternal: per-viewer hidden lists on owned weapons.",
+    "0x14238e8a0": "IsWeaponHiddenForViewer (list membership).",
+    "0x1423ae360": "SetWeaponHiddenForViewer (add/remove list entry).",
+    "0x142b44250": "NotifyVisibilityChanged(bDesiredVisibility, true)."
+  },
+  "notes": "Per-viewer list semantics and the view-actor step are LOW-MEDIUM; the flow (filter by owning controller and stats, update list when the visible state differs, always update view actor, conditionally update indicator) is read in full. Bool order same conflict as SetWeaponVisibility."
+}

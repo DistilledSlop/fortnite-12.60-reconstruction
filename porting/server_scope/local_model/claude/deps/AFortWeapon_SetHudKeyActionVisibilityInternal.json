@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_SetHudKeyActionVisibilityInternal",
+  "address": "0x1426b3070",
+  "signature": "void SetHudKeyActionVisibilityInternal(const TArray<FIndexVisibility>& IndexVisibilityArray)",
+  "inc_or_decl": "// Inlined into AFortWeapon__SetHudKeyActionsVisibility.inc (native 0x1426b3070).",
+  "evidence": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b48660.c"
+  ]
+}

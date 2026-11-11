@@ -1,0 +1,15 @@
+{
+  "function": "AFortWeapon::WeaponDataHasAnyMatchingGameplayTags",
+  "status": "proposed",
+  "original": "0x142b48ec0",
+  "signature": "bool WeaponDataHasAnyMatchingGameplayTags(FGameplayTagContainer TagContainer)",
+  "captures": [
+    "captures/0d71786315864fc9967f412c2843d452/0x142b48ec0.c",
+    "captures/a96288de20cd42c69f6ba089ef867377/0x1426bb650.c"
+  ],
+  "callees": {
+    "0x1426bb650": "Inlined: WeaponData null -> warn and false; empty input -> false; else weapon gameplay tags (via GetWeaponDataGameplayTags, the sibling ported accessor) overlap test.",
+    "0x142ce9f90 / FMsg_Logf_Internal": "engine log helper for the warning."
+  },
+  "notes": "Full body of 0x1426bb650 read. Tag source uses the same IGameplayTagAssetInterface path as AFortWeapon::GetWeaponDataGameplayTags (sibling port). The overlap is a HasAny test over the input container."
+}

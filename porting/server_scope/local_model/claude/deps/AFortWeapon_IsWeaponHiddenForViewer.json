@@ -1,0 +1,9 @@
+{
+  "name": "AFortWeapon_IsWeaponHiddenForViewer",
+  "address": "0x14238e8a0",
+  "signature": "bool IsWeaponHiddenForViewer(AActor* Viewer)",
+  "inc_or_decl": "// Native 0x14238e8a0: linear search of the weapon's per-viewer exclusion list at +0x2e8 (count +0x2f0). Returns true if Viewer is listed.",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x14238e8a0.c"
+  ]
+}

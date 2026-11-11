@@ -1,0 +1,11 @@
+{
+  "name": "AFortWeapon_SetActorVisibilityInternal",
+  "address": "0x1419f38a0",
+  "signature": "void SetActorVisibilityInternal(AActor* Actor, bool bVisible)",
+  "inc_or_decl": "// Native 0x1419f38a0 (actor param). Acts only when the hidden state differs from bVisible.\nif (Actor->IsHidden() == bVisible)\n{\n    Actor->SetActorHiddenInGame(!bVisible);       // vtable +0x2f8\n    Actor->NotifyActorVisibility(bVisible);       // BP event 0x142a3e1b0 (name not resolved)\n    if (Actor->VisibilityComponent)               // param +0x240 (name not resolved)\n    {\n        Actor->VisibilityComponent->NotifyComponentVisibility(bVisible);   // BP event 0x142778c50\n    }\n}",
+  "evidence": [
+    "captures/7e162e9f47e240899ce02362480d3bff/0x1419f38a0.c",
+    "captures/c23dcac8a684482d9bcfeacaa6e63d5e/0x142a3e1b0.c",
+    "captures/c23dcac8a684482d9bcfeacaa6e63d5e/0x142778c50.c"
+  ]
+}
