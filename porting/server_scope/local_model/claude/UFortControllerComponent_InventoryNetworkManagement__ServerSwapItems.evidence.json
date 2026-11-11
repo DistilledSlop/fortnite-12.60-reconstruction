@@ -1,0 +1,16 @@
+{
+  "function": "UFortControllerComponent_InventoryNetworkManagement::ServerSwapItems",
+  "status": "proposed",
+  "original": "0x1428a6460",
+  "signature": "void ServerSwapItems(TArray<FItemGuid> ItemGuids, AActor* TargetOwner, AActor* SourceOwner)",
+  "captures": [
+    "captures/67db0021db174d4891ebfa82569ce31b/0x1428a6460.c"
+  ],
+  "callees": {
+    "0x1406801d0": "Stub_ReturnTrue (shared stub, validate always passes)",
+    "0x141d15b80": "ServerSwapItems_Implementation: copies the ItemGuids array, resolves both owners via FUN_142ec9900 and calls FUN_14201e9e0 (inventory swap)",
+    "0x14201e9e0": "inventory swap helper (not decompiled further; named in deps as ServerSwapItemsCore)",
+    "RPC_ValidateFailed": "engine RPC validation failure reporter"
+  },
+  "notes": "Implementation body is ported as dep ServerSwapItemsCore. The thunk itself is complete."
+}

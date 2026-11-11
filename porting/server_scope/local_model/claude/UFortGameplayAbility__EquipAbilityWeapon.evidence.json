@@ -1,0 +1,14 @@
+{
+  "function": "UFortGameplayAbility::EquipAbilityWeapon",
+  "status": "proposed",
+  "original": "0x1427630e0",
+  "signature": "void EquipAbilityWeapon(int32 ItemLevel, UFortWeaponItemDefinition* WeaponDefinition)",
+  "captures": [
+    "captures/a1af586513d34254a090366c1f3f8382/0x1427630e0.c"
+  ],
+  "callees": {
+    "Stub_Empty": "empty no-op stub (confirmed by the decompile)",
+    "0x1427630e0": "self (exec thunk)"
+  },
+  "notes": "Body is intentionally empty, as the native stub is."
+}

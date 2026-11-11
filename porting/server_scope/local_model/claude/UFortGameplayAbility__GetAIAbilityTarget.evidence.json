@@ -1,0 +1,15 @@
+{
+  "function": "UFortGameplayAbility::GetAIAbilityTarget",
+  "status": "proposed",
+  "original": "0x1428f8210",
+  "signature": "AActor* GetAIAbilityTarget()",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f8210.c"
+  ],
+  "callees": {
+    "0x1415f7790": "GetAIAbilityTarget core (cached entry, then pawn -> AI component -> named target)",
+    "0x1449ca7d0": "named sub-object lookup on AI component",
+    "0x1428f8210": "self (exec thunk)"
+  },
+  "notes": "LOW: the fallback named lookup is kept as dep GetAIAbilityTargetFallback; cached-entry path is exact."
+}

@@ -1,0 +1,15 @@
+{
+  "function": "UFortGameplayAbility::ClearAIFocalPoint",
+  "status": "proposed",
+  "original": "0x1428f7de0",
+  "signature": "void ClearAIFocalPoint(bool bUseAttackingPriority)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f7de0.c"
+  ],
+  "callees": {
+    "0x1415eecb0": "ClearAIFocalPoint core: validates owner and class, calls FUN_1422bfdc0 (dep ClearAIFocusCore)",
+    "0x1422bfdc0": "AFortAIController focus clear with priority flag (dep, declared only)",
+    "0x1428f7de0": "self (exec thunk)"
+  },
+  "notes": "Owner member name (OwnerActor) and ClearFocus name are inferred from the class check; offsets confirmed, names not."
+}

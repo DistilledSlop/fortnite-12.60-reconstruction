@@ -1,0 +1,10 @@
+{
+  "name": "ProjectileTrajectoryCore",
+  "address": "0x14160d6e0",
+  "signature": "void ProjectileTrajectoryCore(TArray<FVector>& OutSplinePoints, TArray<FVector>& OutSplineTangents, AActor* Instigator, const FVector& InitialLocation, const FVector& InitialVelocity, float MaxSpeed, float Gravity, float Friction, float Bounciness, float TimeStep, float TraceExtent, ETraceTypeQuery TraceChannel, int32 MaxBounces, int32 MaxSteps, float MaxDistanceBetweenSplinePoints, float InitialDistance, FName CollisionProfile, FHitResult* OutHitResult)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "0x1415ec900, 0x1415ecbf0, 0x1415ecd00 wrappers",
+    "uses CALCULATE scope; FName_EqualsEName(profile, None) selects channel vs profile trace"
+  ]
+}

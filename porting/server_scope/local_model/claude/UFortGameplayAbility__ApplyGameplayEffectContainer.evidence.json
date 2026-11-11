@@ -1,0 +1,16 @@
+{
+  "function": "UFortGameplayAbility::ApplyGameplayEffectContainer",
+  "status": "proposed",
+  "original": "0x1428f61d0",
+  "signature": "TArray<FActiveGameplayEffectHandle> ApplyGameplayEffectContainer(FGameplayAbilityTargetDataHandle TargetData, FGameplayTag ApplicationTag, int32 GameplayEffectLevel)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f61d0.c"
+  ],
+  "callees": {
+    "0x1415ea920": "ApplyGameplayEffectContainerCore (vtable 0x480 of UFortGameplayAbility; dep)",
+    "0x1406aab60": "copy constructor of FGameplayAbilityTargetDataHandle (shared ref count bump)",
+    "0x1406af1d0": "TArray move/copy assign into the return value",
+    "0x1428f61d0": "self (exec thunk)"
+  },
+  "notes": "Core is a virtual slot, ported as dep ApplyGameplayEffectContainerCore."
+}

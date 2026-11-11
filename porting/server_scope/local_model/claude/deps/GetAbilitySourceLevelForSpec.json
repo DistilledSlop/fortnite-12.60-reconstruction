@@ -1,0 +1,9 @@
+{
+  "name": "GetAbilitySourceLevelForSpec",
+  "address": "0x1415f78b0",
+  "signature": "float GetAbilitySourceLevelForSpec(FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "0x1415f9f20 is the thunk"
+  ]
+}

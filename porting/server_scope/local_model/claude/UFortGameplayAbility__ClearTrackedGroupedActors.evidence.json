@@ -1,0 +1,16 @@
+{
+  "function": "UFortGameplayAbility::ClearTrackedGroupedActors",
+  "status": "proposed",
+  "original": "0x1428f7f20",
+  "signature": "void ClearTrackedGroupedActors(bool bDestroyActors, FGameplayTag GroupTag)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f7f20.c"
+  ],
+  "callees": {
+    "0x1415ef2b0": "ClearTrackedGroupedActors core (dep ClearTrackedActorGroupByTag)",
+    "0x1406ceaa0": "authority check",
+    "0x142ce11c0": "tag hash helper",
+    "0x1428f7f20": "self (exec thunk)"
+  },
+  "notes": "GroupTag None test follows FName_EqualsEName(tag, 0) and the number check in the native."
+}

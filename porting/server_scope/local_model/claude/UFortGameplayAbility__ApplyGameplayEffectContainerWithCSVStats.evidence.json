@@ -1,0 +1,15 @@
+{
+  "function": "UFortGameplayAbility::ApplyGameplayEffectContainerWithCSVStats",
+  "status": "proposed",
+  "original": "0x1428f63b0",
+  "signature": "TArray<FActiveGameplayEffectHandle> ApplyGameplayEffectContainerWithCSVStats(FGameplayAbilityTargetDataHandle TargetData, FGameplayTag ApplicationTag, int32 GameplayEffectLevel, FString StatName)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f63b0.c"
+  ],
+  "callees": {
+    "0x1415ea9b0": "wrapper: copies handle, calls vtable 0x480 with (out, handle, tag, level), releases copy via FUN_1406ad840",
+    "0x1415ea920": "ApplyGameplayEffectContainerCore (dep)",
+    "0x1428f63b0": "self (exec thunk)"
+  },
+  "notes": "StatName stored on the FFrame stack, not forwarded by the thunk; treated as profiling only."
+}

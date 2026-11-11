@@ -1,0 +1,4 @@
+// CONFIDENCE: MEDIUM Thunk reads 16 parameters from the FFrame (reverse reflection order) and forwards them to ProjectileTrajectory core FUN_1415ec900, which calls the simulation core FUN_14160d6e0 with a null profile and no hit output.
+// Original: exec 0x1428f6a00 (decompile captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f6a00.c)
+// Simulation: step with TimeStep under Gravity/Friction/Bounciness, bounce up to MaxBounces, emit spline points spaced by MaxDistanceBetweenSplinePoints, stop at MaxSteps; trace per step with TraceChannel and TraceExtent.
+CalculateProjectileTrajectoryCore(OutSplinePoints, OutSplineTangents, Instigator, InitialLocation, InitialVelocity, MaxSpeed, Gravity, Friction, Bounciness, TimeStep, TraceExtent, TraceChannel, MaxBounces, MaxSteps, MaxDistanceBetweenSplinePoints, InitialDistance, NAME_None, nullptr);

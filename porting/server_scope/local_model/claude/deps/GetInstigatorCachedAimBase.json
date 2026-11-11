@@ -1,0 +1,9 @@
+{
+  "name": "GetInstigatorCachedAimBase",
+  "address": "0x1415f8000",
+  "signature": "FVector GetInstigatorCachedAimBase(AActor* Instigator)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "base vector at instigator sub-object +0x130 field +0x1d0"
+  ]
+}

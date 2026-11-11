@@ -1,0 +1,9 @@
+{
+  "name": "ApplySourcePropertyOverridesCore",
+  "address": "0x1415eaa20",
+  "signature": "bool ApplySourcePropertyOverridesCore(const TArray<FName>& OverriddenPropertyNames)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "partially traced; ability source object branch uses FUN_14237ae70"
+  ]
+}

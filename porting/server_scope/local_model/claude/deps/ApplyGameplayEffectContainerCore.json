@@ -1,0 +1,10 @@
+{
+  "name": "ApplyGameplayEffectContainerCore",
+  "address": "0x1415ea920",
+  "signature": "TArray<FActiveGameplayEffectHandle> ApplyGameplayEffectContainerCore(const FGameplayAbilityTargetDataHandle& TargetData, const FGameplayTag& ApplicationTag, int32 GameplayEffectLevel)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "vtable slot 0x480 of UFortGameplayAbility resolves to 0x1415ea920 (virtual_slots.py)",
+    "calls vtable 0x478 on the ability"
+  ]
+}

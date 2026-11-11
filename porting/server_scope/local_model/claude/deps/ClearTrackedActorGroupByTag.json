@@ -1,0 +1,9 @@
+{
+  "name": "ClearTrackedActorGroupByTag",
+  "address": "0x1415ef2b0",
+  "signature": "void ClearTrackedActorGroupByTag(FGameplayTag GroupTag, bool bDestroyActors)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "tag hash via 0x142ce11c0, destroy via 0x1415ef0f0"
+  ]
+}

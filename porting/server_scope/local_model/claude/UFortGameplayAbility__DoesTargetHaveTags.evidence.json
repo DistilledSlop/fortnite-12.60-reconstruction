@@ -1,0 +1,16 @@
+{
+  "function": "UFortGameplayAbility::DoesTargetHaveTags",
+  "status": "proposed",
+  "original": "0x1428f8080",
+  "signature": "bool DoesTargetHaveTags(FGameplayTagContainer Tags, AActor* Target)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f8080.c"
+  ],
+  "callees": {
+    "0x1415f02b0": "DoesTargetHaveTags core (cast + interface call, dep TargetTagCheckCore)",
+    "0x142ec9900": "interface cast helper (object, class) -> object or null",
+    "0x143e98d10": "interface class getter",
+    "0x1428f8080": "self (exec thunk)"
+  },
+  "notes": "Method choice (Any vs All) is the main open point; slot offset suggests Any."
+}

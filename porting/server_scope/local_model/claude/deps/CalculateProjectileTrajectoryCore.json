@@ -1,0 +1,9 @@
+{
+  "name": "CalculateProjectileTrajectoryCore",
+  "address": "0x14160d6e0",
+  "signature": "alias of ProjectileTrajectoryCore with the same argument list",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "alias used by the chunk .inc bodies"
+  ]
+}

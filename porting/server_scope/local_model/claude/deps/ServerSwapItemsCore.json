@@ -1,0 +1,9 @@
+{
+  "name": "ServerSwapItemsCore",
+  "address": "0x14201e9e0",
+  "signature": "void ServerSwapItemsCore(AActor* A, AActor* B, const TArray<FItemGuid>& ItemGuids)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "0x141d15b80 -> 0x14201e9e0 (inventory swap; not decompiled further)"
+  ]
+}

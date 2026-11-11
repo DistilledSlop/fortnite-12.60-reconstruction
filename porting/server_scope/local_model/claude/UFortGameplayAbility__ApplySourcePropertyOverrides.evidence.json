@@ -1,0 +1,16 @@
+{
+  "function": "UFortGameplayAbility::ApplySourcePropertyOverrides",
+  "status": "proposed",
+  "original": "0x1428f65b0",
+  "signature": "bool ApplySourcePropertyOverrides(TArray<FName> OverriddenPropertyNames)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f65b0.c"
+  ],
+  "callees": {
+    "0x1415eaa20": "ApplySourcePropertyOverridesCore (dep)",
+    "0x1406ccda0": "spec-handle validity check on the ability",
+    "0x14237ae70": "applies overrides to a source UObject (called from the source-object branch)",
+    "0x1428f65b0": "self (exec thunk)"
+  },
+  "notes": "LOW because the core body was only partially traced (about 60 of its lines)."
+}

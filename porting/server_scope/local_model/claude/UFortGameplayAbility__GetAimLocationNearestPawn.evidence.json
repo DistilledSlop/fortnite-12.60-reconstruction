@@ -1,0 +1,15 @@
+{
+  "function": "UFortGameplayAbility::GetAimLocationNearestPawn",
+  "status": "proposed",
+  "original": "0x1428f82e0",
+  "signature": "FVector GetAimLocationNearestPawn(AActor* Instigator)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f82e0.c"
+  ],
+  "callees": {
+    "0x1415f8000": "aim location core: base vector from instigator sub-object, aim component refinement via slot 0x6f8, writes FVector out",
+    "0x142c620f0": "vector copy helper",
+    "0x1428f82e0": "self (exec thunk)"
+  },
+  "notes": "LOW: sub-object and aim component are described by role; their class names were not resolved."
+}

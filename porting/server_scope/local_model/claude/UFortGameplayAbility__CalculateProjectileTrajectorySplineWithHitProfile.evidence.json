@@ -1,0 +1,15 @@
+{
+  "function": "UFortGameplayAbility::CalculateProjectileTrajectorySplineWithHitProfile",
+  "status": "proposed",
+  "original": "0x1428f7890",
+  "signature": "void CalculateProjectileTrajectorySplineWithHitProfile(float InitialDistance, float MaxDistanceBetweenSplinePoints, int32 MaxSteps, int32 MaxBounces, FName CollisionProfile, float TraceExtent, float TimeStep, float Bounciness, float Friction, float Gravity, float MaxSpeed, FVector InitialVelocity, FVector InitialLocation, AActor* Instigator, TArray<FVector> OutSplineTangents, TArray<FVector> OutSplinePoints, FHitResult& OutHitResult)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f7890.c"
+  ],
+  "callees": {
+    "0x1415ecd00": "tail-call wrapper to ProjectileTrajectoryCore",
+    "0x14160d6e0": "ProjectileTrajectoryCore (dep)",
+    "0x1428f7890": "self (exec thunk)"
+  },
+  "notes": "Trace-channel slot is filled with ECC_Visibility as an unused placeholder; the core ignores it when the profile name is set."
+}

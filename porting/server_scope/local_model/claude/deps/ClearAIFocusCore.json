@@ -1,0 +1,9 @@
+{
+  "name": "ClearAIFocusCore",
+  "address": "0x1422bfdc0",
+  "signature": "void ClearAIFocusCore(AFortAIController* Controller, bool bUseAttackingPriority)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "called from 0x1415eecb0 after class checks"
+  ]
+}

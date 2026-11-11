@@ -1,0 +1,15 @@
+{
+  "function": "UFortGameplayAbility::CalculateProjectileTrajectorySpline",
+  "status": "proposed",
+  "original": "0x1428f6a00",
+  "signature": "void CalculateProjectileTrajectorySpline(float InitialDistance, float MaxDistanceBetweenSplinePoints, int32 MaxSteps, int32 MaxBounces, ETraceTypeQuery TraceChannel, float TraceExtent, float TimeStep, float Bounciness, float Friction, float Gravity, float MaxSpeed, FVector InitialVelocity, FVector InitialLocation, AActor* Instigator, TArray<FVector> OutSplineTangents, TArray<FVector> OutSplinePoints)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f6a00.c"
+  ],
+  "callees": {
+    "0x1415ec900": "trajectory wrapper: sets up initial state (scale 1.0) and calls the core",
+    "0x14160d6e0": "ProjectileTrajectoryCore: simulation/spline sampling (765 lines; only its structure was traced)",
+    "0x1428f6a00": "self (exec thunk)"
+  },
+  "notes": "Core ported as dep ProjectileTrajectoryCore; its per-step physics was summarized, not reproduced line by line."
+}

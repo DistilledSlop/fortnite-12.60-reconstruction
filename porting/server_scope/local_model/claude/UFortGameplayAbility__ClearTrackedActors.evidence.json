@@ -1,0 +1,17 @@
+{
+  "function": "UFortGameplayAbility::ClearTrackedActors",
+  "status": "proposed",
+  "original": "0x1428f7e90",
+  "signature": "void ClearTrackedActors(bool bDestroyActors)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f7e90.c"
+  ],
+  "callees": {
+    "0x1415ef180": "ClearTrackedActors core: authority check FUN_1406ceaa0, owner class check, id lookup, FUN_1415ef0f0 destroy, FUN_14110acd0 remove id",
+    "0x1406ceaa0": "authority check on the ability (HasAuthority-equivalent)",
+    "0x1415ef0f0": "destroys grouped tracked actors when bDestroyActors (dep, not decompiled)",
+    "0x14110acd0": "removes the tracking id (not decompiled)",
+    "0x1428f7e90": "self (exec thunk)"
+  },
+  "notes": "Tracking id is the ability field at +0x388; dep ClearTrackedActorGroupById holds the core."
+}

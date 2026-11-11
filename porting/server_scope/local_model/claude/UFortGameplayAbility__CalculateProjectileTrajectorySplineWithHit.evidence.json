@@ -1,0 +1,15 @@
+{
+  "function": "UFortGameplayAbility::CalculateProjectileTrajectorySplineWithHit",
+  "status": "proposed",
+  "original": "0x1428f7340",
+  "signature": "void CalculateProjectileTrajectorySplineWithHit(float InitialDistance, float MaxDistanceBetweenSplinePoints, int32 MaxSteps, int32 MaxBounces, ETraceTypeQuery TraceChannel, float TraceExtent, float TimeStep, float Bounciness, float Friction, float Gravity, float MaxSpeed, FVector InitialVelocity, FVector InitialLocation, AActor* Instigator, TArray<FVector> OutSplineTangents, TArray<FVector> OutSplinePoints, FHitResult& OutHitResult)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f7340.c"
+  ],
+  "callees": {
+    "0x1415ecbf0": "tail-call wrapper to ProjectileTrajectoryCore",
+    "0x14160d6e0": "ProjectileTrajectoryCore (dep)",
+    "0x1428f7340": "self (exec thunk)"
+  },
+  "notes": "OutHitResult is the hit output of the core; its population was not traced in detail."
+}

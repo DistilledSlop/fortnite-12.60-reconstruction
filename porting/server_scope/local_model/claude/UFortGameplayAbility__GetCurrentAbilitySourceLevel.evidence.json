@@ -1,0 +1,15 @@
+{
+  "function": "UFortGameplayAbility::GetCurrentAbilitySourceLevel",
+  "status": "proposed",
+  "original": "0x1428f8380",
+  "signature": "void GetCurrentAbilitySourceLevel(float& OutSourceLevel)",
+  "captures": [
+    "captures/0da226f5ed8442fb9ce91e4985f6c96a/0x1428f8380.c"
+  ],
+  "callees": {
+    "0x1415f9f20": "thunk: forwards the spec handle, actor info and the out pointer to 0x1415f78b0",
+    "0x1415f78b0": "source-level core (171 lines; looked up by spec; only its outline was traced)",
+    "0x1428f8380": "self (exec thunk)"
+  },
+  "notes": "Core ported as dep GetAbilitySourceLevelForSpec."
+}

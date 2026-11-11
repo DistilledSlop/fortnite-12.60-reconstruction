@@ -1,0 +1,9 @@
+{
+  "name": "GetAIAbilityTargetFallback",
+  "address": "0x1415f7790",
+  "signature": "AActor* GetAIAbilityTargetFallback(APawn* OwnerPawn)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "named AI sub-object lookup via 0x1449ca7d0"
+  ]
+}

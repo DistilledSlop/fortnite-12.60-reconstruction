@@ -1,0 +1,9 @@
+{
+  "name": "TargetTagCheckCore",
+  "address": "0x1415f02b0",
+  "signature": "bool TargetTagCheckCore(AActor* Target, const FGameplayTagContainer& Tags)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "cast via 0x142ec9900 then interface vtable 0x28"
+  ]
+}

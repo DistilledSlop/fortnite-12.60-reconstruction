@@ -1,0 +1,9 @@
+{
+  "name": "ClearTrackedActorGroupById",
+  "address": "0x1415ef180",
+  "signature": "void ClearTrackedActorGroupById(int32 TrackingId, bool bDestroyActors)",
+  "inc_or_decl": "decl",
+  "evidence": [
+    "0x1415ef0f0 destroys entries; 0x14110acd0 removes id"
+  ]
+}
