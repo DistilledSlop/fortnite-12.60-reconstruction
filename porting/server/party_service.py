@@ -506,7 +506,8 @@ class PartyService:
         member["meta"].update(copy.deepcopy(updates))
         member["revision"] += 1
         member["updated_at"] = self.ctx.iso()
-        self._touch(party)
+        # Local revision policy: the member event communicates only the member
+        # revision, so a member-only change must not silently stale party writes.
         self._emit(party, "MEMBER_STATE_UPDATED", caller,
                    member_state_removed=deletes, member_state_updated=updates)
         return 204, None

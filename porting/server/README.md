@@ -481,7 +481,11 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   actions remains inferred. A subsequent original-client run accepted a pending
   request, displayed the accepted account offline, then removed it using the v1
   routes (both 204). A new live incoming request also displayed a notification
-  toast and badge without restarting. Two online clients still need verification.
+  toast and badge without restarting. Two original clients now display each other
+  online in the lobby. Native invitation POST succeeds, and the recipient decodes
+  PING/InitialInvite and displays the invitation with ACCEPT/REJECT controls.
+  Accepting currently fails in QueryPartyJoinabilityById after a party GET 200,
+  before a join POST; two-client joining is not yet verified.
   Party update, member-state, joined, rejected and require-confirmation fields
   follow the original readers. Other party notification payloads remain inferred.
   Party-only MUC chat now accepts the original `Party-<party-id>@muc.<stream-domain>`

@@ -884,7 +884,7 @@ class PartyTests(ServiceTestCase):
                                        "account_id": self.b_id, "account_dn": "Bee", "revision": 1,
                                        "reason": "", "member_state_removed": ["old"],
                                        "member_state_updated": {"new": {"v": 3}}})
-        self.assertEqual(service._parties[pid]["revision"], 4)
+        self.assertEqual(service._parties[pid]["revision"], 3)
         member_body["update"]["new"]["v"] = 10
         self.assertEqual(member_event["member_state_updated"], {"new": {"v": 3}})
         self.assertEqual(service._member(service._parties[pid], self.b_id)["meta"]["new"], {"v": 3})
@@ -1046,7 +1046,7 @@ class PartyTests(ServiceTestCase):
         bee = [m for m in party["members"] if m["account_id"] == self.b_id][0]
         self.assertEqual(bee["meta"], {"urn:epic:member:dn_s": "Bee"})
         self.assertEqual(bee["revision"], 1)
-        self.assertEqual(party["revision"], 3)
+        self.assertEqual(party["revision"], 2)
         self.assertError(jcall(self.base, "PATCH", path, token=self.b, body={"update": {"x": "1"}, "revision": 0}),
                          409, Err.STALE_REVISION)
         self.assertError(jcall(self.base, "PATCH", path, token=self.a, body={"update": {"x": "1"}}),

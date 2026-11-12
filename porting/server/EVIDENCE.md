@@ -753,3 +753,39 @@ ping route now removes only the recipient's matching ping, idempotently returnin
 creates a party. Focused tests cover notification fields/timestamps, direct
 array lookup, copying, expiry/departure, authorization, and deletion. Original
 two-client acceptance remains pending.
+
+Member metadata and party revisions are separate local revision domains: a
+member metadata PATCH advances the member revision and timestamp, and emits a
+MEMBER_STATE_UPDATED carrying that member revision, without advancing the party
+revision. This avoids silently invalidating the party revision known to the
+client. Party writes retain strict revision checks and advance the party
+revision. The original server's revision policy is unknown. Original client
+stale-revision handlers schedule bounded retries (party handler at `0x140ba5979`,
+member handler at `0x140ba68b8`); the shared error parser `0x140a57390` reads
+`errorCode`, `errorMessage`, and `numericErrorCode`, with no revision field
+observed. These observations do not establish a replacement error payload or a
+server synchronization policy. An original-client UI probe also observed a
+party GET after a 409; the GET supplies state independently of the error body.
+Private captures:
+`/opt/fortnite/local-model-package/captures/6b6ccdd7d3c0497c9f8657f9e90fdfe5/`
+and `captures/d9276a2c09614809ac5b37912fd45dd2/` under the same package.
+
+## Original two-client invitation and stats probe, 2026-11-12
+
+Two original 12.60 clients ran against frozen backend `e9ce20c4` using the
+private probe network, diagnostic Curl/AppES/WSS bypasses and builtin Wine D3D.
+At 23:12:28 UTC LobbyG1Probe sent a native invitation to SocialLiveFriend.
+The POST party invite returned 204; the sender logged successful completion.
+The receiver constructed both PING and InitialInvite events without the prior
+decode failure. Its lobby showed the yellow `LobbyG1Probe Invited You!` bubble,
+and the friend context menu offered ACCEPT and REJECT. Screenshot:
+`porting/generated/g1-two-client-probe/second.png` was inspected during the run
+(this is a live overwritten diagnostic artifact, not a retained fixture).
+
+At 23:14:14 UTC ACCEPT fetched the party with HTTP 200, then native
+QueryPartyJoinabilityById returned EosResult 12 and the attempt failed before a
+join POST. Party joining is therefore not established by this invitation probe.
+The request record and both original logs remain private under the probe
+directories. Native POST `/statsproxy/api/statsv2/query` also returned 200 on
+both accounts after entering the lobby; this verifies native request compatibility,
+not career display of historical match results (these accounts have no matches).
