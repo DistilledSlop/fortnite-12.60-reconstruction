@@ -789,3 +789,46 @@ The request record and both original logs remain private under the probe
 directories. Native POST `/statsproxy/api/statsv2/query` also returned 200 on
 both accounts after entering the lobby; this verifies native request compatibility,
 not career display of historical match results (these accounts have no matches).
+
+## GET-party invite deserialization during original acceptance
+
+The original two-client invite-accept probe reached GET-party with HTTP 200,
+then logged `Required Json Field ... JsonFieldName=[party_id]
+CppFieldName=[PartyId]`, followed by the enclosing `invites` failure and
+`QueryPartyJoinabilityById` EosResult 12. This isolates the failure to the
+nonempty invitation array; the create response had an empty invitation array.
+Private retained log: `porting/generated/g1-isolated-probe/
+attempt-281-native-invite-decoded/second-client.log` at
+`2026.11.12-23.14.14:737`. Raw logs contain credentials and must not be published.
+
+Native constructor `0x140bf5460` names QueryPartyJoinabilityById and installs
+vtable `0x145afb9b0`. Its start function `0x140c0f3a0` invokes GET builder
+`0x140a534c0` for `/api/v1/{namespace}/parties/{partyId}`. The response processor
+`0x140a21da0` decodes through `0x140a0a330` and `0x140a40b10` (FPartyInfo).
+The latter's `invites` array converter `0x140a0cff0` calls `0x140a096f0`, which
+uses FInviteInfo reader `0x140a3c730` for every element. That reader requires
+string `party_id` and `sent_by`; optional fields include `expires_at`, `meta`,
+`sent_at`, `sent_to`, `status`, and `updated_at`. Optional-string helper
+`0x140a0dc80` succeeds on an absent value. Present status is decoded by
+`0x140a0e2b0` as SENT, ACCEPTED, or DECLINED. These observations do not require
+adding optional fields or inventing their values.
+
+Private read-only decompiles and the unique probe script are under
+`/opt/fortnite/local-model-package/out/joinability_contract_20261112/`.
+Additional transactional captures are under package
+`captures/ba9cd40d574349dca71d249a8b732f8e/` (GET builder and callback thunk)
+and `captures/f37d50a3ce7641f98ca375de5de0ae0d/` (invitation array converter).
+The backend's stored invite now includes its known containing `party_id`;
+GET-party, pinger-party lookup, and user state therefore expose the required
+nested identity. Existing invite notification construction is unchanged.
+The focused regression checks all three views, notification identity and
+metadata, independent response copies, and invitation-only joining/consumption.
+Original-client acceptance after this fix remains pending.
+
+The same retained original two-client probe separately verified chat delivery
+in both directions through the GUI: `OriginalTwoClientWhisper283` and
+`OriginalReplyToWhisper283`, observed at 23:17 and 23:19 respectively. Private
+screenshots are `attempt-281-native-invite-decoded/primary-whisper-reply.png`
+and `attempt-281-native-invite-decoded/second-whisper-conversation.png` beneath
+`porting/generated/g1-isolated-probe/`. This chat result does not establish
+successful party joining.

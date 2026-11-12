@@ -491,7 +491,9 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   Party-only MUC chat now accepts the original `Party-<party-id>@muc.<stream-domain>`
   room and preserves the original encoded display-name/account/resource nickname.
   Bare party IDs remain a local compatibility convention. Two-client room joins
-  and reconnect behavior still require client validation. Friends settings
+  and reconnect behavior still require client validation. Direct friend whispers
+  have now been sent and displayed in both directions between two original
+  clients through their GUI. Friends settings
   persist per account. Friend nicknames persist privately per owner; the observed
   raw-text PUT and DELETE routes return 204. Backend tests cover privacy, restart,
   validation and atomic cleanup on unfriend/block. The original client submitted

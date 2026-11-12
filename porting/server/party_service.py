@@ -462,6 +462,7 @@ class PartyService:
             send_ping = req.query["sendPing"] == "true"
         now = self.ctx.now()
         party["invites"].append({
+            "party_id": party_id,
             "account_id": target,
             "sent_by": caller,
             "meta": meta,
