@@ -100,3 +100,39 @@ connection held until the run ended. Model gap still open: `class_checksum.py` g
 (the client value is authoritative), so its "expected" is not trustworthy for FortGameStateAthena or its struct children.
 Known limits: `promote_native_classes.sh` currently fails on 3 `USceneComponent` behavior splices (present at HEAD, unrelated),
 so the regenerated headers were copied from a scratch generation; struct bitfields have no byte-group separators yet.
+
+### 2026-11-12: first G6 findings (pawn spawns, client stays on LOADING)
+
+Runs `20261112-play-run-2` to `-5` (vanilla client, server build with the changes below). The client stays connected,
+the server spawns `FortPlayerPawnAthena`, but the client's `ClientRestart_Implementation` never completes, so it stays
+on the Battle Royale loading screen.
+
+Fixed (server, C++ in the dedicated-server build):
+- `SerializeNewActor failed to find/spawn actor` (channel 5): the actor was `GameplayDebuggerCategoryReplicator`
+  (`/Script/GameplayDebugger`), which the Development server spawns per player controller and the shipping client does
+  not have. The engine patch now skips those replicators under `-FortniteOriginalClient`
+  (`GameplayDebuggerPlayerManager.cpp`, in `patches/ue425-fortnite-original-client-net.patch`).
+- `ClientRestart_Implementation failed because WorldInventory is invalid`: the controller needs a replicated
+  `AFortInventory` owned by it. `EnsureWorldInventory` in `FortniteAthenaGameplay.cpp` spawns an empty one before the
+  first restart (stand-in until the original login body is ported).
+
+Open:
+- The client now logs `ClientRestart_Implementation failed because Quickbars are invalid` thousands of times.
+  `ClientQuickBars` (`AFortPlayerController` +0x14d0, client-only, not replicated) is created by a controller virtual
+  (`0x1423f20a0`) that `OnReadyToStartMatch` (`0x1423df310`) calls. `OnReadyToStartMatch` runs from
+  `SetHasFinishedLoading` (`0x1423af810`) once the client's own `bHasClientFinishedLoading` and the replicated
+  `bHasServerFinishedLoading` are both true. The client received `bHasServerFinishedLoading = true`
+  (`OnRep_bHasServerFinishedLoading 1`, set by a stand-in in `EnsureWorldInventory`, because the generated
+  `ServerSetClientHasFinishedLoading_Implementation` is a stub), but never called `SetHasFinishedLoading`.
+- On the client that call comes from a per-tick controller check (`0x1423cc220`): server flag true, then
+  `0x14236a740` (building foundations replicated, only logs at VeryVerbose), a loading-counter test
+  (`0x143a9f860 == 0`) and a virtual at +0x2170. Which gate fails is not yet known; `LogFort VeryVerbose` printed none
+  of the "Waiting for building foundations" messages.
+- Related evidence that the player state is incomplete: the pawn logs `Customization ... still hasn't completed
+  Hero:None DoCharacterPartsNeedReplication:1` and `SetPlayerTeam to No TeamInfo`. Team assignment, hero and character
+  parts are the login/spawn pipeline (plan D1: `PostLogin`, player-state setup, team, loadout) and are the likely next
+  fix.
+
+Tooling: `tools/vanilla_play_run.sh <seconds> [client args...]` now forwards extra client arguments (for example
+`"-LogCmds=LogFort VeryVerbose"`). Use at least 420 s; extra logging slows the client's start so 300 s ends right after
+the join. Decompiles used `/opt/fortnite/local-model-package/scripts/evidence.py capture` on the addresses above.

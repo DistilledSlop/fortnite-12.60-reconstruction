@@ -10,6 +10,9 @@
 #include "AFortPlayerPawnAthena.h"
 #include "AFortPlayerControllerAthena.h"
 #include "AFortGameStateAthena.h"
+#include "AFortInventory.h"
+#include "AFortPlayerController.h"
+#include "EFortInventoryType.h"
 
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -294,8 +297,40 @@ void AFortGameModeAthena::SpawnApolloBackground()
     UE_LOG(LogTemp, Display, TEXT("Apollo background: %d/%d placed meshes spawned"), Spawned, Entries.Num());
 }
 
+// The original client's AFortPlayerController::ClientRestart waits until WorldInventory (a replicated AFortInventory
+// owned by the controller) is valid, so a pawn is never finished on the client without it (G6). The original server
+// creates it during login; until that body is ported, create an empty world inventory before the first restart.
+static void EnsureWorldInventory(AController* NewPlayer)
+{
+    AFortPlayerController* Controller = Cast<AFortPlayerController>(NewPlayer);
+    if (!Controller || Controller->WorldInventory || !Controller->GetWorld())
+        return;
+    FActorSpawnParameters Params;
+    Params.Owner = Controller;
+    Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+    AFortInventory* Inventory = Controller->GetWorld()->SpawnActor<AFortInventory>(AFortInventory::StaticClass(), FTransform::Identity, Params);
+    if (!Inventory)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("WorldInventory spawn failed for %s"), *Controller->GetName());
+        return;
+    }
+    Inventory->SetReplicates(true);
+    Inventory->bOnlyRelevantToOwner = true;
+    Inventory->SetOwner(Controller);
+    Inventory->InventoryType = EFortInventoryType::World;
+    Controller->WorldInventory = Inventory;
+    Controller->bHasInitializedWorldInventory = true;
+    // Stand-in for the stubbed ServerSetClientHasFinishedLoading_Implementation: the client's SetHasFinishedLoading
+    // (0x1423af7xx) only runs OnReadyToStartMatch, which creates ClientQuickBars (0x1423f20a0), once the replicated
+    // bHasServerFinishedLoading flips; without it ClientRestart waits forever on "Quickbars are invalid".
+    Controller->bHasClientFinishedLoading = true;
+    Controller->bHasServerFinishedLoading = true;
+    UE_LOG(LogTemp, Display, TEXT("WorldInventory created for %s"), *Controller->GetName());
+}
+
 void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
 {
+    EnsureWorldInventory(NewPlayer);
     Super::RestartPlayer(NewPlayer);
     if (NewPlayer && NewPlayer->GetPawn())
         UE_LOG(LogTemp, Display, TEXT("Athena pawn spawned: class=%s authority=%d"),

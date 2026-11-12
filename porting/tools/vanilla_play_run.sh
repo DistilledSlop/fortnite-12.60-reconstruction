@@ -39,7 +39,7 @@ export FN_ACTIONS='125:click,640,592 235:click,1144,473 300:shot'
 printf -v FN_SERVER_CMD 'exec %q /Game/Maps/FortniteEmptyDedicated -FortniteOriginalClient -nullrhi -nosound -unattended -port=7777 -log -LogCmds=%q > %q 2>&1' "$server" 'LogHandshake VeryVerbose, LogNet VeryVerbose, LogNetTraffic Verbose, PacketHandlerLog VeryVerbose' "$out/server.log"
 export FN_SERVER_CMD
 touch "$out/start.marker"
-"$porting/run_original_client.sh" "$seconds" > "$out/runner.out" 2>&1 & runner_pid=$!
+"$porting/run_original_client.sh" "$seconds" "${@:2}" > "$out/runner.out" 2>&1 & runner_pid=$!
 is_runner_child() {
     local p=$1
     while [[ $p =~ ^[0-9]+$ && $p -gt 1 ]]; do

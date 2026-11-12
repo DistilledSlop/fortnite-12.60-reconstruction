@@ -179,3 +179,32 @@ index 2b0d3591a..e92b31af8 100644
  	if (bUniqueIdCheckOk)
  	{
  		ErrorMessage = GameSession->ApproveLogin(Options);
+diff --git a/Engine/Source/Developer/GameplayDebugger/Private/GameplayDebuggerPlayerManager.cpp b/Engine/Source/Developer/GameplayDebugger/Private/GameplayDebuggerPlayerManager.cpp
+index f028851c5..3b41bf23b 100644
+--- a/Engine/Source/Developer/GameplayDebugger/Private/GameplayDebuggerPlayerManager.cpp
++++ b/Engine/Source/Developer/GameplayDebugger/Private/GameplayDebuggerPlayerManager.cpp
+@@ -2,6 +2,8 @@
+ 
+ #include "GameplayDebuggerPlayerManager.h"
+ #include "Engine/World.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ #include "Components/InputComponent.h"
+ #include "GameplayDebuggerCategoryReplicator.h"
+ #include "GameplayDebuggerLocalController.h"
+@@ -99,6 +101,15 @@ void AGameplayDebuggerPlayerManager::UpdateAuthReplicators()
+ 		}
+ 	}
+ 
++	// The shipping original client has no GameplayDebugger module, so a replicated category replicator makes its
++	// actor channel fail (UActorChannel::ProcessBunch: SerializeNewActor failed). Do not spawn them for it.
++	static const bool bOriginalClient = FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
++	if (bOriginalClient)
++	{
++		PrimaryActorTick.TickInterval = PlayerData.Num() ? 5.0f : 0.5f;
++		return;
++	}
++
+ 	for (FConstPlayerControllerIterator It = World->GetPlayerControllerIterator(); It; It++)
+ 	{
+ 		APlayerController* TestPC = It->Get();
