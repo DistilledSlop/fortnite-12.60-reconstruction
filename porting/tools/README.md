@@ -30,3 +30,13 @@ Then, for any asset under `/mnt/vibrato/fortnite-extracted-full`:
 
 `--property-report` now also prints the rows of curve tables and data tables
 (field `table`). Curve rows print as `time:value` pairs.
+
+## Which bodies are empty in the client (added 2026-11-11)
+
+    python3 -I porting/tools/rpc_sweep.py Server > porting/server_scope/server_rpc_sweep.json
+    python3 -I porting/tools/rpc_sweep.py ''     # every reflected native
+
+Verdicts: `real`, `mixed` (trivial `_Validate` + real `_Implementation`, treat as real),
+`inline` (the exec thunk is the body), `STUB` (empty, must be re-created),
+`STUB_base_real_override` (empty in the declaring class, real in a subclass).
+Results and designs: `porting/server_systems/D5-stubbed-rpcs-and-recreation.md`.

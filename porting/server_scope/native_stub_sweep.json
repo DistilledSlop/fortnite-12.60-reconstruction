@@ -1,0 +1,2969 @@
+[
+{
+"cls": "UCommonPopupMenu",
+"fn": "HandlePostDifferentContextProviderSet",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UCommonPopupMenu",
+"fn": "HandlePreDifferentContextProviderSet",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UCommonTabListWidget",
+"fn": "HandleTabCreated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UCommonTabListWidget",
+"fn": "HandleTabRemoved",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UEpicCMSTileCarousel",
+"fn": "HandleTilePageAdded",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UUACNetworkComponent",
+"fn": "SendPacketToServer",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AAIHotSpot",
+"fn": "IsAIAllowed",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AAIHotSpot",
+"fn": "OnHotSpotDisabled",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAIHotSpot",
+"fn": "OnHotSpotEnabled",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAIHotSpot",
+"fn": "OnSlotBlocked",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAIHotSpot",
+"fn": "OnSlotClaimed",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAIHotSpot",
+"fn": "OnSlotDisabled",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAIHotSpot",
+"fn": "OnSlotEnabled",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAIHotSpot",
+"fn": "OnSlotFreed",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAIHotSpot",
+"fn": "OnSlotOccupied",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UAIHotSpotSlot",
+"fn": "IsAIAllowed",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UAIHotSpotSlotGenerator",
+"fn": "GenerateSlots",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAthenaBarrierFlag",
+"fn": "GetObjectiveActor",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "AAthenaCapturePoint",
+"fn": "OnCapturePointActiveStateChange",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAthenaCapturePoint",
+"fn": "OnCapturePointLockStateChange",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAthenaCapturePoint",
+"fn": "OnCapturePointStateChange",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAthenaGoosePickup",
+"fn": "DeployTimerUp_Client",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAthenaGoosePickup",
+"fn": "OnImpactedByPlane_Client",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AAthenaGoosePickup",
+"fn": "OnStartDespawnWarning_Client",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UAthenaMarkerComponent",
+"fn": "ServerAddMapMarker",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UAthenaMarkerComponent",
+"fn": "ServerRemoveMapMarker",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingActor",
+"fn": "BlueprintGetInteractionTime",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "ABuildingActor",
+"fn": "IsAcceptablePositionForPlacement",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "ABuildingActor",
+"fn": "PlacedByPlacementTool",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingActor",
+"fn": "ShouldDie",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801d0": "stub_true"
+},
+"overrides": {
+"ABuildingRift": {
+"0x141c1e2f0": "real(32)"
+}
+}
+},
+{
+"cls": "ABuildingActor",
+"fn": "ShouldDisplayDamageNumbers",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "ABuildingActor",
+"fn": "UseDefaultHealthBar",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "ABuildingGameplayActor",
+"fn": "AcceptsEmoteSprays",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "ABuildingFlagSpawn",
+"fn": "OnCarriedObjectAttachedEvent",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingFlagSpawn",
+"fn": "OnCarriedObjectDetachedEvent",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorConsumable",
+"fn": "OnInteractAllowedToConsume",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "ABuildingGameplayActorConsumable",
+"fn": "PrepareOnConsumeGameplayEffectSpec",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorSpawnChip",
+"fn": "OnDestroyPickup",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorSpawnMachine",
+"fn": "OnBeginLongUse",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorSpawnMachine",
+"fn": "OnInterruptLongUse",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorSpawnMachine",
+"fn": "OnPlayerPawnResurrected",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorSpawnMachine",
+"fn": "OnResurrectionCompleted",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorSpawnMachine",
+"fn": "OnResurrectionStarted",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorSpawnMachine",
+"fn": "OnSpawnMachineStateChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorCloneMachine",
+"fn": "OnCloneMachineActivationBegins",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorCloneMachine",
+"fn": "OnCloneMachineRespawningBegins",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingGameplayActorCloneMachine",
+"fn": "OnCloneMachineSpawnsPlayer",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingProp_DeimosSpawner",
+"fn": "MinigameStarted",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingSMActor",
+"fn": "BlueprintCanAttemptGenerateResources",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "ABuildingSMActor",
+"fn": "BlueprintOnStructurallyStable",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingSMActor",
+"fn": "GetWindPannerSpeedCurveForPreview",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "ABuildingSMActor",
+"fn": "GetWindSpeedCurveForPreview",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "ABuildingTrap",
+"fn": "BP_ShouldTrigger",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "ABuildingTimeOfDayLights",
+"fn": "GetTimeOfDayBlueprintDefaultVariables",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ABuildingTrapDefender",
+"fn": "TakeWeaponAwayFromDefender",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UCreativeQuickbarComponent",
+"fn": "ServerAddItemToQuickBar",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UCreativeQuickbarComponent",
+"fn": "ServerAddToQuickBar",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "ACustomCosmeticModifierBase",
+"fn": "OnPostResIn",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ADeployableBasePlot",
+"fn": "OnBuildingStateTransition",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ADeployableBasePlot",
+"fn": "OnCurrentBuildingStateSet",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortActorOptionsComponent",
+"fn": "BlueprintGetInteractionTime",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortAIPawn",
+"fn": "OnRep_CanInteract",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"AFortAIBuddy": {
+"0x1422e1b50": "real(?)"
+}
+}
+},
+{
+"cls": "AFortAIPawn",
+"fn": "ShouldUseFiringCapsuleCollision",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UFortAthenaAISpawnerDataComponent_BehaviorBase",
+"fn": "GetBehaviorTree",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UFortAthenaAISpawnerDataComponent_SpawnParamsBase",
+"fn": "GetSpawnTracePadding",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UFortAthenaAISpawnerDataComponent_SpawnParamsBase",
+"fn": "ShouldCheckForOverlaps",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortAthenaMutator_DadBro",
+"fn": "DoDebugSphereForImpulse",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortAthenaMutator_GameModeBase",
+"fn": "OnPlaylistLoaded",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortAthenaVehicle",
+"fn": "BP_CanInteract",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortAthenaVehicle",
+"fn": "CanTeleport",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortAthenaVehicle",
+"fn": "DebugDrawImpactBucket",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortAthenaVehicle",
+"fn": "OnPawnExitVehicle",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"AFortAthenaAntelopeVehicle": {
+"0x1418cd500": "real(157)"
+}
+}
+},
+{
+"cls": "AFortAthenaVehicle",
+"fn": "OnRep_OnFire",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortAthenaVehicle",
+"fn": "OverrideCurrentWrap",
+"verdict": "STUB",
+"targets": {
+"0x14097d780": "stub_nop"
+}
+},
+{
+"cls": "AFortAthenaVehicle",
+"fn": "UpdateClientWithVehicleTestInput",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortAthenaTutorialBase",
+"fn": "ExecuteTutorialStep_Client",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortAthenaVehicleSpawner",
+"fn": "SpawnVehicle",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortCharacterVehicle",
+"fn": "BP_CanInteract",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortCharacterVehicle",
+"fn": "OnPawnExitVehicle",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCheatManager",
+"fn": "SpawnEnemyPlayer",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortCheatManager",
+"fn": "SpawnFriendlyPlayer",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortCheatManager",
+"fn": "SpawnSimplePawn",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "AFortClientAnnouncement_Basic",
+"fn": "SetDetailText",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortClientAnnouncement_Basic",
+"fn": "SetDisplayTime",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortClientAnnouncement_Keybinding",
+"fn": "SetDetailText",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortClientAnnouncement_Keybinding",
+"fn": "SetDisplayTime",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortControllerComponent_HeldDeviceUsage",
+"fn": "ServerUseBattleLabDevice",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UFortControllerComponent_Aircraft",
+"fn": "ServerAttemptAircraftJump",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UFortControllerComponent_Interaction",
+"fn": "ServerNotifyEndLongUse",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UFortControllerComponent_Interaction",
+"fn": "ServerNotifyStartLongUse",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UFortControllerComponent_Portal",
+"fn": "ServerSetPortalLinkCode",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UFortControllerComponent_Inspector",
+"fn": "ClientEndRequestScreenshot",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortCreativeMoveTool",
+"fn": "HandleCopyPickupReleased",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortCreativeMoveTool",
+"fn": "HandleCycleNextPlaysetProp",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortCreativeMoveTool",
+"fn": "HandleCyclePreviousPlaysetProp",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortCreativeMoveTool",
+"fn": "ServerCyclePlaysetProp",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UObjectInteractionBehavior",
+"fn": "HandleDuplicateActor",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UObjectInteractionBehavior",
+"fn": "TickMovementMode",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortCustomizableAbilityDecoTool",
+"fn": "BPReleaseSecondaryFire",
+"verdict": "STUB",
+"targets": {
+"0x14097d780": "stub_nop"
+}
+},
+{
+"cls": "AFortDecoPreview",
+"fn": "OnInitializeDecoPreview",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortEventLevelNavigationActor",
+"fn": "CanCommitNavigationRequest",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UFortGameplayAbility",
+"fn": "OnGenericNotifyFromAnimation",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortGameplayAbility",
+"fn": "SetupPreviewImageOverride",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UFortGameplayAbility_JumpBoostPack",
+"fn": "OnAbilityCanceled",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortGameplayAbility_JumpBoostPack",
+"fn": "OnCurrentStateChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortGameplayAbility_JumpBoostPack",
+"fn": "OnFuelIsEmpty",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortGameplayAbility_JumpBoostPack",
+"fn": "OnFuelIsFull",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortGameplayAbility_MedicPack",
+"fn": "OnAbilityCanceled",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortGameplayAbility_MedicPack",
+"fn": "OnCurrentStateChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortGameplayAbility_MedicPack",
+"fn": "OnFuelIsEmpty",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortGameplayAbility_MedicPack",
+"fn": "OnFuelIsFull",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortGameplayAbilityTooltip",
+"fn": "GetApplicationTag",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UFortGameplayAbilityTooltip",
+"fn": "GetTextForTokenFromAbilityInstanceInternal",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UFortGameplayAbilityTooltip",
+"fn": "GetTextForTokenFromAbilitySpecInternal",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UFortGameplayAbilityTooltip",
+"fn": "InitializeAbilityInstanceInternal",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortGameState",
+"fn": "RunPerfMemCheatScript",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortGameStateBase",
+"fn": "OnRep_TimeOfDayManager",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"AFortGameState": {
+"0x141ea7090": "real(18)"
+},
+"AFortGameStateAthena": {
+"0x141ea7090": "real(18)"
+},
+"AFortGameStateDeployableBase": {
+"0x1424ee7a0": "real(42)"
+},
+"AFortGameStateOutpost": {
+"0x1424ee7a0": "real(42)"
+},
+"AFortGameStateZone": {
+"0x141ea7090": "real(18)"
+}
+}
+},
+{
+"cls": "UFortKismetLibrary",
+"fn": "ExtractSkeletalMesh",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortKismetLibrary",
+"fn": "GetAIDirector",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortKismetLibrary",
+"fn": "GetAIGoalManager",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortKismetLibrary",
+"fn": "IncrementAnalyticMatchCount",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortKismetLibrary",
+"fn": "K2_SpawnPickupInWorld",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortKismetLibrary",
+"fn": "K2_SpawnPickupInWorldWithClass",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "AFortLiveSpectatorController",
+"fn": "ServerSetFollowedPlayer",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+},
+"overrides": {
+"AFortSpectateAFriendController": {
+"0x1424276f0": "real(92)"
+}
+}
+},
+{
+"cls": "AFortLobbyBeaconClient",
+"fn": "ServerToggleIsLobbyTimerPaused",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortLiveBroadcastController",
+"fn": "ServerBeginBusPhase",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortMinigame",
+"fn": "HandleMinigameComponentInPlayChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortMinigame",
+"fn": "HandleMinigameWarmup",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortMinigame",
+"fn": "HasPlayerStartPads",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortMinigame",
+"fn": "K2_EnteredVolumeEvent",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortMinigame",
+"fn": "K2_ExitedVolumeEvent",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortMinigameItemListComponent",
+"fn": "ClearItems",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortMissionLibrary",
+"fn": "SpawnMissionItemPickupInWorld",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "AFortMissionStormShield",
+"fn": "SpawnSafeAreaAtLocation",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "AFortMusicManager",
+"fn": "PlayStinger",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortNotificationHandler",
+"fn": "NotificationShown",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortOctopusVehicle",
+"fn": "ServerUpdateTowhook",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPawn",
+"fn": "OnRep_EmoteWalkSpeed",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"AFortCharacterVehicle_Ostrich": {
+"0x142318890": "real(22)"
+},
+"AFortCharacterVehicle": {
+"0x142318890": "real(22)"
+},
+"AFortPlayerPawn": {
+"0x142318890": "real(22)"
+},
+"AFortPlayerPawnAthena": {
+"0x142318890": "real(22)"
+},
+"AFortRemoteControlledPawnAthena": {
+"0x142318890": "real(22)"
+}
+}
+},
+{
+"cls": "AFortPawn",
+"fn": "OnRep_IsKnockedBack",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"AFortAIBuddy": {
+"0x1422e0530": "real(?)"
+},
+"AFortAIPawn": {
+"0x1422e0530": "real(?)"
+},
+"AFortPawn_InteractablePawn": {
+"0x1422e0530": "real(?)"
+}
+}
+},
+{
+"cls": "AFortPawn",
+"fn": "OnRep_MovingEmote",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"AFortCharacterVehicle_Ostrich": {
+"0x14233cca0": "real(60)"
+},
+"AFortCharacterVehicle": {
+"0x14233cca0": "real(60)"
+},
+"AFortPlayerPawn": {
+"0x14233cca0": "real(60)"
+},
+"AFortPlayerPawnAthena": {
+"0x14233cca0": "real(60)"
+},
+"AFortRemoteControlledPawnAthena": {
+"0x14233cca0": "real(60)"
+}
+}
+},
+{
+"cls": "AFortPawn",
+"fn": "OnRep_MovingEmoteFollowingOnly",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"AFortCharacterVehicle_Ostrich": {
+"0x14233cd40": "real(53)"
+},
+"AFortCharacterVehicle": {
+"0x14233cd40": "real(53)"
+},
+"AFortPlayerPawn": {
+"0x14233cd40": "real(53)"
+},
+"AFortPlayerPawnAthena": {
+"0x14233cd40": "real(53)"
+},
+"AFortRemoteControlledPawnAthena": {
+"0x14233cd40": "real(53)"
+}
+}
+},
+{
+"cls": "AFortPawn",
+"fn": "OnRep_PawnUniqueID",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"AFortAIBuddy": {
+"0x1422edac0": "real(24)"
+},
+"AFortAIPawn": {
+"0x1422edac0": "real(24)"
+},
+"AFortPawn_InteractablePawn": {
+"0x1422edac0": "real(24)"
+}
+}
+},
+{
+"cls": "AFortPawn",
+"fn": "ServerTeleportNearLocation",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPawn_InteractablePawn",
+"fn": "BlueprintCanInteract",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortPawn_InteractablePawn",
+"fn": "BlueprintOnBeginInteract",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPawn_InteractablePawn",
+"fn": "BlueprintOnInteract",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPhysicsPawn",
+"fn": "OnRep_GravityMultiplier",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"AFortHoagieVehicle": {
+"0x1419076b0": "real(103)"
+},
+"AFortAthenaAntelopeVehicle": {
+"0x1419076b0": "real(103)"
+},
+"AFortAthenaExitCraft": {
+"0x14192af10": "real(84)"
+},
+"AFortAthenaFerretVehicle": {
+"0x1419076b0": "real(103)"
+},
+"AFortAthenaDoghouseVehicle": {
+"0x1419076b0": "real(103)"
+},
+"AFortAthenaGoatVehicle": {
+"0x1419076b0": "real(103)"
+},
+"AFortAthenaJackalVehicle": {
+"0x1419076b0": "real(103)"
+},
+"AFortAthenaSKMotorVehicle": {
+"0x1419076b0": "real(103)"
+},
+"AFortAthenaSKPushCannon": {
+"0x1419076b0": "real(103)"
+},
+"AFortAthenaSKPushVehicle": {
+"0x1419076b0": "real(103)"
+},
+"AFortAthenaSKVehicle": {
+"0x1419076b0": "real(103)"
+},
+"AFortAthenaVehicle": {
+"0x14192af10": "real(84)"
+},
+"AFortAthenaWaterJackal": {
+"0x1419076b0": "real(103)"
+},
+"AFortMeatballVehicle": {
+"0x141a07710": "real(49)"
+},
+"AFortMountedTurret": {
+"0x14203e7e0": "real(64)"
+},
+"AFortOctopusVehicle": {
+"0x1419076b0": "real(103)"
+},
+"AFortSpaghettiVehicle": {
+"0x1419076b0": "real(103)"
+},
+"APhysicsObject": {
+"0x141b57340": "real(63)"
+}
+}
+},
+{
+"cls": "AFortPhysicsPawn",
+"fn": "ServerMove",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPhysicsPawn",
+"fn": "ServerUpdateStateSync",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPickup",
+"fn": "AllowLongRangeAutoPickup",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UFortPlacementActorTagTest",
+"fn": "ShouldApplyTagsToPlacementActor",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "Cheat_ClearForcedCosmeticItems",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "Cheat_ClearForcedCosmeticVariantChannels",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "Cheat_ForceAthenaCosmeticItemInSlot",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "Cheat_ForceCosmeticVariantChannels",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "Cheat_ForcePlayEmoteItem",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "Cheat_StopObjectiveServer",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ClientDeveloper_GetConsoleVariable",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ClientLogDebugString",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerAcknowledgeDelayedQuickBarAction",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerAddPawnMovementInput",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerAttemptInventoryDrop",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerBeginEditingBuildingActor",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerCheat",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerCombineInventoryItems",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerDeveloper_GetConsoleVariable",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerEditBuildingActor",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerEndEditingBuildingActor",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerExecuteInventoryItem",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerKillAllAIPawnsAroundPlayer",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerOnMaterialSelection",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerRepairBuildingActor",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerReportClientFPS",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerRequestAIDebug",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerSendClientProgressUpdate",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerSetShouldUseBotManager",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerSetShouldUsePilotComponent",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerSpotActor",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerStartIntensityGraphing",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerStartPIDContributionsGraphing",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerStartPIDValueGraphing",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerTeleportToReticle",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerUpdatePlayerData",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "ServerUpgradeBuildingActor",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "SpawnToyInstance",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "AFortPlayerController",
+"fn": "TogglePersonalVehicle",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ClientAddProfileGoCollection",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ClientReceiveSquadQuickChatMessage",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "OnPostGameForced",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ResetMyCurrentCreativePlot",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "SendClientPhysicsBallStateToServer",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "SendPhysicsBallHitToServer",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerBeginEndPreview",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerClaimPortal",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerCreateProfileGoCollectionForSublevels",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerEnableAnonymousCharacterMode",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerEnableAnonymousMode",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerGenerateMockMatchReport",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerInsertExtraStreamingTestSkydiveStates",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerLoadPlotForPortal",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerReleasePortal",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerReloadCreativePlot",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerRequestObjectTrackingDetails",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerResetCameraPreviewToDefaultLocation",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerResetCurrentVolumeWithoutTeleport",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerRespondToAbandonMatch",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerSelectMutatorItem",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerSendSquadFriend",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerSetOnCreativePortalLoadedDelegate",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerSetReceiveEmailSignups",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerSetStreamingTestStreamingLevels",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerStartInteractWithIslandPortal",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerStopSavingCreativePlot",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerTeleportToPlaygroundIslandDock",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerTeleportToPlaygroundLobbyIsland",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerTeleportViaCreativePortal",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerTickForDoneTeleporting",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerToggleAutoRestartMinigame",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerTryFindPlotItemForDefinition",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerAthena",
+"fn": "ServerUpdateUserCameraPreview",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerGameplay",
+"fn": "ServerRPCSetDisplayNPCNumbers",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerDeployableBase",
+"fn": "ServerMoveItemFromDeployableBase",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerDeployableBase",
+"fn": "ServerMoveItemToDeployableBase",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerOutpost",
+"fn": "ServerCleanUpOnExit",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerOutpost",
+"fn": "ServerLeaveOutpostAsParty",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerOutpost",
+"fn": "ServerMoveItemFromStorageVault",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerOutpost",
+"fn": "ServerMoveItemToStorageVault",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerOutpost",
+"fn": "ServerUpgradePOST",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerPvE",
+"fn": "ServerTriggerSetupTeleportCameraEvent",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerPvE",
+"fn": "ServerUpdateQuickBarRecordsCache",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "UFortPlayerHealthInfoComponent",
+"fn": "OnRep_TeamHealthInfoArray",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerZone",
+"fn": "ClientAckLoadoutConfig",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerZone",
+"fn": "ClientPresentGameplayVote",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerZone",
+"fn": "ServerRequestLoadoutRefresh",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerZone",
+"fn": "ServerSendLoadoutConfig",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerControllerZone",
+"fn": "ServerSetShouldDisablePlayerTeleportingDuringMissionResults",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerControllerZone",
+"fn": "ServerSetVehicleHealth",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ClientResetAbilitySystemComponent",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ServerCyclePart",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ServerHandlePickup",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ServerHandlePickupWithRequestedSwap",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ServerHandlePickupWithSwap",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ServerResetAbilitySystemComponent",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ServerReviveFromDBNO",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ServerSendZiplineState",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ServerSetAimbotDetection",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ServerToggleBodyType",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPawn",
+"fn": "ServerToggleGender",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPawnAthena",
+"fn": "ServerSuicide",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortPlayerPushableCart",
+"fn": "GetPushAreaShapeComponent",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortPlayerSurveyQuestion",
+"fn": "GetPresentationStyle",
+"verdict": "unknown",
+"targets": {}
+},
+{
+"cls": "UFortPlayerSurveyQuestion",
+"fn": "GetQuestionType",
+"verdict": "unknown",
+"targets": {}
+},
+{
+"cls": "AFortPlayerStateZone",
+"fn": "ServerSetInAircraft",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortProjectileAthena",
+"fn": "ServerNotifyEndOverlap",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortRemoteControlledPawnAthena",
+"fn": "OnClientSetupRemoteControlPawn",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortRemoteControlledPawnAthena",
+"fn": "OnDoKill",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortRemoteControlledPawnAthena",
+"fn": "OnTriggeredHealthThreshold",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortScriptedAction",
+"fn": "CanExecute",
+"verdict": "STUB",
+"targets": {
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortScriptedAction",
+"fn": "Execute",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortSpaghettiVehicle",
+"fn": "ServerUpdateTowhook",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AFortSprayDecalInstance",
+"fn": "StartSprayFadeOutDueToNewPlacement",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortSpline",
+"fn": "ClearSpline",
+"verdict": "unknown",
+"targets": {}
+},
+{
+"cls": "UFortTooltip",
+"fn": "BP_GetNumericValue",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UFortUINotification",
+"fn": "NotificationShown",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "AFortWeaponRangedMountedCannon",
+"fn": "ServerFireActorInCannon",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop",
+"0x1406801d0": "stub_true"
+}
+},
+{
+"cls": "AGameplayCueNotify_Jetpack_FuelRegen",
+"fn": "ResetBlink",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "APhysicsObject",
+"fn": "DebugDrawImpactBucket",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "APhysicsObject",
+"fn": "DrawServerAndClientBallPosition",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "APhysicsObject",
+"fn": "UpdateClientWithPhysicsObjectTestInput",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFXSystemComponent",
+"fn": "SetIntParameter",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UAthenaLoadoutWidget",
+"fn": "OnLoadoutChosen",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UBacchusQuickbar",
+"fn": "Refresh",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UBacchusQuickbarComboSlot",
+"fn": "Refresh",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UAthenaWinnersList",
+"fn": "OnWinnersAnnounced",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortBaseButton",
+"fn": "ForceClick",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"UFortItemWidget": {
+"0x144d88720": "real(25)"
+}
+}
+},
+{
+"cls": "UFortBaseButton",
+"fn": "OnButtonClicked",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"UFortItemWidget": {
+"0x144d88720": "real(25)"
+}
+}
+},
+{
+"cls": "UFortBluGloCounter",
+"fn": "OnBluGloQuantityChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCollectionBookOverviewWidget",
+"fn": "OnDeactivated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCollectionBookPrimaryPanel",
+"fn": "OnSummonInfoPanelExecuted",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCollectionBookGenericRewardWidget",
+"fn": "OnRewardStatusChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCollectionBookPicker",
+"fn": "NotifyPanelActivated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCollectionBookPicker",
+"fn": "NotifyPanelDeactivated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCollectionBookProgressWidget",
+"fn": "OnCollectionBookLevelProgressionChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCollectionBookProgressWidget",
+"fn": "OnCollectionBookPreviewXPChange",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCollectionBookSectionTileWidget",
+"fn": "OnSectionSlotUpdate",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCollectionBookWidget",
+"fn": "OnCollectionBookPageClicked",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortCreativeItemListPanelData",
+"fn": "GetInteractionText",
+"verdict": "unknown",
+"targets": {}
+},
+{
+"cls": "UFortCreativeItemListPanelData",
+"fn": "LoadItems",
+"verdict": "unknown",
+"targets": {}
+},
+{
+"cls": "UFortEventLevelScreen",
+"fn": "StreamedVideoOnMediaPlayerEndReached",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortExpeditionOverviewWidget",
+"fn": "OnExpeditionOverviewRefresh",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortExpeditionOverviewWidget",
+"fn": "OnExpeditionTabSelected",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortExpeditionReturnsWidget",
+"fn": "OnExpeditionInProgressUpdated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortExpeditionRewardsWidget",
+"fn": "RefreshRewardsUI",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortExpeditionBuildSquadWidget",
+"fn": "OnRefreshBuildSquadWidget",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortExpeditionSummaryWidget",
+"fn": "OnRefreshSummaryWidget",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortExpeditionExpiresWidget",
+"fn": "OnExpeditionExpirationUpdated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortFrontEndContext",
+"fn": "GetUITestingClass",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortGridWidgetBase",
+"fn": "GetTileForObject",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortInputOptions",
+"fn": "ChangeBinding",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortHUDTargetUnderReticleWidget",
+"fn": "OnTargetChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortHUDTargetUnderReticleWidget",
+"fn": "OnTargetHealthChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortMatchmakingKnobsModal",
+"fn": "ApplyChanges",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"UFortCreativeMessageKnobsDialog": {
+"0x144daec70": "real(101)"
+}
+}
+},
+{
+"cls": "UFortMatchmakingKnobsModal",
+"fn": "InitializeData",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"UFortCreativeMessageKnobsDialog": {
+"0x144dc7dc0": "real(104)"
+}
+}
+},
+{
+"cls": "UFortMtxStoreRootBase",
+"fn": "GenerateOfferWidget",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"UFortLlamaStoreBase": {
+"0x1450ac8a0": "real(71)"
+}
+}
+},
+{
+"cls": "UFortPlayerProfileBannerEditor",
+"fn": "RefreshBannerEditor",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortPlayerSurveyAnswerWidgetBase",
+"fn": "HandleAnswerChanged",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801e0": "stub_false"
+},
+"overrides": {
+"UFortSurveyNumericalChoiceWidget": {
+"0x144fa26c0": "real(119)"
+}
+}
+},
+{
+"cls": "UFortPlayerSurveyAnswerWidgetBase",
+"fn": "NativeHandleAnswerContainerChanged",
+"verdict": "STUB_base_real_override",
+"targets": {
+"0x1406801c0": "stub_nop"
+},
+"overrides": {
+"UFortSurveyNumericalChoiceWidget": {
+"0x144fad570": "real(38)"
+}
+}
+},
+{
+"cls": "UFortQuestExpiresWidget",
+"fn": "OnQuestExpirationUpdated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortRealMoneyOfferDetails",
+"fn": "DeclineMtxPurchase",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortRewardNotificationData",
+"fn": "GetIconBrush",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UFortRewardNotificationWidget",
+"fn": "NotifyPanelActivated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortRewardNotificationWidget",
+"fn": "NotifyPanelDeactivated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortSquadSlotSelectorButton",
+"fn": "SquadSlotWidgetUpdated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortStoreFrontOfferDetailsWidgetBase",
+"fn": "SendRealMoneyPurchase",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortStoreSummary",
+"fn": "NotifyPanelActivated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortStoreSummary",
+"fn": "NotifyPanelDeactivated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortTouchControlRegion",
+"fn": "OnAdditionalTouchStarted",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortTouchControlRegion",
+"fn": "SetFeedbackPosition",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortTouchMoveStick",
+"fn": "SetMovementLockStatus",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortTouchLookStick",
+"fn": "IsFireButtonUnderTouch",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UFortTouchLookStick",
+"fn": "SetFiringState",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortTwitchLoginModalWidget",
+"fn": "OnNativeHostContentChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortTwitchLogin",
+"fn": "OnLoginFlowModalCreated",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortTwitchLogin",
+"fn": "OnLoginFlowModalDismissed",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UFortUIStateWidget_NUI",
+"fn": "PopContentWidgetInternal",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UFortUIStateWidget_NUI",
+"fn": "PushContentWidgetInternal",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UHUDLayoutToolPropertyPanel",
+"fn": "OnClose",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UHUDLayoutToolPropertyPanel",
+"fn": "OnOpen",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UHUDLayoutToolPropertyPanel",
+"fn": "OnWidgetMoved",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UHUDLayoutToolProxy",
+"fn": "BP_GetNumOfProperties",
+"verdict": "STUB",
+"targets": {
+"0x140680300": "stub_null"
+}
+},
+{
+"cls": "UHUDLayoutToolProxy",
+"fn": "BP_GetPropertyRange",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UHUDLayoutToolProxy",
+"fn": "BP_GetPropertyType",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UHUDLayoutToolProxy",
+"fn": "BP_SetPropertyValue",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UHUDLayoutToolPlacementWidget",
+"fn": "GetIsOverlapping",
+"verdict": "STUB",
+"targets": {
+"0x1406801e0": "stub_false"
+}
+},
+{
+"cls": "UHUDLayoutToolPlacementWidget",
+"fn": "OnInsideGridStateChange",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "UMinigameWidgetBase",
+"fn": "OnDisplayMinigameInProgressUI",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+},
+{
+"cls": "ULTMWidgetBase",
+"fn": "OnGamePhaseChanged",
+"verdict": "STUB",
+"targets": {
+"0x1406801c0": "stub_nop"
+}
+}
+]
