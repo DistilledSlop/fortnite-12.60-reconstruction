@@ -520,7 +520,7 @@ catch-up, deterministic selection, missing Weight treated as one and explicit
 zero excluded. Reward reconciliation during purchases or repair does not rotate
 dailies. Seasonal quest XP advances season/book XP under local policy; crossed
 rewards and durable event receipts commit atomically. Original daily UI and
-ClaimQuestReward remain unverified/unimplemented respectively.
+claim UI remain unverified.
 
 Original room construction at 0x140b89610 prefixes Party- to the party ID;
 Strophe login at 0x14487ace3 constructs muc.%s from the configured domain.
@@ -534,3 +534,29 @@ two original clients remain an outstanding check. Private captures:
 71d2ca28a5994929a843d5eb8e2e9026, 2fb414ca95f04e7e8b3556afd53bb89d,
 2abbfd02428343cdb94e6301a07dca1d, 132d31a2339f41eb8c849c7a1ce6e3be
 and 9e69629bdfc94b15b177e833c6d75598.
+
+
+## Fixed quest reward claims
+
+Original UFortQuestManager::ClaimQuestReward at 0x142438a50 calls
+ClaimSelectedQuestReward with index -1 when no selectable rewards exist. The
+selection path at 0x142438be0 validates an index for selectable rewards, then
+passes quest instance ID and index through 0x1429a7180 to the reflected profile
+request. HTTP JSON casing and an omitted-index default were not observed.
+
+The local ClaimQuestReward implementation requires an explicit index -1 for
+supported fixed-reward quests. It validates stored Completed state and objective
+counts, shares the atomic reward path with trusted progression, and accepts
+already Claimed retries without another award. These server policies are local;
+selectable quest rewards remain unsupported. Current trusted events still
+automatically claim completed quests, also a local policy. Tests cover restart
+retries, rejected premature/invalid claims and award-failure rollback.
+
+
+An original-client run after daily quest grants showed the previously unsupported
+MarkNewQuestNotificationSent operation as a modal error. The reflected profile
+request takes ItemIds; UFortQuestItem reflects bool sent_new_notification. The
+new handler validates the complete owned-quest batch, persists that field and
+leaves objective/reward state unchanged. Body casing and field serialization
+remain inferred; a new original-client run is required to confirm the modal is
+resolved. Focused tests cover atomic rejection, idempotence and restart.

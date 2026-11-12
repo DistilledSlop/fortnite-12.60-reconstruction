@@ -177,6 +177,78 @@ class QuestService:
             raise _invalid('Quest event ID already used with different data.')
         return False
 
+    def claim(self, ctx, quest_id, selected_index):
+        """Local claim policy for supported fixed-reward quests; retries never award twice.
+
+        The original caller sends -1 when no selectable rewards exist. Missing
+        indices and selectable reward quests are unsupported, not defaulted.
+        """
+        if type(selected_index) is not int or selected_index != -1:
+            raise _invalid('Only fixed quest rewards with selectedRewardIndex -1 are supported.')
+        tx = ctx.tx('athena')
+        item = tx.item(quest_id)
+        name = next((name for name in EVENT_QUESTS
+                     if item['templateId'].casefold() == ('quest:' + name).casefold()), None)
+        if name is None:
+            raise _invalid('Unsupported quest.')
+        state = item['attributes'].get('quest_state')
+        if state == 'Claimed':
+            return
+        if state != 'Completed':
+            raise _invalid('Quest must be completed before claiming rewards.')
+        definition = EVENT_QUESTS[name]
+        completed = 0
+        for objective, _, target in definition['objectives']:
+            value = item['attributes'].get('completion_' + objective.lower())
+            if type(value) is not int or not 0 <= value <= target:
+                raise _invalid('Invalid quest progress.')
+            completed += value == target
+        if completed < definition.get('ObjectiveCompletionCount', len(definition['objectives'])):
+            raise _invalid('Quest objectives are incomplete.')
+        self._award_completed(ctx, tx, item_id=quest_id, item=item, name=name)
+
+    def _award_completed(self, ctx, tx, item_id, item, name):
+        rewards = EVENT_QUESTS[name]['rewards']
+        tx.set_item_attr(item_id, 'quest_state', 'Claimed')
+        tx.set_item_attr(item_id, 'last_state_change_time', self.profiles.ctx.iso())
+        bundle_id = item['attributes'].get('challenge_bundle_id')
+        if name in EVENT_QUESTS and bundle_id in tx.profile['items']:
+            bundle = tx.item(bundle_id)
+            count = bundle['attributes'].get('num_quests_completed', 0)
+            if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+                raise _invalid('Invalid bundle progress.')
+            # Local counter policy: count claimed quest items, without applying
+            # unverified suppressed-quest or completion-reward semantics.
+            tx.set_item_attr(bundle_id, 'num_quests_completed', count + 1)
+        for kind, reward, quantity in rewards:
+            if kind == 'AccountResource' and reward == 'athenaseasonalxp':
+                from progression_service import award_profile_xp
+                # Local Season 12 policy: seasonal quest XP advances both
+                # season and book XP while retaining purchased book levels.
+                award_profile_xp(ctx, quantity, quantity)
+                continue
+            if quantity != 1:
+                raise _invalid('Unsupported quest reward quantity.')
+            if kind == 'Quest':
+                self._quest(tx, reward, bundle_id)
+            elif kind == 'ChallengeBundle' and reward in EVENT_BUNDLES:
+                schedule_id = tx.item(bundle_id)['attributes'].get('challenge_bundle_schedule_id') if bundle_id in tx.profile['items'] else None
+                self._bundle(tx, reward, schedule_id)
+            elif name in DAILY_QUESTS and kind == 'Token':
+                template = kind + ':' + reward
+                found = next(((i, v) for i, v in tx.profile['items'].items()
+                              if v['templateId'].casefold() == template.casefold()), None)
+                if found:
+                    token_id, token = found
+                    count = token['quantity']
+                    if type(count) is not int or not 1 <= count < 2**31 - 1:
+                        raise _invalid('Invalid daily token quantity.')
+                    tx.set_item_quantity(token_id, count + quantity)
+                else:
+                    self._grant(tx, template, {'item_seen': False})
+            else:
+                self._grant(tx, kind + ':' + reward, {'item_seen': False})
+
     def progress(self, account_id, event, amount=1, *, event_id):
         """Trusted server-only event, with durable per-account replay protection.
 
@@ -202,7 +274,6 @@ class QuestService:
                 continue
             definition = EVENT_QUESTS[name]
             objectives = definition['objectives']
-            rewards = definition['rewards']
             # Missing cooked property: local policy requires all objectives.
             required = definition.get('ObjectiveCompletionCount', len(objectives))
             if not any(stat == event for _, stat, _ in objectives):
@@ -219,45 +290,7 @@ class QuestService:
                 completed += new == target
             if completed < required:
                 continue
-            tx.set_item_attr(item_id, 'quest_state', 'Claimed')
-            tx.set_item_attr(item_id, 'last_state_change_time', self.profiles.ctx.iso())
-            bundle_id = item['attributes'].get('challenge_bundle_id')
-            if name in EVENT_QUESTS and bundle_id in tx.profile['items']:
-                bundle = tx.item(bundle_id)
-                count = bundle['attributes'].get('num_quests_completed', 0)
-                if isinstance(count, bool) or not isinstance(count, int) or count < 0:
-                    raise _invalid('Invalid bundle progress.')
-                # Local counter policy: count claimed quest items, without applying
-                # unverified suppressed-quest or completion-reward semantics.
-                tx.set_item_attr(bundle_id, 'num_quests_completed', count + 1)
-            for kind, reward, quantity in rewards:
-                if kind == 'AccountResource' and reward == 'athenaseasonalxp':
-                    from progression_service import award_profile_xp
-                    # Local Season 12 policy: seasonal quest XP advances both
-                    # season and book XP while retaining purchased book levels.
-                    award_profile_xp(ctx, quantity, quantity)
-                    continue
-                if quantity != 1:
-                    raise _invalid('Unsupported quest reward quantity.')
-                if kind == 'Quest':
-                    self._quest(tx, reward, bundle_id)
-                elif kind == 'ChallengeBundle' and reward in EVENT_BUNDLES:
-                    schedule_id = tx.item(bundle_id)['attributes'].get('challenge_bundle_schedule_id') if bundle_id in tx.profile['items'] else None
-                    self._bundle(tx, reward, schedule_id)
-                elif name in DAILY_QUESTS and kind == 'Token':
-                    template = kind + ':' + reward
-                    found = next(((i, v) for i, v in tx.profile['items'].items()
-                                  if v['templateId'].casefold() == template.casefold()), None)
-                    if found:
-                        token_id, token = found
-                        count = token['quantity']
-                        if type(count) is not int or not 1 <= count < 2**31 - 1:
-                            raise _invalid('Invalid daily token quantity.')
-                        tx.set_item_quantity(token_id, count + quantity)
-                    else:
-                        self._grant(tx, template, {'item_seen': False})
-                else:
-                    self._grant(tx, kind + ':' + reward, {'item_seen': False})
+            self._award_completed(ctx, tx, item_id, item, name)
         receipts[event_id] = payload
         tx.set_stat('local_quest_event_receipts', receipts)
         self.profiles._store(account_id, ctx.txs)

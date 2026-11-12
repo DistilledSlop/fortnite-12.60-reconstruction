@@ -469,6 +469,16 @@ def _client_quest_login(ctx):
     tx.set_stat("daily_rewards", rewards)
 
 
+@command("ClaimQuestReward", ("athena",), "observed",
+         "questId and explicit selectedRewardIndex -1 for supported fixed rewards; casing inferred.")
+def _claim_quest_reward(ctx):
+    quests = getattr(ctx.service, "quests", None)
+    if quests is None:
+        raise _invalid("Quest service is unavailable.")
+    quests.claim(ctx, ctx.str_field("questId"),
+                 ctx.int_field("selectedRewardIndex", minimum=-1, maximum=-1))
+
+
 @command("FortRerollDailyQuest", ("athena",), "observed",
          "questId: owned active daily instance ID (reflected field; casing inferred). Local daily policy applies.")
 def _reroll_daily_quest(ctx):
@@ -476,6 +486,23 @@ def _reroll_daily_quest(ctx):
     if quests is None:
         raise _invalid("Daily quest service is unavailable.")
     quests.daily.reroll(ctx, ctx.str_field("questId"))
+
+
+@command("MarkNewQuestNotificationSent", ("athena",), "observed",
+         "itemIds: quest instance IDs (reflected ItemIds; casing inferred).")
+def _mark_new_quest_notification_sent(ctx):
+    tx = ctx.tx("athena")
+    item_ids = ctx.list_field("itemIds")
+    # Validate the complete batch before applying any change.
+    for item_id in item_ids:
+        if not isinstance(item_id, str) or not item_id:
+            raise _invalid("itemIds must contain nonempty strings.")
+        item = tx.item(item_id)
+        if not item.get("templateId", "").casefold().startswith("quest:"):
+            raise _invalid("itemIds must refer to owned quest items.")
+    for item_id in item_ids:
+        # Reflected UFortQuestItem field, corresponding to this notification.
+        tx.set_item_attr(item_id, "sent_new_notification", True)
 
 
 @command("MarkItemSeen", ("athena", "common_core"), "observed", "itemIds: list of item ids (inferred).")
