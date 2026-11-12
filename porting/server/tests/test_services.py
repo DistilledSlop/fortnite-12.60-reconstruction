@@ -889,10 +889,15 @@ class PartyTests(ServiceTestCase):
         self.assertEqual(member_event["member_state_updated"], {"new": {"v": 3}})
         self.assertEqual(service._member(service._parties[pid], self.b_id)["meta"]["new"], {"v": 3})
         events.clear()
+        connection_id = service._member(service._parties[pid], self.b_id)["connections"][0]["id"]
         service.disconnect(request(self.b, {}), member_match)
-        self.assertEqual(events[0][1]["revision"], 2)
-        self.assertEqual(events[0][1]["member_state_updated"], {})
-        self.assertNotIn("connection", events[0][1])
+        self.assertEqual(events[0][1], {
+            "type": "com.epicgames.social.party.notification.v0.MEMBER_DISCONNECTED",
+            "party_id": pid, "ns": "Fortnite", "sent": self.backend.ctx.iso(),
+            "account_id": self.b_id,
+            "connection": {"id": connection_id, "disconnected_at": self.backend.ctx.iso()},
+        })
+        self.assertEqual(service._member(service._parties[pid], self.b_id)["revision"], 2)
 
     def test_party_notification_privacy_values_and_metadata_endpoint(self):
         pid = create_party(self.base, self.a)["id"]
