@@ -613,3 +613,24 @@ banner_inventory.py. Common-core queries transactionally add only missing
 case-insensitive template IDs, preserving existing instances, attributes and
 premium/custom items. Tests cover fresh defaults, repeat/restart repair and
 rollback on persistence failure.
+
+
+## Location Domination chains
+
+The cooked mission schedule grants two Location Domination bundles at day offsets
+73 and 87. Each contains ten roots, each with an A → B → C chain. The 60 supported
+definitions preserve cooked objective rows, required counts and source hashes in
+season12_location_data.py. Stage XP is 10,000 / 25,000 / 55,000; A and B grant
+their successor, and C grants the hidden Location Domination feat token. Bundle
+completion entries grant weekly challenge tokens at thresholds 1–10 and the
+weekly bundle token at threshold 10. The existing qualified-stat event interface
+applies; native raw gameplay detection remains pending.
+
+The original client reads num_progress_quests_completed for its achieved count
+and percentage, but does not establish which backend actions increment either
+counter or compare completion-reward thresholds. The local policy explicitly
+counts all claimed stages for num_quests_completed and completion rewards, and
+completed terminal chains for the separate 0–10 UI progress count. Login repairs
+the display count and missing successors of claimed stages without replaying
+XP or rewards. Tests exercise date gates, successor activation, all chains,
+reward totals, atomic failure/retry and idempotent legacy repair.

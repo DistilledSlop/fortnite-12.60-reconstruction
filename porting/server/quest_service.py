@@ -27,6 +27,7 @@ from season12_quest_data import (DONUT_BUNDLES, DONUT_QUESTS, DONUT_SCHEDULE,
 
 from season12_maya_data import MAYA_BUNDLE, MAYA_QUESTS
 from season12_daily_quest_data import DAILY_QUESTS
+from season12_location_data import LOCATION_BUNDLES, LOCATION_QUESTS, LOCATION_SCHEDULE
 from season12_weekly_quest_data import (WEEKLY_QUESTS, WEEKLY_BUNDLES, WEEKLY_SCHEDULE,
                                         WEEKLY_SCHEDULE_CALENDAR_EVENT_TAG)
 from daily_quest_service import DailyService
@@ -37,8 +38,8 @@ from profile_service import CommandContext, _invalid
 EVENTS = {'accolade_assault_specialist': 'quest_s12_styles1_q01_accolade_ar',
           'donut_w1_startquest': 'Quest_S12_Donut_W1_A',
           'dont_thank_bus_driver': 'Quest_S12_Donut_W1_B'}
-EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS}
-EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
+EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS}
+EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
 VALID_EVENTS = set(EVENTS) | {stat for quest in EVENT_QUESTS.values() for _, stat, _ in quest['objectives']}
 TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
           'cosmeticvarianttoken:vtid_561_bananaagent_stylec': 'Stage3'}
@@ -112,15 +113,46 @@ class QuestService:
             if grant_type == 'GrantWithBundle' or (grant_type == 'DaysFromEventStart' and
                     self._date_reached(definition['calendar_event_tag'], days)):
                 self._quest(tx, quest, bundle_id)
+        if name in LOCATION_BUNDLES:
+            # Repair a missing successor without replaying the claimed stage's
+            # rewards. Restrict the scan to chains belonging to this bundle.
+            for root, _, _, _ in definition['quest_infos']:
+                current = root.casefold()
+                while True:
+                    successors = [reward.casefold() for kind, reward, _ in LOCATION_QUESTS[current]['rewards']
+                                  if kind == 'Quest']
+                    if not successors:
+                        break
+                    claimed = any(item['templateId'].casefold() == 'quest:' + current and
+                                  item['attributes'].get('challenge_bundle_id') == bundle_id and
+                                  item['attributes'].get('quest_state') == 'Claimed'
+                                  for item in tx.profile['items'].values())
+                    if claimed:
+                        self._quest(tx, successors[0], bundle_id)
+                    current = successors[0]
         self._sync_bundle_progress(tx, name, bundle_id)
 
     def _sync_bundle_progress(self, tx, name, bundle_id):
         # Original GetAchievedCount/GetPercentageComplete read this separate
-        # attribute, not num_quests_completed. These supported bundles have
-        # independent, single-stage QuestInfos; chained bundles need their own rule.
-        if name not in WEEKLY_BUNDLES and name != 'QuestBundle_Styles_PaperDoll':
+        # attribute, not num_quests_completed. Single-stage bundles count
+        # claimed QuestInfos; Location Domination uses terminal stages below.
+        if name not in WEEKLY_BUNDLES and name not in LOCATION_BUNDLES and name != 'QuestBundle_Styles_PaperDoll':
             return
         roots = {quest.casefold() for quest, _, _, _ in EVENT_BUNDLES[name]['quest_infos']}
+        if name in LOCATION_BUNDLES:
+            # Inferred local policy: UI counts completed terminal chains, while
+            # the reward counter counts every claimed stage. Original server
+            # increment and completion-reward comparison are not recovered.
+            terminals = set()
+            for root in roots:
+                current = root
+                while True:
+                    next_quests = [reward.casefold() for kind, reward, _ in LOCATION_QUESTS[current]['rewards'] if kind == 'Quest']
+                    if not next_quests:
+                        terminals.add(current)
+                        break
+                    current = next_quests[0]
+            roots = terminals
         completed = {item['templateId'].split(':', 1)[-1].casefold()
                      for item in tx.profile['items'].values()
                      if item['templateId'].casefold().startswith('quest:') and
@@ -139,7 +171,7 @@ class QuestService:
             if template == 'challengebundleschedule:bundleschedule_styles_paperdoll':
                 self._bundle(tx, 'QuestBundle_Styles_PaperDoll', schedule_id)
             elif template == 'challengebundleschedule:season12_mission_schedule':
-                for bundle, grant_type, days in WEEKLY_SCHEDULE:
+                for bundle, grant_type, days in WEEKLY_SCHEDULE + LOCATION_SCHEDULE:
                     if grant_type == 'OnScheduleGranted' or self._date_reached(WEEKLY_SCHEDULE_CALENDAR_EVENT_TAG, days):
                         self._bundle(tx, bundle, schedule_id)
             elif template == 'challengebundleschedule:season12_donut_schedule':
@@ -255,13 +287,14 @@ class QuestService:
             if isinstance(count, bool) or not isinstance(count, int) or count < 0:
                 raise _invalid('Invalid bundle progress.')
             # Local counter policy: count claimed quest items, without applying
-            # unverified suppressed-quest or completion-reward semantics.
+            # unverified suppressed-quest semantics. For Location Domination this
+            # also drives completion reward thresholds, an inferred local policy.
             tx.set_item_attr(bundle_id, 'num_quests_completed', count + 1)
         if bundle_id in tx.profile['items']:
-            bundle_name = next((key for key in WEEKLY_BUNDLES if
+            bundle_name = next((key for key in {**WEEKLY_BUNDLES, **LOCATION_BUNDLES} if
                                 tx.item(bundle_id)['templateId'].casefold() == ('ChallengeBundle:' + key).casefold()), None)
             if bundle_name:
-                rewards = list(rewards) + WEEKLY_BUNDLES[bundle_name]['completion_rewards'].get(count + 1, [])
+                rewards = list(rewards) + EVENT_BUNDLES[bundle_name]['completion_rewards'].get(count + 1, [])
                 self._sync_bundle_progress(tx, bundle_name, bundle_id)
         for kind, reward, quantity in rewards:
             if kind == 'AccountResource' and reward == 'athenaseasonalxp':
