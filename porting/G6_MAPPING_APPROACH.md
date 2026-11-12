@@ -49,6 +49,21 @@ The same pass could ask the reverse question. Instead of "why is the screen stil
 
 ## Function and control-flow map, G6 to G9
 
+**Added 2026-11-12, after the detailed read.** The real-code parts of this map
+now have line-by-line cards: `server_systems/R1-warmup-and-aircraft-code.md`,
+`R2-safe-zone-code.md`, `R3-elimination-and-match-end-code.md`,
+`R4-readiness-build-interact-code.md`. Implement from those. They correct
+four things in the map below:
+
+- `StartEndGamePhase` starts at `0x14196cb30`, not `0x14196cb50`.
+- `ServerCreateBuildingActor` is not real code. `0x1423aad00` is its
+  implementation and holds only a guard; `0x14236d1a0` is a different helper.
+  Building has to be re-created (R4 section 2).
+- GamePhase numbers are Warmup 2, Aircraft 3, SafeZones 4, EndGame 5.
+- `PlacePlayersInAircraft` is not called by `StartAircraftPhase`. The server
+  destroys each warmup pawn and puts the controller in the Spectating state;
+  the player gets a pawn again through `RestartPlayer` (R1 section 6).
+
 Addresses are in the shipping exe (image base `0x140000000`). "Read" means the body is real code in the client and was read from the decompile. "Design" means the body is compiled out of the client and the behavior is inferred from what the client expects; it is not original code. Details live in `server_systems/D2-match-flow.md`, `D3`, `D5`, `D6`.
 
 ### G6: in the world with a controllable pawn

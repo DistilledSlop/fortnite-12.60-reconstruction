@@ -28,6 +28,10 @@ implements from the card; it does not redo the analysis.
 | `D14-D16-vehicles-ai-quests.md` | D14, D15, D16 | Vehicles: all real except the spawner and the physics-movement receive path (design given). Bots: code recoverable, cost is navmesh and behaviour-tree loading. Quests/XP: all real; design for backend link. All three after the first playable match. |
 | `G11-removing-client-patches.md` | E (patch removal) | What AppES is; code 1 matches our `-fromfl=none` launch; TLS can probably be solved with a loose `Certificates/Windows/cacert.pem`; four tests A–D. AES packet handler is stock. |
 | `E-backend-remaining.md` | E1–E9 | Game-server link, encryption key, cosmetics, results/XP, XMPP, friends, patch removal. |
+| `R1-warmup-and-aircraft-code.md` | A4, D2 (G6 leftovers, G7) | Line-by-line read of the tick driver, warmup, aircraft start, the three bus delegates. GamePhase values are Warmup 2, Aircraft 3, SafeZones 4, EndGame 5 (D2 was off by one). The server destroys warmup pawns at bus start and the forced exit is `RestartPlayer`. Flight path is set up in `OnPlaylistDataLoaded`. |
+| `R2-safe-zone-code.md` | D2, D10 (G7) | Line-by-line read of storm arming, start, activation, per-frame update and advance. Storm centers are picked in `OnPlaylistDataLoaded` (`PickSafeZoneLocation`). |
+| `R3-elimination-and-match-end-code.md` | D6, D11 (G8 end, G9) | `AddToAlivePlayers`, `RemoveFromAlivePlayers`, win check, `StartEndGamePhase` (real start `0x14196cb30`), end-match helper, `HandleMatchHasEnded`. The win check runs only in Aircraft and SafeZones phases and needs two players. |
+| `R4-readiness-build-interact-code.md` | A4, D9 (G6 to G8) | `ServerReadyToStartMatch` sets the bit the warmup counter needs. `ServerCreateBuildingActor` is **not** real code: only a guard survives; it must be re-created. Interact RPC is complete. |
 
 Tools made for this (usage in `porting/tools/README.md`): `rd.py` (annotated
 decompile), `rpc_sweep.py` (real or empty body), `callers.py` (who calls an
@@ -126,7 +130,7 @@ Repo root: `/opt/fortnite/FortniteClient-12.60-CL-13477524` (branch `main`, remo
 | `server/content_service.py`, `cloudstorage_service.py` | Lightswitch, version check, calendar, storefront, keychain, cloud files |
 | `server/matchmaking.py`, `local_ws.py` | Ticket, websocket queue, session, key, `/join` |
 | `server/probe_server.py` | The HTTP server (`--stub` serves the backend) |
-| `server/test_*.py`, `smoke_matchmaking.py` | Tests. Run `python3 -I porting/server/test_services.py` |
+| `server/tests/test_*.py`, `smoke_matchmaking.py` | Tests. Run `python3 -I porting/server/tests/test_services.py` |
 | `server_surface.md` | Requests the real client was seen to make, in order |
 
 ### 4.2 Running the vanilla client
