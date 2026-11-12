@@ -422,8 +422,8 @@ Actual native gameplay emission remains unwired.
 Weekly bundle completion rewards are not yet awarded. Client getters distinguish
 `num_progress_quests_completed` from `num_quests_completed`; treating suppressed
 quests as excluded from completion is unproven and would leave W2 with zero
-eligible quests. Historical epoch, suppression/reward accounting, remaining Maya
-quests and daily rotation remain open.
+eligible quests. Historical epoch, suppression/reward accounting and daily
+rotation remain open.
 
 ## Recipient gift eligibility
 
@@ -450,3 +450,22 @@ or graph writes. Private capture groups are `720719df4ed241929b5891d4209a15e0`,
 This does not resolve sender MFA/eligibility or validate the original gifting
 UI: the local accounts still report `tfaEnabled: false` without an enrollment
 mechanism, and the client gift button remains gated.
+
+## Maya schedule and lifecycle corrections
+
+The cooked PaperDoll bundle lists nine quests, with day offsets 0, 5, 12, 19,
+26, 33, 40, 47 and 54. Their names are not chronological: the top-20 quest
+is second, and outlive is ninth. The local engine now uses each cooked stat
+row, objective target and individual HeroSelection_01–09 reward. EventFlag.LobbySeason12
+requires an explicit start, shared with Deadpool. With no start only the
+GrantWithBundle quest appears. Receipt replay and transaction rollback apply
+to these quests. Normalized definitions and source hashes are in
+`season12_maya_data.py`; full property reports remain ignored. The bundle’s
+HeroSelection_10 reward, CompletionCount=-1, gift-box and cleanup behavior
+remain unresolved; passing nine quests does not currently award that token.
+
+Party leave/kick now clears partyId without changing HTTP presence status or
+lastOnline. Automatic captain succession emits the explicit promotion event
+shape after MEMBER_LEFT to remaining members. This sequence is a local
+inference, covered with three-member lifecycle tests; original two-client
+acceptance and the disconnected-member reconnect contract remain open.

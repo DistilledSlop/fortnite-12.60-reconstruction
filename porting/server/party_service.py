@@ -357,18 +357,25 @@ class PartyService:
         recipients = [member["account_id"] for member in party["members"]]
         was_captain = self._member(party, account_id)["role"] == "CAPTAIN"
         party["members"] = [member for member in party["members"] if member["account_id"] != account_id]
-        self._set_presence(account_id, "Offline", None)
+        presence = self._presence.get(account_id)
+        if presence is not None:
+            presence["partyId"] = None
         if not party["members"]:
             del self._parties[party_id]
             self._applicants.pop(party_id, None)
             self._pings = [ping for ping in self._pings if ping["party_id"] != party_id]
             self._emit(party, "MEMBER_LEFT", account_id, recipients=recipients)
             return 204, None
+        new_captain = None
         if was_captain and self._captain(party) is None:
             oldest = min(party["members"], key=lambda member: member["joined_at"])
             oldest["role"] = "CAPTAIN"
+            new_captain = oldest["account_id"]
         self._touch(party)
         self._emit(party, "MEMBER_LEFT", account_id, recipients=recipients)
+        if new_captain is not None:
+            # Local inference: notify remaining members using the explicit promotion event.
+            self._emit(party, "MEMBER_NEW_CAPTAIN", new_captain)
         return 204, None
 
     def _find_invite(self, party, account_id):

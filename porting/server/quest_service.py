@@ -14,7 +14,7 @@ Cosmetics/Characters/CID_701_Athena_Commando_M_BananaAgent 4a50739682819c09986dd
 
 The profile item attributes and trusted event mapping are inferred, not captured.
 Calendar starts require explicit configuration. Missing objective completion defaults
-to all objectives locally; suppressed bundle rewards and daily rotation remain unresolved.
+to all objectives locally; bundle rewards, Maya customization and daily rotation remain unresolved.
 """
 import copy
 import math
@@ -24,22 +24,17 @@ from datetime import datetime
 from season12_quest_data import (DONUT_BUNDLES, DONUT_QUESTS, DONUT_SCHEDULE,
                                  DONUT_SCHEDULE_CALENDAR_EVENT_TAG)
 
+from season12_maya_data import MAYA_BUNDLE, MAYA_QUESTS
+
 from api_common import ApiError, Err
 from profile_service import CommandContext, _invalid
 
-SCHEDULES = {
-    'challengebundleschedule:bundleschedule_styles_paperdoll': ('QuestBundle_Styles_PaperDoll', 'quest_s12_styles1_q01_accolade_ar'),
-    'challengebundleschedule:season12_donut_schedule': ('QuestBundle_S12_Donut_W1', 'Quest_S12_Donut_W1_A'),
-}
-QUESTS = {
-    'quest_s12_styles1_q01_accolade_ar': ('quest_s12_styles1_q01_accolade_ar_obj', 5, 'Token:AthenaToken_BRS12_HeroSelection_01'),
-    'Quest_S12_Donut_W1_A': ('Quest_S12_Donut_W1_A', 1, 'Quest:Quest_S12_Donut_W1_B'),
-    'Quest_S12_Donut_W1_B': ('Quest_S12_Donut_W1_B', 1, 'ChallengeBundle:QuestBundle_S12_Donut_W2'),
-}
 EVENTS = {'accolade_assault_specialist': 'quest_s12_styles1_q01_accolade_ar',
           'donut_w1_startquest': 'Quest_S12_Donut_W1_A',
           'dont_thank_bus_driver': 'Quest_S12_Donut_W1_B'}
-VALID_EVENTS = set(EVENTS) | {stat for quest in DONUT_QUESTS.values() for _, stat, _ in quest['objectives']}
+EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS}
+EVENT_BUNDLES = {**DONUT_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
+VALID_EVENTS = set(EVENTS) | {stat for quest in EVENT_QUESTS.values() for _, stat, _ in quest['objectives']}
 TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
           'cosmeticvarianttoken:vtid_561_bananaagent_stylec': 'Stage3'}
 
@@ -90,7 +85,7 @@ class QuestService:
         return item_id
 
     def _quest(self, tx, name, bundle):
-        objectives = DONUT_QUESTS[name]['objectives'] if name in DONUT_QUESTS else [(QUESTS[name][0], '', QUESTS[name][1])]
+        objectives = EVENT_QUESTS[name]['objectives']
         attrs = {'quest_state': 'Active', 'last_state_change_time': self.profiles.ctx.iso(),
                  'level': -1, 'item_seen': False, 'challenge_bundle_id': bundle}
         attrs.update({'completion_' + objective.lower(): 0 for objective, _, _ in objectives})
@@ -105,7 +100,7 @@ class QuestService:
         return bundle_id
 
     def _reconcile_bundle(self, tx, name, bundle_id):
-        definition = DONUT_BUNDLES[name]
+        definition = EVENT_BUNDLES[name]
         for quest, grant_type, days, _ in definition['quest_infos']:
             if grant_type == 'GrantWithBundle' or (grant_type == 'DaysFromEventStart' and
                     self._date_reached(definition['calendar_event_tag'], days)):
@@ -118,16 +113,14 @@ class QuestService:
         for schedule_id, item in items:
             template = item['templateId'].casefold()
             if template == 'challengebundleschedule:bundleschedule_styles_paperdoll':
-                bundle_id = self._grant(tx, 'ChallengeBundle:QuestBundle_Styles_PaperDoll',
-                    {'item_seen': False, 'challenge_bundle_schedule_id': schedule_id, 'num_quests_completed': 0})
-                self._quest(tx, 'quest_s12_styles1_q01_accolade_ar', bundle_id)
+                self._bundle(tx, 'QuestBundle_Styles_PaperDoll', schedule_id)
             elif template == 'challengebundleschedule:season12_donut_schedule':
                 for bundle, grant_type, days in DONUT_SCHEDULE:
                     if grant_type == 'OnScheduleGranted' or (grant_type == 'DaysSinceEventStart' and
                             self._date_reached(DONUT_SCHEDULE_CALENDAR_EVENT_TAG, days)):
                         self._bundle(tx, bundle, schedule_id)
         # Manual reward bundles may have been granted before the date gate opened.
-        names = {('challengebundle:' + name).casefold(): name for name in DONUT_BUNDLES}
+        names = {('challengebundle:' + name).casefold(): name for name in EVENT_BUNDLES}
         for bundle_id, item in list(tx.profile['items'].items()):
             name = names.get(item['templateId'].casefold())
             if name:
@@ -196,23 +189,16 @@ class QuestService:
         # Snapshot active quests before awarding anything: an event cannot advance
         # a quest unlocked by that same event, nor one unlocked in the future.
         active = list(tx.profile['items'].items())
-        names = {('quest:' + name).casefold(): name for name in DONUT_QUESTS}
-        names['quest:quest_s12_styles1_q01_accolade_ar'] = 'quest_s12_styles1_q01_accolade_ar'
+        names = {('quest:' + name).casefold(): name for name in EVENT_QUESTS}
         for item_id, item in active:
             name = names.get(item['templateId'].casefold())
             if name is None or item['attributes'].get('quest_state') != 'Active':
                 continue
-            if name in DONUT_QUESTS:
-                definition = DONUT_QUESTS[name]
-                objectives = definition['objectives']
-                rewards = definition['rewards']
-                # Missing cooked property: local policy requires all objectives.
-                required = definition.get('ObjectiveCompletionCount', len(objectives))
-            else:
-                objective, target, reward = QUESTS[name]
-                objectives = [(objective, 'accolade_assault_specialist', target)]
-                rewards = [(reward.split(':', 1)[0], reward.split(':', 1)[1], 1)]
-                required = 1
+            definition = EVENT_QUESTS[name]
+            objectives = definition['objectives']
+            rewards = definition['rewards']
+            # Missing cooked property: local policy requires all objectives.
+            required = definition.get('ObjectiveCompletionCount', len(objectives))
             if not any(stat == event for _, stat, _ in objectives):
                 continue
             completed = 0
@@ -230,7 +216,7 @@ class QuestService:
             tx.set_item_attr(item_id, 'quest_state', 'Claimed')
             tx.set_item_attr(item_id, 'last_state_change_time', self.profiles.ctx.iso())
             bundle_id = item['attributes'].get('challenge_bundle_id')
-            if name in DONUT_QUESTS and bundle_id in tx.profile['items']:
+            if name in EVENT_QUESTS and bundle_id in tx.profile['items']:
                 bundle = tx.item(bundle_id)
                 count = bundle['attributes'].get('num_quests_completed', 0)
                 if isinstance(count, bool) or not isinstance(count, int) or count < 0:
@@ -243,7 +229,7 @@ class QuestService:
                     raise _invalid('Unsupported quest reward quantity.')
                 if kind == 'Quest':
                     self._quest(tx, reward, bundle_id)
-                elif kind == 'ChallengeBundle' and reward in DONUT_BUNDLES:
+                elif kind == 'ChallengeBundle' and reward in EVENT_BUNDLES:
                     schedule_id = tx.item(bundle_id)['attributes'].get('challenge_bundle_schedule_id') if bundle_id in tx.profile['items'] else None
                     self._bundle(tx, reward, schedule_id)
                 else:

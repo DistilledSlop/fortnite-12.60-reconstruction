@@ -479,18 +479,21 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   pending native integration. Suggestions remain empty. Parties are process-local.
   Approval requests and captain decisions now have backend coverage; original UI
   approval/rejection, expiry and reconnect behavior still require verification.
+  Leaving or being kicked preserves HTTP online status; automatic captain succession
+  uses the existing promotion notification as a local inference. Disconnected party
+  connections cannot yet be restored through a verified reconnect contract.
   Voice conferences remain unimplemented.
   Settings PUT/response follows an independent [2019 client interface](https://gist.github.com/Doc94/4dff32bfba0c9036166bc3244ea55e55);
   `acceptInvites` and `mutualPrivacy` enum values follow a [later client implementation](https://pkg.go.dev/github.com/8h9x/fortgo/friends).
   Their exact 12.60 casing, defaults beyond `acceptInvites: public`, partial-update,
   permission and error semantics remain inferred. Local private and mutual-friend
   policies govern new requests; existing requests can still be accepted.
-- **Quest coverage.** Initial Maya and Agent Peely style tokens are implemented.
+- **Quest coverage.** All nine cooked Maya quests and their individual style-token rewards are implemented, alongside Agent Peely style tokens.
   Deadpool activation/progression now uses 21 cooked quest definitions, 12 bundles
   and 11 schedule entries, including multiple objectives and independent W7 timing.
   Dated grants require an explicit event start; the historical event epoch is
-  unproven. Suppressed bundle completion/rewards, remaining Maya quests and daily
-  rotation remain incomplete. An authenticated server quest-event endpoint now
+  unproven. Bundle completion/rewards (including Maya’s tenth token), cleanup and
+  daily rotation remain incomplete. An authenticated server quest-event endpoint now
   supports durable retries; actual native gameplay event integration remains pending.
 - **Native integration.** The local registration/loadout/result protocol is tested
   over HTTP and WebSocket, including durable result retries. The native server
