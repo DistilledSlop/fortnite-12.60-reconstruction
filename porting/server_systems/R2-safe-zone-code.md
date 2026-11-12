@@ -240,5 +240,5 @@ Port order: the table helper (section 1.1), `IsSafeZoneAllowed`,
 | **Storm damage: done.** The per-tick inside check is `0x141961aa0` and the per-pawn effect is `0x1419622e0`; both are in card R6 (sections 3 and 5), with the `GE_OutsideSafeZoneDamage` asset. | G8 "storm hurts" |
 | `0x1419964d0` real start | section 3 step 5 |
 | `0x141a5b1f0`, `0x1419ac150`, `0x141781400`, `0x1419ebd40` | **done**, R6 section 5 |
-| `0x141a48240`, `0x141a5b110` | **done**, sections 6 above |
+| `0x141a48240`, `0x141a5b110` | **done**, section 6 above |
 | `0x141964450` full read | next-next circle |
