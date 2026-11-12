@@ -484,8 +484,10 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   toast and badge without restarting. Two original clients now display each other
   online in the lobby. Native invitation POST succeeds, and the recipient decodes
   PING/InitialInvite and displays the invitation with ACCEPT/REJECT controls.
-  Accepting currently fails in QueryPartyJoinabilityById after a party GET 200,
-  before a join POST; two-client joining is not yet verified.
+  The invitation party lookup now decodes successfully. Acceptance leaves the
+  recipient's old party and calls the recovered POST ping-join route, which now
+  shares direct joining's admission and confirmation checks. Original two-client
+  acceptance with that new route is awaiting validation.
   Party update, member-state, joined, rejected and require-confirmation fields
   follow the original readers. Other party notification payloads remain inferred.
   Party-only MUC chat now accepts the original `Party-<party-id>@muc.<stream-domain>`
@@ -521,7 +523,11 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   40,000 XP rewards and completion-token thresholds. The cooked `SeasonGrantsToEveryone` entitlement now grants their mission schedule
   through `ClientQuestLogin`, including for free accounts. The owned schedule grants week 1
   immediately, then weeks 2–10 at day offsets 10, 17, 24, 31, 38, 45, 52, 59 and 66; sharing the configured
-  LobbySeason12 calendar anchor is a local policy. Faction choice activation and
+  LobbySeason12 calendar anchor is a local policy. Free login now also grants the
+  cooked Brutus eligibility quest and AB schedule. Supported quest rewards count
+  Brutus token acquisitions atomically; at 18, the faction bundle grants both
+  branch quests inactive. Existing token balances alone do not count as new
+  acquisitions. Faction choice activation and
   other seasonal mission families remain incomplete. Location Domination now adds
   60 stages across 20 three-stage chains, cooked XP and feat/token rewards, and
   the mission schedule offsets 73 and 87. Missing successors of claimed stages

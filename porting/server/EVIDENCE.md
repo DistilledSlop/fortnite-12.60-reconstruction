@@ -832,3 +832,70 @@ screenshots are `attempt-281-native-invite-decoded/primary-whisper-reply.png`
 and `attempt-281-native-invite-decoded/second-whisper-conversation.png` beneath
 `porting/generated/g1-isolated-probe/`. This chat result does not establish
 successful party joining.
+
+## Original JoinPartyFromPing endpoint
+
+After the invitation DTO correction, the original accept flow progressed through
+pinger-party lookup (200), departure from the recipient's solo party (204), and
+POST `/party/api/v1/Fortnite/user/{accountId}/pings/{fromAccountId}/join` (404).
+The client then deleted the ping and recreated its solo party. This establishes
+a missing native route, not an admission failure from the existing join handler.
+
+Original builder `0x140a55630` names PartyPings/JoinPartyFromPing and issues POST
+on `/api/v1/{namespace}/user/{accountId}/pings/{fromAccountId}/join`. It serializes
+the request at +0x30 through `0x140a713a0`, the same serializer used by direct
+PartyMembers/JoinParty builder `0x140a51020`. The body contains `connection`
+(serialized by `0x140a70df0`, with id and optional meta/offline_ttl/
+yield_leadership), plus optional top-level `meta`; there is no ping-metadata or
+join-info envelope. Success processing `0x140a1ee00` uses `0x140a0af40` to parse
+FPartyJoinResponse: required `party_id` and `status`. Enum reader `0x140a0e8b0`
+accepts JOINED, PENDING_CONFIRMATION, and REJECTED. These are already the local
+join response values. HTTP 200 remains the existing local success policy;
+original server status-selection rules are unavailable. The invitation accept
+flow observed here uses the ping join route; direct joining already has its
+native route and the same request serializer.
+
+Private read-only source captures are under
+`/opt/fortnite/local-model-package/out/native_ping_join_20261112/` (serializers,
+response decoder/status enum, and direct join builder), with the ping builder
+and response processor under the sibling `out/joinability_contract_20261112/`
+as `140a55630.c` and `140a1ee00.c`. These scripts open only the package's private
+Ghidra project, with no source-project or program mutations.
+
+The new route requires the recipient's authentication, selects a matching
+unexpired ping whose sender remains a member of its recorded party, then calls
+the same admission helper as direct joining. Recipient scoping and selection
+are local policies consistent with pinger-party lookup; missing/expired/stale
+pings return local 404 party_not_found. The route does not manufacture an invite,
+change privacy/build/capacity checks, skip confirmation, or consume the ping;
+the native client sends its separate DELETE afterward. Existing direct-join
+member construction behavior is reused unchanged.
+
+Focused dispatcher tests exercise the observed lookup/depart/join/delete
+sequence, connection/member metadata, MEMBER_JOINED notification, response DTO,
+recipient authorization, expiry, sender departure, current-party conflict,
+privacy and invite consumption, build/capacity/body validation, and approval.
+Original two-client acceptance with this route remains pending.
+
+## Brutus eligibility entitlement and token acquisition (2026-11-12)
+
+The cooked Season12 SeasonGrantsToEveryone list includes
+ChallengeBundleSchedule:Season12_ABChallenges_Schedule and
+Quest:quest_AB_skulldude_grant. Private property reports are
+/tmp/g1-season12-properties.json and /tmp/brutus-grant-report.json.
+The latter defines acquisition of 18 AthenaBattlePass_SkullDudeBundle_Token
+items and the MissionBundle_S12_AB_Skulldude reward. Package hashes are retained
+in season12_brutus_faction_data.py. The existing normalized agent quest reports
+define both GrantWithBundle branch quests with bStartActive false.
+
+ClientQuestLogin now issues the missing free schedule and eligibility quest
+idempotently. Supported quest token awards advance its acquisition counter and
+grant the bundle within the same durable transaction. This does not infer past
+acquisitions from an existing balance or expose a synthetic acquisition event
+through the trusted gameplay-event API. Both faction quests remain inactive;
+selection, exclusivity, and original-client eligibility display remain unverified.
+
+The combined ping-join and Brutus baseline passed 292 unittest-discovery tests
+(/tmp/g1-ping-brutus-full.log). New eligibility coverage includes threshold
+completion, transaction rollback/retry, durable restart, and existing balances.
+Original two-client ping-join acceptance remains the next runtime check.

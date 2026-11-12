@@ -30,6 +30,9 @@ from season12_daily_quest_data import DAILY_QUESTS
 from season12_location_data import LOCATION_BUNDLES, LOCATION_QUESTS, LOCATION_SCHEDULE
 from season12_weekly_quest_data import (WEEKLY_QUESTS, WEEKLY_BUNDLES, WEEKLY_SCHEDULE,
                                         WEEKLY_SCHEDULE_CALENDAR_EVENT_TAG)
+from season12_brutus_faction_data import (QUESTS as BRUTUS_QUESTS, BUNDLES as BRUTUS_BUNDLES,
+                                           GRANT_QUEST as BRUTUS_GRANT, TOKEN as BRUTUS_TOKEN,
+                                           OBJECTIVE as BRUTUS_OBJECTIVE, SCHEDULE as BRUTUS_SCHEDULE)
 from daily_quest_service import DailyService
 
 from api_common import ApiError, Err
@@ -38,9 +41,9 @@ from profile_service import CommandContext, _invalid
 EVENTS = {'accolade_assault_specialist': 'quest_s12_styles1_q01_accolade_ar',
           'donut_w1_startquest': 'Quest_S12_Donut_W1_A',
           'dont_thank_bus_driver': 'Quest_S12_Donut_W1_B'}
-EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS}
-EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
-VALID_EVENTS = set(EVENTS) | {stat for quest in EVENT_QUESTS.values() for _, stat, _ in quest['objectives']}
+EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS, **LOCATION_QUESTS, **BRUTUS_QUESTS}
+EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, **LOCATION_BUNDLES, **BRUTUS_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
+VALID_EVENTS = (set(EVENTS) | {stat for quest in EVENT_QUESTS.values() for _, stat, _ in quest['objectives']}) - {'item_acquire_brutus_token'}
 TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
           'cosmeticvarianttoken:vtid_561_bananaagent_stylec': 'Stage3'}
 
@@ -91,9 +94,9 @@ class QuestService:
         tx.add_item(item_id, template, attrs)
         return item_id
 
-    def _quest(self, tx, name, bundle):
+    def _quest(self, tx, name, bundle, active=True):
         objectives = EVENT_QUESTS[name]['objectives']
-        attrs = {'quest_state': 'Active', 'last_state_change_time': self.profiles.ctx.iso(),
+        attrs = {'quest_state': 'Active' if active else 'Inactive', 'last_state_change_time': self.profiles.ctx.iso(),
                  'level': -1, 'item_seen': False, 'challenge_bundle_id': bundle}
         attrs.update({'completion_' + objective.lower(): 0 for objective, _, _ in objectives})
         return self._grant(tx, 'Quest:' + name, attrs)
@@ -109,10 +112,10 @@ class QuestService:
 
     def _reconcile_bundle(self, tx, name, bundle_id):
         definition = EVENT_BUNDLES[name]
-        for quest, grant_type, days, _ in definition['quest_infos']:
+        for quest, grant_type, days, start_active in definition['quest_infos']:
             if grant_type == 'GrantWithBundle' or (grant_type == 'DaysFromEventStart' and
                     self._date_reached(definition['calendar_event_tag'], days)):
-                self._quest(tx, quest, bundle_id)
+                self._quest(tx, quest, bundle_id, start_active if name in BRUTUS_BUNDLES else True)
         if name in LOCATION_BUNDLES:
             # Repair a missing successor without replaying the claimed stage's
             # rewards. Restrict the scan to chains belonging to this bundle.
@@ -312,6 +315,8 @@ class QuestService:
                 self._quest(tx, reward, bundle_id)
             elif kind == 'ChallengeBundle' and reward in EVENT_BUNDLES:
                 schedule_id = tx.item(bundle_id)['attributes'].get('challenge_bundle_schedule_id') if bundle_id in tx.profile['items'] else None
+                if name == BRUTUS_GRANT:
+                    schedule_id = next((i for i, v in tx.profile['items'].items() if v['templateId'].casefold() == ('ChallengeBundleSchedule:' + BRUTUS_SCHEDULE).casefold()), None)
                 self._bundle(tx, reward, schedule_id)
             else:
                 self._grant(tx, kind + ':' + reward, {'item_seen': False})
@@ -364,6 +369,23 @@ class QuestService:
             item_id = self._grant(tx, template, {'item_seen': False})
             if quantity != 1:
                 tx.set_item_quantity(item_id, quantity)
+
+        if reward.casefold() == BRUTUS_TOKEN.casefold():
+            self._acquire_brutus_token(tx, quantity)
+
+    def _acquire_brutus_token(self, tx, quantity):
+        for item_id, item in list(tx.profile['items'].items()):
+            if (item['templateId'].casefold() != ('Quest:' + BRUTUS_GRANT).casefold()
+                    or item['attributes'].get('quest_state') != 'Active'):
+                continue
+            key = 'completion_' + BRUTUS_OBJECTIVE
+            old = item['attributes'].get(key)
+            if type(old) is not int or not 0 <= old <= 18:
+                raise _invalid('Invalid Brutus grant progress.')
+            new = min(18, old + quantity)
+            tx.set_item_attr(item_id, key, new)
+            if new == 18:
+                self._award_completed(None, tx, item_id, item, BRUTUS_GRANT)
 
     def progress(self, account_id, event, amount=1, *, event_id, match_id=None):
         """Trusted server-only event, with durable per-account replay protection.

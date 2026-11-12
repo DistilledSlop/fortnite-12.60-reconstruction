@@ -14,6 +14,8 @@ MAYA_GRAPH = 'AthenaRewardGraph:S12_HeroSelections'
 SUPPORTED_GRANTS_TO_EVERYONE = (
     ('ChallengeBundleSchedule:Season12_Mission_Schedule', 1),
     (MAYA_GRAPH, 1),
+    ('ChallengeBundleSchedule:Season12_ABChallenges_Schedule', 1),
+    ('Quest:quest_AB_skulldude_grant', 1),
 )
 
 
@@ -27,6 +29,9 @@ def initial_grant_attributes(template):
     graph state and the separately granted Battle Pass purchase token.
     """
     attributes = {'item_seen': False}
+    if template.casefold() == 'quest:quest_ab_skulldude_grant':
+        attributes.update({'quest_state': 'Active', 'level': -1,
+                           'completion_season12_cumulative_skulldude_token': 0})
     if template.casefold() == MAYA_GRAPH.casefold():
         attributes.update({
             'player_random_seed': 0,

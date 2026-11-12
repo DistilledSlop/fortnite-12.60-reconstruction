@@ -326,6 +326,9 @@ class PartyService:
 
     def join(self, req, match):
         party_id, account_id = match.group(1), match.group(2)
+        return self._join_party(req, party_id, account_id)
+
+    def _join_party(self, req, party_id, account_id):
         caller = self._caller(req)
         if caller != account_id:
             raise ApiError(403, Err.MISSING_PERMISSION, "Only the account itself can join a party for it.")
@@ -722,6 +725,22 @@ class PartyService:
                        if not (ping["account_id"] == target and ping["sent_by"] == sender)]
         return 204, None
 
+    def join_from_ping(self, req, match):
+        target, sender = match.group(1), match.group(2)
+        if self._caller(req) != target:
+            raise ApiError(403, Err.MISSING_PERMISSION, "Only the recipient can join from its ping.")
+        now = self.ctx.iso()
+        self._pings = [ping for ping in self._pings if ping["expires_at"] > now]
+        for ping in self._pings:
+            if ping["account_id"] != target or ping["sent_by"] != sender:
+                continue
+            party = self._parties.get(ping["party_id"])
+            if party is not None and self._member(party, sender) is not None:
+                # Native ping and direct joins serialize the same request DTO.
+                # A ping locates the party; normal admission still decides access.
+                return self._join_party(req, party["id"], target)
+        raise ApiError(404, Err.PARTY_NOT_FOUND, "No active party was found for this ping.")
+
     # Presence handlers -------------------------------------------------
 
     def last_online(self, req, match):
@@ -782,6 +801,8 @@ class PartyService:
                    name="party.ping", status="observed")
         router.add("GET", rf"{P}/user/([^/]+)/pings/([^/]+)/parties", self.pinger_parties,
                    name="party.ping.parties", status="observed")
+        router.add("POST", rf"{P}/user/([^/]+)/pings/([^/]+)/join", self.join_from_ping,
+                   name="party.ping.join", status="observed")
         router.add("DELETE", rf"{P}/user/([^/]+)/pings/([^/]+)", self.delete_ping,
                    name="party.ping.delete", status="observed")
         # Retain the older local POST alias; native /parties uses GET instead.
