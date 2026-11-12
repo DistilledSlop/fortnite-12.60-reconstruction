@@ -345,7 +345,9 @@ of `0x141955570`, `0x141955500`, `0x141955490`) does this once:
   the bit;
 - the same function also picks the storm centers (card R2 section 10).
 
-It has no direct caller, so it is bound as a delegate or is a virtual.
+It is the game mode virtual at slot `+0xd10` (start `0x141955570`), called
+from `AFortGameStateAthena::OnPlaylistFullLoadCompleted`; the full trigger
+chain from `OnRep_CurrentPlaylistInfo` is in card R6 section 1.
 **The stand-in server must run this function (or its two calls) before
 `StartWarmupPhase`, otherwise the aircraft spawns with an empty path.** The
 flight path is projected onto map volumes (spawn zone, drop zone), so it
@@ -468,9 +470,10 @@ return value and the aircraft component flags are now in card R5.
 | Address | What | Needed for |
 |---|---|---|
 | vtable `0x1459a9ed8` | the 60 s timer callback set at aircraft start | unknown effect |
-| `OnPlaylistDataLoaded` (real start near `0x141955570`), MapInfo `0x1418ef640`, `InitializeFlightPath` `0x1418e4610` | flight path setup, located but bodies not read | aircraft path |
+| `OnPlaylistDataLoaded` `0x141955570`, MapInfo `0x1418ef640`, `InitializeFlightPath` `0x1418e4610` | **done**: bodies in R5 section 1, trigger in R6 section 1 | aircraft path |
 | `0x141eacd80` | pre-warmup call | unknown |
-| `0x141961aa0`, `0x141978a80`, `0x1419797b0`, `0x1419783c0` | other per-frame work | unknown |
+| `0x141961aa0`, `0x141978a80`, `0x1419783c0` | **done**: storm inside check and placement update in R6 section 5, supply drop scheduler in R6 section 4 | G8 storm damage |
+| `0x1419797b0` | other per-frame work, not read | unknown |
 | `0x14196d920` | `StartMatchAbandonProcess` | probably not needed |
 | `0x14199e430` | GameState test used when the aircraft is skipped | skip path |
 

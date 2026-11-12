@@ -45,9 +45,12 @@ thickness, inferred), `+0x268` `NextMegaStormGridCellThickness`, `+0x26c`
 
 `SafeZoneDefinition` is twelve scalable floats, 0x20 bytes each, starting at
 MapInfo `+0x548`: `Count`, `Radius`, `ForceDistanceMin`, `ForceDistanceMax`,
-`RejectRadius`, `RejectOuterDistance`, `WaitTime`, `ShrinkTime`, then four
-more (the generated header lists `MegaStormGridCellThickness` next; the last
-three are not named in our header).
+`RejectRadius`, `RejectOuterDistance`, `WaitTime`, `ShrinkTime`, then
+`MegaStormGridCellThickness`, `PlayerCapSolo`, `PlayerCapDuo`,
+`PlayerCapSquad`. The values are instance data on the MapInfo actor placed
+in `Apollo_Terrain.umap` (rows `Default.SafeZone.*` of `AthenaGameData`);
+the rows, their keys and what a stand-in MapInfo must set are in card R6
+section 2.
 
 Every storm function starts with the same inlined block: if the int at
 MapInfo `+0x6c8` differs from the global `0x148115c60`, it evaluates `Count`
@@ -230,7 +233,8 @@ Port order: the table helper (section 1.1), `IsSafeZoneAllowed`,
 | Item | Why it matters |
 |---|---|
 | **Who fills `SafeZoneLocations`: found, bodies not read.** The game mode function `OnPlaylistDataLoaded` (contains `0x141955610`, see R1 section 6.1) calls `0x1418e7000(MapInfo, &SafeZoneLocations, …)` once and then sets `bSafeZoneLocationsInitialized` (game mode `+0x1000`). That wrapper calls `0x1418e7080` (1,915 lines), which calls `PickSafeZoneLocation` `0x1418f4530` (305 lines) per phase. `PickSafeZoneLocation` draws a random point in a disc (up to 10,000 tries), rejects points outside the allowed radius or inside reject volumes, and uses `ForceDistanceMin/Max`, `RejectRadius` and `RejectOuterDistance`; it logs `PickSafeZoneLocation[%d]: Setting Location`. A second writer, `0x14194dce0`, re-centers all circles on a given point and is called only from a mutator. | Without the `OnPlaylistDataLoaded` step the circle centers are empty. The stand-in server must run it before the storm activates. Read `0x1418e7080` before porting; it is the largest unread function on the G7 path. |
-| Storm damage. Not in these functions. `FinishRestartPlayer` applies `GE_OutsideSafeZone` (D2 section 10); the per-tick inside/outside test is elsewhere (`IsInsideSafeZone` is in `string_names.json`). | G7 "storm hurts" |
+| **Storm damage: done.** The per-tick inside check is `0x141961aa0` and the per-pawn effect is `0x1419622e0`; both are in card R6 (sections 3 and 5), with the `GE_OutsideSafeZoneDamage` asset. | G8 "storm hurts" |
 | `0x1419964d0` real start | section 3 step 5 |
-| `0x141a5b1f0`, `0x141a48240`, `0x1419ac150`, `0x141781400`, `0x141a5b110`, `0x1419ebd40` | bodies not read |
+| `0x141a5b1f0`, `0x1419ac150`, `0x141781400`, `0x1419ebd40` | **done**, R6 section 5 |
+| `0x141a48240`, `0x141a5b110` | bodies not read (need an exact capture) |
 | `0x141964450` full read | next-next circle |

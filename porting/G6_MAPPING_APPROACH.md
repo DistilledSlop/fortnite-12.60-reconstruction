@@ -65,6 +65,9 @@ four things in the map below:
   phase-change handler when the phase becomes Aircraft, and the player gets a
   pawn again through `RestartPlayer` (R1 section 6, R5 sections 3 and 4).
 
+`server_systems/R6-playlist-trigger-storm-table-storm-damage.md` covers what
+triggers `OnPlaylistDataLoaded`, the storm table on the map's MapInfo actor
+and the per-pawn storm damage.
 `server_systems/R5-playlist-setup-phase-handler-receipts.md` covers the flight
 path and storm-center setup, the phase-change handler, bus placement and the
 client receipts.

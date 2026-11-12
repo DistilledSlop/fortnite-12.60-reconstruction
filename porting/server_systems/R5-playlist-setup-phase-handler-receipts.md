@@ -343,9 +343,10 @@ reflection.
 
 | Address | What |
 |---|---|
-| `0x1418f8580` | fills `FAircraftFlightInfo` (speed and the three times) |
+| `0x1418f8580` | **done**, R6 section 5 |
 | `0x1418f5b60`, `0x1418f5e10` | line-onto-box and line-onto-volume projection |
 | rest of `0x141ccfa40`, and the component's exit function | where `+0xf8` / `+0xf9` are written |
-| `0x1419f5840`, `0x141988940`, `0x1419a9580`, `0x1419ae490`, `0x1419fc560` | called from the phase handler and placement |
+| `0x1419f5840` | **done** (outer body), R6 section 5 |
+| `0x141988940`, `0x1419a9580`, `0x1419ae490`, `0x1419fc560` | called from the phase handler and placement |
 | the random direction formulas in `0x1418ef640` | only needed for exact parity of bus paths |
-| real start of `OnPlaylistDataLoaded` and who binds it | how the server triggers step 2 |
+| real start of `OnPlaylistDataLoaded` and who binds it | **done**: `0x141955570`, game mode slot `+0xd10`, called from `OnPlaylistFullLoadCompleted`; R6 section 1 |
