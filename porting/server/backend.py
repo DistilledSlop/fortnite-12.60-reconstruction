@@ -58,12 +58,12 @@ class Backend:
     def __init__(self, *, clock=None, seed=DEFAULT_SEED, cloudstorage_dir=None,
                  state_dir=None, state_step_sec=None, log_size=1000, matchmaking_ws_origin=None,
                  gameserver_secret=None, registered_matchmaking=None,
-                 content_dir=None, content_file=None, content_public_origin=None):
+                 content_dir=None, content_file=None, content_public_origin=None, quest_event_starts=None):
         self.ctx = Context(clock=clock, seed=seed)
         self.accounts = AccountService(self.ctx, state_dir=state_dir)
         self.oauth = OAuthService(self.ctx, self.accounts)
         self.profiles = ProfileService(self.ctx, self.accounts, self.oauth, state_dir=state_dir)
-        self.profiles.quests = QuestService(self.profiles)
+        self.profiles.quests = QuestService(self.profiles, quest_event_starts)
         self.party = PartyService(self.ctx, self.accounts, self.oauth)
         self.friends = FriendsService(self.ctx, self.accounts, self.oauth, state_dir=state_dir)
         self.xmpp = XmppService(self.ctx, self.accounts, self.oauth, self.friends, self.party)

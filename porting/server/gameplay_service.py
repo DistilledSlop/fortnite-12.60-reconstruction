@@ -63,6 +63,24 @@ class GameplayService:
         self._member(session_id, payload.get("accountId"), include_expired=True)
         return 200, self.progression.record_result(session_id, payload)
 
+    def quest_event(self, req, match):
+        self.gameservers.authorize(req)
+        session_id = match.group(1)
+        payload = req.json_object()
+        if set(payload) - {'accountId', 'eventId', 'event', 'amount'}:
+            raise ApiError(400, Err.INVALID_PAYLOAD, 'Invalid quest event payload.')
+        event_id = payload.get('eventId')
+        if not isinstance(event_id, str) or not event_id or len(event_id) > 128:
+            raise ApiError(400, Err.INVALID_PAYLOAD, 'Invalid quest event ID.')
+        receipt_id = 'gameserver:' + session_id + ':' + event_id
+        account_id, event, amount = payload.get('accountId'), payload.get('event'), payload.get('amount', 1)
+        quests = self.profiles.quests
+        replay = quests.replay_progress(account_id, event, amount, event_id=receipt_id)
+        if replay is not None:
+            return 200, {'accepted': replay}
+        self._member(session_id, account_id)
+        return 200, {'accepted': quests.progress(account_id, event, amount, event_id=receipt_id)}
+
     @staticmethod
     def _time(req, key):
         value = req.query.get(key)
@@ -86,5 +104,7 @@ class GameplayService:
                    name="gameserver.player", status="guess")
         router.add("POST", r"/local/gameserver/([^/]+)/result", self.result,
                    name="gameserver.result", status="guess")
+        router.add("POST", r"/local/gameserver/([^/]+)/quest-event", self.quest_event,
+                   name="gameserver.quest_event", status="guess")
         router.add("GET", r"/statsproxy/api/statsv2/account/([^/]+)", self.stats,
                    name="stats.account", status="inferred")

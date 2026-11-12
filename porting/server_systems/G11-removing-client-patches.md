@@ -164,6 +164,35 @@ diagnostic before login exited with process status 5; causation is unproven.
 This progress validates more of the backend protocol path while **secure
 trust and G11 remain OPEN**. The bypass is not the final solution.
 
+### Controlled Windows ROOT-store probe
+
+A subsequent private capture of Windows loader `0x1438bc8d0` established that it
+calls the base PEM loader, defaults `bUsePlatformProvidedCertificates` to true,
+opens Windows `ROOT` with `CertOpenSystemStoreW`, enumerates its certificates,
+decodes their DER and inserts them into the SSL manager. Private evidence:
+`local-model-package/captures/3e035b4d80ed4a7ba21e5a5146c1bdbd/`.
+
+A fresh valid self-signed CA was generated only for the ignored
+`generated/g11-root-store-probe/` experiment. A small Crypt32 tool checked the
+exact DER certificate in the isolated Wine prefix: ROOT contained 125 certificates
+with zero matches before enrollment and 126 with one exact match afterward.
+The host trust store was not modified. The older probe certificate was already
+enrolled, so repeating that import would not have tested a new trust input.
+
+The client was restarted with Curl verification bypass **off**, WSS bypass **off**,
+AppES callback diagnostic **on**, and the Oodle diagnostic off. Wine's built-in
+renderer was sufficient for this service-only check. Curl still failed with
+error 60 / `certificate not trusted`, and the HTTPS listener reported
+`SSLV3_ALERT_BAD_CERTIFICATE`; login did not reach a WSS trust test. A read-only
+inspection found one SSL manager with 123 roots and six pinned domains, compared
+with 122 roots in the earlier probe. This supports platform-store adoption but
+does not identify the new CA inside that array or independently prove that pins
+caused the rejection. The client remained alive until the 180-second deadline.
+
+ROOT enrollment alone therefore does not solve G11. The next investigation is
+the actual X509/digest verifier and its verification delegate or a supported
+trust configuration. Do not repeat an unchanged certificate import as a fix.
+
 ## 5. Packet encryption (related to G11, already answered)
 
 The client's AES packet handler (`Incoming` 0x1409dd1c0) is the stock

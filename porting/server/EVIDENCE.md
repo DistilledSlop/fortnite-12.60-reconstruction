@@ -362,8 +362,68 @@ strict UTF-8 decoding and a 16 UTF-16-unit limit are local policies; the length
 matches the original UI's displayed limit. Unfriend/block clears both private
 aliases in the same transaction as the relationship change. Backend dispatcher
 tests exercise authorization, privacy, restart, updates/deletion, validation,
-cleanup and transaction rollback. The original UI displayed and accepted typing
-in the nickname form, but a successful HTTP submission has not yet been observed.
+cleanup and transaction rollback. The original UI subsequently submitted
+`ProbeAlias` through PUT, received 204 and displayed it immediately. Deletion and
+restart readback still need original-client verification. In that isolated run,
+a scripted local friend completed XMPP authentication and presence. The original
+client displayed it online as In the Lobby, showed its incoming diagnostic whisper,
+and sent an exact UI reply that the peer received. This is one original client
+plus a scripted peer, not a two-original-client acceptance test. Sanitized requests,
+logs and screenshots are under ignored
+`generated/g1-isolated-probe/attempt-alias-online-whispers/`.
+
+## Party approval and member event contracts
+
+Join response reader `0x140a0af40` requires `party_id` and string `status`;
+decoder `0x140a0e8b0` recognizes JOINED, PENDING_CONFIRMATION and REJECTED.
+Confirm builder `0x140a4f440` sends POST without a serialized body. Reject builder
+`0x140a51840` sends POST with `{}` or optional string `reason` (writer `0x140a715e0`).
+Exact original success codes are unproven; the local service chooses 200 for join
+and 204 for decisions. Applicants remain separate from admitted members, with
+captain-only decisions and eligibility rechecks. Using intention TTL for request
+expiry, silent expiration and invite retention until admission are local policies.
+
+MEMBER_JOINED (`0x140c22590`), MEMBER_REJECTED (`0x140c235e0`) and
+MEMBER_REQUIRE_CONFIRMATION (`0x140c23a80`) share flat reader `0x140c49b30`.
+Joined dispatch additionally requires nonempty `ns` and `connection.id`.
+Connection reader `0x140c48df0` reads `id`, `disconnected_at` and object `meta`.
+Rejection handler `0x140c4fd90` passes a decimal reason string to the native
+handler, which clears pending state and completes the local failed join.
+The service now emits these flat fields with member revisions and copied metadata;
+reject goes to the applicant with the supplied string reason. Their complete UI
+flows remain unverified. Private index:
+`work/party_approval_contract/evidence.json`.
+
+Require-confirmation metadata `urn:epic:member:joinrequestusers` is a JSON string
+containing an object with `users:[{id,dn,plat,data}]`; all four fields are strings
+(reader `0x140bc8dd0`). Dispatch requires valid IDs and nonempty display name and
+platform. The backend preserves the client's submitted metadata, without
+fabricating joining users.
+
+## Deadpool quest activation and trusted events
+
+`season12_quest_data.py` records cooked definitions and uasset hashes for 21 quests,
+12 bundles and 11 schedule entries. `QuestService` now follows those quest/bundle
+reward links and initializes each recovered objective. Dated grants require the
+operator's explicit EventFlag.LobbySeason12 start. W7 is independently scheduled
+at day 42, its first quest at day 46; W6's separate dummy bundle is preserved.
+Positive ObjectiveCompletionCount is honored; absent values use all objectives
+as local policy, consistent with the native getter's nonpositive fallback but
+without proof of every cooked class default.
+
+The authenticated local game-server quest-event route requires admission for new
+events. Receipts include the registration session and occurrence ID, commit in
+the same profile transaction as progress/rewards, reject changed retries and
+allow exact replays after restart without creating profiles. Events cannot advance
+quests unlocked by that same occurrence. Tests cover date boundaries, multiple
+objectives, W7/dummy separation, rollback, restart and bridge authorization.
+Actual native gameplay emission remains unwired.
+
+Weekly bundle completion rewards are not yet awarded. Client getters distinguish
+`num_progress_quests_completed` from `num_quests_completed`; treating suppressed
+quests as excluded from completion is unproven and would leave W2 with zero
+eligible quests. Historical epoch, suppression/reward accounting, remaining Maya
+quests and daily rotation remain open.
 
 ## Recipient gift eligibility
 

@@ -261,7 +261,7 @@ class XmppService:
                 if child.tag == tag(ROSTER, 'query'):
                     friends, _, _, _ = self.friends._snapshot(c.account)
                     items = ''.join('<item jid=%s subscription="both"/>' % quoteattr(account + '@' + c.domain)
-                                    for account, _ in friends if not self.friends.is_blocked(c.account, account))
+                                    for account, _, _ in friends if not self.friends.is_blocked(c.account, account))
                     self._iq_response(c, iqid, 'result', '<query xmlns="%s">%s</query>' % (ROSTER, items))
                     return True
                 if child.tag == tag(DISCO, 'query') and not child.get('node'):

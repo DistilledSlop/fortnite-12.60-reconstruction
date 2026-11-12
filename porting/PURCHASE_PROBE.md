@@ -61,6 +61,11 @@ also restored the displayed 1,500 balance. DXVK is used for visual checks, while
 backend-only tests do not need 3D rendering. Screenshots and redacted request
 records are under ignored `porting/generated/g1-isolated-probe/`.
 
+A later fresh client again rendered the saved Lace style in the lobby and
+locker, then exited with status 139 while opening its style selector. The
+selector's complete selected-style readback is still unverified; the last log
+records rendering hitches but does not establish the crash cause.
+
 The gift button displayed “2FA required to send gifts” because the local
 account response has `tfaEnabled: false`. Backend gift transactions passing
 tests do not establish that this client gift flow is accessible.

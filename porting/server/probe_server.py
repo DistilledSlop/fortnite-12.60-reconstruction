@@ -5,6 +5,7 @@ import argparse
 import fcntl
 import hashlib
 import json
+import math
 import os
 import re
 import sys
@@ -20,6 +21,26 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import api_common  # noqa: E402
 import local_ws  # noqa: E402
+
+
+def quest_event_start(value):
+    """Parse a configured calendar tag and Unix or timezone-aware ISO start."""
+    tag, separator, raw = value.partition('=')
+    if not separator or tag != 'EventFlag.LobbySeason12' or not raw:
+        raise argparse.ArgumentTypeError('expected EventFlag.LobbySeason12=ISO_OR_UNIX')
+    try:
+        try:
+            start = float(raw)
+        except ValueError:
+            start = datetime.fromisoformat(raw.replace('Z', '+00:00'))
+            if start.tzinfo is None or start.utcoffset() is None:
+                raise ValueError('timezone required')
+            start = start.timestamp()
+        if not math.isfinite(start):
+            raise ValueError('finite timestamp required')
+    except (ValueError, OverflowError, OSError) as exc:
+        raise argparse.ArgumentTypeError('invalid event start timestamp') from exc
+    return tag, start
 
 
 def compile_route(path):
@@ -203,7 +224,11 @@ def main():
                         help="with --stub: HTTP(S) origin for local lobby image URLs")
     parser.add_argument("--local-matchmaking-ws-port", type=int,
                         help="with --stub: serve an additional plaintext WebSocket listener on loopback (0 chooses a port)")
+    parser.add_argument("--quest-event-start", action="append", type=quest_event_start, default=[],
+                        metavar="TAG=ISO_OR_UNIX", help="configure a quest calendar event start; repeatable")
     args = parser.parse_args()
+    if len(dict(args.quest_event_start)) != len(args.quest_event_start):
+        parser.error("duplicate quest event start tag")
     if args.local_matchmaking_ws_port is not None and (not args.stub or args.matchmaking_ws_origin):
         parser.error("--local-matchmaking-ws-port requires --stub and no --matchmaking-ws-origin")
     args.record.parent.mkdir(parents=True, exist_ok=True)
@@ -225,7 +250,8 @@ def main():
                        matchmaking_ws_origin=args.matchmaking_ws_origin,
                        registered_matchmaking=args.registered_matchmaking,
                        content_dir=args.content_dir, content_file=args.content_file,
-                       content_public_origin=args.content_public_origin)
+                       content_public_origin=args.content_public_origin,
+                       quest_event_starts=dict(args.quest_event_start))
     server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record, stub))
     if stub is not None and not args.matchmaking_ws_origin and not args.tls_cert and args.bind == "127.0.0.1":
         # The default local HTTP server must advertise its own reachable socket,

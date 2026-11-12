@@ -941,7 +941,11 @@ class PartyTests(ServiceTestCase):
         status, joined, _ = jcall(self.base, "POST", join, token=self.b,
                                   body={"meta": {"member": "bee"}})
         self.assertEqual(status, 200)
-        self.assertEqual(joined["members"][1]["meta"], {"member": "bee"})
+        self.assertEqual(joined, {"party_id": pid, "status": "PENDING_CONFIRMATION"})
+        self.assertEqual(call(self.base, "POST", f"{PARTY}/parties/{pid}/members/{self.b_id}/confirm",
+                              token=self.a)[0], 204)
+        party = jcall(self.base, "GET", f"{PARTY}/parties/{pid}", token=self.a)[1]
+        self.assertEqual(party["members"][1]["meta"], {"member": "bee"})
 
     def test_confirmation_and_invalid_create_fields_fail_closed(self):
         for config in ({"joinability": "UNKNOWN"}, {"join_confirmation": "true"}):
@@ -950,8 +954,11 @@ class PartyTests(ServiceTestCase):
         self.assertError(jcall(self.base, "POST", f"{PARTY}/parties", token=self.a,
                                body={"join_info": {"meta": []}}), 400, Err.INVALID_PAYLOAD)
         pid = create_party(self.base, self.a, config={"joinability": "OPEN", "join_confirmation": True})["id"]
-        self.assertError(jcall(self.base, "POST", f"{PARTY}/parties/{pid}/members/{self.b_id}/join",
-                               token=self.b, body={}), 403, Err.PARTY_JOIN_FORBIDDEN)
+        status, result, _ = jcall(self.base, "POST", f"{PARTY}/parties/{pid}/members/{self.b_id}/join",
+                                  token=self.b, body={})
+        self.assertEqual((status, result), (200, {"party_id": pid, "status": "PENDING_CONFIRMATION"}))
+        party = jcall(self.base, "GET", f"{PARTY}/parties/{pid}", token=self.a)[1]
+        self.assertEqual([member["account_id"] for member in party["members"]], [self.a_id])
 
     def test_join_adds_a_member_and_bumps_revision(self):
         party = create_party(self.base, self.a)
@@ -959,8 +966,10 @@ class PartyTests(ServiceTestCase):
         status, joined, _ = jcall(self.base, "POST", f"{PARTY}/parties/{pid}/members/{self.b_id}/join",
                                   token=self.b, body={"connection": {"id": "conn-b"}})
         self.assertEqual(status, 200)
-        self.assertEqual(joined["revision"], 2)
-        roles = {m["account_id"]: m["role"] for m in joined["members"]}
+        self.assertEqual(joined, {"party_id": pid, "status": "JOINED"})
+        party = jcall(self.base, "GET", f"{PARTY}/parties/{pid}", token=self.a)[1]
+        self.assertEqual(party["revision"], 2)
+        roles = {m["account_id"]: m["role"] for m in party["members"]}
         self.assertEqual(roles, {self.a_id: "CAPTAIN", self.b_id: "MEMBER"})
         self.assertError(jcall(self.base, "POST", f"{PARTY}/parties/{pid}/members/{self.b_id}/join",
                                token=self.b, body={}), 409, Err.USER_ALREADY_IN_PARTY)

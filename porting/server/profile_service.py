@@ -693,6 +693,18 @@ class ProfileService:
             if item_id not in profile["items"]:
                 return item_id
 
+    def existing_profile(self, account_id, profile_id):
+        """Return an existing profile snapshot without creating or caching one."""
+        key = (account_id, profile_id)
+        if key in self._profiles:
+            return copy.deepcopy(self._profiles[key])
+        if self._database is not None:
+            with closing(sqlite3.connect(self._database)) as db:
+                row = db.execute("SELECT data FROM profiles WHERE account_id = ? AND profile_id = ?", key).fetchone()
+            if row is not None:
+                return json.loads(row[0])
+        return None
+
     def profile(self, account_id, profile_id):
         """Return a snapshot of the profile, created with defaults on first use."""
         key = (account_id, profile_id)

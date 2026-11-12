@@ -19,9 +19,8 @@ Evidence (see the 12.60 binary strings and DefaultEngine.ini):
             CLOSED joinability value.
   guess     the PATCH /parties/{partyId}/meta route, and the presence response shape.
 
-Not implemented: party chat, join requests that wait for approval
-(confirm and reject answer 404 applicant_not_found because no request can exist),
-voice conferences
+Local XMPP party chat uses an inferred room naming convention; the original client
+room naming is unverified. Voice conferences are not implemented
 (the /conferences/connection route is not registered, so it answers 404).
 """
 
@@ -56,6 +55,8 @@ class PartyService:
         self.notify = notify
         self.notification_failures = 0
         self._parties = {}
+        # Applicants are intentionally separate from the public party/member state.
+        self._applicants = {}
         self._presence = {}
         self._subscriptions = {}
         self._pings = []
@@ -78,12 +79,20 @@ class PartyService:
                           "party_type": config["type"] if isinstance(config["type"], str) else DEFAULT_CONFIG["type"],
                           "party_sub_type": config["subType"] if isinstance(config["subType"], str) else DEFAULT_CONFIG["subType"],
                           "revision": party["revision"], **copy.deepcopy(fields)})
-        elif kind == "MEMBER_STATE_UPDATED":
-            member = self._member(party, actor)
+        elif kind in ("MEMBER_STATE_UPDATED", "MEMBER_JOINED", "MEMBER_REJECTED", "MEMBER_REQUIRE_CONFIRMATION"):
+            member = fields.pop("member", None) or self._member(party, actor)
+            include_connection = fields.pop("include_connection", kind == "MEMBER_JOINED")
             account = self.accounts.get(actor)
             event.update({"ns": "Fortnite", "sent": self.ctx.iso(), "account_id": actor,
                           "account_dn": account["displayName"] if account else "",
-                          "revision": member["revision"], "reason": "", **copy.deepcopy(fields)})
+                          "revision": member["revision"], "reason": "",
+                          "member_state_removed": [],
+                          "member_state_updated": copy.deepcopy(member["meta"]),
+                          **copy.deepcopy(fields)})
+            if include_connection and member["connections"]:
+                connection = member["connections"][0]
+                event["connection"] = {"id": connection["id"], "disconnected_at": "",
+                                       "meta": copy.deepcopy(connection["meta"])}
         else:
             # Other notification formats remain inferred.
             event.update({"account_id": actor, "revision": party["revision"], **copy.deepcopy(fields)})
@@ -103,6 +112,7 @@ class PartyService:
         if party is None:
             raise ApiError(404, Err.PARTY_NOT_FOUND, "The party was not found.")
         self._expire_invites(party)
+        self._expire_applicants(party)
         return party
 
     def _expire_invites(self, party):
@@ -111,6 +121,27 @@ class PartyService:
         if len(active) != len(party["invites"]):
             party["invites"] = active
             self._touch(party)
+
+    def _expire_applicants(self, party):
+        pending = self._applicants.get(party["id"], {})
+        now = self.ctx.iso()
+        for account_id in list(pending):
+            if pending[account_id]["expires_at"] <= now:
+                del pending[account_id]
+
+    def _clear_applicant(self, account_id):
+        for pending in self._applicants.values():
+            pending.pop(account_id, None)
+
+    def _admit(self, party, account_id, member):
+        invite = self._find_invite(party, account_id)
+        if invite is not None:
+            party["invites"].remove(invite)
+        self._clear_applicant(account_id)
+        party["members"].append(member)
+        self._touch(party)
+        self._set_presence(account_id, "Online", party["id"])
+        self._emit(party, "MEMBER_JOINED", account_id, member=member)
 
     @staticmethod
     def _member(party, account_id):
@@ -224,6 +255,7 @@ class PartyService:
                 size = config[key]
                 if isinstance(size, bool) or not isinstance(size, int) or not 1 <= size <= MAX_PARTY_SIZE:
                     raise ApiError(400, Err.INVALID_PAYLOAD, f"{key} must be between 1 and {MAX_PARTY_SIZE}.")
+        self._invite_expiry(config["intentions_ttl_seconds"], "intentions_ttl_seconds")
         ttl = config["invite_ttl_seconds"]
         if isinstance(ttl, bool) or not isinstance(ttl, int) or ttl < 1:
             raise ApiError(400, Err.INVALID_PAYLOAD, "invite_ttl_seconds must be a positive integer.")
@@ -267,6 +299,7 @@ class PartyService:
         party["members"].append(self._new_member(caller, join_info, "CAPTAIN"))
         party["revision"] = 1
         self._parties[party_id] = party
+        self._clear_applicant(caller)
         self._set_presence(caller, "Online", party_id)
         self._emit(party, "MEMBER_JOINED", caller, member=party["members"][-1])
         return 200, copy.deepcopy(party)
@@ -287,22 +320,29 @@ class PartyService:
                 raise ApiError(409, Err.USER_ALREADY_IN_PARTY, "The user is already in this party.")
             raise ApiError(409, Err.USER_HAS_PARTY, "The user is already in another party.")
         body = req.json_object()
+        # Constructing the member validates nested objects before any admission or request.
+        member = self._new_member(account_id, body, "MEMBER")
         invite = self._find_invite(party, account_id)
         if len(party["members"]) >= party["config"]["maxSize"]:
             raise ApiError(409, Err.PARTY_IS_FULL, "The party is full.")
         expected_build = party["meta"].get(BUILD_KEY)
-        if expected_build is not None and self._dict(body.get("meta"), "meta").get(BUILD_KEY) != expected_build:
+        if expected_build is not None and member["meta"].get(BUILD_KEY) != expected_build:
             raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "The build does not match this party.")
-        if (party["config"]["joinability"] != "OPEN" or party["config"].get("join_confirmation", False)) and invite is None:
+        if party["config"]["joinability"] != "OPEN" and invite is None:
             raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "An invite is required to join this party.")
-        member = self._new_member(account_id, body, "MEMBER")
-        if invite is not None:
-            party["invites"].remove(invite)
-        party["members"].append(member)
-        self._touch(party)
-        self._set_presence(account_id, "Online", party_id)
-        self._emit(party, "MEMBER_JOINED", account_id, member=party["members"][-1])
-        return 200, copy.deepcopy(party)
+        if party["config"].get("join_confirmation", False):
+            expiry = self._invite_expiry(party["config"]["intentions_ttl_seconds"], "intentions_ttl_seconds")
+            self._applicants.setdefault(party_id, {})[account_id] = {
+                "member": member, "expires_at": expiry,
+                "has_connection": isinstance(body.get("connection"), dict),
+            }
+            captain = self._captain(party)
+            self._emit(party, "MEMBER_REQUIRE_CONFIRMATION", account_id,
+                       recipients=[captain["account_id"]], member=member,
+                       include_connection=isinstance(body.get("connection"), dict))
+            return 200, {"party_id": party_id, "status": "PENDING_CONFIRMATION"}
+        self._admit(party, account_id, member)
+        return 200, {"party_id": party_id, "status": "JOINED"}
 
     def leave_or_kick(self, req, match):
         party_id, account_id = match.group(1), match.group(2)
@@ -320,6 +360,7 @@ class PartyService:
         self._set_presence(account_id, "Offline", None)
         if not party["members"]:
             del self._parties[party_id]
+            self._applicants.pop(party_id, None)
             self._pings = [ping for ping in self._pings if ping["party_id"] != party_id]
             self._emit(party, "MEMBER_LEFT", account_id, recipients=recipients)
             return 204, None
@@ -480,8 +521,38 @@ class PartyService:
         captain = self._captain(party)
         if captain is None or captain["account_id"] != caller:
             raise ApiError(403, Err.MEMBER_STATE_FORBIDDEN, "Only the party captain can decide join requests.")
-        raise ApiError(404, Err.APPLICANT_NOT_FOUND,
-                       f"No pending join request exists for {account_id}.")
+        decision = match.group(3).lower()
+        body = req.json_object()
+        if decision == "reject" and "reason" in body and not isinstance(body["reason"], str):
+            raise ApiError(400, Err.INVALID_PAYLOAD, "reason must be a string.")
+        pending = self._applicants.get(party_id, {})
+        applicant = pending.get(account_id)
+        if applicant is None:
+            raise ApiError(404, Err.APPLICANT_NOT_FOUND,
+                           f"No pending join request exists for {account_id}.")
+        if decision == "reject":
+            del pending[account_id]
+            self._emit(party, "MEMBER_REJECTED", account_id, recipients=[account_id],
+                       member=applicant["member"], include_connection=applicant["has_connection"],
+                       reason=body.get("reason", ""))
+            return 204, None
+        current = self._party_of(account_id)
+        if current is not None:
+            raise ApiError(409, Err.USER_HAS_PARTY, "The user is already in a party.")
+        if len(party["members"]) >= party["config"]["maxSize"]:
+            raise ApiError(409, Err.PARTY_IS_FULL, "The party is full.")
+        member = applicant["member"]
+        expected_build = party["meta"].get(BUILD_KEY)
+        if expected_build is not None and member["meta"].get(BUILD_KEY) != expected_build:
+            raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "The build does not match this party.")
+        if party["config"]["joinability"] != "OPEN" and self._find_invite(party, account_id) is None:
+            raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "An invite is required to join this party.")
+        now = self.ctx.iso()
+        member["joined_at"] = member["updated_at"] = now
+        for connection in member["connections"]:
+            connection["connected_at"] = connection["updated_at"] = now
+        self._admit(party, account_id, member)
+        return 204, None
 
     def disconnect(self, req, match):
         party_id, account_id = match.group(1), match.group(2)
