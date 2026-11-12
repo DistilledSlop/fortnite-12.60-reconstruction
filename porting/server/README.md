@@ -533,7 +533,12 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   explicit local policy: one grant per UTC day, three active quests, one reroll
   per day, no catch-up, and deterministic selection excluding explicit zero
   weights. The original lobby now displays a granted daily quest and its progress
-  counter. Historical rotation rules and original-client reroll/rollover flows remain unverified. Maya permanent customization (reward graph
+  counter. Historical rotation rules and original-client reroll/rollover flows remain unverified.
+  Season 12 login also grants the cooked free `AthenaRewardGraph:S12_HeroSelections`
+  entitlement. Its local initial attributes use recovered client constructor defaults;
+  login preserves existing graph state and does not consume the separately owned
+  purchase token. The original server's initial graph serialization and `unlock_epoch`
+  remain unproven. Maya permanent customization (reward graph
   node unlock/configuration and RichColor) is not implemented. An authenticated server quest-event endpoint now
   supports durable retries; actual native gameplay event integration remains pending.
   Daily events must already satisfy their cooked tag/template/condition filters;

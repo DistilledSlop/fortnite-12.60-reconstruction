@@ -9,4 +9,32 @@ SOURCE_SHA256 = {
     'uexp': '6adc59578e9a7d4958633c0c9cd97a1a5c97c1166ef095a307035440e94c5043',
 }
 
-SUPPORTED_GRANTS_TO_EVERYONE = (('ChallengeBundleSchedule:Season12_Mission_Schedule', 1),)
+MAYA_GRAPH = 'AthenaRewardGraph:S12_HeroSelections'
+
+SUPPORTED_GRANTS_TO_EVERYONE = (
+    ('ChallengeBundleSchedule:Season12_Mission_Schedule', 1),
+    (MAYA_GRAPH, 1),
+)
+
+
+def initial_grant_attributes(template):
+    """Local initial state using recovered client defaults, not server parity.
+
+    Graph constructor 0x142727d20 initializes these counters/arrays and purchase
+    state. The original backend's grant serialization is unavailable. In
+    particular, unlock_epoch has no recovered initial value and is omitted.
+    Reconciliation applies this only to a missing item, preserving all existing
+    graph state and the separately granted Battle Pass purchase token.
+    """
+    attributes = {'item_seen': False}
+    if template.casefold() == MAYA_GRAPH.casefold():
+        attributes.update({
+            'player_random_seed': 0,
+            'reward_graph_purchased_timestamp': 0,
+            'unlock_keys_used': 0,
+            'reward_graph_purchased': False,
+            'reward_nodes_claimed': [],
+            'player_state': [],
+            'reward_keys': [],
+        })
+    return attributes

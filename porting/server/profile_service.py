@@ -42,7 +42,7 @@ from api_common import ApiError, Err
 from banner_inventory import repair_starter_items
 from catalog import LOCAL_CREDIT_OFFER, SEASON12_LEVEL_OFFER, SEASON12_PASS_OFFER, cosmetic_attributes, get_offer
 from season12_rewards import FREE as SEASON12_FREE, PAID as SEASON12_PAID
-from season12_grants import SUPPORTED_GRANTS_TO_EVERYONE
+from season12_grants import SUPPORTED_GRANTS_TO_EVERYONE, initial_grant_attributes
 from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, WRAP_SLOT_COUNT, MTX_PLATFORMS, PROFILE_IDS,
                               SLOT_CATEGORIES, build, empty_slots)
 
@@ -462,7 +462,7 @@ def _client_quest_login(ctx):
         for template, quantity in SUPPORTED_GRANTS_TO_EVERYONE:
             if template.casefold() not in owned:
                 item_id = ctx.service._new_item_id("item", tx.profile)
-                tx.add_item(item_id, template, {"item_seen": False}, quantity)
+                tx.add_item(item_id, template, initial_grant_attributes(template), quantity)
     quests = getattr(ctx.service, "quests", None)
     if quests is not None:
         quests.login(ctx)

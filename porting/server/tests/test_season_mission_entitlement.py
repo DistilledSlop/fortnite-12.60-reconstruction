@@ -80,3 +80,24 @@ class SeasonMissionEntitlementTests(support.ServiceTestCase):
         self.assertEqual(self.profile(), before)
         self.restart()
         self.assertEqual(self.profile(), before)
+
+    def test_free_maya_graph_grant_preserves_existing_state_and_purchase_token(self):
+        graph_template = 'AthenaRewardGraph:S12_HeroSelections'
+        token_template = 'RewardEventGraphPurchaseToken:S12_HeroSelections_PurchaseToken'
+        self.assertEqual(self.mcp('ClientQuestLogin')[0], 200)
+        graph_id, graph = self.find(graph_template)[0]
+        self.assertEqual(graph['quantity'], 1)
+        self.assertFalse(graph['attributes']['reward_graph_purchased'])
+        self.assertEqual(graph['attributes']['reward_nodes_claimed'], [])
+        self.assertFalse(self.find(token_template))
+        ctx = CommandContext(self.backend.profiles, support.LOCAL, 'athena', {})
+        tx = ctx.tx('athena')
+        tx.set_item_attr(graph_id, 'player_random_seed', 123)
+        tx.add_item('maya-purchase-token', token_template, {}, 1)
+        self.backend.profiles._store(support.LOCAL, ctx.txs)
+        before = copy.deepcopy(self.profile()['items'])
+        self.restart()
+        self.assertEqual(self.mcp('ClientQuestLogin')[0], 200)
+        self.assertEqual(self.profile()['items'], before)
+        self.assertEqual(len(self.find(graph_template)), 1)
+        self.assertEqual(self.find(token_template)[0][1]['quantity'], 1)

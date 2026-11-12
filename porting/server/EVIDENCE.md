@@ -504,6 +504,31 @@ Dispatcher tests cover recipient selection, state snapshots, deep copying,
 explicit promotion, voluntary departure, captain removal and disband. Original
 two-client acceptance remains pending.
 
+## Maya free graph entitlement and local initial state
+
+Cooked AthenaSeason12 `SeasonGrantsToEveryone` grants one hidden
+`S12_HeroSelections` graph independently of the paid level-one purchase token
+(extracted properties: `/tmp/g1-season12-properties.json`; source hashes in
+`season12_grants.py`). Original graph definition constructor `0x141ffa8c0`
+sets inherited ItemType at +0x51 to 84; `EFortItemType` and original
+`NativeGetProfileKey` `0x142030d00` identify the exact profile prefix as
+`AthenaRewardGraph`. Definition capture:
+`/opt/fortnite/local-model-package/captures/5fd930c0de59463986a701ba9b6fbea9/0x141ffa8c0.c`.
+
+Graph item constructor `0x142727d20` initializes random seed, purchase timestamp
+and keys used to zero, purchase state to false, and claimed-node, player-state
+and reward-key arrays to empty. Capture:
+`/opt/fortnite/local-model-package/captures/38a689a527894bae95cb091c123ee087/0x142727d20.c`.
+These are client object defaults, not proof of original backend grant JSON.
+The backend now uses them as explicit local initial state for the missing free
+graph on Season 12 ClientQuestLogin. No unlock epoch is invented: its initial
+value and wire representation remain unresolved. Existing graph attributes are
+preserved, and the purchase token is neither consumed nor used to invent a
+purchased state. Permanent node selection/configuration remains unimplemented.
+Focused MCP tests verify free entitlement, persistence, repeated-login
+idempotency, preservation of graph state and the separate purchase token,
+season exclusion, and transactional rollback.
+
 
 ## Daily lifecycle and original party chat naming
 
