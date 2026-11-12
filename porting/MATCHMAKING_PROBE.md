@@ -141,3 +141,13 @@ two gates (`[+0x220]`, bit 0x20 of `[+0x658]`) before the check `0x1423cc220` ru
 Tooling: `tools/vanilla_play_run.sh <seconds> [client args...]` now forwards extra client arguments (for example
 `"-LogCmds=LogFort VeryVerbose"`). Use at least 420 s; extra logging slows the client's start so 300 s ends right after
 the join. Decompiles used `/opt/fortnite/local-model-package/scripts/evidence.py capture` on the addresses above.
+
+### 2026-11-12 (later): G6 root cause of the quickbar wait found and fixed (run 12)
+
+The client's `OnReadyToStartMatch`/quickbar creation runs from a 0.5 s timer that the client arms only on receiving the
+`ClientOnGenericPlayerInitialization` RPC, which our server never sent. `EnsureWorldInventory` now sends it. Run 12
+(`generated/wine-investigation/20261112-play-run-12`): `SetHasFinishedLoading` runs, `OnReadyToStartMatch` marks the
+player ready, `ClientQuickBars` exists, `Quickbars are invalid` fell from 11,114 to 8. The client is still on the
+loading screen at 300 s; next blocker is the pawn customization (`Hero:None`, `No TeamInfo`), see
+`G6_CONTROLLER_PROBE_FIX.md` (live result section). The earlier note about `0x1423cc220` being a per-tick check is
+corrected there: it runs from the timer.

@@ -325,7 +325,12 @@ static void EnsureWorldInventory(AController* NewPlayer)
     // bHasServerFinishedLoading flips; without it ClientRestart waits forever on "Quickbars are invalid".
     Controller->bHasClientFinishedLoading = true;
     Controller->bHasServerFinishedLoading = true;
-    UE_LOG(LogTemp, Display, TEXT("WorldInventory created for %s"), *Controller->GetName());
+    // The client's readiness check (0x1423cc220, which calls SetHasFinishedLoading and so creates ClientQuickBars)
+    // runs from a 0.5 s looping timer. That timer is armed only by the client RPC ClientOnGenericPlayerInitialization
+    // (client body 0x142371f00 -> controller virtual +0x1540 -> +0x1568). The original server sends it from login code
+    // that is not in the client, so send it here (G6, see G6_CONTROLLER_PROBE_FIX.md).
+    Controller->ClientOnGenericPlayerInitialization();
+    UE_LOG(LogTemp, Display, TEXT("WorldInventory created for %s; sent ClientOnGenericPlayerInitialization"), *Controller->GetName());
 }
 
 void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)

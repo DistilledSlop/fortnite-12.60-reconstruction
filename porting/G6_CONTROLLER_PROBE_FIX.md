@@ -1,7 +1,38 @@
 # G6: why the controller memory probe found nothing, and how to fix it
 
-Date: 2026-11-12. Status: **static analysis only, not yet run against a live client.**
+Date: 2026-11-12. Status: **superseded by the live result below (runs 10 to 12).** The sections after it are the original static analysis; two of its statements were wrong and are corrected here.
 Applies to `porting/tools/pc_probe.py` (untracked) and to the G6 notes in `MATCHMAKING_PROBE.md`.
+
+## Live result and root cause (runs 10 to 12, 2026-11-12)
+
+`tools/pc_probe.py` was rewritten as described below and its self-test passes (all 16 tables are `lea` targets and hold
+`0x1423bc750` at `+0x1570`). Against the live client it prints the match controller (table `0x145e1aac0`, role 2) plus
+the lobby/default objects (role 3, null fields; they are class default objects, not a lobby controller).
+
+**Corrections to the static analysis below**
+- `[this+0x220]` is `AController::PlayerState` (the class test is `FortPlayerState`), not the `Player`.
+- `0x1423bc750` is not a per-tick function. It is the callback of a **0.5 s looping timer** (handle at `+0x1e18`).
+  The timer is armed by controller virtual `+0x1568` (`0x1419ee380` for the Athena table, `0x1423a86a0` for the others;
+  both also reset `[+0x6f8]`, clear bit 0x20 of `[+0x658]`, and on authority clear `[+0x6f9]`).
+- `+0x1568` is called from slot `+0x1540` (`0x1423dd5c0` -> `0x14239a890`). Slot `+0x1540` has two callers:
+  the server game mode's `GenericPlayerInitialization` override (`0x141e5b090`, runs on the server only) and
+  `ClientOnGenericPlayerInitialization_Implementation` (`0x142371f00`), a `Client, Reliable` RPC.
+
+**Root cause of the LOADING hang:** the client's readiness check only runs from that timer, and the timer is only armed
+when the client receives `ClientOnGenericPlayerInitialization`. The original server sends that RPC from login code that
+does not exist in the client, so our server never sent it. Live probe before the fix: gates 1 and 2 pass,
+`serverFin=1`, `clientFin=0`, quickbars null; every input of the check (`MyPlayerInfo` gate, foundations/`WorldManager`
+null, loading counters 0, `[+0x28c]&2`, `IsLocalController` cache) passes, i.e. the check simply never ran.
+
+**Fix:** `EnsureWorldInventory` (`FortniteAthenaGameplay.cpp`) calls `Controller->ClientOnGenericPlayerInitialization()`
+once, together with the stand-ins for the world inventory and the finished-loading flags. Run 12: the server logs
+`Sent RPC ... ClientOnGenericPlayerInitialization`; the client logs `SetHasFinishedLoading ... bInHasFinishedLoading: 1`
+and `OnReadyToStartMatch: Marking player ... ready to start`; probe shows `clientFin=1`, `ClientQuickBars` created,
+`[+0x658]` bit 0x20 set (timer stopped). `Quickbars are invalid` lines fell from 11,114 to 8.
+
+**Still LOADING after the fix** (screenshot `t300.png` of run 12). Next blocker, from the client log:
+`LogFortCustomization: Customization for ...FortPlayerPawnAthena... still hasn't completed after 20.09 secs. Hero:None`
+and `SetPlayerTeam to No TeamInfo`. The hero, character parts and team are the login/spawn pipeline (plan D1).
 
 ## Summary
 
