@@ -78,14 +78,14 @@ A gate is passed only when the **vanilla client** shows it in a recorded run. A 
 | G1 | Lobby features work: locker, item shop, Battle Pass, V-Bucks | **Mostly passed** (list of verified actions in section 5.1); challenges, XP, gifting, friends, news are not | `LOCKER_*_PROBE.md`, `PURCHASE_PROBE.md` |
 | G2 | Play button: ticket, queue websocket, session, key, `/join`; client sends UDP to our server | **Passed over a plaintext loopback websocket**; `wss://` fails | `MATCHMAKING_PROBE.md` |
 | G3 | UDP stateless handshake completes | **Open.** With `patches/ue425-fortnite-float-handshake.patch` the server sends a challenge and acks the response, then the exchange loops on restart-handshake requests | `MATCHMAKING_PROBE.md`, `docs/progress.json` milestone 3 |
-| G4 | Control channel: Hello, Challenge, Login, Welcome | Not reached | |
-| G5 | Client loads the map and `Join` succeeds; PlayerController replicated; no checksum or NetGUID errors | Not reached | |
-| G6 | Client stays in the world 5 minutes with a controllable pawn | Not reached | |
-| G7 | Match flow: warmup, bus, jump, glide, land, storm phases run | Not reached | |
-| G8 | Core loop: pickaxe, harvest, build, loot, shoot, damage, elimination, victory | Not reached | |
-| G9 | Match ends cleanly, client returns to lobby, results are in the profile | Not reached | |
-| G10 | Two or more vanilla clients in one match (party, teams) | Not reached | |
-| G11 | No diagnostic patches needed; TLS websocket works | Not reached | |
+| G4 | Control channel: Hello, Challenge, Login, Welcome | Not run yet (waits on G3). **Analysis done:** the client's Hello/Challenge/Login handling matches stock 4.25; no server change expected beyond what G3 needs | `server_systems/A-wire-findings.md` |
+| G5 | Client loads the map and `Join` succeeds; PlayerController replicated; no checksum or NetGUID errors | Not run yet. **Analysis done, not implemented:** join sequence read from the client (login options, PostLogin, team pick, player start, pawn spawn); Blueprint classes and their defaults listed; load order and map checks written | `server_systems/D2-match-flow.md`, `server_systems/C-world-classes-and-abilities.md` |
+| G6 | Client stays in the world 5 minutes with a controllable pawn | Not run yet. **Analysis done, not implemented:** test mode identified (`?RequiredPlayers=1?PauseWarmup` holds the client on the warmup island); spawn inventory and the 31 default abilities listed | `server_systems/D2-match-flow.md`, `server_systems/C-world-classes-and-abilities.md` |
+| G7 | Match flow: warmup, bus, jump, glide, land, storm phases run | Not run yet. **Analysis done, not implemented:** warmup, aircraft, safe-zone and end-game functions are real code and are read; storm and bus numbers read from game data; bus jump request designed | `server_systems/D2-match-flow.md`, `server_systems/D4-game-data.md`, `server_systems/D5-stubbed-rpcs-and-recreation.md` |
+| G8 | Core loop: pickaxe, harvest, build, loot, shoot, damage, elimination, victory | Not run yet. **Analysis done, not implemented:** the 24 empty requests (equip, drop, pick up, edit, repair…) each have a design; loot tables and rolling rule read; server death sequence designed | `server_systems/D5-stubbed-rpcs-and-recreation.md`, `server_systems/D6-combat-and-elimination.md`, `server_systems/D4-game-data.md` |
+| G9 | Match ends cleanly, client returns to lobby, results are in the profile | Not run yet. **Analysis done, not implemented:** end-game path read; placement screens and result reporting to the backend designed | `server_systems/D6-combat-and-elimination.md`, `server_systems/D3-dedicated-session.md`, `server_systems/E-backend-remaining.md` |
+| G10 | Two or more vanilla clients in one match (party, teams) | Not run yet. **Design written, not implemented:** XMPP party notifications and friends; team pick read | `server_systems/E-backend-remaining.md` |
+| G11 | No diagnostic patches needed; TLS websocket works | Not run yet. **Partly analysed:** packet encryption matches stock; patch removal (TLS, launcher check) under analysis | `server_systems/E-backend-remaining.md`, `server_systems/A-wire-findings.md` |
 
 **The critical path is G3 → G4 → G5 → G6.** Almost nothing in gameplay can be tested with the vanilla client until G6. Until then, gameplay work is "source only" and must be marked unverified.
 
