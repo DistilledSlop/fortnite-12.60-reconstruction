@@ -39,6 +39,7 @@ from pathlib import Path
 from typing import Callable
 
 from api_common import ApiError, Err
+from banner_inventory import repair_starter_items
 from catalog import LOCAL_CREDIT_OFFER, SEASON12_LEVEL_OFFER, SEASON12_PASS_OFFER, cosmetic_attributes, get_offer
 from season12_rewards import FREE as SEASON12_FREE, PAID as SEASON12_PAID
 from season12_grants import SUPPORTED_GRANTS_TO_EVERYONE
@@ -873,6 +874,12 @@ class ProfileService:
 
     def query(self, account_id, profile_id):
         profile = self.profile(account_id, profile_id)
+        if profile_id == "common_core":
+            tx = ProfileTx(self.ctx, profile)
+            repair_starter_items(self, account_id, tx)
+            if tx.changed:
+                self._store(account_id, {profile_id: tx})
+                profile = tx.profile
         snapshot = copy.deepcopy(profile)
         entry = self._entry(profile_id, profile, profile["rvn"],
                             [{"changeType": "fullProfileUpdate", "profile": snapshot}])

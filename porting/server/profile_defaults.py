@@ -15,6 +15,8 @@ Evidence:
     mapping, and the stored value types (list of template ids per slot).
 """
 
+from banner_inventory import starter_items
+
 PROFILE_IDS = ("athena", "common_core", "common_public", "campaign", "creative")
 
 LOCKER_TEMPLATE = "CosmeticLocker:cosmeticlocker_athena"
@@ -96,6 +98,7 @@ def build_athena(ctx, account_id):
 def build_common_core(ctx, account_id):
     currency_id = ctx.stable_id(f"{account_id}|common_core|currency")
     items = {currency_id: {"templateId": "Currency:MtxGiveaway", "attributes": {"platform": "EpicPC"}, "quantity": 0}}
+    items.update(starter_items(ctx, account_id))
     attributes = {
         "mfa_reward_claimed": True,
         "current_mtx_platform": "EpicPC",

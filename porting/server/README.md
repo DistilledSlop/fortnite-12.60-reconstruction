@@ -448,8 +448,15 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
 - **Original-client G1 verification.** Login, locker edits, favorites, wraps, seeded
   styles, shop purchases, Battle Pass rewards and local V-Bucks have probe evidence
   in `porting/LOCKER_*_PROBE.md` and `porting/PURCHASE_PROBE.md`. The newly added
-  friends, gifting, XMPP, content, quests and progression paths have backend tests;
-  they have not yet passed their affected original-client UI flows.
+  friends, XMPP, content, quests and progression paths have backend tests;
+  their remaining original-client UI checks are listed below. Gifting is deferred.
+  A November 12 diagnostic populated the banner icon and color pickers, saved
+  StandardBanner15 / DefaultColor20 through SetCosmeticLockerBanner (200), and
+  displayed the selection in the lobby. The local starter policy now grants the
+  31 standard icons and 44 default colors to new accounts and repairs missing
+  common-core items on QueryProfile. Original account entitlements remain unproven;
+  a full client restart check is still pending. The same run accepted
+  MarkNewQuestNotificationSent (200) without the earlier error modal.
 - **Social compatibility.** XMPP supports SASL PLAIN using local OAuth sessions,
   resource binding, roster reads, presence, ping and queued JSON notifications.
   A November 12 original-client diagnostic completed authentication, binding,

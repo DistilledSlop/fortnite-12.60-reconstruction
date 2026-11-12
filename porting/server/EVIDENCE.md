@@ -558,8 +558,10 @@ MarkNewQuestNotificationSent operation as a modal error. The reflected profile
 request takes ItemIds; UFortQuestItem reflects bool sent_new_notification. The
 new handler validates the complete owned-quest batch, persists that field and
 leaves objective/reward state unchanged. Body casing and field serialization
-remain inferred; a new original-client run is required to confirm the modal is
-resolved. Focused tests cover atomic rejection, idempotence and restart.
+remain inferred. A November 12 original-client run against frozen backend
+e266dda0 submitted ClientQuestLogin and MarkNewQuestNotificationSent successfully
+(both 200), and the earlier modal was absent. Focused tests cover atomic
+rejection, idempotence and restart.
 
 
 ## First weekly mission family
@@ -589,4 +591,25 @@ counts (15 of 78, 7 of 19 and 3 of 6) and the TNTina completion-token family.
 They use the existing trusted-event, XP, match-rule and atomic reward path.
 The source report had no missing stat rows or additional unsupported match flags.
 Focused date/subset/token tests and the combined 246-test server suite passed.
-Faction-choice activation and the remaining three weekly families are still open.
+All five weekly families are now implemented; faction-choice activation remains open.
+
+
+## Standard banner inventory and picker
+
+The original client reads owned HomebaseBannerIcon and HomebaseBannerColor items
+from common_core; the template suffix after the colon identifies the cooked
+banner table row. A November 12 isolated diagnostic seeded 31 StandardBanner
+icons and 44 DefaultColor colors. Both picker grids populated. Selecting
+StandardBanner15 / DefaultColor20 submitted SetCosmeticLockerBanner (200),
+persisted those two values on the cosmetic locker, and displayed the pink heart
+beside the player name in the lobby. The global athena banner stats remained
+unchanged, so no additional cross-profile mutation was inferred. Screenshots
+remain private generated evidence; full client-restart restoration is pending.
+
+The backend grants those standard/default rows as an explicit local starter
+policy. The source tables establish their identities and categories, but do not
+prove Epic's original new-account entitlements. Source hashes are recorded in
+banner_inventory.py. Common-core queries transactionally add only missing
+case-insensitive template IDs, preserving existing instances, attributes and
+premium/custom items. Tests cover fresh defaults, repeat/restart repair and
+rollback on persistence failure.
