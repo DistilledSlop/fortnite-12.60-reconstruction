@@ -6,10 +6,9 @@ Source roots: /mnt/vibrato/fortnite-extracted-full and generated/extracted.
 Objectives: (backend name, stat row, count); rewards: (asset type, name, quantity).
 Quest infos: (name, unlock type, day offset, start active).
 
-The bundle also contains HeroSelection_10 at CompletionCount=-1 and GB_PaperDoll.
-Its grant, cleanup and bundle-level semantics remain unresolved and are not
-implemented. Calendar dates require explicit configuration. Numbered quest names
-do not indicate release order.
+The bundle reward uses CompletionCount=-1 (all nine QuestInfos) and GB_PaperDoll.
+Calendar dates require explicit configuration. Numbered quest names do not indicate
+release order.
 """
 
 MAYA_SCHEDULE_CALENDAR_EVENT_TAG = 'EventFlag.LobbySeason12'
@@ -25,7 +24,8 @@ MAYA_BUNDLE = {'quest_infos': [('quest_s12_styles1_q01_accolade_ar', 'GrantWithB
                  ('quest_s12_styles1_q09_accolade_smg', 'DaysFromEventStart', 40, True),
                  ('quest_s12_styles1_q08_accolade_scavenger', 'DaysFromEventStart', 47, True),
                  ('quest_s12_styles1_q10_athenaoutlive', 'DaysFromEventStart', 54, True)],
- 'calendar_event_tag': 'EventFlag.LobbySeason12'}
+ 'calendar_event_tag': 'EventFlag.LobbySeason12',
+ 'completion_rewards': {-1: [('Token', 'AthenaToken_BRS12_HeroSelection_10', 1)]}}
 
 MAYA_QUESTS = {'quest_s12_styles1_q01_accolade_ar': {'objectives': [('quest_s12_styles1_q01_accolade_ar_obj',
                                                        'accolade_assault_specialist',

@@ -502,7 +502,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   Their exact 12.60 casing, defaults beyond `acceptInvites: public`, partial-update,
   permission and error semantics remain inferred. Local private and mutual-friend
   policies govern new requests; existing requests can still be accepted.
-- **Quest coverage.** All nine cooked Maya quests and their individual style-token rewards are implemented, alongside Agent Peely style tokens.
+- **Quest coverage.** All nine cooked Maya quests, their individual style-token rewards and the final bundle token are implemented, alongside Agent Peely style tokens. Login repairs older completed Maya bundles with a durable receipt so consuming the final token cannot trigger another grant.
   All 100 weekly missions (Brutus, TNTina, Meowscles, Skye and Midas, weeks 1–10) now use their cooked objectives,
   40,000 XP rewards and completion-token thresholds. The cooked `SeasonGrantsToEveryone` entitlement now grants their mission schedule
   through `ClientQuestLogin`, including for free accounts. The owned schedule grants week 1
@@ -512,8 +512,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   Deadpool activation/progression now uses 21 cooked quest definitions, 12 bundles
   and 11 schedule entries, including multiple objectives and independent W7 timing.
   Dated grants require an explicit event start; the historical event epoch is
-  unproven. Bundle completion/rewards (including Maya’s tenth token) and cleanup remain
-  incomplete. The 62 cooked daily definitions now support daily grants, rerolls,
+  unproven. Other bundle completion rewards and cleanup remain incomplete. The 62 cooked daily definitions now support daily grants, rerolls,
   repeat instances, 31,000 XP rewards and stacked daily tokens. Rotation uses an
   explicit local policy: one grant per UTC day, three active quests, one reroll
   per day, no catch-up, and deterministic selection excluding explicit zero

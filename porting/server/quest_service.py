@@ -137,6 +137,8 @@ class QuestService:
             name = names.get(item['templateId'].casefold())
             if name:
                 self._reconcile_bundle(tx, name, bundle_id)
+                if name == 'QuestBundle_Styles_PaperDoll':
+                    self._award_maya_bundle(tx, bundle_id)
 
     def consume_variants(self, tx):
         items = list(tx.profile['items'].items())
@@ -263,6 +265,37 @@ class QuestService:
                 self._bundle(tx, reward, schedule_id)
             else:
                 self._grant(tx, kind + ':' + reward, {'item_seen': False})
+        if bundle_id in tx.profile['items'] and tx.item(bundle_id)['templateId'].casefold() == 'challengebundle:questbundle_styles_paperdoll':
+            self._award_maya_bundle(tx, bundle_id)
+
+    def _award_maya_bundle(self, tx, bundle_id):
+        # A durable receipt prevents a later consumer of the token from causing
+        # login repair to grant it again. Never infer completion from the counter.
+        attrs = tx.profile['stats']['attributes']
+        receipt = 'local_maya_bundle_reward_received'
+        if receipt in attrs:
+            if attrs[receipt] is not True:
+                raise _invalid('Invalid Maya bundle reward receipt.')
+            return
+        items = tx.profile['items'].values()
+        for name, _, _, _ in MAYA_BUNDLE['quest_infos']:
+            matches = [item for item in items if
+                       item['templateId'].casefold() == ('Quest:' + name).casefold() and
+                       item['attributes'].get('challenge_bundle_id') == bundle_id]
+            if len(matches) != 1 or matches[0]['attributes'].get('quest_state') != 'Claimed':
+                return
+            for objective, _, target in MAYA_QUESTS[name]['objectives']:
+                value = matches[0]['attributes'].get('completion_' + objective.lower())
+                if type(value) is not int or value != target:
+                    return
+        for kind, reward, quantity in MAYA_BUNDLE['completion_rewards'][-1]:
+            if kind != 'Token':
+                raise _invalid('Unsupported Maya bundle reward.')
+            # A profile may have received the token before this receipt existed.
+            if not any(item['templateId'].casefold() == ('Token:' + reward).casefold()
+                       for item in tx.profile['items'].values()):
+                self._award_token(tx, reward, quantity)
+        tx.set_stat(receipt, True)
 
     def _award_token(self, tx, reward, quantity):
         if type(quantity) is not int or not 1 <= quantity < 2**31:

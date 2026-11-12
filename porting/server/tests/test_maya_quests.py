@@ -91,7 +91,7 @@ class MayaQuestTests(unittest.TestCase):
         self.restart({TAG: START})
         self.assertFalse(self.quests.progress(LOCAL_ACCOUNT_ID, 'outlive_athena', 500, event_id='outlive'))
         self.assertEqual(self.item('ChallengeBundle:QuestBundle_Styles_PaperDoll')['attributes']['num_quests_completed'], 9)
-        self.assertIsNone(self.item('Token:AthenaToken_BRS12_HeroSelection_10'))
+        self.assertEqual(self.item('Token:AthenaToken_BRS12_HeroSelection_10')['quantity'], 1)
 
 
 if __name__ == '__main__':
