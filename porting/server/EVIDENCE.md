@@ -604,7 +604,9 @@ StandardBanner15 / DefaultColor20 submitted SetCosmeticLockerBanner (200),
 persisted those two values on the cosmetic locker, and displayed the pink heart
 beside the player name in the lobby. The global athena banner stats remained
 unchanged, so no additional cross-profile mutation was inferred. Screenshots
-remain private generated evidence; full client-restart restoration is pending.
+remain private generated evidence. A subsequent run against frozen backend
+764941e2 restarted both client and backend, restored the pink heart in the lobby
+and locker, and displayed its saved selection.
 
 The backend grants those standard/default rows as an explicit local starter
 policy. The source tables establish their identities and categories, but do not
@@ -634,3 +636,52 @@ completed terminal chains for the separate 0–10 UI progress count. Login repai
 the display count and missing successors of claimed stages without replaying
 XP or rewards. Tests exercise date gates, successor activation, all chains,
 reward totals, atomic failure/retry and idempotent legacy repair.
+
+
+## Original SendInvite request body and sendPing query
+
+Original HTTP builder `0x140a4eab0` selects PartyInvitations/SendInvite and the
+`/api/v1/{namespace}/parties/{partyId}/invites/{accountId}` route. It serializes
+the optional boolean at request+0x30 as the `sendPing` URL query value through
+`0x140a031a0` (text `true` or `false`), then sets POST and serializes the JSON
+object at request+0x38 as the entire request body through `0x140a10680` and
+`0x140a700c0`. The latter serializes that object directly; the builder adds no
+`meta` envelope. Original caller `0x140c10240` populates invite metadata keys
+including `urn:epic:conn:platform`, `urn:epic:conn:platform:dn`, and
+`urn:epic:cfg:build-id` before invoking this builder.
+
+Private static source captures are
+`/opt/fortnite/local-model-package/captures/9c977e938361424cb26a76e0305963a1/0x140a4eab0.c`,
+`captures/9c86fae90a8c4ec7a53e682156bbc65f/0x140a031a0.c` and `0x140a10680.c`,
+`captures/d9e463f4f6c7420c820c4d248e2eb913/0x140a700c0.c`, and
+`captures/1bba5fa7ce4046b5b5747f7daf1d4c51/0x140c10240.c` under the same package.
+
+The local invite endpoint now preserves native flat metadata and reads the
+query boolean. It retains the prior local envelope only for objects consisting
+entirely of `meta`, `ttl`, and `sendPing` control keys; a present query overrides
+that envelope's ping control. Invalid query booleans and non-object envelope
+metadata are local validation errors, not a recovered original server policy.
+Absent platform metadata remains absent: no platform value is invented.
+Focused dispatcher/lifecycle tests cover metadata preservation, notification
+platform, legacy compatibility, query ping selection, invalid inputs, and
+missing platform. Original two-client acceptance remains pending.
+
+## Original CreatePing route correction
+
+Original `0x140a541c0` labels its request PartyPings/CreatePing and sets POST
+on `/api/v1/{namespace}/user/{accountId}/pings/{fromAccountId}`, without a
+`/parties` suffix. It serializes the JSON object at request+0x30 directly as
+the body through the same `0x140a10680` helper used by SendInvite. Original
+`0x140a54940` is DeletePing (DELETE on the same base route); `0x140a54fc0`
+is GetPingerParties (GET on the route ending `/parties`). Its GET literal at
+`0x145a96a20` is UTF-16 `4700450054000000`. Private source capture directory:
+`/opt/fortnite/local-model-package/captures/9b7bc3dbd50a4aeaa73bea1bbe88b30c/`.
+This corrects the earlier route inventory's inferred POST `/parties` mapping.
+
+The backend now accepts native POST on the base route and preserves its flat
+metadata. The older local POST `/parties` route and sole-`meta` envelope remain
+compatibility aliases. Target/sender path direction is unchanged and is tested
+through recipient user state. Focused tests cover the native route, flat body,
+recipient direction, notification metadata copying, missing platform, legacy
+alias, malformed bodies, and sender authorization. PING notification field
+parity and original two-client acceptance remain unverified.

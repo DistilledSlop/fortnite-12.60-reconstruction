@@ -455,7 +455,7 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   displayed the selection in the lobby. The local starter policy now grants the
   31 standard icons and 44 default colors to new accounts and repairs missing
   common-core items on QueryProfile. Original account entitlements remain unproven;
-  a full client restart check is still pending. The same run accepted
+  a full client/backend restart restored the selection in the lobby and picker. The same run accepted
   MarkNewQuestNotificationSent (200) without the earlier error modal.
 - **Social compatibility.** XMPP supports SASL PLAIN using local OAuth sessions,
   resource binding, roster reads, presence, ping and queued JSON notifications.
@@ -531,7 +531,8 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   repeat instances, 31,000 XP rewards and stacked daily tokens. Rotation uses an
   explicit local policy: one grant per UTC day, three active quests, one reroll
   per day, no catch-up, and deterministic selection excluding explicit zero
-  weights. Historical rotation rules and the original daily UI remain unverified. Maya permanent customization (reward graph
+  weights. The original lobby now displays a granted daily quest and its progress
+  counter. Historical rotation rules and original-client reroll/rollover flows remain unverified. Maya permanent customization (reward graph
   node unlock/configuration and RichColor) is not implemented. An authenticated server quest-event endpoint now
   supports durable retries; actual native gameplay event integration remains pending.
   Daily events must already satisfy their cooked tag/template/condition filters;

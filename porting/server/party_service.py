@@ -442,9 +442,19 @@ class PartyService:
         if self._find_invite(party, target) is not None:
             raise ApiError(409, Err.INVITE_ALREADY_EXISTS, "An invite for this user already exists.")
         body = req.json_object()
-        ttl = body.get("ttl", party["config"]["invite_ttl_seconds"])
+        # Native SendInvite (0x140a4eab0) posts the metadata object directly.
+        # Keep the existing local envelope only when all keys are its controls.
+        legacy_envelope = bool(body) and set(body) <= {"meta", "ttl", "sendPing"}
+        ttl = party["config"]["invite_ttl_seconds"]
+        if legacy_envelope:
+            ttl = body.get("ttl", ttl)
         expires_at = self._invite_expiry(ttl, "ttl")
-        meta = self._dict(body.get("meta"), "meta")
+        meta = self._dict(body.get("meta"), "meta") if legacy_envelope else body
+        send_ping = body.get("sendPing") is True if legacy_envelope else False
+        if "sendPing" in req.query:
+            if req.query["sendPing"] not in ("true", "false"):
+                raise ApiError(400, Err.INVALID_PAYLOAD, "sendPing must be true or false.")
+            send_ping = req.query["sendPing"] == "true"
         now = self.ctx.now()
         party["invites"].append({
             "account_id": target,
@@ -454,7 +464,7 @@ class PartyService:
             "expires_at": expires_at,
         })
         self._touch(party)
-        if body.get("sendPing") is True:
+        if send_ping:
             self._add_ping(caller, target, party_id, meta)
             self._emit(party, "PING", caller, recipients=[target], meta=meta)
         self._emit(party, "INITIAL_INVITE", caller, recipients=[target], invite=party["invites"][-1])
@@ -675,7 +685,8 @@ class PartyService:
         if party is None:
             raise ApiError(403, Err.USER_OPERATION_FORBIDDEN, "The sender must be in a party to send a ping.")
         body = req.json_object()
-        meta = self._dict(body.get("meta"), "meta")
+        # Native CreatePing (0x140a541c0) posts the metadata object directly.
+        meta = self._dict(body["meta"], "meta") if set(body) == {"meta"} else body
         self._add_ping(sender, target, party["id"], meta)
         self._emit(party, "PING", sender, recipients=[target], meta=meta)
         return 204, None
@@ -736,8 +747,11 @@ class PartyService:
         router.add("POST", rf"{P}/parties/([^/]+)/members/([^/]+)/disconnect", self.disconnect,
                    name="party.member.disconnect", status="inferred")
         router.add("GET", rf"{P}/user/([^/]+)", self.user_state, name="party.user", status="inferred")
+        router.add("POST", rf"{P}/user/([^/]+)/pings/([^/]+)", self.send_ping,
+                   name="party.ping", status="observed")
+        # Retain the older local POST alias; native /parties uses GET instead.
         router.add("POST", rf"{P}/user/([^/]+)/pings/([^/]+)/parties", self.send_ping,
-                   name="party.ping", status="inferred")
+                   name="party.ping.compat", status="inferred")
         router.add("GET", rf"{R}/([^/]+)/last-online", self.last_online,
                    name="presence.last_online", status="inferred")
         router.add("GET", rf"{R}/([^/]+)/subscriptions", self.list_subscriptions,

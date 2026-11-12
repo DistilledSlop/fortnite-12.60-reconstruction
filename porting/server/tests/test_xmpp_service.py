@@ -237,7 +237,7 @@ class XmppTests(unittest.TestCase):
     def test_party_room_authorization_and_relay(self):
         party = self.backend.party
         def req(token):
-            return SimpleNamespace(bearer_token=lambda: token, json_object=lambda: {})
+            return SimpleNamespace(query={}, bearer_token=lambda: token, json_object=lambda: {})
         _, created = party.create(req(self.at), None)
         pid = created['id']
         match = re.match(r'([^/]+)/([^/]+)', pid + '/' + self.b)
@@ -319,7 +319,7 @@ class XmppTests(unittest.TestCase):
         party = self.backend.party
         party.notify = lambda recipient, event: events.append((recipient, event))
         def request(token, body):
-            return SimpleNamespace(bearer_token=lambda: token, json_object=lambda: body)
+            return SimpleNamespace(query={}, bearer_token=lambda: token, json_object=lambda: body)
         _, created = party.create(request(self.at, {}), None)
         pid = created['id']
         events.clear()

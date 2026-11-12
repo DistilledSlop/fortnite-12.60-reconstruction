@@ -21,7 +21,7 @@ class PartyMucPrefixTests(unittest.TestCase):
     def test_named_room_relay_authorization_and_member_cleanup(self):
         party = self.backend.party
         def req(token):
-            return SimpleNamespace(bearer_token=lambda: token, json_object=lambda: {})
+            return SimpleNamespace(query={}, bearer_token=lambda: token, json_object=lambda: {})
         _, created = party.create(req(self.at), None)
         pid = created['id']
         match = re.match(r'([^/]+)/([^/]+)', pid + '/' + self.b)

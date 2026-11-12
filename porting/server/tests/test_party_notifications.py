@@ -7,6 +7,7 @@ else:
 
 import json
 import unittest
+from urllib.parse import parse_qsl, urlsplit
 
 
 class PartyNotificationTests(support.ServiceTestCase):
@@ -26,7 +27,9 @@ class PartyNotificationTests(support.ServiceTestCase):
         self.events.clear()
 
     def call(self, method, path, token, body=None):
-        return self.backend.respond(method, path, headers={'Authorization': 'bearer ' + token},
+        url = urlsplit(path)
+        return self.backend.respond(method, url.path, query=dict(parse_qsl(url.query)),
+                                    headers={'Authorization': 'bearer ' + token},
                                     body=b'' if body is None else json.dumps(body).encode())
 
     def member_path(self, account, suffix=''):
@@ -51,9 +54,10 @@ class PartyNotificationTests(support.ServiceTestCase):
         self.assertNotIn('member', event)
 
     def test_invite_flat_payload_targets_invitee_and_copies_meta(self):
-        meta = {'urn:epic:conn:platform': 'WIN', 'nested': {'key': 'value'}}
+        meta = {'urn:epic:conn:platform': 'WIN', 'nested': {'key': 'value'},
+                'meta': 'a flat metadata key'}
         path = f'{support.PARTY}/parties/{self.pid}/invites/{self.guest_id}'
-        self.assertEqual(self.call('POST', path, self.captain, {'meta': meta})[0], 204)
+        self.assertEqual(self.call('POST', path, self.captain, meta)[0], 204)
         events = self.events_of('INITIAL_INVITE')
         self.assertEqual(len(events), 1)
         recipient, event = events[0]
@@ -73,6 +77,37 @@ class PartyNotificationTests(support.ServiceTestCase):
         self.assertEqual(self.call('POST', other_path, self.captain, {})[0], 204)
         recipient, without_meta = self.events_of('INITIAL_INVITE')[-1]
         self.assertEqual((recipient, without_meta['meta']), (self.other_id, {}))
+
+    def test_invite_legacy_envelope_and_malformed_meta(self):
+        path = f'{support.PARTY}/parties/{self.pid}/invites/{self.guest_id}'
+        self.assertEqual(self.call('POST', path, self.captain, {'meta': 'WIN'})[0], 400)
+        self.assertEqual(self.backend.party._parties[self.pid]['invites'], [])
+        meta = {'urn:epic:conn:platform': 'WIN'}
+        self.assertEqual(self.call('POST', path, self.captain, {'meta': meta})[0], 204)
+        self.assertEqual(self.events_of('INITIAL_INVITE')[-1][1]['meta'], meta)
+
+    def test_invite_send_ping_query_boolean_overrides_legacy_body(self):
+        for index, (query, body, expected) in enumerate((
+                ('?sendPing=true', {'urn:epic:conn:platform': 'WIN'}, True),
+                ('?sendPing=false', {'meta': {}, 'sendPing': True}, False),
+                ('?sendPing=true', {'meta': {}, 'sendPing': False}, True),
+                ('?sendPing=false', {'urn:epic:conn:platform': 'WIN'}, False),
+                ('', {'urn:epic:conn:platform': 'WIN'}, False),
+                ('', {'meta': {}, 'sendPing': True}, True))):
+            with self.subTest(query=query, body=body):
+                target = self.new_account('Query Guest ' + str(index))
+                path = f'{support.PARTY}/parties/{self.pid}/invites/{target}'
+                self.events.clear()
+                self.assertEqual(self.call('POST', path + query, self.captain, body)[0], 204)
+                self.assertEqual(bool(self.events_of('PING')), expected)
+                self.assertEqual(any(ping['account_id'] == target for ping in self.backend.party._pings), expected)
+                self.assertEqual(len(self.events_of('INITIAL_INVITE')), 1)
+
+    def test_invite_rejects_invalid_send_ping_query_before_mutation(self):
+        path = f'{support.PARTY}/parties/{self.pid}/invites/{self.guest_id}?sendPing=yes'
+        self.assertEqual(self.call('POST', path, self.captain, {})[0], 400)
+        self.assertEqual(self.backend.party._parties[self.pid]['invites'], [])
+        self.assertEqual(self.events, [])
 
     def test_departure_and_succession_use_member_snapshots(self):
         self.join(self.guest_id, self.guest, {'guest-key': 'guest-value'})

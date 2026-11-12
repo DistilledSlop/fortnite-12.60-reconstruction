@@ -15,3 +15,9 @@ this does not establish how the original service granted or unlocked styles.
 The backend's item and locker update policy is inferred and requires broader
 coverage across cosmetics and locker operations. Screenshots from the run are
 in the ignored `porting/generated/wine-investigation/20261109-style/` directory.
+
+A November 12 diagnostic against backend 764941e2 also restored Lace's saved
+Fashion style after restarting both client and backend. The style editor showed
+the second style with the green selected marker. This run used Wine's built-in
+D3D renderer; 3D rendering was black, so it verifies saved ownership/selection
+readback rather than the outfit's rendered appearance.
