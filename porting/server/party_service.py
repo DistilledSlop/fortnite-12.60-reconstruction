@@ -85,6 +85,11 @@ class PartyService:
             event.update({"ns": "Fortnite", "sent": invite["sent_at"],
                           "inviter_id": invite["sent_by"], "invitee_id": invite["account_id"],
                           "expires_at": invite["expires_at"], "meta": copy.deepcopy(invite["meta"])})
+        elif kind == "PING":
+            ping = fields.pop("ping")
+            event.update({"ns": "Fortnite", "sent": ping["sent_at"],
+                          "pinger_id": ping["sent_by"], "expires": ping["expires_at"],
+                          "meta": copy.deepcopy(ping["meta"])})
         elif kind == "MEMBER_DISCONNECTED":
             # Original reader 0x140c22000 keeps account_id, connection.id and the
             # ISO disconnected_at value; it does not consume member-state deltas.
@@ -465,8 +470,8 @@ class PartyService:
         })
         self._touch(party)
         if send_ping:
-            self._add_ping(caller, target, party_id, meta)
-            self._emit(party, "PING", caller, recipients=[target], meta=meta)
+            ping = self._add_ping(caller, target, party_id, meta)
+            self._emit(party, "PING", caller, recipients=[target], ping=ping)
         self._emit(party, "INITIAL_INVITE", caller, recipients=[target], invite=party["invites"][-1])
         return 204, None
 
@@ -667,10 +672,11 @@ class PartyService:
             "account_id": target,
             "sent_by": sender,
             "party_id": party_id,
-            "meta": dict(meta),
+            "meta": copy.deepcopy(meta),
             "sent_at": self.ctx.iso(now),
             "expires_at": self.ctx.iso(now + PING_TTL_SEC),
         })
+        return self._pings[-1]
 
     def send_ping(self, req, match):
         target, sender = match.group(1), match.group(2)
@@ -687,8 +693,31 @@ class PartyService:
         body = req.json_object()
         # Native CreatePing (0x140a541c0) posts the metadata object directly.
         meta = self._dict(body["meta"], "meta") if set(body) == {"meta"} else body
-        self._add_ping(sender, target, party["id"], meta)
-        self._emit(party, "PING", sender, recipients=[target], meta=meta)
+        ping = self._add_ping(sender, target, party["id"], meta)
+        self._emit(party, "PING", sender, recipients=[target], ping=ping)
+        return 204, None
+
+    def pinger_parties(self, req, match):
+        target, sender = match.group(1), match.group(2)
+        if self._caller(req) != target:
+            raise ApiError(403, Err.MISSING_PERMISSION, "Only the recipient can query its pings.")
+        now = self.ctx.iso()
+        self._pings = [ping for ping in self._pings if ping["expires_at"] > now]
+        parties = []
+        for ping in self._pings:
+            if ping["account_id"] != target or ping["sent_by"] != sender:
+                continue
+            party = self._parties.get(ping["party_id"])
+            if party is not None and self._member(party, sender) is not None:
+                parties.append(copy.deepcopy(party))
+        return 200, parties
+
+    def delete_ping(self, req, match):
+        target, sender = match.group(1), match.group(2)
+        if self._caller(req) != target:
+            raise ApiError(403, Err.MISSING_PERMISSION, "Only the recipient can delete its pings.")
+        self._pings = [ping for ping in self._pings
+                       if not (ping["account_id"] == target and ping["sent_by"] == sender)]
         return 204, None
 
     # Presence handlers -------------------------------------------------
@@ -749,6 +778,10 @@ class PartyService:
         router.add("GET", rf"{P}/user/([^/]+)", self.user_state, name="party.user", status="inferred")
         router.add("POST", rf"{P}/user/([^/]+)/pings/([^/]+)", self.send_ping,
                    name="party.ping", status="observed")
+        router.add("GET", rf"{P}/user/([^/]+)/pings/([^/]+)/parties", self.pinger_parties,
+                   name="party.ping.parties", status="observed")
+        router.add("DELETE", rf"{P}/user/([^/]+)/pings/([^/]+)", self.delete_ping,
+                   name="party.ping.delete", status="observed")
         # Retain the older local POST alias; native /parties uses GET instead.
         router.add("POST", rf"{P}/user/([^/]+)/pings/([^/]+)/parties", self.send_ping,
                    name="party.ping.compat", status="inferred")

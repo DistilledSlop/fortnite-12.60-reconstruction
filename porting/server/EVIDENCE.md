@@ -685,3 +685,46 @@ through recipient user state. Focused tests cover the native route, flat body,
 recipient direction, notification metadata copying, missing platform, legacy
 alias, malformed bodies, and sender authorization. PING notification field
 parity and original two-client acceptance remain unverified.
+
+## PING notification DTO and pinger party lookup
+
+Original PING dispatch `0x140c09c01` selects factory `0x140be9410` and event
+constructor `0x140bf2630`. Event vtable `0x145af9f88` selects parser
+`0x140c25990`; its DTO vtable `0x145afa0e0` selects reader `0x140c4acb0`.
+The reader consumes flat `party_id`, `ns`, `sent`, `pinger_id`, `expires`, and
+object-valued `meta`. The parser requires a valid pinger identity, nonempty
+namespace, and parseable ISO `sent` and `expires` timestamps. Common parser
+`0x140c51580` sets the timestamp-valid flag at event+0x88 from `sent`;
+`0x140c25990` rejects invalid expiry with an explicit ExpirationTime log.
+The parser reads optional `urn:epic:invite:platformdata` metadata and has no
+nonempty platform metadata gate. The backend now builds this DTO from the
+stored ping, preserving its sent/expiry timestamps and metadata exactly.
+
+GetPingerParties success callback `0x140a322b0` reaches `0x140a22b10`, which
+parses the complete response through `0x140a0d300`. Converter `0x140a0a510`
+accesses the root JSON array, iterates its values, and decodes each party with
+`0x140a41c00`. This is a direct array response, with no `parties` envelope.
+Client callback `0x140c00e70` selects a compatible party using `0x140c1be50`;
+no suitable party produces the client error `ping_sender_has_no_parties`.
+Source captures under `/opt/fortnite/local-model-package/captures/`:
+`4309bac993be44e493b0599f7e0eb729` (PING parser and lookup client callback),
+`77f1c508836d441b8d72e75ee5ac8324` (PING reader),
+`b41ce507675146038897a363b5fa9f15` (common sent parser),
+`e0f77afddcea474a86777fe6d517a3d9` (lookup success wrapper),
+`3dc5a6c6ed8f4e60a4292bc9f90f3617` (lookup success processor),
+`5a4a7e3498704405baa666fc6f0e5930` (response JSON decode),
+`7d22832a57784a51b9da5c1e6a333e31` (array converter), and
+`5d58d99eb4144848b87df69593529238` (party DTO reader).
+
+GET on the ping `/parties` route now returns a deep copy of the existing party
+associated with a matching unexpired ping while its sender remains a member.
+The recipient must authenticate as the target path account. Missing, expired,
+unknown, or departed-sender pings return `200 []`; these authorization and
+selection choices are local policies, not recovered original server rules.
+Visibility follows the existing authenticated party lookup; joining still uses
+the existing invitation/privacy checks. Confirmed native DELETE on the base
+ping route now removes only the recipient's matching ping, idempotently returning
+204; recipient-only authorization is also a local policy. Neither operation
+creates a party. Focused tests cover notification fields/timestamps, direct
+array lookup, copying, expiry/departure, authorization, and deletion. Original
+two-client acceptance remains pending.

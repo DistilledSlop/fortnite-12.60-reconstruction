@@ -6,6 +6,7 @@ else:
     import test_services as support
 
 import json
+from datetime import datetime
 import unittest
 
 
@@ -43,7 +44,13 @@ class NativePartyPingTests(support.ServiceTestCase):
         self.assertEqual(recipient, self.target_id)
         self.assertTrue(event['type'].endswith('.PING'))
         self.assertEqual(event['meta'], meta)
-        # Notification parity is not established; verify only local copying behavior.
+        self.assertEqual((event['party_id'], event['ns'], event['pinger_id'],
+                          event['sent'], event['expires']),
+                         (self.pid, 'Fortnite', support.LOCAL, ping['sent_at'], ping['expires_at']))
+        datetime.fromisoformat(event['sent'].replace('Z', '+00:00'))
+        datetime.fromisoformat(event['expires'].replace('Z', '+00:00'))
+        self.assertNotIn('account_id', event)
+        self.assertNotIn('expires_at', event)
         self.backend.party._pings[0]['meta']['nested']['value'] = 'changed'
         self.assertEqual(event['meta']['nested']['value'], 'original')
         self.assertNotIn('urn:epic:conn:platform', event['meta'])
@@ -52,6 +59,34 @@ class NativePartyPingTests(support.ServiceTestCase):
         self.assertEqual(self.call('POST', self.path + '/parties', self.sender,
                                    {'meta': {'local': 'value'}})[0], 204)
         self.assertEqual(self.backend.party._pings[0]['meta'], {'local': 'value'})
+
+    def test_get_pinger_parties_returns_existing_party_array_and_copies_state(self):
+        self.assertEqual(self.call('POST', self.path, self.sender, {})[0], 204)
+        status, parties = self.call('GET', self.path + '/parties', self.target)
+        self.assertEqual(status, 200)
+        self.assertEqual(parties, [self.backend.party._parties[self.pid]])
+        parties[0]['members'][0]['role'] = 'changed'
+        self.assertEqual(self.backend.party._parties[self.pid]['members'][0]['role'], 'CAPTAIN')
+        self.assertEqual(self.call('GET', self.path + '/parties', self.sender)[0], 403)
+        other_sender = f'{support.PARTY}/user/{self.target_id}/pings/unknown/parties'
+        self.assertEqual(self.call('GET', other_sender, self.target), (200, []))
+
+    def test_get_pinger_parties_ignores_expired_and_departed_sender(self):
+        self.assertEqual(self.call('POST', self.path, self.sender, {})[0], 204)
+        self.backend.party._pings[0]['expires_at'] = '2000-01-01T00:00:00.000Z'
+        self.assertEqual(self.call('GET', self.path + '/parties', self.target), (200, []))
+        self.assertEqual(self.call('POST', self.path, self.sender, {})[0], 204)
+        self.backend.party._parties[self.pid]['members'] = []
+        self.assertEqual(self.call('GET', self.path + '/parties', self.target), (200, []))
+
+    def test_delete_ping_is_recipient_scoped_and_idempotent(self):
+        self.assertEqual(self.call('POST', self.path, self.sender, {})[0], 204)
+        self.assertEqual(self.call('DELETE', self.path, self.sender)[0], 403)
+        self.assertEqual(len(self.backend.party._pings), 1)
+        self.assertEqual(self.call('DELETE', self.path, self.target), (204, None))
+        self.assertEqual(self.call('GET', self.path + '/parties', self.target), (200, []))
+        self.assertEqual(self.call('DELETE', self.path, self.target), (204, None))
+        self.assertIn(self.pid, self.backend.party._parties)
 
     def test_native_post_rejects_spoofed_sender_and_malformed_body(self):
         self.assertEqual(self.call('POST', self.path, self.target, {})[0], 403)
