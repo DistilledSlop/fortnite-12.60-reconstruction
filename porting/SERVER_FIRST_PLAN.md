@@ -32,6 +32,7 @@ implements from the card; it does not redo the analysis.
 | `R2-safe-zone-code.md` | D2, D10 (G7) | Line-by-line read of storm arming, start, activation, per-frame update and advance. Storm centers are picked in `OnPlaylistDataLoaded` (`PickSafeZoneLocation`). |
 | `R3-elimination-and-match-end-code.md` | D6, D11 (G8 end, G9) | `AddToAlivePlayers`, `RemoveFromAlivePlayers`, win check, `StartEndGamePhase` (real start `0x14196cb30`), end-match helper, `HandleMatchHasEnded`. The win check runs only in Aircraft and SafeZones phases and needs two players. |
 | `R4-readiness-build-interact-code.md` | A4, D9 (G6 to G8) | `ServerReadyToStartMatch` sets the bit the warmup counter needs. `ServerCreateBuildingActor` is **not** real code: only a guard survives; it must be re-created. Interact RPC is complete. |
+| `R5-playlist-setup-phase-handler-receipts.md` | C2, D2, D6, D10 (G7 to G9) | Flight path and storm centers are computed in `OnPlaylistDataLoaded` from MapInfo boxes and tables; the first circle is centered on the bus path. The phase-change handler places players on the bus. `StartAircraftPhase` return value. `ClientNotifyWon` is sent by real code. Section 6 gives the full server order of a match. |
 
 Tools made for this (usage in `porting/tools/README.md`): `rd.py` (annotated
 decompile), `rpc_sweep.py` (real or empty body), `callers.py` (who calls an

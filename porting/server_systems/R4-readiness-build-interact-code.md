@@ -138,14 +138,10 @@ toggling) is in the actor classes and their Blueprints, not here. The loot
 spawn for chests is the part to check against D5 (the pickup helpers are
 re-created).
 
-## 4. Not re-read in this pass
+## 4. Client receipts
 
-These are listed as real in D6 section 1 and were not opened again:
-`NetMulticast_Athena_BatchedDamageCues` (`0x142334fc0`), `ClientOnPawnDied`
-(`0x1423cd300`), `ClientNotifyWon` (`0x1419c6120`) and the other end-of-match
-receipts (`0x1419c5ae0` to `0x1419c7db0`). They are client-side receivers;
-the server only calls them. Their argument structs are the thing to get
-right, and those come from reflection, not from the bodies.
+Read in card R5 section 5: the damage cue multicast, `ClientOnPawnDied`, and
+the fact that `ClientNotifyWon` is already sent by `StartEndGamePhase`.
 
 ## 5. Open items
 

@@ -60,11 +60,14 @@ four things in the map below:
   implementation and holds only a guard; `0x14236d1a0` is a different helper.
   Building has to be re-created (R4 section 2).
 - GamePhase numbers are Warmup 2, Aircraft 3, SafeZones 4, EndGame 5.
-- `PlacePlayersInAircraft` is not called by `StartAircraftPhase`. The server
-  destroys each warmup pawn and puts the controller in the Spectating state;
-  the player gets a pawn again through `RestartPlayer` (R1 section 6).
+- `StartAircraftPhase` destroys each warmup pawn and puts the controller in
+  the Spectating state. `PlacePlayersInAircraft` then runs from the
+  phase-change handler when the phase becomes Aircraft, and the player gets a
+  pawn again through `RestartPlayer` (R1 section 6, R5 sections 3 and 4).
 
-Addresses are in the shipping exe (image base `0x140000000`). "Read" means the body is real code in the client and was read from the decompile. "Design" means the body is compiled out of the client and the behavior is inferred from what the client expects; it is not original code. Details live in `server_systems/D2-match-flow.md`, `D3`, `D5`, `D6`.
+`server_systems/R5-playlist-setup-phase-handler-receipts.md` covers the flight
+path and storm-center setup, the phase-change handler, bus placement and the
+client receipts.
 
 ### G6: in the world with a controllable pawn
 

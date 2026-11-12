@@ -218,10 +218,11 @@ the readiness step in `G6_MAPPING_APPROACH.md`; find who sets the bit
 
 ## 5. The warmup-end helper, `0x141975ef0` (read)
 
-1. Call `StartAircraftPhase(this, 0)`. If it returns non-zero, done. (The
-   decompile types `StartAircraftPhase` as void, so which exits return 0 is
-   **not established**. Read the assembly at each exit of `0x14196b640`
-   before porting this branch.)
+1. Call `StartAircraftPhase(this, 0)`. If it returns true, done. It returns
+   true on normal completion or when the phase is already Aircraft, and
+   false when there is no GameState, bSkipAircraft is set, the phase is
+   already past Aircraft, the playlist is null, or an aircraft could not be
+   spawned (read from the assembly, card R5 section 0).
 2. Otherwise, if the playlist has `SafeZoneStartUp == StartsWithNoAirCraft`,
    or `0x14199e430(GameState)` is true (not read):
    - call `IsSafeZoneAllowed(this, 1)`; if it returns 0 and there is a
@@ -298,7 +299,10 @@ skipped.
 
 **What this means for the design of the jump.** The server does not move the
 warmup pawn onto the bus. It destroys every warmup pawn and puts every
-controller into Spectating. The player gets a new pawn when the game mode
+controller into Spectating. The phase setter in step 9 then runs the
+phase-change handler, which calls `PlacePlayersInAircraft` and so
+`EnterAircraft` on each controller's aircraft component (card R5 sections 3
+and 4). The player gets a new pawn when the game mode
 calls `RestartPlayer` on the controller: that is exactly what the forced exit
 does (section 7.2), and `ChoosePlayerStart` returns the aircraft start during
 the Aircraft phase (`D2-match-flow.md` section 10, step 5). So the
@@ -409,9 +413,8 @@ Then increment `+0xd90`. When it reaches `GameState.Aircrafts.Num()`:
   `StartSafeZonesPhase` (card R2).
 
 The bytes `+0xf8` and `+0xf9` lie inside the aircraft component after its
-reflected properties; they are not named. Before using them, read
-`ServerSetInAircraft`'s client-side counterpart to confirm which is "in
-aircraft" and which is "has been in aircraft".
+reflected properties. From `EnterAircraft` (card R5 section 4.2): `+0xf8` is
+"in the aircraft now" and `+0xf9` is "has already left the aircraft".
 
 ### 7.3 `OnAircraftFlightEnded`, `0x141952500`
 
@@ -459,13 +462,13 @@ of those values.
 
 ## 11. Not read yet (addresses for the next pass)
 
+The phase-change handler, the flight path setup, the `StartAircraftPhase`
+return value and the aircraft component flags are now in card R5.
+
 | Address | What | Needed for |
 |---|---|---|
-| `0x14199ac00` | phase-change handler on the GameState (1,244 lines) | knowing what the client does on each phase |
-| exits of `0x14196b640` | return value of `StartAircraftPhase` | section 5 |
 | vtable `0x1459a9ed8` | the 60 s timer callback set at aircraft start | unknown effect |
 | `OnPlaylistDataLoaded` (real start near `0x141955570`), MapInfo `0x1418ef640`, `InitializeFlightPath` `0x1418e4610` | flight path setup, located but bodies not read | aircraft path |
-| component `+0xf8`/`+0xf9` | the two flags in the aircraft controller component (`0x141695900` is only the lookup: controller slot `+0x610` with the component class from `0x142891700`) | forced exit, jump |
 | `0x141eacd80` | pre-warmup call | unknown |
 | `0x141961aa0`, `0x141978a80`, `0x1419797b0`, `0x1419783c0` | other per-frame work | unknown |
 | `0x14196d920` | `StartMatchAbandonProcess` | probably not needed |
