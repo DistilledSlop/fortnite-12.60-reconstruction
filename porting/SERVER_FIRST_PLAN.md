@@ -25,6 +25,8 @@ implements from the card; it does not redo the analysis.
 | `D5-stubbed-rpcs-and-recreation.md` | D0, D4, D9, D12 | Sweep of all 11,407 reflected natives: 314 empty, of which 98 `Server*` RPCs, of which 24 matter for Battle Royale. A design for each. |
 | `D6-combat-and-elimination.md` | D5, D6, D7, D8 | `RemoveFromAlivePlayers` and the win/end-game path are real; the server death sequence is missing and is designed in the card. |
 | `C-world-classes-and-abilities.md` | C1, C2, C3, D4, D5 | Game-mode Blueprint defaults (starting items, quickbars, class names), the 31 default player abilities, load order for Blueprints, what to check for the map. C3 (game data access) is answered by this and the D4 card. |
+| `D14-D16-vehicles-ai-quests.md` | D14, D15, D16 | Vehicles: all real except the spawner and the physics-movement receive path (design given). Bots: code recoverable, cost is navmesh and behaviour-tree loading. Quests/XP: all real; design for backend link. All three after the first playable match. |
+| `G11-removing-client-patches.md` | E (patch removal) | What AppES is; code 1 matches our `-fromfl=none` launch; TLS can probably be solved with a loose `Certificates/Windows/cacert.pem`; four tests A–D. AES packet handler is stock. |
 | `E-backend-remaining.md` | E1–E9 | Game-server link, encryption key, cosmetics, results/XP, XMPP, friends, patch removal. |
 
 Tools made for this (usage in `porting/tools/README.md`): `rd.py` (annotated
@@ -32,12 +34,11 @@ decompile), `rpc_sweep.py` (real or empty body), `callers.py` (who calls an
 address), `nameidx.py`/`strx.py` (names from strings), `asset_props.py`/
 `asset_table.py` (game data from the extracted content).
 
-Not thought through yet (still open, in priority order): the G3 logged run
-itself (needs running the client; decision tree is ready); testing Blueprint
-loading and the map on the server (C1, C2: order and checks are in the C card);
-vehicles (D14, physics-pawn movement RPCs are empty); bots and henchmen (D15);
-quests; instruction-level compare of the AES packet handler; the AppES gate
-(E card, E6).
+Everything in sections 6 and 7 now has a card. What remains is running
+things, not thinking: the G3 logged run (decision tree in the A card), tests
+A–D for patch removal (G11 card), and the first Blueprint load attempt (C card
+§3 and §6; first task is adding `AFortGameModeBR` to the native class set).
+Known unknowns that only a run can answer are listed at the end of each card.
 
 ---
 

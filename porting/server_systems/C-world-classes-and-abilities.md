@@ -148,3 +148,43 @@ Checks, in order:
   None in the game mode; `AAIHotSpot` natives are empty. Leave out.
 - Quests: client-side progress display works from profile data; server-side
   quest progress is not looked at.
+
+## 6. Blueprint import check (added 2026-11-11, measured)
+
+Direct imports of each match Blueprint (`Cue4Inspect … --imports-json --loose`)
+compared with `native_class_set.txt` (4,660 classes) and the body sweep:
+
+| Blueprint | Imports | `/Game` packages | FortniteGame native classes | Missing from class set | FortniteGame functions referenced |
+|---|---|---|---|---|---|
+| Athena_GameMode | 150 | 22 | 4 | **1: `FortGameModeBR`** | 0 |
+| Athena_GameState | 466 | 111 (mostly the `PBWA_*` building classes) | 6 (incl. `FortGameStateBR`) | 0 | 8 |
+| Athena_PlayerController | 278 | 39 | 41 | 0 | 50 |
+| PlayerPawn_Athena | 531 | 83 | 19 | 0 | 171 (all packages) |
+| PlayerPawn_Athena_Generic | 313 | 52 | 12 | 0 | 89 |
+| GAS_AthenaPlayer | 98 | 31 | 3 | 0 | 0 |
+| SafeZoneIndicator | 148 | 22 | 2 | 0 | 45 |
+| Playlist_DefaultSolo | 30 | 12 | 1 | 0 | 0 |
+
+Findings:
+
+1. **The game mode Blueprint's parent is `AFortGameModeBR`, not
+   `AFortGameModeAthena`** (chain: FortGameModeBR → FortGameModeAthena →
+   FortGamePvPBase → FortGameModeZone → …). The game state's parent is
+   `AFortGameStateBR`. Both are thin (no reflected functions of their own), but
+   `FortGameModeBR` is not in the native class set, so `Athena_GameMode_C`
+   cannot load today. The server is currently started with
+   `?game=/Script/FortniteGame.FortGameModeAthena`; the real target is
+   `/Game/Athena/Athena_GameMode.Athena_GameMode_C`. First C1 task: add
+   `AFortGameModeBR` (and confirm `AFortGameStateBR`) to the class set.
+2. Of the 105 FortniteGame functions these Blueprints reference, **none is
+   empty in the client**. So no Blueprint here depends on a function we would
+   have to re-create; they depend on declarations existing.
+3. The hard part of C1 is breadth, not depth: the pawn pulls 83 other
+   packages directly (effects, sounds, cosmetics, vehicle and water classes)
+   and the game state pulls every building piece class. On a dedicated server
+   most are loadable-but-unused. Strategy: load, collect every failure line,
+   classify (missing native class / missing function declaration / client-only
+   asset), fix classes and declarations, tolerate client-only assets.
+4. Direct imports only were measured. The full closure (imports of imports) is
+   larger; `Cue4Inspect --save-closure` produces it and is the next
+   measurement when C1 starts.
