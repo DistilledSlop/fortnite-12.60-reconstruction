@@ -363,14 +363,16 @@ matches the original UI's displayed limit. Unfriend/block clears both private
 aliases in the same transaction as the relationship change. Backend dispatcher
 tests exercise authorization, privacy, restart, updates/deletion, validation,
 cleanup and transaction rollback. The original UI subsequently submitted
-`ProbeAlias` through PUT, received 204 and displayed it immediately. Deletion and
-restart readback still need original-client verification. In that isolated run,
+`ProbeAlias` through PUT, received 204 and displayed it immediately. A fresh
+client/backend displayed that saved nickname. Clearing the nickname in the
+original UI sent DELETE, received 204 and restored SocialLiveFriend immediately. In that isolated run,
 a scripted local friend completed XMPP authentication and presence. The original
 client displayed it online as In the Lobby, showed its incoming diagnostic whisper,
 and sent an exact UI reply that the peer received. This is one original client
 plus a scripted peer, not a two-original-client acceptance test. Sanitized requests,
 logs and screenshots are under ignored
-`generated/g1-isolated-probe/attempt-alias-online-whispers/`.
+`generated/g1-isolated-probe/attempt-alias-online-whispers/`; nickname restart
+and deletion evidence is in `attempt-alias-restart-delete/`.
 
 ## Party approval and member event contracts
 
@@ -469,3 +471,14 @@ lastOnline. Automatic captain succession emits the explicit promotion event
 shape after MEMBER_LEFT to remaining members. This sequence is a local
 inference, covered with three-member lifecycle tests; original two-client
 acceptance and the disconnected-member reconnect contract remain open.
+
+Maya permanent customization remains a separate missing profile path. Reflected
+service requests are UnlockRewardNode(nodeId, rewardGraphId, rewardCfg) and
+SetRewardGraphConfig(state:string[], rewardGraphId); their wire route and JSON
+serialization are not captured. The cooked S12_HeroSelections graph contains
+58 nodes across ten key tiers; each node maps to a cosmetic variant token.
+Tier10.1 has RewardOperation RichColor with Maya as its context item. Node
+requirements, one-key-per-tier limits and mappings are preserved in ignored
+`generated/maya-graph-reports/normalized.json`. Ownership validation, graph creation,
+purchase-token consumption and RichColor configuration need recovery before
+this can safely become a permanent customization API.

@@ -470,8 +470,8 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   persist per account. Friend nicknames persist privately per owner; the observed
   raw-text PUT and DELETE routes return 204. Backend tests cover privacy, restart,
   validation and atomic cleanup on unfriend/block. The original client submitted
-  a nickname PUT successfully (204) and displayed it immediately; deletion and
-  restart readback remain unverified in the UI. Recent players now come from co-players with committed
+  a nickname PUT successfully (204), restored it after client/backend restart,
+  then deleted it through the UI (204) and displayed the original name. Recent players now come from co-players with committed
   results in the same registered match; blocked peers are filtered. This assumes
   one match per registration, so a new round must register a new session. The
   nonempty recent-player client UI displayed the expected account using explicitly
@@ -493,7 +493,8 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   and 11 schedule entries, including multiple objectives and independent W7 timing.
   Dated grants require an explicit event start; the historical event epoch is
   unproven. Bundle completion/rewards (including Maya’s tenth token), cleanup and
-  daily rotation remain incomplete. An authenticated server quest-event endpoint now
+  daily rotation remain incomplete. Maya permanent customization (reward graph
+  node unlock/configuration and RichColor) is not implemented. An authenticated server quest-event endpoint now
   supports durable retries; actual native gameplay event integration remains pending.
 - **Native integration.** The local registration/loadout/result protocol is tested
   over HTTP and WebSocket, including durable result retries. The native server

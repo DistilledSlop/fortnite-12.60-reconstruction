@@ -69,3 +69,11 @@ records rendering hitches but does not establish the crash cause.
 The gift button displayed “2FA required to send gifts” because the local
 account response has `tfaEnabled: false`. Backend gift transactions passing
 tests do not establish that this client gift flow is accessible.
+
+A further DXVK run verified friend-nickname persistence and deletion, then exited
+139 after entering the locker, before the outfit picker could be reopened. Wine
+SEH tracing did not report a Windows access violation; the runner printed a Linux
+segmentation fault. This does not identify the crashing component. The last
+locker frame rendered the saved Lace style, but full style-selector readback
+remains pending. Logs and screenshots are retained under ignored
+`generated/g1-isolated-probe/attempt-alias-restart-delete/`.

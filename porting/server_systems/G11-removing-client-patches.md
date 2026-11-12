@@ -208,3 +208,38 @@ the WSS diagnostic only enables isolated protocol investigation. Once secure
 TLS works without the diagnostics, revisit C, A, and B as needed. Record each
 run with arguments, diagnostics enabled, closing code, and exit time in
 `EXIT_TRACE.md`.
+
+### Original verification callback recovered
+
+Private machine-code recovery locates Curl SslCertVerify at `0x1438cc1e0`.
+Entry ECX is the OpenSSL PreverifyOk input; RDX is X509_STORE_CTX. Only an
+input of 1 reaches the manager verifier call at `0x1438cc253` (slot +0x40).
+AL at `0x1438cc257` is its boolean result; EBX at `0x148f0461f` is the final
+callback result. A false manager result changes it to zero. These boundaries
+permit a diagnostic observation that distinguishes chain preverification from
+a later manager rejection. A false manager result alone still does not prove
+which pin or delegate rejected the chain. Calls must be paired per thread and
+invocation because callbacks may run for multiple chain certificates.
+
+The private evidence index is
+`/opt/fortnite/local-model-package/work/g11-callback-boundary-evidence.json`, with principal
+capture `4aa6dc35167d4aee920f8ff34ba640a0`. The ignored diagnostic observer uses
+hardware breakpoints and logs only thread IDs and verifier booleans. Debugger
+observation is separate from G11 acceptance; no patch-free success is claimed.
+
+### Live callback observation with enrolled ROOT certificate
+
+A subsequent isolated run kept Curl and WSS bypasses off and AppES diagnostics
+on, with the same fresh CA enrolled in the private Windows ROOT store. After
+the protected callback code became available, hardware-breakpoint observation
+repeatedly recorded PreverifyOk=1, manager=false, final=false on the request
+thread. Thus OpenSSL preverification passed for these observed invocations,
+and the additional manager check rejected the connection. This narrows the
+remaining Curl failure to that manager check rather than base CA trust. The
+manager’s digest/pin check versus its optional verification delegate is not
+yet isolated. The client still failed to sign in without a TLS bypass.
+
+Only verifier booleans and thread IDs were recorded in ignored
+`generated/g11-root-store-probe/verify-observation.out`; no certificate data
+or request credentials were collected by the observer. This was an instrumented
+diagnostic, not a successful G11 acceptance run.
