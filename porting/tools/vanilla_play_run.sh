@@ -35,7 +35,7 @@ fi
 export FORTNITE_NET_ENCRYPTION_KEY_FILE="$porting/generated/g3/netkey"
 export FN_PATCH_APPES_DIAGNOSTIC=1 FN_WINEDEBUG=-all
 unset FN_WINEDLLOVERRIDES FN_VK_ICD_FILENAMES
-export FN_ACTIONS='125:click,640,592 235:click,1144,473 300:shot 420:shot 540:shot 660:shot 780:shot'
+export FN_ACTIONS='125:click,640,592 235:click,1144,473 300:shot 400:hold,w,6 410:shot 430:hold,d,6 440:shot 560:shot'
 printf -v FN_SERVER_CMD 'exec %q /Game/Maps/FortniteEmptyDedicated -FortniteOriginalClient -nullrhi -nosound -unattended -port=7777 -log -LogCmds=%q > %q 2>&1' "$server" 'LogHandshake VeryVerbose, LogNet VeryVerbose, LogNetTraffic Verbose, PacketHandlerLog VeryVerbose' "$out/server.log"
 export FN_SERVER_CMD
 touch "$out/start.marker"

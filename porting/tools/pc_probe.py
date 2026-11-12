@@ -136,9 +136,21 @@ def path_eval(mem, pc, playerstate):
         wm = u(mem, gs + 0x3D0, '<Q', 8)
         print(f'   GameState+0x3d0 WorldManager={wm or 0:#x}')
         if wm:
+            print(f'   WorldManager state[+0x2c8]={u(mem, wm + 0x2C8, "<B", 1)} (5 = initialised, needed by the UI state tag and the loading manager)')
             print(f'   WorldManager +0x860={u(mem, wm + 0x860, "<i", 4)} +0x870={u(mem, wm + 0x870, "<i", 4)} '
                   f'(foundations gate passes only if equal and every entry is replicated)')
-        nm = u(mem, gs + 0x3D0, '<Q', 8)
+        # Loading-screen gate (Athena override 0x1419f9d30): phase byte [gs+0x1cb0] (1 Setup holds the screen,
+        # 2 Warmup holds it while streaming levels are pending unless [gs+0x1ed8] != 0).
+        print(f'   GamePhase[gs+0x1cb0]={u(mem, gs + 0x1CB0, "<B", 1)} [gs+0x1ed8]={u(mem, gs + 0x1ED8, "<B", 1)}')
+        # Manager decision 0x141f062e0: [gs+0x328]&8 clear -> "Loading user content"; [gs+0x2d0]==0 while phase<=2 -> "Waiting for time of day manager".
+        print(f'   gs+0x328={u(mem, gs + 0x328, "<B", 1)} (bit 8 needed) TimeOfDayMgr[gs+0x2d0]={u(mem, gs + 0x2D0, "<Q", 8) or 0:#x} '
+              f'VolumeMgr[gs+0x2108]={u(mem, gs + 0x2108, "<Q", 8) or 0:#x}')
+        arr, cnt = u(mem, w + 0x98, '<Q', 8), u(mem, w + 0xA0, '<i', 4)
+        print(f'   world streaming levels: data={arr or 0:#x} count={cnt}')
+        for k in range(min(cnt or 0, 16)):
+            lv = u(mem, arr + k * 8, '<Q', 8) if arr else None
+            if lv:
+                print(f'     level[{k}]={lv:#x} state[+0xb8]={u(mem, lv + 0xB8, "<B", 1)} loadedLevel[+0x128]={u(mem, lv + 0x128, "<Q", 8) or 0:#x}')
     # Globals read by the loading-counter gate FUN_143a9f860.
     obj = u(mem, 0x14830D600, '<Q', 8)
     if obj:
@@ -221,6 +233,33 @@ def main():
             print(txt + ' => FUN_14238e820 ' + ('returns TRUE (check aborts)' if (o1c8 > 0x10000 and None not in (a, b, c) and a != b - c) or (n230 or 0) > 0 else 'returns false'), flush=True)
         if role == 2 and p220:
             path_eval(mem, addr, p220)
+    if '--reasons' in sys.argv[1:]:
+        # The loading-screen manager (0x141f062e0) keeps the reason it shows/hides in an FString; print the live ones.
+        prefixes = ('Athena: ', 'PC: ', 'Loading user', 'Waiting for', 'One or more', 'The UI', 'World hasn', 'We ', 'Mutator ',
+                    'Matchmaking', 'GameState hasn', 'Switching', 'Not splitscreen', "It's been", 'bCurrentlyInLoadMap', 'At least one')
+        needles = [x.encode('utf-16le') for x in prefixes]
+        seen = set()
+        for line in Path(f'/proc/{pid}/maps').read_text().splitlines():
+            m = re.match(r'([0-9a-f]+)-([0-9a-f]+) (r)(w)', line)
+            if not m or int(m.group(1), 16) > 0x7FFFFFFFFFFF:
+                continue
+            lo, hi = int(m.group(1), 16), int(m.group(2), 16)
+            for start in range(lo, hi, CHUNK):
+                try:
+                    mem.seek(start)
+                    data = mem.read(min(CHUNK, hi - start))
+                except (OSError, ValueError, OverflowError):
+                    continue
+                for nd in needles:
+                    k = data.find(nd)
+                    while k != -1:
+                        if k % 2 == 0:
+                            txt = data[k:k + 200].decode('utf-16le', 'ignore').split('\0')[0]
+                            ad = start + k
+                            if txt.startswith(prefixes) and len(txt) > 12 and not 0x140000000 <= ad < 0x150000000 and (txt, ad) not in seen:
+                                seen.add((txt, ad))
+                                print(f'   reason@{ad:#x} (heap): {txt}')
+                        k = data.find(nd, k + 2)
     print(f'scanned pid {pid}, {len(hits)} controller-table hits')
     return 0
 

@@ -142,6 +142,7 @@ if [[ -n "$FN_ACTIONS" ]]; then
                 shot) ffmpeg -loglevel error -y -f x11grab -video_size 1280x720 -i "$DISPLAY" -frames:v 1 "$SHOTS_DIR/t$at.png" ;;
                 click) xdotool mousemove ${args%%,*} ${args#*,} click 1 ;;
                 key) xdotool key "$args" ;;
+                hold) xdotool keydown "${args%%,*}"; sleep "${args#*,}"; xdotool keyup "${args%%,*}" ;;
             esac
         done
     ) &

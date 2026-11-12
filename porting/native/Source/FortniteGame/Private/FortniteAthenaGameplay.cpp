@@ -1,3 +1,4 @@
+#include "UObject/ConstructorHelpers.h"
 #include "FortniteAthenaGameplay.h"
 #include "AFortTeamInfoAthena.h"
 #include "AMegaStormManager.h"
@@ -18,6 +19,10 @@
 #include "EFortCustomPartType.h"
 #include "EFortCustomGender.h"
 #include "EFortCustomBodyType.h"
+#include "AFortTimeOfDayManager.h"
+#include "AFortWorldManager.h"
+#include "EAthenaGamePhase.h"
+#include "EAthenaGamePhaseStep.h"
 #include "AFortPlayerController.h"
 #include "EFortInventoryType.h"
 
@@ -82,6 +87,16 @@ AFortGameModeAthena::AFortGameModeAthena()
     DefaultPawnClass = AFortPlayerPawnAthena::StaticClass();
     // Exact class-default stores recovered from original constructor 0x14192dab0.
     GameStateClass = AFortGameStateAthena::StaticClass(); // 0x14192e508, +0x230
+    {
+        // The client decides whether to keep its loading screen from class defaults that only the Blueprint
+        // subclass carries (bShowLoadingScreenUntilAllLevelAreLoaded, volume manager class), and those are not
+        // replicated. Spawn the original Athena_GameState_C so the client's own class defaults apply.
+        static ConstructorHelpers::FClassFinder<AFortGameStateAthena> BlueprintGameState(TEXT("/Game/Athena/Athena_GameState"));
+        if (BlueprintGameState.Succeeded())
+        {
+            GameStateClass = BlueprintGameState.Class;
+        }
+    }
     PlayerControllerClass = AFortPlayerControllerAthena::StaticClass(); // 0x14192e514, +0x238
     PlayerStateClass = AFortPlayerStateAthena::StaticClass(); // 0x14192e520, +0x240
     HUDClass = AFortUIPvP::StaticClass(); // 0x14192e52c, +0x248
@@ -178,6 +193,22 @@ static void DumpFortniteClassChecksums(UWorld* World)
 void AFortGameModeAthena::StartPlay()
 {
     Super::StartPlay();
+    if (UWorld* World = GetWorld())
+    {
+        // Run evidence for gate G6: where each possessed pawn is, so a held input key can be shown to move it.
+        static FTimerHandle PawnLogHandle;
+        World->GetTimerManager().SetTimer(PawnLogHandle, FTimerDelegate::CreateLambda([World]()
+        {
+            for (FConstPlayerControllerIterator It = World->GetPlayerControllerIterator(); It; ++It)
+            {
+                if (const APawn* Pawn = It->IsValid() ? It->Get()->GetPawn() : nullptr)
+                {
+                    const FVector Location = Pawn->GetActorLocation();
+                    UE_LOG(LogTemp, Display, TEXT("Pawn tracker: %s at %.1f %.1f %.1f velocity %.1f"), *Pawn->GetName(), Location.X, Location.Y, Location.Z, Pawn->GetVelocity().Size());
+                }
+            }
+        }), 5.0f, true);
+    }
     if (FParse::Param(FCommandLine::Get(), TEXT("FortniteDumpClassChecksums")))
     {
         DumpFortniteClassChecksums(GetWorld());
@@ -383,10 +414,74 @@ static void EnsureHero(AController* NewPlayer)
         (int32)PlayerState->CharacterData.WasPartReplicatedFlags, *PlayerState->GetName());
 }
 
+// StartWarmupPhase (0x141972c30) sets GamePhase = Warmup and the warmup step; with ?PauseWarmup the countdown end time
+// stays unset (UpdateWarmupPhase 0x14197a400 does nothing). The client keeps its loading screen up until the replicated
+// phase leaves Setup (G6). Until StartWarmupPhase is ported, enter the paused warmup when the first player spawns.
+static void EnsureWarmupPhase(UWorld* World)
+{
+    AFortGameStateAthena* GameState = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
+    if (!GameState || GameState->GamePhase >= EAthenaGamePhase::Warmup)
+        return;
+    GameState->GamePhase = EAthenaGamePhase::Warmup;
+    GameState->GamePhaseStep = EAthenaGamePhaseStep::Warmup;
+    GameState->ForceNetUpdate();
+    UE_LOG(LogTemp, Display, TEXT("Set AthenaGamePhase to [Warmup] (paused warmup stand-in)"));
+}
+
+// While the game phase is Setup or Warmup the client keeps the loading screen up with the reason "Waiting for time of
+// day manager" until its GameState's FortTimeOfDayManager (AFortGameStateBase +0x2d0) is set (loading-screen decision
+// 0x141f062e0). The client's own manager actor registers itself with the GameState when it replicates, so the server
+// has to spawn one. The original server spawns the Blueprint from GetTimeOfDayManagerClassNative; the native class
+// stands in until that is ported.
+// The client derives its in-game UI state tag from GameState+0x3d0 (the replicated WorldManager); with no manager the tag
+// stays None and the client's loading screen manager reports "UIDirector has no valid state" forever.
+static void EnsureWorldManager(UWorld* World)
+{
+    AFortGameStateAthena* GameState = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
+    if (!GameState || GameState->WorldManager)
+        return;
+    FActorSpawnParameters Params;
+    Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+    AFortWorldManager* Manager = World->SpawnActor<AFortWorldManager>(AFortWorldManager::StaticClass(), FTransform::Identity, Params);
+    if (!Manager)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("WorldManager spawn failed"));
+        return;
+    }
+    Manager->SetReplicates(true);
+    Manager->bAlwaysRelevant = true;
+    GameState->WorldManager = Manager;
+    GameState->ForceNetUpdate();
+    UE_LOG(LogTemp, Display, TEXT("Spawned %s as the GameState world manager"), *Manager->GetName());
+}
+
+static void EnsureTimeOfDayManager(UWorld* World)
+{
+    AFortGameStateAthena* GameState = World ? World->GetGameState<AFortGameStateAthena>() : nullptr;
+    if (!GameState || GameState->FortTimeOfDayManager)
+        return;
+    FActorSpawnParameters Params;
+    Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+    AFortTimeOfDayManager* Manager = World->SpawnActor<AFortTimeOfDayManager>(AFortTimeOfDayManager::StaticClass(), FTransform::Identity, Params);
+    if (!Manager)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("TimeOfDayManager spawn failed"));
+        return;
+    }
+    Manager->SetReplicates(true);
+    Manager->bAlwaysRelevant = true;
+    GameState->FortTimeOfDayManager = Manager;
+    GameState->ForceNetUpdate();
+    UE_LOG(LogTemp, Display, TEXT("Spawned %s as the GameState time of day manager"), *Manager->GetName());
+}
+
 void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
 {
     EnsureWorldInventory(NewPlayer);
     EnsureHero(NewPlayer);
+    EnsureTimeOfDayManager(GetWorld());
+    EnsureWorldManager(GetWorld());
+    EnsureWarmupPhase(GetWorld());
     Super::RestartPlayer(NewPlayer);
     if (NewPlayer && NewPlayer->GetPawn())
         UE_LOG(LogTemp, Display, TEXT("Athena pawn spawned: class=%s authority=%d"),
