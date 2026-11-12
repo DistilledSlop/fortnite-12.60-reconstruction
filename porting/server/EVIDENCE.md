@@ -581,3 +581,12 @@ quests. Match-aware receipts preserve exact legacy retries and reject changed
 new contexts; XP, tokens, completion bookkeeping and receipts commit together.
 The native gameplay emitter still must qualify the source stat filters and send
 events. Faction choice, its gate and variant consumption remain incomplete.
+
+
+TNTina weeks 3–4 extend the same owned schedule at cooked day offsets 17 and 24.
+The 20 additional quests include 124 qualified objectives with subset completion
+counts (15 of 78, 7 of 19 and 3 of 6) and the TNTina completion-token family.
+They use the existing trusted-event, XP, match-rule and atomic reward path.
+The source report had no missing stat rows or additional unsupported match flags.
+Focused date/subset/token tests and the combined 246-test server suite passed.
+Faction-choice activation and the remaining three weekly families are still open.
