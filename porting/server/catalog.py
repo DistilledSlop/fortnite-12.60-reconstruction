@@ -1,13 +1,17 @@
-"""Small local storefront, shared by catalog display and purchase validation.
-
-Shop offers are local fixtures. Season 12 IDs were recovered from the client;
-their mapping to the pass and bundle, and prices, are local assumptions.
-"""
+"""Local storefront shared by catalog display and purchase validation."""
 from copy import deepcopy
+
+from release_day_shop import DAILY, FEATURED, INITIAL_MATERIAL_STYLES
 
 LOCAL_CREDIT_OFFER = "local-free-credits"
 SEASON12_PASS_OFFER = "89DED540434B169187E1D6A5C2086AA2"
 SEASON12_LEVEL_OFFER = "350050574100C333CB9ACA8D1CEF9BF6"
+
+
+def cosmetic_attributes(template):
+    variants = ([{"channel": "Material", "active": "Mat1", "owned": ["Mat1", "Mat2"]}]
+                if template.casefold() in INITIAL_MATERIAL_STYLES else [])
+    return {"item_seen": False, "favorite": False, "variants": variants}
 
 
 def _offer(offer_id, template, price, section, position):
@@ -23,18 +27,30 @@ def _offer(offer_id, template, price, section, position):
         "matchFilter": "", "filterWeight": 0,
         "catalogGroup": offer_id, "catalogGroupPriority": 0, "sortPriority": position,
         "appStoreId": [], "requirements": [],
-        "giftInfo": {"bIsEnabled": False, "forcedGiftBoxTemplateId": "", "purchaseRequirements": [],
+        "giftInfo": {"bIsEnabled": section in ("Daily", "Featured"), "forcedGiftBoxTemplateId": "", "purchaseRequirements": [],
                      "giftRecordIds": []},
         "refundable": True,
         "itemGrants": [{"templateId": template, "quantity": 1}],
     }
 
 
+def _cosmetic_offers(rows, section):
+    offers = []
+    for position, (name, template, price, back_bling, display) in enumerate(rows):
+        offer_id = "local-20200520-" + name.lower().replace(" ", "-")
+        offer = _offer(offer_id, template, price, section, position)
+        offer["devName"] = name
+        if back_bling:
+            offer["itemGrants"].append({"templateId": back_bling, "quantity": 1})
+        if display:
+            offer["displayAssetPath"] = f"/Game/Catalog/DisplayAssets/{display}.{display}"
+        offers.append(offer)
+    return offers
+
+
 _STOREFRONTS = [
-    {"name": "BRDailyStorefront", "catalogEntries": [
-        _offer("local-floss", "AthenaDance:eid_floss", 500, "Daily", 0),
-        _offer("local-arctic-camo", "AthenaItemWrap:wrap_001_arcticcamo", 300, "Daily", 1),
-    ]},
+    {"name": "BRWeeklyStorefront", "catalogEntries": _cosmetic_offers(FEATURED, "Featured")},
+    {"name": "BRDailyStorefront", "catalogEntries": _cosmetic_offers(DAILY, "Daily")},
     {"name": "CurrencyStorefront", "catalogEntries": [
         {**_offer(LOCAL_CREDIT_OFFER, "Currency:MtxGiveaway", 0, "Currency", 0),
          "devName": "Local free test credits", "title": "Free local test V-Bucks",

@@ -1,5 +1,6 @@
 """Local Season 12 pass purchase; offer mapping and price are assumptions."""
 import sqlite3
+from contextlib import closing
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -96,9 +97,14 @@ class BattlePassPurchaseTests(unittest.TestCase):
         self.service._store("account", {"athena": tx})
         original = self.service.grant_item("account", "athena", PAID[1][0][0], {"variants": [{"channel": "test"}]})
         before = self.service.profile("account", "athena")
-        self.assertEqual(self.service.repair_season12_level_one("account"), 4)
+        # Four missing level-one rewards also activate their two immediate
+        # challenge bundles and initial quests in the same repair transaction.
+        self.assertEqual(self.service.repair_season12_level_one("account"), 8)
         after = self.service.profile("account", "athena")
         self.assertEqual(after["items"][original], before["items"][original])
+        templates = {item["templateId"] for item in after["items"].values()}
+        self.assertIn("Quest:Quest_S12_Donut_W1_A", templates)
+        self.assertIn("Quest:quest_s12_styles1_q01_accolade_ar", templates)
         self.assertEqual(after["rvn"], before["rvn"] + 1)
         self.assertEqual(self.service.repair_season12_level_one("account"), 0)
         self.assertEqual(after, self.service.profile("account", "athena"))
@@ -135,7 +141,7 @@ class BattlePassPurchaseTests(unittest.TestCase):
 
     def test_database_failure_rolls_back_entitlement_and_debit(self):
         before = self.snapshots()
-        with sqlite3.connect(self.service._database) as db:
+        with closing(sqlite3.connect(self.service._database)) as db, db:
             db.execute("CREATE TRIGGER fail_athena BEFORE INSERT ON profiles WHEN NEW.profile_id = 'athena' BEGIN SELECT RAISE(ABORT, 'test failure'); END")
         with self.assertRaises(sqlite3.IntegrityError):
             self.purchase()

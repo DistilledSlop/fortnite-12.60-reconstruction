@@ -10,18 +10,8 @@ class FrontendStubs:
     def __init__(self, ctx):
         self.ctx = ctx
 
-    def friends_summary(self, req, match):
-        return 200, {
-            "friends": [], "incoming": [], "outgoing": [], "suggested": [], "blocklist": [],
-            "settings": {"acceptInvites": "public"},
-            "limitsReached": {"incoming": False, "outgoing": False, "accepted": False},
-        }
-
     def empty_list(self, req, match):
         return 200, []
-
-    def friends_settings(self, req, match):
-        return 200, {"acceptInvites": "public"}
 
     def socialban(self, req, match):
         return 200, {"bans": [], "warnings": []}
@@ -49,10 +39,6 @@ class FrontendStubs:
 
     def register(self, router):
         g = "guess"
-        router.add("GET", r"/friends/api/v1/[^/]+/summary", self.friends_summary, name="friends.summary", status=g)
-        router.add("GET", r"/friends/api/v1/[^/]+/(blocklist|recent/[^/]+)", self.empty_list,
-                   name="friends.lists", status=g)
-        router.add("GET", r"/friends/api/v1/[^/]+/settings", self.friends_settings, name="friends.settings", status=g)
         router.add("GET", r"/socialban/api/public/v1/[^/]+", self.socialban, name="socialban", status=g)
         router.add("GET", r"/party/api/v1/Fortnite/user/[^/]+/notifications/undelivered/count",
                    self.notifications_count, name="party.notifications_count", status=g)

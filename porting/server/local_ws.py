@@ -2,13 +2,14 @@
 
 Handles the opening handshake on a BaseHTTPRequestHandler, text/binary messages
 with fragmentation, ping/pong and close. Not a general WebSocket library: no
-extensions (no permessage-deflate) and no subprotocol negotiation.
+extensions (no permessage-deflate).
 """
 
 import base64
 import hashlib
 import json
 import struct
+import threading
 
 WS_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 MAX_MESSAGE_BYTES = 256 * 1024
@@ -25,8 +26,14 @@ class WebSocketClosed(Exception):
     """The peer closed the socket or sent a frame this server cannot accept."""
 
 
-def accept_upgrade(handler):
+def accept_upgrade(handler, subprotocol=None):
     """Answer a WebSocket upgrade on handler. Returns a WebSocket, or None after a 400."""
+    offered = [item.strip() for item in handler.headers.get("Sec-WebSocket-Protocol", "").split(",")]
+    if subprotocol is not None and subprotocol not in offered:
+        handler.send_response_only(400)
+        handler.send_header("Content-Length", "0")
+        handler.end_headers()
+        return None
     key = handler.headers.get("Sec-WebSocket-Key", "")
     if not key:
         body = b"missing Sec-WebSocket-Key"
@@ -41,6 +48,8 @@ def accept_upgrade(handler):
     handler.send_header("Upgrade", "websocket")
     handler.send_header("Connection", "Upgrade")
     handler.send_header("Sec-WebSocket-Accept", accept)
+    if subprotocol is not None:
+        handler.send_header("Sec-WebSocket-Protocol", subprotocol)
     handler.end_headers()
     handler.wfile.flush()
     return WebSocket(handler.rfile, handler.wfile, handler.connection)
@@ -52,6 +61,7 @@ class WebSocket:
         self.wfile = wfile
         self.sock = sock
         self.closed = False
+        self._write_lock = threading.RLock()
 
     def _send_frame(self, opcode, payload=b""):
         header = bytearray([0x80 | opcode])
@@ -64,8 +74,9 @@ class WebSocket:
         else:
             header.append(127)
             header += struct.pack("!Q", size)
-        self.wfile.write(bytes(header) + payload)
-        self.wfile.flush()
+        with self._write_lock:
+            self.wfile.write(bytes(header) + payload)
+            self.wfile.flush()
 
     def send_text(self, text):
         self._send_frame(OP_TEXT, text.encode("utf-8"))

@@ -1,6 +1,7 @@
 """Local catalog purchases keep wallet and cosmetics in one transaction."""
 import copy
 import sqlite3
+from contextlib import closing
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -67,11 +68,26 @@ class PurchaseTests(unittest.TestCase):
         offer = storefronts()[0]["catalogEntries"][0]
         self.lookup.stop()
         body = dict(BODY, offerId=offer["offerId"], expectedTotalPrice=offer["prices"][0]["finalPrice"])
+        balance = body["expectedTotalPrice"] + 200
+        tx = ProfileTx(self.service.ctx, self.service.profile("account", "common_core"))
+        tx.set_item_quantity(self.wallet, balance)
+        self.service._store("account", {"common_core": tx})
         self.purchase(body)
         core, athena = self.snapshots()
-        self.assertEqual(core["items"][self.wallet]["quantity"], 700 - body["expectedTotalPrice"])
-        self.assertIn(offer["itemGrants"][0]["templateId"],
-                      {item["templateId"] for item in athena["items"].values()})
+        self.assertEqual(core["items"][self.wallet]["quantity"], 200)
+        self.assertTrue({grant["templateId"] for grant in offer["itemGrants"]} <=
+                        {item["templateId"] for item in athena["items"].values()})
+        # The first historical offer is Lace: both cooked Material styles start
+        # unlocked. Exercise purchase -> owned style -> equipped persisted style.
+        character = offer["itemGrants"][0]["templateId"]
+        item_id = next(key for key, item in athena["items"].items() if item["templateId"] == character)
+        locker = athena["stats"]["attributes"]["last_applied_loadout"]
+        self.service.run("account", "athena", "SetCosmeticLockerSlot", {
+            "lockerItem": locker, "category": "Character", "itemToSlot": item_id,
+            "slotIndex": 0, "variantUpdates": [{"channel": "Material", "active": "Mat2"}]})
+        restored = Backend(state_dir=self.directory.name).profiles.profile("account", "athena")
+        self.assertEqual(restored["items"][item_id]["attributes"]["variants"],
+                         [{"channel": "Material", "active": "Mat2", "owned": ["Mat1", "Mat2"]}])
 
     def test_invalid_requests_do_not_change_either_profile(self):
         cases = [dict(BODY, offerId="unknown"), dict(BODY, expectedTotalPrice=0),
@@ -101,7 +117,7 @@ class PurchaseTests(unittest.TestCase):
 
     def test_database_failure_rolls_back_both_profiles_and_cache(self):
         before = self.snapshots()
-        with sqlite3.connect(self.service._database) as db:
+        with closing(sqlite3.connect(self.service._database)) as db, db:
             db.execute("CREATE TRIGGER fail_athena BEFORE INSERT ON profiles WHEN NEW.profile_id = 'athena' BEGIN SELECT RAISE(ABORT, 'test failure'); END")
         with self.assertRaises(sqlite3.IntegrityError):
             self.purchase()

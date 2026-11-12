@@ -39,7 +39,7 @@ from pathlib import Path
 from typing import Callable
 
 from api_common import ApiError, Err
-from catalog import LOCAL_CREDIT_OFFER, SEASON12_LEVEL_OFFER, SEASON12_PASS_OFFER, get_offer
+from catalog import LOCAL_CREDIT_OFFER, SEASON12_LEVEL_OFFER, SEASON12_PASS_OFFER, cosmetic_attributes, get_offer
 from season12_rewards import FREE as SEASON12_FREE, PAID as SEASON12_PAID
 from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, WRAP_SLOT_COUNT, MTX_PLATFORMS, PROFILE_IDS,
                               SLOT_CATEGORIES, build, empty_slots)
@@ -49,8 +49,7 @@ from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, WRAP_SLOT_COUN
 LOCK_EXPIRATION_UNLOCKED = "0001-01-01T00:00:00.000Z"
 
 # observed: these names are in the 12.60 binary but have no implementation here yet.
-UNIMPLEMENTED = ("GiftCatalogEntry", "RemoveGiftBox",
-                 "RefreshExpeditions", "SetActiveHeroLoadout", "ClearHeroLoadout")
+UNIMPLEMENTED = ("RefreshExpeditions", "SetActiveHeroLoadout", "ClearHeroLoadout")
 
 COMMANDS = {}
 
@@ -327,11 +326,15 @@ def _grant_season12_rewards(ctx, athena, rewards, price):
     for template in pending:
         item_id = ctx.service._new_item_id("item", athena.profile)
         prefix = template.split(":", 1)[0].casefold()
-        attrs = ({"item_seen": False, "favorite": False, "variants": []}
+        attrs = (cosmetic_attributes(template)
                  if prefix in {p.casefold() for p in CATEGORY_BY_PREFIX} else {"item_seen": False})
         athena.add_item(item_id, template, attrs)
         loot.append({"itemType": template, "itemGuid": item_id, "quantity": 1,
                      "attributes": attrs, "itemProfile": "athena"})
+    quests = getattr(ctx.service, "quests", None)
+    if quests is not None:
+        quests.consume_variants(athena)
+        quests.login(ctx)
     if loot:
         ctx.notifications.append({"type": "CatalogPurchase", "primary": True, "lootResult": {"tierGroupName": "", "items": loot}})
 
@@ -439,7 +442,7 @@ def _purchase_catalog_entry(ctx):
     loot = []
     for template in templates:
         item_id = ctx.service._new_item_id("item", athena.profile)
-        attributes = {"item_seen": False, "favorite": False, "variants": []}
+        attributes = cosmetic_attributes(template)
         athena.add_item(item_id, template, attributes)
         loot.append({"itemType": template, "itemGuid": item_id, "quantity": 1,
                      "attributes": attributes, "itemProfile": "athena"})
@@ -451,6 +454,9 @@ def _purchase_catalog_entry(ctx):
 @command("ClientQuestLogin", ("athena",), "observed", "no body. Once per UTC day: advances the daily login counter.")
 def _client_quest_login(ctx):
     tx = ctx.tx("athena")
+    quests = getattr(ctx.service, "quests", None)
+    if quests is not None:
+        quests.login(ctx)
     attributes = tx.profile["stats"]["attributes"]
     today = ctx.ctx.day()
     quest = dict(attributes.get("quest_manager") or {})
@@ -720,7 +726,12 @@ class ProfileService:
             self._profiles[key] = profile
         return copy.deepcopy(self._profiles[key])
 
-    def _store(self, account_id, txs, command_profile=None):
+    def _store(self, account_id, txs, command_profile=None, *, database=None, publish=True):
+        """Persist copies, optionally inside a caller-owned SQLite transaction.
+
+        A caller supplying database must publish only after its transaction commits.
+        This lets trusted match results share the profile transaction with a receipt.
+        """
         now = self.ctx.iso()
         for profile_id, tx in txs.items():
             if tx.changed:
@@ -734,9 +745,16 @@ class ProfileService:
             # Publish to the in-memory cache only after the durable commit succeeds.
             rows = [(account_id, profile_id, json.dumps(tx.profile, separators=(",", ":")))
                     for profile_id, tx in txs.items()]
-            with closing(sqlite3.connect(self._database)) as db, db:
-                db.executemany("INSERT OR REPLACE INTO profiles (account_id, profile_id, data) "
-                               "VALUES (?, ?, ?)", rows)
+            sql = "INSERT OR REPLACE INTO profiles (account_id, profile_id, data) VALUES (?, ?, ?)"
+            if database is not None:
+                database.executemany(sql, rows)
+            else:
+                with closing(sqlite3.connect(self._database)) as db, db:
+                    db.executemany(sql, rows)
+        if publish:
+            self._publish(account_id, txs)
+
+    def _publish(self, account_id, txs):
         for profile_id, tx in txs.items():
             self._profiles[(account_id, profile_id)] = copy.deepcopy(tx.profile)
 
@@ -805,6 +823,8 @@ class ProfileService:
         return self._envelope(entry, [], [])
 
     def run(self, account_id, profile_id, command_name, body, client_rvn=None):
+        if command_name in ("GiftCatalogEntry", "RemoveGiftBox") and getattr(self, "gifting", None) is not None:
+            return self.gifting.run(account_id, profile_id, command_name, body, client_rvn)
         if command_name in UNIMPLEMENTED:
             raise ApiError(400, Err.OPERATION_NOT_FOUND,
                            f"Operation {command_name} is not implemented by the local stand-in.")

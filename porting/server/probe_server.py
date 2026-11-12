@@ -118,7 +118,7 @@ def make_handler(routes, record_path, stub=None):
         def serve_websocket(self, url, serve):
             """Run a websocket route. The socket stays open until serve() returns."""
             self.close_connection = True
-            conn = local_ws.accept_upgrade(self)
+            conn = local_ws.accept_upgrade(self, subprotocol=getattr(serve, "subprotocol", None))
             if conn is None:
                 self.record_request(url, b"", {}, 400)
                 return
@@ -192,6 +192,15 @@ def main():
     parser.add_argument("--ephemeral", action="store_true",
                         help="with --stub: keep account, profile and user-file state in memory")
     parser.add_argument("--matchmaking-ws-origin", help="with --stub: advertised ws:// or wss:// origin")
+    parser.add_argument("--registered-matchmaking", action="store_true", default=None,
+                        help="with --stub: wait for a compatible registered game server (also enabled by FORTNITE_GAMESERVER_SECRET)")
+    content_source = parser.add_mutually_exclusive_group()
+    content_source.add_argument("--content-dir", type=Path,
+                                help="with --stub: lobby content.json and local image directory")
+    content_source.add_argument("--content-file", type=Path,
+                                help="with --stub: lobby JSON snapshot; assets resolve beside it")
+    parser.add_argument("--content-public-origin",
+                        help="with --stub: HTTP(S) origin for local lobby image URLs")
     parser.add_argument("--local-matchmaking-ws-port", type=int,
                         help="with --stub: serve an additional plaintext WebSocket listener on loopback (0 chooses a port)")
     args = parser.parse_args()
@@ -213,7 +222,10 @@ def main():
         import fortnite_stub as stub
         stub.configure(cloudstorage_dir=args.cloudstorage_dir,
                        state_dir=None if args.ephemeral else args.state_dir,
-                       matchmaking_ws_origin=args.matchmaking_ws_origin)
+                       matchmaking_ws_origin=args.matchmaking_ws_origin,
+                       registered_matchmaking=args.registered_matchmaking,
+                       content_dir=args.content_dir, content_file=args.content_file,
+                       content_public_origin=args.content_public_origin)
     server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record, stub))
     if stub is not None and not args.matchmaking_ws_origin and not args.tls_cert and args.bind == "127.0.0.1":
         # The default local HTTP server must advertise its own reachable socket,
@@ -241,6 +253,8 @@ def main():
         if ws_server is not None:
             ws_server.shutdown()
             ws_server.server_close()
+        if stub is not None:
+            stub.DEFAULT.close()
         if state_lock is not None:
             state_lock.close()
 

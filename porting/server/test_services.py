@@ -780,7 +780,7 @@ class ProfileTests(ServiceTestCase):
             "sourceIndex": 5, "targetIndex": 0}), 400, Err.INVALID_PAYLOAD)
 
     def test_unimplemented_commands_are_named_in_the_error(self):
-        status, body, _ = mcp(self.base, self.token, LOCAL, "GiftCatalogEntry", "common_core")
+        status, body, _ = mcp(self.base, self.token, LOCAL, "RefreshExpeditions", "campaign")
         self.assertEqual(status, 400)
         self.assertIn("not implemented", body["errorMessage"])
 

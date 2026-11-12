@@ -11,11 +11,12 @@ Evidence:
             MAINTENANCE.
   reflection the calendar timeline (CalendarDownload, EventsTimeline) and the storefront catalog
             (CatalogDownload) member names and kinds; see reflection_schemas.json.
-  guess     the keychain body (storefront) and the content page. These are the earlier stub's answers. The keychain
+  guess     the keychain body and the local content page shape. The keychain
             entry is 32 zero bytes as a placeholder. It is not a real key.
 """
 
 from catalog import storefronts
+from lobby_content import LobbyContent
 
 LIGHTSWITCH_STATUSES = ("UP", "DOWN", "MAINTENANCE")  # inferred values
 CATALOG_OVERRIDE_ID = "a7f138b2e51945ffbfdacc1af0541053"  # from the earlier stub
@@ -24,9 +25,11 @@ KEYCHAIN_PLACEHOLDER = "00000000000000000000000000000000:AAAAAAAAAAAAAAAAAAAAAAA
 
 
 class ContentService:
-    def __init__(self, ctx):
+    def __init__(self, ctx, *, content_dir=None, content_file=None, public_origin=None):
         self.ctx = ctx
         self._status = {}
+        self.lobby_content = LobbyContent(content_dir=content_dir, content_file=content_file,
+                                          public_origin=public_origin)
 
     def set_service_status(self, service_id, status, message=""):
         """Set one service's lightswitch state (tests and maintenance drills)."""
@@ -65,7 +68,7 @@ class ContentService:
     def timeline(self, req, match):
         now = self.ctx.iso()
         state = {
-            "activeStorefronts": ["BRDailyStorefront"], "eventNamedWeights": {}, "seasonNumber": 12,
+            "activeStorefronts": ["BRWeeklyStorefront", "BRDailyStorefront"], "eventNamedWeights": {}, "seasonNumber": 12,
             "seasonTemplateId": "AthenaSeason:athenaseason12", "matchXpBonusPoints": 0,
             "seasonBegin": "2020-06-02T00:00:00Z", "seasonEnd": "2099-01-01T00:00:00.000Z",
             "seasonDisplayedEnd": "2099-01-01T00:00:00.000Z", "weeklyStoreEnd": "2099-01-01T00:00:00.000Z",
@@ -87,8 +90,10 @@ class ContentService:
         return 200, [KEYCHAIN_PLACEHOLDER]
 
     def content_page(self, req, match):
-        now = self.ctx.iso()
-        return 200, {"_title": "Fortnite Game", "_activeDate": now, "lastModified": now, "_locale": "en-US"}
+        return 200, self.lobby_content.page(self.ctx.iso(), req.query.get("locale"))
+
+    def content_asset(self, req, match):
+        return 200, self.lobby_content.asset(match.group(1))
 
     def datarouter(self, req, match):
         return 204, None
@@ -110,5 +115,7 @@ class ContentService:
                    name="storefront.keychain", status="guess")
         router.add("GET", r"/content/api/pages/fortnite-game", self.content_page,
                    name="content.page", status="guess")
+        router.add("GET", r"/content/api/assets/(.+)", self.content_asset,
+                   name="content.asset", status="guess")
         router.add("POST", r"/datarouter/api/v1/public/data", self.datarouter,
                    name="datarouter", status="observed")

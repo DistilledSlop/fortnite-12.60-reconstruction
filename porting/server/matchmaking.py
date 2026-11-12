@@ -92,9 +92,10 @@ def _configured_network_key():
 class MatchmakingService:
     """Ticket, websocket, session and key state for one backend instance."""
 
-    def __init__(self, ctx, accounts, state_step_sec=STATE_STEP_SEC, websocket_origin=None):
+    def __init__(self, ctx, accounts, state_step_sec=STATE_STEP_SEC, websocket_origin=None, gameservers=None):
         self.ctx = ctx
         self.accounts = accounts
+        self.gameservers = gameservers
         self.state_step_sec = state_step_sec
         origin = websocket_origin or f"wss://{MATCHMAKING_HOST}"
         parts = urlsplit(origin)
@@ -153,7 +154,7 @@ class MatchmakingService:
             raise ApiError(400, Err.INVALID_PAYLOAD, "The party exceeds the session capacity.")
         ticket_id = self.ctx.new_id("ticket")
         match_id = self.ctx.new_id("match")
-        session_id = self.ctx.new_id("session")
+        session_id = self.ctx.new_id("session") if self.gameservers is None else None
         claims = {  # [guess] contents of the opaque payload
             "ticketId": ticket_id,
             "matchId": match_id,
@@ -170,9 +171,13 @@ class MatchmakingService:
         ).decode("ascii")
         owner_name = self.accounts.display_name(account_id)
         with self._lock:
+            bucket = query.get("bucketId", "").split(":")
             self._tickets[ticket_id] = {"matchId": match_id, "sessionId": session_id,
-                                        "playerCount": len(players)}
-            self._sessions[session_id] = self._session_record(session_id, account_id, owner_name, players)
+                                        "playerCount": len(players), "players": players,
+                                        "playlist": bucket[3] if len(bucket) > 3 else "",
+                                        "buildUniqueId": bucket[0] if bucket else ""}
+            if self.gameservers is None:
+                self._sessions[session_id] = self._session_record(session_id, account_id, owner_name, players)
         body = {  # [observed] field names per section 3; values [guess]
             "serviceUrl": f"{self.websocket_origin}{MATCHMAKING_WS_PATH}/{ticket_id}",
             "ticketType": TICKET_TYPE,
@@ -196,6 +201,23 @@ class MatchmakingService:
             conn.close(1008, "unknown ticket")
             return
         for state in STATES:
+            if state == "ReadyCheck" and self.gameservers is not None:
+                # [guess] Keep the ticket queued until a live server can admit the party.
+                while True:
+                    with self._lock:
+                        if entry["sessionId"] is None:
+                            entry["sessionId"] = self.gameservers.reserve(entry["playlist"], entry["players"], entry["buildUniqueId"])
+                        assigned = entry["sessionId"]
+                    if assigned is not None:
+                        break
+                    try:
+                        conn.send_json(_message(STATUS_UPDATE_MESSAGE, state="Queued",
+                                              totalPlayers=entry["playerCount"], connectedPlayers=1,
+                                              queuedPlayers=entry["playerCount"], estimatedWaitSec=1,
+                                              ticketId=ticket_id, matchId=entry["matchId"]))
+                    except (local_ws.WebSocketClosed, OSError):
+                        return
+                    time.sleep(max(self.state_step_sec, 0.25))
             count = entry["playerCount"]
             queued = count if state in ("Queued", "ReadyCheck", "SessionAssignment") else 0
             fields = {
@@ -229,6 +251,8 @@ class MatchmakingService:
 
     def session(self, session_id):
         """Answer GET .../matchmaking/session/{id}. Returns (status, body) or None if unknown."""
+        if self.gameservers is not None:
+            return self.gameservers.session(session_id)
         with self._lock:
             record = self._sessions.get(session_id)
             if record is None:
@@ -244,6 +268,8 @@ class MatchmakingService:
         admission and the 204 response are local policies; this does not authenticate
         the accountId query parameter or prove the game-server connection succeeded.
         """
+        if self.gameservers is not None:
+            return self.gameservers.join(session_id, account_id)
         with self._lock:
             session = self._sessions.get(session_id)
             if session is None or account_id not in session["publicPlayers"] + session["privatePlayers"]:
@@ -256,6 +282,8 @@ class MatchmakingService:
         Use the dedicated server's configured key when present; otherwise create
         a random 32-byte key on first request. Keys are kept in memory only.
         """
+        if self.gameservers is not None:
+            return self.gameservers.session_key(account_id, session_id)
         with self._lock:
             session = self._sessions.get(session_id)
             if session is None or account_id not in session["publicPlayers"] + session["privatePlayers"]:

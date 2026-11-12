@@ -19,7 +19,7 @@ Evidence (see the 12.60 binary strings and DefaultEngine.ini):
             CLOSED joinability value.
   guess     the PATCH /parties/{partyId}/meta route, and the presence response shape.
 
-Not implemented: XMPP and the party chat channel, join requests that wait for approval
+Not implemented: party chat, join requests that wait for approval
 (confirm and reject answer 404 applicant_not_found because no request can exist),
 voice conferences
 (the /conferences/connection route is not registered, so it answers 404).
@@ -49,16 +49,33 @@ DEFAULT_CONFIG = {
 
 
 class PartyService:
-    def __init__(self, ctx, accounts, oauth):
+    def __init__(self, ctx, accounts, oauth, *, notify=None):
         self.ctx = ctx
         self.accounts = accounts
         self.oauth = oauth
+        self.notify = notify
+        self.notification_failures = 0
         self._parties = {}
         self._presence = {}
         self._subscriptions = {}
         self._pings = []
 
     # Helpers -----------------------------------------------------------
+
+    def _emit(self, party, kind, actor, recipients=None, **fields):
+        # Notification names and fields are inferred, not captured from the client.
+        if not self.notify:
+            return
+        event = {"type": "com.epicgames.social.party.notification.v0." + kind,
+                 "party_id": party["id"], "account_id": actor,
+                 "revision": party["revision"], **copy.deepcopy(fields)}
+        if recipients is None:
+            recipients = [member["account_id"] for member in party["members"]]
+        for recipient in set(recipients):
+            try:
+                self.notify(recipient, copy.deepcopy(event))
+            except Exception:
+                self.notification_failures += 1
 
     def _caller(self, req):
         return self.oauth.account_session(req).account_id
@@ -195,6 +212,7 @@ class PartyService:
         party["revision"] = 1
         self._parties[party_id] = party
         self._set_presence(caller, "Online", party_id)
+        self._emit(party, "MEMBER_JOINED", caller, member=party["members"][-1])
         return 200, copy.deepcopy(party)
 
     def get(self, req, match):
@@ -226,6 +244,7 @@ class PartyService:
         party["members"].append(self._new_member(account_id, self._connection_id(body, account_id), "MEMBER"))
         self._touch(party)
         self._set_presence(account_id, "Online", party_id)
+        self._emit(party, "MEMBER_JOINED", account_id, member=party["members"][-1])
         return 200, copy.deepcopy(party)
 
     def leave_or_kick(self, req, match):
@@ -238,17 +257,20 @@ class PartyService:
             captain = self._captain(party)
             if captain is None or captain["account_id"] != caller:
                 raise ApiError(403, Err.USER_OPERATION_FORBIDDEN, "Only the party captain can remove other members.")
+        recipients = [member["account_id"] for member in party["members"]]
         was_captain = self._member(party, account_id)["role"] == "CAPTAIN"
         party["members"] = [member for member in party["members"] if member["account_id"] != account_id]
         self._set_presence(account_id, "Offline", None)
         if not party["members"]:
             del self._parties[party_id]
             self._pings = [ping for ping in self._pings if ping["party_id"] != party_id]
+            self._emit(party, "MEMBER_LEFT", account_id, recipients=recipients)
             return 204, None
         if was_captain and self._captain(party) is None:
             oldest = min(party["members"], key=lambda member: member["joined_at"])
             oldest["role"] = "CAPTAIN"
         self._touch(party)
+        self._emit(party, "MEMBER_LEFT", account_id, recipients=recipients)
         return 204, None
 
     def _find_invite(self, party, account_id):
@@ -285,6 +307,8 @@ class PartyService:
         self._touch(party)
         if body.get("sendPing") is True:
             self._add_ping(caller, target, party_id, meta)
+            self._emit(party, "PING", caller, recipients=[target], meta=meta)
+        self._emit(party, "INITIAL_INVITE", caller, recipients=[target], invite=party["invites"][-1])
         return 204, None
 
     def decline_invite(self, req, match):
@@ -297,6 +321,7 @@ class PartyService:
             if invite["account_id"] == account_id and invite["sent_by"] == sender:
                 party["invites"].remove(invite)
                 self._touch(party)
+                self._emit(party, "INVITE_DECLINED", account_id, recipients=[sender])
                 return 204, None
         raise ApiError(404, Err.INVITE_NOT_FOUND, "The invite was not found.")
 
@@ -318,6 +343,7 @@ class PartyService:
         member["revision"] += 1
         member["updated_at"] = self.ctx.iso()
         self._touch(party)
+        self._emit(party, "MEMBER_STATE_UPDATED", account_id, member=member)
         return 204, None
 
     def party_meta(self, req, match):
@@ -334,6 +360,7 @@ class PartyService:
             party["meta"].pop(key, None)
         party["meta"].update(updates)
         self._touch(party)
+        self._emit(party, "PARTY_UPDATED", caller, config=party["config"], meta=party["meta"])
         return 204, None
 
     def promote(self, req, match):
@@ -349,6 +376,7 @@ class PartyService:
         for member in party["members"]:
             member["role"] = "CAPTAIN" if member is target else "MEMBER"
         self._touch(party)
+        self._emit(party, "MEMBER_NEW_CAPTAIN", account_id)
         return 204, None
 
     def applicant_decision(self, req, match):
@@ -375,6 +403,7 @@ class PartyService:
         member["updated_at"] = self.ctx.iso()
         self._set_presence(account_id, "Offline", None)
         self._touch(party)
+        self._emit(party, "MEMBER_STATE_UPDATED", account_id, member=member)
         return 204, None
 
     # User and ping handlers -------------------------------------------
@@ -424,7 +453,9 @@ class PartyService:
         if party is None:
             raise ApiError(403, Err.USER_OPERATION_FORBIDDEN, "The sender must be in a party to send a ping.")
         body = req.json_object()
-        self._add_ping(sender, target, party["id"], self._dict(body.get("meta"), "meta"))
+        meta = self._dict(body.get("meta"), "meta")
+        self._add_ping(sender, target, party["id"], meta)
+        self._emit(party, "PING", sender, recipients=[target], meta=meta)
         return 204, None
 
     # Presence handlers -------------------------------------------------
