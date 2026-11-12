@@ -133,6 +133,11 @@ Open:
   parts are the login/spawn pipeline (plan D1: `PostLogin`, player-state setup, team, loadout) and are the likely next
   fix.
 
+Correction (later 2026-11-12, see `G6_CONTROLLER_PROBE_FIX.md`): the memory probe `tools/pc_probe.py` found no
+controller in runs 6 to 9 because its vtable addresses were not table starts. The quickbar creator is slot `+0x1a98`
+(not `+0x1d00`), called from the base `OnReadyToStartMatch` (`0x14239ccf0`). The per-tick driver `0x1423bc750` has
+two gates (`[+0x220]`, bit 0x20 of `[+0x658]`) before the check `0x1423cc220` runs. Static analysis only.
+
 Tooling: `tools/vanilla_play_run.sh <seconds> [client args...]` now forwards extra client arguments (for example
 `"-LogCmds=LogFort VeryVerbose"`). Use at least 420 s; extra logging slows the client's start so 300 s ends right after
 the join. Decompiles used `/opt/fortnite/local-model-package/scripts/evidence.py capture` on the addresses above.
