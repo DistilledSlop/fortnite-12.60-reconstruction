@@ -96,6 +96,75 @@ class GiftingService:
             if db is not None:
                 db.close()  # Rolls back an uncommitted transaction on errors.
 
+    def _recipient_failure(self, sender, recipient, folded, tx):
+        """Shared local policy; callers choose the protocol error mapping."""
+        if self.accounts.get(recipient) is None:
+            return 'missing'
+        if (sender == recipient or self.friends.is_blocked(sender, recipient)
+                or not self.friends.are_friends(sender, recipient)):
+            return 'unavailable'
+        core, athena = tx(recipient, 'common_core'), tx(recipient, 'athena')
+        if core.profile['stats']['attributes'].get('allowed_to_receive_gifts') is not True:
+            return 'declined'
+        owned = {item['templateId'].casefold() for item in athena.profile['items'].values()}
+        return 'owned' if owned.intersection(folded) else None
+
+    def eligibility(self, req, match):
+        # Authentication and error mappings are local policy. The subcatalog
+        # error strings themselves are observed in the client.
+        sender = self.profiles.oauth.account_session(req).account_id
+        recipient, offer_id = match.group(1, 2)
+        offer = get_offer(offer_id)
+        if not offer or not offer.get('giftInfo', {}).get('bIsEnabled'):
+            raise ApiError(400, Err.INVALID_PAYLOAD, 'Offer cannot be gifted.')
+        templates = self._offer_templates(offer)
+        db = sqlite3.connect(self.profiles._database) if self.profiles._database is not None else None
+        try:
+            if db is not None:
+                db.execute('BEGIN')
+            txs = {}
+            def tx(account, pid):
+                key = (account, pid)
+                if key not in txs:
+                    txs[key] = ProfileTx(self.ctx, self._snapshot(account, pid, db))
+                return txs[key]
+            failure = self._recipient_failure(sender, recipient, {t.casefold() for t in templates}, tx)
+        finally:
+            if db is not None:
+                db.close()
+        if failure == 'missing':
+            raise ApiError(404, Err.ACCOUNT_NOT_FOUND, 'Recipient account was not found.')
+        if failure in ('declined', 'owned'):
+            code = 'receiver_will_not_accept_gifts' if failure == 'declined' else 'purchase_not_allowed'
+            raise ApiError(400, 'errors.com.epicgames.modules.gamesubcatalog.' + code,
+                           'Recipient cannot receive this gift.')
+        if failure:
+            raise ApiError(400, Err.INVALID_PAYLOAD, 'Recipient is unavailable for gifting.')
+        return 204, None
+
+    def register(self, router):
+        router.add('GET', r'(?:/fortnite)?/api/storefront/v2/gift/check_eligibility/recipient/([^/]+)/offer/([^/]+)',
+                   self.eligibility, name='gift.recipient_eligibility', status='inferred')
+
+    @staticmethod
+    def _offer_templates(offer):
+        grants = offer.get('itemGrants')
+        prefixes = {p.casefold() for p in CATEGORY_BY_PREFIX}
+        if not isinstance(grants, list) or not grants:
+            raise _invalid('Offer has no cosmetic grants.')
+        templates = []
+        for grant in grants:
+            if not isinstance(grant, dict):
+                raise _invalid('Invalid cosmetic grant.')
+            template, quantity = grant.get('templateId'), grant.get('quantity')
+            if (not isinstance(template, str) or ':' not in template or not template.split(':', 1)[1]
+                    or template.split(':', 1)[0].casefold() not in prefixes or type(quantity) is not int or quantity != 1):
+                raise _invalid('Invalid cosmetic grant.')
+            templates.append(template)
+        if len({t.casefold() for t in templates}) != len(templates):
+            raise _invalid('Duplicate cosmetic grant.')
+        return templates
+
     def _gift(self, ctx, tx):
         offer = get_offer(ctx.str_field('offerId'))
         recipients = ctx.list_field('receiverAccountIds')
@@ -124,32 +193,15 @@ class GiftingService:
         price = prices[0].get('finalPrice')
         if isinstance(price, bool) or not isinstance(price, int) or price < 0 or expected != price * len(recipients):
             raise _invalid('Offer price does not match expectedTotalPrice.')
-        grants = offer.get('itemGrants')
-        prefixes = {p.casefold() for p in CATEGORY_BY_PREFIX}
-        if not isinstance(grants, list) or not grants:
-            raise _invalid('Offer has no cosmetic grants.')
-        templates = []
-        for grant in grants:
-            if not isinstance(grant, dict):
-                raise _invalid('Invalid cosmetic grant.')
-            template, quantity = grant.get('templateId'), grant.get('quantity')
-            if (not isinstance(template, str) or ':' not in template or not template.split(':', 1)[1]
-                    or template.split(':', 1)[0].casefold() not in prefixes or type(quantity) is not int or quantity != 1):
-                raise _invalid('Invalid cosmetic grant.')
-            templates.append(template)
-        folded = [t.casefold() for t in templates]
-        if len(set(folded)) != len(folded):
-            raise _invalid('Duplicate cosmetic grant.')
+        templates = self._offer_templates(offer)
+        folded = {t.casefold() for t in templates}
         for recipient in recipients:
-            if (self.accounts.get(recipient) is None or self.friends.is_blocked(ctx.account_id, recipient)
-                    or not self.friends.are_friends(ctx.account_id, recipient)):
-                raise _invalid('Recipient is unavailable for gifting.')
-            core, athena = tx(recipient, 'common_core'), tx(recipient, 'athena')
-            if core.profile['stats']['attributes'].get('allowed_to_receive_gifts') is not True:
-                raise _invalid('Recipient cannot receive gifts.')
-            owned = {item['templateId'].casefold() for item in athena.profile['items'].values()}
-            if owned.intersection(folded):
-                raise _invalid('A recipient already owns a cosmetic in this offer.')
+            failure = self._recipient_failure(ctx.account_id, recipient, folded, tx)
+            if failure:
+                raise _invalid({'missing': 'Recipient is unavailable for gifting.',
+                                'unavailable': 'Recipient is unavailable for gifting.',
+                                'declined': 'Recipient cannot receive gifts.',
+                                'owned': 'A recipient already owns a cosmetic in this offer.'}[failure])
         _debit_local_currency(ctx, expected)
         events = []
         for recipient in recipients:

@@ -339,3 +339,29 @@ session, with latest shared time and deterministic account-ID tie-breaking.
 Blocking filters either direction. These ordering/filtering rules and the
 one-registration-per-match requirement are explicit local policies. Nonempty
 client recent-player rendering remains unverified.
+
+## Recipient gift eligibility
+
+Builder `0x144df16e0` issues GET to the configured service base plus
+`/api/storefront/v2/gift/check_eligibility/recipient/{recipientId}/offer/{offerId}`;
+no query/body is added. The base is dynamic, so accepting both bare and
+`/fortnite`-prefixed paths is a local compatibility policy. Authentication setup
+was outside this recovery; the backend requires a local OAuth account session.
+Reader `0x140c2def0` explicitly accepts HTTP 204 without a response body.
+It also accepts 200 through 206, requiring valid JSON when Content-Type is JSON.
+Success callback `0x144df13e0` reads no eligibility-specific response fields.
+
+Error callback `0x144df1b80` recognizes 404 as not a Fortnite player and the
+subcatalog errors `receiver_will_not_accept_gifts` and `purchase_not_allowed`
+as declined and already owned/ineligible. The generic reader extracts top-level
+`errorCode`, `errorMessage` and optional numeric `numericErrorCode`. The backend
+maps recipient absence, receive-gifts preference and existing ownership to
+these client-recognized cases; the mapping and friend/block policy are local.
+It shares those recipient predicates with the final gift transaction, which
+rechecks them before debit/grant. The endpoint itself has no profile, currency
+or graph writes. Private capture groups are `720719df4ed241929b5891d4209a15e0`,
+`31eae107de844affbabf48d2f2c21297` and `23d529ad9cab41e78ef072eef5e4f628`.
+
+This does not resolve sender MFA/eligibility or validate the original gifting
+UI: the local accounts still report `tfaEnabled: false` without an enrollment
+mechanism, and the client gift button remains gated.

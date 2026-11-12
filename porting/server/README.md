@@ -478,8 +478,13 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
 - **Content parity.** The default lobby notice is locally authored. A supplied
   CMS snapshot and images can be served; historical news/calendar rotations and
   all affected client screens remain unverified.
-- **Commerce and campaign.** Local cosmetic gifting is implemented. Real payments,
-  receipts, campaign loadouts and homebase remain unimplemented.
+- **Commerce and campaign.** Local cosmetic gifting and the recipient-eligibility
+  GET are implemented. The latter returns an empty 204, reads profile snapshots
+  without creating or mutating profiles, and shares recipient predicates with the
+  final transaction. The client gift screen still stops at its 2FA requirement:
+  local username accounts have no MFA enrollment. Sender eligibility and the full
+  send/receive/claim UI remain open; `tfaEnabled` is not changed to bypass them.
+  Real payments, receipts, campaign loadouts and homebase remain unimplemented.
 - **Device and external auth.** Local username, client credentials, exchange code
   and refresh token flows exist; external providers and device auth do not.
 - **TLS.** HTTP client probes use the documented diagnostic TLS patch. An isolated,

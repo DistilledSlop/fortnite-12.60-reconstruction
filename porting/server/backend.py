@@ -90,7 +90,7 @@ class Backend:
             matchmaking_options["state_step_sec"] = state_step_sec
         self.matchmaking = MatchmakingService(self.ctx, self.accounts, **matchmaking_options)
         self.router = Router()
-        for service in (self.oauth, self.accounts, self.profiles, self.party, self.friends, self.content,
+        for service in (self.oauth, self.accounts, self.profiles, self.profiles.gifting, self.party, self.friends, self.content,
                         self.cloud, self.frontend, self.chat, self.matchmaking, self.gameservers,
                         self.gameplay):
             service.register(self.router)
