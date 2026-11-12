@@ -317,8 +317,10 @@ Member updates read `account_id`, `account_dn`, `member_state_removed`,
 The updated/overrode fields require JSON objects, not strings containing JSON.
 The backend now emits submitted metadata deltas under those names and uses
 the member revision for member events. Snapshot copies prevent later mutations
-from changing queued messages. Original-client verification of these corrected
-messages is pending; other party event types remain inferred.
+from changing queued messages. A subsequent original-client diagnostic decoded
+the correct captain, max members=16 and nonempty party metadata; its member-state
+event decoded nonempty member metadata and revision=1. This validates decoding
+in one client, not two-client party behavior. Other event types remain inferred.
 
 Privacy decoder `0x140a46060` recognizes OPEN, INVITE_ONLY and INVITE_AND_FORMER.
 Handler `0x140c253b0` maps OPEN to permission enum 3 and the other two to 0.
@@ -337,8 +339,10 @@ Private capture index: `out/recent-players-contract-0dc3119a69c44e8ebb70a5319ac4
 The backend now derives entries from committed match-result pairs sharing a
 session, with latest shared time and deterministic account-ID tie-breaking.
 Blocking filters either direction. These ordering/filtering rules and the
-one-registration-per-match requirement are explicit local policies. Nonempty
-client recent-player rendering remains unverified.
+one-registration-per-match requirement are explicit local policies. A subsequent
+original-client diagnostic displayed one recent player with the expected display
+name. That check used two explicitly seeded, zero-XP result fixtures in the private
+probe state; it does not establish real match-result/native integration.
 
 ## Recipient gift eligibility
 

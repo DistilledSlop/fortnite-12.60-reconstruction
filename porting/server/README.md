@@ -439,8 +439,9 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   accepting the observed configuration. A subsequent diagnostic returned 200
   for creation and 204 for the client's nested root PATCH and member-meta PATCH.
   That run recognized party notifications but decoded some configuration and
-  metadata fields as defaults. The update payloads now use recovered flat fields
-  and member revisions; their affected client flow still needs verification.
+  metadata fields as defaults. After correcting flat fields and member revisions,
+  the next original-client log decoded the captain, max members=16, party metadata
+  and member metadata with member revision=1. Two-client behavior remains open.
   The client sends
   unqualified stanza fragments, which the service now accepts alongside namespaced
   stanzas. Direct chat relays between online local friends or party members;
@@ -459,8 +460,9 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   persist per account. Recent players now come from co-players with committed
   results in the same registered match; blocked peers are filtered. This assumes
   one match per registration, so a new round must register a new session. The
-  nonempty recent-player client UI still needs verification. Suggestions remain
-  empty. Parties are process-local, with approval requests and voice conferences
+  nonempty recent-player client UI displayed the expected account using explicitly
+  seeded zero-XP diagnostic results. Actual gameplay-driven encounters remain
+  pending native integration. Suggestions remain empty. Parties are process-local, with approval requests and voice conferences
   still unimplemented.
   Settings PUT/response follows an independent [2019 client interface](https://gist.github.com/Doc94/4dff32bfba0c9036166bc3244ea55e55);
   `acceptInvites` and `mutualPrivacy` enum values follow a [later client implementation](https://pkg.go.dev/github.com/8h9x/fortgo/friends).
