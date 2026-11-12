@@ -44,3 +44,20 @@ repeatable 1,000-V-Bucks pack. A purchase increased the displayed balance from
 750 to 1,750; after restarting the client, another purchase succeeded and showed
 an acquired 1,000 V-Bucks reward with a Claim button. The pack adds local test
 currency only and does not use a payment provider.
+
+On 2026-11-12, an isolated `LobbyG1Probe` account opened the reconstructed
+May 20 release-day catalog. Featured offers rendered as separate cards with
+their names, artwork and archived prices. Buying Lace for 1,500 returned 200,
+displayed an Items Acquired screen for Lace and Stitches, marked both owned,
+and reduced the displayed and persisted balance from 3,000 to 1,500. The
+client's Equip buttons sent successful locker updates; the persisted active
+Character and Backpack slots contained Lace and Stitches. Lace's Edit Style
+screen showed both initial styles. Selecting the second style and saving
+sent a successful locker update and persisted Material Mat2 with both styles
+owned. Restart UI verification remains pending. The 3D preview area was black, so this
+does not establish character rendering. Screenshots and redacted request
+records are under ignored `porting/generated/g1-isolated-probe/`.
+
+The gift button displayed “2FA required to send gifts” because the local
+account response has `tfaEnabled: false`. Backend gift transactions passing
+tests do not establish that this client gift flow is accessible.

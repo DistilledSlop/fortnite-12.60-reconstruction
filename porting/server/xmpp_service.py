@@ -79,6 +79,12 @@ class XmppService:
             return
         self._enqueue(c, text)
 
+    def _iq_response(self, c, iqid, kind, payload=''):
+        # Server replies use authenticated stream state, never request addresses.
+        recipient = ' to=%s' % quoteattr(c.jid) if c.jid else ''
+        c.last_sent = self._enqueue(c, '<iq xmlns="jabber:client" type=%s id=%s from=%s%s>%s</iq>' %
+                                    (quoteattr(kind), iqid, quoteattr(c.domain), recipient, payload))
+
     def _disconnect(self, c):
         # shutdown interrupts both the reader and a writer blocked on a slow peer;
         # never take the WebSocket write lock from an HTTP request thread.
@@ -228,7 +234,7 @@ class XmppService:
         # The original client also sends standalone, unqualified stanza fragments.
         if c.phase in ('bind', 'ready') and root.tag in (tag(CLIENT, 'iq'), 'iq'):
             iqid = quoteattr(root.get('id', ''))
-            if c.phase == 'ready' and root.get('to') and self._room_iq(c, root, iqid):
+            if c.phase == 'ready' and root.get('to') and root.get('to') != c.domain and self._room_iq(c, root, iqid):
                 return True
             bind = root.find(tag(BIND, 'bind'))
             if c.phase == 'bind' and root.get('type') == 'set' and bind is not None:
@@ -240,30 +246,30 @@ class XmppService:
                     duplicates = [other for other in self._connections if other is not c and other.jid == jid]
                     c.jid = jid
                     c.phase = 'ready'
-                    c.last_sent = self._enqueue(c, '<iq xmlns="jabber:client" type="result" id=%s><bind xmlns="%s"><jid>%s</jid></bind></iq>' % (iqid, BIND, escape(c.jid)))
+                    self._iq_response(c, iqid, 'result', '<bind xmlns="%s"><jid>%s</jid></bind>' % (BIND, escape(c.jid)))
                 for other in duplicates:
                     self._disconnect(other)
                 return True
             if c.phase == 'ready' and root.get('type') == 'set' and root.find(tag(SESSION, 'session')) is not None:
-                c.last_sent = self._enqueue(c, '<iq xmlns="jabber:client" type="result" id=%s/>' % iqid)
+                self._iq_response(c, iqid, 'result')
                 return True
             if c.phase == 'ready' and root.get('type') == 'get' and len(root) == 1:
                 child = root[0]
                 if child.tag == tag(PING, 'ping'):
-                    c.last_sent = self._enqueue(c, '<iq xmlns="jabber:client" type="result" id=%s/>' % iqid)
+                    self._iq_response(c, iqid, 'result')
                     return True
                 if child.tag == tag(ROSTER, 'query'):
                     friends, _, _, _ = self.friends._snapshot(c.account)
                     items = ''.join('<item jid=%s subscription="both"/>' % quoteattr(account + '@' + c.domain)
                                     for account, _ in friends if not self.friends.is_blocked(c.account, account))
-                    c.last_sent = self._enqueue(c, '<iq xmlns="jabber:client" type="result" id=%s><query xmlns="%s">%s</query></iq>' % (iqid, ROSTER, items))
+                    self._iq_response(c, iqid, 'result', '<query xmlns="%s">%s</query>' % (ROSTER, items))
                     return True
                 if child.tag == tag(DISCO, 'query') and not child.get('node'):
-                    c.last_sent = self._enqueue(c, '<iq xmlns="jabber:client" type="result" id=%s><query xmlns="%s"><identity category="server" type="im"/><feature var="%s"/><feature var="%s"/></query></iq>' % (iqid, DISCO, DISCO, PING))
+                    self._iq_response(c, iqid, 'result', '<query xmlns="%s"><identity category="server" type="im"/><feature var="%s"/><feature var="%s"/></query>' % (DISCO, DISCO, PING))
                     return True
             if root.get('type') in ('result', 'error'):
                 return True
-            c.last_sent = self._enqueue(c, '<iq xmlns="jabber:client" type="error" id=%s><error type="cancel"><service-unavailable xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/></error></iq>' % iqid)
+            self._iq_response(c, iqid, 'error', '<error type="cancel"><service-unavailable xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/></error>')
             return True
         if c.phase == 'ready' and root.tag in (tag(CLIENT, 'presence'), 'presence'):
             kind = root.get('type', 'available')
@@ -405,7 +411,7 @@ class XmppService:
             return False
         if not resolved or resolved[1] or (query.tag == tag(MUC_OWNER, 'query') and
                 (root.get('type') != 'set' or resolved[0] not in c.rooms or self.party._captain(resolved[2]) != self.party._member(resolved[2], c.account))):
-            self._send(c, '<iq xmlns="jabber:client" type="error" id=%s><error type="auth"><forbidden xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/></error></iq>' % iqid)
+            self._iq_response(c, iqid, 'error', '<error type="auth"><forbidden xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/></error>')
             return True
         payload = '<query xmlns="%s"><identity category="conference" type="text"/><feature var="%s"/></query>' % (DISCO, MUC) if query.tag == tag(DISCO, 'query') and root.get('type') == 'get' else ''
         self._send(c, '<iq xmlns="jabber:client" from=%s to=%s type="result" id=%s>%s</iq>' % (quoteattr(resolved[0]), quoteattr(c.jid), iqid, payload))

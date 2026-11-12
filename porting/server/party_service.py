@@ -33,7 +33,7 @@ PARTY_PREFIX = "/party/api/v1/Fortnite"
 PRESENCE_PREFIX = "/presence/api/v1/_"
 # inferred: the build-id key that party join compares. Absent from the binary as a plain string.
 BUILD_KEY = "urn:epic:cfg:build-id_s"
-JOINABILITY = ("OPEN", "CLOSED")  # inferred values
+JOINABILITY = ("OPEN", "CLOSED", "INVITE_AND_FORMER")  # last value observed in 12.60 create
 MAX_PARTY_SIZE = 16  # guess: default maxSize
 INVITE_TTL_SEC = 14400  # guess
 PING_TTL_SEC = 60  # guess
@@ -125,16 +125,19 @@ class PartyService:
             "lastOnline": self.ctx.iso(),
         }
 
-    def _new_member(self, account_id, connection, role):
+    def _new_member(self, account_id, join_info, role):
         now = self.ctx.iso()
+        connection = self._dict(join_info.get("connection"), "connection")
+        member_meta = self._dict(join_info.get("meta"), "join_info.meta")
+        connection_meta = self._dict(connection.get("meta"), "connection.meta")
         return {
             "account_id": account_id,
-            "meta": {},
+            "meta": copy.deepcopy(member_meta),
             "connections": [{
-                "id": connection,
+                "id": self._connection_id(join_info, account_id),
                 "connected_at": now,
                 "updated_at": now,
-                "meta": {},
+                "meta": copy.deepcopy(connection_meta),
                 "yield_leadership": False,
             }],
             "revision": 0,
@@ -161,10 +164,12 @@ class PartyService:
     def _config(self, value):
         config = dict(DEFAULT_CONFIG)
         for key, item in self._dict(value, "config").items():
-            if key in DEFAULT_CONFIG:
+            if key in DEFAULT_CONFIG or key == "join_confirmation":
                 config[key] = item
         if config["joinability"] not in JOINABILITY:
-            raise ApiError(400, Err.INVALID_PAYLOAD, "joinability must be OPEN or CLOSED.")
+            raise ApiError(400, Err.INVALID_PAYLOAD, "Invalid joinability.")
+        if "join_confirmation" in config and not isinstance(config["join_confirmation"], bool):
+            raise ApiError(400, Err.INVALID_PAYLOAD, "join_confirmation must be a boolean.")
         size = config["maxSize"]
         if isinstance(size, bool) or not isinstance(size, int) or not 1 <= size <= MAX_PARTY_SIZE:
             raise ApiError(400, Err.INVALID_PAYLOAD, f"maxSize must be between 1 and {MAX_PARTY_SIZE}.")
@@ -208,7 +213,7 @@ class PartyService:
             "members": [],
             "invites": [],
         }
-        party["members"].append(self._new_member(caller, self._connection_id(join_info, caller), "CAPTAIN"))
+        party["members"].append(self._new_member(caller, join_info, "CAPTAIN"))
         party["revision"] = 1
         self._parties[party_id] = party
         self._set_presence(caller, "Online", party_id)
@@ -237,11 +242,12 @@ class PartyService:
         expected_build = party["meta"].get(BUILD_KEY)
         if expected_build is not None and self._dict(body.get("meta"), "meta").get(BUILD_KEY) != expected_build:
             raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "The build does not match this party.")
-        if party["config"]["joinability"] == "CLOSED" and invite is None:
-            raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "The party is closed and no invite exists.")
+        if (party["config"]["joinability"] != "OPEN" or party["config"].get("join_confirmation", False)) and invite is None:
+            raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "An invite is required to join this party.")
+        member = self._new_member(account_id, body, "MEMBER")
         if invite is not None:
             party["invites"].remove(invite)
-        party["members"].append(self._new_member(account_id, self._connection_id(body, account_id), "MEMBER"))
+        party["members"].append(member)
         self._touch(party)
         self._set_presence(account_id, "Online", party_id)
         self._emit(party, "MEMBER_JOINED", account_id, member=party["members"][-1])

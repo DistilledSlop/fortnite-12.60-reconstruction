@@ -150,6 +150,30 @@ class XmppTests(unittest.TestCase):
         peer.send('<iq xmlns="jabber:client" type="get" id="unknown"><query xmlns="urn:unknown"/></iq>')
         self.assertEqual(ET.fromstring(peer.recv()).get('type'), 'error')
 
+    def test_iq_reply_addresses_use_authenticated_stream(self):
+        peer = self.peer()
+        jid = self.a + '@example.test/client'
+        bind = ET.fromstring(peer.login(self.a, self.at, unqualified=True))
+        self.assertEqual((bind.get('id'), bind.get('from'), bind.get('to')), ('bind', 'example.test', jid))
+        requests = (
+            ('set', 'session', '<session xmlns="urn:ietf:params:xml:ns:xmpp-session"/>', 'result'),
+            ('get', 'ping', '<ping xmlns="urn:xmpp:ping"/>', 'result'),
+            ('get', 'roster', '<query xmlns="jabber:iq:roster"/>', 'result'),
+            ('get', 'disco', '<query xmlns="http://jabber.org/protocol/disco#info"/>', 'result'),
+            ('get', 'unknown', '<query xmlns="urn:unknown"/>', 'error'),
+        )
+        for kind, iqid, payload, response in requests:
+            with self.subTest(iqid=iqid):
+                destination = 'example.test' if iqid == 'disco' else 'foreign.test'
+                peer.send('<iq type="' + kind + '" id="' + iqid + '" from="forged@foreign.test/x" to="' + destination + '">' + payload + '</iq>')
+                result = ET.fromstring(peer.recv())
+                self.assertEqual((result.get('id'), result.get('type'), result.get('from'), result.get('to')),
+                                 (iqid, response, 'example.test', jid))
+        peer.send('<iq type="get" id="foreign-disco" to="foreign.test"><query xmlns="http://jabber.org/protocol/disco#info"/></iq>')
+        result = ET.fromstring(peer.recv())
+        self.assertEqual((result.get('id'), result.get('type'), result.get('from'), result.get('to')),
+                         ('foreign-disco', 'error', 'example.test', jid))
+
     def test_unqualified_bind_session_and_presence(self):
         with self.friends._lock, self.friends._db:
             x, y = sorted((self.a, self.b))

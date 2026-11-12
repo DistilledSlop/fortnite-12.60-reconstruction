@@ -152,8 +152,10 @@ Frontend readiness. Together with the Curl and AppES diagnostics, this let
 the original client reach WSS open, SASL authentication, stream reopen, and
 bind IQ. After accepting its unqualified stanza fragments, the next probe
 completed binding, session setup and presence. The client logged XMPP
-`LoggedIn` and created its lobby party. Social notification and chat UI flows
-remain unverified. An earlier run that applied the WSS
+`LoggedIn`. Its initial party-success callback was misleading: HTTP capture
+showed create-party returning 400 for the client's joinability value, followed
+by retries in a disconnected party state. Party creation, social notification
+and chat UI flows remain unverified. An earlier run that applied the WSS
 diagnostic before login exited with process status 5; causation is unproven.
 This progress validates more of the backend protocol path while **secure
 trust and G11 remain OPEN**. The bypass is not the final solution.

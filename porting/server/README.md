@@ -281,8 +281,11 @@ bling receive their two initially unlocked Material styles from the cooked
 ItemVariants definitions. Purchase-to-equip and gifting persistence have backend
 tests. A 2026-11-12 original-client diagnostic rendered the new Featured cards
 with their names, artwork and prices. Each offer uses a separate card; the exact
-historical grouping into cycling cards has not been recovered. The new items'
-purchase and style UI flows still require verification. This fixed rotation
+historical grouping into cycling cards has not been recovered. The client
+purchased Lace and Stitches, displayed both rewards and equipped both; the
+persisted wallet and locker matched. Lace's second style was selected and
+saved through the original locker UI. Restart UI verification and gifting
+remain pending. This fixed rotation
 does not advance with the current date; catalog and calendar refresh windows
 expire at the next UTC midnight. PurchaseCatalogEntry
 checks the catalog price and owned items, deducts the local balance, and grants the
@@ -431,7 +434,9 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
 - **Social compatibility.** XMPP supports SASL PLAIN using local OAuth sessions,
   resource binding, roster reads, presence, ping and queued JSON notifications.
   A November 12 original-client diagnostic completed authentication, binding,
-  session setup and presence, then created its lobby party. The client sends
+  session setup and presence. Party creation then failed because the backend
+  rejected the client's joinability value; the client reported initial success
+  while keeping the party disconnected and retrying. The client sends
   unqualified stanza fragments, which the service now accepts alongside namespaced
   stanzas. Direct chat relays between online local friends or party members;
   blocks are enforced and offline messages are dropped. Full JIDs address one

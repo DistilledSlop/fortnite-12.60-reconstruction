@@ -852,6 +852,41 @@ class PartyTests(ServiceTestCase):
         self.assertError(jcall(self.base, "GET", f"{PARTY}/parties/{'0' * 32}", token=self.b),
                          404, Err.PARTY_NOT_FOUND)
 
+    def test_observed_create_config_and_join_info_are_preserved(self):
+        body = {"config": {"joinability": "INVITE_AND_FORMER", "discoverability": "INVITED_ONLY",
+                           "join_confirmation": True},
+                "meta": {"party": "value"},
+                "join_info": {"connection": {"id": "captain-connection", "meta": {"platform": "PC"}},
+                              "meta": {"member": "value"}}}
+        status, party, _ = jcall(self.base, "POST", f"{PARTY}/parties", token=self.a, body=body)
+        self.assertEqual(status, 200)
+        for key, value in body["config"].items():
+            self.assertEqual(party["config"][key], value)
+        member = party["members"][0]
+        self.assertEqual(member["meta"], body["join_info"]["meta"])
+        self.assertEqual(member["connections"][0]["id"], "captain-connection")
+        self.assertEqual(member["connections"][0]["meta"], {"platform": "PC"})
+        pid = party["id"]
+        join = f"{PARTY}/parties/{pid}/members/{self.b_id}/join"
+        self.assertError(jcall(self.base, "POST", join, token=self.b, body={}),
+                         403, Err.PARTY_JOIN_FORBIDDEN)
+        self.assertEqual(call(self.base, "POST", f"{PARTY}/parties/{pid}/invites/{self.b_id}",
+                              token=self.a, body={})[0], 204)
+        status, joined, _ = jcall(self.base, "POST", join, token=self.b,
+                                  body={"meta": {"member": "bee"}})
+        self.assertEqual(status, 200)
+        self.assertEqual(joined["members"][1]["meta"], {"member": "bee"})
+
+    def test_confirmation_and_invalid_create_fields_fail_closed(self):
+        for config in ({"joinability": "UNKNOWN"}, {"join_confirmation": "true"}):
+            self.assertError(jcall(self.base, "POST", f"{PARTY}/parties", token=self.a,
+                                   body={"config": config}), 400, Err.INVALID_PAYLOAD)
+        self.assertError(jcall(self.base, "POST", f"{PARTY}/parties", token=self.a,
+                               body={"join_info": {"meta": []}}), 400, Err.INVALID_PAYLOAD)
+        pid = create_party(self.base, self.a, config={"joinability": "OPEN", "join_confirmation": True})["id"]
+        self.assertError(jcall(self.base, "POST", f"{PARTY}/parties/{pid}/members/{self.b_id}/join",
+                               token=self.b, body={}), 403, Err.PARTY_JOIN_FORBIDDEN)
+
     def test_join_adds_a_member_and_bumps_revision(self):
         party = create_party(self.base, self.a)
         pid = party["id"]
