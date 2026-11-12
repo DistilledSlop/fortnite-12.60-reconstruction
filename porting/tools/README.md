@@ -40,3 +40,12 @@ Verdicts: `real`, `mixed` (trivial `_Validate` + real `_Implementation`, treat a
 `inline` (the exec thunk is the body), `STUB` (empty, must be re-created),
 `STUB_base_real_override` (empty in the declaring class, real in a subclass).
 Results and designs: `porting/server_systems/D5-stubbed-rpcs-and-recreation.md`.
+
+## Who calls this address (added 2026-11-11)
+
+    python3 -I porting/tools/callers.py 0xADDR [0xADDR...]
+
+Lists direct `call`/`jmp` references and data (vtable) references. No direct
+callers plus a data reference means the function is a virtual. A server
+function with no caller from the expected path means the calling code was
+compiled out (example: `RemoveFromAlivePlayers`, see D6 card).
