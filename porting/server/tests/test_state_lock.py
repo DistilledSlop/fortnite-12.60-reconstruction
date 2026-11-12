@@ -1,5 +1,15 @@
 """Process-level ownership of persistent probe-server state."""
 
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
+
 import subprocess
 import sys
 import tempfile
@@ -7,7 +17,7 @@ import unittest
 from pathlib import Path
 
 
-SERVER = Path(__file__).with_name("probe_server.py")
+SERVER = Path(__file__).resolve().parent.parent / "probe_server.py"
 
 
 class StateLockTests(unittest.TestCase):

@@ -1,6 +1,19 @@
 """Exchange-code lifecycle and local-client compatibility over HTTP."""
 
-from test_services import ServiceTestCase, jcall, LOCAL
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
+
+if __package__:
+    from .test_services import ServiceTestCase, jcall, LOCAL
+else:
+    from test_services import ServiceTestCase, jcall, LOCAL
 from api_common import Err
 
 

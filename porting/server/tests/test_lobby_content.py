@@ -1,16 +1,28 @@
 #!/usr/bin/env python3
 """HTTP and configuration coverage for the local CMS service."""
+
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
 import json
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
 from api_common import Context, Router
 from backend import Backend
 from content_service import ContentService
-from test_services import LiveServer, call, jcall
+if __package__:
+    from .test_services import LiveServer, call, jcall
+else:
+    from test_services import LiveServer, call, jcall
 
 
 class LobbyContentTest(unittest.TestCase):

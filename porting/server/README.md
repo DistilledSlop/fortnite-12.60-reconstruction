@@ -25,7 +25,7 @@ Evidence for each route is in `porting/server_surface.md`.
 | `matchmaking.py` | Ticket, session and session-key routes. Websocket state machine (`local_ws.py` is the RFC 6455 side). |
 | `fortnite_stub.py` | Compatibility facade for `probe_server.py --stub`. Keeps the earlier `respond()` and `websocket_route()` names. |
 | `probe_server.py` | HTTP server. `--stub` serves the backend. Without it, it only records requests and serves fixtures. |
-| `test_services.py` | HTTP regressions, including `SchemaTests` (reflection checks); additional `test_*.py` modules cover persistence, transactions, social transport, quests and the game-server bridge. |
+| `tests/` | HTTP regressions, including `SchemaTests` (reflection checks); additional `tests/test_*.py` modules cover persistence, transactions, social transport, quests and the game-server bridge. |
 | `friends_service.py`, `xmpp_service.py` | Durable friends/requests/blocks and authenticated WebSocket XMPP social transport. |
 | `gifting_service.py` | Atomic cross-account gifting and gift-box dismissal. |
 | `gameserver_service.py`, `gameplay_service.py` | Trusted local game-server registration, loadouts and results; StatsV2 reads. |
@@ -43,7 +43,8 @@ Evidence for each route is in `porting/server_surface.md`.
 ## Running
 
 ```sh
-python3 -m unittest discover -s porting/server -p 'test_*.py'  # combined backend tests
+python3 -m unittest discover -s porting/server/tests -p 'test_*.py'  # combined backend tests
+python3 -I porting/server/tests/test_services.py                  # isolated HTTP tests
 python3 -I porting/server/smoke_matchmaking.py      # lobby-to-match smoke test
 python3 -I porting/server/probe_server.py --stub --port 8080 [--state-dir DIR] [--cloudstorage-dir DIR]
 python3 -I porting/server/backend.py --routes       # route table with evidence labels

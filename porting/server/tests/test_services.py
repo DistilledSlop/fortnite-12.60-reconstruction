@@ -5,12 +5,22 @@ Runs every service over real HTTP on 127.0.0.1 at a random port, using the same 
 as probe_server.py. Standard library only. No sudo, no root-only ports, no network
 namespaces, no subprocess. Files it writes stay under porting/generated (ignored by Git).
 
-    python3 -I server/test_services.py          # or: python3 -I -m unittest -v server/test_services.py
+    python3 -I porting/server/tests/test_services.py
 
 Each test starts a fresh backend with a fixed clock and removes its listener afterwards.
 Tokens are random per run and are never printed. The leak test checks that the
 request log file contains none of them.
 """
+
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
 
 import base64
 import json
@@ -25,8 +35,7 @@ import urllib.request
 from http.server import ThreadingHTTPServer
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE))
+HERE = Path(__file__).resolve().parent.parent
 
 import api_common  # noqa: E402
 import matchmaking  # noqa: E402

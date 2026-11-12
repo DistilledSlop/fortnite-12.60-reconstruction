@@ -1,4 +1,14 @@
 """Friends graph behavior, routing, authorization and durable state."""
+
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
 import tempfile
 import unittest
 from types import SimpleNamespace
@@ -91,7 +101,10 @@ class FriendsTests(unittest.TestCase):
 
 class FriendsHttpTests(unittest.TestCase):
     def test_real_oauth_and_http_across_restart(self):
-        import test_services as support
+        if __package__:
+            from . import test_services as support
+        else:
+            import test_services as support
         from backend import Backend
         with tempfile.TemporaryDirectory() as directory:
             def start():

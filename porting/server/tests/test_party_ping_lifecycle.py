@@ -1,10 +1,22 @@
 """Party pings should not point to parties that have been deleted."""
+
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
 import sys
 import unittest
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import test_services as support
+if __package__:
+    from . import test_services as support
+else:
+    import test_services as support
 
 
 class PartyPingLifecycleTests(support.ServiceTestCase):

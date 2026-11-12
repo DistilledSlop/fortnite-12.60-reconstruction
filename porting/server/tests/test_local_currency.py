@@ -1,4 +1,14 @@
 """Offline local currency grants survive restart and respect the server lock."""
+
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
 import fcntl
 from pathlib import Path
 import subprocess
@@ -12,7 +22,7 @@ from backend import Backend
 class LocalCurrencyTests(unittest.TestCase):
     def test_credit_persists_and_refuses_active_state(self):
         with tempfile.TemporaryDirectory() as directory:
-            cmd = [sys.executable, str(Path(__file__).with_name('local_currency.py')),
+            cmd = [sys.executable, str(Path(__file__).resolve().parent.parent / 'local_currency.py'),
                    '--state-dir', directory, '--username', 'Buyer', '--amount', '1000']
             first = subprocess.run(cmd, capture_output=True, text=True)
             self.assertEqual(first.returncode, 0, first.stderr)
@@ -31,7 +41,7 @@ class LocalCurrencyTests(unittest.TestCase):
 
     def test_season_repair_refuses_active_state(self):
         with tempfile.TemporaryDirectory() as directory:
-            cmd = [sys.executable, str(Path(__file__).with_name('repair_season12.py')),
+            cmd = [sys.executable, str(Path(__file__).resolve().parent.parent / 'repair_season12.py'),
                    directory, 'account']
             with (Path(directory) / '.backend.lock').open('a') as lock:
                 fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)

@@ -1,4 +1,14 @@
 """The explicitly free local credit pack changes only the local wallet."""
+
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
 import tempfile
 import unittest
 from unittest.mock import patch

@@ -1,4 +1,14 @@
 """Local Season 12 pass purchase; offer mapping and price are assumptions."""
+
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
 import sqlite3
 from contextlib import closing
 import tempfile

@@ -70,7 +70,7 @@ choice and are marked by the absence of a `wine_log` verb.
 
 ## Findings from the schema check
 
-The check is `schema_check.py` with the tests in `test_services.py` (`SchemaTests`).
+The check is `schema_check.py` with the tests in `tests/test_services.py` (`SchemaTests`).
 
 1. **Profile responses lacked `lockExpiration` and `notifications` in `multiUpdate` entries, and the root
    lacked `lockExpiration`.** `FProfileUpdateSingle` has seven members (reflection). The backend sent six

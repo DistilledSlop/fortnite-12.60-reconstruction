@@ -1,4 +1,14 @@
 """A locally advertised matchmaking URL is usable without Epic DNS overrides."""
+
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
 import json
 import socket
 import subprocess
@@ -10,7 +20,10 @@ from pathlib import Path
 
 import smoke_matchmaking as ws
 from backend import Backend
-from test_services import LOCAL, jcall
+if __package__:
+    from .test_services import LOCAL, jcall
+else:
+    from test_services import LOCAL, jcall
 
 
 class MatchmakingOriginTests(unittest.TestCase):
@@ -20,7 +33,7 @@ class MatchmakingOriginTests(unittest.TestCase):
             port = reservation.getsockname()[1]
         origin = f"ws://127.0.0.1:{port}"
         with tempfile.TemporaryDirectory() as directory:
-            command = [sys.executable, "-I", str(Path(__file__).with_name("probe_server.py")),
+            command = [sys.executable, "-I", str(Path(__file__).resolve().parent.parent / "probe_server.py"),
                        "--stub", "--ephemeral", "--port", str(port), "--matchmaking-ws-origin", origin,
                        "--record", str(Path(directory) / "requests")]
             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -45,7 +58,7 @@ class MatchmakingOriginTests(unittest.TestCase):
     def test_additional_loopback_listener_shares_ticket_state(self):
         port = ws.free_port()
         with tempfile.TemporaryDirectory() as directory:
-            command = [sys.executable, "-I", str(Path(__file__).with_name("probe_server.py")),
+            command = [sys.executable, "-I", str(Path(__file__).resolve().parent.parent / "probe_server.py"),
                        "--stub", "--ephemeral", "--port", str(port), "--local-matchmaking-ws-port", "0",
                        "--record", str(Path(directory) / "requests")]
             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)

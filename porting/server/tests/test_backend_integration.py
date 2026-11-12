@@ -1,4 +1,14 @@
 """Real HTTP/WebSocket coverage of the trusted dedicated-server bridge."""
+
+# Isolated mode omits the script directory from sys.path.
+if __package__:
+    from . import _bootstrap
+else:
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent))
+    import _bootstrap
+
 import json
 import socket
 import sys
@@ -7,12 +17,17 @@ import tempfile
 import urllib.parse
 import unittest
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import smoke_matchmaking as ws
 from backend import Backend
-from test_services import GENERATED, ServiceTestCase, jcall, mcp
-from test_xmpp_service import Peer
+if __package__:
+    from .test_services import GENERATED, ServiceTestCase, jcall, mcp
+else:
+    from test_services import GENERATED, ServiceTestCase, jcall, mcp
+if __package__:
+    from .test_xmpp_service import Peer
+else:
+    from test_xmpp_service import Peer
 
 
 class BackendGameFlowTests(ServiceTestCase):
