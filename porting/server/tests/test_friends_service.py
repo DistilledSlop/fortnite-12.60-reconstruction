@@ -98,8 +98,65 @@ class FriendsTests(unittest.TestCase):
         self.assertEqual(len(self.summary(self.b)['incoming']), 1)
         self.assertEqual(self.service.notification_failures, 1)
 
+    def test_mutual_friend_permission_and_accepting_existing_request(self):
+        c = self.accounts.create('Mutual')['id']
+        def friend(src, dst):
+            self.call(src, 'POST', f'/friends/api/public/friends/{src}/{dst}')
+        self.service._db.execute('INSERT INTO settings VALUES (?,?,?)', (self.b, 'FRIENDS_OF_FRIENDS', None))
+        self.service._db.commit()
+        with self.assertRaises(ApiError):
+            friend(self.a, self.b)
+        friend(self.a, c)
+        friend(c, self.a)
+        friend(self.b, c)
+        friend(c, self.b)
+        friend(self.a, self.b)
+        self.service._db.execute('UPDATE settings SET accept_invites=? WHERE account=?', ('PRIVATE', self.a))
+        self.service._db.commit()
+        friend(self.b, self.a)
+        self.assertTrue(self.service.are_friends(self.a, self.b))
+
 
 class FriendsHttpTests(unittest.TestCase):
+    def test_settings_persist_and_control_new_requests(self):
+        if __package__:
+            from . import test_services as support
+        else:
+            import test_services as support
+        from backend import Backend
+        with tempfile.TemporaryDirectory() as directory:
+            backend = Backend(state_dir=directory, state_step_sec=0)
+            server = support.LiveServer(backend).start()
+            try:
+                a = '00000000000000000000000000000001'
+                b = backend.accounts.create('Guest')['id']
+                at = backend.oauth.local_sign_in(a)['access_token']
+                bt = backend.oauth.local_sign_in(b)['access_token']
+                path = f'/friends/api/v1/{b}/settings'
+                request = f'/friends/api/public/friends/{a}/{b}'
+                self.assertEqual(support.jcall(server.base, 'PUT', path, token=at, body={'acceptInvites': 'PRIVATE'})[0], 403)
+                self.assertEqual(support.jcall(server.base, 'PUT', path, token=bt, body={'acceptInvites': 'bad'})[0], 400)
+                status, settings, _ = support.jcall(server.base, 'PUT', path, token=bt, body={'acceptInvites': 'PRIVATE', 'mutualPrivacy': 'FRIENDS'})
+                self.assertEqual((status, settings), (200, {'acceptInvites': 'PRIVATE', 'mutualPrivacy': 'FRIENDS'}))
+                self.assertEqual(support.call(server.base, 'POST', request, token=at)[0], 403)
+            finally:
+                server.stop()
+                backend.close()
+            backend = Backend(state_dir=directory, state_step_sec=0)
+            server = support.LiveServer(backend).start()
+            try:
+                bt = backend.oauth.local_sign_in(b)['access_token']
+                at = backend.oauth.local_sign_in(a)['access_token']
+                self.assertEqual(support.jcall(server.base, 'GET', path, token=bt)[1], settings)
+                self.assertEqual(support.jcall(server.base, 'GET', f'/friends/api/v1/{b}/summary', token=bt)[1]['settings'], settings)
+                self.assertEqual(support.jcall(server.base, 'GET', f'/friends/api/v1/{a}/settings', token=at)[1], {'acceptInvites': 'public'})
+                self.assertEqual(support.call(server.base, 'POST', request, token=at)[0], 403)
+                self.assertEqual(support.jcall(server.base, 'PUT', path, token=bt, body={'acceptInvites': 'public'})[1]['mutualPrivacy'], 'FRIENDS')
+                self.assertEqual(support.call(server.base, 'POST', request, token=at)[0], 204)
+            finally:
+                server.stop()
+                backend.close()
+
     def test_real_oauth_and_http_across_restart(self):
         if __package__:
             from . import test_services as support

@@ -2,6 +2,9 @@
 
 A directed request becomes an undirected friendship when the recipient requests back.
 Blocks are directed and remove both pending requests and any friendship atomically.
+The settings PUT and response fields follow public client implementations; 12.60
+wire casing and the permission enforcement rules have not been captured. The
+default retains this stand-in's original lowercase value.
 """
 import re
 import sqlite3
@@ -32,6 +35,7 @@ class FriendsService:
             self._db.execute('CREATE TABLE IF NOT EXISTS requests (src TEXT NOT NULL, dst TEXT NOT NULL, created TEXT NOT NULL, PRIMARY KEY(src,dst))')
             self._db.execute('CREATE TABLE IF NOT EXISTS friends (a TEXT NOT NULL, b TEXT NOT NULL, created TEXT NOT NULL, PRIMARY KEY(a,b))')
             self._db.execute('CREATE TABLE IF NOT EXISTS blocks (src TEXT NOT NULL, dst TEXT NOT NULL, created TEXT NOT NULL, PRIMARY KEY(src,dst))')
+            self._db.execute('CREATE TABLE IF NOT EXISTS settings (account TEXT PRIMARY KEY, accept_invites TEXT NOT NULL, mutual_privacy TEXT)')
 
     def close(self):
         with self._lock:
@@ -80,13 +84,21 @@ class FriendsService:
     def _entry(account, date):
         return {'accountId': account, 'created': date}
 
+    def _settings(self, account):
+        with self._lock:
+            row = self._db.execute('SELECT accept_invites, mutual_privacy FROM settings WHERE account=?', (account,)).fetchone()
+        result = {'acceptInvites': row[0] if row else 'public'}
+        if row and row[1] is not None:
+            result['mutualPrivacy'] = row[1]
+        return result
+
     def summary(self, req, match):
         account = match.group(1)
         self._identity(req, account)
         friends, incoming, outgoing, blocks = self._snapshot(account)
         return 200, {'friends': [self._entry(*x) for x in friends], 'incoming': [self._entry(*x) for x in incoming],
                      'outgoing': [self._entry(*x) for x in outgoing], 'blocklist': [self._entry(*x) for x in blocks],
-                     'suggested': [], 'settings': {'acceptInvites': 'public'},
+                     'suggested': [], 'settings': self._settings(account),
                      'limitsReached': {'incoming': False, 'outgoing': False, 'accepted': False}}
 
     def legacy_list(self, req, match):
@@ -103,7 +115,23 @@ class FriendsService:
 
     def settings(self, req, match):
         self._identity(req, match.group(1))
-        return 200, {'acceptInvites': 'public'}
+        return 200, self._settings(match.group(1))
+
+    def set_settings(self, req, match):
+        account = match.group(1)
+        self._identity(req, account)
+        body = req.json_object()
+        allowed = {'acceptInvites': {'PUBLIC', 'PRIVATE', 'FRIENDS_OF_FRIENDS'},
+                   'mutualPrivacy': {'ALL', 'FRIENDS', 'NONE'}}
+        if not body or any(key not in allowed or not isinstance(value, str) or value.upper() not in allowed[key]
+                           for key, value in body.items()):
+            raise ApiError(400, Err.INVALID_PAYLOAD, 'Invalid friends settings.')
+        with self._lock, self._db:
+            current = self._settings(account)
+            current.update(body)
+            self._db.execute('INSERT OR REPLACE INTO settings VALUES (?,?,?)',
+                             (account, current['acceptInvites'], current.get('mutualPrivacy')))
+        return 200, current
 
     def recent(self, req, match):
         self._identity(req, match.group(1))
@@ -124,6 +152,16 @@ class FriendsService:
                 self._db.execute('INSERT INTO friends VALUES (?,?,?)', (a,b,self.ctx.iso()))
                 event = 'ACCEPTED'
             elif not self._db.execute('SELECT 1 FROM requests WHERE src=? AND dst=?', (account,other)).fetchone():
+                # Local interpretation of the privacy enum; accepting a pending request remains possible.
+                permission = self._settings(other)['acceptInvites'].upper()
+                if permission == 'PRIVATE':
+                    raise ApiError(403, Err.USER_OPERATION_FORBIDDEN, 'Friend requests are disabled.')
+                if permission == 'FRIENDS_OF_FRIENDS':
+                    def neighbors(user):
+                        return {y if x == user else x for x, y in self._db.execute(
+                            'SELECT a,b FROM friends WHERE a=? OR b=?', (user, user))}
+                    if not neighbors(account).intersection(neighbors(other)):
+                        raise ApiError(403, Err.USER_OPERATION_FORBIDDEN, 'Friend requests require a mutual friend.')
                 self._db.execute('INSERT INTO requests VALUES (?,?,?)', (account,other,self.ctx.iso()))
                 event = 'PENDING'
         if event:
@@ -168,6 +206,7 @@ class FriendsService:
                                     (public + '/friends/([^/]+)', self.legacy_list, 'legacy'), (public + '/blocklist/([^/]+)', self.blocklist, 'legacy_blocklist')):
             router.add('GET', path, handler, name='friends.' + name, status='inferred')
         for method, path, handler, name in (('POST', public + '/friends/([^/]+)/([^/]+)', self.request_friend, 'request'),
+                                            ('PUT', v1 + '/settings', self.set_settings, 'set_settings'),
                                             ('DELETE', public + '/friends/([^/]+)/([^/]+)', self.delete_friend, 'delete'),
                                             ('POST', public + '/blocklist/([^/]+)/([^/]+)', self.block, 'block'),
                                             ('DELETE', public + '/blocklist/([^/]+)/([^/]+)', self.unblock, 'unblock'),
