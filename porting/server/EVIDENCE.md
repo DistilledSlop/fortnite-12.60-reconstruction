@@ -560,3 +560,24 @@ new handler validates the complete owned-quest batch, persists that field and
 leaves objective/reward state unchanged. Body casing and field serialization
 remain inferred; a new original-client run is required to confirm the modal is
 resolved. Focused tests cover atomic rejection, idempotence and restart.
+
+
+## First weekly mission family
+
+The cooked Brutus family contains 22 quests and 36 objectives across weeks 1–2
+and two separate faction choices. The implementation includes the 20
+weekly missions, their standard 40,000 XP rewards, weekly/agent token grants and
+bundle completion token thresholds. The normalized source and hashes are in
+season12_weekly_quest_data.py; the larger source report remains ignored. Week 1
+grants with the owned Season12_Mission_Schedule, and week 2 has a ten-day offset.
+Using the explicitly configured LobbySeason12 timestamp as their calendar anchor
+is local policy; no historical epoch or faction activation gate is fabricated.
+
+The serialized once-per-match and single-match flags are now enforced using
+trusted registration IDs supplied by the authenticated quest-event endpoint.
+Per-objective deduplication and ignoring previously seen superseded matches are
+explicit local policies. Context-free direct events cannot advance flagged
+quests. Match-aware receipts preserve exact legacy retries and reject changed
+new contexts; XP, tokens, completion bookkeeping and receipts commit together.
+The native gameplay emitter still must qualify the source stat filters and send
+events. Faction choice, its gate and variant consumption remain incomplete.

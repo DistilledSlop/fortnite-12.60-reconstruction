@@ -79,6 +79,35 @@ class QuestBridgeTests(unittest.TestCase):
         self.assertEqual(self.event(eventId='new')[0], 404)
         self.assertEqual(after, self.profile())
 
+    def test_registered_session_is_trusted_weekly_match_context(self):
+        quests = self.backend.profiles.quests
+        ctx = CommandContext(self.backend.profiles, LOCAL_ACCOUNT_ID, 'athena', {})
+        quests._grant(ctx.tx('athena'), 'ChallengeBundleSchedule:Season12_Mission_Schedule', {})
+        quests.login(ctx, include_daily=False)
+        self.backend.profiles._store(LOCAL_ACCOUNT_ID, ctx.txs)
+        self.assertEqual(self.event(event='open_faction_locked_doors', amount=3), (200, {'accepted': True}))
+        self.assertEqual(self.event(event='open_faction_locked_doors', eventId='second', amount=3),
+                         (200, {'accepted': True}))
+        quest = next(v for v in self.profile()['items'].values()
+                     if v['templateId'] == 'Quest:quest_s12_w1_q03')
+        self.assertEqual(quest['attributes']['completion_quest_s12_w1_q03_obj'], 1)
+        before = self.profile()
+        self.assertEqual(self.event(event='open_faction_locked_doors', eventId='forged', matchId='other')[0], 400)
+        self.assertEqual(before, self.profile())
+        self.backend.close()
+        self.backend = self.start()
+        self.assertEqual(self.event(event='open_faction_locked_doors', amount=3), (200, {'accepted': False}))
+        self.assertEqual(before, self.profile())
+
+    def test_legacy_event_receipt_replays_after_match_context_upgrade(self):
+        quests = self.backend.profiles.quests
+        quests.progress(LOCAL_ACCOUNT_ID, 'donut_w1_startquest',
+                        event_id='gameserver:' + self.sid + ':first')
+        before = self.profile()
+        self.now += 31
+        self.assertEqual(self.event(), (200, {'accepted': False}))
+        self.assertEqual(before, self.profile())
+
     def test_nonmember_cannot_record(self):
         self.backend.gameservers._servers[self.sid]['players'].clear()
         before = self.profile()

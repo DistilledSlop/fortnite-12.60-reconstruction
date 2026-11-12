@@ -494,6 +494,11 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   permission and error semantics remain inferred. Local private and mutual-friend
   policies govern new requests; existing requests can still be accepted.
 - **Quest coverage.** All nine cooked Maya quests and their individual style-token rewards are implemented, alongside Agent Peely style tokens.
+  The first 20 weekly missions (Brutus weeks 1–2) now use their cooked objectives,
+  40,000 XP rewards and completion-token thresholds. Their owned mission schedule
+  grants week 1 immediately and week 2 after ten days; sharing the configured
+  LobbySeason12 calendar anchor is a local policy. Faction choice activation and
+  the remaining weekly mission families are incomplete.
   Deadpool activation/progression now uses 21 cooked quest definitions, 12 bundles
   and 11 schedule entries, including multiple objectives and independent W7 timing.
   Dated grants require an explicit event start; the historical event epoch is
@@ -558,6 +563,11 @@ cannot award XP. These `/local` contracts are ours, rather than recovered Epic A
 New events require a live registration and admitted player. Exact committed
 retries survive expiry/restart without awarding twice; changed retries fail.
 Events affect quests already active at submission, without retroactive progress.
+The authenticated registration supplies the trusted match ID. Once-per-match
+objectives count one qualifying increment per objective per match. Single-match
+quests reset for a new match; previously seen superseded matches are ignored.
+These event-ordering policies are local. Exact legacy receipt retries remain
+valid after upgrading to match-aware events.
 Configure date gates with `--quest-event-start EventFlag.LobbySeason12=ISO_OR_UNIX`
 (also `Backend(quest_event_starts={...})`). No historical event start is fabricated;
 without one, dated quest grants wait. `ClientQuestLogin` reconciles elapsed gates.

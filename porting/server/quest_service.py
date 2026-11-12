@@ -15,7 +15,7 @@ Cosmetics/Characters/CID_701_Athena_Commando_M_BananaAgent 4a50739682819c09986dd
 The profile item attributes and trusted event mapping are inferred, not captured.
 Calendar starts require explicit configuration. Missing objective completion defaults
 to all objectives locally. Daily rotation is an explicit local policy; historical
-rotation, bundle rewards and Maya customization remain unresolved.
+rotation, some bundle rewards and Maya customization remain unresolved.
 """
 import copy
 import math
@@ -27,6 +27,8 @@ from season12_quest_data import (DONUT_BUNDLES, DONUT_QUESTS, DONUT_SCHEDULE,
 
 from season12_maya_data import MAYA_BUNDLE, MAYA_QUESTS
 from season12_daily_quest_data import DAILY_QUESTS
+from season12_weekly_quest_data import (WEEKLY_QUESTS, WEEKLY_BUNDLES, WEEKLY_SCHEDULE,
+                                        WEEKLY_SCHEDULE_CALENDAR_EVENT_TAG)
 from daily_quest_service import DailyService
 
 from api_common import ApiError, Err
@@ -35,8 +37,8 @@ from profile_service import CommandContext, _invalid
 EVENTS = {'accolade_assault_specialist': 'quest_s12_styles1_q01_accolade_ar',
           'donut_w1_startquest': 'Quest_S12_Donut_W1_A',
           'dont_thank_bus_driver': 'Quest_S12_Donut_W1_B'}
-EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS}
-EVENT_BUNDLES = {**DONUT_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
+EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS, **WEEKLY_QUESTS}
+EVENT_BUNDLES = {**DONUT_BUNDLES, **WEEKLY_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
 VALID_EVENTS = set(EVENTS) | {stat for quest in EVENT_QUESTS.values() for _, stat, _ in quest['objectives']}
 TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
           'cosmeticvarianttoken:vtid_561_bananaagent_stylec': 'Stage3'}
@@ -120,6 +122,10 @@ class QuestService:
             template = item['templateId'].casefold()
             if template == 'challengebundleschedule:bundleschedule_styles_paperdoll':
                 self._bundle(tx, 'QuestBundle_Styles_PaperDoll', schedule_id)
+            elif template == 'challengebundleschedule:season12_mission_schedule':
+                for bundle, grant_type, days in WEEKLY_SCHEDULE:
+                    if grant_type == 'OnScheduleGranted' or self._date_reached(WEEKLY_SCHEDULE_CALENDAR_EVENT_TAG, days):
+                        self._bundle(tx, bundle, schedule_id)
             elif template == 'challengebundleschedule:season12_donut_schedule':
                 for bundle, grant_type, days in DONUT_SCHEDULE:
                     if grant_type == 'OnScheduleGranted' or (grant_type == 'DaysSinceEventStart' and
@@ -164,18 +170,31 @@ class QuestService:
         if not isinstance(event_id, str) or not event_id or len(event_id) > 200:
             raise _invalid('Invalid quest event ID.')
 
-    def replay_progress(self, account_id, event, amount=1, *, event_id):
+    def replay_progress(self, account_id, event, amount=1, *, event_id, match_id=None):
         """Return False for an exact receipt, None if absent; never create a profile."""
         self._validate_event(account_id, event, amount, event_id)
+        payload = self._receipt_payload(event, amount, match_id)
         profile = self.profiles.existing_profile(account_id, 'athena')
         if profile is None:
             return None
         receipts = profile['stats']['attributes'].get('local_quest_event_receipts', {})
         if event_id not in receipts:
             return None
-        if receipts[event_id] != [event, amount]:
+        if not self._receipt_matches(receipts[event_id], payload):
             raise _invalid('Quest event ID already used with different data.')
         return False
+
+    @staticmethod
+    def _receipt_matches(stored, payload):
+        # A context-aware retry of a legacy receipt is already accounted for.
+        # The trusted caller must bind its event ID to the actual match.
+        return stored == payload or (len(payload) == 3 and stored == payload[:2])
+
+    @staticmethod
+    def _receipt_payload(event, amount, match_id):
+        if match_id is not None and (not isinstance(match_id, str) or not match_id or len(match_id) > 200):
+            raise _invalid('Invalid trusted match ID.')
+        return [event, amount] if match_id is None else [event, amount, match_id]
 
     def claim(self, ctx, quest_id, selected_index):
         """Local claim policy for supported fixed-reward quests; retries never award twice.
@@ -220,12 +239,20 @@ class QuestService:
             # Local counter policy: count claimed quest items, without applying
             # unverified suppressed-quest or completion-reward semantics.
             tx.set_item_attr(bundle_id, 'num_quests_completed', count + 1)
+        if bundle_id in tx.profile['items']:
+            bundle_name = next((key for key in WEEKLY_BUNDLES if
+                                tx.item(bundle_id)['templateId'].casefold() == ('ChallengeBundle:' + key).casefold()), None)
+            if bundle_name:
+                rewards = list(rewards) + WEEKLY_BUNDLES[bundle_name]['completion_rewards'].get(count + 1, [])
         for kind, reward, quantity in rewards:
             if kind == 'AccountResource' and reward == 'athenaseasonalxp':
                 from progression_service import award_profile_xp
                 # Local Season 12 policy: seasonal quest XP advances both
                 # season and book XP while retaining purchased book levels.
                 award_profile_xp(ctx, quantity, quantity)
+                continue
+            if kind == 'Token':
+                self._award_token(tx, reward, quantity)
                 continue
             if quantity != 1:
                 raise _invalid('Unsupported quest reward quantity.')
@@ -234,22 +261,27 @@ class QuestService:
             elif kind == 'ChallengeBundle' and reward in EVENT_BUNDLES:
                 schedule_id = tx.item(bundle_id)['attributes'].get('challenge_bundle_schedule_id') if bundle_id in tx.profile['items'] else None
                 self._bundle(tx, reward, schedule_id)
-            elif name in DAILY_QUESTS and kind == 'Token':
-                template = kind + ':' + reward
-                found = next(((i, v) for i, v in tx.profile['items'].items()
-                              if v['templateId'].casefold() == template.casefold()), None)
-                if found:
-                    token_id, token = found
-                    count = token['quantity']
-                    if type(count) is not int or not 1 <= count < 2**31 - 1:
-                        raise _invalid('Invalid daily token quantity.')
-                    tx.set_item_quantity(token_id, count + quantity)
-                else:
-                    self._grant(tx, template, {'item_seen': False})
             else:
                 self._grant(tx, kind + ':' + reward, {'item_seen': False})
 
-    def progress(self, account_id, event, amount=1, *, event_id):
+    def _award_token(self, tx, reward, quantity):
+        if type(quantity) is not int or not 1 <= quantity < 2**31:
+            raise _invalid('Invalid token quantity.')
+        template = 'Token:' + reward
+        found = next(((i, v) for i, v in tx.profile['items'].items()
+                      if v['templateId'].casefold() == template.casefold()), None)
+        if found:
+            token_id, token = found
+            count = token['quantity']
+            if type(count) is not int or not 1 <= count <= 2**31 - 1 - quantity:
+                raise _invalid('Invalid token quantity.')
+            tx.set_item_quantity(token_id, count + quantity)
+        else:
+            item_id = self._grant(tx, template, {'item_seen': False})
+            if quantity != 1:
+                tx.set_item_quantity(item_id, quantity)
+
+    def progress(self, account_id, event, amount=1, *, event_id, match_id=None):
         """Trusted server-only event, with durable per-account replay protection.
 
         Event names are objective-stat row names; mapping to actual gameplay is
@@ -259,9 +291,9 @@ class QuestService:
         ctx = CommandContext(self.profiles, account_id, 'athena', {})
         tx = ctx.tx('athena')
         receipts = dict(tx.profile['stats']['attributes'].get('local_quest_event_receipts', {}))
-        payload = [event, amount]
+        payload = self._receipt_payload(event, amount, match_id)
         if event_id in receipts:
-            if receipts[event_id] != payload:
+            if not self._receipt_matches(receipts[event_id], payload):
                 raise _invalid('Quest event ID already used with different data.')
             return False
         # Snapshot active quests before awarding anything: an event cannot advance
@@ -278,16 +310,57 @@ class QuestService:
             required = definition.get('ObjectiveCompletionCount', len(objectives))
             if not any(stat == event for _, stat, _ in objectives):
                 continue
+            once = definition.get('bAthenaUpdateObjectiveOncePerMatch', False)
+            single = definition.get('bAthenaMustCompleteInSingleMatch', False)
+            if (once or single) and match_id is None:
+                continue
+            # Local policy: once-per-match is per objective. For single-match
+            # quests, each unseen match supersedes the current one; late events
+            # from previously seen matches cannot reset or advance progress.
+            state = copy.deepcopy(item['attributes'].get('local_quest_match_state', {}))
+            if (once or single) and not isinstance(state, dict):
+                raise _invalid('Invalid quest match state.')
+            if once:
+                seen = state.setdefault('objective_matches', {})
+                if (not isinstance(seen, dict) or any(
+                        not isinstance(key, str) or not isinstance(matches, list) or
+                        any(not isinstance(value, str) or not value or len(value) > 200 for value in matches)
+                        for key, matches in seen.items())):
+                    raise _invalid('Invalid quest match state.')
+            if single:
+                seen_matches = state.setdefault('seen_matches', [])
+                current = state.get('current_match')
+                if (not isinstance(seen_matches, list) or any(
+                        not isinstance(value, str) or not value or len(value) > 200 for value in seen_matches)
+                        or (current is not None and (not isinstance(current, str) or current not in seen_matches))):
+                    raise _invalid('Invalid quest match state.')
+                if match_id != current:
+                    if match_id in seen_matches:
+                        continue
+                    seen_matches.append(match_id)
+                    state['current_match'] = match_id
+                    for objective, _, _ in objectives:
+                        tx.set_item_attr(item_id, 'completion_' + objective.lower(), 0)
             completed = 0
             for objective, stat, target in objectives:
                 key = 'completion_' + objective.lower()
                 old = item['attributes'].get(key)
                 if isinstance(old, bool) or not isinstance(old, int) or not 0 <= old <= target:
                     raise _invalid('Invalid quest progress.')
-                new = min(target, old + amount) if stat == event else old
+                if single and state['current_match'] == match_id:
+                    old = tx.item(item_id)['attributes'].get(key)
+                increment = amount
+                if once and stat == event:
+                    matches = seen.setdefault(objective.lower(), [])
+                    increment = 0 if match_id in matches else 1
+                    if increment:
+                        matches.append(match_id)
+                new = min(target, old + increment) if stat == event else old
                 if new != old:
                     tx.set_item_attr(item_id, key, new)
                 completed += new == target
+            if once or single:
+                tx.set_item_attr(item_id, 'local_quest_match_state', state)
             if completed < required:
                 continue
             self._award_completed(ctx, tx, item_id, item, name)

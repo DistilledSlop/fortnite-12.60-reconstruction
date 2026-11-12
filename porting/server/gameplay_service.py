@@ -75,11 +75,11 @@ class GameplayService:
         receipt_id = 'gameserver:' + session_id + ':' + event_id
         account_id, event, amount = payload.get('accountId'), payload.get('event'), payload.get('amount', 1)
         quests = self.profiles.quests
-        replay = quests.replay_progress(account_id, event, amount, event_id=receipt_id)
+        replay = quests.replay_progress(account_id, event, amount, event_id=receipt_id, match_id=session_id)
         if replay is not None:
             return 200, {'accepted': replay}
         self._member(session_id, account_id)
-        return 200, {'accepted': quests.progress(account_id, event, amount, event_id=receipt_id)}
+        return 200, {'accepted': quests.progress(account_id, event, amount, event_id=receipt_id, match_id=session_id)}
 
     @staticmethod
     def _time(req, key):
