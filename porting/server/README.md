@@ -379,7 +379,7 @@ are observed in the binary. The `multiUpdate` entry shape is inferred.
   maxSize, invite and intention TTLs), `meta`, `members` and `invites`, and a `revision`.
   Each member has `role` (CAPTAIN or MEMBER), `connections`, `joined_at`, `updated_at`,
   `revision` and `meta`.
-- Joining is refused when the party is full (409), when the caller is already in a
+- New membership is refused when the party is full (409), when the caller is already in a
   party (409), when the build id in `meta` (`urn:epic:cfg:build-id_s`, inferred) does not
   match (403), or when the party is CLOSED and no invite exists (403).
 - The captain can kick members, promote a member and change party meta. When the
@@ -390,6 +390,11 @@ are observed in the binary. The `multiUpdate` entry shape is inferred.
   build and invite eligibility; rejection notifies the applicant. Pending expiry
   uses the configured intention TTL as local policy. Joins use the observed
   `{party_id, status}` response rather than a party snapshot.
+- An existing disconnected member can rejoin with its new connection, preserving
+  role and join time even when new admission is closed or full. It emits the
+  recovered flat `MEMBER_CONNECTED` notification. Revision updates and the HTTP
+  200 `JOINED` response are local policies; original-client reconnect verification
+  remains pending. Connected duplicate joins still return 409.
 - `sendPing` on an invite records a ping. Pings and invites appear in `GET .../user/{id}`.
 - Presence records the status (Online/Offline) and the party id, updated by join,
   leave, disconnect and create. `last-online` returns it. Subscriptions can be added and
@@ -486,7 +491,8 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   approval/rejection, expiry and reconnect behavior still require verification.
   Leaving or being kicked preserves HTTP online status; automatic captain succession
   uses the existing promotion notification as a local inference. Disconnected party
-  connections cannot yet be restored through a verified reconnect contract.
+  connections can be restored with backend regression coverage; original-client
+  reconnection remains unverified.
   Voice conferences remain unimplemented.
   Settings PUT/response follows an independent [2019 client interface](https://gist.github.com/Doc94/4dff32bfba0c9036166bc3244ea55e55);
   `acceptInvites` and `mutualPrivacy` enum values follow a [later client implementation](https://pkg.go.dev/github.com/8h9x/fortgo/friends).

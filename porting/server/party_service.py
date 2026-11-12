@@ -19,8 +19,9 @@ Evidence (see the 12.60 binary strings and DefaultEngine.ini):
             CLOSED joinability value.
   guess     the PATCH /parties/{partyId}/meta route, and the presence response shape.
 
-Local XMPP party chat uses an inferred room naming convention; the original client
-room naming is unverified. Voice conferences are not implemented
+Original-client recovery establishes Party-<id> XMPP rooms and the flat
+MEMBER_CONNECTED reader for an existing member's restored connection. Reconnect
+HTTP success status and revision policy remain local choices. Voice conferences are not implemented
 (the /conferences/connection route is not registered, so it answers 404).
 """
 
@@ -84,9 +85,9 @@ class PartyService:
             event.update({"ns": "Fortnite", "sent": invite["sent_at"],
                           "inviter_id": invite["sent_by"], "invitee_id": invite["account_id"],
                           "expires_at": invite["expires_at"], "meta": copy.deepcopy(invite["meta"])})
-        elif kind in ("MEMBER_STATE_UPDATED", "MEMBER_JOINED", "MEMBER_REJECTED", "MEMBER_REQUIRE_CONFIRMATION", "MEMBER_LEFT", "MEMBER_KICKED", "MEMBER_NEW_CAPTAIN"):
+        elif kind in ("MEMBER_STATE_UPDATED", "MEMBER_JOINED", "MEMBER_CONNECTED", "MEMBER_REJECTED", "MEMBER_REQUIRE_CONFIRMATION", "MEMBER_LEFT", "MEMBER_KICKED", "MEMBER_NEW_CAPTAIN"):
             member = fields.pop("member", None) or self._member(party, actor)
-            include_connection = fields.pop("include_connection", kind == "MEMBER_JOINED")
+            include_connection = fields.pop("include_connection", kind in ("MEMBER_JOINED", "MEMBER_CONNECTED"))
             account = self.accounts.get(actor)
             event.update({"ns": "Fortnite", "sent": self.ctx.iso(), "account_id": actor,
                           "account_dn": account["displayName"] if account else "",
@@ -322,7 +323,39 @@ class PartyService:
         current = self._party_of(account_id)
         if current is not None:
             if current["id"] == party_id:
-                raise ApiError(409, Err.USER_ALREADY_IN_PARTY, "The user is already in this party.")
+                existing = self._member(current, account_id)
+                if existing["connections"]:
+                    raise ApiError(409, Err.USER_ALREADY_IN_PARTY, "The user is already in this party.")
+                body = req.json_object()
+                self._check_revision(body, existing["revision"])
+                connection = self._dict(body.get("connection"), "connection")
+                if not isinstance(connection.get("id"), str) or not connection["id"]:
+                    raise ApiError(400, Err.INVALID_PAYLOAD, "connection.id must be a nonempty string.")
+                connection_meta = self._dict(connection.get("meta"), "connection.meta")
+                member_meta = self._dict(body["meta"], "meta") if "meta" in body else existing["meta"]
+                expected_build = party["meta"].get(BUILD_KEY)
+                if expected_build is not None and member_meta.get(BUILD_KEY) != expected_build:
+                    raise ApiError(403, Err.PARTY_JOIN_FORBIDDEN, "The build does not match this party.")
+                if "yield_leadership" in connection and not isinstance(connection["yield_leadership"], bool):
+                    raise ApiError(400, Err.INVALID_PAYLOAD, "connection.yield_leadership must be a boolean.")
+                if "offline_ttl" in connection and (isinstance(connection["offline_ttl"], bool) or
+                        not isinstance(connection["offline_ttl"], int) or connection["offline_ttl"] < 0):
+                    raise ApiError(400, Err.INVALID_PAYLOAD, "connection.offline_ttl must be a nonnegative integer.")
+                now = self.ctx.iso()
+                restored = {"id": connection["id"], "meta": copy.deepcopy(connection_meta),
+                            "connected_at": now, "updated_at": now,
+                            "yield_leadership": connection.get("yield_leadership", False)}
+                if "offline_ttl" in connection:
+                    restored["offline_ttl"] = connection["offline_ttl"]
+                existing["connections"] = [restored]
+                existing["meta"] = copy.deepcopy(member_meta)
+                existing["revision"] += 1
+                existing["updated_at"] = now
+                self._touch(party)
+                self._set_presence(account_id, "Online", party_id)
+                self._emit(party, "MEMBER_CONNECTED", account_id, member=existing)
+                # Reuse the local join response policy; the original status is unknown.
+                return 200, {"party_id": party_id, "status": "JOINED"}
             raise ApiError(409, Err.USER_HAS_PARTY, "The user is already in another party.")
         body = req.json_object()
         # Constructing the member validates nested objects before any admission or request.
