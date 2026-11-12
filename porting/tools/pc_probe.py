@@ -115,6 +115,12 @@ def path_eval(mem, pc, playerstate):
     print(f'   gate1 class test: PlayerState IsA FortPlayerState = {is_a(mem, playerstate, fortps)}')
     b28c, b54c = u(mem, pc + 0x28C, '<B', 1), u(mem, pc + 0x54C, '<B', 1)
     print(f'   SetHasFinishedLoading needs [+0x28c]&2 (is {b28c:#x}) and IsLocalController (cache [+0x54c]={b54c})')
+    # Pawn customization (0x1423593a0) logs "Hero:None": AFortPlayerPawn::Hero (+0x1818, transient). Read the chain.
+    pawn = u(mem, pc + 0x248, '<Q', 8) or 0
+    pps = u(mem, pawn + 0x238, '<Q', 8) if pawn else None
+    print(f'   Pawn={pawn:#x} pawn.PlayerState={pps or 0:#x} (controller PS {playerstate:#x}) '
+          f'pawn.Hero[+0x1818]={(u(mem, pawn + 0x1818, "<Q", 8) or 0) if pawn else 0:#x} '
+          f'PS.HeroType[+0x370]={u(mem, playerstate + 0x370, "<Q", 8) or 0:#x}')
     outer = u(mem, pc + 0x20, '<Q', 8)
     print(f'   outer={outer or 0:#x}')
     if not outer:

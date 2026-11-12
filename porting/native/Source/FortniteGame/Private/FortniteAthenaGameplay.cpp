@@ -11,6 +11,13 @@
 #include "AFortPlayerControllerAthena.h"
 #include "AFortGameStateAthena.h"
 #include "AFortInventory.h"
+#include "AFortPlayerState.h"
+#include "UFortHeroType.h"
+#include "UCustomCharacterPart.h"
+#include "FCustomCharacterData.h"
+#include "EFortCustomPartType.h"
+#include "EFortCustomGender.h"
+#include "EFortCustomBodyType.h"
 #include "AFortPlayerController.h"
 #include "EFortInventoryType.h"
 
@@ -333,9 +340,53 @@ static void EnsureWorldInventory(AController* NewPlayer)
     UE_LOG(LogTemp, Display, TEXT("WorldInventory created for %s; sent ClientOnGenericPlayerInitialization"), *Controller->GetName());
 }
 
+// The client's pawn customization (0x1423593a0) waits for the player state's HeroType ("Hero:None" in the client log);
+// the hero's specialization lists the character parts the client then builds. The original server assigns the hero from
+// the player's profile loadout during login; until that is ported every player gets the default Athena hero.
+static void EnsureHero(AController* NewPlayer)
+{
+    AFortPlayerState* PlayerState = NewPlayer ? Cast<AFortPlayerState>(NewPlayer->PlayerState) : nullptr;
+    if (!PlayerState || PlayerState->HeroType)
+        return;
+    static const TCHAR* DefaultHeroPath = TEXT("/Game/Athena/Heroes/HID_560_Athena_Commando_M_RebirthDefaultA.HID_560_Athena_Commando_M_RebirthDefaultA");
+    UFortHeroType* Hero = LoadObject<UFortHeroType>(nullptr, DefaultHeroPath);
+    if (!Hero)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Default hero %s did not load"), DefaultHeroPath);
+        return;
+    }
+    PlayerState->HeroType = Hero;
+
+    // On a client the customization (0x1423593a0) takes the character parts from PlayerState->CharacterData when
+    // WasPartReplicatedFlags (its first byte) is non-zero. The parts are the ones HS_560's specialization lists.
+    struct FDefaultPart { EFortCustomPartType::Type Slot; const TCHAR* Path; };
+    static const FDefaultPart DefaultParts[] = {
+        { EFortCustomPartType::Head, TEXT("/Game/Characters/CharacterParts/Male/Medium/Heads/CP_Athena_Head_M_RebithSoldier.CP_Athena_Head_M_RebithSoldier") },
+        { EFortCustomPartType::Body, TEXT("/Game/Athena/Heroes/Meshes/Bodies/CP_Athena_Body_M_RebirthSoldier.CP_Athena_Body_M_RebirthSoldier") },
+        { EFortCustomPartType::Face, TEXT("/Game/Characters/CharacterParts/FaceAccessories/CP_M_MED_RebirthSoldier.CP_M_MED_RebirthSoldier") },
+    };
+    for (const FDefaultPart& Part : DefaultParts)
+    {
+        UCustomCharacterPart* Loaded = LoadObject<UCustomCharacterPart>(nullptr, Part.Path);
+        if (!Loaded)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("Default character part %s did not load"), Part.Path);
+            continue;
+        }
+        PlayerState->CharacterData.Parts[Part.Slot] = Loaded;
+        PlayerState->CharacterData.WasPartReplicatedFlags |= (1 << Part.Slot);
+    }
+    PlayerState->CharacterGender = EFortCustomGender::Male;
+    PlayerState->CharacterBodyType = EFortCustomBodyType::Medium;
+    PlayerState->ForceNetUpdate();
+    UE_LOG(LogTemp, Display, TEXT("Assigned hero %s and character parts (flags %d) to %s"), *Hero->GetName(),
+        (int32)PlayerState->CharacterData.WasPartReplicatedFlags, *PlayerState->GetName());
+}
+
 void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
 {
     EnsureWorldInventory(NewPlayer);
+    EnsureHero(NewPlayer);
     Super::RestartPlayer(NewPlayer);
     if (NewPlayer && NewPlayer->GetPawn())
         UE_LOG(LogTemp, Display, TEXT("Athena pawn spawned: class=%s authority=%d"),
