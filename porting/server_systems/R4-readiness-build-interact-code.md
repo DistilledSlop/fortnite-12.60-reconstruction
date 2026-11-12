@@ -143,11 +143,47 @@ re-created).
 Read in card R5 section 5: the damage cue multicast, `ClientOnPawnDied`, and
 the fact that `ClientNotifyWon` is already sent by `StartEndGamePhase`.
 
+### 2.3 The caller of the extra-piece helper, `0x1426b0790` (read, 148 lines)
+
+A virtual (slot `+0xab0` of the vtable that starts at `0x14620dda8`; the
+table `vt.py` reports from `0x14620d1a8` is two classes merged) of a
+weapon-like class in the `0x1426b…` region whose item definition pointer
+is at `+0xbe8`. Class name not resolved; by its behavior it is the tool
+that places an item onto a building piece (traps), inferred.
+`(this, Location, Rotation, Vec3, Vec4, uint AttachType)`.
+
+1. No item definition: forward everything to `0x1426b04d0` and return.
+2. `PC = 0x14269e2e0()` (the owning Fortnite controller, by two casts).
+   Return when null. Call own slot `+0xb00`.
+3. Return unless byte `+0xb35` bit 1 of the definition at `item + 0xbd0`
+   is set (inferred: "auto-create the attachment building").
+4. Pick the building class list: `AttachType` in {0, 2, 6, 7} uses the
+   definition at `+0xbd0`; `AttachType == 1` uses the one at `+0xbe0`;
+   anything else returns. Resolve the list (`0x142008e60`), pick a class
+   through the controller (`0x14237a640`), require it to be a building
+   class (`0x142752f80`).
+5. Snap Z to the 384 grid: `Z = round(Z / 384) * 384`.
+6. `PC->slot[+0x1a20](Class, &Location, Rotation, …)` (the placement
+   check, same slot as in section 2.2). When it reports an existing piece
+   to replace or support, call **`0x14236d1a0`** (the extra-piece helper).
+7. **The actual spawn call is the shared null stub**:
+   `Stub_Null_140680300(PC, &Class, &Location, &Rotation, …,
+   World[+0x540], bFlag, tagA, tagB)`. Its result is tested and, when
+   non-null, passed to own slot `+0xac0` (attach the item to the new
+   building). In this client the stub returns null, so nothing is ever
+   spawned here.
+
+**What this settles:** the server-side "spawn a building actor" routine is
+compiled out of the client everywhere it would be called, including this
+second, independent call site. There is no original body to port for the
+spawn; the re-creation in section 2 stays the plan. The argument list in
+step 7 is the best evidence for the removed function's signature.
+
 ## 5. Open items
 
 | Item | Needed for |
 |---|---|
 | `OnReadyToStartMatch` past step 7 (team and PlayerState setup) | anything the server does at ready time beyond the bit |
 | Names of building actor slots `+0x670`, `+0xa90`, `+0x880`, `+0x888` and controller slot `+0x1a20` | the build re-creation |
-| `0x1426b0790`, the only caller of the extra-piece helper | may hold more of the original build flow |
+| `0x1426b0790` | **done**, section 2.3 |
 | Re-run the RPC sweep with a rule for "real but only a guard" (a body under about 30 instructions that calls nothing after its checks) | other RPCs may be misclassified the same way as `ServerCreateBuildingActor` |

@@ -290,8 +290,8 @@ arguments.
     position among the Athena controller's generated thunks and its
     arguments this is **`ClientNotifyWon`** (inferred; the exec side is
     `0x142a572e0`, the client body `0x1419c6120`).
-  - `0x142a3bda0(PC)`: a no-argument event on `AFortPlayerController`, not
-    named.
+  - `0x142a3bda0(PC)`: a no-argument RPC thunk; its name global resolves
+    to `ClientFinishedInteractionInZone` (R3 section 5).
   - Before them, `0x1419f4520(PC, 1)` passes 1 to the PlayerState function
     `0x141a5aa60` (inferred: place = 1).
   So `ClientNotifyWon` is already sent by real code. The re-creation must

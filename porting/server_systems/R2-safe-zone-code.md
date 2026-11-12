@@ -166,8 +166,8 @@ Called from the tick driver (R1 section 2). `now` = GameState time.
 4. Centers and radii.
    - Normal advance (`-1`): `LastCenter = NextCenter`;
      `NextCenter = SafeZoneLocations[SafeZonePhase]`;
-     `LastRadius = 0x141a48240(indicator)` (the indicator's current radius,
-     inferred); `NextRadius = Radius[SafeZonePhase]` (0 when out of range).
+     `LastRadius = 0x141a48240(indicator)` (read: returns `Radius`,
+     indicator `+0x39c`); `NextRadius = Radius[SafeZonePhase]` (0 when out of range).
    - Forced index: `LastCenter = SafeZoneLocations[P]`;
      `NextCenter = SafeZoneLocations[P+1]` (or `[P]` when `P+1` is past the
      end); `LastRadius = Radius[P]`; `NextRadius = Radius[P+1]` (or
@@ -195,8 +195,12 @@ Called from the tick driver (R1 section 2). `now` = GameState time.
 14. For every entry of `AlivePlayers`: when the controller's PlayerState
     passes several checks (not fully read; bytes `+0x12ec` and `+0xd30` on
     the PlayerState), call `0x141a5b110(PlayerState, …)` and
-    `0x1419ebd40(controller)`. Inferred: per-player "storm is moving"
-    notification. Read before porting.
+    `0x1419ebd40(controller)`. `0x141a5b110` (read) writes two vectors, a
+    float and a set flag into the PlayerState's `RespawnData` (`+0xd30`
+    flag, `+0xd34`, `+0xd40`, `+0xd4c`), so this step refreshes each
+    alive player's respawn location for the new circle; `0x1419ebd40`
+    then sends the result data RPC (R6 section 5). Only respawn modes
+    need it.
 
 ## 7. Stop at the playlist's last circle, `0x1419b0f50` (read)
 
@@ -236,5 +240,5 @@ Port order: the table helper (section 1.1), `IsSafeZoneAllowed`,
 | **Storm damage: done.** The per-tick inside check is `0x141961aa0` and the per-pawn effect is `0x1419622e0`; both are in card R6 (sections 3 and 5), with the `GE_OutsideSafeZoneDamage` asset. | G8 "storm hurts" |
 | `0x1419964d0` real start | section 3 step 5 |
 | `0x141a5b1f0`, `0x1419ac150`, `0x141781400`, `0x1419ebd40` | **done**, R6 section 5 |
-| `0x141a48240`, `0x141a5b110` | bodies not read (need an exact capture) |
+| `0x141a48240`, `0x141a5b110` | **done**, sections 6 above |
 | `0x141964450` full read | next-next circle |

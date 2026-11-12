@@ -149,20 +149,73 @@ removed while the client is alive.
 When `WinnerPC` and its PlayerState exist:
 
 1. Log `%s won the match!` and the `StartEndGamePhase()` detail line.
-2. `0x1419f4520(WinnerPC, 1)` (not read).
+2. `0x1419f4520(WinnerPC, 1)`: when the controller's PlayerState is the
+   Athena class, `0x141a5aa60(PlayerState, 1)`; on authority that calls
+   `0x141a5a880(X, Place)` (not read; the place setter) for every valid
+   entry of the weak list `0x141a48e90(PlayerState)` and then for the
+   PlayerState itself.
 3. Winner PlayerState: `SecondsAlive = 0x141a483a0(PlayerState)`;
    the int at `+0x1294` = `GameState[+0x1418] - PlayerState[+0x1298]`.
 4. `Team = WinnerPC team`. GameState slot `+0x878` with the team returns the
    team info actor; when it is the Athena team info class, write the int 1
    at team info `+0x380` (inferred: team place = 1).
 5. `0x142a52de0(WinnerPC, FinisherPawn, FinishingWeapon, DeathCause)` and
-   `0x142a3bda0(WinnerPC)` (not read; by the arguments the first is the
-   server side of **`ClientNotifyWon`**).
+   `0x142a3bda0(WinnerPC)`. By the arguments the first is the server side
+   of **`ClientNotifyWon`**. The second is a no-argument RPC thunk whose
+   name global `0x1481aef70` is initialized from the string
+   `ClientFinishedInteractionInZone` (read from the initializer at
+   `0x140417f8x`; an odd name for this place, so treat as "resolved from
+   the name table, purpose not understood").
 6. GameState: `WinningTeam = Team`, `WinningPlayerState = winner's
    PlayerState`, append the winner's `PlayerId` to `WinningPlayerList` if it
    is not there, then slot `+0x5e8` (inferred: force net update).
-7. If the winner has an Athena pawn: `0x141a2bff0(Pawn, 6, 1.0, 0)` (not
-   read; inferred to make the pawn invulnerable or play the win state).
+7. If the winner has an Athena pawn: `0x141a2bff0(Pawn, 6, 1.0, 0)`
+   (read). Authority only, and only when the pawn's
+   `ItemSpecialActorCategoryTag` (`+0x2934`) is set: forwards
+   `(Tag, 6, 1.0, 0)` to `0x141f78700` on `GameState.SpecialActorData`
+   (`+0x1200`). This is the map marker for special actors, not
+   invulnerability. A normal player pawn has no such tag, so it does
+   nothing.
+
+### 5.1 `StartEndGamePhaseTeam`, `0x14196d120` (read, 187 lines)
+
+`(this, uint8 Team, PlayerState WinningPS, int Placement, FinisherPawn,
+FinishingWeapon, uint8 DeathCause)`. Returns 1 always. Does nothing unless
+the GameState is the Athena class.
+
+1. When the mode test `0x14199e4e0(GameState)` is true and `Team` is in
+   `WinningTeamsCN` (`+0x1388`): `Placement = 1`. (False in an ordinary
+   match, R6 section 3.)
+2. Stop unless the playlist exists and
+   `DefaultFirstTeam <= Team <= DefaultLastTeam` (playlist `+0xc8`,
+   `+0xc9`).
+3. Log `FortGameModeAthena: Team %d placed %d!` and the
+   `[AFortGameModeAthena::StartEndGamePhaseTeam()] …` detail line.
+4. `Placement == 1`: `GameState.WinningTeam = Team`,
+   `WinningPlayerState = WinningPS`.
+5. Team info actor (GameState slot `+0x878` with the team): when it is the
+   Athena team info class, int `+0x380` = `Placement`.
+6. For every entry of `PlayerArray` that is an Athena PlayerState on
+   `Team` (team read through the interface at PlayerState `+0x318`, slot
+   `+0x28`):
+   - `Placement == 1`: add its `PlayerId` to `WinningPlayerList` when
+     missing;
+   - when its `Owner` (`+0xe0`) is an Athena controller `PC`:
+     - `0x1419f4520(PC, Placement)` (step 2 of section 5);
+     - `SecondsAlive = 0x141a483a0(PlayerState)` (returns the current
+       `SecondsAlive`, so this is a no-op as compiled), and when the int at
+       `+0x1294` is `-1`: `+0x1294 = GameState[+0x1418] -
+       PlayerState[+0x1298]`;
+     - if `PC.Pawn` is an Athena pawn: `0x141a2bff0(Pawn, 6, 1.0, 0)`
+       (step 7 above);
+     - `0x142a3bda0(PC)`;
+     - `Placement == 1`: **`ClientNotifyTeamWon`** (`0x142a52d90(PC,
+       FinisherPawn, FinishingWeapon, DeathCause)`); otherwise
+       **`ClientNotifyTeamLost`** (`0x142a52d50(PC)`). Both names are read
+       from the name-table initializer at `0x14041ac3x` / `0x14041ac5x`.
+
+Unlike the solo path (section 5) this function does not end the match;
+its caller does (section 4).
 
 Then always: end the match with reason 0 and a one-byte array holding
 `GameState.WinningTeam` (3 when there is no GameState). Returns 1.
@@ -187,8 +240,9 @@ decompile shows only `this`. Eleven callers, all "the match is over" sites.
 ## 6. `HandleMatchHasEnded`, `0x14194b750` (read)
 
 1. `Delay = 0x141946150(this)` (not read; the post-match time).
-   `0x1419ae460(GameState, …, Delay)` (not read; inferred to publish the end
-   time to clients).
+   `0x1419ae460(GameState, Now, Delay)` (read): `EndGameStartTime = Now`,
+   `EndGameKickPlayerTime = Now + Delay`, then broadcasts the delegate at
+   GameState `+0x1338`.
 2. Set a timer of `Delay` seconds on handle `+0xdc0` (callback not read;
    D2 says it is the post-match shutdown).
 3. Set the phase to EndGame through the phase setter (R1 section 3.1) and
@@ -231,7 +285,7 @@ mutator.
    `GameState.TeamsLeft += 1`.
 5. `PC.bMarkedAlive = 1`; `GameState.PlayersLeft = AlivePlayers.Num()`;
    `GameState.TotalPlayers = max(AlivePlayers.Num(), value from
-   0x1419997b0)`.
+   0x1419997b0)` (read: fills three ints, `TotalPlayers`, `TotalPlayersBots`, and their sum).
 6. Large team games: `TeamXPlayersLeft[Index] += 1`.
 7. Log `Player [%s] added to alive players list (Team [%d]). Player count is
    now [%d]. Team count is now [%d].`
@@ -259,9 +313,9 @@ match-ended byte, `WinningTeam`, `WinningPlayerState`, `WinningPlayerList`.
 
 | Item | Needed for |
 |---|---|
-| `0x142a52de0`, `0x142a3bda0`, `0x1419f4520`, `0x141a2bff0` | exactly what the winner receives |
-| `0x1428ef5b0`, `0x141963e70`, `0x141946150`, `0x1419ae460`, `0x141962af0` | end-of-match timing and the return to lobby |
+| `0x141a5a880` (the place setter behind `0x1419f4520`) | exactly what the winner's PlayerState receives; the rest of this row is read (section 5 and 5.1) |
+| `0x141962af0` | match start and end log line; `0x1428ef5b0`, `0x141963e70`, `0x141946150` are read in R6 section 5, `0x1419ae460` in section 6 here |
 | the `+0xdc0` timer callback | what happens after the post-match delay |
 | `0x1419783c0` | called before every win |
-| `0x14196d120` | team win (duos and squads) |
+| `0x14196d120` | **done**, section 5.1 |
 | mode tests `0x14199e430`, `0x14199e4e0` | confirm false for solo |

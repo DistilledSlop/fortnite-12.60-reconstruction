@@ -266,12 +266,14 @@ Steps:
      rows (`StormCamping*` all 0) the timer never starts, so the port can
      keep the literal behavior at no cost.
 2. `bHasTag = 0x14232d430(Pawn)`: the pawn's ability system component has
-   the native tag at table `+0x2e0` (name not resolved).
+   the tag `Granted.Athena.Item.DogSweater.InDamageZone` (table `+0x2e0`).
    `0x14234d960(Pawn, bHasTag ? bInside : !bInside)`: on authority, when
    the value differs, write `bIsInAnyStorm` and call `0x14233c4e0`
-   (not read; the on-change handler).
-3. Pawn slot `+0x1010(bInside)`. The same slot is what the Warmup branch
-   of the caller uses; it sets the inside-safe-zone state (body not read).
+   (section 3.1).
+3. Pawn slot `+0x1010(bInside)` = `0x14234d990` (section 3.1). The same
+   slot is what the Warmup branch of the caller uses. **This is the switch
+   for the damage:** it adds or removes the loose tag
+   `Gameplay.InsideSafeZone`, which the effect ignores on.
 4. `ASC = Pawn's IAbilitySystemInterface (+0x4c8) ->
    GetAbilitySystemComponent()`. Stop when null or when the handle at
    `+0x1224` is `-1`.
@@ -285,8 +287,9 @@ Steps:
      being destroyed) **and not DBNO**:
      - outside: level = `Phase + 1`; `SignalInStorm = 0`.
      - inside: level = `0`; `SignalInStorm = SignalInStormRegenSpeed`.
-     - `P = Pawn->slot[+0xb48]()` (a float, 0 to 100; shield or health
-       percent, not resolved).
+     - `P = Pawn->slot[+0xb48]()` = `0x142323de0`: the current value of
+       the `SignalInStorm` attribute (`HealthSet + 0xd0`, value at `+0xdc`;
+       0 when the pawn has no health set).
        - `P <= 0`: `StormCNKillDamage = 1000.0`.
        - `0 < P < 100`: `i = clamp((100 - (int)P) / 25, 0, 3)`;
          `StormDamageBuffCNTag = StormCNDamageVulnerabilityLevel[i]`.
@@ -305,15 +308,50 @@ the pawn and is switched by the `Gameplay.InsideSafeZone` tag (set through
 step 3, inferred) and scaled by its level.
 
 **For G8 "storm hurts" the minimum is:** apply the effect once (already
-done by `FinishRestartPlayer`), keep its handle, and each storm tick per
-pawn do step 3, step 5 and the level writes of step 7. Steps 1, 6 and the
-CN and signal tags are zero or neutral under the default rows, but the
-`StormCampingDamage` write (1.0) is required: the effect multiplies by it
-(inferred from the modifier; an unset set-by-caller logs an error and
-evaluates as 0).
+done by `FinishRestartPlayer`), keep its handle in the pawn
+(`SafeZoneAppliedGE` is the property at `+0x1230`; the handle read here is
+at `+0x1224`), and each storm tick per pawn do step 3 (the tag), step 5
+(level = phase) and step 6 (`StormCampingDamage = 1.0`). Step 7 does not
+run in an ordinary match. The `StormCampingDamage` write is required: the
+effect multiplies by it (inferred from the modifier; an unset set-by-caller
+logs an error and evaluates as 0).
 
-`bFlag` is passed through from `0x141961aa0`; what sets it there is not
-resolved.
+`bFlag` is `0x14199e4e0(GameState)`, evaluated once per tick in
+`0x141961aa0`. That is the mode test in section 5: false unless a global
+option is set and the playlist qualifies. Together with the names
+(`StormCN…`, `WinningTeamsCN`, the `SignalInStorm` attribute) this is the
+regional "signal in storm" rule set, and **in an ordinary match `bFlag` is
+false, so the function ends after step 6.** The effect level then stays
+at `Phase` for every pawn, inside or outside, and only the
+`Gameplay.InsideSafeZone` tag decides whether damage is dealt.
+
+The phase passed in is `SafeZonePhase`, except that a pawn inside one of
+the per-volume storm overrides gets that volume's phase (`+0x45c` of the
+volume; `0x141961aa0` lines 160 to 222, skimmed).
+
+### 3.1 The pawn side (read)
+
+**`0x14234d990`, pawn slot `+0x1010`, `(Pawn, bool bInside)`.** Authority
+only, and only when `bIsInsideSafeZone` (`+0x1220` bit 1) differs:
+
+1. write the bit;
+2. on the ability system component (interface slot `+0x10`): read the
+   current loose count of `Gameplay.InsideSafeZone` (tag table `+0x928`,
+   count map at ASC `+0x10e0`) and apply the difference so the count
+   becomes 1 when inside and 0 when outside (`0x140744d30(ASC + 0x1040,
+   Tag, Delta, 0)`);
+3. broadcast `OnSafeZoneOccupancyChangedEvent` (`+0x21e8`) with the new
+   value.
+
+**`0x14233c4e0`, after `bIsInAnyStorm` changes.** Works out whether the
+storm screen effects should play (a world check `0x144693a30` and the
+local view `0x142321a70`), updates `bPlayingSafeZoneEffects` (`+0x1061`
+bit 1), calls `0x142a77180` and broadcasts the delegate at `+0x1238`, then
+pawn slot `+0x1018`. Cosmetic; the server can skip everything but the bit.
+
+**`0x14231c4c0`, pawn slot `+0xb28`:** health. 0 when the object is being
+destroyed, 1.0 when the pawn does not use stats or has no health set,
+else `max(0, Health)`.
 
 ## 4. `0x141978a80`: per-phase building gameplay actor spawns (read, 333 lines)
 
@@ -365,7 +403,7 @@ Moved here from the handoff. Confidence "read" unless stated.
 | `0x1419783c0` | Placement update for some playlist types: refreshes every PlayerState (`0x141a5adb0`, `0x141a51eb0`), calls `0x141938090`, then for the losing team's members sets place (`0x141a5b600`) and state 2 (`0x141a5b610`), and for the winner's team state 1. |
 | `0x1419ebd40` | Controller: collects match result data from the PlayerState (`0x141a481a0`) and sends a client RPC through thunk `0x142a53030`. RPC name not resolved. |
 | `0x141961aa0` | Storm inside check, 399 lines. Skips when game mode byte `+0xda0` is set. In Warmup it calls pawn slot `+0x1010(bInside)` for every player pawn. Otherwise, for each pawn: `bInside = 0x14194e9e0(GameMode, &PawnLocation, 0x1419494f0(GameMode))`, an optional creative-volume override, then `0x1419622e0` (section 3). |
-| `0x14196d120` | Is `StartEndGamePhaseTeam` (log strings `[AFortGameModeAthena::StartEndGamePhaseTeam()] TeamNum [%d], WinningPS [%s], Placement [%d…` and `FortGameModeAthena: Team %d placed %d!`). Body not read, 214 lines. |
+| `0x14196d120` | `StartEndGamePhaseTeam`. Read; card R3 section 5.1. |
 | `0x141962af0` | Logs `MatchStarted,%s,%s` / `MatchEnded,%s,%s`. Body not read, 131 lines. |
 | `0x141781400` | Analytics event `Athena.NewSafeZone` (`LastLocation`, `LastRadius`, `NewLocation`, `NewPhase`). Not gameplay. |
 | `0x1419fc560` | Contains `[LTMLoading] - Player %s StartWaitLTMLoading, IsServer %s`. Body not read. |
@@ -380,10 +418,8 @@ Moved here from the handoff. Confidence "read" unless stated.
 
 | Address | What |
 |---|---|
-| `0x14233c4e0`, pawn slots `+0x1010` and `+0xb48` | storm state change handler, inside-safe-zone setter, the 0 to 100 value |
-| native tag `+0x2e0`, `bFlag` source in `0x141961aa0` | section 3 steps 2 and 7 |
 | `0x1419a42b0`, `0x1419a4830` | playspace plugin load callbacks |
 | rest of `0x1419b47b0`, `0x1419a0870` | playlist-to-GameState copy, loot definition preload |
-| `0x14196d120`, `0x1426b0790`, `0x141962af0`, `0x1419fc560` | handoff item 4 |
-| `0x141a48240`, `0x141a5b110`, `0x1419ae460`, `0x1419997b0`, `0x141a483a0` | need an exact capture (`rd.py … --exact`) |
+| `0x141962af0`, `0x1419fc560` | match start and end log line, LTM loading wait |
+| per-volume phase override in `0x141961aa0` (lines 160 to 222) | only for modes with extra storm volumes |
 | `0x141988940`, `0x1419a9580`, `0x1419ae490`, `0x1419797b0` | captured earlier, not read |

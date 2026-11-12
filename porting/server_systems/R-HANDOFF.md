@@ -51,21 +51,22 @@ start is known, because the default start resolution picks the previous
 
 ## 4. Open work for Fable, in priority order
 
-Done on 2026-11-12 (second session): the `OnPlaylistDataLoaded` trigger,
-the storm table source, `0x1419622e0` and `0x141978a80` (all in R6).
+Done on 2026-11-12 (second session), all written into the cards:
+`OnPlaylistDataLoaded` trigger, storm table source, `IsMapInfoValid`,
+storm damage including the pawn side (R6); `StartEndGamePhaseTeam` and the
+end-game helpers (R3 sections 5, 5.1, 6); the build caller `0x1426b0790`
+(R4 section 2.3); the five wrong-start helpers (R2, R3).
 
-1. (done: `IsMapInfoValid` `0x1418f1550` passes for a spawned
-   `DefaultMapInfo_C`, R6 section 2.2.)
-2. Finish storm damage details: pawn slots `+0x1010` and `+0xb48`,
-   `0x14233c4e0`, the native tag at table `+0x2e0`, and what sets `bFlag`
-   in `0x141961aa0` (R6 section 6).
-3. Read `0x14196d120`, `0x1426b0790` and the wrong-start helpers; update R3
-   and R4.
-4. Read the rest of `0x1419b47b0` (playlist values copied into the
+1. Re-run the RPC sweep with a "real but only a guard" rule (R4 section 5).
+   Add a second rule from R4 section 2.3: a body whose only substantive
+   call is `0x140680300` (the shared null stub) is also not real.
+2. Read the rest of `0x1419b47b0` (playlist values copied into the
    GameState) if Sonnet ports the playlist chain instead of calling the
    game mode directly (R6 section 1.3).
-5. Re-run the RPC sweep with a "real but only a guard" rule (R4 section 5).
-6. Review Sonnet's re-creation designs when they appear.
+3. Small leftovers: `0x141a5a880` (place setter), `0x141962af0`,
+   `0x1419fc560`, `0x141988940`, `0x1419a9580`, `0x1419ae490`,
+   `0x1419797b0`, the two plugin callbacks `0x1419a42b0` / `0x1419a4830`.
+4. Review Sonnet's re-creation designs when they appear.
 
 ## 5. Tools
 
