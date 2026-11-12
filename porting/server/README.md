@@ -503,11 +503,12 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   permission and error semantics remain inferred. Local private and mutual-friend
   policies govern new requests; existing requests can still be accepted.
 - **Quest coverage.** All nine cooked Maya quests and their individual style-token rewards are implemented, alongside Agent Peely style tokens.
-  The first 80 weekly missions (Brutus weeks 1–2, TNTina weeks 3–4, Meowscles weeks 5–6 and Skye weeks 7–8) now use their cooked objectives,
-  40,000 XP rewards and completion-token thresholds. Their owned mission schedule
-  grants week 1 immediately, then weeks 2–8 at day offsets 10, 17, 24, 31, 38, 45 and 52; sharing the configured
+  All 100 weekly missions (Brutus, TNTina, Meowscles, Skye and Midas, weeks 1–10) now use their cooked objectives,
+  40,000 XP rewards and completion-token thresholds. The cooked `SeasonGrantsToEveryone` entitlement now grants their mission schedule
+  through `ClientQuestLogin`, including for free accounts. The owned schedule grants week 1
+  immediately, then weeks 2–10 at day offsets 10, 17, 24, 31, 38, 45, 52, 59 and 66; sharing the configured
   LobbySeason12 calendar anchor is a local policy. Faction choice activation and
-  the remaining weekly mission families are incomplete.
+  other seasonal mission families remain incomplete.
   Deadpool activation/progression now uses 21 cooked quest definitions, 12 bundles
   and 11 schedule entries, including multiple objectives and independent W7 timing.
   Dated grants require an explicit event start; the historical event epoch is
