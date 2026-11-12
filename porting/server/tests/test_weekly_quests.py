@@ -54,7 +54,7 @@ class WeeklyQuestTests(unittest.TestCase):
         return self.get('Quest:' + name)['attributes']
 
     def test_owned_schedule_and_dates(self):
-        self.assertEqual(len(WEEKLY_QUESTS), 20)
+        self.assertEqual(len(WEEKLY_QUESTS), 40)
         self.login()
         self.assertIsNone(self.get('Quest:quest_s12_w1_q01'))
         self.grant_schedule(); self.login()
@@ -68,6 +68,28 @@ class WeeklyQuestTests(unittest.TestCase):
         self.quests.event_starts[TAG] = START; self.login()
         self.assertIsNotNone(self.get('Quest:quest_s12_w2_q01'))
         self.assertIsNone(self.get('Quest:quest_AB_skulldude_ego'))
+
+    def test_tntina_schedule_subset_and_token_family(self):
+        self.grant_schedule(); self.login()
+        self.now = START + 17 * 86400 - 1; self.login()
+        self.assertIsNone(self.get('Quest:quest_s12_w3_q05'))
+        self.now += 1; self.login()
+        self.assertIsNotNone(self.get('Quest:quest_s12_w3_q05'))
+        self.assertIsNone(self.get('Quest:quest_s12_w4_q01'))
+        objectives = WEEKLY_QUESTS['quest_s12_w3_q05']['objectives']
+        for index, (_, event, target) in enumerate(objectives[:14]):
+            self.progress(event, f'landmark-{index}', target)
+        self.assertNotEqual(self.quest('quest_s12_w3_q05')['quest_state'], 'Claimed')
+        _, event, target = objectives[14]
+        self.progress(event, 'landmark-14', target)
+        self.assertEqual(self.quest('quest_s12_w3_q05')['quest_state'], 'Claimed')
+        self.assertEqual(self.get('Token:AthenaBattlePass_TnTinaBundle_Token')['quantity'], 1)
+        self.assertEqual(self.get('Token:AthenaBattlePass_WeeklyChallenge_Token')['quantity'], 1)
+        self.assertIsNone(self.get('Token:AthenaBattlePass_SkullDudeBundle_Token'))
+        self.now = START + 24 * 86400 - 1; self.login()
+        self.assertIsNone(self.get('Quest:quest_s12_w4_q01'))
+        self.now += 1; self.login()
+        self.assertIsNotNone(self.get('Quest:quest_s12_w4_q01'))
 
     def test_match_rules_and_receipts(self):
         self.grant_schedule(); self.login()
