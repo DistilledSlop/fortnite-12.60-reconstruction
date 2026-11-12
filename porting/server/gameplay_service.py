@@ -99,6 +99,48 @@ class GameplayService:
             result["stats"] = {key: value for key, value in result["stats"].items() if key in requested}
         return 200, result
 
+    def stats_query(self, req, match):
+        """Read a StatsV2 batch, using the same local visibility policy as GET.
+
+        Original client captures under /opt/fortnite/local-model-package/captures:
+        0bd58650353647638bbb3cf02fd15fc1/0x140bb28a0.c (POST and validation),
+        f40086b73f404a3ea8f04c1015e0faeb/0x140bb35d0.c (array response),
+        da2af36046ad440595e934fbe48ebec8/0x140bca120.c (result fields),
+        ff1d260f787c44739dd130fe2b0eeb0f/0x140bc9c20.c (request fields).
+        Server limits, appId policy, unknown owners and time semantics are
+        local policies rather than original-server proof.
+        Locally, bounds are inclusive Unix seconds, duplicate owners collapse
+        in first-seen order, and an unknown owner fails the entire batch.
+        """
+        self.oauth.account_session(req)
+        body = req.json_object()
+        def invalid(message):
+            raise ApiError(400, Err.INVALID_PAYLOAD, message)
+
+        app_id = body.get("appId")
+        if not isinstance(app_id, str) or not app_id.strip() or len(app_id) > 255:
+            invalid("appId must be a nonempty string of at most 255 characters.")
+        arrays = []
+        for field in ("owners", "stats"):
+            values = body.get(field)
+            if (not isinstance(values, list) or not 1 <= len(values) <= 100 or
+                    any(not isinstance(value, str) or not value.strip() or len(value) > 255
+                        for value in values)):
+                invalid(f"{field} must contain 1 to 100 nonempty strings of at most 255 characters.")
+            arrays.append(values)
+        start, end = body.get("startDate"), body.get("endDate")
+        if (type(start) is not int or type(end) is not int or
+                not 0 <= start <= end <= 2**63 - 1):
+            invalid("startDate and endDate must be ordered nonnegative int64 Unix timestamps.")
+        owners, names = arrays
+        requested = set(names)
+        results = []
+        for owner in dict.fromkeys(owners):
+            result = self.progression.stats(owner, start, end)
+            result["stats"] = {key: value for key, value in result["stats"].items() if key in requested}
+            results.append(result)
+        return 200, results
+
     def register(self, router):
         router.add("GET", r"/local/gameserver/([^/]+)/player/([^/]+)", self.player,
                    name="gameserver.player", status="guess")
@@ -108,3 +150,5 @@ class GameplayService:
                    name="gameserver.quest_event", status="guess")
         router.add("GET", r"/statsproxy/api/statsv2/account/([^/]+)", self.stats,
                    name="stats.account", status="inferred")
+        router.add("POST", r"/statsproxy/api/statsv2/query", self.stats_query,
+                   name="stats.query", status="inferred")
