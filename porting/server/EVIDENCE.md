@@ -307,6 +307,26 @@ recognize PARTY_UPDATED and MEMBER_STATE_UPDATED but show default/empty values
 for several configuration/metadata fields. Notification reader parity and
 two-client party behavior remain open.
 
+The captured defaults led to recovery of PARTY_UPDATED reader `0x140c4a3f0`
+and MEMBER_STATE_UPDATED reader `0x140c49b30`. Both read flat `party_id`, `ns`
+and `sent`. Party updates additionally read `captain_id`, `party_privacy_type`,
+`max_number_of_members`, `party_type`, `party_sub_type`, `revision`,
+`party_state_removed`, `party_state_updated` and `party_state_overrode`.
+Member updates read `account_id`, `account_dn`, `member_state_removed`,
+`member_state_updated`, optional `connection`, `revision` and `reason`.
+The updated/overrode fields require JSON objects, not strings containing JSON.
+The backend now emits submitted metadata deltas under those names and uses
+the member revision for member events. Snapshot copies prevent later mutations
+from changing queued messages. Original-client verification of these corrected
+messages is pending; other party event types remain inferred.
+
+Privacy decoder `0x140a46060` recognizes OPEN, INVITE_ONLY and INVITE_AND_FORMER.
+Handler `0x140c253b0` maps OPEN to permission enum 3 and the other two to 0.
+The local legacy CLOSED value is emitted as INVITE_ONLY; that compatibility
+mapping is local policy. Capture groups in the private package are
+`418135cc66a849369c6056ab92b2f540`, `5378d6ff36694fa880acabbc8c81404b`,
+`1bad8abea9dd4de09a86cdd3972bfaeb` and `6c65e9fa026444bd9b390177b5cee47d`.
+
 The recent-player callback `0x140cc1460` wraps the raw response array under
 `recentplayers` internally, preserving accepted entry order. Reader `0x140cd7250`
 reads `accountId` and `lastPlayed`, with `0x142ca3070` parsing the date string.

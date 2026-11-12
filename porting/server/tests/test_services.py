@@ -24,11 +24,13 @@ else:
 
 import base64
 import json
+import re
 import shutil
 import sys
 import tempfile
 import threading
 import unittest
+from types import SimpleNamespace
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -844,6 +846,70 @@ class PartyTests(ServiceTestCase):
         self.assertError(jcall(self.base, "POST", f"{PARTY}/parties", token=self.a, body={}),
                          409, Err.USER_HAS_PARTY)
         self.assertError(jcall(self.base, "POST", f"{PARTY}/parties", body={}), 401, Err.AUTH_REQUIRED)
+
+    def test_update_notifications_have_flat_client_fields_and_snapshot_deltas(self):
+        party = create_party(self.base, self.a, meta={"remove": 1, "keep": 2})
+        pid = party["id"]
+        jcall(self.base, "POST", f"{PARTY}/parties/{pid}/members/{self.b_id}/join", token=self.b, body={})
+        service = self.backend.party
+        events = []
+        service.notify = lambda recipient, event: events.append((recipient, event))
+        request = lambda token, body: SimpleNamespace(bearer_token=lambda: token, json_object=lambda: body)
+        party_match = re.match(r"(.+)", pid)
+        member_match = re.match(r"([^/]+)/([^/]+)", pid + "/" + self.b_id)
+        body = {"revision": 2, "config": {"joinability": "CLOSED", "max_size": 4},
+                "meta": {"delete": ["remove"], "update": {"new": {"v": 1}},
+                         "override": {"keep": {"v": 2}}}}
+        service.party_update(request(self.a, body), party_match)
+        self.assertEqual({recipient for recipient, _ in events}, {self.a_id, self.b_id})
+        event = events[0][1]
+        self.assertEqual(event, {"type": "com.epicgames.social.party.notification.v0.PARTY_UPDATED",
+                                 "party_id": pid, "ns": "Fortnite", "sent": self.backend.ctx.iso(),
+                                 "captain_id": self.a_id, "party_privacy_type": "INVITE_ONLY",
+                                 "max_number_of_members": 4, "party_type": "DEFAULT", "party_sub_type": "default",
+                                 "revision": 3, "party_state_removed": ["remove"],
+                                 "party_state_updated": {"new": {"v": 1}},
+                                 "party_state_overrode": {"keep": {"v": 2}}})
+        body["meta"]["update"]["new"]["v"] = 9
+        service._parties[pid]["meta"]["keep"]["v"] = 8
+        self.assertEqual(event["party_state_updated"], {"new": {"v": 1}})
+        self.assertEqual(event["party_state_overrode"], {"keep": {"v": 2}})
+        self.assertEqual(service._parties[pid]["meta"]["new"], {"v": 1})
+        events.clear()
+        member_body = {"delete": ["old"], "update": {"new": {"v": 3}}, "revision": 0}
+        service.member_meta(request(self.b, member_body), member_match)
+        member_event = events[0][1]
+        self.assertEqual(member_event, {"type": "com.epicgames.social.party.notification.v0.MEMBER_STATE_UPDATED",
+                                       "party_id": pid, "ns": "Fortnite", "sent": self.backend.ctx.iso(),
+                                       "account_id": self.b_id, "account_dn": "Bee", "revision": 1,
+                                       "reason": "", "member_state_removed": ["old"],
+                                       "member_state_updated": {"new": {"v": 3}}})
+        self.assertEqual(service._parties[pid]["revision"], 4)
+        member_body["update"]["new"]["v"] = 10
+        self.assertEqual(member_event["member_state_updated"], {"new": {"v": 3}})
+        self.assertEqual(service._member(service._parties[pid], self.b_id)["meta"]["new"], {"v": 3})
+        events.clear()
+        service.disconnect(request(self.b, {}), member_match)
+        self.assertEqual(events[0][1]["revision"], 2)
+        self.assertEqual(events[0][1]["member_state_updated"], {})
+        self.assertNotIn("connection", events[0][1])
+
+    def test_party_notification_privacy_values_and_metadata_endpoint(self):
+        pid = create_party(self.base, self.a)["id"]
+        events = []
+        self.backend.party.notify = lambda recipient, event: events.append(event)
+        path = f"{PARTY}/parties/{pid}"
+        for revision, privacy in enumerate(("OPEN", "INVITE_ONLY", "INVITE_AND_FORMER"), 1):
+            self.assertEqual(call(self.base, "PATCH", path, token=self.a,
+                                  body={"revision": revision, "config": {"joinability": privacy}})[0], 204)
+            event = events[-1]
+            self.assertEqual(event["party_privacy_type"], privacy)
+            self.assertEqual((event["party_state_removed"], event["party_state_updated"],
+                              event["party_state_overrode"]), ([], {}, {}))
+        self.assertEqual(call(self.base, "PATCH", path + "/meta", token=self.a,
+                              body={"delete": ["old"], "update": {"key": "value"}})[0], 204)
+        self.assertEqual((events[-1]["party_state_removed"], events[-1]["party_state_updated"],
+                          events[-1]["party_state_overrode"]), (["old"], {"key": "value"}, {}))
 
     def test_get_party_and_unknown_party(self):
         party = create_party(self.base, self.a)

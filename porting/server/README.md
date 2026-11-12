@@ -438,8 +438,9 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   session setup and presence. The initial party-creation failure was fixed by
   accepting the observed configuration. A subsequent diagnostic returned 200
   for creation and 204 for the client's nested root PATCH and member-meta PATCH.
-  Party notifications are recognized, but some configuration and metadata fields
-  still decode as defaults; successful HTTP alone does not establish party UI parity.
+  That run recognized party notifications but decoded some configuration and
+  metadata fields as defaults. The update payloads now use recovered flat fields
+  and member revisions; their affected client flow still needs verification.
   The client sends
   unqualified stanza fragments, which the service now accepts alongside namespaced
   stanzas. Direct chat relays between online local friends or party members;
@@ -452,7 +453,8 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   request, displayed the accepted account offline, then removed it using the v1
   routes (both 204). A new live incoming request also displayed a notification
   toast and badge without restarting. Two online clients still need verification.
-  Party notification payloads remain partly inferred. Party-only MUC chat uses `<party-id>@muc.<stream-domain>` as a local convention.
+  Party update and member-state update fields follow the original readers;
+  other party notification payloads remain inferred. Party-only MUC chat uses `<party-id>@muc.<stream-domain>` as a local convention.
   Its room naming and reconnect behavior require client validation. Friends settings
   persist per account. Recent players now come from co-players with committed
   results in the same registered match; blocked peers are filtered. This assumes

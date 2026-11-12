@@ -63,12 +63,30 @@ class PartyService:
     # Helpers -----------------------------------------------------------
 
     def _emit(self, party, kind, actor, recipients=None, **fields):
-        # Notification names and fields are inferred, not captured from the client.
         if not self.notify:
             return
         event = {"type": "com.epicgames.social.party.notification.v0." + kind,
-                 "party_id": party["id"], "account_id": actor,
-                 "revision": party["revision"], **copy.deepcopy(fields)}
+                 "party_id": party["id"]}
+        if kind == "PARTY_UPDATED":
+            config = party["config"]
+            # CLOSED is a legacy local value; the client recognizes INVITE_ONLY.
+            privacy = "INVITE_ONLY" if config["joinability"] == "CLOSED" else config["joinability"]
+            captain = self._captain(party)
+            event.update({"ns": "Fortnite", "sent": self.ctx.iso(),
+                          "captain_id": captain["account_id"] if captain else "",
+                          "party_privacy_type": privacy, "max_number_of_members": config["maxSize"],
+                          "party_type": config["type"] if isinstance(config["type"], str) else DEFAULT_CONFIG["type"],
+                          "party_sub_type": config["subType"] if isinstance(config["subType"], str) else DEFAULT_CONFIG["subType"],
+                          "revision": party["revision"], **copy.deepcopy(fields)})
+        elif kind == "MEMBER_STATE_UPDATED":
+            member = self._member(party, actor)
+            account = self.accounts.get(actor)
+            event.update({"ns": "Fortnite", "sent": self.ctx.iso(), "account_id": actor,
+                          "account_dn": account["displayName"] if account else "",
+                          "revision": member["revision"], "reason": "", **copy.deepcopy(fields)})
+        else:
+            # Other notification formats remain inferred.
+            event.update({"account_id": actor, "revision": party["revision"], **copy.deepcopy(fields)})
         if recipients is None:
             recipients = [member["account_id"] for member in party["members"]]
         for recipient in set(recipients):
@@ -242,7 +260,7 @@ class PartyService:
             "updated_at": now,
             "revision": 0,
             "config": self._config(body.get("config")),
-            "meta": self._dict(body.get("meta"), "meta"),
+            "meta": copy.deepcopy(self._dict(body.get("meta"), "meta")),
             "members": [],
             "invites": [],
         }
@@ -377,11 +395,12 @@ class PartyService:
         deletes, updates = self._meta_body(body)
         for key in deletes:
             member["meta"].pop(key, None)
-        member["meta"].update(updates)
+        member["meta"].update(copy.deepcopy(updates))
         member["revision"] += 1
         member["updated_at"] = self.ctx.iso()
         self._touch(party)
-        self._emit(party, "MEMBER_STATE_UPDATED", account_id, member=member)
+        self._emit(party, "MEMBER_STATE_UPDATED", caller,
+                   member_state_removed=deletes, member_state_updated=updates)
         return 204, None
 
     def party_meta(self, req, match):
@@ -396,9 +415,10 @@ class PartyService:
         deletes, updates = self._meta_body(body)
         for key in deletes:
             party["meta"].pop(key, None)
-        party["meta"].update(updates)
+        party["meta"].update(copy.deepcopy(updates))
         self._touch(party)
-        self._emit(party, "PARTY_UPDATED", caller, config=party["config"], meta=party["meta"])
+        self._emit(party, "PARTY_UPDATED", caller, party_state_removed=deletes,
+                   party_state_updated=updates, party_state_overrode={})
         return 204, None
 
     def party_update(self, req, match):
@@ -433,7 +453,8 @@ class PartyService:
         party["config"] = config
         party["meta"] = meta
         self._touch(party)
-        self._emit(party, "PARTY_UPDATED", caller, config=config, meta=meta)
+        self._emit(party, "PARTY_UPDATED", caller, party_state_removed=deletes,
+                   party_state_updated=updates, party_state_overrode=override)
         return 204, None
 
     def promote(self, req, match):
@@ -476,7 +497,8 @@ class PartyService:
         member["updated_at"] = self.ctx.iso()
         self._set_presence(account_id, "Offline", None)
         self._touch(party)
-        self._emit(party, "MEMBER_STATE_UPDATED", account_id, member=member)
+        self._emit(party, "MEMBER_STATE_UPDATED", caller,
+                   member_state_removed=[], member_state_updated={})
         return 204, None
 
     # User and ping handlers -------------------------------------------
