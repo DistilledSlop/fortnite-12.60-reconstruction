@@ -15,6 +15,17 @@ Tags: [log] our Wine client/server logs, [exe] strings in the Shipping exe, [ini
 - **Flow:** Hello, then Challenge, Login, PreLogin, Welcome (client loads the map from its own paks), Join. Login URLs can be huge; this tree already has the 16 MB patch [src World.cpp:5076]. The client's MCP `UniqueNetId` cannot be built without an MCP OSS, but `operator<<` ignores that failure [src OnlineReplStructs.cpp:47-52], so login proceeds.
 - **Encryption token.** The client fetches a key from `GET /api/game/v2/matchmaking/account/{acct}/session/{sid}` (FortMcpUtils, base64 key in a JSON object; field name unverified) and adds `?EncryptionToken=` to the join URL. The server must bind `FNetDelegates::OnReceivedNetworkEncryptionToken` [src World.cpp:5031] and return the same 32-byte key, else `NMT_Failure "Encryption failure"`. `Fort.UseFakeEncryptionKey` does not work in shipping [exe]. A direct connect without the option skips encryption.
 
+### Observed packet layouts (2026-11-11, capture `udp.pcap`, bit order LSB first as `FBitReader` reads)
+
+- Every packet starts with the 4 magic bits `1110`.
+- Handshake packets: bit 4 = 1 (handshake), bit 5 restart flag, bit 6 secret id, then a 32-bit **float** timestamp, then the
+  20-byte cookie. Initial client packet: timestamp 0 (25 bytes). Challenge and ack are 25 bytes too.
+- Normal packets after the handshake: `1110`, handshake bit 0, AES encryption bit (0 until the key is set; once set the rest
+  of the packet is the AES block), then the **Oodle compressed-packet bit** (0 for packets under 19 bytes, 1 when compressed),
+  then the net connection data. The notify header is packed `[4-bit history word count - 1][14-bit acked seq][14-bit seq]`.
+  The client's first sequence is the server's incoming init sequence + 1 and it acks the server's outgoing init sequence - 1.
+- Server chain must be Oodle, AES, StatelessConnect (the client logs the same order); see `MATCHMAKING_PROBE.md` 2026-11-11.
+
 ## 2. Replication strictness
 
 - Live connections use **positional** handles, not names. The checksum-per-property path is only for demo/InternalAck connections [src RepLayout.cpp:794,3313]. So for every replicated class the server must match: super chain, replicated UPROPERTY order (native: declaration order; BP: memory offset [src Class.cpp:4079]), array dims, struct layouts, custom `NetSerialize` bit formats, and the set of net UFUNCTIONs (sorted by name, so RPC indices shift).

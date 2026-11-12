@@ -221,6 +221,16 @@ public:
         FNetworkVersion::GetLocalNetworkVersionOverride.BindStatic(&GetFortniteNetworkVersion);
         FNetworkVersion::IsNetworkCompatibleOverride.BindStatic(&IsFortniteNetworkCompatible);
         BindNetworkEncryptionDelegate();
+        if (FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")) && GConfig != nullptr)
+        {
+            // The original 12.60 client's packet handler chain is Oodle, AES, StatelessConnect and the Oodle
+            // component puts one "compressed" bit in front of every packet even when it does not compress
+            // (observed in a capture: that bit is set on large packets, clear on small ones). Without the
+            // Oodle SDK the engine plugin provides a bit-only stand-in for this mode (OodleHandlerComponent.cpp).
+            // The client must be configured not to compress (net.OodleMinSizeForCompression).
+            const TArray<FString> OriginalClientComponents = { TEXT("OodleHandlerComponent") };
+            GConfig->SetArray(TEXT("PacketHandlerComponents"), TEXT("Components"), OriginalClientComponents, GEngineIni);
+        }
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::OnEngineInitForNetwork);
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::ProbeAsset);
         FCoreDelegates::OnPostEngineInit.AddStatic(&RunOriginalVulkanShaderProbe);

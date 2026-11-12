@@ -98,3 +98,16 @@ Everything on the wire from the first handshake packet to `NMT_Join` matches sto
 | Server process restarts or asserts | A `check` in the patched handler | Read the callstack |
 
 After the encryption ack, if packets fail to decrypt: compare the client's AES `Incoming`/`Outgoing` (`0x1409dd1c0`–`0x1409dd990`) with stock `AESHandlerComponent.cpp` instruction by instruction. That is the one part of the chain not yet verified at that level.
+
+## 7. Runtime result (added 2026-11-11, observed)
+
+The restart loop was a missed packet-handler component, not the handshake. The client's chain is Oodle, AES,
+StatelessConnect; section 4's reading "with `bEnableOodle` false, `Incoming` reads nothing" does not match what the running
+client does: the loose-ini value did not take effect and the client still writes and reads the Oodle compressed bit
+(and compresses packets of 19 bytes or more, cvar `net.OodleMinSizeForCompression`, default 19 from shipped config).
+`Initialize` (0x14119bf30) reads `bEnableOodle` from the engine config and there is also a command-line force-enable;
+which of those wins on the running client was not traced. The working answer (engine bit-only stand-in plus a
+memory patch for the cvar) and the capture-based layout are in `MATCHMAKING_PROBE.md` (2026-11-11) and
+`original_client_net_protocol.md` section 1. After that, section 5's expectations held: Hello, encryption response,
+Login and Welcome all work on the stock control channel code.
+

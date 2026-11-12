@@ -1,0 +1,181 @@
+diff --git a/Engine/Plugins/Online/OnlineSubsystemUtils/Source/OnlineSubsystemUtils/Private/OnlineEngineInterfaceImpl.cpp b/Engine/Plugins/Online/OnlineSubsystemUtils/Source/OnlineSubsystemUtils/Private/OnlineEngineInterfaceImpl.cpp
+index ba338e31e..e39fc9eb9 100644
+--- a/Engine/Plugins/Online/OnlineSubsystemUtils/Source/OnlineSubsystemUtils/Private/OnlineEngineInterfaceImpl.cpp
++++ b/Engine/Plugins/Online/OnlineSubsystemUtils/Source/OnlineSubsystemUtils/Private/OnlineEngineInterfaceImpl.cpp
+@@ -8,6 +8,8 @@
+ #include "Misc/ConfigCacheIni.h"
+ #include "Engine/NetConnection.h"
+ #include "OnlineSubsystemNames.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ 
+ UOnlineEngineInterfaceImpl::UOnlineEngineInterfaceImpl(const FObjectInitializer& ObjectInitializer)
+ 	: Super(ObjectInitializer)
+@@ -340,10 +342,24 @@ void UOnlineEngineInterfaceImpl::UpdateSessionJoinability(UWorld* World, FName S
+ 	}
+ }
+ 
++// The original Fortnite client's unique id has type "MCP", which this server has no online subsystem for. The Null
++// session interface asserts when it is given an id of another type, so session (un)registration is skipped for such
++// ids when serving the original client. The original game mode does its own player registration (not ported yet).
++static bool CanUseIdWithSessionInterface(UWorld* World, const FUniqueNetId& UniqueId)
++{
++	static const bool bFortniteOriginalClient = FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
++	if (!bFortniteOriginalClient)
++	{
++		return true;
++	}
++	IOnlineSubsystem* OnlineSub = Online::GetSubsystem(World);
++	return OnlineSub == nullptr || UniqueId.GetType() == OnlineSub->GetSubsystemName();
++}
++
+ void UOnlineEngineInterfaceImpl::RegisterPlayer(UWorld* World, FName SessionName, const FUniqueNetId& UniqueId, bool bWasInvited)
+ {
+ 	IOnlineSessionPtr SessionInt = Online::GetSessionInterface(World);
+-	if (SessionInt.IsValid() && UniqueId.IsValid())
++	if (SessionInt.IsValid() && UniqueId.IsValid() && CanUseIdWithSessionInterface(World, UniqueId))
+ 	{
+ 		SessionInt->RegisterPlayer(SessionName, UniqueId, bWasInvited);
+ 	}
+@@ -352,7 +368,7 @@ void UOnlineEngineInterfaceImpl::RegisterPlayer(UWorld* World, FName SessionName
+ void UOnlineEngineInterfaceImpl::UnregisterPlayer(UWorld* World, FName SessionName, const FUniqueNetId& UniqueId)
+ {
+ 	IOnlineSessionPtr SessionInt = Online::GetSessionInterface(World);
+-	if (SessionInt.IsValid())
++	if (SessionInt.IsValid() && CanUseIdWithSessionInterface(World, UniqueId))
+ 	{
+ 		SessionInt->UnregisterPlayer(SessionName, UniqueId);
+ 	}
+@@ -363,7 +379,18 @@ void UOnlineEngineInterfaceImpl::UnregisterPlayers(UWorld* World, FName SessionN
+ 	IOnlineSessionPtr SessionInt = Online::GetSessionInterface(World);
+ 	if (SessionInt.IsValid())
+ 	{
+-		SessionInt->UnregisterPlayers(SessionName, Players);
++		TArray< TSharedRef<const FUniqueNetId> > UsablePlayers;
++		for (const TSharedRef<const FUniqueNetId>& Player : Players)
++		{
++			if (CanUseIdWithSessionInterface(World, *Player))
++			{
++				UsablePlayers.Add(Player);
++			}
++		}
++		if (UsablePlayers.Num() > 0)
++		{
++			SessionInt->UnregisterPlayers(SessionName, UsablePlayers);
++		}
+ 	}
+ }
+ 
+diff --git a/Engine/Plugins/Runtime/PacketHandlers/CompressionComponents/Oodle/Source/OodleHandlerComponent/Private/OodleHandlerComponent.cpp b/Engine/Plugins/Runtime/PacketHandlers/CompressionComponents/Oodle/Source/OodleHandlerComponent/Private/OodleHandlerComponent.cpp
+index 05bdbb032..dd39a6425 100644
+--- a/Engine/Plugins/Runtime/PacketHandlers/CompressionComponents/Oodle/Source/OodleHandlerComponent/Private/OodleHandlerComponent.cpp
++++ b/Engine/Plugins/Runtime/PacketHandlers/CompressionComponents/Oodle/Source/OodleHandlerComponent/Private/OodleHandlerComponent.cpp
+@@ -1646,8 +1646,83 @@ void FOodleComponentModuleInterface::ShutdownModule()
+ }
+ 
+ #else
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
++
++/**
++ * Stand-in used only for the original Fortnite 12.60 client (-FortniteOriginalClient) when the Oodle
++ * SDK is not available. That client's handler chain is Oodle, AES, StatelessConnect and the Oodle
++ * component puts one "compressed packet" bit at the front of every packet's payload, even when
++ * compression is not used. This class keeps the wire layout identical: it reads that bit on incoming
++ * packets (a set bit means compressed data we cannot decode, so the packet is dropped) and writes a
++ * zero bit on outgoing packets. The client must be configured never to compress
++ * (net.OodleMinSizeForCompression above the maximum packet size).
++ */
++class FFortniteOodleBitComponent : public HandlerComponent
++{
++public:
++	FFortniteOodleBitComponent()
++		: HandlerComponent(FName(TEXT("OodleHandlerComponent")))
++	{
++	}
++
++	virtual void Initialize() override
++	{
++		SetActive(true);
++		SetState(Handler::Component::State::Initialized);
++		Initialized();
++	}
++
++	virtual bool IsValid() const override
++	{
++		return true;
++	}
++
++	virtual void Incoming(FBitReader& Packet) override
++	{
++		if (Packet.GetBitsLeft() > 0)
++		{
++			if (Packet.ReadBit() != 0)
++			{
++				UE_LOG(OodleHandlerComponentLog, Error, TEXT("FFortniteOodleBitComponent::Incoming: received a compressed packet but the Oodle SDK is not available; dropping it."));
++				Packet.SetError();
++			}
++		}
++	}
++
++	virtual void Outgoing(FBitWriter& Packet, FOutPacketTraits& Traits) override
++	{
++		if (Packet.GetNumBytes() > 0)
++		{
++			FBitWriter NewPacket(Packet.GetNumBits() + 1, true);
++			NewPacket.WriteBit(0);
++			NewPacket.SerializeBits(Packet.GetData(), Packet.GetNumBits());
++			Packet = MoveTemp(NewPacket);
++		}
++	}
++
++	virtual void IncomingConnectionless(const TSharedPtr<const FInternetAddr>& Address, FBitReader& Packet) override {}
++	virtual void OutgoingConnectionless(const TSharedPtr<const FInternetAddr>& Address, FBitWriter& Packet, FOutPacketTraits& Traits) override {}
++
++	virtual int32 GetReservedPacketBits() const override
++	{
++		return 1;
++	}
++
++	virtual void CountBytes(FArchive& Ar) const override
++	{
++		Ar.CountBytes(sizeof(*this), sizeof(*this));
++	}
++};
++
+ TSharedPtr<HandlerComponent> FOodleComponentModuleInterface::CreateComponentInstance(FString& Options)
+ {
++	if (FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
++	{
++		UE_LOG(OodleHandlerComponentLog, Log, TEXT("Creating the bit-only Oodle stand-in for the original Fortnite client (no Oodle SDK)."));
++		return MakeShared<FFortniteOodleBitComponent>();
++	}
++
+ 	UE_LOG(OodleHandlerComponentLog, Error, TEXT("Can't create OodleHandlerComponent instance - HAS_OODLE_NET_SDK is false."));
+ 
+ 	return TSharedPtr<HandlerComponent>(nullptr);
+diff --git a/Engine/Source/Runtime/Engine/Private/GameModeBase.cpp b/Engine/Source/Runtime/Engine/Private/GameModeBase.cpp
+index 2b0d3591a..e92b31af8 100644
+--- a/Engine/Source/Runtime/Engine/Private/GameModeBase.cpp
++++ b/Engine/Source/Runtime/Engine/Private/GameModeBase.cpp
+@@ -1,6 +1,8 @@
+ // Copyright Epic Games, Inc. All Rights Reserved.
+ 
+ #include "GameFramework/GameModeBase.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ #include "GameFramework/GameNetworkManager.h"
+ #include "Matinee/MatineeActor.h"
+ #include "Engine/LevelScriptActor.h"
+@@ -625,7 +627,10 @@ void AGameModeBase::GameWelcomePlayer(UNetConnection* Connection, FString& Redir
+ void AGameModeBase::PreLogin(const FString& Options, const FString& Address, const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage)
+ {
+ 	// Login unique id must match server expected unique id type OR No unique id could mean game doesn't use them
+-	const bool bUniqueIdCheckOk = (!UniqueId.IsValid() || (UniqueId.GetType() == UOnlineEngineInterface::Get()->GetDefaultOnlineSubsystemName()));
++	// The original Fortnite client logs in with an "MCP" unique id, which this server has no online subsystem for.
++	// The original AFortGameModeAthena::PreLogin is not ported yet, so that client's login is accepted as is.
++	static const bool bFortniteOriginalClient = FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient"));
++	const bool bUniqueIdCheckOk = (bFortniteOriginalClient || !UniqueId.IsValid() || (UniqueId.GetType() == UOnlineEngineInterface::Get()->GetDefaultOnlineSubsystemName()));
+ 	if (bUniqueIdCheckOk)
+ 	{
+ 		ErrorMessage = GameSession->ApproveLogin(Options);

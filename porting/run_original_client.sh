@@ -10,6 +10,7 @@
 # Set FN_DISPLAY and, if required, FN_XAUTHORITY to use an existing X11 display.
 # Without FN_DISPLAY, the runner creates a private Xvfb display.
 # FN_STATE_DIR selects a separate local backend account/profile directory.
+# FN_SERVER_CMD starts a command (for example the dedicated server) in the same namespace.
 set -euo pipefail
 
 porting_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
@@ -44,7 +45,25 @@ if [[ -z "${FN_NETNS_INNER:-}" ]]; then
         printf 'Wine is still using prefix %s. Close its Wine applications and stop its wineserver before retrying.\n' "$wineprefix" >&2
         exit 1
     fi
-    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
+    # Net settings the original client needs against our server (Engine.ini is a loose config file, the exe is untouched):
+    # the client's Oodle handler adds a "compressed" bit to every packet; we have no Oodle SDK, so it must never compress.
+    ini="$wineprefix/drive_c/users/$USER/AppData/Local/FortniteGame/Saved/Config/WindowsClient/Engine.ini"
+    if [[ -d "$(dirname "$ini")" ]]; then
+        python3 - "$ini" <<'PYEOF'
+import sys,re
+path=sys.argv[1]
+begin,end="; BEGIN original-client-net","; END original-client-net"
+block="\n".join([begin,"[SystemSettings]","net.OodleMinSizeForCompression=100000","[ConsoleVariables]","net.OodleMinSizeForCompression=100000",end])+"\n"
+try:
+    text=open(path).read()
+except FileNotFoundError:
+    text=""
+text=re.sub(re.escape(begin)+r".*?"+re.escape(end)+r"\n?","",text,flags=re.S)
+if text and not text.endswith("\n"): text+="\n"
+open(path,"w").write(text+block)
+PYEOF
+    fi
+    exec sudo -n env FN_NETNS_INNER=1 FN_USER="$USER" FN_USERNAME="$username" FN_WINEPREFIX="$wineprefix" FN_WINEDLLOVERRIDES="${FN_WINEDLLOVERRIDES:-}" FN_VK_ICD_FILENAMES="${FN_VK_ICD_FILENAMES:-}" FN_PATCH_VERIFY="${FN_PATCH_VERIFY:-1}" FN_PATCH_APPES_DIAGNOSTIC="${FN_PATCH_APPES_DIAGNOSTIC:-0}" FN_ACTIONS="${FN_ACTIONS:-}" FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" FN_STATE_DIR="${FN_STATE_DIR:-}" FN_SERVER_CMD="${FN_SERVER_CMD:-}" FN_WINEDEBUG="${FN_WINEDEBUG:--all}" FN_DISPLAY="${FN_DISPLAY:-}" FN_XAUTHORITY="${FN_XAUTHORITY:-}" FN_PORTAL_ARG="${FN_PORTAL_ARG:--NOEPICPORTAL}" FN_EPICENV="${FN_EPICENV:-Prod}" unshare -n -m "$porting_dir/run_original_client.sh" "$seconds" "$@"
 fi
 
 ip link set lo up
@@ -79,12 +98,18 @@ if [[ "${FN_PATCH_APPES_DIAGNOSTIC:-0}" =~ ^(1|timer|handler-only|timer-only)$ ]
     python3 "$porting_dir/server/patch_appes_diagnostic.py" "$seconds" "$client_log" "$appes_mode" > "$generated/patch-appes-diagnostic.out" 2>&1 &
     appes_patcher=$!
 fi
-trap 'kill $server $patcher $appes_patcher 2>/dev/null || true' EXIT
+oodle_patcher=
+if [[ "${FN_PATCH_OODLE:-1}" == 1 ]]; then
+    # The original client's Oodle handler would compress packets we cannot decode (no Oodle SDK); see the script header.
+    python3 "$porting_dir/server/patch_oodle_min_size.py" "$seconds" > "$generated/patch-oodle-min-size.out" 2>&1 &
+    oodle_patcher=$!
+fi
+trap 'kill $server $patcher $appes_patcher $oodle_patcher 2>/dev/null || true' EXIT
 
 mkdir -p "$generated/shots"
 chown "$FN_USER" "$generated/shots"
 set +e
-wine_env=(WINEPREFIX="$wineprefix" WINEDEBUG=-all SHOTS_DIR="$generated/shots" FN_ACTIONS="$FN_ACTIONS")
+wine_env=(WINEPREFIX="$wineprefix" WINEDEBUG="${FN_WINEDEBUG:--all}" SHOTS_DIR="$generated/shots" FN_ACTIONS="$FN_ACTIONS")
 [[ -z "${FN_WINEDLLOVERRIDES:-}" ]] || wine_env+=(WINEDLLOVERRIDES="$FN_WINEDLLOVERRIDES")
 [[ -z "${FN_VK_ICD_FILENAMES:-}" ]] || wine_env+=(VK_ICD_FILENAMES="$FN_VK_ICD_FILENAMES")
 if [[ -n "${FN_DISPLAY:-}" ]]; then
@@ -93,6 +118,15 @@ if [[ -n "${FN_DISPLAY:-}" ]]; then
     display_cmd=()
 else
     display_cmd=(xvfb-run -a -s '-screen 0 1280x720x24')
+fi
+# FN_SERVER_CMD: optional command (run as the user, inside this namespace) started before the
+# client, e.g. the dedicated server. Stopped when the client run ends.
+server_cmd_pid=
+if [[ -n "${FN_SERVER_CMD:-}" ]]; then
+    sudo -n -u "$user" env FORTNITE_NET_ENCRYPTION_KEY_FILE="${FORTNITE_NET_ENCRYPTION_KEY_FILE:-}" \
+        timeout --kill-after=5s "${seconds}s" bash -c "$FN_SERVER_CMD" &
+    server_cmd_pid=$!
+    sleep 5
 fi
 sudo -n -u "$user" env "${wine_env[@]}" \
     "${display_cmd[@]}" timeout "${seconds}s" \
@@ -119,6 +153,7 @@ exec wine FortniteClient-Win64-Shipping.exe "$@"' "$bin_dir" \
     > "$generated/original-client-run.out" 2>&1
 status=$?
 set -e
+[[ -z "$server_cmd_pid" ]] || { kill "$server_cmd_pid" 2>/dev/null || true; }
 printf 'Original client runner exit status: %s\n' "$status"
 if [[ "$status" == 124 ]]; then
     exit 0 # A client still running at the observation deadline is expected.

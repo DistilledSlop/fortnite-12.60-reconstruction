@@ -46,3 +46,15 @@ For controlled investigations, `FN_PATCH_APPES_DIAGNOSTIC=handler-only` and
 handler-only run still registered and fired the exit timer. The timer-only run
 stayed open past that timer but displayed a blocking launcher error; confirming
 it requested exit. Neither is a complete launch mode.
+
+## Server in the same namespace, scripted run (2026-11-11)
+
+`FN_SERVER_CMD` starts a command (the dedicated server) inside the runner's namespace before the client;
+`FN_ACTIONS` clicks and takes screenshots; `FN_WINEDEBUG` overrides the Wine debug channels. The runner also starts
+`server/patch_oodle_min_size.py` (set `FN_PATCH_OODLE=0` to skip) and writes a marked `net.OodleMinSizeForCompression`
+block into the client's loose `Engine.ini`. `tools/vanilla_play_run.sh [seconds]` wires all of it together, presses the
+Battle Royale and lobby Play buttons, captures UDP 7777 and prints a summary; output goes to
+`generated/wine-investigation/<date>-play-run-<n>/`. Do not set `FN_WINEDLLOVERRIDES` for DXVK: the prefix has no
+DXVK (the `d3d11`/`dxgi` files are Wine's own) and the override stops the client at load. Software rendering is slow:
+mode select at about 2 minutes, lobby at about 4.
+
