@@ -197,9 +197,24 @@ spawn, before `OnPlaylistDataLoaded`:
    copy when it loads the real map. Not checked what the server does with
    it (no reads of that property found in the functions read so far).
 
-Open risk, not verified: whether the MapInfo validity check `0x1418f1550`
-(R1 section 6.1) accepts an instance spawned at run time. Read it before
-relying on option 2 of section 1.3.
+**The validity check passes for a spawned instance.** `0x1418f1550` is
+`IsMapInfoValid` (read, 106 lines; log strings `IsMapInfoValid: …`). It
+tests properties only, nothing about how the actor came to exist:
+
+1. `AircraftClass` (`+0x3b0`) is set and is a child of the aircraft base
+   class (`0x1427cdfa0`);
+2. `AircraftSpeed` (`+0x4b8`) at level 0 is above 0;
+3. `AircraftSpawnZone` has `Min < Max` on both axes;
+4. when `AircraftDropVolume` is set: valid, stop here;
+5. otherwise `AircraftDropZone` has `Min < Max` on both axes and lies
+   strictly inside `AircraftSpawnZone`.
+
+The class defaults satisfy all of it (`AthenaAircraft_C`, speed row 7500,
+spawn zone ±150000, drop zone ±80000). The one dependency is that
+`AthenaGameData` is loaded, because the speed comes from its row
+`Default.Aircraft.Speed`; with the table missing the scalable float
+returns its plain value (1 in the asset, still above 0, but then the bus
+moves at 1 unit per second).
 
 Alternative that needs no hand-filled data: `Apollo_Terrain.umap`'s
 persistent level is small (1.8 MB, 143 exports). It holds the MapInfo, the
@@ -354,6 +369,7 @@ Moved here from the handoff. Confidence "read" unless stated.
 | `0x141962af0` | Logs `MatchStarted,%s,%s` / `MatchEnded,%s,%s`. Body not read, 131 lines. |
 | `0x141781400` | Analytics event `Athena.NewSafeZone` (`LastLocation`, `LastRadius`, `NewLocation`, `NewPhase`). Not gameplay. |
 | `0x1419fc560` | Contains `[LTMLoading] - Player %s StartWaitLTMLoading, IsServer %s`. Body not read. |
+| `0x1418f1550` | `IsMapInfoValid`, section 2.2. |
 | `0x141641300` | `World[+0x128]` (`AuthorityGameMode`) cast to `AFortGameModeAthena`, else null. |
 | `0x14194cd50` | Storm camping timer callback (section 3 step 1). |
 | `0x14232d430` | Pawn: its ability system component (`+0xbb8`) has native tag `+0x2e0`. |
@@ -364,7 +380,6 @@ Moved here from the handoff. Confidence "read" unless stated.
 
 | Address | What |
 |---|---|
-| `0x1418f1550` | MapInfo validity check before the flight path setup (section 2.2 risk) |
 | `0x14233c4e0`, pawn slots `+0x1010` and `+0xb48` | storm state change handler, inside-safe-zone setter, the 0 to 100 value |
 | native tag `+0x2e0`, `bFlag` source in `0x141961aa0` | section 3 steps 2 and 7 |
 | `0x1419a42b0`, `0x1419a4830` | playspace plugin load callbacks |

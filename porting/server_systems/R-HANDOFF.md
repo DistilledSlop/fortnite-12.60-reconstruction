@@ -54,8 +54,8 @@ start is known, because the default start resolution picks the previous
 Done on 2026-11-12 (second session): the `OnPlaylistDataLoaded` trigger,
 the storm table source, `0x1419622e0` and `0x141978a80` (all in R6).
 
-1. Read the MapInfo validity check `0x1418f1550` and decide whether a
-   run-time spawned `DefaultMapInfo_C` passes it (R6 section 2.2 risk).
+1. (done: `IsMapInfoValid` `0x1418f1550` passes for a spawned
+   `DefaultMapInfo_C`, R6 section 2.2.)
 2. Finish storm damage details: pawn slots `+0x1010` and `+0xb48`,
    `0x14233c4e0`, the native tag at table `+0x2e0`, and what sets `bFlag`
    in `0x141961aa0` (R6 section 6).

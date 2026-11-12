@@ -322,7 +322,7 @@ re-uses them.
 `0x1418d4da0(World, Index)`:
 
 1. Needs `World->GameState` to be `AFortGameStateAthena` with a `MapInfo`
-   that passes `0x1418f1550` (not read; a validity check).
+   that passes `0x1418f1550` (`IsMapInfoValid`, read in R6 section 2.2).
 2. Spawns `MapInfo.AircraftClass` (must derive from the aircraft base class)
    with spawn parameters flags `|= 6` and collision override 1.
 3. Sets `AircraftIndex = Index`, sets `FlightStartTime`, `FlightEndTime`,
