@@ -54,7 +54,7 @@ class WeeklyQuestTests(unittest.TestCase):
         return self.get('Quest:' + name)['attributes']
 
     def test_owned_schedule_and_dates(self):
-        self.assertEqual(len(WEEKLY_QUESTS), 60)
+        self.assertEqual(len(WEEKLY_QUESTS), 80)
         self.login()
         self.assertIsNone(self.get('Quest:quest_s12_w1_q01'))
         self.grant_schedule(); self.login()
