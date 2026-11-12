@@ -79,3 +79,24 @@ Runs use `tools/vanilla_play_run.sh` (server and original client in one namespac
   four classes. The next step (plan WP A3 step 4) is to find which replicated properties or functions differ,
   starting with the shared engine base classes (the client reports `EngineNetVer 15`).
 
+
+### 2026-11-12: class checksums now match the client (G5)
+
+Method: the server dump (`-FortniteDumpClassChecksums`, plus `-FortniteDumpChecksumProps=<names>` for a recursive
+child listing) prints each property's own and struct-inclusive checksum, and `class_checksum.py` was compared per property.
+Engine ancestors (Actor, Controller, PlayerController) matched once the model was fixed (super struct fields included,
+struct bitfield offsets from `generated/reflection/struct_bool_setters.json`, `mov byte [rcx]` setters decoded).
+The remaining differences were all in the server's generated headers (fixed in `gen_native_classes.py`, 59+ headers regenerated):
+
+| Cause | Fix in the generator |
+| --- | --- |
+| Struct members with `CPF_RepSkip` (0x80000000) were hashed on the server | emit `UPROPERTY(NotReplicated)` |
+| Bitfields from different original bytes were packed into one byte, so the (offset, name) sort order differed | `uint8 : 0;` between original byte groups (`bool_bits.json`) |
+| `TArray<UClass*>` inner (no `CPF_UObjectWrapper`) was emitted as `TSubclassOf<UObject>` | plain `UClass*` for replicated properties and struct members |
+
+Result: server ClassChecksum equals the client's for FortPlayerControllerAthena 944441294, FortPlayerPawnAthena 2681584166,
+FortGameStateAthena 2463825438, FortPlayerStateAthena 3459852286. Vanilla run `20261112-play-run-1`: 0 `NetChecksumMismatch`,
+connection held until the run ended. Model gap still open: `class_checksum.py` gives 2004319565 for FortGameStateAthena
+(the client value is authoritative), so its "expected" is not trustworthy for FortGameStateAthena or its struct children.
+Known limits: `promote_native_classes.sh` currently fails on 3 `USceneComponent` behavior splices (present at HEAD, unrelated),
+so the regenerated headers were copied from a scratch generation; struct bitfields have no byte-group separators yet.
