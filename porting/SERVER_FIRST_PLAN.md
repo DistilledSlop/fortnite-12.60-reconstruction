@@ -9,6 +9,33 @@ It is written so that a worker with no prior context can pick up one work packag
 
 Read sections 1 to 4 before starting any WP.
 
+## 0. Upfront thinking already done (read the card before starting its WP)
+
+These cards hold what was read from the client binary and the game content, the
+decisions taken, and the designs for the parts that must be re-created. A worker
+implements from the card; it does not redo the analysis.
+
+| Card (`porting/server_systems/`) | Covers WPs | Main result |
+|---|---|---|
+| `A-wire-findings.md` | A1, A2 | Handshake, packet header, Oodle and control messages match stock 4.25 plus the float-time patch. No further wire patch indicated. G3 needs one logged run; the card has the decision tree. |
+| `D-server-code-in-client-findings.md` | D-all | 2,536 server functions located by log strings. Corrected names for the 59 engine-called bodies. |
+| `D2-match-flow.md` | A3, A4, D1, D2, D11 | Join sequence and the full phase state machine (warmup → aircraft → safe zones → end game) are real code in the client. Port order, URL options for testing (`?RequiredPlayers=1?PauseWarmup`). |
+| `D3-dedicated-session.md` | D3, E (game-server link) | Do not port the Epic session stack. Keep `ServesPlaylists=`; server command line; four backend calls (register, state, player, result). |
+| `D4-game-data.md` | C3, D10, D11, D12 | Storm, bus, supply drop, DBNO, harvest, fall damage, XP and the complete loot tables with weights are in the client content. Values listed. |
+| `D5-stubbed-rpcs-and-recreation.md` | D0, D4, D9, D12 | Sweep of all 11,407 reflected natives: 314 empty, of which 98 `Server*` RPCs, of which 24 matter for Battle Royale. A design for each. |
+| `D6-combat-and-elimination.md` | D5, D6, D7, D8 | `RemoveFromAlivePlayers` and the win/end-game path are real; the server death sequence is missing and is designed in the card. |
+| `E-backend-remaining.md` | E1–E9 | Game-server link, encryption key, cosmetics, results/XP, XMPP, friends, patch removal. |
+
+Tools made for this (usage in `porting/tools/README.md`): `rd.py` (annotated
+decompile), `rpc_sweep.py` (real or empty body), `callers.py` (who calls an
+address), `nameidx.py`/`strx.py` (names from strings), `asset_props.py`/
+`asset_table.py` (game data from the extracted content).
+
+Not thought through yet (still open, in priority order): Blueprint class
+loading on the server and level streaming (C1, C2); vehicles (D14); bots and
+henchmen (D15); quests (part of D16); instruction-level compare of the AES
+packet handler; the AppES gate (E-card E6).
+
 ---
 
 ## 1. Rules for every worker
@@ -378,6 +405,8 @@ Write a headless check (commandlet or `cue4inspect` script) that prints, for `Pl
 
 #### WP D0: sweep for stripped and protected functions [T, read-only on code; owns `server_scope/stripped.json`]
 
+**Status 2026-11-11: done for reflected functions.** Method, numbers and the list are in `server_systems/D5-stubbed-rpcs-and-recreation.md`; data in `server_scope/server_rpc_sweep.json` and `server_scope/native_stub_sweep.json`. Still open from the text below: C++-only functions (use `callers.py` and the name index per system) and the protected-range check.
+
 For every captured function in `/opt/fortnite/local-model-package/captures/` and every body listed in `engine_trace/needed_engine_driven.json`: record whether it calls one of the four stubs (table in 6.3) or jumps into `0x148d2c000`–`0x149e4d600`, and whether the stub call is the *main effect* (the function does nothing else that matters) or incidental. Output `server_scope/stripped.json`: function, address, stub, role (`main`/`incidental`), notes. Then extend to all Server RPC `_Implementation` bodies of the classes in section 7's system list.
 Done when: every function used by systems D1 to D11 has a bucket (R, D or X).
 
@@ -406,7 +435,7 @@ Each system is one WP family. For each, the first task is always the **system ca
 | D13 | Season 12 AI | Henchmen, bosses, vaults, keycards, ID scanners, shakedown, phone booths | R + D | `UFortServerBotManagerAthena`, behaviour trees in paks |
 | D14 | Consumables, traps, throwables | Use, effect, placement | D + R | |
 | D15 | Teams and squad features | Squad ids, revive, reboot vans, pings and markers, team chat | R | Chunk 22 notes |
-| D16 | Match results, XP, quests | Per-player stats, XP, quest progress, reporting to backend | X | `ServerAddSimulatedXp` is stripped |
+| D16 | Match results, XP, quests | Per-player stats, XP, quest progress, reporting to backend | R + X | `ServerAddSimulatedXp` has a real body (sweep: mixed). Result reporting and XP: `E-backend-remaining.md` E2, `D6` card §2 steps 7–9 |
 | D17 | Replication graph, relevancy, dormancy | Performance for 100 players; not needed for a first match | public UE source + R | `UFortReplicationGraph` is server-only and absent |
 
 Recommended order after G6: D1 → D2 → D5 → D4 → D11 → D3 → D10 → D6 → D7 → D8 → D9 → D15 → D16 → the rest.
