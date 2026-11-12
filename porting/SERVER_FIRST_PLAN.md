@@ -24,6 +24,7 @@ implements from the card; it does not redo the analysis.
 | `D4-game-data.md` | C3, D10, D11, D12 | Storm, bus, supply drop, DBNO, harvest, fall damage, XP and the complete loot tables with weights are in the client content. Values listed. |
 | `D5-stubbed-rpcs-and-recreation.md` | D0, D4, D9, D12 | Sweep of all 11,407 reflected natives: 314 empty, of which 98 `Server*` RPCs, of which 24 matter for Battle Royale. A design for each. |
 | `D6-combat-and-elimination.md` | D5, D6, D7, D8 | `RemoveFromAlivePlayers` and the win/end-game path are real; the server death sequence is missing and is designed in the card. |
+| `C-world-classes-and-abilities.md` | C1, C2, C3, D4, D5 | Game-mode Blueprint defaults (starting items, quickbars, class names), the 31 default player abilities, load order for Blueprints, what to check for the map. C3 (game data access) is answered by this and the D4 card. |
 | `E-backend-remaining.md` | E1–E9 | Game-server link, encryption key, cosmetics, results/XP, XMPP, friends, patch removal. |
 
 Tools made for this (usage in `porting/tools/README.md`): `rd.py` (annotated
@@ -31,10 +32,12 @@ decompile), `rpc_sweep.py` (real or empty body), `callers.py` (who calls an
 address), `nameidx.py`/`strx.py` (names from strings), `asset_props.py`/
 `asset_table.py` (game data from the extracted content).
 
-Not thought through yet (still open, in priority order): Blueprint class
-loading on the server and level streaming (C1, C2); vehicles (D14); bots and
-henchmen (D15); quests (part of D16); instruction-level compare of the AES
-packet handler; the AppES gate (E-card E6).
+Not thought through yet (still open, in priority order): the G3 logged run
+itself (needs running the client; decision tree is ready); testing Blueprint
+loading and the map on the server (C1, C2: order and checks are in the C card);
+vehicles (D14, physics-pawn movement RPCs are empty); bots and henchmen (D15);
+quests; instruction-level compare of the AES packet handler; the AppES gate
+(E card, E6).
 
 ---
 
