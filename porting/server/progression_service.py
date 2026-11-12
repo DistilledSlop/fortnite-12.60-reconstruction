@@ -17,7 +17,7 @@ import re
 import sqlite3
 import threading
 from contextlib import closing
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from api_common import ApiError, Err
@@ -214,6 +214,33 @@ class ProgressionService:
                                 json.dumps(receipt, separators=(",", ":")), ended_at))
             self.profiles._publish(account_id, command.txs)
             return copy.deepcopy(receipt)
+
+    def recent_players(self, account_id):
+        """Co-players with committed results in the same registered match.
+
+        Local policy treats each registered session as one match. The later of
+        the two result times is the shared time; ties sort by account ID.
+        """
+        with self._lock:
+            if self._database is None:
+                own = {sid: row[2] for (sid, aid), row in self._receipts.items()
+                       if aid == account_id}
+                latest = {}
+                for (sid, peer), row in self._receipts.items():
+                    if peer != account_id and sid in own:
+                        latest[peer] = max(latest.get(peer, 0), own[sid], row[2])
+                rows = latest.items()
+            else:
+                with closing(sqlite3.connect(self._database)) as db:
+                    rows = db.execute(
+                        "SELECT peer.account_id, MAX(MAX(own.ended_at, peer.ended_at)) "
+                        "FROM match_results own JOIN match_results peer "
+                        "ON own.session_id=peer.session_id "
+                        "WHERE own.account_id=? AND peer.account_id<>? "
+                        "GROUP BY peer.account_id", (account_id, account_id)).fetchall()
+            return [{'accountId': peer,
+                     'lastPlayed': datetime.fromtimestamp(when, timezone.utc).isoformat().replace('+00:00', 'Z')}
+                    for peer, when in sorted(rows, key=lambda item: (-item[1], item[0]))]
 
     def stats(self, account_id, start_time=None, end_time=None):
         """StatsV2-shaped local counters; optional inclusive Unix-second bounds."""

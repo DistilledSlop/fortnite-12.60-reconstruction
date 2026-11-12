@@ -259,5 +259,63 @@ ReadyCheck explicitly branches on `ACTIVE`, `PASSED`, `FAILED` and `TIMED_OUT` a
 other status strings as invalid. The backend supplies `ACTIVE` and all the named ReadyCheck
 fields with locally selected values. It does not supply Queued `status`: its type and value
 are unresolved. Field-reader calls alone do not prove that absent fields are rejected, and
-no driven client has verified this sequence. Decompiles are in ignored
+no driven client has verified this complete sequence. Decompiles are in ignored
 `generated/ws-initial-probe/`, `generated/ws-parsers/` and `generated/ws-state-handlers/`.
+
+## November 12 social compatibility follow-up
+
+The original friend-message dispatcher `0x140ca91f0` accepts messages from
+`xmpp-admin` on the logged-in JID domain. The Friend reader `0x140cd6a80`
+reads `accountId`, `status`, `direction`, `created` and optional `connections`.
+Decoder `0x140cddf70` recognizes ACCEPTED, PENDING+INBOUND,
+PENDING+OUTBOUND and SUGGESTED; a pending notification without direction maps
+to the ignored state. Removal uses the distinct
+`com.epicgames.friends.core.apiobjects.FriendRemoval` type, whose reader
+`0x140cd6ef0` reads `accountId` and `reason`. Recognized reasons are DELETED,
+REJECTED and ABORTED; their mapping to local delete/reject/cancel operations
+is inferred. Envelope parser `0x144873a60` accepts a nested object/string
+payload or the whole body when payload is absent; a timestamp is optional.
+The backend emits recipient-relative account IDs after the graph transaction
+commits. Capture index: ignored private-package
+`out/friend-notification-contract-bfbe53233d7f44d6937b7d46bf5e30d5.json`.
+
+An original-client Accept action called POST
+`/friends/api/v1/{accountId}/friends/{otherAccountId}`. The backend now exposes
+that observed alias alongside the existing public route. A follow-up client run
+returned 204, removed the pending entry and displayed the accepted account in
+the offline friends list. Remove Friend then called the matching v1 DELETE,
+returned 204 and cleared that entry. During the same run a newly issued friend
+request displayed a live notification toast and incoming badge without restart.
+This validates one client with a local API peer; two online client accounts,
+presence and whisper delivery still need verification.
+
+The party root PATCH builder `0x140a53ad0` and serializers `0x140a72850`,
+`0x140a720c0` and `0x140a72b60` establish optional `config` and `meta` objects
+and a signed 64-bit `revision`. Config uses `max_size`, `invite_ttl`,
+`join_confirmation`, `discoverability` and `joinability`. Meta supports
+string-array `delete` and object-valued `update` and `override`.
+The response checker `0x140a57390` accepts HTTP 200 through 206 and does not
+require a success JSON body; 204 is a compatible local choice. Local override
+handling deletes keys, merges override, then merges update; this is an explicit
+local policy, not a recovered original-server rule. Private capture index:
+`out/party_patch_contract_20261112/contract.json`.
+
+The next isolated original-client diagnostic observed create=200,
+root PATCH=204 (both config/meta and meta-only requests) and member-meta
+PATCH=204. It used the Curl, AppES and WSS diagnostic bypasses. XMPP logs
+recognize PARTY_UPDATED and MEMBER_STATE_UPDATED but show default/empty values
+for several configuration/metadata fields. Notification reader parity and
+two-client party behavior remain open.
+
+The recent-player callback `0x140cc1460` wraps the raw response array under
+`recentplayers` internally, preserving accepted entry order. Reader `0x140cd7250`
+reads `accountId` and `lastPlayed`, with `0x142ca3070` parsing the date string.
+The generic reader requires a nonempty account ID; a missing/invalid date does
+not itself reject the entry. The request namespace partitions the client cache.
+The live client requested `/friends/api/v1/{accountId}/recent/fortnite`.
+Private capture index: `out/recent-players-contract-0dc3119a69c44e8ebb70a5319ac43e82.json`.
+The backend now derives entries from committed match-result pairs sharing a
+session, with latest shared time and deterministic account-ID tie-breaking.
+Blocking filters either direction. These ordering/filtering rules and the
+one-registration-per-match requirement are explicit local policies. Nonempty
+client recent-player rendering remains unverified.

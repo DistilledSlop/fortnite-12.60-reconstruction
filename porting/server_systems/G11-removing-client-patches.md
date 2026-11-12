@@ -154,8 +154,12 @@ bind IQ. After accepting its unqualified stanza fragments, the next probe
 completed binding, session setup and presence. The client logged XMPP
 `LoggedIn`. Its initial party-success callback was misleading: HTTP capture
 showed create-party returning 400 for the client's joinability value, followed
-by retries in a disconnected party state. Party creation, social notification
-and chat UI flows remain unverified. An earlier run that applied the WSS
+by retries in a disconnected party state. Subsequent backend fixes accepted the
+observed config and nested root PATCH: later captures show create=200 and both
+root/member-meta PATCH=204. A later client also accepted and removed a friend
+and displayed a live incoming-request toast. Party notification fields still
+need parity fixes, and two-client social/chat flows remain unverified.
+An earlier run that applied the WSS
 diagnostic before login exited with process status 5; causation is unproven.
 This progress validates more of the backend protocol path while **secure
 trust and G11 remain OPEN**. The bypass is not the final solution.

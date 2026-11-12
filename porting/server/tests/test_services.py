@@ -854,7 +854,7 @@ class PartyTests(ServiceTestCase):
 
     def test_observed_create_config_and_join_info_are_preserved(self):
         body = {"config": {"joinability": "INVITE_AND_FORMER", "discoverability": "INVITED_ONLY",
-                           "join_confirmation": True},
+                           "join_confirmation": True, "max_size": 16},
                 "meta": {"party": "value"},
                 "join_info": {"connection": {"id": "captain-connection", "meta": {"platform": "PC"}},
                               "meta": {"member": "value"}}}
@@ -911,6 +911,19 @@ class PartyTests(ServiceTestCase):
         self.assertError(jcall(self.base, "POST", f"{PARTY}/parties/{other['id']}/members/{self.b_id}/join",
                                token=self.b, body={"meta": {"urn:epic:cfg:build-id_s": "1"}}),
                          403, Err.PARTY_JOIN_FORBIDDEN)
+
+    def test_snake_case_capacity_and_conflicting_aliases(self):
+        for config in ({"max_size": True}, {"max_size": 0}, {"max_size": 17},
+                       {"max_size": "1"}, {"max_size": 1, "maxSize": 2},
+                       {"max_size": 1, "maxSize": True}):
+            self.assertError(jcall(self.base, "POST", f"{PARTY}/parties", token=self.a,
+                                   body={"config": config}), 400, Err.INVALID_PAYLOAD)
+        party = create_party(self.base, self.a, config={"max_size": 1})
+        self.assertEqual(party["config"]["max_size"], 1)
+        self.assertError(jcall(self.base, "POST", f"{PARTY}/parties/{party['id']}/members/{self.b_id}/join",
+                               token=self.b, body={}), 409, Err.PARTY_IS_FULL)
+        matching = create_party(self.base, self.c, config={"max_size": 2, "maxSize": 2})
+        self.assertEqual(matching["config"]["maxSize"], 2)
 
     def test_closed_party_needs_an_invite_and_declining_removes_it(self):
         pid = create_party(self.base, self.a, config={"joinability": "CLOSED"})["id"]
@@ -972,6 +985,58 @@ class PartyTests(ServiceTestCase):
         self.assertEqual(status, 204)
         _, party, _ = jcall(self.base, "GET", f"{PARTY}/parties/{pid}", token=self.a)
         self.assertEqual(party["meta"], {"mode": "x"})
+
+    def test_root_patch_is_atomic_and_captain_only(self):
+        party = create_party(self.base, self.a, config={"max_size": 4}, meta={"remove": 1, "keep": 2})
+        pid = party["id"]
+        path = f"{PARTY}/parties/{pid}"
+        self.assertEqual(jcall(self.base, "POST", f"{path}/members/{self.b_id}/join", token=self.b, body={})[0], 200)
+        _, before, _ = jcall(self.base, "GET", path, token=self.a)
+        revision = before["revision"]
+        payload = {"revision": revision, "config": {"max_size": 3, "joinability": "INVITE_ONLY",
+                                                    "invite_ttl": 42},
+                   "meta": {"delete": ["remove"], "override": {"nested": {"v": 1}},
+                            "update": {"keep": 3}}}
+        self.assertError(jcall(self.base, "PATCH", path, token=self.b, body=payload),
+                         403, Err.PARTY_CHANGE_FORBIDDEN)
+        self.assertError(jcall(self.base, "PATCH", path, token=self.a, body={**payload, "revision": revision - 1}),
+                         409, Err.STALE_REVISION)
+        for invalid in ({**payload, "meta": {"update": []}},
+                        {**payload, "meta": {"override": []}},
+                        {**payload, "config": {"max_size": 1}},
+                        {**payload, "config": {"invite_ttl": True}}):
+            self.assertError(jcall(self.base, "PATCH", path, token=self.a, body=invalid), 400, Err.INVALID_PAYLOAD)
+            self.assertEqual(jcall(self.base, "GET", path, token=self.a)[1], before)
+        self.assertEqual(call(self.base, "PATCH", path, token=self.a, body=payload)[0], 204)
+        _, after, _ = jcall(self.base, "GET", path, token=self.a)
+        self.assertEqual(after["revision"], revision + 1)
+        self.assertEqual(after["meta"], {"keep": 3, "nested": {"v": 1}})
+        self.assertEqual((after["config"]["max_size"], after["config"]["maxSize"]), (3, 3))
+        self.assertEqual((after["config"]["invite_ttl"], after["config"]["invite_ttl_seconds"]), (42, 42))
+        self.assertEqual(after["config"]["joinability"], "INVITE_ONLY")
+
+    def test_invite_ttl_must_have_representable_expiry(self):
+        oversized = 10**100
+        for key in ("invite_ttl", "invite_ttl_seconds"):
+            self.assertError(jcall(self.base, "POST", f"{PARTY}/parties", token=self.a,
+                                   body={"config": {key: oversized}}), 400, Err.INVALID_PAYLOAD)
+        party = create_party(self.base, self.a)
+        path = f"{PARTY}/parties/{party['id']}"
+        events = []
+        self.backend.party.notify = lambda recipient, event: events.append((recipient, event))
+        for key in ("invite_ttl", "invite_ttl_seconds"):
+            self.assertError(jcall(self.base, "PATCH", path, token=self.a,
+                                   body={"revision": party["revision"], "config": {key: oversized},
+                                         "meta": {"update": {"changed": True}}}), 400, Err.INVALID_PAYLOAD)
+            self.assertEqual(jcall(self.base, "GET", path, token=self.a)[1], party)
+            self.assertEqual(events, [])
+        for ttl in (-1, True, oversized):
+            self.assertError(jcall(self.base, "POST", f"{path}/invites/{self.b_id}", token=self.a,
+                                   body={"ttl": ttl}), 400, Err.INVALID_PAYLOAD)
+            self.assertEqual(jcall(self.base, "GET", path, token=self.a)[1], party)
+            self.assertEqual(events, [])
+        self.assertEqual(call(self.base, "POST", f"{path}/invites/{self.b_id}", token=self.a,
+                              body={"ttl": 42})[0], 204)
 
     def test_promote_kick_and_captain_handover_on_leave(self):
         pid = create_party(self.base, self.a)["id"]

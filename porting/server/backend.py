@@ -72,6 +72,7 @@ class Backend:
         self.profiles.gifting = GiftingService(self.ctx, self.accounts, self.profiles, self.friends,
                                               notify=self.xmpp.notify)
         self.progression = ProgressionService(self.ctx, self.accounts, self.profiles, state_dir=state_dir)
+        self.friends.progression = self.progression
         self.gameservers = GameServerService(self.ctx, self.accounts, self.profiles, self.party,
                                             shared_secret=gameserver_secret)
         self.gameplay = GameplayService(self.ctx, self.accounts, self.profiles, self.oauth,

@@ -54,8 +54,11 @@ client's Equip buttons sent successful locker updates; the persisted active
 Character and Backpack slots contained Lace and Stitches. Lace's Edit Style
 screen showed both initial styles. Selecting the second style and saving
 sent a successful locker update and persisted Material Mat2 with both styles
-owned. Restart UI verification remains pending. The 3D preview area was black, so this
-does not establish character rendering. Screenshots and redacted request
+owned. Restart style-selector verification remains pending. That purchase run's
+3D preview was black. A later diagnostic using DXVK 3.1.1 on software Vulkan
+rendered the equipped Lace character and lobby background after restart; it
+also restored the displayed 1,500 balance. DXVK is used for visual checks, while
+backend-only tests do not need 3D rendering. Screenshots and redacted request
 records are under ignored `porting/generated/g1-isolated-probe/`.
 
 The gift button displayed “2FA required to send gifts” because the local

@@ -415,8 +415,9 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   `porting/server_surface.md` has the pre-login route list.
 - **Observed in the client:** the default `buildUniqueId` is the compatible changelist `12896485`; the network checksum `683914758` is a separate value. Session record fields are partly inferred.
 - **Guessed, unverified:**
-  - The HTTP methods of the party and presence routes, the request body shapes, the
-    response shapes beyond the observed field names, and the nesting of party objects.
+  - Party and presence routes not yet captured from the client. Original-client
+    create/member-meta/root-PATCH requests are now observed; other methods and
+    response shapes still include inferred values. See `EVIDENCE.md`.
   - The matchmaking ticket payload, status values and sequencing, session record values,
     and server key lifecycle (see the `[guess]` comments in `matchmaking.py`).
   - The profile command body keys and notification contents; the multiUpdate element type is reflected.
@@ -434,17 +435,31 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
 - **Social compatibility.** XMPP supports SASL PLAIN using local OAuth sessions,
   resource binding, roster reads, presence, ping and queued JSON notifications.
   A November 12 original-client diagnostic completed authentication, binding,
-  session setup and presence. Party creation then failed because the backend
-  rejected the client's joinability value; the client reported initial success
-  while keeping the party disconnected and retrying. The client sends
+  session setup and presence. The initial party-creation failure was fixed by
+  accepting the observed configuration. A subsequent diagnostic returned 200
+  for creation and 204 for the client's nested root PATCH and member-meta PATCH.
+  Party notifications are recognized, but some configuration and metadata fields
+  still decode as defaults; successful HTTP alone does not establish party UI parity.
+  The client sends
   unqualified stanza fragments, which the service now accepts alongside namespaced
   stanzas. Direct chat relays between online local friends or party members;
   blocks are enforced and offline messages are dropped. Full JIDs address one
   resource, while bare JIDs address all online resources. These routing policies
   and actual whisper UI delivery still need original-client verification.
-  Notification payloads remain inferred. Party-only MUC chat uses `<party-id>@muc.<stream-domain>` as a local convention.
+  Friend notifications now follow the original field readers, including request
+  direction and the separate FriendRemoval type. Mapping removal reasons to actor
+  actions remains inferred. A subsequent original-client run accepted a pending
+  request, displayed the accepted account offline, then removed it using the v1
+  routes (both 204). A new live incoming request also displayed a notification
+  toast and badge without restarting. Two online clients still need verification.
+  Party notification payloads remain partly inferred. Party-only MUC chat uses `<party-id>@muc.<stream-domain>` as a local convention.
   Its room naming and reconnect behavior require client validation. Friends settings
-  persist per account; recent players and suggestions remain empty. Parties are process-local.
+  persist per account. Recent players now come from co-players with committed
+  results in the same registered match; blocked peers are filtered. This assumes
+  one match per registration, so a new round must register a new session. The
+  nonempty recent-player client UI still needs verification. Suggestions remain
+  empty. Parties are process-local, with approval requests and voice conferences
+  still unimplemented.
   Settings PUT/response follows an independent [2019 client interface](https://gist.github.com/Doc94/4dff32bfba0c9036166bc3244ea55e55);
   `acceptInvites` and `mutualPrivacy` enum values follow a [later client implementation](https://pkg.go.dev/github.com/8h9x/fortgo/friends).
   Their exact 12.60 casing, defaults beyond `acceptInvites: public`, partial-update,

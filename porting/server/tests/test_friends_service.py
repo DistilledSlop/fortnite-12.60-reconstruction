@@ -11,6 +11,7 @@ else:
 
 import tempfile
 import unittest
+import sqlite3
 from types import SimpleNamespace
 
 from account_service import AccountService
@@ -52,8 +53,8 @@ class FriendsTests(unittest.TestCase):
         ba = f'/friends/api/public/friends/{self.b}/{self.a}'
         self.assertEqual(self.call(self.a, 'POST', ab)[0], 204)
         self.call(self.a, 'POST', ab)
-        self.assertEqual(len(self.events), 1)
-        self.assertEqual(self.events[0][0], self.b)
+        self.assertEqual(len(self.events), 2)
+        self.assertEqual(self.events[1][0], self.b)
         self.assertEqual(self.summary(self.a)['outgoing'][0]['accountId'], self.b)
         self.assertEqual(self.summary(self.b)['incoming'][0]['accountId'], self.a)
         self.restart()
@@ -96,7 +97,107 @@ class FriendsTests(unittest.TestCase):
         self.service.notify = lambda *_: (_ for _ in ()).throw(RuntimeError())
         self.call(self.a, 'POST', f'/friends/api/public/friends/{self.a}/{self.b}')
         self.assertEqual(len(self.summary(self.b)['incoming']), 1)
-        self.assertEqual(self.service.notification_failures, 1)
+        self.assertEqual(self.service.notification_failures, 2)
+
+    def test_notification_payloads_and_committed_relationships(self):
+        ab = f'/friends/api/public/friends/{self.a}/{self.b}'
+        ba = f'/friends/api/public/friends/{self.b}/{self.a}'
+        database = sqlite3.connect(f'{self.tmp.name}/friends.sqlite3')
+        self.addCleanup(database.close)
+        observations = []
+        def notify(recipient, event):
+            rows = (database.execute('SELECT src,dst,created FROM requests').fetchall(),
+                    database.execute('SELECT a,b,created FROM friends').fetchall())
+            observations.append((recipient, event, rows))
+        self.service.notify = notify
+
+        self.call(self.a, 'POST', ab)
+        self.call(self.a, 'POST', ab)
+        created = self.summary(self.a)['outgoing'][0]['created']
+        friend_type = 'com.epicgames.friends.core.apiobjects.Friend'
+        self.assertEqual([(r, e) for r, e, _ in observations], [
+            (self.a, {'type': friend_type, 'accountId': self.b, 'status': 'PENDING', 'direction': 'OUTBOUND', 'created': created}),
+            (self.b, {'type': friend_type, 'accountId': self.a, 'status': 'PENDING', 'direction': 'INBOUND', 'created': created})])
+        self.assertTrue(all(rows == ([(self.a, self.b, created)], []) for _, _, rows in observations))
+        observations.clear()
+        self.call(self.b, 'POST', ba)
+        self.call(self.b, 'POST', ba)
+        created = self.summary(self.a)['friends'][0]['created']
+        self.assertEqual([(r, e) for r, e, _ in observations], [
+            (self.b, {'type': friend_type, 'accountId': self.a, 'status': 'ACCEPTED', 'direction': 'OUTBOUND', 'created': created}),
+            (self.a, {'type': friend_type, 'accountId': self.b, 'status': 'ACCEPTED', 'direction': 'OUTBOUND', 'created': created})])
+        self.assertTrue(all(rows == ([], [(*sorted((self.a, self.b)), created)]) for _, _, rows in observations))
+        observations.clear()
+        self.call(self.a, 'DELETE', ab)
+        self.call(self.a, 'DELETE', ab)
+        self.assertEqual([(r, e) for r, e, _ in observations], self.removal_events(self.a, self.b, 'DELETED'))
+        self.assertTrue(all(rows == ([], []) for _, _, rows in observations))
+
+    def removal_events(self, actor, other, reason):
+        kind = 'com.epicgames.friends.core.apiobjects.FriendRemoval'
+        return [(actor, {'type': kind, 'accountId': other, 'reason': reason}),
+                (other, {'type': kind, 'accountId': actor, 'reason': reason})]
+
+    def test_cancel_reject_and_block_removal_notifications(self):
+        for action, reason in (('cancel', 'ABORTED'), ('reject', 'REJECTED'),
+                               ('block_outgoing', 'ABORTED'), ('block_incoming', 'REJECTED'),
+                               ('block_friend', 'DELETED')):
+            with self.subTest(action=action):
+                ab = f'/friends/api/public/friends/{self.a}/{self.b}'
+                ba = f'/friends/api/public/friends/{self.b}/{self.a}'
+                block = f'/friends/api/v1/{self.a}/blocklist/{self.b}'
+                if action == 'block_incoming':
+                    self.call(self.b, 'POST', ba)
+                else:
+                    self.call(self.a, 'POST', ab)
+                if action == 'block_friend':
+                    self.call(self.b, 'POST', ba)
+                self.events.clear()
+                actor, peer = (self.b, self.a) if action == 'reject' else (self.a, self.b)
+                method, path = ('POST', block) if action.startswith('block') else ('DELETE', ba if action == 'reject' else ab)
+                self.call(actor, method, path)
+                self.call(actor, method, path)
+                self.assertEqual(self.events, self.removal_events(actor, peer, reason))
+                self.assertEqual(self.summary(self.a)['friends'], [])
+                self.assertEqual(self.summary(self.a)['incoming'], [])
+                self.assertEqual(self.summary(self.a)['outgoing'], [])
+                if action.startswith('block'):
+                    self.call(self.a, 'DELETE', block)
+
+    def test_failed_request_does_not_notify(self):
+        block = f'/friends/api/v1/{self.a}/blocklist/{self.b}'
+        self.call(self.a, 'POST', block)
+        with self.assertRaises(ApiError):
+            self.call(self.b, 'POST', f'/friends/api/public/friends/{self.b}/{self.a}')
+        self.assertEqual(self.events, [])
+
+    def test_v1_friend_mutations_use_same_authorization_and_graph(self):
+        ab = f'/friends/api/v1/{self.a}/friends/{self.b}'
+        ba = f'/friends/api/v1/{self.b}/friends/{self.a}'
+        route, _, _ = self.router.resolve('POST', ab)
+        self.assertEqual(route.status, 'observed')
+        route, _, _ = self.router.resolve('DELETE', ab)
+        self.assertEqual(route.status, 'observed')
+        with self.assertRaises(ApiError) as exc:
+            self.call(self.b, 'POST', ab)
+        self.assertEqual(exc.exception.status, 403)
+        self.assertEqual(self.events, [])
+        self.call(self.a, 'POST', ab)
+        self.call(self.a, 'POST', ab)
+        self.assertEqual(len(self.events), 2)
+        self.assertEqual(self.events[0][1]['direction'], 'OUTBOUND')
+        self.assertEqual(self.events[1][1]['direction'], 'INBOUND')
+        self.call(self.b, 'POST', ba)
+        self.call(self.b, 'POST', ba)
+        self.assertTrue(self.service.are_friends(self.a, self.b))
+        self.assertEqual(len(self.events), 4)
+        self.assertTrue(all(event['status'] == 'ACCEPTED' for _, event in self.events[2:]))
+        with self.assertRaises(ApiError):
+            self.call(self.b, 'DELETE', ab)
+        self.assertEqual(len(self.events), 4)
+        self.call(self.a, 'DELETE', ab)
+        self.call(self.a, 'DELETE', ab)
+        self.assertEqual(self.events[4:], self.removal_events(self.a, self.b, 'DELETED'))
 
     def test_mutual_friend_permission_and_accepting_existing_request(self):
         c = self.accounts.create('Mutual')['id']

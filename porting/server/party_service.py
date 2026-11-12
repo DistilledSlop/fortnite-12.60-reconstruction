@@ -33,7 +33,7 @@ PARTY_PREFIX = "/party/api/v1/Fortnite"
 PRESENCE_PREFIX = "/presence/api/v1/_"
 # inferred: the build-id key that party join compares. Absent from the binary as a plain string.
 BUILD_KEY = "urn:epic:cfg:build-id_s"
-JOINABILITY = ("OPEN", "CLOSED", "INVITE_AND_FORMER")  # last value observed in 12.60 create
+JOINABILITY = ("OPEN", "CLOSED", "INVITE_ONLY", "INVITE_AND_FORMER")
 MAX_PARTY_SIZE = 16  # guess: default maxSize
 INVITE_TTL_SEC = 14400  # guess
 PING_TTL_SEC = 60  # guess
@@ -161,18 +161,51 @@ class PartyService:
             return connection["id"]
         return f"{account_id}:connection"
 
-    def _config(self, value):
-        config = dict(DEFAULT_CONFIG)
-        for key, item in self._dict(value, "config").items():
-            if key in DEFAULT_CONFIG or key == "join_confirmation":
+    def _invite_expiry(self, ttl, label):
+        if isinstance(ttl, bool) or not isinstance(ttl, int) or ttl < 1:
+            raise ApiError(400, Err.INVALID_PAYLOAD, f"{label} must be a positive integer.")
+        try:
+            return self.ctx.iso(self.ctx.now() + ttl)
+        except (OverflowError, OSError, ValueError):
+            raise ApiError(400, Err.INVALID_PAYLOAD, f"{label} produces an unrepresentable expiry.")
+
+    def _config(self, value, base=None):
+        config = dict(DEFAULT_CONFIG if base is None else base)
+        supplied = self._dict(value, "config")
+        for key in ("maxSize", "max_size"):
+            if key in supplied:
+                size = supplied[key]
+                if isinstance(size, bool) or not isinstance(size, int) or not 1 <= size <= MAX_PARTY_SIZE:
+                    raise ApiError(400, Err.INVALID_PAYLOAD, f"{key} must be between 1 and {MAX_PARTY_SIZE}.")
+        if "max_size" in supplied and "maxSize" in supplied and supplied["maxSize"] != supplied["max_size"]:
+            raise ApiError(400, Err.INVALID_PAYLOAD, "maxSize and max_size must agree.")
+        for key, item in supplied.items():
+            if key in DEFAULT_CONFIG or key in ("join_confirmation", "max_size", "invite_ttl"):
                 config[key] = item
+        if "maxSize" in supplied and "max_size" not in supplied and "max_size" in config:
+            config["max_size"] = supplied["maxSize"]
+        if "max_size" in supplied:
+            config["maxSize"] = supplied["max_size"]
+        for key in ("invite_ttl", "invite_ttl_seconds"):
+            if key in supplied:
+                self._invite_expiry(supplied[key], key)
+        if "invite_ttl" in supplied and "invite_ttl_seconds" in supplied and supplied["invite_ttl"] != supplied["invite_ttl_seconds"]:
+            raise ApiError(400, Err.INVALID_PAYLOAD, "invite_ttl and invite_ttl_seconds must agree.")
+        if "invite_ttl" in supplied:
+            config["invite_ttl_seconds"] = supplied["invite_ttl"]
+        elif "invite_ttl_seconds" in supplied and "invite_ttl" in config:
+            config["invite_ttl"] = supplied["invite_ttl_seconds"]
         if config["joinability"] not in JOINABILITY:
             raise ApiError(400, Err.INVALID_PAYLOAD, "Invalid joinability.")
+        if config["discoverability"] not in ("ALL", "INVITED_ONLY"):
+            raise ApiError(400, Err.INVALID_PAYLOAD, "Invalid discoverability.")
         if "join_confirmation" in config and not isinstance(config["join_confirmation"], bool):
             raise ApiError(400, Err.INVALID_PAYLOAD, "join_confirmation must be a boolean.")
-        size = config["maxSize"]
-        if isinstance(size, bool) or not isinstance(size, int) or not 1 <= size <= MAX_PARTY_SIZE:
-            raise ApiError(400, Err.INVALID_PAYLOAD, f"maxSize must be between 1 and {MAX_PARTY_SIZE}.")
+        for key in ("maxSize", "max_size"):
+            if key in config:
+                size = config[key]
+                if isinstance(size, bool) or not isinstance(size, int) or not 1 <= size <= MAX_PARTY_SIZE:
+                    raise ApiError(400, Err.INVALID_PAYLOAD, f"{key} must be between 1 and {MAX_PARTY_SIZE}.")
         ttl = config["invite_ttl_seconds"]
         if isinstance(ttl, bool) or not isinstance(ttl, int) or ttl < 1:
             raise ApiError(400, Err.INVALID_PAYLOAD, "invite_ttl_seconds must be a positive integer.")
@@ -299,8 +332,7 @@ class PartyService:
             raise ApiError(409, Err.INVITE_ALREADY_EXISTS, "An invite for this user already exists.")
         body = req.json_object()
         ttl = body.get("ttl", party["config"]["invite_ttl_seconds"])
-        if isinstance(ttl, bool) or not isinstance(ttl, int) or ttl < 1:
-            raise ApiError(400, Err.INVALID_PAYLOAD, "ttl must be a positive integer.")
+        expires_at = self._invite_expiry(ttl, "ttl")
         meta = self._dict(body.get("meta"), "meta")
         now = self.ctx.now()
         party["invites"].append({
@@ -308,7 +340,7 @@ class PartyService:
             "sent_by": caller,
             "meta": meta,
             "sent_at": self.ctx.iso(now),
-            "expires_at": self.ctx.iso(now + ttl),
+            "expires_at": expires_at,
         })
         self._touch(party)
         if body.get("sendPing") is True:
@@ -367,6 +399,41 @@ class PartyService:
         party["meta"].update(updates)
         self._touch(party)
         self._emit(party, "PARTY_UPDATED", caller, config=party["config"], meta=party["meta"])
+        return 204, None
+
+    def party_update(self, req, match):
+        caller = self._caller(req)
+        party = self._require_party(match.group(1))
+        captain = self._captain(party)
+        if captain is None or captain["account_id"] != caller:
+            raise ApiError(403, Err.PARTY_CHANGE_FORBIDDEN, "Only the party captain can change the party.")
+        body = req.json_object()
+        revision = body.get("revision")
+        if isinstance(revision, bool) or not isinstance(revision, int) or not -(2**63) <= revision < 2**63:
+            raise ApiError(400, Err.INVALID_PAYLOAD, "revision must be a signed 64-bit integer.")
+        self._check_revision(body, party["revision"])
+        if "config" in body and not isinstance(body["config"], dict):
+            raise ApiError(400, Err.INVALID_PAYLOAD, "config must be an object.")
+        config = self._config(body.get("config"), party["config"])
+        if config["maxSize"] < len(party["members"]):
+            raise ApiError(400, Err.INVALID_PAYLOAD, "max_size cannot be less than the current member count.")
+        if "meta" in body and not isinstance(body["meta"], dict):
+            raise ApiError(400, Err.INVALID_PAYLOAD, "meta must be an object.")
+        meta_body = body.get("meta", {})
+        deletes, updates = self._meta_body(meta_body)
+        override = meta_body.get("override", {})
+        if not isinstance(override, dict) or not all(isinstance(key, str) for key in override):
+            raise ApiError(400, Err.INVALID_PAYLOAD, "override must be an object.")
+        # Local policy: merge override, then update, after deletions; server semantics are unverified.
+        meta = copy.deepcopy(party["meta"])
+        for key in deletes:
+            meta.pop(key, None)
+        meta.update(copy.deepcopy(override))
+        meta.update(copy.deepcopy(updates))
+        party["config"] = config
+        party["meta"] = meta
+        self._touch(party)
+        self._emit(party, "PARTY_UPDATED", caller, config=config, meta=meta)
         return 204, None
 
     def promote(self, req, match):
@@ -500,6 +567,7 @@ class PartyService:
         P, R = PARTY_PREFIX, PRESENCE_PREFIX
         router.add("POST", rf"{P}/parties", self.create, name="party.create", status="inferred")
         router.add("GET", rf"{P}/parties/([^/]+)", self.get, name="party.get", status="inferred")
+        router.add("PATCH", rf"{P}/parties/([^/]+)", self.party_update, name="party.update", status="observed")
         router.add("POST", rf"{P}/parties/([^/]+)/members/([^/]+)/join", self.join,
                    name="party.member.join", status="inferred")
         router.add("DELETE", rf"{P}/parties/([^/]+)/members/([^/]+)", self.leave_or_kick,

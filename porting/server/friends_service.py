@@ -1,4 +1,4 @@
-"""Persistent local friends graph. Route and response shapes are inferred, not captured.
+"""Persistent local friends graph with partially observed 12.60 wire contracts.
 
 A directed request becomes an undirected friendship when the recipient requests back.
 Blocks are directed and remove both pending requests and any friendship atomically.
@@ -23,6 +23,7 @@ class FriendsService:
     def __init__(self, ctx, accounts, oauth, *, state_dir=None, notify=None):
         self.ctx, self.accounts, self.oauth, self.notify = ctx, accounts, oauth, notify
         self._lock = threading.RLock()
+        self.progression = None
         self.notification_failures = 0
         if state_dir is None:
             path = ':memory:'
@@ -71,6 +72,24 @@ class FriendsService:
             except Exception:
                 with self._lock:
                     self.notification_failures += 1  # Best effort after commit; no event data is logged.
+
+    def _emit_pair(self, account, other, fields):
+        for recipient, peer in ((account, other), (other, account)):
+            self._emit(recipient, dict(fields, accountId=peer))
+
+    def _remove_edge(self, account, other):
+        """Remove the relationship in the caller's transaction and return its reason."""
+        a, b = sorted((account, other))
+        friendship = self._db.execute('DELETE FROM friends WHERE a=? AND b=?', (a, b)).rowcount
+        outgoing = self._db.execute('DELETE FROM requests WHERE src=? AND dst=?', (account, other)).rowcount
+        incoming = self._db.execute('DELETE FROM requests WHERE src=? AND dst=?', (other, account)).rowcount
+        # The client recognizes these reasons; mapping them to actor actions is inferred.
+        return 'DELETED' if friendship else 'ABORTED' if outgoing else 'REJECTED' if incoming else None
+
+    def _emit_removal(self, account, other, reason):
+        if reason:
+            self._emit_pair(account, other, {'type': 'com.epicgames.friends.core.apiobjects.FriendRemoval',
+                                             'reason': reason})
 
     def _snapshot(self, account):
         with self._lock:
@@ -134,8 +153,14 @@ class FriendsService:
         return 200, current
 
     def recent(self, req, match):
-        self._identity(req, match.group(1))
-        return 200, []
+        account, namespace = match.group(1, 2)
+        self._identity(req, account)
+        # Local policy: only Fortnite results are available, and either user's
+        # block hides the peer. No cross-database writes are needed.
+        if namespace.lower() != 'fortnite' or self.progression is None:
+            return 200, []
+        return 200, [entry for entry in self.progression.recent_players(account)
+                     if not self.is_blocked(account, entry['accountId'])]
 
     def request_friend(self, req, match):
         account, other = match.group(1, 2)
@@ -149,8 +174,9 @@ class FriendsService:
                 return 204, None
             if self._db.execute('SELECT 1 FROM requests WHERE src=? AND dst=?', (other,account)).fetchone():
                 self._db.execute('DELETE FROM requests WHERE src=? AND dst=?', (other,account))
-                self._db.execute('INSERT INTO friends VALUES (?,?,?)', (a,b,self.ctx.iso()))
-                event = 'ACCEPTED'
+                created = self.ctx.iso()
+                self._db.execute('INSERT INTO friends VALUES (?,?,?)', (a,b,created))
+                event = ('ACCEPTED', created)
             elif not self._db.execute('SELECT 1 FROM requests WHERE src=? AND dst=?', (account,other)).fetchone():
                 # Local interpretation of the privacy enum; accepting a pending request remains possible.
                 permission = self._settings(other)['acceptInvites'].upper()
@@ -162,33 +188,34 @@ class FriendsService:
                             'SELECT a,b FROM friends WHERE a=? OR b=?', (user, user))}
                     if not neighbors(account).intersection(neighbors(other)):
                         raise ApiError(403, Err.USER_OPERATION_FORBIDDEN, 'Friend requests require a mutual friend.')
-                self._db.execute('INSERT INTO requests VALUES (?,?,?)', (account,other,self.ctx.iso()))
-                event = 'PENDING'
+                created = self.ctx.iso()
+                self._db.execute('INSERT INTO requests VALUES (?,?,?)', (account,other,created))
+                event = ('PENDING', created)
         if event:
-            self._emit(other, {'type': 'com.epicgames.friends.core.apiobjects.Friend', 'accountId': account, 'status': event})
+            status, created = event
+            # Accepted friendships use OUTBOUND as in legacy_list; the client ignores it.
+            for recipient, peer, direction in ((account, other, 'OUTBOUND'),
+                                                (other, account, 'INBOUND' if status == 'PENDING' else 'OUTBOUND')):
+                self._emit(recipient, {'type': 'com.epicgames.friends.core.apiobjects.Friend',
+                                       'accountId': peer, 'status': status, 'direction': direction,
+                                       'created': created})
         return 204, None
 
     def delete_friend(self, req, match):
         account, other = match.group(1, 2)
         self._identity(req, account, other)
-        a, b = sorted((account, other))
         with self._lock, self._db:
-            changed = self._db.execute('DELETE FROM friends WHERE a=? AND b=?', (a,b)).rowcount
-            changed += self._db.execute('DELETE FROM requests WHERE (src=? AND dst=?) OR (src=? AND dst=?)', (account,other,other,account)).rowcount
-        if changed:
-            self._emit(other, {'type': 'com.epicgames.friends.core.apiobjects.Friend', 'accountId': account, 'status': 'REMOVED'})
+            reason = self._remove_edge(account, other)
+        self._emit_removal(account, other, reason)
         return 204, None
 
     def block(self, req, match):
         account, other = match.group(1, 2)
         self._identity(req, account, other)
-        a, b = sorted((account,other))
         with self._lock, self._db:
             self._db.execute('INSERT OR IGNORE INTO blocks VALUES (?,?,?)', (account,other,self.ctx.iso()))
-            removed = self._db.execute('DELETE FROM friends WHERE a=? AND b=?', (a,b)).rowcount
-            removed += self._db.execute('DELETE FROM requests WHERE (src=? AND dst=?) OR (src=? AND dst=?)', (account,other,other,account)).rowcount
-        if removed:
-            self._emit(other, {'type': 'com.epicgames.friends.core.apiobjects.Friend', 'accountId': account, 'status': 'REMOVED'})
+            reason = self._remove_edge(account, other)
+        self._emit_removal(account, other, reason)
         return 204, None
 
     def unblock(self, req, match):
@@ -201,15 +228,20 @@ class FriendsService:
     def register(self, router):
         v1 = r'/friends/api/v1/([^/]+)'
         public = r'/friends/api/public'
+        router.add('POST', v1 + '/friends/([^/]+)', self.request_friend,
+                   name='friends.request_v1', status='observed')
         for path, handler, name in ((v1 + '/summary', self.summary, 'summary'), (v1 + '/settings', self.settings, 'settings'),
-                                    (v1 + '/recent/[^/]+', self.recent, 'recent'), (v1 + '/blocklist', self.blocklist, 'blocklist'),
+                                    (v1 + '/recent/([^/]+)', self.recent, 'recent'), (v1 + '/blocklist', self.blocklist, 'blocklist'),
                                     (public + '/friends/([^/]+)', self.legacy_list, 'legacy'), (public + '/blocklist/([^/]+)', self.blocklist, 'legacy_blocklist')):
-            router.add('GET', path, handler, name='friends.' + name, status='inferred')
+            router.add('GET', path, handler, name='friends.' + name,
+                       status='observed' if name == 'recent' else 'inferred')
         for method, path, handler, name in (('POST', public + '/friends/([^/]+)/([^/]+)', self.request_friend, 'request'),
                                             ('PUT', v1 + '/settings', self.set_settings, 'set_settings'),
                                             ('DELETE', public + '/friends/([^/]+)/([^/]+)', self.delete_friend, 'delete'),
+                                            ('DELETE', v1 + '/friends/([^/]+)', self.delete_friend, 'delete_v1'),
                                             ('POST', public + '/blocklist/([^/]+)/([^/]+)', self.block, 'block'),
                                             ('DELETE', public + '/blocklist/([^/]+)/([^/]+)', self.unblock, 'unblock'),
                                             ('POST', v1 + '/blocklist/([^/]+)', self.block, 'block_v1'),
                                             ('DELETE', v1 + '/blocklist/([^/]+)', self.unblock, 'unblock_v1')):
-            router.add(method, path, handler, name='friends.' + name, status='inferred')
+            router.add(method, path, handler, name='friends.' + name,
+                       status='observed' if name == 'delete_v1' else 'inferred')
