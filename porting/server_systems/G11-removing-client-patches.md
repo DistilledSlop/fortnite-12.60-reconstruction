@@ -150,8 +150,10 @@ untouched.
 In the latest November 12 run, it was applied after the AppES diagnostic and
 Frontend readiness. Together with the Curl and AppES diagnostics, this let
 the original client reach WSS open, SASL authentication, stream reopen, and
-bind IQ. The backend rejected an unqualified IQ; that backend issue was being
-fixed at the time of this update. An earlier run that applied the WSS
+bind IQ. After accepting its unqualified stanza fragments, the next probe
+completed binding, session setup and presence. The client logged XMPP
+`LoggedIn` and created its lobby party. Social notification and chat UI flows
+remain unverified. An earlier run that applied the WSS
 diagnostic before login exited with process status 5; causation is unproven.
 This progress validates more of the backend protocol path while **secure
 trust and G11 remain OPEN**. The bypass is not the final solution.

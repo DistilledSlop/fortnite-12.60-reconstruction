@@ -1,6 +1,7 @@
 """Local RFC 7395 XMPP transport. Epic notification envelopes are inferred.
 
-The stanza and event shapes have not been validated against a 12.60 client.
+Original-client probes reached authentication, binding, session setup and presence.
+Notification envelopes and chat flows still require client validation.
 """
 import base64
 import binascii
@@ -281,9 +282,13 @@ class XmppService:
                     if other is not c and other.available and self._allowed(c.account, other.account):
                         self._send(c, '<presence xmlns="jabber:client" from=%s to=%s>%s</presence>' % (quoteattr(other.jid), quoteattr(c.jid), '<status>%s</status>' % escape(other.status) if other.status else ''))
             return True
-        if c.phase == 'ready' and root.tag in (tag(CLIENT, 'message'), 'message') and root.get('type') == 'groupchat':
-            self._room_message(c, root)
-            return True
+        if c.phase == 'ready' and root.tag in (tag(CLIENT, 'message'), 'message'):
+            if root.get('type') == 'groupchat':
+                self._room_message(c, root)
+                return True
+            if root.get('type') == 'chat':
+                self._direct_message(c, root)
+                return True
         return False
 
     # Local convention until the original room naming is captured: the bare JID
@@ -358,6 +363,27 @@ class XmppService:
                     self._occupant_presence(c, other, room, other.rooms[room])
                     self._occupant_presence(other, c, room, nick)
             self._occupant_presence(c, c, room, nick, self_presence=True)
+
+    def _direct_message(self, c, root):
+        """Relay online local chat; silently drop unsupported or unauthorized targets.
+
+        This local convention does not queue offline messages or disclose whether
+        a rejected recipient exists. The authenticated JID supplies the sender.
+        """
+        target = root.get('to', '')
+        bare, sep, resource = target.partition('/')
+        account, at, domain = bare.partition('@')
+        body = root.find('body' if root.tag == 'message' else tag(CLIENT, 'body'))
+        if (not at or not account or domain != c.domain or (sep and not resource)
+                or body is None or body.text is None or not self._allowed(c.account, account)):
+            return
+        with self._lock:
+            targets = [other for other in self._connections
+                       if other.jid and other.account == account and other.domain == c.domain
+                       and (not sep or other.jid == target)]
+        for other in targets:
+            self._send(other, '<message xmlns="jabber:client" from=%s to=%s type="chat"><body>%s</body></message>' %
+                       (quoteattr(c.jid), quoteattr(other.jid), escape(body.text)))
 
     def _room_message(self, c, root):
         with self._lock:

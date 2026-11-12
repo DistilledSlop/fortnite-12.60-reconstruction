@@ -430,6 +430,13 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   they have not yet passed their affected original-client UI flows.
 - **Social compatibility.** XMPP supports SASL PLAIN using local OAuth sessions,
   resource binding, roster reads, presence, ping and queued JSON notifications.
+  A November 12 original-client diagnostic completed authentication, binding,
+  session setup and presence, then created its lobby party. The client sends
+  unqualified stanza fragments, which the service now accepts alongside namespaced
+  stanzas. Direct chat relays between online local friends or party members;
+  blocks are enforced and offline messages are dropped. Full JIDs address one
+  resource, while bare JIDs address all online resources. These routing policies
+  and actual whisper UI delivery still need original-client verification.
   Notification payloads remain inferred. Party-only MUC chat uses `<party-id>@muc.<stream-domain>` as a local convention.
   Its room naming and reconnect behavior require client validation. Friends settings
   persist per account; recent players and suggestions remain empty. Parties are process-local.

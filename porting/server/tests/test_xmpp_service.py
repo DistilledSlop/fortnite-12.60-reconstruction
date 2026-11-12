@@ -173,6 +173,43 @@ class XmppTests(unittest.TestCase):
             peer.send('<' + name + ' xmlns="urn:foreign" type="groupchat"/>')
             self.assertEqual(peer.recv(), '')
 
+    def test_direct_chat_targets_authorization_and_authenticated_sender(self):
+        a, b1, b2 = self.peer(), self.peer(), self.peer()
+        a.login(self.a, self.at, resource='sender')
+        b1.login(self.b, self.bt, resource='one')
+        b2.login(self.b, self.bt, resource='two')
+        bare = self.b + '@example.test'
+
+        def send(to, body='hello', ns='', sender='forged@example.test/fake'):
+            a.send('<message' + ns + ' type="chat" from="' + sender + '" to="' + to + '"><body>' + body + '</body></message>')
+
+        def no_delivery():
+            # A ping confirms the sender stayed connected after rejected routing.
+            a.send('<iq type="get" id="after"><ping xmlns="urn:xmpp:ping"/></iq>')
+            self.assertEqual(ET.fromstring(a.recv()).get('id'), 'after')
+            self.assertFalse(select.select([b1.sock, b2.sock], [], [], 0.1)[0])
+
+        send(bare)
+        no_delivery()  # No relationship.
+        with self.friends._lock, self.friends._db:
+            x, y = sorted((self.a, self.b))
+            self.friends._db.execute('INSERT INTO friends VALUES (?,?,?)', (x, y, 'now'))
+        send(bare, 'hello &amp; hi')
+        for peer in (b1, b2):
+            stanza = ET.fromstring(peer.recv())
+            self.assertEqual(stanza.get('from'), self.a + '@example.test/sender')
+            self.assertEqual(stanza.find('{jabber:client}body').text, 'hello & hi')
+        send(bare + '/two', 'targeted', ' xmlns="jabber:client"')
+        self.assertEqual(ET.fromstring(b2.recv()).find('{jabber:client}body').text, 'targeted')
+        self.assertFalse(select.select([b1.sock], [], [], 0.1)[0])
+        send(bare + '/missing')
+        send(self.b + '@foreign.test')
+        no_delivery()
+        with self.friends._lock, self.friends._db:
+            self.friends._db.execute('INSERT INTO blocks VALUES (?,?,?)', (self.b, self.a, 'now'))
+        send(bare)
+        no_delivery()
+
     def test_party_room_authorization_and_relay(self):
         party = self.backend.party
         def req(token):
@@ -186,6 +223,8 @@ class XmppTests(unittest.TestCase):
         ot = self.backend.oauth.local_sign_in(oid)['access_token']
         a, b, outsider = self.peer(), self.peer(), self.peer()
         a.login(self.a, self.at); b.login(self.b, self.bt); outsider.login(oid, ot)
+        a.send('<message type="chat" to="' + self.b + '@example.test"><body>party chat</body></message>')
+        self.assertEqual(ET.fromstring(b.recv()).find('{jabber:client}body').text, 'party chat')
         room = pid + '@muc.example.test'
         def join(peer, nick, unqualified=False):
             ns = '' if unqualified else ' xmlns="jabber:client"'
