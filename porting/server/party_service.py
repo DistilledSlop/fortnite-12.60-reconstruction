@@ -79,7 +79,12 @@ class PartyService:
                           "party_type": config["type"] if isinstance(config["type"], str) else DEFAULT_CONFIG["type"],
                           "party_sub_type": config["subType"] if isinstance(config["subType"], str) else DEFAULT_CONFIG["subType"],
                           "revision": party["revision"], **copy.deepcopy(fields)})
-        elif kind in ("MEMBER_STATE_UPDATED", "MEMBER_JOINED", "MEMBER_REJECTED", "MEMBER_REQUIRE_CONFIRMATION"):
+        elif kind == "INITIAL_INVITE":
+            invite = fields.pop("invite")
+            event.update({"ns": "Fortnite", "sent": invite["sent_at"],
+                          "inviter_id": invite["sent_by"], "invitee_id": invite["account_id"],
+                          "expires_at": invite["expires_at"], "meta": copy.deepcopy(invite["meta"])})
+        elif kind in ("MEMBER_STATE_UPDATED", "MEMBER_JOINED", "MEMBER_REJECTED", "MEMBER_REQUIRE_CONFIRMATION", "MEMBER_LEFT", "MEMBER_KICKED", "MEMBER_NEW_CAPTAIN"):
             member = fields.pop("member", None) or self._member(party, actor)
             include_connection = fields.pop("include_connection", kind == "MEMBER_JOINED")
             account = self.accounts.get(actor)
@@ -355,7 +360,9 @@ class PartyService:
             if captain is None or captain["account_id"] != caller:
                 raise ApiError(403, Err.USER_OPERATION_FORBIDDEN, "Only the party captain can remove other members.")
         recipients = [member["account_id"] for member in party["members"]]
-        was_captain = self._member(party, account_id)["role"] == "CAPTAIN"
+        departure_kind = "MEMBER_LEFT" if caller == account_id else "MEMBER_KICKED"
+        departing_member = copy.deepcopy(self._member(party, account_id))
+        was_captain = departing_member["role"] == "CAPTAIN"
         party["members"] = [member for member in party["members"] if member["account_id"] != account_id]
         presence = self._presence.get(account_id)
         if presence is not None:
@@ -364,7 +371,7 @@ class PartyService:
             del self._parties[party_id]
             self._applicants.pop(party_id, None)
             self._pings = [ping for ping in self._pings if ping["party_id"] != party_id]
-            self._emit(party, "MEMBER_LEFT", account_id, recipients=recipients)
+            self._emit(party, departure_kind, account_id, recipients=recipients, member=departing_member)
             return 204, None
         new_captain = None
         if was_captain and self._captain(party) is None:
@@ -372,7 +379,7 @@ class PartyService:
             oldest["role"] = "CAPTAIN"
             new_captain = oldest["account_id"]
         self._touch(party)
-        self._emit(party, "MEMBER_LEFT", account_id, recipients=recipients)
+        self._emit(party, departure_kind, account_id, recipients=recipients, member=departing_member)
         if new_captain is not None:
             # Local inference: notify remaining members using the explicit promotion event.
             self._emit(party, "MEMBER_NEW_CAPTAIN", new_captain)

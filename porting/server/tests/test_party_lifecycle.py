@@ -55,7 +55,7 @@ class PartyLifecycleTests(support.ServiceTestCase):
         self.assertEqual(len(promoted), 2)
         for _, event in promoted:
             self.assertEqual((event['party_id'], event['account_id'], event['revision']),
-                             (self.pid, self.first_id, party['revision']))
+                             (self.pid, self.first_id, party['members'][0]['revision']))
         self.assertEqual(self.call('POST', self.path(self.second_id, '/promote'), self.first)[0], 204)
 
     def test_non_captain_departure_kick_and_offline_disband(self):

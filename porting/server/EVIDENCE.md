@@ -482,3 +482,23 @@ requirements, one-key-per-tier limits and mappings are preserved in ignored
 `generated/maya-graph-reports/normalized.json`. Ownership validation, graph creation,
 purchase-token consumption and RichColor configuration need recovery before
 this can safely become a permanent customization API.
+
+## Remaining party notification readers
+
+Reader `0x140c49680` consumes INITIAL_INVITE as flat party_id, ns, sent,
+inviter_id, invitee_id, expires_at and object-valued meta. Its parser requires
+valid party/inviter IDs, namespace and a nonempty `urn:epic:conn:platform`
+metadata value. The backend now emits those fields from the stored invitation,
+including the actual recipient and client-supplied metadata. It does not invent
+a platform when the caller omits it.
+
+MEMBER_LEFT and MEMBER_NEW_CAPTAIN use shared member reader `0x140c49b30`,
+including flat account_id; neither requires a connection ID. Departures preserve
+a pre-removal member snapshot for the notification. Captain removal now emits
+MEMBER_KICKED; the original removal parser distinguishes envelope reasons
+LEFT=1, EXPIRED=2 and KICKED=3. PARTY_UPDATED uses reader `0x140c4a3e0`; its flat
+fields match the previously implemented party update. Private evidence index:
+`/opt/fortnite/local-model-package/work/party_remaining_contract/evidence.json`.
+Dispatcher tests cover recipient selection, state snapshots, deep copying,
+explicit promotion, voluntary departure, captain removal and disband. Original
+two-client acceptance remains pending.
