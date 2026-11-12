@@ -49,3 +49,11 @@ Lists direct `call`/`jmp` references and data (vtable) references. No direct
 callers plus a data reference means the function is a virtual. A server
 function with no caller from the expected path means the calling code was
 compiled out (example: `RemoveFromAlivePlayers`, see D6 card).
+
+## Client/server log summary (added 2026-11-12)
+
+    python3 -I porting/tools/client_log_scan.py <client.log> [--server <server.log>] [--json]
+
+Groups Warning/Error/Fatal (and Display) lines of a UE log by category (LogNet, LogRep, LogFort*, LogAthena*, ...), with counts,
+first/last timestamps, normalised example messages, a top-15 list and a milestones list (edit `CLIENT_MILESTONES` /
+`SERVER_MILESTONES` at the top). Tokens, account ids, emails and auth strings are redacted. Output is about 70 lines.
