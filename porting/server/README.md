@@ -457,7 +457,10 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   Party update and member-state update fields follow the original readers;
   other party notification payloads remain inferred. Party-only MUC chat uses `<party-id>@muc.<stream-domain>` as a local convention.
   Its room naming and reconnect behavior require client validation. Friends settings
-  persist per account. Recent players now come from co-players with committed
+  persist per account. Friend nicknames persist privately per owner; the observed
+  raw-text PUT and DELETE routes return 204. Backend tests cover privacy, restart,
+  validation and atomic cleanup on unfriend/block. Original-client nickname
+  submission and restart readback remain unverified. Recent players now come from co-players with committed
   results in the same registered match; blocked peers are filtered. This assumes
   one match per registration, so a new round must register a new session. The
   nonempty recent-player client UI displayed the expected account using explicitly

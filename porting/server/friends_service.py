@@ -9,6 +9,7 @@ default retains this stand-in's original lowercase value.
 import re
 import sqlite3
 import threading
+import unicodedata
 from pathlib import Path
 
 from api_common import ApiError, Err
@@ -37,6 +38,7 @@ class FriendsService:
             self._db.execute('CREATE TABLE IF NOT EXISTS friends (a TEXT NOT NULL, b TEXT NOT NULL, created TEXT NOT NULL, PRIMARY KEY(a,b))')
             self._db.execute('CREATE TABLE IF NOT EXISTS blocks (src TEXT NOT NULL, dst TEXT NOT NULL, created TEXT NOT NULL, PRIMARY KEY(src,dst))')
             self._db.execute('CREATE TABLE IF NOT EXISTS settings (account TEXT PRIMARY KEY, accept_invites TEXT NOT NULL, mutual_privacy TEXT)')
+            self._db.execute('CREATE TABLE IF NOT EXISTS aliases (owner TEXT NOT NULL, peer TEXT NOT NULL, alias TEXT NOT NULL, PRIMARY KEY(owner,peer))')
 
     def close(self):
         with self._lock:
@@ -83,6 +85,9 @@ class FriendsService:
         friendship = self._db.execute('DELETE FROM friends WHERE a=? AND b=?', (a, b)).rowcount
         outgoing = self._db.execute('DELETE FROM requests WHERE src=? AND dst=?', (account, other)).rowcount
         incoming = self._db.execute('DELETE FROM requests WHERE src=? AND dst=?', (other, account)).rowcount
+        # Local policy: removing or blocking a relationship clears both private aliases.
+        self._db.execute('DELETE FROM aliases WHERE (owner=? AND peer=?) OR (owner=? AND peer=?)',
+                         (account, other, other, account))
         # The client recognizes these reasons; mapping them to actor actions is inferred.
         return 'DELETED' if friendship else 'ABORTED' if outgoing else 'REJECTED' if incoming else None
 
@@ -93,15 +98,44 @@ class FriendsService:
 
     def _snapshot(self, account):
         with self._lock:
-            friends = self._db.execute('SELECT a,b,created FROM friends WHERE a=? OR b=? ORDER BY a,b', (account, account)).fetchall()
+            friends = self._db.execute('SELECT f.a,f.b,f.created,al.alias FROM friends f LEFT JOIN aliases al ON al.owner=? AND al.peer=CASE WHEN f.a=? THEN f.b ELSE f.a END WHERE f.a=? OR f.b=? ORDER BY f.a,f.b', (account, account, account, account)).fetchall()
             incoming = self._db.execute('SELECT src,created FROM requests WHERE dst=? ORDER BY src', (account,)).fetchall()
             outgoing = self._db.execute('SELECT dst,created FROM requests WHERE src=? ORDER BY dst', (account,)).fetchall()
             blocks = self._db.execute('SELECT dst,created FROM blocks WHERE src=? ORDER BY dst', (account,)).fetchall()
-        return ([(b if a == account else a, date) for a,b,date in friends], incoming, outgoing, blocks)
+        return ([(b if a == account else a, date, alias) for a,b,date,alias in friends], incoming, outgoing, blocks)
 
     @staticmethod
-    def _entry(account, date):
-        return {'accountId': account, 'created': date}
+    def _entry(account, date, alias=None):
+        result = {'accountId': account, 'created': date}
+        if alias is not None:
+            result['alias'] = alias
+        return result
+
+    def alias(self, req, match):
+        account, other = match.group(1, 2)
+        self._identity(req, account, other)
+        value = None
+        if req.method == 'PUT':
+            content_type = req.headers.get('content-type', '').split(';', 1)[0].strip().lower()
+            try:
+                value = req.body.decode('utf-8', errors='strict')
+            except (UnicodeDecodeError, AttributeError):
+                raise ApiError(400, Err.INVALID_PAYLOAD, 'Invalid friend alias.')
+            # UI limit is 16 UTF-16 units; empty names and control characters are
+            # rejected by local policy. Preserve all other characters verbatim.
+            if (content_type != 'text/plain' or not value.strip() or
+                    any(unicodedata.category(ch) == 'Cc' for ch in value) or
+                    len(value.encode('utf-16-le')) // 2 > 16):
+                raise ApiError(400, Err.INVALID_PAYLOAD, 'Invalid friend alias.')
+        a, b = sorted((account, other))
+        with self._lock, self._db:
+            if not self._db.execute('SELECT 1 FROM friends WHERE a=? AND b=?', (a, b)).fetchone():
+                raise ApiError(404, Err.NOT_FOUND, 'Friend not found.')
+            if value is None:
+                self._db.execute('DELETE FROM aliases WHERE owner=? AND peer=?', (account, other))
+            else:
+                self._db.execute('INSERT OR REPLACE INTO aliases VALUES (?,?,?)', (account, other, value))
+        return 204, None
 
     def _settings(self, account):
         with self._lock:
@@ -236,6 +270,8 @@ class FriendsService:
             router.add('GET', path, handler, name='friends.' + name,
                        status='observed' if name == 'recent' else 'inferred')
         for method, path, handler, name in (('POST', public + '/friends/([^/]+)/([^/]+)', self.request_friend, 'request'),
+                                            ('PUT', v1 + '/friends/([^/]+)/alias', self.alias, 'set_alias'),
+                                            ('DELETE', v1 + '/friends/([^/]+)/alias', self.alias, 'delete_alias'),
                                             ('PUT', v1 + '/settings', self.set_settings, 'set_settings'),
                                             ('DELETE', public + '/friends/([^/]+)/([^/]+)', self.delete_friend, 'delete'),
                                             ('DELETE', v1 + '/friends/([^/]+)', self.delete_friend, 'delete_v1'),
@@ -244,4 +280,4 @@ class FriendsService:
                                             ('POST', v1 + '/blocklist/([^/]+)', self.block, 'block_v1'),
                                             ('DELETE', v1 + '/blocklist/([^/]+)', self.unblock, 'unblock_v1')):
             router.add(method, path, handler, name='friends.' + name,
-                       status='observed' if name == 'delete_v1' else 'inferred')
+                       status='observed' if name in ('delete_v1', 'set_alias', 'delete_alias') else 'inferred')

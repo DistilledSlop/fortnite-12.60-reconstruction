@@ -344,6 +344,27 @@ original-client diagnostic displayed one recent player with the expected display
 name. That check used two explicitly seeded, zero-XP result fixtures in the private
 probe state; it does not establish real match-result/native integration.
 
+## Friend nicknames
+
+The original alias setter `0x140cd7af0` sends PUT to
+`/friends/api/v1/{owner}/friends/{peer}/alias` with `Content-Type: text/plain`
+and the raw string as its body. Delete builder `0x140c7eac0` uses the same path
+with DELETE and no serialized body. The shared response validator explicitly
+accepts empty 204; completion callbacks update/clear the local cache and notify
+friends changes. Summary entry reader `0x140c67670` and single-friend handler
+`0x140cb91d0` read top-level string `alias`. Private capture index:
+`out/friend-alias-contract-279670ff16ea46d9ba5162ccaf5aed8b.json`.
+
+The backend stores aliases in the social SQLite database, keyed by owner and
+peer. Summary and legacy-list readback expose only the requesting owner's alias.
+Requiring an accepted friendship, rejecting blank/control-containing names,
+strict UTF-8 decoding and a 16 UTF-16-unit limit are local policies; the length
+matches the original UI's displayed limit. Unfriend/block clears both private
+aliases in the same transaction as the relationship change. Backend dispatcher
+tests exercise authorization, privacy, restart, updates/deletion, validation,
+cleanup and transaction rollback. The original UI displayed and accepted typing
+in the nickname form, but a successful HTTP submission has not yet been observed.
+
 ## Recipient gift eligibility
 
 Builder `0x144df16e0` issues GET to the configured service base plus
