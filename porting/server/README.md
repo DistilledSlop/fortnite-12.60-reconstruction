@@ -508,7 +508,9 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   through `ClientQuestLogin`, including for free accounts. The owned schedule grants week 1
   immediately, then weeks 2–10 at day offsets 10, 17, 24, 31, 38, 45, 52, 59 and 66; sharing the configured
   LobbySeason12 calendar anchor is a local policy. Faction choice activation and
-  other seasonal mission families remain incomplete.
+  other seasonal mission families remain incomplete. Independent weekly and Maya bundles
+  maintain the separate `num_progress_quests_completed` attribute read by the client
+  and repair older display counters on login without re-awarding completion tokens.
   Deadpool activation/progression now uses 21 cooked quest definitions, 12 bundles
   and 11 schedule entries, including multiple objectives and independent W7 timing.
   Dated grants require an explicit event start; the historical event epoch is

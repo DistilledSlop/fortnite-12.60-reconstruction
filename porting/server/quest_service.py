@@ -98,7 +98,8 @@ class QuestService:
         return self._grant(tx, 'Quest:' + name, attrs)
 
     def _bundle(self, tx, name, schedule_id=None):
-        attrs = {'item_seen': False, 'num_quests_completed': 0}
+        attrs = {'item_seen': False, 'num_quests_completed': 0,
+                 'num_progress_quests_completed': 0}
         if schedule_id is not None:
             attrs['challenge_bundle_schedule_id'] = schedule_id
         bundle_id = self._grant(tx, 'ChallengeBundle:' + name, attrs)
@@ -111,6 +112,21 @@ class QuestService:
             if grant_type == 'GrantWithBundle' or (grant_type == 'DaysFromEventStart' and
                     self._date_reached(definition['calendar_event_tag'], days)):
                 self._quest(tx, quest, bundle_id)
+        self._sync_bundle_progress(tx, name, bundle_id)
+
+    def _sync_bundle_progress(self, tx, name, bundle_id):
+        # Original GetAchievedCount/GetPercentageComplete read this separate
+        # attribute, not num_quests_completed. These supported bundles have
+        # independent, single-stage QuestInfos; chained bundles need their own rule.
+        if name not in WEEKLY_BUNDLES and name != 'QuestBundle_Styles_PaperDoll':
+            return
+        roots = {quest.casefold() for quest, _, _, _ in EVENT_BUNDLES[name]['quest_infos']}
+        completed = {item['templateId'].split(':', 1)[-1].casefold()
+                     for item in tx.profile['items'].values()
+                     if item['templateId'].casefold().startswith('quest:') and
+                     item['attributes'].get('challenge_bundle_id') == bundle_id and
+                     item['attributes'].get('quest_state') == 'Claimed'}
+        tx.set_item_attr(bundle_id, 'num_progress_quests_completed', len(roots & completed))
 
     def login(self, ctx, *, include_daily=True):
         tx = ctx.tx('athena')
@@ -246,6 +262,7 @@ class QuestService:
                                 tx.item(bundle_id)['templateId'].casefold() == ('ChallengeBundle:' + key).casefold()), None)
             if bundle_name:
                 rewards = list(rewards) + WEEKLY_BUNDLES[bundle_name]['completion_rewards'].get(count + 1, [])
+                self._sync_bundle_progress(tx, bundle_name, bundle_id)
         for kind, reward, quantity in rewards:
             if kind == 'AccountResource' and reward == 'athenaseasonalxp':
                 from progression_service import award_profile_xp
@@ -266,6 +283,7 @@ class QuestService:
             else:
                 self._grant(tx, kind + ':' + reward, {'item_seen': False})
         if bundle_id in tx.profile['items'] and tx.item(bundle_id)['templateId'].casefold() == 'challengebundle:questbundle_styles_paperdoll':
+            self._sync_bundle_progress(tx, 'QuestBundle_Styles_PaperDoll', bundle_id)
             self._award_maya_bundle(tx, bundle_id)
 
     def _award_maya_bundle(self, tx, bundle_id):
