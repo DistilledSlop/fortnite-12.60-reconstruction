@@ -97,6 +97,30 @@ class PartyReconnectTests(support.ServiceTestCase):
         self.assertEqual(self.call('POST', self.path(self.guest_id, '/join'), self.guest, valid)[0], 200)
         self.assertEqual(party['members'][1]['meta'], {BUILD_KEY: 'build', 'old': 'state'})
 
+    def test_disconnect_identifies_the_connection_without_a_roster_change(self):
+        self.assertEqual(self.call('POST', self.path(self.guest_id, '/join'), self.guest,
+                                   {'connection': {'id': 'replacement', 'meta': {}}})[0], 200)
+        party = self.backend.party._parties[self.pid]
+        before = copy.deepcopy(party['members'][1])
+        self.events.clear()
+        self.assertEqual(self.call('POST', self.path(self.guest_id, '/disconnect'), self.guest)[0], 204)
+        self.assertEqual(len(party['members']), 2)
+        member = party['members'][1]
+        self.assertEqual((member['role'], member['joined_at']), (before['role'], before['joined_at']))
+        self.assertEqual(member['connections'], [])
+        self.assertEqual({r for r, _ in self.events}, {support.LOCAL, self.guest_id})
+        self.assertEqual(len(self.events), 2)
+        for _, event in self.events:
+            self.assertTrue(event['type'].endswith('.MEMBER_DISCONNECTED'))
+            self.assertEqual(event['account_id'], self.guest_id)
+            self.assertEqual(event['party_id'], self.pid)
+            self.assertEqual(event['connection'], {'id': 'replacement',
+                                                   'disconnected_at': member['updated_at']})
+            self.assertNotIn('member_state_updated', event)
+        self.events.clear()
+        self.assertEqual(self.call('POST', self.path(self.guest_id, '/disconnect'), self.guest)[0], 204)
+        self.assertFalse(self.events)
+
 
 if __name__ == '__main__':
     unittest.main()

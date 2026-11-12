@@ -394,7 +394,10 @@ are observed in the binary. The `multiUpdate` entry shape is inferred.
   role and join time even when new admission is closed or full. It emits the
   recovered flat `MEMBER_CONNECTED` notification. Revision updates and the HTTP
   200 `JOINED` response are local policies; original-client reconnect verification
-  remains pending. Connected duplicate joins still return 409.
+  remains pending. Connected duplicate joins still return 409. Explicit disconnect
+  emits the recovered `MEMBER_DISCONNECTED` shape with the prior connection ID and
+  an ISO timestamp, while keeping the roster member. Clearing active server-side
+  connections remains a local storage policy.
 - `sendPing` on an invite records a ping. Pings and invites appear in `GET .../user/{id}`.
 - Presence records the status (Online/Offline) and the party id, updated by join,
   leave, disconnect and create. `last-online` returns it. Subscriptions can be added and

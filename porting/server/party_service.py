@@ -85,6 +85,11 @@ class PartyService:
             event.update({"ns": "Fortnite", "sent": invite["sent_at"],
                           "inviter_id": invite["sent_by"], "invitee_id": invite["account_id"],
                           "expires_at": invite["expires_at"], "meta": copy.deepcopy(invite["meta"])})
+        elif kind == "MEMBER_DISCONNECTED":
+            # Original reader 0x140c22000 keeps account_id, connection.id and the
+            # ISO disconnected_at value; it does not consume member-state deltas.
+            event.update({"ns": "Fortnite", "sent": self.ctx.iso(),
+                          "account_id": actor, **copy.deepcopy(fields)})
         elif kind in ("MEMBER_STATE_UPDATED", "MEMBER_JOINED", "MEMBER_CONNECTED", "MEMBER_REJECTED", "MEMBER_REQUIRE_CONFIRMATION", "MEMBER_LEFT", "MEMBER_KICKED", "MEMBER_NEW_CAPTAIN"):
             member = fields.pop("member", None) or self._member(party, actor)
             include_connection = fields.pop("include_connection", kind in ("MEMBER_JOINED", "MEMBER_CONNECTED"))
@@ -610,13 +615,17 @@ class PartyService:
         member = self._member(party, account_id)
         if member is None:
             raise ApiError(404, Err.PARTY_MEMBER_NOT_FOUND, "The member was not found in the party.")
+        connections = copy.deepcopy(member["connections"])
+        disconnected_at = self.ctx.iso()
+        # Local storage policy: keep the membership and clear active connections.
         member["connections"] = []
         member["revision"] += 1
         member["updated_at"] = self.ctx.iso()
         self._set_presence(account_id, "Offline", None)
         self._touch(party)
-        self._emit(party, "MEMBER_STATE_UPDATED", caller,
-                   member_state_removed=[], member_state_updated={})
+        for connection in connections:
+            self._emit(party, "MEMBER_DISCONNECTED", caller,
+                       connection={"id": connection["id"], "disconnected_at": disconnected_at})
         return 204, None
 
     # User and ping handlers -------------------------------------------
