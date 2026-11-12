@@ -106,6 +106,8 @@ class BattlePassPurchaseTests(unittest.TestCase):
         tx.set_stat("book_purchased", True)
         self.service._store("account", {"athena": tx})
         original = self.service.grant_item("account", "athena", PAID[1][0][0], {"variants": [{"channel": "test"}]})
+        with patch.object(self.service.ctx, 'now', return_value=1700000000):
+            self.service.run("account", "athena", "ClientQuestLogin", {})
         before = self.service.profile("account", "athena")
         # Four missing level-one rewards also activate their two immediate
         # challenge bundles and initial quests in the same repair transaction.
@@ -116,9 +118,39 @@ class BattlePassPurchaseTests(unittest.TestCase):
         self.assertIn("Quest:Quest_S12_Donut_W1_A", templates)
         self.assertIn("Quest:quest_s12_styles1_q01_accolade_ar", templates)
         self.assertEqual(after["rvn"], before["rvn"] + 1)
-        self.assertEqual(self.service.repair_season12_level_one("account"), 0)
+        with patch.object(self.service.ctx, 'now', return_value=1700000000 + 86400):
+            self.assertEqual(self.service.repair_season12_level_one("account"), 0)
         self.assertEqual(after, self.service.profile("account", "athena"))
         self.assertEqual(after, Backend(state_dir=self.directory.name).profiles.profile("account", "athena"))
+
+    def test_reward_grants_do_not_rotate_dailies(self):
+        self.purchase()
+        stats = self.service.profile("account", "athena")["stats"]["attributes"]
+        self.assertNotIn("local_daily_grant_day", stats)
+        self.assertNotIn("local_daily_reroll_day", stats)
+        # A fresh repair must not rotate dailies even if rewards are missing.
+        tx = ProfileTx(self.service.ctx, self.service.profile("repair-account", "athena"))
+        tx.set_stat("book_purchased", True)
+        self.service._store("repair-account", {"athena": tx})
+        self.service.repair_season12_level_one("repair-account")
+        stats = self.service.profile("repair-account", "athena")["stats"]["attributes"]
+        self.assertNotIn("local_daily_grant_day", stats)
+        self.assertNotIn("local_daily_reroll_day", stats)
+
+    def test_invalid_daily_dates_reject_login_without_changes(self):
+        for field in ('local_daily_grant_day', 'local_daily_reroll_day'):
+            for value in ('9999-99-99', '20240101', 123):
+                with self.subTest(field=field, value=value):
+                    tx = ProfileTx(self.service.ctx, self.service.profile("account", "athena"))
+                    tx.set_stat(field, value)
+                    self.service._store("account", {"athena": tx})
+                    before = self.service.profile("account", "athena")
+                    with self.assertRaises(ApiError):
+                        self.service.run("account", "athena", "ClientQuestLogin", {})
+                    self.assertEqual(before, self.service.profile("account", "athena"))
+                    tx = ProfileTx(self.service.ctx, before)
+                    tx.set_stat(field, '')
+                    self.service._store("account", {"athena": tx})
 
     def test_level_limit_and_invalid_quantity_are_atomic(self):
         before = self.snapshots()

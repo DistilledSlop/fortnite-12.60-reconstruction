@@ -29,6 +29,7 @@ MUC_USER = MUC + '#user'
 MUC_OWNER = MUC + '#owner'
 MAX_XML = 65536
 MAX_PENDING = 128
+MAX_ROOM_NICK = 1023  # Local bound; encoded client composite nicks can exceed 128.
 PREAUTH_TIMEOUT = 15
 
 
@@ -297,14 +298,15 @@ class XmppService:
                 return True
         return False
 
-    # Local convention until the original room naming is captured: the bare JID
-    # is <party-id>@muc.<stream-domain>; only existing party IDs qualify.
+    # The client uses Party-<party-id>@muc.<stream-domain>. Accept the bare
+    # party ID as a local compatibility convention for existing clients.
     def _room(self, c, jid):
         bare, sep, nick = (jid or '').partition('/')
         local, at, domain = bare.partition('@')
         if not at or domain != 'muc.' + c.domain or not re.fullmatch(r'[A-Za-z0-9_-]{1,128}', local):
             return None
-        party = self.party._parties.get(local)
+        party_id = local[6:] if local.startswith('Party-') else local
+        party = self.party._parties.get(party_id)
         if not party or not self.party._member(party, c.account):
             return None
         return bare, nick if sep else '', party
@@ -355,7 +357,7 @@ class XmppService:
                             self._occupant_presence(other, c, room, old, True)
                     self._occupant_presence(c, c, room, old, True, True)
                 return
-            if kind != 'available' or not re.fullmatch(r'[^\x00-\x20/@]{1,128}', nick):
+            if kind != 'available' or len(nick) > MAX_ROOM_NICK or not re.fullmatch(r'[^\x00-\x20/@]+', nick):
                 return
             occupants = [o for o in self._connections if room in o.rooms and o is not c]
             if any(o.rooms[room] == nick for o in occupants):

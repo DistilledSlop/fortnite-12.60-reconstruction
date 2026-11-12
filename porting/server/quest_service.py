@@ -14,7 +14,8 @@ Cosmetics/Characters/CID_701_Athena_Commando_M_BananaAgent 4a50739682819c09986dd
 
 The profile item attributes and trusted event mapping are inferred, not captured.
 Calendar starts require explicit configuration. Missing objective completion defaults
-to all objectives locally; bundle rewards, Maya customization and daily rotation remain unresolved.
+to all objectives locally. Daily rotation is an explicit local policy; historical
+rotation, bundle rewards and Maya customization remain unresolved.
 """
 import copy
 import math
@@ -25,6 +26,8 @@ from season12_quest_data import (DONUT_BUNDLES, DONUT_QUESTS, DONUT_SCHEDULE,
                                  DONUT_SCHEDULE_CALENDAR_EVENT_TAG)
 
 from season12_maya_data import MAYA_BUNDLE, MAYA_QUESTS
+from season12_daily_quest_data import DAILY_QUESTS
+from daily_quest_service import DailyService
 
 from api_common import ApiError, Err
 from profile_service import CommandContext, _invalid
@@ -32,7 +35,7 @@ from profile_service import CommandContext, _invalid
 EVENTS = {'accolade_assault_specialist': 'quest_s12_styles1_q01_accolade_ar',
           'donut_w1_startquest': 'Quest_S12_Donut_W1_A',
           'dont_thank_bus_driver': 'Quest_S12_Donut_W1_B'}
-EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS}
+EVENT_QUESTS = {**DONUT_QUESTS, **MAYA_QUESTS, **DAILY_QUESTS}
 EVENT_BUNDLES = {**DONUT_BUNDLES, 'QuestBundle_Styles_PaperDoll': MAYA_BUNDLE}
 VALID_EVENTS = set(EVENTS) | {stat for quest in EVENT_QUESTS.values() for _, stat, _ in quest['objectives']}
 TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
@@ -42,6 +45,7 @@ TOKENS = {'cosmeticvarianttoken:vtid_560_bananaagent_styleb': 'Stage2',
 class QuestService:
     def __init__(self, profiles, event_starts=None):
         self.profiles = profiles
+        self.daily = DailyService(profiles)
         if event_starts is None:
             event_starts = {}
         if not isinstance(event_starts, Mapping):
@@ -106,8 +110,10 @@ class QuestService:
                     self._date_reached(definition['calendar_event_tag'], days)):
                 self._quest(tx, quest, bundle_id)
 
-    def login(self, ctx):
+    def login(self, ctx, *, include_daily=True):
         tx = ctx.tx('athena')
+        if include_daily:
+            self.daily.login(ctx)
         self.consume_variants(tx)
         items = list(tx.profile['items'].items())
         for schedule_id, item in items:
@@ -225,6 +231,12 @@ class QuestService:
                 # unverified suppressed-quest or completion-reward semantics.
                 tx.set_item_attr(bundle_id, 'num_quests_completed', count + 1)
             for kind, reward, quantity in rewards:
+                if kind == 'AccountResource' and reward == 'athenaseasonalxp':
+                    from progression_service import award_profile_xp
+                    # Local Season 12 policy: seasonal quest XP advances both
+                    # season and book XP while retaining purchased book levels.
+                    award_profile_xp(ctx, quantity, quantity)
+                    continue
                 if quantity != 1:
                     raise _invalid('Unsupported quest reward quantity.')
                 if kind == 'Quest':
@@ -232,6 +244,18 @@ class QuestService:
                 elif kind == 'ChallengeBundle' and reward in EVENT_BUNDLES:
                     schedule_id = tx.item(bundle_id)['attributes'].get('challenge_bundle_schedule_id') if bundle_id in tx.profile['items'] else None
                     self._bundle(tx, reward, schedule_id)
+                elif name in DAILY_QUESTS and kind == 'Token':
+                    template = kind + ':' + reward
+                    found = next(((i, v) for i, v in tx.profile['items'].items()
+                                  if v['templateId'].casefold() == template.casefold()), None)
+                    if found:
+                        token_id, token = found
+                        count = token['quantity']
+                        if type(count) is not int or not 1 <= count < 2**31 - 1:
+                            raise _invalid('Invalid daily token quantity.')
+                        tx.set_item_quantity(token_id, count + quantity)
+                    else:
+                        self._grant(tx, template, {'item_seen': False})
                 else:
                     self._grant(tx, kind + ':' + reward, {'item_seen': False})
         receipts[event_id] = payload

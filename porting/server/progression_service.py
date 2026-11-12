@@ -52,6 +52,32 @@ def _advance(level, remainder, award, cap):
     return level, remainder
 
 
+def award_profile_xp(command, xp, book_xp):
+    """Award XP and crossed rewards within a caller-owned profile transaction.
+
+    The caller commits all profiles in command.txs; no match is recorded here.
+    """
+    xp = _integer(xp, "xp")
+    book_xp = _integer(book_xp, "bookXp")
+    athena = command.tx("athena")
+    stats = athena.profile["stats"]["attributes"]
+    if stats.get("season_num") != 12 or not isinstance(stats.get("book_purchased"), bool):
+        raise _invalid("Season 12 progression is unavailable.")
+    old_level = _integer(stats.get("level"), "stored level", 1, 1000)
+    old_book_level = _integer(stats.get("book_level"), "stored book level", 1, 100)
+    level, xp = _advance(old_level, stats.get("xp", 0), xp, 1000)
+    book_level, book_xp = _advance(old_book_level, stats.get("book_xp", 0), book_xp, 100)
+    account_level = _integer(stats.get("accountLevel", old_level), "stored accountLevel", 1)
+    for name, value in (("level", level), ("xp", xp), ("book_level", book_level),
+                        ("book_xp", book_xp), ("accountLevel", account_level + level - old_level)):
+        athena.set_stat(name, value)
+    rewards = [reward for n in range(old_book_level + 1, book_level + 1)
+               for schedule in ((FREE, PAID) if stats["book_purchased"] else (FREE,))
+               for reward in schedule.get(n, ())]
+    if rewards:
+        _grant_season12_rewards(command, athena, rewards, 0)
+
+
 class ProgressionService:
     def __init__(self, ctx, accounts, profiles, *, state_dir=None):
         self.ctx, self.accounts, self.profiles = ctx, accounts, profiles
@@ -142,26 +168,12 @@ class ProgressionService:
     def _changes(self, data):
         account_id = data["accountId"]
         command = CommandContext(self.profiles, account_id, "athena", {})
+        award_profile_xp(command, data["xp"], data["bookXp"])
         athena = command.tx("athena")
         stats = athena.profile["stats"]["attributes"]
-        if stats.get("season_num") != 12 or not isinstance(stats.get("book_purchased"), bool):
-            raise _invalid("Season 12 progression is unavailable.")
-        old_level = _integer(stats.get("level"), "stored level", 1, 1000)
-        old_book_level = _integer(stats.get("book_level"), "stored book level", 1, 100)
-        level, xp = _advance(old_level, stats.get("xp", 0), data["xp"], 1000)
-        book_level, book_xp = _advance(old_book_level, stats.get("book_xp", 0), data["bookXp"], 100)
-        account_level = _integer(stats.get("accountLevel", old_level), "stored accountLevel", 1)
-        for name, value in (("level", level), ("xp", xp), ("book_level", book_level),
-                            ("book_xp", book_xp), ("accountLevel", account_level + level - old_level)):
-            athena.set_stat(name, value)
         for name, value in (("matchesplayed", 1), ("kills", data["kills"]),
                             ("wins", int(data["placement"] == 1))):
             athena.set_stat(name, _integer(stats.get(name, 0), "stored " + name) + value)
-        rewards = [reward for n in range(old_book_level + 1, book_level + 1)
-                   for schedule in ((FREE, PAID) if stats["book_purchased"] else (FREE,))
-                   for reward in schedule.get(n, ())]
-        if rewards:
-            _grant_season12_rewards(command, athena, rewards, 0)
         return command
 
     def _receipt(self, session_id, data, command, ended_at):

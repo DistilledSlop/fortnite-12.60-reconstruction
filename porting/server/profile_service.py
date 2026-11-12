@@ -334,7 +334,7 @@ def _grant_season12_rewards(ctx, athena, rewards, price):
     quests = getattr(ctx.service, "quests", None)
     if quests is not None:
         quests.consume_variants(athena)
-        quests.login(ctx)
+        quests.login(ctx, include_daily=False)
     if loot:
         ctx.notifications.append({"type": "CatalogPurchase", "primary": True, "lootResult": {"tierGroupName": "", "items": loot}})
 
@@ -467,6 +467,15 @@ def _client_quest_login(ctx):
     quest["dailyLoginInterval"] = today
     tx.set_stat("quest_manager", quest)
     tx.set_stat("daily_rewards", rewards)
+
+
+@command("FortRerollDailyQuest", ("athena",), "observed",
+         "questId: owned active daily instance ID (reflected field; casing inferred). Local daily policy applies.")
+def _reroll_daily_quest(ctx):
+    quests = getattr(ctx.service, "quests", None)
+    if quests is None:
+        raise _invalid("Daily quest service is unavailable.")
+    quests.daily.reroll(ctx, ctx.str_field("questId"))
 
 
 @command("MarkItemSeen", ("athena", "common_core"), "observed", "itemIds: list of item ids (inferred).")

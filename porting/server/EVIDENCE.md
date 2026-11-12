@@ -4,8 +4,9 @@ This file says where each backend route comes from. It replaces the observed, in
 labels in `server_surface.md` where local evidence exists. The data is in `endpoint_evidence.json`
 (same directory). The table at the end is generated from that JSON by `build_evidence.py`.
 
-Nothing here is a capture of a driven client. The 12.60 client still stops at the frontend login
-gate (`direct_connect_results.md`), so every row is static evidence or an earlier recorded run.
+The generated route table is primarily static evidence. Later sections record
+driven original-client probes; their diagnostic bypasses and verification limits
+are stated with each result.
 
 ## Method
 
@@ -502,3 +503,34 @@ fields match the previously implemented party update. Private evidence index:
 Dispatcher tests cover recipient selection, state snapshots, deep copying,
 explicit promotion, voluntary departure, captain removal and disband. Original
 two-client acceptance remains pending.
+
+
+## Daily lifecycle and original party chat naming
+
+The normalized daily module records 62 cooked quest definitions, 70 objectives
+and source hashes. AthenaChallengeRewardS12Daily supplies 31,000 seasonal XP;
+each quest also grants one hidden athena_dailychallenge_token. Conditions and
+tag/template filters are preserved as data. Trusted stat-row events must already
+satisfy those filters; a general raw-event condition evaluator is not implemented.
+
+Daily grants, rerolls and repeat instances now share the profile transaction.
+The rotation is an explicit local policy, not recovered historical scheduling:
+one grant per UTC day, at most three active quests, one reroll per day, no
+catch-up, deterministic selection, missing Weight treated as one and explicit
+zero excluded. Reward reconciliation during purchases or repair does not rotate
+dailies. Seasonal quest XP advances season/book XP under local policy; crossed
+rewards and durable event receipts commit atomically. Original daily UI and
+ClaimQuestReward remain unverified/unimplemented respectively.
+
+Original room construction at 0x140b89610 prefixes Party- to the party ID;
+Strophe login at 0x14487ace3 constructs muc.%s from the configured domain.
+JoinPublicRoom at 0x140c26bb0 constructs the occupant nick as
+UrlEncode(displayName):accountId:xmppResource. URL encoding uses UTF8 and uppercase
+hex. The backend preserves that nick and accepts the original room, retaining
+bare party IDs only for local compatibility. The 1,023-character nick limit is
+a local bound, replacing the insufficient 128-character limit. Backend XMPP
+tests cover original-shaped long nicks, membership, blocks, chat and departure;
+two original clients remain an outstanding check. Private captures:
+71d2ca28a5994929a843d5eb8e2e9026, 2fb414ca95f04e7e8b3556afd53bb89d,
+2abbfd02428343cdb94e6301a07dca1d, 132d31a2339f41eb8c849c7a1ce6e3be
+and 9e69629bdfc94b15b177e833c6d75598.

@@ -243,3 +243,14 @@ Only verifier booleans and thread IDs were recorded in ignored
 `generated/g11-root-store-probe/verify-observation.out`; no certificate data
 or request credentials were collected by the observer. This was an instrumented
 diagnostic, not a successful G11 acceptance run.
+
+### Diagnostic Curl option address confined
+
+The recovered sslctx_function tests the bVerifyPeer byte at `0x147c69478`
+(at original `0x140c593b3`). The diagnostic formerly wrote every aligned match
+of its generic option signature; recent runs matched another address too. A
+matching byte pattern does not establish that other object as the intended
+option. The diagnostic now validates initialization at the observed address
+and changes only that one byte, with write readback and a private-namespace
+requirement. This remains a verification bypass. It has not been established
+that the former extra write caused any client exit.
