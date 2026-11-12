@@ -677,7 +677,11 @@ try
                     name = property.Name.Text,
                     type = property.PropertyType.Text,
                     value = MaterialValue(property.Tag)
-                }).ToArray()
+                }).ToArray(),
+                // Curve tables and data tables keep their rows outside the tagged properties.
+                table = item is CUE4Parse.UE4.Assets.Exports.Engine.UCurveTable or CUE4Parse.UE4.Assets.Exports.Engine.UDataTable
+                    ? Newtonsoft.Json.JsonConvert.SerializeObject(item)
+                    : null
             }).ToArray()
         }, new JsonSerializerOptions { WriteIndented = true }));
         return 0;
