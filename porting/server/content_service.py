@@ -65,15 +65,22 @@ class ContentService:
     def enabled_features(self, req, match):
         return 200, []
 
+    def _store_end(self, timestamp):
+        # Keep the historical rotation fixed, with a usable daily cache/countdown
+        # window rather than displaying the placeholder expiry in 2099.
+        return self.ctx.iso((int(timestamp) // 86400 + 1) * 86400)
+
     def timeline(self, req, match):
-        now = self.ctx.iso()
+        timestamp = self.ctx.now()
+        now = self.ctx.iso(timestamp)
+        store_end = self._store_end(timestamp)
         state = {
             "activeStorefronts": ["BRWeeklyStorefront", "BRDailyStorefront"], "eventNamedWeights": {}, "seasonNumber": 12,
             "seasonTemplateId": "AthenaSeason:athenaseason12", "matchXpBonusPoints": 0,
             "seasonBegin": "2020-06-02T00:00:00Z", "seasonEnd": "2099-01-01T00:00:00.000Z",
-            "seasonDisplayedEnd": "2099-01-01T00:00:00.000Z", "weeklyStoreEnd": "2099-01-01T00:00:00.000Z",
+            "seasonDisplayedEnd": "2099-01-01T00:00:00.000Z", "weeklyStoreEnd": store_end,
             "stwEventStoreEnd": "2099-01-01T00:00:00.000Z", "stwWeeklyStoreEnd": "2099-01-01T00:00:00.000Z",
-            "dailyStoreEnd": "2099-01-01T00:00:00.000Z",
+            "dailyStoreEnd": store_end,
         }
         far = "2099-01-01T00:00:00.000Z"
         return 200, {"channels": {
@@ -83,8 +90,8 @@ class ContentService:
         }, "cacheIntervalMins": 10.0, "currentTime": now}  # CalendarDownload members (reflection)
 
     def catalog(self, req, match):
-        far = "2099-01-01T00:00:00.000Z"
-        return 200, {"refreshIntervalHrs": 1, "dailyPurchaseHrs": 24, "expiration": far, "storefronts": storefronts()}
+        return 200, {"refreshIntervalHrs": 1, "dailyPurchaseHrs": 24,
+                     "expiration": self._store_end(self.ctx.now()), "storefronts": storefronts()}
 
     def keychain(self, req, match):
         return 200, [KEYCHAIN_PLACEHOLDER]

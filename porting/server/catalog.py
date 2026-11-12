@@ -39,6 +39,10 @@ def _cosmetic_offers(rows, section):
     for position, (name, template, price, back_bling, display) in enumerate(rows):
         offer_id = "local-20200520-" + name.lower().replace(" ", "-")
         offer = _offer(offer_id, template, price, section, position)
+        # The 12.60 shop groups offers with the same first category into one
+        # cycling tile. Give each offer its own panel; historical panel grouping
+        # has not been recovered.
+        offer["categories"] = [f"{section} {position + 1:02d}"]
         offer["devName"] = name
         if back_bling:
             offer["itemGrants"].append({"templateId": back_bling, "quantity": 1})

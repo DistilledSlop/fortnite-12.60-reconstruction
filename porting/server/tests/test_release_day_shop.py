@@ -10,11 +10,27 @@ else:
     import _bootstrap
 
 import unittest
+from datetime import datetime, timezone
 
 import catalog
+from api_common import Context
+from content_service import ContentService
 
 
 class ReleaseDayShopTest(unittest.TestCase):
+    def test_refresh_window_tracks_utc_day_without_changing_rotation(self):
+        moment = datetime(2026, 11, 12, 23, 59, 59, tzinfo=timezone.utc).timestamp()
+        service = ContentService(Context(clock=lambda: moment))
+        before = service.catalog(None, None)[1]
+        state = service.timeline(None, None)[1]['channels']['client-events']['states'][0]['state']
+        self.assertEqual(before['expiration'], '2026-11-13T00:00:00.000Z')
+        self.assertEqual(state['dailyStoreEnd'], before['expiration'])
+        self.assertEqual(state['weeklyStoreEnd'], before['expiration'])
+        moment += 1
+        after = service.catalog(None, None)[1]
+        self.assertEqual(after['expiration'], '2026-11-14T00:00:00.000Z')
+        self.assertEqual(after['storefronts'], before['storefronts'])
+
     def test_rotation_prices_and_grouping(self):
         shops = {s['name']: s['catalogEntries'] for s in catalog.storefronts()}
         expected = {

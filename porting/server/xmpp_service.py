@@ -224,7 +224,8 @@ class XmppService:
             c.phase = 'restart'
             c.last_sent = self._enqueue(c, '<success xmlns="%s"/>' % SASL)
             return True
-        if c.phase in ('bind', 'ready') and root.tag == tag(CLIENT, 'iq'):
+        # The original client also sends standalone, unqualified stanza fragments.
+        if c.phase in ('bind', 'ready') and root.tag in (tag(CLIENT, 'iq'), 'iq'):
             iqid = quoteattr(root.get('id', ''))
             if c.phase == 'ready' and root.get('to') and self._room_iq(c, root, iqid):
                 return True
@@ -263,7 +264,7 @@ class XmppService:
                 return True
             c.last_sent = self._enqueue(c, '<iq xmlns="jabber:client" type="error" id=%s><error type="cancel"><service-unavailable xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/></error></iq>' % iqid)
             return True
-        if c.phase == 'ready' and root.tag == tag(CLIENT, 'presence'):
+        if c.phase == 'ready' and root.tag in (tag(CLIENT, 'presence'), 'presence'):
             kind = root.get('type', 'available')
             if root.get('to'):
                 self._room_presence(c, root)
@@ -280,7 +281,7 @@ class XmppService:
                     if other is not c and other.available and self._allowed(c.account, other.account):
                         self._send(c, '<presence xmlns="jabber:client" from=%s to=%s>%s</presence>' % (quoteattr(other.jid), quoteattr(c.jid), '<status>%s</status>' % escape(other.status) if other.status else ''))
             return True
-        if c.phase == 'ready' and root.tag == tag(CLIENT, 'message') and root.get('type') == 'groupchat':
+        if c.phase == 'ready' and root.tag in (tag(CLIENT, 'message'), 'message') and root.get('type') == 'groupchat':
             self._room_message(c, root)
             return True
         return False
@@ -362,7 +363,7 @@ class XmppService:
         with self._lock:
             self._prune_rooms()
             resolved = self._room(c, root.get('to'))
-            body = root.find(tag(CLIENT, 'body'))
+            body = root.find('body' if root.tag == 'message' else tag(CLIENT, 'body'))
             if not resolved or resolved[1] or resolved[0] not in c.rooms or body is None or body.text is None:
                 return
             room = resolved[0]

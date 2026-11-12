@@ -1,9 +1,11 @@
 # G11: running the vanilla client with no in-memory patches
 
-Date: 2026-11-11. Nothing here has been run. Each section is a hypothesis with
-the evidence for it and a test that confirms or kills it.
+Updated: 2026-11-12. **G11 remains OPEN:** secure local TLS trust and removal
+of the client memory diagnostics have not been achieved. Sections 2–3 retain
+the November 11 hypotheses; section 4 records the actual November 12 probes.
 
-Today two patches are applied to the running client (file on disk untouched):
+The original diagnostic setup applies two patches to the running client
+(file on disk untouched):
 `server/patch_curl_verify.py` (TLS verification off) and
 `server/patch_appes_diagnostic.py` (unsafe-environment handler and its 20 s
 exit timer suppressed).
@@ -75,49 +77,84 @@ by section 4 instead. If code 3 disappears, candidate 1 was the cause, and
 both patches go away together. If it stays, vary `-fromfl=` / `-nobe -noeac`
 against what the launcher passes.
 
-## 4. TLS without a patch: hypothesis and test
+## 4. TLS trust: November 12 findings and remaining work
 
-**Evidence:** the client contains the stock UE strings
-`Certificates/%s/cacert.pem`, `Certificates/cacert.pem`,
-`Certificates/ThirdParty/cacert.pem`, `DebuggingCertificatePath` and
-`PinnedPublicKeys` (all UTF-16, as in stock `SslCertificateManager.cpp`).
-Stock 4.25 builds the trusted root list from the **first existing** of:
+The original 12.60 client was tested in a private network namespace with an
+isolated Wine prefix and a private Content overlay. Its certificate platform
+is **Windows**, and its project directory is `../../../FortniteGame/`.
 
-1. `<Project>/Content/Certificates/<Platform>/cacert.pem`
-2. `<Project>/Content/Certificates/cacert.pem`
-3. `<Engine>/Content/Certificates/ThirdParty/cacert.pem` (this is the one
-   shipped: 138 certificates, inside the paks)
+**Trust probe:** the local self-signed CA/server certificate with the required
+host names was supplied as a private loose
+`FortniteGame/Content/Certificates/Windows/cacert.pem`. With the Curl
+verification diagnostic off, requests still failed with OpenSSL
+`SSL certificate problem: certificate not trusted`. This did not solve trust.
+A live read showed **122 root certificates and six pinned domains**. The
+root count does not prove adoption of the loose CA. Stock SSL verification
+also sets `X509_V_ERR_CERT_UNTRUSTED` on pin or verification-delegate rejection,
+so this error alone does not establish whether root loading failed.
 
-and then adds one extra certificate from `[SSL] DebuggingCertificatePath` in
-the engine ini if set. Pins come from `[SSL] PinnedPublicKeys` in config; the
-client's reader is at 0x1438bd850. No shipped ini under the extracted
-`Config/` directories contains `[SSL]` or `PinnedPublicKeys`, so pins, if any,
-arrive by hotfix ini from cloud storage, which is **our backend**.
+**Pins are compiled into game initialization.** The previous claim that pins
+must come only from backend hotfix INIs is superseded. All 15 shipped Engine
+Config and 29 FortniteGame Config INIs in the full extraction lack `[SSL]`,
+`PinnedPublicKeys`, and `DebuggingCertificatePath`, but the actual initializer
+at `0x1422ec980` obtains the SSL certificate manager, clears its pins at
+`0x1422eca87`, and sets these domains through virtual slot `+0x30`:
 
-**Hypothesis:** a loose file
-`FortniteGame/Content/Certificates/Windows/cacert.pem` containing the 138
-shipped certificates plus our local CA makes the client trust the backend with
-`bVerifyPeer` left on. No code is touched; the client reads a file from its
-own install directory.
+| Domain | SetPinnedPublicKeys call |
+|---|---|
+| `.ol.epicgames.net` | `0x1422ecad9` |
+| `.ol.epicgames.com` | `0x1422ecb3b` |
+| `.on.epicgames.net` | `0x1422ecb9d` |
+| `.on.epicgames.com` | `0x1422ecbff` |
+| `.ak.epicgames.com` | `0x1422ecc77` |
+| `.fortnite.qq.com` | `0x1422eccf7` |
 
-**Test D:**
-1. Make a local CA and a server certificate signed by it with the right
-   subject alternative names for every host in `server/gen_hosts.py`
-   (today `gen_tls_cert.sh` makes a bare self-signed certificate with
-   `CN=local-fortnite-mock`; a verifying client needs matching names).
-2. Write `Certificates/Windows/cacert.pem` = shipped bundle + our CA.
-3. Run with the TLS patch off. Watch `LogHttp`/`LogSsl` in the client log.
-4. Outcomes: requests succeed → done; "certificate verify failed" → the loose
-   file was not used (try path 2, then `DebuggingCertificatePath` through a
-   `Saved/Config/WindowsClient/Engine.ini` override); "pinned key" failure →
-   make sure the hotfix `DefaultEngine.ini` our backend serves has no
-   `PinnedPublicKeys`, or serve pins computed from our own certificate.
-5. If the client only reads paks for that path (loose files ignored in
-   shipping), fall back to adding a small extra pak; that modifies the install
-   directory but not the executable. Record which.
+These match the six live entries. The initializer reads compiled digest
+constants and has no configuration reads or conditionals. Its direct caller
+is `0x1422b8cec` in protected function `0x1422b8b10`; an outer configuration
+gate has not been established. The SSL module's initial INI reader at
+`0x1438bd850` therefore does not establish a lasting pin override. The manager's
+digest verifier is `0x1438bda50` (slot `+0x38`), and its X509 verifier is
+`0x1438bdc10` (slot `+0x40`); their protected bodies and any bound verification
+delegate remain unresolved.
 
-The matchmaking websocket (`wss://`, today plaintext) uses the same trust
-store through libwebsockets in stock UE; re-test it once D passes.
+**Configuration and packaging limits:** `Saved/Config/.../Engine.ini` is
+ignored by this cooked shipping build. Actual `LoadExternalIniFile` at
+`0x142c77618` forces generated overrides off for non-`GameUserSettings` files
+at `0x142c77650` / `0x142c776dc`. Thus the proposed Saved Engine INI
+`DebuggingCertificatePath` or pin-array override is superseded. A supported
+source-INI trust override remains unproven. Shipping also excludes the stock
+`-ini:` overrides, `DisableSSLCertificatePinning`, and
+`OverrideCertificateBundlePath` facilities. A private unsigned certificate
+pak was rejected for its missing Epic signature; the proposed extra-pak
+fallback is superseded.
+
+The stock root search remains useful evidence, not a successful fix: it uses
+the first existing project platform PEM, project generic PEM, or Engine
+`Certificates/ThirdParty/cacert.pem`, then an optional
+`[SSL] DebuggingCertificatePath` certificate. Actual loose-file visibility
+and CA adoption must be established separately from pin acceptance. Repeating
+the historical Test D with only a Saved INI change or an unsigned pak is not
+an actionable next step.
+
+### Opt-in WSS diagnostic, not a trust solution
+
+`server/patch_wss_diagnostic.py` is an explicitly opt-in, runtime-only
+certificate-validation bypass for the private network namespace. It checks
+both the branch context and existing target context, then changes opcode
+`75` to `EB` at `0x144866e35`, selecting the existing validation-disabled
+branch. It requires root, rejects the host network namespace, and only
+considers client processes in its own namespace; it leaves the EXE on disk
+untouched.
+
+In the latest November 12 run, it was applied after the AppES diagnostic and
+Frontend readiness. Together with the Curl and AppES diagnostics, this let
+the original client reach WSS open, SASL authentication, stream reopen, and
+bind IQ. The backend rejected an unqualified IQ; that backend issue was being
+fixed at the time of this update. An earlier run that applied the WSS
+diagnostic before login exited with process status 5; causation is unproven.
+This progress validates more of the backend protocol path while **secure
+trust and G11 remain OPEN**. The bypass is not the final solution.
 
 ## 5. Packet encryption (related to G11, already answered)
 
@@ -128,6 +165,9 @@ stock server-side component is compatible. No work.
 
 ## 6. Order
 
-D (TLS) first: it is independent and removes the memory writer. Then C, then A,
-then B only if needed. Record every run in a table (arguments, patches on/off,
-closing code, time of exit) in `EXIT_TRACE.md`.
+Resolve root-CA adoption and compiled pin acceptance first, using the actual
+shipping behavior above. The historical Test D assumptions are superseded;
+the WSS diagnostic only enables isolated protocol investigation. Once secure
+TLS works without the diagnostics, revisit C, A, and B as needed. Record each
+run with arguments, diagnostics enabled, closing code, and exit time in
+`EXIT_TRACE.md`.

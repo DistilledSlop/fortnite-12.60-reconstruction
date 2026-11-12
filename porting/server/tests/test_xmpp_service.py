@@ -66,7 +66,7 @@ class Peer:
         data = self.reader.read(length)
         return data.decode() if h[0] & 15 == 1 else ''
 
-    def login(self, account, token, resource='client'):
+    def login(self, account, token, resource='client', unqualified=False):
         self.send('<open xmlns="urn:ietf:params:xml:ns:xmpp-framing" to="example.test"/>')
         self.recv(); self.recv()
         value = base64.b64encode(('\0' + account + '\0' + token).encode()).decode()
@@ -76,7 +76,8 @@ class Peer:
             return result
         self.send('<open xmlns="urn:ietf:params:xml:ns:xmpp-framing" to="example.test"/>')
         self.recv(); self.recv()
-        self.send('<iq xmlns="jabber:client" type="set" id="bind"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><resource>' + resource + '</resource></bind></iq>')
+        ns = '' if unqualified else ' xmlns="jabber:client"'
+        self.send('<iq' + ns + ' type="set" id="bind"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><resource>' + resource + '</resource></bind></iq>')
         return self.recv()
 
     def close(self):
@@ -149,6 +150,29 @@ class XmppTests(unittest.TestCase):
         peer.send('<iq xmlns="jabber:client" type="get" id="unknown"><query xmlns="urn:unknown"/></iq>')
         self.assertEqual(ET.fromstring(peer.recv()).get('type'), 'error')
 
+    def test_unqualified_bind_session_and_presence(self):
+        with self.friends._lock, self.friends._db:
+            x, y = sorted((self.a, self.b))
+            self.friends._db.execute('INSERT INTO friends VALUES (?,?,?)', (x, y, 'now'))
+        a, b = self.peer(), self.peer()
+        self.assertIn(self.a + '@example.test/client', a.login(self.a, self.at, unqualified=True))
+        b.login(self.b, self.bt)
+        a.send('<iq type="set" id="session"><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></iq>')
+        result = ET.fromstring(a.recv())
+        self.assertEqual((result.get('id'), result.get('type')), ('session', 'result'))
+        a.send('<presence><status>Ready &amp; waiting</status></presence>')
+        self.assertEqual(ET.fromstring(b.recv()).find('{jabber:client}status').text, 'Ready & waiting')
+
+    def test_unqualified_stanzas_still_require_phase_and_foreign_roots_rejected(self):
+        early = self.peer()
+        early.send('<iq type="set"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"/></iq>')
+        self.assertEqual(early.recv(), '')
+        for name in ('iq', 'presence', 'message'):
+            peer = self.peer()
+            peer.login(self.a, self.at, resource=name)
+            peer.send('<' + name + ' xmlns="urn:foreign" type="groupchat"/>')
+            self.assertEqual(peer.recv(), '')
+
     def test_party_room_authorization_and_relay(self):
         party = self.backend.party
         def req(token):
@@ -163,21 +187,26 @@ class XmppTests(unittest.TestCase):
         a, b, outsider = self.peer(), self.peer(), self.peer()
         a.login(self.a, self.at); b.login(self.b, self.bt); outsider.login(oid, ot)
         room = pid + '@muc.example.test'
-        def join(peer, nick):
-            peer.send('<presence xmlns="jabber:client" to="' + room + '/' + nick + '"><x xmlns="http://jabber.org/protocol/muc"/></presence>')
+        def join(peer, nick, unqualified=False):
+            ns = '' if unqualified else ' xmlns="jabber:client"'
+            peer.send('<presence' + ns + ' to="' + room + '/' + nick + '"><x xmlns="http://jabber.org/protocol/muc"/></presence>')
         join(outsider, 'outsider')
         self.assertIn('forbidden', outsider.recv())
-        join(a, 'alice')
+        join(a, 'alice', unqualified=True)
         self.assertIn('code="110"', a.recv())
         join(b, 'bob')
         self.assertIn('/alice', b.recv())
         self.assertIn('code="110"', b.recv())
         self.assertIn('/bob', a.recv())
-        def message(body):
-            a.send('<message xmlns="jabber:client" type="groupchat" to="' + room + '"><body>' + body + '</body></message>')
+        def message(body, unqualified=False):
+            ns = '' if unqualified else ' xmlns="jabber:client"'
+            a.send('<message' + ns + ' type="groupchat" to="' + room + '"><body>' + body + '</body></message>')
         message('hello &amp; hi')
         self.assertEqual(ET.fromstring(a.recv()).find('{jabber:client}body').text, 'hello & hi')
         self.assertEqual(ET.fromstring(b.recv()).find('{jabber:client}body').text, 'hello & hi')
+        message('legacy', unqualified=True)
+        self.assertIn('legacy', a.recv())
+        self.assertIn('legacy', b.recv())
         with self.friends._lock, self.friends._db:
             self.friends._db.execute('INSERT INTO blocks VALUES (?,?,?)', (self.a, self.b, 'now'))
         message('private')

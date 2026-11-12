@@ -279,8 +279,12 @@ Offer IDs and catalog layout fields are local reconstructions. Template and
 display asset names exist in the 12.60 asset index. Lace, Echo and Echo’s back
 bling receive their two initially unlocked Material styles from the cooked
 ItemVariants definitions. Purchase-to-equip and gifting persistence have backend
-tests; their new shop display and style flows still require client verification. This fixed rotation
-does not advance with the current date. PurchaseCatalogEntry
+tests. A 2026-11-12 original-client diagnostic rendered the new Featured cards
+with their names, artwork and prices. Each offer uses a separate card; the exact
+historical grouping into cycling cards has not been recovered. The new items'
+purchase and style UI flows still require verification. This fixed rotation
+does not advance with the current date; catalog and calendar refresh windows
+expire at the next UTC midnight. PurchaseCatalogEntry
 checks the catalog price and owned items, deducts the local balance, and grants the
 cosmetic to the Athena profile in one transaction. Catalog entries, purchase payload,
 and response semantics are partly inferred. Original-client cosmetic and Battle
@@ -449,8 +453,11 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
   receipts, campaign loadouts and homebase remain unimplemented.
 - **Device and external auth.** Local username, client credentials, exchange code
   and refresh token flows exist; external providers and device auth do not.
-- **TLS.** HTTP client probes currently use the documented diagnostic TLS patch.
-  Original-client WSS certificate trust remains a blocker for live XMPP validation.
+- **TLS.** HTTP client probes use the documented diagnostic TLS patch. An isolated,
+  opt-in WSS diagnostic now also reaches original-client SASL authentication;
+  secure certificate trust and compiled-in pinning remain unresolved. See
+  [G11](../server_systems/G11-removing-client-patches.md). Neither bypass is a
+  completed trust implementation.
 - **Error codes and storage policy.** Most numeric error codes, storage quotas and
   retention semantics have not been recovered.
 

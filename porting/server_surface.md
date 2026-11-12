@@ -145,7 +145,10 @@ class from `porting/server/EVIDENCE.md` (generated table, `endpoint_evidence.jso
 `wine_log` (an earlier Wine run), `reflection` (a reflected struct), `binary` (route format in the exe
 and code that loads it), `asset` (cooked config), `binary_string_only` (in the exe, no code reference)
 and `convention` (public naming, not seen locally). `server/README.md` has the route table. The tests are
-`python3 -I server/test_services.py` (71 pass, including the schema checks).
+under `server/tests/`. From the repository root, run
+`python3 -m unittest discover -s porting/server/tests -p 'test_*.py'` for the
+combined suite, or `python3 -I porting/server/tests/test_services.py` for HTTP and
+schema checks. Historical test counts below describe their original runs.
 
 ### Evidence-based (observed in the 12.60 binary, the cooked config, reflection, or the earlier login capture)
 
