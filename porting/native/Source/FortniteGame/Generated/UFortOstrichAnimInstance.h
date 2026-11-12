@@ -231,6 +231,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsRocketOnCooldown : 1;
 
+	// original bitfield byte 1393, previous group was byte 1392
+	uint8 : 0;
+
 	// table index 141, flags 0x20080000002014
 	UPROPERTY(Transient)
 	uint8 bShouldApplyShoulderPadsAdditive : 1;
@@ -262,6 +265,9 @@ public:
 	// table index 134, flags 0x20080000002014
 	UPROPERTY(Transient)
 	uint8 bWasStompInAir : 1;
+
+	// original bitfield byte 1394, previous group was byte 1393
+	uint8 : 0;
 
 	// table index 133, flags 0x20080000002014
 	UPROPERTY(Transient)
@@ -295,6 +301,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bJustGotGunner : 1;
 
+	// original bitfield byte 1395, previous group was byte 1394
+	uint8 : 0;
+
 	// table index 125, flags 0x20080000002014
 	UPROPERTY(Transient)
 	uint8 bJustLostGunner : 1;
@@ -326,6 +335,9 @@ public:
 	// table index 118, flags 0x20080000002014
 	UPROPERTY(Transient)
 	uint8 bIsSkyTubing : 1;
+
+	// original bitfield byte 1396, previous group was byte 1395
+	uint8 : 0;
 
 	// table index 117, flags 0x20080000002014
 	UPROPERTY(Transient)

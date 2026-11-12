@@ -72,6 +72,9 @@ public:
 	UPROPERTY()
 	uint8 bForceIntoOverflow : 1;
 
+	// original bitfield byte 834, previous group was byte 833
+	uint8 : 0;
+
 	// table index 46, flags 0x20080000000015
 	UPROPERTY()
 	uint8 bForceStayInOverflow : 1;
@@ -104,6 +107,9 @@ public:
 	UPROPERTY()
 	uint8 bCanBeDepositedInStorageVault : 1;
 
+	// original bitfield byte 835, previous group was byte 834
+	uint8 : 0;
+
 	// table index 38, flags 0x10000000000015
 	UPROPERTY()
 	uint8 bItemHasDurability : 1;
@@ -135,6 +141,9 @@ public:
 	// table index 31, flags 0x10000000000001
 	UPROPERTY()
 	uint8 bDoesNotNeedSourceSchematic : 1;
+
+	// original bitfield byte 836, previous group was byte 835
+	uint8 : 0;
 
 	// table index 30, flags 0x10000000020001
 	UPROPERTY()

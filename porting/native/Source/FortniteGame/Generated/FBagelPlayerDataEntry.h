@@ -37,19 +37,19 @@ struct FBagelPlayerDataEntry : public FFastArraySerializerItem
 	uint8 StreakMultiplierCurrentKillCount;
 
 	// table index 4, offset 88, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float LastAIKillTime;
 
 	// table index 2, offset 96, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<float> AIKillTimes;
 
 	// table index 1, offset 112, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FTimerHandle ResetStreakScoreMultiplierTimerHandle;
 
 	// table index 0, offset 120, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 TotalAIKillCount;
 
 };

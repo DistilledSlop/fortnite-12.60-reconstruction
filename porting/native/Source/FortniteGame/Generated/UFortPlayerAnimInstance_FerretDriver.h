@@ -108,6 +108,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsBraking : 1;
 
+	// original bitfield byte 7845, previous group was byte 7844
+	uint8 : 0;
+
 	// table index 50, flags 0x10000000002014
 	UPROPERTY(Transient)
 	uint8 bIsBoosting : 1;

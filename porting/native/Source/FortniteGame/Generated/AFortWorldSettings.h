@@ -83,6 +83,9 @@ public:
 	UPROPERTY()
 	uint8 bUseProceduralFoliage : 1;
 
+	// original bitfield byte 969, previous group was byte 968
+	uint8 : 0;
+
 	// table index 38, flags 0x10000000000001
 	UPROPERTY()
 	uint8 bUseConditionalBuildingFoundations : 1;

@@ -21,7 +21,7 @@ struct FVisibilityInfo : public FFastArraySerializerItem
 	AActor* Actor;
 
 	// table index 1, offset 24, flags 0x10000080080008
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	UFortVisibilityComponent* VisibilityComponent;
 
 	// table index 0, offset 32, flags 0x10000000000000

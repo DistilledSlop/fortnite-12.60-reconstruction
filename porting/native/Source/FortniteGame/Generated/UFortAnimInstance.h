@@ -191,6 +191,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bRigidBodyEnabled : 1;
 
+	// original bitfield byte 832, previous group was byte 828
+	uint8 : 0;
+
 	// table index 0, flags 0x10000000000005
 	UPROPERTY()
 	uint8 bEnableAdditiveLayer : 1;

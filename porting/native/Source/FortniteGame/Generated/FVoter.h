@@ -18,7 +18,7 @@ struct FVoter
 	int32 VoteDecision;
 
 	// table index 2, offset 4, flags 0x10000080002014
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 LastVoteDecision;
 
 	// table index 1, offset 8, flags 0x10000000002014

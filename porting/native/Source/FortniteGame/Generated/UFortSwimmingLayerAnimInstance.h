@@ -188,6 +188,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsOnGround : 1;
 
+	// original bitfield byte 1486, previous group was byte 1485
+	uint8 : 0;
+
 	// table index 27, flags 0x10000000022005
 	UPROPERTY(Transient)
 	uint8 bIsCrouching : 1;
@@ -219,6 +222,9 @@ public:
 	// table index 20, flags 0x10000000022005
 	UPROPERTY(Transient)
 	uint8 bStoppedDivingWhileUnderWater : 1;
+
+	// original bitfield byte 1487, previous group was byte 1486
+	uint8 : 0;
 
 	// table index 19, flags 0x10000000022005
 	UPROPERTY(Transient)
@@ -252,6 +258,9 @@ public:
 	UPROPERTY()
 	uint8 bTransition_Swimming_LowerBody_Movement : 1;
 
+	// original bitfield byte 1488, previous group was byte 1487
+	uint8 : 0;
+
 	// table index 11, flags 0x10000000000004
 	UPROPERTY()
 	uint8 bTransition_SwimSprintSlow_to_SwimSprintStart : 1;
@@ -283,6 +292,9 @@ public:
 	// table index 4, flags 0x10000000000004
 	UPROPERTY()
 	uint8 bTransition_Sprinting_to_Conduit : 1;
+
+	// original bitfield byte 1489, previous group was byte 1488
+	uint8 : 0;
 
 	// table index 3, flags 0x10000000000004
 	UPROPERTY()

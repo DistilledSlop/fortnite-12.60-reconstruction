@@ -34,7 +34,7 @@ struct FPOIRoundInfo
 	TArray<FPlayerStartInfo> PlayerStartInfos;
 
 	// table index 0, offset 80, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AFortPOICameraActor* CameraActor;
 
 };

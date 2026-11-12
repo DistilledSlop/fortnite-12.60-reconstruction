@@ -48,6 +48,9 @@ public:
 	UPROPERTY()
 	uint8 bUpdateObjectiveOncePerMatch : 1;
 
+	// original bitfield byte 906, previous group was byte 905
+	uint8 : 0;
+
 	// table index 45, flags 0x20080000000001
 	UPROPERTY()
 	uint8 IsStreamingRequired : 1;
@@ -79,6 +82,9 @@ public:
 	// table index 38, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bAllowTileMatching : 1;
+
+	// original bitfield byte 907, previous group was byte 906
+	uint8 : 0;
 
 	// table index 37, flags 0x20080000010001
 	UPROPERTY()

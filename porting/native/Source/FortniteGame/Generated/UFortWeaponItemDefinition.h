@@ -158,6 +158,9 @@ public:
 	UPROPERTY()
 	uint8 bPreventDefaultPreload : 1;
 
+	// original bitfield byte 2472, previous group was byte 2471
+	uint8 : 0;
+
 	// table index 13, flags 0x20080000000001
 	UPROPERTY()
 	uint8 bRequestClientPreload : 1;

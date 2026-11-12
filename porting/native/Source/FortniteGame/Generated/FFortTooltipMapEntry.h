@@ -17,11 +17,11 @@ struct FFortTooltipMapEntry
 
 	// table index 2, offset 0, flags 0x10000000010001
 	UPROPERTY()
-	TSubclassOf<UObject> ObjectClass;
+	UClass* ObjectClass;
 
 	// table index 1, offset 8, flags 0x10000000010001
 	UPROPERTY()
-	TSubclassOf<UObject> SecondaryObjectClass;
+	UClass* SecondaryObjectClass;
 
 	// table index 0, offset 16, flags 0x14000000010001
 	UPROPERTY()

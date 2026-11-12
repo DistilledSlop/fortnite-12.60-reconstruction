@@ -25,7 +25,7 @@ struct FWaxPlayerDataEntry : public FFastArraySerializerItem
 	bool bPermanentlyWaxed;
 
 	// table index 9, offset None, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bPlayerWasLeader;
 
 	// table index 8, offset 28, flags 0x10000000000000
@@ -37,7 +37,7 @@ struct FWaxPlayerDataEntry : public FFastArraySerializerItem
 	int32 CurrentTokens;
 
 	// table index 6, offset 36, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 PreviousTokens;
 
 	// table index 5, offset 40, flags 0x10000000000000
@@ -45,7 +45,7 @@ struct FWaxPlayerDataEntry : public FFastArraySerializerItem
 	int32 CurrentTeamTokens;
 
 	// table index 4, offset 44, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 PreviousTeamTokens;
 
 	// table index 3, offset 48, flags 0x10000000000000
@@ -53,7 +53,7 @@ struct FWaxPlayerDataEntry : public FFastArraySerializerItem
 	int32 CurrentKills;
 
 	// table index 2, offset 52, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 PreviousKills;
 
 	// table index 1, offset 56, flags 0x10000000000000

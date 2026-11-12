@@ -119,6 +119,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsInAirNotJumping : 1;
 
+	// original bitfield byte 1121, previous group was byte 1120
+	uint8 : 0;
+
 	// table index 46, flags 0x20080000002005
 	UPROPERTY(Transient)
 	uint8 bUseSkydiveRotation : 1;
@@ -151,6 +154,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsOwnerPawnBeingControlledByNonPlayerAnimBP : 1;
 
+	// original bitfield byte 1122, previous group was byte 1121
+	uint8 : 0;
+
 	// table index 38, flags 0x20080000002015
 	UPROPERTY(Transient)
 	uint8 bIsCrouching : 1;
@@ -178,6 +184,9 @@ public:
 	// table index 32, flags 0x20080000002015
 	UPROPERTY(Transient)
 	uint8 bIsCrouchMoving : 1;
+
+	// original bitfield byte 1123, previous group was byte 1122
+	uint8 : 0;
 
 	// table index 31, flags 0x20080000002015
 	UPROPERTY(Transient)
@@ -227,6 +236,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bTransition_Crouching_CrouchToCrouchADSNotMoving : 1;
 
+	// original bitfield byte 1209, previous group was byte 1208
+	uint8 : 0;
+
 	// table index 19, flags 0x20080000002014
 	UPROPERTY(Transient)
 	uint8 bTransition_CrouchToCrouchADSNotMoving_Crouching : 1;
@@ -259,6 +271,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bTransition_DownSights_DownSightsToIdle : 1;
 
+	// original bitfield byte 1210, previous group was byte 1209
+	uint8 : 0;
+
 	// table index 11, flags 0x20080000002014
 	UPROPERTY(Transient)
 	uint8 bTransition_CrouchWalkingDownSights_DownSights : 1;
@@ -290,6 +305,9 @@ public:
 	// table index 4, flags 0x20080000002014
 	UPROPERTY(Transient)
 	uint8 bTransition_ParachuteToSkydiveGlide_Skydive : 1;
+
+	// original bitfield byte 1211, previous group was byte 1210
+	uint8 : 0;
 
 	// table index 3, flags 0x20080000002015
 	UPROPERTY(Transient)

@@ -21,7 +21,7 @@ struct FFortSpectatorZoneArray : public FFastArraySerializer
 	TArray<FFortSpectatorZoneItem> SpectatorArray;
 
 	// table index 0, offset 280, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AFortPlayerStateZone* OwningState;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x1464d8458, traits HasNetDeltaSerializer): the

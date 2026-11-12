@@ -29,7 +29,7 @@ struct FAthenaPawnReplayData
 	TArray<uint8> CipherText;
 
 	// table index 0, offset 24, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	UWorld* World;
 
 };

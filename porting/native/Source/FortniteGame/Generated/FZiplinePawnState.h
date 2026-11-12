@@ -36,11 +36,11 @@ struct FZiplinePawnState
 	FVector SocketOffset;
 
 	// table index 1, offset 28, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float TimeZipliningBegan;
 
 	// table index 0, offset 32, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float TimeZipliningEndedFromJump;
 
 };

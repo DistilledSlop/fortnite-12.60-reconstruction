@@ -17,15 +17,15 @@ struct FQuickBar
 	GENERATED_BODY()
 
 	// table index 9, offset 0, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 CurrentFocusedSlot;
 
 	// table index 8, offset 4, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 PreviousFocusedSlot;
 
 	// table index 7, offset 8, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 SecondaryFocusedSlot;
 
 	// table index 5, offset 16, flags 0x40000000000000
@@ -33,15 +33,15 @@ struct FQuickBar
 	TArray<FQuickBarSlot> Slots;
 
 	// table index 4, offset 32, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FQuickBarData DataDefinition;
 
 	// table index 2, offset 48, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TSet<UFortItemDefinition*> EquippedItemDefinitions;
 
 	// table index 0, offset 128, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<int32> SharedVisibleSlotIndicesWhenUsingGamepad;
 
 	void RefreshEquippedItemDefinitions(class AFortPlayerController* Owner);

@@ -108,6 +108,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bShouldPlayPivotTransition : 1;
 
+	// original bitfield byte 1010, previous group was byte 1009
+	uint8 : 0;
+
 	// table index 0, flags 0x10000000002014
 	UPROPERTY(Transient)
 	uint8 bShouldPlayGrappleFire : 1;

@@ -56,15 +56,15 @@ struct FAthenaBatchedDamageGameplayCues_Shared
 	bool bIsBallistic;
 
 	// table index 5, offset 36, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector_NetQuantize10 NonPlayerLocation;
 
 	// table index 4, offset 48, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector_NetQuantizeNormal NonPlayerNormal;
 
 	// table index 3, offset 60, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float NonPlayerMagnitude;
 
 	// table index 2, offset None, flags 0x10000000000000
@@ -76,7 +76,7 @@ struct FAthenaBatchedDamageGameplayCues_Shared
 	bool NonPlayerbIsCritical;
 
 	// table index 0, offset None, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bIsValid;
 
 };

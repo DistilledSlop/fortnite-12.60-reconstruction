@@ -27,11 +27,11 @@ struct FPlayspaceUser : public FFastArraySerializerItem
 	APlayspace* LeafPlayspace;
 
 	// table index 1, offset 64, flags 0x20080080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	APlayerState* PlayerStateCached;
 
 	// table index 0, offset 72, flags 0x20080080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AController* ControllerCached;
 
 };

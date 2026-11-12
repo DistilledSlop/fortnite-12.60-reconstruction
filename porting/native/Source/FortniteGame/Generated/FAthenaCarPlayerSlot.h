@@ -121,7 +121,7 @@ struct FAthenaCarPlayerSlot
 	AFortPlayerPawn* Player;
 
 	// table index 11, offset 176, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AFortPlayerControllerZone* Controller;
 
 	// table index 10, offset 184, flags 0x10000000002000
@@ -129,7 +129,7 @@ struct FAthenaCarPlayerSlot
 	float PlayerEntryTime;
 
 	// table index 9, offset 188, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float EnterSeatTime;
 
 	// table index 8, offset None, flags 0x10000000000001

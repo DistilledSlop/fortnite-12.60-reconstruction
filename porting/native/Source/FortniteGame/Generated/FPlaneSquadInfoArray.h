@@ -21,7 +21,7 @@ struct FPlaneSquadInfoArray : public FFastArraySerializer
 	TArray<FPlaneSquadInfo> SquadData;
 
 	// table index 0, offset 280, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<AFortPlayerControllerAthena*> RemovedControllers;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x14630eb58, traits HasNetDeltaSerializer): the

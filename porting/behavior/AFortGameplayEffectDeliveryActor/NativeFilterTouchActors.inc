@@ -5,7 +5,7 @@ FCollisionQueryParams FilterInfo(FName(TEXT("FortTargetFilter_FilterInfo")), fal
 const bool bFilterRelationships = Filter.bExcludePawnFriends || Filter.bExcludeFriendlyAI ||
     Filter.bExcludePawnEnemies || Filter.bExcludeNonPawnFriends || Filter.bExcludeNonPawnEnemies;
 AFortGameStateZone* ZoneState = bFilterRelationships ? Cast<AFortGameStateZone>(World->GetGameState()) : nullptr;
-UClass* ClassFilter = Filter.ActorClassFilter.Get();
+UClass* ClassFilter = Filter.ActorClassFilter;
 UClass* TypeClass = nullptr;
 switch (Filter.ActorTypeFilter)
 {

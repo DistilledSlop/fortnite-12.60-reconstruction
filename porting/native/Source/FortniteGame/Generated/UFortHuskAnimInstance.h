@@ -112,6 +112,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 StateTransition_IdleToKnockedbackUp : 1;
 
+	// original bitfield byte 953, previous group was byte 952
+	uint8 : 0;
+
 	// table index 6, flags 0x20080000002015
 	UPROPERTY(Transient)
 	uint8 StateTransition_MoveToIdle : 1;

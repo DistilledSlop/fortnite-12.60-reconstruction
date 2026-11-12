@@ -21,7 +21,7 @@ struct FTeamSpottedActorInfoArray : public FFastArraySerializer
 	TArray<FTeamSpottedActorInfo> SpottedActorInfo;
 
 	// table index 0, offset 280, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AFortTeamInfo* OwningTeam;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x1465313b0, traits HasNetDeltaSerializer): the

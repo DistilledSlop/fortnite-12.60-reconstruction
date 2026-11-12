@@ -214,6 +214,9 @@ public:
 	UPROPERTY()
 	uint8 bUpgradeUsesSameClass : 1;
 
+	// original bitfield byte 993, previous group was byte 992
+	uint8 : 0;
+
 	// table index 109, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bDisplayLevelInInfoWidget : 1;
@@ -246,6 +249,9 @@ public:
 	UPROPERTY(ReplicatedUsing=HandleDestroyed, Transient)
 	uint8 bDestroyed : 1;
 
+	// original bitfield byte 994, previous group was byte 993
+	uint8 : 0;
+
 	// table index 101, flags 0x10000000010001
 	UPROPERTY()
 	uint8 bPersistToWorld : 1;
@@ -273,6 +279,9 @@ public:
 	// table index 95, flags 0x10000000010015
 	UPROPERTY()
 	uint8 bIsNavigationModifier : 1;
+
+	// original bitfield byte 995, previous group was byte 994
+	uint8 : 0;
 
 	// table index 94, flags 0x10040000010015
 	UPROPERTY()
@@ -306,6 +315,9 @@ public:
 	UPROPERTY()
 	uint8 bForceAutomationPass : 1;
 
+	// original bitfield byte 996, previous group was byte 995
+	uint8 : 0;
+
 	// table index 86, flags 0x10040000010015
 	UPROPERTY()
 	uint8 bForceAutomationPass_NavmeshOnTop : 1;
@@ -333,6 +345,9 @@ public:
 	// table index 80, flags 0x20080000000001
 	UPROPERTY()
 	uint8 bUseHotSpotAsMoveGoalReplacement : 1;
+
+	// original bitfield byte 997, previous group was byte 996
+	uint8 : 0;
 
 	// table index 79, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -366,6 +381,9 @@ public:
 	UPROPERTY()
 	uint8 bUsesDayPhaseChange : 1;
 
+	// original bitfield byte 998, previous group was byte 997
+	uint8 : 0;
+
 	// table index 71, flags 0x20090000000015
 	UPROPERTY()
 	uint8 bIsDynamic : 1;
@@ -398,6 +416,9 @@ public:
 	UPROPERTY()
 	uint8 bDestroyFoliageWhenPlaced : 1;
 
+	// original bitfield byte 999, previous group was byte 998
+	uint8 : 0;
+
 	// table index 63, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bObstructTrapTargeting : 1;
@@ -425,6 +446,9 @@ public:
 	// table index 57, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bPredictedBuildingActor : 1;
+
+	// original bitfield byte 1000, previous group was byte 999
+	uint8 : 0;
 
 	// table index 56, flags 0x10000000010015
 	UPROPERTY()
@@ -458,6 +482,9 @@ public:
 	UPROPERTY()
 	uint8 bAllowHostileBlueprintInteraction : 1;
 
+	// original bitfield byte 1001, previous group was byte 1000
+	uint8 : 0;
+
 	// table index 48, flags 0x10000000010001
 	UPROPERTY()
 	uint8 bEndAbilitiesOnDeath : 1;
@@ -485,6 +512,9 @@ public:
 	// table index 42, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bIgnoreAffiliationInteractHighlight : 1;
+
+	// original bitfield byte 1002, previous group was byte 1001
+	uint8 : 0;
 
 	// table index 41, flags 0x20080000010001
 	UPROPERTY()

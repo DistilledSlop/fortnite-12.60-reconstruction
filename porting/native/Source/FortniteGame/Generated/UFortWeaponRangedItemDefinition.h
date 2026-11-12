@@ -57,6 +57,9 @@ public:
 	UPROPERTY()
 	uint8 bAllowADSInAir : 1;
 
+	// original bitfield byte 2841, previous group was byte 2840
+	uint8 : 0;
+
 	// table index 1, flags 0x40000000010001
 	UPROPERTY()
 	uint8 bShowReticleHitNotifyAtImpactLocation : 1;

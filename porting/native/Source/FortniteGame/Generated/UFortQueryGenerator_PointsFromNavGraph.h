@@ -80,6 +80,9 @@ public:
 	UPROPERTY()
 	uint8 bFilterAllowClimbup : 1;
 
+	// original bitfield byte 449, previous group was byte 448
+	uint8 : 0;
+
 	// table index 2, flags 0x10000000010001
 	UPROPERTY()
 	uint8 bFilterAllowSmash : 1;

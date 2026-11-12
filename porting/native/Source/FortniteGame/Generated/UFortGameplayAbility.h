@@ -110,6 +110,9 @@ public:
 	UPROPERTY()
 	uint8 bStopsAIMovement : 1;
 
+	// original bitfield byte 2137, previous group was byte 2136
+	uint8 : 0;
+
 	// table index 43, flags 0x10000000000015
 	UPROPERTY()
 	uint8 bStopsRVOAvoidance : 1;

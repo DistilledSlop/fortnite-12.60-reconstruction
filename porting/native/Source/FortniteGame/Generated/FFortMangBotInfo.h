@@ -18,7 +18,7 @@ struct FFortMangBotInfo : public FFastArraySerializerItem
 	GENERATED_BODY()
 
 	// table index 3, offset 16, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AFortAthenaAIBotController* BotController;
 
 	// table index 2, offset 24, flags 0x10000000000000

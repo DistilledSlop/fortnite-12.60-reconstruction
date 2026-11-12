@@ -449,6 +449,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bPlayConsumableOffsetPose : 1;
 
+	// original bitfield byte 6841, previous group was byte 6840
+	uint8 : 0;
+
 	// table index 272, flags 0x10000000022015
 	UPROPERTY(Transient)
 	uint8 bIsOnGround : 1;
@@ -480,6 +483,9 @@ public:
 	// table index 265, flags 0x10000000022015
 	UPROPERTY(Transient)
 	uint8 bIsPlayingUpperBodySlot : 1;
+
+	// original bitfield byte 6842, previous group was byte 6841
+	uint8 : 0;
 
 	// table index 264, flags 0x10000000022015
 	UPROPERTY(Transient)
@@ -513,6 +519,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsCrouchSprinting : 1;
 
+	// original bitfield byte 6843, previous group was byte 6842
+	uint8 : 0;
+
 	// table index 256, flags 0x10000000022015
 	UPROPERTY(Transient)
 	uint8 bIsSurfaceSwimming : 1;
@@ -544,6 +553,9 @@ public:
 	// table index 249, flags 0x10000000022005
 	UPROPERTY(Transient)
 	uint8 bSwimmingIsJumpAscending : 1;
+
+	// original bitfield byte 6844, previous group was byte 6843
+	uint8 : 0;
 
 	// table index 248, flags 0x10000000022005
 	UPROPERTY(Transient)
@@ -577,6 +589,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsBackpedaling : 1;
 
+	// original bitfield byte 6845, previous group was byte 6844
+	uint8 : 0;
+
 	// table index 240, flags 0x10000000022015
 	UPROPERTY(Transient)
 	uint8 bShouldWalkRightFootFwd : 1;
@@ -608,6 +623,9 @@ public:
 	// table index 233, flags 0x10000000022015
 	UPROPERTY(Transient)
 	uint8 bShouldPlayPostPivotTransition : 1;
+
+	// original bitfield byte 6846, previous group was byte 6845
+	uint8 : 0;
 
 	// table index 232, flags 0x10000000022015
 	UPROPERTY(Transient)
@@ -641,6 +659,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsUsingRemoteControlPawn : 1;
 
+	// original bitfield byte 6847, previous group was byte 6846
+	uint8 : 0;
+
 	// table index 224, flags 0x10000000022015
 	UPROPERTY(Transient)
 	uint8 bIsInVehicle : 1;
@@ -672,6 +693,9 @@ public:
 	// table index 217, flags 0x10000000022015
 	UPROPERTY(Transient)
 	uint8 bIsDBNOCarrying : 1;
+
+	// original bitfield byte 6848, previous group was byte 6847
+	uint8 : 0;
 
 	// table index 216, flags 0x10000000022015
 	UPROPERTY(Transient)
@@ -705,6 +729,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsFallingSlow : 1;
 
+	// original bitfield byte 6849, previous group was byte 6848
+	uint8 : 0;
+
 	// table index 208, flags 0x10000000022015
 	UPROPERTY(Transient)
 	uint8 bIsFloatingHigher : 1;
@@ -736,6 +763,9 @@ public:
 	// table index 201, flags 0x10000000022015
 	UPROPERTY(Transient)
 	uint8 bIsPlayingEmote : 1;
+
+	// original bitfield byte 6850, previous group was byte 6849
+	uint8 : 0;
 
 	// table index 200, flags 0x10000000022015
 	UPROPERTY(Transient)
@@ -1245,6 +1275,9 @@ public:
 	UPROPERTY()
 	uint8 bIsRelaxedLevel1AndNotJumpBoosting : 1;
 
+	// original bitfield byte 7401, previous group was byte 7400
+	uint8 : 0;
+
 	// table index 67, flags 0x10000000000005
 	UPROPERTY()
 	uint8 bPlayWeaponInspect : 1;
@@ -1276,6 +1309,9 @@ public:
 	// table index 60, flags 0x10000000002005
 	UPROPERTY(Transient)
 	uint8 bSwimmingIsWaterPaddlingToSurface : 1;
+
+	// original bitfield byte 7402, previous group was byte 7401
+	uint8 : 0;
 
 	// table index 59, flags 0x10000000002005
 	UPROPERTY(Transient)
@@ -1409,6 +1445,9 @@ public:
 	UPROPERTY()
 	uint8 bTransition_NewFallAditive_NewFallLandAdditive : 1;
 
+	// original bitfield byte 7529, previous group was byte 7528
+	uint8 : 0;
+
 	// table index 26, flags 0x10000000000014
 	UPROPERTY()
 	uint8 bTransition_NewFallAditive_NewFallLandAdditive_Brolly : 1;
@@ -1440,6 +1479,9 @@ public:
 	// table index 19, flags 0x10000000000014
 	UPROPERTY()
 	uint8 bEarlyOut_Lowerbody_Turns : 1;
+
+	// original bitfield byte 7530, previous group was byte 7529
+	uint8 : 0;
 
 	// table index 18, flags 0x10000000000014
 	UPROPERTY()
@@ -1473,6 +1515,9 @@ public:
 	UPROPERTY()
 	uint8 bTransition_DiveJumpLoop_to_DiveJumpFall : 1;
 
+	// original bitfield byte 7531, previous group was byte 7530
+	uint8 : 0;
+
 	// table index 10, flags 0x10000000000014
 	UPROPERTY()
 	uint8 bTransition_SwimDiveLandOnGround_to_SplitBody : 1;
@@ -1504,6 +1549,9 @@ public:
 	// table index 3, flags 0x10000000002014
 	UPROPERTY(Transient)
 	uint8 bIsUmbrellaFailing : 1;
+
+	// original bitfield byte 7532, previous group was byte 7531
+	uint8 : 0;
 
 	// table index 2, flags 0x10000000002014
 	UPROPERTY(Transient)

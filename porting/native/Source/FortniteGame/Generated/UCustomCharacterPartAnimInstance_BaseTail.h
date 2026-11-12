@@ -68,6 +68,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bBlendInBackwardPose : 1;
 
+	// original bitfield byte 1164, previous group was byte 1160
+	uint8 : 0;
+
 	// table index 11, flags 0x10000000002014
 	UPROPERTY(Transient)
 	uint8 bTransition_Idle_Locomotion : 1;
@@ -99,6 +102,9 @@ public:
 	// table index 4, flags 0x10000000002014
 	UPROPERTY(Transient)
 	uint8 bTransition_DownSights_Conduit_DownSightsToIdle : 1;
+
+	// original bitfield byte 1165, previous group was byte 1164
+	uint8 : 0;
 
 	// table index 3, flags 0x10000000002014
 	UPROPERTY(Transient)

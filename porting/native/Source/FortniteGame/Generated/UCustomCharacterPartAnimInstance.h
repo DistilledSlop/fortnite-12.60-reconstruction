@@ -64,6 +64,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsSkyDiving : 1;
 
+	// original bitfield byte 857, previous group was byte 856
+	uint8 : 0;
+
 	// table index 45, flags 0x20080000022015
 	UPROPERTY(Transient)
 	uint8 bIsParachuteOpened : 1;
@@ -95,6 +98,9 @@ public:
 	// table index 38, flags 0x20080000022015
 	UPROPERTY(Transient)
 	uint8 bIsBackpedaling : 1;
+
+	// original bitfield byte 858, previous group was byte 857
+	uint8 : 0;
 
 	// table index 37, flags 0x20080000022015
 	UPROPERTY(Transient)
@@ -128,6 +134,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsPlayingFullBodySlotInFrontEnd : 1;
 
+	// original bitfield byte 859, previous group was byte 858
+	uint8 : 0;
+
 	// table index 29, flags 0x20080000022015
 	UPROPERTY(Transient)
 	uint8 bIsInVehicle : 1;
@@ -152,9 +161,15 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsDBNO : 1;
 
+	// original bitfield byte 860, previous group was byte 859
+	uint8 : 0;
+
 	// table index 23, flags 0x20080000022015
 	UPROPERTY(Transient)
 	uint8 bIsOnGround : 1;
+
+	// original bitfield byte 864, previous group was byte 860
+	uint8 : 0;
 
 	// table index 22, flags 0x20080000022015
 	UPROPERTY(Transient)
@@ -188,6 +203,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsAntelopeVehicleDriver : 1;
 
+	// original bitfield byte 865, previous group was byte 864
+	uint8 : 0;
+
 	// table index 14, flags 0x20080000022015
 	UPROPERTY(Transient)
 	uint8 bIsAntelopeVehiclePassenger : 1;
@@ -219,6 +237,9 @@ public:
 	// table index 7, flags 0x20080000022015
 	UPROPERTY(Transient)
 	uint8 bIsDBNOCarrying : 1;
+
+	// original bitfield byte 866, previous group was byte 865
+	uint8 : 0;
 
 	// table index 6, flags 0x20080000022015
 	UPROPERTY(Transient)

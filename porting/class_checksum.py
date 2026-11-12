@@ -188,7 +188,7 @@ def bool_setter_offset(img, va):
     """(offset, mask) of the first byte a bool setter writes, as UE's DoDetermineBitfieldOffsetAndMask finds it.
 
     The setter is one store into the object (rcx) followed by ret: or/mov on a byte (80/C6), a dword (81/83/C7).
-    The store is with a [rcx+disp8] or [rcx+disp32] operand. The offset is disp plus the index of the first nonzero
+    The store is with a [rcx], [rcx+disp8] or [rcx+disp32] operand. The offset is disp plus the index of the first nonzero
     byte of the immediate (little endian). Returns None for any other shape.
     """
     if not va:
@@ -202,11 +202,13 @@ def bool_setter_offset(img, va):
         return None
     modrm = b[1]
     is_or = op in (0x80, 0x81, 0x83)
-    if is_or and modrm not in (0x49, 0x89):          # reg=/1 (or), base=rcx
+    if is_or and modrm not in (0x09, 0x49, 0x89):    # reg=/1 (or), base=rcx; 0x09 is [rcx] without displacement
         return None
-    if not is_or and modrm not in (0x41, 0x81):      # reg=/0 (mov), base=rcx
+    if not is_or and modrm not in (0x01, 0x41, 0x81):  # reg=/0 (mov), base=rcx; 0x01 is [rcx] without displacement
         return None
-    if modrm in (0x49, 0x41):
+    if modrm in (0x09, 0x01):
+        disp, p = 0, 2
+    elif modrm in (0x49, 0x41):
         disp, p = b[2], 3
     else:
         disp, p = struct.unpack_from("<I", b, 2)[0], 6
@@ -412,6 +414,12 @@ class Model:
         self.class_ref = {k.lower(): v.lower() for k, v in self._load("class_ref_map.json", "resolved").items()}
         self.construct = {k.lower(): v for k, v in self._load("construct_fn_to_block.json", "map").items()}
         self.structs = {s["block_va"].lower(): s for s in self._load("struct_blocks.json", "structs")}
+        # struct_blocks.json has no bool setters (see extract_struct_bool_setters.py); without one a struct bitfield
+        # would sort at offset 0 instead of its real byte.
+        for va, by_index in self._load("struct_bool_setters.json", "setters").items():
+            for prop in self.structs[va.lower()].get("properties") or []:
+                if str(prop.get("index")) in by_index and not prop.get("set_bit_fn"):
+                    prop["set_bit_fn"] = by_index[str(prop["index"])]
         self.enums = {e["block_va"].lower(): e for e in self._load("enum_blocks.json", "enums")}
         self.delegates = {d["block_va"].lower(): d for d in self._load("delegate_blocks.json", "delegates")}
         self.by_name = {}
@@ -641,11 +649,19 @@ class Model:
 
     # ---- checksums ---------------------------------------------------------------------------------
     def struct_checksum(self, struct_va, crc):
-        struct = self.structs[struct_va]
-        fields = [p for p in self._records(struct.get("properties")) if not (int(p["property_flags"], 16) & CPF_REPSKIP)]
-        keyed = sorted(fields, key=lambda p: (self.offset(p), sort_key_name(p["name"])))
-        for field in keyed:
-            crc = self.property_checksum(field, crc, True, struct.get("properties"))
+        # SortedStructFieldsChecksum iterates TFieldIterator<FProperty>(Struct), which includes the properties
+        # of every super struct (FVector_NetQuantize100 hashes the X/Y/Z of FVector).
+        fields = []
+        cur = struct_va
+        while cur:
+            struct = self.structs[cur]
+            fields += [(p, struct.get("properties")) for p in self._records(struct.get("properties"))
+                       if not (int(p["property_flags"], 16) & CPF_REPSKIP)]
+            sup = struct.get("super_fn")
+            cur = self.construct_block(sup, "struct") if sup else None
+        keyed = sorted(fields, key=lambda f: (self.offset(f[0]), sort_key_name(f[0]["name"])))
+        for field, outer in keyed:
+            crc = self.property_checksum(field, crc, True, outer)
         return crc
 
     def property_checksum(self, prop, crc, include_children, outer_props, type_override=None, dim_override=None):

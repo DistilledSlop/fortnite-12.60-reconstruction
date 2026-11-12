@@ -27,7 +27,7 @@ struct FORTNITEGAME_API FFortItemEntry : public FFastArraySerializerItem
 	int32 Count;
 
 	// table index 25, offset 16, flags 0x20080080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 PreviousCount;
 
 	// table index 24, offset 24, flags 0x20080001000014
@@ -51,11 +51,11 @@ struct FORTNITEGAME_API FFortItemEntry : public FFastArraySerializerItem
 	int32 LoadedAmmo;
 
 	// table index 18, offset 48, flags 0x40000081000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<FString> AlterationDefinitions;
 
 	// table index 17, offset 64, flags 0x40000081000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FString ItemSource;
 
 	// table index 16, offset 80, flags 0x40000001000000
@@ -87,7 +87,7 @@ struct FORTNITEGAME_API FFortItemEntry : public FFastArraySerializerItem
 	bool bUpdateStatsOnCollection;
 
 	// table index 9, offset 112, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FFortGiftingInfo GiftingInfo;
 
 	// table index 7, offset 152, flags 0x40000000002000

@@ -30,7 +30,7 @@ struct FSpecialActorRepData : public FFastArraySerializerItem
 	FGameplayTag CategoryTag;
 
 	// table index 36, offset 32, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AActor* SpecialActor;
 
 	// table index 35, offset 40, flags 0x10000000000000
@@ -38,35 +38,35 @@ struct FSpecialActorRepData : public FFastArraySerializerItem
 	APlayerState* PlayerState;
 
 	// table index 34, offset 48, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float ReplicationInterval;
 
 	// table index 33, offset 52, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float ReplicationIntervalDeviation;
 
 	// table index 32, offset 56, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float NextReplicationTime;
 
 	// table index 31, offset 60, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float LastActorNotRelevantTime;
 
 	// table index 30, offset None, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bActorIsRelevant;
 
 	// table index 29, offset None, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bWasActorRelevantLastUpdate;
 
 	// table index 28, offset 68, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector CurrentLocation;
 
 	// table index 27, offset 80, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float CurrentYaw;
 
 	// table index 26, offset 88, flags 0x10000000000000
@@ -118,19 +118,19 @@ struct FSpecialActorRepData : public FFastArraySerializerItem
 	FGameplayTagContainer RenderTags;
 
 	// table index 14, offset 464, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float AddedToClientTime;
 
 	// table index 12, offset 472, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<FSpecialActorSingleStatData> TrackedStats;
 
 	// table index 11, offset 488, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float LastLocationReplicationTime;
 
 	// table index 10, offset 492, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float PrevLocationReplicatedTime;
 
 	// table index 9, offset 496, flags 0x40000000000000
@@ -138,19 +138,19 @@ struct FSpecialActorRepData : public FFastArraySerializerItem
 	FVector_NetQuantize100 LastRepLocation;
 
 	// table index 8, offset 508, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector_NetQuantize100 PrevRepLocation;
 
 	// table index 7, offset 520, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector LerpStartLocation;
 
 	// table index 6, offset 532, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float LastYawReplicationTime;
 
 	// table index 5, offset 536, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float PrevYawReplicatedTime;
 
 	// table index 4, offset 540, flags 0x40000000000000
@@ -158,19 +158,19 @@ struct FSpecialActorRepData : public FFastArraySerializerItem
 	float LastRepYaw;
 
 	// table index 3, offset 544, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float PrevRepYaw;
 
 	// table index 2, offset 548, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float LerpStartYaw;
 
 	// table index 1, offset None, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bReplicateHealth;
 
 	// table index 0, offset None, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bReplicateShield;
 
 };

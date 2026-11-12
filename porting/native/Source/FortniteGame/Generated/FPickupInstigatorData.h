@@ -37,7 +37,7 @@ struct FPickupInstigatorData
 	FPropertyOverrideData ItemOptionData;
 
 	// table index 0, offset 96, flags 0x14000080020805
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TSubclassOf<AFortPickup> OverridePickupClass;
 
 };

@@ -18,27 +18,27 @@ struct FQuickBarSlot
 	TArray<FGuid> Items;
 
 	// table index 5, offset None, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	uint8 bEnabled : 1;
 
 	// table index 4, offset None, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	uint8 bIsDirty : 1;
 
 	// table index 3, offset None, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	uint8 bIsReserved : 1;
 
 	// table index 2, offset None, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	uint8 bIsOccupied : 1;
 
 	// table index 1, offset 20, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 UsedBySlotIndex;
 
 	// table index 0, offset 24, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FGuid UsedByItemGuid;
 
 };

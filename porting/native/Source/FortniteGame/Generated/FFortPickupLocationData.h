@@ -59,7 +59,7 @@ struct FFortPickupLocationData
 	bool bPlayPickupSound;
 
 	// table index 0, offset 80, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FGuid PickupGuid;
 
 };

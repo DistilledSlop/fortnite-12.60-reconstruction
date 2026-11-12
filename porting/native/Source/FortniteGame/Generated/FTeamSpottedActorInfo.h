@@ -17,7 +17,7 @@ struct FTeamSpottedActorInfo : public FFastArraySerializerItem
 	GENERATED_BODY()
 
 	// table index 1, offset 16, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AFortPlayerController* Spotter;
 
 	// table index 0, offset 24, flags 0x10000000000000

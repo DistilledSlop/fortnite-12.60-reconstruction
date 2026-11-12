@@ -127,6 +127,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIgnoreAllFallingDamage : 1;
 
+	// original bitfield byte 1037, previous group was byte 1036
+	uint8 : 0;
+
 	// table index 139, flags 0x10000000002001
 	UPROPERTY(Transient)
 	uint8 bIgnoreNextFallingDamage : 1;

@@ -332,7 +332,7 @@ void AFortGameplayEffectDeliveryActor::NativeFilterTouchActors(const FFortTarget
 	const bool bFilterRelationships = Filter.bExcludePawnFriends || Filter.bExcludeFriendlyAI ||
 	    Filter.bExcludePawnEnemies || Filter.bExcludeNonPawnFriends || Filter.bExcludeNonPawnEnemies;
 	AFortGameStateZone* ZoneState = bFilterRelationships ? Cast<AFortGameStateZone>(World->GetGameState()) : nullptr;
-	UClass* ClassFilter = Filter.ActorClassFilter.Get();
+	UClass* ClassFilter = Filter.ActorClassFilter;
 	UClass* TypeClass = nullptr;
 	switch (Filter.ActorTypeFilter)
 	{

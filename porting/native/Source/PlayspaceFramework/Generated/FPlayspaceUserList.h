@@ -21,11 +21,11 @@ struct FPlayspaceUserList : public FFastArraySerializer
 	TArray<FPlayspaceUser> PlayspaceUsers;
 
 	// table index 1, offset None, flags 0x20080080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bIsInitialized;
 
 	// table index 0, offset 288, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	APlayspace* Playspace;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x145c29b80, traits HasNetDeltaSerializer): the

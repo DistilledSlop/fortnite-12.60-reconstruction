@@ -22,7 +22,7 @@ struct FDeathInfo
 	AActor* FinisherOrDowner;
 
 	// table index 8, offset 8, flags 0x10000080000014
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AActor* Downer;
 
 	// table index 7, offset None, flags 0x10000000000014

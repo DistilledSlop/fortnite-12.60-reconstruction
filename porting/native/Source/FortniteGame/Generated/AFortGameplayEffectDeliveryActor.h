@@ -106,6 +106,9 @@ public:
 	UPROPERTY()
 	uint8 bExplosionTransformIgnoresRotation : 1;
 
+	// original bitfield byte 993, previous group was byte 992
+	uint8 : 0;
+
 	// table index 9, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bCanExplodeMultipleTimes : 1;

@@ -18,7 +18,7 @@ struct FPropertyOverrideData
 	GENERATED_BODY()
 
 	// table index 8, offset 0, flags 0x10000081000001
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<FPropertyOverrideMk2> PropertyOverrides;
 
 	// table index 6, offset 16, flags 0x10000000002000
@@ -26,7 +26,7 @@ struct FPropertyOverrideData
 	TArray<FPropertyOverrideId> SharedPropertyIds;
 
 	// table index 4, offset 32, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<FPropertyOverrideId> PendingPropertyIds;
 
 	// table index 2, offset 56, flags 0x40000000002000
@@ -38,7 +38,7 @@ struct FPropertyOverrideData
 	UObject* BaseObject;
 
 	// table index 0, offset 72, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	UObject* MutableObject;
 
 };

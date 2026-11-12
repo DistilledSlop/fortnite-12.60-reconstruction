@@ -22,15 +22,15 @@ struct FActiveGameplayModifier : public FFastArraySerializerItem
 	UFortGameplayModifierItemDefinition* ModifierDef;
 
 	// table index 3, offset 24, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FActiveGameplayModifierHandle ModifierHandle;
 
 	// table index 1, offset 32, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<AFortGameplayMutator*> Mutators;
 
 	// table index 0, offset 48, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 Expiration;
 
 };

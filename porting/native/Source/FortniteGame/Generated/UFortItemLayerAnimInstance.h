@@ -80,6 +80,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsRelaxedLevel1AndNotJumpBoosting : 1;
 
+	// original bitfield byte 702, previous group was byte 701
+	uint8 : 0;
+
 	// table index 2, flags 0x10000000022015
 	UPROPERTY(Transient)
 	uint8 bIsInVehicle : 1;

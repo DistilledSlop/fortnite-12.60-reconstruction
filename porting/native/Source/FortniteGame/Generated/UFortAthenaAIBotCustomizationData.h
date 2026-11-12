@@ -74,6 +74,9 @@ public:
 	UPROPERTY()
 	uint8 bOverrideSkillSets : 1;
 
+	// original bitfield byte 59, previous group was byte 58
+	uint8 : 0;
+
 	// table index 17, flags 0x40000000010001
 	UPROPERTY()
 	uint8 bOverrideStartupInventory : 1;

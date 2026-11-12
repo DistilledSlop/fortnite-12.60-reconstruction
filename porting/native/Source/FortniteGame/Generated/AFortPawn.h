@@ -132,6 +132,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 bIsStaggered : 1;
 
+	// original bitfield byte 1313, previous group was byte 1312
+	uint8 : 0;
+
 	// table index 192, flags 0x10000000000001
 	UPROPERTY()
 	uint8 bCanCapsuleBeUsedForTargeting : 1;
@@ -155,6 +158,9 @@ public:
 	// table index 187, flags 0x10000000000034
 	UPROPERTY(Replicated)
 	uint8 bMovingEmoteSkipLandingFX : 1;
+
+	// original bitfield byte 1314, previous group was byte 1313
+	uint8 : 0;
 
 	// table index 186, flags 0x10000000000024
 	UPROPERTY(Replicated)
@@ -187,6 +193,9 @@ public:
 	// table index 179, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_WeaponActivated)
 	uint8 bWeaponActivated : 1;
+
+	// original bitfield byte 1315, previous group was byte 1314
+	uint8 : 0;
 
 	// table index 178, flags 0x10000000000000
 	UPROPERTY()
@@ -231,6 +240,9 @@ public:
 	// table index 167, flags 0x20080000010015
 	UPROPERTY()
 	uint8 bUsesStats : 1;
+
+	// original bitfield byte 1338, previous group was byte 1337
+	uint8 : 0;
 
 	// table index 166, flags 0x20080000000015
 	UPROPERTY()

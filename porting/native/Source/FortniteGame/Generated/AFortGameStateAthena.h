@@ -390,7 +390,7 @@ public:
 
 	// table index 154, flags 0x10000000000020
 	UPROPERTY(Replicated)
-	TArray<TSubclassOf<UObject>> ClientVehicleClassesToLoad;
+	TArray<UClass*> ClientVehicleClassesToLoad;
 
 	// table index 152, flags 0x10000000002000
 	UPROPERTY(Transient)

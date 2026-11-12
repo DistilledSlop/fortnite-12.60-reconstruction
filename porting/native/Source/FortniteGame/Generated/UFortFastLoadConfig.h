@@ -46,6 +46,9 @@ public:
 	UPROPERTY(Config)
 	uint8 bDisableThreatVisualsManager : 1;
 
+	// original bitfield byte 41, previous group was byte 40
+	uint8 : 0;
+
 	// table index 0, flags 0x40000000004000
 	UPROPERTY(Config)
 	uint8 bDisablePreLoadAssets : 1;

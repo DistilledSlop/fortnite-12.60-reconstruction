@@ -14,11 +14,11 @@ struct FLocationLerpData
 	GENERATED_BODY()
 
 	// table index 3, offset 0, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector PositionLerp_Start;
 
 	// table index 2, offset 12, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector PositionLerp_End;
 
 	// table index 1, offset 24, flags 0x10000000000000

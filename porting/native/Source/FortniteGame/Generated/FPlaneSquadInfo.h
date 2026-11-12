@@ -18,7 +18,7 @@ struct FPlaneSquadInfo : public FFastArraySerializerItem
 	GENERATED_BODY()
 
 	// table index 6, offset 16, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<AFortPlayerControllerAthena*> Controllers;
 
 	// table index 5, offset 32, flags 0x10000000000000

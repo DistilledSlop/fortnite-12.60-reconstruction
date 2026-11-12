@@ -19,7 +19,7 @@ struct FActiveTieredCollectionLayoutArray : public FFastArraySerializer
 	TArray<FActiveTieredCollectionLayout> LayoutArray;
 
 	// table index 0, offset None, flags 0x20080080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bTiersForced;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x1463b76a8, traits HasNetDeltaSerializer): the

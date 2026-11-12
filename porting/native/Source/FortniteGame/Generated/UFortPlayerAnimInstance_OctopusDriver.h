@@ -135,6 +135,9 @@ public:
 	UPROPERTY()
 	uint8 bWantsEastWestPivot : 1;
 
+	// original bitfield byte 7901, previous group was byte 7900
+	uint8 : 0;
+
 	// table index 5, flags 0x10000000000004
 	UPROPERTY()
 	uint8 bWantsNorthSouthPivot : 1;

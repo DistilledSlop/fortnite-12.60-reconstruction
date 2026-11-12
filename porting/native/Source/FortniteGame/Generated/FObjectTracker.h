@@ -15,7 +15,7 @@ struct FObjectTracker
 	GENERATED_BODY()
 
 	// table index 0, offset 248, flags 0x20080080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	UMetricConfiguration* MetricConfiguration;
 
 };

@@ -79,7 +79,7 @@ struct FORTNITEGAME_API FFortWorldMarkerData : public FFastArraySerializerItem
 	FMarkedActorDisplayInfo CustomDisplayInfo;
 
 	// table index 0, offset 248, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	UFortWorldMarker* MarkerInstance;
 
 };

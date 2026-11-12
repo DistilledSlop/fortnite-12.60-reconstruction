@@ -22,7 +22,7 @@ struct FPlaylistPropertyArray : public FFastArraySerializer
 	TArray<FPropertyOverride> PropertyOverrides;
 
 	// table index 5, offset 280, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 PlaylistReplicationKey;
 
 	// table index 4, offset 288, flags 0x40000000002000
@@ -30,11 +30,11 @@ struct FPlaylistPropertyArray : public FFastArraySerializer
 	UFortPlaylistAthena* BasePlaylist;
 
 	// table index 3, offset 296, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	UFortPlaylistAthena* OverridePlaylist;
 
 	// table index 0, offset 304, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TMap<FString, FPropertyOverrideScope> PropertyOverrideScopes;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x1464e1fd0, traits HasNetDeltaSerializer): the

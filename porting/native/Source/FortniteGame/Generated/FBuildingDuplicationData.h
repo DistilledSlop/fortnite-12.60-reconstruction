@@ -17,7 +17,7 @@ struct FBuildingDuplicationData
 
 	// table index 1, offset 0, flags 0x10000000000005
 	UPROPERTY()
-	TSubclassOf<UObject> ClassData;
+	UClass* ClassData;
 
 	// table index 0, offset 8, flags 0x10000000000001
 	UPROPERTY()

@@ -19,15 +19,15 @@ struct FUraniumSingleRoundInfo
 	uint8 RoundTeamWinner;
 
 	// table index 2, offset 8, flags 0x10000080010001
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FText RoundName;
 
 	// table index 1, offset 32, flags 0x10000080010001
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	USoundBase* RoundSound;
 
 	// table index 0, offset 40, flags 0x10000080010001
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 PointsForWinning;
 
 };

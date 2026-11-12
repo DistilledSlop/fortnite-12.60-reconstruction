@@ -24,19 +24,19 @@ struct FAshtonStoneState
 	EAshtonStoneStateType StoneState;
 
 	// table index 3, offset 4, flags 0x10000080010001
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FGameplayTag GameplayTag;
 
 	// table index 2, offset 12, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float SpawnTime;
 
 	// table index 1, offset None, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bHasEverSpawned;
 
 	// table index 0, offset 20, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 SpawnDataIdx;
 
 };

@@ -19,6 +19,8 @@
 #include "Components/SkyAtmosphereComponent.h"
 #include "Dom/JsonObject.h"
 #include "Engine/World.h"
+#include "Engine/NetDriver.h"
+#include "UObject/CoreNet.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/PlayerController.h"
@@ -81,9 +83,95 @@ AFortGameModeAthena::AFortGameModeAthena()
     TeamInfoClass = AFortTeamInfoAthena::StaticClass(); // 0x14192e58b, +0x4e8
 }
 
+// Diagnostic for the vanilla-client checksum rejection (WP A3): logs the engine's own class net checksum at every
+// ancestor of the given classes, with each class's owned replicated properties and net functions, so the offline
+// model (porting/class_checksum.py) can be compared against the real engine. Enabled by -FortniteDumpClassChecksums.
+static void DumpChecksumPropertyTree(const FProperty* Property, int32 Depth)
+{
+    FString Indent;
+    for (int32 i = 0; i < Depth; ++i) { Indent += TEXT("    "); }
+    UE_LOG(LogTemp, Display, TEXT("FortChecksumDump:   TREE %s%s | %s | dim=%d | off=%d | flags=%llx"), *Indent, *Property->GetName(), *Property->GetCPPType(nullptr, 0), Property->ArrayDim, Property->GetOffset_ForInternal(), (uint64)Property->PropertyFlags);
+    if (Depth > 4) { return; }
+    if (const FArrayProperty* Array = CastField<FArrayProperty>(Property))
+    {
+        DumpChecksumPropertyTree(Array->Inner, Depth + 1);
+    }
+    else if (const FStructProperty* StructProp = CastField<FStructProperty>(Property))
+    {
+        UE_LOG(LogTemp, Display, TEXT("FortChecksumDump:   TREE %s  struct=%s"), *Indent, *StructProp->Struct->GetName());
+        for (TFieldIterator<FProperty> It(StructProp->Struct); It; ++It)
+        {
+            if (It->PropertyFlags & CPF_RepSkip)
+            {
+                UE_LOG(LogTemp, Display, TEXT("FortChecksumDump:   TREE %s    (RepSkip) %s | %s | off=%d"), *Indent, *It->GetName(), *It->GetCPPType(nullptr, 0), It->GetOffset_ForInternal());
+                continue;
+            }
+            DumpChecksumPropertyTree(*It, Depth + 2);
+        }
+    }
+}
+
+static void DumpFortniteClassChecksums(UWorld* World)
+{
+    UNetDriver* Driver = World ? World->GetNetDriver() : nullptr;
+    if (!Driver || !Driver->NetCache.IsValid())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("FortChecksumDump: no net driver or class net cache"));
+        return;
+    }
+    const TCHAR* Roots[] = { TEXT("FortPlayerControllerAthena"), TEXT("FortPlayerPawnAthena"), TEXT("FortGameStateAthena"), TEXT("FortPlayerStateAthena") };
+    for (const TCHAR* RootName : Roots)
+    {
+        UClass* Root = FindObject<UClass>(ANY_PACKAGE, RootName);
+        if (!Root)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("FortChecksumDump: class %s not found"), RootName);
+            continue;
+        }
+        UE_LOG(LogTemp, Display, TEXT("FortChecksumDump: ROOT %s ClassChecksum=%u"), RootName, Driver->NetCache->GetClassNetCache(Root)->GetClassChecksum());
+        for (UClass* C = Root; C; C = C->GetSuperClass())
+        {
+            const uint32 Sum = Driver->NetCache->GetClassNetCache(C)->GetClassChecksum();
+            int32 OwnedReps = 0;
+            for (TFieldIterator<FProperty> It(C, EFieldIteratorFlags::ExcludeSuper); It; ++It)
+            {
+                if (It->PropertyFlags & CPF_Net) { ++OwnedReps; }
+            }
+            UE_LOG(LogTemp, Display, TEXT("FortChecksumDump: CLASS %s %s checksum=%u ownedReps=%d"), RootName, *C->GetPathName(), Sum, OwnedReps);
+            for (TFieldIterator<FProperty> It(C, EFieldIteratorFlags::ExcludeSuper); It; ++It)
+            {
+                if (It->PropertyFlags & CPF_Net)
+                {
+                    UE_LOG(LogTemp, Display, TEXT("FortChecksumDump:   REP %s | %s | dim=%d | off=%d | flags=%llx | own=%u | full=%u"), *It->GetName(), *It->GetCPPType(nullptr, 0), It->ArrayDim, It->GetOffset_ForInternal(), (uint64)It->PropertyFlags, Driver->NetCache->GetPropertyChecksum(*It, 0, false), Driver->NetCache->GetPropertyChecksum(*It, 0, true));
+                    FString TreeProps;
+                    FParse::Value(FCommandLine::Get(), TEXT("FortniteDumpChecksumProps="), TreeProps);
+                    TArray<FString> TreeNames;
+                    TreeProps.ParseIntoArray(TreeNames, TEXT(","));
+                    if (TreeNames.Contains(It->GetName()))
+                    {
+                        DumpChecksumPropertyTree(*It, 0);
+                    }
+                }
+            }
+            for (TFieldIterator<UFunction> It(C, EFieldIteratorFlags::ExcludeSuper); It; ++It)
+            {
+                if (It->FunctionFlags & FUNC_Net)
+                {
+                    UE_LOG(LogTemp, Display, TEXT("FortChecksumDump:   FUNC %s | flags=%x"), *It->GetName(), (uint32)It->FunctionFlags);
+                }
+            }
+        }
+    }
+    UE_LOG(LogTemp, Display, TEXT("FortChecksumDump: done"));
+}
+
 void AFortGameModeAthena::StartPlay()
 {
     Super::StartPlay();
+    if (FParse::Param(FCommandLine::Get(), TEXT("FortniteDumpClassChecksums")))
+    {
+        DumpFortniteClassChecksums(GetWorld());
+    }
     if (!GetWorld() || !GetWorld()->GetMapName().EndsWith(TEXT("Apollo_Terrain")))
         return;
     // Invented Apollo stand-in actors are not part of the original protocol. The

@@ -23,11 +23,11 @@ struct FActiveGameplayModifierArray : public FFastArraySerializer
 	TArray<FActiveGameplayModifier> DeferredGameplayModifiers;
 
 	// table index 1, offset 296, flags 0x20080080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 ModifierHandleGenerator;
 
 	// table index 0, offset None, flags 0x20080080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bSupportRuntimeModifierShutdown;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x1463f4e28, traits HasNetDeltaSerializer): the

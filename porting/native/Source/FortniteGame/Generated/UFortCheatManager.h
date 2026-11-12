@@ -59,6 +59,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bInfiniteStamina : 1;
 
+	// original bitfield byte 137, previous group was byte 136
+	uint8 : 0;
+
 	// table index 15, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bShowGameDifficultyHUD : 1;
@@ -90,6 +93,9 @@ public:
 	// table index 8, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bUnlimitedAIHealth : 1;
+
+	// original bitfield byte 138, previous group was byte 137
+	uint8 : 0;
 
 	// table index 7, flags 0x10000000002000
 	UPROPERTY(Transient)

@@ -128,6 +128,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_HiddenDueToTrapPlacement, Transient)
 	uint8 bHiddenDueToTrapPlacement : 1;
 
+	// original bitfield byte 1705, previous group was byte 1704
+	uint8 : 0;
+
 	// table index 137, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
 	uint8 bAttachmentPlacementBlockedFront : 1;
@@ -159,6 +162,9 @@ public:
 	// table index 130, flags 0x10000000010005
 	UPROPERTY()
 	uint8 bNoPawnCollision : 1;
+
+	// original bitfield byte 1706, previous group was byte 1705
+	uint8 : 0;
 
 	// table index 129, flags 0x10000000010015
 	UPROPERTY()
@@ -192,6 +198,9 @@ public:
 	UPROPERTY()
 	uint8 bUsePhysicalSurfaceForFootstep : 1;
 
+	// original bitfield byte 1707, previous group was byte 1706
+	uint8 : 0;
+
 	// table index 121, flags 0x10000000010005
 	UPROPERTY()
 	uint8 bRandomYawOnPlacement : 1;
@@ -216,6 +225,9 @@ public:
 	UPROPERTY()
 	uint8 bHideOnDeath : 1;
 
+	// original bitfield byte 1708, previous group was byte 1707
+	uint8 : 0;
+
 	// table index 115, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bPlayDestructionEffects : 1;
@@ -239,6 +251,9 @@ public:
 	// table index 110, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bCurrentlyBeingEdited : 1;
+
+	// original bitfield byte 1709, previous group was byte 1708
+	uint8 : 0;
 
 	// table index 109, flags 0x20080000000005
 	UPROPERTY()

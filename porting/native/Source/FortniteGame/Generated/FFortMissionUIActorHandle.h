@@ -34,7 +34,7 @@ struct FFortMissionUIActorHandle
 	FGuid MissionGuid;
 
 	// table index 0, offset 40, flags 0x14000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TWeakObjectPtr<UFortMissionInfoIndicator> MissionUIIndicator;
 
 };

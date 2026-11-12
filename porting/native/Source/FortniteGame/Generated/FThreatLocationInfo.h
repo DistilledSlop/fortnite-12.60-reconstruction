@@ -32,7 +32,7 @@ struct FThreatLocationInfo : public FFastArraySerializerItem
 	AFortThreatVisualsManager* ThreatVisualsManager;
 
 	// table index 3, offset 64, flags 0x14000080002014
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TWeakObjectPtr<AThreatCloud> CloudActor;
 
 	// table index 2, offset None, flags 0x10000000002000

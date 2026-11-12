@@ -54,6 +54,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsParachuteOpened : 1;
 
+	// original bitfield byte 952, previous group was byte 948
+	uint8 : 0;
+
 	// table index 3, flags 0x20080000002015
 	UPROPERTY(Transient)
 	uint8 bIsSkydiveDiveMode : 1;
@@ -61,6 +64,9 @@ public:
 	// table index 2, flags 0x20080000002015
 	UPROPERTY(Transient)
 	uint8 bIsSkydiveFloating : 1;
+
+	// original bitfield byte 956, previous group was byte 952
+	uint8 : 0;
 
 	// table index 1, flags 0x20080000002015
 	UPROPERTY(Transient)

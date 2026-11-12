@@ -55,6 +55,9 @@ public:
 	UPROPERTY()
 	uint8 bOverride_FogDirectionalInscatteringExponent : 1;
 
+	// original bitfield byte 537, previous group was byte 536
+	uint8 : 0;
+
 	// table index 75, flags 0x20080000000005
 	UPROPERTY()
 	uint8 bOverride_FogDirectionalInscatteringStartDistance : 1;
@@ -86,6 +89,9 @@ public:
 	// table index 68, flags 0x20080000000005
 	UPROPERTY()
 	uint8 bOverride_TimeOfDay : 1;
+
+	// original bitfield byte 538, previous group was byte 537
+	uint8 : 0;
 
 	// table index 67, flags 0x20080000000005
 	UPROPERTY()
@@ -119,6 +125,9 @@ public:
 	UPROPERTY()
 	uint8 bOverride_SkyboxHorizonColor : 1;
 
+	// original bitfield byte 539, previous group was byte 538
+	uint8 : 0;
+
 	// table index 59, flags 0x20080000000005
 	UPROPERTY()
 	uint8 bOverride_SkyboxZenithColor : 1;
@@ -150,6 +159,9 @@ public:
 	// table index 52, flags 0x20080000000005
 	UPROPERTY()
 	uint8 bOverride_SunScale : 1;
+
+	// original bitfield byte 540, previous group was byte 539
+	uint8 : 0;
 
 	// table index 51, flags 0x20080000000005
 	UPROPERTY()

@@ -17,7 +17,7 @@ struct FMeshNetworkEventStateDataArray : public FFastArraySerializer
 	GENERATED_BODY()
 
 	// table index 2, offset 264, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AFortMeshNetworkEventsLoader* OwningLoader;
 
 	// table index 0, offset 272, flags 0x20080000002000

@@ -22,7 +22,7 @@ struct FTagTeamInfoEntry : public FFastArraySerializerItem
 	int32 PlayerCount;
 
 	// table index 0, offset 20, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 PreviousPlayerCount;
 
 };

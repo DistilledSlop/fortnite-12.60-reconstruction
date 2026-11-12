@@ -24,15 +24,15 @@ struct FFortPawnVocalChord
 	FFortSpokenLine ReplicatedSpokenLine;
 
 	// table index 2, offset 56, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FFortSpokenLine PendingSpokenLine;
 
 	// table index 1, offset 104, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FFortSpokenLine QueuedSpokenLine;
 
 	// table index 0, offset 152, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FFortSpokenLine CurrentSpokenLine;
 
 };

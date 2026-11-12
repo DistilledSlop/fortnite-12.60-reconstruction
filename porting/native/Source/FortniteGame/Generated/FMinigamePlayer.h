@@ -32,7 +32,7 @@ struct FMinigamePlayer : public FFastArraySerializerItem
 	uint8 ClassSlotIndex;
 
 	// table index 11, offset 60, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float LastClassSwitchTime;
 
 	// table index 10, offset 64, flags 0x10000000020815
@@ -64,11 +64,11 @@ struct FMinigamePlayer : public FFastArraySerializerItem
 	bool bIsTeleportingOrRespawningForGameplay;
 
 	// table index 3, offset None, flags 0x10000080020815
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bIsLocalPlayer;
 
 	// table index 2, offset None, flags 0x10000080020815
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bPreparingForRespawn;
 
 	// table index 1, offset 104, flags 0x10000000020801

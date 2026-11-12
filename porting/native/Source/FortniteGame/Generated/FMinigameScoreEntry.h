@@ -32,7 +32,7 @@ struct FMinigameScoreEntry : public FFastArraySerializerItem
 	FDateTime TimeRecorded;
 
 	// table index 0, offset None, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	uint8 bHasScore : 1;
 
 };

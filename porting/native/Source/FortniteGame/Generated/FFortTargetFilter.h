@@ -22,7 +22,7 @@ struct FFortTargetFilter
 
 	// table index 28, offset 8, flags 0x10000000000015
 	UPROPERTY()
-	TSubclassOf<UObject> ActorClassFilter;
+	UClass* ActorClassFilter;
 
 	// table index 27, offset None, flags 0x10000000000015
 	UPROPERTY()

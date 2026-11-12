@@ -84,6 +84,9 @@ public:
 	UPROPERTY()
 	uint8 bDisableLocationLerpWhilePlacing : 1;
 
+	// original bitfield byte 2866, previous group was byte 2865
+	uint8 : 0;
+
 	// table index 25, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bDisableRotationLerpWhilePlacing : 1;
@@ -147,6 +150,9 @@ public:
 	// table index 10, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bAllowAnyFloorPlacement : 1;
+
+	// original bitfield byte 2869, previous group was byte 2868
+	uint8 : 0;
 
 	// table index 9, flags 0x20080000010001
 	UPROPERTY()

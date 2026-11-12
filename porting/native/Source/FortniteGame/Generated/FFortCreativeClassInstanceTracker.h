@@ -16,11 +16,11 @@ struct FFortCreativeClassInstanceTracker
 
 	// table index 2, offset 80, flags 0x20080000000000
 	UPROPERTY()
-	TArray<TSubclassOf<UObject>> ChildClassesAtLimit;
+	TArray<UClass*> ChildClassesAtLimit;
 
 	// table index 0, offset 96, flags 0x20080000000000
 	UPROPERTY()
-	TArray<TSubclassOf<UObject>> ParentClassesAtLimit;
+	TArray<UClass*> ParentClassesAtLimit;
 
 };
 

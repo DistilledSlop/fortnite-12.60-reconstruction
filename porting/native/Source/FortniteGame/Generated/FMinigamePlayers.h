@@ -21,7 +21,7 @@ struct FMinigamePlayers : public FFastArraySerializer
 	TArray<FMinigamePlayer> Players;
 
 	// table index 0, offset 280, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AFortMinigame* Owner;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x14644e038, traits HasNetDeltaSerializer): the

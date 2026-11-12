@@ -966,6 +966,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bPickerOpen : 1;
 
+	// original bitfield byte 7349, previous group was byte 7348
+	uint8 : 0;
+
 	// table index 70, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bPickerEnabled : 1;

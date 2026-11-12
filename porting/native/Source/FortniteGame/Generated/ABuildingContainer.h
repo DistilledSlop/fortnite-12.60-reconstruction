@@ -171,6 +171,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bAlreadySearched, Transient)
 	uint8 bAlreadySearched : 1;
 
+	// original bitfield byte 3146, previous group was byte 3145
+	uint8 : 0;
+
 	// table index 14, flags 0x10000000000001
 	UPROPERTY()
 	uint8 bDoNotDropLootOnDestruction : 1;

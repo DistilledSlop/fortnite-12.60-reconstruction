@@ -16,19 +16,19 @@ struct FPlayerFishingTelemetryData
 	GENERATED_BODY()
 
 	// table index 3, offset 0, flags 0x10000080000001
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float TimeFishingSessionBegan;
 
 	// table index 2, offset 4, flags 0x14000080000001
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TWeakObjectPtr<AFortPickup> Item;
 
 	// table index 1, offset 12, flags 0x14000080000001
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TWeakObjectPtr<AActor> ItemUsedToFish;
 
 	// table index 0, offset None, flags 0x10000080000001
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bFromFishingPool;
 
 };

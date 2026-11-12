@@ -24,7 +24,7 @@ struct FMinigameItemData
 	int32 ItemQuantity;
 
 	// table index 1, offset 56, flags 0x10000081000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FPropertyOverrideData ItemOptionData;
 
 	// table index 0, offset 136, flags 0x10000000002000

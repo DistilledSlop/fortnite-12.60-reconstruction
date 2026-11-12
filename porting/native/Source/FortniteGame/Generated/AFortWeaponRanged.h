@@ -105,6 +105,9 @@ public:
 	UPROPERTY()
 	uint8 bPersistentFireFX : 1;
 
+	// original bitfield byte 3029, previous group was byte 3028
+	uint8 : 0;
+
 	// table index 61, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bUseBeamParticles : 1;

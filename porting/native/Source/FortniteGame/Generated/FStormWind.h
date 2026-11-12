@@ -39,11 +39,11 @@ struct FStormWind : public FFastArraySerializerItem
 	AFortThreatVisualsManager* ThreatVisualsManager;
 
 	// table index 1, offset 56, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<UFortAIEncounterInfo*> Encounters;
 
 	// table index 0, offset 72, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FFortWindImpulseHandle WindHandle;
 
 };

@@ -245,6 +245,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsCreativeQuickmenuEnabled : 1;
 
+	// original bitfield byte 9674, previous group was byte 9673
+	uint8 : 0;
+
 	// table index 10, flags 0x40000000002000
 	UPROPERTY(Transient)
 	uint8 bIsCreativeThermometer2Enabled : 1;

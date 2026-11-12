@@ -29,7 +29,7 @@ struct FPowPlayerDataEntry : public FFastArraySerializerItem
 	float CurrentShield;
 
 	// table index 0, offset 32, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AFortAthenaMutator_Pow* POWMutator;
 
 };

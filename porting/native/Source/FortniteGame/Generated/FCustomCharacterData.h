@@ -36,7 +36,7 @@ struct FCustomCharacterData
 	TArray<UCustomCharacterPart*> VariantRequiredCharacterParts;
 
 	// table index 0, offset None, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bReplicationFailed;
 
 };

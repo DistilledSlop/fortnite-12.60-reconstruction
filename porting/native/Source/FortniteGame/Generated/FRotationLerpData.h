@@ -14,11 +14,11 @@ struct FRotationLerpData
 	GENERATED_BODY()
 
 	// table index 3, offset 0, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FQuat RotationLerp_Start;
 
 	// table index 2, offset 16, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FQuat RotationLerp_End;
 
 	// table index 1, offset 32, flags 0x10000000000000

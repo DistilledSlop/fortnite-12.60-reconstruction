@@ -21,11 +21,11 @@ struct FMinigameScoreArray : public FFastArraySerializer
 	TArray<FMinigameScoreEntry> Scores;
 
 	// table index 1, offset 280, flags 0x10000080022001
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<FMinigameScoreEntry> HighScores;
 
 	// table index 0, offset 296, flags 0x10000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AActor* Owner;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x146452548, traits HasNetDeltaSerializer): the

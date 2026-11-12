@@ -76,6 +76,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ShowHeroBackpack, Transient)
 	uint8 bShowHeroBackpack : 1;
 
+	// original bitfield byte 817, previous group was byte 816
+	uint8 : 0;
+
 	// table index 52, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ShowHeroHeadAccessories, Transient)
 	uint8 bShowHeroHeadAccessories : 1;

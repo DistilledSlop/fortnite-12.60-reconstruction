@@ -56,31 +56,31 @@ struct FCobaltCombatStormShieldDataEntry : public FFastArraySerializerItem
 	uint8 TieBreakerTeam;
 
 	// table index 8, offset None, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bAwardedFirstEliminationOfRound;
 
 	// table index 7, offset 83, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	uint8 FirstLandTeam;
 
 	// table index 5, offset 88, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<float> TotalDamageDealt;
 
 	// table index 3, offset 104, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	TArray<float> TotalDamageTaken;
 
 	// table index 2, offset 120, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	ACobaltPOICameraActor* POICamera;
 
 	// table index 1, offset 128, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector2D Team0RespawnPoint;
 
 	// table index 0, offset 136, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector2D Team1RespawnPoint;
 
 };

@@ -21,7 +21,7 @@ struct FFortWorldMarkerContainer : public FFastArraySerializer
 	TArray<FFortWorldMarkerData> Markers;
 
 	// table index 0, offset 280, flags 0x40000080080008
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	UAthenaMarkerComponent* OwningComponent;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x14657e110, traits HasNetDeltaSerializer): the

@@ -23,11 +23,11 @@ struct FGhostModeRepData
 	UFortWorldItemDefinition* GhostModeItemDef;
 
 	// table index 1, offset 16, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	int32 PreviousFocusedSlot;
 
 	// table index 0, offset 20, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float TimeExitedGhostMode;
 
 };

@@ -56,6 +56,7 @@ PARAM_ORDER = os.environ.get("FN_PARAM_ORDER", "offset")
 PARAM_ORDER_BREAKS = []
 
 # EPropertyFlags (UObjectMacros/ObjectMacros.h, UE 4.25)
+CPF_UOBJECT_WRAPPER = 0x0004000000000000   # EPropertyFlags::CPF_UObjectWrapper (TSubclassOf, TSoftClassPtr)
 CPF_NET = 0x20
 GEN_NATIVE_BOOL = 0x20   # EPropertyGenFlags::NativeBool (kind_raw of a Bool property)
 CPF_CONST_PARM = 0x2
@@ -207,6 +208,11 @@ class Resolver:
             return wrap % target
         if kind == "Class":
             target = self.class_name(refs.get("meta_class"), "MetaClass")
+            # Without CPF_UObjectWrapper the original property is a plain `UClass*` (for example the inner of
+            # TArray<UClass*>); its CPPType differs from TSubclassOf<UObject>, which changes the net checksum.
+            if (getattr(self, "plain_class_ok", False) and target == "UObject"
+                    and not (hx(entry.get("property_flags")) & CPF_UOBJECT_WRAPPER)):
+                return "UClass*"
             return "TSubclassOf<%s>" % target
         if kind == "SoftClass":
             target = self.class_name(refs.get("meta_class"), "MetaClass")
@@ -332,6 +338,24 @@ def property_specifiers(entry):
     return specs
 
 
+_BOOL_BITS = None
+
+
+def original_bool_byte(class_name, member_name):
+    """Byte offset of a class bitfield in the original layout (generated/reflection/bool_bits.json), or None."""
+    global _BOOL_BITS
+    if _BOOL_BITS is None:
+        path = Path(__file__).resolve().parent / "generated" / "reflection" / "bool_bits.json"
+        try:
+            _BOOL_BITS = json.loads(path.read_text(encoding="utf-8"))["by_class"]
+        except (OSError, ValueError, KeyError):
+            _BOOL_BITS = {}
+    for rec in _BOOL_BITS.get(class_name, []):
+        if rec["name"] == member_name and rec.get("bitfield"):
+            return rec["offset"]
+    return None
+
+
 def build_members(props, resolver, promote=False, struct_mode=False):
     """struct_mode: members of a USTRUCT. A wire-custom member type does not skip a struct member, because a
     struct's NetSerialize is the one that changes the wire, and the struct itself is then skipped where it is used."""
@@ -342,7 +366,11 @@ def build_members(props, resolver, promote=False, struct_mode=False):
         mark = len(resolver.tokens)
         resolver.wire_used = False
         resolver.used = {}
+        # Only replicated properties and struct members feed the net checksum, so only they follow the original
+        # CPPType (TSubclassOf versus plain UClass*); other members and parameters keep TSubclassOf.
+        resolver.plain_class_ok = bool(hx(entry.get("property_flags")) & CPF_NET) or struct_mode
         ctype = resolver.ctype(entry, children)
+        resolver.plain_class_ok = False
         new_tokens = resolver.tokens[mark:]
         wire = resolver.wire_used
         used = resolver.used
@@ -3620,10 +3648,19 @@ def render_promoted_header(model, api, parent_include, source_label):
     global _HEADER_MEMBER_NAMES
     _HEADER_MEMBER_NAMES = frozenset([m["name"] for m in model["members_decl_order"]] +
                                      [f["name"] for f in (model.get("fields") or []) if f.get("name")])
+    prev_bit_byte = None
     for m in model["members_decl_order"]:
         while (pending and pending[0].get("offset") is not None and m.get("offset") is not None
                and pending[0]["offset"] < m["offset"]):
             lines.extend(field_lines(pending.pop(0)))
+        # Net checksums sort members by (byte offset, name). The original packs bitfields into bytes together with
+        # members this generator does not emit, so keep each emitted bitfield in the byte group it had originally.
+        bit_byte = original_bool_byte(name, m["name"]) if m.get("bitfield") else None
+        if bit_byte is not None and prev_bit_byte is not None and bit_byte != prev_bit_byte:
+            lines.append("\t// original bitfield byte %d, previous group was byte %d" % (bit_byte, prev_bit_byte))
+            lines.append("\tuint8 : 0;")
+            lines.append("")
+        prev_bit_byte = bit_byte if m.get("bitfield") else None
         lines.append("\t// table index %s, flags %s" % (m["table_index"], m["property_flags"]))
         lines.append("\t%s" % uproperty_line(m["specifiers"]))
         decl = m["decl"]
@@ -6044,7 +6081,11 @@ def render_struct_header(model, source_label):
     lines.append("")
     for m in model["members"]:
         lines.append("\t// table index %s, offset %s, flags %s" % (m["table_index"], m["offset"], m["property_flags"]))
-        specifiers = m.get("runtime_property_specifiers", ["BlueprintReadWrite"] if m.get("blueprint_read_write") else [])
+        specifiers = list(m.get("runtime_property_specifiers", ["BlueprintReadWrite"] if m.get("blueprint_read_write") else []))
+        # CPF_RepSkip (0x80000000) members are left out of the net checksum (SortedStructFieldsChecksum skips them).
+        # UHT sets CPF_RepSkip from the NotReplicated specifier on a struct member.
+        if int(str(m["property_flags"]), 16) & 0x80000000 and "NotReplicated" not in specifiers:
+            specifiers.append("NotReplicated")
         lines.append("\tUPROPERTY(%s)" % ", ".join(specifiers))
         lines.append("\t%s" % m["decl"])
         lines.append("")

@@ -73,7 +73,7 @@ struct FTimeOfDayDirectOverrides
 
 	// table index 0, offset 72, flags 0x10000000000000
 	UPROPERTY()
-	TSubclassOf<UObject> OverriddenPostProcessActorClass;
+	UClass* OverriddenPostProcessActorClass;
 
 };
 

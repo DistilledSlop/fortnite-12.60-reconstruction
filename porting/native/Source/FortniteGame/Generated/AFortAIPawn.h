@@ -136,6 +136,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 bFrozen : 1;
 
+	// original bitfield byte 4932, previous group was byte 4928
+	uint8 : 0;
+
 	// table index 181, flags 0x10000000000015
 	UPROPERTY()
 	uint8 bUseSharedAnimation : 1;
@@ -168,6 +171,9 @@ public:
 	UPROPERTY()
 	uint8 bIgnoreDefender : 1;
 
+	// original bitfield byte 4933, previous group was byte 4932
+	uint8 : 0;
+
 	// table index 173, flags 0x10000000010015
 	UPROPERTY()
 	uint8 bTrackNearbyPickups : 1;
@@ -195,6 +201,9 @@ public:
 	// table index 167, flags 0x10000000010001
 	UPROPERTY()
 	uint8 bIsAlwaysGameplayRelevant : 1;
+
+	// original bitfield byte 4934, previous group was byte 4933
+	uint8 : 0;
 
 	// table index 166, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -488,6 +497,9 @@ public:
 	UPROPERTY()
 	uint8 bCanUseSimpleCollisions : 1;
 
+	// original bitfield byte 6365, previous group was byte 6364
+	uint8 : 0;
+
 	// table index 90, flags 0x200c0000000001
 	UPROPERTY()
 	uint8 bCanUseStepAside : 1;
@@ -520,6 +532,9 @@ public:
 	UPROPERTY()
 	uint8 bAllowServerCosmeticComponentOptimizations : 1;
 
+	// original bitfield byte 6366, previous group was byte 6365
+	uint8 : 0;
+
 	// table index 82, flags 0x200c0000000001
 	UPROPERTY()
 	uint8 bCanUseMeshPooling : 1;
@@ -531,6 +546,9 @@ public:
 	// table index 80, flags 0x200c0000010001
 	UPROPERTY()
 	uint8 bControlWalkingOffLedges : 1;
+
+	// original bitfield byte 6367, previous group was byte 6366
+	uint8 : 0;
 
 	// table index 79, flags 0x20080000000015
 	UPROPERTY()

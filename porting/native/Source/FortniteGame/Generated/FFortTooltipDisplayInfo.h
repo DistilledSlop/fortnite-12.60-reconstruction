@@ -18,11 +18,11 @@ struct FFortTooltipDisplayInfo
 
 	// table index 3, offset 0, flags 0x10000000010015
 	UPROPERTY()
-	TSubclassOf<UObject> PrimaryObjectClass;
+	UClass* PrimaryObjectClass;
 
 	// table index 2, offset 8, flags 0x10000000010015
 	UPROPERTY()
-	TSubclassOf<UObject> SecondaryObjectClass;
+	UClass* SecondaryObjectClass;
 
 	// table index 1, offset 16, flags 0x10000000010015
 	UPROPERTY()

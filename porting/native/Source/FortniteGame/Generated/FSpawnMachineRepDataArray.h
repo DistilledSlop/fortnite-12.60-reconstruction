@@ -21,7 +21,7 @@ struct FSpawnMachineRepDataArray : public FFastArraySerializer
 	TArray<FSpawnMachineRepData> SpawnMachineRepDataArray;
 
 	// table index 0, offset 280, flags 0x40000080002000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	AFortGameStateAthena* OwningGameState;
 
 	// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable 0x1463ebc48, traits HasNetDeltaSerializer): the

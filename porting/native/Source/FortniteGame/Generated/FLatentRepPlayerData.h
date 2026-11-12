@@ -22,31 +22,31 @@ struct FLatentRepPlayerData : public FFastArraySerializerItem
 	AFortPlayerStateAthena* PlayerState;
 
 	// table index 18, offset 24, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float LastPawnNotRelevantTime;
 
 	// table index 17, offset None, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bPawnIsRelevant;
 
 	// table index 16, offset None, flags 0x10000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	bool bWasPawnRelevantLastUpdate;
 
 	// table index 15, offset 32, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector CurrentLocation;
 
 	// table index 14, offset 44, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float CurrentYaw;
 
 	// table index 13, offset 48, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float LastLocationReplicationTime;
 
 	// table index 12, offset 52, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float PrevLocationReplicatedTime;
 
 	// table index 11, offset 56, flags 0x40000000000000
@@ -54,19 +54,19 @@ struct FLatentRepPlayerData : public FFastArraySerializerItem
 	FVector_NetQuantize100 LastRepLocation;
 
 	// table index 10, offset 68, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector_NetQuantize100 PrevRepLocation;
 
 	// table index 9, offset 80, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	FVector LerpStartLocation;
 
 	// table index 8, offset 92, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float LastYawReplicationTime;
 
 	// table index 7, offset 96, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float PrevYawReplicatedTime;
 
 	// table index 6, offset 100, flags 0x40000000000000
@@ -74,11 +74,11 @@ struct FLatentRepPlayerData : public FFastArraySerializerItem
 	float LastRepYaw;
 
 	// table index 5, offset 104, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float PrevRepYaw;
 
 	// table index 4, offset 108, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	float LerpStartYaw;
 
 	// table index 2, offset 112, flags 0x40000000000000
@@ -86,7 +86,7 @@ struct FLatentRepPlayerData : public FFastArraySerializerItem
 	EFortPawnState PawnStateMask;
 
 	// table index 0, offset 113, flags 0x40000080000000
-	UPROPERTY()
+	UPROPERTY(NotReplicated)
 	EFortPawnState CurrPawnStateMask;
 
 };

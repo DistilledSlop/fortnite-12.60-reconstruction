@@ -64,6 +64,9 @@ public:
 	UPROPERTY()
 	uint8 bUsesOnHitPawn : 1;
 
+	// original bitfield byte 549, previous group was byte 548
+	uint8 : 0;
+
 	// table index 6, flags 0x40000000002000
 	UPROPERTY(Transient)
 	uint8 bRegisteredForDayPhaseChange : 1;

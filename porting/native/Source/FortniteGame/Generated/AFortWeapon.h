@@ -545,6 +545,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bPendingDestroyDueToDurabilityOrStackCount : 1;
 
+	// original bitfield byte 2305, previous group was byte 2304
+	uint8 : 0;
+
 	// table index 53, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bCompletedAppliedAlterationsLoad : 1;

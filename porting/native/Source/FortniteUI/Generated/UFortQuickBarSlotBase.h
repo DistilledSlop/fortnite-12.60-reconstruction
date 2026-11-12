@@ -154,6 +154,9 @@ public:
 	UPROPERTY()
 	uint8 bShouldCollapseItemWidgetBorder : 1;
 
+	// original bitfield byte 821, previous group was byte 820
+	uint8 : 0;
+
 	// table index 12, flags 0x20080000000005
 	UPROPERTY()
 	uint8 DoNotPlaySelectionAnimation : 1;

@@ -168,6 +168,9 @@ public:
 	UPROPERTY(Replicated)
 	uint8 bIsWaterSprintBoostPending : 1;
 
+	// original bitfield byte 4194, previous group was byte 4193
+	uint8 : 0;
+
 	// table index 313, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bPlayingPassengerToPassengerAnimation : 1;
@@ -296,6 +299,9 @@ public:
 	UPROPERTY(Transient)
 	uint8 bIsInSlipperyMovement : 1;
 
+	// original bitfield byte 4328, previous group was byte 4327
+	uint8 : 0;
+
 	// table index 280, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedIsInSlipperyMovement)
 	uint8 bReplicatedIsInSlipperyMovement : 1;
@@ -323,6 +329,9 @@ public:
 	// table index 274, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bLocalInGliderRedeploy : 1;
+
+	// original bitfield byte 4329, previous group was byte 4328
+	uint8 : 0;
 
 	// table index 273, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -355,6 +364,9 @@ public:
 	// table index 266, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	uint8 bIsRespawning : 1;
+
+	// original bitfield byte 4330, previous group was byte 4329
+	uint8 : 0;
 
 	// table index 265, flags 0x20080000000020
 	UPROPERTY(Replicated)
